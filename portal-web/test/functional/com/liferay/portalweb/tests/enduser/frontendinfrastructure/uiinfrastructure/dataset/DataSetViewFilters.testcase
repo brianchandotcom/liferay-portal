@@ -2191,12 +2191,12 @@ definition {
 			DataSetAdmin.createFilters(
 				filterName = "Test Filter",
 				filterType = "Selection",
-				key_filterList = "creator,label,status");
+				key_filterList = "externalReferenceCode,label,fieldName");
 		}
 
 		task ("And edits one of them") {
 			Click(
-				key_fieldName = "creator",
+				key_fieldName = "externalReferenceCode",
 				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
 
 			MenuItem.click(menuItem = "Edit");
@@ -2204,7 +2204,7 @@ definition {
 			Type(
 				key_text = "Name",
 				locator1 = "TextInput#ANY",
-				value1 = "creator edited");
+				value1 = "externalReferenceCode edited");
 
 			Click(
 				key_text = "Save",
@@ -2235,16 +2235,16 @@ definition {
 
 		task ("When the user reorder the filters") {
 			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_nameField = "creator edited",
+				key_nameField = "externalReferenceCode edited",
 				key_position = 2,
-				keyName = "status",
+				keyName = "fieldName",
 				locator1 = "DataSet#SELECT_DATASET",
 				locator2 = "DataSet#FIELDS_TABLE");
 		}
 
 		task ("Then the filters are ordered accordingly to the changes") {
 			AssertElementPresent(
-				chosenFilter = "status",
+				chosenFilter = "fieldName",
 				key_tableColumn = 1,
 				key_tableRow = 1,
 				locator1 = "DataSet#FILTER_TABLE_CELL");

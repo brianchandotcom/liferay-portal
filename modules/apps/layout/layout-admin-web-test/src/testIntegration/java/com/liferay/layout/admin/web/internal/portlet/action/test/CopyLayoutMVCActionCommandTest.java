@@ -169,7 +169,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
+				null, TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =

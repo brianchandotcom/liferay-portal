@@ -47,7 +47,7 @@ public class SiteNavigationMenuTestUtil {
 		serviceContext.setModifiedDate(date);
 
 		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), group.getGroupId(), name,
+			null, TestPropsValues.getUserId(), group.getGroupId(), name,
 			serviceContext);
 	}
 
@@ -63,7 +63,7 @@ public class SiteNavigationMenuTestUtil {
 		throws PortalException {
 
 		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(), type, auto,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
@@ -77,7 +77,7 @@ public class SiteNavigationMenuTestUtil {
 				group.getGroupId(), userId);
 
 		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			userId, group.getGroupId(), RandomTestUtil.randomString(),
+			null, userId, group.getGroupId(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
 
@@ -86,7 +86,7 @@ public class SiteNavigationMenuTestUtil {
 		throws PortalException {
 
 		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), group.getGroupId(), name,
+			null, TestPropsValues.getUserId(), group.getGroupId(), name,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

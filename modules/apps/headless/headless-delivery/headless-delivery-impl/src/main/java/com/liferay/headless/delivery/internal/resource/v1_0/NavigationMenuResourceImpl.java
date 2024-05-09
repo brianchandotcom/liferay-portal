@@ -124,7 +124,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuService.addSiteNavigationMenu(
-				siteId, navigationMenu.getName(),
+				null, siteId, navigationMenu.getName(),
 				SiteNavigationConstants.TYPE_DEFAULT, true,
 				ServiceContextBuilder.create(
 					siteId, contextHttpServletRequest, null
@@ -197,7 +197,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				siteId, siteNavigationMenuId, parentNavigationMenuId,
+				null, siteId, siteNavigationMenuId, parentNavigationMenuId,
 				_getType(navigationMenuItem), unicodeProperties,
 				ServiceContextBuilder.create(
 					siteId, contextHttpServletRequest, null

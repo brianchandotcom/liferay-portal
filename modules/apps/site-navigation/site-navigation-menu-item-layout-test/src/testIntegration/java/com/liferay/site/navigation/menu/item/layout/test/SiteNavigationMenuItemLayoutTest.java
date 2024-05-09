@@ -61,7 +61,7 @@ public class SiteNavigationMenuItemLayoutTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
+			null, TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
 			SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
 
 		LayoutServiceUtil.addLayout(
@@ -89,8 +89,9 @@ public class SiteNavigationMenuItemLayoutTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), _group.getGroupId(), "Primary Menu",
-			SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
+			serviceContext);
 
 		LayoutServiceUtil.addLayout(
 			_group.getGroupId(), false, 0,
@@ -118,12 +119,13 @@ public class SiteNavigationMenuItemLayoutTest {
 
 		SiteNavigationMenu autoSiteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
-				SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				"Auto Menu", SiteNavigationConstants.TYPE_DEFAULT, true,
+				serviceContext);
 
 		SiteNavigationMenu primarySiteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
 				serviceContext);
 
@@ -158,7 +160,7 @@ public class SiteNavigationMenuItemLayoutTest {
 
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
 				serviceContext);
 

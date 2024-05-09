@@ -224,7 +224,7 @@ public class NavigationMenuResourceTest
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 				postNavigationMenu.getId(), 0, displayPageType,
 				UnicodePropertiesBuilder.create(
 					true
@@ -295,7 +295,7 @@ public class NavigationMenuResourceTest
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 				postNavigationMenu.getId(), 0, displayPageType,
 				UnicodePropertiesBuilder.create(
 					true

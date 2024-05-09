@@ -101,8 +101,8 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 
 				SiteNavigationMenuItem siteNavigationMenuItem =
 					_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-						themeDisplay.getScopeGroupId(), siteNavigationMenuId,
-						parentSiteNavigationMenuItemId,
+						null, themeDisplay.getScopeGroupId(),
+						siteNavigationMenuId, parentSiteNavigationMenuItemId,
 						siteNavigationMenuItemType,
 						UnicodePropertiesBuilder.create(
 							true

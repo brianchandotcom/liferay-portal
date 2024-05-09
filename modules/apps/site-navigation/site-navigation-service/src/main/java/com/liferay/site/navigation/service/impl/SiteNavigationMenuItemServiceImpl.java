@@ -64,6 +64,15 @@ public class SiteNavigationMenuItemServiceImpl
 	}
 
 	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
 		throws PortalException {
 
@@ -72,13 +81,23 @@ public class SiteNavigationMenuItemServiceImpl
 	}
 
 	@Override
-	public SiteNavigationMenuItem fetchSiteNavigationMenuItem(
-			String externalReferenceCode, long groupId)
+	public List<Long> getParentSiteNavigationMenuItemIds(
+		long siteNavigationMenuId, String typeSettingsKeyword) {
+
+		return siteNavigationMenuItemLocalService.
+			getParentSiteNavigationMenuItemIds(
+				siteNavigationMenuId, typeSettingsKeyword);
+	}
+
+	@Override
+	public SiteNavigationMenuItem
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			siteNavigationMenuItemLocalService.
-				fetchSiteNavigationMenuItemByExternalReferenceCode(
+				getSiteNavigationMenuItemByExternalReferenceCode(
 					externalReferenceCode, groupId);
 
 		if (siteNavigationMenuItem != null) {
@@ -89,15 +108,6 @@ public class SiteNavigationMenuItemServiceImpl
 		}
 
 		return siteNavigationMenuItem;
-	}
-
-	@Override
-	public List<Long> getParentSiteNavigationMenuItemIds(
-		long siteNavigationMenuId, String typeSettingsKeyword) {
-
-		return siteNavigationMenuItemLocalService.
-			getParentSiteNavigationMenuItemIds(
-				siteNavigationMenuId, typeSettingsKeyword);
 	}
 
 	@Override

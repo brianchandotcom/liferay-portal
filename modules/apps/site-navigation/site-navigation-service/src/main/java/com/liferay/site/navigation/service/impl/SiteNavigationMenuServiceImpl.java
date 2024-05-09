@@ -122,19 +122,18 @@ public class SiteNavigationMenuServiceImpl
 	}
 
 	@Override
-	public SiteNavigationMenu fetchSiteNavigationMenu(
+	public SiteNavigationMenu getSiteNavigationMenuByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		SiteNavigationMenu siteNavigationMenu =
 			siteNavigationMenuLocalService.
-				fetchSiteNavigationMenuByExternalReferenceCode(
+				getSiteNavigationMenuByExternalReferenceCode(
 					externalReferenceCode, groupId);
 
 		if (siteNavigationMenu != null) {
 			_siteNavigationMenuModelResourcePermission.check(
-				getPermissionChecker(),
-				siteNavigationMenu.getSiteNavigationMenuId(), ActionKeys.VIEW);
+				getPermissionChecker(), siteNavigationMenu, ActionKeys.VIEW);
 		}
 
 		return siteNavigationMenu;

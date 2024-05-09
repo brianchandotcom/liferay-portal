@@ -129,46 +129,50 @@ export default function ChangeTrackingWorkflowView({
 				</ClayTable.Body>
 			</ClayTable>
 
-			<ClayTable borderless className="mt-n3">
-				<ClayTable.Row>
-					<ClayPanel
-						borderless
-						className="mb-0"
-						collapsable
-						displayTitle={
-							<ClayPanel.Title>
-								<b> {Liferay.Language.get('activities')} </b>
-							</ClayPanel.Title>
-						}
-						displayType="primary"
-						showCollapseIcon={true}
-					>
-						<th className="bg-white">
-							{Liferay.Language.get('activity-description')}
-						</th>
+			<ClayPanel
+				borderless="true"
+				className="mb-0"
+				collapsable
+				displayTitle={
+					<ClayPanel.Title>
+						<b> {Liferay.Language.get('activities')} </b>
+					</ClayPanel.Title>
+				}
+				displayType="primary"
+				showCollapseIcon={true}
+			>
+				<ClayTable borderless className="mt-n3">
+					<ClayTable.Head>
+						<ClayTable.Row>
+							<ClayTable.Cell headingCell headingTitle>
+								{Liferay.Language.get('activity-description')}
+							</ClayTable.Cell>
 
-						<th className="bg-white">
-							{Liferay.Language.get('date')}
-						</th>
+							<ClayTable.Cell headingCell headingTitle>
+								{Liferay.Language.get('date')}
+							</ClayTable.Cell>
+						</ClayTable.Row>
+					</ClayTable.Head>
 
+					<ClayTable.Body>
 						{Object.keys(workflowData.activities)
 							.reverse()
 							.slice(0, next)
 							?.map((id) => (
-								<tr key={id}>
-									<td className="bg-white">
+								<ClayTable.Row key={id}>
+									<ClayTable.Cell className="bg-white">
 										{
 											workflowData.activities[id]
 												.description
 										}
 										&nbsp;
 										{workflowData.activities[id].comment}
-									</td>
+									</ClayTable.Cell>
 
-									<td className="bg-white">
+									<ClayTable.Cell className="bg-white">
 										{workflowData.activities[id].createDate}
-									</td>
-								</tr>
+									</ClayTable.Cell>
+								</ClayTable.Row>
 							))}
 
 						{next <
@@ -182,9 +186,9 @@ export default function ChangeTrackingWorkflowView({
 								{Liferay.Language.get('view-more')}
 							</ClayButton>
 						)}
-					</ClayPanel>
-				</ClayTable.Row>
-			</ClayTable>
+					</ClayTable.Body>
+				</ClayTable>
+			</ClayPanel>
 		</div>
 	);
 }

@@ -1188,6 +1188,7 @@ export default function ChangeTrackingRenderView({
 
 		return (
 			<ClayTable
+				borderless
 				className={classNames('publications-render-view', {
 					'publications-table':
 						state.contentType === CONTENT_TYPE_PARENTS ||

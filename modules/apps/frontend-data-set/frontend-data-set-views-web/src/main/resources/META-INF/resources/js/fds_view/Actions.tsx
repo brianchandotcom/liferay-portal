@@ -329,6 +329,9 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 							>
 								<ActionList
 									createFDSAction={createFDSAction}
+									creationMenuItemLabel={Liferay.Language.get(
+										'new-item-action'
+									)}
 									deleteFDSAction={deleteFDSAction}
 									editFDSAction={editFDSAction}
 									fdsActions={fdsActions}
@@ -348,6 +351,9 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 							>
 								<ActionList
 									createFDSAction={createFDSAction}
+									creationMenuItemLabel={Liferay.Language.get(
+										'new-creation-action'
+									)}
 									deleteFDSAction={deleteFDSAction}
 									editFDSAction={editFDSAction}
 									fdsActions={fdsActions}

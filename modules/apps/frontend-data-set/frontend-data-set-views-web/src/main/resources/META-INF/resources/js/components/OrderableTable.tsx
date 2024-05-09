@@ -361,7 +361,7 @@ const OrderableTable = ({
 	actions,
 	className,
 	creationMenuItems,
-	creationMenuLabel = Liferay.Language.get('add'),
+	creationMenuLabel = Liferay.Language.get('new'),
 	fields,
 	items: initialItems,
 	noItemsButtonLabel,

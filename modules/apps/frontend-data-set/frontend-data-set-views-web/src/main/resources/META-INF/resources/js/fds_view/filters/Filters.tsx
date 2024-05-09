@@ -934,6 +934,7 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 							onCreationButtonClick(EFilterType.SELECTION),
 					},
 				]}
+				creationMenuLabel={Liferay.Language.get('new-filter')}
 				fields={[
 					{
 						label: Liferay.Language.get('name'),
@@ -949,7 +950,7 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 					},
 				]}
 				items={filters}
-				noItemsButtonLabel={Liferay.Language.get('create-filter')}
+				noItemsButtonLabel={Liferay.Language.get('new-filter')}
 				noItemsDescription={Liferay.Language.get(
 					'start-creating-a-filter-to-display-specific-data'
 				)}

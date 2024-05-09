@@ -937,6 +937,34 @@
 			"label": "Sanitize Language"
 		},
 		{
+			"externalReferenceCode": "scancodePipelines",
+			"jobDefinitionsToJobDefinitionParameters": [
+				{
+					"externalReferenceCode": "dockerTag"
+				},
+				{
+					"externalReferenceCode": "jenkinsBranchURL"
+				},
+				{
+					"externalReferenceCode": "pipelineName"
+				},
+				{
+					"externalReferenceCode": "portalBranchSHA"
+				},
+				{
+					"externalReferenceCode": "portalReleaseTomcatURL"
+				},
+				{
+					"externalReferenceCode": "portalReleaseVersion"
+				},
+				{
+					"externalReferenceCode": "portalUserName"
+				}
+			],
+			"key": "scancodePipelines",
+			"label": "Scancode Pipelines"
+		},
+		{
 			"externalReferenceCode": "subrepositoryPullRequest",
 			"jobDefinitionsToJobDefinitionParameters": [
 				{
@@ -971,6 +999,16 @@
 			],
 			"key": "verificationNode",
 			"label": "Verification Node"
+		},
+		{
+			"externalReferenceCode": "verificationServersDaily",
+			"jobDefinitionsToJobDefinitionParameters": [
+				{
+					"externalReferenceCode": "jenkinsBranchURL"
+				}
+			],
+			"key": "verificationServersDaily",
+			"label": "Verification Servers Daily"
 		}
 	]
 }

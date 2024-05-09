@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class ObjectValidationsFDSPage {
+export class ObjectValidationsPage {
 	readonly addObjectValidationButton: Locator;
 	readonly validationTabItem: Locator;
 

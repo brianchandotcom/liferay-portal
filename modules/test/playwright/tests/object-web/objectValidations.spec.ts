@@ -50,7 +50,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 		apiHelpers,
 		editObjectValidationPage,
 		modalAddObjectValidationPage,
-		objectValidationsFDSPage,
+		objectValidationsPage,
 		page,
 		viewObjectDefinitionsPage,
 		viewObjectEntriesPage,
@@ -85,9 +85,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			objectDefinition1.label['en_US']
 		);
 
-		objectValidationsFDSPage.goto();
+		objectValidationsPage.goto();
 
-		await objectValidationsFDSPage.addObjectValidationButton.click();
+		await objectValidationsPage.addObjectValidationButton.click();
 
 	const objectValidationLabel =
 		'UniqueCompositeKeyValidation' + getRandomInt();
@@ -146,7 +146,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 		apiHelpers,
 		editObjectValidationPage,
 		modalAddObjectValidationPage,
-		objectValidationsFDSPage,
+		objectValidationsPage,
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
@@ -279,9 +279,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			objectDefinition1.label['en_US']
 		);
 
-		objectValidationsFDSPage.goto();
+		objectValidationsPage.goto();
 
-		await objectValidationsFDSPage.addObjectValidationButton.click();
+		await objectValidationsPage.addObjectValidationButton.click();
 
 	const objectValidationLabel =
 		'UniqueCompositeKeyValidation' + getRandomInt();
@@ -318,7 +318,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 		apiHelpers,
 		editObjectValidationPage,
 		modalAddObjectValidationPage,
-		objectValidationsFDSPage,
+		objectValidationsPage,
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
@@ -364,9 +364,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			objectDefinition1.label['en_US']
 		);
 
-		objectValidationsFDSPage.goto();
+		objectValidationsPage.goto();
 
-		await objectValidationsFDSPage.addObjectValidationButton.click();
+		await objectValidationsPage.addObjectValidationButton.click();
 
 	const objectValidationLabel =
 		'UniqueCompositeKeyValidation' + getRandomInt();
@@ -400,7 +400,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 	test('cannot add unique composite key validation with just one field', async ({
 		editObjectValidationPage,
 		modalAddObjectValidationPage,
-		objectValidationsFDSPage,
+		objectValidationsPage,
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
@@ -414,9 +414,9 @@ test.describe('Object Unique Composite Key Validation', () => {
 			objectDefinition1.label['en_US']
 		);
 
-		objectValidationsFDSPage.goto();
+		objectValidationsPage.goto();
 
-		await objectValidationsFDSPage.addObjectValidationButton.click();
+		await objectValidationsPage.addObjectValidationButton.click();
 
 		const validationLabel = 'UniqueCompositeKeyValidation' + getRandomInt();
 

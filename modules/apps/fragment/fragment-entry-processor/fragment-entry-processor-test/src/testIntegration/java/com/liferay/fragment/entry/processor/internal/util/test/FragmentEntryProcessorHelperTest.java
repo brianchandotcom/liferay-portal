@@ -460,17 +460,20 @@ public class FragmentEntryProcessorHelperTest {
 	@FeatureFlags("LPD-11377")
 	@Test
 	public void testGetRepeatableAssetTags() throws Exception {
-		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName",
-			RandomTestUtil.randomString());
-
 		JSONObject jsonObject = JSONUtil.put(
 			"className", JournalArticle.class.getName()
 		).put(
 			"classNameId",
 			_portal.getClassNameId(JournalArticle.class.getName())
 		).put(
-			"classPK", journalArticle.getResourcePrimKey()
+			"classPK",
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					_addImageFileEntry(), "ImageFieldName",
+					RandomTestUtil.randomString());
+
+				return journalArticle.getResourcePrimKey();
+			}
 		).put(
 			"fieldId", "AssetTag_tagNames"
 		);
@@ -502,17 +505,20 @@ public class FragmentEntryProcessorHelperTest {
 	@FeatureFlags("LPD-11377")
 	@Test
 	public void testGetRepeatableAssetVocabularies() throws Exception {
-		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName",
-			RandomTestUtil.randomString());
-
 		JSONObject jsonObject = JSONUtil.put(
 			"className", JournalArticle.class.getName()
 		).put(
 			"classNameId",
 			_portal.getClassNameId(JournalArticle.class.getName())
 		).put(
-			"classPK", journalArticle.getResourcePrimKey()
+			"classPK",
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					_addImageFileEntry(), "ImageFieldName",
+					RandomTestUtil.randomString());
+
+				return journalArticle.getResourcePrimKey();
+			}
 		).put(
 			"fieldId",
 			AssetVocabulary.class.getSimpleName() + StringPool.UNDERLINE +
@@ -546,21 +552,24 @@ public class FragmentEntryProcessorHelperTest {
 	@FeatureFlags("LPD-11377")
 	@Test
 	public void testGetRepeatableFieldValue() throws Exception {
-		DDMStructure ddmStructure = _addDDMStructure(
-			_readJSONFileToString("ddm_structure_with_repeatable_field.json"));
-
-		JournalArticle journalArticle = _addJournalArticle(
-			ddmStructure,
-			_readFileToString("dynamic_content_with_repeatable_field.xml"),
-			RandomTestUtil.randomString());
-
 		JSONObject jsonObject = JSONUtil.put(
 			"className", JournalArticle.class.getName()
 		).put(
 			"classNameId",
 			_portal.getClassNameId(JournalArticle.class.getName())
 		).put(
-			"classPK", journalArticle.getResourcePrimKey()
+			"classPK",
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					_addDDMStructure(
+						_readJSONFileToString(
+							"ddm_structure_with_repeatable_field.json")),
+					_readFileToString(
+						"dynamic_content_with_repeatable_field.xml"),
+					RandomTestUtil.randomString());
+
+				return journalArticle.getResourcePrimKey();
+			}
 		).put(
 			"fieldId", "DDMStructure_Text"
 		);

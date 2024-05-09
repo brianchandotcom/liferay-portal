@@ -799,8 +799,154 @@
 					"state": false,
 					"type": "String",
 					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Primary Contact Title"
+					},
+					"name": "primaryContactTitle",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Product Label"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_PRODUCT_LABELS",
+					"name": "productLabel",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Products of Interest"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_PRODUCT_TYPES",
+					"name": "productsOfInterest",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference Address Line One"
+					},
+					"name": "referenceAddressLineOne",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference Address Line Two"
+					},
+					"name": "referenceAddressLineTwo",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference City"
+					},
+					"name": "referenceCity",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference Country"
+					},
+					"name": "referenceCountry",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference Phone Number"
+					},
+					"name": "referencePhoneNumber",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference State, Province, Region"
+					},
+					"name": "referenceStateProvinceRegion",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference Supplier Name"
+					},
+					"name": "referenceSupplierName",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Reference ZIP, Postal Code"
+					},
+					"name": "referenceZIPPostalCode",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
 				}
-			]
+			],
+			"objectFolderExternalReferenceCode": "default"
 		}
 	]
 }

@@ -693,14 +693,14 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), RandomTestUtil.randomString(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
 				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
 
 		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(), siteNavigationMenu.getSiteNavigationMenuId(),
-			0, SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY,
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			siteNavigationMenu.getSiteNavigationMenuId(), 0,
+			SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(

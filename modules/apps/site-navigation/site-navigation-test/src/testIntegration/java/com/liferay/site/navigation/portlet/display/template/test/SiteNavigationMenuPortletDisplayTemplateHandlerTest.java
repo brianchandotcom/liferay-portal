@@ -111,7 +111,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandlerTest {
 				).build());
 
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				RandomTestUtil.randomString(), _group.getGroupId(),
+				null, _group.getGroupId(),
 				siteNavigationMenu.getSiteNavigationMenuId(), 0,
 				SiteNavigationMenuItemTypeConstants.LAYOUT,
 				UnicodePropertiesBuilder.create(

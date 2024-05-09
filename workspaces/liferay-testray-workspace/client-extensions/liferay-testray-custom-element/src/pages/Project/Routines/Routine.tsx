@@ -46,7 +46,7 @@ const Routine = () => {
 					},
 					sort: {
 						direction: 'DESC',
-						key: 'dateCreated',
+						key: 'dueDate',
 					},
 				}}
 				managementToolbarProps={{

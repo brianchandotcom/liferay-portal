@@ -33,7 +33,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 				pageSize: 200,
 				sort: {
 					direction: 'DESC',
-					key: 'dateCreated',
+					key: 'dueDate',
 				},
 			}}
 			managementToolbarProps={{

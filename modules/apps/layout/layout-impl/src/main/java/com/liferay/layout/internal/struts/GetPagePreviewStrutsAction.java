@@ -16,7 +16,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -35,12 +34,12 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -168,13 +167,12 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			layout.includeLayoutContent(
 				httpServletRequest, httpServletResponse);
 
-			ServletContext servletContext = ServletContextPool.get(
-				StringPool.BLANK);
 			LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
 			Document document = Jsoup.parse(
 				ThemeUtil.include(
-					servletContext, httpServletRequest, httpServletResponse,
+					ServletContextPool.get(_portal.getServletContextName()),
+					httpServletRequest, httpServletResponse,
 					"portal_normal.ftl", layoutSet.getTheme(), false));
 
 			Element contentElement = document.getElementById("content");
@@ -262,6 +260,9 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -71,5 +71,5 @@ module.exports = {
 		'react-dom': ['*', 'default'],
 		'text-mask-addons': ['*', 'default'],
 		'text-mask-core': ['*', 'default'],
-	}
+	},
 };

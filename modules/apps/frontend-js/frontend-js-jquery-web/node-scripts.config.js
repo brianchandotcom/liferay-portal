@@ -4,5 +4,5 @@
  */
 
 module.exports = {
-	npmscripts: {"build":{"bundler":false}},
+	npmscripts: {build: {bundler: false}},
 };

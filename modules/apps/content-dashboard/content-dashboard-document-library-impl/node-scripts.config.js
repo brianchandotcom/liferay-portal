@@ -4,6 +4,7 @@
  */
 
 module.exports = {
-	main: 'src/main/resources/META-INF/resources/js/components/SelectFileExtensionWrapper.js',
+	main:
+		'src/main/resources/META-INF/resources/js/components/SelectFileExtensionWrapper.js',
 	npmscripts: {},
 };

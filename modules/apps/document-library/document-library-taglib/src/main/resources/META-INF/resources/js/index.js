@@ -4,7 +4,10 @@
  */
 
 export {default as RepositoryBrowserComponent} from './repository_browser/RepositoryBrowserComponent';
-export {deleteEntry, renameEntry} from './repository_browser/RepositoryBrowserDropdownActions';
+export {
+	deleteEntry,
+	renameEntry,
+} from './repository_browser/RepositoryBrowserDropdownActions';
 export {default as RepositoryBrowserDropdownDefaultEventHandler} from './repository_browser/RepositoryBrowserDropdownDefaultEventHandler';
 export {default as RepositoryBrowserDropdownPropsTransformer} from './repository_browser/RepositoryBrowserDropdownPropsTransformer';
 export {default as RepositoryBrowserManagementToolbarPropsTransformer} from './repository_browser/RepositoryBrowserManagementToolbarPropsTransformer';

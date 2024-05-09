@@ -1,17 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import * as childProcess from 'child_process';
 import {constants, mkdirSync, renameSync} from 'fs';
 import * as fs from 'fs/promises';
+import path from 'path';
 import resolve from 'resolve';
 
 import {WORK_PATH} from '../util/constants.mjs';
 import onExit from '../util/onExit.mjs';
 
-const DISABLE_BUILD_CONFIGS = [
-	'babel',
-	'bundler',
-	'exports',
-	'main'
-];
+const DISABLE_BUILD_CONFIGS = ['babel', 'bundler', 'exports', 'main'];
 
 export default async function runNpmScripts(projectNpmScriptsConfig) {
 	if (!projectNpmScriptsConfig) {
@@ -20,16 +21,14 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 
 	await writeNpmScriptsConfig(projectNpmScriptsConfig);
 
-	const npmScriptsPath =
-		resolve.sync('@liferay/npm-scripts/bin/liferay-npm-scripts.js', {basedir: '.'});
-
-	const child = childProcess.spawn(
-		npmScriptsPath,
-		['build'],
-		{
-			stdio: 'inherit'
-		}
+	const npmScriptsPath = resolve.sync(
+		'@liferay/npm-scripts/bin/liferay-npm-scripts.js',
+		{basedir: '.'}
 	);
+
+	const child = childProcess.spawn(npmScriptsPath, ['build'], {
+		stdio: 'inherit',
+	});
 
 	let killChild = true;
 
@@ -45,12 +44,18 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 
 			if (code === 0) {
 				resolve();
-			}
-			else if (code !== null) {
-				reject(new Error(`Error: liferay-npm-scripts finished with status ${code}`));
-			}
-			else {
-				reject(new Error(`Error: liferay-npm-scripts finished due to signal ${signal}`));
+			} else if (code !== null) {
+				reject(
+					new Error(
+						`Error: liferay-npm-scripts finished with status ${code}`
+					)
+				);
+			} else {
+				reject(
+					new Error(
+						`Error: liferay-npm-scripts finished due to signal ${signal}`
+					)
+				);
 			}
 		});
 
@@ -65,7 +70,9 @@ async function writeNpmScriptsConfig(projectNpmScriptsConfig) {
 
 	for (const config of DISABLE_BUILD_CONFIGS) {
 		if (projectNpmScriptsConfig.build[config]) {
-			console.warn(`WARNING: ignoring build.${config} configuration for npmscripts`);
+			console.warn(
+				`WARNING: ignoring build.${config} configuration for npmscripts`
+			);
 		}
 
 		projectNpmScriptsConfig.build[config] = false;
@@ -78,20 +85,27 @@ async function writeNpmScriptsConfig(projectNpmScriptsConfig) {
 
 		await fs.writeFile(
 			'npmscripts.config.js',
-			`module.exports = ${JSON.stringify(projectNpmScriptsConfig, null, 2)};`,
+			`module.exports = ${JSON.stringify(
+				projectNpmScriptsConfig,
+				null,
+				2
+			)};`,
 			'utf-8'
 		);
 
 		onExit(restoreNpmScriptsConfig);
-	}
-	catch(error) {
+	} catch (error) {
 		if (error.code !== 'ENOENT') {
 			throw error;
 		}
 
 		await fs.writeFile(
 			'npmscripts.config.js',
-			`module.exports = ${JSON.stringify(projectNpmScriptsConfig, null, 2)};`,
+			`module.exports = ${JSON.stringify(
+				projectNpmScriptsConfig,
+				null,
+				2
+			)};`,
 			'utf-8'
 		);
 
@@ -102,9 +116,11 @@ async function writeNpmScriptsConfig(projectNpmScriptsConfig) {
 function moveNpmScriptsConfig() {
 	try {
 		mkdirSync(WORK_PATH, {recursive: true});
-		renameSync('npmscripts.config.js', path.join(WORK_PATH, 'npmscripts.config.js'));
-	}
-	catch(error) {
+		renameSync(
+			'npmscripts.config.js',
+			path.join(WORK_PATH, 'npmscripts.config.js')
+		);
+	} catch (error) {
 		// ignore
 	}
 }
@@ -114,8 +130,7 @@ function restoreNpmScriptsConfig() {
 
 	try {
 		renameSync('./npmscripts.config.js.$$$', './npmscripts.config.js');
-	}
-	catch(error) {
+	} catch (error) {
 		// ignore
 	}
 }

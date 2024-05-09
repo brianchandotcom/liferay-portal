@@ -1,6 +1,14 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getExportedSymbols from '../../util/getExportedSymbols.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
-import {IMPORT_BRIDGE_FILTER, decodeBridgePath} from '../getImportBridgePath.mjs';
+import {
+	IMPORT_BRIDGE_FILTER,
+	decodeBridgePath,
+} from '../getImportBridgePath.mjs';
 import getPathPrefix from '../getPathPrefix.mjs';
 
 /**
@@ -11,7 +19,10 @@ import getPathPrefix from '../getPathPrefix.mjs';
  * and for that to happen it must be fed an ES module as entry point. If fed a CommonJS one esbuild
  * will refuse to export things as ESM syntax.
  */
-export default function getImportBridgesPlugin(globalImports, overridenPackageSymbols) {
+export default function getImportBridgesPlugin(
+	globalImports,
+	overridenPackageSymbols
+) {
 	const importBridgesCache = {};
 
 	return {
@@ -19,9 +30,9 @@ export default function getImportBridgesPlugin(globalImports, overridenPackageSy
 
 		setup(build) {
 			build.onLoad(
-				{ 
-					filter: IMPORT_BRIDGE_FILTER 
-				}, 
+				{
+					filter: IMPORT_BRIDGE_FILTER,
+				},
 				async (args) => {
 					const {path: loadPath} = args;
 
@@ -31,12 +42,18 @@ export default function getImportBridgesPlugin(globalImports, overridenPackageSy
 
 					const {moduleName, type} = decodeBridgePath(loadPath);
 
-					const {external, webContextPath} = globalImports[moduleName];
+					const {external, webContextPath} = globalImports[
+						moduleName
+					];
 
 					const contents = getImportBridgeCode(
-						globalImports, overridenPackageSymbols, type, moduleName, external,
+						globalImports,
+						overridenPackageSymbols,
+						type,
+						moduleName,
+						external,
 						webContextPath
-					);	
+					);
 
 					importBridgesCache[loadPath] = {
 						contents,
@@ -51,14 +68,18 @@ export default function getImportBridgesPlugin(globalImports, overridenPackageSy
 }
 
 function getImportBridgeCode(
-	globalImports, overridenPackageSymbols, type, moduleName, external, webContextPath
+	globalImports,
+	overridenPackageSymbols,
+	type,
+	moduleName,
+	external,
+	webContextPath
 ) {
 	let hasDefault;
 
 	if (globalImports[moduleName]?.external === false) {
 		hasDefault = false;
-	}
-	else {
+	} else {
 		const symbols = getExportedSymbols(overridenPackageSymbols, moduleName);
 
 		hasDefault = !!symbols['default'];
@@ -66,7 +87,9 @@ function getImportBridgeCode(
 
 	const pathPrefix = getPathPrefix(type);
 
-	const modulePath = external ? `exports/${getFlatName(moduleName)}.js` : 'index.js';
+	const modulePath = external
+		? `exports/${getFlatName(moduleName)}.js`
+		: 'index.js';
 
 	let source = `
 export * from '${pathPrefix}/${webContextPath}/__liferay__/${modulePath}';

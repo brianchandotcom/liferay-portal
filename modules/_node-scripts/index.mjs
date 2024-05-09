@@ -38,14 +38,23 @@ export default async function main() {
 		getProjectExports(),
 		getProjectMain(),
 		getProjectNpmScriptsConfig(),
-		getProjectWebContextPath()
+		getProjectWebContextPath(),
 	]);
 
 	const endConfig = Date.now();
 
 	await Promise.all([
-		bundleJavaScriptMain(globalImports, overridenPackageSymbols, projectMain, projectWebContextPath),
-		bundleJavaScriptExports(globalImports, overridenPackageSymbols, projectExports),
+		bundleJavaScriptMain(
+			globalImports,
+			overridenPackageSymbols,
+			projectMain,
+			projectWebContextPath
+		),
+		bundleJavaScriptExports(
+			globalImports,
+			overridenPackageSymbols,
+			projectExports
+		),
 		bundleCSSExports(projectExports),
 		writeCSSExportsLoaderModules(projectExports, projectWebContextPath),
 		writePackageJson(projectDescription),

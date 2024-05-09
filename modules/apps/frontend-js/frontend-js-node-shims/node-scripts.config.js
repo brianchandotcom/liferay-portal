@@ -15,7 +15,7 @@ module.exports = {
 		'string_decoder',
 		'timers-browserify',
 		'url',
-		'util'
+		'util',
 	],
 	npmscripts: {},
 };

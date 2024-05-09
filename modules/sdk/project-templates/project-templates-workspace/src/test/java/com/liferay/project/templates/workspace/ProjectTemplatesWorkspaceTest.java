@@ -104,7 +104,7 @@ public class ProjectTemplatesWorkspaceTest
 			temporaryFolder, getDefaultLiferayVersion());
 
 		writeGradlePropertiesInWorkspace(
-			workspaceProjectDir, "liferay.workspace.product=dxp-7.3-ga1");
+			workspaceProjectDir, "liferay.workspace.product=dxp-7.3-u35");
 
 		File modulesProjectDir = buildTemplateWithGradle(
 			new File(workspaceProjectDir, "modules"), "mvc-portlet",

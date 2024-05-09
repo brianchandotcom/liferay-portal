@@ -34,13 +34,14 @@ public class RankingJSONStorageEntryUpgradeProcess extends UpgradeProcess {
 		}
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select jsonStorageEntryId, valueString from " +
+				"select ctCollectionId, jsonStorageEntryId, valueString from " +
 					"JSONStorageEntry where classNameId = ? and key_ = ?");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update JSONStorageEntry set key_ = ?, valueString = ? " +
-						"where jsonStorageEntryId = ?")) {
+						"where ctCollectionId = ? and jsonStorageEntryId = " +
+							"?")) {
 
 			preparedStatement1.setLong(
 				1, _classNameLocalService.getClassNameId(Ranking.class));
@@ -72,7 +73,10 @@ public class RankingJSONStorageEntryUpgradeProcess extends UpgradeProcess {
 				}
 
 				preparedStatement2.setLong(
-					3, resultSet.getLong("jsonStorageEntryId"));
+					3, resultSet.getLong("ctCollectionId"));
+
+				preparedStatement2.setLong(
+					4, resultSet.getLong("jsonStorageEntryId"));
 
 				preparedStatement2.addBatch();
 			}

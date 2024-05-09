@@ -101,37 +101,6 @@ public class BlogsEditEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAssetCategorySelectorURL() {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
-		InfoItemItemSelectorCriterion itemSelectorCriterion =
-			new InfoItemItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoItemItemSelectorReturnType());
-		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
-		itemSelectorCriterion.setMultiSelection(true);
-
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, _themeDisplay.getScopeGroup(),
-				_themeDisplay.getScopeGroupId(),
-				_liferayPortletResponse.getNamespace() +
-					"selectedAssetCategory",
-				itemSelectorCriterion)
-		).setParameter(
-			"selectedCategoryIds",
-			StringUtil.merge(_getAssetCategoryIds(), StringPool.COMMA)
-		).setParameter(
-			"vocabularyIds",
-			() -> ListUtil.toString(
-				_assetVocabularyLocalService.getGroupsVocabularies(
-					_getGroupIds()),
-				AssetVocabulary.VOCABULARY_ID_ACCESSOR)
-		).buildString();
-	}
-
 	public BlogsEntry getBlogsEntry() {
 		return _blogsEntry;
 	}
@@ -291,6 +260,38 @@ public class BlogsEditEntryDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	public String getFriendlyURLAssetCategorySelectorURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
+
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
+		itemSelectorCriterion.setMultiSelection(true);
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, _themeDisplay.getScopeGroup(),
+				_themeDisplay.getScopeGroupId(),
+				_liferayPortletResponse.getNamespace() +
+					"selectedAssetCategory",
+				itemSelectorCriterion)
+		).setParameter(
+			"selectedCategoryIds",
+			StringUtil.merge(
+				_getFriendlyURLAssetCategoryIds(), StringPool.COMMA)
+		).setParameter(
+			"vocabularyIds",
+			() -> ListUtil.toString(
+				_assetVocabularyLocalService.getGroupsVocabularies(
+					_getGroupIds()),
+				AssetVocabulary.VOCABULARY_ID_ACCESSOR)
+		).buildString();
 	}
 
 	public String getFriendlyURLSeparatorCompanyConfigurationURL()
@@ -601,10 +602,10 @@ public class BlogsEditEntryDisplayContext {
 		return _assetAutoTaggerConfiguration.isUpdateAutoTags();
 	}
 
-	private long[] _getAssetCategoryIds() {
+	private long[] _getFriendlyURLAssetCategoryIds() {
 		if (_assetCategoryIds == null) {
 			_assetCategoryIds = ParamUtil.getLongValues(
-				_httpServletRequest, "assetCategoryId");
+				_httpServletRequest, "friendlyURLAssetCategoryIds");
 		}
 
 		return _assetCategoryIds;

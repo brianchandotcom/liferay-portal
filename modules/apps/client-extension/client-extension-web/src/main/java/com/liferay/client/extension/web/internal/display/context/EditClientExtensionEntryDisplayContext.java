@@ -11,7 +11,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -27,7 +29,9 @@ import com.liferay.portal.util.WebAppPool;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -44,6 +48,17 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 		_adding = adding;
 		_cet = cet;
 		_portletRequest = portletRequest;
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	public Set<Locale> getAvailableLocales() {
+		return LanguageUtil.getCompanyAvailableLocales(
+			_themeDisplay.getCompanyId());
 	}
 
 	public T getCET() {
@@ -56,6 +71,12 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 		}
 
 		return Constants.UPDATE;
+	}
+
+	public String getDefaultLanguageId() throws PortalException {
+		Company company = _themeDisplay.getCompany();
+
+		return LanguageUtil.getLanguageId(company.getLocale());
 	}
 
 	public String getDescription() {
@@ -72,9 +93,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getHelpLabel() {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		return CETLabelUtil.getHelpLabel(themeDisplay.getLocale(), getType());
+		return CETLabelUtil.getHelpLabel(_themeDisplay.getLocale(), getType());
 	}
 
 	public String getLearnResourceKey() {
@@ -173,14 +192,12 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getTitle() {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		if (_adding) {
 			return CETLabelUtil.getNewLabel(
-				themeDisplay.getLocale(), _cet.getType());
+				_themeDisplay.getLocale(), _cet.getType());
 		}
 
-		return _cet.getName(themeDisplay.getLocale());
+		return _cet.getName(_themeDisplay.getLocale());
 	}
 
 	public String getType() {
@@ -188,9 +205,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	}
 
 	public String getTypeLabel() {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		return CETLabelUtil.getTypeLabel(themeDisplay.getLocale(), getType());
+		return CETLabelUtil.getTypeLabel(_themeDisplay.getLocale(), getType());
 	}
 
 	public boolean isAdding() {
@@ -201,21 +216,11 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 		return _cet.hasProperties();
 	}
 
-	private HttpServletRequest _getHttpServletRequest() {
-		return PortalUtil.getHttpServletRequest(_portletRequest);
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
-		return (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
 	private static final String[] _EMPTY_STRINGS = {StringPool.BLANK};
 
 	private final boolean _adding;
 	private final T _cet;
 	private final PortletRequest _portletRequest;
+	private final ThemeDisplay _themeDisplay;
 
 }

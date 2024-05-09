@@ -62,6 +62,8 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 				<div class="panel-body">
 					<aui:field-wrapper label="name" name="name" required="<%= true %>">
 						<liferay-ui:input-localized
+							availableLocales="<%= editClientExtensionEntryDisplayContext.getAvailableLocales() %>"
+							defaultLanguageId="<%= editClientExtensionEntryDisplayContext.getDefaultLanguageId() %>"
 							name="name"
 							xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
 						/>

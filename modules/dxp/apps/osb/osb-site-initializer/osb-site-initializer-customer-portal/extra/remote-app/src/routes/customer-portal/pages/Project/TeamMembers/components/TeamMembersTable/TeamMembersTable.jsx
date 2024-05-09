@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { useMutation } from '@apollo/client';
+import {useMutation} from '@apollo/client';
 import {useModal} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
 import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
-import { associateUserAccountWithAccountAndAccountRole } from '~/common/services/liferay/graphql/queries';
+import {associateUserAccountWithAccountAndAccountRole} from '~/common/services/liferay/graphql/queries';
 import {getRolesFiltered} from '~/common/utils/getProjectRoles';
 import {rolesHighPriorityContacts} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import i18n from '../../../../../../../common/I18n';
@@ -56,7 +56,6 @@ const TeamMembersTable = ({
 			refetchQueries: ['getUserAccountsByAccountExternalReferenceCode'],
 		}
 	);
-	
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -245,19 +244,17 @@ const TeamMembersTable = ({
 		const roles = getCurrentRoleBriefs(userAccount.selectedAccountSummary);
 
 		if (!roles.length) {
-			return ['User']
-		}
-
-		else {
+			return ['User'];
+		} else {
 			return roles.map((role) => {
 				if (!isInvalidRole(role)) {
 					return role?.name;
 				}
-	
+
 				return ['User'];
-			})
+			});
 		}
-	}
+	};
 
 	const handleEdit = () => {
 		const currentAccountRoles =

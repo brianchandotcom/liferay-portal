@@ -2,16 +2,16 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-import { useEffect, useState } from 'react';
-import { ROLE_TYPES } from '~/common/utils/constants';
+import {useEffect, useState} from 'react';
+import {ROLE_TYPES} from '~/common/utils/constants';
 import RoleSelectorDropdown from '~/routes/customer-portal/components/RoleSelectorDropdown';
 import isSupportSeatRole from '../../../../../../../../../../../../common/utils/isSupportSeatRole';
 
 const partnerMemberRoles = [
 	ROLE_TYPES.partnerMarketingUser.key,
 	ROLE_TYPES.partnerSalesUser.key,
-	ROLE_TYPES.partnerTechnicalUser.key
-]
+	ROLE_TYPES.partnerTechnicalUser.key,
+];
 
 const RolesDropdown = ({
 	accountRoles,
@@ -32,25 +32,40 @@ const RolesDropdown = ({
 			disabled: hasAccountSupportSeatRole
 				? supportSeatsCount === 1
 				: isSupportSeatRole(accountRole.name) &&
-				availableSupportSeatsCount === 0,
+				  availableSupportSeatsCount === 0,
 			label: accountRole.name,
 			raysourceName: accountRole.raysourceName,
 			value: accountRole.id,
-		}))
+		}));
 
-		setRadioOptions(baseFormatAccount.reduce((previousItem, item) => {
-			if (!partnerMemberRoles.includes(item.label)) {
-				previousItem[item.label] = item;
+		setRadioOptions(
+			baseFormatAccount.reduce(
+				(previousItem, item) => {
+					if (!partnerMemberRoles.includes(item.label)) {
+						previousItem[item.label] = item;
 
-				return previousItem;
-			}
+						return previousItem;
+					}
 
-			previousItem.partnerMemberRoles.roles.push(item);
-			previousItem.partnerMemberRoles.active = previousItem.partnerMemberRoles.active ? true : item.active
+					previousItem.partnerMemberRoles.roles.push(item);
+					previousItem.partnerMemberRoles.active = previousItem
+						.partnerMemberRoles.active
+						? true
+						: item.active;
 
-			return previousItem;
-		}, { partnerMemberRoles: { active: undefined, roles: [] } }))
-	}, [accountRoles, availableSupportSeatsCount, hasAccountSupportSeatRole, selectedAccountRoleName, setRadioOptions, supportSeatsCount])
+					return previousItem;
+				},
+				{partnerMemberRoles: {active: undefined, roles: []}}
+			)
+		);
+	}, [
+		accountRoles,
+		availableSupportSeatsCount,
+		hasAccountSupportSeatRole,
+		selectedAccountRoleName,
+		setRadioOptions,
+		supportSeatsCount,
+	]);
 
 	return (
 		<RoleSelectorDropdown

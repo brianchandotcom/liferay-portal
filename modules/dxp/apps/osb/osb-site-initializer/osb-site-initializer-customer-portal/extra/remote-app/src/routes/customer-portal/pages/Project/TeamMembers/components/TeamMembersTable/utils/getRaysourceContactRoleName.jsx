@@ -9,7 +9,10 @@ const RAYSOURCE_ROLE_NAMES = {
 	User: 'Support User',
 };
 
-export default function getRaysourceContactRoleName(roleName, isNewTeamMembersRoleTableAssociated) {
+export default function getRaysourceContactRoleName(
+	roleName,
+	isNewTeamMembersRoleTableAssociated
+) {
 	const raySourceRoleName = RAYSOURCE_ROLE_NAMES[roleName] || roleName;
 
 	if (isNewTeamMembersRoleTableAssociated) {

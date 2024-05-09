@@ -1,3 +1,7 @@
+.cp-badge-error-message {
+	width: 250px;
+}
+
 .invites-form {
 	height: 100%;
 	max-height: 355.5px;
@@ -11,10 +15,6 @@
 	width: 551px;
 }
 
-.cp-badge-error-message {
-	width: 250px;
-}
-
 .role-selector-container {
 	.dropdown-toggle {
 		border-radius: 0.5rem;
@@ -22,7 +22,7 @@
 		font-size: 1rem;
 		font-weight: 400;
 		height: 3rem;
-		margin-top: 1px;
+		margin-top: 0.063rem;
 		padding: 0.688rem 1rem !important;
 	}
 

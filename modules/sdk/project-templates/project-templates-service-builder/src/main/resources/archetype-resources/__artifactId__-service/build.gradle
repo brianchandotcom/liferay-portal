@@ -9,6 +9,7 @@ dependencies {
 
 buildService {
 	apiDir = "../${artifactId}-api/src/main/java"
+	testDir = "../${artifactId}-test/src/testIntegration/java"
 }
 
 group = "${package}"

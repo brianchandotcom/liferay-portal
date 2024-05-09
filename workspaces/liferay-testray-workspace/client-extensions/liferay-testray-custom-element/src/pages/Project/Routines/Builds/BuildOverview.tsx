@@ -64,9 +64,10 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 						},
 						{
 							title: i18n.translate('git-hash'),
-							value: testrayBuild.gitHash.includes('null')
-								? '-'
-								: testrayBuild.gitHash,
+							value:
+								testrayBuild?.gitHash === 'null' || ''
+									? '-'
+									: testrayBuild?.gitHash,
 						},
 						{
 							title: i18n.translate('create-date'),

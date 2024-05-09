@@ -15,10 +15,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -51,29 +47,29 @@ public class TestrayRoutineMetric implements Serializable {
 	}
 
 	@Schema
-	public Date getDueDate() {
-		if (_dueDateSupplier != null) {
-			dueDate = _dueDateSupplier.get();
+	public String getTestrayBuildDueDate() {
+		if (_testrayBuildDueDateSupplier != null) {
+			testrayBuildDueDate = _testrayBuildDueDateSupplier.get();
 
-			_dueDateSupplier = null;
+			_testrayBuildDueDateSupplier = null;
 		}
 
-		return dueDate;
+		return testrayBuildDueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
+	public void setTestrayBuildDueDate(String testrayBuildDueDate) {
+		this.testrayBuildDueDate = testrayBuildDueDate;
 
-		_dueDateSupplier = null;
+		_testrayBuildDueDateSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setDueDate(
-		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
+	public void setTestrayBuildDueDate(
+		UnsafeSupplier<String, Exception> testrayBuildDueDateUnsafeSupplier) {
 
-		_dueDateSupplier = () -> {
+		_testrayBuildDueDateSupplier = () -> {
 			try {
-				return dueDateUnsafeSupplier.get();
+				return testrayBuildDueDateUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -86,10 +82,10 @@ public class TestrayRoutineMetric implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date dueDate;
+	protected String testrayBuildDueDate;
 
 	@JsonIgnore
-	private Supplier<Date> _dueDateSupplier;
+	private Supplier<String> _testrayBuildDueDateSupplier;
 
 	@Schema
 	public Long getTestrayRoutineId() {
@@ -246,21 +242,18 @@ public class TestrayRoutineMetric implements Serializable {
 
 		sb.append("{");
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+		String testrayBuildDueDate = getTestrayBuildDueDate();
 
-		Date dueDate = getDueDate();
-
-		if (dueDate != null) {
+		if (testrayBuildDueDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dueDate\": ");
+			sb.append("\"testrayBuildDueDate\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(dueDate));
+			sb.append(_escape(testrayBuildDueDate));
 
 			sb.append("\"");
 		}

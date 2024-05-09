@@ -141,6 +141,14 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro formatJSONAdminUser() {
+		var adminUserEmail = JSONUtil2.getAdminUserEmail();
+		var adminUserPassword = JSONUtil2.getAdminUserPassword();
+
+		return "${adminUserEmail}:${adminUserPassword}";
+	}
+
+	@summary = "Default summary"
 	macro formatJSONSuperAdminUser() {
 		var superAdminUserEmail = JSONUtil2.getSuperAdminUserEmail();
 		var superAdminUserPassword = JSONUtil2.getSuperAdminUserPassword();
@@ -154,6 +162,28 @@ definition {
 		var defaultUserPassword = JSONUtil2.getDefaultUserPassword();
 
 		return "${defaultUserEmail}:${defaultUserPassword}";
+	}
+
+	@summary = "Default summary"
+	macro getAdminUserEmail() {
+		var adminUserEmail = PropsUtil.get("default.admin.email");
+
+		if (!(isSet(adminUserEmail)) || (${adminUserEmail} == "")) {
+			var adminUserEmail = "test@liferay.com";
+		}
+
+		return ${adminUserEmail};
+	}
+
+	@summary = "Default summary"
+	macro getAdminUserPassword() {
+		var adminUserPassword = PropsUtil.get("default.admin.password");
+
+		if (!(isSet(adminUserPassword)) || (${adminUserPassword} == "")) {
+			var adminUserPassword = "test";
+		}
+
+		return ${adminUserPassword};
 	}
 
 	@summary = "Default summary"

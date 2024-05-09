@@ -4,11 +4,12 @@ definition {
 	macro _associateUser(accountRoleId = null, accountEntryId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${accountEntryId},${accountRoleId},${userId}");
 
+		var adminUserLoginCredentials = JSONUtil2.formatJSONAdminUser();
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountrole/associate-user \
-				-u test@liferay.com:test \
+				-u ${adminUserLoginCredentials} \
 				-d accountEntryId=${accountEntryId}
 				-d accountRoleId=${accountRoleId}
 				-d userId=${userId} \
@@ -21,12 +22,13 @@ definition {
 	macro _getAccountRoleByRoleId(accountRole = null) {
 		Variables.assertDefined(parameterList = ${accountRole});
 
+		var adminUserLoginCredentials = JSONUtil2.formatJSONAdminUser();
 		var portalURL = JSONCompany.getPortalURL();
 		var roleId = JSONRoleSetter.setRoleId(name = ${accountRole});
 
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountrole/get-account-role-by-role-id \
-				-u test@liferay.com:test \
+				-u ${adminUserLoginCredentials} \
 				-d roleId=${roleId} \
 		''';
 

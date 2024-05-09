@@ -1,8 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import projectScopeRequire from './projectScopeRequire.mjs';
 
 const cachedExportedSymbols = {};
 
-export default function getExportedSymbols(overridenPackageSymbols, moduleName) {
+export default function getExportedSymbols(
+	overridenPackageSymbols,
+	moduleName
+) {
 	if (cachedExportedSymbols[moduleName]) {
 		return cachedExportedSymbols;
 	}
@@ -13,23 +21,21 @@ export default function getExportedSymbols(overridenPackageSymbols, moduleName) 
 		if (overridenPackageSymbols[moduleName]) {
 			symbols = {};
 
-			overridenPackageSymbols[moduleName].forEach(
-				symbol => symbols[symbol] = true
-			);
+			overridenPackageSymbols[moduleName].forEach((symbol) => {
+				symbols[symbol] = true;
+			});
 
 			if (symbols['*']) {
 				delete symbols['*'];
 
-				Object.keys(loadSymbols(moduleName)).forEach(
-					symbol => symbols[symbol] = true
-				);
+				Object.keys(loadSymbols(moduleName)).forEach((symbol) => {
+					symbols[symbol] = true;
+				});
 			}
-		}
-		else {
+		} else {
 			symbols = loadSymbols(moduleName);
 		}
-	}
-	catch(error) {
+	} catch (error) {
 		throw new Error(
 			`Cannot infer exported symbols for ${moduleName}: ${error}`
 		);
@@ -41,17 +47,14 @@ export default function getExportedSymbols(overridenPackageSymbols, moduleName) 
 function loadSymbols(moduleName) {
 	const module = projectScopeRequire(moduleName);
 
-	const symbols = Object.keys(module).reduce(
-		(symbols, key) => {
-			symbols[key] = true;
+	const symbols = Object.keys(module).reduce((symbols, key) => {
+		symbols[key] = true;
 
-			return symbols;
-		},
-		{}
-	);
+		return symbols;
+	}, {});
 
 	// Some modules config __esModule as non-enumerable, so we explicitly check for it
-	
+
 	if (module.__esModule) {
 		symbols.__esModule = true;
 	}

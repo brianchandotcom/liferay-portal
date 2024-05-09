@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -11,7 +16,10 @@ import getExportBridgePath from './getExportBridgePath.mjs';
  * and for that to happen it must be fed an ES module as entry point. If fed a CommonJS one esbuild
  * will refuse to export things as ESM syntax.
  */
-export default async function writeExportBridge(overridenPackageSymbols, moduleName) {
+export default async function writeExportBridge(
+	overridenPackageSymbols,
+	moduleName
+) {
 	const symbols = getExportedSymbols(overridenPackageSymbols, moduleName);
 
 	const exportBridgePath = getExportBridgePath(moduleName);
@@ -29,7 +37,7 @@ export default async function writeExportBridge(overridenPackageSymbols, moduleN
 	// babel or webpack.
 	//
 	// Note that we need to use import from instead of require in the generated
-	// source because otherwise esbuild fails to honor "browser" field of 
+	// source because otherwise esbuild fails to honor "browser" field of
 	// package.json files.
 	//
 
@@ -37,17 +45,16 @@ export default async function writeExportBridge(overridenPackageSymbols, moduleN
 import * as __star__ from '${moduleName}';
 
 const {
-${symbols.default ? "default: __default__," : ""}
+${symbols.default ? 'default: __default__,' : ''}
 ${namedExportSymbols}
 } = __star__;
 
 export {
 ${namedExportSymbols}
 };
-${symbols.default ? "export default __default__;" : ""}
+${symbols.default ? 'export default __default__;' : ''}
 `;
 
-	await fs.mkdir(path.dirname(exportBridgePath), {recursive:true});
+	await fs.mkdir(path.dirname(exportBridgePath), {recursive: true});
 	await fs.writeFile(exportBridgePath, source, 'utf-8');
 }
-

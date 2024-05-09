@@ -46,7 +46,7 @@ module.exports = {
 		'@clayui/time-picker',
 		'@clayui/toolbar',
 		'@clayui/tooltip',
-		'@clayui/upper-toolbar'
+		'@clayui/upper-toolbar',
 	],
 	main: 'src/main/resources/META-INF/resources/index.js',
 	npmscripts: {},

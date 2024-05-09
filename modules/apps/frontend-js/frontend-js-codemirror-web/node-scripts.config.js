@@ -7,7 +7,7 @@ module.exports = {
 	exports: [
 		'codemirror/addon/fold/foldgutter.css',
 		'codemirror/addon/hint/show-hint.css',
-		'codemirror/lib/codemirror.css'
+		'codemirror/lib/codemirror.css',
 	],
 	main: 'src/main/resources/META-INF/resources/js/index.ts',
 	npmscripts: {},

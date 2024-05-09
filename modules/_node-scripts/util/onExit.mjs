@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 let handlers = [];
 
 process.on('exit', invokeHandlers);
@@ -12,12 +17,13 @@ function invokeHandlers() {
 	for (const handler of handlers) {
 		try {
 			handler();
-		}
-		catch(error) {
-			console.error('Exception thrown while running onExit handler:', error);
+		} catch (error) {
+			console.error(
+				'Exception thrown while running onExit handler:',
+				error
+			);
 		}
 	}
 
-	handlers = [];	
+	handlers = [];
 }
-

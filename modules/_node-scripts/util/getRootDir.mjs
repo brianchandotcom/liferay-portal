@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -11,15 +16,14 @@ export default async function getRootDir() {
 	let rootDir = path.resolve('.');
 	let found = false;
 
-	while(path.dirname(rootDir) !== rootDir) {
+	while (path.dirname(rootDir) !== rootDir) {
 		try {
 			await fs.stat(path.join(rootDir, 'yarn.lock'));
 
 			found = true;
 
 			break;
-		}
-		catch(error) {
+		} catch (error) {
 			if (error.code !== 'ENOENT') {
 				throw error;
 			}
@@ -29,7 +33,9 @@ export default async function getRootDir() {
 	}
 
 	if (!found) {
-		throw new Error('Unable to find root project folder (is yarn.lock missing?)');
+		throw new Error(
+			'Unable to find root project folder (is yarn.lock missing?)'
+		);
 	}
 
 	cachedRootDir = rootDir;

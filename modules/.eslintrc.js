@@ -31,10 +31,8 @@ config = {
 			env: {
 				node: true,
 			},
-			files: [
-				'**/node-scripts.config.js'
-			]
-		}
+			files: ['**/node-scripts.config.js'],
+		},
 	],
 	rules: {
 		'@liferay/import-extensions': 'off',

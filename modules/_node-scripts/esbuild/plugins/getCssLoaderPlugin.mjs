@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import getFlatName from '../../util/getFlatName.mjs';
 import getPathPrefix from '../getPathPrefix.mjs';
 
@@ -13,27 +18,31 @@ export default function getCssLoaderPlugin(globalImports, type) {
 
 		setup(build) {
 			build.onResolve(
-				{ 
-					filter: /\.css$/ 
-				}, 
+				{
+					filter: /\.css$/,
+				},
 				(args) => ({path: `/$/css/${args.path}`})
 			);
 
 			build.onLoad(
-				{ 
-					filter: /\/\$\/css\/.*$/ 
-				}, 
+				{
+					filter: /\/\$\/css\/.*$/,
+				},
 				async (args) => {
 					const path = args.path.replace('/$/css/', '');
-					
+
 					if (!globalImports[path]) {
 						throw new Error(`Cannot rewrite CSS import: ${path}`);
 					}
-					
+
 					const {webContextPath} = globalImports[path];
 
 					const contents = `
-import '${getPathPrefix(type)}/${webContextPath}/__liferay__/exports/${getFlatName(path)}.js';
+import '${getPathPrefix(
+						type
+					)}/${webContextPath}/__liferay__/exports/${getFlatName(
+						path
+					)}.js';
 `;
 
 					return {

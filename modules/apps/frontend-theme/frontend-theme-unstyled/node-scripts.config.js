@@ -4,5 +4,5 @@
  */
 
 module.exports = {
-	npmscripts: {"bundler":{"ignore":["**/*"]}},
+	npmscripts: {bundler: {ignore: ['**/*']}},
 };

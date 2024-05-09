@@ -1,6 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import path from 'path';
 
-import { SRC_PATH } from '../../util/constants.mjs';
+import {SRC_PATH} from '../../util/constants.mjs';
 
 /**
  * This plugin transforms `import from` statements for .scss files into JavaScript code that inserts
@@ -15,9 +20,9 @@ export default function getScssLoaderPlugin(projectWebContextPath) {
 
 		setup(build) {
 			build.onLoad(
-				{ 
-					filter: /\.scss$/ 
-				}, 
+				{
+					filter: /\.scss$/,
+				},
 				async (args) => {
 					const projectPath = path.relative(SRC_PATH, args.path);
 

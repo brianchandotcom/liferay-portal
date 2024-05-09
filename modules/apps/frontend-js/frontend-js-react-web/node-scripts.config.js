@@ -11,7 +11,7 @@ module.exports = {
 		'react',
 		'react-dnd',
 		'react-dnd-html5-backend',
-		'react-dom'
+		'react-dom',
 	],
 	main: 'src/main/resources/META-INF/resources/js/index.ts',
 	npmscripts: {},

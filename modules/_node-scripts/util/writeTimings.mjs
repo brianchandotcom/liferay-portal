@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {constants} from 'fs';
 import * as fs from 'fs/promises';
 import * as path from 'path';
@@ -12,14 +17,16 @@ export default async function writeTimings(start, endConfig) {
 
 		const projectDir = path.relative(await getRootDir(), process.cwd());
 
-		const csvFilePath = path.join(LIFERAY_NPM_SCRIPTS_TIMING, `${projectDir}.csv`);
+		const csvFilePath = path.join(
+			LIFERAY_NPM_SCRIPTS_TIMING,
+			`${projectDir}.csv`
+		);
 
 		console.log(`Appending timing information to: ${csvFilePath}`);
 
 		try {
 			await fs.access(csvFilePath, constants.F_OK);
-		}
-		catch(error) {
+		} catch (error) {
 			if (error.code !== 'ENOENT') {
 				throw error;
 			}
@@ -29,10 +36,12 @@ export default async function writeTimings(start, endConfig) {
 		}
 
 		await fs.appendFile(
-			csvFilePath, 
-			`node-build,${start},${end},${end-start}\n` +
-			`node-build:config,${start},${endConfig},${endConfig-start}\n` +
-			`node-build:build,${endConfig},${end},${end-endConfig}\n`,
+			csvFilePath,
+			`node-build,${start},${end},${end - start}\n` +
+				`node-build:config,${start},${endConfig},${
+					endConfig - start
+				}\n` +
+				`node-build:build,${endConfig},${end},${end - endConfig}\n`,
 			'utf-8'
 		);
 	}

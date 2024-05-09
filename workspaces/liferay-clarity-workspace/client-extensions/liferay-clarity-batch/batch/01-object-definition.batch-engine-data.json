@@ -285,9 +285,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Bank Address Line One"
+						"en_US": "Bank Address Line 1"
 					},
-					"name": "bankAddressLineOne",
+					"name": "bankAddressLine1",
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
@@ -298,9 +298,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Bank Address Line Two"
+						"en_US": "Bank Address Line 2"
 					},
-					"name": "bankAddressLineTwo",
+					"name": "bankAddressLine2",
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
@@ -389,9 +389,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Business Address Line One"
+						"en_US": "Business Address Line 1"
 					},
-					"name": "businessAddressLineOne",
+					"name": "businessAddressLine1",
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
@@ -402,9 +402,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Business Address Line Two"
+						"en_US": "Business Address Line 2"
 					},
-					"name": "businessAddressLineTwo",
+					"name": "businessAddressLine2",
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
@@ -847,9 +847,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Reference Address Line One"
+						"en_US": "Reference Address Line 1"
 					},
-					"name": "referenceAddressLineOne",
+					"name": "referenceAddressLine1",
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
@@ -860,9 +860,9 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Reference Address Line Two"
+						"en_US": "Reference Address Line 2"
 					},
-					"name": "referenceAddressLineTwo",
+					"name": "referenceAddressLine2",
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
@@ -946,7 +946,225 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "default"
+			"objectFolderExternalReferenceCode": "default",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Application Layout"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Application"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "General Details"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "applicantName",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "applicantEmail",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "productsOfInterest",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "distributionRegions",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "orderTypesOfInterest",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "productLabel",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "annualPurchaseVolume",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "comments",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "applicationState",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Contact Information"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "primaryContactName",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "primaryContactTitle",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "primaryContactEmail",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "primaryContactPhoneNumber",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Business Details"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessName",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessType",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessWebsite",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessPhoneNumber",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessEstablishedDate",
+													"priority": 0,
+													"size": 4
+												},
+												{
+													"objectFieldName": "businessEmployeeNumber",
+													"priority": 0,
+													"size": 4
+												},
+												{
+													"objectFieldName": "businessAnnualRevenueInUSD",
+													"priority": 0,
+													"size": 4
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "distributionChannels",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							]
+						}
+					]
+				}
+			]
 		}
 	]
 }

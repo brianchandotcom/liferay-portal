@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 
 import org.junit.Assert;
@@ -55,7 +56,7 @@ public class JSONWebServiceTest {
 				continue;
 			}
 
-			Assert.assertTrue(_hasAccessControlled(clazz));
+			Assert.assertTrue(_hasAnnotation(clazz, AccessControlled.class));
 		}
 	}
 
@@ -90,7 +91,7 @@ public class JSONWebServiceTest {
 			Class<?> clazz = _getTargetClass(
 				bundleContext.getService(serviceReference));
 
-			Assert.assertTrue(_hasJSONWebService(clazz));
+			Assert.assertTrue(_hasAnnotation(clazz, JSONWebService.class));
 		}
 	}
 
@@ -134,32 +135,16 @@ public class JSONWebServiceTest {
 		return service.getClass();
 	}
 
-	private boolean _hasAccessControlled(Class<?> clazz) {
+	private boolean _hasAnnotation(
+		Class<?> clazz, Class<? extends Annotation> annotation) {
+
 		while (clazz != null) {
-			if (clazz.isAnnotationPresent(AccessControlled.class)) {
+			if (clazz.isAnnotationPresent(annotation)) {
 				return true;
 			}
 
 			for (Class<?> iface : clazz.getInterfaces()) {
-				if (iface.isAnnotationPresent(AccessControlled.class)) {
-					return true;
-				}
-			}
-
-			clazz = clazz.getSuperclass();
-		}
-
-		return false;
-	}
-
-	private boolean _hasJSONWebService(Class<?> clazz) {
-		while (clazz != null) {
-			if (clazz.isAnnotationPresent(JSONWebService.class)) {
-				return true;
-			}
-
-			for (Class<?> iface : clazz.getInterfaces()) {
-				if (iface.isAnnotationPresent(JSONWebService.class)) {
+				if (iface.isAnnotationPresent(annotation)) {
 					return true;
 				}
 			}

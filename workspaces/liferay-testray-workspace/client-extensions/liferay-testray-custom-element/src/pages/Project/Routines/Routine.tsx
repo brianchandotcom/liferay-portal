@@ -113,7 +113,7 @@ const Routine = () => {
 							clickable: true,
 							key: 'gitHash',
 							render: (gitHash) =>
-								gitHash.includes('null') ? '-' : gitHash,
+								gitHash === 'null' || '' ? '-' : gitHash,
 							value: i18n.translate('git-hash'),
 						},
 						{

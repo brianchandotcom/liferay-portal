@@ -59,7 +59,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 						clickable: true,
 						key: 'build',
 						render: (build) =>
-							build?.gitHash.includes('null')
+							build?.gitHash === 'null' || ''
 								? '-'
 								: build?.gitHash,
 						value: i18n.translate('git-hash'),

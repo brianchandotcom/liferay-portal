@@ -885,6 +885,10 @@ public abstract class Base${schemaName}ResourceImpl
 			return null;
 		}
 
+		public String getResourceName() {
+			return "${schemaName}";
+		}
+
 		public String getVersion() {
 			return "${freeMarkerTool.getVersion(openAPIYAML)}";
 		}

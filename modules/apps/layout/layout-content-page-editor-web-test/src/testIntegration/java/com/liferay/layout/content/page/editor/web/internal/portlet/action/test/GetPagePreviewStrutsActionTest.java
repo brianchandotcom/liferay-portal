@@ -6,15 +6,8 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -36,9 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -130,43 +121,10 @@ public class GetPagePreviewStrutsActionTest {
 			StringPool.BLANK, type, false, privateLayout, StringPool.BLANK,
 			_serviceContext);
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				StringUtil.randomString(), StringUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
-				0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
-		long defaultSegmentsExperienceId =
+		_fragmentEntryLink = ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			null, layout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
-		_fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			defaultSegmentsExperienceId, layout.getPlid(),
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-			StringPool.BLANK, 0, null, fragmentEntry.getType(),
-			_serviceContext);
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(defaultSegmentsExperienceId));
-
-		layoutStructure.addFragmentStyledLayoutStructureItem(
-			_fragmentEntryLink.getFragmentEntryLinkId(),
-			layoutStructure.getMainItemId(), 0);
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), layout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				layout.getPlid()));
 
 		_themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)layout.getLayoutType());
@@ -225,12 +183,6 @@ public class GetPagePreviewStrutsActionTest {
 
 	private FragmentEntryLink _fragmentEntryLink;
 
-	@Inject
-	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Inject
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
 	@Inject(
 		filter = "component.name=com.liferay.layout.internal.struts.GetPagePreviewStrutsAction"
 	)
@@ -243,8 +195,7 @@ public class GetPagePreviewStrutsActionTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

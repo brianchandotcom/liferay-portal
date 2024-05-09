@@ -661,6 +661,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "scancodePipelines",
+					"key": "scancodePipelines",
+					"name": "Scancode Pipelines",
+					"name_i18n": {
+						"en-US": "Sanitize Language"
+					}
+				},
+				{
 					"externalReferenceCode": "subrepositoryPullRequest",
 					"key": "subrepositoryPullRequest",
 					"name": "Subrepository Pull Request",
@@ -682,6 +690,14 @@
 					"name": "Verification Node",
 					"name_i18n": {
 						"en-US": "Verification Node"
+					}
+				},
+				{
+					"externalReferenceCode": "verificationServersDaily",
+					"key": "verificationServersDaily",
+					"name": "Verification Servers Daily",
+					"name_i18n": {
+						"en-US": "Verification Servers Daily"
 					}
 				}
 			],

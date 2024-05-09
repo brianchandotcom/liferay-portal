@@ -41,6 +41,13 @@
 			"valueDescription": "Insert your Docker image filter here"
 		},
 		{
+			"externalReferenceCode": "dockerTag",
+			"key": "dockerTag",
+			"label": "Docker Tag",
+			"type": "string",
+			"valueDescription": "e.g. dxp:2024.q1.2 or portal:7.4.3.112-ga112"
+		},
+		{
 			"externalReferenceCode": "fileNames",
 			"key": "fileNames",
 			"label": "File Names",
@@ -110,6 +117,14 @@
 			"type": "url",
 			"valueDescription": "e.g. https://github.com/[user]/com-liferay-osb-asah-private/tree/[branch]",
 			"valueRegex": "https://github.com/[^/]+/com-liferay-osb-asah-private/tree/[^/]+"
+		},
+		{
+			"externalReferenceCode": "pipelineName",
+			"key": "pipelineName",
+			"label": "Pipeline Name",
+			"type": "string",
+			"valueDefault": "inspect_packages",
+			"valueDescription": "Insert your Pipeline name here"
 		},
 		{
 			"externalReferenceCode": "pluginName",
@@ -364,6 +379,13 @@
 			"type": "string",
 			"valueDescription": "e.g. 617eb3201c2ad33025bfe6a3989ba90c268431ba",
 			"valueRegex": "[a-f0-9]+"
+		},
+		{
+			"externalReferenceCode": "portalUserName",
+			"key": "portalUserName",
+			"label": "Portal User Name",
+			"type": "string",
+			"valueDescription": "e.g. liferay, brianchandotcom"
 		},
 		{
 			"externalReferenceCode": "poshiQuery",

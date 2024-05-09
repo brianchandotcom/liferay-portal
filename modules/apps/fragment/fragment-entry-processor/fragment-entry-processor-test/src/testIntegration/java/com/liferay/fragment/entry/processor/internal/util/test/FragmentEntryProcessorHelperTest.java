@@ -550,11 +550,10 @@ public class FragmentEntryProcessorHelperTest {
 	@FeatureFlags("LPD-11377")
 	@Test
 	public void testGetRepeatableFieldValue() throws Exception {
-		String ddmStructureContent = _readJSONFileToString(
-			"ddm_structure_with_repeatable_field.json");
-
 		DDMStructure ddmStructure = _addDDMStructure(
-			_group, ddmStructureContent);
+			_group,
+			_readJSONFileToString(
+				"ddm_structure_with_repeatable_field.json"));
 
 		JournalArticle journalArticle = _addJournalArticle(
 			ddmStructure,

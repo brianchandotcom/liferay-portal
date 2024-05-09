@@ -202,11 +202,6 @@ public class ClassNameLocalServiceImpl
 		return CompanyConstants.SYSTEM;
 	}
 
-	private static <S, T> Map<S, T> _getMap(Map<Long, Map<S, T>> map) {
-		return map.computeIfAbsent(
-			_getCompanyId(), companyId -> new ConcurrentHashMap<>());
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClassNameLocalServiceImpl.class);
 
@@ -274,6 +269,11 @@ public class ClassNameLocalServiceImpl
 
 					return classNames;
 				});
+		}
+
+		private static <S, T> Map<S, T> _getMap(Map<Long, Map<S, T>> map) {
+			return map.computeIfAbsent(
+				_getCompanyId(), companyId -> new ConcurrentHashMap<>());
 		}
 
 		private static Map<Long, Map<String, Long>> _classNameIdsMap =

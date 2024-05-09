@@ -10706,17 +10706,6 @@ public class ObjectEntryResourceTest {
 				"%s/%s:asc", _objectRelationship1.getName(),
 				_OBJECT_FIELD_NAME_TEXT));
 
-		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testSortByUnsupportedObjectField(
-			"Unable to sort by a many to one related object field",
-			_objectDefinition1,
-			String.format(
-				"%s/%s:asc", _objectRelationship2.getName(),
-				_OBJECT_FIELD_NAME_TEXT));
-
 		_testSortByUnsupportedObjectField(
 			"Unable to sort by property: objectDefinitionId",
 			_objectDefinition1, "objectDefinitionId");

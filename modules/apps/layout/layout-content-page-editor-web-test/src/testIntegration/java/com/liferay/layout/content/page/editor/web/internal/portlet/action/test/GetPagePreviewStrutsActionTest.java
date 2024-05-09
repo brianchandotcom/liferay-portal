@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -78,18 +79,7 @@ public class GetPagePreviewStrutsActionTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
-		_themeDisplay = new ThemeDisplay();
-
-		_themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		_themeDisplay.setLanguageId(
-			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
-		_themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		_themeDisplay.setRealUser(TestPropsValues.getUser());
-		_themeDisplay.setScopeGroupId(_group.getGroupId());
-		_themeDisplay.setSiteGroupId(_group.getGroupId());
-		_themeDisplay.setUser(TestPropsValues.getUser());
+		_setUpThemeDisplay();
 	}
 
 	@Test
@@ -168,9 +158,6 @@ public class GetPagePreviewStrutsActionTest {
 			null, layout,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
-
-		_themeDisplay.setLayoutTypePortlet(
-			(LayoutTypePortlet)layout.getLayoutType());
 	}
 
 	private void _assertContainsContent() throws Exception {
@@ -221,6 +208,29 @@ public class GetPagePreviewStrutsActionTest {
 			content, CoreMatchers.containsString("themeId=" + expectedThemeId));
 	}
 
+	private void _setUpThemeDisplay() throws Exception {
+		_themeDisplay = new ThemeDisplay();
+
+		_themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		_themeDisplay.setLanguageId(
+			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
+		_themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		_themeDisplay.setRealUser(TestPropsValues.getUser());
+		_themeDisplay.setScopeGroupId(_group.getGroupId());
+		_themeDisplay.setSiteGroupId(_group.getGroupId());
+		_themeDisplay.setUser(TestPropsValues.getUser());
+
+		Layout layout = _layoutLocalService.getLayout(
+			_layoutService.getControlPanelLayoutPlid());
+
+		_themeDisplay.setLayout(layout);
+		_themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)layout.getLayoutType());
+		_themeDisplay.setPlid(layout.getPlid());
+	}
+
 	private static final String[] _DEFAULT_THEME_IDS = {
 		PropsValues.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID,
 		PropsValues.DEFAULT_REGULAR_THEME_ID,
@@ -244,6 +254,9 @@ public class GetPagePreviewStrutsActionTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutService _layoutService;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

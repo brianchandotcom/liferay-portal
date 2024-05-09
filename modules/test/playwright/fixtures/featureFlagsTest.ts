@@ -12,7 +12,7 @@ export interface FeatureFlagsOptions {
 }
 
 export interface FeatureFlag {
-	readonly enabled: boolean;
+	readonly enabled?: boolean;
 	readonly key: string;
 }
 
@@ -67,10 +67,6 @@ function featureFlagsTest(options: FeatureFlagsOptions) {
 							key,
 						}
 					);
-
-					if (reply.error) {
-						throw new Error(reply.error);
-					}
 
 					const {result} = reply;
 
@@ -161,7 +157,7 @@ interface FeatureFlagResult {
 async function invokeServer<T>(
 	page: Page,
 	url: string,
-	partialBody: object
+	partialBody: FeatureFlag
 ): Promise<ServerReply<T>> {
 	return await page.evaluate(
 		async ({partialBody, url}) =>
@@ -173,20 +169,28 @@ async function invokeServer<T>(
 					}),
 					method: 'POST',
 				})
-					.then((response) => response.text())
-					.then((text) => {
-						const json = JSON.parse(text);
+					.then(async (response) => {
+						if (!response?.ok) {
+							if (response?.status === 404) {
+								reject(
+									`Feature flag "${partialBody.key}" is not available`
+								);
+							}
+							else if (response?.status === 500) {
+								reject('An unexpected error has occurred');
+							}
+							else {
+								reject(
+									`Unable to fetch feature flag "${partialBody.key}"`
+								);
+							}
+						}
 
-						if (json.error) {
-							resolve({
-								error: json.error,
-							});
-						}
-						else {
-							resolve({
-								result: json,
-							});
-						}
+						const json = JSON.parse(await response.text());
+
+						resolve({
+							result: json,
+						});
 					})
 					.catch(reject);
 			}),

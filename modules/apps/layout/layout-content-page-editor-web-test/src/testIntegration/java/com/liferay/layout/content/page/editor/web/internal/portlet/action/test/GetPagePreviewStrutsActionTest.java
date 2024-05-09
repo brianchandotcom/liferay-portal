@@ -14,11 +14,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,8 +29,10 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -92,34 +97,72 @@ public class GetPagePreviewStrutsActionTest {
 		_serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
-		_addLayout(false, LayoutConstants.TYPE_ASSET_DISPLAY);
+		_addLayout(_group, false, LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		_assertContainsContent();
 	}
 
 	@Test
 	public void testGetPagePreviewContentPage() throws Exception {
-		_addLayout(false, LayoutConstants.TYPE_CONTENT);
+		_addLayout(_group, false, LayoutConstants.TYPE_CONTENT);
 
 		_assertContainsContent();
 	}
 
 	@Test
+	public void testGetPagePreviewContentPageLayoutSetNoDefaultTheme()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		_addLayout(group, false, LayoutConstants.TYPE_CONTENT);
+
+		Theme theme = null;
+
+		for (Theme curTheme :
+				ThemeLocalServiceUtil.getThemes(
+					TestPropsValues.getCompanyId())) {
+
+			if (!ArrayUtil.contains(
+					_DEFAULT_THEME_IDS, curTheme.getThemeId())) {
+
+				theme = curTheme;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(theme);
+
+		_layoutSetLocalService.updateLookAndFeel(
+			group.getGroupId(), false, theme.getThemeId(), null, null);
+
+		_assertContainsContent(theme.getThemeId());
+	}
+
+	@Test
 	public void testGetPagePreviewPageTemplate() throws Exception {
-		_addLayout(true, LayoutConstants.TYPE_CONTENT);
+		_addLayout(_group, true, LayoutConstants.TYPE_CONTENT);
 
 		_assertContainsContent();
 	}
 
-	private void _addLayout(boolean privateLayout, String type)
+	private void _addLayout(Group group, boolean privateLayout, String type)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), privateLayout,
+			TestPropsValues.getUserId(), group.getGroupId(), privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, type, false, privateLayout, StringPool.BLANK,
-			_serviceContext);
+			serviceContext);
 
 		_fragmentEntryLink = ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			null, layout,
@@ -177,6 +220,14 @@ public class GetPagePreviewStrutsActionTest {
 		Assert.assertThat(
 			content, CoreMatchers.containsString("themeId=" + expectedThemeId));
 	}
+
+	private static final String[] _DEFAULT_THEME_IDS = {
+		PropsValues.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID,
+		PropsValues.DEFAULT_REGULAR_THEME_ID,
+		PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_THEME_ID,
+		PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_REGULAR_THEME_ID,
+		PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_REGULAR_THEME_ID
+	};
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

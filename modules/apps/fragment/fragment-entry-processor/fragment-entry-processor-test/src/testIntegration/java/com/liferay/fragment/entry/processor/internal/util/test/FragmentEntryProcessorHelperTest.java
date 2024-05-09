@@ -547,6 +547,60 @@ public class FragmentEntryProcessorHelperTest {
 				LocaleUtil.SPAIN));
 	}
 
+	@FeatureFlags("LPD-11377")
+	@Test
+	public void testGetRepeatableFieldValue() throws Exception {
+		String ddmStructureContent = _readJSONFileToString(
+			"ddm_structure_with_repeatable_field.json");
+
+		DDMStructure ddmStructure = _addDDMStructure(
+			_group, ddmStructureContent);
+
+		JournalArticle journalArticle = _addJournalArticle(
+			ddmStructure,
+			_readFileToString("dynamic_content_with_repeatable_field.xml"),
+			RandomTestUtil.randomString());
+
+		JSONObject jsonObject = JSONUtil.put(
+			"className", JournalArticle.class.getName()
+		).put(
+			"classNameId",
+			_portal.getClassNameId(JournalArticle.class.getName())
+		).put(
+			"classPK", journalArticle.getResourcePrimKey()
+		).put(
+			"fieldId", "DDMStructure_Text"
+		);
+
+		Assert.assertEquals(
+			"uno", _getFieldValue(jsonObject, LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"one",
+			_getFieldValue(
+				jsonObject.put(
+					"config", JSONUtil.put("iterationType", "first")),
+				LocaleUtil.US));
+
+		Assert.assertEquals(
+			"dos",
+			_getFieldValue(
+				jsonObject.put(
+					"config",
+					JSONUtil.put(
+						"iterationNumber", "2"
+					).put(
+						"iterationType", "iteration-number"
+					)),
+				LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			"three",
+			_getFieldValue(
+				jsonObject.put("config", JSONUtil.put("iterationType", "last")),
+				LocaleUtil.US));
+	}
+
 	private DDMStructure _addDDMStructure(Group group, String content)
 		throws Exception {
 

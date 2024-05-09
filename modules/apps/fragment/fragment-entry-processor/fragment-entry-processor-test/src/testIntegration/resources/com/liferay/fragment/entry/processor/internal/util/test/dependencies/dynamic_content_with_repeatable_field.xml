@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<root available-locales="es_ES,en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Text" index-type="keyword" instance-id="71Q2LrSL" name="Text" type="text">
+		<dynamic-content language-id="es_ES"><![CDATA[uno]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[one]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Text" index-type="keyword" instance-id="6kapjo4i" name="Text" type="text">
+		<dynamic-content language-id="es_ES"><![CDATA[dos]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[two]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Text" index-type="keyword" instance-id="ixru49gd" name="Text" type="text">
+		<dynamic-content language-id="es_ES"><![CDATA[tres]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[three]]></dynamic-content>
+	</dynamic-element>
+</root>

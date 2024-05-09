@@ -90,6 +90,7 @@ const TeamMemberInputs = ({
 			const emailExistsInOkta = await provisioningService.getUserInOkta(
 				invite?.email
 			);
+
 			if (!emailExistsInOkta) {
 				return isLiferayDomain(invite?.email);
 			}
@@ -149,7 +150,12 @@ const TeamMemberInputs = ({
 
 					return previousItem;
 				},
-				{partnerMemberRoles: {active: undefined, roles: []}}
+				{
+					partnerMemberRoles: {
+						active: undefined,
+						roles: []
+					}
+				}
 			)
 		);
 	}, [optionsFormatted, selectedAccountRoleName, setRadioOptions]);

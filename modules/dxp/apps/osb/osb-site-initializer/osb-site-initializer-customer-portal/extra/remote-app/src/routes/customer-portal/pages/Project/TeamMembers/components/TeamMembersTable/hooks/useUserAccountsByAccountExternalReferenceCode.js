@@ -8,7 +8,10 @@ import {useEffect, useMemo, useState} from 'react';
 import {associateContactRoleNameByEmailByProject} from '~/common/services/liferay/rest/raysource/LicenseKeys';
 import useSearchTerm from '../../../../../../../../common/hooks/useSearchTerm';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
-import getRaysourceContactRoleName from '../utils/getRaysourceContactRoleName';
+import {
+	getRaysourceContactRoleName,
+	getRaysourceContactRoleNameURLParameter,
+} from '../utils/getRaysourceContactRoleName';
 import useDeleteUserAccount from './useDeleteUserAccount';
 import useSupportSeatsCount from './useSupportSeatsCount';
 import useUpdateUserAccount from './useUpdateUserAccount';
@@ -103,8 +106,9 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 	});
 
 	const remove = (userAccount) => {
-		const contactRoleNames = userAccount.selectedAccountSummary.roleBriefs?.map(
-			(roleBrief) => getRaysourceContactRoleName(roleBrief.name)
+		const contactRoleNameURLParameters = userAccount.selectedAccountSummary.roleBriefs?.map(
+			(roleBrief) =>
+				getRaysourceContactRoleNameURLParameter(roleBrief.name)
 		);
 
 		deleteContactRoles({
@@ -117,7 +121,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 				}),
 			variables: {
 				contactEmail: userAccount.emailAddress,
-				contactRoleNames: contactRoleNames.join('&'),
+				contactRoleNames: contactRoleNameURLParameters.join('&'),
 				externalReferenceCode,
 			},
 		});
@@ -133,12 +137,13 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		associateUserAccountWithAccountRole,
 		setCurrentUserEditing
 	) => {
-		const newContactRoleName = getRaysourceContactRoleName(
+		const newContactRoleNameURLParameter = getRaysourceContactRoleNameURLParameter(
 			newAccountRoleItem.raysourceName
 		);
 
-		const currentContactRolesName = currentAccountRoles.map((roleBrief) =>
-			getRaysourceContactRoleName(roleBrief.name)
+		const currentContactRoleNameURLParameters = currentAccountRoles.map(
+			(roleBrief) =>
+				getRaysourceContactRoleNameURLParameter(roleBrief.name)
 		);
 
 		if (Array.isArray(newAccountRoleItem)) {
@@ -150,7 +155,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 
 			if (!hasConflictedRole) {
 				newAccountRoleItem.map((accountRole) => {
-					const newAccountRoleRaysourceName = getRaysourceContactRoleName(
+					const newAccountRoleRaysourceNameURLParameter = getRaysourceContactRoleNameURLParameter(
 						accountRole.raysourceName
 					);
 
@@ -172,7 +177,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 										}),
 									variables: {
 										contactEmail: userAccount.emailAddress,
-										contactRoleNames: currentContactRolesName.join(
+										contactRoleNames: currentContactRoleNameURLParameters.join(
 											'&'
 										),
 										externalReferenceCode,
@@ -181,7 +186,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 							}),
 						variables: {
 							contactEmail: userAccount.emailAddress,
-							contactRoleName: newAccountRoleRaysourceName,
+							contactRoleName: newAccountRoleRaysourceNameURLParameter,
 							externalReferenceCode,
 						},
 					});
@@ -205,8 +210,9 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 					}
 				);
 
-				const raysourceCurrentContactRolesName = nonConflictingCurrentAccountRoles.map(
-					(roleBrief) => getRaysourceContactRoleName(roleBrief.name)
+				const currentRaysourceContactRoleNameURLParameters = nonConflictingCurrentAccountRoles.map(
+					(roleBrief) =>
+						getRaysourceContactRoleNameURLParameter(roleBrief.name)
 				);
 
 				if (
@@ -214,7 +220,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 					nonConflictingCurrentAccountRoles.length
 				) {
 					nonConflictingNewAccountRoleItem.map((accountRole) => {
-						const nonNewAccountRoleRaysourceName = getRaysourceContactRoleName(
+						const oldAccountRoleRaysourceNameURLParameter = getRaysourceContactRoleNameURLParameter(
 							accountRole.raysourceName
 						);
 
@@ -238,7 +244,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 											variables: {
 												contactEmail:
 													userAccount.emailAddress,
-												contactRoleNames: raysourceCurrentContactRolesName.join(
+												contactRoleNames: currentRaysourceContactRoleNameURLParameters.join(
 													'&'
 												),
 												externalReferenceCode,
@@ -248,7 +254,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 								),
 							variables: {
 								contactEmail: userAccount.emailAddress,
-								contactRoleName: nonNewAccountRoleRaysourceName,
+								contactRoleName: oldAccountRoleRaysourceNameURLParameter,
 								externalReferenceCode,
 							},
 						});
@@ -277,7 +283,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 										}),
 									variables: {
 										contactEmail: userAccount.emailAddress,
-										contactRoleNames: raysourceCurrentContactRolesName.join(
+										contactRoleNames: currentRaysourceContactRoleNameURLParameters.join(
 											'&'
 										),
 										externalReferenceCode,
@@ -303,10 +309,8 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 								displaySuccess: true,
 							};
 
-							const isNewTeamMembersRoleTableAssociated = true;
-							const nonNewAccountRoleRaysourceName = getRaysourceContactRoleName(
-								accountRole.raysourceName,
-								isNewTeamMembersRoleTableAssociated
+							const oldAccountRoleRaysourceName = getRaysourceContactRoleName(
+								accountRole.raysourceName
 							);
 
 							await associateContactRoleNameByEmailByProject({
@@ -315,7 +319,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 								firstName,
 								lastName,
 								provisioningServerAPI,
-								roleName: nonNewAccountRoleRaysourceName,
+								roleName: oldAccountRoleRaysourceName,
 								sessionId,
 							});
 
@@ -357,7 +361,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 								}),
 							variables: {
 								contactEmail: userAccount.emailAddress,
-								contactRoleNames: currentContactRolesName.join(
+								contactRoleNames: currentContactRoleNameURLParameters.join(
 									'&'
 								),
 								externalReferenceCode,
@@ -366,7 +370,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 					}),
 				variables: {
 					contactEmail: userAccount.emailAddress,
-					contactRoleName: newContactRoleName,
+					contactRoleName: newContactRoleNameURLParameter,
 					externalReferenceCode,
 				},
 			});

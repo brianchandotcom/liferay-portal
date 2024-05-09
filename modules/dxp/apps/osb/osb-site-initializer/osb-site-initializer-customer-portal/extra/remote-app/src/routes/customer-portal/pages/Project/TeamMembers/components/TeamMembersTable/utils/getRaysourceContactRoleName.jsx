@@ -3,21 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const RAYSOURCE_ROLE_NAMES = {
+const RAYSOURCE_ROLE_NAMES_MAP = {
 	Administrator: 'Support Administrator',
 	Requester: 'Support Requester',
 	User: 'Support User',
 };
 
-export default function getRaysourceContactRoleName(
-	roleName,
-	isNewTeamMembersRoleTableAssociated
+export function getRaysourceContactRoleName(
+	roleName
 ) {
-	const raySourceRoleName = RAYSOURCE_ROLE_NAMES[roleName] || roleName;
+	return RAYSOURCE_ROLE_NAMES_MAP[roleName] || roleName;
+}
 
-	if (isNewTeamMembersRoleTableAssociated) {
-		return raySourceRoleName;
-	}
+export function getRaysourceContactRoleNameURLParameter(
+	roleName
+) {
+	const raySourceRoleName = RAYSOURCE_ROLE_NAMES_MAP[roleName] || roleName;
 
 	return `contactRoleNames=${raySourceRoleName}`;
 }

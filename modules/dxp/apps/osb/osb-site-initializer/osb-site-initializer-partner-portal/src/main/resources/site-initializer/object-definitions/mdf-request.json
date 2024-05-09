@@ -7,6 +7,28 @@
 		"en_US": "MDF Request"
 	},
 	"name": "MDFRequest",
+	"objectActions": [
+		{
+			"active": true,
+			"errorMessage": {
+			},
+			"externalReferenceCode": "MDF-REQUEST-STATUS-MANAGEMENT-ACTION",
+			"label": {
+				"en_US": "MDF Request Status Management"
+			},
+			"name": "mdfRequestStatusManagement",
+			"objectActionExecutorKey": "function#liferay-partner-etc-spring-boot-object-action-mdf-request-status-management",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+			},
+			"status": {
+				"code": 1,
+				"label": "success",
+				"label_i18n": "Success"
+			},
+			"system": false
+		}
+	],
 	"objectFields": [
 		{
 			"DBType": "String",

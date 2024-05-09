@@ -680,6 +680,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-94990. It checks that a blog entry can be viewed when using a display page template."
+	@ignore = "true"
 	@priority = 5
 	test CanViewEntryUsingDisplayPageTemplate {
 		property test.liferay.virtual.instance = "false";

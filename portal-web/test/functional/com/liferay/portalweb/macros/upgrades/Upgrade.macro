@@ -9,7 +9,7 @@ definition {
 		Portlet.startServer(deleteLiferayHome = "false");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 

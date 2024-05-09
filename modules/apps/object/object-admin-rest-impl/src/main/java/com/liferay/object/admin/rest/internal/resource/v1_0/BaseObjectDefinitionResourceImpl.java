@@ -836,6 +836,10 @@ public abstract class BaseObjectDefinitionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectDefinition";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

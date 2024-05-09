@@ -616,6 +616,10 @@ public abstract class BaseOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OrderType";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

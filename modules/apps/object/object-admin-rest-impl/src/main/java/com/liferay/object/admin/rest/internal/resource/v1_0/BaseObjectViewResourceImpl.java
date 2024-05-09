@@ -673,6 +673,10 @@ public abstract class BaseObjectViewResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectView";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -832,6 +832,10 @@ public abstract class BaseNotificationTemplateResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "NotificationTemplate";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

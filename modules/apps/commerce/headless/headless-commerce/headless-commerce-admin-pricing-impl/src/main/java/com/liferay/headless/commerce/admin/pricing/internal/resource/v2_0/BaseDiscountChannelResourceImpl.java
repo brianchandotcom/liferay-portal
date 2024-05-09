@@ -442,6 +442,10 @@ public abstract class BaseDiscountChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountChannel";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

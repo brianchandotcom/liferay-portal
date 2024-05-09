@@ -713,6 +713,10 @@ public abstract class BaseCountryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Country";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

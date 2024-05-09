@@ -645,6 +645,10 @@ public abstract class BaseReplenishmentItemResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ReplenishmentItem";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

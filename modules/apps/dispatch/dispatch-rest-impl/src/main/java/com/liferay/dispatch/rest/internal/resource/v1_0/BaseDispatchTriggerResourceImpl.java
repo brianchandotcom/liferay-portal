@@ -319,6 +319,10 @@ public abstract class BaseDispatchTriggerResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DispatchTrigger";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

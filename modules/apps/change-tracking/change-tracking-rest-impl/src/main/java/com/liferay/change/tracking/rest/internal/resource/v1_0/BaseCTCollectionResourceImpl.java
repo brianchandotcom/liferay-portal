@@ -934,6 +934,10 @@ public abstract class BaseCTCollectionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "CTCollection";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

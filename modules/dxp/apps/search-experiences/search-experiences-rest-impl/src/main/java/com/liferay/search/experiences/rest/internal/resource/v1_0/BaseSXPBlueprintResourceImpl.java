@@ -792,6 +792,10 @@ public abstract class BaseSXPBlueprintResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SXPBlueprint";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

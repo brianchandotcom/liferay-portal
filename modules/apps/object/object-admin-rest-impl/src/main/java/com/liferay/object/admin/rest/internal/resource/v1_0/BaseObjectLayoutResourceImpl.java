@@ -643,6 +643,10 @@ public abstract class BaseObjectLayoutResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectLayout";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -881,6 +881,10 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "MessageBoardAttachment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

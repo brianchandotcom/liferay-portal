@@ -428,6 +428,10 @@ public abstract class BaseDiscountSkuResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountSku";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

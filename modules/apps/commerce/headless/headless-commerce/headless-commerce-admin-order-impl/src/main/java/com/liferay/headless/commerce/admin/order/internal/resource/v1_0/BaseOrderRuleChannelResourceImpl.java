@@ -443,6 +443,10 @@ public abstract class BaseOrderRuleChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OrderRuleChannel";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

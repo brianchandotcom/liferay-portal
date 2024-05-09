@@ -396,6 +396,10 @@ public abstract class BaseChannelAccountResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ChannelAccount";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

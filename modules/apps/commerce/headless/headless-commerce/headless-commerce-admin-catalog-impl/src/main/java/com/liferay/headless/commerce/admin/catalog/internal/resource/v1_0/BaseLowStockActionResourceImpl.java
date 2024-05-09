@@ -195,6 +195,10 @@ public abstract class BaseLowStockActionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "LowStockAction";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -549,6 +549,10 @@ public abstract class BaseCTRemoteResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "CTRemote";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -428,6 +428,10 @@ public abstract class BaseDiscountCategoryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountCategory";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

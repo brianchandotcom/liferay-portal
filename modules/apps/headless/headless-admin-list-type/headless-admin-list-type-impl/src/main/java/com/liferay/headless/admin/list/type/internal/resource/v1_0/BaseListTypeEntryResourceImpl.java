@@ -698,6 +698,10 @@ public abstract class BaseListTypeEntryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ListTypeEntry";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

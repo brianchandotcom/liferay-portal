@@ -190,6 +190,10 @@ public abstract class BaseSearchResultResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SearchResult";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -460,6 +460,10 @@ public abstract class BasePinResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Pin";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -442,6 +442,10 @@ public abstract class BaseDiscountProductResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountProduct";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

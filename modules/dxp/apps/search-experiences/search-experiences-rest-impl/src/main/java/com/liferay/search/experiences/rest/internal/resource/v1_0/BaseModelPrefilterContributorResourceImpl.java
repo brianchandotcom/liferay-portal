@@ -199,6 +199,10 @@ public abstract class BaseModelPrefilterContributorResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ModelPrefilterContributor";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

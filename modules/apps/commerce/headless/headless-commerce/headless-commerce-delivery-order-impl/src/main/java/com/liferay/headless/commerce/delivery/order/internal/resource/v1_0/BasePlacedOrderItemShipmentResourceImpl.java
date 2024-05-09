@@ -267,6 +267,10 @@ public abstract class BasePlacedOrderItemShipmentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PlacedOrderItemShipment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

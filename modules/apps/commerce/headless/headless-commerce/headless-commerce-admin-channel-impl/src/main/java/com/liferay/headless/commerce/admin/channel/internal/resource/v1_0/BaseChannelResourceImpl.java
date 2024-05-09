@@ -799,6 +799,10 @@ public abstract class BaseChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Channel";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -201,6 +201,10 @@ public abstract class BaseCTEntryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "CTEntry";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

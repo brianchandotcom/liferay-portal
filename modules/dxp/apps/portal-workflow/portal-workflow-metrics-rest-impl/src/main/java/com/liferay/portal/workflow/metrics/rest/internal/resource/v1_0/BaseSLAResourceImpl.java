@@ -544,6 +544,10 @@ public abstract class BaseSLAResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SLA";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

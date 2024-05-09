@@ -173,6 +173,10 @@ public abstract class BaseSkuForecastResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SkuForecast";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

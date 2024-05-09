@@ -438,6 +438,10 @@ public abstract class BaseOrderTypeChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OrderTypeChannel";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

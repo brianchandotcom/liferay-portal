@@ -782,6 +782,10 @@ public abstract class BaseObjectFieldResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectField";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

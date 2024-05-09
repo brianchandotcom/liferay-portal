@@ -577,6 +577,10 @@ public abstract class BaseTierPriceResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TierPrice";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

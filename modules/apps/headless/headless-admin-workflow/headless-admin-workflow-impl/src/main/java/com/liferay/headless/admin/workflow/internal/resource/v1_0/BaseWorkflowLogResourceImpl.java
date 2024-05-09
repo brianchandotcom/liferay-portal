@@ -391,6 +391,10 @@ public abstract class BaseWorkflowLogResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WorkflowLog";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

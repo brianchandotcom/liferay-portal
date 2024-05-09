@@ -199,6 +199,10 @@ public abstract class BaseKeywordQueryContributorResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "KeywordQueryContributor";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

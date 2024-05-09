@@ -435,6 +435,10 @@ public abstract class BaseOrderRuleAccountResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OrderRuleAccount";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -255,6 +255,10 @@ public abstract class BasePaymentMethodResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PaymentMethod";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

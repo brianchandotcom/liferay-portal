@@ -703,6 +703,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ListTypeDefinition";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

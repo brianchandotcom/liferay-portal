@@ -728,6 +728,10 @@ public abstract class BaseObjectActionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectAction";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -349,6 +349,10 @@ public abstract class BaseDiagramResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Diagram";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

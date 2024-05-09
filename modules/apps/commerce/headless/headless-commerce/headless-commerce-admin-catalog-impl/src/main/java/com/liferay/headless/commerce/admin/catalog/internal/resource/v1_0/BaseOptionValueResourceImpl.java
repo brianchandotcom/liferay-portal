@@ -601,6 +601,10 @@ public abstract class BaseOptionValueResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OptionValue";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

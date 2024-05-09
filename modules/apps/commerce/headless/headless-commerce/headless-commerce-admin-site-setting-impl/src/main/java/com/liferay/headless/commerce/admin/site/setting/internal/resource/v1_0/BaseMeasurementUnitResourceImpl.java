@@ -711,6 +711,10 @@ public abstract class BaseMeasurementUnitResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "MeasurementUnit";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

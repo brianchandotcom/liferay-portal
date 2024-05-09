@@ -434,6 +434,10 @@ public abstract class BaseDSEnvelopeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DSEnvelope";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

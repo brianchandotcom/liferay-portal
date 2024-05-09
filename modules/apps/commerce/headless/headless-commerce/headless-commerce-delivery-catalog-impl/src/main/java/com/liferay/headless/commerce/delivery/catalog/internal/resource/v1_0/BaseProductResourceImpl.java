@@ -222,6 +222,10 @@ public abstract class BaseProductResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Product";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -687,6 +687,10 @@ public abstract class BaseWarehouseItemResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WarehouseItem";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

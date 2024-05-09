@@ -426,6 +426,10 @@ public abstract class BasePriceListOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceListOrderType";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

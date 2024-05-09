@@ -426,6 +426,10 @@ public abstract class BasePriceListDiscountResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceListDiscount";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

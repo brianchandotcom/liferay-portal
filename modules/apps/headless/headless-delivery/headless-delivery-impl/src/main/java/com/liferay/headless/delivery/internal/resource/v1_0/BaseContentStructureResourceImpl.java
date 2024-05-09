@@ -910,6 +910,10 @@ public abstract class BaseContentStructureResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ContentStructure";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -159,6 +159,10 @@ public abstract class BaseMLModelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "MLModel";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

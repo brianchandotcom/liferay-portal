@@ -1891,6 +1891,10 @@ public abstract class BaseCommentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Comment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

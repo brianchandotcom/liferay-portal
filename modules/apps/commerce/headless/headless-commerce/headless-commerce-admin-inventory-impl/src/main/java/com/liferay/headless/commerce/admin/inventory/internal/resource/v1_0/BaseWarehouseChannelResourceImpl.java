@@ -444,6 +444,10 @@ public abstract class BaseWarehouseChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WarehouseChannel";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

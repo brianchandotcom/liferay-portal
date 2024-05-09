@@ -434,6 +434,10 @@ public abstract class BaseOrderRuleOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OrderRuleOrderType";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

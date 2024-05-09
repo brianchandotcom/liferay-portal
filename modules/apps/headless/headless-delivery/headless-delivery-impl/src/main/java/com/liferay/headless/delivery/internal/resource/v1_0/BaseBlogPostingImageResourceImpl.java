@@ -538,6 +538,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "BlogPostingImage";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

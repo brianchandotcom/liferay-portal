@@ -189,6 +189,10 @@ public abstract class BaseSearchIndexResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SearchIndex";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

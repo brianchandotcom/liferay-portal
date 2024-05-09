@@ -434,6 +434,10 @@ public abstract class BaseWishListResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WishList";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

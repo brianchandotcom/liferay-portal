@@ -1192,6 +1192,10 @@ public abstract class BaseKeywordResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Keyword";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

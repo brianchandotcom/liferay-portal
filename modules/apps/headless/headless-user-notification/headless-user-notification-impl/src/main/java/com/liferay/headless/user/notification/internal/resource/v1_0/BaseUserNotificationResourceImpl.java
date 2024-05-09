@@ -365,6 +365,10 @@ public abstract class BaseUserNotificationResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "UserNotification";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

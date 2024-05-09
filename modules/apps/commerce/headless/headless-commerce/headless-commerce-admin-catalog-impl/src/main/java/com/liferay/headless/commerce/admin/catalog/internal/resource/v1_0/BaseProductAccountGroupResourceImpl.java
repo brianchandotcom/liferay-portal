@@ -312,6 +312,10 @@ public abstract class BaseProductAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ProductAccountGroup";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

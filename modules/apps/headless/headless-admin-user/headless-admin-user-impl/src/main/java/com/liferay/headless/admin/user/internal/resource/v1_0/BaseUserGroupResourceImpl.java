@@ -832,6 +832,10 @@ public abstract class BaseUserGroupResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "UserGroup";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

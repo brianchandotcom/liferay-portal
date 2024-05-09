@@ -299,6 +299,10 @@ public abstract class BasePaymentMethodGroupRelTermResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PaymentMethodGroupRelTerm";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

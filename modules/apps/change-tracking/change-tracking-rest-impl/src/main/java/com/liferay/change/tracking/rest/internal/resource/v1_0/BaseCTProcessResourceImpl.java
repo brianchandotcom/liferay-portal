@@ -322,6 +322,10 @@ public abstract class BaseCTProcessResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "CTProcess";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

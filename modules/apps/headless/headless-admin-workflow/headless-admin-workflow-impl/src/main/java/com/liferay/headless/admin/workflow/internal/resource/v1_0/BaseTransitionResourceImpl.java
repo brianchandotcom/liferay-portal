@@ -190,6 +190,10 @@ public abstract class BaseTransitionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Transition";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

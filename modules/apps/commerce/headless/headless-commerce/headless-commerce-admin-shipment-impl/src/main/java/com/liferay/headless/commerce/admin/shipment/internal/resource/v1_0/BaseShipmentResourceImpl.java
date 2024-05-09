@@ -862,6 +862,10 @@ public abstract class BaseShipmentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Shipment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

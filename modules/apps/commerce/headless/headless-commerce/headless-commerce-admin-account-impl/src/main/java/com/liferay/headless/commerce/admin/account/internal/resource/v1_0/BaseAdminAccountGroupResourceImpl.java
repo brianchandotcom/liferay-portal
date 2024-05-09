@@ -475,6 +475,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AdminAccountGroup";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -641,6 +641,10 @@ public abstract class BaseObjectFolderResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectFolder";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

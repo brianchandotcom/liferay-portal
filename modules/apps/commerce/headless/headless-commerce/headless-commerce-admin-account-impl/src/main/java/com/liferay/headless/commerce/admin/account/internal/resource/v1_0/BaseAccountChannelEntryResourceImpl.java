@@ -2468,6 +2468,10 @@ public abstract class BaseAccountChannelEntryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountChannelEntry";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

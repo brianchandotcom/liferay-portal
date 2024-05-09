@@ -652,6 +652,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "KnowledgeBaseAttachment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

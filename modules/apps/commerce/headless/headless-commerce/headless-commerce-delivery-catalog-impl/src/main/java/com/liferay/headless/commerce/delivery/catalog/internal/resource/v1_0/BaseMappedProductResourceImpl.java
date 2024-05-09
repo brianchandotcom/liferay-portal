@@ -180,6 +180,10 @@ public abstract class BaseMappedProductResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "MappedProduct";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

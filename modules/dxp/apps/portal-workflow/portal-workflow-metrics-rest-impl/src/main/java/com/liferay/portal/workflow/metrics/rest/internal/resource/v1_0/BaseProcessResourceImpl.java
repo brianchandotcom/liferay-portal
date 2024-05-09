@@ -407,6 +407,10 @@ public abstract class BaseProcessResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Process";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

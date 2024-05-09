@@ -695,6 +695,10 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WorkflowDefinition";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

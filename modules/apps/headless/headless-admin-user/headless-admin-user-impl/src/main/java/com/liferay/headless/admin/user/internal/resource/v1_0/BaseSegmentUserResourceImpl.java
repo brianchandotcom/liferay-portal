@@ -152,6 +152,10 @@ public abstract class BaseSegmentUserResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SegmentUser";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

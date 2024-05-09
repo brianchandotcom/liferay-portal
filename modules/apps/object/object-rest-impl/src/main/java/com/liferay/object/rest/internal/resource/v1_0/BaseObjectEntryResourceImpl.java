@@ -1299,6 +1299,10 @@ public abstract class BaseObjectEntryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectEntry";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

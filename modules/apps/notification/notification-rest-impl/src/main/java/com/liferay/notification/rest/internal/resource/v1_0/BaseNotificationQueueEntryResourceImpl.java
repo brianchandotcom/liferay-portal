@@ -505,6 +505,10 @@ public abstract class BaseNotificationQueueEntryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "NotificationQueueEntry";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

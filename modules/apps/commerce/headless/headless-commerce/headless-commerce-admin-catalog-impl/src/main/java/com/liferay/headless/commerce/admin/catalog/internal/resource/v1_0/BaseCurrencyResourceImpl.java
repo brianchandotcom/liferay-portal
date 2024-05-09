@@ -458,6 +458,10 @@ public abstract class BaseCurrencyResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Currency";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

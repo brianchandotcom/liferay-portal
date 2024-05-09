@@ -360,6 +360,10 @@ public abstract class BasePlacedOrderResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PlacedOrder";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

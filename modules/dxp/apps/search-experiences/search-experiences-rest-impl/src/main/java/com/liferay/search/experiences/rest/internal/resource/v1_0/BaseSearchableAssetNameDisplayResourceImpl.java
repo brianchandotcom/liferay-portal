@@ -145,6 +145,10 @@ public abstract class BaseSearchableAssetNameDisplayResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SearchableAssetNameDisplay";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

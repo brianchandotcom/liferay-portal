@@ -377,6 +377,10 @@ public abstract class BaseAccountAddressChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountAddressChannel";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

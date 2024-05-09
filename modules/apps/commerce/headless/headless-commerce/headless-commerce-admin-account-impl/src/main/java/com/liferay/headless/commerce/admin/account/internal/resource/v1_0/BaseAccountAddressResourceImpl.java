@@ -755,6 +755,10 @@ public abstract class BaseAccountAddressResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountAddress";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

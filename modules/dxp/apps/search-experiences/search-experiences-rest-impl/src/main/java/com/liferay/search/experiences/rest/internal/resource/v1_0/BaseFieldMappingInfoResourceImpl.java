@@ -241,6 +241,10 @@ public abstract class BaseFieldMappingInfoResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "FieldMappingInfo";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

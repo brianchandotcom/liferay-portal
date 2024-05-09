@@ -206,6 +206,10 @@ public abstract class BaseSubscriptionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Subscription";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

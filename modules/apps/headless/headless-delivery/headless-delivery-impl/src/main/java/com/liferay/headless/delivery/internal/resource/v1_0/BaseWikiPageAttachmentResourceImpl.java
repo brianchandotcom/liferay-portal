@@ -606,6 +606,10 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WikiPageAttachment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

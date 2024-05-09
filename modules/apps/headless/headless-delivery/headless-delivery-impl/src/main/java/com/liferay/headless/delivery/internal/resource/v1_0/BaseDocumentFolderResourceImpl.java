@@ -1932,6 +1932,10 @@ public abstract class BaseDocumentFolderResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DocumentFolder";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

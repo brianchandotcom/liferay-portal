@@ -432,6 +432,10 @@ public abstract class BaseTermOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TermOrderType";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

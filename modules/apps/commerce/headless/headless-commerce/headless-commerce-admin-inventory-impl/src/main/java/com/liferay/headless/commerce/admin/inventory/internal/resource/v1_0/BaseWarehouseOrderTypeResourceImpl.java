@@ -445,6 +445,10 @@ public abstract class BaseWarehouseOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WarehouseOrderType";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

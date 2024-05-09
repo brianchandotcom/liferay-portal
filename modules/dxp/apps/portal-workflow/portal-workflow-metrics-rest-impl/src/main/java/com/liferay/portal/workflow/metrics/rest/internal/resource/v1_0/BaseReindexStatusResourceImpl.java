@@ -192,6 +192,10 @@ public abstract class BaseReindexStatusResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ReindexStatus";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

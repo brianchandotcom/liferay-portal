@@ -149,6 +149,10 @@ public abstract class BaseAssigneeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Assignee";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

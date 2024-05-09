@@ -873,6 +873,10 @@ public abstract class BaseWorkflowTaskResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WorkflowTask";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

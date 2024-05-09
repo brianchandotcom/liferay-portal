@@ -304,6 +304,10 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PaymentMethodGroupRelOrderType";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -1006,6 +1006,10 @@ public abstract class BaseAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountGroup";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

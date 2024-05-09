@@ -262,6 +262,10 @@ public abstract class BaseFormStructureResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "FormStructure";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -299,6 +299,10 @@ public abstract class BaseShippingFixedOptionTermResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ShippingFixedOptionTerm";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

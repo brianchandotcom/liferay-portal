@@ -187,6 +187,10 @@ public abstract class BaseTimeRangeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TimeRange";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

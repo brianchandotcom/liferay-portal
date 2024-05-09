@@ -488,6 +488,10 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SkuUnitOfMeasure";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

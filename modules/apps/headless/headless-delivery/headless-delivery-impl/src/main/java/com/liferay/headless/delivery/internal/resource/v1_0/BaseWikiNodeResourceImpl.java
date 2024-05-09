@@ -1068,6 +1068,10 @@ public abstract class BaseWikiNodeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WikiNode";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

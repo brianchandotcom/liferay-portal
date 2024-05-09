@@ -222,6 +222,10 @@ public abstract class BaseRoleResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Role";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

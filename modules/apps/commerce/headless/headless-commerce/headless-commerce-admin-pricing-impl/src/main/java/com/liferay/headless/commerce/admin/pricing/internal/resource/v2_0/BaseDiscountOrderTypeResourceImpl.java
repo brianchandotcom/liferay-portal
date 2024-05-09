@@ -443,6 +443,10 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountOrderType";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

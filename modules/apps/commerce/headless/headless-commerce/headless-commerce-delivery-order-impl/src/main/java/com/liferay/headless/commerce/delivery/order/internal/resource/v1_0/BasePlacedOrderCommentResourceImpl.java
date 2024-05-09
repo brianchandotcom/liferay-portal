@@ -336,6 +336,10 @@ public abstract class BasePlacedOrderCommentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PlacedOrderComment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

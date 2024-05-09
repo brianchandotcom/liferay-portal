@@ -388,6 +388,10 @@ public abstract class BaseProductSpecificationResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ProductSpecification";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

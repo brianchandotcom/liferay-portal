@@ -687,6 +687,10 @@ public abstract class BaseSitePageResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SitePage";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

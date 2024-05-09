@@ -554,6 +554,10 @@ public abstract class BasePriceListResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceList";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

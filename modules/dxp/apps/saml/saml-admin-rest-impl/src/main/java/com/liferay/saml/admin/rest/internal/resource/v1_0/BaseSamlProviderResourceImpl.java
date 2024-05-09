@@ -248,6 +248,10 @@ public abstract class BaseSamlProviderResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SamlProvider";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -551,6 +551,10 @@ public abstract class BaseWebUrlResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WebUrl";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

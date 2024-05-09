@@ -551,6 +551,10 @@ public abstract class BasePhoneResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Phone";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

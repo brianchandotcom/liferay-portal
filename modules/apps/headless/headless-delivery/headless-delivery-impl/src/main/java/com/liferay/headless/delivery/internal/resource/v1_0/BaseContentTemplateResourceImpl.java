@@ -495,6 +495,10 @@ public abstract class BaseContentTemplateResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ContentTemplate";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

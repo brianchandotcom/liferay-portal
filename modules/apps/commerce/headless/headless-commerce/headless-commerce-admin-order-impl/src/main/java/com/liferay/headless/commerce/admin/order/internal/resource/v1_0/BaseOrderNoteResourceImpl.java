@@ -577,6 +577,10 @@ public abstract class BaseOrderNoteResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OrderNote";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

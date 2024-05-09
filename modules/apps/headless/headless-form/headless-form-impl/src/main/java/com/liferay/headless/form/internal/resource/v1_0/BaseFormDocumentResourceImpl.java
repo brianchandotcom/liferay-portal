@@ -220,6 +220,10 @@ public abstract class BaseFormDocumentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "FormDocument";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

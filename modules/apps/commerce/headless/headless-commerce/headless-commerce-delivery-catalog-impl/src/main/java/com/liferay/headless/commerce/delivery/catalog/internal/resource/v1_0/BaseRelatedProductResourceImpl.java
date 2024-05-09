@@ -171,6 +171,10 @@ public abstract class BaseRelatedProductResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "RelatedProduct";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

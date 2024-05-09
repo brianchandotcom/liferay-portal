@@ -150,6 +150,10 @@ public abstract class BaseLinkedProductResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "LinkedProduct";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -734,6 +734,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectRelationship";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

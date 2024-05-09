@@ -1219,6 +1219,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TaxonomyCategory";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -405,6 +405,10 @@ public abstract class BasePlacedOrderItemResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PlacedOrderItem";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -776,6 +776,10 @@ public abstract class BaseRegionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Region";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

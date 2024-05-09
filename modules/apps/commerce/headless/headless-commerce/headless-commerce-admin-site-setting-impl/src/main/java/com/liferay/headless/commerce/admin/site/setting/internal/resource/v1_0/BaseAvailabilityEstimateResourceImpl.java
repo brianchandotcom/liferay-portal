@@ -402,6 +402,10 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AvailabilityEstimate";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

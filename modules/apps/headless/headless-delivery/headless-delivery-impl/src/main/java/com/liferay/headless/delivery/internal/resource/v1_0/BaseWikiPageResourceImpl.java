@@ -1027,6 +1027,10 @@ public abstract class BaseWikiPageResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "WikiPage";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

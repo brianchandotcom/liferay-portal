@@ -549,6 +549,10 @@ public abstract class BaseTermResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Term";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

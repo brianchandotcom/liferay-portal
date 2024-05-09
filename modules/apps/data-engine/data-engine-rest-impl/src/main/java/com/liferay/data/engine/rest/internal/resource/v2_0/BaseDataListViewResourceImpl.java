@@ -576,6 +576,10 @@ public abstract class BaseDataListViewResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DataListView";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

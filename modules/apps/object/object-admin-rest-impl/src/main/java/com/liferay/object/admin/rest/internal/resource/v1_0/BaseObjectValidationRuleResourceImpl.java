@@ -794,6 +794,10 @@ public abstract class BaseObjectValidationRuleResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ObjectValidationRule";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

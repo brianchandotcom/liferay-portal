@@ -303,6 +303,10 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ShippingFixedOptionOrderType";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -2691,6 +2691,10 @@ public abstract class BaseStructuredContentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "StructuredContent";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

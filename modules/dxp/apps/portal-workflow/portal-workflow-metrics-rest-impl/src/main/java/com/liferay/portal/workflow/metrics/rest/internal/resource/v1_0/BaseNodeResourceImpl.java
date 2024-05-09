@@ -360,6 +360,10 @@ public abstract class BaseNodeResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Node";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

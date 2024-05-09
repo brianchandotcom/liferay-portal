@@ -470,6 +470,10 @@ public abstract class BaseOptionCategoryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OptionCategory";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -1194,6 +1194,10 @@ public abstract class BaseAccountResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Account";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

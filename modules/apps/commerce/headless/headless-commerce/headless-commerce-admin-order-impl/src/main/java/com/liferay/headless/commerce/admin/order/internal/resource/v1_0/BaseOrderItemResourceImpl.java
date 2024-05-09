@@ -857,6 +857,10 @@ public abstract class BaseOrderItemResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "OrderItem";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

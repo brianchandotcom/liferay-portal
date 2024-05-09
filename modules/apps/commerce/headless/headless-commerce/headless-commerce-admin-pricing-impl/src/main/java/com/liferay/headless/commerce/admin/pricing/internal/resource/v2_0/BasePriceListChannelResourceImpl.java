@@ -443,6 +443,10 @@ public abstract class BasePriceListChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceListChannel";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

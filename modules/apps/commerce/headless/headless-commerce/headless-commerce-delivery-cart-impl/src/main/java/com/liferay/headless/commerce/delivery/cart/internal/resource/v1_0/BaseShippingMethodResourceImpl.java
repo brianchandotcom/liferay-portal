@@ -256,6 +256,10 @@ public abstract class BaseShippingMethodResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ShippingMethod";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

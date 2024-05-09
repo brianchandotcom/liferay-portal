@@ -261,6 +261,10 @@ public abstract class BaseSegmentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Segment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

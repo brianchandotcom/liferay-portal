@@ -537,6 +537,10 @@ public abstract class BaseAccountOrganizationResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountOrganization";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

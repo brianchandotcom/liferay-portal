@@ -526,6 +526,10 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountChannelShippingOption";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

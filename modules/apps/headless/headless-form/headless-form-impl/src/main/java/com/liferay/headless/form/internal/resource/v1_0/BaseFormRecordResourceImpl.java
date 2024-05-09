@@ -491,6 +491,10 @@ public abstract class BaseFormRecordResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "FormRecord";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

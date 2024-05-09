@@ -273,15 +273,19 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 	private void _upgradeLayoutPageTemplateStructureRel() throws Exception {
 		try (Statement s = connection.createStatement();
 			ResultSet resultSet = s.executeQuery(
-				"select lPageTemplateStructureRelId, segmentsExperienceId, " +
-					"data_ from LayoutPageTemplateStructureRel");
+				"select ctCollectionId, lPageTemplateStructureRelId, " +
+					"segmentsExperienceId, data_ from " +
+						"LayoutPageTemplateStructureRel");
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update LayoutPageTemplateStructureRel set data_ = ? " +
-						"where lPageTemplateStructureRelId = ?")) {
+						"where ctCollectionId = ? and " +
+							"lPageTemplateStructureRelId = ?")) {
 
 			while (resultSet.next()) {
+				long ctCollectionId = resultSet.getLong("ctCollectionId");
+
 				long layoutPageTemplateStructureRelId = resultSet.getLong(
 					"lPageTemplateStructureRelId");
 
@@ -289,7 +293,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 				preparedStatement.setString(1, _upgradeLayoutData(data));
 
-				preparedStatement.setLong(2, layoutPageTemplateStructureRelId);
+				preparedStatement.setLong(2, ctCollectionId);
+
+				preparedStatement.setLong(3, layoutPageTemplateStructureRelId);
 
 				preparedStatement.addBatch();
 			}

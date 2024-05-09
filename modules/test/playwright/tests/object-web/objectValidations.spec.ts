@@ -46,13 +46,12 @@ test.afterEach(async ({apiHelpers}) => {
 });
 
 test.describe('Object Unique Composite Key Validation', () => {
-	test('can create and use a object unique composite key validation', async ({
+	test('can create an object unique composite key validation', async ({
 		apiHelpers,
 		editObjectValidationPage,
 		modalAddObjectValidationPage,
 		objectValidationsPage,
 		page,
-		viewObjectEntriesPage,
 	}) => {
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
 			objectDefinition1.externalReferenceCode,
@@ -78,15 +77,15 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await objectValidationsPage.addObjectValidationButton.click();
 
-	const objectValidationLabel =
-		'UniqueCompositeKeyValidation' + getRandomInt();
+		const objectValidationLabel =
+			'UniqueCompositeKeyValidation' + getRandomInt();
 
-	await modalAddObjectValidationPage.fillObjectValidationInputs(
-		objectValidationLabel,
-		'Composite Key'
-	);
+		await modalAddObjectValidationPage.fillObjectValidationInputs(
+			objectValidationLabel,
+			'Composite Key'
+		);
 
-	const newValidationLink = page.getByText(objectValidationLabel);
+		const newValidationLink = page.getByText(objectValidationLabel);
 
 		await newValidationLink.click();
 
@@ -97,6 +96,68 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await editObjectValidationPage.clickSelectAllFields();
 
 		await editObjectValidationPage.saveObjectValidationButton.click();
+
+		await expect(
+			page.getByText('The object validation was updated successfully.')
+		).toBeVisible();
+	});
+
+	test('can use an object unique composite key validation', async ({
+		apiHelpers,
+		viewObjectEntriesPage,
+	}) => {
+		const integerFieldName = 'integerField' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition1.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				businessType: 'Integer',
+				externalReferenceCode: integerFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: integerFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: integerFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
+
+		const objectValidationName =
+			'Unique Composite Key Object Validation' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectValidation(
+			objectDefinition1.externalReferenceCode,
+			{
+				active: true,
+				engine: 'compositeKey',
+				engineLabel: 'Composite Key',
+				errorLabel: {
+					en_US: 'The field values are already in use. Please choose unique values.',
+				},
+				name: {
+					en_US: objectValidationName,
+				},
+				objectValidationRuleSettings: [
+					{
+						name: 'compositeKeyObjectFieldExternalReferenceCode',
+						value: 'textField',
+					},
+					{
+						name: 'compositeKeyObjectFieldExternalReferenceCode',
+						value: integerFieldName,
+					},
+				],
+				outputType: 'fullValidation',
+				script: '',
+				system: false,
+			}
+		);
 
 		const applicationName =
 			'c/' + objectDefinition1.name.toLowerCase() + 's';
@@ -261,15 +322,15 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await objectValidationsPage.addObjectValidationButton.click();
 
-	const objectValidationLabel =
-		'UniqueCompositeKeyValidation' + getRandomInt();
+		const objectValidationLabel =
+			'UniqueCompositeKeyValidation' + getRandomInt();
 
-	await modalAddObjectValidationPage.fillObjectValidationInputs(
-		objectValidationLabel,
-		'Composite Key'
-	);
+		await modalAddObjectValidationPage.fillObjectValidationInputs(
+			objectValidationLabel,
+			'Composite Key'
+		);
 
-	const newValidationLink = page.getByText(objectValidationLabel);
+		const newValidationLink = page.getByText(objectValidationLabel);
 
 		await expect(newValidationLink).toBeVisible();
 
@@ -285,7 +346,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await expect(page.getByText(objectRelationshipLabel)).toBeVisible();
 		await expect(page.getByText(picklistFieldName)).toBeVisible();
 
-	// Clean Up
+		// Clean Up
 
 		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
 			listTypeDefinition.id
@@ -335,15 +396,15 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await objectValidationsPage.addObjectValidationButton.click();
 
-	const objectValidationLabel =
-		'UniqueCompositeKeyValidation' + getRandomInt();
+		const objectValidationLabel =
+			'UniqueCompositeKeyValidation' + getRandomInt();
 
-	await modalAddObjectValidationPage.fillObjectValidationInputs(
-		objectValidationLabel,
-		'Composite Key'
-	);
+		await modalAddObjectValidationPage.fillObjectValidationInputs(
+			objectValidationLabel,
+			'Composite Key'
+		);
 
-	const newValidationLink = page.getByText(objectValidationLabel);
+		const newValidationLink = page.getByText(objectValidationLabel);
 
 		await expect(newValidationLink).toBeVisible();
 
@@ -355,7 +416,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await editObjectValidationPage.clickSelectAllFields();
 
-	await editObjectValidationPage.saveObjectValidationButton.click();
+		await editObjectValidationPage.saveObjectValidationButton.click();
 
 		await expect(
 			editObjectValidationPage.getObjectFieldAlreadyHasEntryErrorLocator(
@@ -393,9 +454,10 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await editObjectValidationPage.clickSelectAllFields();
 
-	await editObjectValidationPage.saveObjectValidationButton.click();
+		await editObjectValidationPage.saveObjectValidationButton.click();
 
-	await expect(
-		editObjectValidationPage.addTwoObjectFieldsErrorMessage
-	).toBeVisible();
+		await expect(
+			editObjectValidationPage.addTwoObjectFieldsErrorMessage
+		).toBeVisible();
+	});
 });

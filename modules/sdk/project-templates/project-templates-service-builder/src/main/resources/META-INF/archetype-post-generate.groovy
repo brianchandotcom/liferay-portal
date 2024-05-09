@@ -55,6 +55,10 @@ File serviceXMLFile = serviceXMLPath.toFile()
 
 char minorVersion = liferayVersion.charAt(2)
 
+if (liferayVersion.startsWith("20")) {
+	minorVersion = '4'
+}
+
 def newserviceXMLContent = serviceXMLFile.text.replace("7.0", "7." + minorVersion).replace("7_0", "7_" + minorVersion)
 
 serviceXMLFile.text = newserviceXMLContent

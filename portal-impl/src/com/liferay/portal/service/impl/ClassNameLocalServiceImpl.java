@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.base.ClassNameLocalServiceBaseImpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -155,44 +156,32 @@ public class ClassNameLocalServiceImpl
 		return className.getClassNameId();
 	}
 
-	@Override
 	public Supplier<long[]> getClassNameIdsLongArraySupplier(
-		String keyName, String[] classNames) {
+		String[] classNames) {
 
-		return () -> {
-			Map<String, Object> companyIdMap = _getMap(_classNameIdsSuppliers);
+		Map<Long, Object> classNameIds = new HashMap<>();
 
-			return (long[])companyIdMap.computeIfAbsent(
-				keyName,
-				key -> TransformUtil.transformToLongArray(
-					ListUtil.fromArray(classNames),
-					className -> getClassNameId(className)));
-		};
+		return () -> (long[])classNameIds.computeIfAbsent(
+			_getCompanyId(),
+			key -> TransformUtil.transformToLongArray(
+				ListUtil.fromArray(classNames),
+				className -> getClassNameId(className)));
 	}
 
 	@Override
-	public Supplier<Long[]> getClassNameIdsSupplier(
-		String keyName, String[] classNames) {
+	public Supplier<Long[]> getClassNameIdsSupplier(String[] classNames) {
+		Map<Long, Object> classNameIds = new HashMap<>();
 
-		return () -> {
-			Map<String, Object> companyIdMap = _getMap(_classNameIdsSuppliers);
-
-			return (Long[])companyIdMap.computeIfAbsent(
-				keyName,
-				key -> TransformUtil.transform(
-					classNames, className -> getClassNameId(className),
-					Long.class));
-		};
+		return () -> (Long[])classNameIds.computeIfAbsent(
+			_getCompanyId(),
+			key -> TransformUtil.transform(
+				classNames, className -> getClassNameId(className),
+				Long.class));
 	}
 
 	@Override
 	public Supplier<Long> getClassNameIdSupplier(String className) {
-		return () -> {
-			Map<String, Long> companyIdMap = _getMap(_classNameIdSuppliers);
-
-			return companyIdMap.computeIfAbsent(
-				className, key -> getClassNameId(className));
-		};
+		return () -> getClassNameId(className);
 	}
 
 	@Override
@@ -221,10 +210,6 @@ public class ClassNameLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClassNameLocalServiceImpl.class);
 
-	private static final Map<Long, Map<String, Object>> _classNameIdsSuppliers =
-		new ConcurrentHashMap<>();
-	private static final Map<Long, Map<String, Long>> _classNameIdSuppliers =
-		new ConcurrentHashMap<>();
 	private static final ClassName _nullClassName = new ClassNameImpl();
 
 	private static class ClassNamePool {

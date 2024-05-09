@@ -493,7 +493,10 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	private String _getContextPath(HttpServletRequest httpServletRequest) {
 		if (httpServletRequest != null) {
-			String contextPath = httpServletRequest.getContextPath();
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			String contextPath = originalHttpServletRequest.getContextPath();
 
 			if (Validator.isNotNull(contextPath)) {
 				return contextPath;

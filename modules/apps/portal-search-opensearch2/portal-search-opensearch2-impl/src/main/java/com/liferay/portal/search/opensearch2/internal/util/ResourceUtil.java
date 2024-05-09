@@ -6,18 +6,8 @@
 package com.liferay.portal.search.opensearch2.internal.util;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.InputStream;
-
-import java.net.URL;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 
 /**
  * @author Michael C. Han
@@ -36,33 +26,6 @@ public class ResourceUtil {
 			throw new RuntimeException(
 				"Unable to load resource: " + resourceName, exception);
 		}
-	}
-
-	public static List<String> getResourcesAsStrings(
-		BundleContext bundleContext, String directory) {
-
-		List<String> resources = new ArrayList<>();
-
-		Bundle bundle = bundleContext.getBundle();
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			directory, "*.json", true);
-
-		if (enumeration != null) {
-			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
-				try {
-					resources.add(URLUtil.toString(url));
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(
-						"Unable to load resource: " + url, exception);
-				}
-			}
-		}
-
-		return resources;
 	}
 
 }

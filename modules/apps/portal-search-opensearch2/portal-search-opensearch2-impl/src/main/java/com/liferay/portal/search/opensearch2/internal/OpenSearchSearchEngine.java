@@ -50,7 +50,6 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationObserver;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.index.IndexConfigurationDynamicUpdatesExecutor;
 import com.liferay.portal.search.opensearch2.internal.index.IndexFactory;
 
 import jakarta.json.JsonObject;
@@ -175,8 +174,6 @@ public class OpenSearchSearchEngine
 		if (created) {
 			_waitForYellowStatus();
 		}
-
-		_indexConfigurationDynamicUpdatesExecutor.execute(companyId);
 
 		CrossClusterReplicationHelper crossClusterReplicationHelper =
 			_crossClusterReplicationHelperSnapshot.get();
@@ -609,10 +606,6 @@ public class OpenSearchSearchEngine
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private IndexConfigurationDynamicUpdatesExecutor
-		_indexConfigurationDynamicUpdatesExecutor;
 
 	@Reference
 	private IndexFactory _indexFactory;

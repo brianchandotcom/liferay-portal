@@ -547,9 +547,7 @@ public class FragmentEntryProcessorHelperTest {
 	@Test
 	public void testGetRepeatableFieldValue() throws Exception {
 		DDMStructure ddmStructure = _addDDMStructure(
-			_group,
-			_readJSONFileToString(
-				"ddm_structure_with_repeatable_field.json"));
+			_readJSONFileToString("ddm_structure_with_repeatable_field.json"));
 
 		JournalArticle journalArticle = _addJournalArticle(
 			ddmStructure,
@@ -593,12 +591,10 @@ public class FragmentEntryProcessorHelperTest {
 				LocaleUtil.US));
 	}
 
-	private DDMStructure _addDDMStructure(Group group, String content)
-		throws Exception {
-
+	private DDMStructure _addDDMStructure(String content) throws Exception {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
-				_portal.getClassNameId(JournalArticle.class), group);
+				_portal.getClassNameId(JournalArticle.class), _group);
 
 		return ddmStructureTestHelper.addStructure(
 			_portal.getClassNameId(JournalArticle.class),
@@ -717,8 +713,7 @@ public class FragmentEntryProcessorHelperTest {
 		ddmStructureContent = StringUtil.replace(
 			ddmStructureContent, "FIELD_NAME", fieldId);
 
-		DDMStructure ddmStructure = _addDDMStructure(
-			_group, ddmStructureContent);
+		DDMStructure ddmStructure = _addDDMStructure(ddmStructureContent);
 
 		return _addJournalArticle(ddmStructure, fieldId, fileEntry, title);
 	}

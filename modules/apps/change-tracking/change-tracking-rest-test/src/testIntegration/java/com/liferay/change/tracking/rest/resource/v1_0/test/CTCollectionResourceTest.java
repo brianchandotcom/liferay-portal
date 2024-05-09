@@ -14,6 +14,8 @@ import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
@@ -207,6 +209,14 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection =
 			testPostCTCollectionByExternalReferenceCodePublish_addCTCollection();
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getId())) {
+
+			DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), JournalArticle.class.getName());
+		}
+
 		assertHttpResponseStatusCode(
 			Response.Status.NO_CONTENT.getStatusCode(),
 			ctCollectionResource.
@@ -289,6 +299,14 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 	public void testPostCTCollectionPublish() throws Exception {
 		CTCollection ctCollection =
 			testPostCTCollectionPublish_addCTCollection();
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getId())) {
+
+			DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), JournalArticle.class.getName());
+		}
 
 		assertHttpResponseStatusCode(
 			Response.Status.NO_CONTENT.getStatusCode(),

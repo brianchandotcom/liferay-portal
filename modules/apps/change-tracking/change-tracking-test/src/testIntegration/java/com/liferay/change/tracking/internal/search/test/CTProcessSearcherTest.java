@@ -12,12 +12,16 @@ import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -154,6 +158,14 @@ public class CTProcessSearcherTest {
 		CTCollection ctCollection1 = _addCTCollection();
 		CTCollection ctCollection2 = _addCTCollection();
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection1.getCtCollectionId())) {
+
+			DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), JournalArticle.class.getName());
+		}
+
 		CTProcess moveCTProcess = _ctProcessLocalService.addCTProcess(
 			TestPropsValues.getUserId(), ctCollection1.getCtCollectionId(),
 			ctCollection2.getCtCollectionId(), null);
@@ -170,6 +182,14 @@ public class CTProcessSearcherTest {
 		CTCollection ctCollection = _addCTCollection();
 
 		User user = UserTestUtil.addUser();
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), JournalArticle.class.getName());
+		}
 
 		CTProcess ctProcess = _ctProcessLocalService.addCTProcess(
 			user.getUserId(), ctCollection.getCtCollectionId());
@@ -207,10 +227,26 @@ public class CTProcessSearcherTest {
 
 		ctProcess.setBackgroundTaskId(backgroundTask.getBackgroundTaskId());
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), JournalArticle.class.getName());
+		}
+
 		return _ctProcessLocalService.addCTProcess(ctProcess);
 	}
 
 	private CTProcess _addCTProcess(long ctCollectionId) throws Exception {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), JournalArticle.class.getName());
+		}
+
 		return _ctProcessLocalService.addCTProcess(
 			TestPropsValues.getUserId(), ctCollectionId);
 	}

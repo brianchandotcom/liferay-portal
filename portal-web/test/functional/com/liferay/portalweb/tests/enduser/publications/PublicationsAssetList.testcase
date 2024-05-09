@@ -231,6 +231,13 @@ definition {
 			JSONPublications.selectPublication(publicationName = "Publication Name 1");
 		}
 
+		task ("Add new Document") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name");
+		}
+
 		task ("Select Blog Entry as item type and add the new blog to the Asset List") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
@@ -252,8 +259,8 @@ definition {
 
 		task ("Add new Document") {
 			JSONDocument.addFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
+				dmDocumentDescription = "DM Document Description 2",
+				dmDocumentTitle = "DM Document Title 2",
 				groupName = "Site Name");
 		}
 
@@ -269,7 +276,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListTitle = "Manual Asset List Test",
 				assetType = "Basic Document",
-				entryList = "DM Document Title");
+				entryList = "DM Document Title 2");
 		}
 
 		task ("Publish Publication 2") {

@@ -267,6 +267,11 @@ definition {
 
 		FormsAdmin.deleteForm(formName = "Created Form Name");
 
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name");
+
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name 2");
 
 		PublicationsChanges.viewChanges(

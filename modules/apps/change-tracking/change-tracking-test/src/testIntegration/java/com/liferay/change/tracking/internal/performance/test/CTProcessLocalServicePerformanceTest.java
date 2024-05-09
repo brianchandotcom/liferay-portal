@@ -87,6 +87,9 @@ public class CTProcessLocalServicePerformanceTest {
 			DDMFormTestUtil.addTextDDMFormFields(ddmForm, formFieldName);
 
 			DDMFormValuesTestUtil.createDDMFormValuesWithRandomValues(ddmForm);
+
+			DDMStructureTestUtil.addStructure(
+				TestPropsValues.getGroupId(), JournalArticle.class.getName());
 		}
 
 		DDMFormValuesTestUtil.createDDMFormValuesWithRandomValues(ddmForm);

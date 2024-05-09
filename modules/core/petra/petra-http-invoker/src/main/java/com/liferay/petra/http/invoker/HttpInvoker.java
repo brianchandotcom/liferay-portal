@@ -210,7 +210,7 @@ public class HttpInvoker {
 			(HttpURLConnection)url.openConnection();
 
 		try {
-			HttpURLConnection setMethodHttpURLConnection = httpURLConnection;
+			HttpURLConnection methodHttpURLConnection = httpURLConnection;
 
 			if (Objects.equals(url.getProtocol(), "https")) {
 				Class<?> clazz = httpURLConnection.getClass();
@@ -219,11 +219,11 @@ public class HttpInvoker {
 
 				field.setAccessible(true);
 
-				setMethodHttpURLConnection = (HttpURLConnection)field.get(
+				methodHttpURLConnection = (HttpURLConnection)field.get(
 					httpURLConnection);
 			}
 
-			_methodField.set(setMethodHttpURLConnection, httpMethod.name());
+			_methodField.set(methodHttpURLConnection, httpMethod.name());
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new IOException(reflectiveOperationException);

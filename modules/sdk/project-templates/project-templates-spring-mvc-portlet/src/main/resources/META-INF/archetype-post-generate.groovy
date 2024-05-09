@@ -44,6 +44,10 @@ String liferayVersion = request.properties.get("liferayVersion")
 
 char minorVersion = liferayVersion.charAt(2)
 
+if (liferayVersion.startsWith("20")) {
+	minorVersion = '4'
+}
+
 File liferayDisplayXML = new File(webappDir, "WEB-INF/liferay-display.xml");
 
 File liferayPortletXML = new File(webappDir, "WEB-INF/liferay-portlet.xml");

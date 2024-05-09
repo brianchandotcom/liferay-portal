@@ -74,9 +74,14 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			FileUtil.deleteDir(spring4JavaPkgDir.toPath());
 		}
 
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+
 		String minorVersionString = String.valueOf(
-			VersionUtil.getMinorVersion(
-				projectTemplatesArgs.getLiferayVersion()));
+			VersionUtil.getMinorVersion(liferayVersion));
+
+		if (VersionUtil.isLiferayQuarterlyVersion(liferayVersion)) {
+			minorVersionString = "4";
+		}
 
 		File liferayPortletXML = new File(
 			webappDir, "WEB-INF/liferay-display.xml");

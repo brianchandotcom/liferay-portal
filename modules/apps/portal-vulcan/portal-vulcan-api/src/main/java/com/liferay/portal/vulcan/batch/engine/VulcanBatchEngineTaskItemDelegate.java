@@ -56,6 +56,10 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 		return getClass();
 	}
 
+	public default String getResourceName() {
+		return null;
+	}
+
 	public default String getVersion() {
 		return "v1.0";
 	}

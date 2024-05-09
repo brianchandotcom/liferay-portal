@@ -425,6 +425,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"item.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
+				InfoStagingClassMapper.class,
+				new ObjectEntryInfoStagingClassMapper(objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
 				ItemSelectorView.class,
 				new ObjectEntryItemSelectorView(
 					infoPermissionProvider, _itemSelectorViewDescriptorRenderer,
@@ -434,14 +442,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectRelatedModelsProviderRegistry, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
-				).build()),
-			_bundleContext.registerService(
-				InfoStagingClassMapper.class,
-				new ObjectEntryInfoStagingClassMapper(objectDefinition),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"company.id", objectDefinition.getCompanyId()
-				).put(
-					"item.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
 				LayoutDisplayPageProvider.class,

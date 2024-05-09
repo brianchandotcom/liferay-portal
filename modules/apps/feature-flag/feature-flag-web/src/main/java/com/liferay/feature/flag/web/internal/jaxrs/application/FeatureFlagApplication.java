@@ -95,13 +95,8 @@ public class FeatureFlagApplication extends Application {
 			FeatureFlag featureFlag = featureFlagsBag.getFeatureFlag(key);
 
 			if (featureFlag == null) {
-				return Response.ok(
-					HashMapBuilder.<String, Object>put(
-						"error",
-						"Feature flag \"" + HtmlUtil.escape(key) +
-							"\" is not available"
-					).build(),
-					MediaType.APPLICATION_JSON
+				return Response.status(
+					Response.Status.NOT_FOUND
 				).build();
 			}
 
@@ -120,11 +115,10 @@ public class FeatureFlagApplication extends Application {
 			).build();
 		}
 		catch (Exception exception) {
-			return Response.ok(
-				HashMapBuilder.<String, Object>put(
-					"error", exception.toString()
-				).build(),
-				MediaType.APPLICATION_JSON
+			_log.error(exception);
+
+			return Response.status(
+				Response.Status.INTERNAL_SERVER_ERROR
 			).build();
 		}
 	}

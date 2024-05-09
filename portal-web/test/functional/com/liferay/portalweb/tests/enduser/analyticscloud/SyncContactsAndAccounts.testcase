@@ -522,7 +522,7 @@ definition {
 		}
 
 		task ("Connect to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(userGroup = "User Group Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(userGroup = "User Group Name");
 		}
 
 		task ("Go to the people page in the sidebar") {
@@ -543,6 +543,8 @@ definition {
 
 		task ("Interact with the user who belongs to the user group and the user who does not belong") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
 				emailList = "ac@liferay.com,userea@liferay.com",
 				pageName = "Home",
 				siteName = "guest");
@@ -555,7 +557,7 @@ definition {
 		}
 
 		task ("Go to Known Individuals tab") {
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToIndividuals();
 

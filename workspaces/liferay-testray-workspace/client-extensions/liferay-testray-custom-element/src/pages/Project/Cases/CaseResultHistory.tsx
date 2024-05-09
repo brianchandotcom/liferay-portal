@@ -47,7 +47,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 				columns: [
 					{
 						clickable: true,
-						key: 'dateCreated',
+						key: 'dueDate',
 						render: (date) => (
 							<p style={{maxWidth: '11ch'}}>
 								{dayjs(date).format('lll')}
@@ -58,7 +58,10 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					{
 						clickable: true,
 						key: 'build',
-						render: (build) => build?.gitHash,
+						render: (build) =>
+							build?.gitHash.includes('null')
+								? '-'
+								: build?.gitHash,
 						value: i18n.translate('git-hash'),
 					},
 					{

@@ -119,6 +119,7 @@ export type TestrayBuild = {
 	dateArchived: string;
 	dateCreated: string;
 	description: string;
+	dueDate: string;
 	dueStatus: PickList;
 	gitHash: string;
 	id: number;

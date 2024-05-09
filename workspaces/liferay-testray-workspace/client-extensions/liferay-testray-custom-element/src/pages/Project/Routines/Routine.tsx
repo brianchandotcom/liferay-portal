@@ -104,15 +104,16 @@ const Routine = () => {
 						},
 						{
 							clickable: true,
-							key: 'dateCreated',
-							render: (dateCreated) =>
-								dayjs(dateCreated).format('lll'),
+							key: 'dueDate',
+							render: (dueDate) => dayjs(dueDate).format('lll'),
 							size: 'sm',
 							value: i18n.translate('create-date'),
 						},
 						{
 							clickable: true,
 							key: 'gitHash',
+							render: (gitHash) =>
+								gitHash.includes('null') ? '-' : gitHash,
 							value: i18n.translate('git-hash'),
 						},
 						{

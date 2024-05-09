@@ -47,8 +47,13 @@ const Routines = () => {
 						},
 						{
 							clickable: true,
-							key: 'createDate',
-							render: (createDate) => getTimeFromNow(createDate),
+							key: 'dueDate',
+							render: (_, testrayRoutine: TestrayRoutine) =>
+								testrayRoutine.builds[0]?.dueDate
+									? getTimeFromNow(
+											testrayRoutine.builds[0]?.dueDate
+									  )
+									: null,
 							value: i18n.translate('execution-date'),
 						},
 						{

@@ -311,6 +311,8 @@ pre[class*='language-'] {
 			text-decoration: none;
 		}
 
+		margin-right: 2rem;
+
 		blockquote {
 			border-left: 2px solid var(--color-brand-primary, #0b5fff);
 			color: var(--color-neutral-8, #54555f);
@@ -501,6 +503,10 @@ pre[class*='language-'] {
 		width: 100%;
 		z-index: 1;
 
+		.learn-article-nav-item .d-flex {
+			align-items: center;
+		}
+
 		.learn-article-nav-item .learn-article-nav-image {
 			height: 2.25rem;
 			width: 2.25rem;
@@ -614,6 +620,10 @@ pre[class*='language-'] {
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
+
+		.d-flex {
+			align-items: center;
+		}
 	}
 
 	.learn-article-nav-root {

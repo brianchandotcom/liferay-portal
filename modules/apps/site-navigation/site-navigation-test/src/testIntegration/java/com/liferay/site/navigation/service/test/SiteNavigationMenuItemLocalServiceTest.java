@@ -27,6 +27,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuItemExternalReferenceCodeException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
@@ -95,6 +96,28 @@ public class SiteNavigationMenuItemLocalServiceTest {
 			siteNavigationMenuItem, persistedSiteNavigationMenuItem);
 	}
 
+	@Test(
+		expected = DuplicateSiteNavigationMenuItemExternalReferenceCodeException.class
+	)
+	public void testAddSiteNavigationMenuItemWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	@Test
 	public void testAddSiteNavigationMenuItemWithOrder()
 		throws PortalException {
@@ -125,6 +148,28 @@ public class SiteNavigationMenuItemLocalServiceTest {
 		Assert.assertNull(
 			_siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				siteNavigationMenuItem.getSiteNavigationMenuItemId()));
+	}
+
+	@Test
+	public void testDeleteSiteNavigationMenuItemByExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), _siteNavigationMenu.getSiteNavigationMenuId(),
+			0, SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNull(
+			_siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
 	}
 
 	@Test

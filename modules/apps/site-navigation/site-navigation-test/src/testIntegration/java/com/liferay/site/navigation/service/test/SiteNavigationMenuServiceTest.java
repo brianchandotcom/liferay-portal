@@ -7,6 +7,7 @@ package com.liferay.site.navigation.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -14,6 +15,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -25,11 +29,14 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
+import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuExternalReferenceCodeException;
+import com.liferay.site.navigation.exception.NoSuchMenuException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.test.util.SiteNavigationMenuTestUtil;
@@ -75,6 +82,59 @@ public class SiteNavigationMenuServiceTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
 		UserTestUtil.setUser(_user);
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testAddSiteNavigationMenuByExternalReferenceCodeWithoutPermissions()
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			Company company = _companyLocalService.fetchCompany(
+				TestPropsValues.getCompanyId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(company.getGuestUser()));
+
+			String externalReferenceCode = StringUtil.randomString();
+
+			_siteNavigationMenuService.addSiteNavigationMenu(
+				externalReferenceCode, _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				SiteNavigationConstants.TYPE_DEFAULT,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
+	@Test(
+		expected = DuplicateSiteNavigationMenuExternalReferenceCodeException.class
+	)
+	public void testAddSiteNavigationMenuWithExistingExternalReferenceCode()
+		throws Exception {
+
+		_addSiteMemberRoleResourcePermission(
+			SiteNavigationConstants.RESOURCE_NAME,
+			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
+
+		UserTestUtil.setUser(_groupUser);
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_siteNavigationMenuService.addSiteNavigationMenu(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), SiteNavigationConstants.TYPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(
+				_group, _groupUser.getUserId()));
+		_siteNavigationMenuService.addSiteNavigationMenu(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), SiteNavigationConstants.TYPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(
+				_group, _groupUser.getUserId()));
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -147,6 +207,64 @@ public class SiteNavigationMenuServiceTest {
 
 		_deleteSiteMemberRoleResourcePermissions(
 			SiteNavigationConstants.RESOURCE_NAME);
+	}
+
+	@Test(expected = NoSuchMenuException.class)
+	public void testDeleteSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		_addSiteMemberRoleResourcePermission(
+			SiteNavigationConstants.RESOURCE_NAME,
+			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
+
+		UserTestUtil.setUser(_groupUser);
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_siteNavigationMenuService.addSiteNavigationMenu(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), SiteNavigationConstants.TYPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_siteNavigationMenuService.deleteSiteNavigationMenu(
+			externalReferenceCode, _group.getGroupId());
+
+		_siteNavigationMenuService.getSiteNavigationMenuByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testDeleteSiteNavigationMenuByExternalReferenceCodeWithoutPermissions()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		_siteNavigationMenuService.addSiteNavigationMenu(
+			externalReferenceCode, _group.getGroupId(),
+			RandomTestUtil.randomString(), SiteNavigationConstants.TYPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			Company company = _companyLocalService.fetchCompany(
+				TestPropsValues.getCompanyId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(company.getGuestUser()));
+
+			_siteNavigationMenuService.deleteSiteNavigationMenu(
+				externalReferenceCode, _group.getGroupId());
+
+			Assert.assertNull(
+				_siteNavigationMenuService.
+					getSiteNavigationMenuByExternalReferenceCode(
+						externalReferenceCode, _group.getGroupId()));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)

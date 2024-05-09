@@ -37,7 +37,7 @@ const useSubtaskScore = ({
 	);
 
 	for (const subtask of testraySubtasks?.items ?? []) {
-		if (subtask.dueStatus.key !== TaskStatuses.COMPLETE) {
+		if (subtask?.dueStatus?.key !== TaskStatuses.COMPLETE) {
 			continue;
 		}
 

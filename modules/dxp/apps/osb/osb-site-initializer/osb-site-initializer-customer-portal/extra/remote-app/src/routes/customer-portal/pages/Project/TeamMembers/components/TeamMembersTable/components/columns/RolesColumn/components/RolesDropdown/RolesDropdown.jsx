@@ -55,7 +55,12 @@ const RolesDropdown = ({
 
 					return previousItem;
 				},
-				{partnerMemberRoles: {active: undefined, roles: []}}
+				{
+					partnerMemberRoles: {
+						active: undefined,
+						roles: []
+					}
+				}
 			)
 		);
 	}, [

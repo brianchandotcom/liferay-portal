@@ -54,6 +54,7 @@ const RoleSelectorDropdown = ({
 				if (!isTeamMemberInviteForm) {
 					onClick(accountRoleItem[0]);
 				}
+
 				setSelectedAccountRoleName([accountRoleItem[0].label]);
 			}
 		}
@@ -195,7 +196,7 @@ const RoleSelectorDropdown = ({
 												getKebabCase(role.label)
 											)
 												? i18n.translate(
-														getKebabCase(role.label)
+													getKebabCase(role.label)
 												  )
 												: role.label}
 										</ClayCheckbox>
@@ -241,7 +242,7 @@ const RoleSelectorDropdown = ({
 							>
 								{i18n.translate(getKebabCase(accountRole.label))
 									? i18n.translate(
-											getKebabCase(accountRole.label)
+										getKebabCase(accountRole.label)
 									  )
 									: accountRole.label}
 							</RadioRoles>

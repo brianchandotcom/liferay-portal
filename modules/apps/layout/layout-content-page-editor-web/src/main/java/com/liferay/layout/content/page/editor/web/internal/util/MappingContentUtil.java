@@ -59,7 +59,7 @@ public class MappingContentUtil {
 		).put(
 			"label",
 			() -> {
-				if (infoField.isMultivalued() &&
+				if ((infoField.isMultivalued() || infoField.isRepeatable()) &&
 					FeatureFlagManagerUtil.isEnabled("LPD-11377")) {
 
 					return LanguageUtil.format(

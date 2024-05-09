@@ -168,13 +168,8 @@ public class GetPagePreviewStrutsActionTest {
 				_group.getGroupId(), layout.getPlid(),
 				defaultSegmentsExperienceId, layoutStructure.toString());
 
-		_themeDisplay.setLayout(layout);
-		_themeDisplay.setLayoutSet(layout.getLayoutSet());
 		_themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)layout.getLayoutType());
-		_themeDisplay.setLookAndFeel(
-			layout.getTheme(), layout.getColorScheme());
-		_themeDisplay.setPlid(layout.getPlid());
 	}
 
 	private void _assertContainsContent() throws Exception {
@@ -196,6 +191,8 @@ public class GetPagePreviewStrutsActionTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						_fragmentEntryLink.getPlid())));
+		mockHttpServletRequest.addParameter(
+			"selPlid", String.valueOf(_fragmentEntryLink.getPlid()));
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);

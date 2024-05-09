@@ -11,7 +11,7 @@
 	"name": "@liferay/frontend-data-set-sample-web",
 	"private": true,
 	"scripts": {
-		"build": "node ../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

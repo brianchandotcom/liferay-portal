@@ -1,7 +1,7 @@
 {
 	"name": "frontend-js-aui-web",
 	"scripts": {
-		"build": "node ../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

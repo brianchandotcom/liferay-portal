@@ -5,7 +5,7 @@
 	"main": "js/App.js",
 	"name": "@liferay/frontend-js-a11y-sample-web",
 	"scripts": {
-		"build": "node ../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

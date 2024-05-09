@@ -41,7 +41,7 @@
 	"name": "@liferay/digital-signature-web",
 	"private": true,
 	"scripts": {
-		"build": "node ../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
 		"test": "env TZ=utc liferay-npm-scripts test"

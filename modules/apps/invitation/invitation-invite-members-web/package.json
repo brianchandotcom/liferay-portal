@@ -14,7 +14,7 @@
 	"main": "invite_members/js/InviteMembers.js",
 	"name": "invitation-invite-members-web",
 	"scripts": {
-		"build": "node ../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

@@ -14,7 +14,7 @@
 	"main": "js/index.js",
 	"name": "@liferay/frontend-js-components-sample-web",
 	"scripts": {
-		"build": "node ../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

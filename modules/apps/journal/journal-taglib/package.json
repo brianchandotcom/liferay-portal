@@ -7,7 +7,7 @@
 	"main": "journal_article/js/index.js",
 	"name": "@liferay/journal-taglib",
 	"scripts": {
-		"build": "node ../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

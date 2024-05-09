@@ -5,7 +5,7 @@
 	"main": "js/index.js",
 	"name": "@liferay/multi-factor-authentication-fido2-web",
 	"scripts": {
-		"build": "node ../../../../sdk/node-build/index.mjs",
+		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},

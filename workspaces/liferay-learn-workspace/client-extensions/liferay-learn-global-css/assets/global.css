@@ -376,7 +376,9 @@ pre[class*='language-'] {
 		table,
 		.table-striped {
 			tbody
-				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
+				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+					.table-divider
+				) {
 				&,
 				td,
 				th {
@@ -555,6 +557,9 @@ pre[class*='language-'] {
 		}
 
 		.learn-article-nav-item {
+			font-family: 'Source Sans 3';
+			font-size: 1rem;
+
 			a {
 				width: 100%;
 
@@ -777,7 +782,7 @@ pre[class*='language-'] {
 	border-radius: var(--border-radius, 0.5rem);
 	color: var(--color-neutral-10);
 	display: block;
-	padding: var(--spacer-1) var(--spacer-2);
+	padding: var(--spacer-2) var(--spacer-2);
 	position: relative;
 
 	&:hover,

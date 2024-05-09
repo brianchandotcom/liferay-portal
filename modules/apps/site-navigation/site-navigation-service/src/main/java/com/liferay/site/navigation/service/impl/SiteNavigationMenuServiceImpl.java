@@ -94,6 +94,23 @@ public class SiteNavigationMenuServiceImpl
 	}
 
 	@Override
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		SiteNavigationMenu siteNavigationMenu =
+			siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		_siteNavigationMenuModelResourcePermission.check(
+			getPermissionChecker(), siteNavigationMenu, ActionKeys.DELETE);
+
+		return siteNavigationMenuLocalService.deleteSiteNavigationMenu(
+			siteNavigationMenu);
+	}
+
+	@Override
 	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId)
 		throws PortalException {
 

@@ -123,6 +123,20 @@
 			"objectFields": [
 				{
 					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Annual Purchase Volume"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_ANNUAL_PURCHASE_VOLUMES",
+					"name": "annualPurchaseVolume",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
 					"businessType": "Text",
 					"indexed": true,
 					"indexedLanguageId": "en_US",
@@ -656,6 +670,201 @@
 					"readOnly": "false",
 					"state": false,
 					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Business ZIP, Postal Code"
+					},
+					"name": "businessZIPPostalCode",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Comments"
+					},
+					"name": "comments",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"state": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"indexed": false,
+					"label": {
+						"en_US": "Create Date"
+					},
+					"name": "createDate",
+					"readOnly": "true",
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": false,
+					"label": {
+						"en_US": "Author"
+					},
+					"name": "creator",
+					"readOnly": "true",
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Distribution Channels"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_DISTRIBUTION_CHANNELS",
+					"name": "distributionChannels",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Distribution Regions"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_DISTRIBUTION_REGIONS",
+					"name": "distributionRegions",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": false,
+					"label": {
+						"en_US": "External Reference Code"
+					},
+					"name": "externalReferenceCode",
+					"readOnly": "false",
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "ID"
+					},
+					"name": "id",
+					"readOnly": "true",
+					"state": false,
+					"system": true,
+					"type": "Long"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"indexed": false,
+					"label": {
+						"en_US": "Modified Date"
+					},
+					"name": "modifiedDate",
+					"readOnly": "true",
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Order Types of Interest"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_ORDER_TYPES",
+					"name": "orderTypesOfInterest",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Primary Contact Email"
+					},
+					"name": "primaryContactEmail",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Primary Contact Name"
+					},
+					"name": "primaryContactName",
+					"readOnly": "false",
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Primary Contact Phone Number"
+					},
+					"name": "primaryContactPhoneNumber",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": true
 				}
 			]
 		}

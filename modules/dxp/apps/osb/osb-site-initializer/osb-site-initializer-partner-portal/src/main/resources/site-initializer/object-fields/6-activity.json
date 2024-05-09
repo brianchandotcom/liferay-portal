@@ -421,18 +421,13 @@
 								"key": "submitted",
 								"objectStateTransitions": [
 									{
-										"key": "approved"
-									}
-								]
-							},
-							{
-								"key": "approved",
-								"objectStateTransitions": [
-									{
 										"key": "active"
 									},
 									{
-										"key": "canceled"
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "rejected"
 									}
 								]
 							},
@@ -440,8 +435,19 @@
 								"key": "active",
 								"objectStateTransitions": [
 									{
+										"key": "completed"
+									},
+									{
 										"key": "expired"
+									},
+									{
+										"key": "submitted"
 									}
+								]
+							},
+							{
+								"key": "completed",
+								"objectStateTransitions": [
 								]
 							},
 							{
@@ -450,10 +456,21 @@
 								]
 							},
 							{
-								"key": "canceled",
+								"key": "moreInfoRequested",
 								"objectStateTransitions": [
 									{
-										"key": "approved"
+										"key": "submitted"
+									}
+								]
+							},
+							{
+								"key": "rejected",
+								"objectStateTransitions": [
+									{
+										"key": "moreInfoRequested"
+									},
+									{
+										"key": "submitted"
 									}
 								]
 							}

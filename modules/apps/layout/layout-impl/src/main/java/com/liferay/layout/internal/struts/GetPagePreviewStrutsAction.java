@@ -86,6 +86,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 			themeDisplay.setPlid(layout.getPlid());
 			themeDisplay.setScopeGroupId(layout.getGroupId());
+			themeDisplay.setSiteGroupId(layout.getGroupId());
 		}
 
 		if (!LayoutPermissionUtil.containsLayoutUpdatePermission(
@@ -183,7 +184,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 			contentElement.html(sb.toString());
 
-			ServletResponseUtil.write(httpServletResponse, document.toString());
+			ServletResponseUtil.write(httpServletResponse, document.html());
 		}
 		finally {
 			httpServletRequest.setAttribute(

@@ -5,11 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = "${accountEntryName},${accountEntryType}");
 
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
+			var creatorEmailAddress = JSONUtil2.getAdminUserEmail();
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getAdminUserPassword();
 		}
 
 		if (!(isSet(accountEntryDescription))) {

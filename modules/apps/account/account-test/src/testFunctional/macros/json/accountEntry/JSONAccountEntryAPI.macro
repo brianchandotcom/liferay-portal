@@ -31,11 +31,11 @@ definition {
 		Variables.assertDefined(parameterList = "${accountEntryId},${organizationId}");
 
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
+			var creatorEmailAddress = JSONUtil2.getAdminUserEmail();
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getAdminUserPassword();
 		}
 
 		var companyId = JSONCompany.getCompanyId();
@@ -54,11 +54,11 @@ definition {
 	@summary = "Default summary"
 	macro _deleteAllAccountEntries() {
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
+			var creatorEmailAddress = JSONUtil2.getAdminUserEmail();
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getAdminUserPassword();
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -87,11 +87,11 @@ definition {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
+			var creatorEmailAddress = JSONUtil2.getAdminUserEmail();
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getAdminUserPassword();
 		}
 
 		var companyId = JSONCompany.getCompanyIdNoSelenium();
@@ -124,11 +124,11 @@ definition {
 	@summary = "Default summary"
 	macro _getAccountEntryIds() {
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
+			var creatorEmailAddress = JSONUtil2.getAdminUserEmail();
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getAdminUserPassword();
 		}
 
 		var companyId = JSONCompany.getCompanyId();
@@ -153,12 +153,13 @@ definition {
 	macro _setAccountExternalReferenceCode(accountEntryName = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${externalReferenceCode}");
 
+		var adminUserLoginCredentials = JSONUtil2.formatJSONAdminUser();
 		var portalURL = JSONCompany.getPortalURL();
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
 
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountentry/update-external-reference-code \
-				-u test@liferay.com:test \
+				-u ${adminUserLoginCredentials} \
 				-d accountEntryId=${accountEntryId} \
 				-d externalReferenceCode=${externalReferenceCode}
 		''';

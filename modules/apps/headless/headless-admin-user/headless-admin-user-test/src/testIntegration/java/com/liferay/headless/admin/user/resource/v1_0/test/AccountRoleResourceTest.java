@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -62,14 +63,14 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 		_accountResource = AccountResource.builder(
 		).authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
 
 		_userAccountResource = UserAccountResource.builder(
 		).authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

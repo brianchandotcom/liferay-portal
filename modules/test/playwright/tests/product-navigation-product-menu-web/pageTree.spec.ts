@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from '../layout-content-page-editor-web/fixtures/pageEditorPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -19,14 +18,12 @@ export const test = mergeTests(
 		'LPS-196847': true,
 	}),
 	isolatedSiteTest,
-	loginTest(),
-	pageEditorPagesTest
+	loginTest()
 );
 
 test('checks the correct label for restricted page in the Page Tree', async ({
 	apiHelpers,
 	page,
-	pageEditorPage,
 	site,
 }) => {
 
@@ -45,7 +42,7 @@ test('checks the correct label for restricted page in the Page Tree', async ({
 		title: pageName,
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	// Open the Product Menu
 

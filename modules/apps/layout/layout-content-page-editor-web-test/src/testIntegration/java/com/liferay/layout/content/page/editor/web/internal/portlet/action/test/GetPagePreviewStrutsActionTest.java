@@ -11,7 +11,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -22,17 +21,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -40,7 +35,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -190,29 +184,18 @@ public class GetPagePreviewStrutsActionTest {
 	private void _assertContainsContent(String expectedThemeId)
 		throws Exception {
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		Portlet portlet = _portletLocalService.getPortletById(
-			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
-
-		mockLiferayResourceRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG,
-			PortletConfigFactoryUtil.create(portlet, null));
-
-		mockLiferayResourceRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
 
-		mockLiferayResourceRequest.addParameter(
+		mockHttpServletRequest.addParameter(
 			"segmentsExperienceId",
 			String.valueOf(
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						_fragmentEntryLink.getPlid())));
-
-		MockHttpServletRequest mockHttpServletRequest =
-			(MockHttpServletRequest)
-				mockLiferayResourceRequest.getHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
@@ -265,9 +248,6 @@ public class GetPagePreviewStrutsActionTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

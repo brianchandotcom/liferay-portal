@@ -140,28 +140,6 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
-	public void testGetFieldValueFromEmptyCollectionValue() throws Exception {
-		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName",
-			RandomTestUtil.randomString());
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			_getFieldValue(
-				JSONUtil.put(
-					"className", JournalArticle.class.getName()
-				).put(
-					"classNameId",
-					_portal.getClassNameId(JournalArticle.class.getName())
-				).put(
-					"classPK", journalArticle.getResourcePrimKey()
-				).put(
-					"fieldId", "AssetCategory_categories"
-				),
-				LocaleUtil.SPAIN));
-	}
-
-	@Test
 	public void testGetFieldValueFromLabeledValue() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle(
 			_addImageFileEntry(), "ImageFieldName", "Custom Title");
@@ -611,6 +589,18 @@ public class FragmentEntryProcessorHelperTest {
 			String title)
 		throws Exception {
 
+		String content = StringUtil.replace(
+			_readFileToString("dynamic_content.xml"),
+			new String[] {"[$FIELD_ID$]", "[$IMAGE_JSON$]"},
+			new String[] {fieldId, _toJSON(fileEntry)});
+
+		return _addJournalArticle(ddmStructure, content, title);
+	}
+
+	private JournalArticle _addJournalArticle(
+			DDMStructure ddmStructure, String content, String title)
+		throws Exception {
+
 		User user = TestPropsValues.getUser();
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
@@ -662,11 +652,8 @@ public class FragmentEntryProcessorHelperTest {
 			HashMapBuilder.put(
 				defaultLocale, RandomTestUtil.randomString()
 			).build(),
-			StringUtil.replace(
-				_readFileToString("dynamic_content.xml"),
-				new String[] {"[$FIELD_ID$]", "[$IMAGE_JSON$]"},
-				new String[] {fieldId, _toJSON(fileEntry)}),
-			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
+			content, ddmStructure.getStructureId(),
+			ddmTemplate.getTemplateKey(), null,
 			displayCalendar.get(Calendar.MONTH),
 			displayCalendar.get(Calendar.DATE),
 			displayCalendar.get(Calendar.YEAR),

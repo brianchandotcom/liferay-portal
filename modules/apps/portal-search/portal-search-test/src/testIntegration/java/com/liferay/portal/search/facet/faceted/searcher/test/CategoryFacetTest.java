@@ -79,9 +79,9 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		AssetCategory assetCategory = addCategory(
 			RandomTestUtil.randomString());
 
-		long categoryId = assetCategory.getCategoryId();
-
 		addJournalArticle(_group, assetCategory.getTitleCurrentValue());
+
+		long categoryId = assetCategory.getCategoryId();
 
 		addUser(_group, categoryId);
 
@@ -140,9 +140,9 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		AssetCategory assetCategory = addCategory(
 			RandomTestUtil.randomString());
 
-		long categoryId = assetCategory.getCategoryId();
-
 		addJournalArticle(_group, assetCategory.getTitleCurrentValue());
+
+		long categoryId = assetCategory.getCategoryId();
 
 		addUser(_group, categoryId);
 

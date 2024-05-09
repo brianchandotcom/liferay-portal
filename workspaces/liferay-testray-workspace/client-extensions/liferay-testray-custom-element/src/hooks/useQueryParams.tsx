@@ -4,13 +4,8 @@
  */
 
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {
-	useLocation,
-	useNavigate,
-	useParams,
-	useSearchParams,
-} from 'react-router-dom';
-import SearchBuilder from '~/core/SearchBuilder';
+import {useParams, useSearchParams} from 'react-router-dom';
+import useSWR from 'swr';
 import i18n from '~/i18n';
 import fetcher from '~/services/fetcher';
 import {safeJSONParse} from '~/util';
@@ -29,23 +24,21 @@ type Options = {
 	value: string;
 };
 
-type FieldOptions = {
-	[fieldName: string]: string | Array<Options>;
-};
-
 type Params = {
 	[key: string]: string | number | boolean;
 };
 
+type FieldOptions = {
+	[fieldName: string]: string | Array<Options>;
+};
+
 const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
-	const location = useLocation();
-	const navigate = useNavigate();
-	const [searchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [filterWithOptions, setFilterWithOptions] = useState<FieldOptions>(
 		{}
 	);
 
-	const routeParams = useParams();
+	const params = useParams();
 	const page = searchParams.get('page');
 
 	const pageSize = searchParams.get('pageSize');
@@ -54,83 +47,62 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 		return JSON.parse(searchParams.get('filter') as string) || '';
 	}, [searchParams]);
 
-	const filterSchemaKey = searchParams.get('filterSchema') || '';
+	const filterSchemaKey = searchParams.get('filterSchema');
 	const filterSchema = (filterSchemas as any)[
-		filterSchemaKey
+		filterSchemaKey as string
 	] as FilterSchemaType;
-	const filterFields = filterSchema?.fields;
 
 	const filterKeys = useMemo(() => Object.keys(serializedFilter), [
 		serializedFilter,
 	]);
-	const filteredFields = useMemo(
-		() => filterFields?.filter((field) => filterKeys.includes(field.name)),
-		[filterFields, filterKeys]
+	const filterFields = useMemo(
+		() =>
+			filterSchema?.fields?.filter((field) =>
+				filterKeys.includes(field.name)
+			),
+		[filterKeys, filterSchema?.fields]
 	);
 
-	const getFilterWithOptions = useCallback(async () => {
-		const parameters = safeJSONParse(JSON.stringify(routeParams));
-		const resourceFields =
-			filteredFields?.filter(({resource}) => resource) || {};
-		const _resourceFieldOptions: any = {};
+	const {data: filterResponse = {}} = useSWR(
+		filterSchema?.fields?.length
+			? `/filterResponse-${filterSchema?.name}`
+			: null,
+		async () => {
+			const parameters = safeJSONParse(JSON.stringify(params));
+			const resourceFields =
+				filterFields?.filter(({resource}) => resource) || {};
+			const _resourceFieldOptions: any = {};
 
-		for (const field of resourceFields) {
-			const resource =
-				typeof field.resource === 'function'
-					? field.resource({...parameters, ...customFilterFields})
-					: (field.resource as string);
+			if (resourceFields) {
+				await Promise.all(
+					resourceFields.map((field) =>
+						fetcher(
+							(typeof field.resource === 'function'
+								? field.resource({
+										...parameters,
+										...customFilterFields,
+								  })
+								: field.resource) as string
+						)
+					)
+				).then((results) =>
+					results.forEach((result, index) => {
+						const field = resourceFields[index];
 
-			const filter = SearchBuilder.in('id', serializedFilter[field.name]);
+						if (field.transformData) {
+							const parsedValue = field.transformData(result);
 
-			let resourceFilter = resource;
-
-			if (resource.includes('filter=')) {
-				resourceFilter = resource.replace(
-					/(filter=.*?)(&|$)/,
-					`$1 and ${filter}$2`
+							_resourceFieldOptions[field.name] = parsedValue;
+						}
+					})
 				);
 			}
-			else {
-				resourceFilter = `${resource}${
-					resource.includes('?') ? '&' : '?'
-				}filter=${filter}`;
-			}
 
-			const response = await fetcher(resourceFilter);
-
-			if (field.transformData) {
-				const parsedValue = field.transformData(response);
-
-				if (Array.isArray(parsedValue)) {
-					_resourceFieldOptions[field.name] = parsedValue;
-				}
-				else {
-					if (
-						filterKeys.every(
-							(key) => parsedValue && key in parsedValue
-						)
-					) {
-						const filteredObjects = parsedValue.filter(
-							(options: any) =>
-								filterKeys.every((key) =>
-									Array.isArray(serializedFilter[key])
-										? serializedFilter[key].includes(
-												options[key]
-										  )
-										: options[key] === serializedFilter[key]
-								)
-						);
-
-						_resourceFieldOptions[
-							field.name
-						] = filteredObjects.length
-							? filteredObjects
-							: parsedValue;
-					}
-				}
-			}
+			return _resourceFieldOptions;
 		}
+	);
 
+	const getFilterWithOptions = useCallback(() => {
 		const updatedFilterOptions: any = {...serializedFilter};
 
 		Object.keys(updatedFilterOptions).forEach((key) => {
@@ -149,9 +121,9 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 			}
 		});
 
-		Object.keys(_resourceFieldOptions).forEach((key) => {
+		Object.keys(filterResponse).forEach((key) => {
 			if (Array.isArray(serializedFilter[key])) {
-				const filteredOptions = _resourceFieldOptions[
+				const filteredOptions = filterResponse[
 					key
 				]?.filter((option: Options) =>
 					serializedFilter[key].includes(option.value)
@@ -160,9 +132,8 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 				if (filteredOptions.length) {
 					updatedFilterOptions[key] = filteredOptions;
 				}
-			}
-			else {
-				const matchingValues = _resourceFieldOptions[key]?.filter(
+			} else {
+				const matchingValues = filterResponse[key]?.filter(
 					(options: Options) =>
 						options.value === serializedFilter[key]
 				);
@@ -173,25 +144,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 		});
 
 		setFilterWithOptions(updatedFilterOptions);
-	}, [
-		customFilterFields,
-		filteredFields,
-		filterKeys,
-		routeParams,
-		serializedFilter,
-	]);
-
-	const updateUrlParams = (param: Params) => {
-		const existingParams = new URLSearchParams(location.search);
-
-		for (const [key, value] of Object.entries(param)) {
-			existingParams.set(key, value as string);
-		}
-
-		const newUrl = `${location.pathname}?${existingParams.toString()}`;
-
-		navigate(newUrl, {replace: true});
-	};
+	}, [filterResponse, serializedFilter]);
 
 	useEffect(() => {
 		if (serializedFilter || customFilterFields?.key) {
@@ -201,7 +154,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 
 	const filterEntries = useMemo(
 		() =>
-			filteredFields?.map((filteredField) => {
+			filterFields?.map((filteredField) => {
 				const filterValue =
 					serializedFilter[filteredField.name as string];
 				const filterValueOptions =
@@ -215,8 +168,21 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 						: filterValue,
 				};
 			}) || [],
-		[filterWithOptions, serializedFilter, filteredFields]
+		[filterFields, serializedFilter, filterWithOptions]
 	);
+
+	const updateUrlParams = (param: Params) => {
+		setSearchParams(
+			new URLSearchParams({
+				...(serializedFilter && {
+					filter: JSON.stringify(serializedFilter),
+				}),
+				...(page && {page}),
+				...(pageSize && {pageSize}),
+				...param,
+			})
+		);
+	};
 
 	const filterInitialContext = useMemo(
 		() => ({
@@ -228,8 +194,6 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 
 	return {
 		filterInitialContext,
-		page,
-		pageSize,
 		updateUrlParams,
 	};
 };

@@ -193,7 +193,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						valueOption ? options?.label : options?.value || options
 					),
 				};
-			} else {
+			}
+			else {
 				return {
 					name: key,
 					value: filterCleaned[key],

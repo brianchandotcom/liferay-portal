@@ -5,6 +5,7 @@
 
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {withVisibleContent} from '~/hoc/withVisibleContent';
 
 import BreadcrumbSearch from '../../components/BreadcrumbSearch';
 import Form from '../../components/Form';
@@ -75,4 +76,4 @@ const TestflowModal: React.FC<TestflowModalProps> = ({
 	);
 };
 
-export default TestflowModal;
+export default withVisibleContent(TestflowModal);

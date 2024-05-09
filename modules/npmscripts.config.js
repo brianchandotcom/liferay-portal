@@ -6,8 +6,8 @@
 const CHECK_AND_FIX_GLOBS = [
 	'!settings.json',
 	'!tsconfig.json',
-	'/{,dxp/}*.{js,ts}',
-	'/{,dxp/}{,apps/}**/*.{js,ts,tsx,scss,jsp,jspf}',
+	'/{,dxp/}*.{mjs,js,ts}',
+	'/{,dxp/}{,apps/}**/*.{mjs,js,ts,tsx,scss,jsp,jspf}',
 ];
 
 module.exports = {
@@ -792,6 +792,7 @@ module.exports = {
 			'codemirror',
 			'core-js',
 			'd3',
+			'esbuild',
 			'es-module-shims',
 			'fetch-mock',
 			'fs',
@@ -808,6 +809,7 @@ module.exports = {
 			'path-to-regexp',
 			'react-dnd-test-utils',
 			'resize-observer-polyfill',
+			'resolve',
 			'swagger-ui-react',
 			'timers-browserify',
 			'webpack',

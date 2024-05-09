@@ -7,5 +7,9 @@
 		"resolve": "^1.19.0"
 	},
 	"name": "@liferay/node-scripts",
+	"scripts": {
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts format"
+	},
 	"version": "1.0.0"
 }

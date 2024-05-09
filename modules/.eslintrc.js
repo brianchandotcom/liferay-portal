@@ -26,6 +26,16 @@ config = {
 		...config.globals,
 		MODULE_PATH: true,
 	},
+	overrides: [
+		{
+			env: {
+				node: true,
+			},
+			files: [
+				'**/node-scripts.config.js'
+			]
+		}
+	],
 	rules: {
 		'@liferay/import-extensions': 'off',
 		'@liferay/no-extraneous-dependencies': [

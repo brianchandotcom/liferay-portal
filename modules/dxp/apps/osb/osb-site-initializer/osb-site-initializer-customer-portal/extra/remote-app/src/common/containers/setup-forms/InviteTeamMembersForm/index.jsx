@@ -104,11 +104,13 @@ const InviteTeamMembersPage = ({
 					'invites[0].role',
 					availableAdministratorAssets < 1
 						? [accountMember]
-						: [roles?.find(
-							({ name }) =>
-								name === ROLE_TYPES?.requester.name ||
-								name === ROLE_TYPES?.admin.name
-						)]
+						: [
+								roles?.find(
+									({name}) =>
+										name === ROLE_TYPES?.requester.name ||
+										name === ROLE_TYPES?.admin.name
+								),
+						  ]
 				);
 
 				for (let i = 1; i < INITIAL_INVITES_COUNT; i++) {
@@ -271,13 +273,12 @@ const InviteTeamMembersPage = ({
 					}
 				}
 
-
-				const inviteMemberRolesSelected = []
-				const invitedMemberRoles = inviteMember.role
+				const inviteMemberRolesSelected = [];
+				const invitedMemberRoles = inviteMember.role;
 
 				invitedMemberRoles?.map((roleInvited) => {
 					inviteMemberRolesSelected.push(roleInvited);
-				})
+				});
 
 				for (const inviteRole of inviteMemberRolesSelected) {
 					await associateUserAccountWithAccountRole({
@@ -288,7 +289,7 @@ const InviteTeamMembersPage = ({
 							emailAddress: inviteMember.email,
 						},
 					});
-				
+
 					await associateContactRoleNameByEmailByProject({
 						accountKey: project.accountKey,
 						emailURI: encodeURI(inviteMember.email),
@@ -298,7 +299,7 @@ const InviteTeamMembersPage = ({
 						roleName: inviteRole.raysourceName,
 						sessionId,
 					});
-				  }
+				}
 
 				invitedAccounts.push(inviteMember);
 			} catch (error) {
@@ -319,15 +320,17 @@ const InviteTeamMembersPage = ({
 				},
 				notifyOnNetworkStatusChange: false,
 				variables: {
-					TeamMembersInvitation: invitedAccounts.flatMap(({ email, familyName, givenName, role }) => (
-						role?.map((roleInvited) => ({
-							email,
-							familyName,
-							givenName,
-							r_accountEntryToDXPCloudEnvironment_accountEntryId: project?.id,
-							role: roleInvited,
-						}))
-					)),
+					TeamMembersInvitation: invitedAccounts.flatMap(
+						({email, familyName, givenName, role}) =>
+							role?.map((roleInvited) => ({
+								email,
+								familyName,
+								givenName,
+								r_accountEntryToDXPCloudEnvironment_accountEntryId:
+									project?.id,
+								role: roleInvited,
+							}))
+					),
 				},
 			});
 
@@ -360,7 +363,11 @@ const InviteTeamMembersPage = ({
 				),
 				middleButton: (
 					<Button
-						disabled={baseButtonDisabled || isLoadingUserInvitation || !roleSelectorFilled}
+						disabled={
+							baseButtonDisabled ||
+							isLoadingUserInvitation ||
+							!roleSelectorFilled
+						}
 						displayType="primary"
 						isLoading={isLoadingUserInvitation}
 						onClick={handleSubmit}
@@ -423,36 +430,55 @@ const InviteTeamMembersPage = ({
 										placeholderEmail={`username@${
 											project?.code?.toLowerCase() ||
 											'example'
-											}.com`}
+										}.com`}
 										selectOnChange={(roleSelected) => {
-											const isPartnerMember = roleSelected.partnerMemberRoles.active;
+											const isPartnerMember =
+												roleSelected.partnerMemberRoles
+													.active;
 
 											if (isPartnerMember) {
-												const memberRoles = roleSelected.partnerMemberRoles.roles;
-												const updatedMemberRoles = memberRoles.filter(role => role.active);
+												const memberRoles =
+													roleSelected
+														.partnerMemberRoles
+														.roles;
+												const updatedMemberRoles = memberRoles.filter(
+													(role) => role.active
+												);
 
-												return updatedMemberRoles?.map((updateRole, roleIndex) => {
+												return updatedMemberRoles?.map(
+													(updateRole, roleIndex) => {
+														setFieldValue(
+															`invites[${index}].role[${roleIndex}]`,
+															accountRoles?.find(
+																({id}) =>
+																	id ===
+																	+updateRole.value
+															)
+														);
+													}
+												);
+											}
+
+											const accountRoleItem = Object.values(
+												roleSelected
+											).filter((role) => role.active);
+
+											return accountRoleItem?.map(
+												(updateRole, roleIndex) => {
 													setFieldValue(
 														`invites[${index}].role[${roleIndex}]`,
 														accountRoles?.find(
-															({ id }) => id === +updateRole.value
+															({id}) =>
+																id ===
+																+updateRole.value
 														)
-													)
-												})
-											}
-
-											const accountRoleItem = Object.values(roleSelected).filter(role => role.active);
-
-											return accountRoleItem?.map((updateRole, roleIndex) => {
-												setFieldValue(
-													`invites[${index}].role[${roleIndex}]`,
-													accountRoles?.find(
-														({ id }) => id === +updateRole.value
-													)
-												)
-											})
+													);
+												}
+											);
 										}}
-										setRoleSelectorFilled={setRoleSelectorFilled}
+										setRoleSelectorFilled={
+											setRoleSelectorFilled
+										}
 									/>
 								))}
 							</ClayForm.Group>
@@ -505,9 +531,9 @@ const InviteTeamMembersPage = ({
 
 											if (!hasEmptyEmails) {
 												push(
-													getInitialInvite(
-														[accountMemberRole]
-													)
+													getInitialInvite([
+														accountMemberRole,
+													])
 												);
 											}
 										}}

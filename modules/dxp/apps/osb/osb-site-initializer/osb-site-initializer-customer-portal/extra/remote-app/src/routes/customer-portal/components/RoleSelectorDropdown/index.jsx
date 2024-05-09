@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { Button } from '@clayui/core';
+import {Button} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
-import { ClayCheckbox } from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import { ClayTooltipProvider } from '@clayui/tooltip';
-import { Fragment, useMemo, useState } from 'react';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import {Fragment, useMemo, useState} from 'react';
 import i18n from '~/common/I18n';
 import getKebabCase from '~/common/utils/getKebabCase';
 import RadioRoles from '../RadioRoles';
@@ -23,8 +23,9 @@ const RoleSelectorDropdown = ({
 	setRoleSelectorFilled,
 	setSelectedAccountRoleName,
 }) => {
-
-	const [atLeastOneFieldIsFilled, setAtLeastOneFieldIsFilled] = useState(false);
+	const [atLeastOneFieldIsFilled, setAtLeastOneFieldIsFilled] = useState(
+		false
+	);
 	const [active, setActive] = useState(false);
 
 	const handleOnClick = (accountRoleItems) => {
@@ -32,40 +33,49 @@ const RoleSelectorDropdown = ({
 
 		if (isPartnerMember) {
 			const memberRoles = accountRoleItems.partnerMemberRoles.roles;
-			const updatedMemberRoles = memberRoles.filter(role => role.active);
-			const roleLabelsList = updatedMemberRoles.map(role => role.label);
-			
+			const updatedMemberRoles = memberRoles.filter(
+				(role) => role.active
+			);
+			const roleLabelsList = updatedMemberRoles.map((role) => role.label);
+
 			if (!isTeamMemberInviteForm) {
 				onClick(updatedMemberRoles);
 			}
 
 			setSelectedAccountRoleName(roleLabelsList);
 		}
-		
+
 		if (!isPartnerMember) {
-			const accountRoleItem = Object.values(accountRoleItems).filter(role => role.active);
+			const accountRoleItem = Object.values(accountRoleItems).filter(
+				(role) => role.active
+			);
 
 			if (accountRoleItem[0].label !== selectedAccountRoleName[0]) {
 				if (!isTeamMemberInviteForm) {
 					onClick(accountRoleItem[0]);
 				}
-				setSelectedAccountRoleName([accountRoleItem[0].label]) ;
-		}}
+				setSelectedAccountRoleName([accountRoleItem[0].label]);
+			}
+		}
 	};
 
 	const atLeastOnePartnerMemberSelected = useMemo(() => {
 		if (radioOptions.partnerMemberRoles?.active) {
-			if(radioOptions.partnerMemberRoles?.roles.some(({active}) => active)){
-				return true
+			if (
+				radioOptions.partnerMemberRoles?.roles.some(
+					({active}) => active
+				)
+			) {
+				return true;
 			}
 		}
 
 		if (!radioOptions.partnerMemberRoles?.active) {
 			return true;
 		}
-		
-		return false
-	}, [radioOptions])
+
+		return false;
+	}, [radioOptions]);
 
 	return (
 		<DropDown
@@ -81,10 +91,12 @@ const RoleSelectorDropdown = ({
 					small
 				>
 					<div className="text-truncate">
-						{i18n.translate(getKebabCase(selectedAccountRoleName[0]))
+						{i18n.translate(
+							getKebabCase(selectedAccountRoleName[0])
+						)
 							? i18n.translate(
-								getKebabCase(selectedAccountRoleName[0])
-							)
+									getKebabCase(selectedAccountRoleName[0])
+							  )
 							: selectedAccountRoleName[0]}
 					</div>
 
@@ -94,106 +106,152 @@ const RoleSelectorDropdown = ({
 				</Button>
 			}
 		>
-		
 			{Object.keys(radioOptions).map((key, index) => {
 				const accountRole = radioOptions[key];
 
-				return <Fragment key={index}> 
-					{key === 'partnerMemberRoles' ?
-						<>
-							<RadioRoles
-								className="pr-6"
-								key={index}
-								onClick={() => {
-									const newObject = {...radioOptions}
-							
-									Object.keys(radioOptions).forEach(roleLabel => { newObject[roleLabel].active = roleLabel === key })
-									
-									newObject.partnerMemberRoles.roles = newObject.partnerMemberRoles.roles.map((role) => (
-										{...role, active: false}
-									))
-
-									setRadioOptions(newObject);
-									setAtLeastOneFieldIsFilled(false);
-							
-								}}
-								selected={accountRole.active}
-							>
-								{i18n.translate('partner-member')}
-							</RadioRoles>
-
-							{accountRole.roles.map((role, accountRoleIndex) => (
-								<ClayCheckbox
-									checked={role.active}
+				return (
+					<Fragment key={index}>
+						{key === 'partnerMemberRoles' ? (
+							<>
+								<RadioRoles
 									className="pr-6"
-									disabled={role.disabled || !radioOptions.partnerMemberRoles.active}
-									key={accountRoleIndex}
+									key={index}
 									onClick={() => {
-										const newObject = {...radioOptions}
-							
-										const partnerMemberRole = newObject.partnerMemberRoles.roles[accountRoleIndex];
+										const newObject = {...radioOptions};
 
-   										partnerMemberRole.active = !partnerMemberRole.active;
+										Object.keys(radioOptions).forEach(
+											(roleLabel) => {
+												newObject[roleLabel].active =
+													roleLabel === key;
+											}
+										);
 
-										if (partnerMemberRole.active) {
-											Object.keys(newObject).forEach(key => {
-												if (key !== "partnerMemberRoles") {
-													newObject[key].active = false;
-												}
-											});
-										}
+										newObject.partnerMemberRoles.roles = newObject.partnerMemberRoles.roles.map(
+											(role) => ({...role, active: false})
+										);
 
 										setRadioOptions(newObject);
-
-										const activeMemberRoles = (role) => role.active;
-										const atLeastOneMemberIsFilled = radioOptions.partnerMemberRoles.roles.some(activeMemberRoles);
-
-										setAtLeastOneFieldIsFilled(atLeastOneMemberIsFilled);
+										setAtLeastOneFieldIsFilled(false);
 									}}
+									selected={accountRole.active}
 								>
-									{i18n.translate(getKebabCase(role.label))
-										? i18n.translate(getKebabCase(role.label))
-										: role.label}
-								</ClayCheckbox>
-							))}
-						</> :
-						<RadioRoles
-							className="pr-6"
-							disabled={accountRole.disabled}
-							onClick={() => {
-								const newObject = {...radioOptions}
-								
-								Object.keys(radioOptions).forEach(roleLabel => { newObject[roleLabel].active = roleLabel === key })
-								
-								newObject.partnerMemberRoles.roles = newObject.partnerMemberRoles.roles.map((role) => (
-									{...role, active: false}
-								))
+									{i18n.translate('partner-member')}
+								</RadioRoles>
 
-								setRadioOptions(newObject);
+								{accountRole.roles.map(
+									(role, accountRoleIndex) => (
+										<ClayCheckbox
+											checked={role.active}
+											className="pr-6"
+											disabled={
+												role.disabled ||
+												!radioOptions.partnerMemberRoles
+													.active
+											}
+											key={accountRoleIndex}
+											onClick={() => {
+												const newObject = {
+													...radioOptions,
+												};
 
-								const accountRoleActiveItem = Object.values(newObject).filter(role => role.active)
+												const partnerMemberRole =
+													newObject.partnerMemberRoles
+														.roles[
+														accountRoleIndex
+													];
 
-								if (accountRoleActiveItem[0].label === selectedAccountRoleName[0]) {
-									setAtLeastOneFieldIsFilled(false);
+												partnerMemberRole.active = !partnerMemberRole.active;
+
+												if (partnerMemberRole.active) {
+													Object.keys(
+														newObject
+													).forEach((key) => {
+														if (
+															key !==
+															'partnerMemberRoles'
+														) {
+															newObject[
+																key
+															].active = false;
+														}
+													});
+												}
+
+												setRadioOptions(newObject);
+
+												const activeMemberRoles = (
+													role
+												) => role.active;
+												const atLeastOneMemberIsFilled = radioOptions.partnerMemberRoles.roles.some(
+													activeMemberRoles
+												);
+
+												setAtLeastOneFieldIsFilled(
+													atLeastOneMemberIsFilled
+												);
+											}}
+										>
+											{i18n.translate(
+												getKebabCase(role.label)
+											)
+												? i18n.translate(
+														getKebabCase(role.label)
+												  )
+												: role.label}
+										</ClayCheckbox>
+									)
+								)}
+							</>
+						) : (
+							<RadioRoles
+								className="pr-6"
+								disabled={accountRole.disabled}
+								onClick={() => {
+									const newObject = {...radioOptions};
+
+									Object.keys(radioOptions).forEach(
+										(roleLabel) => {
+											newObject[roleLabel].active =
+												roleLabel === key;
+										}
+									);
+
+									newObject.partnerMemberRoles.roles = newObject.partnerMemberRoles.roles.map(
+										(role) => ({...role, active: false})
+									);
+
+									setRadioOptions(newObject);
+
+									const accountRoleActiveItem = Object.values(
+										newObject
+									).filter((role) => role.active);
+
+									if (
+										accountRoleActiveItem[0].label ===
+										selectedAccountRoleName[0]
+									) {
+										setAtLeastOneFieldIsFilled(false);
+									} else {
+										setAtLeastOneFieldIsFilled(true);
+									}
+								}}
+								selected={
+									accountRole.active && accountRole.label
 								}
-								else {
-									setAtLeastOneFieldIsFilled(true);
-								}
-
-							}}
-							selected={accountRole.active && accountRole.label}
-						>
-							{i18n.translate(getKebabCase(accountRole.label))
-								? i18n.translate(getKebabCase(accountRole.label))
-								: accountRole.label}
-						</RadioRoles>
-					}
-				</Fragment>
+							>
+								{i18n.translate(getKebabCase(accountRole.label))
+									? i18n.translate(
+											getKebabCase(accountRole.label)
+									  )
+									: accountRole.label}
+							</RadioRoles>
+						)}
+					</Fragment>
+				);
 			})}
-			
 
 			<ClayTooltipProvider>
-				<Button 
+				<Button
 					className="btn btn-sm px-2 py-2 w-100"
 					data-tooltip-align="right"
 					disabled={!atLeastOneFieldIsFilled}
@@ -202,11 +260,16 @@ const RoleSelectorDropdown = ({
 							selectOnChange(radioOptions);
 							setRoleSelectorFilled(true);
 						}
-						
+
 						handleOnClick(radioOptions);
 						setActive(false);
 					}}
-					title={!atLeastOnePartnerMemberSelected && i18n.translate('partner-members-must-have-at-least-one-role-assigned')}
+					title={
+						!atLeastOnePartnerMemberSelected &&
+						i18n.translate(
+							'partner-members-must-have-at-least-one-role-assigned'
+						)
+					}
 				>
 					{i18n.translate('apply')}
 				</Button>

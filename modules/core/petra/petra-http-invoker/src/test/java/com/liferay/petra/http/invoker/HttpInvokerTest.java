@@ -36,9 +36,9 @@ public class HttpInvokerTest {
 
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {1} {0}")
 	public static Iterable<Object[]> data() {
-		List<Object[]> testData = new ArrayList<>();
+		List<Object[]> data = new ArrayList<>();
 
-		HttpInvoker.HttpMethod[] methods = {
+		HttpInvoker.HttpMethod[] httpMethods = {
 			HttpInvoker.HttpMethod.GET, HttpInvoker.HttpMethod.DELETE,
 			HttpInvoker.HttpMethod.PUT, HttpInvoker.HttpMethod.POST,
 			HttpInvoker.HttpMethod.PATCH
@@ -46,16 +46,16 @@ public class HttpInvokerTest {
 		String[] protocols = {"http", "https"};
 
 		for (String protocol : protocols) {
-			for (HttpInvoker.HttpMethod method : methods) {
-				testData.add(new Object[] {method, protocol});
+			for (HttpInvoker.HttpMethod httpMethod : httpMethods) {
+				data.add(new Object[] {httpMethod, protocol});
 			}
 		}
 
-		return testData;
+		return data;
 	}
 
-	public HttpInvokerTest(HttpInvoker.HttpMethod method, String protocol) {
-		_method = method;
+	public HttpInvokerTest(HttpInvoker.HttpMethod httpMethod, String protocol) {
+		_httpMethod = httpMethod;
 		_protocol = protocol;
 	}
 
@@ -64,26 +64,28 @@ public class HttpInvokerTest {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		HttpURLConnection httpURLConnection = httpInvoker.getHttpURLConnection(
-			_method, String.format("%s://foo.demo", _protocol));
+			_httpMethod, String.format("%s://foo.bar", _protocol));
 
 		Assert.assertEquals(
-			_protocol, _method.name(), httpURLConnection.getRequestMethod());
+			_protocol, _httpMethod.name(),
+			httpURLConnection.getRequestMethod());
 	}
 
-	private static final Field _methodField;
+	private static final Field _httpMethodField;
 
 	static {
 		try {
-			_methodField = HttpURLConnection.class.getDeclaredField("method");
+			_httpMethodField = HttpURLConnection.class.getDeclaredField(
+				"method");
 
-			_methodField.setAccessible(true);
+			_httpMethodField.setAccessible(true);
 		}
 		catch (Exception exception) {
 			throw new ExceptionInInitializerError(exception);
 		}
 	}
 
-	private final HttpInvoker.HttpMethod _method;
+	private final HttpInvoker.HttpMethod _httpMethod;
 	private final String _protocol;
 
 }

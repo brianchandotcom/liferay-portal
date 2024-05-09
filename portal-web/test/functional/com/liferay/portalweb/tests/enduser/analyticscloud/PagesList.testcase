@@ -116,15 +116,15 @@ definition {
 
 			ACUtils.searchBar(searchItem = "AC Page");
 
-			ACUtils.viewNameList(nameList = ${pageNameList});
+			ACUtils.viewPartialNameList(nameList = ${pageNameList});
 
 			ACUtils.searchBar(searchItem = 2);
 
-			ACUtils.viewNameList(nameList = "AC Page 2 - Site Name - ${dataSourceName}");
+			ACUtils.viewPartialNameList(nameList = "AC Page 2 - Site Name - ${dataSourceName}");
 
 			ACUtils.searchBar(searchItem = 3);
 
-			ACUtils.viewNameList(nameList = "AC Page 3 - Site Name - ${dataSourceName}");
+			ACUtils.viewPartialNameList(nameList = "AC Page 3 - Site Name - ${dataSourceName}");
 		}
 	}
 

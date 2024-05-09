@@ -139,7 +139,7 @@ const AddFDSSortModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Language.get('new-sort')}
+				{Liferay.Language.get('new-sorting-option')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

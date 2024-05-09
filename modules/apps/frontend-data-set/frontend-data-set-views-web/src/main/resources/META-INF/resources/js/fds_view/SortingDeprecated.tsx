@@ -145,7 +145,7 @@ const AddFDSSortModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Language.get('new-default-sort')}
+				{Liferay.Language.get('new-sorting-option')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -537,7 +537,9 @@ const SortingDeprecated = ({fdsView, namespace}: IFDSViewSectionProps) => {
 						]}
 						creationMenuItems={[
 							{
-								label: Liferay.Language.get('new-default-sort'),
+								label: Liferay.Language.get(
+									'new-sorting-option'
+								),
 								onClick: handleCreation,
 							},
 						]}
@@ -558,7 +560,7 @@ const SortingDeprecated = ({fdsView, namespace}: IFDSViewSectionProps) => {
 						]}
 						items={fdsSorts}
 						noItemsButtonLabel={Liferay.Language.get(
-							'new-default-sort'
+							'new-sorting-option'
 						)}
 						noItemsDescription={Liferay.Language.get(
 							'start-creating-a-sort-to-display-specific-data'

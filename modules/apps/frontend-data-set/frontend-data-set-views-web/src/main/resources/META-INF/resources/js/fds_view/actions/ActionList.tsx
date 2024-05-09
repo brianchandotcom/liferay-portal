@@ -10,6 +10,7 @@ import {IFDSAction} from '../Actions';
 
 interface IFDSActionListProps {
 	createFDSAction: () => void;
+	creationMenuItemLabel: string;
 	deleteFDSAction: ({item}: {item: IFDSAction}) => void;
 	editFDSAction: ({item}: {item: IFDSAction}) => void;
 	fdsActions: Array<IFDSAction>;
@@ -19,6 +20,7 @@ interface IFDSActionListProps {
 
 const ActionList = ({
 	createFDSAction,
+	creationMenuItemLabel,
 	deleteFDSAction,
 	editFDSAction,
 	fdsActions,
@@ -42,7 +44,7 @@ const ActionList = ({
 			className="mt-0 p-1"
 			creationMenuItems={[
 				{
-					label: Liferay.Language.get('add-action'),
+					label: creationMenuItemLabel,
 					onClick: createFDSAction,
 				},
 			]}

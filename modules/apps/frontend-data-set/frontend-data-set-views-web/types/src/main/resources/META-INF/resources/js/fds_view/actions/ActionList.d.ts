@@ -8,6 +8,7 @@
 import {IFDSAction} from '../Actions';
 interface IFDSActionListProps {
 	createFDSAction: () => void;
+	creationMenuItemLabel: string;
 	deleteFDSAction: ({item}: {item: IFDSAction}) => void;
 	editFDSAction: ({item}: {item: IFDSAction}) => void;
 	fdsActions: Array<IFDSAction>;
@@ -16,6 +17,7 @@ interface IFDSActionListProps {
 }
 declare const ActionList: ({
 	createFDSAction,
+	creationMenuItemLabel,
 	deleteFDSAction,
 	editFDSAction,
 	fdsActions,

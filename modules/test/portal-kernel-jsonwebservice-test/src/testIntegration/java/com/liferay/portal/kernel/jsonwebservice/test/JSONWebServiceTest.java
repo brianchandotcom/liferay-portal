@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.remote.json.web.service.web.service.test;
+package com.liferay.portal.kernel.jsonwebservice.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.aop.AopService;
@@ -31,7 +31,7 @@ import org.osgi.framework.ServiceReference;
  * @author Istvan Sajtos
  */
 @RunWith(Arquillian.class)
-public class JSONWebServiceAccessControlTest {
+public class JSONWebServiceTest {
 
 	@ClassRule
 	@Rule
@@ -40,8 +40,7 @@ public class JSONWebServiceAccessControlTest {
 
 	@Test
 	public void testAccessControlled() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			JSONWebServiceAccessControlTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(JSONWebServiceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -61,8 +60,7 @@ public class JSONWebServiceAccessControlTest {
 
 	@Test
 	public void testAopService() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			JSONWebServiceAccessControlTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(JSONWebServiceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

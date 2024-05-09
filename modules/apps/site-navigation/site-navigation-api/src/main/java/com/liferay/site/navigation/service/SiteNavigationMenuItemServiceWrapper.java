@@ -61,20 +61,20 @@ public class SiteNavigationMenuItemServiceWrapper
 	}
 
 	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_siteNavigationMenuItemService.deleteSiteNavigationMenuItems(
 			siteNavigationMenuId);
-	}
-
-	@Override
-	public SiteNavigationMenuItem fetchSiteNavigationMenuItem(
-			String externalReferenceCode, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _siteNavigationMenuItemService.fetchSiteNavigationMenuItem(
-			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -94,6 +94,17 @@ public class SiteNavigationMenuItemServiceWrapper
 		return _siteNavigationMenuItemService.
 			getParentSiteNavigationMenuItemIds(
 				siteNavigationMenuId, typeSettingsKeyword);
+	}
+
+	@Override
+	public SiteNavigationMenuItem
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemService.
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	@Override

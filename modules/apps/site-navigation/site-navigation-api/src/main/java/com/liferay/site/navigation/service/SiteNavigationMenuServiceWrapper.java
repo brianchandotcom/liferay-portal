@@ -70,20 +70,20 @@ public class SiteNavigationMenuServiceWrapper
 	}
 
 	@Override
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuService.deleteSiteNavigationMenu(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _siteNavigationMenuService.fetchSiteNavigationMenu(
 			siteNavigationMenuId);
-	}
-
-	@Override
-	public SiteNavigationMenu fetchSiteNavigationMenu(
-			String externalReferenceCode, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _siteNavigationMenuService.fetchSiteNavigationMenu(
-			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -94,6 +94,16 @@ public class SiteNavigationMenuServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _siteNavigationMenuService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public SiteNavigationMenu getSiteNavigationMenuByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuService.
+			getSiteNavigationMenuByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	@Override

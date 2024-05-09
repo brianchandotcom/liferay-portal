@@ -59,18 +59,18 @@ public class SiteNavigationMenuItemServiceUtil {
 			siteNavigationMenuItemId, deleteChildren);
 	}
 
+	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteSiteNavigationMenuItem(
+			externalReferenceCode, groupId);
+	}
+
 	public static void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
 		throws PortalException {
 
 		getService().deleteSiteNavigationMenuItems(siteNavigationMenuId);
-	}
-
-	public static SiteNavigationMenuItem fetchSiteNavigationMenuItem(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		return getService().fetchSiteNavigationMenuItem(
-			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -87,6 +87,15 @@ public class SiteNavigationMenuItemServiceUtil {
 
 		return getService().getParentSiteNavigationMenuItemIds(
 			siteNavigationMenuId, typeSettingsKeyword);
+	}
+
+	public static SiteNavigationMenuItem
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getSiteNavigationMenuItemByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<SiteNavigationMenuItem> getSiteNavigationMenuItems(

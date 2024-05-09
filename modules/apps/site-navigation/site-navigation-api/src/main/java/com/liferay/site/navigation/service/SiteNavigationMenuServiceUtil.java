@@ -66,19 +66,19 @@ public class SiteNavigationMenuServiceUtil {
 		return getService().deleteSiteNavigationMenu(siteNavigationMenuId);
 	}
 
+	public static SiteNavigationMenu deleteSiteNavigationMenu(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteSiteNavigationMenu(
+			externalReferenceCode, groupId);
+	}
+
 	public static SiteNavigationMenu fetchSiteNavigationMenu(
 			long siteNavigationMenuId)
 		throws PortalException {
 
 		return getService().fetchSiteNavigationMenu(siteNavigationMenuId);
-	}
-
-	public static SiteNavigationMenu fetchSiteNavigationMenu(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		return getService().fetchSiteNavigationMenu(
-			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -88,6 +88,15 @@ public class SiteNavigationMenuServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static SiteNavigationMenu
+			getSiteNavigationMenuByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getSiteNavigationMenuByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<SiteNavigationMenu> getSiteNavigationMenus(

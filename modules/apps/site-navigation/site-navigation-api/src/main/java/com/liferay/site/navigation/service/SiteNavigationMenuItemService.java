@@ -60,12 +60,11 @@ public interface SiteNavigationMenuItemService extends BaseService {
 			long siteNavigationMenuItemId, boolean deleteChildren)
 		throws PortalException;
 
-	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SiteNavigationMenuItem fetchSiteNavigationMenuItem(
-			String externalReferenceCode, long groupId)
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
 		throws PortalException;
 
 	/**
@@ -78,6 +77,12 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getParentSiteNavigationMenuItemIds(
 		long siteNavigationMenuId, String typeSettingsKeyword);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenuItem
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(

@@ -65,13 +65,12 @@ public interface SiteNavigationMenuService extends BaseService {
 			long siteNavigationMenuId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId)
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SiteNavigationMenu fetchSiteNavigationMenu(
-			String externalReferenceCode, long groupId)
+	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId)
 		throws PortalException;
 
 	/**
@@ -80,6 +79,11 @@ public interface SiteNavigationMenuService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenu getSiteNavigationMenuByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId);

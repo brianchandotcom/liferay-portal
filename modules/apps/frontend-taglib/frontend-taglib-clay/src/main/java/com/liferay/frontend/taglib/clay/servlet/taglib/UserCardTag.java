@@ -188,7 +188,7 @@ public class UserCardTag extends BaseCardTag {
 			jspWriter.write("<div class=\"custom-checkbox custom-control\">");
 			jspWriter.write("<label><input ");
 
-			jspWriter.write("class=\"custom-control-input\"");
+			jspWriter.write("class=\"custom-control-input\" ");
 
 			Boolean selected = isSelected();
 

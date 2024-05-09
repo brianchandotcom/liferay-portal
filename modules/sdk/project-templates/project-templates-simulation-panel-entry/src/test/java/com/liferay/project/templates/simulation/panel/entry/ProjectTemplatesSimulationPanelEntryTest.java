@@ -8,6 +8,7 @@ package com.liferay.project.templates.simulation.panel.entry;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.File;
@@ -120,8 +121,9 @@ public class ProjectTemplatesSimulationPanelEntryTest
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
 			mavenExecutor);
 
-		if (_liferayVersion.startsWith("7.4") &&
-			_liferayProduct.equals("dxp")) {
+		if ((_liferayVersion.startsWith("7.4") &&
+			 _liferayProduct.equals("dxp")) ||
+			_liferayVersion.startsWith("20")) {
 
 			updateMavenPomProperties(
 				mavenWorkspaceDir, "liferay.bom.version", "liferay.bom.version",
@@ -142,11 +144,20 @@ public class ProjectTemplatesSimulationPanelEntryTest
 
 		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
 
+		boolean newTemplate = false;
+
+		if (_liferayVersion.equals("7.4.13.u72") ||
+			VersionUtil.isLiferayQuarterlyVersion(_liferayVersion)) {
+
+			newTemplate = true;
+		}
+
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Simulator",
 			"-DliferayProduct=" + _liferayProduct,
-			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + packageName);
+			"-DliferayVersion=" + _liferayVersion,
+			"-DnewTemplate=" + newTemplate, "-Dpackage=" + packageName);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(

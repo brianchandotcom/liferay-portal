@@ -116,6 +116,11 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 					gradleOutput.contains(
 						"release.portal.bom:" + _liferayVersion));
 			}
+			else if (_liferayVersion.startsWith("20")) {
+				Assert.assertTrue(
+					gradleOutput.contains(
+						"release.dxp.bom:" + _liferayVersion));
+			}
 			else {
 				Assert.assertTrue(
 					gradleOutput.contains(

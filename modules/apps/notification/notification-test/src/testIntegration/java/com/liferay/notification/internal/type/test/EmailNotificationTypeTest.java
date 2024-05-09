@@ -108,6 +108,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -199,6 +200,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	public static void tearDownClass() {
 		ObjectActionThreadLocal.setHttpServletRequest(
 			_originalHttpServletRequest);
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		MailServiceTestUtil.clearMessages();
 	}
 
 	@Test
@@ -886,7 +895,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		NotificationQueueEntry notificationQueueEntry) {
 
 		Assert.assertNotNull(
-			MailServiceTestUtil.getMailMessages("To", expectedToEmailAddress));
+			MailServiceTestUtil.getMailMessage(
+				"To", StringUtil.split(expectedToEmailAddress)));
 
 		Map<String, Object> notificationRecipientSettingsMap =
 			NotificationRecipientSettingUtil.
@@ -1101,6 +1111,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationQueueEntries.get(1));
 		}
 
+		MailServiceTestUtil.clearMessages();
+
 		for (NotificationQueueEntry notificationQueueEntry :
 				notificationQueueEntries) {
 
@@ -1234,6 +1246,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		_assertNotificationQueueEntry(
 			expectedBcc, false, expectedToEmailAddress,
 			notificationQueueEntries.get(0));
+
+		MailServiceTestUtil.clearMessages();
 
 		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntries.get(0));

@@ -42,7 +42,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -77,9 +76,8 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 	@Test
 	public void testAggregation() throws Exception {
-		String title = RandomTestUtil.randomString();
-
-		AssetCategory assetCategory = addCategory(title);
+		AssetCategory assetCategory = addCategory(
+			RandomTestUtil.randomString());
 
 		long categoryId = assetCategory.getCategoryId();
 
@@ -103,11 +101,10 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 			Arrays.asList(JournalArticle.class.getName(), User.class.getName()),
 			hits, searchContext);
 
-		Map<String, Integer> frequencies = Collections.singletonMap(
-			_getAssetVocabularyCategoryId(assetCategory), 1);
-
 		FacetsAssert.assertFrequencies(
-			facet.getFieldName(), searchContext, hits, frequencies);
+			facet.getFieldName(), searchContext, hits,
+			Collections.singletonMap(
+				_getAssetVocabularyCategoryId(assetCategory), 1));
 	}
 
 	@Test
@@ -116,9 +113,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		// See LPS-58543
 
-		String title = "To Do";
-
-		AssetCategory assetCategory = addCategory(title);
+		AssetCategory assetCategory = addCategory("To Do");
 
 		long categoryId = assetCategory.getCategoryId();
 
@@ -134,20 +129,16 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		searchContext.addFacet(facet);
 
-		Hits hits = search(searchContext);
-
-		Map<String, Integer> frequencies = Collections.singletonMap(
-			_getAssetVocabularyCategoryId(assetCategory), 1);
-
 		FacetsAssert.assertFrequencies(
-			facet.getFieldName(), searchContext, hits, frequencies);
+			facet.getFieldName(), searchContext, search(searchContext),
+			Collections.singletonMap(
+				_getAssetVocabularyCategoryId(assetCategory), 1));
 	}
 
 	@Test
 	public void testSelection() throws Exception {
-		String title = RandomTestUtil.randomString();
-
-		AssetCategory assetCategory = addCategory(title);
+		AssetCategory assetCategory = addCategory(
+			RandomTestUtil.randomString());
 
 		long categoryId = assetCategory.getCategoryId();
 
@@ -173,11 +164,10 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 			Collections.singletonList(User.class.getName()), hits,
 			searchContext);
 
-		Map<String, Integer> frequencies = Collections.singletonMap(
-			_getAssetVocabularyCategoryId(assetCategory), 1);
-
 		FacetsAssert.assertFrequencies(
-			facet.getFieldName(), searchContext, hits, frequencies);
+			facet.getFieldName(), searchContext, hits,
+			Collections.singletonMap(
+				_getAssetVocabularyCategoryId(assetCategory), 1));
 	}
 
 	protected AssetCategory addCategory(String title) throws Exception {

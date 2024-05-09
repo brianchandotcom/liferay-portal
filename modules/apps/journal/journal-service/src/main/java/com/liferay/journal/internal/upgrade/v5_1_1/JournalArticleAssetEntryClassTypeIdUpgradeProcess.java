@@ -42,25 +42,27 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select distinct AssetEntry.entryId, ",
-					"AssetEntry.classTypeId, JournalArticle.DDMStructureId ",
-					"from AssetEntry, JournalArticle where ",
-					"AssetEntry.classNameId = ", classNameId,
+					"AssetEntry.classTypeId, JournalArticle.DDMStructureId, ",
+					"AssetEntry.ctCollectionId from AssetEntry, ",
+					"JournalArticle where AssetEntry.classNameId = ",
+					classNameId,
 					" and (AssetEntry.classPK = JournalArticle.id_ or ",
 					"AssetEntry.classPK = JournalArticle.resourcePrimKey) and ",
 					"AssetEntry.classTypeId != JournalArticle.DDMStructureId"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"update AssetEntry set classTypeId = ? where entryId = ?");
+				"update AssetEntry set classTypeId = ? where entryId = ? and " +
+					"ctCollectionId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
 				long entryId = resultSet.getLong(1);
 				long classTypeId = resultSet.getLong(2);
-
 				long ddmStructureId = resultSet.getLong(3);
+				long ctCollectionId = resultSet.getLong(4);
 
 				preparedStatement2.setLong(1, ddmStructureId);
-
 				preparedStatement2.setLong(2, entryId);
+				preparedStatement2.setLong(3, ctCollectionId);
 
 				preparedStatement2.addBatch();
 

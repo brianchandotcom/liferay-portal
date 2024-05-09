@@ -26,47 +26,27 @@ const patchRequestStatus = async (
 		);
 
 		const mdfRequestDTO = (await liferayFetcher(
-			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}?nestedFields=mdfReqToActs,mdfReqToMDFClms`,
+			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}?nestedFields=mdfReqToMDFClms`,
 			Liferay.authToken
 		)) as MDFRequestDTO;
 
 		if (mdfRequestDTO) {
 			if (
 				mdfRequestDTO.mdfRequestStatus.key === Status.APPROVED.key &&
-				mdfRequestDTO.mdfReqToActs?.length
+				mdfRequestDTO.mdfReqToMDFClms?.length
 			) {
-				for (const activity of mdfRequestDTO.mdfReqToActs) {
+				for (const claim of mdfRequestDTO.mdfReqToMDFClms) {
 					if (
-						activity.id &&
-						(activity.activityStatus?.key ===
-							Status.SUBMITTED.key ||
-							activity.activityStatus?.key ===
-								Status.CANCELED.key)
+						claim.id &&
+						claim.mdfClaimStatus?.key === Status.CANCELED.key
 					) {
 						await patchObjectEntry(
-							ResourceName.ACTIVITY_DXP,
-							activity.id,
+							ResourceName.MDF_CLAIM_DXP,
+							claim.id,
 							{
-								activityStatus: Status.APPROVED,
+								mdfClaimStatus: Status.APPROVED,
 							}
 						);
-					}
-				}
-
-				if (mdfRequestDTO.mdfReqToMDFClms?.length) {
-					for (const claim of mdfRequestDTO.mdfReqToMDFClms) {
-						if (
-							claim.id &&
-							claim.mdfClaimStatus?.key === Status.CANCELED.key
-						) {
-							await patchObjectEntry(
-								ResourceName.MDF_CLAIM_DXP,
-								claim.id,
-								{
-									mdfClaimStatus: Status.APPROVED,
-								}
-							);
-						}
 					}
 				}
 				location.reload();
@@ -75,39 +55,21 @@ const patchRequestStatus = async (
 			}
 			else if (
 				mdfRequestDTO.mdfRequestStatus.key === Status.CANCELED.key &&
-				mdfRequestDTO.mdfReqToActs?.length
+				mdfRequestDTO.mdfReqToMDFClms?.length
 			) {
-				for (const activity of mdfRequestDTO.mdfReqToActs) {
+				for (const claim of mdfRequestDTO.mdfReqToMDFClms) {
 					if (
-						activity.id &&
-						activity.activityStatus?.key === Status.APPROVED.key
+						claim.id &&
+						(claim.mdfClaimStatus?.key === Status.APPROVED.key ||
+							claim.mdfClaimStatus?.key === Status.DRAFT.key)
 					) {
 						await patchObjectEntry(
-							ResourceName.ACTIVITY_DXP,
-							activity.id,
+							ResourceName.MDF_CLAIM_DXP,
+							claim.id,
 							{
-								activityStatus: Status.CANCELED,
+								mdfClaimStatus: Status.CANCELED,
 							}
 						);
-					}
-				}
-
-				if (mdfRequestDTO.mdfReqToMDFClms?.length) {
-					for (const claim of mdfRequestDTO.mdfReqToMDFClms) {
-						if (
-							claim.id &&
-							(claim.mdfClaimStatus?.key ===
-								Status.APPROVED.key ||
-								claim.mdfClaimStatus?.key === Status.DRAFT.key)
-						) {
-							await patchObjectEntry(
-								ResourceName.MDF_CLAIM_DXP,
-								claim.id,
-								{
-									mdfClaimStatus: Status.CANCELED,
-								}
-							);
-						}
 					}
 				}
 

@@ -35,7 +35,7 @@ const MDFRequestManagerStatus = () => {
 		MDFRequestDTO
 	>(
 		mdfRequestId &&
-			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}?nestedFields=mdfReqToActs,mdfReqToMDFClms`
+			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}`
 	);
 	const [patchedStatus, setPatchedStatus] = useState<LiferayPicklist>();
 

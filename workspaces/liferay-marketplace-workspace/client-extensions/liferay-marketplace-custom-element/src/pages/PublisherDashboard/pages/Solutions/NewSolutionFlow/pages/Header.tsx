@@ -102,7 +102,7 @@ const Header = () => {
 	};
 
 	const handleArrowClick = (index: number, direction: string) => {
-		const newIndex = direction === 'up' ? index - 1 : index + 1;
+		const newIndex = direction === 'top' ? index - 1 : index + 1;
 
 		const files = swapImageElements(
 			(contentType as HeaderContentTypeImages).content.headerImages,

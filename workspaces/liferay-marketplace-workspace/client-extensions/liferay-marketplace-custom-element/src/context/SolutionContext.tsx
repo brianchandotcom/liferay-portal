@@ -61,11 +61,16 @@ export type HeaderContentTypeImages = {
 	type: 'upload-images';
 };
 
+export type KebbabController = {
+	block: {};
+};
+
 export type HeaderContentType =
 	| HeaderContentTypeEmbeded
 	| HeaderContentTypeImages;
 
 export enum SolutionTypes {
+	SET_BLOCK_MOVE = 'SET_BLOCK_MOVE',
 	SET_CLEANUP = 'SET_CLEANUP',
 	SET_COMPANY = 'SET_COMPANY',
 	SET_CONTACT_US = 'SET_CONTACT_US',
@@ -79,6 +84,7 @@ export enum SolutionTypes {
 }
 
 type SolutionPayload = {
+	[SolutionTypes.SET_BLOCK_MOVE]: {direction: string; index: number};
 	[SolutionTypes.SET_CLEANUP]: undefined;
 	[SolutionTypes.SET_COMPANY]: Partial<{
 		description: string;
@@ -294,6 +300,32 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 			return {
 				...state,
 				details: newDetails,
+			};
+		}
+
+		case SolutionTypes.SET_BLOCK_MOVE: {
+			const {direction, index} = action.payload;
+			const blocks = [...state.details];
+
+			const blockToMove = blocks[index];
+
+			if (direction === 'Move to Top' || direction === 'Move to Bottom') {
+				blocks.splice(index, 1);
+
+				direction === 'Move to Top'
+					? blocks.unshift(blockToMove)
+					: blocks.push(blockToMove);
+			} else {
+				const newIndex =
+					direction === 'Move Up' ? index - 1 : index + 1;
+
+				blocks[index] = blocks[newIndex];
+				blocks[newIndex] = blockToMove;
+			}
+
+			return {
+				...state,
+				details: blocks,
 			};
 		}
 

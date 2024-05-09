@@ -54,8 +54,46 @@ const Details = () => {
 			{blocks.map((block, index) => {
 				const Component = (blockTypes as any)[block.type];
 
+				const handleMoveBlock = (direction: string) => {
+					dispatch({
+						payload: {
+							direction,
+							index,
+						},
+						type: SolutionTypes.SET_BLOCK_MOVE,
+					});
+				};
+
+				const dropdownItems = [
+					{
+						disabled: index === 0,
+						name: 'Move to Top',
+						onClick: () => handleMoveBlock('Move to Top'),
+					},
+					{
+						disabled: index === 0,
+						name: 'Move Up',
+						onClick: () => handleMoveBlock('Move Up'),
+					},
+					{
+						disabled: index === blocks.length - 1,
+						name: 'Move Down',
+						onClick: () => handleMoveBlock('Move Down'),
+					},
+					{
+						disabled: index === blocks.length - 1,
+						name: 'Move to Bottom',
+						onClick: () => handleMoveBlock('Move to Bottom'),
+					},
+					{
+						name: 'Delete',
+						onClick: () => handleMoveBlock('Delete'),
+					},
+				];
+
 				return (
 					<Form.SectionWithControllers
+						dropdownItems={dropdownItems}
 						index={index}
 						key={index}
 						name={

@@ -11,21 +11,19 @@ import ClayDropDown from '@clayui/drop-down';
 import {HTMLAttributes, useState} from 'react';
 
 interface SectionWithControllersProps extends HTMLAttributes<HTMLDivElement> {
+	dropdownItems: {
+		disabled?: boolean;
+		name: string;
+		onClick?: () => void;
+	}[];
 	index: number;
 	name: string;
 	position: number;
 }
 
-const dropDownItems = [
-	{name: 'Move to Top'},
-	{name: 'Move Up'},
-	{name: 'Move Down'},
-	{name: 'Move to Bottom'},
-	{name: 'Delete'},
-];
-
 export function SectionWithControllers({
 	children,
+	dropdownItems,
 	index,
 	name,
 	position,
@@ -70,8 +68,12 @@ export function SectionWithControllers({
 						}
 					>
 						<ClayDropDown.ItemList>
-							{dropDownItems.map((dropDownItem, index) => (
-								<ClayDropDown.Item key={index}>
+							{dropdownItems.map((dropDownItem, index) => (
+								<ClayDropDown.Item
+									disabled={dropDownItem.disabled}
+									key={index}
+									onClick={dropDownItem.onClick}
+								>
 									{dropDownItem.name}
 								</ClayDropDown.Item>
 							))}

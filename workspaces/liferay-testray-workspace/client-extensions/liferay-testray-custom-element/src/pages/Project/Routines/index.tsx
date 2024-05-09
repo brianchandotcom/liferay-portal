@@ -50,9 +50,9 @@ const Routines = () => {
 							clickable: true,
 							key: 'dueDate',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.dueDate
+								testrayRoutine?.testrayBuildDueDate
 									? getTimeFromNow(
-											testrayRoutine.builds[0]?.dueDate
+											testrayRoutine?.testrayBuildDueDate
 									  )
 									: null,
 							value: i18n.translate('execution-date'),

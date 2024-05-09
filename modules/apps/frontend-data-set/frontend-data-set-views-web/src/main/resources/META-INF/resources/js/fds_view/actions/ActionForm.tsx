@@ -646,6 +646,14 @@ const ActionForm = ({
 											  )
 											: undefined
 									}
+									helpMessage={
+										actionData.type ===
+										ACTION_TYPE.SIDEPANEL
+											? Liferay.Language.get(
+													'side-panel-title-help'
+											  )
+											: ''
+									}
 									id={titleFormElementId}
 									label={Liferay.Language.get('title')}
 									onChange={(translations) => {
@@ -665,11 +673,15 @@ const ActionForm = ({
 											url: actionData.url,
 										});
 									}}
-									placeholder={Liferay.Language.get(
+									placeholder={
 										actionData.type === ACTION_TYPE.MODAL
-											? 'add-the-title-of-the-modal'
-											: 'add-the-title-of-the-side-panel'
-									)}
+											? Liferay.Language.get(
+													'add-the-title-of-the-modal'
+											  )
+											: Liferay.Language.get(
+													'add-the-title-of-the-side-panel'
+											  )
+									}
 									required={
 										actionData.type !==
 										ACTION_TYPE.SIDEPANEL

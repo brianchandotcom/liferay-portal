@@ -273,6 +273,30 @@ test.describe('Manage object definitions through Model Builder', () => {
 		await apiHelpers.objectAdmin.deleteObjectFolder(objectFolder.id);
 	});
 
+	test('navigate to edit object definition page', async ({
+		context,
+		modelBuilderPage,
+		page,
+	}) => {
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.clickObjectDefinitionActionsButton(
+			'organization'
+		);
+
+		await modelBuilderPage.editInPageViewOption.click();
+
+		const pagePromise = context.waitForEvent('page');
+
+		await modelBuilderPage.openPageViewButton.click();
+
+		const editObjectDefinitionPage = await pagePromise;
+
+		await expect(
+			editObjectDefinitionPage.getByText('ERC:L_ORGANIZATION')
+		).toBeVisible();
+	});
+
 	test('see object definition details', async ({
 		apiHelpers,
 		modelBuilderPage,

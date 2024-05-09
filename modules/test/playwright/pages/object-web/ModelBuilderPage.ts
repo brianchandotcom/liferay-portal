@@ -14,6 +14,7 @@ export class ModelBuilderPage {
 	readonly deleteObjectDefinitionOption: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly deleteTrashButton: Locator;
+	readonly editInPageViewOption: Locator;
 	readonly editObjectFolderDetailsButton: Locator;
 	readonly fitViewButton: Locator;
 	readonly goToFolderButton: Locator;
@@ -33,6 +34,7 @@ export class ModelBuilderPage {
 	readonly newObjectRelationshipSaveButton: Locator;
 	readonly objectDefinitionNodes: Locator;
 	readonly objectRelationshipEdges: Locator;
+	readonly openPageViewButton: Locator;
 	readonly otherObjectFolders: Locator;
 	readonly page: Page;
 	readonly rightSidebar: Locator;
@@ -56,6 +58,9 @@ export class ModelBuilderPage {
 		this.deleteTrashButton = page
 			.getByRole('tabpanel')
 			.getByTitle('Delete');
+		this.editInPageViewOption = page.getByRole('menuitem', {
+			name: 'Edit in page view',
+		});
 		this.editObjectFolderDetailsButton = page.locator(
 			'button[name=editObjectFolderButton]'
 		);
@@ -115,6 +120,9 @@ export class ModelBuilderPage {
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 		this.objectDefinitionNodes = page.locator('.react-flow__node');
 		this.objectRelationshipEdges = page.locator('.react-flow__edge');
+		this.openPageViewButton = page.getByRole('button', {
+			name: 'Open Page View',
+		});
 		this.otherObjectFolders = page
 			.getByRole('region')
 			.filter({has: page.getByTitle('Go to Folder')});

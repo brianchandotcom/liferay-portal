@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.jsonwebservice.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -77,6 +78,22 @@ public class JSONWebServiceTest {
 		}
 	}
 
+	@Test
+	public void testJSONWebService() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(JSONWebServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		for (ServiceReference<?> serviceReference :
+				_getServiceReferences(bundleContext)) {
+
+			Class<?> clazz = _getTargetClass(
+				bundleContext.getService(serviceReference));
+
+			Assert.assertTrue(_hasJSONWebService(clazz));
+		}
+	}
+
 	private ServiceReference<?>[] _getServiceReferences(
 			BundleContext bundleContext)
 		throws Exception {
@@ -125,6 +142,24 @@ public class JSONWebServiceTest {
 
 			for (Class<?> iface : clazz.getInterfaces()) {
 				if (iface.isAnnotationPresent(AccessControlled.class)) {
+					return true;
+				}
+			}
+
+			clazz = clazz.getSuperclass();
+		}
+
+		return false;
+	}
+
+	private boolean _hasJSONWebService(Class<?> clazz) {
+		while (clazz != null) {
+			if (clazz.isAnnotationPresent(JSONWebService.class)) {
+				return true;
+			}
+
+			for (Class<?> iface : clazz.getInterfaces()) {
+				if (iface.isAnnotationPresent(JSONWebService.class)) {
 					return true;
 				}
 			}

@@ -126,7 +126,10 @@ const BreadcrumbSearch: React.FC<BreadccrumbSearchProps> = ({
 
 					{!MAX_BREADCRUMB_REACHED && (
 						<ClayAutocomplete className="mb-4">
-							<ClayAutocomplete.DropDown active={active}>
+							<ClayAutocomplete.DropDown
+								active={active}
+								onSetActive={setActive}
+							>
 								<ClayDropDown.ItemList>
 									{!!items.length &&
 										items?.map(

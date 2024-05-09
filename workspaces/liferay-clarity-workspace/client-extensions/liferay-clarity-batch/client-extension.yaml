@@ -15,4 +15,5 @@ liferay-clarity-batch-oauth-application-headless-server:
         - Liferay.Headless.Admin.Workflow.everything
         - Liferay.Headless.Batch.Engine.everything
         - Liferay.Notification.REST.everything
+        - Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

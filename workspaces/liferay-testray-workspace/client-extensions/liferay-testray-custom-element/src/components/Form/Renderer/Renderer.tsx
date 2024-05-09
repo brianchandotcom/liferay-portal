@@ -4,9 +4,7 @@
  */
 
 import Form from '..';
-import React, {memo, useEffect, useMemo, useState} from 'react';
-import {useSearchParams} from 'react-router-dom';
-import useQueryParams from '~/hooks/useQueryParams';
+import React, {memo, useMemo, useState} from 'react';
 
 import {Operators} from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
@@ -62,19 +60,6 @@ const Renderer: React.FC<RendererProps> = ({
 	onChange,
 }) => {
 	const [fieldDisabled, setFieldDisabled] = useState({});
-	const [searchParams] = useSearchParams();
-
-	const {filterInitialContext} = useQueryParams();
-
-	useEffect(() => {
-		if (searchParams.get('filter')) {
-			for (const key in form) {
-				if (filterInitialContext.filter[key] && form[key] === '') {
-					form[key] = filterInitialContext.filter[key];
-				}
-			}
-		}
-	}, [filterInitialContext.filter, form, searchParams]);
 
 	const fieldsMemoized = useMemo(() => fields, [fields]);
 

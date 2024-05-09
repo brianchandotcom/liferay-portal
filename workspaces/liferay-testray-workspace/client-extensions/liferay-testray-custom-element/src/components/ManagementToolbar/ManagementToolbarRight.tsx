@@ -5,13 +5,9 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {ReactNode, useCallback, useContext, useMemo} from 'react';
-import {useParams} from 'react-router-dom';
-import useSWR from 'swr';
+import {ReactNode, useCallback, useContext} from 'react';
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
-import fetcher from '~/services/fetcher';
 import {Liferay} from '~/services/liferay';
-import {safeJSONParse} from '~/util';
 
 import i18n from '../../i18n';
 import {FilterSchema} from '../../schema/filter';
@@ -67,7 +63,6 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	filterSchema,
 }) => {
 	const [{filters, pin}, dispatch] = useContext(ListViewContext);
-	const params = useParams();
 
 	const hasAppliedFilters = !!filters.entries.length;
 
@@ -96,57 +91,6 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 		});
 	}, [dispatch, filterSchema?.name, hasAppliedFilters, pin]);
 
-	const paramsMemoized = useMemo(() => {
-		const testrayModalParams = document.getElementById(
-			'testray-modal-params'
-		);
-
-		if (testrayModalParams) {
-			return testrayModalParams.textContent!;
-		}
-
-		return JSON.stringify({...params, ...customFilterFields});
-	}, [params, customFilterFields]);
-
-	const fieldsMemoized = useMemo(() => filterSchema?.fields, [filterSchema]);
-
-	const {data: fieldOptions = {}, isLoading} = useSWR(
-		filterSchema?.fields?.length ? `/filter-${filterSchema?.name}` : null,
-		async () => {
-			const parameters = safeJSONParse(paramsMemoized);
-
-			const fieldsWithResource = fieldsMemoized?.filter(
-				({resource}) => resource
-			);
-
-			const _fieldOptions: any = {};
-
-			if (fieldsWithResource) {
-				await Promise.all(
-					fieldsWithResource.map((field) =>
-						fetcher(
-							(typeof field.resource === 'function'
-								? field.resource(parameters)
-								: field.resource) as string
-						)
-					)
-				).then((results) =>
-					results.forEach((result, index) => {
-						const field = fieldsWithResource[index];
-
-						if (field.transformData) {
-							const parsedValue = field.transformData(result);
-
-							_fieldOptions[field.name] = parsedValue;
-						}
-					})
-				);
-			}
-
-			return _fieldOptions;
-		}
-	);
-
 	return (
 		<ClayManagementToolbar.ItemList>
 			{filterSchema?.fields?.length && (
@@ -164,9 +108,8 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 
 					<ManagementToolbarFilter
 						applyFilters={applyFilters}
-						fieldOptions={fieldOptions}
+						customFilterFields={customFilterFields}
 						filterSchema={filterSchema}
-						isLoading={isLoading}
 					/>
 				</>
 			)}

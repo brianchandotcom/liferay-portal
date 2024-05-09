@@ -37,7 +37,6 @@ import {APIResponse, Results} from '../../services/rest';
 import {SortDirection} from '../../types';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
-import {RendererFields} from '../Form/Renderer';
 import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
@@ -114,6 +113,10 @@ const ListView: React.FC<ListViewProps> = ({
 	const {updateUrlParams} = useQueryParams();
 	const [searchParams] = useSearchParams();
 
+	const urlPage = searchParams.get('page');
+
+	const urlPageSize = searchParams.get('pageSize');
+
 	const onSelectRowNormalizer = useMemo(
 		() => normalizers.onSelectRow ?? noop,
 		[normalizers.onSelectRow]
@@ -166,15 +169,16 @@ const ListView: React.FC<ListViewProps> = ({
 	};
 
 	const filter = useMemo(() => {
-		const appliedFilters: {[key: string]: string} =
-			filterVariables.appliedFilter;
+		const appliedFilters: {[key: string]: string} = {
+			...filterVariables.appliedFilter,
+		};
 
 		const filters: {[key: string]: string | undefined} = {};
 
 		Object.entries(appliedFilters).forEach(([key, value]) => {
 			const matchingField = filterSchema.fields.find(
 				(field) => field.name === key && field.isCustomFilter
-			) as RendererFields;
+			);
 
 			if (matchingField) {
 				filters[key] = SearchBuilder.createCustomFilter(
@@ -203,8 +207,14 @@ const ListView: React.FC<ListViewProps> = ({
 		() => ({
 			...filter,
 			forceRefetch,
-			page: listViewContext.page,
-			pageSize: listViewContext.pageSize,
+			page:
+				managementToolbarProps.applyFilters && urlPage
+					? Number(urlPage)
+					: listViewContext.page,
+			pageSize:
+				managementToolbarProps.applyFilters && urlPageSize
+					? Number(urlPageSize)
+					: listViewContext.pageSize,
 			sort: buildSort(sort),
 		}),
 		[
@@ -212,7 +222,10 @@ const ListView: React.FC<ListViewProps> = ({
 			forceRefetch,
 			listViewContext.page,
 			listViewContext.pageSize,
+			managementToolbarProps.applyFilters,
 			sort,
+			urlPage,
+			urlPageSize,
 		]
 	);
 

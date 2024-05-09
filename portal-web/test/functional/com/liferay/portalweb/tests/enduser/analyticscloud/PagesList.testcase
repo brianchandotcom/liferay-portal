@@ -46,6 +46,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8336 | Test Summary: Search for a Page in Pages list"
 	@priority = 5
 	test CanSearchPageInPagesList {
+		property test.run.type = "single";
+
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
 				ACUtils.addPage(layoutName = ${layoutName});

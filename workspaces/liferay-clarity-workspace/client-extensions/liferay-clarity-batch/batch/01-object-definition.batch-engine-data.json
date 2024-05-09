@@ -1159,6 +1159,219 @@
 									],
 									"priority": 0,
 									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Business Address"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessAddressLine1",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessAddressLine2",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessCity",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessZIPPostalCode",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessStateProvinceRegion",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessCountry",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Additional Business Information"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessLicenseNumber",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessResaleNumber",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessTaxIDNumber",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Attachments"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "businessLicense",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "businessProofOfInsurance",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "References"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Bank Details"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "bankName",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "bankPhoneNumber",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "bankAccountNumber",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "bankAddressLine1",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "bankAddressLine2",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "bankCity",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "bankZIPPostalCode",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "bankStateProvinceRegion",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "bankCountry",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
 								}
 							]
 						}

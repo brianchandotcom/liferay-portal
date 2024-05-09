@@ -14,7 +14,7 @@ import require from '../util/require.mjs';
 export default async function getGlobalSymbols() {
 	const rootDir = await getRootDir();
 
-	const {symbols} = require(path.join(rootDir, 'node-build.config.js'));
+	const {symbols} = require(path.join(rootDir, 'node-scripts.config.js'));
 
 	return symbols || {};
 }

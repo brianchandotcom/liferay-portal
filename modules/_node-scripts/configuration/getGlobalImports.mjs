@@ -21,7 +21,7 @@ import require from '../util/require.mjs';
 export default async function getGlobalImports() {
 	const rootDir = await getRootDir();
 
-	const {imports} = require(path.join(rootDir, 'node-build.config.js'));
+	const {imports} = require(path.join(rootDir, 'node-scripts.config.js'));
 
 	const externalImports = Object.keys(imports).reduce(
 		(externalImports, providerName) => {

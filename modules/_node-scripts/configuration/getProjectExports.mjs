@@ -12,7 +12,7 @@ import require from '../util/require.mjs';
  * ]
  */
 export default function getProjectExports() {
-	const {exports} = require('./node-build.config.js');
+	const {exports} = require('./node-scripts.config.js');
 
 	if (exports === undefined) {
 		return [];

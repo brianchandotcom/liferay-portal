@@ -10,6 +10,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d name=${siteNavigationMenuName} \
 				-d type=0 \
@@ -29,6 +30,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d siteNavigationMenuId=${siteNavigationMenuId} \
 				-d parentSiteNavigationMenuItemId=${parentSiteNavigationMenuItemId} \

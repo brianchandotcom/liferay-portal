@@ -8,14 +8,6 @@
 		"type": "string"
 	},
 	{
-		"key": "approved",
-		"name": "Approved",
-		"name_i18n": {
-			"en-US": "Approved"
-		},
-		"type": "string"
-	},
-	{
 		"key": "active",
 		"name": "Active",
 		"name_i18n": {
@@ -32,10 +24,26 @@
 		"type": "string"
 	},
 	{
-		"key": "canceled",
-		"name": "Canceled",
+		"key": "completed",
+		"name": "Completed",
 		"name_i18n": {
-			"en-US": "Canceled"
+			"en-US": "Completed"
+		},
+		"type": "string"
+	},
+	{
+		"key": "moreInfoRequested",
+		"name": "More Info Requested",
+		"name_i18n": {
+			"en-US": "More Info Requested"
+		},
+		"type": "string"
+	},
+	{
+		"key": "rejected",
+		"name": "Rejected",
+		"name_i18n": {
+			"en-US": "Rejected"
 		},
 		"type": "string"
 	}

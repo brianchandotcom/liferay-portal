@@ -30,10 +30,11 @@ definition {
 	@summary = "Default summary"
 	macro _createEmployee(firstname = null, managerId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/employees \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"firstname": "${firstname}",
@@ -49,10 +50,11 @@ definition {
 	@summary = "Default summary"
 	macro _createManager(firstname = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/managers \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"firstname": "${firstname}"
@@ -98,10 +100,11 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId1}/object-relationships \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"deletionType": "${deletionType}",
@@ -139,10 +142,11 @@ definition {
 		}
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntry1}/${relationshipName}/${objectEntry2} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		return ${curl};
@@ -154,10 +158,11 @@ definition {
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntryId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 		''';
 
@@ -171,10 +176,11 @@ definition {
 		Variables.assertDefined(parameterList = ${relationshipId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json
 		''';
 
@@ -188,10 +194,11 @@ definition {
 		Variables.assertDefined(parameterList = ${employeeId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/employees/${employeeId} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var employeeFirstname = JSONCurlUtil.get(${curl}, "$.firstname");
@@ -204,10 +211,11 @@ definition {
 		Variables.assertDefined(parameterList = ${managerId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/managers/${managerId} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var managerFirstname = JSONCurlUtil.get(${curl}, "$.firstname");
@@ -229,10 +237,11 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		if (isSet(token)) {
@@ -249,10 +258,11 @@ definition {
 		Variables.assertDefined(parameterList = ${aggregationTermsValue});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/${objects}?aggregationTerms=${aggregationTermsValue} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var json = JSONCurlUtil.get(${curl});
@@ -265,10 +275,11 @@ definition {
 		Variables.assertDefined(parameterList = "${nestedField}, ${objects}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/${objects}?nestedFields=${nestedField} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var json = JSONCurlUtil.get(${curl});
@@ -281,10 +292,11 @@ definition {
 		Variables.assertDefined(parameterList = ${objectDefinitionId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		if (isSet(relationshipName)) {
@@ -311,10 +323,11 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var relationshipName = JSONCurlUtil.get(${curl}, "$.name");
@@ -327,10 +340,11 @@ definition {
 		Variables.assertDefined(parameterList = "${deletionType},${relationshipId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-H accept: application/json \
 				-d {
@@ -357,10 +371,11 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		if (isSet(token)) {
@@ -377,10 +392,11 @@ definition {
 		Variables.assertDefined(parameterList = "${employeeId},${firstname},${managerId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/employees/${employeeId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"firstname": "${firstname}",
@@ -398,10 +414,11 @@ definition {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${parameter},${parameterValue}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"${parameter}": "${parameterValue}"
@@ -455,12 +472,13 @@ definition {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${objectSchemas},${batchActions}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		for (var objectSchema : list ${objectSchemas}) {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/${objectSchema} \
 					-H Content-Type: application/json \
-					-u test@liferay.com:test
+					-u test@liferay.com:${userPassword}
 			''';
 
 			var response = JSONCurlUtil.get(${curl});
@@ -723,11 +741,12 @@ definition {
 		if (!(isSet(requiredStringFieldName))) {
 			var requiredStringFieldName = "name";
 		}
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(objectDefinitionExternalReferenceCode) && isSet(requiredStringFieldNameExternalReferenceCode)) {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions \
-					-u test@liferay.com:test \
+					-u test@liferay.com:${userPassword} \
 					-H Content-Type: application/json \
 					-d {
 						"active": true,
@@ -759,7 +778,7 @@ definition {
 		else {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions \
-					-u test@liferay.com:test \
+					-u test@liferay.com:${userPassword} \
 					-H Content-Type: application/json \
 					-d {
 						"active": true,
@@ -992,11 +1011,12 @@ definition {
 	@summary = "Default summary"
 	macro getIdOfObjectDefinitionExportBatch() {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/export-batch \
 				-H Content-Type: application/json \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var objectDefinitionsExportBatchId = JSONCurlUtil.post(${curl}, "$.id");
@@ -1007,6 +1027,7 @@ definition {
 	@summary = "Default summary"
 	macro getObjectDefinitionIdByName(name = null, virtualHost = null) {
 		Variables.assertDefined(parameterList = ${name});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
@@ -1022,7 +1043,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions?filter=name%20eq%20%27${name}%27 \
 				-H Content-Type: application/json \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var objectDefinitionId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${name}')]['id']");
@@ -1033,11 +1054,12 @@ definition {
 	@summary = "Default summary"
 	macro getObjectDefinitions() {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
 				-H Content-Type: application/json \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var response = JSONCurlUtil.get(${curl});
@@ -1059,6 +1081,7 @@ definition {
 		Variables.assertDefined(parameterList = ${en_US_plural_label});
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
@@ -1074,7 +1097,7 @@ definition {
 		if (isSet(parameter)) {
 			var curl = '''
 				${portalURL}/o/c/${en_US_plural_label_lowercase}?${parameter} \
-					-u test@liferay.com:test
+					-u test@liferay.com:${userPassword}
 			''';
 		}
 		else if (isSet(scopeKey)) {
@@ -1088,13 +1111,13 @@ definition {
 
 			var curl = '''
 				${portalURL}/o/c/${en_US_plural_label_lowercase}/scopes/${scopeKey} \
-					-u test@liferay.com:test
+					-u test@liferay.com:${userPassword}
 			''';
 		}
 		else {
 			var curl = '''
 				${portalURL}/o/c/${en_US_plural_label_lowercase}/ \
-					-u test@liferay.com:test
+					-u test@liferay.com:${userPassword}
 			''';
 		}
 
@@ -1123,11 +1146,12 @@ definition {
 		}
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId}/${relationshipName} \
 				-H accept: application/json \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var json = JSONCurlUtil.get(${curl});
@@ -1156,10 +1180,11 @@ definition {
 	@summary = "Default summary"
 	macro graphQL() {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/graphql \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {"query":"{ c { students { items { id universityStudents } } } }","variables":null}
 		''';
@@ -1204,11 +1229,12 @@ definition {
 		}
 
 		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectDefinitionName});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(listTypeDefinitionId)) {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields \
-					-u test@liferay.com:test \
+					-u test@liferay.com:${userPassword} \
 					-H Content-Type: application/json \
 					-H accept: application/json \
 					-d {
@@ -1226,7 +1252,7 @@ definition {
 		else {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields \
-					-u test@liferay.com:test \
+					-u test@liferay.com:${userPassword} \
 					-H Content-Type: application/json \
 					-H accept: application/json \
 					-d {

@@ -216,6 +216,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public String getResourceName() {
+		return _objectDefinition.getShortName();
+	}
+
+	@Override
 	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
 		throws Exception {

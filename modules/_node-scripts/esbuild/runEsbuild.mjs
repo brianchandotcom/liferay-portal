@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 export default async function runEsbuild(config, configName) {
-	return Promise.all([
+	await Promise.all([
 		doRunEsbuild(config, configName),
 		writeDebugEsbuildConfig(config, configName),
 	]);

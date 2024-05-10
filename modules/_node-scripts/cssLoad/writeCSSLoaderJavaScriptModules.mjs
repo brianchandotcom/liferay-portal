@@ -8,7 +8,7 @@ export default async function writeCSSLoaderJavaScriptModules(projectExports, pr
 		return;
 	}
 
-	return Promise.all( 
+	await Promise.all(
 		projectExports
 			.filter(moduleName => moduleName.endsWith('.css'))
 			.map(moduleName => writeCSSLoaderJavaScriptModule(projectWebContextPath, moduleName))

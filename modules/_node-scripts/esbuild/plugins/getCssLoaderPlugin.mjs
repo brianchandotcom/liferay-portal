@@ -1,5 +1,5 @@
-import getFlatName from '../util/getFlatName.mjs';
-import getPathPrefix from './getPathPrefix.mjs';
+import getFlatName from '../../util/getFlatName.mjs';
+import getPathPrefix from '../getPathPrefix.mjs';
 	
 export default function getCssLoaderPlugin(globalImports, type) {
 	return {

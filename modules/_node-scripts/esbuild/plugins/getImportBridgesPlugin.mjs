@@ -1,7 +1,7 @@
-import {IMPORT_BRIDGE_FILTER, decodeBridgePath} from './getImportBridgePath.mjs';
-import getExportedSymbols from '../util/getExportedSymbols.mjs';
-import getFlatName from '../util/getFlatName.mjs';
-import getPathPrefix from './getPathPrefix.mjs';
+import getExportedSymbols from '../../util/getExportedSymbols.mjs';
+import getFlatName from '../../util/getFlatName.mjs';
+import {IMPORT_BRIDGE_FILTER, decodeBridgePath} from '../getImportBridgePath.mjs';
+import getPathPrefix from '../getPathPrefix.mjs';
 
 export default function getImportBridgesPlugin(globalImports, globalSymbols) {
 	const importBridgesCache = {};

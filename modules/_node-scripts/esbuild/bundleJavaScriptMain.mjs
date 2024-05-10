@@ -1,10 +1,10 @@
 import path from 'path';
 
-import getCssLoaderPlugin from './getCssLoaderPlugin.mjs';
-import getExactAliasPlugin from './getExactAliasPlugin.mjs';
-import getImportBridgesPlugin from './getImportBridgesPlugin.mjs';
-import getScssLoaderPlugin from './getScssLoaderPlugin.mjs';
 import getExternals from './getExternals.mjs';
+import getCssLoaderPlugin from './plugins/getCssLoaderPlugin.mjs';
+import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
+import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
+import getScssLoaderPlugin from './plugins/getScssLoaderPlugin.mjs';
 import runEsbuild from './runEsbuild.mjs';
 
 export default async function bundleJavaScriptMain(

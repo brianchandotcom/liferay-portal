@@ -1,8 +1,8 @@
-import getExactAliasPlugin from './getExactAliasPlugin.mjs';
 import getFlatName from '../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
 import getExternals from './getExternals.mjs';
-import getImportBridgesPlugin from './getImportBridgesPlugin.mjs';
+import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
+import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
 import runEsbuild from './runEsbuild.mjs';
 import writeExportBridge from './writeExportBridge.mjs';
 

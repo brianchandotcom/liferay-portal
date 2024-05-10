@@ -1,6 +1,6 @@
 import path from 'path';
 
-import getImportBridgePath from './getImportBridgePath.mjs';
+import getImportBridgePath from '../getImportBridgePath.mjs';
 
 export default function getExactAliasPlugin(globalImports, type, exclusions) {
 	const aliases = getAliases(globalImports, type, exclusions);

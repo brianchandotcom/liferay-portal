@@ -21,7 +21,7 @@ export default async function bundleJavaScriptExports(
 }
 
 async function bundle(globalImports, globalSymbols, moduleName) {
-	const config = {
+	const esbuildConfig = {
 		bundle: true,
 		entryPoints: [getEntryPoint(moduleName)],
 		external: getExternals(globalImports, 'exports'),
@@ -37,5 +37,5 @@ async function bundle(globalImports, globalSymbols, moduleName) {
 	
 	await writeExportBridge(globalSymbols, moduleName);
 
-	return runEsbuild(config, getFlatName(moduleName));
+	return runEsbuild(esbuildConfig, getFlatName(moduleName));
 }

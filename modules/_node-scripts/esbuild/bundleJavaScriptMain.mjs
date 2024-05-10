@@ -14,7 +14,7 @@ export default async function bundleJavaScriptMain(
 		return;
 	}
 
-	const config = {
+	const esbuildConfig = {
 		bundle: true,
 		entryNames: 'index',
 		entryPoints: [path.resolve(projectMain)],
@@ -36,5 +36,5 @@ export default async function bundleJavaScriptMain(
 		]
 	};
 
-	return runEsbuild(config, 'main');
+	return runEsbuild(esbuildConfig, 'main');
 }

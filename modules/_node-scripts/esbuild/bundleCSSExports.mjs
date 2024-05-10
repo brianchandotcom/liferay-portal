@@ -15,7 +15,7 @@ export default async function bundleCSSExports(projectExports) {
 }
 
 async function bundle(moduleName) {
-	const config = {
+	const esbuildConfig = {
 		entryPoints: [getEntryPoint(moduleName)],
 		loader: {
 			'.png': 'empty',
@@ -24,5 +24,5 @@ async function bundle(moduleName) {
 		sourcemap: true,
 	};
 	
-	return runEsbuild(config, getFlatName(moduleName));
+	return runEsbuild(esbuildConfig, getFlatName(moduleName));
 }

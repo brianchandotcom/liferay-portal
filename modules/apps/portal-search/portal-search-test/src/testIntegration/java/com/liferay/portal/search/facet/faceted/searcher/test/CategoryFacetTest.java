@@ -85,11 +85,8 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		addUser(_group, categoryId);
 
-		SearchContext searchContext = getSearchContext(
-			assetCategory.getTitleCurrentValue());
-
-		searchContext.setCategoryIds(new long[] {categoryId});
-		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+		SearchContext searchContext = _getSearchContext(
+			assetCategory, categoryId);
 
 		Facet facet = categoryFacetFactory.newInstance(searchContext);
 
@@ -119,11 +116,8 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		addUser(_group, categoryId);
 
-		SearchContext searchContext = getSearchContext(
-			assetCategory.getTitleCurrentValue());
-
-		searchContext.setCategoryIds(new long[] {categoryId});
-		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+		SearchContext searchContext = _getSearchContext(
+			assetCategory, categoryId);
 
 		Facet facet = categoryFacetFactory.newInstance(searchContext);
 
@@ -146,11 +140,8 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		addUser(_group, categoryId);
 
-		SearchContext searchContext = getSearchContext(
-			assetCategory.getTitleCurrentValue());
-
-		searchContext.setCategoryIds(new long[] {categoryId});
-		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+		SearchContext searchContext = _getSearchContext(
+			assetCategory, categoryId);
 
 		Facet facet = categoryFacetFactory.newInstance(searchContext);
 
@@ -243,6 +234,19 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		return StringBundler.concat(
 			assetCategory.getVocabularyId(), StringPool.DASH,
 			assetCategory.getCategoryId());
+	}
+
+	private SearchContext _getSearchContext(
+			AssetCategory assetCategory, long categoryId)
+		throws Exception {
+
+		SearchContext searchContext = getSearchContext(
+			assetCategory.getTitleCurrentValue());
+
+		searchContext.setCategoryIds(new long[] {categoryId});
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		return searchContext;
 	}
 
 	@DeleteAfterTestRun

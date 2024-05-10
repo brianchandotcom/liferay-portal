@@ -225,11 +225,11 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 								className='d-flex flex-column justify-content-center'
 								style={{minHeight: 240}}
 							>
-								<h4 className='no-results-title'>
+								<div className='h4 no-results-title'>
 									{Liferay.Language.get(
 										'there-are-no-results-found'
 									)}
-								</h4>
+								</div>
 
 								{Liferay.Language.get(
 									'please-try-a-different-search-term'
@@ -249,11 +249,11 @@ const Dropdown = ({channelId, groupId, items, loading, onFilterChange}) => {
 								className='d-flex flex-column justify-content-center'
 								style={{minHeight: 240}}
 							>
-								<h4 className='no-results-title'>
+								<div className='h4 no-results-title'>
 									{Liferay.Language.get(
 										'there-are-no-segments'
 									)}
-								</h4>
+								</div>
 
 								{Liferay.Language.get(
 									'start-by-creating-a-segment'

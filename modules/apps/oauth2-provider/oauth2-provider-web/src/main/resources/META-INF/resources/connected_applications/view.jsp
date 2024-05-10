@@ -59,9 +59,9 @@ if (Validator.isNotNull(backURL)) {
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-					<h4>
+					<div class="h4">
 						<aui:a href="<%= viewURL.toString() %>"><%= HtmlUtil.escape(oAuth2Application.getName()) %></aui:a>
-					</h4>
+					</div>
 
 					<h5 class="text-default">
 						<span><liferay-ui:message key="authorization" /></span>:

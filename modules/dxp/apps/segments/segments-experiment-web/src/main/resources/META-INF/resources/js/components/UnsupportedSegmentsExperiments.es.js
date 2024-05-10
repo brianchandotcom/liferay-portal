@@ -12,11 +12,11 @@ export default function UnsupportedSegmentsExperiments() {
 		<div className="align-items-center d-flex flex-column p-3">
 			<FlaskIllustration />
 
-			<h4 className="text-center text-dark">
+			<div className="h4 text-center text-dark">
 				{Liferay.Language.get(
 					'ab-test-is-available-only-for-content-pages'
 				)}
-			</h4>
+			</div>
 		</div>
 	);
 }

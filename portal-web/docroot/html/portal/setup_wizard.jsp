@@ -115,9 +115,9 @@
 											<liferay-ui:message key="this-database-is-useful-for-development-and-demo'ing-purposes" />
 										</c:when>
 										<c:otherwise>
-											<h4>
+											<div class="h4">
 												<liferay-ui:message key="configured-database" />
-											</h4>
+											</div>
 
 											<dl class="database-values dl-horizontal">
 												<c:choose>

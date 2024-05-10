@@ -49,11 +49,11 @@ const Panel = ({bottomContent, children, expression}) => (
 		<ClayPanel.Body>
 			<div className="form-group-autofit">
 				<FormGroupItem className="form-group-item-label form-group-item-shrink">
-					<h4>
+					<div className="h4">
 						<span className="text-truncate-inline">
 							<span className="text-truncate">{expression}</span>
 						</span>
-					</h4>
+					</div>
 				</FormGroupItem>
 
 				{children}

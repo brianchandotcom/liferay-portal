@@ -46,7 +46,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 						<liferay-ui:message key="not-set" />
 					</c:when>
 					<c:otherwise>
-						<h4><%= HtmlUtil.escape(defaultBillingAddress.getName()) %></h4>
+						<div class="h4"><%= HtmlUtil.escape(defaultBillingAddress.getName()) %></div>
 
 						<liferay-text-localizer:address-display
 							address="<%= defaultBillingAddress %>"
@@ -113,7 +113,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 						<liferay-ui:message key="not-set" />
 					</c:when>
 					<c:otherwise>
-						<h4><%= HtmlUtil.escape(defaultShippingAddress.getName()) %></h4>
+						<div class="h4"><%= HtmlUtil.escape(defaultShippingAddress.getName()) %></div>
 
 						<liferay-text-localizer:address-display
 							address="<%= defaultShippingAddress %>"

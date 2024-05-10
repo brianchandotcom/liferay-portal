@@ -82,9 +82,9 @@ function Experiments({
 			{experiment && (
 				<>
 					<div className="align-items-center d-flex justify-content-between">
-						<h4 className="mb-0 text-dark text-truncate">
+						<div className="h4 mb-0 text-dark text-truncate">
 							{experiment.name}
-						</h4>
+						</div>
 
 						{experiment.editable && (
 							<ClayDropDown
@@ -226,11 +226,11 @@ function Experiments({
 						width="185"
 					/>
 
-					<h4 className="text-dark">
+					<div className="h4 text-dark">
 						{Liferay.Language.get(
 							'no-active-tests-were-found-for-the-selected-experience'
 						)}
-					</h4>
+					</div>
 
 					<p>{Liferay.Language.get('create-test-help-message')}</p>
 

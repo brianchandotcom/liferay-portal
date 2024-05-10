@@ -414,11 +414,11 @@ export function Conditions({
 								openModal({
 									payload: {
 										body: (
-											<h4>
+											<div className="h4">
 												{Liferay.Language.get(
 													'are-you-sure-you-want-to-delete-this-condition'
 												)}
-											</h4>
+											</div>
 										),
 										footer: [
 											null,

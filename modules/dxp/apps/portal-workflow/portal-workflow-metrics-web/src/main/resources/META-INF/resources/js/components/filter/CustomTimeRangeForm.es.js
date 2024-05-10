@@ -90,7 +90,9 @@ export default function CustomTimeRangeForm({
 	return (
 		<div className="custom-range-wrapper" ref={wrapperRef}>
 			<ClayForm className="custom-range-form">
-				<h4 className="mb-2">{Liferay.Language.get('custom-range')}</h4>
+				<div className="h4 mb-2">
+					{Liferay.Language.get('custom-range')}
+				</div>
 
 				<span className="form-text mb-3 text-semi-bold">
 					{sub(Liferay.Language.get('default-date-format-is-x'), [

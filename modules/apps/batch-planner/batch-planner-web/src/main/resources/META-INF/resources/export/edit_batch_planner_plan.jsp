@@ -27,7 +27,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 		<input id="<portlet:namespace />containsHeaders" name="<portlet:namespace />containsHeaders" type="hidden" value="<%= true %>" />
 
 		<div class="card">
-			<h4 class="card-header"><liferay-ui:message key="export-settings" /></h4>
+			<div class="card-header"><liferay-ui:message key="export-settings" /></div>
 
 			<div class="card-body">
 				<liferay-frontend:edit-form-body>

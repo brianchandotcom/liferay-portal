@@ -12,7 +12,7 @@ CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute(CommerceOrderC
 %>
 
 <div class="container-fluid container-fluid-max-xl">
-	<h4><liferay-ui:message key="order-details" /></h4>
+	<div class="h4"><liferay-ui:message key="order-details" /></div>
 
 	<liferay-ui:search-container
 		id="commerceOrderItems"

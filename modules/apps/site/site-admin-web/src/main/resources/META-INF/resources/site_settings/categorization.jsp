@@ -17,7 +17,7 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 <liferay-asset:asset-tags-error />
 
-<h4 class="sheet-subtitle"><liferay-ui:message key="categories" /></h4>
+<div class="sheet-subtitle"><liferay-ui:message key="categories" /></div>
 
 <liferay-asset:asset-categories-selector
 	className="<%= Group.class.getName() %>"
@@ -25,7 +25,7 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 	visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 />
 
-<h4 class="sheet-subtitle"><liferay-ui:message key="tags" /></h4>
+<div class="sheet-subtitle"><liferay-ui:message key="tags" /></div>
 
 <liferay-asset:asset-tags-selector
 	className="<%= Group.class.getName() %>"

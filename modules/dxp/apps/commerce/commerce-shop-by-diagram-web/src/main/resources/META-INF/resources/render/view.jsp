@@ -20,9 +20,9 @@ CSDiagramSetting csDiagramSetting = csDiagramCPTypeHelper.getCSDiagramSetting(co
 %>
 
 <div class="col my-4 p-0">
-	<h4 class="component-title mb-4 text-7">
+	<div class="component-title mb-4 text-7">
 		<%= cpCatalogEntry.getName() %>
-	</h4>
+	</div>
 
 	<p class="text-3">
 		<%= cpCatalogEntry.getShortDescription() %>

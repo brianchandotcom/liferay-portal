@@ -85,7 +85,7 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 								>
 									<div class="connection-info-item-header">
 										<div class="connection-info-item-header-block">
-											<h4 class="connection-id">
+											<div class="connection-id h4">
 												<%= connectionInformation.getConnectionId() %>
 
 												<%
@@ -100,7 +100,7 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 												}
 												%>
 
-											</h4>
+											</div>
 
 											<c:if test="<%= Validator.isNotNull(connectionInformation.getClusterName()) %>">
 												<span class="connection-cluster-name text-secondary"><%= connectionInformation.getClusterName() %></span>

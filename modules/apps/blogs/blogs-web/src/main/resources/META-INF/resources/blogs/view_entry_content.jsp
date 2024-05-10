@@ -47,7 +47,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					%>
 
 					<c:if test="<%= Objects.equals(blogsPortletInstanceConfiguration.displayStyle(), BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) && Validator.isNotNull(subtitle) %>">
-						<h4 class="sub-title"><%= HtmlUtil.escape(subtitle) %></h4>
+						<div class="h4 sub-title"><%= HtmlUtil.escape(subtitle) %></div>
 					</c:if>
 				</clay:content-col>
 

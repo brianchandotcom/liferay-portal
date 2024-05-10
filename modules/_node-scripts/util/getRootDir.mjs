@@ -9,10 +9,13 @@ export default async function getRootDir() {
 	}
 
 	let rootDir = path.resolve('.');
+	let found = false;
 
-	while(rootDir !== '/') {
+	while(path.dirname(rootDir) !== rootDir) {
 		try {
 			await fs.stat(path.join(rootDir, 'yarn.lock'));
+
+			found = true;
 
 			break;
 		}
@@ -23,6 +26,10 @@ export default async function getRootDir() {
 
 			rootDir = path.resolve(rootDir, '..');
 		}
+	}
+
+	if (!found) {
+		throw new Error('Unable to find root project folder (is yarn.lock missing?)');
 	}
 
 	cachedRootDir = rootDir;

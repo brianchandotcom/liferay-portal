@@ -80,12 +80,12 @@ async function writeNpmScriptsConfig(projectNpmScriptsConfig) {
 	}
 
 	try {
-		await fs.access('./npmscripts.config.js', constants.F_OK);
+		await fs.access('npmscripts.config.js', constants.F_OK);
 
-		await fs.rename('./npmscripts.config.js', './npmscripts.config.js.$$$');
+		await fs.rename('npmscripts.config.js', 'npmscripts.config.js.$$$');
 
 		await fs.writeFile(
-			'./npmscripts.config.js',
+			'npmscripts.config.js',
 			`module.exports = ${JSON.stringify(projectNpmScriptsConfig, null, 2)};`,
 			'utf-8'
 		);
@@ -98,7 +98,7 @@ async function writeNpmScriptsConfig(projectNpmScriptsConfig) {
 		}
 
 		await fs.writeFile(
-			'./npmscripts.config.js',
+			'npmscripts.config.js',
 			`module.exports = ${JSON.stringify(projectNpmScriptsConfig, null, 2)};`,
 			'utf-8'
 		);

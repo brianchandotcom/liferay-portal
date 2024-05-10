@@ -4523,6 +4523,16 @@ public class DataFactory {
 			groupId, "2_columns_ii", name, false, column1, column2);
 	}
 
+	public List<LayoutModel> newLayoutModels(
+		long groupId, String name, String column1, String column2) {
+
+		return ListUtil.fromArray(
+			newLayoutModel(
+				groupId, "2_columns_ii", name, false, column1, column2),
+			newLayoutModel(
+				groupId, "2_columns_ii", name, true, column1, column2));
+	}
+
 	public LayoutPageTemplateStructureModel newLayoutPageTemplateStructureModel(
 		LayoutModel layoutModel) {
 

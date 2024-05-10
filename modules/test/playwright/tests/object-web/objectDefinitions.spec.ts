@@ -13,6 +13,10 @@ import {getRandomInt} from '../../utils/getRandomInt';
 export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 test.describe('Manage object definitions through Model Builder', () => {
+	test.beforeEach(({page}) => {
+		page.setViewportSize({height: 1080, width: 1920});
+	});
+
 	test('can create an object definition by model builder', async ({
 		apiHelpers,
 		modalAddObjectDefinitionPage,
@@ -276,7 +280,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 	test('navigate to edit object definition page', async ({
 		context,
 		modelBuilderPage,
-		page,
 	}) => {
 		await modelBuilderPage.goto({objectFolderName: 'Default'});
 

@@ -18,6 +18,18 @@ import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
+type MoveOrDeleteBlockActions = {
+	[key: string]: () => void;
+};
+
+export enum KebabDropdownItems {
+	MOVE_TO_TOP = 'Move to Top',
+	MOVE_UP = 'Move Up',
+	MOVE_DOWN = 'Move Down',
+	MOVE_TO_BOTTOM = 'Move To Bottom',
+	DELETE = 'Delete',
+}
+
 export type TextBlock = {
 	content: {
 		description: string;
@@ -59,10 +71,6 @@ export type HeaderContentTypeImages = {
 		headerImages: UploadedFile[];
 	};
 	type: 'upload-images';
-};
-
-export type KebbabController = {
-	block: {};
 };
 
 export type HeaderContentType =
@@ -309,18 +317,32 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 
 			const blockToMove = blocks[index];
 
-			if (direction === 'Move to Top' || direction === 'Move to Bottom') {
-				blocks.splice(index, 1);
+			const MoveOrDeleteBlockAction: MoveOrDeleteBlockActions = {
+				[KebabDropdownItems.MOVE_TO_TOP]: () => {
+					blocks.splice(index, 1);
+					blocks.unshift(blockToMove);
+				},
+				[KebabDropdownItems.MOVE_TO_BOTTOM]: () => {
+					blocks.splice(index, 1);
+					blocks.push(blockToMove);
+				},
+				[KebabDropdownItems.MOVE_UP]: () => {
+					const newIndex = index - 1;
+					blocks[index] = blocks[newIndex];
+					blocks[newIndex] = blockToMove;
+				},
+				[KebabDropdownItems.MOVE_DOWN]: () => {
+					const newIndex = index + 1;
+					blocks[index] = blocks[newIndex];
+					blocks[newIndex] = blockToMove;
+				},
+				[KebabDropdownItems.DELETE]: () => {
+					blocks.splice(index, 1);
+				},
+			};
 
-				direction === 'Move to Top'
-					? blocks.unshift(blockToMove)
-					: blocks.push(blockToMove);
-			} else {
-				const newIndex =
-					direction === 'Move Up' ? index - 1 : index + 1;
-
-				blocks[index] = blocks[newIndex];
-				blocks[newIndex] = blockToMove;
+			if (MoveOrDeleteBlockAction[direction]) {
+				MoveOrDeleteBlockAction[direction]();
 			}
 
 			return {

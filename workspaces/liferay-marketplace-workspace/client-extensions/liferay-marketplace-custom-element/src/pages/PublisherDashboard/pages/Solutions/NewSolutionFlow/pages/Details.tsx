@@ -11,6 +11,7 @@ import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
 import {
+	KebabDropdownItems,
 	SolutionTypes,
 	useSolutionContext,
 } from '../../../../../../context/SolutionContext';
@@ -54,7 +55,7 @@ const Details = () => {
 			{blocks.map((block, index) => {
 				const Component = (blockTypes as any)[block.type];
 
-				const handleMoveBlock = (direction: string) => {
+				const handleMoveOrDeleteBlock = (direction: string) => {
 					dispatch({
 						payload: {
 							direction,
@@ -67,27 +68,38 @@ const Details = () => {
 				const dropdownItems = [
 					{
 						disabled: index === 0,
-						name: 'Move to Top',
-						onClick: () => handleMoveBlock('Move to Top'),
+						name: KebabDropdownItems.MOVE_TO_TOP,
+						onClick: () =>
+							handleMoveOrDeleteBlock(
+								KebabDropdownItems.MOVE_TO_TOP
+							),
 					},
 					{
 						disabled: index === 0,
-						name: 'Move Up',
-						onClick: () => handleMoveBlock('Move Up'),
+						name: KebabDropdownItems.MOVE_UP,
+						onClick: () =>
+							handleMoveOrDeleteBlock(KebabDropdownItems.MOVE_UP),
 					},
 					{
 						disabled: index === blocks.length - 1,
-						name: 'Move Down',
-						onClick: () => handleMoveBlock('Move Down'),
+						name: KebabDropdownItems.MOVE_DOWN,
+						onClick: () =>
+							handleMoveOrDeleteBlock(
+								KebabDropdownItems.MOVE_DOWN
+							),
 					},
 					{
 						disabled: index === blocks.length - 1,
-						name: 'Move to Bottom',
-						onClick: () => handleMoveBlock('Move to Bottom'),
+						name: KebabDropdownItems.MOVE_TO_BOTTOM,
+						onClick: () =>
+							handleMoveOrDeleteBlock(
+								KebabDropdownItems.MOVE_TO_BOTTOM
+							),
 					},
 					{
-						name: 'Delete',
-						onClick: () => handleMoveBlock('Delete'),
+						name: KebabDropdownItems.DELETE,
+						onClick: () =>
+							handleMoveOrDeleteBlock(KebabDropdownItems.DELETE),
 					},
 				];
 
@@ -100,6 +112,9 @@ const Details = () => {
 							items.find(({value}) => value === block.type)
 								?.label as string
 						}
+						onArrowClick={(direction) => {
+							handleMoveOrDeleteBlock(direction);
+						}}
 						position={blocks.length}
 					>
 						<Component

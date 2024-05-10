@@ -14,6 +14,8 @@ import getRandomString from '../../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import getPageDefinition from '../utils/getPageDefinition';
 
+type FragmentSet = 'Layout Elements';
+
 export class PageEditorPage {
 	readonly page: Page;
 
@@ -37,6 +39,30 @@ export class PageEditorPage {
 		this.undoHistory = page.locator('.page-editor__undo-history');
 
 		this.segmentEditorPage = new SegmentEditorPage(page);
+	}
+
+	async addFragment(setName: FragmentSet, name: string) {
+		await this.goToSidebarTab('Fragments and Widgets');
+
+		const header = this.page.getByRole('menuitem', {
+			exact: true,
+			name: setName,
+		});
+
+		const isOpen = await header.evaluate(
+			(element) => element.getAttribute('aria-expanded') === 'true'
+		);
+
+		if (!isOpen) {
+			await this.experienceSelector.click();
+		}
+
+		await this.page.getByLabel(`Add ${name}`).focus();
+
+		await this.page.keyboard.press('Enter');
+		await this.page.keyboard.press('Enter');
+
+		await this.waitForChangesSaved();
 	}
 
 	async changeFragmentConfiguration(
@@ -224,6 +250,14 @@ export class PageEditorPage {
 			'Success:The experience was duplicated successfully.',
 			{autoClose: false}
 		);
+	}
+
+	async duplicateFragment(fragmentId: string) {
+		await this.selectFragment(fragmentId);
+
+		await this.page.keyboard.press('Control+D');
+
+		await this.waitForChangesSaved();
 	}
 
 	async editEditableText(

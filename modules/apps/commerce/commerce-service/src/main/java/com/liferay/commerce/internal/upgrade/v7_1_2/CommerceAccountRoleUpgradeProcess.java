@@ -52,9 +52,10 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select distinct UserGroupRole.roleId from UserGroupRole ",
-					"inner join Role_ on Role_.roleId = UserGroupRole.roleId ",
-					"inner join Group_ on Group_.classNameId = '",
+					"select distinct UserGroupRole.ctCollectionId, ",
+					"UserGroupRole.roleId from UserGroupRole inner join Role_ ",
+					"on Role_.roleId = UserGroupRole.roleId inner join Group_ ",
+					"on Group_.classNameId = '",
 					_classNameLocalService.getClassNameId(AccountEntry.class),
 					"' and Group_.groupId = UserGroupRole.groupId where ",
 					"Role_.type_ =", RoleConstants.TYPE_SITE));
@@ -66,11 +67,11 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 						_classNameLocalService.getClassNameId(
 							AccountRole.class),
 						",  classPK = ?, type_ = ", RoleConstants.TYPE_ACCOUNT,
-						" where roleId = ?"))) {
+						" where ctCollectionId = ? and roleId = ?"))) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					long roleId = resultSet.getLong(1);
+					long roleId = resultSet.getLong(2);
 
 					if (_hasNonaccountEntryGroup(roleId)) {
 						AccountRole accountRole = _copyToAccountRole(roleId);
@@ -95,7 +96,10 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 						preparedStatement2.setLong(
 							1, accountRole.getAccountRoleId());
 
-						preparedStatement2.setLong(2, roleId);
+						preparedStatement2.setLong(
+							2, resultSet.getLong("ctCollectionId"));
+
+						preparedStatement2.setLong(3, roleId);
 
 						preparedStatement2.addBatch();
 					}

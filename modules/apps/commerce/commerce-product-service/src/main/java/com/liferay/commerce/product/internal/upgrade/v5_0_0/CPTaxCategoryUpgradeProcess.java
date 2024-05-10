@@ -30,24 +30,29 @@ public class CPTaxCategoryUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update CPTaxCategory set externalReferenceCode = ? " +
-						"where CPTaxCategoryId = ?")) {
+						"where ctCollectionId = ? and CPTaxCategoryId = ?")) {
 
 			try (ResultSet resultSet = s.executeQuery(
 					StringBundler.concat(
-						"select externalReferenceCode, CPTaxCategoryId from ",
-						"CPTaxCategory where externalReferenceCode in (select ",
+						"select ctCollectionId, externalReferenceCode, ",
+						"CPTaxCategoryId from CPTaxCategory where ",
+						"externalReferenceCode in (select ",
 						"externalReferenceCode from CPTaxCategory group by ",
 						"externalReferenceCode having ",
 						"count(externalReferenceCode) > 1)"))) {
 
 				while (resultSet.next()) {
-					String externalReferenceCode = resultSet.getString(1);
+					String externalReferenceCode = resultSet.getString(2);
 
-					long cpTaxCategoryId = resultSet.getLong(2);
+					long cpTaxCategoryId = resultSet.getLong(3);
 
 					preparedStatement.setString(
 						1, externalReferenceCode + StringUtil.randomString(4));
-					preparedStatement.setLong(2, cpTaxCategoryId);
+
+					preparedStatement.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+
+					preparedStatement.setLong(3, cpTaxCategoryId);
 
 					preparedStatement.addBatch();
 				}

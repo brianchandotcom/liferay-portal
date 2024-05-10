@@ -263,3 +263,16 @@ html {
 	height: fit-content !important;
 	width: fit-content !important;
 }
+
+.auto-fill-builds-popover {
+	.build-buttons {
+		cursor: default;
+		background-color: #373ecc !important;
+	}
+}
+.compare-runs-popover {
+	.runs-buttons {
+		cursor: default;
+		background-color: #373ecc !important;
+	}
+}

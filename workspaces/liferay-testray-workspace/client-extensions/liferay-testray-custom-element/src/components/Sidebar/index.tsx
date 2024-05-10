@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useRef, useState} from 'react';
@@ -13,7 +14,8 @@ import {CONSENT_TYPE} from '~/util/enum';
 import useStorage from '../../hooks/useStorage';
 import i18n from '../../i18n';
 import {TestrayIcon, TestrayIconBrand} from '../../images';
-import ComparePopover from '../ComparePopover';
+import AutoFillBuildsPopover from '../AutofillPopover';
+import CompareRunsPopover from '../ComparePopover';
 import TestrayIcons from '../Icons/TestrayIcon';
 import Tooltip from '../Tooltip';
 import SidebarFooter from './SidebarFooter';
@@ -27,6 +29,7 @@ const Sidebar = () => {
 		storageType: 'persisted',
 	});
 	const [visible, setVisible] = useState(false);
+	const [type, setType] = useState<'autoFill' | 'compareRuns'>('compareRuns');
 
 	const CompareRunsContent = (
 		<div
@@ -51,7 +54,30 @@ const Sidebar = () => {
 		</div>
 	);
 
-	const ref = useRef<HTMLDivElement>(null);
+	const AutoFillContent = (
+		<div
+			className={classNames(
+				'tr-sidebar__content__list__item tr-sidebar__content__list__item__compare-runs-options'
+			)}
+		>
+			<ClayIcon
+				className="tr-sidebar__content__list__item__clayicon"
+				fill="#8b8db2"
+				symbol="change-list"
+			/>
+
+			<span
+				className={classNames('tr-sidebar__content__list__item__text', {
+					'tr-sidebar__content__list__item__text--expanded': expanded,
+				})}
+			>
+				{i18n.sub('auto-fill-x', 'builds')}
+			</span>
+		</div>
+	);
+
+	const CompareRunsRef = useRef<HTMLDivElement>(null);
+	const AutoFillRef = useRef<HTMLDivElement>(null);
 
 	const sidebarItems = [
 		{
@@ -66,7 +92,36 @@ const Sidebar = () => {
 		},
 		{
 			element: (
-				<div onClick={() => setVisible((show) => !show)} ref={ref}>
+				<div
+					onClick={() => {
+						setType('autoFill');
+						setVisible((show) => !show);
+					}}
+					ref={AutoFillRef}
+				>
+					<Tooltip
+						position="right"
+						title={
+							expanded
+								? undefined
+								: i18n.sub('auto-fill-x', 'builds')
+						}
+					>
+						{AutoFillContent}
+					</Tooltip>
+				</div>
+			),
+		},
+		{
+			element: (
+				<div
+					onClick={() => {
+						setType('compareRuns');
+
+						setVisible((show) => !show);
+					}}
+					ref={CompareRunsRef}
+				>
 					<Tooltip
 						position="right"
 						title={
@@ -149,12 +204,21 @@ const Sidebar = () => {
 							)}
 						</div>
 
-						<ComparePopover
-							expanded={expanded}
-							setVisible={setVisible}
-							triggedRef={ref}
-							visible={visible}
-						/>
+						{type === 'compareRuns' ? (
+							<CompareRunsPopover
+								expanded={expanded}
+								setVisible={setVisible}
+								triggedRef={CompareRunsRef}
+								visible={visible}
+							/>
+						) : (
+							<AutoFillBuildsPopover
+								expanded={expanded}
+								setVisible={setVisible}
+								triggedRef={AutoFillRef}
+								visible={visible}
+							/>
+						)}
 
 						<div className="tr-sidebar__content__divider" />
 					</div>

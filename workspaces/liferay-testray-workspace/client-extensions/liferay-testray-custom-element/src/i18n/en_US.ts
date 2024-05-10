@@ -55,6 +55,7 @@ export default {
 	'attachment': 'Attachment',
 	'attachments': 'Attachments',
 	'attachments-x': 'Attachments ({0})',
+	'auto-fill': 'Auto Fill',
 	'auto-fill-build-is-scheduled-to-be-processed':
 		'Auto Fill Build is Scheduled to be Processed.',
 	'auto-fill-x': 'Auto Fill {0}',
@@ -105,6 +106,7 @@ export default {
 	'columns': 'Columns',
 	'comment': 'Comment',
 	'comments': 'Comments',
+	'compare': 'Compare',
 	'compare-x': 'Compare {0}',
 	'complete': 'Complete',
 	'complete-test': 'Complete Test',

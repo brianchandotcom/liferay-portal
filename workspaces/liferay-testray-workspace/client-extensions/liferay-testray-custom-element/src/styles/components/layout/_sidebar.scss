@@ -134,6 +134,11 @@ $normal-transition: all 0.3s ease;
 					fill: $color-white;
 				}
 
+				&:hover > &__clayicon {
+					color: $color-white;
+					fill: $color-white;
+				}
+
 				&.active {
 					background-color: $color-indigo;
 					color: $color-indigo-light;
@@ -151,6 +156,12 @@ $normal-transition: all 0.3s ease;
 				&__icon {
 					fill: $color-indigo-light;
 					min-height: 35px;
+					min-width: 35px;
+				}
+
+				&__clayicon {
+					fill: $color-indigo-light;
+					min-height: 22px;
 					min-width: 35px;
 				}
 
@@ -182,6 +193,11 @@ $normal-transition: all 0.3s ease;
 				}
 
 				&:hover > .tr-sidebar__content__item__icon {
+					fill: $color-white;
+					transition: $normal-transition;
+				}
+
+				&:hover > .tr-sidebar__content__item__clayicon {
 					fill: $color-white;
 					transition: $normal-transition;
 				}

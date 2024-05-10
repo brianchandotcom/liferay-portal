@@ -12,6 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
+import getPageDefinition from './utils/getPageDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -287,4 +288,71 @@ test('checks that the value of a field is propagated to smaller viewports', asyn
 
 		await expect(hideFragmentInput).not.toBeChecked();
 	}
+});
+
+test('correct viewport configuration is set when adding a Grid', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Create page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition(),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	// Add a grid and change number of columns to 6
+
+	await pageEditorPage.addFragment('Layout Elements', 'Grid');
+
+	const topper = await page.locator('.page-editor__topper[data-name="Grid"]');
+
+	const gridId = await topper.evaluate((element) =>
+		Array.from(element.classList)
+			.find((cssClass) => cssClass.includes('lfr-layout-structure-item'))
+			.replace('lfr-layout-structure-item-topper-', '')
+	);
+
+	await pageEditorPage.changeFragmentConfiguration(
+		gridId,
+		'General',
+		'Number of Modules',
+		'6'
+	);
+
+	// Check columns have size 2 in desktop
+
+	await expect(page.locator('.page-editor__col.col-2')).toHaveCount(6);
+
+	// Change to Landscape Phone and check columns have size 12
+
+	await pageEditorPage.switchViewport('Landscape Phone');
+
+	const globalFrame = await page.frameLocator(
+		'.page-editor__global-context-iframe'
+	);
+
+	await pageEditorPage.selectFragment(gridId, false);
+
+	await expect(globalFrame.locator('.page-editor__col.col-12')).toHaveCount(
+		6
+	);
+
+	// Change to 2 modules per row and check size is 6
+
+	await pageEditorPage.changeFragmentConfiguration(
+		gridId,
+		'General',
+		'Layout',
+		'2 Modules per Row',
+		false
+	);
+
+	await expect(globalFrame.locator('.page-editor__col.col-6')).toHaveCount(6);
 });

@@ -915,7 +915,7 @@ definition {
 	macro viewAuthenticationFailedErrorMessage() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
-			value1 = "Authentication failed. Please try again.");
+			value1 = "Authentication failed due to incorrect credentials or account lockout. Click \"Forgot Password\" if the correct credentials were provided.");
 	}
 
 	@summary = "Default summary"

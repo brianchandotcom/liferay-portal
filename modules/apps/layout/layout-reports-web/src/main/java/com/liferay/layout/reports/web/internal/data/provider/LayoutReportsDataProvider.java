@@ -84,6 +84,10 @@ public class LayoutReportsDataProvider {
 		LayoutReportsIssue.Detail.Key key,
 		JSONObject lighthouseAuditJSONObject) {
 
+		if (lighthouseAuditJSONObject == null) {
+			return null;
+		}
+
 		return new LayoutReportsIssue.Detail(key, lighthouseAuditJSONObject);
 	}
 

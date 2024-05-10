@@ -32,7 +32,9 @@
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": ["learn-article-nav-container"],
+							"cssClasses": [
+								"learn-article-nav-container"
+							],
 							"customCSS": ".[$FRAGMENT_CLASS$] > div {\n  display: flex;\n  height: 100%;\n}",
 							"customCSSViewports": [
 								{
@@ -40,8 +42,11 @@
 									"id": "landscapeMobile"
 								}
 							],
-							"fragment": {"key": "BASIC_COMPONENT-html"},
-							"fragmentConfig": {},
+							"fragment": {
+								"key": "BASIC_COMPONENT-html"
+							},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "element-html",
@@ -95,8 +100,11 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {"key": "BASIC_COMPONENT-html"},
-									"fragmentConfig": {},
+									"fragment": {
+										"key": "BASIC_COMPONENT-html"
+									},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-html",
@@ -128,7 +136,9 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect"
 	},
 	"version": 1.1

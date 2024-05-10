@@ -33,6 +33,10 @@ public class LayoutPageTemplateEntryTable
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutPageTemplateEntryTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutPageTemplateEntryTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<LayoutPageTemplateEntryTable, Long>
 		layoutPageTemplateEntryId = createColumn(
 			"layoutPageTemplateEntryId", Long.class, Types.BIGINT,

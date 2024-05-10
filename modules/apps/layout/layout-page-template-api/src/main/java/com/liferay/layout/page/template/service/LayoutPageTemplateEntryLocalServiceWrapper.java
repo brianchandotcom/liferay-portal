@@ -347,6 +347,16 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateEntry
+		fetchLayoutPageTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return _layoutPageTemplateEntryLocalService.
+			fetchLayoutPageTemplateEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
 		long plid) {
 
@@ -599,6 +609,17 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 
 		return _layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
 			groupId, layoutPageTemplateEntryKey);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry
+			getLayoutPageTemplateEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryLocalService.
+			getLayoutPageTemplateEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

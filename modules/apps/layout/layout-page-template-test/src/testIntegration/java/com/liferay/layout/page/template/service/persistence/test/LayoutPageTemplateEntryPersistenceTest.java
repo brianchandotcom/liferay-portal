@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryExternalReferenceCodeException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -127,6 +128,9 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setUuid(RandomTestUtil.randomString());
 
+		newLayoutPageTemplateEntry.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newLayoutPageTemplateEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newLayoutPageTemplateEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -192,6 +196,9 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutPageTemplateEntry.getUuid(),
 			newLayoutPageTemplateEntry.getUuid());
+		Assert.assertEquals(
+			existingLayoutPageTemplateEntry.getExternalReferenceCode(),
+			newLayoutPageTemplateEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			newLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
@@ -264,6 +271,32 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			Time.getShortTimestamp(
 				existingLayoutPageTemplateEntry.getStatusDate()),
 			Time.getShortTimestamp(newLayoutPageTemplateEntry.getStatusDate()));
+	}
+
+	@Test(
+		expected = DuplicateLayoutPageTemplateEntryExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			addLayoutPageTemplateEntry();
+
+		LayoutPageTemplateEntry newLayoutPageTemplateEntry =
+			addLayoutPageTemplateEntry();
+
+		newLayoutPageTemplateEntry.setGroupId(
+			layoutPageTemplateEntry.getGroupId());
+
+		newLayoutPageTemplateEntry = _persistence.update(
+			newLayoutPageTemplateEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newLayoutPageTemplateEntry);
+
+		newLayoutPageTemplateEntry.setExternalReferenceCode(
+			layoutPageTemplateEntry.getExternalReferenceCode());
+
+		_persistence.update(newLayoutPageTemplateEntry);
 	}
 
 	@Test
@@ -543,6 +576,15 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutPageTemplateEntry newLayoutPageTemplateEntry =
 			addLayoutPageTemplateEntry();
@@ -579,10 +621,10 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		return OrderByComparatorFactoryUtil.create(
 			"LayoutPageTemplateEntry", "mvccVersion", true, "ctCollectionId",
-			true, "uuid", true, "layoutPageTemplateEntryId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true,
-			"layoutPageTemplateCollectionId", true,
+			true, "uuid", true, "externalReferenceCode", true,
+			"layoutPageTemplateEntryId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "layoutPageTemplateCollectionId", true,
 			"layoutPageTemplateEntryKey", true, "classNameId", true,
 			"classTypeId", true, "name", true, "type", true,
 			"previewFileEntryId", true, "defaultTemplate", true,
@@ -927,6 +969,17 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			ReflectionTestUtil.<Integer>invoke(
 				layoutPageTemplateEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "type_"));
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected LayoutPageTemplateEntry addLayoutPageTemplateEntry()
@@ -942,6 +995,9 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		layoutPageTemplateEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateEntry.setUuid(RandomTestUtil.randomString());
+
+		layoutPageTemplateEntry.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		layoutPageTemplateEntry.setGroupId(RandomTestUtil.nextLong());
 

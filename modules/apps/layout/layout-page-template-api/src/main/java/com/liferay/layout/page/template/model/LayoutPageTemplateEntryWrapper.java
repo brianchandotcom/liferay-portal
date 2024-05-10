@@ -41,6 +41,7 @@ public class LayoutPageTemplateEntryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
 			"layoutPageTemplateEntryId", getLayoutPageTemplateEntryId());
 		attributes.put("groupId", getGroupId());
@@ -89,6 +90,13 @@ public class LayoutPageTemplateEntryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long layoutPageTemplateEntryId = (Long)attributes.get(
@@ -300,6 +308,16 @@ public class LayoutPageTemplateEntryWrapper
 	@Override
 	public boolean getDefaultTemplate() {
 		return model.getDefaultTemplate();
+	}
+
+	/**
+	 * Returns the external reference code of this layout page template entry.
+	 *
+	 * @return the external reference code of this layout page template entry
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -687,6 +705,16 @@ public class LayoutPageTemplateEntryWrapper
 	@Override
 	public void setDefaultTemplate(boolean defaultTemplate) {
 		model.setDefaultTemplate(defaultTemplate);
+	}
+
+	/**
+	 * Sets the external reference code of this layout page template entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this layout page template entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

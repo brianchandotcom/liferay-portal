@@ -262,6 +262,11 @@ public interface LayoutPageTemplateEntryLocalService
 		long groupId, String name, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry
+		fetchLayoutPageTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
 		long plid);
 
@@ -405,6 +410,12 @@ public interface LayoutPageTemplateEntryLocalService
 	public LayoutPageTemplateEntry getLayoutPageTemplateEntry(
 			long groupId, String layoutPageTemplateEntryKey)
 		throws NoSuchPageTemplateEntryException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry
+			getLayoutPageTemplateEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns the layout page template entry matching the UUID and group.

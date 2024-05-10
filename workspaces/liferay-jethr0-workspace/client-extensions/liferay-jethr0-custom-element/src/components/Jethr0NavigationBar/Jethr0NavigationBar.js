@@ -26,6 +26,12 @@ function Jethr0NavigationBar({active}) {
 					Upstream Branches
 				</ClayLink>
 			</ClayNavigationBar.Item>
+
+			<ClayNavigationBar.Item active={active === 'Jenkins'}>
+				<ClayLink href="/#/jenkins-cohorts">
+					Jenkins
+				</ClayLink>
+			</ClayNavigationBar.Item>
 		</ClayNavigationBar>
 	);
 }

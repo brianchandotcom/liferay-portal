@@ -39,7 +39,7 @@ export class ObjectFieldsPage {
 	async goto(objectDefinitionLabel: string) {
 		await this.viewObjectDefinitionsPage.goto();
 
-		await this.viewObjectDefinitionsPage.editObjectDefinitionFDSLink(
+		await this.viewObjectDefinitionsPage.clickEditObjectDefinitionFDSLink(
 			objectDefinitionLabel
 		);
 

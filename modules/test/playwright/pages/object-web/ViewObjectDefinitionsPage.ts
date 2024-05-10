@@ -83,6 +83,14 @@ export class ViewObjectDefinitionsPage {
 		await this.deleteObjectDefinitionOption.click();
 	}
 
+	async clickEditObjectDefinitionFDSLink(objectDefinitionLabel: string) {
+		await this.frontendDataSetEntries
+			.filter({
+				hasText: objectDefinitionLabel,
+			})
+			.click();
+	}
+
 	async createObjectFolder(objectFolderLabel: string) {
 		await this.addObjectFolderButton.click();
 		await this.objectFolderLabelInput.click();
@@ -100,14 +108,6 @@ export class ViewObjectDefinitionsPage {
 		await this.confirmObjectFolderNameInput.click();
 		await this.confirmObjectFolderNameInput.fill(objectFolderName);
 		await this.deleteObjectFolderButton.click();
-	}
-
-	async editObjectDefinitionFDSLink(objectDefinitionLabel: string) {
-		await this.frontendDataSetEntries
-			.filter({
-				hasText: objectDefinitionLabel,
-			})
-			.click();
 	}
 
 	getObjectFolderCardHeaderERC = (objectFolderERC: string) => {

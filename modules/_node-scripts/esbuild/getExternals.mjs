@@ -11,6 +11,11 @@ export default function getExternals(globalImports, type) {
 	}
 
 	const externals = [
+
+		//
+		// Use a Set to deduplicate items
+		//
+
 		...new Set(
 			Object.values(globalImports).map(
 				({webContextPath}) => `${prefix}/${webContextPath}/*`

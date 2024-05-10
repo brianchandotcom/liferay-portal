@@ -115,8 +115,8 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 				PortletProviderUtil.getPortletURL(
 					portletRequest, Layout.class.getName(),
 					PortletProvider.Action.EDIT)
-			).setMVCPath(
-				"/select_layout_page_template_entry.jsp"
+			).setMVCRenderCommandName(
+				"/layout_admin/select_layout_page_template_entry"
 			).setRedirect(
 				_portal.getLayoutFullURL(themeDisplay)
 			).setPortletResource(

@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -148,6 +150,7 @@ public class HTTPTestUtil {
 	}
 
 	private static String _baseURL = "http://localhost:8080";
-	private static String _credentials = "test@liferay.com:test";
+	private static String _credentials = "test@liferay.com:" + PropsUtil.get(
+		PropsKeys.DEFAULT_ADMIN_PASSWORD);
 
 }

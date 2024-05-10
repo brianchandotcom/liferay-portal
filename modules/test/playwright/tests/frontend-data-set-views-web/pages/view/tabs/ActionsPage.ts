@@ -11,7 +11,8 @@ import {ViewPage} from '../ViewPage';
 export class ActionsPage {
 	readonly creationActionsTab: Locator;
 	readonly itemActionsTab: Locator;
-	readonly newActionButton: Locator;
+	readonly newItemActionPlusButton: Locator;
+	readonly newCreationActionPlusButton: Locator;
 	readonly newActionForm: {
 		addIconButton: Locator;
 		confirmationMessageInput: Locator;
@@ -40,7 +41,8 @@ export class ActionsPage {
 			name: 'Creation Actions',
 		});
 		this.itemActionsTab = page.getByRole('tab', {name: 'Item Actions'});
-		this.newActionButton = page.getByRole('button', {name: 'Add Action'});
+		this.newItemActionPlusButton = page.getByTitle('New Item Action');
+		this.newCreationActionPlusButton = page.getByText("New Creation Action");
 		this.newActionForm = {
 			addIconButton: page.getByLabel('add-icon'),
 			confirmationMessageInput: page.getByLabel('Confirmation Message', {
@@ -65,12 +67,8 @@ export class ActionsPage {
 			urlText: page.getByPlaceholder('Add a URL here.'),
 			variantSelect: page.getByLabel('VariantRequired', {exact: true}),
 		};
-		this.newCreationActionButton = page.getByRole('button', {
-			name: 'New Creation Action',
-		});
-		this.newItemActionButton = page.getByRole('button', {
-			name: 'New Item Action',
-		});
+		this.newCreationActionButton = page.getByText('New Creation Action');
+		this.newItemActionButton = page.getByText('New Item Action');
 		this.noActionsWereCreatedMessage = page
 			.getByRole('tabpanel')
 			.nth(0)
@@ -97,9 +95,9 @@ export class ActionsPage {
 	async createCreationAction(creationActionProps: ICreationAction) {
 		await this.creationActionsTab.click();
 
-		await this.newActionButton.waitFor({state: 'visible'});
+		await this.newCreationActionPlusButton.waitFor({state: 'visible'});
 
-		await this.newActionButton.click();
+		await this.newCreationActionPlusButton.click();
 
 		await this.createAction({...creationActionProps});
 	}
@@ -107,7 +105,7 @@ export class ActionsPage {
 	async createItemAction(itemActionProps: IItemAction) {
 		await this.itemActionsTab.click();
 
-		await this.newActionButton.click();
+		await this.newItemActionPlusButton.click();
 
 		await this.createAction({...itemActionProps});
 	}

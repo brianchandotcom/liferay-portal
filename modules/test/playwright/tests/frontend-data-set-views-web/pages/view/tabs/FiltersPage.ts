@@ -32,8 +32,8 @@ export class FiltersPage {
 
 	constructor(page: Page) {
 		this.newFilterButton = page
-			.getByRole('button', {name: 'Add'})
-			.and(page.getByTitle('Add'));
+			.getByRole('button', {name: 'New Filter'})
+			.and(page.getByTitle('New Filter'));
 		this.newDateRangeFilterModal = {
 			filterBySelect: page.getByLabel('Filter By'),
 		};

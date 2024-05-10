@@ -1,8 +1,12 @@
 import AttributeConjunctionInput from './components/attribute-conjunction-input';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
+import EventPropertiesQuery, {
+	EventPropertiesData,
+	EventPropertiesVariables
+} from '../queries/EventPropertiesQuery';
 import Form from 'shared/components/form';
 import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
@@ -11,8 +15,11 @@ import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName
 } from '../utils/custom-inputs';
-import {isBoolean, isNil, isNull} from 'lodash';
+import {isBoolean, isNil} from 'lodash';
+import {NAME} from 'shared/util/pagination';
+import {OrderByDirections} from 'shared/util/constants';
 import {SafeResults} from 'shared/hoc/util';
+import {useQuery} from '@apollo/react-hooks';
 
 type Touched = {
 	attribute: boolean;
@@ -37,19 +44,12 @@ const EventInput: React.FC<IEventInputProps> = ({
 	displayValue,
 	onChange,
 	operatorRenderer: OperatorDropdown,
-	property: {options, type},
+	property,
 	touched,
 	valid,
 	value: valueIMap
 }) => {
-	// TODO: useEffect below is temporary. Remove it when LPD-23023 is merged and before sending LPD-23024.
-
-	useEffect(() => {
-		onChange({
-			touched: {attribute: true, attributeValue: true},
-			valid: {attribute: true, attributeValue: true}
-		});
-	}, []);
+	const {id: eventId, options} = property;
 
 	const getConjunctionDateFilterIMap = value => {
 		const conjunctionDateFilterIndex = getIndexFromPropertyName(
@@ -80,11 +80,11 @@ const EventInput: React.FC<IEventInputProps> = ({
 	const handleDateFilterConjunctionChange = criterion => {
 		onChange({
 			touched: {...touched, dateFilter: criterion && criterion.touched},
-			valid: {...valid, dateFilter: isNull(criterion) || criterion.valid},
-			value: isNull(criterion)
-				? valueIMap.deleteIn(['criterionGroup', 'items', 1])
+			valid: {...valid, dateFilter: isNil(criterion) || criterion.valid},
+			value: isNil(criterion)
+				? valueIMap.deleteIn(['criterionGroup', 'items', 2])
 				: valueIMap.mergeIn(
-						['criterionGroup', 'items', 1],
+						['criterionGroup', 'items', 2],
 						fromJS(criterion)
 				  )
 		});
@@ -156,13 +156,28 @@ const EventInput: React.FC<IEventInputProps> = ({
 		);
 	}
 
+	const result = useQuery<EventPropertiesData, EventPropertiesVariables>(
+		EventPropertiesQuery,
+		{
+			variables: {
+				eventId,
+				keyword: '',
+				page: 0,
+				size: 25,
+				sort: {
+					column: NAME,
+					type: OrderByDirections.Ascending
+				}
+			}
+		}
+	);
+
 	return (
 		<div className='criteria-statement'>
-			<SafeResults page={false} pageDisplay={false}>
+			<SafeResults {...result} page={false} pageDisplay={false}>
 				{data => {
 					const attributes =
-						data?.eventAttributeDefinitions
-							?.eventAttributeDefinitions || [];
+						data?.eventProperties?.eventProperties || [];
 
 					return (
 						<>
@@ -214,9 +229,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 								/>
 							</Form.Group>
 
-							{/* TODO: !type below is temporary. Remove it when LPD-23023 is merged and before sending LPD-23024. */}
-
-							{!type && (
+							{!!attributes.length && (
 								<Form.Group autoFit>
 									<Form.GroupItem
 										className='conjunction'

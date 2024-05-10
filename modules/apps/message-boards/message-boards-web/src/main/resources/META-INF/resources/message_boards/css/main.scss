@@ -207,9 +207,12 @@
 		clear: both;
 	}
 
-	.list-group .list-group-item h4,
-	.list-group .list-group-item h2 {
-		font-weight: 400;
+	.list-group .list-group-item {
+		.h4,
+		h2,
+		h4 {
+			font-weight: 400;
+		}
 	}
 
 	.taglib-custom-attributes-list {

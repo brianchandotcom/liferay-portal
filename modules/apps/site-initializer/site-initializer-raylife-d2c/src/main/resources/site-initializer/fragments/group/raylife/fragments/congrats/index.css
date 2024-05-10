@@ -17,6 +17,7 @@
 	line-height: 32px;
 }
 
+.congrats .h4,
 .congrats h4 {
 	color: var(--color-neutral-9);
 	font-size: 16px;

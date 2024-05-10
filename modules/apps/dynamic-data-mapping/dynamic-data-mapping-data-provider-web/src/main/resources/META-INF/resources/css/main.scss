@@ -26,7 +26,11 @@
 	}
 
 	td.lfr-name-column,
-	.lfr-search-container-wrapper .list-group .list-group-item .autofit-col h4 {
+	.lfr-search-container-wrapper
+		.list-group
+		.list-group-item
+		.autofit-col
+		.h4 {
 		font-weight: 600;
 	}
 }

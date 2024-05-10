@@ -129,6 +129,7 @@ $table-responsive-margin-left-md: 375px !default;
 		}
 
 		.list-group-item {
+			.h4,
 			h4 {
 				font-size: $font-size-sm;
 				line-height: 1.5;

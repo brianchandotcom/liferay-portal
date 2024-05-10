@@ -298,7 +298,7 @@ public class ContentLayoutTypeControllerTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				_group.getGroupId(),
+				null, _group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				RandomTestUtil.randomString(),

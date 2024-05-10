@@ -393,8 +393,8 @@ public class PortalImplAlternateURLTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(), journalArticle.getGroupId(), 0,
-				_portal.getClassNameId(JournalArticle.class.getName()),
+				null, TestPropsValues.getUserId(), journalArticle.getGroupId(),
+				0, _portal.getClassNameId(JournalArticle.class.getName()),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, 0, serviceContext);

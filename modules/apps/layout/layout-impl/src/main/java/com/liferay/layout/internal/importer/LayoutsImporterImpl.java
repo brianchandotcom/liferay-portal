@@ -412,15 +412,15 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		if (classNameId == 0) {
 			return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				groupId, layoutPageTemplateCollectionId, name,
+				null, groupId, layoutPageTemplateCollectionId, name,
 				layoutPageTemplateEntryType, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextThreadLocal.getServiceContext());
 		}
 
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			groupId, layoutPageTemplateCollectionId, classNameId, classTypeId,
-			name, 0, WorkflowConstants.STATUS_APPROVED,
+			null, groupId, layoutPageTemplateCollectionId, classNameId,
+			classTypeId, name, 0, WorkflowConstants.STATUS_APPROVED,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

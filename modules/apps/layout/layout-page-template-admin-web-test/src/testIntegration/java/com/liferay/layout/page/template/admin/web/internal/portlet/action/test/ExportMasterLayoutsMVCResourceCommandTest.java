@@ -78,8 +78,8 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 	public void testGetFile() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				0, "Master Page One",
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(), 0, "Master Page One",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
@@ -138,8 +138,8 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 	public void testGetFileDraft() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				0, StringUtil.randomString(),
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(), 0, StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
@@ -170,8 +170,8 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 	public void testGetFileNameSingleMasterPage() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				0, "Master Page One",
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(), 0, "Master Page One",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 

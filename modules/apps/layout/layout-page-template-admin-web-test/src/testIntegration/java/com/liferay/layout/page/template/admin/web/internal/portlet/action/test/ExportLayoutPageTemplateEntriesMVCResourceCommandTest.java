@@ -163,7 +163,8 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC,
@@ -290,7 +291,8 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollectionId, name,
 				LayoutPageTemplateEntryTypeConstants.BASIC, 0, status,
 				_serviceContext);

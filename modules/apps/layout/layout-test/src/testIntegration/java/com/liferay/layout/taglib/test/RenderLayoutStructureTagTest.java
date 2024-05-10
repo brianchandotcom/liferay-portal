@@ -980,7 +980,7 @@ public class RenderLayoutStructureTagTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				_group.getGroupId(), 0,
+				null, _group.getGroupId(), 0,
 				_portal.getClassNameId(MockObject.class.getName()), 0,
 				RandomTestUtil.randomString(), 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);

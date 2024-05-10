@@ -429,7 +429,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_group.getCreatorUserId(), blogsEntry.getGroupId(), 0,
+				null, _group.getCreatorUserId(), blogsEntry.getGroupId(), 0,
 				_portal.getClassNameId(BlogsEntry.class.getName()), 0,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,

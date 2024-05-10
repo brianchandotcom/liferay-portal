@@ -175,7 +175,7 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 		throws Exception {
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			ddmStructureId, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0, 0,

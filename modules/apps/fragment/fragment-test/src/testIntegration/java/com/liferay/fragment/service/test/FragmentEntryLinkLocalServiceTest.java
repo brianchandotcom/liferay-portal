@@ -864,7 +864,8 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC,

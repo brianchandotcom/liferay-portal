@@ -109,7 +109,7 @@ public class LayoutsImporterTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext1.getUserId(),
+				null, _serviceContext1.getUserId(),
 				_serviceContext1.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),

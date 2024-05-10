@@ -254,7 +254,7 @@ public class EditInfoItemStrutsActionTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_group.getCreatorUserId(), _group.getGroupId(), 0,
+				null, _group.getCreatorUserId(), _group.getGroupId(), 0,
 				_portal.getClassNameId(_objectDefinition.getClassName()), 0,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,

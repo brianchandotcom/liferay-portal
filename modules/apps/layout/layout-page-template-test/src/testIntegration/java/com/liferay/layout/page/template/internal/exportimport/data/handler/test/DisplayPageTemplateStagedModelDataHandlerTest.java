@@ -71,8 +71,8 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 		throws Exception {
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), group.getGroupId(), 0, _classNameId,
-			_classTypeId, RandomTestUtil.randomString(),
+			null, TestPropsValues.getUserId(), group.getGroupId(), 0,
+			_classNameId, _classTypeId, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0, 0,
 			0, WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(

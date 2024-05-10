@@ -123,7 +123,8 @@ public class PageDefinitionDTOConverterTest {
 
 		_layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				RandomTestUtil.randomString(),

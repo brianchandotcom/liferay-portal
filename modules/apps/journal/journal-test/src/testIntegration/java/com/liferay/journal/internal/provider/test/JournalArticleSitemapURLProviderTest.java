@@ -229,7 +229,7 @@ public class JournalArticleSitemapURLProviderTest {
 		DDMStructure ddmStructure = article.getDDMStructure();
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			ddmStructure.getStructureId(), RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,

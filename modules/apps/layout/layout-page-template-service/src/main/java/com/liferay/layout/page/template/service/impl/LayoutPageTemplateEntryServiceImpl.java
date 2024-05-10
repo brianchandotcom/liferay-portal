@@ -137,7 +137,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				getUserId(), sourceLayout.getGroupId(),
+				null, getUserId(), sourceLayout.getGroupId(),
 				targetLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				0, 0, name, LayoutPageTemplateEntryTypeConstants.BASIC, 0,

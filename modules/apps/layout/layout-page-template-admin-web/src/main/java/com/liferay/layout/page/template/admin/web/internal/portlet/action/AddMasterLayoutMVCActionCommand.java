@@ -67,7 +67,7 @@ public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-					serviceContext.getScopeGroupId(),
+					null, serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name,
 					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 					WorkflowConstants.STATUS_DRAFT, serviceContext);

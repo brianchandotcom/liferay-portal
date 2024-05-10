@@ -220,7 +220,7 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), siteId, 0,
+			null, TestPropsValues.getUserId(), siteId, 0,
 			_portal.getClassNameId(BlogsEntry.class.getName()), 0,
 			RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,

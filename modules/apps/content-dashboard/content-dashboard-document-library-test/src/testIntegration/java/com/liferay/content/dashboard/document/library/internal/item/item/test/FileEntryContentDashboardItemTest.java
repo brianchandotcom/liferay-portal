@@ -652,7 +652,7 @@ public class FileEntryContentDashboardItemTest {
 			new byte[0], null, null, null, _serviceContext);
 
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_portal.getClassNameId(FileEntry.class.getName()),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			RandomTestUtil.randomString(),

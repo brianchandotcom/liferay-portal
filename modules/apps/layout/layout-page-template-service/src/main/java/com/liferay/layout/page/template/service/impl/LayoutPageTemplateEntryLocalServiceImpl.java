@@ -280,7 +280,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 			addLayoutPageTemplateEntry(
-				userId, groupId, layoutPageTemplateCollectionId,
+				null, userId, groupId, layoutPageTemplateCollectionId,
 				sourceLayoutPageTemplateEntry.getClassNameId(),
 				sourceLayoutPageTemplateEntry.getClassTypeId(), name,
 				sourceLayoutPageTemplateEntry.getType(), 0, false,
@@ -927,7 +927,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		return addLayoutPageTemplateEntry(
-			layoutPrototype.getUserId(), groupId, 0, 0, 0,
+			null, layoutPrototype.getUserId(), groupId, 0, 0, 0,
 			nameMap.get(defaultLocale),
 			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false,
 			layoutPrototype.getLayoutPrototypeId(), layout.getPlid(), 0, status,

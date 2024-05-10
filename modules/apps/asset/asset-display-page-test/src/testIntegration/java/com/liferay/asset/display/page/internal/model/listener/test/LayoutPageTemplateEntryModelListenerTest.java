@@ -103,7 +103,7 @@ public class LayoutPageTemplateEntryModelListenerTest {
 		throws Exception {
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), group.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class),
 			journalArticle.getDDMStructureId(), RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,

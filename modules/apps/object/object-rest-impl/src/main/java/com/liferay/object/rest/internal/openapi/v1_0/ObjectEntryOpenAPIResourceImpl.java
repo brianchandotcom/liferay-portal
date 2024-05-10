@@ -24,7 +24,6 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -212,19 +211,6 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			return new DTOProperty(
 				HashMapBuilder.<String, Object>put(
-					"x-batch-unsupported-formats",
-					() -> {
-						if (Objects.equals(
-								objectField.getBusinessType(),
-								ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) &&
-							!FeatureFlagManagerUtil.isEnabled("LPD-6683")) {
-
-							return "CSV";
-						}
-
-						return null;
-					}
-				).put(
 					"x-parent-map", "properties"
 				).build(),
 				objectField.getName(), "String") {
@@ -275,29 +261,6 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		return new DTOProperty(
 			HashMapBuilder.<String, Object>put(
-				"x-batch-unsupported-formats",
-				() -> {
-					if ((Objects.equals(
-							objectField.getBusinessType(),
-							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-						 Objects.equals(
-							 objectField.getBusinessType(),
-							 ObjectFieldConstants.
-								 BUSINESS_TYPE_AUTO_INCREMENT) ||
-						 Objects.equals(
-							 objectField.getBusinessType(),
-							 ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
-						 Objects.equals(
-							 objectField.getBusinessType(),
-							 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) &&
-						!FeatureFlagManagerUtil.isEnabled("LPD-6683")) {
-
-						return "CSV";
-					}
-
-					return null;
-				}
-			).put(
 				"x-parent-map", "properties"
 			).build(),
 			objectField.getName(), objectField.getDBType()) {

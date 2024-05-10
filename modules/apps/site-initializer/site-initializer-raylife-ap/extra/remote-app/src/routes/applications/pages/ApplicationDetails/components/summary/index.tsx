@@ -11,7 +11,7 @@ const Summary = ({application}: any) => {
 	return (
 		<div className="bg-neutral-0 rounded summary-container w-100">
 			<div className="pt-3 px-5 summary-title">
-				<h5 className="m-0">Summary</h5>
+				<div className="h5 m-0">Summary</div>
 			</div>
 
 			<hr />

@@ -47,9 +47,9 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(articleVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 					</div>
 
-					<h5>
+					<div class="h5">
 						<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>
-					</h5>
+					</div>
 
 					<div>
 						<clay:label

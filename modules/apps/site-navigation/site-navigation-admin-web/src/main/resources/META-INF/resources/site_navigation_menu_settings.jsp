@@ -26,9 +26,9 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 
 	<c:if test="<%= Validator.isNotNull(typeKey) %>">
 		<div class="mb-4">
-			<h5>
+			<div class="h5">
 				<strong><liferay-ui:message key="this-menu-will-act-as-the" /></strong>
-			</h5>
+			</div>
 
 			<clay:icon
 				symbol="check-circle-full"

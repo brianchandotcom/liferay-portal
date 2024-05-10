@@ -30,9 +30,9 @@ const ClaimNavigator = ({claimData}: ClaimComponentsType) => {
 
 	return (
 		<div className="bg-neutral-0 claims-details-nav-container h-100 mb-6 rounded w-100">
-			<h5 className="bg-neutral-0 claims-detail-nav-title pt-3 px-5 rounded-top">
+			<div className="bg-neutral-0 claims-detail-nav-title h5 pt-3 px-5 rounded-top">
 				Claims Detail
-			</h5>
+			</div>
 
 			<div className="d-flex flex-row rounded w-100">
 				<NavigationBar

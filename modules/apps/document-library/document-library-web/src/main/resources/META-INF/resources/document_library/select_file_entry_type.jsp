@@ -68,11 +68,11 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
 			>
-				<h5>
+				<div class="h5">
 					<aui:a href="#">
 						<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>
 					</aui:a>
-				</h5>
+				</div>
 
 				<div class="h6 text-default">
 					<span><%= fileEntryType.getDescription(locale) %></span>

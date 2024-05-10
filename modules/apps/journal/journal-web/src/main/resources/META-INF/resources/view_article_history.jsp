@@ -77,9 +77,9 @@ renderResponse.setTitle(article.getTitle(locale));
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(articleVersion.getStatusByUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 						</div>
 
-						<h5>
+						<div class="h5">
 							<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>
-						</h5>
+						</div>
 
 						<div class="h6 text-default">
 							<liferay-portal-workflow:status

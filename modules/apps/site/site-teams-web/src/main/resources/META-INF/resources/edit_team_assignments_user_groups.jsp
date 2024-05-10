@@ -57,7 +57,7 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5><%= userGroup.getName() %></h5>
+						<div class="h5"><%= userGroup.getName() %></div>
 
 						<div class="h6 text-default">
 							<span><%= userGroup.getDescription() %></span>

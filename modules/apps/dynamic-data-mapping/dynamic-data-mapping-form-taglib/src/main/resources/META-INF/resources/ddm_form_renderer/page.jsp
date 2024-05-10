@@ -93,7 +93,7 @@ if (ddmFormInstance != null) {
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">
-									<h5 class="ddm-form-description"><%= description %></h5>
+									<div class="ddm-form-description h5"><%= description %></div>
 								</c:if>
 							</clay:container-fluid>
 						</div>

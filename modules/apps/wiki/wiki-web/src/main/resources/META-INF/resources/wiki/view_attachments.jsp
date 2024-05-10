@@ -13,7 +13,7 @@ final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 <c:if test="<%= wikiPage.getAttachmentsFileEntriesCount() > 0 %>">
 	<div class="page-attachments">
-		<h5><liferay-ui:message key="attachments" /></h5>
+		<div class="h5"><liferay-ui:message key="attachments" /></div>
 
 		<clay:row>
 

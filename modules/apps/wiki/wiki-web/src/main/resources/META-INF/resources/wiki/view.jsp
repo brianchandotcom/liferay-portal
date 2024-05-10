@@ -386,7 +386,7 @@ if (portletTitleBasedNavigation) {
 										className="<%= WikiPage.class.getName() %>"
 										classPK="<%= wikiPage.getResourcePrimKey() %>"
 									>
-										<h5><liferay-ui:message key="tags" /></h5>
+										<div class="h5"><liferay-ui:message key="tags" /></div>
 
 										<liferay-asset:asset-tags-summary
 											className="<%= WikiPage.class.getName() %>"

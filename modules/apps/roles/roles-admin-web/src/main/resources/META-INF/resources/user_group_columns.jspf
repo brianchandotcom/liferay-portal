@@ -15,7 +15,7 @@
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h5><%= HtmlUtil.escape(userGroup.getName()) %></h5>
+			<div class="h5"><%= HtmlUtil.escape(userGroup.getName()) %></div>
 
 			<div class="h6 text-default">
 				<span><%= HtmlUtil.escape(userGroup.getDescription()) %></span>

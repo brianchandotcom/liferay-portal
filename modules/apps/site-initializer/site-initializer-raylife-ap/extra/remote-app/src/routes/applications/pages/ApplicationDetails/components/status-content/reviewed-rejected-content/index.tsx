@@ -57,9 +57,9 @@ const UnderwritingContent = ({
 		<div className="application-details-underwriter-content d-flex flex-column">
 			<div className="action-detail-title pt-3 px-5">
 				{externalReferenceCode ? (
-					<h5 className="m-0">Policy Ready to Bind</h5>
+					<div className="h5 m-0">Policy Ready to Bind</div>
 				) : (
-					<h5 className="m-0">Follow up With Applicant</h5>
+					<div className="h5 m-0">Follow up With Applicant</div>
 				)}
 			</div>
 

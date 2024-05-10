@@ -13,7 +13,7 @@ const IncompleteContent = ({onClick}: IncompleteContentProps) => (
 	<>
 		<div className="d-flex flex-column">
 			<div className="action-detail-title pt-3 px-5">
-				<h5 className="m-0">Complete Application</h5>
+				<div className="h5 m-0">Complete Application</div>
 			</div>
 
 			<hr />

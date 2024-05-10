@@ -36,9 +36,9 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 					</div>
 
 					<div class="col-md-8">
-						<h5>
+						<div class="h5">
 							<%= HtmlUtil.escape(cProductCPDefinition.getName(LocaleUtil.toLanguageId(locale))) %>
-						</h5>
+						</div>
 
 						<p>
 							<%= cProductCPDefinition.getShortDescription(LocaleUtil.toLanguageId(locale)) %>

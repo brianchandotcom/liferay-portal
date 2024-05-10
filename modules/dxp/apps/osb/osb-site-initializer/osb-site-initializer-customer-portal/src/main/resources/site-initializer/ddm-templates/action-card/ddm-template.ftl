@@ -1,7 +1,7 @@
 <a href="${ActionUrl.getData()}" rel="noopener noreferrer" target="_blank">
-	<h5 class="font-weight-bold text-neutral-10">
+	<div class="font-weight-bold h5 text-neutral-10">
 		${ActionTitle.getData()}
-	</h5>
+	</div>
 
 	<div class="text-neutral-7 text-paragraph-sm">
 		${ActionText.getData()}

@@ -54,9 +54,9 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 						colspan="<%= 3 %>"
 						href="<%= editPLOEntryURL %>"
 					>
-						<h5>
+						<div class="h5">
 							<strong><%= languageItemDisplay.getKey() %></strong>
-						</h5>
+						</div>
 
 						<div class="h6 text-default">
 							<%= HtmlUtil.escape(languageItemDisplay.getValue()) %>

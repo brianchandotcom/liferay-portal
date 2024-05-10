@@ -39,7 +39,7 @@ const SpecificFields = ({fields, languageTag}: IProps) => {
 			value &&
 			type && (
 				<div className="c-mb-4 sidebar-section" key={title}>
-					<h5 className="c-mb-1 font-weight-semi-bold">
+					<div className="c-mb-1 font-weight-semi-bold h5">
 						{title}
 
 						{help && (
@@ -53,7 +53,7 @@ const SpecificFields = ({fields, languageTag}: IProps) => {
 								</span>
 							</ClayTooltipProvider>
 						)}
-					</h5>
+					</div>
 
 					<SpecificItem
 						languageTag={languageTag}

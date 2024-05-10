@@ -60,9 +60,9 @@ renderResponse.setTitle(selLayout.getName(locale) + StringPool.SPACE + LanguageU
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5>
+						<div class="h5">
 							<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
-						</h5>
+						</div>
 
 						<div class="h6 text-default">
 							<span><%= portlet.getPortletId() %></span>

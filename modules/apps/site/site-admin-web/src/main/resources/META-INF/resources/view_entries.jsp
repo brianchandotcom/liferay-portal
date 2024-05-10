@@ -61,9 +61,9 @@ SiteAdminDisplayContext siteAdminDisplayContext = (SiteAdminDisplayContext)reque
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-					<h5>
+					<div class="h5">
 						<aui:a href="<%= !curGroup.isCompany() ? viewSubsitesURL : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
-					</h5>
+					</div>
 
 					<span class="text-secondary">
 						<c:choose>

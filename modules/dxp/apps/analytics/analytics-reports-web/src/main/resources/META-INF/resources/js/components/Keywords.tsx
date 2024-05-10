@@ -110,9 +110,9 @@ export default function Keywords({currentPage}: Props) {
 
 	return (
 		<>
-			<h5 className="mt-3 sheet-subtitle">
+			<div className="mt-3 sheet-subtitle">
 				{Liferay.Language.get('best-keywords')}
-			</h5>
+			</div>
 
 			<div className="mb-3 text-secondary">
 				{Liferay.Language.get('best-keywords-description')}

@@ -18,8 +18,8 @@ const VariantTitle: React.FC<IVariantTitleProps> = ({labels = [], title}) => {
 
 	return (
 		<td className='table-cell-expanded'>
-			<h5
-				className='variant-title mb-1 text-truncate'
+			<div
+				className='h5 mb-1 text-truncate variant-title'
 				onBlur={handleMouseOut}
 				onFocus={handleMouseOver}
 				onMouseOut={handleMouseOut}
@@ -27,7 +27,7 @@ const VariantTitle: React.FC<IVariantTitleProps> = ({labels = [], title}) => {
 				ref={titleRef}
 			>
 				{title}
-			</h5>
+			</div>
 
 			{!!labels.length &&
 				labels.map(({status, value}, index) => (

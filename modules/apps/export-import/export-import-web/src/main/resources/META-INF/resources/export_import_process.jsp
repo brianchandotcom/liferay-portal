@@ -63,7 +63,7 @@ if (Validator.isNotNull(backURL)) {
 				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(backgroundTaskUserName), modifiedDateDescription} %>" key="x-modified-x-ago" />
 			</div>
 
-			<h5>
+			<div class="h5">
 				<span id="<portlet:namespace />backgroundTaskName<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>">
 					<%= HtmlUtil.escape(backgroundTaskName) %>
 				</span>
@@ -83,7 +83,7 @@ if (Validator.isNotNull(backURL)) {
 				}
 				%>
 
-			</h5>
+			</div>
 
 			<c:if test="<%= curBackgroundTask.isInProgress() %>">
 

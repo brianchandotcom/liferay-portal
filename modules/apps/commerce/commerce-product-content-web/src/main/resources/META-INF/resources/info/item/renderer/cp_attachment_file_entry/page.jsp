@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="autofit-col autofit-col-expand">
-		<h5><%= HtmlUtil.escape(cpMedia.getTitle()) %></h5>
+		<div class="h5"><%= HtmlUtil.escape(cpMedia.getTitle()) %></div>
 
 		<p class="m-0"><%= LanguageUtil.formatStorageSize(cpMedia.getSize(), locale) %></p>
 	</div>

@@ -26,7 +26,7 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 	return (
 		<div className='trend-item-root' key={title}>
 			<div className='trend-item-title d-flex justify-content-between'>
-				<h5 className='card-title'>{title}</h5>
+				<div className='card-title'>{title}</div>
 
 				{info && <InfoPopover {...info} />}
 			</div>

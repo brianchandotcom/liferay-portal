@@ -111,9 +111,9 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 
 		StringBundler sb = new StringBundler(content);
 
-		sb.append("<div class=\"page-attachments\"><h5>");
+		sb.append("<div class=\"page-attachments\"><div class=\"h5\">");
 		sb.append(_language.get(httpServletRequest, "attachments"));
-		sb.append("</h5><div class=\"row\">");
+		sb.append("</div><div class=\"row\">");
 
 		for (FileEntry fileEntry : fileEntries) {
 			sb.append("<div class=\"col-md-4\">");

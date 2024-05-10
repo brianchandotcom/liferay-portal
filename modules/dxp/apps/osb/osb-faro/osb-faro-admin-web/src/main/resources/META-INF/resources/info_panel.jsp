@@ -49,55 +49,55 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		<c:choose>
 			<c:when test='<%= tab.equals("details") %>'>
 				<div class="sidebar-body">
-					<h5><liferay-ui:message key="group-id" /></h5>
+					<div class="h5"><liferay-ui:message key="group-id" /></div>
 
 					<p>
 						<%= faroProjectAdminDisplay.getGroupId() %>
 					</p>
 
-					<h5><liferay-ui:message key="corp-project-uuid" /></h5>
+					<div class="h5"><liferay-ui:message key="corp-project-uuid" /></div>
 
 					<p>
 						<%= faroProjectAdminDisplay.getCorpProjectUuid() %>
 					</p>
 
-					<h5><liferay-ui:message key="corp-project-name" /></h5>
+					<div class="h5"><liferay-ui:message key="corp-project-name" /></div>
 
 					<p>
 						<%= faroProjectAdminDisplay.getCorpProjectName() %>
 					</p>
 
-					<h5><liferay-ui:message key="wedeploy-key" /></h5>
+					<div class="h5"><liferay-ui:message key="wedeploy-key" /></div>
 
 					<p>
 						<%= faroProjectAdminDisplay.getWeDeployKey() %>
 					</p>
 
-					<h5><liferay-ui:message key="last-access-date" /></h5>
+					<div class="h5"><liferay-ui:message key="last-access-date" /></div>
 
 					<p>
 						<%= faroProjectAdminDisplay.getLastAccessDate() %>
 					</p>
 
-					<h5><liferay-ui:message key="individuals-usage" /></h5>
+					<div class="h5"><liferay-ui:message key="individuals-usage" /></div>
 
 					<p>
 						<%= StringBundler.concat(faroProjectAdminDisplay.getIndividualsCount(), " / ", faroProjectAdminDisplay.getIndividualsLimit(), " (", faroProjectAdminDisplay.getIndividualsUsage(), "%)") %>
 					</p>
 
-					<h5><liferay-ui:message key="page-views-usage" /></h5>
+					<div class="h5"><liferay-ui:message key="page-views-usage" /></div>
 
 					<p>
 						<%= StringBundler.concat(faroProjectAdminDisplay.getPageViewsCount(), " / ", faroProjectAdminDisplay.getPageViewsLimit(), " (", faroProjectAdminDisplay.getPageViewsUsage(), "%)") %>
 					</p>
 
-					<h5><liferay-ui:message key="subscription" /></h5>
+					<div class="h5"><liferay-ui:message key="subscription" /></div>
 
 					<p>
 						<%= faroProjectAdminDisplay.getSubscription() %>
 					</p>
 
-					<h5><liferay-ui:message key="serverLocation" /></h5>
+					<div class="h5"><liferay-ui:message key="serverLocation" /></div>
 
 					<p>
 						<%= faroProjectAdminDisplay.getServerLocation() %>

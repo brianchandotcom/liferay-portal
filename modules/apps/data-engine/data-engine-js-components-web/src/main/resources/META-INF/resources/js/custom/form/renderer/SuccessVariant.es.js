@@ -35,10 +35,10 @@ export function Container({children, pages, strings = {}}) {
 		<div className="page">
 			<ClayLayout.Sheet className="ddm-page-success-layout simple-page">
 				<div className="form-builder-layout">
-					<h5 className="pagination">
+					<div className="h5 pagination">
 						{strings['success-page'] ??
 							Liferay.Language.get('success-page')}
-					</h5>
+					</div>
 
 					{children}
 				</div>

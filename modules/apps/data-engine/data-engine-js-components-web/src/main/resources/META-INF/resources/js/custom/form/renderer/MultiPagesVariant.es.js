@@ -89,7 +89,7 @@ export function Container({children, empty, pageIndex, pages}) {
 					role="tabpanel"
 				>
 					<div className="form-builder-layout">
-						<h5 className="pagination">
+						<div className="h5 pagination">
 							{sub(Liferay.Language.get('page-x-of-x'), [
 								pageIndex + 1,
 								pages[pages.length - 1].contentRenderer ===
@@ -97,7 +97,7 @@ export function Container({children, empty, pageIndex, pages}) {
 									? pages.length - 1
 									: pages.length,
 							])}
-						</h5>
+						</div>
 
 						{children}
 					</div>

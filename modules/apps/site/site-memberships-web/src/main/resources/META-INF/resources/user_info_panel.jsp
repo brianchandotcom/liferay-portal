@@ -47,7 +47,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
 				<clay:tabs-panel>
-					<h5><liferay-ui:message key="num-of-users" /></h5>
+					<div class="h5"><liferay-ui:message key="num-of-users" /></div>
 
 					<%
 					LinkedHashMap<String, Object> userParams = LinkedHashMapBuilder.<String, Object>put(
@@ -113,7 +113,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="crop-img rounded" src="<%= portraitURL %>" />
 					</c:if>
 
-					<h5><liferay-ui:message key="email" /></h5>
+					<div class="h5"><liferay-ui:message key="email" /></div>
 
 					<p>
 						<%= curUser.getEmailAddress() %>
@@ -128,7 +128,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 					%>
 
 					<c:if test="<%= !ListUtil.isEmpty(rolesAndTeamsNames) %>">
-						<h5><liferay-ui:message key="roles-and-teams" /></h5>
+						<div class="h5"><liferay-ui:message key="roles-and-teams" /></div>
 
 						<p>
 							<%= HtmlUtil.escape(StringUtil.merge(rolesAndTeamsNames, StringPool.COMMA_AND_SPACE)) %>
@@ -148,7 +148,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
 				<clay:tabs-panel>
-					<h5><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></h5>
+					<div class="h5"><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></div>
 				</clay:tabs-panel>
 			</clay:tabs>
 		</div>

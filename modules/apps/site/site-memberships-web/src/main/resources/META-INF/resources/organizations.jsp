@@ -80,7 +80,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 								<liferay-ui:search-container-column-text
 									colspan="<%= 2 %>"
 								>
-									<h5><%= organization.getName() %></h5>
+									<div class="h5"><%= organization.getName() %></div>
 
 									<div class="h6 text-default">
 										<span><%= HtmlUtil.escape(organization.getParentOrganizationName()) %></span>

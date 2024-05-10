@@ -32,7 +32,9 @@ const AlreadySubmittedFormModal: React.FC<AlreadySubmittedFormModalProps> = ({
 				</p>
 			</header>
 
-			<h5 className="my-1 text-neutral-10">{submittedModalTexts.text}</h5>
+			<div className="h5 my-1 text-neutral-10">
+				{submittedModalTexts.text}
+			</div>
 
 			<p className="mb-5 text-neutral-10">
 				{submittedModalTexts.paragraph}

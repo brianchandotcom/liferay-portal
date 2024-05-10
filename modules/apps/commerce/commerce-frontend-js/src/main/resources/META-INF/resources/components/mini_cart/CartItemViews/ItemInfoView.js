@@ -133,7 +133,7 @@ function ItemInfoViewReplacement({replacedSku}) {
 function ItemInfoViewBase({name, sku}) {
 	return (
 		<div className="item-info-base">
-			<h5 className="item-name">{name}</h5>
+			<div className="h5 item-name">{name}</div>
 
 			<p className="item-sku">{sku}</p>
 		</div>

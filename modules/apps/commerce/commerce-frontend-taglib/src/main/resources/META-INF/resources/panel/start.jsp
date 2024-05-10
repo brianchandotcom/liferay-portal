@@ -89,9 +89,9 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 					<span class="d-flex mr-n2">
 						<c:if test="<%= Validator.isNotNull(collapseLabel) %>">
 							<label for="<%= HtmlUtil.escapeAttribute(collapseSwitchId) %>" id="<%= HtmlUtil.escapeAttribute(randomNamespace) %>toggle-label">
-								<h5 class="mb-0 mr-3">
+								<div class="h5 mb-0 mr-3">
 									<%= HtmlUtil.escape(collapseLabel) %>
-								</h5>
+								</div>
 							</label>
 						</c:if>
 

@@ -90,11 +90,11 @@ function Email({
 						</div>
 
 						<div className="col-12">
-							<h5 className="mt-3">
+							<div className="h5 mt-3">
 								<a href="#" onClick={handleClickOnSubject}>
 									{subject}
 								</a>
-							</h5>
+							</div>
 
 							<div>{summary}</div>
 						</div>

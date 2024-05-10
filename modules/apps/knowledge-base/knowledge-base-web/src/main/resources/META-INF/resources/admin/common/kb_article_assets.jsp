@@ -24,7 +24,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 		className="<%= KBArticle.class.getName() %>"
 		classPK="<%= kbArticle.getClassPK() %>"
 	>
-		<h5><liferay-ui:message key="tags" /></h5>
+		<div class="h5"><liferay-ui:message key="tags" /></div>
 
 		<liferay-asset:asset-tags-summary
 			className="<%= KBArticle.class.getName() %>"

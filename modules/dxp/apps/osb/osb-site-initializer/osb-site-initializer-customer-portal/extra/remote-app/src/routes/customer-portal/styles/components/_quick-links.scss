@@ -8,6 +8,7 @@
 	&:hover {
 		box-shadow: $elevation-fluffy-3;
 
+		.h5,
 		h5 {
 			color: var(--color-action-primary-hover) !important;
 		}

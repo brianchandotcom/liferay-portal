@@ -80,7 +80,7 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 				cssClass="opening-hours-header"
 			>
 				<clay:content-col>
-					<h5><%= orgLaborDisplay.getTitle() %></h5>
+					<div class="h5"><%= orgLaborDisplay.getTitle() %></div>
 				</clay:content-col>
 
 				<clay:content-col

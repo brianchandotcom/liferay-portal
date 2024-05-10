@@ -45,11 +45,11 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5>
+						<div class="h5">
 							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 								<%= HtmlUtil.escape(role.getTitle(locale)) %>
 							</aui:a>
-						</h5>
+						</div>
 
 						<div class="h6 text-default">
 							<span><%= HtmlUtil.escape(role.getDescription(locale)) %></span>

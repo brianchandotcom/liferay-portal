@@ -14,7 +14,7 @@ String linkId = PortalUtil.generateRandomKey(request, "info-box") + "_action-lin
 <div class="info-box<%= Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK %>">
 	<header class="header pb-2">
 		<c:if test="<%= Validator.isNotNull(title) %>">
-			<h5 class="mb-0 title"><%= HtmlUtil.escape(title) %></h5>
+			<div class="h5 mb-0 title"><%= HtmlUtil.escape(title) %></div>
 		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(actionLabel) %>">

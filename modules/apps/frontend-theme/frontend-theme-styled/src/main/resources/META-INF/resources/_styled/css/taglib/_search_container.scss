@@ -136,10 +136,10 @@ $table-responsive-margin-left-md: 375px !default;
 				margin-bottom: 0;
 			}
 
-			h5,
-			h6,
 			.h5,
-			.h6 {
+			.h6,
+			h5,
+			h6 {
 				font-size: $font-size-sm;
 				font-weight: 400;
 				line-height: 1.5;
@@ -150,6 +150,7 @@ $table-responsive-margin-left-md: 375px !default;
 				font-weight: 600;
 			}
 
+			.h6 + .h5,
 			h6 + h5 {
 				font-weight: 600;
 			}

@@ -182,7 +182,11 @@ const Header = () => {
 					dispatch({
 						payload: {
 							contentType: {
-								...contentType,
+								content: {
+									headerImages: [],
+									headerVideoDescription: '',
+									headerVideoUrl: '',
+								},
 								type: event,
 							},
 						},

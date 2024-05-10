@@ -22,6 +22,43 @@ const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
 	dispatch: ReturnType<typeof useSolutionContext>[1]
 ) => {
+	const updateSpecification = async (
+		product: Product,
+		specificationKey: PRODUCT_SPECIFICATION_KEY,
+		value: string
+	) => {
+		const {productId, productSpecifications = []} = product;
+
+		const specification = productSpecifications.find(
+			(productSpecification) =>
+				productSpecification.specificationKey === specificationKey
+		);
+
+		if (specification && specification.value.en_US === value) {
+			// No need to update the specification if the value is equal.
+
+			return;
+		}
+
+		const fn = specification
+			? headlessCommerceAdminCatalogImpl.updateProductSpecification
+			: headlessCommerceAdminCatalogImpl.createProductSpecification;
+
+		const result = await fn(
+			(specification ? specification.id : productId) as number,
+			{
+				specificationKey,
+				value: {en_US: value},
+			}
+		);
+
+		if (specification) {
+			specification.value.en_US = value;
+		} else {
+			productSpecifications.push(result);
+		}
+	};
+
 	const syncProfile = async () => {
 		const {
 			_product,
@@ -95,63 +132,29 @@ const usePublishSolutionSubmission = (
 			header: {contentType, description, title},
 		} = context;
 
-		const {productId, productSpecifications = []} = product;
-
-		const _updateSpecification = async (
-			specificationKey: PRODUCT_SPECIFICATION_KEY,
-			value: string
-		) => {
-			const specification = productSpecifications.find(
-				(productSpecification) =>
-					productSpecification.specificationKey === specificationKey
-			);
-
-			if (specification && specification.value.en_US === value) {
-
-				// No need to update the specification if the value is equal.
-
-				return;
-			}
-
-			const fn = specification
-				? headlessCommerceAdminCatalogImpl.updateProductSpecification
-				: headlessCommerceAdminCatalogImpl.createProductSpecification;
-
-			const result = await fn(
-				(specification ? specification.id : productId) as number,
-				{
-					specificationKey,
-					value: {en_US: value},
-				}
-			);
-
-			if (specification) {
-				specification.value.en_US = value;
-			}
-			else {
-				productSpecifications.push(result);
-			}
-		};
-
-		await _updateSpecification(
+		await updateSpecification(
+			product,
 			PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_DESCRIPTION,
 			description
 		);
 
-		await _updateSpecification(
+		await updateSpecification(
+			product,
 			PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_TITLE,
 			title
 		);
 
 		if (contentType.type === 'embed-video-url') {
 			if (contentType.content?.headerVideoDescription) {
-				await _updateSpecification(
+				await updateSpecification(
+					product,
 					PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_DESCRIPTION,
 					contentType.content.headerVideoDescription
 				);
 			}
 
-			await _updateSpecification(
+			await updateSpecification(
+				product,
 				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_URL,
 				contentType.content.headerVideoUrl as string
 			);
@@ -195,10 +198,51 @@ const usePublishSolutionSubmission = (
 		}
 	};
 
+	const syncCompanyProfile = async (product: Product) => {
+		const {
+			company: {description, email, phone, website},
+		} = context;
+
+		await updateSpecification(
+			product,
+			PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_DESCRIPTION,
+			description
+		);
+
+		await updateSpecification(
+			product,
+			PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_EMAIL,
+			email
+		);
+
+		await updateSpecification(
+			product,
+			PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_PHONE,
+			phone
+		);
+
+		await updateSpecification(
+			product,
+			PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_WEBSITE,
+			website
+		);
+	};
+
+	const syncContactUs = async (product: Product) => {
+		const {contactUs} = context;
+		await updateSpecification(
+			product,
+			PRODUCT_SPECIFICATION_KEY.SOLUTION_CONTACT_EMAIL,
+			contactUs
+		);
+	};
+
 	const onSave = async () => {
 		const product = await syncProfile();
 
 		await syncSolutionHeader(product);
+		await syncCompanyProfile(product);
+		await syncContactUs(product);
 	};
 
 	const onSaveAsDraft = async () => {

@@ -8,6 +8,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import classnames from 'classnames';
 import {
+	getPortletNamespace,
 	normalizeFriendlyURL,
 	openCategorySelectionModal,
 } from 'frontend-js-web';
@@ -76,7 +77,9 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 			const url = new URL(initialSelectCategoryURL);
 
 			url.searchParams.set(
-				`_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_selectedCategoryIds`,
+				`${getPortletNamespace(
+					Liferay.PortletKeys.ITEM_SELECTOR
+				)}selectedCategoryIds`,
 				current.map(({value: categoryId}) => categoryId).join(',')
 			);
 

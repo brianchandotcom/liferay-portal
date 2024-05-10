@@ -10,6 +10,8 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Clustering";
 
+	var password = PropsUtil.get("default.admin.password");
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -24,7 +26,7 @@ definition {
 		}
 		else {
 			User.loginPG(
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			PortalInstances.tearDownCP();
@@ -68,12 +70,12 @@ definition {
 			entryTitle = "Blogs Entry1 Title");
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -142,11 +144,11 @@ definition {
 
 		User.logoutPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Test Page2");
@@ -183,7 +185,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		GogoShell.openGogoShellAdmin(baseURL = "http://localhost:9080");
@@ -221,7 +223,7 @@ definition {
 		task ("When the user clicks on the document from the slave node") {
 			User.loginPG(
 				nodePort = 9080,
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			DMNavigator.openDocumentsAndMediaAdmin(
@@ -268,14 +270,14 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 
 		User.firstLoginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@www.baker.com",
 			virtualHostsURL = "http://www.baker.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:9080");
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://www.baker.com:9080",
 			userEmailAddress = "test@www.baker.com");
 
@@ -310,14 +312,14 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		User.firstLoginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@www.able.com");
 
@@ -342,12 +344,12 @@ definition {
 		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -362,14 +364,14 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		User.firstLoginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@www.able.com");
 
@@ -462,7 +464,7 @@ definition {
 		for (var serverPort : list "8080,9080") {
 			User.loginPG(
 				nodePort = ${serverPort},
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			Clustering.viewTextPresentOnSpecificNode(
@@ -478,12 +480,12 @@ definition {
 		property test.run.type = "single";
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		ServerAdministration.openServerAdmin(baseURL = "http://localhost:9080");
@@ -499,7 +501,7 @@ definition {
 		for (var serverPort : list "8080,9080,10080") {
 			User.loginPG(
 				nodePort = ${serverPort},
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			Clustering.viewTextPresentOnSpecificNode(
@@ -525,7 +527,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -547,7 +549,7 @@ definition {
 
 		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:9080",
 			userScreenName = "test");
 
@@ -570,7 +572,7 @@ definition {
 		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
@@ -600,7 +602,7 @@ definition {
 		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
 			nodePort = 8080,
-			password = "test",
+			password = ${password},
 			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = 8080);
@@ -628,7 +630,7 @@ definition {
 
 		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:9080",
 			userScreenName = "test");
 
@@ -662,7 +664,7 @@ definition {
 
 				User.loginPG(
 					nodePort = ${nodePort},
-					password = "test",
+					password = ${password},
 					userEmailAddress = "test@liferay.com");
 			}
 		}
@@ -687,7 +689,7 @@ definition {
 
 				User.loginPG(
 					nodePort = ${nodePort},
-					password = "test",
+					password = ${password},
 					userEmailAddress = "test@liferay.com");
 			}
 		}
@@ -719,7 +721,7 @@ definition {
 				if (${nodePort} == 9080) {
 					User.loginPG(
 						nodePort = ${nodePort},
-						password = "test",
+						password = ${password},
 						userEmailAddress = "test@liferay.com");
 				}
 			}
@@ -748,7 +750,7 @@ definition {
 				if (${nodePort} == 9080) {
 					User.loginPG(
 						nodePort = ${nodePort},
-						password = "test",
+						password = ${password},
 						userEmailAddress = "test@liferay.com");
 				}
 			}
@@ -775,7 +777,7 @@ definition {
 
 				User.loginPG(
 					nodePort = ${nodePort},
-					password = "test",
+					password = ${password},
 					userEmailAddress = "test@liferay.com");
 			}
 		}
@@ -808,7 +810,7 @@ definition {
 				if (${nodePort} == 8080) {
 					User.loginPG(
 						nodePort = ${nodePort},
-						password = "test",
+						password = ${password},
 						userEmailAddress = "test@liferay.com");
 				}
 			}
@@ -834,7 +836,7 @@ definition {
 				if (${nodePort} == 9080) {
 					User.loginPG(
 						nodePort = ${nodePort},
-						password = "test",
+						password = ${password},
 						userEmailAddress = "test@liferay.com");
 				}
 
@@ -893,12 +895,12 @@ definition {
 		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -915,12 +917,12 @@ definition {
 		Page.assertNodePortPG(nodePort = 9080);
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 8080);
@@ -935,12 +937,12 @@ definition {
 		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -973,12 +975,12 @@ definition {
 			nodePort = 8080);
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Groovy.runScriptViaGogoShell(
@@ -1004,7 +1006,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -1026,7 +1028,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -1060,12 +1062,12 @@ definition {
 		DMDocument.viewAllPG(dmDocumentTitle = "DM Document Title");
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -1078,11 +1080,11 @@ definition {
 
 		User.logoutPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -1100,7 +1102,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		UserTracker.openMonitoringAdmin(baseURL = "http://localhost:9080");
@@ -1109,7 +1111,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		UserTracker.openMonitoringAdmin();
@@ -1120,7 +1122,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		UserTracker.openMonitoringAdmin(baseURL = "http://localhost:9080");
@@ -1171,12 +1173,12 @@ definition {
 		Staging.publishToLive();
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -1208,11 +1210,11 @@ definition {
 
 		User.logoutPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -1274,12 +1276,12 @@ definition {
 			value1 = "New Page Name");
 
 		User.logoutPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -1314,11 +1316,11 @@ definition {
 
 		User.logoutPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 	}
 

@@ -11,6 +11,8 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Clustering";
 
+	var password = PropsUtil.get("default.admin.password");
+
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
@@ -35,7 +37,7 @@ definition {
 
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -53,7 +55,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 10080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -73,7 +75,7 @@ definition {
 		for (var nodeNumber : list "8,9") {
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -98,7 +100,7 @@ definition {
 		for (var nodeNumber : list "8,10") {
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -119,7 +121,7 @@ definition {
 
 		for (var nodeNumber : list "8,9,10,11") {
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
@@ -140,7 +142,7 @@ definition {
 
 		for (var nodeNumber : list "8,9") {
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
@@ -158,7 +160,7 @@ definition {
 		User.firstLoginPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -169,7 +171,7 @@ definition {
 			nodePort = 10080);
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
@@ -189,7 +191,7 @@ definition {
 				nodePort = "${nodeNumber}080");
 
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
@@ -199,7 +201,7 @@ definition {
 		}
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -219,7 +221,7 @@ definition {
 				nodePort = "${nodeNumber}080");
 
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
@@ -242,7 +244,7 @@ definition {
 		User.firstLoginPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -253,7 +255,7 @@ definition {
 			nodePort = 10080);
 
 		User.firstLoginUI(
-			password = "test",
+			password = ${password},
 			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
@@ -269,7 +271,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "test@liferay.com");
 
 		Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
@@ -324,7 +326,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/logout");
 
 		User.loginPG(
-			password = "test",
+			password = ${password},
 			userEmailAddress = "userea@liferay.com");
 
 		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -336,7 +338,7 @@ definition {
 		for (var nodeNumber : list "9,10") {
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -356,7 +358,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 10080,
-			password = "test",
+			password = ${password},
 			userEmailAddress = "userea@liferay.com");
 
 		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -378,7 +380,7 @@ definition {
 
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -403,7 +405,7 @@ definition {
 
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -428,7 +430,7 @@ definition {
 		for (var nodeNumber : list "8,9") {
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
@@ -453,7 +455,7 @@ definition {
 		for (var nodeNumber : list "8,9") {
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");

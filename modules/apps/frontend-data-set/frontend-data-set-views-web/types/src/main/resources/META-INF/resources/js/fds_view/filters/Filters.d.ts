@@ -5,21 +5,12 @@
 
 /// <reference types="react" />
 
-import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
-import {FDSViewType} from '../../FDSViews';
-import {IFieldTreeItem} from '../../utils/types';
+import {IFDSViewSectionProps} from '../../FDSView';
 import '../../../css/Filters.scss';
-interface IProps {
-	fdsFilterClientExtensions: IClientExtensionRenderer[];
-	fdsView: FDSViewType;
-	fdsViewsURL: string;
-	fieldTreeItems: Array<IFieldTreeItem>;
-	namespace: string;
-}
 declare function Filters({
 	fdsFilterClientExtensions,
 	fdsView,
-	fieldTreeItems: fields,
 	namespace,
-}: IProps): JSX.Element;
+	schemaFields: fields,
+}: IFDSViewSectionProps): JSX.Element;
 export default Filters;

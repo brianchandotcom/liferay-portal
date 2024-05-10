@@ -35,7 +35,7 @@ interface IListSection {
 }
 
 export default function List(props: IFDSViewSectionProps) {
-	const {fdsView, fieldTreeItems} = props;
+	const {fdsView, schemaFields: fieldTreeItems} = props;
 
 	const [listSections, setListSections] = useState<Array<IListSection>>([
 		{fieldTreeItems, label: Liferay.Language.get('title'), name: 'title'},

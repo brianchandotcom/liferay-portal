@@ -439,12 +439,8 @@ const EditFDSSortModalContent = ({
 	);
 };
 
-const Sorting = ({
-	fdsView,
-	fieldTreeItems,
-	namespace,
-}: IFDSViewSectionProps) => {
-	const fields = fieldTreeItems.filter((field) => field.sortable);
+const Sorting = ({fdsView, namespace, schemaFields}: IFDSViewSectionProps) => {
+	const fields = schemaFields.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
 	const [loading, setLoading] = useState(true);
 

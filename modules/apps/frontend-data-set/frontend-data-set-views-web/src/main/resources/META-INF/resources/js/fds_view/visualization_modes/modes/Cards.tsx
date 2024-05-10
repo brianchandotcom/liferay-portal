@@ -35,7 +35,7 @@ interface ICardsSection {
 }
 
 export default function Cards(props: IFDSViewSectionProps) {
-	const {fdsView, fieldTreeItems} = props;
+	const {fdsView, schemaFields: fieldTreeItems} = props;
 
 	const [cardsSections, setCardsSections] = useState<Array<ICardsSection>>([
 		{fieldTreeItems, label: Liferay.Language.get('title'), name: 'title'},

@@ -15,6 +15,7 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {IFDSViewSectionProps} from '../../FDSView';
 import {FDSViewType} from '../../FDSViews';
 import OrderableTable from '../../components/OrderableTable';
 import ValidationFeedback from '../../components/ValidationFeedback';
@@ -30,7 +31,6 @@ import {
 	IClientExtensionFilter,
 	IDateFilter,
 	IField,
-	IFieldTreeItem,
 	IFilter,
 	IPickList,
 	ISelectionFilter,
@@ -624,20 +624,12 @@ function AddFDSFilterModalContent({
 	);
 }
 
-interface IProps {
-	fdsFilterClientExtensions: IClientExtensionRenderer[];
-	fdsView: FDSViewType;
-	fdsViewsURL: string;
-	fieldTreeItems: Array<IFieldTreeItem>;
-	namespace: string;
-}
-
 function Filters({
 	fdsFilterClientExtensions,
 	fdsView,
-	fieldTreeItems: fields,
 	namespace,
-}: IProps) {
+	schemaFields: fields,
+}: IFDSViewSectionProps) {
 	const [filters, setFilters] = useState<IFilter[]>([]);
 
 	useEffect(() => {

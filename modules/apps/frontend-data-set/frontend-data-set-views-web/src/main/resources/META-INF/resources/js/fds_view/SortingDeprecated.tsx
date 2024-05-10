@@ -346,10 +346,10 @@ const EditFDSSortModalContent = ({
 
 const SortingDeprecated = ({
 	fdsView,
-	fieldTreeItems,
 	namespace,
+	schemaFields,
 }: IFDSViewSectionProps) => {
-	const fields = fieldTreeItems.filter((field) => field.sortable);
+	const fields = schemaFields.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
 	const [loading, setLoading] = useState(true);
 

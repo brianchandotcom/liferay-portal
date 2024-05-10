@@ -361,9 +361,9 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 	const {
 		fdsClientExtensionCellRenderers,
 		fdsView,
-		fieldTreeItems,
 		namespace,
 		saveFDSFieldsURL,
+		schemaFields: fieldTreeItems,
 		title,
 	} = props;
 

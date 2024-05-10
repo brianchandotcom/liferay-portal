@@ -167,7 +167,7 @@ definition {
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
@@ -213,7 +213,7 @@ definition {
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content="custom meta content edit"''');
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		CustomMetaTags.openToCustomMetaTags(

@@ -143,10 +143,14 @@ definition {
 			menuItem = "Edit Default Values",
 			rowEntry = "WC Structure Name");
 
+		takeScreenshot();
+
 		Type(
 			key_fieldFieldLabel = "Label UF Comunicado",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "Edited LabelUFComunicado Field");
+
+		takeScreenshot();
 
 		Type(
 			key_fieldFieldLabel = "Lista UF Comunicado",

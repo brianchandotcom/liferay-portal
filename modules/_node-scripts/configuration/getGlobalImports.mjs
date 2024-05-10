@@ -47,6 +47,18 @@ export default async function getGlobalImports() {
 }
 
 function getWebContextPath(packageName) {
+
+	//
+	// We cannot guarantee that the web context is the same as the package name without @liferay
+	// because we don't have any SF requiring that.
+	//
+	// However, doing it the safe way requires a lot of horse power to compute (need to read every
+	// project in liferay-portal and parse its bnd.bnd file).
+	//
+	// Additionally, nearly all deps live in frontend-js-dependencies-web, which makes the need to
+	// make this safer even more superfluous.
+	//
+
 	if (packageName.startsWith('@liferay')) {
 		return packageName.replace('@liferay/', '');
 	}

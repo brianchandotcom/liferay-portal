@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.net.URI;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -282,13 +280,7 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			UUID uuid = new UUID(
 				SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
 
-			Cookie cookie = new Cookie(cookieName, uuid.toString());
-
-			URI uri = _uriInfo.getBaseUri();
-
-			cookie.setPath(uri.getPath());
-
-			return cookie;
+			return new Cookie(cookieName, uuid.toString());
 		}
 
 		private LiferayOAuthDataProvider _getLiferayOAuthDataProvider() {

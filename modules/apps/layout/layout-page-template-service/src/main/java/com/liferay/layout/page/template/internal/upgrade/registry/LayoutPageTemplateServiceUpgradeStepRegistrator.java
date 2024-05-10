@@ -227,6 +227,19 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"5.6.0", "5.7.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"LayoutPageTemplateEntry", "layoutPageTemplateEntryId"}
+					};
+				}
+
+			});
 	}
 
 	@Reference

@@ -74,6 +74,10 @@ public class RecentGroupManagerImpl implements RecentGroupManager {
 		List<Long> groupIds = ListUtil.fromArray(
 			ArrayUtil.toLongArray(StringUtil.split(value, 0L)));
 
+		if (!groupIds.isEmpty() && (groupIds.get(0) == liveGroupId)) {
+			return;
+		}
+
 		groupIds.remove(liveGroupId);
 
 		groupIds.add(0, liveGroupId);

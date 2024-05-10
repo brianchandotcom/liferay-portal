@@ -7,5 +7,6 @@ application:
     name: "sample-application"
 author: "John Doe"
 changeTrackingEnabled: true
+clientDir: "./test-classes/actual/sample-client/src/main/java"
 forcePredictableOperationId: true
 implDir: "./test-classes/actual/sample-impl/src/main/java"

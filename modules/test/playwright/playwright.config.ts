@@ -37,6 +37,7 @@ import {config as portalDefaultPermissionsWebConfig} from './tests/portal-defaul
 import {config as portalSearchWebConfig} from './tests/portal-search-web/config';
 import {config as portalSecurityScriptManagementWeb} from './tests/portal-security-script-management-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
+import {config as portletConfigurationWebConfig} from './tests/portlet-configuration-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
 import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookConfig} from './tests/style-book-web/config';
@@ -81,6 +82,7 @@ export default defineConfig({
 		portalSearchWebConfig,
 		portalSecurityScriptManagementWeb,
 		portalWorkflowKaleoDesignerWebConfig,
+		portletConfigurationWebConfig,
 		productNavigationUserPersonalBarWebConfig,
 		stableConfig,
 		stylebookConfig,

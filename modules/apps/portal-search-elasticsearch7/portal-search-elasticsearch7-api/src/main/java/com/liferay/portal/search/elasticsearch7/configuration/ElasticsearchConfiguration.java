@@ -108,7 +108,7 @@ public interface ElasticsearchConfiguration {
 	public String indexNumberOfReplicas();
 
 	@Meta.AD(
-		deflt = "", description = "number-of-index-shards-help",
+		deflt = "1", description = "number-of-index-shards-help",
 		name = "number-of-index-shards", required = false
 	)
 	public String indexNumberOfShards();

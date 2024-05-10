@@ -1573,7 +1573,395 @@
 					"outputType": "fullValidation",
 					"script": "(businessWebsiteURL == \"\") OR isURL(businessWebsiteURL)"
 				}
-			]
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Application View"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "ID"
+							},
+							"objectFieldName": "id",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Applicant Name"
+							},
+							"objectFieldName": "applicantName",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Business Name"
+							},
+							"objectFieldName": "businessName",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Create Date"
+							},
+							"objectFieldName": "createDate",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Application State"
+							},
+							"objectFieldName": "applicationState",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Status"
+							},
+							"objectFieldName": "status",
+							"priority": 5
+						}
+					]
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "D4B8 Distributor Applications"
+			},
+			"restContextPath": "/o/c/d4b8distributorapplications",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "businessName"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"externalReferenceCode": "D4B8_APPLICATION_EVALUATION",
+			"label": {
+				"en_US": "D4B8 Application Evaluation"
+			},
+			"modifiable": true,
+			"name": "D4B8ApplicationEvaluation",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Assessment Score"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_ASSESSMENT_SCORES",
+					"name": "assessmentScore",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Attachment"
+					},
+					"name": "attachment",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Decision"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_DECISIONS",
+					"name": "decision",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Interview Notes"
+					},
+					"name": "interviewNotes",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Recommendation Comments"
+					},
+					"name": "recommendationComments",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Recommendations"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_RECOMMENDATIONS",
+					"name": "recommendations",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "default",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Evaluation Layout"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_APPLICATION_EVALUATION",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Review"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "General Details"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "r_applicationToEvaluations_c_d4b8DistributorApplicationId",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "interviewNotes",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "attachment",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Assessment"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "recommendations",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "recommendationComments",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "assessmentScore",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Resolution"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "decision",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								}
+							],
+							"priority": 0
+						}
+					]
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Evaluation View"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_APPLICATION_EVALUATION",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "ID"
+							},
+							"objectFieldName": "id",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Distributor Application"
+							},
+							"objectFieldName": "r_applicationToEvaluations_c_d4b8DistributorApplicationId",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Author"
+							},
+							"objectFieldName": "creator",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Assessment Score"
+							},
+							"objectFieldName": "assessmentScore",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Decision"
+							},
+							"objectFieldName": "decision",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Create Date"
+							},
+							"objectFieldName": "createDate",
+							"priority": 5
+						},
+						{
+							"label": {
+								"en_US": "Modified Date"
+							},
+							"objectFieldName": "modifiedDate",
+							"priority": 6
+						}
+					]
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "D4B8 Application Evaluations"
+			},
+			"restContextPath": "/o/c/d4b8distributorapplications",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "creator"
 		}
 	]
 }

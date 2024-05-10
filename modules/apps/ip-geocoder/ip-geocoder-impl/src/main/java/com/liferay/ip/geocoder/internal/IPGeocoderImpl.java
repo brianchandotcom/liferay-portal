@@ -54,6 +54,10 @@ public class IPGeocoderImpl implements IPGeocoder {
 	public IPInfo getIPInfo(HttpServletRequest httpServletRequest) {
 		String ipAddress = _getIPAddress(httpServletRequest);
 
+		if (Validator.isNull(ipAddress)) {
+			return new IPInfo(StringPool.BLANK, ipAddress);
+		}
+
 		String countryCode = _countryCodes.get(ipAddress);
 
 		if (countryCode == null) {

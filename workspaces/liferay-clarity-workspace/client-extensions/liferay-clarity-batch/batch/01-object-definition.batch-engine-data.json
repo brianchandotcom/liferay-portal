@@ -1487,7 +1487,7 @@
 					},
 					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
-					"script": "isEmailAddress(applicantEmailAddress) OR applicantEmailAddress == \"\""
+					"script": "(applicantEmailAddress == \"\") OR isEmailAddress(applicantEmailAddress)"
 				},
 				{
 					"active": true,
@@ -1501,7 +1501,7 @@
 					},
 					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
-					"script": "isEmailAddress(primaryContactEmailAddress) OR primaryContactEmailAddress == \"\""
+					"script": "(primaryContactEmailAddress == \"\") OR isEmailAddress(primaryContactEmailAddress)"
 				},
 				{
 					"active": true,
@@ -1515,7 +1515,7 @@
 					},
 					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
-					"script": "match(bankPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR bankPhoneNumber == \"\""
+					"script": "(bankPhoneNumber == \"\") OR match(bankPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\")"
 				},
 				{
 					"active": true,
@@ -1529,7 +1529,7 @@
 					},
 					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
-					"script": "match(businessPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR businessPhoneNumber == \"\""
+					"script": "(businessPhoneNumber == \"\") OR match(businessPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\")"
 				},
 				{
 					"active": true,
@@ -1543,7 +1543,7 @@
 					},
 					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
-					"script": "match(primaryContactPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR primaryContactPhoneNumber == \"\""
+					"script": "(primaryContactPhoneNumber == \"\") OR match(primaryContactPhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\")"
 				},
 				{
 					"active": true,
@@ -1557,7 +1557,7 @@
 					},
 					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
-					"script": "match(referencePhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\") OR referencePhoneNumber == \"\""
+					"script": "(referencePhoneNumber == \"\") OR match(referencePhoneNumber, \"^(\\+\\d{1,3} ?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$\")"
 				},
 				{
 					"active": true,
@@ -1573,7 +1573,204 @@
 					"outputType": "fullValidation",
 					"script": "(businessWebsiteURL == \"\") OR isURL(businessWebsiteURL)"
 				}
-			]
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Application View"
+					},
+					"objectDefinitionExternalReferenceCode": "D4B8_DISTRIBUTOR_APPLICATION",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "ID"
+							},
+							"objectFieldName": "id",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "Applicant Name"
+							},
+							"objectFieldName": "applicantName",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Business Name"
+							},
+							"objectFieldName": "businessName",
+							"priority": 2
+						},
+						{
+							"label": {
+								"en_US": "Create Date"
+							},
+							"objectFieldName": "createDate",
+							"priority": 3
+						},
+						{
+							"label": {
+								"en_US": "Application State"
+							},
+							"objectFieldName": "applicationState",
+							"priority": 4
+						},
+						{
+							"label": {
+								"en_US": "Status"
+							},
+							"objectFieldName": "status",
+							"priority": 5
+						}
+					]
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "D4B8 Distributor Applications"
+			},
+			"restContextPath": "/o/c/d4b8distributorapplications",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "businessName"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"externalReferenceCode": "D4B8_APPLICATION_EVALUATION",
+			"label": {
+				"en_US": "D4B8 Application Evaluation"
+			},
+			"modifiable": true,
+			"name": "D4B8ApplicationEvaluation",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Assessment Score"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_ASSESSMENT_SCORES",
+					"name": "assessmentScore",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Attachment"
+					},
+					"name": "attachment",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": 100
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Decision"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_DECISIONS",
+					"name": "decision",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Interview Notes"
+					},
+					"name": "interviewNotes",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Recommendation Comments"
+					},
+					"name": "recommendationComments",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Recommendations"
+					},
+					"listTypeDefinitionExternalReferenceCode": "D4B8_RECOMMENDATIONS",
+					"name": "recommendations",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "default"
 		}
 	]
 }

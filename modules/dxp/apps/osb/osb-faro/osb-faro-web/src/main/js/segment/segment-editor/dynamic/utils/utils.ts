@@ -371,9 +371,6 @@ export const convertEventToProperty = (
 	const displayName = isMap(eventDefinition)
 		? eventDefinition.get('displayName')
 		: eventDefinition.displayName;
-	const id = isMap(eventDefinition)
-		? eventDefinition.get('id')
-		: eventDefinition.id;
 	const name = isMap(eventDefinition)
 		? eventDefinition.get('name')
 		: eventDefinition.name;
@@ -384,7 +381,7 @@ export const convertEventToProperty = (
 
 	return new Property({
 		entityName: Liferay.Language.get('event'),
-		id,
+		id: name,
 		label: displayName || name,
 		name,
 		options: [{label: 'hidden', value: hidden}],

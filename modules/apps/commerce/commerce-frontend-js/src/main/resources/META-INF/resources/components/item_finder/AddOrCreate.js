@@ -92,9 +92,9 @@ class AddOrCreateBase extends Component {
 				}`}
 				onFocus={(event) => this.handleFocusIn(event)}
 			>
-				<h4 className="align-items-center card-header py-3">
+				<div className="align-items-center card-header h4 py-3">
 					{this.props.panelHeaderLabel}
-				</h4>
+				</div>
 
 				<div className="card-body">
 					<div className="input-group">

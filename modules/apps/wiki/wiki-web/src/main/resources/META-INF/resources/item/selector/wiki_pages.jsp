@@ -85,11 +85,11 @@ String searchURL = HttpComponentsUtil.removeParameter(
 				WikiPageItemSelectorReturnTypeResolver wikiPageItemSelectorReturnTypeResolver = wikiPageItemSelectorViewDisplayContext.getWikiPageItemSelectorReturnTypeResolver();
 				%>
 
-				<h4>
+				<div class="h4">
 					<a class="wiki-page" data-title="<%= wikiPageItemSelectorReturnTypeResolver.getTitle(curPage, themeDisplay) %>" data-value="<%= wikiPageItemSelectorReturnTypeResolver.getValue(curPage, themeDisplay) %>" href="javascript:void(0);">
 						<%= curPage.getTitle() %>
 					</a>
-				</h4>
+				</div>
 
 				<h5 class="text-default">
 					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />

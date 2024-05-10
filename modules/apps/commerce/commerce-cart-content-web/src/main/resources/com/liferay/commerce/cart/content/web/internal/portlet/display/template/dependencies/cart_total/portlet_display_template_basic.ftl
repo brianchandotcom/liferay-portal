@@ -5,7 +5,7 @@
 		commerceOrderTotal = commerceOrderPrice.getTotal()
 	/>
 
-	<h4>
+	<div class="h4">
 		<strong><@liferay_ui["message"] key="total" /> ${commerceOrderTotal.format(locale)}</strong>
-	</h4>
+	</div>
 </#if>

@@ -36,9 +36,9 @@ renderResponse.setTitle(viewKBSuggestionDisplayContext.getKBCommentTitle());
 						<%= HtmlUtil.escape(viewKBSuggestionDisplayContext.getModifiedDateLabel()) %>
 					</h5>
 
-					<h4>
+					<div class="h4">
 						<%= HtmlUtil.escape(viewKBSuggestionDisplayContext.getKBCommentTitle()) %>
-					</h4>
+					</div>
 
 					<h5>
 						<span class="kb-comment-status text-default">

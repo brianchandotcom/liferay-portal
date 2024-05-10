@@ -23,9 +23,9 @@ const AnalyticsCloudStatusModal: React.FC<AnalyticsCloudStatusModalProps> = ({
 	<ClayModal center observer={observer}>
 		<div className="bg-neutral-1 cp-analytics-cloud-status-modal">
 			<div className="d-flex justify-content-between">
-				<h4 className="ml-4 mt-4 text-brand-primary text-paragraph">
+				<div className="h4 ml-4 mt-4 text-brand-primary text-paragraph">
 					{i18n.translate('analytics-cloud-setup').toUpperCase()}
-				</h4>
+				</div>
 
 				<div className="mr-4 mt-3">
 					<Button

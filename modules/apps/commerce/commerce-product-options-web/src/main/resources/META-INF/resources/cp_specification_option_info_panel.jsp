@@ -31,7 +31,7 @@ if (cpSpecificationOptions == null) {
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h4 class="component-title"><%= HtmlUtil.escape(cpSpecificationOption.getTitle(locale)) %></h4>
+					<div class="component-title"><%= HtmlUtil.escape(cpSpecificationOption.getTitle(locale)) %></div>
 				</clay:content-col>
 
 				<clay:content-col>
@@ -62,7 +62,7 @@ if (cpSpecificationOptions == null) {
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h4 class="component-title"><liferay-ui:message arguments="<%= cpSpecificationOptions.size() %>" key="x-items-are-selected" /></h4>
+					<div class="component-title"><liferay-ui:message arguments="<%= cpSpecificationOptions.size() %>" key="x-items-are-selected" /></div>
 				</clay:content-col>
 			</clay:content-row>
 		</div>

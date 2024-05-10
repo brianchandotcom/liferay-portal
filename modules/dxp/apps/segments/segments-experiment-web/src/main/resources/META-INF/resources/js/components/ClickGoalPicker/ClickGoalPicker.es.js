@@ -184,7 +184,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 	return (
 		<DispatchContext.Provider value={dispatch}>
 			<StateContext.Provider value={state}>
-				<h4 className="mb-3 mt-4 sheet-subtitle">
+				<div className="mb-3 mt-4 sheet-subtitle">
 					{Liferay.Language.get('click-goal')}
 
 					{allowEdit && (
@@ -194,7 +194,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 							symbol="asterisk"
 						/>
 					)}
-				</h4>
+				</div>
 
 				{allowEdit && (
 					<div className="c-mb-2 text-secondary">

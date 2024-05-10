@@ -7,9 +7,9 @@
 
 <%@ include file="/wiki/init.jsp" %>
 
-<h4>
+<div class="h4">
 	<liferay-ui:message key="text-styles" />
-</h4>
+</div>
 
 <pre>
 'quoted'
@@ -18,9 +18,9 @@
 monospaced
 </pre>
 
-<h4>
+<div class="h4">
 	<liferay-ui:message key="headers" />
-</h4>
+</div>
 
 <pre>
 = Header 1 =
@@ -28,18 +28,18 @@ monospaced
 === Header 3 ===
 </pre>
 
-<h4>
+<div class="h4">
 	<liferay-ui:message key="links" />
-</h4>
+</div>
 
 <pre>
 CamelCaseWordsAreLinksToPages
 [http://www.liferay.com Liferay's Website]
 </pre>
 
-<h4>
+<div class="h4">
 	<liferay-ui:message key="lists" />
-</h4>
+</div>
 
 <pre>
 <i class="icon-long-arrow-right"></i>* Item

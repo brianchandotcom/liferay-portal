@@ -111,9 +111,9 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 							/>
 
 							<c:if test="<%= assetEntry != null %>">
-								<h4 class="task-content-author">
+								<div class="h4 task-content-author">
 									<liferay-ui:message key="author" />
-								</h4>
+								</div>
 
 								<liferay-asset:asset-metadata
 									className="<%= assetEntry.getClassName() %>"

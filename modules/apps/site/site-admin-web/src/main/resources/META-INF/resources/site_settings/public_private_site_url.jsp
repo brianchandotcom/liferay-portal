@@ -131,7 +131,7 @@ if (privateVirtualHostnames.isEmpty()) {
 	</p>
 
 	<div class="mb-5" id="<portlet:namespace />publicVirtualHostFields">
-		<h4 class="sheet-subtitle"><liferay-ui:message key="public-pages" /></h4>
+		<div class="sheet-subtitle"><liferay-ui:message key="public-pages" /></div>
 
 		<%
 		for (Map.Entry<String, String> entry : publicVirtualHostnames.entrySet()) {
@@ -171,7 +171,7 @@ if (privateVirtualHostnames.isEmpty()) {
 	</div>
 
 	<div id="<portlet:namespace />privateVirtualHostFields">
-		<h4 class="sheet-subtitle"><liferay-ui:message key="private-pages" /></h4>
+		<div class="sheet-subtitle"><liferay-ui:message key="private-pages" /></div>
 
 		<%
 		for (Map.Entry<String, String> entry : privateVirtualHostnames.entrySet()) {

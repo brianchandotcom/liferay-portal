@@ -21,9 +21,9 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 
 	return (
 		<>
-			<h4 className="mb-3 mt-4 sheet-subtitle">
+			<div className="mb-3 mt-4 sheet-subtitle">
 				{Liferay.Language.get('details')}
-			</h4>
+			</div>
 
 			<dl className="pl-0 segments-experiment-details">
 				{description && (

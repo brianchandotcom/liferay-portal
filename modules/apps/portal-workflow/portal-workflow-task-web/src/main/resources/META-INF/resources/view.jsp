@@ -94,12 +94,12 @@ else {
 							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
 						</h5>
 
-						<h4>
+						<div class="h4">
 							<clay:link
 								href="<%= rowURL %>"
 								label="<%= HtmlUtil.escape(workflowTaskDisplayContext.getAssetTitle(workflowTask)) %>"
 							/>
-						</h4>
+						</div>
 
 						<h5 class="text-default">
 							<span class="asset-type">

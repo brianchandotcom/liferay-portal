@@ -52,33 +52,33 @@
 </#list>
 
 <@clay.panel displayTitle="${name}">
-	<h4>
+	<div class="h4">
 		What Changed?
-	</h4>
+	</div>
 
 	<p>
 		${whatChanged}
 	</p>
 
-	<h4>
+	<div class="h4">
 		Who is affected?
-	</h4>
+	</div>
 
 	<p>
 		${whoIsAffected}
 	</p>
 
-	<h4>
+	<div class="h4">
 		What do I need to do?
-	</h4>
+	</div>
 
 	<p>
 		${whatDoINeedToDo}
 	</p>
 
-	<h4>
+	<div class="h4">
 		Why was the change made?
-	</h4>
+	</div>
 
 	<p>
 		${whyWasTheChangeMade}

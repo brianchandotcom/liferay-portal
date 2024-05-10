@@ -23,9 +23,9 @@ for (DDLRecordVersion recordVersion : DDLRecordVersionServiceUtil.getRecordVersi
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<h4 class="list-group-title">
+				<div class="list-group-title">
 					<liferay-ui:message arguments="<%= recordVersion.getVersion() %>" key="version-x" />
-				</h4>
+				</div>
 
 				<p class="list-group-subtitle">
 					<liferay-ui:message key="author" />: <%= HtmlUtil.escape(recordVersion.getUserName()) %>

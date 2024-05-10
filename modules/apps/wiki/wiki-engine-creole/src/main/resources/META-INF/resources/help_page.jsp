@@ -8,18 +8,18 @@
 <%@ include file="/init.jsp" %>
 
 <clay:container-fluid>
-	<h4>
+	<div class="h4">
 		<liferay-ui:message key="text-styles" />
-	</h4>
+	</div>
 
 	<pre>
 	//italics//
 	**bold**
 	</pre>
 
-	<h4>
+	<div class="h4">
 		<liferay-ui:message key="headers" />
-	</h4>
+	</div>
 
 	<pre>
 	== Large heading ==
@@ -27,18 +27,18 @@
 	==== Small heading ====
 	</pre>
 
-	<h4>
+	<div class="h4">
 		<liferay-ui:message key="links" />
-	</h4>
+	</div>
 
 	<pre>
 	[[Link to a page]]
 	[[http://www.liferay.com|Link to website]]
 	</pre>
 
-	<h4>
+	<div class="h4">
 		<liferay-ui:message key="lists" />
-	</h4>
+	</div>
 
 	<pre>
 	* Item
@@ -47,18 +47,18 @@
 	## Ordered Subitem
 	</pre>
 
-	<h4>
+	<div class="h4">
 		<liferay-ui:message key="images" />
-	</h4>
+	</div>
 
 	<pre>
 	{{attached-image.png}}
 	{{Page Name/other-image.jpg|label}}
 	</pre>
 
-	<h4>
+	<div class="h4">
 		<liferay-ui:message key="other" />
-	</h4>
+	</div>
 
 	<pre>
 	&lt;&lt;TableOfContents&gt;&gt;

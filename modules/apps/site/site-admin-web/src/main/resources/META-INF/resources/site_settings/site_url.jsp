@@ -122,7 +122,7 @@ if (publicVirtualHostnames.isEmpty()) {
 	</p>
 
 	<div class="mb-5" id="<portlet:namespace />publicVirtualHostFields">
-		<h4 class="sheet-subtitle"><liferay-ui:message key="pages" /></h4>
+		<div class="sheet-subtitle"><liferay-ui:message key="pages" /></div>
 
 		<%
 		for (Map.Entry<String, String> entry : publicVirtualHostnames.entrySet()) {

@@ -272,7 +272,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 </c:if>
 
 <c:if test="<%= !inheritedSiteGroups.isEmpty() %>">
-	<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-sites" /></h4>
+	<div class="sheet-tertiary-title"><liferay-ui:message key="inherited-sites" /></div>
 
 	<liferay-ui:search-container
 		cssClass="lfr-search-container-inherited-sites"

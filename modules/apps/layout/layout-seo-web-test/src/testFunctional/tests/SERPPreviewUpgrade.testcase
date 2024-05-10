@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-wcm"
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -7,8 +7,8 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";
-	property testray.component.names = "SEO";
-	property testray.main.component.name = "Upgrades Content Management";
+	property testray.component.names = "Page SEO Links";
+	property testray.main.component.name = "Upgrades WEM";
 
 	setUp {
 		SignIn.signIn();

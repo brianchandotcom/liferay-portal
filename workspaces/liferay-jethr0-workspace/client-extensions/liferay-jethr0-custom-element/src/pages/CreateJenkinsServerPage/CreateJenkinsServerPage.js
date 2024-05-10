@@ -9,14 +9,17 @@ import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
-import Jethr0FieldLabel from '../../components/Jethr0FieldLabel/Jethr0FieldLabel';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
-import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
+import Jethr0FieldLabel from '../../components/Jethr0FieldLabel/Jethr0FieldLabel';
 import Jethr0Input from '../../components/Jethr0Input/Jethr0Input';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
-import {createJenkinsServer, getJenkinsCohortsPage} from '../../objects/jenkins/JenkinsUtil';
+import Jethr0SelectWithOption from '../../components/Jethr0SelectWithOption/Jethr0SelectWithOption';
+import {
+	createJenkinsServer,
+	getJenkinsCohortsPage,
+} from '../../objects/jenkins/JenkinsUtil';
 
 const jenkinsServerURLRegExp = new RegExp(
 	'https?://(test-\\d+-\\d+)(.liferay.com)?'
@@ -34,16 +37,18 @@ function CreateJenkinsServerPage() {
 		return;
 	}
 
-	let jenkinsCohortNames = jenkinsCohortsPage?.jenkinsCohorts.map((jenkinsCohort) => {
-		return {
-			label: jenkinsCohort.name,
-			value: jenkinsCohort.id,
-		};
-	});
+	const jenkinsCohortNames = jenkinsCohortsPage?.jenkinsCohorts.map(
+		(jenkinsCohort) => {
+			return {
+				label: jenkinsCohort.name,
+				value: jenkinsCohort.id,
+			};
+		}
+	);
 
 	if (!jenkinsCohort) {
 		for (const availableJenkinsCohort of jenkinsCohortsPage?.jenkinsCohorts) {
-			if (availableJenkinsCohort.id === parseInt(jenkinsCohortId)) {
+			if (availableJenkinsCohort.id === parseInt(jenkinsCohortId, 10)) {
 				setJenkinsCohort(availableJenkinsCohort);
 
 				return;
@@ -57,17 +62,23 @@ function CreateJenkinsServerPage() {
 		}
 	}
 
-	let breadcrumbs = [
+	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jenkins-servers', name: 'Jenkins Servers'},
-		{active: true, link: '/jenkins-servers/create', name: 'Create Jenkins Server'},
+		{
+			active: true,
+			link: '/jenkins-servers/create',
+			name: 'Create Jenkins Server',
+		},
 	];
 
 	let jenkinsName = '';
 	let jenkinsURL = '';
 
 	if (jenkinsServerURL) {
-		const jenkinsServerURLMatch = jenkinsServerURL.match(jenkinsServerURLRegExp);
+		const jenkinsServerURLMatch = jenkinsServerURL.match(
+			jenkinsServerURLRegExp
+		);
 
 		if (jenkinsServerURLMatch) {
 			jenkinsName = jenkinsServerURLMatch[1];
@@ -103,7 +114,10 @@ function CreateJenkinsServerPage() {
 						id="jenkinsCohort"
 						onChange={(event) => {
 							for (const availableJenkinsCohort of jenkinsCohortsPage?.jenkinsCohorts) {
-								if (availableJenkinsCohort.id === parseInt(event.target.value)) {
+								if (
+									availableJenkinsCohort.id ===
+									parseInt(event.target.value, 10)
+								) {
 									setJenkinsCohort(availableJenkinsCohort);
 
 									return;

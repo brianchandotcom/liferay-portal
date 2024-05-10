@@ -29,13 +29,11 @@ function JenkinsServersPage() {
 		return <div>Loading...</div>;
 	}
 
-	console.log(jenkinsServersPage);
-
 	function setActiveDelta({activeDelta, jenkinsServersPage}) {
 		getJenkinsServersPage({
 			page: jenkinsServersPage.page,
 			pageSize: activeDelta,
-			setJenkinsServersPage
+			setJenkinsServersPage,
 		});
 	}
 
@@ -74,11 +72,14 @@ function JenkinsServersPage() {
 				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
-						Jenkins Servers
+							Jenkins Servers
 						</Heading>
 						<Jethr0ButtonsRow
 							buttons={[
-								{link: '/jenkins-servers/create', title: 'Create Jenkins Server'},
+								{
+									link: '/jenkins-servers/create',
+									title: 'Create Jenkins Server',
+								},
 							]}
 						/>
 					</ClayLayout.Row>
@@ -94,23 +95,36 @@ function JenkinsServersPage() {
 						</tr>
 					</thead>
 					<tbody>
-						{jenkinsServersPage?.jenkinsServers.map((jenkinsServer) => {
-							return (
-								<tr key={jenkinsServer.id}>
-									<th className="font-weight-semi-bold">
-										<Link
-											title={jenkinsServer.id}
-											to={'/jenkins-servers/' + jenkinsServer.id}
-										>
-											{jenkinsServer.id}
-										</Link>
-									</th>
-									<td>{jenkinsServer.name}</td>
-									<td>{toLocaleString(jenkinsServer.dateCreated)}</td>
-									<td>{toLocaleString(jenkinsServer.dateModified)}</td>
-								</tr>
-							);
-						})}
+						{jenkinsServersPage?.jenkinsServers.map(
+							(jenkinsServer) => {
+								return (
+									<tr key={jenkinsServer.id}>
+										<th className="font-weight-semi-bold">
+											<Link
+												title={jenkinsServer.id}
+												to={
+													'/jenkins-servers/' +
+													jenkinsServer.id
+												}
+											>
+												{jenkinsServer.id}
+											</Link>
+										</th>
+										<td>{jenkinsServer.name}</td>
+										<td>
+											{toLocaleString(
+												jenkinsServer.dateCreated
+											)}
+										</td>
+										<td>
+											{toLocaleString(
+												jenkinsServer.dateModified
+											)}
+										</td>
+									</tr>
+								);
+							}
+						)}
 					</tbody>
 				</Jethr0Table>
 			</Jethr0Card>

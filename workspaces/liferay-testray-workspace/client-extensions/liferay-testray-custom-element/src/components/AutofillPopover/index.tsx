@@ -6,16 +6,16 @@
 import classNames from 'classnames';
 import {useEffect, useRef} from 'react';
 
-import CompareRuns from './CompareRuns';
+import AutofillBuilds from './AutoFillBuilds';
 
-type CompareRunsPopoverProps = {
+type AutoFillBuildsPopoverProps = {
 	expanded?: boolean;
 	setVisible: (state: boolean) => void;
 	triggedRef: React.RefObject<HTMLDivElement>;
 	visible: boolean;
 };
 
-const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
+const AutoFillBuildsPopover: React.FC<AutoFillBuildsPopoverProps> = ({
 	expanded = false,
 	setVisible,
 	triggedRef,
@@ -51,9 +51,9 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 			onBlur={() => setVisible(false)}
 			ref={ref}
 		>
-			<CompareRuns setVisible={setVisible} />
+			<AutofillBuilds setVisible={setVisible} />
 		</div>
 	);
 };
 
-export default CompareRunsPopover;
+export default AutoFillBuildsPopover;

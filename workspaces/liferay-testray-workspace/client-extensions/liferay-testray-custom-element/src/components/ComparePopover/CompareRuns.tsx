@@ -37,35 +37,25 @@ const CompareRuns: React.FC<CompareRunsProps> = ({setVisible}) => {
 
 			<Form.Divider />
 
-			<div className="mt-3">
+			<div className="compare-runs-popover mt-3">
 				<ClayLayout.Row>
 					<ClayLayout.Col>
-						<ClayButton
-							block
-							className="text-uppercase"
-							disabled={!compareRuns?.runA}
-							displayType="primary"
-						>
+						<ClayButton block className="runs-buttons">
 							{compareRuns?.runA
 								? `${i18n.translate('run-a')} : ${
 										compareRuns?.runA
 								  }`
-								: i18n.translate('add-run-a')}
+								: i18n.translate('run-a')}
 						</ClayButton>
 					</ClayLayout.Col>
 
 					<ClayLayout.Col>
-						<ClayButton
-							block
-							className="text-uppercase"
-							disabled={!compareRuns?.runB}
-							displayType="primary"
-						>
+						<ClayButton block className="runs-buttons">
 							{compareRuns?.runB
 								? `${i18n.translate('run-b')} : ${
 										compareRuns?.runB
 								  }`
-								: i18n.translate('add-run-b')}
+								: i18n.translate('run-b')}
 						</ClayButton>
 					</ClayLayout.Col>
 				</ClayLayout.Row>
@@ -82,7 +72,7 @@ const CompareRuns: React.FC<CompareRunsProps> = ({setVisible}) => {
 							setVisible(false);
 						}}
 					>
-						{i18n.sub('compare-x', 'runs')}
+						{i18n.translate('compare')}
 					</ClayButton>
 
 					<ClayButton

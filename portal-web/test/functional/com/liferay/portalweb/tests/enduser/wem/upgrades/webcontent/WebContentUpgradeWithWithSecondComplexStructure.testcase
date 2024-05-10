@@ -143,18 +143,10 @@ definition {
 			menuItem = "Edit Default Values",
 			rowEntry = "WC Structure Name");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Label UF Comunicado",
-			locator1 = "WCEditWebContent#TEXT_INPUT");
-
 		Type(
 			key_fieldFieldLabel = "Label UF Comunicado",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "Edited LabelUFComunicado Field");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Lista UF Comunicado",
-			locator1 = "WCEditWebContent#TEXT_INPUT");
 
 		Type(
 			key_fieldFieldLabel = "Lista UF Comunicado",

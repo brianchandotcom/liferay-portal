@@ -308,6 +308,7 @@ pre[class*='language-'] {
 
 	.learn-article-content {
 		max-width: var(--container-max-lg);
+		width: 100%;
 
 		h1 {
 			margin-bottom: var(--spacer-3, 1rem);
@@ -472,6 +473,14 @@ pre[class*='language-'] {
 			text-decoration: none;
 		}
 	}
+}
+
+.learn-article-nav-container .component-html {
+	width: 100%;
+}
+
+.lfr-layout-structure-item-basic-component-html {
+	width: 100%;
 }
 
 .learn-article-nav {

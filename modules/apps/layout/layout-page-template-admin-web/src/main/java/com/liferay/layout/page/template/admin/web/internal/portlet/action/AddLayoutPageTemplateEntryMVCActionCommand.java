@@ -73,7 +73,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-					serviceContext.getScopeGroupId(),
+					null, serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name, type,
 					masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);

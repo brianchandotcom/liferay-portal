@@ -74,7 +74,7 @@ public class LayoutPageTemplateTestUtil {
 
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollectionId, name, type, 0, status,
 				ServiceContextTestUtil.getServiceContext(

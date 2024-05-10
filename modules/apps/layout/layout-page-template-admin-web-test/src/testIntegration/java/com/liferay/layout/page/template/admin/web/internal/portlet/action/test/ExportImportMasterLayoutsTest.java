@@ -87,7 +87,7 @@ public class ExportImportMasterLayoutsTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext1.getUserId(),
+				null, _serviceContext1.getUserId(),
 				_serviceContext1.getScopeGroupId(), 0,
 				StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,

@@ -433,7 +433,7 @@ public class StructuredContentResourceTest
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
+				null, testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				_ddmStructure.getStructureId(), RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
@@ -636,7 +636,7 @@ public class StructuredContentResourceTest
 		super.testPostStructuredContentFolderStructuredContent();
 
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
+			null, testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class.getName()),
 			_localizedDDMStructure.getStructureId(),
 			RandomTestUtil.randomString(),

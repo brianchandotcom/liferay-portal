@@ -101,8 +101,8 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 
 		_layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_group.getCreatorUserId(), _group.getGroupId(), 0, _classNameId,
-				_journalArticle.getDDMStructureId(),
+				null, _group.getCreatorUserId(), _group.getGroupId(), 0,
+				_classNameId, _journalArticle.getDDMStructureId(),
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, 0, serviceContext);

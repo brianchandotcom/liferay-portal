@@ -255,7 +255,7 @@ public class LockedLayoutsDisplayContextTest {
 		throws Exception {
 
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
 			RandomTestUtil.randomString(), type, 0, true, 0, plid, 0,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}

@@ -126,7 +126,7 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-					serviceContext.getScopeGroupId(),
+					null, serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, classNameId, classTypeId,
 					name, masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);

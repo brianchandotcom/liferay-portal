@@ -1592,8 +1592,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_group.getCreatorUserId(), _group.getGroupId(), 0, classNameId,
-				0, RandomTestUtil.randomString(),
+				null, _group.getCreatorUserId(), _group.getGroupId(), 0,
+				classNameId, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, 0,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

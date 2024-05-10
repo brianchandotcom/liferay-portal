@@ -214,7 +214,7 @@ public class GroupModelListenerTest {
 				groupId, TestPropsValues.getUserId());
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), groupId,
+			null, TestPropsValues.getUserId(), groupId,
 			layoutPageTemplateCollectionId, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);

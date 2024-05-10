@@ -705,7 +705,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 					serviceContext);
 
 		_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			_group.getGroupId(),
+			null, _group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Layout Page Template Entry",
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,

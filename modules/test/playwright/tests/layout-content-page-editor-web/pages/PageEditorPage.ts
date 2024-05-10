@@ -43,9 +43,10 @@ export class PageEditorPage {
 		fragmentId: string,
 		tab: ConfigurationTab,
 		fieldLabel: string,
-		value: string
+		value: string,
+		isDesktop = true
 	) {
-		await this.selectFragment(fragmentId);
+		await this.selectFragment(fragmentId, isDesktop);
 		await this.goToConfigurationTab(tab);
 
 		// Change value in different way depending on field type

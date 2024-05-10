@@ -248,7 +248,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long masterLayoutPlid, int status, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addLayoutPageTemplateEntry(
+		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			externalReferenceCode, userId, groupId,
 			layoutPageTemplateCollectionId, 0, 0, name, type, 0, false, 0, 0,
 			masterLayoutPlid, status, serviceContext);
@@ -394,8 +394,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long layoutPageTemplateEntryId)
 		throws PortalException {
 
-		return deleteLayoutPageTemplateEntry(
-			getLayoutPageTemplateEntry(layoutPageTemplateEntryId));
+		return layoutPageTemplateEntryLocalService.
+			deleteLayoutPageTemplateEntry(
+				getLayoutPageTemplateEntry(layoutPageTemplateEntryId));
 	}
 
 	@Override
@@ -476,7 +477,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId) {
 
-		return getLayoutPageTemplateEntries(
+		return layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 			groupId, layoutPageTemplateCollectionId,
 			WorkflowConstants.STATUS_ANY);
 	}
@@ -498,7 +499,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end) {
 
-		return getLayoutPageTemplateEntries(
+		return layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 			groupId, layoutPageTemplateCollectionId,
 			WorkflowConstants.STATUS_ANY, start, end);
 	}
@@ -539,7 +540,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		long groupId, long layoutPageTemplateCollectionId, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
-		return getLayoutPageTemplateEntries(
+		return layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 			groupId, layoutPageTemplateCollectionId,
 			WorkflowConstants.STATUS_ANY, start, end, orderByComparator);
 	}
@@ -579,7 +580,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
-		return getLayoutPageTemplateEntries(
+		return layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 			groupId, layoutPageTemplateCollectionId, name,
 			WorkflowConstants.STATUS_ANY, start, end, orderByComparator);
 	}
@@ -635,7 +636,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		long layoutPageTemplateEntryId, boolean defaultTemplate) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+			layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
 
 		if (layoutPageTemplateEntry == null) {
 			return null;
@@ -926,7 +928,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			status = WorkflowConstants.STATUS_INACTIVE;
 		}
 
-		return addLayoutPageTemplateEntry(
+		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, layoutPrototype.getUserId(), groupId, 0, 0, 0,
 			nameMap.get(defaultLocale),
 			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false,

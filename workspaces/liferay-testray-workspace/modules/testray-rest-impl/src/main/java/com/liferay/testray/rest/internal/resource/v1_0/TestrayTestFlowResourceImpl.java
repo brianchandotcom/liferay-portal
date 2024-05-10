@@ -64,8 +64,6 @@ public class TestrayTestFlowResourceImpl
 
 		Map<String, Serializable> testrayBuild = valuesList.get(0);
 
-		long testrayBuildId = GetterUtil.getLong(testrayBuild.get("c_buildId"));
-
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("select cr.errors_ , sum(c.priority_) as score from ");
@@ -80,7 +78,8 @@ public class TestrayTestFlowResourceImpl
 			StringUtil.replace(
 				sb.toString(), "[%COMPANY_ID%]",
 				String.valueOf(contextCompany.getCompanyId())),
-			ListUtil.fromArray(testrayBuildId));
+			ListUtil.fromArray(
+				GetterUtil.getLong(testrayBuild.get("c_buildId"))));
 
 		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
 			contextCompany.getCompanyId(), "C_Subtask");
@@ -118,7 +117,8 @@ public class TestrayTestFlowResourceImpl
 					sb.toString(), "[%COMPANY_ID%]",
 					String.valueOf(contextCompany.getCompanyId())),
 				ListUtil.fromArray(
-					objectEntry.getObjectEntryId(), testrayBuildId,
+					objectEntry.getObjectEntryId(),
+					GetterUtil.getLong(testrayBuild.get("c_buildId")),
 					String.valueOf(value.get("errors_"))));
 		}
 

@@ -33,7 +33,9 @@ exports[`AttributeConjunctionInput should render 1`] = `
       role="combobox"
       tabindex="0"
       type="button"
-    />
+    >
+      is
+    </button>
   </div>
   <div
     aria-hidden="true"

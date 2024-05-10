@@ -113,17 +113,21 @@ public class ${schemaName}SerDes {
 
 						for (int i = 0; i < ${schemaVarName}.get${capitalizedPropertyName}().length; i++) {
 							<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]") || enumSchemas?keys?seq_contains(propertyType)>
-								sb.append("\"");
-
 								<#if stringUtil.equals(propertyType, "Date[]")>
-									sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${capitalizedPropertyName}()[i]));
-								<#elseif stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]")>
-									sb.append(_escape(${schemaVarName}.get${capitalizedPropertyName}()[i]));
-								<#else>
-									sb.append(${schemaVarName}.get${capitalizedPropertyName}()[i]);
-								</#if>
+									sb.append("\"");
 
-								sb.append("\"");
+									sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${capitalizedPropertyName}()[i]));
+
+									sb.append("\"");
+								<#elseif stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]")>
+									sb.append(_toJSON(${schemaVarName}.get${capitalizedPropertyName}()[i]));
+								<#else>
+									sb.append("\"");
+
+									sb.append(${schemaVarName}.get${capitalizedPropertyName}()[i]);
+
+									sb.append("\"");
+								</#if>
 							<#elseif stringUtil.startsWith(propertyType, "Map<")>
 								sb.append(_toJSON(${schemaVarName}.get${capitalizedPropertyName}()[i]));
 							<#elseif allSchemas[propertyType?remove_ending("[]")]??>

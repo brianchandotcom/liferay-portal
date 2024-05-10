@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+import { BUILD_NPM_EXPORTS_PATH } from '../util/constants.mjs';
 import getFlatName from '../util/getFlatName.mjs';
 
 export default async function writeCSSLoaderJavaScriptModules(projectExports, projectWebContextPath) {
@@ -18,8 +19,7 @@ export default async function writeCSSLoaderJavaScriptModules(projectExports, pr
 async function writeCSSLoaderJavaScriptModule(webContextPath, moduleName) {
 	const flatModuleName = getFlatName(moduleName);
 
-	const cssLoaderPath = 
-		`./build/node/packageRunBuild/resources/__liferay__/exports/${flatModuleName}.js`;
+	const cssLoaderPath = path.join(BUILD_NPM_EXPORTS_PATH, `${flatModuleName}.js`);
 
 	const source = `
 const link = document.createElement('link');

@@ -3,6 +3,7 @@ import {constants, mkdirSync, renameSync} from 'fs';
 import * as fs from 'fs/promises';
 import resolve from 'resolve';
 
+import {WORK_PATH} from '../util/constants.mjs';
 import onExit from '../util/onExit.mjs';
 
 const DISABLE_BUILD_CONFIGS = [
@@ -108,8 +109,8 @@ async function writeNpmScriptsConfig(projectNpmScriptsConfig) {
 
 function moveNpmScriptsConfig() {
 	try {
-		mkdirSync('./build/node-build', {recursive: true});
-		renameSync('./npmscripts.config.js', './build/node-build/npmscripts.config.js');
+		mkdirSync(WORK_PATH, {recursive: true});
+		renameSync('npmscripts.config.js', path.join(WORK_PATH, 'npmscripts.config.js'));
 	}
 	catch(error) {
 		// ignore
@@ -126,4 +127,3 @@ function restoreNpmScriptsConfig() {
 		// ignore
 	}
 }
-

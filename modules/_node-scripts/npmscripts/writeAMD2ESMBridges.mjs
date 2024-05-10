@@ -2,8 +2,10 @@ import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
 
+import {BUILD_RESOURCES_PATH} from '../util/constants.mjs';
+
 export default async function writeAMD2ESMBridges(projectDescription, projectWebContextPath) {
-	const filePath = `./build/node/packageRunBuild/resources/index.js`;
+	const filePath = path.join(BUILD_RESOURCES_PATH, 'index.js');
 
 	const {name, version} = projectDescription;
 

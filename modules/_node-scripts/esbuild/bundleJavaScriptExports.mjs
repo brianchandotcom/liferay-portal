@@ -1,3 +1,4 @@
+import { BUILD_MAIN_EXPORTS_PATH } from '../util/constants.mjs';
 import getFlatName from '../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
 import getExternals from './getExternals.mjs';
@@ -26,7 +27,7 @@ async function bundle(globalImports, globalSymbols, moduleName) {
 		entryPoints: [getEntryPoint(moduleName)],
 		external: getExternals(globalImports, 'exports'),
 		format: 'esm',
-		outdir: './build/node/packageRunBuild/resources/__liferay__',
+		outdir: BUILD_MAIN_EXPORTS_PATH,
 		sourcemap: true,
 		target: ['es2020'],
 		plugins: [

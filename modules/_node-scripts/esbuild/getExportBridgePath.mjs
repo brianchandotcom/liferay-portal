@@ -1,6 +1,9 @@
+import path from 'path';
+
+import {WORK_EXPORT_PATH} from '../util/constants.mjs';
 import getFlatName from '../util/getFlatName.mjs';
 
 export default function getExportBridgePath(moduleName) {			
-	return `./build/node-build/export/${getFlatName(moduleName)}.js`;
+	return path.join(WORK_EXPORT_PATH, `${getFlatName(moduleName)}.js`);
 }
 

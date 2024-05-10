@@ -1,3 +1,4 @@
+import { BUILD_MAIN_EXPORTS_PATH } from '../util/constants.mjs';
 import getFlatName from '../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
 import runEsbuild from './runEsbuild.mjs';
@@ -20,7 +21,7 @@ async function bundle(moduleName) {
 		loader: {
 			'.png': 'empty',
 		},
-		outdir: './build/node/packageRunBuild/resources/__liferay__',
+		outdir: BUILD_MAIN_EXPORTS_PATH,
 		sourcemap: true,
 	};
 	

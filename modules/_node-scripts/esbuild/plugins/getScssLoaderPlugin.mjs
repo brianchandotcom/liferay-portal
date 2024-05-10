@@ -1,5 +1,7 @@
 import path from 'path';
 
+import { SRC_PATH } from '../../util/constants.mjs';
+
 export default function getScssLoaderPlugin(projectWebContextPath) {
 	return {
 		name: 'scss-loader-plugin',
@@ -10,9 +12,7 @@ export default function getScssLoaderPlugin(projectWebContextPath) {
 					filter: /\.scss$/ 
 				}, 
 				async (args) => {
-					const projectPath = path.relative(
-						'./src/main/resources/META-INF/resources', args.path
-					);
+					const projectPath = path.relative(SRC_PATH, args.path);
 
 					const cssPath = projectPath
 						.split(path.sep)

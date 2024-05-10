@@ -1,8 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+import {BUILD_RESOURCES_PATH} from '../util/constants.mjs';
+
 export default async function writeManifestJson(projectDescription) {
-	const filePath = `./build/node/packageRunBuild/resources/manifest.json`;
+	const filePath = path.join(BUILD_RESOURCES_PATH, 'manifest.json');
 
 	const {name, version} = projectDescription;
 

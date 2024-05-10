@@ -3,6 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro _curlObjectField(objectDefinitionId = null, objectFieldId = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(objectDefinitionId)) {
 			var api = "object-definitions/${objectDefinitionId}/object-fields";
@@ -15,7 +16,7 @@ definition {
 			${portalURL}/o/object-admin/v1.0/${api} \
 				-H accept: application/json \
 				-H Content-Type: application/json \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 		''';
 
 		return ${curl};
@@ -117,10 +118,11 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${entryId},${fieldLabel},${fieldValue},${requiredFieldLabel},${requiredFieldValue}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label}/${entryId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"${requiredFieldLabel}": "${requiredFieldValue}",

@@ -3,10 +3,11 @@ definition {
 	@summary = "Default summary"
 	macro _curlCreateObjectAction(objectDefinitionId = null, objectActionExecutorKey = null, objectActionTriggerKey = null, name = null, errorMessage = null, label = null, parameters = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-actions \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H accept: application/json \
 				-H Content-Type: application/json \
 				-d {

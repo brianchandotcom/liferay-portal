@@ -1,7 +1,8 @@
 definition {
 
+	var userPassword = PropsUtil.get("default.admin.password");
 	var headers = '''
-			-u test@liferay.com:test \
+			-u test@liferay.com:${userPassword} \
 			-H Content-Type: application/json \
 		''';
 
@@ -210,10 +211,11 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${customBooleanValue},${customLongTextValue},${customPicklistValue},${customPrecisionDecimalValue},${requiredFieldLabel},${requiredFieldValue}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"customBoolean": ${customBooleanValue},
@@ -259,6 +261,7 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var api = "o/c/${en_US_plural_label}";
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (!(isSet(externalReferenceCode))) {
 			var externalReferenceCode = "";
@@ -278,7 +281,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/${api} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"name": "${name}",
@@ -297,10 +300,11 @@ definition {
 		Variables.assertDefined(parameterList = "${name},${accountId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/students \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"name": "${name}",
@@ -318,10 +322,11 @@ definition {
 		Variables.assertDefined(parameterList = "${name},${accountId},${studentId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/subjects \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-H Content-Type: application/json \
 				-d {
 					"name": "${name}",
@@ -356,6 +361,7 @@ definition {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
@@ -370,7 +376,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntryId} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		if (isSet(token)) {
@@ -386,6 +392,8 @@ definition {
 	macro getObjectEntryErcByName(name = null, virtualHost = null, en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 
+		var userPassword = PropsUtil.get("default.admin.password");
+
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -400,7 +408,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label}?filter=name%20eq%20%27${name}%27 \
 				-H Content-Type: application/json \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var objectEntryErc = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${name}')]['externalReferenceCode']");
@@ -412,6 +420,8 @@ definition {
 	macro getObjectEntryIdByName(name = null, virtualHost = null, en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 
+		var userPassword = PropsUtil.get("default.admin.password");
+
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -426,7 +436,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/c/${en_US_plural_label}?filter=name%20eq%20%27${name}%27 \
 				-H Content-Type: application/json \
-				-u test@liferay.com:test
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var objectEntryId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${name}')]['id']");

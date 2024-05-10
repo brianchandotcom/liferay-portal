@@ -86,6 +86,7 @@ const CaseTypes = () => {
 							value: i18n.translate('test-fix'),
 						},
 						{
+							clickable: true,
 							key: 'testrayStatusMetric',
 							render: (testrayStatusMetric) => (
 								<ProgressBar

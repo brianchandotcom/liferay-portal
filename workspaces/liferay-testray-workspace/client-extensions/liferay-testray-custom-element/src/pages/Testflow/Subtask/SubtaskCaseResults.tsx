@@ -162,6 +162,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 			tableProps={{
 				columns: [
 					{
+						clickable: true,
 						key: 'run',
 						render: (_, caseResult: TestrayCaseResult) =>
 							caseResult.run?.number?.toString().padStart(2, '0'),
@@ -182,6 +183,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 						value: i18n.translate('team'),
 					},
 					{
+						clickable: true,
 						key: 'component',
 						render: (_, {case: testrayCase}: TestrayCaseResult) =>
 							testrayCase?.component?.name,
@@ -206,6 +208,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 						value: i18n.translate('issues'),
 					},
 					{
+						clickable: true,
 						key: 'dueStatus',
 						render: (dueStatus: PickList) => (
 							<StatusBadge
@@ -217,6 +220,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 						value: i18n.translate('status'),
 					},
 					{
+						clickable: true,
 						key: 'comment',
 						render: (value) => getTruncateText(value),
 						size: 'lg',

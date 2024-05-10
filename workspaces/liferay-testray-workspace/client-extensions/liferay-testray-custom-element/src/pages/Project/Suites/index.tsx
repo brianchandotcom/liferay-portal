@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
@@ -12,7 +12,6 @@ import i18n from '../../../i18n';
 import useSuiteActions from './useSuiteActions';
 
 const Suites = () => {
-	const navigate = useNavigate();
 	const {projectId} = useParams();
 
 	const {actions} = useSuiteActions();
@@ -21,7 +20,6 @@ const Suites = () => {
 		<Container>
 			<ListView
 				managementToolbarProps={{
-					addButton: () => navigate('create'),
 					applyFilters: true,
 					filterSchema: 'suites',
 					title: i18n.translate('suites'),
@@ -37,10 +35,12 @@ const Suites = () => {
 							value: i18n.translate('suite-name'),
 						},
 						{
+							clickable: true,
 							key: 'description',
 							value: i18n.translate('description'),
 						},
 						{
+							clickable: true,
 							key: 'type',
 							render: (type) => i18n.translate(type),
 							value: i18n.translate('type'),

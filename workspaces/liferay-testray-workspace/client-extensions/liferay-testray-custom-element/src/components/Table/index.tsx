@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import i18n from '~/i18n';
 
@@ -78,6 +78,7 @@ const Table: React.FC<TableProps> = ({
 	sort,
 }) => {
 	const [firstRowAction] = items;
+	const navigate = useNavigate();
 
 	const filteredActions = actions
 		? Permission.filterActions(actions, firstRowAction?.actions)
@@ -250,11 +251,6 @@ const Table: React.FC<TableProps> = ({
 							)}
 
 							{columns?.map((column, columnIndex) => {
-								const Wrapper =
-									column.clickable && navigateTo
-										? Link
-										: (props: any) => <div {...props} />;
-
 								return (
 									<ClayTable.Cell
 										className={classNames('text-dark', {
@@ -272,31 +268,26 @@ const Table: React.FC<TableProps> = ({
 										expanded={column.truncate}
 										key={columnIndex}
 										onClick={() => {
-											if (
-												column.clickable &&
-												onClickRow
-											) {
-												onClickRow(item);
+											if (column.clickable) {
+												navigate(
+													navigateTo?.(
+														item
+													)?.toString() as string
+												);
+												if (onClickRow) {
+													onClickRow(item);
+												}
 											}
 										}}
 										truncate={column.truncate}
 									>
-										<Wrapper
-											className="text-dark"
-											to={
-												navigateTo?.(
-													item
-												)?.toString() as string
-											}
-										>
-											{column.render
-												? column.render(
-														item[column.key],
-														{...item, rowIndex},
-														mutate
-												  )
-												: item[column.key]}
-										</Wrapper>
+										{column.render
+											? column.render(
+													item[column.key],
+													{...item, rowIndex},
+													mutate
+											  )
+											: item[column.key]}
 									</ClayTable.Cell>
 								);
 							})}

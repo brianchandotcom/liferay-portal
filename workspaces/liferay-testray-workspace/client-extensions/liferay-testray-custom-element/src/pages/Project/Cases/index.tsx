@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView, {ListViewProps} from '../../../components/ListView';
@@ -36,14 +36,10 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 	tableProps,
 	variables,
 }) => {
-	const {pathname} = useLocation();
-	const navigate = useNavigate();
-
 	return (
 		<ListView
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
-				addButton: () => navigate('create', {state: {back: pathname}}),
 				applyFilters: true,
 				filterSchema: 'cases',
 				title: i18n.translate('cases'),
@@ -53,23 +49,27 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				actions,
 				columns: [
 					{
+						clickable: true,
 						key: 'dateCreated',
 						render: (dateCreated) =>
 							dayjs(dateCreated).format('lll'),
-						value: i18n.translate('create-date'),
+						value: i18n.translate('execution-date'),
 					},
 					{
+						clickable: true,
 						key: 'dateModified',
 						render: (dateModified) =>
 							dayjs(dateModified).format('lll'),
 						value: i18n.translate('modified-date'),
 					},
 					{
+						clickable: true,
 						key: 'priority',
 						sorteable: true,
 						value: i18n.translate('priority'),
 					},
 					{
+						clickable: true,
 						key: 'caseType',
 						render: (caseType) => caseType?.name,
 						value: i18n.translate('case-type'),
@@ -82,16 +82,19 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 						value: i18n.translate('case-name'),
 					},
 					{
+						clickable: true,
 						key: 'team',
 						render: (_, {component}) => component?.team?.name,
 						value: i18n.translate('team'),
 					},
 					{
+						clickable: true,
 						key: 'component',
 						render: (component) => component?.name,
 						value: i18n.translate('component'),
 					},
 					{
+						clickable: true,
 						key: 'description',
 						render: (description) => description,
 						value: i18n.translate('description'),

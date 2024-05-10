@@ -89,6 +89,7 @@ const Build = () => {
 							value: i18n.translate('team'),
 						},
 						{
+							clickable: true,
 							key: 'component',
 							render: (
 								_,
@@ -107,6 +108,7 @@ const Build = () => {
 							value: i18n.translate('case'),
 						},
 						{
+							clickable: true,
 							key: 'run',
 							render: (_, caseResult: TestrayCaseResult) =>
 								caseResult.run?.number
@@ -167,6 +169,7 @@ const Build = () => {
 							width: '200',
 						},
 						{
+							clickable: true,
 							key: 'dueStatus',
 							render: (dueStatus: PickList) => (
 								<StatusBadge
@@ -188,6 +191,7 @@ const Build = () => {
 							value: i18n.translate('issues'),
 						},
 						{
+							clickable: true,
 							key: 'errors',
 							render: (errors: string) =>
 								errors && (
@@ -200,6 +204,7 @@ const Build = () => {
 							value: i18n.translate('errors'),
 						},
 						{
+							clickable: true,
 							key: 'comment',
 							size: 'lg',
 							value: i18n.translate('comment'),

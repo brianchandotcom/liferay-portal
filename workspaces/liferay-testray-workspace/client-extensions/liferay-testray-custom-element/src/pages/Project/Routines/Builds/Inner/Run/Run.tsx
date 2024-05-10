@@ -131,6 +131,7 @@ const Runs = () => {
 							value: i18n.translate('total'),
 						},
 						{
+							clickable: true,
 							key: 'testrayStatusMetric',
 							render: (testrayStatusMetric) => (
 								<ProgressBar

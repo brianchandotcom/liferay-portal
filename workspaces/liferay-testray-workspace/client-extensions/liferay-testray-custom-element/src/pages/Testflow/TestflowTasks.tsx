@@ -341,6 +341,7 @@ const TestFlowTasks = () => {
 								value: i18n.translate('tests'),
 							},
 							{
+								clickable: true,
 								key: 'errors',
 								render: (value) => (
 									<Code title={value as string}>

@@ -399,6 +399,19 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateEntry deleteLayoutPageTemplateEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		return layoutPageTemplateEntryLocalService.
+			deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
 		long groupId, long classNameId, long classTypeId) {
 

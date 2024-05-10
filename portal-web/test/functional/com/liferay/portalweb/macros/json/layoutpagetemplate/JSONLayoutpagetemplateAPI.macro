@@ -74,6 +74,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d layoutPageTemplateCollectionId=${layoutPageTemplateCollectionId} \
 				-d name=${layoutPageTemplateEntryName} \

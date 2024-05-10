@@ -305,6 +305,14 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 		return getService().fetchLayoutPageTemplateEntry(groupId, name, type);
 	}
 
+	public static LayoutPageTemplateEntry
+		fetchLayoutPageTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchLayoutPageTemplateEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
 		long plid) {
 
@@ -517,6 +525,15 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 
 		return getService().getLayoutPageTemplateEntry(
 			groupId, layoutPageTemplateEntryKey);
+	}
+
+	public static LayoutPageTemplateEntry
+			getLayoutPageTemplateEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getLayoutPageTemplateEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

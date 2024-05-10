@@ -9,6 +9,7 @@ create index IX_A17F0EBD on LayoutPageTemplateCollection (uuid_[$COLUMN_LENGTH:7
 
 create unique index IX_E4BCB00E on LayoutPageTemplateEntry (ctCollectionId, plid);
 create index IX_A6459477 on LayoutPageTemplateEntry (groupId, classNameId, classTypeId, defaultTemplate);
+create unique index IX_8B1AF2DA on LayoutPageTemplateEntry (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_246C8117 on LayoutPageTemplateEntry (groupId, ctCollectionId, layoutPageTemplateEntryKey[$COLUMN_LENGTH:75$]);
 create unique index IX_92540951 on LayoutPageTemplateEntry (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_E7CC5585 on LayoutPageTemplateEntry (groupId, layoutPageTemplateCollectionId);

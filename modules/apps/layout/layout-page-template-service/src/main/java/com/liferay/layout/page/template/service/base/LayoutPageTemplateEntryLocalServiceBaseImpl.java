@@ -285,6 +285,25 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 		return layoutPageTemplateEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public LayoutPageTemplateEntry
+		fetchLayoutPageTemplateEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return layoutPageTemplateEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry
+			getLayoutPageTemplateEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return layoutPageTemplateEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the layout page template entry with the primary key.
 	 *

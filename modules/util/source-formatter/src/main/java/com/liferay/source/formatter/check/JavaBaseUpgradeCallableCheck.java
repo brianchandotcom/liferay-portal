@@ -30,6 +30,12 @@ public class JavaBaseUpgradeCallableCheck extends BaseJavaTermCheck {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
+		String name = javaClass.getName();
+
+		if (name.endsWith("Test")) {
+			return javaTerm.getContent();
+		}
+
 		String packageName = javaClass.getPackageName();
 
 		if (packageName == null) {

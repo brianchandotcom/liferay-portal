@@ -131,10 +131,8 @@ public class SiteNavigationMenuServiceImpl
 				getSiteNavigationMenuByExternalReferenceCode(
 					externalReferenceCode, groupId);
 
-		if (siteNavigationMenu != null) {
-			_siteNavigationMenuModelResourcePermission.check(
-				getPermissionChecker(), siteNavigationMenu, ActionKeys.VIEW);
-		}
+		_siteNavigationMenuModelResourcePermission.check(
+			getPermissionChecker(), siteNavigationMenu, ActionKeys.VIEW);
 
 		return siteNavigationMenu;
 	}

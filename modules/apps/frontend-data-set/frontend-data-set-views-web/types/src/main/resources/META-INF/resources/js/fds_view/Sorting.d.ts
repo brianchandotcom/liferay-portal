@@ -8,6 +8,7 @@
 import {IFDSViewSectionProps} from '../FDSView';
 declare const Sorting: ({
 	fdsView,
+	fieldTreeItems,
 	namespace,
 }: IFDSViewSectionProps) => JSX.Element;
 export default Sorting;

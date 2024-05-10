@@ -8,6 +8,7 @@
 import {IFDSViewSectionProps} from '../FDSView';
 declare const SortingDeprecated: ({
 	fdsView,
+	fieldTreeItems,
 	namespace,
 }: IFDSViewSectionProps) => JSX.Element;
 export default SortingDeprecated;

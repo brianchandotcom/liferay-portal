@@ -20,7 +20,6 @@ import OrderableTable from '../../components/OrderableTable';
 import ValidationFeedback from '../../components/ValidationFeedback';
 import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
 import getAllPicklists from '../../utils/getAllPicklists';
-import getFields from '../../utils/getFields';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {
@@ -31,6 +30,7 @@ import {
 	IClientExtensionFilter,
 	IDateFilter,
 	IField,
+	IFieldTreeItem,
 	IFilter,
 	IPickList,
 	ISelectionFilter,
@@ -628,11 +628,16 @@ interface IProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
+	fieldTreeItems: Array<IFieldTreeItem>;
 	namespace: string;
 }
 
-function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
-	const [fields, setFields] = useState<IField[]>([]);
+function Filters({
+	fdsFilterClientExtensions,
+	fdsView,
+	fieldTreeItems: fields,
+	namespace,
+}: IProps) {
 	const [filters, setFilters] = useState<IFilter[]>([]);
 
 	useEffect(() => {
@@ -688,12 +693,6 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 				})
 			);
 		};
-
-		getFields(fdsView).then((newFields) => {
-			if (newFields) {
-				setFields(newFields as IField[]);
-			}
-		});
 
 		getFilters();
 	}, [fdsView]);

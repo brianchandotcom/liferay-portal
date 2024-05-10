@@ -7,16 +7,19 @@
 
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {FDSViewType} from '../../FDSViews';
+import {IFieldTreeItem} from '../../utils/types';
 import '../../../css/Filters.scss';
 interface IProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
+	fieldTreeItems: Array<IFieldTreeItem>;
 	namespace: string;
 }
 declare function Filters({
 	fdsFilterClientExtensions,
 	fdsView,
+	fieldTreeItems: fields,
 	namespace,
 }: IProps): JSX.Element;
 export default Filters;

@@ -19,7 +19,6 @@ import {FDSViewType} from '../FDSViews';
 import OrderableTable from '../components/OrderableTable';
 import RequiredMark from '../components/RequiredMark';
 import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
-import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 import sortItems from '../utils/sortItems';
@@ -440,8 +439,12 @@ const EditFDSSortModalContent = ({
 	);
 };
 
-const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
-	const [fields, setFields] = React.useState<IField[]>([]);
+const Sorting = ({
+	fdsView,
+	fieldTreeItems,
+	namespace,
+}: IFDSViewSectionProps) => {
+	const fields = fieldTreeItems.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
 	const [loading, setLoading] = useState(true);
 
@@ -465,12 +468,6 @@ const Sorting = ({fdsView, namespace}: IFDSViewSectionProps) => {
 						?.fdsSortsOrder as string
 				) as IFDSSort[]
 			);
-
-			await getFields(fdsView).then((fields) => {
-				const nextFields = fields.filter((field) => field.sortable);
-
-				setFields(nextFields);
-			});
 
 			setLoading(false);
 		};

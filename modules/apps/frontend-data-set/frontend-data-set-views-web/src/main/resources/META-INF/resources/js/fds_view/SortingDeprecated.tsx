@@ -18,7 +18,6 @@ import {FDSViewType} from '../FDSViews';
 import OrderableTable from '../components/OrderableTable';
 import RequiredMark from '../components/RequiredMark';
 import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../utils/constants';
-import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 import sortItems from '../utils/sortItems';
@@ -345,8 +344,12 @@ const EditFDSSortModalContent = ({
 	);
 };
 
-const SortingDeprecated = ({fdsView, namespace}: IFDSViewSectionProps) => {
-	const [fields, setFields] = React.useState<IField[]>([]);
+const SortingDeprecated = ({
+	fdsView,
+	fieldTreeItems,
+	namespace,
+}: IFDSViewSectionProps) => {
+	const fields = fieldTreeItems.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
 	const [loading, setLoading] = useState(true);
 
@@ -374,12 +377,6 @@ const SortingDeprecated = ({fdsView, namespace}: IFDSViewSectionProps) => {
 		};
 
 		getFDSSort();
-
-		getFields(fdsView).then((newFields) => {
-			if (newFields) {
-				setFields(newFields);
-			}
-		});
 	}, [fdsView]);
 
 	const handleCreation = () =>

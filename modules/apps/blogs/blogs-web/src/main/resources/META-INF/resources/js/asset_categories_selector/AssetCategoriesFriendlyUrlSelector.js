@@ -49,15 +49,8 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 	};
 
 	const handleItemsChange = (items) => {
-		const assetCategories = Object.values(items).map(
-			({categoryId, label, title, value}) => ({
-				label: title ?? label,
-				value: categoryId ?? value,
-			})
-		);
-
 		const addedItems = getUnique(
-			assetCategories.filter(
+			items.filter(
 				(item) =>
 					!selectedItems.find(
 						(selectedItem) => selectedItem.value === item.value
@@ -68,9 +61,7 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 		const removedItems = selectedItems.filter(
 			(selectedItem) =>
-				!assetCategories.find(
-					(item) => item.value === selectedItem.value
-				)
+				!items.find((item) => item.value === selectedItem.value)
 		);
 
 		const current = [...selectedItems, ...addedItems].filter(
@@ -95,7 +86,16 @@ function AssetVocabulariesCategoriesFriendlyUrlSelector({
 
 	const handleSelectButtonClick = () => {
 		openCategorySelectionModal({
-			onSelect: handleItemsChange,
+			onSelect: (selectedCategories) => {
+				handleItemsChange(
+					Object.values(selectedCategories).map(
+						({categoryId, title}) => ({
+							label: title,
+							value: categoryId,
+						})
+					)
+				);
+			},
 			portletNamespace,
 			selectCategoryURL,
 		});

@@ -6,6 +6,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Locale";
 
+	var password = PropsUtil.get("default.admin.password");
+
 	setUp {
 		TestCase.setUpPortalInstance();
 	}
@@ -207,7 +209,7 @@ definition {
 			PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "English (United States)");
 
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -415,7 +417,7 @@ definition {
 			localizedAgree = "Acepto",
 			localizedAnswer = "Respuesta",
 			localizedSaveButton = "Guardar",
-			password = "test",
+			password = ${password},
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -974,7 +976,7 @@ definition {
 			localizedAgree = "Sono d'accordo",
 			localizedAnswer = "Risposta",
 			localizedSaveButton = "Salva",
-			password = "test",
+			password = ${password},
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 	}

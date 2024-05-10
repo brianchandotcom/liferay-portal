@@ -94,6 +94,8 @@ function main {
 
 	copy_resources
 
+	replace_tokens
+
 	prepare_import
 }
 
@@ -122,6 +124,14 @@ function prepare_import {
 	then
 		export LIFERAY_LEARN_ETC_CRON_LIFERAY_URL="https://$(cat /etc/liferay/lxc/dxp-metadata/com.liferay.lxc.dxp.mainDomain)"
 	fi
+}
+
+function replace_tokens {
+	pushd ~/liferay-learn/docs
+
+	./replace_tokens.sh
+
+	popd
 }
 
 function send_slack_message {

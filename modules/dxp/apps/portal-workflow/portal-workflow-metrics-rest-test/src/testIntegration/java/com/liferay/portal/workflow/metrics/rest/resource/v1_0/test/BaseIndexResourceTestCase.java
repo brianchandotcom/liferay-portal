@@ -25,7 +25,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -96,7 +99,9 @@ public abstract class BaseIndexResourceTestCase {
 		IndexResource.Builder builder = IndexResource.builder();
 
 		indexResource = builder.authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com",
+			GetterUtil.getString(
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD), "test")
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -675,7 +680,10 @@ public abstract class BaseIndexResourceTestCase {
 			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 		httpInvoker.path("http://localhost:8080/o/graphql");
-		httpInvoker.userNameAndPassword("test@liferay.com:test");
+		httpInvoker.userNameAndPassword(
+			"test@liferay.com:" +
+				GetterUtil.getString(
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD), "test"));
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 

@@ -143,8 +143,6 @@ const RichText = ({
 				...currentValue,
 				[currentEditingLocale.localeId]: content,
 			};
-
-			setCurrentValue(newValue);
 			setCurrentInternalValue(content);
 
 			const {availableLocales} = {
@@ -157,13 +155,26 @@ const RichText = ({
 
 			setCurrentAvailableLocales(availableLocales);
 
-			onChange({
-				target: {
-					value: localizedObjectField
-						? newValue
-						: newValue[currentEditingLocale?.localeId],
-				},
-			});
+			if (
+				currentValue[currentEditingLocale?.localeId] ||
+				currentEditingLocale?.localeId === defaultLocale.localeId ||
+				currentValue[defaultLocale.localeId] !== content
+			) {
+				const newValue = {
+					...currentValue,
+					[currentEditingLocale.localeId]: content,
+				};
+
+				setCurrentValue(newValue);
+
+				onChange({
+					target: {
+						value: localizedObjectField
+							? newValue
+							: newValue[currentEditingLocale?.localeId],
+					},
+				});
+			}
 		}
 	};
 

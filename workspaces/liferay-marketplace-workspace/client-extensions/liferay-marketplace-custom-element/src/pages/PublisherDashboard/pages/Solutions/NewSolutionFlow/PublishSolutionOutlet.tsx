@@ -17,6 +17,7 @@ import {useMemo} from 'react';
 import AppToolbar from '../../../../../components/AppToolBar/AppToolBar';
 import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
+import {isCloudEnvironment} from '../../../../../utils/util';
 import usePublishSolutionHeader from '../../../hooks/usePublishSolutionHeader';
 import usePublishSolutionNavigation from '../../../hooks/usePublishSolutionNavigation';
 import usePublishSolutionSubmission from '../../../hooks/usePublishSolutionSubmission';
@@ -26,7 +27,7 @@ const PublishSolutionOutlet = () => {
 	usePublishSolutionHeader();
 
 	const {data: account} = useAccount();
-	const [context, dispatch] = useSolutionContext();
+	const [context] = useSolutionContext();
 
 	const {
 		activeIndex,
@@ -37,7 +38,7 @@ const PublishSolutionOutlet = () => {
 		publishSolutionSteps,
 	} = usePublishSolutionNavigation();
 
-	const {onSaveAsDraft} = usePublishSolutionSubmission(context, dispatch);
+	const {onSaveAsDraft} = usePublishSolutionSubmission(context);
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -74,9 +75,12 @@ const PublishSolutionOutlet = () => {
 					onClick: onSaveAsDraft,
 				}}
 			/>
-			<details>
-				<pre>{JSON.stringify(context._product, null, 2)}</pre>
-			</details>
+
+			{!isCloudEnvironment() && (
+				<details>
+					<pre>{JSON.stringify(context._product, null, 2)}</pre>
+				</details>
+			)}
 
 			<hr />
 
@@ -90,9 +94,13 @@ const PublishSolutionOutlet = () => {
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
 					{activeRoute.description}
 
-					<details>
-						<pre>{JSON.stringify(context.profile, null, 2)}</pre>
-					</details>
+					{!isCloudEnvironment() && (
+						<details>
+							<pre>
+								{JSON.stringify(context.profile, null, 2)}
+							</pre>
+						</details>
+					)}
 
 					<div className="mt-6 solutions-form">
 						<Outlet />

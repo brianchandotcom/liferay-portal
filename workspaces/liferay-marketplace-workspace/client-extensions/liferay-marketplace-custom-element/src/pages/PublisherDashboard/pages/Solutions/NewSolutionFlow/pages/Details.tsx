@@ -11,10 +11,11 @@ import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
 import {
-	KebabDropdownItems,
+	BLOCK_DIRECTIONS,
 	SolutionTypes,
 	useSolutionContext,
 } from '../../../../../../context/SolutionContext';
+import i18n from '../../../../../../i18n';
 import IconsBlock from '../../components/Blocks/IconBlock';
 import ImagesGrid from '../../components/Blocks/ImagesGrid';
 import SingleImage from '../../components/Blocks/SingleImage';
@@ -55,7 +56,9 @@ const Details = () => {
 			{blocks.map((block, index) => {
 				const Component = (blockTypes as any)[block.type];
 
-				const handleMoveOrDeleteBlock = (direction: string) => {
+				const handleMoveOrDeleteBlock = (
+					direction: BLOCK_DIRECTIONS
+				) => {
 					dispatch({
 						payload: {
 							direction,
@@ -68,38 +71,36 @@ const Details = () => {
 				const dropdownItems = [
 					{
 						disabled: index === 0,
-						name: KebabDropdownItems.MOVE_TO_TOP,
+						name: i18n.translate('move-to-top'),
 						onClick: () =>
 							handleMoveOrDeleteBlock(
-								KebabDropdownItems.MOVE_TO_TOP
+								BLOCK_DIRECTIONS.MOVE_TO_TOP
 							),
 					},
 					{
 						disabled: index === 0,
-						name: KebabDropdownItems.MOVE_UP,
+						name: i18n.translate('move-up'),
 						onClick: () =>
-							handleMoveOrDeleteBlock(KebabDropdownItems.MOVE_UP),
+							handleMoveOrDeleteBlock(BLOCK_DIRECTIONS.MOVE_UP),
 					},
 					{
 						disabled: index === blocks.length - 1,
-						name: KebabDropdownItems.MOVE_DOWN,
+						name: i18n.translate('move-down'),
 						onClick: () =>
-							handleMoveOrDeleteBlock(
-								KebabDropdownItems.MOVE_DOWN
-							),
+							handleMoveOrDeleteBlock(BLOCK_DIRECTIONS.MOVE_DOWN),
 					},
 					{
 						disabled: index === blocks.length - 1,
-						name: KebabDropdownItems.MOVE_TO_BOTTOM,
+						name: i18n.translate('move-to-bottom'),
 						onClick: () =>
 							handleMoveOrDeleteBlock(
-								KebabDropdownItems.MOVE_TO_BOTTOM
+								BLOCK_DIRECTIONS.MOVE_TO_BOTTOM
 							),
 					},
 					{
-						name: KebabDropdownItems.DELETE,
+						name: i18n.translate('delete'),
 						onClick: () =>
-							handleMoveOrDeleteBlock(KebabDropdownItems.DELETE),
+							handleMoveOrDeleteBlock(BLOCK_DIRECTIONS.DELETE),
 					},
 				];
 

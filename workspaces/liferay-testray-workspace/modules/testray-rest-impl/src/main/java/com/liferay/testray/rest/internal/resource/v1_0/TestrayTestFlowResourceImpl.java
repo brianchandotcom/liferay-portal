@@ -71,9 +71,9 @@ public class TestrayTestFlowResourceImpl
 		sb.append("select cr.errors_ , sum(c.priority_) as score from ");
 		sb.append("lportal.O_[%COMPANY_ID%]_CaseResult cr, ");
 		sb.append("lportal.O_[%COMPANY_ID%]_Case c where cr.errors_ is not ");
-		sb.append("null and cr.errors_ != '' and cr.");
-		sb.append("r_caseToCaseResult_c_caseId = c.c_caseId_ and cr.");
-		sb.append("r_buildToCaseResult_c_buildId = ? group by cr.errors_ ");
+		sb.append("null and cr.errors_ != '' and ");
+		sb.append("cr.r_caseToCaseResult_c_caseId = c.c_caseId_ and ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = ? group by cr.errors_ ");
 		sb.append("order by score desc");
 
 		List<Map<String, Object>> values = TestrayUtil.executeQuery(

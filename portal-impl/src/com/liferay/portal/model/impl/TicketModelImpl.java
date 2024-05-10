@@ -83,7 +83,7 @@ public class TicketModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Ticket (mvccVersion LONG default 0 not null,ticketId LONG not null primary key,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(75) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null)";
+		"create table Ticket (mvccVersion LONG default 0 not null,ticketId LONG not null primary key,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(255) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Ticket";
 

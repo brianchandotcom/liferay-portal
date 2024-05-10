@@ -18,10 +18,6 @@ import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
-type MoveOrDeleteBlockActions = {
-	[key: string]: () => void;
-};
-
 export enum KebabDropdownItems {
 	MOVE_TO_TOP = 'Move to Top',
 	MOVE_UP = 'Move Up',
@@ -29,6 +25,21 @@ export enum KebabDropdownItems {
 	MOVE_TO_BOTTOM = 'Move To Bottom',
 	DELETE = 'Delete',
 }
+
+export type HeaderContentTypeEmbeded = {
+	content: {
+		headerVideoDescription?: string;
+		headerVideoUrl: string;
+	};
+	type: 'embed-video-url';
+};
+
+export type HeaderContentTypeImages = {
+	content: {
+		headerImages: UploadedFile[];
+	};
+	type: 'upload-images';
+};
 
 export type TextBlock = {
 	content: {
@@ -58,24 +69,13 @@ export type TextVideoBlock = {
 
 export type ContentBlock = TextBlock | TextImageBlock | TextVideoBlock;
 
-export type HeaderContentTypeEmbeded = {
-	content: {
-		headerVideoDescription?: string;
-		headerVideoUrl: string;
-	};
-	type: 'embed-video-url';
-};
-
-export type HeaderContentTypeImages = {
-	content: {
-		headerImages: UploadedFile[];
-	};
-	type: 'upload-images';
-};
-
 export type HeaderContentType =
 	| HeaderContentTypeEmbeded
 	| HeaderContentTypeImages;
+
+type MoveOrDeleteBlockActions = {
+	[key: string]: () => void;
+};
 
 export enum SolutionTypes {
 	SET_BLOCK_MOVE = 'SET_BLOCK_MOVE',

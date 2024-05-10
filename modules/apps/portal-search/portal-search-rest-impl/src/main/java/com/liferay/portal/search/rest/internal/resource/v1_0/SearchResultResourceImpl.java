@@ -51,6 +51,8 @@ import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.internal.facet.FacetRequestContributor;
 import com.liferay.portal.search.rest.internal.facet.FacetResponseProcessor;
 import com.liferay.portal.search.rest.internal.odata.entity.v1_0.SearchResultEntityModel;
+import com.liferay.portal.search.rest.internal.util.ScopeUtil;
+import com.liferay.portal.search.rest.internal.util.ValueUtil;
 import com.liferay.portal.search.rest.pagination.SearchPage;
 import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -99,7 +101,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 	@Override
 	public Page<SearchResult> postSearchPage(
-			String entryClassNames, String search, Filter filter,
+			String entryClassNames, String scope, String search, Filter filter,
 			Pagination pagination, Sort[] sorts,
 			SearchRequestBody searchRequestBody)
 		throws Exception {
@@ -127,12 +129,13 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			).size(
 				pagination.getPageSize()
 			).withSearchContext(
-				searchContext -> _addSearchContextAttributes(
-					searchRequestBody.getAttributes(), filter, search,
+				searchContext -> _populateSearchContext(
+					searchRequestBody.getAttributes(), filter, scope, search,
 					searchContext, sorts)
 			);
 
-		String[] entryClassNamesArray = _toArray(entryClassNames);
+		String[] entryClassNamesArray = ValueUtil.csvStringToArray(
+			entryClassNames);
 
 		if (!ArrayUtil.isEmpty(entryClassNamesArray)) {
 			searchRequestBuilder.entryClassNames(entryClassNamesArray);
@@ -154,49 +157,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			Arrays.asList(
 				ParamUtil.getStringValues(contextHttpServletRequest, "fields")),
 			pagination, _searcher.search(searchRequestBuilder.build()));
-	}
-
-	private void _addSearchContextAttributes(
-		Map<String, Object> attributes, Filter filter, String search,
-		SearchContext searchContext, Sort[] sorts) {
-
-		MapUtil.isNotEmptyForEach(
-			attributes,
-			(key, value) -> {
-				if (_isAllowedSearchContextAttribute(key) && (value != null) &&
-					(value instanceof Serializable)) {
-
-					searchContext.setAttribute(key, (Serializable)value);
-				}
-			});
-
-		if (searchContext.getAttribute("search.experiences.ip.address") ==
-				null) {
-
-			searchContext.setAttribute(
-				"search.experiences.ip.address",
-				contextHttpServletRequest.getRemoteAddr());
-		}
-
-		if (filter != null) {
-			searchContext.setBooleanClauses(
-				new BooleanClause[] {
-					_getBooleanClause(
-						booleanQuery -> {
-						},
-						filter)
-				});
-		}
-
-		searchContext.setKeywords(search);
-		searchContext.setLocale(contextAcceptLanguage.getPreferredLocale());
-
-		if (!ArrayUtil.isEmpty(sorts)) {
-			searchContext.setSorts(sorts);
-		}
-
-		searchContext.setTimeZone(contextUser.getTimeZone());
-		searchContext.setUserId(contextUser.getUserId());
 	}
 
 	private Object _fetchObject(String entryClassName, Long entryClassPK) {
@@ -393,6 +353,51 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 	}
 
+	private void _populateSearchContext(
+		Map<String, Object> attributes, Filter filter, String scope,
+		String search, SearchContext searchContext, Sort[] sorts) {
+
+		MapUtil.isNotEmptyForEach(
+			attributes,
+			(key, value) -> {
+				if (_isAllowedSearchContextAttribute(key) && (value != null) &&
+					(value instanceof Serializable)) {
+
+					searchContext.setAttribute(key, (Serializable)value);
+				}
+			});
+
+		if (searchContext.getAttribute("search.experiences.ip.address") ==
+				null) {
+
+			searchContext.setAttribute(
+				"search.experiences.ip.address",
+				contextHttpServletRequest.getRemoteAddr());
+		}
+
+		if (filter != null) {
+			searchContext.setBooleanClauses(
+				new BooleanClause[] {
+					_getBooleanClause(
+						booleanQuery -> {
+						},
+						filter)
+				});
+		}
+
+		searchContext.setGroupIds(
+			ScopeUtil.parseGroupIds(contextCompany.getCompanyId(), scope));
+		searchContext.setKeywords(search);
+		searchContext.setLocale(contextAcceptLanguage.getPreferredLocale());
+
+		if (!ArrayUtil.isEmpty(sorts)) {
+			searchContext.setSorts(sorts);
+		}
+
+		searchContext.setTimeZone(contextUser.getTimeZone());
+		searchContext.setUserId(contextUser.getUserId());
+	}
+
 	private void _setDateModified(
 		Document document, List<String> fields, SearchResult searchResult) {
 
@@ -556,16 +561,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 
 		return aggregations;
-	}
-
-	private String[] _toArray(String csvString) {
-		if (Validator.isBlank(csvString)) {
-			return new String[0];
-		}
-
-		csvString = StringUtil.trim(csvString);
-
-		return csvString.split("\\s*,\\s*");
 	}
 
 	private SearchPage<SearchResult> _toSearchPage(

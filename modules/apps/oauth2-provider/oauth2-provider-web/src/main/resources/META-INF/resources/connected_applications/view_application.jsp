@@ -65,9 +65,9 @@ renderResponse.setTitle(oAuth2Application.getName());
 						</p>
 					</c:if>
 
-					<h4 class="permissions">
+					<div class="h4 permissions">
 						<liferay-ui:message key="permissions" />
-					</h4>
+					</div>
 
 					<ul class="list-group">
 
@@ -85,7 +85,7 @@ renderResponse.setTitle(oAuth2Application.getName());
 								<clay:content-col
 									expand="<%= true %>"
 								>
-									<h4 class="list-group-title text-truncate"><%= HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName)) %></h4>
+									<div class="list-group-title text-truncate"><%= HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName)) %></div>
 
 									<p class="list-group-subtitle text-truncate"><%= StringUtil.merge(assignableScopes.getApplicationScopeDescription(themeDisplay.getCompanyId(), applicationName), ", ") %></p>
 								</clay:content-col>
@@ -97,9 +97,9 @@ renderResponse.setTitle(oAuth2Application.getName());
 
 					</ul>
 
-					<h4 class="activity">
+					<div class="activity h4">
 						<liferay-ui:message key="activity" />
-					</h4>
+					</div>
 
 					<p class="last-access text-truncate">
 						<span><liferay-ui:message key="last-access" /></span>:

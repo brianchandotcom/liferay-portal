@@ -89,13 +89,13 @@ export function VariationPreview({
 	return (
 		<article className="d-flex flex-column-reverse">
 			<div className="cadmin">
-				<h4
-					className={classNames('mb-0 mt-2 text-secondary', {
+				<div
+					className={classNames('h4 mb-0 mt-2 text-secondary', {
 						'sr-only': !showLabel,
 					})}
 				>
 					{label}
-				</h4>
+				</div>
 			</div>
 
 			<div

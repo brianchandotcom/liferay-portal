@@ -107,7 +107,7 @@
 
 						<#foreach page in pages>
 							<div class="introduction">
-								<h4>${page.title}</h4>
+								<div class="h4">${page.title}</div>
 
 								<#foreach field in page.fields>
 

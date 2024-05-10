@@ -24,9 +24,9 @@ const CardItem = ({fileEntryTitle, fileEntryURL}) => {
 		<ClayCard horizontal>
 			<ClayCard.Body>
 				<div className="card-col-content card-col-gutters">
-					<h4 className="text-truncate" title={fileEntryTitle}>
+					<div className="h4 text-truncate" title={fileEntryTitle}>
 						{fileEntryTitle}
-					</h4>
+					</div>
 				</div>
 
 				<div className="card-col-field">

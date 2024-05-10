@@ -53,12 +53,12 @@
 							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
 						</h5>
 
-						<h4>
+						<div class="h4">
 							<clay:link
 								href="<%= rowURL %>"
 								label="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
 							/>
-						</h4>
+						</div>
 
 						<h5 class="text-default">
 							<span class="asset-type">

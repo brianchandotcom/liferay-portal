@@ -30,9 +30,9 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
-		<h4 class="text-default">
+		<div class="h4 text-default">
 			<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
-		</h4>
+		</div>
 
 		<%
 		Map<String, RatingsType> ratingsTypeMap = entry.getValue();

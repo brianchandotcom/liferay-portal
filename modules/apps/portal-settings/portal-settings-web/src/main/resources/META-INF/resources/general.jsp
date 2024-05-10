@@ -19,7 +19,7 @@ catch (Exception e) {
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-<h4><liferay-ui:message key="main-configuration" /></h4>
+<div class="h4"><liferay-ui:message key="main-configuration" /></div>
 
 <aui:model-context bean="<%= company %>" model="<%= Company.class %>" />
 
@@ -51,7 +51,7 @@ catch (Exception e) {
 	</clay:col>
 </clay:row>
 
-<h4><liferay-ui:message key="navigation" /></h4>
+<div class="h4"><liferay-ui:message key="navigation" /></div>
 
 <clay:row>
 	<clay:col
@@ -69,7 +69,7 @@ catch (Exception e) {
 	</clay:col>
 </clay:row>
 
-<h4><liferay-ui:message key="additional-information" /></h4>
+<div class="h4"><liferay-ui:message key="additional-information" /></div>
 
 <clay:row>
 	<clay:col

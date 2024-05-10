@@ -1,11 +1,11 @@
 <div class="alert alert-danger publish-error">
-	<h4 class="upload-error-message">
+	<div class="h4 upload-error-message">
 		<#if exported && !validated>
 			<@liferay.language key="the-publication-process-did-not-start-due-to-validation-errors" />
 		<#else>
 			<@liferay.language key="an-unexpected-error-occurred-with-the-publication-process.-please-check-your-portal-and-publishing-configuration" />
 		</#if>
-	</h4>
+	</div>
 
 	<span class="error-message">${htmlUtil.escape(statusMessageJSONObject.getString("message"))}</span>
 

@@ -5,6 +5,7 @@
 
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -15,7 +16,7 @@ import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {getJobQueueOrderedJobsPage} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
-function JobQueue() {
+function JobQueuePage() {
 	const [jobsPage, setJobsPage] = useState(null);
 
 	if (!jobsPage) {
@@ -26,87 +27,35 @@ function JobQueue() {
 		return <div>...</div>;
 	}
 
-	return (
-		<Jethr0Table>
-			<thead>
-				<tr>
-					<th>Position</th>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Priority</th>
-					<th>Create Date</th>
-					<th>Start Date</th>
-					<th>State</th>
-					<th className="table-cell-expanded">
-						<span className="text-muted">Opened</span>
-						<span> / </span>
-						<span className="text-warning">Running</span>
-						<span> / </span>
-						<span className="text-success">Completed</span>
-						<span> / </span>
-						<span>Total Builds</span>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				{jobsPage?.jobs?.map((job, index) => {
-					let completedBuilds = 0;
-					let openedBuilds = 0;
-					let runningBuilds = 0;
-					let totalBuilds = 0;
+	function setActiveDelta({activeDelta, jobsPage}) {
+		getJobQueueOrderedJobsPage({
+			page: jobsPage.page,
+			pageSize: activeDelta,
+			setJobsPage,
+		});
+	}
 
-					for (const build of job.builds) {
-						if (build.state.key === 'completed') {
-							completedBuilds++;
-						}
-						else if (build.state.key === 'opened') {
-							openedBuilds++;
-						}
-						else if (build.state.key === 'running') {
-							runningBuilds++;
-						}
+	function setActivePage({activePage, jobsPage}) {
+		getJobQueueOrderedJobsPage({
+			page: activePage,
+			pageSize: jobsPage.pageSize,
+			setJobsPage,
+		});
+	}
 
-						totalBuilds++;
-					}
-
-					return (
-						<tr key={job.id}>
-							<td>{index + 1}</td>
-							<th className="font-weight-semi-bold">
-								<Link title={job.id} to={'/jobs/' + job.id}>
-									{job.id}
-								</Link>
-							</th>
-							<td>{job.name}</td>
-							<td>{job.priority}</td>
-							<td>{toLocaleString(job.dateCreated)}</td>
-							<td>{toLocaleString(job.startDate)}</td>
-							<td>{job.state.name}</td>
-							<td>
-								<span className="text-muted">
-									{openedBuilds}
-								</span>
-								<span> / </span>
-								<span className="text-warning">
-									{runningBuilds}
-								</span>
-								<span> / </span>
-								<span className="text-success">
-									{completedBuilds}
-								</span>
-								<span> / </span>
-								<span>{totalBuilds}</span>
-							</td>
-						</tr>
-					);
-				})}
-			</tbody>
-		</Jethr0Table>
-	);
-}
-
-function JobQueuePage() {
 	const breadcrumbs = [{active: true, link: '/', name: 'Home'}];
+
+	const deltas = [
+		{
+			label: 25,
+		},
+		{
+			label: 50,
+		},
+		{
+			label: 100,
+		},
+	];
 
 	return (
 		<ClayLayout.Container>
@@ -119,8 +68,102 @@ function JobQueuePage() {
 					Job Queue
 				</Heading>
 
-				<JobQueue />
+				<Jethr0Table>
+					<thead>
+						<tr>
+							<th>Position</th>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Priority</th>
+							<th>Create Date</th>
+							<th>Start Date</th>
+							<th>State</th>
+							<th className="table-cell-expanded">
+								<span className="text-muted">Opened</span>
+								<span> / </span>
+								<span className="text-warning">Running</span>
+								<span> / </span>
+								<span className="text-success">Completed</span>
+								<span> / </span>
+								<span>Total Builds</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{jobsPage?.jobs?.map((job, index) => {
+							let completedBuilds = 0;
+							let openedBuilds = 0;
+							let runningBuilds = 0;
+							let totalBuilds = 0;
+
+							for (const build of job.builds) {
+								if (build.state.key === 'completed') {
+									completedBuilds++;
+								}
+								else if (build.state.key === 'opened') {
+									openedBuilds++;
+								}
+								else if (build.state.key === 'running') {
+									runningBuilds++;
+								}
+
+								totalBuilds++;
+							}
+
+							return (
+								<tr key={job.id}>
+									<td>{index + 1}</td>
+									<th className="font-weight-semi-bold">
+										<Link
+											title={job.id}
+											to={'/jobs/' + job.id}
+										>
+											{job.id}
+										</Link>
+									</th>
+									<td>{job.name}</td>
+									<td>{job.priority}</td>
+									<td>{toLocaleString(job.dateCreated)}</td>
+									<td>{toLocaleString(job.startDate)}</td>
+									<td>{job.state.name}</td>
+									<td>
+										<span className="text-muted">
+											{openedBuilds}
+										</span>
+										<span> / </span>
+										<span className="text-warning">
+											{runningBuilds}
+										</span>
+										<span> / </span>
+										<span className="text-success">
+											{completedBuilds}
+										</span>
+										<span> / </span>
+										<span>{totalBuilds}</span>
+									</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</Jethr0Table>
 			</Jethr0Card>
+
+			{jobsPage && (
+				<ClayPaginationBarWithBasicItems
+					activeDelta={jobsPage.pageSize}
+					defaultActive={jobsPage.page}
+					deltas={deltas}
+					ellipsisBuffer={3}
+					onActiveChange={(activePage) => {
+						setActivePage({activePage, jobsPage});
+					}}
+					onDeltaChange={(activeDelta) => {
+						setActiveDelta({activeDelta, jobsPage});
+					}}
+					showDeltasDropDown={true}
+					totalItems={jobsPage.totalCount}
+				/>
+			)}
 		</ClayLayout.Container>
 	);
 }

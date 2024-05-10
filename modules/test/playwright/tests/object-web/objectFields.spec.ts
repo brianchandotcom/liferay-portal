@@ -138,6 +138,79 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 	});
 
+	test('can show and hide object fields in the object definition node', async ({
+		apiHelpers,
+		modelBuilderPage,
+		page,
+	}) => {
+		const {objectDefinition} = createdEntities;
+		const dateFieldName = 'dateField' + getRandomInt();
+		const integerFieldName = 'integerField' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition.externalReferenceCode,
+			{
+				DBType: 'Integer',
+				businessType: 'Integer',
+				externalReferenceCode: integerFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: integerFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: integerFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			objectDefinition.externalReferenceCode,
+			{
+				DBType: 'Date',
+				businessType: 'Date',
+				externalReferenceCode: dateFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: dateFieldName},
+				listTypeDefinitionId: 0,
+				localized: false,
+				name: dateFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.clickLeftSideBarItem(
+			objectDefinition.label['en_US']
+		);
+
+		await expect(page.getByText(integerFieldName)).not.toBeVisible();
+		await expect(page.getByText(dateFieldName)).not.toBeVisible();
+
+		await modelBuilderPage.clickShowAllFieldsButton(
+			objectDefinition.label['en_US']
+		);
+
+		await expect(page.getByText(integerFieldName)).toBeVisible();
+		await expect(page.getByText(dateFieldName)).toBeVisible();
+
+		await modelBuilderPage.clickHideFieldsButton(
+			objectDefinition.label['en_US']
+		);
+
+		await expect(page.getByText(integerFieldName)).not.toBeVisible();
+		await expect(page.getByText(dateFieldName)).not.toBeVisible();
+	});
+
 	test('cannot delete an objectField that belongs to a unique composite key validation through Model Builder', async ({
 		apiHelpers,
 		modelBuilderPage,

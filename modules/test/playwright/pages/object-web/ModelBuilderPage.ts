@@ -156,6 +156,13 @@ export class ModelBuilderPage {
 		this.goToFolderButton.click();
 	}
 
+	async clickHideFieldsButton(objectDefinitionName: string) {
+		await this.objectDefinitionNodes
+			.filter({hasText: objectDefinitionName})
+			.getByRole('button', {name: 'Hide Fields'})
+			.click();
+	}
+
 	async clickLeftSideBarItem(objectDefinitionLabel: string) {
 		await this.leftSidebarItems
 			.filter({hasText: objectDefinitionLabel})

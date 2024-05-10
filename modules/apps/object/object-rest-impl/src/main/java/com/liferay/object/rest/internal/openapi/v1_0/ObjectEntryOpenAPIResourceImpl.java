@@ -150,15 +150,6 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			DTOProperty dtoProperty = new DTOProperty(
 				HashMapBuilder.<String, Object>put(
-					"x-batch-unsupported-formats",
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-200135")) {
-							return "CSV";
-						}
-
-						return null;
-					}
-				).put(
 					"x-parent-map", "properties"
 				).build(),
 				objectField.getName(), FileEntry.class.getSimpleName());
@@ -252,20 +243,6 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			DTOProperty dtoProperty = new DTOProperty(
 				HashMapBuilder.<String, Object>put(
-					"x-batch-unsupported-formats",
-					() -> {
-						if (Objects.equals(
-								objectField.getBusinessType(),
-								ObjectFieldConstants.
-									BUSINESS_TYPE_MULTISELECT_PICKLIST) &&
-							!FeatureFlagManagerUtil.isEnabled("LPS-200135")) {
-
-							return "CSV";
-						}
-
-						return null;
-					}
-				).put(
 					"x-parent-map", "properties"
 				).build(),
 				objectField.getName(), ListEntry.class.getSimpleName());

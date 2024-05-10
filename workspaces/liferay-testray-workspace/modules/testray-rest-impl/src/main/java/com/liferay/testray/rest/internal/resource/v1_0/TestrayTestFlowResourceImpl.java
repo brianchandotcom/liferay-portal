@@ -5,6 +5,7 @@
 
 package com.liferay.testray.rest.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -61,6 +62,10 @@ public class TestrayTestFlowResourceImpl
 					"buildToTasks/id eq '" + testrayTaskId + "'",
 					objectDefinition),
 				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (ListUtil.isEmpty(valuesList)) {
+			throw new NoSuchEntryException();
+		}
 
 		Map<String, Serializable> testrayBuild = valuesList.get(0);
 

@@ -531,7 +531,13 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		}
 
 		if (documentFolderId == null) {
-			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			if (document != null) {
+				documentFolderId = document.getDocumentFolderId();
+			}
+
+			if (documentFolderId == null) {
+				documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
 		}
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");

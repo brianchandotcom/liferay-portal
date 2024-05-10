@@ -584,6 +584,26 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		String cpInstanceUuid, int start, int end) {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommercePriceEntryTable.INSTANCE
+			).from(
+				CommercePriceEntryTable.INSTANCE
+			).where(
+				CommercePriceEntryTable.INSTANCE.CPInstanceUuid.eq(
+					cpInstanceUuid)
+			).orderBy(
+				CommercePriceEntryTable.INSTANCE.unitOfMeasureKey.ascending(),
+				CommercePriceEntryTable.INSTANCE.createDate.ascending()
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid) {
 		return _commercePriceListFinder.countByCPInstanceUuid(cpInstanceUuid);
 	}

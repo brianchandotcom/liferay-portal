@@ -26,7 +26,7 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Override
 	public void onAfterRemove(User user) throws ModelListenerException {
 		try {
-			_faroUserLocalService.deleteFaroUsers(user.getUserId());
+			_faroUserLocalService.deleteFaroUsersByLiveUserId(user.getUserId());
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

@@ -26,7 +26,7 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 	const occurenceCount = valueIMap.get('value');
 
 	const conjunctionCriterion = (
-		getFilterCriterionIMap(valueIMap, 1) ||
+		getFilterCriterionIMap(valueIMap, 2) ||
 		Map({propertyName: 'completeDate'})
 	).toJS();
 

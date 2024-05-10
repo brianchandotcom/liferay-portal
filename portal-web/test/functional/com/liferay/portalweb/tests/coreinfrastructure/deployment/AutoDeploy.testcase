@@ -5,6 +5,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Deployment";
 
+	var password = PropsUtil.get("default.admin.password");
+
 	@description = "LPS-173157 Verify a file is not consumed by auto deploy before it's listener is ready."
 	@priority = 3
 	test FragmentAutoDeploy {
@@ -28,7 +30,7 @@ definition {
 			Portlet.startServer(keepOSGiState = "true");
 
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://localhost:8080",
 				userEmailAddress = "test@liferay.com");
 		}

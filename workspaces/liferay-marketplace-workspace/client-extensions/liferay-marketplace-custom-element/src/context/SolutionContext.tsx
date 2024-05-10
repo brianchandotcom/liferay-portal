@@ -18,12 +18,12 @@ import {ProductVocabulary} from '../enums/ProductVocabulary';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 
-export enum KebabDropdownItems {
-	MOVE_TO_TOP = 'Move to Top',
-	MOVE_UP = 'Move Up',
-	MOVE_DOWN = 'Move Down',
-	MOVE_TO_BOTTOM = 'Move To Bottom',
-	DELETE = 'Delete',
+export enum BLOCK_DIRECTIONS {
+	DELETE,
+	MOVE_DOWN,
+	MOVE_TO_BOTTOM,
+	MOVE_TO_TOP,
+	MOVE_UP,
 }
 
 export type HeaderContentTypeEmbeded = {
@@ -73,10 +73,6 @@ export type HeaderContentType =
 	| HeaderContentTypeEmbeded
 	| HeaderContentTypeImages;
 
-type MoveOrDeleteBlockActions = {
-	[key: string]: () => void;
-};
-
 export enum SolutionTypes {
 	SET_BLOCK_MOVE = 'SET_BLOCK_MOVE',
 	SET_CLEANUP = 'SET_CLEANUP',
@@ -92,7 +88,10 @@ export enum SolutionTypes {
 }
 
 type SolutionPayload = {
-	[SolutionTypes.SET_BLOCK_MOVE]: {direction: string; index: number};
+	[SolutionTypes.SET_BLOCK_MOVE]: {
+		direction: BLOCK_DIRECTIONS;
+		index: number;
+	};
 	[SolutionTypes.SET_CLEANUP]: undefined;
 	[SolutionTypes.SET_COMPANY]: Partial<{
 		description: string;
@@ -229,23 +228,75 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 
 			const productSpecifications = _product.productSpecifications || [];
 
-			const getSpecificationValue = (
-				specificationKey: PRODUCT_SPECIFICATION_KEY
-			) =>
-				productSpecifications.find(
-					(productSpecification) =>
-						productSpecification.specificationKey ===
-						specificationKey
-				)?.value?.en_US;
+			const specificationsMap = new Map<string, string>();
+
+			for (const productSpecification of productSpecifications) {
+				specificationsMap.set(
+					productSpecification.specificationKey,
+					productSpecification.value.en_US || ''
+				);
+			}
+
+			let contentType = {
+				content: {
+					headerImages: [],
+				},
+				type: 'upload-images',
+			} as HeaderContentType;
+
+			const headerVideoUrl = specificationsMap.get(
+				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_URL
+			);
+
+			if (headerVideoUrl) {
+				contentType = {
+					content: {
+						headerVideoDescription: specificationsMap.get(
+							PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_DESCRIPTION
+						),
+						headerVideoUrl: specificationsMap.get(
+							PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_URL
+						),
+					},
+					type: 'embed-video-url',
+				} as HeaderContentTypeEmbeded;
+			}
+
+			const solutionCompanyEmail = specificationsMap.get(
+				PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_EMAIL
+			);
+
+			const company = {...solutionInitialState.company};
+
+			if (solutionCompanyEmail) {
+				company.email = solutionCompanyEmail;
+
+				company.description =
+					specificationsMap.get(
+						PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_DESCRIPTION
+					) || '';
+
+				company.phone =
+					specificationsMap.get(
+						PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_PHONE
+					) || '';
+
+				company.website =
+					specificationsMap.get(
+						PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_WEBSITE
+					) || '';
+			}
 
 			return {
 				...state,
 				_product,
+				company,
 				header: ({
-					description: getSpecificationValue(
+					contentType,
+					description: specificationsMap.get(
 						PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_DESCRIPTION
 					),
-					title: getSpecificationValue(
+					title: specificationsMap.get(
 						PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_TITLE
 					),
 				} as unknown) as SolutionInitialState['header'],
@@ -317,33 +368,33 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 
 			const blockToMove = blocks[index];
 
-			const MoveOrDeleteBlockAction: MoveOrDeleteBlockActions = {
-				[KebabDropdownItems.MOVE_TO_TOP]: () => {
+			const moveActions = {
+				[BLOCK_DIRECTIONS.MOVE_TO_TOP]: () => {
 					blocks.splice(index, 1);
 					blocks.unshift(blockToMove);
 				},
-				[KebabDropdownItems.MOVE_TO_BOTTOM]: () => {
+				[BLOCK_DIRECTIONS.MOVE_TO_BOTTOM]: () => {
 					blocks.splice(index, 1);
 					blocks.push(blockToMove);
 				},
-				[KebabDropdownItems.MOVE_UP]: () => {
+				[BLOCK_DIRECTIONS.MOVE_UP]: () => {
 					const newIndex = index - 1;
+
 					blocks[index] = blocks[newIndex];
 					blocks[newIndex] = blockToMove;
 				},
-				[KebabDropdownItems.MOVE_DOWN]: () => {
+				[BLOCK_DIRECTIONS.MOVE_DOWN]: () => {
 					const newIndex = index + 1;
+
 					blocks[index] = blocks[newIndex];
 					blocks[newIndex] = blockToMove;
 				},
-				[KebabDropdownItems.DELETE]: () => {
+				[BLOCK_DIRECTIONS.DELETE]: () => {
 					blocks.splice(index, 1);
 				},
 			};
 
-			if (MoveOrDeleteBlockAction[direction]) {
-				MoveOrDeleteBlockAction[direction]();
-			}
+			moveActions[direction]();
 
 			return {
 				...state,

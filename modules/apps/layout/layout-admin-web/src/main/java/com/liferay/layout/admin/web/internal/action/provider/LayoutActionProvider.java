@@ -205,8 +205,8 @@ public class LayoutActionProvider {
 			PortalUtil.getControlPanelPortletURL(
 				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/select_layout_page_template_entry.jsp"
+		).setMVCRenderCommandName(
+			"/layout_admin/select_layout_page_template_entry"
 		).setRedirect(
 			_getRedirect()
 		).setBackURL(

@@ -269,8 +269,8 @@ public class LayoutsAdminDisplayContext {
 	public String getAddLayoutURL() {
 		PortletURL portletURL = PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
-		).setMVCPath(
-			"/select_layout_page_template_entry.jsp"
+		).setMVCRenderCommandName(
+			"/layout_admin/select_layout_page_template_entry"
 		).setBackURL(
 			getBackURL()
 		).setPortletResource(
@@ -1177,8 +1177,8 @@ public class LayoutsAdminDisplayContext {
 		PortletURL selectLayoutPageTemplateEntryURL =
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
-			).setMVCPath(
-				"/select_layout_page_template_entry.jsp"
+			).setMVCRenderCommandName(
+				"/layout_admin/select_layout_page_template_entry"
 			).setRedirect(
 				getRedirect()
 			).setBackURL(

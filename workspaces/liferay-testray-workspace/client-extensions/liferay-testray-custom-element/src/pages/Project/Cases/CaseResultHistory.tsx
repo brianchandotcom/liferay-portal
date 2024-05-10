@@ -53,7 +53,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 								{dayjs(date).format('lll')}
 							</p>
 						),
-						value: i18n.translate('create-date'),
+						value: i18n.translate('execution-date'),
 					},
 					{
 						clickable: true,

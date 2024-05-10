@@ -107,7 +107,7 @@ const RoutineArchived = () => {
 							render: (dateCreated) =>
 								dayjs(dateCreated).format('lll'),
 							size: 'sm',
-							value: i18n.translate('create-date'),
+							value: i18n.translate('execution-date'),
 						},
 						{
 							clickable: true,

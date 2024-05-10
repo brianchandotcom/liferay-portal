@@ -70,7 +70,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 									: testrayBuild?.gitHash,
 						},
 						{
-							title: i18n.translate('create-date'),
+							title: i18n.translate('execution-date'),
 							value: dayjs(testrayBuild.dueDate).format('lll'),
 						},
 						{

@@ -422,13 +422,13 @@ const filterSchema = {
 				type: 'number',
 			},
 			{
-				label: i18n.sub('x-create-date', 'min'),
+				label: i18n.sub('x-execution-date', 'min'),
 				name: 'dateCreated',
 				operator: 'gt',
 				type: 'date',
 			},
 			{
-				label: i18n.sub('x-create-date', 'max'),
+				label: i18n.sub('x-execution-date', 'max'),
 				name: 'dateCreated$',
 				operator: 'lt',
 				type: 'date',

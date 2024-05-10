@@ -34,7 +34,7 @@ const Suite = () => {
 							value: testraySuite?.description,
 						},
 						{
-							title: i18n.translate('create-date'),
+							title: i18n.translate('execution-date'),
 							value: dayjs(testraySuite?.dateCreated).format(
 								'lll'
 							),

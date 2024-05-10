@@ -32,57 +32,6 @@
 				},
 				"pageElements": [
 					{
-						"definition": {
-							"fragment": {
-								"key": "app-banner",
-								"siteKey": "mkt1"
-							},
-							"fragmentConfig": {
-								"productID": "",
-								"publisherEmail": ""
-							},
-							"fragmentFields": [
-								{
-									"id": "text-product-tag",
-									"value": {
-										"fragmentLink": {
-										}
-									}
-								},
-								{
-									"id": "image-editable-product-logo",
-									"value": {
-										"fragmentImage": {
-											"url": {
-												"value_i18n": {
-												}
-											}
-										},
-										"fragmentLink": {
-										}
-									}
-								},
-								{
-									"id": "text-product-tag-2",
-									"value": {
-										"fragmentLink": {
-										}
-									}
-								},
-								{
-									"id": "text-product-name-2",
-									"value": {
-										"fragmentLink": {
-										}
-									}
-								}
-							],
-							"fragmentStyle": {
-								"marginBottom": "7"
-							},
-							"indexed": true
-						},
-						"type": "Fragment"
 					},
 					{
 						"definition": {

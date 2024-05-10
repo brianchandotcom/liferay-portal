@@ -1317,7 +1317,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		try (OutputStream outputStream = new FileOutputStream(
-				bundleContext.getDataFile("bundles.checksum"))) {
+				bundleContext.getDataFile("bundles.checksum"), true)) {
 
 			outputStream.write(bytes);
 		}

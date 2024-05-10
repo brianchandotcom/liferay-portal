@@ -4,11 +4,11 @@
 	sampleUserModel = dataFactory.newSampleUserModel()
 
 	userGroupModel = dataFactory.newGroupModel(sampleUserModel)
-
-	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
 />
 
-<@insertLayout _layoutModel=layoutModel />
+<#list dataFactory.newLayoutModels(userGroupModel.groupId, "home", "", "") as layoutModel>
+	<@insertLayout _layoutModel=layoutModel />
+</#list>
 
 <@insertGroup _groupModel=userGroupModel />
 

@@ -44,10 +44,9 @@ export interface IField {
 	type?: string;
 	visible?: boolean;
 }
-export interface IFDSField {
+export interface IFDSField extends IOrderable {
 	contextPath: string;
 	externalReferenceCode: string;
-	id: number;
 	label: string;
 	label_i18n: LocalizedValue<string>;
 	name: string;
@@ -63,10 +62,9 @@ export interface IFieldTreeItem extends IField {
 	savedId?: string;
 	selected?: boolean;
 }
-export interface IFilter {
+export interface IFilter extends IOrderable {
 	fieldName: string;
 	filterType?: EFilterType;
-	id: number;
 	label: string;
 	label_i18n: LocalizedValue<string>;
 	type: string;
@@ -84,6 +82,10 @@ export interface ISelectionFilter extends IFilter {
 	preselectedValues: string;
 	source: string;
 	sourceType: ESelectionFilterSourceType;
+}
+export interface IOrderable {
+	dateCreated: string;
+	id: number;
 }
 export interface IPickList {
 	externalReferenceCode: string;

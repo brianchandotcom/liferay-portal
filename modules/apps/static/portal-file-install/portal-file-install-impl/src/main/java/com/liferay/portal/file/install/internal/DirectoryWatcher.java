@@ -100,6 +100,16 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				index += 16;
 			}
 
+			List<Long> currentBundleIds = new ArrayList<>();
+
+			for (Bundle currentBundle : bundleContext.getBundles()) {
+				currentBundleIds.add(currentBundle.getBundleId());
+			}
+
+			Set<Long> checksumBundleIds = _bundleChecksums.keySet();
+
+			checksumBundleIds.retainAll(currentBundleIds);
+
 			int actualEntryCount = _bundleChecksums.size();
 
 			if (actualEntryCount < entryCount) {

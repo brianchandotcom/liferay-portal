@@ -23,33 +23,22 @@ export default async function getGlobalImports() {
 
 	const {imports} = require(path.join(rootDir, 'node-scripts.config.js'));
 
-	const externalImports = Object.keys(imports).reduce(
-		(externalImports, providerName) => {
-			imports[providerName].forEach(
-				packageName => {
-					externalImports[packageName] = {
-						external: true,
-						webContextPath: getWebContextPath(providerName)
-					};
-				}
-			);
+	const externalImports = {};
+	const rawProjectImports = {};
 
-			return externalImports;
-		},
-		{}
-	);
+	for (const providerName of Object.keys(imports)) {
+		rawProjectImports[providerName] = {
+			external: false,
+			webContextPath: getWebContextPath(providerName)
+		};
 
-	const rawProjectImports = Object.keys(imports).reduce(
-		(rawProjectImports, packageName) => {
-			rawProjectImports[packageName] = {
-				external: false,
-				webContextPath: getWebContextPath(packageName)
+		for (const packageName of imports[providerName]) {
+			externalImports[packageName] = {
+				external: true,
+				webContextPath: getWebContextPath(providerName)
 			};
-
-			return rawProjectImports;
-		},
-		{}
-	);
+		}
+	}
 
 	return {
 		...externalImports,

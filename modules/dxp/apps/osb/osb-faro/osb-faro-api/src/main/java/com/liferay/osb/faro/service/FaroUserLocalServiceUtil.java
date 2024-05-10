@@ -119,6 +119,12 @@ public class FaroUserLocalServiceUtil {
 		getService().deleteFaroUsers(groupId);
 	}
 
+	public static void deleteFaroUsersByLiveUserId(long liveUserId)
+		throws PortalException {
+
+		getService().deleteFaroUsersByLiveUserId(liveUserId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

@@ -116,6 +116,9 @@ public interface FaroUserLocalService
 
 	public void deleteFaroUsers(long groupId);
 
+	public void deleteFaroUsersByLiveUserId(long liveUserId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

@@ -45,34 +45,34 @@ export default function openCategorySelectionModal({
 		iframeBodyCssClass: '',
 		multiple: true,
 		onSelect: (selectedItems: Record<string, Category>) => {
+			if (onSelect) {
+				onSelect(selectedItems);
+
+				return;
+			}
+
 			if (!Object.keys(selectedItems).length) {
 				return;
 			}
-			if (onSelect) {
-				onSelect(selectedItems);
-			}
-			else {
-				const url = new URL(redirectURL);
 
-				const resetCurParam = `_${url.searchParams.get(
-					'p_p_id'
-				)}_resetCur`;
+			const url = new URL(redirectURL);
 
-				url.searchParams.set(resetCurParam, 'true');
+			const resetCurParam = `_${url.searchParams.get('p_p_id')}_resetCur`;
 
-				const assetCategories = Object.keys(selectedItems);
+			url.searchParams.set(resetCurParam, 'true');
 
-				let finalURL = url.href;
+			const assetCategories = Object.keys(selectedItems);
 
-				assetCategories.forEach((assetCategory) => {
-					finalURL = addParams(
-						`${portletNamespace}assetCategoryId=${selectedItems[assetCategory].categoryId}`,
-						finalURL
-					);
-				});
+			let finalURL = url.href;
 
-				navigate(finalURL);
-			}
+			assetCategories.forEach((assetCategory) => {
+				finalURL = addParams(
+					`${portletNamespace}assetCategoryId=${selectedItems[assetCategory].categoryId}`,
+					finalURL
+				);
+			});
+
+			navigate(finalURL);
 		},
 		selectEventName: `${portletNamespace}selectedAssetCategory`,
 		size: 'md',

@@ -3,11 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	SolutionInitialState,
-	SolutionTypes,
-	useSolutionContext,
-} from '../../../context/SolutionContext';
+import {SolutionInitialState} from '../../../context/SolutionContext';
 import {
 	PRODUCT_SPECIFICATION_KEY,
 	PRODUCT_WORKFLOW_STATUS_CODE,
@@ -18,10 +14,7 @@ import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../utils/file';
 
-const usePublishSolutionSubmission = (
-	context: SolutionInitialState,
-	dispatch: ReturnType<typeof useSolutionContext>[1]
-) => {
+const usePublishSolutionSubmission = (context: SolutionInitialState) => {
 	const updateSpecification = async (
 		product: Product,
 		specificationKey: PRODUCT_SPECIFICATION_KEY,
@@ -35,6 +28,7 @@ const usePublishSolutionSubmission = (
 		);
 
 		if (specification && specification.value.en_US === value) {
+
 			// No need to update the specification if the value is equal.
 
 			return;
@@ -54,7 +48,8 @@ const usePublishSolutionSubmission = (
 
 		if (specification) {
 			specification.value.en_US = value;
-		} else {
+		}
+		else {
 			productSpecifications.push(result);
 		}
 	};
@@ -121,8 +116,6 @@ const usePublishSolutionSubmission = (
 				},
 			}
 		);
-
-		dispatch({payload: product, type: SolutionTypes.SET_PRODUCT});
 
 		return product;
 	};

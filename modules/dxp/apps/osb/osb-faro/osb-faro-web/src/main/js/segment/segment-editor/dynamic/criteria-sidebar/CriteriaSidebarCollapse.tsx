@@ -3,6 +3,7 @@ import React from 'react';
 import {
 	ACTIVITY_KEY,
 	EVENT_KEY,
+	FunctionalOperators,
 	PropertyTypes,
 	RelationalOperators,
 	TimeSpans
@@ -99,14 +100,11 @@ const getDefaultValue = (property: Property): any => {
 							value: name
 						},
 
-						/* TODO: uncomment object below when starting to work on LPD-6519.
-						Dont forget to import again FunctionalOperators from utils/constants */
-
-						/* {
+						{
 							operatorName: FunctionalOperators.Contains,
 							propertyName: 'attribute/',
 							value: ''
-						}, */
+						},
 						{
 							operatorName: RelationalOperators.GT,
 							propertyName: 'day',

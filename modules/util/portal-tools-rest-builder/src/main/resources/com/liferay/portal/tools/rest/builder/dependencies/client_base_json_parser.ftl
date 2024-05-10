@@ -78,7 +78,7 @@ public abstract class BaseJSONParser<T> {
 
 			_readWhileLastCharIsWhiteSpace();
 
-			setField(dto, fieldName, _readValue());
+			setField(dto, fieldName, _readValue(parseMaps(fieldName)));
 
 			_readWhileLastCharIsWhiteSpace();
 		}
@@ -177,6 +177,8 @@ public abstract class BaseJSONParser<T> {
 	protected abstract T createDTO();
 
 	protected abstract T[] createDTOArray(int size);
+
+	protected abstract boolean parseMaps(String jsonParserFieldName);
 
 	protected abstract void setField(T dto, String jsonParserFieldName, Object jsonParserFieldValue);
 
@@ -378,7 +380,7 @@ public abstract class BaseJSONParser<T> {
 
 	private Object _readValue(boolean parseMaps) {
 		if (_lastChar == '[') {
-			return _readValueAsArray();
+			return _readValueAsArray(parseMaps);
 		}
 		else if (_lastChar == 'f') {
 			return _readValueAsBooleanFalse();
@@ -415,7 +417,7 @@ public abstract class BaseJSONParser<T> {
 		}
 	}
 
-	private Object[] _readValueAsArray() {
+	private Object[] _readValueAsArray(boolean parseMaps) {
 		List<Object> objects = new ArrayList<>();
 
 		_readNextChar();
@@ -431,7 +433,7 @@ public abstract class BaseJSONParser<T> {
 		do {
 			_readWhileLastCharIsWhiteSpace();
 
-			objects.add(_readValue());
+			objects.add(_readValue(parseMaps));
 
 			_readWhileLastCharIsWhiteSpace();
 		}

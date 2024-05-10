@@ -239,6 +239,35 @@ public class ${schemaName}SerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			<#list properties?keys as propertyName>
+				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas) />
+
+				<#if !propertyName?is_first>
+					else
+				</#if>
+
+				<#if propertySchema.name??>
+					<#assign fieldName = propertySchema.name />
+				<#else>
+					<#assign fieldName = propertyName />
+				</#if>
+
+				if (Objects.equals(jsonParserFieldName, "${fieldName}")) {
+					<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.permission.", "${configYAML.apiPackagePath}.client.permission.") />
+
+					<#if stringUtil.startsWith(propertyType, "Map<") || stringUtil.equals(propertyType, "Object[]")>
+						return true;
+					<#else>
+						return false;
+					</#if>
+				}
+			</#list>
+
+			return false;
+		}
+
+		@Override
 		protected void setField(${schemaName} ${schemaVarName}, String jsonParserFieldName, Object jsonParserFieldValue) {
 			<#list properties?keys as propertyName>
 				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas) />
@@ -283,8 +312,6 @@ public class ${schemaName}SerDes {
 							${schemaVarName}.set${capitalizedPropertyName}(Long.valueOf((String)jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "Long[]")>
 							${schemaVarName}.set${capitalizedPropertyName}(toLongs((Object[])jsonParserFieldValue));
-						<#elseif stringUtil.startsWith(propertyType, "Map<")>
-							${schemaVarName}.set${capitalizedPropertyName}((Map)${schemaName}SerDes.toMap((String)jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "Number")>
 							${schemaVarName}.set${capitalizedPropertyName}(Integer.valueOf((String)jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "Number[]")>

@@ -36,9 +36,12 @@ body.page-maximized {
 }
 
 html#{$cadmin-selector} {
-	.cadmin h4 {
-		font-size: 0.875rem;
-		font-weight: 600;
+	.cadmin {
+		.h4,
+		h4 {
+			font-size: 0.875rem;
+			font-weight: 600;
+		}
 	}
 }
 

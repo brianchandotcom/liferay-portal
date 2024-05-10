@@ -9,8 +9,11 @@ body {
 	padding-left: 30px;
 }
 
-h4 span {
-	font-size: 14px;
+.h4,
+h4 {
+	span {
+		font-size: 14px;
+	}
 }
 
 .swagger-ui .responses-table {

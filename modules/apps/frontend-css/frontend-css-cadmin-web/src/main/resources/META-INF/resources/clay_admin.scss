@@ -621,10 +621,13 @@ html#{$cadmin-selector} {
 				position: relative;
 				text-align: center;
 
-				h4 span {
-					display: block;
-					margin: 5px 0;
-					text-transform: lowercase;
+				.h4,
+				h4 {
+					span {
+						display: block;
+						margin: 5px 0;
+						text-transform: lowercase;
+					}
 				}
 
 				.or-text {
@@ -694,6 +697,7 @@ html#{$cadmin-selector} {
 			.upload-list-info {
 				margin: 1em 0 0.5em;
 
+				.h4,
 				h4 {
 					font-size: 1.3em;
 				}

@@ -25,9 +25,10 @@ public class CommerceChannelAccountEntryRelUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select CChannelAccountEntryRel.CChannelAccountEntryRelId ",
-					"from CChannelAccountEntryRel inner join ",
-					"CommercePriceList on CChannelAccountEntryRel.classPK = ",
+					"select CChannelAccountEntryRel.ctCollectionId, ",
+					"CChannelAccountEntryRel.CChannelAccountEntryRelId from ",
+					"CChannelAccountEntryRel inner join CommercePriceList on ",
+					"CChannelAccountEntryRel.classPK = ",
 					"CommercePriceList.commercePriceListId inner join ",
 					"ClassName_ on CChannelAccountEntryRel.classNameId = ",
 					"ClassName_.classNameId where ClassName_.classNameId = ",
@@ -37,7 +38,8 @@ public class CommerceChannelAccountEntryRelUpgradeProcess
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update CChannelAccountEntryRel set classNameId = ? " +
-						"where CChannelAccountEntryRelId = ?")) {
+						"where ctCollectionId = ? and " +
+							"CChannelAccountEntryRelId = ?")) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
@@ -45,8 +47,12 @@ public class CommerceChannelAccountEntryRelUpgradeProcess
 						1,
 						ClassNameLocalServiceUtil.getClassNameId(
 							CommercePriceList.class));
+
 					preparedStatement2.setLong(
-						2, resultSet.getLong("CChannelAccountEntryRelId"));
+						2, resultSet.getLong("ctCollectionId"));
+
+					preparedStatement2.setLong(
+						3, resultSet.getLong("CChannelAccountEntryRelId"));
 
 					preparedStatement2.addBatch();
 				}

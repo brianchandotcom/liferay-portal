@@ -28,7 +28,8 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcess
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update CPDSpecificationOptionValue set key_ = ? where " +
-						"CPDSpecificationOptionValueId = ?")) {
+						"ctCollectionId = ? and " +
+							"CPDSpecificationOptionValueId = ?")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -37,8 +38,12 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcess
 
 					updatePreparedStatement.setString(
 						1, String.valueOf(cpdSpecificationOptionValueId));
+
 					updatePreparedStatement.setLong(
-						2, cpdSpecificationOptionValueId);
+						2, resultSet.getLong("ctCollectionId"));
+
+					updatePreparedStatement.setLong(
+						3, cpdSpecificationOptionValueId);
 
 					updatePreparedStatement.addBatch();
 				}

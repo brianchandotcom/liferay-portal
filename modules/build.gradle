@@ -394,7 +394,7 @@ gradle.beforeProject {
 			processResources {
 				exclude "**/.sass-cache/"
 
-				filesMatching(["**/*.gradle", "**/pom.xml"]) {
+				filesMatching(["**/*.gradle", "**/*.properties", "**/pom.xml"]) {
 					filter(ReplaceTokens, tokens: projectTemplateTokens)
 				}
 

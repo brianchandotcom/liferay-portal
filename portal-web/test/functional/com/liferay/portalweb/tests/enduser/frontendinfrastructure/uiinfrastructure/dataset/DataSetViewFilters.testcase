@@ -2500,6 +2500,8 @@ definition {
 	@description = "LPS-183621. Confirm that by editing the filter and selecting Multiple, other items can be added and saved."
 	@priority = 4
 	test SelectionTypeAfterEditFilterChangeSelectionToMultiple {
+		property portal.upstream = "quarantine";
+
 		task ("And creating a picklist And Add items to the created picklist") {
 			DataSetAdmin.setUpPicklistforDataSet(
 				picklistItemList = "bike,car,bus",
@@ -2543,6 +2545,8 @@ definition {
 	@description = "LPS-183621. Confirm that Single works when there is only one item left in Preselected values."
 	@priority = 4
 	test SelectionTypeAfterEditFilterChangeSelectionToSingle {
+		property portal.upstream = "quarantine";
+
 		task ("And creating a picklist And Add items to the created picklist") {
 			DataSetAdmin.setUpPicklistforDataSet(
 				picklistItemList = "bike,car,bus",

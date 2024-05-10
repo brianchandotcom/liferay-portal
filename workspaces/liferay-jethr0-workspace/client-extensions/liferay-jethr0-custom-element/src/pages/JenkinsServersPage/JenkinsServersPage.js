@@ -15,33 +15,35 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {getJenkinsCohortsPage} from '../../objects/jenkins/JenkinsUtil';
+import {getJenkinsServersPage} from '../../objects/jenkins/JenkinsUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
-function JenkinsCohortsPage() {
-	const [jenkinsCohortsPage, setJenkinsCohortsPage] = useState(null);
+function JenkinsServersPage() {
+	const [jenkinsServersPage, setJenkinsServersPage] = useState(null);
 
-	if (!jenkinsCohortsPage) {
-		getJenkinsCohortsPage({setJenkinsCohortsPage});
+	if (!jenkinsServersPage) {
+		getJenkinsServersPage({setJenkinsServersPage});
 	}
 
-	if (!jenkinsCohortsPage) {
+	if (!jenkinsServersPage) {
 		return <div>Loading...</div>;
 	}
 
-	function setActiveDelta({activeDelta, jenkinsCohortsPage}) {
-		getJenkinsCohortsPage({
-			page: jenkinsCohortsPage.page,
+	console.log(jenkinsServersPage);
+
+	function setActiveDelta({activeDelta, jenkinsServersPage}) {
+		getJenkinsServersPage({
+			page: jenkinsServersPage.page,
 			pageSize: activeDelta,
-			setJenkinsCohortsPage,
+			setJenkinsServersPage
 		});
 	}
 
-	function setActivePage({activePage, jenkinsCohortsPage}) {
-		getJenkinsCohortsPage({
+	function setActivePage({activePage, jenkinsServersPage}) {
+		getJenkinsServersPage({
 			page: activePage,
-			pageSize: jenkinsCohortsPage.pageSize,
-			setJenkinsCohortsPage,
+			pageSize: jenkinsServersPage.pageSize,
+			setJenkinsServersPage,
 		});
 	}
 
@@ -72,14 +74,11 @@ function JenkinsCohortsPage() {
 				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
-							Jenkins Cohorts
+						Jenkins Servers
 						</Heading>
 						<Jethr0ButtonsRow
 							buttons={[
-								{
-									link: '/jenkins-cohorts/create',
-									title: 'Create Jenkins Cohort',
-								},
+								{link: '/jenkins-servers/create', title: 'Create Jenkins Server'},
 							]}
 						/>
 					</ClayLayout.Row>
@@ -95,58 +94,45 @@ function JenkinsCohortsPage() {
 						</tr>
 					</thead>
 					<tbody>
-						{jenkinsCohortsPage?.jenkinsCohorts.map(
-							(jenkinsCohort) => {
-								return (
-									<tr key={jenkinsCohort.id}>
-										<th className="font-weight-semi-bold">
-											<Link
-												title={jenkinsCohort.id}
-												to={
-													'/jenkins-cohorts/' +
-													jenkinsCohort.id
-												}
-											>
-												{jenkinsCohort.id}
-											</Link>
-										</th>
-										<td>{jenkinsCohort.name}</td>
-										<td>
-											{toLocaleString(
-												jenkinsCohort.dateCreated
-											)}
-										</td>
-										<td>
-											{toLocaleString(
-												jenkinsCohort.dateModified
-											)}
-										</td>
-									</tr>
-								);
-							}
-						)}
+						{jenkinsServersPage?.jenkinsServers.map((jenkinsServer) => {
+							return (
+								<tr key={jenkinsServer.id}>
+									<th className="font-weight-semi-bold">
+										<Link
+											title={jenkinsServer.id}
+											to={'/jenkins-servers/' + jenkinsServer.id}
+										>
+											{jenkinsServer.id}
+										</Link>
+									</th>
+									<td>{jenkinsServer.name}</td>
+									<td>{toLocaleString(jenkinsServer.dateCreated)}</td>
+									<td>{toLocaleString(jenkinsServer.dateModified)}</td>
+								</tr>
+							);
+						})}
 					</tbody>
 				</Jethr0Table>
 			</Jethr0Card>
 
-			{jenkinsCohortsPage && (
+			{jenkinsServersPage && (
 				<ClayPaginationBarWithBasicItems
-					activeDelta={jenkinsCohortsPage.pageSize}
-					defaultActive={jenkinsCohortsPage.page}
+					activeDelta={jenkinsServersPage.pageSize}
+					defaultActive={jenkinsServersPage.page}
 					deltas={deltas}
 					ellipsisBuffer={3}
 					onActiveChange={(activePage) => {
-						setActivePage({activePage, jenkinsCohortsPage});
+						setActivePage({activePage, jenkinsServersPage});
 					}}
 					onDeltaChange={(activeDelta) => {
-						setActiveDelta({activeDelta, jenkinsCohortsPage});
+						setActiveDelta({activeDelta, jenkinsServersPage});
 					}}
 					showDeltasDropDown={true}
-					totalItems={jenkinsCohortsPage.totalCount}
+					totalItems={jenkinsServersPage.totalCount}
 				/>
 			)}
 		</ClayLayout.Container>
 	);
 }
 
-export default JenkinsCohortsPage;
+export default JenkinsServersPage;

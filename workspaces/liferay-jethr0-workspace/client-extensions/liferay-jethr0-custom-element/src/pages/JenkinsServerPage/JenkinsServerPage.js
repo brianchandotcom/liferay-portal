@@ -16,14 +16,11 @@ import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0Co
 import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {
-	deleteJenkinsCohortById,
-	getJenkinsCohortById,
-} from '../../objects/jenkins/JenkinsUtil';
+import {deleteJenkinsServerById, getJenkinsServerById} from '../../objects/jenkins/JenkinsUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
-function JenkinsMasters({jenkinsCohort}) {
-	if (!jenkinsCohort?.jenkinsServers) {
+function JenkinsNodes({jenkinsServer}) {
+	if (!jenkinsServer?.jenkinsNodes) {
 		return <div>Loading...</div>;
 	}
 
@@ -31,7 +28,7 @@ function JenkinsMasters({jenkinsCohort}) {
 		<ClayPanel
 			collapsable
 			defaultExpanded
-			displayTitle="Jenkins Servers"
+			displayTitle="Jenkins Nodes"
 			displayType="secondary"
 			showCollapseIcon={true}
 		>
@@ -46,34 +43,29 @@ function JenkinsMasters({jenkinsCohort}) {
 						</tr>
 					</thead>
 					<tbody>
-						{jenkinsCohort.jenkinsServers?.map((jenkinsServer) => {
+						{jenkinsServer?.jenkinsNodes?.map((jenkinsNode) => {
 							return (
-								<tr key={jenkinsServer.id}>
+								<tr key={jenkinsNode.id}>
 									<th className="font-weight-semi-bold">
 										<Link
-											title={jenkinsServer.id}
-											to={
-												'/jenkins-servers/' +
-												jenkinsServer.id
-											}
+											title={jenkinsNode.id}
+											to={'/jenkins-server/' + jenkinsNode.id}
 										>
-											{jenkinsServer.id}
+											{jenkinsNode.id}
 										</Link>
 									</th>
 									<td>
-										<a href={jenkinsServer.url}>
-											{jenkinsServer.name}
+										<a
+											href={jenkinsNode.url}
+										>
+											{jenkinsNode.name}
 										</a>
 									</td>
 									<td>
-										{toLocaleString(
-											jenkinsServer.dateCreated
-										)}
+										{toLocaleString(jenkinsNode.dateCreated)}
 									</td>
 									<td>
-										{toLocaleString(
-											jenkinsServer.dateModified
-										)}
+										{toLocaleString(jenkinsNode.dateModified)}
 									</td>
 								</tr>
 							);
@@ -85,13 +77,13 @@ function JenkinsMasters({jenkinsCohort}) {
 	);
 }
 
-function JenkinsCohortInformation({jenkinsCohort}) {
-	if (!jenkinsCohort) {
+function JenkinsServerInformation({jenkinsServer}) {
+	if (!jenkinsServer) {
 		return (
 			<ClayPanel
 				collapsable
 				defaultExpanded
-				displayTitle="Jenkins Cohort Information"
+				displayTitle="Jenkins Server Information"
 				displayType="secondary"
 			>
 				<ClayPanel.Body>Loading...</ClayPanel.Body>
@@ -103,47 +95,62 @@ function JenkinsCohortInformation({jenkinsCohort}) {
 		<ClayPanel
 			collapsable
 			defaultExpanded
-			displayTitle="Jenkins Cohort Information"
+			displayTitle="Jenkins Server Information"
 			displayType="secondary"
 		>
 			<ClayPanel.Body>
 				<Jethr0InformationField
-					fieldLabel="Jenkins Cohort Name"
+					fieldLabel="Jenkins Server ID"
 					fieldType="STRING"
-					fieldValue={jenkinsCohort.name}
+					fieldValue={jenkinsServer.id}
 				/>
 
 				<Jethr0InformationField
-					fieldLabel="Jenkins Cohort ID"
+					fieldLabel="Jenkins Server Name"
 					fieldType="STRING"
-					fieldValue={jenkinsCohort.id}
+					fieldValue={jenkinsServer.name}
 				/>
+
+				<Jethr0InformationField
+					fieldLabel="Jenkins Server URL"
+					fieldType="URL"
+					fieldValue={jenkinsServer.url}
+				/>
+
+				{jenkinsServer.jenkinsCohort &&
+					<Jethr0InformationField
+						fieldLabel="Jenkins Cohort"
+						fieldType="URL"
+						fieldValue={jenkinsServer.jenkinsCohort.name}
+						fieldURLValue={'/#/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id}
+					/>
+				}
 
 				<Jethr0InformationField
 					fieldLabel="Create Date"
 					fieldType="DATE"
-					fieldValue={jenkinsCohort.dateCreated}
+					fieldValue={jenkinsServer.dateCreated}
 				/>
 
 				<Jethr0InformationField
 					fieldLabel="Modified Date"
 					fieldType="DATE"
-					fieldValue={jenkinsCohort.dateModified}
+					fieldValue={jenkinsServer.dateModified}
 				/>
 			</ClayPanel.Body>
 		</ClayPanel>
 	);
 }
 
-function JenkinsCohortPage() {
+function JenkinsServerPage() {
 	const {id} = useParams();
-	const [jenkinsCohort, setJenkinsCohort] = useState(null);
+	const [jenkinsServer, setJenkinsServer] = useState(null);
 
-	if (!jenkinsCohort) {
-		getJenkinsCohortById({id, setJenkinsCohort});
+	if (!jenkinsServer) {
+		getJenkinsServerById({id, setJenkinsServer});
 	}
 
-	if (!jenkinsCohort) {
+	if (!jenkinsServer) {
 		return (
 			<ClayLayout.Container>
 				<Jethr0Card>
@@ -154,7 +161,7 @@ function JenkinsCohortPage() {
 					<Jethr0ContainerFluid>
 						<ClayLayout.Row justify="between">
 							<Heading level={3} weight="lighter">
-								{'Jenkins Cohort #' + id}
+								{'Jenkins Server #' + id}
 							</Heading>
 						</ClayLayout.Row>
 					</Jethr0ContainerFluid>
@@ -163,21 +170,35 @@ function JenkinsCohortPage() {
 		);
 	}
 
-	function redirectToJenkinsCohortPage() {
-		window.location.replace('/#/jenkins-cohorts/');
+	function redirectToJenkinsServerPage() {
+		if (jenkinsServer.jenkinsCohort) {
+			window.location.replace('/#/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id);
+		}
+		else {
+			window.location.replace('/#/jenkins-servers/');
+		}
 	}
 
-	let jenkinsCohortName = 'Jenkins Cohort #' + id;
+	let jenkinsServerName = 'Jenkins Server #' + id;
 
-	if (jenkinsCohort) {
-		jenkinsCohortName = jenkinsCohort.name;
+	if (jenkinsServer) {
+		jenkinsServerName = jenkinsServer.name;
 	}
 
-	const breadcrumbs = [
+	let breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jenkins-cohorts', name: 'Jenkins'},
-		{active: true, link: '/jenkins-cohorts/' + id, name: jenkinsCohortName},
+		{active: true, link: '/jenkins-servers/' + id, name: jenkinsServerName},
 	];
+
+	if (jenkinsServer.jenkinsCohort) {
+		breadcrumbs = [
+			{active: false, link: '/', name: 'Home'},
+			{active: false, link: '/jenkins-cohorts', name: 'Jenkins'},
+			{active: false, link: '/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id, name: jenkinsServer.jenkinsCohort.name},
+			{active: true, link: '/jenkins-servers/' + id, name: jenkinsServerName},
+		];
+	}
 
 	return (
 		<ClayLayout.Container>
@@ -189,20 +210,16 @@ function JenkinsCohortPage() {
 				<Jethr0ContainerFluid>
 					<ClayLayout.Row justify="between">
 						<Heading level={3} weight="lighter">
-							{jenkinsCohortName}
+							{jenkinsServerName}
 						</Heading>
 
 						<Jethr0ButtonsRow
 							buttons={[
 								{
-									link: `/jenkins-cohorts/${id}/create-server`,
-									title: 'Create Jenkins Server',
-								},
-								{
 									onClick: () => {
-										deleteJenkinsCohortById({
+										deleteJenkinsServerById({
 											id,
-											redirect: redirectToJenkinsCohortPage,
+											redirect: redirectToJenkinsServerPage,
 										});
 									},
 									title: 'Delete',
@@ -212,12 +229,12 @@ function JenkinsCohortPage() {
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
 
-				<JenkinsCohortInformation jenkinsCohort={jenkinsCohort} />
+				<JenkinsServerInformation jenkinsServer={jenkinsServer} />
 
-				<JenkinsMasters jenkinsCohort={jenkinsCohort} />
+				<JenkinsNodes jenkinsServer={jenkinsServer}  />
 			</Jethr0Card>
 		</ClayLayout.Container>
 	);
 }
 
-export default JenkinsCohortPage;
+export default JenkinsServerPage;

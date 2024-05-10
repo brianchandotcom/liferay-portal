@@ -7,10 +7,13 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import BuildPage from './pages/BuildPage/BuildPage';
 import CreateJenkinsCohortPage from './pages/CreateJenkinsCohortPage/CreateJenkinsCohortPage';
+import CreateJenkinsServerPage from './pages/CreateJenkinsServerPage/CreateJenkinsServerPage';
 import CreateJobPage from './pages/CreateJobPage/CreateJobPage';
 import CreateRoutinePage from './pages/CreateRoutinePage/CreateRoutinePage';
 import JenkinsCohortPage from './pages/JenkinsCohortPage/JenkinsCohortPage';
 import JenkinsCohortsPage from './pages/JenkinsCohortsPage/JenkinsCohortsPage';
+import JenkinsServerPage from './pages/JenkinsServerPage/JenkinsServerPage';
+import JenkinsServersPage from './pages/JenkinsServersPage/JenkinsServersPage';
 import JobPage from './pages/JobPage/JobPage';
 import JobQueuePage from './pages/JobQueuePage/JobQueuePage';
 import JobsPage from './pages/JobsPage/JobsPage';
@@ -32,13 +35,35 @@ function App() {
 						element={<CreateJenkinsCohortPage />}
 						path="/jenkins-cohorts/create"
 					/>
+					<Route
+						element={<CreateJenkinsServerPage />}
+						path="/jenkins-servers/create"
+					/>
 					<Route element={<CreateJobPage />} path="/jobs/create" />
 					<Route
 						element={<CreateRoutinePage />}
 						path="/routines/create"
 					/>
-					<Route element={<JenkinsCohortPage />} path="/jenkins-cohorts/:id" />
-					<Route element={<JenkinsCohortsPage />} path="/jenkins-cohorts" />
+					<Route
+						element={<JenkinsCohortPage />}
+						path="/jenkins-cohorts/:id"
+					/>
+					<Route
+						element={<CreateJenkinsServerPage />}
+						path="/jenkins-cohorts/:jenkinsCohortId/create-server"
+					/>
+					<Route
+						element={<JenkinsCohortsPage />}
+						path="/jenkins-cohorts"
+					/>
+					<Route
+						element={<JenkinsServerPage />}
+						path="/jenkins-servers/:id"
+					/>
+					<Route
+						element={<JenkinsServersPage />}
+						path="/jenkins-servers"
+					/>
 					<Route element={<JobPage />} path="/jobs/:id" />
 					<Route element={<JobQueuePage />} path="/" />
 					<Route element={<JobsPage />} path="/jobs" />

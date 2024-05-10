@@ -5,6 +5,7 @@
 
 import liferayRequest from '../../services/liferayRequest';
 import JenkinsCohort from './JenkinsCohort';
+import JenkinsNode from './JenkinsNode';
 import JenkinsServer from './JenkinsServer';
 
 export async function createJenkinsCohort({data, redirect}) {
@@ -25,10 +26,41 @@ export async function createJenkinsCohort({data, redirect}) {
 	}
 }
 
+export async function createJenkinsServer({data, redirect}) {
+	const response = await liferayRequest({
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json',
+			'accept': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/c/jenkinsservers',
+	});
+
+	const result = JSON.parse(await response.text());
+
+	if (result && redirect) {
+		redirect(result);
+	}
+}
+
 export async function deleteJenkinsCohortById({id, redirect}) {
 	const response = await liferayRequest({
 		method: 'DELETE',
 		urlPath: '/o/c/jenkinscohorts/' + id,
+	});
+
+	await response.text();
+
+	if (redirect) {
+		redirect(null);
+	}
+}
+
+export async function deleteJenkinsServerById({id, redirect}) {
+	const response = await liferayRequest({
+		method: 'DELETE',
+		urlPath: '/o/c/jenkinsservers/' + id,
 	});
 
 	await response.text();
@@ -92,6 +124,64 @@ export async function getJenkinsCohortById({id, setJenkinsCohort}) {
 	}
 }
 
+export async function getJenkinsServerById({id, setJenkinsServer}) {
+	const response = await liferayRequest({
+		graphqlQuery: `{
+			c {
+				jenkinsNodes(filter: \\"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId eq '${id}'\\") {
+					items {
+						dateCreated
+						dateModified
+						id
+						name
+					}
+				}
+				jenkinsServers(filter: \\"id eq '${id}'\\") {
+					items {
+						dateCreated
+						dateModified
+						id
+						jenkinsCohortToJenkinsServers
+						name
+						url
+					}
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
+	});
+
+	const result = JSON.parse(await response.text());
+
+	const jenkinsNodes = [];
+
+	for (const jenkinsNodesJSON of result.data.c.jenkinsNodes.items) {
+		jenkinsNodes.push(new JenkinsNode(jenkinsNodesJSON));
+	}
+
+	for (const jenkinsServerJSON of result.data.c.jenkinsServers.items) {
+		const jenkinsServer = new JenkinsServer(jenkinsServerJSON);
+
+		jenkinsServer.jenkinsCohort = new JenkinsCohort(
+			jenkinsServerJSON.jenkinsCohortToJenkinsServers
+		);
+
+		jenkinsServer.jenkinsNodes = jenkinsNodes;
+
+		if (jenkinsServer) {
+			if (setJenkinsServer) {
+				setJenkinsServer(jenkinsServer);
+			}
+
+			return jenkinsServer;
+		}
+	}
+}
+
 export async function getJenkinsCohortsPage({
 	page,
 	pageSize,
@@ -145,5 +235,62 @@ export async function getJenkinsCohortsPage({
 
 	if (setJenkinsCohortsPage) {
 		setJenkinsCohortsPage(jenkinsCohortsPage);
+	}
+}
+
+export async function getJenkinsServersPage({
+	page,
+	pageSize,
+	setJenkinsServersPage,
+}) {
+	if (!page) {
+		page = 1;
+	}
+
+	if (!pageSize) {
+		pageSize = 25;
+	}
+
+	const response = await liferayRequest({
+		graphqlQuery: `{
+			c {
+				jenkinsServers (page: ${page}, pageSize: ${pageSize}) {
+					items {
+						id
+						dateCreated
+						dateModified
+						name
+						url
+					}
+					page
+					pageSize
+					totalCount
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
+	});
+
+	const result = JSON.parse(await response.text());
+
+	const jenkinsServers = [];
+
+	for (const item of result.data.c.jenkinsServers.items) {
+		jenkinsServers.push(new JenkinsServer(item));
+	}
+
+	const jenkinsServersPage = {
+		jenkinsServers,
+		page: result.data.c.jenkinsServers.page,
+		pageSize: result.data.c.jenkinsServers.pageSize,
+		totalCount: result.data.c.jenkinsServers.totalCount,
+	};
+
+	if (setJenkinsServersPage) {
+		setJenkinsServersPage(jenkinsServersPage);
 	}
 }

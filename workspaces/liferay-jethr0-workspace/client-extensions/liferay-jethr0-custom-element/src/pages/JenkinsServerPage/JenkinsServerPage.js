@@ -16,7 +16,10 @@ import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0Co
 import Jethr0InformationField from '../../components/Jethr0InformationField/Jethr0InformationField';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
-import {deleteJenkinsServerById, getJenkinsServerById} from '../../objects/jenkins/JenkinsUtil';
+import {
+	deleteJenkinsServerById,
+	getJenkinsServerById,
+} from '../../objects/jenkins/JenkinsUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
 function JenkinsNodes({jenkinsServer}) {
@@ -49,23 +52,28 @@ function JenkinsNodes({jenkinsServer}) {
 									<th className="font-weight-semi-bold">
 										<Link
 											title={jenkinsNode.id}
-											to={'/jenkins-server/' + jenkinsNode.id}
+											to={
+												'/jenkins-server/' +
+												jenkinsNode.id
+											}
 										>
 											{jenkinsNode.id}
 										</Link>
 									</th>
 									<td>
-										<a
-											href={jenkinsNode.url}
-										>
+										<a href={jenkinsNode.url}>
 											{jenkinsNode.name}
 										</a>
 									</td>
 									<td>
-										{toLocaleString(jenkinsNode.dateCreated)}
+										{toLocaleString(
+											jenkinsNode.dateCreated
+										)}
 									</td>
 									<td>
-										{toLocaleString(jenkinsNode.dateModified)}
+										{toLocaleString(
+											jenkinsNode.dateModified
+										)}
 									</td>
 								</tr>
 							);
@@ -117,14 +125,17 @@ function JenkinsServerInformation({jenkinsServer}) {
 					fieldValue={jenkinsServer.url}
 				/>
 
-				{jenkinsServer.jenkinsCohort &&
+				{jenkinsServer.jenkinsCohort && (
 					<Jethr0InformationField
 						fieldLabel="Jenkins Cohort"
 						fieldType="URL"
+						fieldURLValue={
+							'/#/jenkins-cohorts/' +
+							jenkinsServer.jenkinsCohort.id
+						}
 						fieldValue={jenkinsServer.jenkinsCohort.name}
-						fieldURLValue={'/#/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id}
 					/>
-				}
+				)}
 
 				<Jethr0InformationField
 					fieldLabel="Create Date"
@@ -172,7 +183,9 @@ function JenkinsServerPage() {
 
 	function redirectToJenkinsServerPage() {
 		if (jenkinsServer.jenkinsCohort) {
-			window.location.replace('/#/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id);
+			window.location.replace(
+				'/#/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id
+			);
 		}
 		else {
 			window.location.replace('/#/jenkins-servers/');
@@ -195,8 +208,16 @@ function JenkinsServerPage() {
 		breadcrumbs = [
 			{active: false, link: '/', name: 'Home'},
 			{active: false, link: '/jenkins-cohorts', name: 'Jenkins'},
-			{active: false, link: '/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id, name: jenkinsServer.jenkinsCohort.name},
-			{active: true, link: '/jenkins-servers/' + id, name: jenkinsServerName},
+			{
+				active: false,
+				link: '/jenkins-cohorts/' + jenkinsServer.jenkinsCohort.id,
+				name: jenkinsServer.jenkinsCohort.name,
+			},
+			{
+				active: true,
+				link: '/jenkins-servers/' + id,
+				name: jenkinsServerName,
+			},
 		];
 	}
 
@@ -231,7 +252,7 @@ function JenkinsServerPage() {
 
 				<JenkinsServerInformation jenkinsServer={jenkinsServer} />
 
-				<JenkinsNodes jenkinsServer={jenkinsServer}  />
+				<JenkinsNodes jenkinsServer={jenkinsServer} />
 			</Jethr0Card>
 		</ClayLayout.Container>
 	);

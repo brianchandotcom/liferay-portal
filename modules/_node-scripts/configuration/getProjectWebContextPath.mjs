@@ -3,15 +3,16 @@ import fs from 'fs/promises';
 export default async function getProjectWebContextPath() {
 	const bnd = await fs.readFile('./bnd.bnd', 'utf-8');
 
-	const parts = 
+	const webContextPathLine =
 		bnd
 			.split('\n')
-			.find(line => line.startsWith('Web-ContextPath:'))
-			.split(':');
+			.find(line => line.startsWith('Web-ContextPath:'));
 
-	if (!parts.length) {
+	if (!webContextPathLine) {
 		throw new Error("Project's bnd.bnd file has no Web-ContextPath entry");
 	}
+
+	const parts = webContextPathLine.split(':');
 
 	return parts[1].trim();
 }

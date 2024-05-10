@@ -8,7 +8,7 @@ import {
 	ReferencedEntities,
 	withReferencedObjectsConsumer
 } from '../../../context/referencedObjects';
-import {Attribute} from 'event-analysis/utils/types';
+import {Attribute, DataTypes} from 'event-analysis/utils/types';
 import {Criterion} from '../../../utils/types';
 import {
 	getDefaultAttributeOperator,
@@ -49,7 +49,6 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 	attributes,
 	conjunctionCriterion,
 	onChange,
-	referencedEntities,
 	touched,
 	valid
 }) => {
@@ -64,9 +63,9 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 	const getAttributeFromContext = () => {
 		const attributeId = getAttributeId();
 
-		return referencedEntities
-			.getIn([EntityType.Attributes, attributeId], Map({}))
-			.toJS();
+		return (
+			attributes.find(attribute => attribute?.id === attributeId) || {}
+		);
 	};
 
 	const getAttributeId = (): string => {
@@ -115,7 +114,7 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 		});
 	};
 
-	const {dataType} = getAttributeFromContext();
+	const {dataType}: {dataType?: DataTypes} = getAttributeFromContext();
 	const {operatorName, value} = conjunctionCriterion;
 
 	return (

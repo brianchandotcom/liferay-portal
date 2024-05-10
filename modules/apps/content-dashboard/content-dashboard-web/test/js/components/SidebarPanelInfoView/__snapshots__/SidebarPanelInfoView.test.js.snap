@@ -296,11 +296,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       <div
                         class="c-mb-4 sidebar-section"
                       >
-                        <h5
-                          class="c-mb-1 font-weight-semi-bold"
+                        <div
+                          class="c-mb-1 font-weight-semi-bold h5"
                         >
                           Display Date
-                        </h5>
+                        </div>
                         <time>
                           Jul 27, 2020, 10:53 AM
                         </time>
@@ -308,11 +308,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       <div
                         class="c-mb-4 sidebar-section"
                       >
-                        <h5
-                          class="c-mb-1 font-weight-semi-bold"
+                        <div
+                          class="c-mb-1 font-weight-semi-bold h5"
                         >
                           Expiration Date
-                        </h5>
+                        </div>
                         <time>
                           Jul 28, 2020, 10:00 AM
                         </time>
@@ -320,11 +320,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       <div
                         class="c-mb-4 sidebar-section"
                       >
-                        <h5
-                          class="c-mb-1 font-weight-semi-bold"
+                        <div
+                          class="c-mb-1 font-weight-semi-bold h5"
                         >
                           Review Date
-                        </h5>
+                        </div>
                         <time>
                           Jul 27, 2020, 2:14 PM
                         </time>
@@ -332,11 +332,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       <div
                         class="c-mb-4 sidebar-section"
                       >
-                        <h5
-                          class="c-mb-1 font-weight-semi-bold"
+                        <div
+                          class="c-mb-1 font-weight-semi-bold h5"
                         >
                           creation-date
-                        </h5>
+                        </div>
                         <p
                           class="text-secondary"
                         >
@@ -346,11 +346,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       <div
                         class="c-mb-4 sidebar-section"
                       >
-                        <h5
-                          class="c-mb-1 font-weight-semi-bold"
+                        <div
+                          class="c-mb-1 font-weight-semi-bold h5"
                         >
                           modified-date
-                        </h5>
+                        </div>
                         <p
                           class="text-secondary"
                         >
@@ -360,11 +360,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       <div
                         class="c-mb-4 sidebar-section"
                       >
-                        <h5
-                          class="c-mb-1 font-weight-semi-bold"
+                        <div
+                          class="c-mb-1 font-weight-semi-bold h5"
                         >
                           id
-                        </h5>
+                        </div>
                         <p
                           class="text-secondary"
                         >
@@ -375,11 +375,11 @@ exports[`SidebarPanelInfoView renders 1`] = `
                     <div
                       class="c-mb-4 sidebar-section"
                     >
-                      <h5
-                        class="font-weight-semi-bold"
+                      <div
+                        class="font-weight-semi-bold h5"
                       >
                         languages-translated-into
-                      </h5>
+                      </div>
                       <div
                         class="autofit-row autofit-row-center"
                       >

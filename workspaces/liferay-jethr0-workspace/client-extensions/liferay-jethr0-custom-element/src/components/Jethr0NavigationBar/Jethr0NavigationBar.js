@@ -28,9 +28,7 @@ function Jethr0NavigationBar({active}) {
 			</ClayNavigationBar.Item>
 
 			<ClayNavigationBar.Item active={active === 'Jenkins'}>
-				<ClayLink href="/#/jenkins-cohorts">
-					Jenkins
-				</ClayLink>
+				<ClayLink href="/#/jenkins-cohorts">Jenkins</ClayLink>
 			</ClayNavigationBar.Item>
 		</ClayNavigationBar>
 	);

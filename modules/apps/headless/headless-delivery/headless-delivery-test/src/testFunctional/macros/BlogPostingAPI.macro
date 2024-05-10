@@ -185,6 +185,7 @@ definition {
 			groupName = "Guest",
 			site = "true");
 		var userPassword = PropsUtil.get("default.admin.password");
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch \
 				-u test@liferay.com:${userPassword} \
@@ -218,6 +219,7 @@ definition {
 			groupName = "Guest",
 			site = "true");
 		var userPassword = PropsUtil.get("default.admin.password");
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=${updateStrategy}\&importStrategy=${importStrategy} \
 				-u test@liferay.com:${userPassword} \

@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -202,7 +204,7 @@ public class OpenAPIResourceTest {
 		).withBaseURL(
 			"http://www.able.com:8080"
 		).withCredentials(
-			"test@able.com", "test"
+			"test@able.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 		).apply(
 			() -> {
 				User user = UserTestUtil.addUser(

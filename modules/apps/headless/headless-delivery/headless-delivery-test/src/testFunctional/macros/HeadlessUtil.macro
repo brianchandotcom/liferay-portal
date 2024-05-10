@@ -4,7 +4,6 @@ definition {
 	macro executeGraphQLQuery(query = null, token = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var userPassword = PropsUtil.get("default.admin.password");
-
 		var curl = '''
 			${portalURL}/o/graphql \
 				-H Content-Type: application/json \

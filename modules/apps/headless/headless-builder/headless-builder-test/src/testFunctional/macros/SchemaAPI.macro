@@ -30,6 +30,7 @@ definition {
 		if (isSet(requestSchemaErc) && isSet(endpointErc)) {
 			var api = "${api}/by-external-reference-code/${requestSchemaErc}/requestAPISchemaToAPIEndpoints/${endpointErc}";
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''

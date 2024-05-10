@@ -100,6 +100,7 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
@@ -237,6 +238,7 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
@@ -323,6 +325,7 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
@@ -371,6 +374,7 @@ definition {
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
@@ -741,6 +745,7 @@ definition {
 		if (!(isSet(requiredStringFieldName))) {
 			var requiredStringFieldName = "name";
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(objectDefinitionExternalReferenceCode) && isSet(requiredStringFieldNameExternalReferenceCode)) {
@@ -1027,6 +1032,7 @@ definition {
 	@summary = "Default summary"
 	macro getObjectDefinitionIdByName(name = null, virtualHost = null) {
 		Variables.assertDefined(parameterList = ${name});
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(virtualHost)) {

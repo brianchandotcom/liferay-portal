@@ -38,6 +38,7 @@ definition {
 		else {
 			var api = "user-accounts";
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''

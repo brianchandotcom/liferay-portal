@@ -273,7 +273,8 @@ public class StructuredContentResourceTest
 			com.liferay.headless.admin.content.client.resource.v1_0.
 				StructuredContentResource.builder(
 				).authentication(
-					"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+					"test@liferay.com",
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 				).locale(
 					LocaleUtil.getDefault()
 				).parameters(
@@ -302,7 +303,8 @@ public class StructuredContentResourceTest
 			com.liferay.headless.admin.content.client.resource.v1_0.
 				StructuredContentResource.builder(
 				).authentication(
-					"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+					"test@liferay.com",
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 				).locale(
 					LocaleUtil.getDefault()
 				).parameters(
@@ -337,7 +339,8 @@ public class StructuredContentResourceTest
 			com.liferay.headless.admin.content.client.resource.v1_0.
 				StructuredContentResource.builder(
 				).authentication(
-					"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+					"test@liferay.com",
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 				).locale(
 					LocaleUtil.getDefault()
 				).build();
@@ -381,7 +384,8 @@ public class StructuredContentResourceTest
 			com.liferay.headless.admin.content.client.resource.v1_0.
 				StructuredContentResource.builder(
 				).authentication(
-					"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+					"test@liferay.com",
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 				).locale(
 					LocaleUtil.getDefault()
 				).parameters(
@@ -426,7 +430,8 @@ public class StructuredContentResourceTest
 			com.liferay.headless.admin.content.client.resource.v1_0.
 				StructuredContentResource.builder(
 				).authentication(
-					"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+					"test@liferay.com",
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 				).locale(
 					LocaleUtil.getDefault()
 				).build();
@@ -467,7 +472,8 @@ public class StructuredContentResourceTest
 			com.liferay.headless.admin.content.client.resource.v1_0.
 				StructuredContentResource.builder(
 				).authentication(
-					"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+					"test@liferay.com",
+					PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 				).locale(
 					LocaleUtil.getDefault()
 				).build();

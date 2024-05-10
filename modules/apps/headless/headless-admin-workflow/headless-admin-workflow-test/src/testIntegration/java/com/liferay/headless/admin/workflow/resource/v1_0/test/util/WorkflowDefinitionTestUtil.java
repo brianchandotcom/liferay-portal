@@ -31,7 +31,8 @@ public class WorkflowDefinitionTestUtil {
 
 		WorkflowDefinitionResource workflowDefinitionResource =
 			builder.authentication(
-				"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+				"test@liferay.com",
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 			).locale(
 				LocaleUtil.getDefault()
 			).build();

@@ -1773,7 +1773,8 @@ public class StructuredContentResourceTest
 
 		StructuredContentResource frenchStructuredContentResource =
 			builder.authentication(
-				"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+				"test@liferay.com",
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
 			).locale(
 				LocaleUtil.FRANCE
 			).build();

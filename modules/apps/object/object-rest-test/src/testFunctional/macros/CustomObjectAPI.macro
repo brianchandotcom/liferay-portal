@@ -1,6 +1,7 @@
 definition {
 
 	var userPassword = PropsUtil.get("default.admin.password");
+
 	var headers = '''
 			-u test@liferay.com:${userPassword} \
 			-H Content-Type: application/json \

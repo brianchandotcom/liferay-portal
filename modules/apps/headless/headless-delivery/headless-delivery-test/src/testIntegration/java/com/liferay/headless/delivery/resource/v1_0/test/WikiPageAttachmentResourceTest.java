@@ -302,8 +302,9 @@ public class WikiPageAttachmentResourceTest
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.path(url);
-		httpInvoker.userNameAndPassword("test@liferay.com:" + PropsUtil.get(
-			PropsKeys.DEFAULT_ADMIN_PASSWORD));
+		httpInvoker.userNameAndPassword(
+			"test@liferay.com:" +
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD));
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 

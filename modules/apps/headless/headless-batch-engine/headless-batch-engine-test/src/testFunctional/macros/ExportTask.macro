@@ -38,6 +38,7 @@ definition {
 			groupName = "Guest",
 			site = "true");
 		var userPassword = PropsUtil.get("default.admin.password");
+
 		var curl = '''
 			${portalURL}/o/headless-batch-engine/v1.0/export-task/${exportTaskId} \
 				-u test@liferay.com:${userPassword} \

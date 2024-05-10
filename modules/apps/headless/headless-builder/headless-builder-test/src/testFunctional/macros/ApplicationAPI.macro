@@ -21,6 +21,7 @@ definition {
 		else {
 			var api = "headless-builder/applications";
 		}
+
 		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''

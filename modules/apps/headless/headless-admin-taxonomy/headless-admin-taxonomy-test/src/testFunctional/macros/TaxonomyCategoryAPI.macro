@@ -5,7 +5,6 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 		var userPassword = PropsUtil.get("default.admin.password");
 
-
 		if (isSet(parentTaxonomyCategoryId)) {
 			var api = "taxonomy-categories/${parentTaxonomyCategoryId}/taxonomy-categories";
 		}

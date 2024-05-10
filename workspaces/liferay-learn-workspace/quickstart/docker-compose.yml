@@ -2,6 +2,12 @@ name: liferaylearn
 services:
     caddy:
         container_name: caddy
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+                reservations:
+                    memory: 1G
         image: liferay/caddy
         ports:
             - "127.0.0.1:8000:80"
@@ -10,6 +16,12 @@ services:
     database:
         command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --character-set-filesystem=utf8 --max_allowed_packet=32M
         container_name: database
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+                reservations:
+                    memory: 1G
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
             MYSQL_DATABASE: lportal
@@ -27,6 +39,12 @@ services:
         depends_on:
             liferay:
                 condition: service_healthy
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+                reservations:
+                    memory: 1G
         env_file: ./.env
         environment:
             - JAVA_VERSION=zulu11
@@ -41,6 +59,12 @@ services:
         depends_on:
             database:
                 condition: service_healthy
+        deploy:
+            resources:
+                limits:
+                    memory: 4G
+                reservations:
+                    memory: 4G
         environment:
             - JAVA_VERSION=zulu11
             - LIFERAY_PASSWORDS_PERIOD_DEFAULT_PERIOD_POLICY_PERIOD_CHANGE_PERIOD_REQUIRED=false

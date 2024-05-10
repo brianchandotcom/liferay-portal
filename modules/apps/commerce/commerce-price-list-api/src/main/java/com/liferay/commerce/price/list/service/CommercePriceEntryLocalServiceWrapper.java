@@ -556,6 +556,14 @@ public class CommercePriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		String cpInstanceUuid, int start, int end) {
+
+		return _commercePriceEntryLocalService.getInstanceCommercePriceEntries(
+			cpInstanceUuid, start, end);
+	}
+
+	@Override
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid) {
 		return _commercePriceEntryLocalService.
 			getInstanceCommercePriceEntriesCount(cpInstanceUuid);

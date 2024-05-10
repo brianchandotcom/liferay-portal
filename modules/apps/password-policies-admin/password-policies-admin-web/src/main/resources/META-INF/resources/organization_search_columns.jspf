@@ -93,7 +93,7 @@
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
 			>
-				<h5><%= name %></h5>
+				<div class="h5"><%= name %></div>
 
 				<div class="h6 text-default">
 					<span><%= HtmlUtil.escape(organization.getParentOrganizationName()) %></span>

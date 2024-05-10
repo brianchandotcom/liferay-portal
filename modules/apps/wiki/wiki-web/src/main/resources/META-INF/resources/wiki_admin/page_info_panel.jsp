@@ -31,9 +31,9 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 								<%= HtmlUtil.escape(wikiPage.getTitle()) %>
 							</h4>
 
-							<h5 class="component-subtitle">
+							<div class="component-subtitle">
 								<liferay-ui:message key="page" />
-							</h5>
+							</div>
 						</div>
 
 						<div class="autofit-col">
@@ -208,7 +208,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 					</c:if>
 				</c:when>
 				<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
-					<h5><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h5>
+					<div class="h5"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></div>
 				</c:when>
 				<c:otherwise>
 					<dl class="sidebar-dl sidebar-section">

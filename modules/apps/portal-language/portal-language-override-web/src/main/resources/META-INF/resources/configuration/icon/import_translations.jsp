@@ -42,7 +42,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 		<liferay-ui:error key="fileExtensionInvalid" message='<%= LanguageUtil.format(request, "please-upload-a-file-with-a-valid-extension-x", "properties", false) %>' />
 		<liferay-ui:error key="fileInvalid" message="please-select-a-valid-file" />
 
-		<h5><liferay-ui:message key="import-file" /></h5>
+		<div class="h5"><liferay-ui:message key="import-file" /></div>
 
 		<div class="sheet-text">
 			<liferay-ui:message arguments=".properties" key="support-file-format" />

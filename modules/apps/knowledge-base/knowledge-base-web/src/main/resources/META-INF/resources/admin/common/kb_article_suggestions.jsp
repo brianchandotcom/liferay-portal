@@ -72,7 +72,7 @@ if (ratingsType == null) {
 
 	<liferay-ui:success key="suggestionSaved" message="suggestion-was-saved-successfully" />
 
-	<h5 class="mb-0">
+	<div class="h5 mb-0">
 		<c:choose>
 			<c:when test="<%= kbCommentsCount == 1 %>">
 				<c:choose>
@@ -103,7 +103,7 @@ if (ratingsType == null) {
 				</c:choose>
 			</c:when>
 		</c:choose>
-	</h5>
+	</div>
 
 	<c:if test="<%= kbCommentsCount > 0 %>">
 		<c:choose>

@@ -6,7 +6,7 @@
 const NoActionRequired = () => (
 	<div className="d-flex flex-column">
 		<div className="action-detail-title pt-3 px-5">
-			<h5 className="m-0">No Action Required</h5>
+			<div className="h5 m-0">No Action Required</div>
 		</div>
 
 		<hr />

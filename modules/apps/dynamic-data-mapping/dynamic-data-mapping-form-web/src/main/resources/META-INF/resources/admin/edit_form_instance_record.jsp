@@ -52,7 +52,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 			%>
 
 			<c:if test="<%= Validator.isNotNull(description) %>">
-				<h5 class="ddm-form-description"><%= HtmlUtil.replaceNewLine(HtmlUtil.escape(description)) %></h5>
+				<div class="ddm-form-description h5"><%= HtmlUtil.replaceNewLine(HtmlUtil.escape(description)) %></div>
 			</c:if>
 		</div>
 

@@ -103,10 +103,10 @@ export function CreateAnAccount({createAnAccount, setCreateAnAccount}) {
 	return (
 		<div className="create-account mb-md-4 ml-lg-5 ml-md-4 mt-0 mt-md-4">
 			{createAnAccount && (
-				<h5 className="font-weight-bolder mb-5 mx-0">
+				<div className="font-weight-bolder h5 mb-5 mx-0">
 					Create a Raylife account to continue. This will be used to
 					login to your dashboard.
-				</h5>
+				</div>
 			)}
 
 			<ClayForm autoComplete="off" className="create-account__form">

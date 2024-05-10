@@ -57,9 +57,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 			<ul class="commerce-checkout-summary-header">
 				<li class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
-						<h5 class="commerce-title">
+						<div class="commerce-title h5">
 							<liferay-ui:message arguments="<%= orderSummaryCheckoutStepDisplayContext.getCommerceOrderItemsQuantity() %>" key="items-x" translateArguments="<%= false %>" />
-						</h5>
+						</div>
 					</div>
 				</li>
 			</ul>
@@ -400,9 +400,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 			<c:if test="<%= shippingAddress != null %>">
 				<address class="shipping-address">
-					<h5>
+					<div class="h5">
 						<liferay-ui:message key="shipping-address-and-date" />
-					</h5>
+					</div>
 
 					<%
 					request.setAttribute("address.jsp-commerceAddress", shippingAddress);
@@ -476,9 +476,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 			<c:if test="<%= (commerceBillingAddress != null) && orderSummaryCheckoutStepDisplayContext.hasViewBillingAddressPermission(permissionChecker, accountEntry) %>">
 				<address class="billing-address">
-					<h5>
+					<div class="h5">
 						<liferay-ui:message key="billing-address" />
-					</h5>
+					</div>
 
 					<%
 					request.setAttribute("address.jsp-commerceAddress", commerceBillingAddress);
@@ -517,9 +517,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 			<c:if test="<%= Validator.isNotNull(commerceShippingOptionName) %>">
 				<div class="panel-body shipping-method">
-					<h5>
+					<div class="h5">
 						<liferay-ui:message key="method" />
-					</h5>
+					</div>
 
 					<div class="shipping-description">
 						<%= HtmlUtil.escape(commerceShippingOptionName) %>
@@ -541,9 +541,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 			<c:if test="<%= Validator.isNotNull(commercePaymentMethodName) %>">
 				<div class="panel-body payment-method">
-					<h5>
+					<div class="h5">
 						<liferay-ui:message key="payment" />
-					</h5>
+					</div>
 
 					<div class="shipping-description">
 						<%= HtmlUtil.escape(commercePaymentMethodName) %>
@@ -557,9 +557,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 			<c:if test="<%= Validator.isNotNull(deliveryTermEntryName) %>">
 				<div class="panel-body payment-method">
-					<h5>
+					<div class="h5">
 						<liferay-ui:message key="delivery-terms" />
-					</h5>
+					</div>
 
 					<div class="shipping-description">
 						<a href="#" id="<%= commerceOrder.getDeliveryCommerceTermEntryId() %>"><%= HtmlUtil.escape(deliveryTermEntryName) %></a>
@@ -586,9 +586,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 			<c:if test="<%= Validator.isNotNull(paymentTermEntryName) %>">
 				<div class="panel-body payment-method">
-					<h5>
+					<div class="h5">
 						<liferay-ui:message key="payment-terms" />
-					</h5>
+					</div>
 
 					<div class="shipping-description">
 						<a href="#" id="<%= commerceOrder.getPaymentCommerceTermEntryId() %>"><%= HtmlUtil.escape(paymentTermEntryName) %></a>

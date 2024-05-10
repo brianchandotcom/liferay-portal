@@ -191,9 +191,9 @@ const NotificationSidebar: React.FC = () => {
 									<p className="mt-0 my-0">{item.message}</p>
 								</a>
 
-								<h5 className="font-italic mt-2">
+								<div className="font-italic h5 mt-2">
 									{item.dateCreated}
-								</h5>
+								</div>
 							</div>
 						</div>
 					))}

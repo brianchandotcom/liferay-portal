@@ -61,11 +61,11 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<h5>
+								<div class="h5">
 									<aui:a cssClass="selector-button" href="<%= depotAdminDisplayContext.getViewDepotURL(depotEntry) %>">
 										<%= HtmlUtil.escape(depotEntryGroup.getDescriptiveName(locale)) %>
 									</aui:a>
-								</h5>
+								</div>
 
 								<div class="h6">
 

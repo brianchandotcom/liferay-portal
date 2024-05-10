@@ -143,7 +143,7 @@ export default function ReferralDetail({
 				/>
 			</div>
 
-			{title && <h5 className="c-mb-4">{title}</h5>}
+			{title && <div className="c-mb-4 h5">{title}</div>}
 
 			<TotalCount
 				className="c-mb-2"

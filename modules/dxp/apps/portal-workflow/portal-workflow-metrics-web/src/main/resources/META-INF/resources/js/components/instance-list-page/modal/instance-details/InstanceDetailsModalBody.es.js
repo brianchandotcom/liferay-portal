@@ -257,9 +257,9 @@ function SectionTitle({children, className = ''}) {
 
 function SectionSubTitle({children}) {
 	return (
-		<h5 className="font-weight-medium mb-4 mt-4 text-secondary">
+		<div className="font-weight-medium h5 mb-4 mt-4 text-secondary">
 			{children}
-		</h5>
+		</div>
 	);
 }
 

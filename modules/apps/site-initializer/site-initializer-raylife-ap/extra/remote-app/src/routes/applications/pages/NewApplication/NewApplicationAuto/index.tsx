@@ -229,7 +229,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 			<div className="container">
 				<div className="border mt-4 sheet sheet-dataset-content">
 					<div className="align-items-center d-flex flex-column flex-md-row justify-content-md-between">
-						<h5 className="my-2 my-md-0">New Application</h5>
+						<div className="h5 my-2 my-md-0">New Application</div>
 
 						<div className="my-2 my-md-0">
 							{getChangeStatusMessage()}

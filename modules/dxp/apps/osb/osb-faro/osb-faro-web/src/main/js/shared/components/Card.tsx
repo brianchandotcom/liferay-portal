@@ -37,7 +37,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 const Title: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
 	className
-}) => <h5 className={getCN('card-title', className)}>{children}</h5>;
+}) => <div className={getCN('card-title', className)}>{children}</div>;
 
 interface ICardProps extends React.HTMLAttributes<HTMLElement> {
 	horizontal?: boolean;

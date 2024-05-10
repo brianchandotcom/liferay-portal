@@ -134,7 +134,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 				%>
 
 					<div class="org-labor-entry">
-						<h5 class="org-labor-entry-title"><%= days[j] %></h5>
+						<div class="h5 org-labor-entry-title"><%= days[j] %></div>
 
 						<aui:select label="Open" name='<%= paramPrefix + "Open" + orgLaborsIndex %>'>
 							<aui:option value="-1" />

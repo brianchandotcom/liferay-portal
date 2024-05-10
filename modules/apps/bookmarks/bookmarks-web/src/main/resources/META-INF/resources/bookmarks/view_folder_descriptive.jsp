@@ -33,9 +33,9 @@ folder = folder.toEscapedModel();
 	</aui:a>
 </h4>
 
-<h5 class="text-default">
+<div class="h5 text-default">
 	<%= folder.getDescription() %>
-</h5>
+</div>
 
 <%
 int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(scopeGroupId, folder.getFolderId());

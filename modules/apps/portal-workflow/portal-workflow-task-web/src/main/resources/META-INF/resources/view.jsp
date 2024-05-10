@@ -83,7 +83,7 @@ else {
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5 class="text-default">
+						<div class="h5 text-default">
 
 							<%
 							DateSearchEntry dateSearchEntry = new DateSearchEntry();
@@ -92,7 +92,7 @@ else {
 							%>
 
 							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
-						</h5>
+						</div>
 
 						<h4>
 							<clay:link
@@ -101,7 +101,7 @@ else {
 							/>
 						</h4>
 
-						<h5 class="text-default">
+						<div class="h5 text-default">
 							<span class="asset-type">
 								<liferay-ui:message key="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>" />
 							</span>
@@ -122,7 +122,7 @@ else {
 									<liferay-ui:message key="due-date" />: <%= dateSearchEntry.getName(request) %>
 								</span>
 							</c:if>
-						</h5>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<c:choose>

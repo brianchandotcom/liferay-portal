@@ -121,15 +121,15 @@ export default function SiteLanguageConfiguration({
 
 			{inheritLocales === 'true' ? (
 				<div>
-					<h5 className="h4">
+					<div className="h4">
 						{Liferay.Language.get('default-language')}
-					</h5>
+					</div>
 
 					<p>{defaultLanguageLabel}</p>
 
-					<h5 className="h4">
+					<div className="h4">
 						{Liferay.Language.get('available-languages')}
-					</h5>
+					</div>
 
 					{initialCurrentLanguages
 						.map((language) => language.label)
@@ -137,9 +137,9 @@ export default function SiteLanguageConfiguration({
 				</div>
 			) : (
 				<fieldset>
-					<h5 className="h4">
+					<div className="h4">
 						{Liferay.Language.get('default-language')}
-					</h5>
+					</div>
 
 					<ClaySelectWithOption
 						name={`${portletNamespace}TypeSettingsProperties--languageId--`}
@@ -166,9 +166,9 @@ export default function SiteLanguageConfiguration({
 						</ClayAlert>
 					)}
 
-					<h5 className="h4 mt-4 sheet-subtitle">
+					<div className="h4 mt-4 sheet-subtitle">
 						{Liferay.Language.get('available-languages')}
-					</h5>
+					</div>
 
 					{showRemoveDefaultLanguageWarning && (
 						<ClayAlert

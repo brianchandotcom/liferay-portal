@@ -55,7 +55,7 @@ const PolicyDetail = ({
 	return (
 		<div className="bg-neutral-0 h-100 rounded w-100">
 			<div className="bg-neutral-0 policy-detail-title pt-3 px-5 rounded-top">
-				<h5 className="m-0">Policy Detail</h5>
+				<div className="h5 m-0">Policy Detail</div>
 			</div>
 
 			<div className="d-flex flex-row">

@@ -16,7 +16,7 @@ const indicators = [].slice.call(
 const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
 const nextItemIndexKey = `${fragmentEntryLinkNamespace}-next-item-index`;
 const stepsNumber = fragmentElement.querySelectorAll('h1');
-const stepsTitle = fragmentElement.querySelectorAll('h5');
+const stepsTitle = fragmentElement.querySelectorAll('.h5');
 
 let moving = false;
 

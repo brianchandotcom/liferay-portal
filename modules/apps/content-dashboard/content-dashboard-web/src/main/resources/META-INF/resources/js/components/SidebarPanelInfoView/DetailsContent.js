@@ -49,9 +49,9 @@ const DetailsContent = ({
 					/>
 
 					<div className="c-mb-4 sidebar-section" key="creation-date">
-						<h5 className="c-mb-1 font-weight-semi-bold">
+						<div className="c-mb-1 font-weight-semi-bold h5">
 							{Liferay.Language.get('creation-date')}
-						</h5>
+						</div>
 
 						<p className="text-secondary">
 							{formatDate(createDate, languageTag)}
@@ -59,9 +59,9 @@ const DetailsContent = ({
 					</div>
 
 					<div className="c-mb-4 sidebar-section" key="modified-date">
-						<h5 className="c-mb-1 font-weight-semi-bold">
+						<div className="c-mb-1 font-weight-semi-bold h5">
 							{Liferay.Language.get('modified-date')}
-						</h5>
+						</div>
 
 						<p className="text-secondary">
 							{formatDate(modifiedDate, languageTag)}
@@ -69,9 +69,9 @@ const DetailsContent = ({
 					</div>
 
 					<div className="c-mb-4 sidebar-section" key="id">
-						<h5 className="c-mb-1 font-weight-semi-bold">
+						<div className="c-mb-1 font-weight-semi-bold h5">
 							{Liferay.Language.get('id')}
-						</h5>
+						</div>
 
 						<p className="text-secondary">{classPK}</p>
 					</div>

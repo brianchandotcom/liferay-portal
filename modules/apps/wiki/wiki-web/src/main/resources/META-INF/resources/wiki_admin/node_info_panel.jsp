@@ -25,9 +25,9 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = new WikiNodeIn
 						<%= HtmlUtil.escape(node.getName()) %>
 					</h4>
 
-					<h5 class="component-subtitle">
+					<div class="component-subtitle">
 						<liferay-ui:message key="wiki" />
-					</h5>
+					</div>
 				</div>
 
 				<div class="autofit-col">

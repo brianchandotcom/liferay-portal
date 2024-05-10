@@ -32,9 +32,9 @@
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-					<h5>
+					<div class="h5">
 						<aui:a href="<%= String.valueOf(rowURL) %>"><%= HtmlUtil.escape(curOrganization.getName()) %></aui:a>
-					</h5>
+					</div>
 
 					<div class="h6 text-default">
 						<liferay-ui:message key="<%= curOrganization.getType() %>" />
@@ -117,9 +117,9 @@
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-					<h5>
+					<div class="h5">
 						<aui:a href="<%= String.valueOf(rowURL) %>"><%= HtmlUtil.escape(user2.getFullName()) %></aui:a>
-					</h5>
+					</div>
 
 					<div class="h6 text-default">
 						<liferay-ui:message key="user" />

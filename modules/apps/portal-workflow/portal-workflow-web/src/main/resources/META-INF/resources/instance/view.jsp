@@ -42,7 +42,7 @@
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5 class="text-default">
+						<div class="h5 text-default">
 
 							<%
 							DateSearchEntry dateSearchEntry = new DateSearchEntry();
@@ -51,7 +51,7 @@
 							%>
 
 							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
-						</h5>
+						</div>
 
 						<h4>
 							<clay:link
@@ -60,7 +60,7 @@
 							/>
 						</h4>
 
-						<h5 class="text-default">
+						<div class="h5 text-default">
 							<span class="asset-type">
 								<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>" />
 							</span>
@@ -81,7 +81,7 @@
 									<liferay-ui:message key="end-date" />: <%= dateSearchEntry.getName(request) %>
 								</span>
 							</c:if>
-						</h5>
+						</div>
 					</liferay-ui:search-container-column-text>
 
 					<c:choose>

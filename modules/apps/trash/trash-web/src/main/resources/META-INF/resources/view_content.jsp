@@ -76,11 +76,11 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 								<liferay-ui:search-container-column-text
 									colspan="<%= 2 %>"
 								>
-									<h5>
+									<div class="h5">
 										<aui:a href="<%= rowURL %>">
 											<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>
 										</aui:a>
-									</h5>
+									</div>
 
 									<div class="h6 text-default">
 										<liferay-ui:message key="type" /> <%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>

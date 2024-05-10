@@ -30,9 +30,9 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 						<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>
 					</h4>
 
-					<h5 class="component-subtitle">
+					<div class="component-subtitle">
 						<liferay-ui:message key="image-resolution" />
-					</h5>
+					</div>
 				</div>
 
 				<div class="autofit-col">

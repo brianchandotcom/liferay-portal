@@ -37,9 +37,9 @@ const ItemLanguages = ({urls}) => {
 
 	return (
 		<div className="c-mb-4 sidebar-section">
-			<h5 className="font-weight-semi-bold">
+			<div className="font-weight-semi-bold h5">
 				{Liferay.Language.get('languages-translated-into')}
-			</h5>
+			</div>
 
 			{sortedViewURLS.map((language) => (
 				<ClayLayout.ContentRow

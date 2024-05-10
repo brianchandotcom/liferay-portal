@@ -58,7 +58,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5><%= user2.getFullName() %></h5>
+						<div class="h5"><%= user2.getFullName() %></div>
 
 						<div class="h6 text-default">
 							<span><%= user2.getScreenName() %></span>

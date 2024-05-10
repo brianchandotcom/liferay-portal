@@ -111,7 +111,7 @@ else if (metadataField.equals("view-count")) {
 					</c:otherwise>
 				</c:choose>
 
-				<h5 class="component-subtitle"><%= displayDate %></h5>
+				<div class="component-subtitle"><%= displayDate %></div>
 			</div>
 		</div>
 	</c:when>

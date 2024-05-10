@@ -45,7 +45,7 @@ if (commerceOrder != null) {
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.REMOVE %>" />
 
 			<div class="coupon-code-header">
-				<h5><liferay-ui:message key="coupon-code" /></h5>
+				<div class="h5"><liferay-ui:message key="coupon-code" /></div>
 			</div>
 
 			<div class="coupon-code-body">

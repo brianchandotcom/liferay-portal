@@ -528,11 +528,11 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 									<liferay-ui:search-container-column-text
 										colspan="<%= 3 %>"
 									>
-										<h5>
+										<div class="h5">
 											<a href="<%= HtmlUtil.escapeAttribute(viewFolderURL.toString()) %>" title="<%= folder.getName() %>">
 												<strong><%= HtmlUtil.escape(folder.getName()) %></strong>
 											</a>
-										</h5>
+										</div>
 
 										<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 											<div class="h6 text-default">
@@ -588,7 +588,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 										colspan="<%= 2 %>"
 									>
 										<div class="<%= repositoryEntryBrowserDisplayContext.isPreviewable(latestFileVersion) ? "item-preview-editable" : StringPool.BLANK %> item-preview" data-href="<%= Validator.isNotNull(thumbnailSrc) ? HtmlUtil.escapeHREF(DLURLHelperUtil.getImagePreviewURL(fileEntry, themeDisplay)) : themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType)) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-type="<%= repositoryEntryBrowserDisplayContext.getType(latestFileVersion) %>" data-url="<%= HtmlUtil.escapeAttribute(DLURLHelperUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorRepositoryEntryBrowserUtil.getValue(itemSelectorReturnTypeResolver, existingFileEntryReturnType, fileEntry, themeDisplay)) %>">
-											<h5>
+											<div class="h5">
 												<strong><%= title %></strong>
 
 												<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-16311") && !repositoryEntryBrowserDisplayContext.hasGuestViewPermission(fileEntry) %>'>
@@ -599,7 +599,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 														symbol="password-policies"
 													/>
 												</c:if>
-											</h5>
+											</div>
 
 											<c:if test="<%= repositoryEntryBrowserDisplayContext.isSearchEverywhere() %>">
 												<div class="h6 text-default">

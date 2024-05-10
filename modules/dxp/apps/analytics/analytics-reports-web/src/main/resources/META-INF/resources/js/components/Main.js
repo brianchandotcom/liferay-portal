@@ -72,11 +72,11 @@ export default function Main({
 				</div>
 			)}
 
-			{title && <h5 className="c-mb-4">{title}</h5>}
+			{title && <div className="c-mb-4 h5">{title}</div>}
 
-			<h5 className="mt-3 sheet-subtitle">
+			<div className="mt-3 sheet-subtitle">
 				{Liferay.Language.get('engagement')}
-			</h5>
+			</div>
 
 			<TotalCount
 				className="mb-2"

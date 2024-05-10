@@ -20,11 +20,11 @@ const TERTIARY_TAB = (
 
 		<div>
 			<div>
-				<h5 className="d-inline">k</h5>
+				<div className="d-inline h5">k</div>
 
 				<h1 className="d-inline">999.9</h1>
 
-				<h5 className="d-inline">k</h5>
+				<div className="d-inline h5">k</div>
 			</div>
 
 			<div className="font-weight-bold text-paragraph-sm text-right">

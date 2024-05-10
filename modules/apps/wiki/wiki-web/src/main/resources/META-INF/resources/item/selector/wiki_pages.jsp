@@ -70,7 +70,7 @@ String searchURL = HttpComponentsUtil.removeParameter(
 				String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 				%>
 
-				<h5 class="text-default">
+				<div class="h5 text-default">
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(curPage.getUserName()) %>">
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curPage.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
@@ -79,7 +79,7 @@ String searchURL = HttpComponentsUtil.removeParameter(
 							<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" />
 						</c:otherwise>
 					</c:choose>
-				</h5>
+				</div>
 
 				<%
 				WikiPageItemSelectorReturnTypeResolver wikiPageItemSelectorReturnTypeResolver = wikiPageItemSelectorViewDisplayContext.getWikiPageItemSelectorReturnTypeResolver();
@@ -91,9 +91,9 @@ String searchURL = HttpComponentsUtil.removeParameter(
 					</a>
 				</h4>
 
-				<h5 class="text-default">
+				<div class="h5 text-default">
 					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curPage.getStatus() %>" />
-				</h5>
+				</div>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

@@ -91,7 +91,7 @@ const Review = () => {
 
 	return (
 		<div className="mx-1 mx-md-8">
-			<h5 className="text-center">Review Quote</h5>
+			<div className="h5 text-center">Review Quote</div>
 
 			<ClayTable
 				borderless

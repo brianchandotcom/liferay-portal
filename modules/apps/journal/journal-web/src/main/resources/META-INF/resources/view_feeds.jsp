@@ -78,11 +78,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5>
+						<div class="h5">
 							<aui:a href="<%= editURL %>">
 								<%= feed.getName() %>
 							</aui:a>
-						</h5>
+						</div>
 
 						<div class="h6 text-default">
 							<%= feed.getDescription() %>

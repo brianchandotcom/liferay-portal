@@ -137,7 +137,7 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 			{isLoading && (
 				<div className="bg-neutral policy-active-claims-container rounded w-100">
 					<div className="bg-neutral-0 p-4 policy-active-claims-title pt-3 px-5 rounded-top w-100">
-						<h5 className="m-0">Active Claims</h5>
+						<div className="h5 m-0">Active Claims</div>
 					</div>
 
 					<hr className="my-0" />

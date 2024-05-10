@@ -9,7 +9,7 @@ import {CONSTANTS} from '../../../../../../common/utils/constants';
 const NotifyRepairComponent = () => (
 	<div className="d-flex flex-column">
 		<div className="action-detail-title pt-3 px-5">
-			<h5 className="m-0">Notify Repair Options</h5>
+			<div className="h5 m-0">Notify Repair Options</div>
 		</div>
 
 		<hr />

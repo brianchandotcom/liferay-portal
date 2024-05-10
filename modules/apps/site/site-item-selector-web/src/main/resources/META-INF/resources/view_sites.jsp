@@ -109,7 +109,7 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5>
+						<div class="h5">
 							<c:choose>
 								<c:when test="<%= group.isActive() %>">
 									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
@@ -126,7 +126,7 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 							<c:if test="<%= groupItemSelectorCriterion.isAllowNavigation() && group.isActive() %>">
 								<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
 							</c:if>
-						</h5>
+						</div>
 
 						<div class="h6 text-default">
 							<span><liferay-ui:message key="<%= group.getScopeLabel(themeDisplay) %>" /></span>

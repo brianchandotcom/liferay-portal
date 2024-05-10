@@ -23,9 +23,9 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 			cssClass="lfr-title-column"
 		>
 			<div id="<portlet:namespace />exportStatus">
-				<h5>
+				<div class="h5">
 					<liferay-ui:message key="<%= UADLanguageUtil.getApplicationName(UADExportProcessUtil.getApplicationKey(backgroundTask), locale) %>" />
-				</h5>
+				</div>
 
 				<clay:label
 					displayType="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"

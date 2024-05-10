@@ -104,14 +104,14 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 							)}
 						</p>
 
-						<h5>
+						<div className="h5">
 							{sub(
 								Liferay.Language.get(
 									'you-will-permanently-lose-analytics-data-that-has-been-recorded-over-x-ago.-you-will-not-be-able-to-undo-this-operation'
 								),
 								[getRetentionLabel(newVal).toLowerCase()]
 							)}
-						</h5>
+						</div>
 					</div>
 				),
 				modalVariant: 'modal-warning',

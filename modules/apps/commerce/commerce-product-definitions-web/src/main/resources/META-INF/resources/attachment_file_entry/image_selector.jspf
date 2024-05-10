@@ -35,11 +35,11 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 		<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
 
 		<div id="<portlet:namespace />fileEntryContainer">
-			<h5 id="<portlet:namespace />fileEntryTitle">
+			<div class="h5" id="<portlet:namespace />fileEntryTitle">
 				<c:if test="<%= fileEntryId > 0 %>">
 					<%= HtmlUtil.escape(cpAttachmentFileEntriesDisplayContext.getFileEntryName()) %>
 				</c:if>
-			</h5>
+			</div>
 		</div>
 
 		<aui:button name="selectFile" value="select-file" />

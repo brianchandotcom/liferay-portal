@@ -20,13 +20,13 @@ DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)row.g
 		</aui:a>
 	</h4>
 
-	<h5 class="text-default">
+	<div class="h5 text-default">
 		<div class="text-truncate">
 			<%= HtmlUtil.escape(ddmDataProviderInstance.getDescription(locale)) %>
 		</div>
-	</h5>
+	</div>
 
-	<h5 class="text-default">
+	<div class="h5 text-default">
 		<span class="data-provider-instance-id">
 			<liferay-ui:message key="id" />: <%= ddmDataProviderInstance.getDataProviderInstanceId() %>
 		</span>
@@ -40,5 +40,5 @@ DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)row.g
 
 			<liferay-ui:message key="modified-date" />: <%= dateSearchEntry.getName(request) %>
 		</span>
-	</h5>
+	</div>
 </div>

@@ -83,7 +83,7 @@ export function FormInfo() {
 					</ClayForm.Group>
 				</h1>
 
-				<h5>
+				<div className="h5">
 					<ClayForm.Group>
 						<textarea
 							className="ddm-form-description form-control"
@@ -108,7 +108,7 @@ export function FormInfo() {
 							}
 						/>
 					</ClayForm.Group>
-				</h5>
+				</div>
 			</ClayLayout.ContainerFluid>
 		</div>
 	);

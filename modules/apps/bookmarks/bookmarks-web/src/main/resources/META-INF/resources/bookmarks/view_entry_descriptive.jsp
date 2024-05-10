@@ -32,9 +32,9 @@ entry = entry.toEscapedModel();
 	</aui:a>
 </h4>
 
-<h5 class="text-default">
+<div class="h5 text-default">
 	<%= entry.getDescription() %>
-</h5>
+</div>
 
 <span class="h6">
 	<liferay-ui:message arguments="<%= entry.getVisits() %>" key='<%= (entry.getVisits() == 1) ? "x-visit" : "x-visits" %>' />

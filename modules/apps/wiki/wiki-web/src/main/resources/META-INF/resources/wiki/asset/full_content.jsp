@@ -71,7 +71,7 @@ WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 
 <c:if test="<%= wikiPage.getAttachmentsFileEntriesCount() > 0 %>">
 	<div class="page-attachments">
-		<h5><liferay-ui:message key="attachments" /></h5>
+		<div class="h5"><liferay-ui:message key="attachments" /></div>
 
 		<clay:row>
 

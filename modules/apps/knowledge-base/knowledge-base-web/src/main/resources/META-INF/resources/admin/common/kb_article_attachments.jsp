@@ -19,7 +19,7 @@ if (kbArticle != null) {
 
 <c:if test="<%= !attachmentsFileEntries.isEmpty() %>">
 	<div class="kb-attachments">
-		<h5><liferay-ui:message key="attachments" /></h5>
+		<div class="h5"><liferay-ui:message key="attachments" /></div>
 
 		<clay:row>
 

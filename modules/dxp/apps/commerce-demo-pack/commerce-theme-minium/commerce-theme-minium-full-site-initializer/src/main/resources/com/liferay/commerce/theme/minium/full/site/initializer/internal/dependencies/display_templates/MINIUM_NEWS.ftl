@@ -53,9 +53,9 @@
 							</#if>
 
 							<a href="${viewEntryPortletURL}">
-								<h5 class="title">
+								<div class="h5 title">
 									${htmlUtil.escape(blogsEntryUtil.getDisplayTitle(resourceBundle, curEntry))}
-								</h5>
+								</div>
 							</a>
 
 							<#assign publishedDate = languageUtil.getTimeDescription(locale, .now?long - curEntry.getCreateDate()?long, true) />

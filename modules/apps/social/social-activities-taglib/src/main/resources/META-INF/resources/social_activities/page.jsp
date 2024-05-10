@@ -95,9 +95,9 @@
 						</div>
 
 						<div class="autofit-col autofit-col-expand">
-							<h5 class="component-subtitle">
+							<div class="component-subtitle">
 								<%= timeFormat.format(activityDescriptor.getCreateDate()) %>
-							</h5>
+							</div>
 
 							<div>
 								<%= activityFeedEntry.getTitle() %>

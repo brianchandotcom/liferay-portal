@@ -96,7 +96,7 @@ if (Validator.isNotNull(portletResource)) {
 						String curModelResourceName = ResourceActionsUtil.getModelResource(request, curModelResource);
 					%>
 
-						<h5 class="sheet-tertiary-title" id="<%= roleDisplayContext.getResourceHtmlId(curModelResource) %>"><%= curModelResourceName %></h5>
+						<div class="sheet-tertiary-title" id="<%= roleDisplayContext.getResourceHtmlId(curModelResource) %>"><%= curModelResourceName %></div>
 
 						<%
 						request.setAttribute("edit_role_permissions.jsp-curModelResource", curModelResource);

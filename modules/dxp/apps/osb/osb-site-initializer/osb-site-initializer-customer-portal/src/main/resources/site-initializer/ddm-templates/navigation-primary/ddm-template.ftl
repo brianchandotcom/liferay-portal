@@ -82,9 +82,9 @@
 											</div>
 										</#if>
 
-										<h5 class="adt-submenu-item-title">
+										<div class="adt-submenu-item-title h5">
 											${navTertiaryItem.getName()}
-										</h5>
+										</div>
 
 										<#if descriptionText?has_content>
 											<div class="adt-submenu-item-description">

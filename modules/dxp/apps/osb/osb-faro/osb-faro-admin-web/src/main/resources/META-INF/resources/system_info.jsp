@@ -8,13 +8,13 @@
 <%@ include file="/init.jsp" %>
 
 <div class="sheet sheet-lg">
-	<h5><liferay-ui:message key="build-date" /></h5>
+	<div class="h5"><liferay-ui:message key="build-date" /></div>
 
 	<p>
 		<%= System.getenv("LABEL_BUILD_DATE") %>
 	</p>
 
-	<h5><liferay-ui:message key="vcs-hash" /></h5>
+	<div class="h5"><liferay-ui:message key="vcs-hash" /></div>
 
 	<p>
 		<%= System.getenv("LABEL_VCS_REF") %>

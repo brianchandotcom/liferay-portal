@@ -46,7 +46,7 @@ export function PanelSimpleBody({
 		<div className="object-admin-panel__simple-body">
 			<div className="object-admin-panel__simple-body__content-left">
 				<div>
-					<h5 className="object-admin-panel__title">{title}</h5>
+					<div className="h5 object-admin-panel__title">{title}</div>
 
 					<div>{children}</div>
 				</div>

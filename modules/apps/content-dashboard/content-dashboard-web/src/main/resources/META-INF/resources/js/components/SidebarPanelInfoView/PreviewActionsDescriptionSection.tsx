@@ -52,9 +52,9 @@ const PreviewActionsDescriptionSection = ({
 
 			{description && (
 				<div className="sidebar-section">
-					<h5 className="c-mb-1 font-weight-semi-bold">
+					<div className="c-mb-1 font-weight-semi-bold h5">
 						{Liferay.Language.get('description')}
-					</h5>
+					</div>
 
 					<div
 						className="text-secondary"

@@ -197,7 +197,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					({hide = false, items, label}, sectionIndex) =>
 						!hide && (
 							<div className='section' key={sectionIndex}>
-								<h5 className='section-title'>{label}</h5>
+								<div className='h5 section-title'>{label}</div>
 
 								<ul className='nav-list'>
 									{items.map(

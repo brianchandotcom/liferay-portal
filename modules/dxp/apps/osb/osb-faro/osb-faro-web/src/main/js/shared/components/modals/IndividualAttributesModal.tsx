@@ -21,7 +21,7 @@ const IndividualAttributesModal: React.FC<IIndividualAttributesModalInterface> =
 		<Modal.Header onClose={onClose} title={fieldName} />
 
 		<Modal.Body>
-			<h5>{Liferay.Language.get('data-sources')}</h5>
+			<div className="h5">{Liferay.Language.get('data-sources')}</div>
 
 			<Table
 				columns={[

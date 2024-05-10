@@ -137,7 +137,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 
 	return (
 		<>
-			<h5 className="mt-3 sheet-subtitle">
+			<div className="mt-3 sheet-subtitle">
 				{Liferay.Language.get('traffic-channels')}
 
 				<Hint
@@ -145,7 +145,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 					secondary={true}
 					title={Liferay.Language.get('traffic-channels')}
 				/>
-			</h5>
+			</div>
 
 			{!fullPieChart && !missingTrafficSourceValue && (
 				<div className="mb-3 text-secondary">

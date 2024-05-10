@@ -68,11 +68,11 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<h5>
+								<div class="h5">
 									<aui:a href="<%= assetListDisplayContext.getEditURL(assetListEntry) %>">
 										<strong><%= HtmlUtil.escape(assetListEntry.getTitle()) %></strong>
 									</aui:a>
-								</h5>
+								</div>
 
 								<div class="h6 text-default">
 									<%= assetListDisplayContext.getAssetEntrySubtypeLabel(assetListEntry) %>

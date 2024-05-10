@@ -61,7 +61,7 @@
 											<div class="adt-submenu-item-preheader color-neutral-3 font-weight-semi-bold">${preheaderText}</div>
 										</#if>
 
-										<h5 class="adt-submenu-item-title">${navTertiaryItem.getName()}</h5>
+										<div class="adt-submenu-item-title h5">${navTertiaryItem.getName()}</div>
 
 										<#if (menuItemType == '' || stringUtil.equals(menuItemType, "Text")) && descriptionText?has_content>
 											<div class="adt-submenu-item-description">${descriptionText}</div>

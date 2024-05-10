@@ -28,11 +28,11 @@ const VehicleInfo = ({dataJSON: applicationData}: VehicleNavigatorType) => {
 							)}
 
 							<div className="align-self-start w-25">
-								<h5>
+								<div className="h5">
 									{`${currentVehicle?.year} ${
 										currentVehicle?.make
 									} ${currentVehicle?.model ?? 'No data'}`}
-								</h5>
+								</div>
 
 								<img
 									className="w-75"

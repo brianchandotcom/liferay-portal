@@ -78,7 +78,7 @@
 
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS</td>
-	<td>//div[@class='property-builder-field-label']/h5[normalize-space(text())='${key_campaignTrackingAction}']</td>
+	<td>//div[@class='property-builder-field-label']/div[contains(@class,'h5') and normalize-space(text())='${key_campaignTrackingAction}']</td>
 	<td></td>
 </tr>
 <tr>

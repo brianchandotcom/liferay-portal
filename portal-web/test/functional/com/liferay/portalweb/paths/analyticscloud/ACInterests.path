@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>INTERESTS_TABLE</td>
-	<td>//h5[contains(.,'Interests')]/../..//span[contains(@class,'title') and contains(.,'${key_interestName}')]</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Interests')]/../..//span[contains(@class,'title') and contains(.,'${key_interestName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 
 <tr>
 	<td>INTEREST_HEADER</td>
-	<td>//h5[contains(.,'Interest')]/span[contains(@class,'interest-name') and contains(.,'${key_interestTopic}')]</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Interest')]/span[contains(@class,'interest-name') and contains(.,'${key_interestTopic}')]</td>
 	<td></td>
 </tr>
 <tr>

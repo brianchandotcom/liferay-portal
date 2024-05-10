@@ -42,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>FIELD_ADDED_ON_BLOCK</td>
-		<td>//div[contains(@class,'object-admin-panel__simple-body__content-left')]//div//h5[contains(text(),'${key_fieldLabelName}')]</td>
+		<td>//div[contains(@class,'object-admin-panel__simple-body__content-left')]//div//div[contains(@class,'h5') and contains(text(),'${key_fieldLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>SITE</td>
-	<td>//div[contains(@id,'siteSelector')]//div[h5[.='${key_site}']]</td>
+	<td>//div[contains(@id,'siteSelector')]//div[div[.='${key_site}']]</td>
 	<td></td>
 </tr>
 <tr>

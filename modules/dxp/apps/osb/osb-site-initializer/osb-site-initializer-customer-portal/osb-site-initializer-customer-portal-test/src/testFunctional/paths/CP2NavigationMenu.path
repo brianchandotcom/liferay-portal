@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>QUICK_LINKS</td>
-	<td>//div[contains(@class, 'cp-link-body')]//h5[contains(text(), '${title}')]</td>
+	<td>//div[contains(@class, 'cp-link-body')]//div[contains(text(), '${title}')]</td>
 	<td></td>
 </tr>
 <tr>

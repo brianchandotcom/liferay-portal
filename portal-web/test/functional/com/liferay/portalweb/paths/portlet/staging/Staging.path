@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>STAGING_STATUS_PORTLET</td>
-	<td>//h5[contains(text(),'Successful')]</td>
+	<td>//div[contains(@class,'h5') and contains(text(),'Successful')]</td>
 	<td></td>
 </tr>
 <tr>

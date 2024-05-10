@@ -1,4 +1,4 @@
-import require from './require.mjs';
+import projectScopeRequire from './projectScopeRequire.mjs';
 
 const cachedExportedSymbols = {};
 
@@ -39,7 +39,7 @@ export default function getExportedSymbols(globalSymbols, moduleName) {
 }
 
 function loadSymbols(moduleName) {
-	const module = require(moduleName);
+	const module = projectScopeRequire(moduleName);
 
 	const symbols = Object.keys(module).reduce(
 		(symbols, key) => {

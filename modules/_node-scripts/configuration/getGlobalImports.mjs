@@ -1,7 +1,7 @@
 import path from 'path';
 
 import getRootDir from '../util/getRootDir.mjs';
-import require from '../util/require.mjs';
+import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**
  * @returns
@@ -21,7 +21,7 @@ import require from '../util/require.mjs';
 export default async function getGlobalImports() {
 	const rootDir = await getRootDir();
 
-	const {imports} = require(path.join(rootDir, 'node-scripts.config.js'));
+	const {imports} = projectScopeRequire(path.join(rootDir, 'node-scripts.config.js'));
 
 	const externalImports = {};
 	const rawProjectImports = {};

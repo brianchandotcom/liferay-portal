@@ -1,10 +1,10 @@
-import require from '../util/require.mjs';
+import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**
  * @returns the proejct relative path of the main entry point
  */
 export default function getProjectExports() {
-	const {main} = require('./node-scripts.config.js');
+	const {main} = projectScopeRequire('./node-scripts.config.js');
 
 	return main;
 }

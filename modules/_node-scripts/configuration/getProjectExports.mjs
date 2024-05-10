@@ -1,4 +1,4 @@
-import require from '../util/require.mjs';
+import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**
  * @returns
@@ -12,7 +12,7 @@ import require from '../util/require.mjs';
  * ]
  */
 export default function getProjectExports() {
-	const {exports} = require('./node-scripts.config.js');
+	const {exports} = projectScopeRequire('./node-scripts.config.js');
 
 	if (exports === undefined) {
 		return [];

@@ -1,7 +1,7 @@
 import path from 'path';
 
 import getRootDir from '../util/getRootDir.mjs';
-import require from '../util/require.mjs';
+import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**
  * @returns
@@ -14,7 +14,7 @@ import require from '../util/require.mjs';
 export default async function getGlobalSymbols() {
 	const rootDir = await getRootDir();
 
-	const {symbols} = require(path.join(rootDir, 'node-scripts.config.js'));
+	const {symbols} = projectScopeRequire(path.join(rootDir, 'node-scripts.config.js'));
 
 	return symbols || {};
 }

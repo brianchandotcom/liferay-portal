@@ -1,4 +1,4 @@
-import require from '../util/require.mjs';
+import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**
  * @returns 
@@ -8,7 +8,7 @@ import require from '../util/require.mjs';
  * }
  */
 export default function getProjectDescription() {
-	const {main, name, version} = require('./package.json');
+	const {main, name, version} = projectScopeRequire('./package.json');
 
 	return {main, name, version};
 }

@@ -27,7 +27,7 @@ const ContactSalesPage = () => {
 				continueButtonText={i18n.translate('contact-sales')}
 				onClickBack={() =>
 					Liferay.Util.navigate(
-						Liferay.ThemeDisplay.getCanonicalURL().replace(
+						Liferay.ThemeDisplay.getLayoutURL().replace(
 							'/get-app',
 							''
 						)

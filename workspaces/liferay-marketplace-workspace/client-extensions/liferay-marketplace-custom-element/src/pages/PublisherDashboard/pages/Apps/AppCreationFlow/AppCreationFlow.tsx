@@ -403,7 +403,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								selectedItem: '',
 							});
 
-							location.href = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
+							location.href = `${Liferay.ThemeDisplay.getLayoutURL().replace(
 								'/create-new-app',
 								'/publisher-dashboard'
 							)}`;

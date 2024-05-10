@@ -216,7 +216,7 @@ export function NextSteps({
 							};
 
 							Liferay.Util.navigate(
-								Liferay.ThemeDisplay.getCanonicalURL().replace(
+								Liferay.ThemeDisplay.getLayoutURL().replace(
 									'/next-steps',
 									`/customer-dashboard`
 								)

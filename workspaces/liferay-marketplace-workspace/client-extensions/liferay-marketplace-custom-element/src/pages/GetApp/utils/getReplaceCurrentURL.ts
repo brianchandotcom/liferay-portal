@@ -10,7 +10,7 @@ export default function getReplaceCurrentURL(
 	nextURL: string,
 	orderId?: string
 ) {
-	let newURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
+	let newURL = `${Liferay.ThemeDisplay.getLayoutURL().replace(
 		`/${currentURL}`,
 		''
 	)}/${nextURL}`;

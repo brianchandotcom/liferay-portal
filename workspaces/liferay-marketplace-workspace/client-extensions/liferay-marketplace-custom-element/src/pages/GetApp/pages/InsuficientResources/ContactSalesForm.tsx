@@ -61,7 +61,7 @@ const ContactSalesForm = () => {
 			});
 
 			Liferay.Util.navigate(
-				Liferay.ThemeDisplay.getCanonicalURL().replace('/get-app', '')
+				Liferay.ThemeDisplay.getLayoutURL().replace('/get-app', '')
 			);
 		}
 		catch (error) {

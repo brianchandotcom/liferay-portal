@@ -62,7 +62,7 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 						};
 
 						Liferay.Util.navigate(
-							Liferay.ThemeDisplay.getCanonicalURL().replace(
+							Liferay.ThemeDisplay.getLayoutURL().replace(
 								'/administrator-dashboard',
 								`/customer-dashboard`
 							)
@@ -92,7 +92,7 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 						};
 
 						Liferay.Util.navigate(
-							Liferay.ThemeDisplay.getCanonicalURL().replace(
+							Liferay.ThemeDisplay.getLayoutURL().replace(
 								'/administrator-dashboard',
 								`/publisher-dashboard`
 							)

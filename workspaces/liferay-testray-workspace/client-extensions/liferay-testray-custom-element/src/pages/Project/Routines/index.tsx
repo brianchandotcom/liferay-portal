@@ -4,7 +4,7 @@
  */
 
 import {useParams} from 'react-router-dom';
-import { TestrayRoutine } from '~/services/rest';
+import {TestrayRoutine} from '~/services/rest';
 
 import Container from '../../../components/Layout/Container';
 import ListViewRest from '../../../components/ListView';
@@ -14,7 +14,7 @@ import {getTimeFromNow} from '../../../util/date';
 import useRoutineActions from './useRoutineActions';
 
 const Routines = () => {
-	const {actions, navigate} = useRoutineActions();
+	const {actions} = useRoutineActions();
 	const {projectId} = useParams();
 
 	return (
@@ -30,7 +30,6 @@ const Routines = () => {
 					columnsFixed: ['name'],
 				}}
 				managementToolbarProps={{
-					addButton: () => navigate('create'),
 					applyFilters: true,
 					filterSchema: 'routines',
 					title: i18n.translate('routines'),

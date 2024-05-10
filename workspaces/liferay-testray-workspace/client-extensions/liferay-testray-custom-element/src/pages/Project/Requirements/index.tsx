@@ -5,7 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import useFormModal from '~/hooks/useFormModal';
 import {testrayRequirementsImpl} from '~/services/rest';
 
@@ -39,13 +39,10 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 	tableProps,
 	variables,
 }) => {
-	const navigate = useNavigate();
-
 	return (
 		<ListView
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
-				addButton: () => navigate('create'),
 				applyFilters: true,
 				buttons: (actions) =>
 					actions?.create && (

@@ -14,7 +14,6 @@ import i18n from '~/i18n';
 import {TestrayBuild, testrayBuildImpl} from '~/services/rest';
 import dayjs from '~/util/date';
 
-import BuildAddButton from './Builds/BuildAddButton';
 import BuildHistoryChart from './Builds/BuildHistoryChart';
 import useBuildActions from './Builds/useBuildActions';
 
@@ -51,10 +50,6 @@ const Routine = () => {
 				}}
 				managementToolbarProps={{
 					applyFilters: true,
-					buttons: (actions) =>
-						actions?.create && (
-							<BuildAddButton routineId={routineId as string} />
-						),
 					filterSchema: 'builds',
 					title: i18n.translate('build-history'),
 				}}
@@ -107,7 +102,7 @@ const Routine = () => {
 							key: 'dueDate',
 							render: (dueDate) => dayjs(dueDate).format('lll'),
 							size: 'sm',
-							value: i18n.translate('create-date'),
+							value: i18n.translate('execution-date'),
 						},
 						{
 							clickable: true,

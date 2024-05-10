@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -180,20 +179,8 @@ public class EditBatchPlannerPlanDisplayContext {
 		for (Map.Entry<String, String> entry :
 				internalClassNameKeyCategories.entrySet()) {
 
-			String internalClassNameKey = entry.getKey();
-
-			String[] internalClassNameKeyParts = StringUtil.split(
-				internalClassNameKey, StringPool.PERIOD);
-
 			internalClassNameKeySelectOptions.add(
-				new SelectOption(
-					String.format(
-						"%s (%s - %s)",
-						TaskItemUtil.getSimpleClassName(internalClassNameKey),
-						internalClassNameKeyParts
-							[internalClassNameKeyParts.length - 2],
-						entry.getValue()),
-					internalClassNameKey));
+				new SelectOption(entry.getValue(), entry.getKey()));
 		}
 
 		internalClassNameKeySelectOptions.sort(

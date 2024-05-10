@@ -7,10 +7,28 @@ import liferayRequest from '../../services/liferayRequest';
 import JenkinsCohort from './JenkinsCohort';
 import JenkinsServer from './JenkinsServer';
 
+export async function createJenkinsCohort({data, redirect}) {
+	const response = await liferayRequest({
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json',
+			'accept': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/c/jenkinscohorts',
+	});
+
+	const result = JSON.parse(await response.text());
+
+	if (result && redirect) {
+		redirect(result);
+	}
+}
+
 export async function deleteJenkinsCohortById({id, redirect}) {
 	const response = await liferayRequest({
 		method: 'DELETE',
-		urlPath: '/o/c/jenkins-cohort/' + id,
+		urlPath: '/o/c/jenkinscohorts/' + id,
 	});
 
 	await response.text();

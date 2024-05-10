@@ -5,14 +5,12 @@
 
 import {Text} from '@clayui/core';
 
+import Jethr0FieldLabel from '../Jethr0FieldLabel/Jethr0FieldLabel';
+
 function Jethr0JobFieldLabel({fromRoutine, labelKey, labelName, routine}) {
 	return (
 		<>
-			<label htmlFor={labelKey}>
-				<Text size={6} weight="normal">
-					{labelName}
-				</Text>
-			</label>
+			<Jethr0FieldLabel labelKey={labelKey} labelName={labelName} />
 
 			{fromRoutine && routine && (
 				<div>

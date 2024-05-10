@@ -6,6 +6,7 @@
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import BuildPage from './pages/BuildPage/BuildPage';
+import CreateJenkinsCohortPage from './pages/CreateJenkinsCohortPage/CreateJenkinsCohortPage';
 import CreateJobPage from './pages/CreateJobPage/CreateJobPage';
 import CreateRoutinePage from './pages/CreateRoutinePage/CreateRoutinePage';
 import JenkinsCohortPage from './pages/JenkinsCohortPage/JenkinsCohortPage';
@@ -27,6 +28,10 @@ function App() {
 			<HashRouter>
 				<Routes>
 					<Route element={<BuildPage />} path="/builds/:id" />
+					<Route
+						element={<CreateJenkinsCohortPage />}
+						path="/jenkins-cohorts/create"
+					/>
 					<Route element={<CreateJobPage />} path="/jobs/create" />
 					<Route
 						element={<CreateRoutinePage />}

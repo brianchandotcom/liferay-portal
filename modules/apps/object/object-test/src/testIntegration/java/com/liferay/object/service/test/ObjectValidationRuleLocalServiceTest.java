@@ -609,11 +609,12 @@ public class ObjectValidationRuleLocalServiceTest {
 				objectValidationRuleResults.toString(), 1,
 				objectValidationRuleResults.size());
 
+			ObjectValidationRuleResult objectValidationRuleResult =
+				objectValidationRuleResults.get(0);
+
 			Assert.assertEquals(
 				objectValidationRule.getErrorLabel(user.getLanguageId()),
-				objectValidationRuleResults.get(
-					0
-				).getErrorMessage());
+				objectValidationRuleResult.getErrorMessage());
 		}
 	}
 

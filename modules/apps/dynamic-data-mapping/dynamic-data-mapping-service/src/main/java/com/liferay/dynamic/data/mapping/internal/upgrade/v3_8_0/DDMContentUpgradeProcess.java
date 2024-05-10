@@ -44,7 +44,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select DDMContent.contentId, DDMContent.data_, ",
+					"select DDMContent.ctCollectionId, DDMContent.contentId, ",
+					"DDMContent.data_, ",
 					"DDMStructureVersion.structureVersionId, ",
 					"DDMStructureVersion.definition from DDMContent inner ",
 					"join DDMFormInstanceRecordVersion on ",
@@ -61,7 +62,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMContent set data_ = ? where contentId = ?")) {
+					"update DDMContent set data_ = ? where contentId = ? and " +
+						"ctCollectionId = ?")) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
@@ -90,6 +92,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.setString(1, newData);
 					preparedStatement2.setLong(
 						2, resultSet.getLong("contentId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("ctCollectionId"));
 
 					preparedStatement2.addBatch();
 				}

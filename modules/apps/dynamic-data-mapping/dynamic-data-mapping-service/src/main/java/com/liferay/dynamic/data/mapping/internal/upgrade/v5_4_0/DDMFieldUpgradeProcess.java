@@ -28,12 +28,13 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					SQLTransformer.transform(
-						"select fieldId, fieldName from DDMField where " +
-							"LENGTH(fieldName) > ?"));
+						"select ctCollectionId, fieldId, fieldName from " +
+							"DDMField where LENGTH(fieldName) > ?"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMField set fieldName = ? where fieldId = ?")) {
+					"update DDMField set fieldName = ? where ctCollectionId " +
+						"= ? and fieldId = ?")) {
 
 			selectPreparedStatement.setInt(1, _MAX_LENGTH_FIELD_NAME);
 
@@ -46,7 +47,10 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					1, StringUtil.shorten(fieldName, _MAX_LENGTH_FIELD_NAME));
 
 				updatePreparedStatement.setLong(
-					2, resultSet.getLong("fieldId"));
+					2, resultSet.getLong("ctCollectionId"));
+
+				updatePreparedStatement.setLong(
+					3, resultSet.getLong("fieldId"));
 
 				updatePreparedStatement.addBatch();
 

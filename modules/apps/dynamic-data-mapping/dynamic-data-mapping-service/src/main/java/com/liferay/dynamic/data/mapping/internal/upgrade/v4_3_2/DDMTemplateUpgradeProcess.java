@@ -27,12 +27,13 @@ public class DDMTemplateUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeDDMTemplate() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select templateId, script FROM DDMTemplate where " +
-					"classNameId = ?");
+				"select ctCollectionId, templateId, script FROM DDMTemplate " +
+					"where classNameId = ?");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMTemplate set script = ? where templateId = ?")) {
+					"update DDMTemplate set script = ? where ctCollectionId " +
+						"= ? and templateId = ?")) {
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DDMStructure.class));
@@ -45,7 +46,9 @@ public class DDMTemplateUpgradeProcess extends UpgradeProcess {
 							resultSet.getString("script"), "randomizer.",
 							"random."));
 					preparedStatement2.setLong(
-						2, resultSet.getLong("templateId"));
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("templateId"));
 
 					preparedStatement2.addBatch();
 				}
@@ -57,13 +60,13 @@ public class DDMTemplateUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeDDMTemplateVersion() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select templateVersionId, script FROM DDMTemplateVersion " +
-					"where classNameId = ?");
+				"select ctCollectionId, templateVersionId, script FROM " +
+					"DDMTemplateVersion where classNameId = ?");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMTemplateVersion set script = ? where " +
-						"templateVersionId = ?")) {
+						"ctCollectionId = ? and templateVersionId = ?")) {
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DDMStructure.class));
@@ -76,7 +79,9 @@ public class DDMTemplateUpgradeProcess extends UpgradeProcess {
 							resultSet.getString("script"), "randomizer.",
 							"random."));
 					preparedStatement2.setLong(
-						2, resultSet.getLong("templateVersionId"));
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("templateVersionId"));
 
 					preparedStatement2.addBatch();
 				}

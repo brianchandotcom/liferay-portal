@@ -55,7 +55,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					StringBundler.concat(
-						"select DDMContent.contentId, DDMContent.data_, ",
+						"select DDMContent.ctCollectionId, ",
+						"DDMContent.contentId, DDMContent.data_, ",
 						"DDMStructureVersion.definition from DDMContent inner ",
 						"join DDMFormInstanceRecordVersion on ",
 						"DDMContent.contentId = ",
@@ -71,7 +72,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMContent set data_ = ? where contentId = ?")) {
+					"update DDMContent set data_ = ? where contentId = ? and " +
+						"ctCollectionId = ?")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -87,6 +89,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 					updatePreparedStatement.setString(1, newData);
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong("contentId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("ctCollectionId"));
 
 					updatePreparedStatement.addBatch();
 				}

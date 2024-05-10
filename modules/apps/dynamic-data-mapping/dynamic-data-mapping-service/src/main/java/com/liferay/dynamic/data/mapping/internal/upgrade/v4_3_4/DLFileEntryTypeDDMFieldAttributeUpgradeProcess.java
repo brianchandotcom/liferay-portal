@@ -55,15 +55,16 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
-					"select fieldAttributeId, languageId, smallAttributeValue ",
-					"from DDMFieldAttribute where storageId = ? and fieldId = ",
-					"? and (attributeName is null or attributeName = '') "));
+					"select ctCollectionId, fieldAttributeId, languageId, ",
+					"smallAttributeValue from DDMFieldAttribute where ",
+					"storageId = ? and fieldId = ? and (attributeName is null ",
+					"or attributeName = '') "));
 
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update DDMFieldAttribute set smallAttributeValue = ? " +
-						"where fieldAttributeId = ? ");
+						"where ctCollectionId = ? and fieldAttributeId = ? ");
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DLFileEntryType.class));
@@ -79,7 +80,8 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 							preparedStatement2.executeQuery()) {
 
 						while (resultSet2.next()) {
-							String languageId = resultSet2.getString(2);
+							String languageId = resultSet2.getString(
+								"languageId");
 
 							Locale locale = LocaleUtil.fromLanguageId(
 								languageId);
@@ -89,7 +91,8 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 
 							numberFormat.setGroupingUsed(true);
 
-							String valueString = resultSet2.getString(3);
+							String valueString = resultSet2.getString(
+								"smallAttributeValue");
 
 							if (Validator.isNull(valueString)) {
 								preparedStatement3.setString(1, null);
@@ -104,7 +107,9 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 							}
 
 							preparedStatement3.setLong(
-								2, resultSet2.getLong(1));
+								2, resultSet2.getLong("ctCollectionId"));
+							preparedStatement3.setLong(
+								3, resultSet2.getLong("fieldAttributeId"));
 
 							preparedStatement3.addBatch();
 						}

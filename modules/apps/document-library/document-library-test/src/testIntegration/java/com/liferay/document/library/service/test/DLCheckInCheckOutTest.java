@@ -639,6 +639,9 @@ public class DLCheckInCheckOutTest {
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 		DLStoreUtil.updateFile(
 			DLStoreRequest.builder(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
@@ -647,10 +650,6 @@ public class DLCheckInCheckOutTest {
 				dlFileVersion.getVersion()
 			).build(),
 			new UnsyncByteArrayInputStream(_TEST_CONTENT.getBytes()));
-
-		DLStoreUtil.deleteFile(
-			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 	}
 
 	private static final String _FILE_NAME = "test1.txt";

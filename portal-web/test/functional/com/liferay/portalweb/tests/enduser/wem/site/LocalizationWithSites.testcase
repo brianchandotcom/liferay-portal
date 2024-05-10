@@ -489,7 +489,7 @@ definition {
 
 		task ("Sign in as Test Test") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "${portalURL}/fr/web/test-site-name-1",
 				userEmailAddress = "test@liferay.com");
 

@@ -77,7 +77,7 @@ definition {
 			portalURL = ${portalURL});
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Canonical URL Test Page");
@@ -204,7 +204,7 @@ definition {
 		Page.assertCanonicalURL(portalURL = ${portalURL});
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -247,7 +247,7 @@ definition {
 		Page.assertCanonicalURL(portalURL = ${portalURL});
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		SystemSettings.openSystemSettingsAdmin();

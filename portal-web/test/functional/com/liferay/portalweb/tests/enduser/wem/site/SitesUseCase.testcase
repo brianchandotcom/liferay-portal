@@ -438,7 +438,7 @@ definition {
 
 		task ("Log in as default user") {
 			User.loginUserPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -704,7 +704,7 @@ definition {
 
 		task ("Log in as default user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -817,7 +817,7 @@ definition {
 
 		task ("Log out and log in as the default user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -950,7 +950,7 @@ definition {
 
 		task ("Log in as default user") {
 			User.loginUserPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -1054,7 +1054,7 @@ definition {
 
 		task ("Log in as default user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 

@@ -45,7 +45,12 @@ const VideoThumbnail: React.FC<VideoThumbnailProps> = ({videoURL}) => {
 
 	return (
 		<Wrapper>
-			<img height={140} src={getThumbnail(videoURL)} width={140} />
+			<img
+				className="video-preview"
+				height={140}
+				src={getThumbnail(videoURL)}
+				width={140}
+			/>
 		</Wrapper>
 	);
 };

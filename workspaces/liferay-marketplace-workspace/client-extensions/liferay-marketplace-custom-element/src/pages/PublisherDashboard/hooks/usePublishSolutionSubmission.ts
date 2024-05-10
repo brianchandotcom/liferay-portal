@@ -13,47 +13,51 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../utils/file';
+import {getTemporaryProductIdForSpefication} from '../../../utils/util';
+
+const updateSpecification = async (
+	product: Product,
+	specificationKey: PRODUCT_SPECIFICATION_KEY,
+	value: string
+) => {
+	const {id, productId, productSpecifications = []} = product;
+
+	const _productId = getTemporaryProductIdForSpefication({
+		appId: id,
+		appProductId: productId,
+	});
+
+	const specification = productSpecifications.find(
+		(productSpecification) =>
+			productSpecification.specificationKey === specificationKey
+	);
+
+	if (specification && specification.value.en_US === value) {
+		// No need to update the specification if the value is equal.
+
+		return;
+	}
+
+	const fn = specification
+		? headlessCommerceAdminCatalogImpl.updateProductSpecification
+		: headlessCommerceAdminCatalogImpl.createProductSpecification;
+
+	const result = await fn(
+		(specification ? specification.id : _productId) as number,
+		{
+			specificationKey,
+			value: {en_US: value},
+		}
+	);
+
+	if (specification) {
+		specification.value.en_US = value;
+	} else {
+		productSpecifications.push(result);
+	}
+};
 
 const usePublishSolutionSubmission = (context: SolutionInitialState) => {
-	const updateSpecification = async (
-		product: Product,
-		specificationKey: PRODUCT_SPECIFICATION_KEY,
-		value: string
-	) => {
-		const {productId, productSpecifications = []} = product;
-
-		const specification = productSpecifications.find(
-			(productSpecification) =>
-				productSpecification.specificationKey === specificationKey
-		);
-
-		if (specification && specification.value.en_US === value) {
-
-			// No need to update the specification if the value is equal.
-
-			return;
-		}
-
-		const fn = specification
-			? headlessCommerceAdminCatalogImpl.updateProductSpecification
-			: headlessCommerceAdminCatalogImpl.createProductSpecification;
-
-		const result = await fn(
-			(specification ? specification.id : productId) as number,
-			{
-				specificationKey,
-				value: {en_US: value},
-			}
-		);
-
-		if (specification) {
-			specification.value.en_US = value;
-		}
-		else {
-			productSpecifications.push(result);
-		}
-	};
-
 	const syncProfile = async () => {
 		const {
 			_product,
@@ -223,6 +227,7 @@ const usePublishSolutionSubmission = (context: SolutionInitialState) => {
 
 	const syncContactUs = async (product: Product) => {
 		const {contactUs} = context;
+
 		await updateSpecification(
 			product,
 			PRODUCT_SPECIFICATION_KEY.SOLUTION_CONTACT_EMAIL,

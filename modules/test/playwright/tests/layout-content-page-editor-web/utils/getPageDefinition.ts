@@ -6,7 +6,7 @@
 import getRandomString from '../../../utils/getRandomString';
 
 export default function getPageDefinition(
-	pageElements: PageElement[]
+	pageElements: PageElement[] = []
 ): PageDefinition {
 	return {
 		pageElement: {

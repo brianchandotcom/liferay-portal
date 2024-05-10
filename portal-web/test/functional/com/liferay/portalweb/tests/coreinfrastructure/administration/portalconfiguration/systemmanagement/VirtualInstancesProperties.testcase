@@ -7,6 +7,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Virtual Instances";
 
+	var password = PropsUtil.get("default.admin.password");
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -162,7 +164,7 @@ definition {
 
 		task ("And given the virtual instance is not the default company") {
 			User.firstLoginPG(
-				password = "test",
+				password = ${password},
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
@@ -190,7 +192,7 @@ definition {
 			User.logoutPG(specificURL = "http://www.able.com:8080");
 
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 

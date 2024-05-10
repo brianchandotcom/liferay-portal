@@ -226,6 +226,32 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSiteDocumentByExternalReferenceCode() throws Exception {
+		super.testPutSiteDocumentByExternalReferenceCode();
+
+		DLFolder dlFolder = _dlFolderLocalService.addFolder(
+			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+			testGroup.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		Document randomDocument = randomDocument();
+
+		randomDocument.setDocumentFolderId(dlFolder.getFolderId());
+
+		Document putDocument =
+			documentResource.putSiteDocumentByExternalReferenceCode(
+				randomDocument.getSiteId(),
+				randomDocument.getExternalReferenceCode(), randomDocument,
+				getMultipartFiles());
+
+		Assert.assertEquals(
+			(Long)dlFolder.getFolderId(), putDocument.getDocumentFolderId());
+	}
+
+	@Override
 	protected void assertValid(
 			Document document, Map<String, File> multipartFiles)
 		throws Exception {

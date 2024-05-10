@@ -195,8 +195,8 @@ public class LayoutsTreeDisplayContext {
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/select_layout_page_template_entry.jsp"
+		).setMVCRenderCommandName(
+			"/layout_admin/select_layout_page_template_entry"
 		).setRedirect(
 			_getRedirect()
 		).setBackURL(

@@ -363,7 +363,17 @@ export class PageEditorPage {
 	}
 
 	async goToSidebarTab(tab: SidebarTab) {
-		await this.page.getByRole('tab', {exact: true, name: tab}).click();
+		const tabElement = this.page.getByRole('tab', {exact: true, name: tab});
+
+		const isOpen = await tabElement.evaluate(
+			(element) => element.getAttribute('aria-selected') === 'true'
+		);
+
+		if (!isOpen) {
+			await this.page.getByRole('tab', {exact: true, name: tab}).click();
+
+			await this.page.locator('header', {hasText: tab}).waitFor();
+		}
 	}
 
 	async isActive(fragmentId: string, isDesktop = true) {
@@ -483,6 +493,13 @@ export class PageEditorPage {
 
 	async switchViewport(viewport: Viewport) {
 		await this.page.getByLabel(viewport, {exact: true}).click();
+
+		if (viewport !== 'Desktop') {
+			await this.page
+				.frameLocator('.page-editor__global-context-iframe')
+				.locator('.page-editor')
+				.waitFor();
+		}
 	}
 
 	async waitForChangesSaved() {

@@ -20,7 +20,15 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
-let objectDefinition: ObjectDefinition;
+interface CreatedEntities {
+	listTypeDefinitionIds: number[];
+	objectDefinition: ObjectDefinition;
+}
+
+const createdEntities = {
+	listTypeDefinitionIds: [],
+	objectDefinition: {},
+} as CreatedEntities;
 
 test.beforeEach(async ({apiHelpers}) => {
 	const newObjectDefinition =
@@ -29,41 +37,25 @@ test.beforeEach(async ({apiHelpers}) => {
 			status: {code: 0},
 		});
 
-	objectDefinition = newObjectDefinition;
+	createdEntities.objectDefinition = newObjectDefinition;
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
-});
+	await apiHelpers.objectAdmin.deleteObjectDefinition(
+		createdEntities.objectDefinition.id
+	);
 
-export const createdEntities = {
-	listTypeDefinitionIds: [],
-	objectDefinitionIds: [],
-};
-
-test.afterEach(async ({apiHelpers}) => {
 	if (createdEntities.listTypeDefinitionIds.length) {
 		await Promise.all(
-			createdEntities.listTypeDefinitionIds.map((listTypeDefinitionId) =>
-				apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-					listTypeDefinitionId
-				)
+			createdEntities.listTypeDefinitionIds.map(
+				async (listTypeDefinitionId) =>
+					await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+						listTypeDefinitionId
+					)
 			)
 		);
 
 		createdEntities.listTypeDefinitionIds = [];
-	}
-
-	if (createdEntities.objectDefinitionIds.length) {
-		await Promise.all(
-			createdEntities.objectDefinitionIds.map((objectDefinitionId) =>
-				apiHelpers.objectAdmin.deleteObjectDefinition(
-					objectDefinitionId
-				)
-			)
-		);
-
-		createdEntities.objectDefinitionIds = [];
 	}
 });
 
@@ -74,10 +66,14 @@ test.describe('Manage object fields through Model Builder', () => {
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
+		const {listTypeDefinitionIds, objectDefinition} = createdEntities;
+
 		await page.goto('/');
 
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		listTypeDefinitionIds.push(listTypeDefinition.id);
 
 		await viewObjectDefinitionsPage.goto();
 
@@ -100,18 +96,14 @@ test.describe('Manage object fields through Model Builder', () => {
 				.filter({hasText: objectDefinition.label['en_US']})
 				.getByText(objectFieldLabel)
 		).toBeVisible();
-
-		// Clean up
-
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-			listTypeDefinition.id
-		);
 	});
 
 	test('all picklist definitions are listed during object field creation', async ({
 		apiHelpers,
 		modelBuilderPage,
 	}) => {
+		const {listTypeDefinitionIds, objectDefinition} = createdEntities;
+
 		const listTypeDefinitions = await Promise.all(
 			Array(22)
 				.fill(null)
@@ -120,24 +112,11 @@ test.describe('Manage object fields through Model Builder', () => {
 				)
 		);
 
-		createdEntities.listTypeDefinitionIds = listTypeDefinitions.map(
-			({id}) => id
-		);
-
-		const objectDefinition = [
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'default',
-				status: {code: 0},
-			}),
-		];
-
-		objectDefinition.map((objectDefinition) =>
-			createdEntities.objectDefinitionIds.push(objectDefinition.id)
-		);
+		listTypeDefinitions.forEach(({id}) => listTypeDefinitionIds.push(id));
 
 		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
-		await modelBuilderPage.openNewFieldModal(objectDefinition[0].name);
+		await modelBuilderPage.openNewFieldModal(objectDefinition.name);
 
 		await modelBuilderPage.fillNewObjectFieldLabel(
 			'objectFieldLabel' + getRandomInt()
@@ -164,6 +143,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		modelBuilderPage,
 		page,
 	}) => {
+		const {objectDefinition} = createdEntities;
+
 		const integerFieldName = 'integerField' + getRandomInt();
 
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
@@ -238,6 +219,8 @@ test.describe('Manage object fields through Model Builder', () => {
 	});
 
 	test('can delete object field', async ({apiHelpers, modelBuilderPage}) => {
+		const {objectDefinition} = createdEntities;
+
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
 			objectDefinition.externalReferenceCode,
 			{
@@ -289,6 +272,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		objectFieldsPage,
 		page,
 	}) => {
+		const {objectDefinition} = createdEntities;
 		const integerFieldName = 'integerField' + getRandomInt();
 
 		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(

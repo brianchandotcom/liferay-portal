@@ -144,6 +144,21 @@ interface ObjectDefinitionNodeData
 	showAllObjectFields: boolean;
 }
 
+interface ObjectEntry {
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	keywords: [];
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+	textField: string;
+	[key: string]: any;
+}
+
 interface ObjectField {
 	DBType: string;
 	businessType: ObjectFieldBusinessTypeName;

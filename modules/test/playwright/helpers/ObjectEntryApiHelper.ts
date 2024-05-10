@@ -61,7 +61,10 @@ export class ObjectEntryApiHelper {
 		);
 	}
 
-	async postObjectEntry(data: DataObject, applicationName: string) {
+	async postObjectEntry(
+		data: DataObject,
+		applicationName: string
+	): Promise<ObjectEntry> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${applicationName}/`,
 			{data}

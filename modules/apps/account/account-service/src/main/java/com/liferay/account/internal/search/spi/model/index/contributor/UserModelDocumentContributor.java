@@ -8,8 +8,6 @@ package com.liferay.account.internal.search.spi.model.index.contributor;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -18,7 +16,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,16 +53,10 @@ public class UserModelDocumentContributor
 	protected long[] getAccountEntryIds(User user) throws Exception {
 		Set<Long> accountEntryIds = new HashSet<>();
 
-		DynamicQuery dynamicQuery =
-			accountEntryUserRelLocalService.dynamicQuery();
+		for (AccountEntryUserRel accountEntryUserRel :
+				accountEntryUserRelLocalService.
+					getAccountEntryUserRelsByAccountUserId(user.getUserId())) {
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("accountUserId", user.getUserId()));
-
-		List<AccountEntryUserRel> accountEntryUserRels =
-			accountEntryUserRelLocalService.dynamicQuery(dynamicQuery);
-
-		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
 			accountEntryIds.add(accountEntryUserRel.getAccountEntryId());
 		}
 

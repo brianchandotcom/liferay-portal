@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -98,7 +97,7 @@ public abstract class BasePortalInstanceResourceTestCase {
 			PortalInstanceResource.builder();
 
 		portalInstanceResource = builder.authentication(
-			"test@liferay.com", PropsUtil.get("default.admin.password")
+			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

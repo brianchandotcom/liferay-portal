@@ -1,0 +1,31 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.testray.rest.service;
+
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.testray.rest.dto.v1_0.TestrayCache;
+import org.w3c.dom.Document;
+
+/**
+ * @author José Abelenda
+ */
+public interface TestrayService {
+
+	public void loadTestrayCache(
+			long companyId, TestrayCache testrayCache, long userId)
+		throws Exception;
+
+	public void processArchive(
+			long companyId, byte[] bytes, ServiceContext serviceContext,
+			long userId)
+		throws Exception;
+
+	public void processDocument(
+			long companyId, Document document, ServiceContext serviceContext,
+			TestrayCache testrayCache, long testrayRunNumber, long userId)
+			throws Exception;
+
+}

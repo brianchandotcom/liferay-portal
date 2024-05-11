@@ -334,7 +334,9 @@ public class LockedLayoutsDisplayContextTest {
 	}
 
 	private Layout _getDraftLayout(String type) throws Exception {
-		if (Objects.equals(LayoutConstants.TYPE_ASSET_DISPLAY, type)) {
+		if (Objects.equals(LayoutConstants.TYPE_ASSET_DISPLAY, type) ||
+			Objects.equals(LayoutConstants.TYPE_UTILITY, type)) {
+
 			_serviceContext.setAttribute(
 				"layout.instanceable.allowed", Boolean.TRUE);
 		}

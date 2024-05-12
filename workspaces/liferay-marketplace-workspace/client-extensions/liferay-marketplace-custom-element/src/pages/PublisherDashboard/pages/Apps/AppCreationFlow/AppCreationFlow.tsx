@@ -81,6 +81,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 				accountName={account?.name as string}
 				appImage={appLogo?.preview}
 				appName={appName}
+				exitHref="../"
 			/>
 
 			<div className="app-creation-flow-body">
@@ -257,8 +258,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -331,8 +331,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 								});
 
 								setCurrentFlow('licensingPrice');
-							}
-							else {
+							} else {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

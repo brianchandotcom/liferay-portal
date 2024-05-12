@@ -33,7 +33,7 @@ export function SectionWithControllers({
 	position,
 	...props
 }: SectionWithControllersProps) {
-	const [collapsed, setCollapsed] = useState(false);
+	const [collapsed, setCollapsed] = useState(true);
 
 	return (
 		<div className="marketplace-form-section mt-4 p-0" {...props}>

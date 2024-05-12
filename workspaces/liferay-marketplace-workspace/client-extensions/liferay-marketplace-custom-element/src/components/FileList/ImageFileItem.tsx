@@ -15,6 +15,7 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
+import i18n from '../../i18n';
 import CircularProgress from '../CircularProgress';
 
 type ImageFileItemProps = {
@@ -49,6 +50,7 @@ export function ImageFileItem({
 		<div className="image-file-item-container">
 			<div className="image-file-item-arrow-container">
 				<ClayButton
+					aria-label={i18n.translate('move-up')}
 					disabled={isProcessing || index === 0}
 					displayType="unstyled"
 					onClick={() => onArrowClick(index, 'up')}
@@ -61,6 +63,7 @@ export function ImageFileItem({
 				</ClayButton>
 
 				<ClayButton
+					aria-label={i18n.translate('move-down')}
 					disabled={isProcessing || index === position - 1}
 					displayType="unstyled"
 					onClick={() => onArrowClick(index, 'down')}
@@ -117,13 +120,14 @@ export function ImageFileItem({
 
 					{!isProcessing && (
 						<ClayButton
+							aria-label={i18n.translate('remove')}
 							displayType="secondary"
 							onClick={() =>
 								onDelete(uploadedFile.id, versionName)
 							}
 							size="sm"
 						>
-							Remove
+							{i18n.translate('remove')}
 						</ClayButton>
 					)}
 				</div>

@@ -64,6 +64,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 				long ddmStructureId = resultSet.getLong(4);
 
 				preparedStatement2.setLong(1, ddmStructureId);
+
 				preparedStatement2.setLong(2, ctCollectionId);
 				preparedStatement2.setLong(3, entryId);
 

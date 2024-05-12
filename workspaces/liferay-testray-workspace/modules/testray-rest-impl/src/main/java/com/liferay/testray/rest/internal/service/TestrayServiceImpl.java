@@ -186,6 +186,101 @@ public class TestrayServiceImpl implements TestrayService {
 			values, serviceContext);
 	}
 
+	private void _addOrUpdateTestrayCaseResult(
+			ServiceContext serviceContext, Node testcaseNode,
+			String testrayBuildDate, long testrayBuildId,
+			TestrayCache testrayCache, long testrayCaseId,
+			Map<String, Serializable> testrayCasePropertiesMap,
+			long testrayComponentId, long testrayRunId, long userId)
+		throws Exception {
+
+		String objectEntryIdsKey = StringBundler.concat(
+			"RunId#", testrayRunId, "#CaseId#", testrayCaseId);
+
+		long testrayCaseResultId = _getObjectEntryId(
+			serviceContext.getCompanyId(),
+			StringBundler.concat(
+				"r_runToCaseResult_c_runId eq '", testrayRunId,
+				"' and r_caseToCaseResult_c_caseId eq '", testrayCaseId, "'"),
+			objectEntryIdsKey, "CaseResult", testrayCache, userId);
+
+		Map<String, Serializable> properties =
+			HashMapBuilder.<String, Serializable>put(
+				"attachments", _addTestrayAttachments(testcaseNode)
+			).put(
+				"closedDate", Timestamp.valueOf(testrayBuildDate)
+			).put(
+				"dueStatus",
+				() -> {
+					String testrayTestcaseStatus =
+						(String)testrayCasePropertiesMap.get(
+							"testray.testcase.status");
+
+					if (testrayTestcaseStatus.equals("blocked")) {
+						return "BLOCKED";
+					}
+					else if (testrayTestcaseStatus.equals("dnr")) {
+						return "DIDNOTRUN";
+					}
+					else if (testrayTestcaseStatus.equals("failed")) {
+						return "FAILED";
+					}
+					else if (testrayTestcaseStatus.equals("in-progress")) {
+						return "INPROGRESS";
+					}
+					else if (testrayTestcaseStatus.equals("passed")) {
+						return "PASSED";
+					}
+					else if (testrayTestcaseStatus.equals("test-fix")) {
+						return "TESTFIX";
+					}
+
+					return "UNTESTED";
+				}
+			).put(
+				"r_buildToCaseResult_c_buildId", testrayBuildId
+			).put(
+				"r_caseToCaseResult_c_caseId", testrayCaseId
+			).put(
+				"r_componentToCaseResult_c_componentId", testrayComponentId
+			).put(
+				"r_runToCaseResult_c_runId", testrayRunId
+			).put(
+				"startDate", Timestamp.valueOf(testrayBuildDate)
+			).put(
+				"warnings",
+				GetterUtil.getInteger(
+					testrayCasePropertiesMap.get("testray.testcase.warnings"))
+			).build();
+
+		Element element = (Element)testcaseNode;
+
+		NodeList nodeList = element.getElementsByTagName("failure");
+
+		Node failureNode = nodeList.item(0);
+
+		if (failureNode != null) {
+			String message = _getAttributeValue("message", failureNode);
+
+			if (!message.isEmpty()) {
+				properties.put("errors", message);
+			}
+		}
+
+		if (testrayCaseResultId == 0) {
+			ObjectEntry objectEntry = _addObjectEntry(
+				"CaseResult", serviceContext, testrayCache, userId, properties);
+
+			testrayCache.addObjectEntryId(
+				objectEntryIdsKey, objectEntry.getObjectEntryId());
+
+			return;
+		}
+
+		_updateObjectEntry(
+			testrayCaseResultId, serviceContext, userId, properties);
+	}
+
 	private JSONArray _addTestrayAttachments(Node testcaseNode)
 		throws Exception {
 
@@ -311,85 +406,10 @@ public class TestrayServiceImpl implements TestrayService {
 				).build());
 		}
 
-		_addTestrayCaseResult(
+		_addOrUpdateTestrayCaseResult(
 			serviceContext, testcaseNode, testrayBuildDate, testrayBuildId,
 			testrayCache, testrayCaseId, testrayCasePropertiesMap,
 			testrayComponentId, testrayRunId, userId);
-	}
-
-	private void _addTestrayCaseResult(
-			ServiceContext serviceContext, Node testcaseNode,
-			String testrayBuildDate, long testrayBuildId,
-			TestrayCache testrayCache, long testrayCaseId,
-			Map<String, Serializable> testrayCasePropertiesMap,
-			long testrayComponentId, long testrayRunId, long userId)
-		throws Exception {
-
-		Map<String, Serializable> properties =
-			HashMapBuilder.<String, Serializable>put(
-				"attachments", _addTestrayAttachments(testcaseNode)
-			).put(
-				"closedDate", Timestamp.valueOf(testrayBuildDate)
-			).put(
-				"dueStatus",
-				() -> {
-					String testrayTestcaseStatus =
-						(String)testrayCasePropertiesMap.get(
-							"testray.testcase.status");
-
-					if (testrayTestcaseStatus.equals("blocked")) {
-						return "BLOCKED";
-					}
-					else if (testrayTestcaseStatus.equals("dnr")) {
-						return "DIDNOTRUN";
-					}
-					else if (testrayTestcaseStatus.equals("failed")) {
-						return "FAILED";
-					}
-					else if (testrayTestcaseStatus.equals("in-progress")) {
-						return "INPROGRESS";
-					}
-					else if (testrayTestcaseStatus.equals("passed")) {
-						return "PASSED";
-					}
-					else if (testrayTestcaseStatus.equals("test-fix")) {
-						return "TESTFIX";
-					}
-
-					return "UNTESTED";
-				}
-			).put(
-				"r_buildToCaseResult_c_buildId", testrayBuildId
-			).put(
-				"r_caseToCaseResult_c_caseId", testrayCaseId
-			).put(
-				"r_componentToCaseResult_c_componentId", testrayComponentId
-			).put(
-				"r_runToCaseResult_c_runId", testrayRunId
-			).put(
-				"startDate", Timestamp.valueOf(testrayBuildDate)
-			).put(
-				"warnings",
-				GetterUtil.getInteger(
-					testrayCasePropertiesMap.get("testray.testcase.warnings"))
-			).build();
-
-		Element element = (Element)testcaseNode;
-
-		NodeList nodeList = element.getElementsByTagName("failure");
-
-		Node failureNode = nodeList.item(0);
-
-		if (failureNode != null) {
-			String message = _getAttributeValue("message", failureNode);
-
-			if (!message.isEmpty()) {
-				properties.put("errors", message);
-			}
-		}
-
-		_addObjectEntry(
-			"CaseResult", serviceContext, testrayCache, userId, properties);
 	}
 
 	private void _addTestrayCases(
@@ -1139,6 +1159,15 @@ public class TestrayServiceImpl implements TestrayService {
 						values.get("r_projectToTeams_c_projectIds"))),
 				GetterUtil.getLong(values.get("c_teamId")));
 		}
+	}
+
+	private ObjectEntry _updateObjectEntry(
+			long objectEntryId, ServiceContext serviceContext, long userId,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		return _objectEntryLocalService.updateObjectEntry(
+			userId, objectEntryId, values, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

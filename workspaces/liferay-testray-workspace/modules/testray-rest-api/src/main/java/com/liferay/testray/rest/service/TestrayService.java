@@ -7,6 +7,7 @@ package com.liferay.testray.rest.service;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
+
 import org.w3c.dom.Document;
 
 /**
@@ -25,7 +26,7 @@ public interface TestrayService {
 
 	public void processDocument(
 			long companyId, Document document, ServiceContext serviceContext,
-			TestrayCache testrayCache, long testrayRunNumber, long userId)
-			throws Exception;
+			TestrayCache testrayCache, long userId)
+		throws Exception;
 
 }

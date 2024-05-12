@@ -86,10 +86,10 @@ import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemPer
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemScopeProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemStatusProvider;
 import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItemRenderer;
-import com.liferay.object.web.internal.info.staging.ObjectEntryInfoStagingClassMapper;
 import com.liferay.object.web.internal.info.item.updater.ObjectEntryInfoItemFieldValuesUpdater;
 import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer;
 import com.liferay.object.web.internal.info.permission.provider.ObjectEntryInfoPermissionProvider;
+import com.liferay.object.web.internal.info.staging.ObjectEntryInfoStagingClassMapper;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
 import com.liferay.object.web.internal.layout.display.page.ObjectEntryLayoutDisplayPageProvider;
 import com.liferay.object.web.internal.notifications.ObjectUserNotificationsDefinition;

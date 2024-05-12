@@ -562,6 +562,7 @@
 		"assetTagNames": {
 			"fields": {
 				"raw": {
+					"store": true,
 					"type": "keyword"
 				}
 			},

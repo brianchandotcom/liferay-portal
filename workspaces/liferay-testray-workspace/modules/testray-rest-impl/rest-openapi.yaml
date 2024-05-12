@@ -154,16 +154,11 @@ components:
             type: object
         TestrayTestSuite:
             properties:
-                caseAmount:
-                    format: int32
-                    type: integer
+                fileName:
+                    type: string
                 runtime:
                     format: int64
                     type: integer
-                tarFileName:
-                    type: string
-                xmlFileName:
-                    type: string
 info:
     license:
         name: "Apache 2.0"

@@ -48,16 +48,16 @@ public class JavaBaseUpgradeCallableCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		Matcher runnablematcher = _runnablePattern.matcher(fileContent);
+		Matcher runnableMatcher = _runnablePattern.matcher(fileContent);
 
-		if (runnablematcher.find()) {
+		if (runnableMatcher.find()) {
 			addMessage(
 				fileName,
 				StringBundler.concat(
 					"Do not use 'java.lang.Runnable' in '",
 					packageNameMatcher.group(2),
 					"' classes, use 'BaseUpgradeCallable' instead."),
-				getLineNumber(fileContent, runnablematcher.start()));
+				getLineNumber(fileContent, runnableMatcher.start()));
 		}
 
 		List<String> importNames = javaClass.getImportNames();

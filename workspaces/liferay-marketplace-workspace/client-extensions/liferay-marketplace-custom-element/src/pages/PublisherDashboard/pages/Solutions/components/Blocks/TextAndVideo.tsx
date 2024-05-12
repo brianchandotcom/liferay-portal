@@ -12,11 +12,11 @@ import i18n from '../../../../../../i18n';
 import {BlockTypeProps} from './BlockPropsType';
 
 const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
-	block,
+	block: {
+		content: {description = '', title = '', videoUrl = ''},
+	},
 	onChange,
 }) => {
-	const {content} = block;
-
 	return (
 		<>
 			<div className="p-4">
@@ -34,7 +34,7 @@ const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
 					onChange={(event) => onChange({title: event.target.value})}
 					placeholder="Enter title header"
 					type="text"
-					value={content.title}
+					value={title}
 				/>
 
 				<Form.Label
@@ -50,7 +50,7 @@ const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
 					<ReactQuill
 						onChange={(text) => onChange({description: text})}
 						placeholder="Insert text here"
-						value={content.description}
+						value={description}
 					/>
 				</div>
 			</div>
@@ -67,7 +67,7 @@ const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
 					}
 					placeholder="http://"
 					type="text"
-					value={content.videoUrl}
+					value={videoUrl}
 				/>
 
 				<Form.HelpMessage>
@@ -75,7 +75,7 @@ const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
 				</Form.HelpMessage>
 
 				<div className="border d-flex flex-row mt-5 p-4 rounded">
-					<VideoThumbnail videoURL={content.videoUrl} />
+					<VideoThumbnail videoURL={videoUrl} />
 
 					<Form.Input
 						className="ml-3"

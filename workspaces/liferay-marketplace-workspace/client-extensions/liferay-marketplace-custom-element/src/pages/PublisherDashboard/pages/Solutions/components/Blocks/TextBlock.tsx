@@ -11,7 +11,9 @@ import i18n from '../../../../../../i18n';
 import {BlockTypeProps} from './BlockPropsType';
 
 const TextBlock: React.FC<BlockTypeProps<TextBlockType>> = ({
-	block,
+	block: {
+		content: {description = '', title = ''},
+	},
 	onChange,
 }) => (
 	<div className="p-4">
@@ -24,7 +26,7 @@ const TextBlock: React.FC<BlockTypeProps<TextBlockType>> = ({
 			onChange={(event) => onChange({title: event.target.value})}
 			placeholder="Enter title header"
 			type="text"
-			value={block.content.title}
+			value={title}
 		/>
 
 		<Form.Label className="mt-5" htmlFor="description" required>
@@ -33,9 +35,9 @@ const TextBlock: React.FC<BlockTypeProps<TextBlockType>> = ({
 
 		<div className="rich-text-editor">
 			<ReactQuill
-				onChange={(text) => onChange({description: text})}
+				onChange={(description) => onChange({description})}
 				placeholder="Insert text here"
-				value={block.content.description}
+				value={description}
 			/>
 		</div>
 	</div>

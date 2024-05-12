@@ -35,6 +35,7 @@ const updateSpecification = async (
 	);
 
 	if (specification && specification.value.en_US === value) {
+
 		// No need to update the specification if the value is equal.
 
 		return;
@@ -310,9 +311,11 @@ const usePublishSolutionSubmission = (
 			]) {
 				await sync(product);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
-		} finally {
+		}
+		finally {
 			dispatch({payload: false, type: SolutionTypes.SET_LOADING});
 		}
 	};

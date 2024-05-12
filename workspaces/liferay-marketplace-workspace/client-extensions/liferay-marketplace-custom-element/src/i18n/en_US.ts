@@ -258,6 +258,7 @@ export default {
 	'ram-in-gbs': 'RAM in GBs',
 	'recent-published-apps': 'Recent Published Apps',
 	'recent-trials': 'Recent Trials',
+	'remove': 'Remove',
 	'remove-a-version': 'Remove a Version',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',

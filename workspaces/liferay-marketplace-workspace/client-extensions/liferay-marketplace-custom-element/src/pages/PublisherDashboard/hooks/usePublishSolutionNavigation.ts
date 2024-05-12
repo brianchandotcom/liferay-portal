@@ -45,6 +45,7 @@ const usePublishSolutionNavigation = () => {
 	return {
 		activeIndex,
 		activeRoute,
+		id,
 		onClickContinue,
 		onClickPrevious,
 		onExit,

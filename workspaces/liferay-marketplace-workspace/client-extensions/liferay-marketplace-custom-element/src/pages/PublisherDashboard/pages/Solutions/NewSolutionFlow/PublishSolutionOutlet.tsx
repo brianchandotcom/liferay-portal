@@ -17,7 +17,6 @@ import {useMemo} from 'react';
 import AppToolbar from '../../../../../components/AppToolBar/AppToolBar';
 import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
-import {isCloudEnvironment} from '../../../../../utils/util';
 import usePublishSolutionHeader from '../../../hooks/usePublishSolutionHeader';
 import usePublishSolutionNavigation from '../../../hooks/usePublishSolutionNavigation';
 import usePublishSolutionSubmission from '../../../hooks/usePublishSolutionSubmission';
@@ -27,18 +26,19 @@ const PublishSolutionOutlet = () => {
 	usePublishSolutionHeader();
 
 	const {data: account} = useAccount();
-	const [context] = useSolutionContext();
+	const [context, dispatch] = useSolutionContext();
 
 	const {
 		activeIndex,
 		activeRoute,
+		id,
 		onClickContinue,
 		onClickPrevious,
 		onExit,
 		publishSolutionSteps,
 	} = usePublishSolutionNavigation();
 
-	const {onSaveAsDraft} = usePublishSolutionSubmission(context);
+	const {onSaveAsDraft} = usePublishSolutionSubmission(context, dispatch);
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -67,20 +67,14 @@ const PublishSolutionOutlet = () => {
 					to: undefined as any,
 				}}
 				previewProps={{
-					disabled: true,
+					disabled: false,
 					onClick: () => alert('Preview...'),
 				}}
 				saveAsDraftProps={{
-					disabled: activeIndex < 1,
+					disabled: activeIndex < (id ? 1 : 2),
 					onClick: onSaveAsDraft,
 				}}
 			/>
-
-			{!isCloudEnvironment() && (
-				<details>
-					<pre>{JSON.stringify(context._product, null, 2)}</pre>
-				</details>
-			)}
 
 			<hr />
 
@@ -93,14 +87,6 @@ const PublishSolutionOutlet = () => {
 				<div className="ml-8 solutions-body-container">
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
 					{activeRoute.description}
-
-					{!isCloudEnvironment() && (
-						<details>
-							<pre>
-								{JSON.stringify(context.profile, null, 2)}
-							</pre>
-						</details>
-					)}
 
 					<div className="mt-6 solutions-form">
 						<Outlet />

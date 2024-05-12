@@ -14,6 +14,7 @@ import Modal from '../../../../components/Modal';
 import OrderStatus from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
 import TableKebabButton from '../../../../components/Table/TableButtons/TableKebabButton';
+import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -72,8 +73,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 			modal.onClose();
 
 			setSelectedApp({} as Product);
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
@@ -90,6 +90,9 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 					<TableKebabButton
 						items={[
 							{
+								disabled:
+									row.workflowStatusInfo.code ===
+									PRODUCT_WORKFLOW_STATUS_CODE.PENDING,
 								label: i18n.translate('edit'),
 								onClick: () =>
 									navigate(
@@ -97,6 +100,9 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 									),
 							},
 							{
+								disabled:
+									row.workflowStatusInfo.code ===
+									PRODUCT_WORKFLOW_STATUS_CODE.PENDING,
 								label: i18n.translate('delete'),
 								onClick: () => {
 									setSelectedApp(row);

@@ -23,6 +23,9 @@
 						"pageElements": [
 							{
 								"definition": {
+									"cssClasses": [
+										"marketplace-header"
+									],
 									"customCSS": ".[$FRAGMENT_CLASS$] .nav-mobile-class {\ndisplay: flex !important;\n}",
 									"fragmentStyle": {
 										"borderWidth": "0",

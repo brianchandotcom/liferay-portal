@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"cssClasses": [
+						"publisher-dashboard-container"
+					],
 					"fragmentStyle": {
 						"borderWidth": "0",
 						"marginBottom": "6",

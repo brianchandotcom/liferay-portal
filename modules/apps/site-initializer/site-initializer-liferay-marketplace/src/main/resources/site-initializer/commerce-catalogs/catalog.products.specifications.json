@@ -225,6 +225,14 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-DETAILS-BLOCKS",
+		"description": "Solution details blocks",
+		"facetable": true,
+		"key": "solution-details-blocks",
+		"title": "Solution Details Blocks"
+	},
+	{
+		"categoryKey": "solution-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-SOLUTION-HEADER-DESCRIPTION",
 		"description": "Solution header description",
 		"facetable": true,

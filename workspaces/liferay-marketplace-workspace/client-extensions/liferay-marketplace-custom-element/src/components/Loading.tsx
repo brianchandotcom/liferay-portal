@@ -4,11 +4,15 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ComponentProps} from 'react';
+import {ComponentProps, ReactNode} from 'react';
 
 type LoadingProps = ComponentProps<typeof ClayLoadingIndicator>;
 
-const Loading: React.FC<LoadingProps> = ({
+type FullScreenProps = {
+	children: ReactNode;
+};
+
+const Loading: React.FC<LoadingProps> & {FullScreen: typeof FullScreen} = ({
 	displayType = 'primary',
 	shape = 'squares',
 	size = 'lg',
@@ -21,5 +25,18 @@ const Loading: React.FC<LoadingProps> = ({
 		{...props}
 	/>
 );
+
+const FullScreen: React.FC<FullScreenProps> = ({children}) => (
+	<div className="loading-overlay">
+		<div className="loading-container">
+			<div className="loading-text">
+				<Loading className="mb-6" />
+				<span className="mt-4">{children}</span>
+			</div>
+		</div>
+	</div>
+);
+
+Loading.FullScreen = FullScreen;
 
 export default Loading;

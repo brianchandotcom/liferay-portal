@@ -88,3 +88,25 @@ html.dev body {
 .marketplace-publisher-header {
 	margin-top: 1rem !important;
 }
+
+.loading-container {
+	text-align: center;
+}
+
+.loading-overlay {
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.9);
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	left: 0;
+	overflow-y: hidden;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+.loading-text {
+	width: 300px;
+}

@@ -44,29 +44,29 @@ public class TestrayTestSuite implements Serializable {
 	}
 
 	@Schema
-	public Integer getCaseAmount() {
-		if (_caseAmountSupplier != null) {
-			caseAmount = _caseAmountSupplier.get();
+	public String getFileName() {
+		if (_fileNameSupplier != null) {
+			fileName = _fileNameSupplier.get();
 
-			_caseAmountSupplier = null;
+			_fileNameSupplier = null;
 		}
 
-		return caseAmount;
+		return fileName;
 	}
 
-	public void setCaseAmount(Integer caseAmount) {
-		this.caseAmount = caseAmount;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 
-		_caseAmountSupplier = null;
+		_fileNameSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setCaseAmount(
-		UnsafeSupplier<Integer, Exception> caseAmountUnsafeSupplier) {
+	public void setFileName(
+		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
 
-		_caseAmountSupplier = () -> {
+		_fileNameSupplier = () -> {
 			try {
-				return caseAmountUnsafeSupplier.get();
+				return fileNameUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -79,10 +79,10 @@ public class TestrayTestSuite implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer caseAmount;
+	protected String fileName;
 
 	@JsonIgnore
-	private Supplier<Integer> _caseAmountSupplier;
+	private Supplier<String> _fileNameSupplier;
 
 	@Schema
 	public Long getRuntime() {
@@ -125,88 +125,6 @@ public class TestrayTestSuite implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _runtimeSupplier;
 
-	@Schema
-	public String getTarFileName() {
-		if (_tarFileNameSupplier != null) {
-			tarFileName = _tarFileNameSupplier.get();
-
-			_tarFileNameSupplier = null;
-		}
-
-		return tarFileName;
-	}
-
-	public void setTarFileName(String tarFileName) {
-		this.tarFileName = tarFileName;
-
-		_tarFileNameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTarFileName(
-		UnsafeSupplier<String, Exception> tarFileNameUnsafeSupplier) {
-
-		_tarFileNameSupplier = () -> {
-			try {
-				return tarFileNameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String tarFileName;
-
-	@JsonIgnore
-	private Supplier<String> _tarFileNameSupplier;
-
-	@Schema
-	public String getXmlFileName() {
-		if (_xmlFileNameSupplier != null) {
-			xmlFileName = _xmlFileNameSupplier.get();
-
-			_xmlFileNameSupplier = null;
-		}
-
-		return xmlFileName;
-	}
-
-	public void setXmlFileName(String xmlFileName) {
-		this.xmlFileName = xmlFileName;
-
-		_xmlFileNameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setXmlFileName(
-		UnsafeSupplier<String, Exception> xmlFileNameUnsafeSupplier) {
-
-		_xmlFileNameSupplier = () -> {
-			try {
-				return xmlFileNameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String xmlFileName;
-
-	@JsonIgnore
-	private Supplier<String> _xmlFileNameSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -234,16 +152,20 @@ public class TestrayTestSuite implements Serializable {
 
 		sb.append("{");
 
-		Integer caseAmount = getCaseAmount();
+		String fileName = getFileName();
 
-		if (caseAmount != null) {
+		if (fileName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"caseAmount\": ");
+			sb.append("\"fileName\": ");
 
-			sb.append(caseAmount);
+			sb.append("\"");
+
+			sb.append(_escape(fileName));
+
+			sb.append("\"");
 		}
 
 		Long runtime = getRuntime();
@@ -256,38 +178,6 @@ public class TestrayTestSuite implements Serializable {
 			sb.append("\"runtime\": ");
 
 			sb.append(runtime);
-		}
-
-		String tarFileName = getTarFileName();
-
-		if (tarFileName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"tarFileName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(tarFileName));
-
-			sb.append("\"");
-		}
-
-		String xmlFileName = getXmlFileName();
-
-		if (xmlFileName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"xmlFileName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(xmlFileName));
-
-			sb.append("\"");
 		}
 
 		sb.append("}");

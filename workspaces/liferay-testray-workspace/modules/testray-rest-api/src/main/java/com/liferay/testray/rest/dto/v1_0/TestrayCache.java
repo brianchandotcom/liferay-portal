@@ -24,6 +24,10 @@ public class TestrayCache {
 		_objectEntryIds.put(key, value);
 	}
 
+	public long getNextTestrayRunNumber() {
+		return _testrayRunNumber++;
+	}
+
 	public ObjectDefinition getObjectDefinition(String shortName) {
 		return _objectDefinitionsMap.get(shortName);
 	}
@@ -35,5 +39,6 @@ public class TestrayCache {
 	private final Map<String, ObjectDefinition> _objectDefinitionsMap =
 		new HashMap<>();
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
+	private long _testrayRunNumber = 1;
 
 }

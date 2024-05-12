@@ -35,7 +35,26 @@ public class NotificationQueueEntryResourceTest
 		NotificationQueueEntry notificationQueueEntry1 =
 			new NotificationQueueEntry();
 
-		notificationQueueEntry1.setBody("Something...");
+		notificationQueueEntry1.setActions(
+			new TreeMap<>(
+				HashMapBuilder.put(
+					"action1",
+					new TreeMap<>(
+						HashMapBuilder.put(
+							"href", "href1"
+						).put(
+							"method", "method1"
+						).build())
+				).put(
+					"action2",
+					new TreeMap<>(
+						HashMapBuilder.put(
+							"href", "href2"
+						).put(
+							"method", "method2"
+						).build())
+				).build()));
+		notificationQueueEntry1.setBody("{Something...}");
 		notificationQueueEntry1.setSubject("Something...");
 		notificationQueueEntry1.setType("email");
 
@@ -71,7 +90,24 @@ public class NotificationQueueEntryResourceTest
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"body", "Something..."
+				"actions",
+				JSONUtil.put(
+					"action1",
+					JSONUtil.put(
+						"href", "href1"
+					).put(
+						"method", "method1"
+					)
+				).put(
+					"action2",
+					JSONUtil.put(
+						"href", "href2"
+					).put(
+						"method", "method2"
+					)
+				)
+			).put(
+				"body", "{Something...}"
 			).put(
 				"recipients",
 				JSONUtil.putAll(

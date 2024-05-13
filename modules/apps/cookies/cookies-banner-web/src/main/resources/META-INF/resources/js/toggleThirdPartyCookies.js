@@ -74,7 +74,7 @@ function flipThirdPartyCookie(type) {
 
 			switch (element.tagName) {
 				case 'SCRIPT': {
-					const newScript = element.cloneNode();
+					const newScript = element.cloneNode(true);
 
 					newScript.type = 'text/javascript';
 

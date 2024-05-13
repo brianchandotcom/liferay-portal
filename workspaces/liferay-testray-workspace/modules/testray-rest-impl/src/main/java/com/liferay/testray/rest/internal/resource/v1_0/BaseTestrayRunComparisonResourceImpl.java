@@ -16,11 +16,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultComparison;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +96,7 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/testray-rest/v1.0/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/details'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/testray-rest/v1.0/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/runs'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -143,11 +147,11 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/details"
+		"/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/runs"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TestrayRunComparison getTestrayRunComparisonDetail(
+	public TestrayRunComparison getTestrayRunComparisonRun(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("testrayRunId1")
@@ -178,6 +182,107 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 		throws Exception {
 
 		return new TestrayRunComparison();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/testray-rest/v1.0/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/testray-case-result-comparisons'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testrayRunId1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testrayRunId2"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultError1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultError2"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultIssue1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultIssue2"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultStatus1"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testrayCaseResultStatus2"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "TestrayRunComparison"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/testray-case-result-comparisons"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<TestrayCaseResultComparison>
+			getTestrayRunComparisonTestrayCaseResultComparisonsPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("testrayRunId1")
+				Long testrayRunId1,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("testrayRunId2")
+				Long testrayRunId2,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCaseResultError1")
+				String testrayCaseResultError1,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCaseResultError2")
+				String testrayCaseResultError2,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCaseResultIssue1")
+				String testrayCaseResultIssue1,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCaseResultIssue2")
+				String testrayCaseResultIssue2,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCaseResultStatus1")
+				String testrayCaseResultStatus1,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("testrayCaseResultStatus2")
+				String testrayCaseResultStatus2,
+				@javax.ws.rs.core.Context Filter filter,
+				@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

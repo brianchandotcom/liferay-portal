@@ -34,10 +34,11 @@ public class DocumentShortcutResourceImpl
 	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
 		throws Exception {
 
-		return _toDocument(_dlAppService.getFileShortcut(documentShortcutId));
+		return _toDocumentShortcut(
+			_dlAppService.getFileShortcut(documentShortcutId));
 	}
 
-	private DocumentShortcut _toDocument(FileShortcut fileShortcut)
+	private DocumentShortcut _toDocumentShortcut(FileShortcut fileShortcut)
 		throws Exception {
 
 		return _documentShortcutDTOConverter.toDTO(
@@ -46,7 +47,7 @@ public class DocumentShortcutResourceImpl
 				HashMapBuilder.put(
 					"get",
 					addAction(
-						ActionKeys.ACCESS, fileShortcut.getFileShortcutId(),
+						ActionKeys.VIEW, fileShortcut.getFileShortcutId(),
 						"getDocumentShortcut", fileShortcut.getUserId(),
 						DLFileShortcut.class.getName(),
 						fileShortcut.getGroupId())

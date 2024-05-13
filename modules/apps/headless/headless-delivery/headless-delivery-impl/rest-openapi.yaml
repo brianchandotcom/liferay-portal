@@ -1579,6 +1579,16 @@ components:
             description:
                 Represents a document shortcut.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
                 assetLibraryKey:
                     # @review
                     description:

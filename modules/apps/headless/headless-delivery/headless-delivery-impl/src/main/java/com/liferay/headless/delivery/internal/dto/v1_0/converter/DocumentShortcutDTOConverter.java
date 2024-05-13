@@ -40,7 +40,7 @@ public class DocumentShortcutDTOConverter
 		FileShortcut fileShortcut = _dlAppService.getFileShortcut(
 			(Long)dtoConverterContext.getId());
 
-		Group group = _groupLocalService.fetchGroup(fileShortcut.getGroupId());
+		Group group = _groupLocalService.getGroup(fileShortcut.getGroupId());
 
 		return new DocumentShortcut() {
 			{

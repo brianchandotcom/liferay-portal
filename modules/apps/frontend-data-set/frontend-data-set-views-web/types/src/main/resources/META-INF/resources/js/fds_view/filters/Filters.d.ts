@@ -10,7 +10,7 @@ import '../../../css/Filters.scss';
 declare function Filters({
 	fdsFilterClientExtensions,
 	fdsView,
+	fieldTreeItems: fields,
 	namespace,
-	schemaFields: fields,
 }: IFDSViewSectionProps): JSX.Element;
 export default Filters;

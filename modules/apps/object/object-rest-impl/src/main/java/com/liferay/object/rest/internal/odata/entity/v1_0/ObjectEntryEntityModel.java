@@ -212,7 +212,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 				"keywords",
 				new CollectionEntityField(
 					new StringEntityField(
-						"keywords", locale -> "assetTagNames.raw"))
+						"keywords", locale -> "lowerCaseAssetTagNames"))
 			).put(
 				"status",
 				new CollectionEntityField(

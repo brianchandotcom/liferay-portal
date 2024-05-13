@@ -11,7 +11,7 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  *   '@clayui/charts': ['__esModule', 'bb', 'default']
  * }
  */
-export default async function getGlobalSymbols() {
+export default async function getOverridenPackageSymbols() {
 	const rootDir = await getRootDir();
 
 	const {symbols} = projectScopeRequire(path.join(rootDir, 'node-scripts.config.js'));

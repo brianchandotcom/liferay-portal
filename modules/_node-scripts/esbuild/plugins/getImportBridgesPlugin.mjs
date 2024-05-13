@@ -3,7 +3,7 @@ import getFlatName from '../../util/getFlatName.mjs';
 import {IMPORT_BRIDGE_FILTER, decodeBridgePath} from '../getImportBridgePath.mjs';
 import getPathPrefix from '../getPathPrefix.mjs';
 
-export default function getImportBridgesPlugin(globalImports, globalSymbols) {
+export default function getImportBridgesPlugin(globalImports, overridenPackageSymbols) {
 	const importBridgesCache = {};
 
 	return {
@@ -26,7 +26,7 @@ export default function getImportBridgesPlugin(globalImports, globalSymbols) {
 					const {external, webContextPath} = globalImports[moduleName];
 
 					const contents = getImportBridgeCode(
-						globalImports, globalSymbols, type, moduleName, external, 
+						globalImports, overridenPackageSymbols, type, moduleName, external,
 						webContextPath
 					);	
 
@@ -43,7 +43,7 @@ export default function getImportBridgesPlugin(globalImports, globalSymbols) {
 }
 
 function getImportBridgeCode(
-	globalImports, globalSymbols, type, moduleName, external, webContextPath
+	globalImports, overridenPackageSymbols, type, moduleName, external, webContextPath
 ) {
 	let hasDefault;
 
@@ -51,7 +51,7 @@ function getImportBridgeCode(
 		hasDefault = false;
 	}
 	else {
-		const symbols = getExportedSymbols(globalSymbols, moduleName);
+		const symbols = getExportedSymbols(overridenPackageSymbols, moduleName);
 
 		hasDefault = !!symbols['default'];
 	}

@@ -5,7 +5,7 @@
  */
 
 import getGlobalImports from './configuration/getGlobalImports.mjs';
-import getGlobalSymbols from './configuration/getGlobalSymbols.mjs';
+import getOverridenPackageSymbols from './configuration/getOverridenPackageSymbols.mjs';
 import getProjectDescription from './configuration/getProjectDescription.mjs';
 import getProjectExports from './configuration/getProjectExports.mjs';
 import getProjectMain from './configuration/getProjectMain.mjs';
@@ -26,7 +26,7 @@ export default async function main() {
 
 	const [
 		globalImports,
-		globalSymbols,
+		overridenPackageSymbols,
 		projectDescription,
 		projectExports,
 		projectMain,
@@ -34,7 +34,7 @@ export default async function main() {
 		projectWebContextPath,
 	] = await Promise.all([
 		getGlobalImports(),
-		getGlobalSymbols(),
+		getOverridenPackageSymbols(),
 		getProjectDescription(),
 		getProjectExports(),
 		getProjectMain(),
@@ -45,8 +45,8 @@ export default async function main() {
 	const endConfig = Date.now();
 
 	await Promise.all([
-		bundleJavaScriptMain(globalImports, globalSymbols, projectMain, projectWebContextPath),
-		bundleJavaScriptExports(globalImports, globalSymbols, projectExports),
+		bundleJavaScriptMain(globalImports, overridenPackageSymbols, projectMain, projectWebContextPath),
+		bundleJavaScriptExports(globalImports, overridenPackageSymbols, projectExports),
 		bundleCSSExports(projectExports),
 		writeCSSLoaderJavaScriptModules(projectExports, projectWebContextPath),
 		writePackageJson(projectDescription),

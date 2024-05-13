@@ -10,7 +10,7 @@ import runEsbuild from './runEsbuild.mjs';
 
 
 export default async function bundleJavaScriptMain(
-	globalImports, globalSymbols, projectMain, projectWebContextPath
+	globalImports, overridenPackageSymbols, projectMain, projectWebContextPath
 ) {
 	if (!projectMain) {
 		return;
@@ -33,7 +33,7 @@ export default async function bundleJavaScriptMain(
 		plugins: [
 			getCssLoaderPlugin(globalImports, 'main'),
 			getExactAliasPlugin(globalImports, 'main'),
-			getImportBridgesPlugin(globalImports, globalSymbols),
+			getImportBridgesPlugin(globalImports, overridenPackageSymbols),
 			getScssLoaderPlugin(projectWebContextPath),
 		]
 	};

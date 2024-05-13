@@ -2,7 +2,7 @@ import projectScopeRequire from './projectScopeRequire.mjs';
 
 const cachedExportedSymbols = {};
 
-export default function getExportedSymbols(globalSymbols, moduleName) {
+export default function getExportedSymbols(overridenPackageSymbols, moduleName) {
 	if (cachedExportedSymbols[moduleName]) {
 		return cachedExportedSymbols;
 	}
@@ -10,10 +10,10 @@ export default function getExportedSymbols(globalSymbols, moduleName) {
 	let symbols;
 
 	try {
-		if (globalSymbols[moduleName]) {
+		if (overridenPackageSymbols[moduleName]) {
 			symbols = {};
 
-			globalSymbols[moduleName].forEach(
+			overridenPackageSymbols[moduleName].forEach(
 				symbol => symbols[symbol] = true
 			);
 

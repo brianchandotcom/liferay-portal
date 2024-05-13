@@ -8,7 +8,7 @@ import runEsbuild from './runEsbuild.mjs';
 import writeExportBridge from './writeExportBridge.mjs';
 
 export default async function bundleJavaScriptExports(
-	globalImports, globalSymbols, projectExports
+	globalImports, overridenPackageSymbols, projectExports
 ) {
 	if (!projectExports.length) {
 		return;
@@ -17,11 +17,11 @@ export default async function bundleJavaScriptExports(
 	await Promise.all(
 		projectExports
 			.filter(moduleName => !moduleName.endsWith('.css'))
-			.map(moduleName => bundle(globalImports, globalSymbols, moduleName))
+			.map(moduleName => bundle(globalImports, overridenPackageSymbols, moduleName))
 	);
 }
 
-async function bundle(globalImports, globalSymbols, moduleName) {
+async function bundle(globalImports, overridenPackageSymbols, moduleName) {
 	const esbuildConfig = {
 		bundle: true,
 		entryPoints: [getEntryPoint(moduleName)],
@@ -32,11 +32,11 @@ async function bundle(globalImports, globalSymbols, moduleName) {
 		target: ['es2020'],
 		plugins: [
 			getExactAliasPlugin(globalImports, 'exports', [moduleName]),
-			getImportBridgesPlugin(globalImports, globalSymbols),
+			getImportBridgesPlugin(globalImports, overridenPackageSymbols),
 		]
 	};
 	
-	await writeExportBridge(globalSymbols, moduleName);
+	await writeExportBridge(overridenPackageSymbols, moduleName);
 
 	return runEsbuild(esbuildConfig, getFlatName(moduleName));
 }

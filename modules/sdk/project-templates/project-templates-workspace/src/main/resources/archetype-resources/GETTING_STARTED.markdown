@@ -251,8 +251,17 @@ slow down your IDE's project synchronization.
 $h2 Build Customizations via `build.gradle`
 
 $h3 Overwrite specific dependency in one project
-Set `force = true` to overwrite the version of a specific dependency. See
+Set `configuration.resolutionStrategy.force 'groupId:artifactId:version'` to
+overwrite the version of a specific dependency. See
 `https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#forced_dependencies_vs_strict_dependencies`.
+
+```
+configurations {
+    compileClasspath {
+        resolutionStrategy.force 'groupId:artifactId:version`
+    }
+}
+```
 
 $h3 Overwrite dependency in multiple projects
 Set the following to overwrite the version of a dependency for the project.

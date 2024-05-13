@@ -1229,57 +1229,57 @@ test('cannot import empty CSV file', async ({
 	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 });
 
-
 test('can see correct custom object name in dropdown', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
 }) => {
-	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
-		{
-			active: true,
-			externalReferenceCode: 'stockERC',
-			label: {
-				en_US: 'stock',
-			},
-			name: 'Stock',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					externalReferenceCode: 'nameERC',
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'name',
-					},
-					name: 'name',
-					required: true,
+	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition({
+		active: true,
+		externalReferenceCode: 'stockERC',
+		label: {
+			en_US: 'stock',
+		},
+		name: 'Stock',
+		objectFields: [
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'nameERC',
+				indexed: true,
+				indexedAsKeyword: true,
+				label: {
+					en_US: 'name',
 				},
-			],
-			pluralLabel: {
-				en_US: 'stocks',
+				name: 'name',
+				required: true,
 			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		}
-	);
-	
-	await apiHelpers.object.postObjectEntry({
-		externalReferenceCode: 'nameERC',
-		name: 'Stock Entry',
-	}, 'c/stocks');
+		],
+		pluralLabel: {
+			en_US: 'stocks',
+		},
+		portlet: true,
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	});
 
-	await dataMigrationCenterPage.goto()
+	await apiHelpers.object.postObjectEntry(
+		{
+			externalReferenceCode: 'nameERC',
+			name: 'Stock Entry',
+		},
+		'c/stocks'
+	);
+
+	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
 
 	expect(
-		await dataMigrationCenterPage.page.getByLabel('Entity Type').textContent()
-	).toContain('Stock (v1_0 - Liferay Object REST)')
+		await dataMigrationCenterPage.page
+			.getByLabel('Entity Type')
+			.textContent()
+	).toContain('Stock (v1_0 - Liferay Object REST)');
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
-
-

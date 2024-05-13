@@ -67,7 +67,7 @@ test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 		JSON.parse(
 			await dataMigrationCenterPage.exportFile(
 				'JSONT',
-				'C_Stock (v1_0 - Liferay Object REST)',
+				'Stock (v1_0 - Liferay Object REST)',
 				['name']
 			)
 		)
@@ -125,7 +125,7 @@ test('can export as JSON with excluded fields', async ({
 		JSON.parse(
 			await dataMigrationCenterPage.exportFile(
 				'JSON',
-				'C_Stock (v1_0 - Liferay Object REST)',
+				'Stock (v1_0 - Liferay Object REST)',
 				['name']
 			)
 		)
@@ -302,7 +302,7 @@ test('can export as JSON with all field types mapped', async ({
 		JSON.parse(
 			await dataMigrationCenterPage.exportFile(
 				'JSON',
-				'C_Stock (v1_0 - Liferay Object REST)',
+				'Stock (v1_0 - Liferay Object REST)',
 				[
 					'creator',
 					'customAttachment',
@@ -362,7 +362,7 @@ test('can export as JSONL with excluded fields', async ({
 	expect(
 		await dataMigrationCenterPage.exportFile(
 			'JSONL',
-			'C_Stock (v1_0 - Liferay Object REST)',
+			'Stock (v1_0 - Liferay Object REST)',
 			['name']
 		)
 	).toBe('{"name":"Stock Entry"}\n');
@@ -379,14 +379,14 @@ test('can see correct custom object name in dropdown', async ({
 	);
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	await dataMigrationCenterPage.goto()
+	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToExportFile();
 
 	expect(
-		await dataMigrationCenterPage.page.getByLabel('Entity Type').textContent()
-	).toContain('Stock (v1_0 - Liferay Object REST)')
+		await dataMigrationCenterPage.page
+			.getByLabel('Entity Type')
+			.textContent()
+	).toContain('Stock (v1_0 - Liferay Object REST)');
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
-
-

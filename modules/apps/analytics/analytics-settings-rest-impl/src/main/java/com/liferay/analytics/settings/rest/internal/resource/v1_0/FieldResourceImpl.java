@@ -388,16 +388,21 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 
 		return transform(
 			_expandoColumnLocalService.getColumns(expandoTable.getTableId()),
-			expandoColumn -> new Field() {
-				{
-					setName(expandoColumn::getName);
-					setRequired(() -> Boolean.FALSE);
-					setSelected(
-						() -> ArrayUtil.contains(
-							syncedNames, expandoColumn.getName()));
-					setSource(() -> source);
-					setType(() -> _getDataType(expandoColumn.getType()));
-				}
+			expandoColumn -> {
+				Field field = new Field() {
+					{
+						setName(expandoColumn::getName);
+						setRequired(() -> Boolean.FALSE);
+						setSelected(
+							() -> ArrayUtil.contains(
+								syncedNames, expandoColumn.getName()));
+						setType(() -> _getDataType(expandoColumn.getType()));
+					}
+				};
+
+				field.setSource(() -> source);
+
+				return field;
 			});
 	}
 

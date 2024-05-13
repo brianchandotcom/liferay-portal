@@ -120,7 +120,7 @@ const SideMenu = () => {
 									PRODUCT_TYPES.liferayExperienceCloud
 								)}
 							>
-								{MENU_TYPES.liferaySaas}
+								{MENU_TYPES.liferaySaaS}
 							</MenuItem>
 						</div>
 					)}

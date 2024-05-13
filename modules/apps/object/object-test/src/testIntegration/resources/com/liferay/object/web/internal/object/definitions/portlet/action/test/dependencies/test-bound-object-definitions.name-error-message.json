@@ -1,0 +1,23 @@
+{
+	"message": [
+		{
+			"error": {
+				"type": "ObjectDefinitionNameException.MustOnlyContainLettersAndDigits"
+			},
+			"objectDefinitionName": "!@TestObjectDefinition1"
+		},
+		{
+			"error": {
+				"type": "ObjectDefinitionNameException.MustOnlyContainLettersAndDigits"
+			},
+			"objectDefinitionName": "!@TestObjectDefinition2"
+		},
+		{
+			"error": {
+				"type": "ObjectDefinitionNameException.MustOnlyContainLettersAndDigits"
+			},
+			"objectDefinitionName": "!@TestObjectDefinition3"
+		}
+	],
+	"type": "importMultipleObjectDefinitions"
+}

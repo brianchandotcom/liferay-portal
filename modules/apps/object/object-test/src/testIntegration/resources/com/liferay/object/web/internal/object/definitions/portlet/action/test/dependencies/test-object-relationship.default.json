@@ -1,0 +1,21 @@
+{
+	"deletionType": "cascade",
+	"edge": false,
+	"externalReferenceCode": "TESTOBJECTRELATIONSHIP",
+	"label": {
+		"en_US": "Test Object Relationship"
+	},
+	"name": "ObjectRelationship",
+	"objectDefinitionExternalReferenceCode1": "",
+	"objectDefinitionExternalReferenceCode2": "",
+	"objectDefinitionModifiable2": true,
+	"objectDefinitionName2": "",
+	"objectDefinitionSystem2": false,
+	"objectField": {
+	},
+	"parameterObjectFieldId": 0,
+	"parameterObjectFieldName": "",
+	"reverse": false,
+	"system": false,
+	"type": ""
+}

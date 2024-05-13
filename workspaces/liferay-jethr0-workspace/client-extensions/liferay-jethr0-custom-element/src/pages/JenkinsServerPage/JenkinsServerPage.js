@@ -5,9 +5,10 @@
 
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
@@ -18,14 +19,53 @@ import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0Navi
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {
 	deleteJenkinsServerById,
+	getJenkinsNodesPage,
 	getJenkinsServerById,
 } from '../../objects/jenkins/JenkinsUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
 function JenkinsNodes({jenkinsServer}) {
-	if (!jenkinsServer?.jenkinsNodes) {
+	const [jenkinsNodesPage, setJenkinsNodesPage] = useState(null);
+
+	if (!jenkinsNodesPage) {
+		getJenkinsNodesPage({jenkinsServer, setJenkinsNodesPage});
+
+		return;
+	}
+
+	if (!jenkinsNodesPage) {
 		return <div>Loading...</div>;
 	}
+
+	function setActiveDelta({activeDelta, jenkinsNodesPage, jenkinsServer}) {
+		getJenkinsNodesPage({
+			jenkinsServer,
+			page: jenkinsNodesPage.page,
+			pageSize: activeDelta,
+			setJenkinsNodesPage
+		});
+	}
+
+	function setActivePage({activePage, jenkinsNodesPage, jenkinsServer}) {
+		getJenkinsNodesPage({
+			jenkinsServer,
+			page: activePage,
+			pageSize: jenkinsNodesPage.pageSize,
+			setJenkinsNodesPage,
+		});
+	}
+
+	const deltas = [
+		{
+			label: 25,
+		},
+		{
+			label: 50,
+		},
+		{
+			label: 100,
+		},
+	];
 
 	return (
 		<ClayPanel
@@ -41,29 +81,41 @@ function JenkinsNodes({jenkinsServer}) {
 						<tr>
 							<th>ID</th>
 							<th>Name</th>
+							<th>Good Battery</th>
+							<th>Node Count</th>
+							<th>Node RAM</th>
+							<th>Primary Label</th>
+							<th>Type</th>
 							<th>Create Date</th>
 							<th>Modified Date</th>
 						</tr>
 					</thead>
 					<tbody>
-						{jenkinsServer?.jenkinsNodes?.map((jenkinsNode) => {
+						{jenkinsNodesPage?.jenkinsNodes?.map((jenkinsNode) => {
 							return (
 								<tr key={jenkinsNode.id}>
 									<th className="font-weight-semi-bold">
-										<Link
-											title={jenkinsNode.id}
-											to={
-												'/jenkins-server/' +
-												jenkinsNode.id
-											}
-										>
-											{jenkinsNode.id}
-										</Link>
+										{jenkinsNode.id}
 									</th>
 									<td>
 										<a href={jenkinsNode.url}>
 											{jenkinsNode.name}
 										</a>
+									</td>
+									<td>
+										{jenkinsNode.goodBattery ? 'yes' : 'no'}
+									</td>
+									<td>
+										{jenkinsNode.nodeCount}
+									</td>
+									<td>
+										{jenkinsNode.nodeRAM}
+									</td>
+									<td>
+										{jenkinsNode.primaryLabel}
+									</td>
+									<td>
+										{jenkinsNode.type.name}
 									</td>
 									<td>
 										{toLocaleString(
@@ -80,6 +132,23 @@ function JenkinsNodes({jenkinsServer}) {
 						})}
 					</tbody>
 				</Jethr0Table>
+
+				{jenkinsNodesPage && (
+					<ClayPaginationBarWithBasicItems
+						activeDelta={jenkinsNodesPage.pageSize}
+						defaultActive={jenkinsNodesPage.page}
+						deltas={deltas}
+						ellipsisBuffer={3}
+						onActiveChange={(activePage) => {
+							setActivePage({activePage, jenkinsNodesPage, jenkinsServer});
+						}}
+						onDeltaChange={(activeDelta) => {
+							setActiveDelta({activeDelta, jenkinsNodesPage, jenkinsServer});
+						}}
+						showDeltasDropDown={true}
+						totalItems={jenkinsNodesPage.totalCount}
+					/>
+				)}
 			</ClayPanel.Body>
 		</ClayPanel>
 	);

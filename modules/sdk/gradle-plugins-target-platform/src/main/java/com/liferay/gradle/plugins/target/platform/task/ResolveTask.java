@@ -50,9 +50,9 @@ public class ResolveTask extends AbstractBndrun {
 	@Deprecated
 	@InputFile
 	public File getBndrunFile() {
-		RegularFileProperty bndrun = getBndrun();
+		RegularFileProperty regularFileProperty = getBndrun();
 
-		return GradleUtil.toFile(getProject(), bndrun.get());
+		return GradleUtil.toFile(getProject(), regularFileProperty.get());
 	}
 
 	@InputFile
@@ -129,9 +129,9 @@ public class ResolveTask extends AbstractBndrun {
 	 */
 	@Deprecated
 	public void setBndrunFile(Object bndrunFile) {
-		RegularFileProperty bndrun = getBndrun();
+		RegularFileProperty regularFileProperty = getBndrun();
 
-		bndrun.set(GradleUtil.toFile(getProject(), bndrunFile));
+		regularFileProperty.set(GradleUtil.toFile(getProject(), bndrunFile));
 	}
 
 	public void setDistro(FileCollection distroFileCollection) {

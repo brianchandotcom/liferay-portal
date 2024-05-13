@@ -12,7 +12,7 @@ import {getBusinessTypeLabel} from '../../../utils/businessTypeLabel';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
-import './ObjectDefinitionNodeObjectFields.scss';
+import './ObjectDefinitionNodeFields.scss';
 
 interface ObjectDefinitionNodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
@@ -21,7 +21,7 @@ interface ObjectDefinitionNodeFieldsProps {
 	showAllObjectFields: boolean;
 }
 
-export default function ObjectDefinitionNodeFields({
+export function ObjectDefinitionNodeFields({
 	defaultLanguageId,
 	objectFields,
 	selectedObjectDefinitionId,

@@ -5,14 +5,14 @@
 
 /// <reference types="react" />
 
-import './ObjectDefinitionNodeObjectFields.scss';
+import './ObjectDefinitionNodeFields.scss';
 interface ObjectDefinitionNodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
 	objectFields: ObjectFieldNodeRow[];
 	selectedObjectDefinitionId: number;
 	showAllObjectFields: boolean;
 }
-export default function ObjectDefinitionNodeFields({
+export declare function ObjectDefinitionNodeFields({
 	defaultLanguageId,
 	objectFields,
 	selectedObjectDefinitionId,

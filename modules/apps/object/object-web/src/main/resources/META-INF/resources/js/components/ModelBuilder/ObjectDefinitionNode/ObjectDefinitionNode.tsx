@@ -11,9 +11,9 @@ import {Handle, NodeProps, Position, useStore} from 'react-flow-renderer';
 import {getObjectDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
+import {ObjectDefinitionNodeFields} from './ObjectDefinitionNodeFields';
 import ObjectDefinitionNodeFooter from './ObjectDefinitionNodeFooter';
 import ObjectDefinitionNodeHeader from './ObjectDefinitionNodeHeader';
-import ObjectDefinitionNodeFields from './ObjectDefinitionNodeObjectFields';
 
 import './NodeContainer.scss';
 

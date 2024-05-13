@@ -55,6 +55,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -141,6 +142,7 @@ public class StructuredContentDTOConverter
 						journalArticle.getCompanyId(),
 						dtoConverterContext.getLocale()));
 				setDateCreated(journalArticle::getCreateDate);
+				setDateExpired(journalArticle::getExpirationDate);
 				setDateModified(journalArticle::getModifiedDate);
 				setDatePublished(journalArticle::getDisplayDate);
 				setDescription(
@@ -168,6 +170,16 @@ public class StructuredContentDTOConverter
 							JournalArticle.class.getName(),
 							journalArticle.getResourcePrimKey()),
 						AssetTag.NAME_ACCESSOR));
+				setNeverExpire(
+					() -> {
+						Date dateExpired = journalArticle.getExpirationDate();
+
+						if (dateExpired == null) {
+							return true;
+						}
+
+						return false;
+					});
 				setNumberOfComments(
 					() -> _commentManager.getCommentsCount(
 						JournalArticle.class.getName(),

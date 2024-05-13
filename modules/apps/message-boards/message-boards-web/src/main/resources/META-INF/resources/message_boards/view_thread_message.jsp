@@ -143,12 +143,15 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 							/>
 						</span>
 					</c:if>
+				</c:if>
 
-					<c:if test="<%= !message.isApproved() %>">
-						<span class="h5 text-default">
-							<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
-						</span>
-					</c:if>
+				<c:if test="<%= !message.isApproved() %>">
+					<span class="h5 text-default">
+						<liferay-portal-workflow:status
+							showStatusLabel="<%= false %>"
+							status="<%= message.getStatus() %>"
+						/>
+					</span>
 				</c:if>
 
 				<c:if test="<%= enableFlags || enableRatings %>">

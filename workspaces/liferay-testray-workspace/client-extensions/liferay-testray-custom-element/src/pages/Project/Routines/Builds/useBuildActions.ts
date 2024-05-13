@@ -29,17 +29,6 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('export-csv'),
 		},
 		{
-			action: (testrayBuild) =>
-				navigate(
-					isHeaderActions
-						? 'update'
-						: `build/${testrayBuild.id}/update`
-				),
-			icon: 'pencil',
-			name: i18n.translate(isHeaderActions ? 'edit-build' : 'edit'),
-			permission: 'UPDATE',
-		},
-		{
 			action: ({id, promoted}, mutate) => {
 				testrayBuildImpl
 					.update(id, {

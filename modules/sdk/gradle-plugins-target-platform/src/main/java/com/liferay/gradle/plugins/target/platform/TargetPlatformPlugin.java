@@ -242,9 +242,9 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		resolveTask.dependsOn(taskContainer.findByName("assemble"));
 
-		RegularFileProperty bndrun = resolveTask.getBndrun();
+		RegularFileProperty regularFileProperty = resolveTask.getBndrun();
 
-		bndrun.set(bndrunFile);
+		regularFileProperty.set(bndrunFile);
 
 		resolveTask.setDescription(
 			"Resolve a project against the Liferay distro.");

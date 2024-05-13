@@ -153,6 +153,40 @@ public class GraphQLServletTest {
 				"JSONObject/data", "JSONObject/testPath",
 				"JSONObject/createTestDTO"));
 
+		_assertEqualsV1(
+			false, _testDTOV1,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"testPath",
+						new GraphQLField(
+							"createTestDTOV1",
+							Collections.singletonMap(
+								"testDTO", _toGraphQLString(_testDTOV1)),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string"),
+							new GraphQLField("version"))),
+					"mutation"),
+				"JSONObject/data", "JSONObject/testPath",
+				"JSONObject/createTestDTOV1"));
+
+		_assertEqualsV2(
+			false, _testDTOV2,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"testPath",
+						new GraphQLField(
+							"createTestDTOV2",
+							Collections.singletonMap(
+								"testDTO", _toGraphQLString(_testDTOV2)),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string"),
+							new GraphQLField("version"))),
+					"mutation"),
+				"JSONObject/data", "JSONObject/testPath",
+				"JSONObject/createTestDTOV2"));
+
 		// Without namespace (backwards compatibility)
 
 		_assertEqualsV2(
@@ -168,6 +202,34 @@ public class GraphQLServletTest {
 						new GraphQLField("version")),
 					"mutation"),
 				"JSONObject/data", "JSONObject/createTestDTO"));
+
+		_assertEqualsV1(
+			false, _testDTOV1,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"createTestDTOV1",
+						Collections.singletonMap(
+							"testDTO", _toGraphQLString(_testDTOV1)),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string"),
+						new GraphQLField("version")),
+					"mutation"),
+				"JSONObject/data", "JSONObject/createTestDTOV1"));
+
+		_assertEqualsV2(
+			false, _testDTOV2,
+			JSONUtil.getValueAsJSONObject(
+				_invoke(
+					new GraphQLField(
+						"createTestDTOV2",
+						Collections.singletonMap(
+							"testDTO", _toGraphQLString(_testDTOV2)),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string"),
+						new GraphQLField("version")),
+					"mutation"),
+				"JSONObject/data", "JSONObject/createTestDTOV2"));
 	}
 
 	@Test
@@ -269,7 +331,8 @@ public class GraphQLServletTest {
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
 					"query"),
-				"JSONObject/data", "JSONObject/testPath", "JSONObject/testDTO"));
+				"JSONObject/data", "JSONObject/testPath",
+				"JSONObject/testDTO"));
 
 		_assertEqualsV1(
 			true, _testDTOV1,
@@ -283,7 +346,8 @@ public class GraphQLServletTest {
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
 					"query"),
-				"JSONObject/data", "JSONObject/testPath",  "JSONObject/testDTOV1"));
+				"JSONObject/data", "JSONObject/testPath",
+				"JSONObject/testDTOV1"));
 
 		_assertEqualsV2(
 			true, _testDTOV2,
@@ -297,7 +361,8 @@ public class GraphQLServletTest {
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
 					"query"),
-				"JSONObject/data", "JSONObject/testPath", "JSONObject/testDTOV2"));
+				"JSONObject/data", "JSONObject/testPath",
+				"JSONObject/testDTOV2"));
 
 		Assert.assertEquals(
 			"Not Found",

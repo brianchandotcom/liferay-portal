@@ -15,14 +15,17 @@ import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -44,7 +47,10 @@ import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -113,7 +119,7 @@ public class DDMIndexerImplTest {
 		_setUpPortalUtil();
 		_setUpPropsUtil();
 
-		_ddmIndexer = _createDDMIndexer();
+		_ddmIndexer = _createDDMIndexer(false);
 	}
 
 	@After
@@ -134,6 +140,42 @@ public class DDMIndexerImplTest {
 		ddmFormField.setRepeatable(true);
 
 		_testExtractIndexableAttributes(ddmFormField, StringPool.BLANK);
+	}
+
+	@Test
+	public void testFormWithLegacyDDMIndexFieldsEnabled() {
+		DDMIndexer ddmIndexer = _createDDMIndexer(true);
+
+		Document document = _createDocument();
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"date", "date", DDMFormFieldType.DATE, "string", false, false,
+			false);
+
+		ddmFormField.setIndexType("keyword");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
+
+		String randomDate = _randomDate();
+
+		ddmIndexer.addAttributes(
+			document, ddmStructure,
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					"date", new UnlocalizedValue(randomDate))));
+
+		String name = StringBundler.concat(
+			"ddm__keyword__", ddmStructure.getStructureId(), "__date_");
+
+		FieldValuesAssert.assertFieldValues(
+			_getSortableValues(Collections.singletonMap(name, randomDate)),
+			name, document, randomDate);
 	}
 
 	@Test
@@ -262,10 +304,11 @@ public class DDMIndexerImplTest {
 		return ddmFormValues;
 	}
 
-	private DDMIndexer _createDDMIndexer() {
+	private DDMIndexer _createDDMIndexer(boolean enableLegacyDDMIndexFields) {
 		return new DDMIndexerImpl() {
 			{
-				DDMIndexerConfiguration ddmIndexerConfiguration = () -> false;
+				DDMIndexerConfiguration ddmIndexerConfiguration =
+					() -> enableLegacyDDMIndexFields;
 
 				ReflectionTestUtil.setFieldValue(
 					this, "_ddmFormValuesToFieldsConverter",
@@ -337,6 +380,12 @@ public class DDMIndexerImplTest {
 		sortableValues.putAll(map);
 
 		return sortableValues;
+	}
+
+	private String _randomDate() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		return simpleDateFormat.format(new Date());
 	}
 
 	private void _setUpPortalUtil() {

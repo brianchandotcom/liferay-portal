@@ -12,6 +12,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:account:account-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-currency-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-price-list-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-product-api")
 	testIntegrationImplementation project(":apps:commerce:commerce-product-test-util")
 	testIntegrationImplementation project(":apps:commerce:commerce-product-type-simple")

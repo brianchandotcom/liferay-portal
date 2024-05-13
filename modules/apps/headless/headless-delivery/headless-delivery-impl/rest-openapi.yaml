@@ -5101,6 +5101,11 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                dateExpired:
+                    description:
+                        The expiration date of the structured content.
+                    format: date-time
+                    type: string
                 dateModified:
                     description:
                         The last time any field of the structured content was changed.
@@ -5157,6 +5162,10 @@ components:
                     items:
                         type: string
                     type: array
+                neverExpire:
+                    description:
+                        Whether the web content article is not set to auto expire
+                    type: boolean
                 numberOfComments:
                     description:
                         The number of comments the structured content has received.

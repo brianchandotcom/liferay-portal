@@ -357,7 +357,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				}
 				else {
 					redirectLayout = _getLayoutFriendlyURLLayout(
-						group.getGroupId(), layoutFriendlyURL);
+						group, layoutFriendlyURL, httpServletRequest);
 				}
 			}
 
@@ -811,13 +811,26 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	private Layout _getLayoutFriendlyURLLayout(
-		long groupId, String friendlyURL) {
+		Group group, String friendlyURL,
+		HttpServletRequest httpServletRequest) {
 
 		LayoutFriendlyURL layoutFriendlyURL =
 			layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(
-				groupId, _private, friendlyURL);
+				group.getGroupId(), _private, friendlyURL);
 
 		if (layoutFriendlyURL == null) {
+			if (group.isUser()) {
+				List<Layout> layouts = layoutLocalService.getLayouts(
+					group.getGroupId(), _private,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				for (Layout layout : layouts) {
+					if (layout.matches(httpServletRequest, friendlyURL)) {
+						return layout;
+					}
+				}
+			}
+
 			return null;
 		}
 

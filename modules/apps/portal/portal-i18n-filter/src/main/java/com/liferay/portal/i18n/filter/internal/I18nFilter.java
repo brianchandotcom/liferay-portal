@@ -253,6 +253,11 @@ public class I18nFilter extends BasePortalFilter {
 			while (enumeration.hasMoreElements()) {
 				Locale requestLocale = enumeration.nextElement();
 
+				if (Validator.isNull(requestLocale.getCountry())) {
+					requestLocale = _language.getLocale(
+						requestLocale.getLanguage());
+				}
+
 				if (_language.isAvailableLocale(requestLocale)) {
 					requestedLanguageId = LocaleUtil.toLanguageId(
 						requestLocale);

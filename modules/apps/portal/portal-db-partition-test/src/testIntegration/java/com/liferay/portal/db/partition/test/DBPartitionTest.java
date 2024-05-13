@@ -45,6 +45,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.function.Supplier;
 
 import javax.sql.DataSource;
 
@@ -481,6 +482,33 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					classNames.add(
 						_classNameLocalService.getClassName(
 							"class.name.test"))));
+
+			Assert.assertEquals(
+				classNames.toString(), companyLocalService.getCompaniesCount(),
+				classNames.size());
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _classNameLocalService.deleteClassName(
+					_classNameLocalService.fetchClassName("class.name.test")));
+		}
+	}
+
+	@Test
+	public void testGetClassNameIdSupplier() throws Exception {
+		Set<Long> classNames = Collections.synchronizedSet(
+			Collections.newSetFromMap(new IdentityHashMap<>()));
+
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					Supplier<Long> classNameIdSupplier =
+						_classNameLocalService.getClassNameIdSupplier(
+							"class.name.test");
+
+					Assert.assertTrue(
+						classNames.add(classNameIdSupplier.get()));
+				});
 
 			Assert.assertEquals(
 				classNames.toString(), companyLocalService.getCompaniesCount(),

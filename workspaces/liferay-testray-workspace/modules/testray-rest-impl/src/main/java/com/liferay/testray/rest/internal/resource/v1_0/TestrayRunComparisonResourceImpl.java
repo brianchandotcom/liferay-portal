@@ -13,11 +13,14 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultComparison;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.internal.util.comparator.TestrayCaseResultComparisonComparator;
@@ -30,7 +33,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,12 +85,43 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	@Override
-	public TestrayRunComparison getTestrayRunComparisonDetail(
+	public TestrayRunComparison getTestrayRunComparisonRun(
 			Long testrayRunId1, Long testrayRunId2,
 			String testrayCaseResultError1, String testrayCaseResultError2,
 			String testrayCaseResultIssue1, String testrayCaseResultIssue2,
 			String testrayCaseResultStatus1, String testrayCaseResultStatus2,
 			Filter filter)
+		throws Exception {
+
+		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
+
+		testrayRunComparison.setResults(
+			ListUtil.fromArray(
+				HashMapBuilder.<String, Object>put(
+					"Runs",
+					_getTestrayRunComparisons(
+						_getTestrayCaseResultComparisons(
+							ParamUtil.getString(
+								contextHttpServletRequest, "filter"),
+							testrayCaseResultError1, testrayCaseResultError2,
+							testrayCaseResultIssue1, testrayCaseResultIssue2,
+							testrayCaseResultStatus1, testrayCaseResultStatus2,
+							testrayRunId1, testrayRunId2))
+				).build()
+			).toArray());
+
+		return testrayRunComparison;
+	}
+
+	@Override
+	public Page<TestrayCaseResultComparison>
+			getTestrayRunComparisonTestrayCaseResultComparisonsPage(
+				Long testrayRunId1, Long testrayRunId2,
+				String testrayCaseResultError1, String testrayCaseResultError2,
+				String testrayCaseResultIssue1, String testrayCaseResultIssue2,
+				String testrayCaseResultStatus1,
+				String testrayCaseResultStatus2, Filter filter,
+				Pagination pagination)
 		throws Exception {
 
 		Map<String, Map<String, Serializable>> testrayCaseMap =
@@ -117,24 +150,20 @@ public class TestrayRunComparisonResourceImpl
 				GetterUtil.getInteger(testrayCase.get("priority")));
 		}
 
-		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
-
-		testrayRunComparison.setResults(
+		return Page.of(
 			ListUtil.fromArray(
-				HashMapBuilder.<String, Object>put(
-					"Runs",
-					_getTestrayRunComparisons(testrayCaseResultComparisons)
-				).build()
-			).toArray());
-		testrayRunComparison.setTestrayCaseResultComparisons(
-			ListUtil.sort(
-				testrayCaseResultComparisons,
-				new TestrayCaseResultComparisonComparator()
-			).toArray(
-				new TestrayCaseResultComparison[0]
-			));
-
-		return testrayRunComparison;
+				ArrayUtil.subset(
+					ListUtil.sort(
+						testrayCaseResultComparisons,
+						new TestrayCaseResultComparisonComparator()
+					).toArray(
+						new TestrayCaseResultComparison[0]
+					),
+					pagination.getStartPosition(),
+					Math.min(
+						pagination.getEndPosition(),
+						testrayCaseResultComparisons.size()))),
+			pagination, testrayCaseResultComparisons.size());
 	}
 
 	private void _compareTestrayCaseResultStatus(
@@ -239,13 +268,8 @@ public class TestrayRunComparisonResourceImpl
 			testrayCaseResultComparison.setId1(
 				GetterUtil.getLong(
 					testrayCaseResultMap1.get("c_caseResultId")));
-
-			String dueStatus = String.valueOf(
-				testrayCaseResultMap1.get("dueStatus"));
-
-			if (!Objects.equals(dueStatus, "UNTESTED")) {
-				testrayCaseResultComparison.setStatus1(dueStatus);
-			}
+			testrayCaseResultComparison.setStatus1(
+				String.valueOf(testrayCaseResultMap1.get("dueStatus")));
 		}
 
 		if (testrayCaseResultMap2 != null) {
@@ -256,13 +280,8 @@ public class TestrayRunComparisonResourceImpl
 			testrayCaseResultComparison.setId2(
 				GetterUtil.getLong(
 					testrayCaseResultMap2.get("c_caseResultId")));
-
-			String dueStatus = String.valueOf(
-				testrayCaseResultMap2.get("dueStatus"));
-
-			if (!Objects.equals(dueStatus, "UNTESTED")) {
-				testrayCaseResultComparison.setStatus2(dueStatus);
-			}
+			testrayCaseResultComparison.setStatus2(
+				String.valueOf(testrayCaseResultMap2.get("dueStatus")));
 		}
 
 		testrayCaseResultComparison.setTestrayCaseId(

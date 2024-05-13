@@ -216,9 +216,12 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 
 								return (
 									<>
-										{`${label}:`}
-
-										<b className='ml-1'>{value}</b>
+										<span className='legend-text-color'>
+											{label}
+											<b className='ml-1'>
+												{value}
+											</b>
+										</span>
 									</>
 								);
 							}

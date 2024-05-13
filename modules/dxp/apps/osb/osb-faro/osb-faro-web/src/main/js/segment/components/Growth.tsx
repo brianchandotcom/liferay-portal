@@ -401,7 +401,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 					<Legend
 						align='left'
 						formatter={(value, {count}) => (
-							<span>
+							<span className='legend-text-color'>
 								{`${value}:`}
 
 								<b className='ml-1'>{count}</b>

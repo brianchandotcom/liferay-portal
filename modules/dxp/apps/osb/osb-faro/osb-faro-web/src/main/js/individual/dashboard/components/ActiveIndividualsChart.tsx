@@ -211,6 +211,9 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 
 					<Legend
 						align='right'
+						formatter={dataKey => (
+							<span className='legend-text-color'>{dataKey}</span>
+						)}
 						iconSize={8}
 						onMouseEnter={({dataKey}) =>
 							setLegendHoverItem(dataKey)

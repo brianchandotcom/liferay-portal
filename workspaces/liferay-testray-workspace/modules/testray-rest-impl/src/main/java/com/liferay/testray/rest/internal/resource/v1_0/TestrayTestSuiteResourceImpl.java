@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
+import com.liferay.testray.rest.manager.TestrayManager;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
-import com.liferay.testray.rest.service.TestrayManager;
 
 import java.io.File;
 

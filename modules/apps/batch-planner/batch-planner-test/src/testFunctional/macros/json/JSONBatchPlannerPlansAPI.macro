@@ -9,6 +9,7 @@ definition {
 		}
 
 		var batchPlannerPlanIds = JSONBatchPlannerPlansAPI._getBatchPlannerPlanIds();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (${batchPlannerPlanIds} != "") {
 			for (var batchPlannerPlanId : list ${batchPlannerPlanIds}) {
@@ -16,7 +17,7 @@ definition {
 
 				var curl = '''
 					${baseURL}/api/jsonws/batchplanner.batchplannerplan/delete-batch-planner-plan \
-						-u test@liferay.com:test \
+						-u test@liferay.com:${userPassword} \
 						-d batchPlannerPlanId=${batchPlannerPlanId}
 				''';
 
@@ -37,10 +38,11 @@ definition {
 		}
 
 		var companyId = JSONCompany.getCompanyId();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${baseURL}/api/jsonws/batchplanner.batchplannerplan/get-batch-planner-plans \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${userPassword} \
 				-d companyId=${companyId} \
 				-d start=0 \
 				-d end=100 \

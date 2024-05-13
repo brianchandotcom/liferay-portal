@@ -124,6 +124,17 @@ public class JenkinsServerEntityRepository
 	}
 
 	@Override
+	public void initialize() {
+		addAll(_jenkinsServerEntityDALO.getAll());
+
+		for (JenkinsServerEntity jenkinsServerEntity : getAll()) {
+			jenkinsServerEntity.update();
+
+			update(jenkinsServerEntity);
+		}
+	}
+
+	@Override
 	public void initializeRelationships() {
 	}
 

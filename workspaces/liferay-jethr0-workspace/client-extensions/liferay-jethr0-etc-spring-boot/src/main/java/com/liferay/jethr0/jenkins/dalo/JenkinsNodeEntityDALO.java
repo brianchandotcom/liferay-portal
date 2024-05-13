@@ -9,6 +9,7 @@ import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntityFactory;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Objects;
@@ -22,12 +23,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JenkinsNodeEntityDALO extends BaseEntityDALO<JenkinsNodeEntity> {
 
-	public JenkinsNodeEntity getByName(String name) {
+	public JenkinsNodeEntity getByName(
+		JenkinsServerEntity jenkinsServerEntity, String name) {
+
 		if (StringUtil.isNullOrEmpty(name)) {
 			return null;
 		}
 
-		String filterString = "name eq '" + name + "'";
+		String filterString = StringUtil.combine(
+			"name eq '", name,
+			"' and r_jenkinsServerToJenkinsNodes_c_jenkinsServerId eq '",
+			jenkinsServerEntity.getId(), "'");
 
 		for (JenkinsNodeEntity jenkinsNodeEntity :
 				getAll(filterString, null, null)) {

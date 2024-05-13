@@ -62,6 +62,17 @@ public class JenkinsCohortEntityRepository
 	}
 
 	@Override
+	public void initialize() {
+		addAll(_jenkinsCohortEntityDALO.getAll());
+
+		for (JenkinsCohortEntity jenkinsCohortEntity : getAll()) {
+			jenkinsCohortEntity.update();
+
+			update(jenkinsCohortEntity);
+		}
+	}
+
+	@Override
 	public void initializeRelationships() {
 	}
 

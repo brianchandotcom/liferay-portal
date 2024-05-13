@@ -67,7 +67,7 @@ definition {
 			}
 		}
 
-		task ("And Given all 20+ object deinifition entities available in Objects") {
+		task ("And Given all 20+ object definitions entities available in Objects") {
 			ObjectAdmin.openObjectAdmin();
 
 			AssertTextEquals(
@@ -93,9 +93,9 @@ definition {
 			Click(locator1 = "APIBuilder#SELECT_AN_OBJECT_DEFINITION");
 		}
 
-		task ("Then all object deinifition entities from Objects are listed inluding the one placed on 2nd page of Objects") {
+		task ("Then all modifiable object definition entities from Objects are listed including the one placed on 2nd page of Objects") {
 			AssertElementPresent(
-				index = 21,
+				index = 13,
 				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION_BY_INDEX");
 		}
 	}

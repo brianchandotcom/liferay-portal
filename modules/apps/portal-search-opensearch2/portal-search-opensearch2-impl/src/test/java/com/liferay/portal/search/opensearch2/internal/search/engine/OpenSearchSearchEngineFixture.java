@@ -21,7 +21,6 @@ import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchCo
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.connection.TestOpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.index.CompanyIndexFactory;
-import com.liferay.portal.search.opensearch2.internal.index.IndexConfigurationDynamicUpdatesExecutor;
 import com.liferay.portal.search.opensearch2.internal.index.IndexHelper;
 import com.liferay.portal.search.opensearch2.internal.index.IndexHelperImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.OpenSearchEngineAdapterFixture;
@@ -83,7 +82,6 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 		_frameworkUtilMockedStatic = _createFrameworkUtil();
 		_indexNameBuilder = indexNameBuilder;
 		_openSearchSearchEngine = _createOpenSearchSearchEngine(
-			Mockito.mock(IndexConfigurationDynamicUpdatesExecutor.class),
 			indexNameBuilder, openSearchConfigurationWrapper);
 	}
 
@@ -232,8 +230,6 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 	}
 
 	private OpenSearchSearchEngine _createOpenSearchSearchEngine(
-		IndexConfigurationDynamicUpdatesExecutor
-			indexConfigurationDynamicUpdatesExecutor,
 		IndexNameBuilder indexNameBuilder,
 		OpenSearchConfigurationWrapper openSearchConfigurationWrapper) {
 
@@ -249,9 +245,6 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 		OpenSearchSearchEngine openSearchSearchEngine =
 			new OpenSearchSearchEngine();
 
-		ReflectionTestUtil.setFieldValue(
-			openSearchSearchEngine, "_indexConfigurationDynamicUpdatesExecutor",
-			indexConfigurationDynamicUpdatesExecutor);
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngine, "_indexFactory", _companyIndexFactory);
 		ReflectionTestUtil.setFieldValue(

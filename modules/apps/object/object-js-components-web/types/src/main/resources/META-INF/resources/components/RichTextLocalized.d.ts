@@ -7,6 +7,27 @@
 
 import React from 'react';
 import './RichTextLocalized.scss';
+interface LabelSymbolObject {
+	label: Liferay.Language.Locale;
+	symbol: string;
+}
+interface RichTextLocalizedProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {
+	ariaLabels?: {
+		default: string;
+		openLocalizations: string;
+		translated: string;
+		untranslated: string;
+	};
+	editorConfig: CKEDITOR.config;
+	helpMessage?: string;
+	label: string;
+	onSelectedLocaleChange: (val: LabelSymbolObject) => void;
+	onTranslationsChange: (val: LocalizedValue<string>) => void;
+	readOnly?: boolean;
+	selectedLocale: Liferay.Language.Locale;
+	translations: LocalizedValue<string>;
+}
 export declare function RichTextLocalized({
 	ariaLabels,
 	editorConfig,
@@ -17,25 +38,5 @@ export declare function RichTextLocalized({
 	readOnly,
 	selectedLocale,
 	translations,
-}: IProps): JSX.Element;
-interface IItem {
-	label: Liferay.Language.Locale;
-	symbol: string;
-}
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-	ariaLabels?: {
-		default: string;
-		openLocalizations: string;
-		translated: string;
-		untranslated: string;
-	};
-	editorConfig: CKEDITOR.config;
-	helpMessage?: string;
-	label: string;
-	onSelectedLocaleChange: (val: IItem) => void;
-	onTranslationsChange: (val: LocalizedValue<string>) => void;
-	readOnly?: boolean;
-	selectedLocale: Liferay.Language.Locale;
-	translations: LocalizedValue<string>;
-}
+}: RichTextLocalizedProps): JSX.Element;
 export {};

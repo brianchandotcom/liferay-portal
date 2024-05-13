@@ -16,7 +16,38 @@ import {ClassicEditor, IEditor} from 'frontend-editor-ckeditor-web';
 import {FieldBase} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {sanitizeHTML} from '../utils/sanitizeHTML';
+
 import './RichTextLocalized.scss';
+
+interface LabelSymbolObject {
+	label: Liferay.Language.Locale;
+	symbol: string;
+}
+
+interface OnSetDataEvent {
+	data: {
+		dataValue: string;
+	};
+	editor: CKEDITOR.editor;
+}
+interface RichTextLocalizedProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {
+	ariaLabels?: {
+		default: string;
+		openLocalizations: string;
+		translated: string;
+		untranslated: string;
+	};
+	editorConfig: CKEDITOR.config;
+	helpMessage?: string;
+	label: string;
+	onSelectedLocaleChange: (val: LabelSymbolObject) => void;
+	onTranslationsChange: (val: LocalizedValue<string>) => void;
+	readOnly?: boolean;
+	selectedLocale: Liferay.Language.Locale;
+	translations: LocalizedValue<string>;
+}
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -42,7 +73,7 @@ export function RichTextLocalized({
 	readOnly = false,
 	selectedLocale,
 	translations,
-}: IProps) {
+}: RichTextLocalizedProps) {
 	const editorRef = useRef<IEditor>(null);
 
 	const [active, setActive] = useState(false);
@@ -85,6 +116,22 @@ export function RichTextLocalized({
 								...translations,
 								[selectedLocale]: content,
 							});
+						}}
+						onSetData={(event: OnSetDataEvent) => {
+							const editor = event.editor;
+
+							if (editor.mode === 'source') {
+								const value = event.data.dataValue;
+
+								const sanitizedValue = sanitizeHTML(value);
+
+								onTranslationsChange({
+									...translations,
+									[selectedLocale]: sanitizedValue,
+								});
+
+								event.data.dataValue = sanitizedValue;
+							}
 						}}
 						readOnly={readOnly}
 						ref={editorRef}
@@ -176,24 +223,4 @@ export function RichTextLocalized({
 			</div>
 		</FieldBase>
 	);
-}
-interface IItem {
-	label: Liferay.Language.Locale;
-	symbol: string;
-}
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-	ariaLabels?: {
-		default: string;
-		openLocalizations: string;
-		translated: string;
-		untranslated: string;
-	};
-	editorConfig: CKEDITOR.config;
-	helpMessage?: string;
-	label: string;
-	onSelectedLocaleChange: (val: IItem) => void;
-	onTranslationsChange: (val: LocalizedValue<string>) => void;
-	readOnly?: boolean;
-	selectedLocale: Liferay.Language.Locale;
-	translations: LocalizedValue<string>;
 }

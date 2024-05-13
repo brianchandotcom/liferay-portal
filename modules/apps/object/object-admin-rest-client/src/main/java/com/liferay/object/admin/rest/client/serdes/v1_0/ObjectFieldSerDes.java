@@ -217,6 +217,22 @@ public class ObjectFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (objectField.getObjectDefinitionExternalReferenceCode1() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode1\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					objectField.getObjectDefinitionExternalReferenceCode1()));
+
+			sb.append("\"");
+		}
+
 		if (objectField.getObjectFieldSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -238,6 +254,22 @@ public class ObjectFieldSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (objectField.getObjectRelationshipExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectRelationshipExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					objectField.getObjectRelationshipExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (objectField.getReadOnly() != null) {
@@ -466,6 +498,16 @@ public class ObjectFieldSerDes {
 			map.put("name", String.valueOf(objectField.getName()));
 		}
 
+		if (objectField.getObjectDefinitionExternalReferenceCode1() == null) {
+			map.put("objectDefinitionExternalReferenceCode1", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionExternalReferenceCode1",
+				String.valueOf(
+					objectField.getObjectDefinitionExternalReferenceCode1()));
+		}
+
 		if (objectField.getObjectFieldSettings() == null) {
 			map.put("objectFieldSettings", null);
 		}
@@ -473,6 +515,16 @@ public class ObjectFieldSerDes {
 			map.put(
 				"objectFieldSettings",
 				String.valueOf(objectField.getObjectFieldSettings()));
+		}
+
+		if (objectField.getObjectRelationshipExternalReferenceCode() == null) {
+			map.put("objectRelationshipExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"objectRelationshipExternalReferenceCode",
+				String.valueOf(
+					objectField.getObjectRelationshipExternalReferenceCode()));
 		}
 
 		if (objectField.getReadOnly() == null) {
@@ -648,6 +700,15 @@ public class ObjectFieldSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectDefinitionExternalReferenceCode1")) {
+
+				if (jsonParserFieldValue != null) {
+					objectField.setObjectDefinitionExternalReferenceCode1(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "objectFieldSettings")) {
 
 				if (jsonParserFieldValue != null) {
@@ -665,6 +726,15 @@ public class ObjectFieldSerDes {
 
 					objectField.setObjectFieldSettings(
 						objectFieldSettingsArray);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectRelationshipExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectField.setObjectRelationshipExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "readOnly")) {

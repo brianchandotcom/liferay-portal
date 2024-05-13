@@ -178,6 +178,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 		objectField.setIndexedLanguageId(regex);
 		objectField.setListTypeDefinitionExternalReferenceCode(regex);
 		objectField.setName(regex);
+		objectField.setObjectDefinitionExternalReferenceCode1(regex);
+		objectField.setObjectRelationshipExternalReferenceCode(regex);
 		objectField.setReadOnlyConditionExpression(regex);
 
 		String json = ObjectFieldSerDes.toJSON(objectField);
@@ -192,6 +194,10 @@ public abstract class BaseObjectFieldResourceTestCase {
 		Assert.assertEquals(
 			regex, objectField.getListTypeDefinitionExternalReferenceCode());
 		Assert.assertEquals(regex, objectField.getName());
+		Assert.assertEquals(
+			regex, objectField.getObjectDefinitionExternalReferenceCode1());
+		Assert.assertEquals(
+			regex, objectField.getObjectRelationshipExternalReferenceCode());
 		Assert.assertEquals(
 			regex, objectField.getReadOnlyConditionExpression());
 	}
@@ -1626,9 +1632,35 @@ public abstract class BaseObjectFieldResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode1",
+					additionalAssertFieldName)) {
+
+				if (objectField.getObjectDefinitionExternalReferenceCode1() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectFieldSettings", additionalAssertFieldName)) {
 
 				if (objectField.getObjectFieldSettings() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectRelationshipExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectField.getObjectRelationshipExternalReferenceCode() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -1981,11 +2013,43 @@ public abstract class BaseObjectFieldResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode1",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectField1.
+							getObjectDefinitionExternalReferenceCode1(),
+						objectField2.
+							getObjectDefinitionExternalReferenceCode1())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectFieldSettings", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						objectField1.getObjectFieldSettings(),
 						objectField2.getObjectFieldSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectRelationshipExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectField1.
+							getObjectRelationshipExternalReferenceCode(),
+						objectField2.
+							getObjectRelationshipExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2462,9 +2526,103 @@ public abstract class BaseObjectFieldResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("objectDefinitionExternalReferenceCode1")) {
+			Object object =
+				objectField.getObjectDefinitionExternalReferenceCode1();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("objectFieldSettings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("objectRelationshipExternalReferenceCode")) {
+			Object object =
+				objectField.getObjectRelationshipExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("readOnly")) {
@@ -2606,6 +2764,10 @@ public abstract class BaseObjectFieldResourceTestCase {
 				listTypeDefinitionId = RandomTestUtil.randomLong();
 				localized = RandomTestUtil.randomBoolean();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				objectDefinitionExternalReferenceCode1 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				objectRelationshipExternalReferenceCode =
+					StringUtil.toLowerCase(RandomTestUtil.randomString());
 				readOnlyConditionExpression = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				required = RandomTestUtil.randomBoolean();

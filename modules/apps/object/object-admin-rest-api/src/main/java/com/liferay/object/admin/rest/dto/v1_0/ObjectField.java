@@ -660,6 +660,53 @@ public class ObjectField implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@Schema
+	public String getObjectDefinitionExternalReferenceCode1() {
+		if (_objectDefinitionExternalReferenceCode1Supplier != null) {
+			objectDefinitionExternalReferenceCode1 =
+				_objectDefinitionExternalReferenceCode1Supplier.get();
+
+			_objectDefinitionExternalReferenceCode1Supplier = null;
+		}
+
+		return objectDefinitionExternalReferenceCode1;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode1(
+		String objectDefinitionExternalReferenceCode1) {
+
+		this.objectDefinitionExternalReferenceCode1 =
+			objectDefinitionExternalReferenceCode1;
+
+		_objectDefinitionExternalReferenceCode1Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setObjectDefinitionExternalReferenceCode1(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCode1UnsafeSupplier) {
+
+		_objectDefinitionExternalReferenceCode1Supplier = () -> {
+			try {
+				return objectDefinitionExternalReferenceCode1UnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectDefinitionExternalReferenceCode1;
+
+	@JsonIgnore
+	private Supplier<String> _objectDefinitionExternalReferenceCode1Supplier;
+
+	@Schema
 	@Valid
 	public ObjectFieldSetting[] getObjectFieldSettings() {
 		if (_objectFieldSettingsSupplier != null) {
@@ -703,6 +750,53 @@ public class ObjectField implements Serializable {
 
 	@JsonIgnore
 	private Supplier<ObjectFieldSetting[]> _objectFieldSettingsSupplier;
+
+	@Schema
+	public String getObjectRelationshipExternalReferenceCode() {
+		if (_objectRelationshipExternalReferenceCodeSupplier != null) {
+			objectRelationshipExternalReferenceCode =
+				_objectRelationshipExternalReferenceCodeSupplier.get();
+
+			_objectRelationshipExternalReferenceCodeSupplier = null;
+		}
+
+		return objectRelationshipExternalReferenceCode;
+	}
+
+	public void setObjectRelationshipExternalReferenceCode(
+		String objectRelationshipExternalReferenceCode) {
+
+		this.objectRelationshipExternalReferenceCode =
+			objectRelationshipExternalReferenceCode;
+
+		_objectRelationshipExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setObjectRelationshipExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectRelationshipExternalReferenceCodeUnsafeSupplier) {
+
+		_objectRelationshipExternalReferenceCodeSupplier = () -> {
+			try {
+				return objectRelationshipExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectRelationshipExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _objectRelationshipExternalReferenceCodeSupplier;
 
 	@JsonGetter("readOnly")
 	@Schema
@@ -1299,6 +1393,23 @@ public class ObjectField implements Serializable {
 			sb.append("\"");
 		}
 
+		String objectDefinitionExternalReferenceCode1 =
+			getObjectDefinitionExternalReferenceCode1();
+
+		if (objectDefinitionExternalReferenceCode1 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode1\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinitionExternalReferenceCode1));
+
+			sb.append("\"");
+		}
+
 		ObjectFieldSetting[] objectFieldSettings = getObjectFieldSettings();
 
 		if (objectFieldSettings != null) {
@@ -1319,6 +1430,23 @@ public class ObjectField implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String objectRelationshipExternalReferenceCode =
+			getObjectRelationshipExternalReferenceCode();
+
+		if (objectRelationshipExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectRelationshipExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectRelationshipExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		ReadOnly readOnly = getReadOnly();

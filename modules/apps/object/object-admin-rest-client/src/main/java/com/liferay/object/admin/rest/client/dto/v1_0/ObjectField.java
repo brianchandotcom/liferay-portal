@@ -338,6 +338,32 @@ public class ObjectField implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getObjectDefinitionExternalReferenceCode1() {
+		return objectDefinitionExternalReferenceCode1;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode1(
+		String objectDefinitionExternalReferenceCode1) {
+
+		this.objectDefinitionExternalReferenceCode1 =
+			objectDefinitionExternalReferenceCode1;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode1(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCode1UnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode1 =
+				objectDefinitionExternalReferenceCode1UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectDefinitionExternalReferenceCode1;
+
 	public ObjectFieldSetting[] getObjectFieldSettings() {
 		return objectFieldSettings;
 	}
@@ -361,6 +387,32 @@ public class ObjectField implements Cloneable, Serializable {
 	}
 
 	protected ObjectFieldSetting[] objectFieldSettings;
+
+	public String getObjectRelationshipExternalReferenceCode() {
+		return objectRelationshipExternalReferenceCode;
+	}
+
+	public void setObjectRelationshipExternalReferenceCode(
+		String objectRelationshipExternalReferenceCode) {
+
+		this.objectRelationshipExternalReferenceCode =
+			objectRelationshipExternalReferenceCode;
+	}
+
+	public void setObjectRelationshipExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectRelationshipExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectRelationshipExternalReferenceCode =
+				objectRelationshipExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectRelationshipExternalReferenceCode;
 
 	public ReadOnly getReadOnly() {
 		return readOnly;

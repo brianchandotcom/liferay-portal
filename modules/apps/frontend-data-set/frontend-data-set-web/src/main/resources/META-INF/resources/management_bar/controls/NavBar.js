@@ -14,7 +14,7 @@ import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
 import CustomViewsControls from './CustomViewsControls';
 import MainSearch from './MainSearch';
-import OrderDropdown from './OrderDropdown';
+import SortDropdown from './SortDropdown';
 import FiltersDropdown from './filters/FiltersDropdown';
 
 function NavBar({creationMenu, showSearch}) {
@@ -38,7 +38,7 @@ function NavBar({creationMenu, showSearch}) {
 
 				{!!sorts.length && Liferay.FeatureFlags['LPD-19465'] && (
 					<ManagementToolbar.Item>
-						<OrderDropdown />
+						<SortDropdown />
 					</ManagementToolbar.Item>
 				)}
 			</ManagementToolbar.ItemList>

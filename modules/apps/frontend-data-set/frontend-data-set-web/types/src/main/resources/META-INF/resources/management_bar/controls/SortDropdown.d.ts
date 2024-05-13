@@ -5,5 +5,5 @@
 
 /// <reference types="react" />
 
-declare function OrderDropdown(): JSX.Element;
-export default OrderDropdown;
+declare function SortDropdown(): JSX.Element;
+export default SortDropdown;

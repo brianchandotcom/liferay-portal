@@ -15,7 +15,7 @@ import ViewsContext from '../../views/ViewsContext';
 
 import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
 
-function OrderDropdown() {
+function SortDropdown() {
 	const [{sorts}, viewsDispatch]: [{sorts: TSort[]}, Function] = useContext(
 		ViewsContext
 	);
@@ -129,4 +129,4 @@ function OrderDropdown() {
 	);
 }
 
-export default OrderDropdown;
+export default SortDropdown;

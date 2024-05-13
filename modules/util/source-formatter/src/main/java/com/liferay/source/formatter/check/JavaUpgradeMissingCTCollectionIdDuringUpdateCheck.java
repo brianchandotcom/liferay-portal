@@ -93,6 +93,9 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 			updateClause = updateClause.replaceAll("\n", "");
 			updateClause = updateClause.replaceAll("\\s{2,}", " ");
 
+			updateClause = updateClause.replace("\" + \"", "");
+			updateClause = updateClause.replace("\", \"", "");
+
 			String tableName = updateClause.replaceFirst(
 				"\"update (\\w+).*", "$1");
 

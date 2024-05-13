@@ -64,16 +64,29 @@ export default function AttributeFields({
 					disabled={disabled}
 					errorMessage={errorMessage}
 					id={nameId}
-					label={Liferay.Language.get('attribute')}
+					label={
+						<>
+							{Liferay.Language.get('attribute')}
+
+							<span className="sr-only">
+								{Liferay.Language.get('spaces-are-not-allowed')}
+							</span>
+						</>
+					}
 					required
 				>
 					<ClayInput
+						aria-describedby={`${nameId}fieldFeedback`}
 						aria-required={true}
 						defaultValue={name}
 						disabled={disabled}
 						id={nameId}
-						onChange={({target}) => {
-							if (target.value.toLowerCase().trim() === 'src') {
+						onChange={(event) => {
+							const value = event.target.value
+								.split(' ')
+								.join('');
+
+							if (value.toLowerCase() === 'src') {
 								setErrorMessage(
 									Liferay.Language.get(
 										'use-the-javascript-url-field'
@@ -84,7 +97,9 @@ export default function AttributeFields({
 								setErrorMessage(null);
 							}
 
-							onAttributeChange(index, {name: target.value});
+							onAttributeChange(index, {
+								name: value,
+							});
 						}}
 						type="text"
 						value={name}

@@ -263,7 +263,10 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		List<String> sourceFormatterProperties = new ArrayList<>();
 
 		sourceFormatterProperties.add(
-			"upgrade.to.version=" + _UPGRADE_TO_VERSION);
+			"upgrade.to.liferay.version=" + _UPGRADE_TO_LIFERAY_VERSION);
+
+		sourceFormatterProperties.add(
+			"upgrade.to.release.version=" + _UPGRADE_TO_RELEASE_VERSION);
 
 		SourceFormatterArgs sourceFormatterArgs =
 			super.getSourceFormatterArgs();
@@ -287,6 +290,8 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		}
 	}
 
-	private static final String _UPGRADE_TO_VERSION = "7.4.13.u27";
+	private static final String _UPGRADE_TO_LIFERAY_VERSION = "7.4.13.u27";
+
+	private static final String _UPGRADE_TO_RELEASE_VERSION = "2024.q1.1";
 
 }

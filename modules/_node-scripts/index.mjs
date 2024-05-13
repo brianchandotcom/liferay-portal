@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import writeAMD2ESMBridges from './amd/writeAMD2ESMBridges.mjs';
+import writeManifestJson from './amd/writeManifestJson.mjs';
+import writePackageJson from './amd/writePackageJson.mjs';
 import getGlobalImports from './configuration/getGlobalImports.mjs';
 import getOverridenPackageSymbols from './configuration/getOverridenPackageSymbols.mjs';
 import getProjectDescription from './configuration/getProjectDescription.mjs';
@@ -15,9 +18,6 @@ import bundleCSSExports from './esbuild/bundleCSSExports.mjs';
 import bundleJavaScriptExports from './esbuild/bundleJavaScriptExports.mjs';
 import bundleJavaScriptMain from './esbuild/bundleJavaScriptMain.mjs';
 import runNpmScripts from './npmscripts/runNpmScripts.mjs';
-import writeAMD2ESMBridges from './npmscripts/writeAMD2ESMBridges.mjs';
-import writeManifestJson from './npmscripts/writeManifestJson.mjs';
-import writePackageJson from './npmscripts/writePackageJson.mjs';
 import writeTimings from './util/writeTimings.mjs';
 
 export default async function main() {

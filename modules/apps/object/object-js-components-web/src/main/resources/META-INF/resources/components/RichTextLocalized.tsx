@@ -99,14 +99,14 @@ export function RichTextLocalized({
 	return (
 		<FieldBase
 			className={classNames({
-				'lfr-notification__rich-text-localized-readonly': readOnly,
+				'lfr-objects__rich-text-localized-readonly': readOnly,
 			})}
 			disabled={readOnly}
 			helpMessage={helpMessage}
 			label={label}
 		>
-			<div className="lfr-notification__rich-text-localized">
-				<div className="lfr-notification__rich-text-localized-editor">
+			<div className="lfr-objects__rich-text-localized">
+				<div className="lfr-objects__rich-text-localized-editor">
 					<ClassicEditor
 						contents={translations[selectedLocale] as string}
 						editorConfig={editorConfig}
@@ -140,7 +140,7 @@ export function RichTextLocalized({
 
 				<ClayDropDown
 					active={active}
-					className="lfr-notification__rich-text-localized-flag"
+					className="lfr-objects__rich-text-localized-flag"
 					onActiveChange={setActive}
 					trigger={
 						<ClayButton

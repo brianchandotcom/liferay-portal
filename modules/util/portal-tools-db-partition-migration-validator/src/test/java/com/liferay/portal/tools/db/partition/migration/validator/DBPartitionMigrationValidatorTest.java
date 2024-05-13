@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.db.partition.migration.validator;
 
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -16,6 +18,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintStream;
+
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import java.nio.file.Paths;
 
 import java.security.Permission;
 
@@ -35,15 +42,13 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Luis Ortiz
  */
-public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
+public class DBPartitionMigrationValidatorTest extends DatabaseMockUtil {
 
 	@Before
 	public void setUp() {
 		System.setErr(new PrintStream(_errByteArrayOutputStream));
 		System.setOut(new PrintStream(_outByteArrayOutputStream));
-		System.setSecurityManager(
-			new DBPartitionMigrationValidatorExportTest.
-				DisallowExitSecurityManager());
+		System.setSecurityManager(new DisallowExitSecurityManager());
 	}
 
 	@After
@@ -53,7 +58,7 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 	}
 
 	@Test
-	public void testMultipleCompanyDefaultDatabase() throws Exception {
+	public void testExportMultipleCompanyDefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -64,7 +69,7 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 	}
 
 	@Test
-	public void testMultipleCompanyNondefaultDatabase() throws Exception {
+	public void testExportMultipleCompanyNondefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -75,7 +80,7 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 	}
 
 	@Test
-	public void testSingleCompanyDefaultDatabase() throws Exception {
+	public void testExportSingleCompanyDefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -85,13 +90,140 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 	}
 
 	@Test
-	public void testSingleCompanyNondefaultDatabase() throws Exception {
+	public void testExportSingleCompanyNondefaultDatabase() throws Exception {
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
 			Collections.singletonList(RandomTestUtil.randomLong()), false,
 			_generateReleases());
+	}
+
+	@Test
+	public void testValidateErrors() throws Exception {
+		_validate(
+			"sourceFailure.json", "targetFailure.json",
+			runtimeException -> {
+				Assert.assertEquals("1", runtimeException.getMessage());
+
+				String string = _outByteArrayOutputStream.toString();
+
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Company ID 3007447931789165977 already " +
+							"exists in the target database"));
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Module com.liferay.address.impl needs to be " +
+							"verified in the source database before the " +
+								"migration"));
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Module com.liferay.comment.page.comments." +
+							"web has a failed release state in the source " +
+								"database"));
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Module com.liferay.exportimport.service " +
+							"needs to be installed in the source database " +
+								"before the migration"));
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Module com.liferay.knowledge.base.web needs " +
+							"to be upgraded in the target database before " +
+								"the migration"));
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Module com.liferay.organizations.service " +
+							"has a failed release state in the target " +
+								"database"));
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Module com.liferay.organizations.service " +
+							"needs to be verified in the target database " +
+								"before the migration"));
+				Assert.assertTrue(
+					string.contains(
+						"[ERROR] Module com.liferay.wiki.web needs to be " +
+							"upgraded in the source database before the " +
+								"migration"));
+				Assert.assertTrue(
+					string.contains(
+						StringBundler.concat(
+							"[WARN] Company name Liferay DXP already exists ",
+							"in the target database. You must set a different ",
+							"value in ",
+							"DBPartitionInsertVirtualInstanceConfiguration.",
+							"config.")));
+				Assert.assertTrue(
+					string.contains(
+						"[WARN] Module com.liferay.asset.publisher.web is " +
+							"not present in the source database"));
+				Assert.assertTrue(
+					string.contains(
+						"[WARN] Module com.liferay.license.manager.web is " +
+							"not present in the target database"));
+				Assert.assertTrue(
+					string.contains(
+						"[WARN] Table CommercePriceList is not present in " +
+							"the source database"));
+				Assert.assertTrue(
+					string.contains(
+						"[WARN] Table DDMTemplate is not present in the " +
+							"target database"));
+				Assert.assertTrue(
+					string.contains(
+						StringBundler.concat(
+							"[WARN] Virtual host localhost already exists in ",
+							"the target database. You must set a different ",
+							"value in ",
+							"DBPartitionInsertVirtualInstanceConfiguration.",
+							"config.")));
+				Assert.assertTrue(
+					string.contains(
+						StringBundler.concat(
+							"[WARN] Web ID liferay.com already exists in the ",
+							"target database. You must set a different value ",
+							"in ",
+							"DBPartitionInsertVirtualInstanceConfiguration.",
+							"config.")));
+			},
+			() -> {
+			});
+	}
+
+	@Test
+	public void testValidateSuccess() throws Exception {
+		_validate(
+			"sourceSuccess.json", "targetSuccess.json",
+			runtimeException -> Assert.fail(),
+			() -> {
+				Assert.assertTrue(
+					_errByteArrayOutputStream.toString(
+					).isEmpty());
+				Assert.assertTrue(
+					_outByteArrayOutputStream.toString(
+					).isEmpty());
+			});
+	}
+
+	@Test
+	public void testValidateTargetNondefaultPartition() throws Exception {
+		_validate(
+			"sourceSuccess.json", "targetNotDefault.json",
+			runtimeException -> {
+				Assert.assertEquals("1", runtimeException.getMessage());
+				Assert.assertTrue(
+					_errByteArrayOutputStream.toString(
+					).contains(
+						"Target is not the default partition"
+					));
+				Assert.assertTrue(
+					_outByteArrayOutputStream.toString(
+					).isEmpty());
+			},
+			() -> {
+			});
 	}
 
 	@Rule
@@ -292,6 +424,15 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 		return sb.toString();
 	}
 
+	private String _getResourceFilePath(String fileName)
+		throws URISyntaxException {
+
+		URL resource = DBPartitionMigrationValidatorTest.class.getResource(
+			"dependencies/" + fileName);
+
+		return String.valueOf(Paths.get(resource.toURI()));
+	}
+
 	private void _mockDatabase(
 			List<Company> companies, List<Long> companyIds,
 			List<Long> companyInfoIds, boolean defaultPartition,
@@ -307,6 +448,27 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 			_USER);
 		mockGetReleases(releases);
 		mockGetTables(defaultPartition);
+	}
+
+	private void _validate(
+			String sourceFile, String targetFile,
+			UnsafeConsumer<RuntimeException, Exception> catchValidations,
+			UnsafeRunnable<Exception> validations)
+		throws Exception {
+
+		try {
+			DBPartitionMigrationValidator.main(
+				new String[] {
+					"--validate", "--source-file",
+					_getResourceFilePath(sourceFile), "--target-file",
+					_getResourceFilePath(targetFile)
+				});
+		}
+		catch (RuntimeException runtimeException) {
+			catchValidations.accept(runtimeException);
+		}
+
+		validations.run();
 	}
 
 	private static final String _PASSWORD = RandomTestUtil.randomString();
@@ -331,7 +493,9 @@ public class DBPartitionMigrationValidatorExportTest extends DatabaseMockUtil {
 		public void checkExit(int status) {
 			super.checkExit(status);
 
-			throw new RuntimeException(String.valueOf(status));
+			if (status != 0) {
+				throw new RuntimeException(String.valueOf(status));
+			}
 		}
 
 		@Override

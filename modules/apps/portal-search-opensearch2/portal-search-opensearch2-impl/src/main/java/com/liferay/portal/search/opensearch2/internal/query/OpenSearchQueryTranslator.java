@@ -1145,30 +1145,6 @@ public class OpenSearchQueryTranslator
 			"Invalid multi match query type " + type);
 	}
 
-	private org.opensearch.client.opensearch._types.query_dsl.TermsQuery
-		_translateTermsQuery(TermsQuery termsQuery, String field, String[] values) {
-
-		org.opensearch.client.opensearch._types.query_dsl.TermsQuery.Builder
-			builder = QueryBuilders.terms();
-
-		SetterUtil.setNotNullFloat(builder::boost, termsQuery.getBoost());
-
-		builder.field(field);
-
-		builder.terms(
-			termsQueryField -> {
-				List<FieldValue> fieldValues = new ArrayList<>();
-
-				ListUtil.isNotEmptyForEach(
-					Arrays.asList(values),
-					value -> fieldValues.add(FieldValue.of(value)));
-
-				return termsQueryField.value(fieldValues);
-			});
-
-		return builder.build();
-	}
-
 	private void _processBooleanQueryClauses(
 		List<Query> queryClauses,
 		Consumer<org.opensearch.client.opensearch._types.query_dsl.Query>
@@ -1418,6 +1394,31 @@ public class OpenSearchQueryTranslator
 
 		throw new IllegalArgumentException(
 			"Invalid shape relation " + shapeRelation);
+	}
+
+	private org.opensearch.client.opensearch._types.query_dsl.TermsQuery
+		_translateTermsQuery(
+			TermsQuery termsQuery, String field, String[] values) {
+
+		org.opensearch.client.opensearch._types.query_dsl.TermsQuery.Builder
+			builder = QueryBuilders.terms();
+
+		SetterUtil.setNotNullFloat(builder::boost, termsQuery.getBoost());
+
+		builder.field(field);
+
+		builder.terms(
+			termsQueryField -> {
+				List<FieldValue> fieldValues = new ArrayList<>();
+
+				ListUtil.isNotEmptyForEach(
+					Arrays.asList(values),
+					value -> fieldValues.add(FieldValue.of(value)));
+
+				return termsQueryField.value(fieldValues);
+			});
+
+		return builder.build();
 	}
 
 	private static final Integer _MAX_TERMS_COUNT = 65536;

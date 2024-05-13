@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.testray.rest.service;
+package com.liferay.testray.rest.manager;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;

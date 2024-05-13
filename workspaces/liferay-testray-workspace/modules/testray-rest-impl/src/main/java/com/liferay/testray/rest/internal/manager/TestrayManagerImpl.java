@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.testray.rest.internal.service;
+package com.liferay.testray.rest.internal.manager;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
-import com.liferay.testray.rest.service.TestrayManager;
+import com.liferay.testray.rest.manager.TestrayManager;
 
 import java.io.File;
 import java.io.Serializable;

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.testray.rest.service.TestrayManager;
+import com.liferay.testray.rest.manager.TestrayManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

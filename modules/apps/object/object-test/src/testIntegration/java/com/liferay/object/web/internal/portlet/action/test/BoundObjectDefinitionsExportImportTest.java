@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -28,6 +29,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Guilherme Sá
  */
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class BoundObjectDefinitionsExportImportTest
 	extends BaseExportImportTestCase {

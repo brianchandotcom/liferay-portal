@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutServiceBaseImpl;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -79,6 +81,11 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			getPermissionChecker(), fileShortcutId, ActionKeys.VIEW);
 
 		return dlFileShortcutLocalService.getFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
+		return dlFileShortcutPersistence.findByGroupId(groupId);
 	}
 
 	@Override

@@ -310,6 +310,11 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
+		return dlFileShortcutPersistence.findByGroupId(groupId);
+	}
+
+	@Override
 	public void rebuildTree(long companyId) throws PortalException {
 		_dlFolderLocalService.rebuildTree(companyId);
 	}

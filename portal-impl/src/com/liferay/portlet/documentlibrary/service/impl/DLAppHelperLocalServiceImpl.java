@@ -271,6 +271,11 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
+		return _dlFileShortcutPersistence.findByGroupId(groupId);
+	}
+
+	@Override
 	public List<FileEntry> getNoAssetFileEntries() {
 		return null;
 	}

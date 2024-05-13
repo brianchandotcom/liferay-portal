@@ -6,6 +6,7 @@
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 
@@ -19,13 +20,55 @@ import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {
 	deleteJenkinsCohortById,
 	getJenkinsCohortById,
+	getJenkinsServersPage,
 } from '../../objects/jenkins/JenkinsUtil';
 import {toLocaleString} from '../../services/DateUtil';
 
 function JenkinsMasters({jenkinsCohort}) {
-	if (!jenkinsCohort?.jenkinsServers) {
+	const [jenkinsServersPage, setJenkinsServersPage] = useState(null);
+
+	if (!jenkinsServersPage) {
+		getJenkinsServersPage({
+			jenkinsCohort,
+			setJenkinsServersPage,
+		});
+
+		return;
+	}
+
+	if (!jenkinsServersPage) {
 		return <div>Loading...</div>;
 	}
+
+	function setActiveDelta({activeDelta, jenkinsCohort, jenkinsServersPage}) {
+		getJenkinsServersPage({
+			jenkinsCohort,
+			page: jenkinsServersPage.page,
+			pageSize: activeDelta,
+			setJenkinsServersPage,
+		});
+	}
+
+	function setActivePage({activePage, jenkinsCohort, jenkinsServersPage}) {
+		getJenkinsServersPage({
+			jenkinsCohort,
+			page: activePage,
+			pageSize: jenkinsServersPage.pageSize,
+			setJenkinsServersPage,
+		});
+	}
+
+	const deltas = [
+		{
+			label: 25,
+		},
+		{
+			label: 50,
+		},
+		{
+			label: 100,
+		},
+	];
 
 	return (
 		<ClayPanel
@@ -47,7 +90,7 @@ function JenkinsMasters({jenkinsCohort}) {
 						</tr>
 					</thead>
 					<tbody>
-						{jenkinsCohort.jenkinsServers?.map((jenkinsServer) => {
+						{jenkinsServersPage.jenkinsServers?.map((jenkinsServer) => {
 							return (
 								<tr key={jenkinsServer.id}>
 									<th className="font-weight-semi-bold">
@@ -82,6 +125,23 @@ function JenkinsMasters({jenkinsCohort}) {
 						})}
 					</tbody>
 				</Jethr0Table>
+
+				{jenkinsServersPage && (
+					<ClayPaginationBarWithBasicItems
+						activeDelta={jenkinsServersPage.pageSize}
+						defaultActive={jenkinsServersPage.page}
+						deltas={deltas}
+						ellipsisBuffer={3}
+						onActiveChange={(activePage) => {
+							setActivePage({activePage, jenkinsCohort, jenkinsServersPage});
+						}}
+						onDeltaChange={(activeDelta) => {
+							setActiveDelta({activeDelta, jenkinsCohort, jenkinsServersPage});
+						}}
+						showDeltasDropDown={true}
+						totalItems={jenkinsServersPage.totalCount}
+					/>
+				)}
 			</ClayPanel.Body>
 		</ClayPanel>
 	);

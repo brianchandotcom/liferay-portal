@@ -324,6 +324,7 @@ export async function getJenkinsNodesPage({
 }
 
 export async function getJenkinsServersPage({
+	jenkinsCohort,
 	page,
 	pageSize,
 	setJenkinsServersPage,
@@ -336,10 +337,16 @@ export async function getJenkinsServersPage({
 		pageSize = 25;
 	}
 
+	let filter = '';
+
+	if (jenkinsCohort) {
+		filter = `r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId eq '${jenkinsCohort.id}'`;
+	}
+
 	const response = await liferayRequest({
 		graphqlQuery: `{
 			c {
-				jenkinsServers (page: ${page}, pageSize: ${pageSize}) {
+				jenkinsServers (filter: \\"${filter}\\", sort: \\"name\\", page: ${page}, pageSize: ${pageSize}) {
 					items {
 						dateCreated
 						dateModified

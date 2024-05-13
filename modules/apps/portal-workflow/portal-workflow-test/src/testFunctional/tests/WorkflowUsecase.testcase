@@ -673,7 +673,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
@@ -721,7 +721,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com",
 			userScreenName = "usersn");
 
@@ -763,7 +763,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
@@ -809,7 +809,7 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
@@ -851,7 +851,7 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 

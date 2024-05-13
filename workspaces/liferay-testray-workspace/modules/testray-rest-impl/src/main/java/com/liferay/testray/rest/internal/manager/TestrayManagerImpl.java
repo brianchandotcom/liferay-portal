@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
 import com.liferay.testray.rest.manager.TestrayManager;
@@ -344,7 +345,9 @@ public class TestrayManagerImpl implements TestrayManager {
 			companyId,
 			StringBundler.concat(
 				"projectId eq '", testrayProjectId, "' and name eq '",
-				testrayCaseName, "'"),
+				StringUtil.removeChar(
+					StringUtil.replace(testrayCaseName, '\'', "''"), '\\'),
+				"'"),
 			objectEntryIdsKey, "Case", testrayCache, userId);
 
 		long testrayTeamId = _getTestrayTeamId(

@@ -329,6 +329,17 @@ public class ObjectDefinitionResourceImpl
 					serviceBuilderObjectField.getObjectFieldId());
 		}
 
+		for (ObjectField objectField : objectDefinition.getObjectFields()) {
+			if (StringUtil.equals(
+					objectField.getBusinessTypeAsString(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				_addObjectRelationship(
+					objectDefinition.getDefaultLanguageId(), objectField,
+					serviceBuilderObjectDefinition);
+			}
+		}
+
 		_addObjectDefinitionResources(
 			Collections.emptySet(), objectDefinition.getObjectActions(),
 			serviceBuilderObjectDefinition.getObjectDefinitionId(),
@@ -635,6 +646,10 @@ public class ObjectDefinitionResourceImpl
 						objectDefinitionId);
 
 				if (existingObjectField == null) {
+					_addObjectRelationship(
+						objectDefinition.getDefaultLanguageId(), objectField,
+						serviceBuilderObjectDefinition);
+
 					continue;
 				}
 			}
@@ -1018,6 +1033,62 @@ public class ObjectDefinitionResourceImpl
 					objectDefinitionId, objectView);
 			}
 		}
+	}
+
+	private void _addObjectRelationship(
+			String defaultLanguageId, ObjectField objectField,
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition2)
+		throws Exception {
+
+		String objectDefinitionExternalReferenceCode1 =
+			objectField.getObjectDefinitionExternalReferenceCode1();
+
+		if (Validator.isNull(objectDefinitionExternalReferenceCode1) ||
+			StringUtil.equals(
+				objectDefinitionExternalReferenceCode1,
+				serviceBuilderObjectDefinition2.getExternalReferenceCode())) {
+
+			return;
+		}
+
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition1 =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						objectDefinitionExternalReferenceCode1,
+						serviceBuilderObjectDefinition2.getCompanyId());
+
+		if (serviceBuilderObjectDefinition1 == null) {
+			serviceBuilderObjectDefinition1 =
+				_objectDefinitionLocalService.addObjectDefinition(
+					objectDefinitionExternalReferenceCode1,
+					contextUser.getUserId(),
+					serviceBuilderObjectDefinition2.getObjectFolderId(),
+					serviceBuilderObjectDefinition2.getRootObjectDefinitionId(),
+					true, false);
+		}
+
+		com.liferay.object.model.ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByExternalReferenceCode(
+					objectField.getObjectRelationshipExternalReferenceCode(),
+					serviceBuilderObjectDefinition1.getObjectDefinitionId());
+
+		if (objectRelationship != null) {
+			return;
+		}
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			objectField.getObjectRelationshipExternalReferenceCode(),
+			contextUser.getUserId(),
+			serviceBuilderObjectDefinition1.getObjectDefinitionId(),
+			serviceBuilderObjectDefinition2.getObjectDefinitionId(),
+			ObjectFieldUtil.toObjectField(
+				LocaleUtil.fromLanguageId(defaultLanguageId), false,
+				_listTypeDefinitionLocalService, objectField,
+				_objectFieldLocalService, _objectFieldSettingLocalService,
+				_objectFilterLocalService));
 	}
 
 	private com.liferay.object.model.ObjectDefinition

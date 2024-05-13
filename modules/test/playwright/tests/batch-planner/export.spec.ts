@@ -369,3 +369,24 @@ test('can export as JSONL with excluded fields', async ({
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
+
+test('can see correct custom object name in dropdown', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+}) => {
+	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
+		stockObjectDefinition
+	);
+	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
+
+	await dataMigrationCenterPage.goto()
+	await dataMigrationCenterPage.goToExportFile();
+
+	expect(
+		await dataMigrationCenterPage.page.getByLabel('Entity Type').textContent()
+	).toContain('Stock (v1_0 - Liferay Object REST)')
+
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+});
+
+

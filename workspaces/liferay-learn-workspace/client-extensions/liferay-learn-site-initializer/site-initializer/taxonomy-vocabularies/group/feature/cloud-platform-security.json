@@ -1,0 +1,11 @@
+{
+	"description": "Cloud Platform Security",
+	"description_i18n": {
+		"en_US": "Cloud Platform Security"
+	},
+	"name": "Cloud Platform Security",
+	"name_i18n": {
+		"en_US": "Cloud Platform Security"
+	},
+	"viewableBy": "Anyone"
+}

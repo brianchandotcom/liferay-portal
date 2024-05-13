@@ -1,0 +1,11 @@
+{
+	"description": "Collection Pages",
+	"description_i18n": {
+		"en_US": "Collection Pages"
+	},
+	"name": "Collection Pages",
+	"name_i18n": {
+		"en_US": "Collection Pages"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,11 @@
+{
+	"description": "Notifications and Notification Templates",
+	"description_i18n": {
+		"en_US": "Notifications and Notification Templates"
+	},
+	"name": "Notifications and Notification Templates",
+	"name_i18n": {
+		"en_US": "Notifications and Notification Templates"
+	},
+	"viewableBy": "Anyone"
+}

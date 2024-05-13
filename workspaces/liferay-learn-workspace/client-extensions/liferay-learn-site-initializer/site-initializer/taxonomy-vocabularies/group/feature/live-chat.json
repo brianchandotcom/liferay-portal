@@ -1,0 +1,11 @@
+{
+	"description": "Live Chat",
+	"description_i18n": {
+		"en_US": "Live Chat"
+	},
+	"name": "Live Chat",
+	"name_i18n": {
+		"en_US": "Live Chat"
+	},
+	"viewableBy": "Anyone"
+}

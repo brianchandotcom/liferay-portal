@@ -1,11 +1,11 @@
 {
-	"description": "Liferay Experience Cloud - Self Managed",
+	"description": "Liferay PaaS",
 	"description_i18n": {
-		"en_US": "Liferay Experience Cloud - Self Managed"
+		"en_US": "Liferay PaaS"
 	},
-	"name": "Liferay Experience Cloud - Self Managed",
+	"name": "Liferay PaaS",
 	"name_i18n": {
-		"en_US": "Liferay Experience Cloud - Self Managed"
+		"en_US": "Liferay PaaS"
 	},
 	"viewableBy": "Anyone"
 }

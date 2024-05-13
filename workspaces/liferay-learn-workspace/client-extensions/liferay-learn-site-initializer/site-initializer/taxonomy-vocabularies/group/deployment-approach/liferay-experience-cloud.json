@@ -1,11 +1,11 @@
 {
-	"description": "Liferay Experience Cloud",
+	"description": "Liferay SaaS",
 	"description_i18n": {
-		"en_US": "Liferay Experience Cloud"
+		"en_US": "Liferay SaaS"
 	},
-	"name": "Liferay Experience Cloud",
+	"name": "Liferay SaaS",
 	"name_i18n": {
-		"en_US": "Liferay Experience Cloud"
+		"en_US": "Liferay SaaS"
 	},
 	"viewableBy": "Anyone"
 }

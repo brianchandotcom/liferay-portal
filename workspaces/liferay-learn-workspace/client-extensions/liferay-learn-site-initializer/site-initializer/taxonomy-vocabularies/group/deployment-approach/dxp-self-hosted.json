@@ -1,11 +1,11 @@
 {
-	"description": "DXP - Self Hosted",
+	"description": "Liferay Self-Hosted",
 	"description_i18n": {
-		"en_US": "DXP - Self Hosted"
+		"en_US": "Liferay Self-Hosted"
 	},
-	"name": "DXP - Self Hosted",
+	"name": "Liferay Self-Hosted",
 	"name_i18n": {
-		"en_US": "DXP - Self Hosted"
+		"en_US": "Liferay Self-Hosted"
 	},
 	"viewableBy": "Anyone"
 }

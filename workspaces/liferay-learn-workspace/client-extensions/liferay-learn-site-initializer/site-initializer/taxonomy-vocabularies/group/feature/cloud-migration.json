@@ -1,0 +1,11 @@
+{
+	"description": "Cloud Migration",
+	"description_i18n": {
+		"en_US": "Cloud Migration"
+	},
+	"name": "Cloud Migration",
+	"name_i18n": {
+		"en_US": "Cloud Migration"
+	},
+	"viewableBy": "Anyone"
+}

@@ -8,7 +8,10 @@ package com.liferay.jethr0.routine;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +44,14 @@ public abstract class BaseRoutineEntity
 	@Override
 	public Boolean getEnabled() {
 		return _enabled;
+	}
+
+	@Override
+	public URL getEntityURL() {
+		return StringUtil.toURL(
+			StringUtil.combine(
+				Jethr0ContextUtil.getLiferayPortalURL(), "/#/routines/",
+				getId()));
 	}
 
 	@Override

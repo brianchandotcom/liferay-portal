@@ -8,6 +8,10 @@ package com.liferay.jethr0.jenkins.cohort;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import java.util.Set;
 
@@ -41,6 +45,14 @@ public abstract class BaseJenkinsCohortEntity
 	@Override
 	public void addJobEntity(JobEntity jobEntity) {
 		addRelatedEntity(jobEntity);
+	}
+
+	@Override
+	public URL getEntityURL() {
+		return StringUtil.toURL(
+			StringUtil.combine(
+				Jethr0ContextUtil.getLiferayPortalURL(), "/#/jenkins-cohorts/",
+				getId()));
 	}
 
 	public int getJenkinsServerCount() {

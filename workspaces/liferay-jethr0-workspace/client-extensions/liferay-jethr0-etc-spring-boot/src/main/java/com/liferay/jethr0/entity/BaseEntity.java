@@ -6,8 +6,11 @@
 package com.liferay.jethr0.entity;
 
 import com.liferay.jethr0.util.BaseRetryable;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,6 +53,13 @@ public abstract class BaseEntity implements Entity {
 	@Override
 	public Date getCreatedDate() {
 		return _createdDate;
+	}
+
+	@Override
+	public URL getEntityURL() {
+		return StringUtil.toURL(
+			StringUtil.combine(
+				Jethr0ContextUtil.getLiferayPortalURL(), "/#/", getId()));
 	}
 
 	@Override

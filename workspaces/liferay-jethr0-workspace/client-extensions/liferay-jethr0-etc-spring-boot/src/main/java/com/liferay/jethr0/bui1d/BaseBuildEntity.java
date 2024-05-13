@@ -11,7 +11,10 @@ import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.task.TaskEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,6 +90,14 @@ public abstract class BaseBuildEntity
 	@Override
 	public Set<BuildEntity> getChildBuildEntities() {
 		return _childBuildEntities;
+	}
+
+	@Override
+	public URL getEntityURL() {
+		return StringUtil.toURL(
+			StringUtil.combine(
+				Jethr0ContextUtil.getLiferayPortalURL(), "/#/builds/",
+				getId()));
 	}
 
 	@Override

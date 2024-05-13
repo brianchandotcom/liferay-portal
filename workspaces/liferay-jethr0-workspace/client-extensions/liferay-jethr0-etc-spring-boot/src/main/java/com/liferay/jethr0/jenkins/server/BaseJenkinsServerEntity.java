@@ -8,6 +8,7 @@ package com.liferay.jethr0.jenkins.server;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
+import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -61,6 +62,14 @@ public abstract class BaseJenkinsServerEntity
 		).block();
 
 		return new JSONObject(response);
+	}
+
+	@Override
+	public URL getEntityURL() {
+		return StringUtil.toURL(
+			StringUtil.combine(
+				Jethr0ContextUtil.getLiferayPortalURL(), "/#/jenkins-servers/",
+				getId()));
 	}
 
 	@Override

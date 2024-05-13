@@ -10,7 +10,7 @@ import getProjectExports from './configuration/getProjectExports.mjs';
 import getProjectMain from './configuration/getProjectMain.mjs';
 import getProjectNpmScriptsConfig from './configuration/getProjectNpmScriptsConfig.mjs';
 import getProjectWebContextPath from './configuration/getProjectWebContextPath.mjs';
-import writeCSSLoaderJavaScriptModules from './cssLoad/writeCSSLoaderJavaScriptModules.mjs';
+import writeCSSExportsLoaderModules from './cssLoad/writeCSSExportsLoaderModules.mjs';
 import bundleCSSExports from './esbuild/bundleCSSExports.mjs';
 import bundleJavaScriptExports from './esbuild/bundleJavaScriptExports.mjs';
 import bundleJavaScriptMain from './esbuild/bundleJavaScriptMain.mjs';
@@ -47,7 +47,7 @@ export default async function main() {
 		bundleJavaScriptMain(globalImports, overridenPackageSymbols, projectMain, projectWebContextPath),
 		bundleJavaScriptExports(globalImports, overridenPackageSymbols, projectExports),
 		bundleCSSExports(projectExports),
-		writeCSSLoaderJavaScriptModules(projectExports, projectWebContextPath),
+		writeCSSExportsLoaderModules(projectExports, projectWebContextPath),
 		writePackageJson(projectDescription),
 		writeManifestJson(projectDescription),
 		writeAMD2ESMBridges(projectDescription, projectWebContextPath),

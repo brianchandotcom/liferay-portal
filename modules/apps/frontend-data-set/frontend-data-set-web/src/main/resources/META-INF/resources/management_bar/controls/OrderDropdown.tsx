@@ -8,7 +8,7 @@ import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {TSorting} from '../../index';
+import {TSort} from '../../index';
 import ViewsContext from '../../views/ViewsContext';
 
 // @ts-ignore
@@ -16,22 +16,21 @@ import ViewsContext from '../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
 
 function OrderDropdown() {
-	const [{sorts}, viewsDispatch]: [
-		{sorts: TSorting[]},
-		Function
-	] = useContext(ViewsContext);
+	const [{sorts}, viewsDispatch]: [{sorts: TSort[]}, Function] = useContext(
+		ViewsContext
+	);
 
-	const activeSort = sorts?.find((sort: TSorting) => sort.active);
+	const activeSort = sorts?.find((sort: TSort) => sort.active);
 
 	const [selectedDirection, setSelectedDirection] = useState<
-		TSorting['direction']
+		TSort['direction']
 	>(activeSort?.direction ?? 'asc');
-	const [selectedKey, setSelectedKey] = useState<TSorting['key']>(
+	const [selectedKey, setSelectedKey] = useState<TSort['key']>(
 		activeSort?.key
 	);
 
 	useEffect(() => {
-		const activeSort = sorts?.find((sort: TSorting) => sort.active);
+		const activeSort = sorts?.find((sort: TSort) => sort.active);
 
 		if (activeSort) {
 			setSelectedDirection(activeSort.direction);
@@ -65,7 +64,7 @@ function OrderDropdown() {
 			}
 		>
 			<DropDown.ItemList items={sorts}>
-				{(sort: TSorting) => (
+				{(sort: TSort) => (
 					<DropDown.Item
 						key={sort.key}
 						onClick={() => {

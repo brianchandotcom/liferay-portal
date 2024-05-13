@@ -9,7 +9,7 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {TSorting} from '../..';
+import {TSort} from '../..';
 import ViewsContext from '../ViewsContext';
 
 // @ts-ignore
@@ -49,7 +49,7 @@ const TableHeadCell = ({
 	function handleSortingCellClick(event: any) {
 		event.preventDefault();
 
-		let updatedSortedElements: TSorting[] = [];
+		let updatedSortedElements: TSort[] = [];
 
 		if (Liferay.FeatureFlags['LPD-19465']) {
 			updatedSortedElements = sorts.map((element) =>

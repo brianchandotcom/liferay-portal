@@ -1024,9 +1024,10 @@ public class ObjectRelationshipLocalServiceImpl
 	private ObjectField _addObjectField(
 			String externalReferenceCode, User user,
 			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, Map<Locale, String> labelMap,
-			String name, String readOnly, String readOnlyConditionExpression,
-			String relationshipType, boolean required, boolean system)
+			ObjectDefinition objectDefinition2, String dbColumnName,
+			Map<Locale, String> labelMap, String name, String readOnly,
+			String readOnlyConditionExpression, String relationshipType,
+			boolean required, boolean system)
 		throws PortalException {
 
 		_objectFieldLocalService.validateExternalReferenceCode(
@@ -1053,8 +1054,10 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP);
 		objectField.setSystem(system);
 
-		String dbColumnName = StringBundler.concat(
-			"r_", name, "_", objectDefinition1.getPKObjectFieldName());
+		if (Validator.isNull(dbColumnName)) {
+			dbColumnName = StringBundler.concat(
+				"r_", name, "_", objectDefinition1.getPKObjectFieldName());
+		}
 
 		objectField.setDBColumnName(dbColumnName);
 
@@ -1217,14 +1220,14 @@ public class ObjectRelationshipLocalServiceImpl
 
 				objectField = _addObjectField(
 					objectField.getExternalReferenceCode(), user,
-					objectDefinition1, objectDefinition2, objectFieldLabelMap,
-					name, objectField.getReadOnly(),
+					objectDefinition1, objectDefinition2, objectField.getName(),
+					objectFieldLabelMap, name, objectField.getReadOnly(),
 					objectField.getReadOnlyConditionExpression(), type,
 					objectField.isRequired(), system);
 			}
 			else {
 				objectField = _addObjectField(
-					null, user, objectDefinition1, objectDefinition2,
+					null, user, objectDefinition1, objectDefinition2, null,
 					objectRelationship.getLabelMap(), name,
 					ObjectFieldConstants.READ_ONLY_FALSE, StringPool.BLANK,
 					type, false, system);

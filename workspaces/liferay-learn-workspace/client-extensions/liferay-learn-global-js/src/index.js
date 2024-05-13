@@ -10,6 +10,8 @@ import 'prismjs';
 
 import './article';
 
+import './handleRecipePage';
+
 export default {
 	DropdownProvider,
 	SpatialNavigationProvider,

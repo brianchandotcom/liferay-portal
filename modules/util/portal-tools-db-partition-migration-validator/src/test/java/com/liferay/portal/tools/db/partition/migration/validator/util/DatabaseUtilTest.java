@@ -26,19 +26,19 @@ import org.junit.Test;
 /**
  * @author Luis Ortiz
  */
-public class DatabaseUtilTest extends DatabaseMockUtil {
+public class DatabaseUtilTest {
 
 	@Before
 	public void setUp() throws SQLException {
-		mockGetColumns(Collections.emptyList());
-		mockGetCompanies(Collections.emptyList());
-		mockGetCompanyIds(Collections.emptyList());
-		mockGetCompanyInfos(Collections.emptyList());
-		mockGetConnection(
+		DatabaseMockUtil.mockGetColumns(Collections.emptyList());
+		DatabaseMockUtil.mockGetCompanies(Collections.emptyList());
+		DatabaseMockUtil.mockGetCompanyIds(Collections.emptyList());
+		DatabaseMockUtil.mockGetCompanyInfos(Collections.emptyList());
+		DatabaseMockUtil.mockGetConnection(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-		mockGetReleases(Collections.emptyList());
-		mockGetTables(true);
+		DatabaseMockUtil.mockGetReleases(Collections.emptyList());
+		DatabaseMockUtil.mockGetTables(true);
 	}
 
 	@Test
@@ -50,10 +50,10 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		mockGetCompanies(Arrays.asList(company1, company2));
+		DatabaseMockUtil.mockGetCompanies(Arrays.asList(company1, company2));
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			connection);
+			DatabaseMockUtil.getConnection());
 
 		List<Company> companies = liferayDatabase.getCompanies();
 
@@ -97,10 +97,11 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 		Release module2Release = new Release(
 			Version.parseVersion("2.0.1"), "module2", 1, false);
 
-		mockGetReleases(Arrays.asList(module1Release, module2Release));
+		DatabaseMockUtil.mockGetReleases(
+			Arrays.asList(module1Release, module2Release));
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			connection);
+			DatabaseMockUtil.getConnection());
 
 		List<Release> releases = liferayDatabase.getReleases();
 
@@ -111,12 +112,12 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 
 	@Test
 	public void testGetTableNames() throws Exception {
-		mockGetColumns(
+		DatabaseMockUtil.mockGetColumns(
 			Arrays.asList("Table1", "Company", "Table2", "Object_x_25000"));
-		mockGetCompanyIds(Collections.singletonList(25000L));
+		DatabaseMockUtil.mockGetCompanyIds(Collections.singletonList(25000L));
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			connection);
+			DatabaseMockUtil.getConnection());
 
 		List<String> tableNames = liferayDatabase.getTableNames();
 
@@ -143,18 +144,22 @@ public class DatabaseUtilTest extends DatabaseMockUtil {
 			List<Long> companyIds, Consumer<LiferayDatabase> consumer)
 		throws Exception {
 
-		mockGetCompanyInfos(companyIds);
+		DatabaseMockUtil.mockGetCompanyInfos(companyIds);
 
-		consumer.accept(DatabaseUtil.exportLiferayDatabase(connection));
+		consumer.accept(
+			DatabaseUtil.exportLiferayDatabase(
+				DatabaseMockUtil.getConnection()));
 	}
 
 	private void _testIsExportedCompanyDefault(
 			Consumer<LiferayDatabase> consumer, boolean defaultPartition)
 		throws Exception {
 
-		mockGetTables(defaultPartition);
+		DatabaseMockUtil.mockGetTables(defaultPartition);
 
-		consumer.accept(DatabaseUtil.exportLiferayDatabase(connection));
+		consumer.accept(
+			DatabaseUtil.exportLiferayDatabase(
+				DatabaseMockUtil.getConnection()));
 	}
 
 }

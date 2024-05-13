@@ -27,9 +27,15 @@ import org.mockito.stubbing.Answer;
 /**
  * @author Luis Ortiz
  */
-public abstract class DatabaseMockUtil {
+public class DatabaseMockUtil {
 
-	protected void mockGetColumns(List<String> tableNames) throws SQLException {
+	public static Connection getConnection() {
+		return _connection;
+	}
+
+	public static void mockGetColumns(List<String> tableNames)
+		throws SQLException {
+
 		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
 
 		Mockito.when(
@@ -111,14 +117,14 @@ public abstract class DatabaseMockUtil {
 		);
 	}
 
-	protected void mockGetCompanies(List<Company> companies)
+	public static void mockGetCompanies(List<Company> companies)
 		throws SQLException {
 
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 
 		Mockito.when(
-			connection.prepareStatement(
+			_connection.prepareStatement(
 				"select Company.companyId, webId, name, hostname from " +
 					"Company left join VirtualHost on Company.companyId = " +
 						"VirtualHost.companyId")
@@ -278,14 +284,14 @@ public abstract class DatabaseMockUtil {
 		);
 	}
 
-	protected void mockGetCompanyIds(List<Long> companyIds)
+	public static void mockGetCompanyIds(List<Long> companyIds)
 		throws SQLException {
 
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 
 		Mockito.when(
-			connection.prepareStatement("select companyId from Company")
+			_connection.prepareStatement("select companyId from Company")
 		).thenReturn(
 			preparedStatement
 		);
@@ -353,14 +359,14 @@ public abstract class DatabaseMockUtil {
 		);
 	}
 
-	protected void mockGetCompanyInfos(List<Long> companyIds)
+	public static void mockGetCompanyInfos(List<Long> companyIds)
 		throws SQLException {
 
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 
 		Mockito.when(
-			connection.prepareStatement("select companyId from CompanyInfo")
+			_connection.prepareStatement("select companyId from CompanyInfo")
 		).thenReturn(
 			preparedStatement
 		);
@@ -428,17 +434,18 @@ public abstract class DatabaseMockUtil {
 		);
 	}
 
-	protected void mockGetConnection(String password, String url, String user)
+	public static void mockGetConnection(
+			String password, String url, String user)
 		throws SQLException {
 
 		_driverManagerMockedStatic.when(
 			() -> DriverManager.getConnection(url, user, password)
 		).thenReturn(
-			connection
+			_connection
 		);
 
 		Mockito.when(
-			connection.getMetaData()
+			_connection.getMetaData()
 		).thenReturn(
 			_databaseMetaData
 		);
@@ -450,12 +457,14 @@ public abstract class DatabaseMockUtil {
 		);
 	}
 
-	protected void mockGetReleases(List<Release> releases) throws SQLException {
+	public static void mockGetReleases(List<Release> releases)
+		throws SQLException {
+
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 
 		Mockito.when(
-			connection.prepareStatement(
+			_connection.prepareStatement(
 				"select servletContextName, schemaVersion, state_, verified " +
 					"from Release_")
 		).thenReturn(
@@ -616,7 +625,9 @@ public abstract class DatabaseMockUtil {
 		);
 	}
 
-	protected void mockGetTables(boolean defaultPartition) throws SQLException {
+	public static void mockGetTables(boolean defaultPartition)
+		throws SQLException {
+
 		ResultSet resultSet = Mockito.mock(ResultSet.class);
 
 		Mockito.when(
@@ -634,9 +645,8 @@ public abstract class DatabaseMockUtil {
 		);
 	}
 
-	protected static final Connection connection = Mockito.mock(
+	private static final Connection _connection = Mockito.mock(
 		Connection.class);
-
 	private static final DatabaseMetaData _databaseMetaData = Mockito.mock(
 		DatabaseMetaData.class);
 	private static final MockedStatic<DriverManager>

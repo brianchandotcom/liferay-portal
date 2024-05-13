@@ -42,7 +42,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Luis Ortiz
  */
-public class DBPartitionMigrationValidatorTest extends DatabaseMockUtil {
+public class DBPartitionMigrationValidatorTest {
 
 	@Before
 	public void setUp() {
@@ -439,15 +439,15 @@ public class DBPartitionMigrationValidatorTest extends DatabaseMockUtil {
 			List<Release> releases, List<String> tableNames)
 		throws Exception {
 
-		mockGetColumns(tableNames);
-		mockGetCompanies(companies);
-		mockGetCompanyIds(companyIds);
-		mockGetCompanyInfos(companyInfoIds);
-		mockGetConnection(
+		DatabaseMockUtil.mockGetColumns(tableNames);
+		DatabaseMockUtil.mockGetCompanies(companies);
+		DatabaseMockUtil.mockGetCompanyIds(companyIds);
+		DatabaseMockUtil.mockGetCompanyInfos(companyInfoIds);
+		DatabaseMockUtil.mockGetConnection(
 			_PASSWORD, StringUtil.replace(_URL, "lportal", _SCHEMA_NAME),
 			_USER);
-		mockGetReleases(releases);
-		mockGetTables(defaultPartition);
+		DatabaseMockUtil.mockGetReleases(releases);
+		DatabaseMockUtil.mockGetTables(defaultPartition);
 	}
 
 	private void _validate(

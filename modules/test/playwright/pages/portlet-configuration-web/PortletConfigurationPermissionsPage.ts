@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -45,9 +45,9 @@ export class PortletConfigurationPermissionsPage {
         await this.permissionsMenuItem.click();
     }
 
-    async switchDeltaFrom20To4() {
-        await this.permissionsFrame.getByText('20 Entries Per Page', { exact: true }).click();
-        await this.permissionsFrame.getByRole('link', { name: '4 Entries per Page' }).click();
-        await expect(this.permissionsFrame.getByText('Showing 1 to 4')).toBeVisible();
+    async changePagination(startValue : number, endValue : number) {
+        await this.permissionsFrame.getByText(startValue + ' Entries Per Page', { exact: true }).click();
+        await this.permissionsFrame.getByRole('link', { name: endValue + ' Entries per Page' }).click();
+        await expect(this.permissionsFrame.getByText('Showing 1 to ' + endValue)).toBeVisible();
     }  
 }

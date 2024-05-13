@@ -14,6 +14,12 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -24,6 +30,12 @@ public class CreateBuildRunEventHandler extends BaseJRPEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Creating build run from JRP at " +
+					StringUtil.toString(new Date()));
+		}
+
 		BuildEntityRepository buildEntityRepository =
 			Jethr0ContextUtil.getBuildEntityRepository();
 
@@ -65,11 +77,21 @@ public class CreateBuildRunEventHandler extends BaseJRPEventHandler {
 
 		updateJRPStatus(buildRunEntity, buildEntity, jobEntity, "queued");
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Created build run ", buildRunEntity.getEntityURL(),
+					" from JRP at ", StringUtil.toString(new Date())));
+		}
+
 		return buildRunEntity.toString();
 	}
 
 	protected CreateBuildRunEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		CreateBuildRunEventHandler.class);
 
 }

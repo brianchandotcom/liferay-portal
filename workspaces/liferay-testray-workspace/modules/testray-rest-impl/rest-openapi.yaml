@@ -223,9 +223,9 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestrayRunComparison"
             tags: ["TestrayRunComparison"]
-    "/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/details":
+    "/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/runs":
         get:
-            operationId: getTestrayRunComparisonDetail
+            operationId: getTestrayRunComparisonRun
             parameters:
                 - in: path
                   name: testrayRunId1
@@ -276,6 +276,72 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/TestrayRunComparison"
+            tags: ["TestrayRunComparison"]
+    "/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}/testray-case-result-comparisons":
+        get:
+            operationId: getTestrayRunComparisonTestrayCaseResultComparisonsPage
+            parameters:
+                - in: path
+                  name: testrayRunId1
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: testrayRunId2
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: testrayCaseResultError1
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultError2
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultIssue1
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultIssue2
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultStatus1
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseResultStatus2
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseResultComparison"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseResultComparison"
+                                type: array
             tags: ["TestrayRunComparison"]
     "/testray-status-metrics/by-testray-buildId/{testrayBuildId}/testray-case-types-metrics":
         get:

@@ -8,6 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.portal.search.query.TermsQuery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -30,7 +31,7 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 			return QueryBuilders.termsQuery(field, terms);
 		}
 
-		ArrayList<String> termsList = new ArrayList<>();
+		List<String> termsList = new ArrayList<>();
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
 		for (String term : terms) {

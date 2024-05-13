@@ -534,6 +534,10 @@ definition {
 			AssertElementNotPresent(
 				key_menuItem = "ViewEditDelete",
 				locator1 = "CommerceNavigation#DROPDOWN_ITEM");
+
+			Click(
+				key_menuItem = "Delete",
+				locator1 = "CommerceNavigation#DROPDOWN_ITEM");
 		}
 
 		task ("When the buyer edits Brake Fluid option value, selecting MIN93016B, and edits the bundled product option value, selecting White") {

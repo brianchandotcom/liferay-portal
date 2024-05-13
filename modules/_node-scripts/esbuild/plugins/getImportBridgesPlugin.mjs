@@ -56,10 +56,6 @@ function getImportBridgeCode(
 		hasDefault = !!symbols['default'];
 	}
 
-	if (moduleName === 'react' || moduleName === 'react-dom' || moduleName === 'object-hash' || moduleName === 'prop-types') {
-		hasDefault = true;
-	}
-
 	const pathPrefix = getPathPrefix(type);
 
 	const modulePath = external ? `exports/${getFlatName(moduleName)}.js` : 'index.js';

@@ -14,27 +14,16 @@ export default function FieldFeedback({
 	warningMessage,
 	...otherProps
 }: IProps) {
-	if (!errorMessage && !helpMessage && !warningMessage) {
-		return null;
-	}
+	const message = errorMessage ? errorMessage : warningMessage;
+	const symbol = errorMessage ? 'exclamation-full' : 'warning-full';
 
 	return (
 		<ClayForm.FeedbackGroup className="field-feedback" {...otherProps}>
-			{errorMessage && (
-				<ClayForm.FeedbackItem>
-					<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+			<ClayForm.FeedbackItem aria-live="assertive">
+				{message && <ClayForm.FeedbackIndicator symbol={symbol} />}
 
-					{errorMessage}
-				</ClayForm.FeedbackItem>
-			)}
-
-			{warningMessage && !errorMessage && (
-				<ClayForm.FeedbackItem>
-					<ClayForm.FeedbackIndicator symbol="warning-full" />
-
-					{warningMessage}
-				</ClayForm.FeedbackItem>
-			)}
+				{message}
+			</ClayForm.FeedbackItem>
 
 			{helpMessage && <div>{helpMessage}</div>}
 		</ClayForm.FeedbackGroup>

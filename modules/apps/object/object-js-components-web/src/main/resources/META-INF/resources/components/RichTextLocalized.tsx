@@ -18,7 +18,44 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import './RichTextLocalized.scss';
 
+interface LabelSymbolObject {
+	label: Liferay.Language.Locale;
+	symbol: string;
+}
+
+interface OnSetDataEvent {
+	data: {
+		dataValue: string;
+	};
+	editor: CKEDITOR.editor;
+}
+interface RichTextLocalizedProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {
+	ariaLabels?: {
+		default: string;
+		openLocalizations: string;
+		translated: string;
+		untranslated: string;
+	};
+	editorConfig: CKEDITOR.config;
+	helpMessage?: string;
+	label: string;
+	onSelectedLocaleChange: (val: LabelSymbolObject) => void;
+	onTranslationsChange: (val: LocalizedValue<string>) => void;
+	readOnly?: boolean;
+	selectedLocale: Liferay.Language.Locale;
+	translations: LocalizedValue<string>;
+}
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+const ALERT_REGEX = /alert\((.*?)\)/;
+const ASP_CODE_REGEX = /<%[\s\S]*?%>/g;
+const ASP_NET_CODE_REGEX = /(<asp:[^]+>[\s|\S]*?<\/asp:[^]+>)|(<asp:[^]+\/>)/gi;
+const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX = /<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
+const INNER_HTML_REGEX = /innerHTML\s*=\s*.*?/;
+const ON_ATTRIBUTE_REGEX = /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi;
+const PHP_CODE_REGEX = /<\?[\s\S]*?\?>/g;
 
 const availableLocales = Object.keys(Liferay.Language.available)
 	.sort((languageId) => (languageId === defaultLanguageId ? -1 : 1))
@@ -26,6 +63,20 @@ const availableLocales = Object.keys(Liferay.Language.available)
 		label: language as Liferay.Language.Locale,
 		symbol: language.replace(/_/g, '-').toLowerCase(),
 	}));
+
+function sanitizeHTML(html: string) {
+	const sanitizedHtml = html
+		.replace(HTML_TAG_WITH_ON_ATTRIBUTE_REGEX, (match) => {
+			return match.replace(ON_ATTRIBUTE_REGEX, '');
+		})
+		.replace(ALERT_REGEX, '')
+		.replace(INNER_HTML_REGEX, '')
+		.replace(PHP_CODE_REGEX, '')
+		.replace(ASP_CODE_REGEX, '')
+		.replace(ASP_NET_CODE_REGEX, '');
+
+	return sanitizedHtml;
+}
 
 export function RichTextLocalized({
 	ariaLabels = {
@@ -42,7 +93,7 @@ export function RichTextLocalized({
 	readOnly = false,
 	selectedLocale,
 	translations,
-}: IProps) {
+}: RichTextLocalizedProps) {
 	const editorRef = useRef<IEditor>(null);
 
 	const [active, setActive] = useState(false);
@@ -85,6 +136,22 @@ export function RichTextLocalized({
 								...translations,
 								[selectedLocale]: content,
 							});
+						}}
+						onSetData={(event: OnSetDataEvent) => {
+							const editor = event.editor;
+
+							if (editor.mode === 'source') {
+								const value = event.data.dataValue;
+
+								const sanitizedValue = sanitizeHTML(value);
+
+								onTranslationsChange({
+									...translations,
+									[selectedLocale]: sanitizedValue,
+								});
+
+								event.data.dataValue = sanitizedValue;
+							}
 						}}
 						readOnly={readOnly}
 						ref={editorRef}
@@ -176,24 +243,4 @@ export function RichTextLocalized({
 			</div>
 		</FieldBase>
 	);
-}
-interface IItem {
-	label: Liferay.Language.Locale;
-	symbol: string;
-}
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-	ariaLabels?: {
-		default: string;
-		openLocalizations: string;
-		translated: string;
-		untranslated: string;
-	};
-	editorConfig: CKEDITOR.config;
-	helpMessage?: string;
-	label: string;
-	onSelectedLocaleChange: (val: IItem) => void;
-	onTranslationsChange: (val: LocalizedValue<string>) => void;
-	readOnly?: boolean;
-	selectedLocale: Liferay.Language.Locale;
-	translations: LocalizedValue<string>;
 }

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
-import com.liferay.testray.rest.service.TestrayService;
+import com.liferay.testray.rest.service.TestrayManager;
 
 import java.io.File;
 import java.io.Serializable;
@@ -59,8 +59,8 @@ import org.w3c.dom.NodeList;
 /**
  * @author José Abelenda
  */
-@Component(service = TestrayService.class)
-public class TestrayServiceImpl implements TestrayService {
+@Component(service = TestrayManager.class)
+public class TestrayManagerImpl implements TestrayManager {
 
 	public void loadTestrayCache(
 			long companyId, TestrayCache testrayCache, long userId)
@@ -1171,7 +1171,7 @@ public class TestrayServiceImpl implements TestrayService {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TestrayServiceImpl.class);
+		TestrayManagerImpl.class);
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

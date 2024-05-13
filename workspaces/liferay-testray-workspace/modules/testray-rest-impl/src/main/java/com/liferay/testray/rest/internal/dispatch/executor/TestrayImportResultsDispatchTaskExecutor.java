@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.testray.rest.service.TestrayService;
+import com.liferay.testray.rest.service.TestrayManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -158,7 +158,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 				}
 
 				try {
-					_testrayService.processArchive(
+					_testrayManager.processArchive(
 						companyId, blob.getContent(), serviceContext, userId);
 
 					blob.copyTo(
@@ -195,7 +195,7 @@ public class TestrayImportResultsDispatchTaskExecutor
 		TestrayImportResultsDispatchTaskExecutor.class);
 
 	@Reference
-	private TestrayService _testrayService;
+	private TestrayManager _testrayManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

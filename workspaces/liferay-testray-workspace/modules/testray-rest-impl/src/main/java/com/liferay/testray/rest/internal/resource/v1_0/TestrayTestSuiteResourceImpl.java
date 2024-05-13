@@ -13,7 +13,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestSuite;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestSuiteResource;
-import com.liferay.testray.rest.service.TestrayService;
+import com.liferay.testray.rest.service.TestrayManager;
 
 import java.io.File;
 
@@ -47,7 +47,7 @@ public class TestrayTestSuiteResourceImpl
 		).getFileName();
 
 		if (fileName.endsWith(".tar")) {
-			_testrayService.processArchive(
+			_testrayManager.processArchive(
 				contextCompany.getCompanyId(),
 				multipartBody.getBinaryFileAsBytes("file"),
 				_serviceContextHelper.getServiceContext(),
@@ -70,11 +70,11 @@ public class TestrayTestSuiteResourceImpl
 
 				TestrayCache testrayCache = new TestrayCache();
 
-				_testrayService.loadTestrayCache(
+				_testrayManager.loadTestrayCache(
 					contextCompany.getCompanyId(), testrayCache,
 					contextUser.getUserId());
 
-				_testrayService.processDocument(
+				_testrayManager.processDocument(
 					contextCompany.getCompanyId(), document,
 					_serviceContextHelper.getServiceContext(), testrayCache,
 					contextUser.getUserId());
@@ -99,6 +99,6 @@ public class TestrayTestSuiteResourceImpl
 	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference
-	private TestrayService _testrayService;
+	private TestrayManager _testrayManager;
 
 }

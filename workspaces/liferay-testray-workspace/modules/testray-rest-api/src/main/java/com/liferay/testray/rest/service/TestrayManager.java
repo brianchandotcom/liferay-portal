@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 /**
  * @author José Abelenda
  */
-public interface TestrayService {
+public interface TestrayManager {
 
 	public void loadTestrayCache(
 			long companyId, TestrayCache testrayCache, long userId)

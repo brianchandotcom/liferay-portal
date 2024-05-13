@@ -23,17 +23,9 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 	const npmScriptsPath =
 		resolve.sync('@liferay/npm-scripts/bin/liferay-npm-scripts.js', {basedir: '.'});
 
-	const argv = [
-		'build',
-	];
-
-	if (process.argv.includes('--clean')) {
-		argv.push('--clean');
-	}
-
 	const child = childProcess.spawn(
 		npmScriptsPath,
-		argv,
+		['build'],
 		{
 			stdio: 'inherit'
 		}

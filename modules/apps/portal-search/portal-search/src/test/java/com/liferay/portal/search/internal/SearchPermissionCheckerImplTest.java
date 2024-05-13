@@ -13,11 +13,13 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -73,6 +75,7 @@ public class SearchPermissionCheckerImplTest {
 
 		long userId = RandomTestUtil.randomLong();
 
+		_whenGroupLocalServiceGetGroupIds(RandomTestUtil.randomLong());
 		_whenIndexerIsPermissionAware(true);
 		_whenPermissionCheckerGetUser(_user);
 		_whenPermissionCheckerGetUserBag(_userBag);
@@ -86,6 +89,9 @@ public class SearchPermissionCheckerImplTest {
 	private SearchPermissionCheckerImpl _createSearchPermissionChecker() {
 		_searchPermissionCheckerImpl = new SearchPermissionCheckerImpl();
 
+		ReflectionTestUtil.setFieldValue(
+			_searchPermissionCheckerImpl, "_groupLocalService",
+			_groupLocalService);
 		ReflectionTestUtil.setFieldValue(
 			_searchPermissionCheckerImpl, "_indexerRegistry", _indexerRegistry);
 		ReflectionTestUtil.setFieldValue(
@@ -109,6 +115,16 @@ public class SearchPermissionCheckerImplTest {
 			SystemBundleUtil.getBundleContext(), Collections.emptyMap());
 
 		return _searchPermissionCheckerImpl;
+	}
+
+	private void _whenGroupLocalServiceGetGroupIds(long... groupIds) {
+		Mockito.doReturn(
+			ListUtil.fromArray(groupIds)
+		).when(
+			_groupLocalService
+		).getGroupIds(
+			Mockito.anyLong(), Mockito.eq(true)
+		);
 	}
 
 	private boolean _whenIndexerIsPermissionAware(boolean permissionAware) {
@@ -145,6 +161,8 @@ public class SearchPermissionCheckerImplTest {
 		).getUserId();
 	}
 
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 	private final Indexer<?> _indexer = Mockito.mock(Indexer.class);
 	private final IndexerRegistry _indexerRegistry = Mockito.mock(
 		IndexerRegistry.class);

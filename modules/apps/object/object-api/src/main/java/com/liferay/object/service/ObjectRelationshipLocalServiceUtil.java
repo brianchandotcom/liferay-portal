@@ -68,6 +68,17 @@ public class ObjectRelationshipLocalServiceUtil {
 			name, system, type, objectField);
 	}
 
+	public static ObjectRelationship addObjectRelationship(
+			String externalReferenceCode, long userId, long objectDefinitionId1,
+			long objectDefinitionId2,
+			com.liferay.object.model.ObjectField objectField)
+		throws PortalException {
+
+		return getService().addObjectRelationship(
+			externalReferenceCode, userId, objectDefinitionId1,
+			objectDefinitionId2, objectField);
+	}
+
 	public static void addObjectRelationshipMappingTableValues(
 			long userId, long objectRelationshipId, long primaryKey1,
 			long primaryKey2,

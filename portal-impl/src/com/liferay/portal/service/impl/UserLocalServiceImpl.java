@@ -1808,9 +1808,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-		user = _applyLockoutRelease(user, passwordPolicy);
-
-		checkLoginFailure(user);
+		checkLoginFailure(_applyLockoutRelease(user, passwordPolicy));
 	}
 
 	/**

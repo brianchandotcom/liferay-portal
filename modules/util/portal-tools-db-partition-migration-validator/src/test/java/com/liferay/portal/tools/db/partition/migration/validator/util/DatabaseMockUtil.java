@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 /**
@@ -69,23 +68,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet2.next()
 		).thenAnswer(
-			new Answer<Boolean>() {
+			(Answer<Boolean>)invocationOnMock -> {
+				int counter = nextCounter.get(0);
 
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= tableNames.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
+				if (counter >= tableNames.size()) {
+					return false;
 				}
 
+				nextCounter.set(0, ++counter);
+
+				return true;
 			}
 		);
 
@@ -96,23 +88,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet2.getString("TABLE_NAME")
 		).thenAnswer(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				int counter = tableNameCounter.get(0);
 
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = tableNameCounter.get(0);
-
-					if (counter >= tableNames.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					tableNameCounter.set(0, ++counter);
-
-					return tableNames.get(counter - 1);
+				if (counter >= tableNames.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				tableNameCounter.set(0, ++counter);
+
+				return tableNames.get(counter - 1);
 			}
 		);
 	}
@@ -147,23 +132,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.next()
 		).thenAnswer(
-			new Answer<Boolean>() {
+			(Answer<Boolean>)invocationOnMock -> {
+				int counter = nextCounter.get(0);
 
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= companies.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
+				if (counter >= companies.size()) {
+					return false;
 				}
 
+				nextCounter.set(0, ++counter);
+
+				return true;
 			}
 		);
 
@@ -174,25 +152,18 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getLong(1)
 		).thenAnswer(
-			new Answer<Long>() {
+			(Answer<Long>)invocationOnMock -> {
+				int counter = companyIdCounter.get(0);
 
-				@Override
-				public Long answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyIdCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyIdCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getCompanyId();
+				if (counter >= companies.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				companyIdCounter.set(0, ++counter);
+
+				Company company = companies.get(counter - 1);
+
+				return company.getCompanyId();
 			}
 		);
 
@@ -203,25 +174,18 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getString(2)
 		).thenAnswer(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				int counter = webIdCounter.get(0);
 
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = webIdCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					webIdCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getWebId();
+				if (counter >= companies.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				webIdCounter.set(0, ++counter);
+
+				Company company = companies.get(counter - 1);
+
+				return company.getWebId();
 			}
 		);
 
@@ -232,25 +196,18 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getString(3)
 		).thenAnswer(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				int counter = companyNameCounter.get(0);
 
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyNameCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyNameCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getCompanyName();
+				if (counter >= companies.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				companyNameCounter.set(0, ++counter);
+
+				Company company = companies.get(counter - 1);
+
+				return company.getCompanyName();
 			}
 		);
 
@@ -261,25 +218,18 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getString(4)
 		).thenAnswer(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				int counter = virtualHostnameCounter.get(0);
 
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = virtualHostnameCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					virtualHostnameCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getVirtualHostname();
+				if (counter >= companies.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				virtualHostnameCounter.set(0, ++counter);
+
+				Company company = companies.get(counter - 1);
+
+				return company.getVirtualHostname();
 			}
 		);
 	}
@@ -311,23 +261,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.next()
 		).thenAnswer(
-			new Answer<Boolean>() {
+			(Answer<Boolean>)invocationOnMock -> {
+				int counter = nextCounter.get(0);
 
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
+				if (counter >= companyIds.size()) {
+					return false;
 				}
 
+				nextCounter.set(0, ++counter);
+
+				return true;
 			}
 		);
 
@@ -338,23 +281,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getLong("companyId")
 		).thenAnswer(
-			new Answer<Long>() {
+			(Answer<Long>)invocationOnMock -> {
+				int counter = companyIdCounter.get(0);
 
-				@Override
-				public Long answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyIdCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyIdCounter.set(0, ++counter);
-
-					return companyIds.get(counter - 1);
+				if (counter >= companyIds.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				companyIdCounter.set(0, ++counter);
+
+				return companyIds.get(counter - 1);
 			}
 		);
 	}
@@ -386,23 +322,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.next()
 		).thenAnswer(
-			new Answer<Boolean>() {
+			(Answer<Boolean>)invocationOnMock -> {
+				int counter = nextCounter.get(0);
 
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
+				if (counter >= companyIds.size()) {
+					return false;
 				}
 
+				nextCounter.set(0, ++counter);
+
+				return true;
 			}
 		);
 
@@ -413,23 +342,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getLong(1)
 		).thenAnswer(
-			new Answer<Long>() {
+			(Answer<Long>)invocationOnMock -> {
+				int counter = companyIdCounter.get(0);
 
-				@Override
-				public Long answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyIdCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyIdCounter.set(0, ++counter);
-
-					return companyIds.get(counter - 1);
+				if (counter >= companyIds.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				companyIdCounter.set(0, ++counter);
+
+				return companyIds.get(counter - 1);
 			}
 		);
 	}
@@ -486,23 +408,16 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.next()
 		).thenAnswer(
-			new Answer<Boolean>() {
+			(Answer<Boolean>)invocationOnMock -> {
+				int counter = nextCounter.get(0);
 
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= releases.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
+				if (counter >= releases.size()) {
+					return false;
 				}
 
+				nextCounter.set(0, ++counter);
+
+				return true;
 			}
 		);
 
@@ -513,25 +428,18 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getString(1)
 		).thenAnswer(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				int counter = servletContextNameCounter.get(0);
 
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = servletContextNameCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					servletContextNameCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					return release.getServletContextName();
+				if (counter >= releases.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				servletContextNameCounter.set(0, ++counter);
+
+				Release release = releases.get(counter - 1);
+
+				return release.getServletContextName();
 			}
 		);
 
@@ -542,27 +450,20 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getString(2)
 		).thenAnswer(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				int counter = schemaVersionCounter.get(0);
 
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = schemaVersionCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					schemaVersionCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					Version version = release.getSchemaVersion();
-
-					return version.toString();
+				if (counter >= releases.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				schemaVersionCounter.set(0, ++counter);
+
+				Release release = releases.get(counter - 1);
+
+				Version version = release.getSchemaVersion();
+
+				return version.toString();
 			}
 		);
 
@@ -573,25 +474,18 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getInt(3)
 		).thenAnswer(
-			new Answer<Integer>() {
+			(Answer<Integer>)invocationOnMock -> {
+				int counter = stateCounter.get(0);
 
-				@Override
-				public Integer answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = stateCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					stateCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					return release.getState();
+				if (counter >= releases.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				stateCounter.set(0, ++counter);
+
+				Release release = releases.get(counter - 1);
+
+				return release.getState();
 			}
 		);
 
@@ -602,25 +496,18 @@ public class DatabaseMockUtil {
 		Mockito.when(
 			resultSet.getBoolean(4)
 		).thenAnswer(
-			new Answer<Boolean>() {
+			(Answer<Boolean>)invocationOnMock -> {
+				int counter = verifiedCounter.get(0);
 
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = verifiedCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					verifiedCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					return release.getVerified();
+				if (counter >= releases.size()) {
+					throw new IndexOutOfBoundsException();
 				}
 
+				verifiedCounter.set(0, ++counter);
+
+				Release release = releases.get(counter - 1);
+
+				return release.getVerified();
 			}
 		);
 	}

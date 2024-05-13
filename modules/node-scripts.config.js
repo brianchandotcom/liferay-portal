@@ -9,6 +9,26 @@ const {imports} = npmscriptsConfig.build;
 
 module.exports = {
 	imports,
+
+	// The following symbols override the actual symbols that listed packages export. This is
+	// sometimes necessary when:
+	//
+	// 1. The build cannot infer the exported symbols because the package cannot be required from
+	//    Node.js (eg: if it references `window` or any other browser API not available).
+	// 2. The inferred exported symbols are wrong (eg: polymorphic packages).
+	// 3. The package must re-export everything as `default` so that it can be directly imported
+	//    using ES syntax (eg: `react` since it can be imported as `import React from 'react';` even
+	//    though it is a CJS package that doesn't really export any `default` symbol).
+	//
+	// For number 3 note that tools like `webpack` sometimes rely on the `__esModule` symbol to
+	// mimic that behavior. However we prefer to make it explicit in this file due to how much
+	// headaches the `__esModule` inferences usually cause when they don't work correctly.
+	//
+	// The way to obtain these symbols is different for each package but it usually starts with a
+	// runtime error in the browser and a following investigation on what the package is really
+	// exporting when used from a browser.
+	//
+
 	symbols: {
 		'@clayui/charts': ['bb', 'default'],
 		'@clayui/css': [

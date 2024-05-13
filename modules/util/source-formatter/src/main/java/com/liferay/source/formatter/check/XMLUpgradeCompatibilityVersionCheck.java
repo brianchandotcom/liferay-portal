@@ -24,7 +24,7 @@ public class XMLUpgradeCompatibilityVersionCheck extends BaseFileCheck {
 		throws Exception {
 
 		_upgradeToVersion = getAttributeValue(
-			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
+			SourceFormatterUtil.UPGRADE_TO_LIFERAY_VERSION, absolutePath);
 
 		if ((_upgradeToVersion == null) || !fileName.endsWith(".xml")) {
 			return content;

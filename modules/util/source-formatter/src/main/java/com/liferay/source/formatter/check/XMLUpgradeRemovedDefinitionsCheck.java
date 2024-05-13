@@ -77,7 +77,7 @@ public class XMLUpgradeRemovedDefinitionsCheck extends BaseFileCheck {
 		}
 
 		String upgradeToVersion = getAttributeValue(
-			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
+			SourceFormatterUtil.UPGRADE_TO_LIFERAY_VERSION, absolutePath);
 
 		String upgradeToVersionDTDFileName = _getUpgradeToVersionDTDFileName(
 			dtdFileName, upgradeFromVersion, upgradeToVersion);

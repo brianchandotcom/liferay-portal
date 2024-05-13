@@ -34,7 +34,7 @@ public class PropertiesUpgradeLiferayPluginPackageFileCheck
 		}
 
 		String upgradeToVersion = getAttributeValue(
-			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
+			SourceFormatterUtil.UPGRADE_TO_LIFERAY_VERSION, absolutePath);
 
 		if (upgradeToVersion == null) {
 			return content;

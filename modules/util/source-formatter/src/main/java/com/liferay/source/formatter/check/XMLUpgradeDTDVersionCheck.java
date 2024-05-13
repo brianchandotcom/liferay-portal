@@ -23,7 +23,7 @@ public class XMLUpgradeDTDVersionCheck extends XMLDTDVersionCheck {
 		throws IOException {
 
 		_upgradeToVersion = getAttributeValue(
-			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
+			SourceFormatterUtil.UPGRADE_TO_LIFERAY_VERSION, absolutePath);
 
 		if ((_upgradeToVersion == null) || !fileName.endsWith(".xml")) {
 			return content;

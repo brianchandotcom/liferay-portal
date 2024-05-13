@@ -76,10 +76,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayRunComparisonDetail(filter: ___, testrayCaseResultError1: ___, testrayCaseResultError2: ___, testrayCaseResultIssue1: ___, testrayCaseResultIssue2: ___, testrayCaseResultStatus1: ___, testrayCaseResultStatus2: ___, testrayRunId1: ___, testrayRunId2: ___){results, testrayCaseResultComparisons}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayRunComparisonRun(filter: ___, testrayCaseResultError1: ___, testrayCaseResultError2: ___, testrayCaseResultIssue1: ___, testrayCaseResultIssue2: ___, testrayCaseResultStatus1: ___, testrayCaseResultStatus2: ___, testrayRunId1: ___, testrayRunId2: ___){results, testrayCaseResultComparisons}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public TestrayRunComparison testrayRunComparisonDetail(
+	public TestrayRunComparison testrayRunComparisonRun(
 			@GraphQLName("testrayRunId1") Long testrayRunId1,
 			@GraphQLName("testrayRunId2") Long testrayRunId2,
 			@GraphQLName("testrayCaseResultError1") String
@@ -101,13 +101,55 @@ public class Query {
 			_testrayRunComparisonResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			testrayRunComparisonResource ->
-				testrayRunComparisonResource.getTestrayRunComparisonDetail(
+				testrayRunComparisonResource.getTestrayRunComparisonRun(
 					testrayRunId1, testrayRunId2, testrayCaseResultError1,
 					testrayCaseResultError2, testrayCaseResultIssue1,
 					testrayCaseResultIssue2, testrayCaseResultStatus1,
 					testrayCaseResultStatus2,
 					_filterBiFunction.apply(
 						testrayRunComparisonResource, filterString)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayRunComparisonTestrayCaseResultComparisons(filter: ___, page: ___, pageSize: ___, testrayCaseResultError1: ___, testrayCaseResultError2: ___, testrayCaseResultIssue1: ___, testrayCaseResultIssue2: ___, testrayCaseResultStatus1: ___, testrayCaseResultStatus2: ___, testrayRunId1: ___, testrayRunId2: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TestrayRunComparisonPage
+			testrayRunComparisonTestrayCaseResultComparisons(
+				@GraphQLName("testrayRunId1") Long testrayRunId1,
+				@GraphQLName("testrayRunId2") Long testrayRunId2,
+				@GraphQLName("testrayCaseResultError1") String
+					testrayCaseResultError1,
+				@GraphQLName("testrayCaseResultError2") String
+					testrayCaseResultError2,
+				@GraphQLName("testrayCaseResultIssue1") String
+					testrayCaseResultIssue1,
+				@GraphQLName("testrayCaseResultIssue2") String
+					testrayCaseResultIssue2,
+				@GraphQLName("testrayCaseResultStatus1") String
+					testrayCaseResultStatus1,
+				@GraphQLName("testrayCaseResultStatus2") String
+					testrayCaseResultStatus2,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayRunComparisonResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayRunComparisonResource -> new TestrayRunComparisonPage(
+				testrayRunComparisonResource.
+					getTestrayRunComparisonTestrayCaseResultComparisonsPage(
+						testrayRunId1, testrayRunId2, testrayCaseResultError1,
+						testrayCaseResultError2, testrayCaseResultIssue1,
+						testrayCaseResultIssue2, testrayCaseResultStatus1,
+						testrayCaseResultStatus2,
+						_filterBiFunction.apply(
+							testrayRunComparisonResource, filterString),
+						Pagination.of(page, pageSize))));
 	}
 
 	/**

@@ -79,6 +79,7 @@ const rawProvider = {
 		video.controls = !configuration.hideControls;
 		video.loop = configuration.loop;
 		video.muted = configuration.mute;
+		video.playsInline = true;
 
 		video.style.height = '100%';
 		video.style.width = '100%';

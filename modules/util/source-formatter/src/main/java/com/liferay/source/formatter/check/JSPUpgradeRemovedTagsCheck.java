@@ -37,7 +37,7 @@ public class JSPUpgradeRemovedTagsCheck extends BaseTagAttributesCheck {
 		String upgradeFromVersion = getAttributeValue(
 			SourceFormatterUtil.UPGRADE_FROM_VERSION, absolutePath);
 		String upgradeToVersion = getAttributeValue(
-			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
+			SourceFormatterUtil.UPGRADE_TO_RELEASE_VERSION, absolutePath);
 
 		if ((upgradeFromVersion == null) || (upgradeToVersion == null)) {
 			return content;

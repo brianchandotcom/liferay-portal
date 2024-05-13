@@ -41,7 +41,7 @@ public class UpgradeDeprecatedAPICheck extends DeprecatedAPICheck {
 		String upgradeFromVersion = getAttributeValue(
 			SourceFormatterUtil.UPGRADE_FROM_VERSION);
 		String upgradeToVersion = getAttributeValue(
-			SourceFormatterUtil.UPGRADE_TO_VERSION);
+			SourceFormatterUtil.UPGRADE_TO_RELEASE_VERSION);
 
 		try {
 			JSONObject upgradeFromJavaClassesJSONObject =

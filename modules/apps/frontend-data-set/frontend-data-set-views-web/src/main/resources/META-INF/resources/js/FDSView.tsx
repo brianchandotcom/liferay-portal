@@ -65,11 +65,11 @@ interface IFDSViewSectionProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
+	fieldTreeItems: Array<IFieldTreeItem>;
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
-	schemaFields: Array<IFieldTreeItem>;
 	spritemap: string;
 }
 
@@ -94,7 +94,9 @@ const FDSView = ({
 }: IFDSViewProps) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<FDSViewType>();
-	const [schemaFields, setSchemaFields] = useState<Array<IFieldTreeItem>>([]);
+	const [fieldTreeItems, setFieldTreeItems] = useState<Array<IFieldTreeItem>>(
+		[]
+	);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -114,7 +116,7 @@ const FDSView = ({
 				setFDSView(responseJSON);
 
 				getFields(responseJSON).then((fields) => {
-					setSchemaFields(fields);
+					setFieldTreeItems(fields);
 
 					setLoading(false);
 				});
@@ -157,13 +159,13 @@ const FDSView = ({
 						fdsFilterClientExtensions={fdsFilterClientExtensions}
 						fdsView={fdsView}
 						fdsViewsURL={fdsViewsURL}
+						fieldTreeItems={fieldTreeItems}
 						namespace={namespace}
 						onActiveSectionChange={(tab) => setActiveIndex(tab)}
 						onFDSViewUpdate={(updatedFdsViewData) => {
 							setFDSView({...fdsView, ...updatedFdsViewData});
 						}}
 						saveFDSFieldsURL={saveFDSFieldsURL}
-						schemaFields={schemaFields}
 						spritemap={spritemap}
 					/>
 				)

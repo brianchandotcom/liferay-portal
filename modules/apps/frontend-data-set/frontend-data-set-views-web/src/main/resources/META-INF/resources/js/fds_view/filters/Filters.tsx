@@ -627,8 +627,8 @@ function AddFDSFilterModalContent({
 function Filters({
 	fdsFilterClientExtensions,
 	fdsView,
+	fieldTreeItems: fields,
 	namespace,
-	schemaFields: fields,
 }: IFDSViewSectionProps) {
 	const [filters, setFilters] = useState<IFilter[]>([]);
 

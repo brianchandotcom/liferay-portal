@@ -134,7 +134,7 @@ public class ObjectEntryEntityModelTest {
 				"keywords",
 				new CollectionEntityField(
 					new StringEntityField(
-						"keywords", locale -> "assetTagNames.raw"))
+						"keywords", locale -> "lowerCaseAssetTagNames"))
 			).put(
 				"status",
 				new CollectionEntityField(

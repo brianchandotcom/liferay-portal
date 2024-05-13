@@ -5,7 +5,7 @@
 
 package com.liferay.object.rest.internal.util;
 
-import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 
@@ -17,33 +17,34 @@ import java.util.Objects;
 public class BinaryExpressionConverterUtil {
 
 	public static <T> Predicate getExpressionPredicate(
-		Column<?, T> column, BinaryExpression.Operation operation, T value) {
+		Expression<T> expression, BinaryExpression.Operation operation,
+		T value) {
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
 			if (value == null) {
-				return column.isNull();
+				return expression.isNull();
 			}
 
-			return column.eq(value);
+			return expression.eq(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
-			return column.gte(value);
+			return expression.gte(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
-			return column.gt(value);
+			return expression.gt(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
-			return column.lte(value);
+			return expression.lte(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
-			return column.lt(value);
+			return expression.lt(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
 			if (value == null) {
-				return column.isNotNull();
+				return expression.isNotNull();
 			}
 
-			return column.neq(value);
+			return expression.neq(value);
 		}
 
 		return null;

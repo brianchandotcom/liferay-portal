@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -88,6 +89,10 @@ public class AssetTagDocumentContributor
 		Document document, List<AssetTag> assetTags) {
 
 		document.addText(Field.ASSET_TAG_NAMES, _getNames(assetTags));
+		document.addText(
+			"lowerCaseAssetTagNames",
+			TransformUtil.transform(
+				_getNames(assetTags), StringUtil::lowerCase, String.class));
 	}
 
 	private Long _getGroupId(BaseModel<?> baseModel) {

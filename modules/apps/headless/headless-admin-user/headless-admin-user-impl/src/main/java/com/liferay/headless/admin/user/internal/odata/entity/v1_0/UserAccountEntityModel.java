@@ -26,7 +26,7 @@ public class UserAccountEntityModel implements EntityModel {
 		_entityFieldsMap = EntityFieldsMapFactory.create(
 			new CollectionEntityField(
 				new StringEntityField(
-					"keywords", locale -> "assetTagNames.raw")),
+					"keywords", locale -> "lowerCaseAssetTagNames")),
 			new CollectionEntityField(
 				new StringEntityField("roleNames", locale -> "roleNames")),
 			new CollectionEntityField(

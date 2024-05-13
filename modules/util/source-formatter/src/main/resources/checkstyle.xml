@@ -435,6 +435,11 @@
 			<property name="populateTypeNames" value="false" />
 			<message key="generic.type.parameterize" value="Parameterize the generic {0} for ''{1}'" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.InnerExceptionClassCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks that classes that should have either public constructors or inner classes." />
+			<message key="class.definition.incorrect" value="Exception class should have either public constructors or inner classes" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceInitializerCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Performs several checks on class instance initializer." />

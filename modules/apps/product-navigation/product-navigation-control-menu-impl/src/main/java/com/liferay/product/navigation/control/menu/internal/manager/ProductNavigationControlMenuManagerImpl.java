@@ -14,13 +14,13 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.UserUtil;
 import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.site.configuration.MenuAccessConfiguration;
 
@@ -75,8 +75,7 @@ public class ProductNavigationControlMenuManagerImpl
 					menuAccessConfiguration.accessToControlMenuRoleIds();
 
 				for (Role role :
-						_roleLocalService.getUserRoles(
-							themeDisplay.getUserId())) {
+						UserUtil.getAllUserRoles(themeDisplay.getUser())) {
 
 					if (Objects.equals(
 							role.getName(), RoleConstants.ADMINISTRATOR) ||
@@ -150,8 +149,5 @@ public class ProductNavigationControlMenuManagerImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

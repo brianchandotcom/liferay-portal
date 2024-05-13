@@ -1,14 +1,7 @@
-const TYPE_PREFIX = {
-	exports: '../../..',
-	main: '../..'
-};
+import getPathPrefix from "./getPathPrefix.mjs";
 
 export default function getExternals(globalImports, type) {
-	const prefix = TYPE_PREFIX[type];
-
-	if (prefix === undefined) {
-		throw new Error(`Invalid type: ${type}`);
-	}
+	const prefix = getPathPrefix(type);
 
 	const externals = [
 

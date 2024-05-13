@@ -2,6 +2,10 @@ import path from 'path';
 
 import getImportBridgePath from '../getImportBridgePath.mjs';
 
+/**
+ * This plugin is needed to prevent esbuild from interpreting aliases as prefixes (the OOTB
+ * behavior). Instead this plugin treats each alias as a specific complete path.
+ */
 export default function getExactAliasPlugin(globalImports, type, exclusions) {
 	const aliases = getAliases(globalImports, type, exclusions);
 

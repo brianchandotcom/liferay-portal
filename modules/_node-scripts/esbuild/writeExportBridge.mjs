@@ -4,6 +4,13 @@ import path from 'path';
 import getExportedSymbols from '../util/getExportedSymbols.mjs';
 import getExportBridgePath from './getExportBridgePath.mjs';
 
+/**
+ * Create an export bridge file that can be used by esbuild as an entry point.
+ *
+ * Export bridges are necessary since we need esbuild to export symbols using standard ESM syntax
+ * and for that to happen it must be fed an ES module as entry point. If fed a CommonJS one esbuild
+ * will refuse to export things as ESM syntax.
+ */
 export default async function writeExportBridge(overridenPackageSymbols, moduleName) {
 	const symbols = getExportedSymbols(overridenPackageSymbols, moduleName);
 

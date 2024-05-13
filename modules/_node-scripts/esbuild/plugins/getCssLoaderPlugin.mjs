@@ -1,6 +1,12 @@
 import getFlatName from '../../util/getFlatName.mjs';
 import getPathPrefix from '../getPathPrefix.mjs';
-	
+
+/**
+ * Emit an `import from` statement referencing the CSS export loader module whenever an import for
+ * a CSS file appears while esbuild is bundling.
+ *
+ * The CSS export loader module will insert a link to the actual CSS into the HTML at runtime.
+ */
 export default function getCssLoaderPlugin(globalImports, type) {
 	return {
 		name: 'css-loader-plugin',

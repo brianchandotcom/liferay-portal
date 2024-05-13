@@ -2,6 +2,13 @@ import path from 'path';
 
 import { SRC_PATH } from '../../util/constants.mjs';
 
+/**
+ * This plugin transforms `import from` statements for .scss files into JavaScript code that inserts
+ * a link to the actual file in the HTML at rutime.
+ *
+ * This technique is only used for liferay-portal internal code (ie: it is not applied to external
+ * npm packages).
+ */
 export default function getScssLoaderPlugin(projectWebContextPath) {
 	return {
 		name: 'scss-loader-plugin',

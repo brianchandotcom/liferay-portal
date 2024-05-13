@@ -205,6 +205,25 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
+	private void _addMissingFieldValues(
+		Field ddmField, String defaultLanguageId,
+		Set<String> missingLanguageIds) {
+
+		if (missingLanguageIds.isEmpty()) {
+			return;
+		}
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+		Serializable fieldValue = ddmField.getValue(defaultLocale);
+
+		for (String missingLanguageId : missingLanguageIds) {
+			Locale missingLocale = LocaleUtil.fromLanguageId(missingLanguageId);
+
+			ddmField.setValue(missingLocale, fieldValue);
+		}
+	}
+
 	private void _addNestedDDMFields(
 			String[] availableLanguageIds, String defaultLanguageId,
 			Fields ddmFields, DDMFormField ddmFormField,
@@ -410,6 +429,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 			ddmField.addValue(locale, serializable);
 		}
+
+		_addMissingFieldValues(ddmField, defaultLanguageId, missingLanguageIds);
 
 		return ddmField;
 	}

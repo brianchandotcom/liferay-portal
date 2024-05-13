@@ -249,7 +249,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public DDMFormValues getDDMFormValues() {
 		if (_ddmFormValues == null) {
-			_ddmFormValues = getDDMFormValues(false);
+			_ddmFormValues = getDDMFormValues(true);
 		}
 
 		return _ddmFormValues;

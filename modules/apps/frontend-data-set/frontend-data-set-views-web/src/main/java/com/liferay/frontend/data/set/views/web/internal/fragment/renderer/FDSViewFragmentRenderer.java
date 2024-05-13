@@ -606,8 +606,16 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					);
 				}
 
-				String listTypeDefinitionERC = MapUtil.getString(
-					properties, "listTypeDefinitionERC");
+				String listTypeDefinitionERC = null;
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-10754")) {
+					listTypeDefinitionERC = MapUtil.getString(
+						properties, "source");
+				}
+				else {
+					listTypeDefinitionERC = MapUtil.getString(
+						properties, "listTypeDefinitionERC");
+				}
 
 				if (Validator.isNotNull(listTypeDefinitionERC)) {
 					ThemeDisplay themeDisplay =

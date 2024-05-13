@@ -58,9 +58,6 @@ public class I18nFilterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_mockHttpServletRequest = new MockHttpServletRequest();
-		_mockHttpServletResponse = new MockHttpServletResponse();
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -256,6 +253,11 @@ public class I18nFilterTest {
 			Locale preferredLocale)
 		throws Exception {
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
 		if (virtualHostLocale != null) {
 			String layoutHostname =
 				RandomTestUtil.randomString(6) + "." +
@@ -270,14 +272,14 @@ public class I18nFilterTest {
 					LocaleUtil.toLanguageId(virtualHostLocale)
 				).build());
 
-			_mockHttpServletRequest.addHeader("Host", layoutHostname);
-			_mockHttpServletRequest.setServerName(layoutHostname);
+			mockHttpServletRequest.addHeader("Host", layoutHostname);
+			mockHttpServletRequest.setServerName(layoutHostname);
 
-			PortalInstances.getCompanyId(_mockHttpServletRequest);
+			PortalInstances.getCompanyId(mockHttpServletRequest);
 		}
 
 		if (sessionLocale != null) {
-			HttpSession httpSession = _mockHttpServletRequest.getSession();
+			HttpSession httpSession = mockHttpServletRequest.getSession();
 
 			httpSession.setAttribute(WebKeys.LOCALE, sessionLocale);
 		}
@@ -288,19 +290,18 @@ public class I18nFilterTest {
 				RandomTestUtil.randomString(),
 				new long[] {_group.getGroupId()});
 
-			_mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
+			mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
 		}
 
 		if (cookieLocale != null) {
 			_language.updateCookie(
-				_mockHttpServletRequest, _mockHttpServletResponse,
-				cookieLocale);
+				mockHttpServletRequest, mockHttpServletResponse, cookieLocale);
 
 			// Passing cookies from mock HTTP servlet response to mock HTTP
 			// servlet request
 
-			_mockHttpServletRequest.setCookies(
-				_mockHttpServletResponse.getCookies());
+			mockHttpServletRequest.setCookies(
+				mockHttpServletResponse.getCookies());
 		}
 
 		boolean localeDefaultRequest = false;
@@ -308,7 +309,7 @@ public class I18nFilterTest {
 		if (preferredLocale != null) {
 			localeDefaultRequest = true;
 
-			_mockHttpServletRequest.setPreferredLocales(
+			mockHttpServletRequest.setPreferredLocales(
 				ListUtil.fromArray(preferredLocale));
 		}
 
@@ -323,12 +324,12 @@ public class I18nFilterTest {
 					new Class<?>[] {
 						HttpServletRequest.class, HttpServletResponse.class
 					},
-					_mockHttpServletRequest, _mockHttpServletResponse));
+					mockHttpServletRequest, mockHttpServletResponse));
 
 			return ReflectionTestUtil.invoke(
 				_i18nFilter, "prependI18nLanguageId",
 				new Class<?>[] {HttpServletRequest.class, int.class},
-				_mockHttpServletRequest, localePrependFriendlyURLStyle);
+				mockHttpServletRequest, localePrependFriendlyURLStyle);
 		}
 	}
 
@@ -340,9 +341,6 @@ public class I18nFilterTest {
 
 	@Inject
 	private Language _language;
-
-	private MockHttpServletRequest _mockHttpServletRequest;
-	private MockHttpServletResponse _mockHttpServletResponse;
 
 	@DeleteAfterTestRun
 	private User _user;

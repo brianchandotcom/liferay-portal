@@ -11,6 +11,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {Fragment, useMemo, useState} from 'react';
 import i18n from '~/common/I18n';
 import getKebabCase from '~/common/utils/getKebabCase';
+import {useCustomerPortal} from '../../context';
 import RadioRoles from '../RadioRoles';
 
 const RoleSelectorDropdown = ({
@@ -27,6 +28,9 @@ const RoleSelectorDropdown = ({
 		false
 	);
 	const [active, setActive] = useState(false);
+
+	const [{project}] = useCustomerPortal();
+	const isPartnerProject = project?.partner;
 
 	const handleOnClick = (accountRoleItems) => {
 		const isPartnerMember = accountRoleItems.partnerMemberRoles.active;
@@ -114,30 +118,37 @@ const RoleSelectorDropdown = ({
 					<Fragment key={index}>
 						{key === 'partnerMemberRoles' ? (
 							<>
-								<RadioRoles
-									className="pr-6"
-									key={index}
-									onClick={() => {
-										const newObject = {...radioOptions};
+								{isPartnerProject && (
+									<RadioRoles
+										className="pr-6"
+										key={index}
+										onClick={() => {
+											const newObject = {...radioOptions};
 
-										Object.keys(radioOptions).forEach(
-											(roleLabel) => {
-												newObject[roleLabel].active =
-													roleLabel === key;
-											}
-										);
+											Object.keys(radioOptions).forEach(
+												(roleLabel) => {
+													newObject[
+														roleLabel
+													].active =
+														roleLabel === key;
+												}
+											);
 
-										newObject.partnerMemberRoles.roles = newObject.partnerMemberRoles.roles.map(
-											(role) => ({...role, active: false})
-										);
+											newObject.partnerMemberRoles.roles = newObject.partnerMemberRoles.roles.map(
+												(role) => ({
+													...role,
+													active: false,
+												})
+											);
 
-										setRadioOptions(newObject);
-										setAtLeastOneFieldIsFilled(false);
-									}}
-									selected={accountRole.active}
-								>
-									{i18n.translate('partner-member')}
-								</RadioRoles>
+											setRadioOptions(newObject);
+											setAtLeastOneFieldIsFilled(false);
+										}}
+										selected={accountRole.active}
+									>
+										{i18n.translate('partner-member')}
+									</RadioRoles>
+								)}
 
 								{accountRole.roles.map(
 									(role, accountRoleIndex) => (

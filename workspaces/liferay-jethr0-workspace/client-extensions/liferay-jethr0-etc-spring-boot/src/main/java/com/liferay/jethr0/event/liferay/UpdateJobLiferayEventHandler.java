@@ -9,6 +9,12 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -19,6 +25,10 @@ public class UpdateJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Updating job at " + StringUtil.toString(new Date()));
+		}
+
 		JobEntityRepository jobEntityRepository =
 			Jethr0ContextUtil.getJobEntityRepository();
 
@@ -27,12 +37,21 @@ public class UpdateJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 		JobEntity jobEntity = jobEntityRepository.getById(
 			jobJSONObject.getLong("id"));
 
-		if (jobEntity != null) {
-			jobEntity.setJSONObject(jobJSONObject);
+		if (jobEntity == null) {
+			return null;
+		}
 
-			JobQueue jobQueue = Jethr0ContextUtil.getJobQueue();
+		jobEntity.setJSONObject(jobJSONObject);
 
-			jobQueue.sort();
+		JobQueue jobQueue = Jethr0ContextUtil.getJobQueue();
+
+		jobQueue.sort();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Updated job ", jobEntity.getEntityURL(), " at ",
+					StringUtil.toString(new Date())));
 		}
 
 		return String.valueOf(jobEntity);
@@ -41,5 +60,8 @@ public class UpdateJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 	protected UpdateJobLiferayEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		UpdateJobLiferayEventHandler.class);
 
 }

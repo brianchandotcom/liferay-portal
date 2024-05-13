@@ -17,6 +17,12 @@ import com.liferay.jethr0.routine.UpstreamBranchRoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.JobUtil;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -27,6 +33,10 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Adding job at " + StringUtil.toString(new Date()));
+		}
+
 		JobEntityRepository jobEntityRepository =
 			Jethr0ContextUtil.getJobEntityRepository();
 		BuildEntityRepository buildEntityRepository =
@@ -98,11 +108,21 @@ public class AddJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 			jenkinsQueue.invoke();
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Added job ", jobEntity.getEntityURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
+
 		return jobEntity.toString();
 	}
 
 	protected AddJobLiferayEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		AddJobLiferayEventHandler.class);
 
 }

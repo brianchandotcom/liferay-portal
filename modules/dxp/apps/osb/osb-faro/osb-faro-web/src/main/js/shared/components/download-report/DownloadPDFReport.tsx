@@ -1,8 +1,15 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import html2canvas from 'html2canvas';
 import React, {useEffect, useMemo, useState} from 'react';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal} from './DownloadReportModal';
-import {generateReport} from './utils';
+import {
+	JSPDFExtension,
+	JSPDFExtensionContainer,
+	PosX,
+	Size,
+	Weight
+} from './jsPDF';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {useDownloadReportContext} from './DownloadReportContext';
@@ -149,6 +156,10 @@ export const CONTAINERS: {[key in ReportContainer]: TReportContainer} = {
 	}
 };
 
+const PRIMARY_COLOR = '#0B5FFF';
+const SECONDARY_COLOR = '#6B6C7E';
+const TITLE_COLOR = '#000000';
+
 export type TReportContainer = {label: string; layout: 1 | 2 | 3};
 export type TransformedContainer = TReportContainer & {
 	checked: boolean;
@@ -180,6 +191,34 @@ export const formattedContainers = (
 
 		return acc;
 	}, {} as ContainerList);
+
+const getContainers = async (
+	containers: TransformedContainer[]
+): Promise<JSPDFExtensionContainer[]> => {
+	const containerArr = [];
+	const promises = [];
+
+	containers.map(({id, layout}) => {
+		const containerElement = document.getElementById(id);
+
+		if (!containerElement) {
+			throw new Error(`container not found! ID: ${id}`);
+		}
+
+		const promise = html2canvas(containerElement, {
+			backgroundColor: '#F1F2F5',
+			logging: false
+		}).then(canvas => {
+			const imageData = canvas.toDataURL('image/jpeg', 1.0);
+
+			containerArr.push({containerElement, imageData, layout});
+		});
+
+		promises.push(promise);
+	});
+
+	return Promise.all(promises).then(() => containerArr);
+};
 
 const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	dateRangeDescription,
@@ -238,18 +277,66 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 						 * animation be loaded before generate the report
 						 */
 
-						setTimeout(() => {
-							generateReport({
-								containers: filteredContainers,
-								subtitle,
-								title,
-								url
-							}).then(() => {
-								setContainers(
-									formattedContainers(reportContainers)
-								);
-								setLoading(false);
+						setTimeout(async () => {
+							if (!containers) return;
+
+							const doc = new JSPDFExtension({
+								containers: await getContainers(
+									filteredContainers
+								),
+								fontFamily: 'Helvetica',
+								name: title
 							});
+
+							doc.addFloatText({
+								color: PRIMARY_COLOR,
+								posX: PosX.Right,
+								posY: 10,
+								size: Size.Small,
+								url: window.location.href,
+								value: Liferay.Language.get('access-workspace'),
+								weight: Weight.Normal
+							});
+
+							doc.addText({
+								color: PRIMARY_COLOR,
+								size: Size.Small,
+								value: 'Analytics Cloud',
+								weight: Weight.Normal
+							});
+
+							doc.addText({
+								color: TITLE_COLOR,
+								size: Size.Medium,
+								value: title,
+								weight: Weight.Bold
+							});
+
+							if (url) {
+								doc.addText({
+									color: SECONDARY_COLOR,
+									size: Size.Small,
+									truncateText: true,
+									url,
+									value: decodeURIComponent(url),
+									weight: Weight.Bold
+								});
+							}
+
+							doc.addText({
+								color: SECONDARY_COLOR,
+								size: Size.Small,
+								value: subtitle,
+								weight: Weight.Normal
+							});
+
+							doc.render();
+
+							setContainers(
+								formattedContainers(reportContainers)
+							);
+
+							setLoading(false);
 						}, 1000);
 					}}
 					showDateRange={showDateRange}

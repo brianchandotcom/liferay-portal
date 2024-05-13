@@ -201,10 +201,14 @@ components:
                     type: boolean
                 name:
                     type: string
+                objectDefinitionExternalReferenceCode1:
+                    type: string
                 objectFieldSettings:
                     items:
                         $ref: "#/components/schemas/ObjectFieldSetting"
                     type: array
+                objectRelationshipExternalReferenceCode:
+                    type: string
                 readOnly:
                     enum: [conditional, false, true]
                     type: string

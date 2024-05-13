@@ -196,7 +196,8 @@ public class DBPartitionMigrationValidatorTest {
 	public void testValidateSuccess() throws Exception {
 		_validate(
 			"sourceSuccess.json", "targetSuccess.json",
-			runtimeException -> Assert.fail(),
+			runtimeException -> Assert.assertEquals(
+				"0", runtimeException.getMessage()),
 			() -> {
 				Assert.assertTrue(
 					_errByteArrayOutputStream.toString(
@@ -493,9 +494,7 @@ public class DBPartitionMigrationValidatorTest {
 		public void checkExit(int status) {
 			super.checkExit(status);
 
-			if (status != 0) {
-				throw new RuntimeException(String.valueOf(status));
-			}
+			throw new RuntimeException(String.valueOf(status));
 		}
 
 		@Override

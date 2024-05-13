@@ -505,17 +505,17 @@ public class PortletConfigurationPermissionsDisplayContext {
 				roleSearchContainer.setResultsAndTotal(
 					RoleServiceUtil.getGroupRolesAndTeamRoles(
 						_themeDisplay.getCompanyId(), _getKeywords(),
-						excludedRoleNames, _getKeywords(), null,
-						getRoleTypes(), modelResourceRoleId, teamGroupId,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+						excludedRoleNames, _getKeywords(), null, getRoleTypes(),
+						modelResourceRoleId, teamGroupId, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS));
 			}
 			else {
 				roleSearchContainer.setResultsAndTotal(
 					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
 						_themeDisplay.getCompanyId(), _getKeywords(),
-						excludedRoleNames, _getKeywords(), null,
-						getRoleTypes(), modelResourceRoleId, teamGroupId,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+						excludedRoleNames, _getKeywords(), null, getRoleTypes(),
+						modelResourceRoleId, teamGroupId, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS));
 			}
 		}
 

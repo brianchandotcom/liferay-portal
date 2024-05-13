@@ -14,6 +14,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.dto.v1_0.DocumentShortcut;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
@@ -40,6 +41,7 @@ import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentShortcutResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
@@ -163,6 +165,14 @@ public class Query {
 
 		_documentFolderResourceComponentServiceObjects =
 			documentFolderResourceComponentServiceObjects;
+	}
+
+	public static void setDocumentShortcutResourceComponentServiceObjects(
+		ComponentServiceObjects<DocumentShortcutResource>
+			documentShortcutResourceComponentServiceObjects) {
+
+		_documentShortcutResourceComponentServiceObjects =
+			documentShortcutResourceComponentServiceObjects;
 	}
 
 	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -1680,6 +1690,24 @@ public class Query {
 				documentFolderResource.
 					getSiteDocumentsFolderByExternalReferenceCode(
 						Long.valueOf(siteKey), externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentShortcut(documentShortcutId: ___){assetLibraryKey, dateCreated, dateModified, folderId, id, siteId, targetDocumentId, title}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the document shortcut.")
+	public DocumentShortcut documentShortcut(
+			@GraphQLName("documentShortcutId") Long documentShortcutId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.getDocumentShortcut(
+					documentShortcutId));
 	}
 
 	/**
@@ -5771,6 +5799,44 @@ public class Query {
 
 	}
 
+	@GraphQLName("DocumentShortcutPage")
+	public class DocumentShortcutPage {
+
+		public DocumentShortcutPage(Page documentShortcutPage) {
+			actions = documentShortcutPage.getActions();
+
+			facets = documentShortcutPage.getFacets();
+
+			items = documentShortcutPage.getItems();
+			lastPage = documentShortcutPage.getLastPage();
+			page = documentShortcutPage.getPage();
+			pageSize = documentShortcutPage.getPageSize();
+			totalCount = documentShortcutPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<DocumentShortcut> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("KnowledgeBaseArticlePage")
 	public class KnowledgeBaseArticlePage {
 
@@ -6722,6 +6788,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			DocumentShortcutResource documentShortcutResource)
+		throws Exception {
+
+		documentShortcutResource.setContextAcceptLanguage(_acceptLanguage);
+		documentShortcutResource.setContextCompany(_company);
+		documentShortcutResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		documentShortcutResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		documentShortcutResource.setContextUriInfo(_uriInfo);
+		documentShortcutResource.setContextUser(_user);
+		documentShortcutResource.setGroupLocalService(_groupLocalService);
+		documentShortcutResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
 
@@ -6972,6 +7054,8 @@ public class Query {
 		_documentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentFolderResource>
 		_documentFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentShortcutResource>
+		_documentShortcutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>

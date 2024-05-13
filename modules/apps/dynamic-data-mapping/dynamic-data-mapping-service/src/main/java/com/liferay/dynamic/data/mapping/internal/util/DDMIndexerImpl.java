@@ -511,6 +511,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 			sb.append(StringPool.UNDERLINE);
 			sb.append(LocaleUtil.toLanguageId(locale));
 		}
+		else if (isLegacyDDMIndexFieldsEnabled() &&
+				 StringUtil.equals(fieldReference, "date")) {
+
+			sb.append(StringPool.UNDERLINE);
+		}
 
 		return sb.toString();
 	}

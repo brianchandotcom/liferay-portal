@@ -42,7 +42,7 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 		throws Exception {
 
 		String upgradeToVersion = getAttributeValue(
-			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
+			SourceFormatterUtil.UPGRADE_TO_RELEASE_VERSION, absolutePath);
 
 		if (Validator.isNull(upgradeToVersion)) {
 			return content;

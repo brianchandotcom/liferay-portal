@@ -26,7 +26,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import java.security.Permission;
@@ -57,35 +56,36 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		System.setErr(new PrintStream(_errByteArrayOutputStream));
-		System.setOut(new PrintStream(_outByteArrayOutputStream));
-		System.setSecurityManager(new DisallowExitSecurityManager());
 		_company = CompanyTestUtil.addCompany();
 
 		_outputDirectoryFile = new File(PropsValues.LIFERAY_HOME, "exports");
 
 		_outputDirectoryFile.mkdirs();
+
+		System.setErr(new PrintStream(_errByteArrayOutputStream));
+		System.setOut(new PrintStream(_outByteArrayOutputStream));
+		System.setSecurityManager(new DisallowExitSecurityManager());
 	}
 
 	@After
-	public void tearDown() throws IOException, PortalException {
+	public void tearDown() throws Exception {
 		_deleteCompany();
+		FileUtils.deleteDirectory(_outputDirectoryFile);
 		System.setErr(_originalErr);
 		System.setOut(_originalOut);
-		FileUtils.deleteDirectory(_outputDirectoryFile);
 	}
 
 	@Test
 	public void testFailure() throws Exception {
-		String sourceFilePath = _runExport(_company.getCompanyId());
+		String sourceFilePath = _export(_company.getCompanyId());
 
-		String targetFilePath = _runExport(_defaultCompanyId);
+		String targetFilePath = _export(_defaultCompanyId);
 
 		File[] files = _outputDirectoryFile.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
-		_runValidation(
+		_validate(
 			() -> {
 			},
 			runtimeException -> {
@@ -126,17 +126,17 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testSuccess() throws Exception {
-		String sourceFilePath = _runExport(_company.getCompanyId());
+		String sourceFilePath = _export(_company.getCompanyId());
 
 		_deleteCompany();
 
-		String targetFilePath = _runExport(_defaultCompanyId);
+		String targetFilePath = _export(_defaultCompanyId);
 
 		File[] files = _outputDirectoryFile.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
-		_runValidation(
+		_validate(
 			() -> {
 				Assert.assertTrue(
 					_outByteArrayOutputStream.toString(
@@ -158,7 +158,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		_company = null;
 	}
 
-	private String _runExport(long companyId) throws Exception {
+	private String _export(long companyId) throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
@@ -170,7 +170,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		}
 	}
 
-	private void _runValidation(
+	private void _validate(
 			UnsafeRunnable<Exception> afterExecutionValidations,
 			UnsafeConsumer<RuntimeException, Exception> catchValidations,
 			String sourceFile, String targetFile)

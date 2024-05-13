@@ -21,7 +21,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -89,8 +88,7 @@ public class BuildQueue {
 
 				_log.info(
 					StringUtil.combine(
-						i + 1, ". ", _liferayPortalURL, "/#/jobs/builds/",
-						buildEntity.getId()));
+						i + 1, ". ", buildEntity.getEntityURL()));
 			}
 		}
 	}
@@ -168,11 +166,6 @@ public class BuildQueue {
 
 	@Autowired
 	private JobQueue _jobQueue;
-
-	@Value(
-		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"
-	)
-	private String _liferayPortalURL;
 
 	private final List<BuildEntity> _sortedBuildEntities = new ArrayList<>();
 

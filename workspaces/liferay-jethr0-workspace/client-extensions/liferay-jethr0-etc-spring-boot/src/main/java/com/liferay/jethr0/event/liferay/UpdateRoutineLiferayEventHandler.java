@@ -9,6 +9,12 @@ import com.liferay.jethr0.routine.RoutineEntity;
 import com.liferay.jethr0.routine.repository.RoutineEntityRepository;
 import com.liferay.jethr0.routine.scheduler.RoutineEntityScheduler;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -20,6 +26,10 @@ public class UpdateRoutineLiferayEventHandler
 
 	@Override
 	public String process() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Updating routine at " + StringUtil.toString(new Date()));
+		}
+
 		RoutineEntityRepository routineEntityRepository =
 			Jethr0ContextUtil.getRoutineEntityRepository();
 		RoutineEntityScheduler routineEntityScheduler =
@@ -37,7 +47,14 @@ public class UpdateRoutineLiferayEventHandler
 			routineEntity.setJSONObject(routineJSONObject);
 		}
 		else {
-			routineEntityRepository.add(routineJSONObject);
+			routineEntity = routineEntityRepository.add(routineJSONObject);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Updated routine ", routineEntity.getEntityURL(), " at ",
+					StringUtil.toString(new Date())));
 		}
 
 		routineEntityScheduler.unscheduleRoutineEntity(routineEntity);
@@ -50,5 +67,8 @@ public class UpdateRoutineLiferayEventHandler
 	protected UpdateRoutineLiferayEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		UpdateRoutineLiferayEventHandler.class);
 
 }

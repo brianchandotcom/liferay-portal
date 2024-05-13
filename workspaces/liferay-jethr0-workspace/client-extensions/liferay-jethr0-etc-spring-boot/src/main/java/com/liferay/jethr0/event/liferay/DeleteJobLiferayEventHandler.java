@@ -9,6 +9,12 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -19,6 +25,10 @@ public class DeleteJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 
 	@Override
 	public String process() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleting job at " + StringUtil.toString(new Date()));
+		}
+
 		JobEntityRepository jobEntityRepository =
 			Jethr0ContextUtil.getJobEntityRepository();
 
@@ -27,10 +37,19 @@ public class DeleteJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 		JobEntity jobEntity = jobEntityRepository.getById(
 			jobJSONObject.getLong("id"));
 
-		if (jobEntity != null) {
-			JobQueue jobQueue = Jethr0ContextUtil.getJobQueue();
+		if (jobEntity == null) {
+			return null;
+		}
 
-			jobQueue.removeJobEntity(jobEntity);
+		JobQueue jobQueue = Jethr0ContextUtil.getJobQueue();
+
+		jobQueue.removeJobEntity(jobEntity);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Deleted job ", jobEntity.getEntityURL(), " at ",
+					StringUtil.toString(new Date())));
 		}
 
 		return String.valueOf(jobEntity);
@@ -39,5 +58,8 @@ public class DeleteJobLiferayEventHandler extends BaseJobLiferayEventHandler {
 	protected DeleteJobLiferayEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		DeleteJobLiferayEventHandler.class);
 
 }

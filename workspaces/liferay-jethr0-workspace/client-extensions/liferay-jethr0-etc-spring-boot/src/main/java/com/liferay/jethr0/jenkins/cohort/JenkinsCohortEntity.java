@@ -25,6 +25,8 @@ public interface JenkinsCohortEntity extends Entity {
 
 	public void addJobEntity(JobEntity jobEntity);
 
+	public int getJenkinsServerCount();
+
 	public Set<JenkinsServerEntity> getJenkinsServerEntities();
 
 	public Set<JobEntity> getJobEntities();
@@ -41,6 +43,10 @@ public interface JenkinsCohortEntity extends Entity {
 
 	public void removeJobEntity(JobEntity jobEntity);
 
+	public void setJenkinsServerCount(int jenkinsServerCount);
+
 	public void setName(String name);
+
+	public void update();
 
 }

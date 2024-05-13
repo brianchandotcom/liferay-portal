@@ -74,6 +74,11 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	@Override
+	public int getJenkinsNodeCount() {
+		return _jenkinsNodeCount;
+	}
+
+	@Override
 	public Set<JenkinsNodeEntity> getJenkinsNodeEntities() {
 		return getRelatedEntities(JenkinsNodeEntity.class);
 	}
@@ -93,6 +98,8 @@ public abstract class BaseJenkinsServerEntity
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
+			"jenkinsNodeCount", getJenkinsNodeCount()
+		).put(
 			"jenkinsUserName", getJenkinsUserName()
 		).put(
 			"jenkinsUserPassword", getJenkinsUserPassword()
@@ -143,6 +150,11 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	@Override
+	public void setJenkinsNodeCount(int jenkinsNodeCount) {
+		_jenkinsNodeCount = jenkinsNodeCount;
+	}
+
+	@Override
 	public void setJenkinsUserName(String jenkinsUserName) {
 		_jenkinsUserName = jenkinsUserName;
 	}
@@ -158,8 +170,9 @@ public abstract class BaseJenkinsServerEntity
 
 		_jenkinsCohortEntityId = jsonObject.optLong(
 			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId");
-		_jenkinsUserName = jsonObject.getString("jenkinsUserName");
-		_jenkinsUserPassword = jsonObject.getString("jenkinsUserPassword");
+		_jenkinsNodeCount = jsonObject.optInt("jenkinsNodeCount");
+		_jenkinsUserName = jsonObject.optString("jenkinsUserName");
+		_jenkinsUserPassword = jsonObject.optString("jenkinsUserPassword");
 		_name = jsonObject.optString("name");
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
@@ -198,6 +211,10 @@ public abstract class BaseJenkinsServerEntity
 
 			jenkinsNodeEntity.update(computerJSONObject);
 		}
+
+		Set<JenkinsNodeEntity> jenkinsNodeEntities = getJenkinsNodeEntities();
+
+		setJenkinsNodeCount(jenkinsNodeEntities.size());
 	}
 
 	protected BaseJenkinsServerEntity(JSONObject jsonObject) {
@@ -206,6 +223,7 @@ public abstract class BaseJenkinsServerEntity
 
 	private JenkinsCohortEntity _jenkinsCohortEntity;
 	private long _jenkinsCohortEntityId;
+	private int _jenkinsNodeCount;
 	private String _jenkinsUserName;
 	private String _jenkinsUserPassword;
 	private String _name;

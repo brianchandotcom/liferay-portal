@@ -417,6 +417,16 @@
 			"name": "JenkinsServer",
 			"objectFields": [
 				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Jenkins Node Count"
+					},
+					"name": "jenkinsNodeCount",
+					"required": false,
+					"type": "Integer"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
@@ -673,6 +683,16 @@
 					},
 					"name": "name",
 					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Jenkins Server Count"
+					},
+					"name": "jenkinsServerCount",
+					"required": false,
+					"type": "Integer"
 				}
 			],
 			"objectRelationships": [

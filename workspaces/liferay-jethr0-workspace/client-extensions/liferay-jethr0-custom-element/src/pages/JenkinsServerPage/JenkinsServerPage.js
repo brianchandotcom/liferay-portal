@@ -42,7 +42,7 @@ function JenkinsNodes({jenkinsServer}) {
 			jenkinsServer,
 			page: jenkinsNodesPage.page,
 			pageSize: activeDelta,
-			setJenkinsNodesPage
+			setJenkinsNodesPage,
 		});
 	}
 
@@ -105,18 +105,10 @@ function JenkinsNodes({jenkinsServer}) {
 									<td>
 										{jenkinsNode.goodBattery ? 'yes' : 'no'}
 									</td>
-									<td>
-										{jenkinsNode.nodeCount}
-									</td>
-									<td>
-										{jenkinsNode.nodeRAM}
-									</td>
-									<td>
-										{jenkinsNode.primaryLabel}
-									</td>
-									<td>
-										{jenkinsNode.type.name}
-									</td>
+									<td>{jenkinsNode.nodeCount}</td>
+									<td>{jenkinsNode.nodeRAM}</td>
+									<td>{jenkinsNode.primaryLabel}</td>
+									<td>{jenkinsNode.type.name}</td>
 									<td>
 										{toLocaleString(
 											jenkinsNode.dateCreated
@@ -140,10 +132,18 @@ function JenkinsNodes({jenkinsServer}) {
 						deltas={deltas}
 						ellipsisBuffer={3}
 						onActiveChange={(activePage) => {
-							setActivePage({activePage, jenkinsNodesPage, jenkinsServer});
+							setActivePage({
+								activePage,
+								jenkinsNodesPage,
+								jenkinsServer,
+							});
 						}}
 						onDeltaChange={(activeDelta) => {
-							setActiveDelta({activeDelta, jenkinsNodesPage, jenkinsServer});
+							setActiveDelta({
+								activeDelta,
+								jenkinsNodesPage,
+								jenkinsServer,
+							});
 						}}
 						showDeltasDropDown={true}
 						totalItems={jenkinsNodesPage.totalCount}

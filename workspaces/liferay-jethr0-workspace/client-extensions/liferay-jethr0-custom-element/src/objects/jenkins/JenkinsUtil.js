@@ -252,9 +252,9 @@ export async function getJenkinsCohortsPage({
 }
 
 export async function getJenkinsNodesPage({
+	jenkinsServer,
 	page,
 	pageSize,
-	jenkinsServer,
 	setJenkinsNodesPage,
 }) {
 	if (!page) {
@@ -268,7 +268,7 @@ export async function getJenkinsNodesPage({
 	let filter = '';
 
 	if (jenkinsServer) {
-		filter = `r_jenkinsServerToJenkinsNodes_c_jenkinsServerId eq '${jenkinsServer.id}'`
+		filter = `r_jenkinsServerToJenkinsNodes_c_jenkinsServerId eq '${jenkinsServer.id}'`;
 	}
 
 	const response = await liferayRequest({
@@ -367,9 +367,11 @@ export async function getJenkinsServersPage({
 	const jenkinsServers = [];
 
 	for (const jenkinsServersJSON of result.data.c.jenkinsServers.items) {
-		let jenkinsServer = new JenkinsServer(jenkinsServersJSON);
+		const jenkinsServer = new JenkinsServer(jenkinsServersJSON);
 
-		jenkinsServer.jenkinsCohort = new JenkinsCohort(jenkinsServersJSON.jenkinsCohortToJenkinsServers);
+		jenkinsServer.jenkinsCohort = new JenkinsCohort(
+			jenkinsServersJSON.jenkinsCohortToJenkinsServers
+		);
 
 		jenkinsServers.push(jenkinsServer);
 	}

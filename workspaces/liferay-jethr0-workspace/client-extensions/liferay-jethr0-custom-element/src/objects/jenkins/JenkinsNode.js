@@ -4,7 +4,18 @@
  */
 
 export default class JenkinsNode {
-	constructor({dateCreated, dateModified, goodBattery, id, name, nodeCount, nodeRAM, primaryLabel, type, url}) {
+	constructor({
+		dateCreated,
+		dateModified,
+		goodBattery,
+		id,
+		name,
+		nodeCount,
+		nodeRAM,
+		primaryLabel,
+		type,
+		url,
+	}) {
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
 		this.goodBattery = goodBattery;

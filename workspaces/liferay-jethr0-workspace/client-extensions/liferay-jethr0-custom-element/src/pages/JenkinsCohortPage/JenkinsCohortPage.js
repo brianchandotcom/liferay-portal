@@ -66,9 +66,7 @@ function JenkinsMasters({jenkinsCohort}) {
 											{jenkinsServer.name}
 										</a>
 									</td>
-									<td>
-										{jenkinsServer.jenkinsNodeCount}
-									</td>
+									<td>{jenkinsServer.jenkinsNodeCount}</td>
 									<td>
 										{toLocaleString(
 											jenkinsServer.dateCreated

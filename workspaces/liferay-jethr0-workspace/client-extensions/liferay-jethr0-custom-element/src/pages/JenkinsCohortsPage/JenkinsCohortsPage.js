@@ -112,7 +112,9 @@ function JenkinsCohortsPage() {
 											</Link>
 										</th>
 										<td>{jenkinsCohort.name}</td>
-										<td>{jenkinsCohort.jenkinsServerCount}</td>
+										<td>
+											{jenkinsCohort.jenkinsServerCount}
+										</td>
 										<td>
 											{toLocaleString(
 												jenkinsCohort.dateCreated

@@ -60,25 +60,20 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 
 		if (Validator.isNotNull(entryUuid)) {
 			_optimizeImagesSingleConfiguration(
-				themeDisplay.getUserId(), themeDisplay.getCompanyId(), jobName,
-				entryUuid);
+				themeDisplay.getUserId(), jobName, entryUuid);
 		}
 		else {
-			_optimizeImages(
-				themeDisplay.getUserId(), themeDisplay.getCompanyId(), jobName);
+			_optimizeImages(themeDisplay.getUserId(), jobName);
 		}
 
 		SessionMessages.add(actionRequest, "optimizeImages");
 	}
 
-	private BackgroundTask _optimizeImages(
-			long userId, long companyId, String jobName)
+	private BackgroundTask _optimizeImages(long userId, String jobName)
 		throws Exception {
 
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
-				AMOptimizeImagesBackgroundTaskConstants.COMPANY_ID, companyId
-			).put(
 				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
 			).build();
 
@@ -97,14 +92,11 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private BackgroundTask _optimizeImagesSingleConfiguration(
-			long userId, long companyId, String jobName,
-			String configurationEntryUuid)
+			long userId, String jobName, String configurationEntryUuid)
 		throws Exception {
 
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
-				AMOptimizeImagesBackgroundTaskConstants.COMPANY_ID, companyId
-			).put(
 				AMOptimizeImagesBackgroundTaskConstants.
 					CONFIGURATION_ENTRY_UUID,
 				configurationEntryUuid

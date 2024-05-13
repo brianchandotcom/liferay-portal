@@ -147,6 +147,10 @@ public class I18nFilterTest {
 		Assert.assertNull(
 			_getPrependI18nLanguageId(
 				3, null, null, null, null, LocaleUtil.US));
+
+		Assert.assertNull(
+			_getPrependI18nLanguageId(
+				3, null, null, null, null, LocaleUtil.ENGLISH));
 	}
 
 	@Test
@@ -194,6 +198,11 @@ public class I18nFilterTest {
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
 				3, null, null, null, null, LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			_getPrependI18nLanguageId(
+				3, null, null, null, null, new Locale("es")));
 	}
 
 	@Test

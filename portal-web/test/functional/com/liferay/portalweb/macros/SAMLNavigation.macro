@@ -1,6 +1,11 @@
 definition {
 
 	@summary = "Default summary"
+	macro assertConsoleValueNotPresent(consoleValue = null) {
+		WaitForConsoleTextNotPresent(value1 = ${consoleValue});
+	}
+
+	@summary = "Default summary"
 	macro gotoGeneral() {
 		Navigator.gotoNavTab(navTab = "General");
 	}

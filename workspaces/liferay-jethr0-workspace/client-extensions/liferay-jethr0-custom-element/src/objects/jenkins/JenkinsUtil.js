@@ -78,6 +78,7 @@ export async function getJenkinsCohortById({id, setJenkinsCohort}) {
 					items {
 						dateCreated
 						dateModified
+						jenkinsServerCount
 						id
 						name
 					}
@@ -88,6 +89,7 @@ export async function getJenkinsCohortById({id, setJenkinsCohort}) {
 						dateModified
 						id
 						jenkinsCohortToJenkinsServers
+						jenkinsNodeCount
 						name
 						url
 					}
@@ -128,20 +130,30 @@ export async function getJenkinsServerById({id, setJenkinsServer}) {
 	const response = await liferayRequest({
 		graphqlQuery: `{
 			c {
-				jenkinsNodes(filter: \\"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId eq '${id}'\\") {
+				jenkinsNodes (filter: \\"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId eq '${id}'\\") {
 					items {
 						dateCreated
 						dateModified
+						goodBattery
 						id
 						name
+						nodeCount
+						nodeRAM
+						primaryLabel
+						type {
+							key
+							name
+						}
+						url
 					}
 				}
-				jenkinsServers(filter: \\"id eq '${id}'\\") {
+				jenkinsServers (filter: \\"id eq '${id}'\\") {
 					items {
 						dateCreated
 						dateModified
 						id
 						jenkinsCohortToJenkinsServers
+						jenkinsNodeCount
 						name
 						url
 					}
@@ -203,6 +215,7 @@ export async function getJenkinsCohortsPage({
 						id
 						dateCreated
 						dateModified
+						jenkinsServerCount
 						name
 					}
 					page
@@ -238,6 +251,78 @@ export async function getJenkinsCohortsPage({
 	}
 }
 
+export async function getJenkinsNodesPage({
+	page,
+	pageSize,
+	jenkinsServer,
+	setJenkinsNodesPage,
+}) {
+	if (!page) {
+		page = 1;
+	}
+
+	if (!pageSize) {
+		pageSize = 25;
+	}
+
+	let filter = '';
+
+	if (jenkinsServer) {
+		filter = `r_jenkinsServerToJenkinsNodes_c_jenkinsServerId eq '${jenkinsServer.id}'`
+	}
+
+	const response = await liferayRequest({
+		graphqlQuery: `{
+			c {
+				jenkinsNodes (filter: \\"${filter}\\", page: ${page}, pageSize: ${pageSize}) {
+					items {
+						dateCreated
+						dateModified
+						goodBattery
+						id
+						name
+						nodeCount
+						nodeRAM
+						primaryLabel
+						type {
+							key
+							name
+						}
+						url
+					}
+					page
+					pageSize
+					totalCount
+				}
+			}
+		}`,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+		urlPath: '/o/graphql',
+	});
+
+	const result = JSON.parse(await response.text());
+
+	const jenkinsNodes = [];
+
+	for (const item of result.data.c.jenkinsNodes.items) {
+		jenkinsNodes.push(new JenkinsNode(item));
+	}
+
+	const jenkinsNodesPage = {
+		jenkinsNodes,
+		page: result.data.c.jenkinsNodes.page,
+		pageSize: result.data.c.jenkinsNodes.pageSize,
+		totalCount: result.data.c.jenkinsNodes.totalCount,
+	};
+
+	if (setJenkinsNodesPage) {
+		setJenkinsNodesPage(jenkinsNodesPage);
+	}
+}
+
 export async function getJenkinsServersPage({
 	page,
 	pageSize,
@@ -256,9 +341,11 @@ export async function getJenkinsServersPage({
 			c {
 				jenkinsServers (page: ${page}, pageSize: ${pageSize}) {
 					items {
-						id
 						dateCreated
 						dateModified
+						id
+						jenkinsCohortToJenkinsServers
+						jenkinsNodeCount
 						name
 						url
 					}
@@ -279,8 +366,12 @@ export async function getJenkinsServersPage({
 
 	const jenkinsServers = [];
 
-	for (const item of result.data.c.jenkinsServers.items) {
-		jenkinsServers.push(new JenkinsServer(item));
+	for (const jenkinsServersJSON of result.data.c.jenkinsServers.items) {
+		let jenkinsServer = new JenkinsServer(jenkinsServersJSON);
+
+		jenkinsServer.jenkinsCohort = new JenkinsCohort(jenkinsServersJSON.jenkinsCohortToJenkinsServers);
+
+		jenkinsServers.push(jenkinsServer);
 	}
 
 	const jenkinsServersPage = {

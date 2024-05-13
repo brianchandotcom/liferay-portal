@@ -4,11 +4,17 @@
  */
 
 export default class JenkinsNode {
-	constructor({dateCreated, dateModified, id, name}) {
+	constructor({dateCreated, dateModified, goodBattery, id, name, nodeCount, nodeRAM, primaryLabel, type, url}) {
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
+		this.goodBattery = goodBattery;
 		this.id = id;
 		this.name = name;
+		this.nodeCount = nodeCount;
+		this.nodeRAM = nodeRAM;
+		this.primaryLabel = primaryLabel;
+		this.type = type;
+		this.url = url;
 	}
 
 	jenkinsServer;

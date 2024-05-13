@@ -107,6 +107,8 @@ public class IndexHelperImpl implements IndexHelper {
 		OpenSearchIndicesClient openSearchIndicesClient,
 		boolean resetBothIndexNames) {
 
+		_executeIndexContributorsBeforeRemove(indexName);
+
 		try {
 			JsonpUtil.logInfoResponse(
 				openSearchIndicesClient.delete(
@@ -338,11 +340,32 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
+	private void _executeIndexContributorBeforeRemove(
+		IndexContributor indexContributor, String indexName) {
+
+		try {
+			indexContributor.onBeforeRemove(indexName);
+		}
+		catch (Throwable throwable) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to apply contributor ", indexContributor,
+					" when removing index ", indexName),
+				throwable);
+		}
+	}
+
 	private void _executeIndexContributorsAfterCreate(String indexName) {
 		for (IndexContributor indexContributor :
 				_indexContributorServiceTrackerList) {
 
 			_executeIndexContributorAfterCreate(indexContributor, indexName);
+		}
+	}
+
+	private void _executeIndexContributorsBeforeRemove(String indexName) {
+		for (IndexContributor indexContributor : getIndexContributors()) {
+			_executeIndexContributorBeforeRemove(indexContributor, indexName);
 		}
 	}
 

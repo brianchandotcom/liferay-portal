@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.index;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -15,7 +14,6 @@ import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchCo
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.index.util.IndexFactoryCompanyIdRegistryUtil;
-import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
@@ -73,8 +71,6 @@ public class CompanyIndexFactory
 		if (!_indexHelper.hasIndex(indexName, openSearchIndicesClient)) {
 			return false;
 		}
-
-		_executeIndexContributorsBeforeRemove(indexName);
 
 		_indexHelper.deleteIndex(
 			companyId, indexName, openSearchIndicesClient, true);
@@ -136,29 +132,6 @@ public class CompanyIndexFactory
 		_companyLocalService.forEachCompanyId(
 			companyId -> _createCompanyIndex(companyId),
 			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
-	}
-
-	private void _executeIndexContributorBeforeRemove(
-		IndexContributor indexContributor, String indexName) {
-
-		try {
-			indexContributor.onBeforeRemove(indexName);
-		}
-		catch (Throwable throwable) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to apply contributor ", indexContributor,
-					" when removing index ", indexName),
-				throwable);
-		}
-	}
-
-	private void _executeIndexContributorsBeforeRemove(String indexName) {
-		for (IndexContributor indexContributor :
-				_indexHelper.getIndexContributors()) {
-
-			_executeIndexContributorBeforeRemove(indexContributor, indexName);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

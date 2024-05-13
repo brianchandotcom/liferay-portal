@@ -69,7 +69,7 @@ definition {
 		User.openUsersAdmin();
 
 		CommerceLogin.editPasswordCP(
-			newPassword = "test",
+			newPassword = "password",
 			requirePasswordReset = "false",
 			userScreenName = "buyeruser");
 
@@ -100,7 +100,7 @@ definition {
 		User.logoutPG();
 
 		CommerceLogin.miniumLogin(
-			password = "test",
+			password = "password",
 			urlAppend = "web/minium",
 			userEmailAddress = "buyer@liferay.com");
 
@@ -143,7 +143,7 @@ definition {
 
 		task ("Then a notification is sent to the Admin User containing the new user's details") {
 			User.loginUserPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			WorkflowAsset.gotoViaNotification(assetType = "User");

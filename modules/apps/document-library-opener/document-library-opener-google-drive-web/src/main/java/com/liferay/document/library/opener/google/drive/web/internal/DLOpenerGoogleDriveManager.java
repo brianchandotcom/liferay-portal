@@ -276,9 +276,6 @@ public class DLOpenerGoogleDriveManager {
 			).put(
 				GoogleDriveBackgroundTaskConstants.CMD, cmd
 			).put(
-				GoogleDriveBackgroundTaskConstants.COMPANY_ID,
-				fileEntry.getCompanyId()
-			).put(
 				GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
 				fileEntry.getFileEntryId()
 			).put(

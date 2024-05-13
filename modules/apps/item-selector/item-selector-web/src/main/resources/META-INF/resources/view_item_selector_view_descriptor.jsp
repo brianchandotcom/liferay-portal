@@ -193,6 +193,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 		<liferay-ui:search-iterator
 			displayStyle="<%= itemSelectorViewDescriptorRendererDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
+			resultRowSplitter="<%= itemSelectorViewDescriptor.getResultRowSplitter() %>"
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>

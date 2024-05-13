@@ -10,6 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,6 +53,10 @@ public interface ItemSelectorViewDescriptor<T> {
 	}
 
 	public default String[] getOrderByKeys() {
+		return null;
+	}
+
+	public default ResultRowSplitter getResultRowSplitter() {
 		return null;
 	}
 

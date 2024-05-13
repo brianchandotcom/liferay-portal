@@ -14,7 +14,7 @@ import {CONSENT_TYPE} from '~/util/enum';
 import useStorage from '../../hooks/useStorage';
 import i18n from '../../i18n';
 import {TestrayIcon, TestrayIconBrand} from '../../images';
-import AutoFillBuildsPopover from '../AutofillPopover';
+import AutofillBuildsPopover from '../AutofillPopover';
 import CompareRunsPopover from '../ComparePopover';
 import TestrayIcons from '../Icons/TestrayIcon';
 import Tooltip from '../Tooltip';
@@ -29,7 +29,7 @@ const Sidebar = () => {
 		storageType: 'persisted',
 	});
 	const [visible, setVisible] = useState(false);
-	const [type, setType] = useState<'autoFill' | 'compareRuns'>('compareRuns');
+	const [type, setType] = useState<'autofill' | 'compareRuns'>('compareRuns');
 
 	const CompareRunsContent = (
 		<div
@@ -54,7 +54,7 @@ const Sidebar = () => {
 		</div>
 	);
 
-	const AutoFillContent = (
+	const AutofillContent = (
 		<div
 			className={classNames(
 				'tr-sidebar__content__list__item tr-sidebar__content__list__item__compare-runs-options'
@@ -77,7 +77,7 @@ const Sidebar = () => {
 	);
 
 	const CompareRunsRef = useRef<HTMLDivElement>(null);
-	const AutoFillRef = useRef<HTMLDivElement>(null);
+	const AutofillRef = useRef<HTMLDivElement>(null);
 
 	const sidebarItems = [
 		{
@@ -94,10 +94,10 @@ const Sidebar = () => {
 			element: (
 				<div
 					onClick={() => {
-						setType('autoFill');
+						setType('autofill');
 						setVisible((show) => !show);
 					}}
-					ref={AutoFillRef}
+					ref={AutofillRef}
 				>
 					<Tooltip
 						position="right"
@@ -107,7 +107,7 @@ const Sidebar = () => {
 								: i18n.sub('auto-fill-x', 'builds')
 						}
 					>
-						{AutoFillContent}
+						{AutofillContent}
 					</Tooltip>
 				</div>
 			),
@@ -212,10 +212,10 @@ const Sidebar = () => {
 								visible={visible}
 							/>
 						) : (
-							<AutoFillBuildsPopover
+							<AutofillBuildsPopover
 								expanded={expanded}
 								setVisible={setVisible}
-								triggedRef={AutoFillRef}
+								triggedRef={AutofillRef}
 								visible={visible}
 							/>
 						)}

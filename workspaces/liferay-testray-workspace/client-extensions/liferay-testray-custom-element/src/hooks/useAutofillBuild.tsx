@@ -7,8 +7,8 @@ import {useCallback, useContext} from 'react';
 
 import {BuildId, TestrayContext, TestrayTypes} from '../context/TestrayContext';
 
-const useAutoFillBuild = () => {
-	const [{autoFillBuild}, dispatch] = useContext(TestrayContext);
+const useAutofillBuild = () => {
+	const [{autofillBuild}, dispatch] = useContext(TestrayContext);
 
 	const setBuildA = useCallback(
 		(buildA: BuildId) =>
@@ -23,12 +23,12 @@ const useAutoFillBuild = () => {
 	);
 
 	return {
-		autoFillBuild: {
-			...autoFillBuild,
+		autofillBuild: {
+			...autofillBuild,
 		},
 		setBuildA,
 		setBuildB,
 	};
 };
 
-export default useAutoFillBuild;
+export default useAutofillBuild;

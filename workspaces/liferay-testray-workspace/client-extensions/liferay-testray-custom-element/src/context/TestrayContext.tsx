@@ -32,7 +32,7 @@ export type CompareRuns = {
 };
 
 type InitialState = {
-	autoFillBuild: AutofillBuild;
+	autofillBuild: AutofillBuild;
 	compareRuns: CompareRuns;
 	myUserAccount?: UserAccount;
 	runNumber: number;
@@ -40,7 +40,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-	autoFillBuild: {
+	autofillBuild: {
 		buildA: null,
 		buildB: null,
 	},
@@ -104,13 +104,13 @@ const reducer = (state: InitialState, action: AppActions) => {
 		case TestrayTypes.SET_BUILD_A:
 			return {
 				...state,
-				autoFillBuild: {...state.autoFillBuild, buildA: action.payload},
+				autofillBuild: {...state.autofillBuild, buildA: action.payload},
 			};
 
 		case TestrayTypes.SET_BUILD_B:
 			return {
 				...state,
-				autoFillBuild: {...state.autoFillBuild, buildB: action.payload},
+				autofillBuild: {...state.autofillBuild, buildB: action.payload},
 			};
 
 		case TestrayTypes.SET_RUN_A:
@@ -133,8 +133,8 @@ const reducer = (state: InitialState, action: AppActions) => {
 const TestrayContextProvider: React.FC<{
 	children: ReactNode;
 }> = ({children}) => {
-	const [autoFillBuildValue, setAutoFillBuildValue] = useStorage<{
-		autoFillBuild: AutofillBuild;
+	const [autofillBuildValue, setAutofillBuildValue] = useStorage<{
+		autofillBuild: AutofillBuild;
 	}>(STORAGE_KEYS.AUTO_FILL, {
 		initialValue: initialState,
 		storageType: 'temporary',
@@ -149,7 +149,7 @@ const TestrayContextProvider: React.FC<{
 
 	const [state, dispatch] = useReducer(reducer, {
 		...initialState,
-		autoFillBuild: autoFillBuildValue?.autoFillBuild,
+		autofillBuild: autofillBuildValue?.autofillBuild,
 		compareRuns: compareRunsValue?.compareRuns,
 	});
 
@@ -183,8 +183,8 @@ const TestrayContextProvider: React.FC<{
 
 	const compareRuns = useMemo(() => state.compareRuns, [state.compareRuns]);
 
-	const autoFillBuild = useMemo(() => state.autoFillBuild, [
-		state.autoFillBuild,
+	const autofillBuild = useMemo(() => state.autofillBuild, [
+		state.autofillBuild,
 	]);
 
 	useEffect(() => {
@@ -192,13 +192,13 @@ const TestrayContextProvider: React.FC<{
 			setcompareRunsValue({compareRuns});
 		}
 
-		if (autoFillBuild) {
-			setAutoFillBuildValue({autoFillBuild});
+		if (autofillBuild) {
+			setAutofillBuildValue({autofillBuild});
 		}
 	}, [
-		autoFillBuild,
+		autofillBuild,
 		compareRuns,
-		setAutoFillBuildValue,
+		setAutofillBuildValue,
 		setcompareRunsValue,
 	]);
 

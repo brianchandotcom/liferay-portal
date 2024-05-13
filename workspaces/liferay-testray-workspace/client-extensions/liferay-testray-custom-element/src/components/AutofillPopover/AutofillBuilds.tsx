@@ -9,7 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useState} from 'react';
 import {useObjectPermission} from '~/hooks/data/useObjectPermission';
-import useAutoFillBuild from '~/hooks/useAutofillBuild';
+import useAutofillBuild from '~/hooks/useAutofillBuild';
 
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay';
@@ -21,25 +21,25 @@ type AutofillBuildsProps = {
 };
 
 const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
-	const {autoFillBuild, setBuildA, setBuildB} = useAutoFillBuild();
+	const {autofillBuild, setBuildA, setBuildB} = useAutofillBuild();
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const buildsPermission = useObjectPermission('/builds');
 	const disbleButtonAutofillBuilds = buildsPermission.canCreate;
 
-	const validateAutoFillButton = !(
-		autoFillBuild?.buildA && autoFillBuild?.buildB
+	const validateAutofillButton = !(
+		autofillBuild?.buildA && autofillBuild?.buildB
 	);
 
-	const onAutoFill = () => {
-		if (!autoFillBuild.buildA || !autoFillBuild.buildB) {
+	const onAutofill = () => {
+		if (!autofillBuild.buildA || !autofillBuild.buildB) {
 			return;
 		}
 
 		setLoading(true);
 
 		testrayBuildImpl
-			.autofill(autoFillBuild.buildA, autoFillBuild.buildB)
+			.autofill(autofillBuild.buildA, autofillBuild.buildB)
 			.then((reponse) =>
 				Liferay.Util.openToast({
 					message: i18n.sub(
@@ -83,9 +83,9 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
 				<ClayLayout.Row>
 					<ClayLayout.Col>
 						<ClayButton block className="build-buttons">
-							{autoFillBuild?.buildA
+							{autofillBuild?.buildA
 								? `${i18n.translate('build-a')} : ${
-										autoFillBuild?.buildA
+										autofillBuild?.buildA
 								  }`
 								: i18n.translate('build-a')}
 						</ClayButton>
@@ -93,9 +93,9 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
 
 					<ClayLayout.Col>
 						<ClayButton block className="build-buttons">
-							{autoFillBuild?.buildB
+							{autofillBuild?.buildB
 								? `${i18n.translate('run-b')} : ${
-										autoFillBuild?.buildB
+										autofillBuild?.buildB
 								  }`
 								: i18n.translate('build-b')}
 						</ClayButton>
@@ -107,11 +107,11 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
 						className="align-items-center d-flex"
 						disabled={
 							loading ||
-							validateAutoFillButton ||
+							validateAutofillButton ||
 							!disbleButtonAutofillBuilds
 						}
 						displayType="primary"
-						onClick={() => onAutoFill()}
+						onClick={() => onAutofill()}
 					>
 						{loading && (
 							<ClayLoadingIndicator className="mb-0 mr-2 mt-0" />

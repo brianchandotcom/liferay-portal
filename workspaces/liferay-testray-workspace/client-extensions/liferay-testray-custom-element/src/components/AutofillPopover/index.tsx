@@ -6,16 +6,16 @@
 import classNames from 'classnames';
 import {useEffect, useRef} from 'react';
 
-import AutofillBuilds from './AutoFillBuilds';
+import AutofillBuilds from './AutofillBuilds';
 
-type AutoFillBuildsPopoverProps = {
+type AutofillBuildsPopoverProps = {
 	expanded?: boolean;
 	setVisible: (state: boolean) => void;
 	triggedRef: React.RefObject<HTMLDivElement>;
 	visible: boolean;
 };
 
-const AutoFillBuildsPopover: React.FC<AutoFillBuildsPopoverProps> = ({
+const AutofillBuildsPopover: React.FC<AutofillBuildsPopoverProps> = ({
 	expanded = false,
 	setVisible,
 	triggedRef,
@@ -56,4 +56,4 @@ const AutoFillBuildsPopover: React.FC<AutoFillBuildsPopoverProps> = ({
 	);
 };
 
-export default AutoFillBuildsPopover;
+export default AutofillBuildsPopover;

@@ -79,7 +79,7 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
 
 			<Form.Divider />
 
-			<div className="auto-fill-builds-popover mt-3">
+			<div className="autofill-builds-popover mt-3">
 				<ClayLayout.Row>
 					<ClayLayout.Col>
 						<ClayButton block className="build-buttons">

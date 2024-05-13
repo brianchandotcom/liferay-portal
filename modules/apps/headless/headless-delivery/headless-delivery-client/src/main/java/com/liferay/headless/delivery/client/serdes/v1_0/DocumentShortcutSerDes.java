@@ -52,6 +52,16 @@ public class DocumentShortcutSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (documentShortcut.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(documentShortcut.getActions()));
+		}
+
 		if (documentShortcut.getAssetLibraryKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -174,6 +184,13 @@ public class DocumentShortcutSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (documentShortcut.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(documentShortcut.getActions()));
+		}
+
 		if (documentShortcut.getAssetLibraryKey() == null) {
 			map.put("assetLibraryKey", null);
 		}
@@ -261,7 +278,14 @@ public class DocumentShortcutSerDes {
 			DocumentShortcut documentShortcut, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					documentShortcut.setActions(
+						(Map)DocumentShortcutSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
 				if (jsonParserFieldValue != null) {
 					documentShortcut.setAssetLibraryKey(
 						(String)jsonParserFieldValue);

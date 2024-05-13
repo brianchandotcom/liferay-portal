@@ -4,7 +4,7 @@ import path from 'path';
 import { BUILD_NPM_EXPORTS_PATH } from '../util/constants.mjs';
 import getFlatName from '../util/getFlatName.mjs';
 
-export default async function writeCSSLoaderJavaScriptModules(projectExports, projectWebContextPath) {
+export default async function writeCSSExportsLoaderModules(projectExports, projectWebContextPath) {
 	if (!projectExports) {
 		return;
 	}
@@ -12,11 +12,11 @@ export default async function writeCSSLoaderJavaScriptModules(projectExports, pr
 	await Promise.all(
 		projectExports
 			.filter(moduleName => moduleName.endsWith('.css'))
-			.map(moduleName => writeCSSLoaderJavaScriptModule(projectWebContextPath, moduleName))
+			.map(moduleName => writeCSSExportLoaderModule(projectWebContextPath, moduleName))
 	);
 }
 
-async function writeCSSLoaderJavaScriptModule(webContextPath, moduleName) {
+async function writeCSSExportLoaderModule(webContextPath, moduleName) {
 	const flatModuleName = getFlatName(moduleName);
 
 	const cssLoaderPath = path.join(BUILD_NPM_EXPORTS_PATH, `${flatModuleName}.js`);

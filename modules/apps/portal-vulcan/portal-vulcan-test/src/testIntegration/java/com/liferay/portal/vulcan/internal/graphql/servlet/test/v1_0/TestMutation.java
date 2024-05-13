@@ -18,4 +18,9 @@ public class TestMutation {
 		return testDTO;
 	}
 
+	@GraphQLField
+	public TestDTO createTestDTOV1(@GraphQLName("testDTO") TestDTO testDTO) {
+		return testDTO;
+	}
+
 }

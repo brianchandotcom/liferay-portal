@@ -4,10 +4,11 @@
  */
 
 export default class JenkinsCohort {
-	constructor({dateCreated, dateModified, id, name}) {
+	constructor({dateCreated, dateModified, id, jenkinsServerCount, name}) {
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
 		this.id = id;
+		this.jenkinsServerCount = jenkinsServerCount;
 		this.name = name;
 	}
 

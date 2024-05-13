@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
@@ -39,11 +38,8 @@ public abstract class BaseOptimizeImagesBackgroundTaskExecutor
 
 		String configurationEntryUuid = (String)taskContextMap.get(
 			AMOptimizeImagesBackgroundTaskConstants.CONFIGURATION_ENTRY_UUID);
-		long companyId = GetterUtil.getLong(
-			taskContextMap.get(
-				AMOptimizeImagesBackgroundTaskConstants.COMPANY_ID));
 
-		optimizeImages(configurationEntryUuid, companyId);
+		optimizeImages(configurationEntryUuid, backgroundTask.getCompanyId());
 
 		return BackgroundTaskResult.SUCCESS;
 	}

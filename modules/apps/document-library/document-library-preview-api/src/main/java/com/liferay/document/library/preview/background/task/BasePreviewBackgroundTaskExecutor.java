@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-
-import java.io.Serializable;
 
 import java.util.Map;
 import java.util.function.Consumer;
@@ -44,13 +41,8 @@ public abstract class BasePreviewBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		long companyId = GetterUtil.getLong(taskContextMap.get("companyId"));
-
 		try {
-			generatePreviews(companyId);
+			generatePreviews(backgroundTask.getCompanyId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

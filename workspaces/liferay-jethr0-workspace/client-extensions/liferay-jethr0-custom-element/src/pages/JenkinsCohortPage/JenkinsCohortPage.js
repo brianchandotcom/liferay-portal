@@ -41,6 +41,7 @@ function JenkinsMasters({jenkinsCohort}) {
 						<tr>
 							<th>ID</th>
 							<th>Name</th>
+							<th>Jenkins Nodes</th>
 							<th>Create Date</th>
 							<th>Modified Date</th>
 						</tr>
@@ -64,6 +65,9 @@ function JenkinsMasters({jenkinsCohort}) {
 										<a href={jenkinsServer.url}>
 											{jenkinsServer.name}
 										</a>
+									</td>
+									<td>
+										{jenkinsServer.jenkinsNodeCount}
 									</td>
 									<td>
 										{toLocaleString(

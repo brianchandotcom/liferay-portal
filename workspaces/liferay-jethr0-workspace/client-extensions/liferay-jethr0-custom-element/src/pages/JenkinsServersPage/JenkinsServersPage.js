@@ -90,6 +90,7 @@ function JenkinsServersPage() {
 						<tr>
 							<th>ID</th>
 							<th>Name</th>
+							<th>Jenkins Nodes</th>
 							<th>Create Date</th>
 							<th>Modified Date</th>
 						</tr>
@@ -111,6 +112,7 @@ function JenkinsServersPage() {
 											</Link>
 										</th>
 										<td>{jenkinsServer.name}</td>
+										<td>{jenkinsServer.jenkinsNodeCount}</td>
 										<td>
 											{toLocaleString(
 												jenkinsServer.dateCreated

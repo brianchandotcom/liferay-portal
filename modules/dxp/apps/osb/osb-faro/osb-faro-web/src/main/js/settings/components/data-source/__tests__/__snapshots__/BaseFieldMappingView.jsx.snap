@@ -55,7 +55,9 @@ exports[`BaseFieldMappingView should render 1`] = `
               <div
                 class="sheet-section"
               >
-                <h4 />
+                <div
+                  class="h4"
+                />
                 <div
                   class="sheet-text"
                 />

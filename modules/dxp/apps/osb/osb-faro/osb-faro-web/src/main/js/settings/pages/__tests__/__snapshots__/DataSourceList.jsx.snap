@@ -536,11 +536,11 @@ exports[`DataSourceList should render with a member-specific message to connect 
         />
       </svg>
     </div>
-    <h4
-      class="no-results-title"
+    <div
+      class="h4 no-results-title"
     >
       No Data Sources Connected
-    </h4>
+    </div>
     <div
       class="no-results-description"
     >
@@ -569,11 +569,11 @@ exports[`DataSourceList should render with a message to connect datasources if t
         />
       </svg>
     </div>
-    <h4
-      class="no-results-title"
+    <div
+      class="h4 no-results-title"
     >
       No Data Sources Connected
-    </h4>
+    </div>
     <div
       class="no-results-description"
     >
@@ -615,11 +615,11 @@ exports[`DataSourceList should render with an empty state 1`] = `
         />
       </svg>
     </div>
-    <h4
-      class="no-results-title"
+    <div
+      class="h4 no-results-title"
     >
       There are no results found.
-    </h4>
+    </div>
     <div
       class="no-results-description"
     >

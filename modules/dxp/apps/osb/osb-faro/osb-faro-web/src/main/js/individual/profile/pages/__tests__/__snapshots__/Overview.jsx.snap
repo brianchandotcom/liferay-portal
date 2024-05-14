@@ -119,9 +119,11 @@ exports[`IndividualOverview should render 1`] = `
               <div
                 class="activities-date d-flex align-items-baseline"
               >
-                <h4>
+                <div
+                  class="h4"
+                >
                   Individual's Events - December 9, 2021 - December 10, 2021
-                </h4>
+                </div>
               </div>
               <div
                 class="details"
@@ -503,9 +505,11 @@ Chrome"
           >
             FB
           </div>
-          <h4>
+          <div
+            class="h4"
+          >
             Foo Bar
-          </h4>
+          </div>
           <div
             class="job-title"
           >
@@ -554,8 +558,8 @@ Chrome"
           <li
             class="interest list-group-item"
           >
-            <h4
-              class="list-group-title text-truncate"
+            <div
+              class="h4 list-group-title text-truncate"
             >
               <a
                 class="text-decoration-none"
@@ -563,7 +567,7 @@ Chrome"
               >
                 Bar0
               </a>
-            </h4>
+            </div>
           </li>
         </ul>
         <div

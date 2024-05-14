@@ -166,11 +166,11 @@ exports[`UserRequest should render 1`] = `
           class=""
         >
           <td>
-            <h4
-              class="table-title text-truncate"
+            <div
+              class="h4 table-title text-truncate"
             >
               Test Test
-            </h4>
+            </div>
           </td>
           <td>
             test@liferay.com

@@ -20,8 +20,8 @@ exports[`InterestsCard should render 1`] = `
       <li
         class="interest list-group-item"
       >
-        <h4
-          class="list-group-title text-truncate"
+        <div
+          class="h4 list-group-title text-truncate"
         >
           <a
             class="text-decoration-none"
@@ -29,7 +29,7 @@ exports[`InterestsCard should render 1`] = `
           >
             Bar0
           </a>
-        </h4>
+        </div>
       </li>
     </ul>
     <div
@@ -62,8 +62,8 @@ exports[`InterestsList should render 1`] = `
     <li
       class="interest list-group-item"
     >
-      <h4
-        class="list-group-title text-truncate"
+      <div
+        class="h4 list-group-title text-truncate"
       >
         <a
           class="text-decoration-none"
@@ -71,7 +71,7 @@ exports[`InterestsList should render 1`] = `
         >
           Bar0
         </a>
-      </h4>
+      </div>
     </li>
   </ul>
 </div>

@@ -131,14 +131,16 @@ exports[`DataSourceClearData should render 1`] = `
                 <div
                   class="copy-container"
                 >
-                  <h4>
+                  <div
+                    class="h4"
+                  >
                     Copy the following: 
                     <span
                       class="copy-text"
                     >
                       Clear Liferay1 Data
                     </span>
-                  </h4>
+                  </div>
                 </div>
                 <div
                   class=""

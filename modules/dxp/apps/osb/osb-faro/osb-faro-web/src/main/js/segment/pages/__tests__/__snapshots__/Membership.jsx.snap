@@ -32,9 +32,11 @@ exports[`Membership should render 1`] = `
       <div
         class="selected-point-info"
       >
-        <h4>
+        <div
+          class="h4"
+        >
           Known Members
-        </h4>
+        </div>
       </div>
       <div
         class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root searchable-table-borderless"
@@ -310,9 +312,11 @@ exports[`MembershipChart should render 1`] = `
     <div
       class="selected-point-info"
     >
-      <h4>
+      <div
+        class="h4"
+      >
         Known Members
-      </h4>
+      </div>
     </div>
     <div
       class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root searchable-table-borderless"

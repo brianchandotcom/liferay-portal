@@ -86,7 +86,7 @@ describe('BaseFieldMappingView', () => {
 
 		jest.runAllTimers();
 
-		expect(container.querySelector('h4')).toBeTruthy();
+		expect(container.querySelector('.h4')).toBeTruthy();
 		expect(getByText(title)).toBeTruthy();
 	});
 });

@@ -34,8 +34,8 @@ exports[`Sheet Subtitle should render 1`] = `
 
 exports[`Sheet TertiaryTitle should render 1`] = `
 <div>
-  <h4
-    class="sheet-tertiary-title"
+  <div
+    class="h4 sheet-tertiary-title"
   />
 </div>
 `;

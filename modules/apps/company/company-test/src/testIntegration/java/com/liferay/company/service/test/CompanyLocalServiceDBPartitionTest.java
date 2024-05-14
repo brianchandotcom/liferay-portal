@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.messaging.Message;
@@ -531,6 +532,14 @@ public class CompanyLocalServiceDBPartitionTest
 				companyLocalService.deleteCompany(company);
 			}
 		}
+	}
+
+	@Test
+	public void testParallelInitResourceActions() throws Exception {
+		_company1 = CompanyTestUtil.addCompany();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> StartupHelperUtil.initResourceActions());
 	}
 
 	private static void _regenerateResourceActions() throws Exception {

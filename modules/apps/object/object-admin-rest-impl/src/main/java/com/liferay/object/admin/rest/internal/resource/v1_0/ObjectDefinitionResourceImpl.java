@@ -485,17 +485,6 @@ public class ObjectDefinitionResourceImpl
 					getObjectFieldId();
 		}
 
-		long titleObjectFieldId = 0;
-
-		com.liferay.object.model.ObjectField titleServiceBuilderObjectField =
-			_objectFieldLocalService.fetchObjectField(
-				objectDefinitionId, objectDefinition.getTitleObjectFieldName());
-
-		if (titleServiceBuilderObjectField != null) {
-			titleObjectFieldId =
-				titleServiceBuilderObjectField.getObjectFieldId();
-		}
-
 		int statusInt = serviceBuilderObjectDefinition.getStatus();
 
 		if ((objectDefinition.getStatus() != null) &&
@@ -514,7 +503,7 @@ public class ObjectDefinitionResourceImpl
 					_getObjectFolderId(
 						objectDefinition.
 							getObjectFolderExternalReferenceCode()),
-					titleObjectFieldId);
+					0);
 		}
 		else {
 			if (!FeatureFlagManagerUtil.isEnabled("LPD-23379")) {
@@ -529,7 +518,7 @@ public class ObjectDefinitionResourceImpl
 					_getObjectFolderId(
 						objectDefinition.
 							getObjectFolderExternalReferenceCode()),
-					titleObjectFieldId,
+					0,
 					GetterUtil.getBoolean(
 						objectDefinition.getAccountEntryRestricted()),
 					GetterUtil.getBoolean(
@@ -692,6 +681,17 @@ public class ObjectDefinitionResourceImpl
 
 			_objectFieldLocalService.deleteObjectField(
 				serviceBuilderObjectField);
+		}
+
+		com.liferay.object.model.ObjectField titleServiceBuilderObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinitionId, objectDefinition.getTitleObjectFieldName());
+
+		if (titleServiceBuilderObjectField != null) {
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.updateTitleObjectFieldId(
+					serviceBuilderObjectDefinition.getObjectDefinitionId(),
+					titleServiceBuilderObjectField.getObjectFieldId());
 		}
 
 		Set<String> deleteObjectActionsERCs = SetUtil.asymmetricDifference(

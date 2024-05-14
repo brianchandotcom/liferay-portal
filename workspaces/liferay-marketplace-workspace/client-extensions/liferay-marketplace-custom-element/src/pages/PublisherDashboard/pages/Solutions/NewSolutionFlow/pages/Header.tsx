@@ -43,6 +43,14 @@ const Header = () => {
 	] = useSolutionContext();
 
 	const handleUpload = (files: File[]) => {
+		if (
+			files.length +
+				(contentType as HeaderContentTypeImages).content?.headerImages
+					.length >
+			MAX_FILES
+		) {
+			return onOpenChange(true);
+		}
 		if (contentType.type === ContentMediaType.UPLOAD_IMAGES) {
 			const totalImages =
 				(contentType.content.headerImages?.length || 0) + files.length;
@@ -310,7 +318,7 @@ const Header = () => {
 						maxSize={MAX_SIZE_5MBS}
 						multiple
 						onDropRejected={(fileList) => {
-							if (fileList.length > MAX_FILES) {
+							if (fileList.length > MAX_IMAGE_QUANTITY) {
 								onOpenChange(true);
 							}
 						}}

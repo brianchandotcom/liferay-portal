@@ -7,6 +7,7 @@ import {SolutionInitialState} from '../../../../../context/SolutionContext';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
 
+export const MAX_IMAGE_QUANTITY = 5;
 export const MAX_SIZE_5MBS = 5_000_000;
 
 export const SOLUTION_FLOW_ITEMS = [
@@ -73,9 +74,9 @@ export const SOLUTION_FLOW_ITEMS = [
 			'please-review-before-submitting-once-sent-you-will-not-be-able-to-edit-any-information-until-this-submission-is-completely-reviewed-by-liferay'
 		),
 		label: i18n.translate('submit'),
+		parseSchema: (context: SolutionInitialState) =>
+			zodSchema.solutionPublishing.submit.safeParse(context.submit),
 		path: 'submit',
 		title: 'Review and submit solution',
 	},
 ];
-
-export const MAX_IMAGE_QUANTITY = 5;

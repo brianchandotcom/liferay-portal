@@ -27,7 +27,7 @@ const getThumbnail = (videoURL: string) => {
 };
 
 const Wrapper: React.FC<{children: ReactNode}> = ({children}) => (
-	<div className="align-items-center d-flex justify-content-center rounded video-player">
+	<div className="align-items-center d-flex justify-content-center video-player">
 		{children}
 	</div>
 );
@@ -38,7 +38,7 @@ const VideoThumbnail: React.FC<VideoThumbnailProps> = ({videoURL}) => {
 	if (!thumbnail) {
 		return (
 			<Wrapper>
-				<ClayIcon symbol="video" />
+				<ClayIcon aria-label="video thumbnail empty" symbol="video" />
 			</Wrapper>
 		);
 	}
@@ -46,10 +46,9 @@ const VideoThumbnail: React.FC<VideoThumbnailProps> = ({videoURL}) => {
 	return (
 		<Wrapper>
 			<img
+				aria-label="video-thumbnail"
 				className="video-preview"
-				height={140}
 				src={getThumbnail(videoURL)}
-				width={140}
 			/>
 		</Wrapper>
 	);

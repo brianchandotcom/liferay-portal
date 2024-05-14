@@ -5,11 +5,11 @@
 
 	&-header {
 		&-image {
-			width: 110px;
-			height: 64px;
 			border-radius: 4px;
+			height: 64px;
 			object-fit: contain;
 			overflow: hidden;
+			width: 110px;
 
 			&-icon {
 				color: #0b5fff;
@@ -32,18 +32,18 @@
 			background-color: #e6ebf5;
 			border-radius: 4px;
 			color: #1c3667;
-			height: Hug (24px) px;
+			height: hug (24px) px;
 			padding: 4px 8px;
-			width: Hug (252px) px;
 			text-wrap: nowrap;
+			width: hug (252px) px;
 		}
 	}
 }
 
 .suport-link {
-	width: 40px;
-	height: 40px;
 	border-radius: 50%;
+	height: 40px;
+	width: 40px;
 
 	svg {
 		position: relative;

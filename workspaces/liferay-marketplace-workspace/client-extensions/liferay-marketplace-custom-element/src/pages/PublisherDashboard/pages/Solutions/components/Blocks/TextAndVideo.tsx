@@ -80,6 +80,9 @@ const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
 					<Form.Input
 						className="ml-3"
 						name="video-description"
+						onChange={({target: {value}}) =>
+							onChange({videoDescription: value})
+						}
 						placeholder="Video description"
 						type="text"
 					/>

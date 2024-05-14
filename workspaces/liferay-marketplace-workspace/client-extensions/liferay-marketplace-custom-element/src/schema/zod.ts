@@ -17,10 +17,10 @@ const baseContentSchema = z.object({
 const blocksContentSchemas = {
 	textBlock: baseContentSchema,
 	textImages: baseContentSchema.extend({
-		files: z.array(z.any()).optional(),
+		files: z.array(z.any()).min(1),
 	}),
 	textVideo: baseContentSchema.extend({
-		videoUrl: z.string().optional(),
+		videoUrl: z.string().url().min(1),
 	}),
 };
 
@@ -137,11 +137,11 @@ const zodSchema = {
 	solutionPublishing: {
 		company: z.object({
 			description: z.string().min(1),
-			email: z.string().min(1),
+			email: z.string().email().min(1),
 			phone: z.string().min(1),
 			website: z.string().min(1),
 		}),
-		contactUs: z.string().min(1),
+		contactUs: z.string().email().min(1),
 		details: z
 			.array(
 				z.object({
@@ -178,6 +178,7 @@ const zodSchema = {
 			name: z.string().min(3),
 			tags: z.array(z.any()).nonempty(),
 		}),
+		submit: z.boolean().refine((data) => data === true),
 	},
 };
 

@@ -68,6 +68,7 @@ export function SectionWithControllers({
 
 				<div className="align-self-center d-flex justify-content-end">
 					<ClayDropDown
+						closeOnClick
 						trigger={
 							<ClayButtonWithIcon
 								aria-label="Menu"

@@ -5,14 +5,14 @@ export default class ItemTitle extends React.Component {
 		const {children, className, ...otherProps} = this.props;
 
 		return (
-			<h4
+			<div
 				{...otherProps}
-				className={`list-group-title${
+				className={`h4 list-group-title${
 					className ? ` ${className}` : ''
 				}`}
 			>
 				{children}
-			</h4>
+			</div>
 		);
 	}
 }

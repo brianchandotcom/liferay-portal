@@ -9,7 +9,7 @@ interface ICellProps {
 const Cell: React.FC<ICellProps> = ({children, className, title}) => (
 	<td className={className}>
 		{title ? (
-			<h4 className='table-title text-truncate'>{children}</h4>
+			<div className='h4 table-title text-truncate'>{children}</div>
 		) : (
 			children
 		)}

@@ -117,7 +117,7 @@ export const SummaryDraftCard = ({
 										)}
 									>
 										<Card.Body>
-											<h4>{title}</h4>
+											<div className='h4'>{title}</div>
 
 											<Description className='analytics-summary-card-step-content-description' />
 										</Card.Body>

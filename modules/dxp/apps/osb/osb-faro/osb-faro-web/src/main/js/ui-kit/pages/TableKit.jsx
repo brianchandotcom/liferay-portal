@@ -87,7 +87,7 @@ class CustomRenderer extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}`}
 			>
-				<h4 className='table-title'>{name}</h4>
+				<div className='h4 table-title'>{name}</div>
 
 				{properties.jobTitle}
 			</td>

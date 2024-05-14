@@ -173,7 +173,7 @@ export default class BaseFieldMappingView extends React.Component {
 				<Sheet>
 					<Sheet.Header>
 						<Sheet.Section>
-							<h4>{title}</h4>
+							<div className='h4'>{title}</div>
 
 							<Sheet.Text>{details}</Sheet.Text>
 						</Sheet.Section>

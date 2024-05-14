@@ -154,7 +154,7 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 			{!!history.length && (
 				<div className='selected-info'>
 					<div className='d-flex align-items-baseline'>
-						<h4>{sub(activitiesLabel, [date])}</h4>
+						<div className='h4'>{sub(activitiesLabel, [date])}</div>
 
 						{hasSelectedPoint && (
 							<ClayButton

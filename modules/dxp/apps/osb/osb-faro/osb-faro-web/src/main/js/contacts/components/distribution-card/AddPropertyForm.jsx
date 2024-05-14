@@ -103,11 +103,11 @@ const AddPropertyForm = ({
 			<div className='row d-flex flex-column flex-grow-1'>
 				<div className='col-xl-5 d-flex flex-column flex-grow-1'>
 					<div className='description'>
-						<h4>
+						<div className='h4'>
 							{Liferay.Language.get(
 								'add-a-breakdown-by-individual-attribute'
 							)}
-						</h4>
+						</div>
 
 						<p>
 							{Liferay.Language.get(

@@ -97,9 +97,9 @@ class TertiaryTitle extends React.Component {
 		const {children, className} = this.props;
 
 		return (
-			<h4 className={getCN('sheet-tertiary-title', className)}>
+			<div className={getCN('h4 sheet-tertiary-title', className)}>
 				{children}
-			</h4>
+			</div>
 		);
 	}
 }

@@ -180,9 +180,9 @@ export class DeleteDataSource extends React.Component {
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
 				<div>
-					<h4 className='text-secondary'>
+					<div className='h4 text-secondary'>
 						{pageActionConfirmationText}
-					</h4>
+					</div>
 
 					<b>
 						{Liferay.Language.get(
@@ -291,7 +291,7 @@ export class DeleteDataSource extends React.Component {
 								<div>{deleteMessage}</div>
 
 								<div className='copy-container'>
-									<h4>
+									<div className='h4'>
 										{sub(
 											Liferay.Language.get(
 												'copy-the-following-x'
@@ -306,7 +306,7 @@ export class DeleteDataSource extends React.Component {
 											],
 											false
 										)}
-									</h4>
+									</div>
 								</div>
 
 								<Form.Input

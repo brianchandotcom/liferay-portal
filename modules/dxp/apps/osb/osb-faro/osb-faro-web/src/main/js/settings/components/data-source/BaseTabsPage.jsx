@@ -96,7 +96,9 @@ export default class BaseTabsPage extends React.Component {
 										: toRoute(addRoute, routeOptions)
 								}
 							>
-								<h4>{Liferay.Language.get('authorization')}</h4>
+								<div className='h4'>
+									{Liferay.Language.get('authorization')}
+								</div>
 							</Nav.Item>
 
 							<Nav.Item
@@ -115,11 +117,11 @@ export default class BaseTabsPage extends React.Component {
 										: '#'
 								}
 							>
-								<h4>
+								<div className='h4'>
 									{Liferay.Language.get(
 										'configure-data-source'
 									)}
-								</h4>
+								</div>
 
 								{!!id &&
 									getPendingConfigurationSticker(

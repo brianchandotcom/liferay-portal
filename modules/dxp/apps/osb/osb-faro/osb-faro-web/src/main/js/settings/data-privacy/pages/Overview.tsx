@@ -176,11 +176,11 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 							<div className='container'>
 								<div className='row justify-content-between'>
 									<div className='col-lg-8'>
-										<h4>
+										<div className='h4'>
 											{Liferay.Language.get(
 												'retention-period'
 											)}
-										</h4>
+										</div>
 
 										<p className='text-secondary'>
 											{Liferay.Language.get(
@@ -217,11 +217,11 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 
 								<div className='row mt-3 justify-content-between'>
 									<div className='col-lg-8'>
-										<h4>
+										<div className='h4'>
 											{Liferay.Language.get(
 												'request-log'
 											)}
-										</h4>
+										</div>
 
 										<p className='text-secondary'>
 											{Liferay.Language.get(
@@ -259,11 +259,11 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 
 								<div className='row mt-3 justify-content-between'>
 									<div className='col-lg-8'>
-										<h4>
+										<div className='h4'>
 											{Liferay.Language.get(
 												'suppressed-users'
 											)}
-										</h4>
+										</div>
 
 										<p className='text-secondary'>
 											{Liferay.Language.get(

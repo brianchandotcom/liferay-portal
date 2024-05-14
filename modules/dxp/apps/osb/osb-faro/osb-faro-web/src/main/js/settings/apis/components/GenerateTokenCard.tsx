@@ -45,7 +45,9 @@ const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 	return (
 		<Card>
 			<Card.Body>
-				<h4>{Liferay.Language.get('create-new-access-token')}</h4>
+				<div className='h4'>
+					{Liferay.Language.get('create-new-access-token')}
+				</div>
 				<div className='col-md-5 mt-2 pl-0'>
 					<Form.Group>
 						<label htmlFor='picker' id='picker-label'>

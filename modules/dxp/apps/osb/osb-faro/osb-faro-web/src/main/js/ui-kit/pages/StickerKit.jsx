@@ -6,7 +6,7 @@ class StickerKit extends React.Component {
 	render() {
 		return (
 			<div>
-				<h4>{'Displays'}</h4>
+				<div className='h4'>{'Displays'}</div>
 
 				<Row>
 					{Sticker.DISPLAYS.map((display, index) => (
@@ -16,7 +16,7 @@ class StickerKit extends React.Component {
 					))}
 				</Row>
 
-				<h4>{'Sizes'}</h4>
+				<div className='h4'>{'Sizes'}</div>
 
 				<Row className='align-items-center'>
 					{Sticker.SIZES.map((size, index) => (

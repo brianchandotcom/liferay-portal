@@ -304,7 +304,9 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 				)}
 			</p>
 
-			<h4>{Liferay.Language.get('keywords-blocklist')}</h4>
+			<div className='h4'>
+				{Liferay.Language.get('keywords-blocklist')}
+			</div>
 			<p>
 				{Liferay.Language.get(
 					'keywords-can-be-excluded-by-adding-them-to-a-blocklist-manage-the-keywords-that-you-dont-want-listed-in-liferay-analytics-cloud-and-dont-want-them-to-be-used-to-generate-content-recommendation-in-liferay-dxp'

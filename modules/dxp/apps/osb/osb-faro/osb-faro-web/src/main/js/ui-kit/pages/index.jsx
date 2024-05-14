@@ -83,7 +83,9 @@ export default class UIKit extends React.Component {
 											/>
 										</form>
 
-										<h4>{'Component List'}</h4>
+										<div className='h4'>
+											{'Component List'}
+										</div>
 
 										<div className='active-item-header'>
 											{'Now Showing: '}

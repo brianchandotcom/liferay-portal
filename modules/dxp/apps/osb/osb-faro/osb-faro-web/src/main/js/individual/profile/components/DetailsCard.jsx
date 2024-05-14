@@ -39,7 +39,7 @@ export default class DetailsCard extends React.PureComponent {
 				<Card.Body>
 					<Avatar circle entity={individual} size='xl' />
 
-					{name && <h4>{name}</h4>}
+					{name && <div className='h4'>{name}</div>}
 
 					{jobTitle && <div className='job-title'>{jobTitle}</div>}
 

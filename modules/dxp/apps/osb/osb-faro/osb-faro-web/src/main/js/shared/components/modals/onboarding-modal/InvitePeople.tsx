@@ -82,11 +82,11 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 
 				{sent ? (
 					<div className='description text-center'>
-						<h4>
+						<div className='h4'>
 							{Liferay.Language.get(
 								'you-can-see-the-new-members-invitation-status-and-role-permissions-under-user-management-in-settings'
 							)}
-						</h4>
+						</div>
 					</div>
 				) : (
 					<div className='add-emails'>

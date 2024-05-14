@@ -74,11 +74,11 @@ export default WrappedComponent => {
 			open(modalTypes.CONFIRMATION_MODAL, {
 				message: (
 					<div>
-						<h4 className='text-secondary'>
+						<div className='h4 text-secondary'>
 							{Liferay.Language.get(
 								'are-you-sure-you-want-to-delete-this-segment'
 							)}
-						</h4>
+						</div>
 
 						<p>
 							{Liferay.Language.get(

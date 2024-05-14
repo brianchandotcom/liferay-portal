@@ -52,7 +52,7 @@ public class DatabaseUtilTest {
 	}
 
 	@Test
-	public void testExportDefaultCompany() throws Exception {
+	public void testExportLiferayDatabaseWithDefaultCompany() throws Exception {
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			_connection);
 
@@ -60,13 +60,17 @@ public class DatabaseUtilTest {
 	}
 
 	@Test
-	public void testExportMultiCompanyDatabase() throws Exception {
+	public void testExportLiferayDatabaseWithMultipleCompanies()
+		throws Exception {
+
 		_mockGetCompanyInfos(
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()));
 
 		try {
 			DatabaseUtil.exportLiferayDatabase(_connection);
+
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(
@@ -75,16 +79,13 @@ public class DatabaseUtilTest {
 				"Database schema has to have a single company or database " +
 					"partitioning must be enabled",
 				exception.getMessage());
-
-			return;
 		}
-
-		throw new Exception(
-			"An UnsupportedOperationException should have been caught");
 	}
 
 	@Test
-	public void testExportNondefaultCompany() throws Exception {
+	public void testExportLiferayDatabaseWithNondefaultCompany()
+		throws Exception {
+
 		_mockGetTables(false);
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(

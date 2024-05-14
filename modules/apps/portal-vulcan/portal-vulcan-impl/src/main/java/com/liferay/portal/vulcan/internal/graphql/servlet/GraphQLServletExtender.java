@@ -2395,6 +2395,19 @@ public class GraphQLServletExtender {
 			return processedErrors;
 		}
 
+		private Throwable _getCauseThrowable(GraphQLError graphQLError) {
+			ExceptionWhileDataFetching exceptionWhileDataFetching =
+				(ExceptionWhileDataFetching)graphQLError;
+
+			Throwable throwable = exceptionWhileDataFetching.getException();
+
+			if (throwable instanceof InvocationTargetException) {
+				return throwable.getCause();
+			}
+
+			return throwable;
+		}
+
 		private GraphQLError _getExtendedGraphQLError(
 			GraphQLError graphQLError, Response.Status status) {
 
@@ -2444,14 +2457,10 @@ public class GraphQLServletExtender {
 				return false;
 			}
 
-			ExceptionWhileDataFetching exceptionWhileDataFetching =
-				(ExceptionWhileDataFetching)graphQLError;
+			Throwable throwable = _getCauseThrowable(graphQLError);
 
-			Throwable throwable = exceptionWhileDataFetching.getException();
-
-			if ((throwable != null) &&
-				((throwable.getCause() instanceof ForbiddenException) ||
-				 (throwable instanceof SecurityException))) {
+			if (throwable instanceof ForbiddenException ||
+				throwable instanceof SecurityException) {
 
 				return true;
 			}
@@ -2464,16 +2473,11 @@ public class GraphQLServletExtender {
 				return false;
 			}
 
-			ExceptionWhileDataFetching exceptionWhileDataFetching =
-				(ExceptionWhileDataFetching)graphQLError;
+			Throwable throwable = _getCauseThrowable(graphQLError);
 
-			Throwable throwable = exceptionWhileDataFetching.getException();
-
-			if ((throwable != null) &&
-				(throwable.getCause() instanceof NotFoundException ||
-				 throwable.getCause() instanceof NoSuchModelException ||
-				 throwable.getCause() instanceof
-					 PrincipalException.MustHavePermission)) {
+			if (throwable instanceof NoSuchModelException ||
+				throwable instanceof NotFoundException ||
+				throwable instanceof PrincipalException.MustHavePermission) {
 
 				return true;
 			}

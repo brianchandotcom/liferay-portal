@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.manager.WorkflowLogManager;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
 import java.io.Serializable;
@@ -387,11 +389,19 @@ public class WorkflowInstanceEditDisplayContext
 	private String _getWorkflowDefinitionName() throws PortalException {
 		WorkflowInstance workflowInstance = _getWorkflowInstance();
 
-		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				workflowInstanceRequestHelper.getCompanyId(),
-				workflowInstance.getWorkflowDefinitionName(),
-				workflowInstance.getWorkflowDefinitionVersion());
+		WorkflowDefinition workflowDefinition = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinition =
+				WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+					workflowInstanceRequestHelper.getCompanyId(),
+					workflowInstance.getWorkflowDefinitionName(),
+					workflowInstance.getWorkflowDefinitionVersion());
+		}
 
 		return HtmlUtil.escape(
 			workflowDefinition.getTitle(

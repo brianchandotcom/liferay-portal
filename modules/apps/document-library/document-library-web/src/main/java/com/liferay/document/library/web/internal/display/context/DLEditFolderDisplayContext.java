@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.util.RepositoryUtil;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
 import java.util.List;
@@ -208,10 +210,16 @@ public class DLEditFolderDisplayContext {
 			return null;
 		}
 
-		_workflowDefinitions =
-			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-				_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			_workflowDefinitions =
+				WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+					_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+		}
 
 		return _workflowDefinitions;
 	}

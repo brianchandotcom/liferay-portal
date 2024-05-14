@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.web.internal.display.context.helper.WorkflowDefinitionRequestHelper;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearch;
@@ -272,26 +273,36 @@ public class WorkflowDefinitionDisplayContext {
 		_workflowDefinitionSearch.setEmptyResultsMessage(
 			"no-workflow-definitions-are-defined");
 
-		List<WorkflowDefinition> workflowDefinitions =
-			WorkflowDefinitionManagerUtil.getLatestWorkflowDefinitions(
-				_workflowDefinitionRequestHelper.getCompanyId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				_getWorkflowDefinitionOrderByComparator());
+		List<WorkflowDefinition> workflowDefinitions = null;
 
-		if (!CTCollectionThreadLocal.isProductionMode() &&
-			_ctEntryLocalService.hasCTEntries(
-				CTCollectionThreadLocal.getCTCollectionId(),
-				_portal.getClassNameId(WorkflowDefinition.class.getName()))) {
+		try (SafeCloseable safeCloseable1 =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
 
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
+			workflowDefinitions =
+				WorkflowDefinitionManagerUtil.getLatestWorkflowDefinitions(
+					_workflowDefinitionRequestHelper.getCompanyId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					_getWorkflowDefinitionOrderByComparator());
 
-				workflowDefinitions.addAll(
-					WorkflowDefinitionManagerUtil.getLatestWorkflowDefinitions(
-						_workflowDefinitionRequestHelper.getCompanyId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						_getWorkflowDefinitionOrderByComparator()));
+			if (!CTCollectionThreadLocal.isProductionMode() &&
+				_ctEntryLocalService.hasCTEntries(
+					CTCollectionThreadLocal.getCTCollectionId(),
+					_portal.getClassNameId(
+						WorkflowDefinition.class.getName()))) {
+
+				try (SafeCloseable safeCloseable2 =
+						CTCollectionThreadLocal.
+							setProductionModeWithSafeCloseable()) {
+
+					workflowDefinitions.addAll(
+						WorkflowDefinitionManagerUtil.
+							getLatestWorkflowDefinitions(
+								_workflowDefinitionRequestHelper.getCompanyId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+								_getWorkflowDefinitionOrderByComparator()));
+				}
 			}
 		}
 
@@ -372,9 +383,20 @@ public class WorkflowDefinitionDisplayContext {
 	public List<WorkflowDefinition> getWorkflowDefinitions(String name)
 		throws PortalException {
 
-		return WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
-			_workflowDefinitionRequestHelper.getCompanyId(), name,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<WorkflowDefinition> workflowDefinitions = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinitions =
+				WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
+					_workflowDefinitionRequestHelper.getCompanyId(), name,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
+
+		return workflowDefinitions;
 	}
 
 	public int getWorkflowDefinitionsCount(

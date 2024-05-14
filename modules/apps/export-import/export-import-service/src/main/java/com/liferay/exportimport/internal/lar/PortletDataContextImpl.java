@@ -32,6 +32,7 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -98,6 +99,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 import com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil;
@@ -2530,7 +2532,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			WorkflowDefinition workflowDefinition = null;
 
-			try {
+			try (SafeCloseable safeCloseable =
+					KaleoDefinitionThreadLocal.
+						setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+							true)) {
+
 				workflowDefinition =
 					WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
 						getCompanyId(), displayName);

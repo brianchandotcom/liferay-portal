@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
@@ -39,6 +40,7 @@ import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionLinkResourcesConstants;
 import com.liferay.portal.workflow.web.internal.display.context.helper.WorkflowDefinitionLinkRequestHelper;
@@ -106,9 +108,20 @@ public class WorkflowDefinitionLinkDisplayContext {
 			return null;
 		}
 
-		return WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
-			_workflowDefinitionLinkRequestHelper.getCompanyId(),
-			defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
+		WorkflowDefinition workflowDefinition = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinition =
+				WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
+					_workflowDefinitionLinkRequestHelper.getCompanyId(),
+					defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
+		}
+
+		return workflowDefinition;
 	}
 
 	public String getDefaultWorkflowDefinitionLabel(String className)
@@ -314,13 +327,20 @@ public class WorkflowDefinitionLinkDisplayContext {
 			return _workflowDefinitions;
 		}
 
-		_workflowDefinitions = ListUtil.filter(
-			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-				_workflowDefinitionLinkRequestHelper.getCompanyId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				_workflowComparatorFactory.getDefinitionNameComparator(true)),
-			new WorkflowDefinitionScopePredicate(
-				WorkflowDefinitionConstants.SCOPE_ALL));
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			_workflowDefinitions = ListUtil.filter(
+				WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+					_workflowDefinitionLinkRequestHelper.getCompanyId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					_workflowComparatorFactory.getDefinitionNameComparator(
+						true)),
+				new WorkflowDefinitionScopePredicate(
+					WorkflowDefinitionConstants.SCOPE_ALL));
+		}
 
 		return _workflowDefinitions;
 	}

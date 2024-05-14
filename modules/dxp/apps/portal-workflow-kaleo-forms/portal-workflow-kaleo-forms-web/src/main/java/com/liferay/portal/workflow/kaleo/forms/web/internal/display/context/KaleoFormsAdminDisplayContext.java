@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -55,6 +56,7 @@ import com.liferay.portal.workflow.kaleo.forms.web.internal.util.filter.KaleoDef
 import com.liferay.portal.workflow.kaleo.forms.web.internal.util.filter.KaleoDefinitionVersionScopePredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
 import java.util.List;
@@ -387,14 +389,22 @@ public class KaleoFormsAdminDisplayContext {
 					_renderRequest, _getIteratorURL(), null,
 					emptyResultsMessage);
 
-			searchContainer.setResultsAndTotal(
-				() ->
-					WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-						_themeDisplay.getCompanyId(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						null),
-				WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionsCount(
-					_themeDisplay.getCompanyId()));
+			try (SafeCloseable safeCloseable =
+					KaleoDefinitionThreadLocal.
+						setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+							true)) {
+
+				searchContainer.setResultsAndTotal(
+					() ->
+						WorkflowDefinitionManagerUtil.
+							getActiveWorkflowDefinitions(
+								_themeDisplay.getCompanyId(),
+								searchContainer.getStart(),
+								searchContainer.getEnd(), null),
+					WorkflowDefinitionManagerUtil.
+						getActiveWorkflowDefinitionsCount(
+							_themeDisplay.getCompanyId()));
+			}
 
 			_searchContainer = searchContainer;
 		}

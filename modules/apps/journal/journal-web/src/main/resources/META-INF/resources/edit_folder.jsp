@@ -23,7 +23,7 @@ boolean workflowEnabled = WorkflowHandlerRegistryUtil.getWorkflowHandler(Journal
 List<WorkflowDefinition> workflowDefinitions = null;
 
 if (workflowEnabled) {
-	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	workflowDefinitions = journalDisplayContext.getActiveWorkflowDefinitions(company.getCompanyId());
 }
 
 String languageId = LocaleUtil.toLanguageId(locale);

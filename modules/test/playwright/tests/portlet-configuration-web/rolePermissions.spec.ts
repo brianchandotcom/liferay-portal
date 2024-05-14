@@ -12,41 +12,56 @@ import {portletConfigurationPermissionsPageTest} from '../../fixtures/portletCon
 
 export const test = mergeTests(
 	loginTest(),
-    portletConfigurationPermissionsPageTest
+	portletConfigurationPermissionsPageTest
 );
 
-test ('LPD-25265 search results should stay when form submitted', async ({
-    portletConfigurationPermissionsPage,
+test('LPD-25265 search results should stay when form submitted', async ({
+	portletConfigurationPermissionsPage,
 }) => {
-    await portletConfigurationPermissionsPage.goto();
-    await expect(
-        portletConfigurationPermissionsPage.searchBar
-    ).toBeVisible();
-    
-    await portletConfigurationPermissionsPage.searchBar.click();
-    await portletConfigurationPermissionsPage.searchBar.fill('r');
-    await portletConfigurationPermissionsPage.searchBar.press('Enter');
+	await portletConfigurationPermissionsPage.goto();
+	await expect(portletConfigurationPermissionsPage.searchBar).toBeVisible();
 
-    await expect(
-        portletConfigurationPermissionsPage.resultsBanner
-    ).toBeVisible();
-    await expect(portletConfigurationPermissionsPage.ownerRoleCell).toBeVisible();
-    await expect(portletConfigurationPermissionsPage.siteMemberRoleCell).toBeVisible();
+	await portletConfigurationPermissionsPage.searchBar.click();
+	await portletConfigurationPermissionsPage.searchBar.fill('r');
+	await portletConfigurationPermissionsPage.searchBar.press('Enter');
 
-    await portletConfigurationPermissionsPage.changePagination(20, 4);
+	await expect(
+		portletConfigurationPermissionsPage.resultsBanner
+	).toBeVisible();
+	await expect(
+		portletConfigurationPermissionsPage.ownerRoleCell
+	).toBeVisible();
+	await expect(
+		portletConfigurationPermissionsPage.siteMemberRoleCell
+	).toBeVisible();
 
-    await expect(portletConfigurationPermissionsPage.ownerRoleCell).toBeVisible();
-    await expect(portletConfigurationPermissionsPage.siteMemberRoleCell).toHaveCount(0);
-    
-    await portletConfigurationPermissionsPage.saveButton.click();
+	await portletConfigurationPermissionsPage.changePagination(20, 4);
 
-    await expect(portletConfigurationPermissionsPage.successMessage).toBeVisible();
+	await expect(
+		portletConfigurationPermissionsPage.ownerRoleCell
+	).toBeVisible();
+	await expect(
+		portletConfigurationPermissionsPage.siteMemberRoleCell
+	).toHaveCount(0);
 
-    await expect(portletConfigurationPermissionsPage.resultsBanner).toBeVisible();
-    await expect(portletConfigurationPermissionsPage.ownerRoleCell).toBeVisible();
-    await expect(portletConfigurationPermissionsPage.siteMemberRoleCell).toHaveCount(0);
+	await portletConfigurationPermissionsPage.saveButton.click();
 
-    await portletConfigurationPermissionsPage.clearLink.click();
+	await expect(
+		portletConfigurationPermissionsPage.successMessage
+	).toBeVisible();
+	await expect(
+		portletConfigurationPermissionsPage.resultsBanner
+	).toBeVisible();
+	await expect(
+		portletConfigurationPermissionsPage.ownerRoleCell
+	).toBeVisible();
+	await expect(
+		portletConfigurationPermissionsPage.siteMemberRoleCell
+	).toHaveCount(0);
 
-    await expect(portletConfigurationPermissionsPage.siteMemberRoleCell).toBeVisible();
+	await portletConfigurationPermissionsPage.clearLink.click();
+
+	await expect(
+		portletConfigurationPermissionsPage.siteMemberRoleCell
+	).toBeVisible();
 });

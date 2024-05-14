@@ -78,14 +78,11 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 	public void testAggregation() throws Exception {
 		_addCategory(RandomTestUtil.randomString());
 
-		_addJournalArticle(_group, _assetCategory.getTitleCurrentValue());
+		_addJournalArticle();
 
-		long categoryId = _assetCategory.getCategoryId();
+		_addUser();
 
-		_addUser(_group, categoryId);
-
-		SearchContext searchContext = _getSearchContext(
-			_assetCategory, categoryId);
+		SearchContext searchContext = _getSearchContext();
 
 		Facet facet = _categoryFacetFactory.newInstance(searchContext);
 
@@ -99,8 +96,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits,
-			Collections.singletonMap(
-				_getAssetVocabularyCategoryId(_assetCategory), 1));
+			Collections.singletonMap(_getAssetVocabularyCategoryId(), 1));
 	}
 
 	@Test
@@ -111,12 +107,9 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		_addCategory("To Do");
 
-		long categoryId = _assetCategory.getCategoryId();
+		_addUser();
 
-		_addUser(_group, categoryId);
-
-		SearchContext searchContext = _getSearchContext(
-			_assetCategory, categoryId);
+		SearchContext searchContext = _getSearchContext();
 
 		Facet facet = _categoryFacetFactory.newInstance(searchContext);
 
@@ -124,26 +117,22 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, search(searchContext),
-			Collections.singletonMap(
-				_getAssetVocabularyCategoryId(_assetCategory), 1));
+			Collections.singletonMap(_getAssetVocabularyCategoryId(), 1));
 	}
 
 	@Test
 	public void testSelection() throws Exception {
 		_addCategory(RandomTestUtil.randomString());
 
-		_addJournalArticle(_group, _assetCategory.getTitleCurrentValue());
+		_addJournalArticle();
 
-		long categoryId = _assetCategory.getCategoryId();
+		_addUser();
 
-		_addUser(_group, categoryId);
-
-		SearchContext searchContext = _getSearchContext(
-			_assetCategory, categoryId);
+		SearchContext searchContext = _getSearchContext();
 
 		Facet facet = _categoryFacetFactory.newInstance(searchContext);
 
-		facet.select(_getAssetVocabularyCategoryId(_assetCategory));
+		facet.select(_getAssetVocabularyCategoryId());
 
 		searchContext.addFacet(facet);
 
@@ -155,8 +144,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits,
-			Collections.singletonMap(
-				_getAssetVocabularyCategoryId(_assetCategory), 1));
+			Collections.singletonMap(_getAssetVocabularyCategoryId(), 1));
 	}
 
 	private void _addCategory(String title) throws Exception {
@@ -167,13 +155,11 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
-	private void _addJournalArticle(Group group, String title)
-		throws Exception {
-
+	private void _addJournalArticle() throws Exception {
 		journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
-					setGroupId(group.getGroupId());
+					setGroupId(_group.getGroupId());
 					setJournalArticleContent(
 						new JournalArticleContent() {
 							{
@@ -188,21 +174,24 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 					setJournalArticleTitle(
 						new JournalArticleTitle() {
 							{
-								put(LocaleUtil.US, title);
+								put(
+									LocaleUtil.US,
+									_assetCategory.getTitleCurrentValue());
 							}
 						});
 				}
 			});
 	}
 
-	private void _addUser(Group group, long... categoryIds) throws Exception {
-		_user = UserTestUtil.addUser(group.getGroupId());
+	private void _addUser() throws Exception {
+		_user = UserTestUtil.addUser(_group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setAssetCategoryIds(categoryIds);
+		serviceContext.setAssetCategoryIds(
+			new long[] {_assetCategory.getCategoryId()});
 
 		UserTestUtil.updateUser(_user, serviceContext);
 	}
@@ -215,20 +204,18 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 			Field.ENTRY_CLASS_NAME, entryClassNames);
 	}
 
-	private String _getAssetVocabularyCategoryId(AssetCategory assetCategory) {
+	private String _getAssetVocabularyCategoryId() {
 		return StringBundler.concat(
-			assetCategory.getVocabularyId(), StringPool.DASH,
-			assetCategory.getCategoryId());
+			_assetCategory.getVocabularyId(), StringPool.DASH,
+			_assetCategory.getCategoryId());
 	}
 
-	private SearchContext _getSearchContext(
-			AssetCategory assetCategory, long categoryId)
-		throws Exception {
-
+	private SearchContext _getSearchContext() throws Exception {
 		SearchContext searchContext = getSearchContext(
-			assetCategory.getTitleCurrentValue());
+			_assetCategory.getTitleCurrentValue());
 
-		searchContext.setCategoryIds(new long[] {categoryId});
+		searchContext.setCategoryIds(
+			new long[] {_assetCategory.getCategoryId()});
 		searchContext.setGroupIds(new long[] {_group.getGroupId()});
 
 		return searchContext;

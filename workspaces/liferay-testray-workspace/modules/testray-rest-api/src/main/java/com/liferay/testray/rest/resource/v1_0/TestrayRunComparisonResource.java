@@ -14,6 +14,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultComparison;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
+import com.liferay.testray.rest.dto.v1_0.TestrayRunQuickComparison;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/testray-rest/v1.0
+ * curl -u your@email.com:yourpassword -D -
+ * http://localhost:8080/o/testray-rest/v1.0
  *
  * @author Nilton Vieira
  * @generated
@@ -41,9 +43,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TestrayRunComparisonResource {
 
+	public Page<TestrayRunQuickComparison> getTestrayRunComparisonByTestrayRoutineIdTestrayRoutinePage(
+			Long testrayRoutineId)
+			throws Exception;
+
 	public TestrayRunComparison getTestrayRunComparison(
 			Long testrayRunId1, Long testrayRunId2, Filter filter)
-		throws Exception;
+			throws Exception;
 
 	public TestrayRunComparison getTestrayRunComparisonRun(
 			Long testrayRunId1, Long testrayRunId2,
@@ -51,52 +57,51 @@ public interface TestrayRunComparisonResource {
 			String testrayCaseResultIssue1, String testrayCaseResultIssue2,
 			String testrayCaseResultStatus1, String testrayCaseResultStatus2,
 			Filter filter)
-		throws Exception;
+			throws Exception;
 
-	public Page<TestrayCaseResultComparison>
-			getTestrayRunComparisonTestrayCaseResultComparisonsPage(
-				Long testrayRunId1, Long testrayRunId2,
-				String testrayCaseResultError1, String testrayCaseResultError2,
-				String testrayCaseResultIssue1, String testrayCaseResultIssue2,
-				String testrayCaseResultStatus1,
-				String testrayCaseResultStatus2, Filter filter,
-				Pagination pagination)
-		throws Exception;
+	public Page<TestrayCaseResultComparison> getTestrayRunComparisonTestrayCaseResultComparisonsPage(
+			Long testrayRunId1, Long testrayRunId2,
+			String testrayCaseResultError1, String testrayCaseResultError2,
+			String testrayCaseResultIssue1, String testrayCaseResultIssue2,
+			String testrayCaseResultStatus1,
+			String testrayCaseResultStatus2, Filter filter,
+			Pagination pagination)
+			throws Exception;
 
 	public default void setContextAcceptLanguage(
-		AcceptLanguage contextAcceptLanguage) {
+			AcceptLanguage contextAcceptLanguage) {
 	}
 
 	public void setContextCompany(
-		com.liferay.portal.kernel.model.Company contextCompany);
+			com.liferay.portal.kernel.model.Company contextCompany);
 
 	public default void setContextHttpServletRequest(
-		HttpServletRequest contextHttpServletRequest) {
+			HttpServletRequest contextHttpServletRequest) {
 	}
 
 	public default void setContextHttpServletResponse(
-		HttpServletResponse contextHttpServletResponse) {
+			HttpServletResponse contextHttpServletResponse) {
 	}
 
 	public default void setContextUriInfo(UriInfo contextUriInfo) {
 	}
 
 	public void setContextUser(
-		com.liferay.portal.kernel.model.User contextUser);
+			com.liferay.portal.kernel.model.User contextUser);
 
 	public void setExpressionConvert(
-		ExpressionConvert<Filter> expressionConvert);
+			ExpressionConvert<Filter> expressionConvert);
 
 	public void setFilterParserProvider(
-		FilterParserProvider filterParserProvider);
+			FilterParserProvider filterParserProvider);
 
 	public void setGroupLocalService(GroupLocalService groupLocalService);
 
 	public void setResourceActionLocalService(
-		ResourceActionLocalService resourceActionLocalService);
+			ResourceActionLocalService resourceActionLocalService);
 
 	public void setResourcePermissionLocalService(
-		ResourcePermissionLocalService resourcePermissionLocalService);
+			ResourcePermissionLocalService resourcePermissionLocalService);
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
@@ -104,11 +109,11 @@ public interface TestrayRunComparisonResource {
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(
-			filterString, Collections.<String, List<String>>emptyMap());
+				filterString, Collections.<String, List<String>>emptyMap());
 	}
 
 	public default Filter toFilter(
-		String filterString, Map<String, List<String>> multivaluedMap) {
+			String filterString, Map<String, List<String>> multivaluedMap) {
 
 		return null;
 	}
@@ -125,10 +130,10 @@ public interface TestrayRunComparisonResource {
 		public Builder checkPermissions(boolean checkPermissions);
 
 		public Builder httpServletRequest(
-			HttpServletRequest httpServletRequest);
+				HttpServletRequest httpServletRequest);
 
 		public Builder httpServletResponse(
-			HttpServletResponse httpServletResponse);
+				HttpServletResponse httpServletResponse);
 
 		public Builder preferredLocale(Locale preferredLocale);
 

@@ -54,6 +54,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayRunComparisonByTestrayRoutineIdTestrayRoutine(testrayRoutineId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TestrayRunComparisonPage
+			testrayRunComparisonByTestrayRoutineIdTestrayRoutine(
+				@GraphQLName("testrayRoutineId") Long testrayRoutineId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayRunComparisonResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayRunComparisonResource -> new TestrayRunComparisonPage(
+				testrayRunComparisonResource.
+					getTestrayRunComparisonByTestrayRoutineIdTestrayRoutinePage(
+						testrayRoutineId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayRunComparison(filter: ___, testrayRunId1: ___, testrayRunId2: ___){results, testrayCaseResultComparisons}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField

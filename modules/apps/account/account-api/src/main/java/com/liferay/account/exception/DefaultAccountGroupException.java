@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DefaultAccountGroupException extends PortalException {
 
-	public DefaultAccountGroupException() {
-	}
-
-	public DefaultAccountGroupException(String msg) {
-		super(msg);
-	}
-
-	public DefaultAccountGroupException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public DefaultAccountGroupException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MustNotDeleteDefaultAccountGroup
 		extends DefaultAccountGroupException {
 
@@ -73,6 +58,21 @@ public class DefaultAccountGroupException extends PortalException {
 
 		public long accountGroupId;
 
+	}
+
+	private DefaultAccountGroupException() {
+	}
+
+	private DefaultAccountGroupException(String msg) {
+		super(msg);
+	}
+
+	private DefaultAccountGroupException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	private DefaultAccountGroupException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

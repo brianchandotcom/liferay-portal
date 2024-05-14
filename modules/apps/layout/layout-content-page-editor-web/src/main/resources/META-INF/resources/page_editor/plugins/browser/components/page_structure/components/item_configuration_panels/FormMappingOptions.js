@@ -41,10 +41,11 @@ export default function FormMappingOptions({
 				setClassTypeId(item.config.classTypeId);
 			};
 
-			const saveMapping = () =>
+			const saveMapping = (fields = []) =>
 				onValueSelect({
 					classNameId,
 					classTypeId,
+					fields: fields.map(({uniqueId}) => uniqueId),
 					formConfig: FORM_MAPPING_SOURCES.otherContentType,
 				});
 

@@ -22,6 +22,7 @@ function SortDropdown() {
 
 	const activeSort = sorts?.find((sort: TSort) => sort.active);
 
+	const [active, setActive] = useState(false);
 	const [selectedDirection, setSelectedDirection] = useState<
 		TSort['direction']
 	>(activeSort?.direction ?? 'asc');
@@ -40,10 +41,18 @@ function SortDropdown() {
 
 	return (
 		<DropDown
+			active={active}
 			closeOnClick
 			hasLeftSymbols
+			onActiveChange={setActive}
 			trigger={
-				<Button borderless displayType="secondary" size="sm">
+				<Button
+					aria-expanded={active}
+					borderless
+					className="nav-link"
+					displayType="secondary"
+					size="sm"
+				>
 					<span className="inline-item inline-item-before">
 						<ClayIcon
 							symbol={

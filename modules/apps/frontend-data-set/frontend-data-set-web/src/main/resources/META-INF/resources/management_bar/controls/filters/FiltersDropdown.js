@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import Button, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect, useState} from 'react';
@@ -41,19 +41,26 @@ const FiltersDropdown = () => {
 			className="filters-dropdown"
 			onActiveChange={setActive}
 			trigger={
-				<ClayButton
-					className="filters-dropdown-button"
-					displayType="unstyled"
+				<Button
+					aria-expanded={active}
+					borderless
+					className="filters-dropdown-button nav-link"
+					displayType="secondary"
+					size="sm"
 				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol="filter" />
+					</span>
+
 					<span className="navbar-text-truncate">
 						{Liferay.Language.get('filter')}
 					</span>
 
 					<ClayIcon
-						className="ml-2"
-						symbol={active ? 'caret-top' : 'caret-bottom'}
+						className="inline-item inline-item-after"
+						symbol="caret-bottom"
 					/>
-				</ClayButton>
+				</Button>
 			}
 		>
 			{activeFilter ? (

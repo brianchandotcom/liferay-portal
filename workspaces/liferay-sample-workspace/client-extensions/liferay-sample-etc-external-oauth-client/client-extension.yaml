@@ -1,0 +1,9 @@
+assemble:
+    - fromTask: bootJar
+liferay-sample-etc-external-oauth-client:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Sample Etc External OAuth Client
+    scopes:
+        - Liferay.Headless.Delivery.everything.read
+    type: oAuthApplicationUserAgent

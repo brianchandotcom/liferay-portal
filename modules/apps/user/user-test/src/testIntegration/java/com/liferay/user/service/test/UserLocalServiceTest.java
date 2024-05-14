@@ -266,6 +266,8 @@ public class UserLocalServiceTest {
 				).getTime() - 5000L));
 		user.setFailedLoginAttempts(3);
 
+		_userLocalService.updateUser(user);
+
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 		passwordPolicy.setLockout(false);
@@ -590,6 +592,8 @@ public class UserLocalServiceTest {
 			DateUtil.newDate(
 				new Date(
 				).getTime() - 5000L));
+
+		_userLocalService.updateUser(user);
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 

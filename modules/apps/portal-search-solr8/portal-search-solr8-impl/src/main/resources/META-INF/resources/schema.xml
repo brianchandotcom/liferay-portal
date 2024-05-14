@@ -726,6 +726,7 @@
 		<field docValues="true" indexed="true" name="languageId" stored="true" type="string" />
 		<field indexed="true" name="lastName" stored="true" type="text_lowercase" />
 		<field indexed="true" name="leftOrganizationId" stored="true" type="tlong" />
+		<field indexed="true" multiValued="true" name="lowerCaseAssetTagNames" stored="true" type="string" />
 		<field indexed="true" name="middleName" stored="true" type="text_lowercase" />
 		<field indexed="true" name="mimeType" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="modified" stored="true" type="string" />

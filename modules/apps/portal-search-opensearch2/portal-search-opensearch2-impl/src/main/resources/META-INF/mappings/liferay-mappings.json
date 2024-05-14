@@ -1713,6 +1713,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"lowerCaseAssetTagNames": {
+			"store": true,
+			"type": "keyword"
+		},
 		"mimeType": {
 			"store": true,
 			"type": "keyword"

@@ -388,7 +388,6 @@
 					},
 					"multiselectPicklistField": {
 						"extensions": {
-							"x-batch-unsupported-formats": "CSV",
 							"x-parent-map": "properties"
 						},
 						"items": {

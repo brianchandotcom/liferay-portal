@@ -41,7 +41,9 @@ export class ActionsPage {
 		});
 		this.itemActionsTab = page.getByRole('tab', {name: 'Item Actions'});
 		this.newItemActionPlusButton = page.getByTitle('New Item Action');
-		this.newCreationActionPlusButton = page.getByText("New Creation Action");
+		this.newCreationActionPlusButton = page.getByText(
+			'New Creation Action'
+		);
 		this.newActionForm = {
 			addIconButton: page.getByLabel('add-icon'),
 			confirmationMessageInput: page.getByLabel('Confirmation Message', {

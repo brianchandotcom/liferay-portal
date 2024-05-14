@@ -244,7 +244,6 @@ const ListView: React.FC<ListViewProps> = ({
 		page = 1,
 		pageSize,
 		results,
-		testrayCaseResultComparisons,
 		totalCount = 0,
 	} = response || {};
 
@@ -253,13 +252,11 @@ const ListView: React.FC<ListViewProps> = ({
 		[results, title]
 	);
 
-	const itemsMemoized = useMemo(() => {
-		if (results && !testrayCaseResultComparisons) {
-			return matrixData;
-		}
-
-		return testrayCaseResultComparisons || items;
-	}, [items, matrixData, results, testrayCaseResultComparisons]);
+	const itemsMemoized = useMemo(() => (results ? matrixData : items), [
+		items,
+		matrixData,
+		results,
+	]);
 
 	const isCompareRunsMatrix = title === 'Runs';
 
@@ -384,7 +381,7 @@ const ListView: React.FC<ListViewProps> = ({
 
 				dispatch({payload: page, type: ListViewTypes.SET_PAGE});
 			}}
-			totalItems={totalCount || testrayCaseResultComparisons?.length || 0}
+			totalItems={totalCount || 0}
 		/>
 	);
 
@@ -420,13 +417,11 @@ const ListView: React.FC<ListViewProps> = ({
 					mutate,
 				})}
 
-			{!!items.length ||
-			(!!testrayCaseResultComparisons?.length && !isCompareRunsMatrix) ? (
+			{!!items.length && !isCompareRunsMatrix ? (
 				<>
-					{!testrayCaseResultComparisons?.length &&
-						pagination?.displayTop && (
-							<div className="mt-4">{Pagination}</div>
-						)}
+					{pagination?.displayTop && (
+						<div className="mt-4">{Pagination}</div>
+					)}
 
 					{tableVisible && (
 						<Table
@@ -446,7 +441,7 @@ const ListView: React.FC<ListViewProps> = ({
 						/>
 					)}
 
-					{!testrayCaseResultComparisons?.length && Pagination}
+					{Pagination}
 				</>
 			) : null}
 
@@ -456,21 +451,19 @@ const ListView: React.FC<ListViewProps> = ({
 						<TableChart matrixData={matrixData} title={title} />
 					</ClayLayout.Col>
 				) : (
-					!testrayCaseResultComparisons && (
-						<div className="d-flex flex-wrap">
-							{Object.entries(itemsMemoized).map(
-								([name, data], index) => (
-									<div className="my-4" key={index}>
-										<TableChart
-											fieldName={title}
-											matrixData={data}
-											title={name}
-										/>
-									</div>
-								)
-							)}
-						</div>
-					)
+					<div className="d-flex flex-wrap">
+						{Object.entries(itemsMemoized).map(
+							([name, data], index) => (
+								<div className="my-4" key={index}>
+									<TableChart
+										fieldName={title}
+										matrixData={data}
+										title={name}
+									/>
+								</div>
+							)
+						)}
+					</div>
 				))}
 		</>
 	);

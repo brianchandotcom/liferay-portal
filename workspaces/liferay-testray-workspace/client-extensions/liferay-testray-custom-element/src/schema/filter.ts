@@ -622,7 +622,7 @@ const filterSchema = {
 						runB as string
 					)}`;
 
-					return `/teams?filter=${filter}&pageSize=100&sort=name:asc`;
+					return `/teams?filter=${filter}&pageSize=-1&sort=name:asc`;
 				},
 				type: 'select',
 			}),
@@ -638,7 +638,7 @@ const filterSchema = {
 						runB as string
 					)}`;
 
-					return `/components?filter=${filter}&pageSize=100&sort=name:asc`;
+					return `/components?filter=${filter}&pageSize=-1&sort=name:asc`;
 				},
 				type: 'multiselect',
 			}),

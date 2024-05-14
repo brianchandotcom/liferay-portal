@@ -210,7 +210,9 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 							</p>
 
 							<Form.Group>
-								<div className="h4">{Liferay.Language.get('job-type')}</div>
+								<div className='h4'>
+									{Liferay.Language.get('job-type')}
+								</div>
 
 								<Form.GroupItem>
 									<Form.Checkbox
@@ -258,7 +260,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 							</Form.Group>
 
 							<Form.Group>
-								<div className="h4">
+								<div className='h4'>
 									{Liferay.Language.get('data-subject-id')}
 								</div>
 

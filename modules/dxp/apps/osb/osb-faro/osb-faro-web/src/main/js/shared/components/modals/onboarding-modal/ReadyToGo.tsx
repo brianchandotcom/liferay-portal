@@ -28,7 +28,7 @@ const ReadyToGo: React.FC<IReadyToGoProps> = ({onClose}) => (
 					)}
 				</div>
 
-				<div className="h4">
+				<div className='h4'>
 					{Liferay.Language.get(
 						'make-sure-to-set-your-time-period-to-last-24-hours-to-see-if-your-data-is-coming-in-correctly'
 					)}

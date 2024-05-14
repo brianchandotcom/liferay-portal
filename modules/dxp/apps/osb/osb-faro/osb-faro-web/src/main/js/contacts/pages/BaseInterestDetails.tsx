@@ -223,7 +223,7 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 						{navigationItems.map(({active, href, label}) => (
 							<ClayNavigationBar.Item active={active} key={label}>
 								<ClayLink href={href}>
-									<div className="h4">{label}</div>
+									<div className='h4'>{label}</div>
 								</ClayLink>
 							</ClayNavigationBar.Item>
 						))}

@@ -11,7 +11,7 @@ const TestModal: React.FC<{onClose: () => void; title: string}> = ({
 		<Modal.Header onClose={() => onClose} title={title} />
 
 		<Modal.Body inlineScroller>
-			<div className="h4">{'Modal Body'}</div>
+			<div className='h4'>{'Modal Body'}</div>
 		</Modal.Body>
 
 		<Modal.Footer>

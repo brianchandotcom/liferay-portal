@@ -272,7 +272,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 					<div className='selected-info'>
 						<div className='activities-date d-flex align-items-baseline'>
-							<div className="h4">
+							<div className='h4'>
 								{activityHistory?.length
 									? sub(
 											Liferay.Language.get(

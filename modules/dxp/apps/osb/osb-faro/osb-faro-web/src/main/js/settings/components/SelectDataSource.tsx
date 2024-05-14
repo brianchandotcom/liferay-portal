@@ -47,7 +47,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 
 									<div className='details'>
 										<div className='title'>
-											<div className="h4">{name}</div>
+											<div className='h4'>{name}</div>
 										</div>
 
 										<div className='subtitle'>
@@ -71,7 +71,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 
 									<div className='details'>
 										<div className='title'>
-											<div className="h4">{name}</div>
+											<div className='h4'>{name}</div>
 										</div>
 
 										<div className='subtitle'>

@@ -128,7 +128,7 @@ const PublishSolutionOutlet = () => {
 							displayType="secondary"
 							onClick={() => onSaveAsDraft().then(onExit)}
 						>
-							{i18n.translate('save-as-a-draft-&-exit')}
+							{i18n.translate('save-as-a-draft-exit')}
 						</ClayButton>
 
 						<Link

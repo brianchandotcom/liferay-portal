@@ -178,7 +178,7 @@ const zodSchema = {
 			name: z.string().min(3),
 			tags: z.array(z.any()).nonempty(),
 		}),
-		submit: z.boolean().refine((data) => data === true),
+		termsAndConditions: z.boolean().refine((data) => data === true),
 	},
 };
 

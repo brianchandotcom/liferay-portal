@@ -11,7 +11,7 @@ import {ContentReviewImageInfo} from './ContentReviewImageInfo';
 import {ContentReviewParagraph} from './ContentReviewParagraph';
 import {ContentReviewSection} from './ContentReviewSection';
 import {ContentReviewSeparator} from './ContentReviewSeparator';
-import {ContentReviewSuportLink} from './ContentReviewSuportLink';
+import {ContentReviewSupportLink} from './ContentReviewSupportLink';
 import {ContentReviewVideo} from './ContentReviewVideo';
 
 type ContentReviewProps = {
@@ -25,7 +25,7 @@ type ContentReviewChildrens = {
 	Paragraph: typeof ContentReviewParagraph;
 	Section: typeof ContentReviewSection;
 	Separator: typeof ContentReviewSeparator;
-	SuportLink: typeof ContentReviewSuportLink;
+	SupportLink: typeof ContentReviewSupportLink;
 	Video: typeof ContentReviewVideo;
 };
 
@@ -39,7 +39,7 @@ ContentReview.ImageInfo = ContentReviewImageInfo;
 ContentReview.Paragraph = ContentReviewParagraph;
 ContentReview.Section = ContentReviewSection;
 ContentReview.Separator = ContentReviewSeparator;
-ContentReview.SuportLink = ContentReviewSuportLink;
+ContentReview.SupportLink = ContentReviewSupportLink;
 ContentReview.Video = ContentReviewVideo;
 
 export {ContentReview};

@@ -7,8 +7,10 @@ import classNames from 'classnames';
 import {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
 
+import i18n from '../../../../../../i18n';
+
 interface ContentReviewHeaderProps {
-	as?: 'span' | 'h1' | 'h2' | 'h3';
+	as?: 'h1' | 'h2' | 'h3' | 'span';
 	children: ReactNode;
 	className?: string;
 	path: string;
@@ -31,8 +33,8 @@ export function ContentReviewHeader({
 		>
 			<Wrapper>{children}</Wrapper>
 
-			<Link to={path}>
-				<strong>Edit</strong>
+			<Link className="font-weight-bold" to={path}>
+				{i18n.translate('edit')}
 			</Link>
 		</div>
 	);

@@ -165,7 +165,7 @@ export default {
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update compatibility range.',
 	'if-you-are-requesting-the-account-on-behalf-of-a-business-,-please-note-the-business-name':
 		'If you are requesting the account on behalf of a business, please note the business name.',
-	'important-Images-will-be-displayed-following-thenumerical-order-above':
+	'important-images-will-be-displayed-following-the-numerical-order-above':
 		'Important: Images will be displayed following thenumerical order above',
 	'in-the-future-you-will-be-able-to-submit-your-app-directly-from-liferay-experience-cloud-projects':
 		'In the future, you will be able to submit your app directly from Liferay SaaS projects.',
@@ -254,7 +254,7 @@ export default {
 	'publisher-account-request': 'Publisher Account Request.',
 	'publisher-dashboard': 'Publisher Dashboard',
 	'publisher-requests': 'Publisher Requests',
-	'publisher-website-url ': 'Publisher website URL',
+	'publisher-website-url': 'Publisher website URL',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
 		'Purchase and install new apps and they will show up here.',
 	'purchase-order-number': 'Purchase Order Number',
@@ -281,7 +281,7 @@ export default {
 	'review-and-submit-solution': 'Review and submit solution',
 	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding',
-	'save-as-a-draft-&-exit': 'Save as a draft & exit',
+	'save-as-a-draft-exit': 'Save as a draft & exit',
 	'search': 'Search',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',

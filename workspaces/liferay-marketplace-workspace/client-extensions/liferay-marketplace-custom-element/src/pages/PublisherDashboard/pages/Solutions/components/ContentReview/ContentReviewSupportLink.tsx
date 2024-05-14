@@ -5,17 +5,17 @@
 
 import ClayIcon from '@clayui/icon';
 
-interface ContentReviewSuportLinkProps {
+interface ContentReviewSupportLinkProps {
 	href: string;
 	linkLabel: string;
 	symbol: string;
 }
 
-export function ContentReviewSuportLink({
+export function ContentReviewSupportLink({
 	href,
 	linkLabel,
 	symbol,
-}: ContentReviewSuportLinkProps) {
+}: ContentReviewSupportLinkProps) {
 	const hrefType = href.includes('@') ? 'mailto:' : '';
 
 	return (

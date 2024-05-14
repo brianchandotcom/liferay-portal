@@ -21,7 +21,14 @@ import {ContentReview} from '../../components/ContentReview';
 const Submit = () => {
 	const [context, dispatch] = useSolutionContext();
 
-	const {company, contactUs, details, header, profile} = context;
+	const {
+		company,
+		contactUs,
+		details,
+		header,
+		profile,
+		termsAndConditions,
+	} = context;
 
 	return (
 		<div className="mb-4 solutions-form-header">
@@ -35,7 +42,7 @@ const Submit = () => {
 				/>
 			</span>
 
-			<hr className="mb-5 mt-2" />
+			<ContentReview.Separator className="mb-5 mt-2" />
 
 			<ContentReview>
 				<ContentReview.Section>
@@ -133,7 +140,7 @@ const Submit = () => {
 
 					<ContentReview.Paragraph>
 						{i18n.translate(
-							'important-Images-will-be-displayed-following-thenumerical-order-above'
+							'important-images-will-be-displayed-following-the-numerical-order-above'
 						)}
 					</ContentReview.Paragraph>
 				</ContentReview.Section>
@@ -145,69 +152,69 @@ const Submit = () => {
 						<ContentReview.Header as="h2" path="../details">
 							{i18n.translate('solution-details')}
 						</ContentReview.Header>
-						{details.map((block, index) => {
-							return (
-								<ContentReview.Block
-									key={index}
-									title={i18n.translate(
-										block.type as keyof typeof en_US
-									)}
+						{details.map((block, index) => (
+							<ContentReview.Block
+								key={index}
+								title={i18n.translate(
+									block.type as keyof typeof en_US
+								)}
+							>
+								<ContentReview.Paragraph
+									title={i18n.translate('title')}
 								>
-									<ContentReview.Paragraph
-										title={i18n.translate('title')}
-									>
-										{i18n.translate(
-											block.content
-												.title as keyof typeof en_US
-										)}
-									</ContentReview.Paragraph>
-									<ContentReview.Paragraph
-										title={i18n.translate('description')}
-									>
-										<p
-											dangerouslySetInnerHTML={{
-												__html: DOMPurify.sanitize(
-													block.content.description
-												),
-											}}
-										/>
-									</ContentReview.Paragraph>
-
-									{block.type === 'text-images-block' &&
-										block.content.files.map(
-											(file, fileIndex) => (
-												<ContentReview.ImageInfo
-													icon="document-image"
-													imageFile={file}
-													key={fileIndex}
-												/>
-											)
-										)}
-
-									{block.type === 'text-video-block' && (
-										<div className="d-flex">
-											<ContentReview.Video className="mr-3">
-												{block.content.videoUrl}
-											</ContentReview.Video>
-
-											<ContentReview.Paragraph className="mt-3">
-												{block.content.videoDescription}
-											</ContentReview.Paragraph>
-										</div>
+									{i18n.translate(
+										block.content
+											.title as keyof typeof en_US
 									)}
-								</ContentReview.Block>
-							);
-						})}
+								</ContentReview.Paragraph>
+								<ContentReview.Paragraph
+									title={i18n.translate('description')}
+								>
+									<p
+										dangerouslySetInnerHTML={{
+											__html: DOMPurify.sanitize(
+												block.content.description
+											),
+										}}
+									/>
+								</ContentReview.Paragraph>
+
+								{block.type === 'text-images-block' &&
+									block.content.files.map(
+										(file, fileIndex) => (
+											<ContentReview.ImageInfo
+												icon="document-image"
+												imageFile={file}
+												key={fileIndex}
+											/>
+										)
+									)}
+
+								{block.type === 'text-video-block' && (
+									<div className="d-flex">
+										<ContentReview.Video className="mr-3">
+											{block.content.videoUrl}
+										</ContentReview.Video>
+
+										<ContentReview.Paragraph className="mt-3">
+											{block.content.videoDescription}
+										</ContentReview.Paragraph>
+									</div>
+								)}
+							</ContentReview.Block>
+						))}
 					</ContentReview.Section>
 				)}
 
 				<ContentReview.Separator />
 
 				<ContentReview.Section>
-					<ContentReview.Header as="h2" path="../company">
-						<h2 className="mb-0">
-							{i18n.translate('company-profile')}
-						</h2>
+					<ContentReview.Header
+						as="h2"
+						className="mb-0"
+						path="../company"
+					>
+						{i18n.translate('company-profile')}
 					</ContentReview.Header>
 
 					<ContentReview.Paragraph
@@ -220,19 +227,19 @@ const Submit = () => {
 						/>
 					</ContentReview.Paragraph>
 					<ContentReview.Paragraph>
-						<ContentReview.SuportLink
+						<ContentReview.SupportLink
 							href={company.website}
-							linkLabel={i18n.translate('publisher-website-url ')}
+							linkLabel={i18n.translate('publisher-website-url')}
 							symbol="globe"
 						/>
 
-						<ContentReview.SuportLink
+						<ContentReview.SupportLink
 							href={company.email}
 							linkLabel={i18n.translate('email')}
 							symbol="envelope-closed"
 						/>
 
-						<ContentReview.SuportLink
+						<ContentReview.SupportLink
 							href={company.phone}
 							linkLabel={i18n.translate('phone')}
 							symbol="phone"
@@ -243,10 +250,14 @@ const Submit = () => {
 				<ContentReview.Separator />
 
 				<ContentReview.Section>
-					<ContentReview.Header as="h2" path="../contact">
-						<h2 className="mb-0">{i18n.translate('contact-us')}</h2>
+					<ContentReview.Header
+						as="h2"
+						className="mb-0"
+						path="../contact"
+					>
+						{i18n.translate('contact-us')}
 					</ContentReview.Header>
-					<ContentReview.SuportLink
+					<ContentReview.SupportLink
 						href={contactUs}
 						linkLabel={i18n.translate('email')}
 						symbol="envelope-closed"
@@ -256,11 +267,11 @@ const Submit = () => {
 
 			<div className="d-flex my-5">
 				<ClayCheckbox
-					checked={!!context.submit}
+					checked={termsAndConditions}
 					onChange={(event) => {
 						dispatch({
 							payload: event.target.checked,
-							type: SolutionTypes.SET_SUBMIT,
+							type: SolutionTypes.SET_TERMS_AND_CONDITIONS,
 						});
 					}}
 				/>

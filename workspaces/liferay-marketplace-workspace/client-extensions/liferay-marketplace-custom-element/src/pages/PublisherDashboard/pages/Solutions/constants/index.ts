@@ -75,7 +75,9 @@ export const SOLUTION_FLOW_ITEMS = [
 		),
 		label: i18n.translate('submit'),
 		parseSchema: (context: SolutionInitialState) =>
-			zodSchema.solutionPublishing.submit.safeParse(context.submit),
+			zodSchema.solutionPublishing.termsAndConditions.safeParse(
+				context.termsAndConditions
+			),
 		path: 'submit',
 		title: 'Review and submit solution',
 	},

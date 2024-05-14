@@ -8,6 +8,7 @@ package com.liferay.portal.servlet.filters.invoker.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -38,12 +39,12 @@ public class InvokerFilterTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testFilterInitParams() {
-		BasePortalFilter testBasePortalFilter = new BasePortalFilter() {
+	public void testGetFilterConfig() {
+		BasePortalFilter basePortalFilter = new BasePortalFilter() {
 		};
 
-		String urlRegexIgnorePattern = "/test-regex-ignore-pattern";
-		String urlRegexPattern = "/test-regex-pattern";
+		String urlRegexIgnorePattern = "/" + RandomTestUtil.randomString();
+		String urlRegexPattern = "/" + RandomTestUtil.randomString();
 
 		Bundle bundle = FrameworkUtil.getBundle(InvokerFilterTest.class);
 
@@ -51,7 +52,7 @@ public class InvokerFilterTest {
 
 		ServiceRegistration<Filter> serviceRegistration =
 			bundleContext.registerService(
-				Filter.class, testBasePortalFilter,
+				Filter.class, basePortalFilter,
 				HashMapDictionaryBuilder.put(
 					"init-param.url-regex-ignore-pattern", urlRegexIgnorePattern
 				).put(
@@ -59,11 +60,11 @@ public class InvokerFilterTest {
 				).put(
 					"servlet-context-name", StringPool.BLANK
 				).put(
-					"servlet-filter-name", "Invoker Filter - Test Filter"
+					"servlet-filter-name", RandomTestUtil.randomString()
 				).build());
 
 		try {
-			FilterConfig filterConfig = testBasePortalFilter.getFilterConfig();
+			FilterConfig filterConfig = basePortalFilter.getFilterConfig();
 
 			Assert.assertEquals(
 				urlRegexIgnorePattern,

@@ -146,6 +146,8 @@ export async function loadData(
 	}
 
 	if (sorts.length) {
+		url.searchParams.delete('sort');
+
 		url.searchParams.append(
 			'sort',
 			sorts.map((item) => `${item.key}:${item.direction}`).join(',')

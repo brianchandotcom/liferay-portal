@@ -2166,6 +2166,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			userId, rootFolderId, mimeTypes, status);
 	}
 
+	@Override
+	public List<FileShortcut> getGroupFileShortcuts(long groupId)
+		throws PortalException {
+		Repository repository = getRepository(groupId);
+
+		return repository.getRepositoryFileShortcuts(groupId);
+	}
+
 	/**
 	 * Returns all immediate subfolders of the parent folder that are used for
 	 * mounting third-party repositories. This method is only supported by the

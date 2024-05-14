@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.repository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
@@ -129,6 +130,9 @@ public interface Repository extends DocumentRepository {
 
 	public int getRepositoryFileEntriesCount(
 			long userId, long rootFolderId, String[] mimeTypes, int status)
+		throws PortalException;
+
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
 		throws PortalException;
 
 	public void getSubfolderIds(List<Long> folderIds, long folderId)

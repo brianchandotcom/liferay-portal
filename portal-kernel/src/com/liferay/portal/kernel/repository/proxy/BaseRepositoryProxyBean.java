@@ -573,6 +573,13 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+
+		return _baseRepository.getRepositoryFileShortcuts(groupId);
+	}
+
+	@Override
 	public long getRepositoryId() {
 		return _baseRepository.getRepositoryId();
 	}

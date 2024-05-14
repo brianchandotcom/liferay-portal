@@ -546,6 +546,12 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+		return _repository.getRepositoryFileShortcuts(groupId);
+	}
+
+	@Override
 	public long getRepositoryId() {
 		return _repository.getRepositoryId();
 	}

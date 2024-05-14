@@ -688,6 +688,13 @@ public class CapabilityRepository
 	}
 
 	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+
+		return getRepository().getRepositoryFileShortcuts(groupId);
+	}
+
+	@Override
 	public long getRepositoryId() {
 		return getRepository().getRepositoryId();
 	}

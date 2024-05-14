@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
@@ -358,6 +359,13 @@ public class InitializedRepository
 
 		return documentRepository.getRepositoryFileEntriesCount(
 			userId, rootFolderId, mimeTypes, status);
+	}
+
+	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+
+		return documentRepository.getRepositoryFileShortcuts(groupId);
 	}
 
 	@Override

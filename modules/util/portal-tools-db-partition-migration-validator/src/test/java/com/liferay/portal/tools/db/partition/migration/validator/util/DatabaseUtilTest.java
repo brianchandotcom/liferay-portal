@@ -11,14 +11,8 @@ import com.liferay.portal.tools.db.partition.migration.validator.Company;
 import com.liferay.portal.tools.db.partition.migration.validator.LiferayDatabase;
 import com.liferay.portal.tools.db.partition.migration.validator.Release;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,34 +21,29 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
 /**
  * @author Luis Ortiz
  */
-public class DatabaseUtilTest {
+public class DatabaseUtilTest extends BaseTestCase {
 
 	@Before
 	public void setUp() throws SQLException {
-		_mockGetColumns(
+		mockGetColumns(
 			Arrays.asList("Table1", "Company", "Table2", "Object_x_25000"));
-		_mockGetCompanies(Arrays.asList(_company1, _company2));
-		_mockGetCompanyIds(Collections.singletonList(25000L));
-		_mockGetCompanyInfos(Collections.singletonList(_COMPANY_ID));
-		_mockGetConnection(
+		mockGetCompanies(Arrays.asList(_company1, _company2));
+		mockGetCompanyIds(Collections.singletonList(25000L));
+		mockGetCompanyInfos(Collections.singletonList(_COMPANY_ID));
+		mockGetConnection(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-		_mockGetReleases(Arrays.asList(_module1Release, _module2Release));
-		_mockGetTables(true);
+		mockGetReleases(Arrays.asList(_module1Release, _module2Release));
+		mockGetTables(true);
 	}
 
 	@Test
 	public void testExportLiferayDatabaseWithDefaultCompany() throws Exception {
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			_connection);
+			getConnection());
 
 		_assert(liferayDatabase, true);
 	}
@@ -63,12 +52,12 @@ public class DatabaseUtilTest {
 	public void testExportLiferayDatabaseWithMultipleCompanies()
 		throws Exception {
 
-		_mockGetCompanyInfos(
+		mockGetCompanyInfos(
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()));
 
 		try {
-			DatabaseUtil.exportLiferayDatabase(_connection);
+			DatabaseUtil.exportLiferayDatabase(getConnection());
 
 			Assert.fail();
 		}
@@ -86,10 +75,10 @@ public class DatabaseUtilTest {
 	public void testExportLiferayDatabaseWithNondefaultCompany()
 		throws Exception {
 
-		_mockGetTables(false);
+		mockGetTables(false);
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			_connection);
+			getConnection());
 
 		_assert(liferayDatabase, false);
 	}
@@ -122,617 +111,7 @@ public class DatabaseUtilTest {
 			isDefault, liferayDatabase.isExportedCompanyDefault());
 	}
 
-	private void _mockGetColumns(List<String> tableNames) throws SQLException {
-		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getColumns(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.any(), Mockito.nullable(String.class))
-		).thenReturn(
-			resultSet1
-		);
-
-		Mockito.when(
-			resultSet1.next()
-		).thenReturn(
-			true
-		);
-
-		ResultSet resultSet2 = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.isNull(), Mockito.any(String[].class))
-		).thenReturn(
-			resultSet2
-		);
-
-		List<Integer> nextCounter = new ArrayList<>();
-
-		nextCounter.add(0);
-
-		Mockito.when(
-			resultSet2.next()
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= tableNames.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
-				}
-
-			}
-		);
-
-		List<Integer> tableNameCounter = new ArrayList<>();
-
-		tableNameCounter.add(0);
-
-		Mockito.when(
-			resultSet2.getString("TABLE_NAME")
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = tableNameCounter.get(0);
-
-					if (counter >= tableNames.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					tableNameCounter.set(0, ++counter);
-
-					return tableNames.get(counter - 1);
-				}
-
-			}
-		);
-	}
-
-	private void _mockGetCompanies(List<Company> companies)
-		throws SQLException {
-
-		PreparedStatement preparedStatement = Mockito.mock(
-			PreparedStatement.class);
-
-		Mockito.when(
-			_connection.prepareStatement(
-				"select Company.companyId, webId, name, hostname from " +
-					"Company left join VirtualHost on Company.companyId = " +
-						"VirtualHost.companyId")
-		).thenReturn(
-			preparedStatement
-		);
-
-		ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			preparedStatement.executeQuery()
-		).thenReturn(
-			resultSet
-		);
-
-		List<Integer> nextCounter = new ArrayList<>();
-
-		nextCounter.add(0);
-
-		Mockito.when(
-			resultSet.next()
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= companies.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
-				}
-
-			}
-		);
-
-		List<Integer> companyIdCounter = new ArrayList<>();
-
-		companyIdCounter.add(0);
-
-		Mockito.when(
-			resultSet.getLong(1)
-		).thenAnswer(
-			new Answer<Long>() {
-
-				@Override
-				public Long answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyIdCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyIdCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getCompanyId();
-				}
-
-			}
-		);
-
-		List<Integer> webIdCounter = new ArrayList<>();
-
-		webIdCounter.add(0);
-
-		Mockito.when(
-			resultSet.getString(2)
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = webIdCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					webIdCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getWebId();
-				}
-
-			}
-		);
-
-		List<Integer> companyNameCounter = new ArrayList<>();
-
-		companyNameCounter.add(0);
-
-		Mockito.when(
-			resultSet.getString(3)
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyNameCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyNameCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getCompanyName();
-				}
-
-			}
-		);
-
-		List<Integer> virtualHostnameCounter = new ArrayList<>();
-
-		virtualHostnameCounter.add(0);
-
-		Mockito.when(
-			resultSet.getString(4)
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = virtualHostnameCounter.get(0);
-
-					if (counter >= companies.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					virtualHostnameCounter.set(0, ++counter);
-
-					Company company = companies.get(counter - 1);
-
-					return company.getVirtualHostname();
-				}
-
-			}
-		);
-	}
-
-	private void _mockGetCompanyIds(List<Long> companyIds) throws SQLException {
-		PreparedStatement preparedStatement = Mockito.mock(
-			PreparedStatement.class);
-
-		Mockito.when(
-			_connection.prepareStatement("select companyId from Company")
-		).thenReturn(
-			preparedStatement
-		);
-
-		ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			preparedStatement.executeQuery()
-		).thenReturn(
-			resultSet
-		);
-
-		List<Integer> nextCounter = new ArrayList<>();
-
-		nextCounter.add(0);
-
-		Mockito.when(
-			resultSet.next()
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
-				}
-
-			}
-		);
-
-		List<Integer> companyIdCounter = new ArrayList<>();
-
-		companyIdCounter.add(0);
-
-		Mockito.when(
-			resultSet.getLong("companyId")
-		).thenAnswer(
-			new Answer<Long>() {
-
-				@Override
-				public Long answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyIdCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyIdCounter.set(0, ++counter);
-
-					return companyIds.get(counter - 1);
-				}
-
-			}
-		);
-	}
-
-	private void _mockGetCompanyInfos(List<Long> companyIds)
-		throws SQLException {
-
-		PreparedStatement preparedStatement = Mockito.mock(
-			PreparedStatement.class);
-
-		Mockito.when(
-			_connection.prepareStatement("select companyId from CompanyInfo")
-		).thenReturn(
-			preparedStatement
-		);
-
-		ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			preparedStatement.executeQuery()
-		).thenReturn(
-			resultSet
-		);
-
-		List<Integer> nextCounter = new ArrayList<>();
-
-		nextCounter.add(0);
-
-		Mockito.when(
-			resultSet.next()
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
-				}
-
-			}
-		);
-
-		List<Integer> companyIdCounter = new ArrayList<>();
-
-		companyIdCounter.add(0);
-
-		Mockito.when(
-			resultSet.getLong(1)
-		).thenAnswer(
-			new Answer<Long>() {
-
-				@Override
-				public Long answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = companyIdCounter.get(0);
-
-					if (counter >= companyIds.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					companyIdCounter.set(0, ++counter);
-
-					return companyIds.get(counter - 1);
-				}
-
-			}
-		);
-	}
-
-	private void _mockGetConnection(String password, String url, String user)
-		throws SQLException {
-
-		_driverManagerMockedStatic.when(
-			() -> DriverManager.getConnection(url, user, password)
-		).thenReturn(
-			_connection
-		);
-
-		Mockito.when(
-			_connection.getMetaData()
-		).thenReturn(
-			_databaseMetaData
-		);
-
-		Mockito.when(
-			_databaseMetaData.getURL()
-		).thenReturn(
-			url
-		);
-	}
-
-	private void _mockGetReleases(List<Release> releases) throws SQLException {
-		PreparedStatement preparedStatement = Mockito.mock(
-			PreparedStatement.class);
-
-		Mockito.when(
-			_connection.prepareStatement(
-				"select servletContextName, schemaVersion, state_, verified " +
-					"from Release_")
-		).thenReturn(
-			preparedStatement
-		);
-
-		ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			preparedStatement.executeQuery()
-		).thenReturn(
-			resultSet
-		);
-
-		List<Integer> nextCounter = new ArrayList<>();
-
-		nextCounter.add(0);
-
-		Mockito.when(
-			resultSet.next()
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = nextCounter.get(0);
-
-					if (counter >= releases.size()) {
-						return false;
-					}
-
-					nextCounter.set(0, ++counter);
-
-					return true;
-				}
-
-			}
-		);
-
-		List<Integer> servletContextNameCounter = new ArrayList<>();
-
-		servletContextNameCounter.add(0);
-
-		Mockito.when(
-			resultSet.getString(1)
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = servletContextNameCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					servletContextNameCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					return release.getServletContextName();
-				}
-
-			}
-		);
-
-		List<Integer> schemaVersionCounter = new ArrayList<>();
-
-		schemaVersionCounter.add(0);
-
-		Mockito.when(
-			resultSet.getString(2)
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = schemaVersionCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					schemaVersionCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					Version version = release.getSchemaVersion();
-
-					return version.toString();
-				}
-
-			}
-		);
-
-		List<Integer> stateCounter = new ArrayList<>();
-
-		stateCounter.add(0);
-
-		Mockito.when(
-			resultSet.getInt(3)
-		).thenAnswer(
-			new Answer<Integer>() {
-
-				@Override
-				public Integer answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = stateCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					stateCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					return release.getState();
-				}
-
-			}
-		);
-
-		List<Integer> verifiedCounter = new ArrayList<>();
-
-		verifiedCounter.add(0);
-
-		Mockito.when(
-			resultSet.getBoolean(4)
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					int counter = verifiedCounter.get(0);
-
-					if (counter >= releases.size()) {
-						throw new IndexOutOfBoundsException();
-					}
-
-					verifiedCounter.set(0, ++counter);
-
-					Release release = releases.get(counter - 1);
-
-					return release.getVerified();
-				}
-
-			}
-		);
-	}
-
-	private void _mockGetTables(boolean defaultPartition) throws SQLException {
-		ResultSet resultSet = Mockito.mock(ResultSet.class);
-
-		Mockito.when(
-			_databaseMetaData.getTables(
-				Mockito.nullable(String.class), Mockito.nullable(String.class),
-				Mockito.eq("Company"), Mockito.any(String[].class))
-		).thenReturn(
-			resultSet
-		);
-
-		Mockito.when(
-			resultSet.next()
-		).thenReturn(
-			defaultPartition
-		);
-	}
-
 	private static final Long _COMPANY_ID = RandomTestUtil.randomLong();
-
-	private static final Connection _connection = Mockito.mock(
-		Connection.class);
-	private static final DatabaseMetaData _databaseMetaData = Mockito.mock(
-		DatabaseMetaData.class);
-	private static final MockedStatic<DriverManager>
-		_driverManagerMockedStatic = Mockito.mockStatic(DriverManager.class);
 
 	private final Company _company1 = new Company(
 		RandomTestUtil.randomLong(), RandomTestUtil.randomString(),

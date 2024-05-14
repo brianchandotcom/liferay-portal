@@ -32,12 +32,14 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -97,6 +99,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_baseURI = "search";
+
 		_locale = LocaleUtil.getSiteDefault();
 
 		_ddmStructure = _addJournalArticleDDMStructure(_locale);
@@ -118,18 +122,20 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	@Override
 	@Test
 	public void testPostSearchPage() throws Exception {
-		SearchPage<SearchResult> searchPage = _postSearchPage(
-			_journalArticle.getArticleId());
-
-		Assert.assertEquals(1L, searchPage.getPage());
-		Assert.assertEquals(1L, searchPage.getTotalCount());
-
 		_testPostSearchPageWithCategoryTreeFacetConfiguration();
 		_testPostSearchPageWithCustomFacetConfiguration();
 		_testPostSearchPageWithDateRangeFacetConfiguration();
 		_testPostSearchPageWithEmbeddedNestedFields();
+		_testPostSearchPageWithEmptyScope();
+		_testPostSearchPageWithFaultyScope();
+		_testPostSearchPageWithFilter();
 		_testPostSearchPageWithFolderFacetConfiguration();
+		_testPostSearchPageWithGroupERCAndIdScope();
+		_testPostSearchPageWithGroupERCScope();
+		_testPostSearchPageWithGroupIdScope();
 		_testPostSearchPageWithHighlightConfiguration();
+		_testPostSearchPageWithKeywords();
+		_testPostSearchPageWithMultipleGroupIdsScope();
 		_testPostSearchPageWithNestedFacetConfiguration();
 		_testPostSearchPageWithSiteFacetConfiguration();
 		_testPostSearchPageWithTagFacetConfiguration();
@@ -137,6 +143,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_testPostSearchPageWithUserFacetConfiguration();
 		_testPostSearchPageWithoutHighlightConfiguration();
 		_testPostSearchPageZeroResults();
+	}
+
+	@Test
+	public void testSearchEndpointRedirect() throws Exception {
+		_baseURI = "portal-search-rest";
+
+		_testPostSearchPageWithKeywords();
 	}
 
 	private AssetCategory _addAssetCategory(
@@ -301,6 +314,26 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		return searchPage;
 	}
 
+	private void _assertSearchResultTitles(
+		SearchPage<SearchResult> searchPage, String... expectedValues) {
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			searchPage.getItems());
+
+		List<String> titles = new ArrayList<>();
+
+		for (SearchResult searchResult : searchResults) {
+			titles.add(searchResult.getTitle());
+		}
+
+		Arrays.sort(expectedValues);
+
+		Collections.sort(titles);
+
+		Assert.assertEquals(
+			Arrays.toString(expectedValues), String.valueOf(titles));
+	}
+
 	private JSONObject _createSXPBlueprintHighlightConfigurationJSON() {
 		return JSONUtil.put(
 			"fields",
@@ -330,10 +363,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 	private String _getEndpoint(
 			String entryClassNames, String filterString, String keywords,
-			String nestedFields)
+			String nestedFields, String scope)
 		throws Exception {
 
-		String endpoint = "portal-search-rest/v1.0/search?";
+		String endpoint = _baseURI + "/v1.0/search?";
 
 		if (!Validator.isBlank(entryClassNames)) {
 			endpoint +=
@@ -350,6 +383,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			endpoint +=
 				"&nestedFields=" +
 					URLEncoder.encode(nestedFields, StringPool.UTF8);
+		}
+
+		if (!Validator.isBlank(scope)) {
+			endpoint += "&scope=" + URLEncoder.encode(scope, StringPool.UTF8);
 		}
 
 		if (!Validator.isBlank(keywords)) {
@@ -393,20 +430,30 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		return _postSearchPage(
-			null, "groupIds/any(g:g eq " + testGroup.getGroupId() + ")",
-			keywords, null, new SearchRequestBody());
+			null, null, keywords, null, String.valueOf(testGroup.getGroupId()),
+			new SearchRequestBody());
+	}
+
+	private SearchPage<SearchResult> _postSearchPage(
+			String keywords, String scope)
+		throws Exception {
+
+		return _postSearchPage(
+			null, null, keywords, null, scope, new SearchRequestBody());
 	}
 
 	private SearchPage<SearchResult> _postSearchPage(
 			String entryClassNames, String filterString, String keywords,
-			String nestedFields, SearchRequestBody searchRequestBody)
+			String nestedFields, String scope,
+			SearchRequestBody searchRequestBody)
 		throws Exception {
 
 		return _toSearchPage(
 			HTTPTestUtil.invokeToJSONObject(
 				searchRequestBody.toString(),
 				_getEndpoint(
-					entryClassNames, filterString, keywords, nestedFields),
+					entryClassNames, filterString, keywords, nestedFields,
+					scope),
 				Http.Method.POST));
 	}
 
@@ -427,9 +474,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		};
 
 		return _postSearchPage(
-			entryClassNames,
-			"groupIds/any(g:g eq " + testGroup.getGroupId() + ")", null, null,
-			searchRequestBody);
+			entryClassNames, null, null, null,
+			String.valueOf(testGroup.getGroupId()), searchRequestBody);
 	}
 
 	private SearchPage<SearchResult>
@@ -448,7 +494,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		};
 
 		return _postSearchPage(
-			entryClassNames, null, keywords, null, searchRequestBody);
+			entryClassNames, null, keywords, null, null, searchRequestBody);
 	}
 
 	private void _testPostSearchPageWithCategoryTreeFacetConfiguration()
@@ -544,7 +590,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			objectDefinition.getClassName(), null,
-			objectDefinition.getUserName(), "embedded",
+			objectDefinition.getUserName(), "embedded", null,
 			new SearchRequestBody());
 
 		Collection<SearchResult> searchResults = searchPage.getItems();
@@ -556,12 +602,89 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 	}
 
+	private void _testPostSearchPageWithEmptyScope() throws Exception {
+		Group testGroup2 = GroupTestUtil.addGroup();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup2.getGroupId(), StringUtil.randomString(),
+			StringUtil.randomString());
+
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			StringBundler.concat(
+				_journalArticle.getTitle(_locale), StringPool.SPACE,
+				journalArticle.getTitle(_locale)),
+			null);
+
+		_assertSearchResultTitles(
+			searchPage, _journalArticle.getTitle(_locale),
+			journalArticle.getTitle(_locale));
+
+		GroupTestUtil.deleteGroup(testGroup2);
+	}
+
+	private void _testPostSearchPageWithFaultyScope() throws Exception {
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			_journalArticle.getArticleId(), "notexistingscope");
+
+		_assertSearchResultTitles(searchPage, new String[0]);
+	}
+
+	private void _testPostSearchPageWithFilter() throws Exception {
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			null, "groupIds/any(g:g eq " + testGroup.getGroupId() + ")",
+			_journalArticle.getArticleId(), null, null,
+			new SearchRequestBody());
+
+		_assertSearchResultTitles(
+			searchPage, _journalArticle.getTitle(_locale));
+	}
+
 	private void _testPostSearchPageWithFolderFacetConfiguration()
 		throws Exception {
 
 		_assertFacetConfiguration(
 			false, null, null, "folder", _journalArticle.getFolderId(),
 			String.valueOf(_journalArticle.getFolderId()));
+	}
+
+	private void _testPostSearchPageWithGroupERCAndIdScope() throws Exception {
+		Group testGroup2 = GroupTestUtil.addGroup();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup2.getGroupId(), StringUtil.randomString(),
+			StringUtil.randomString());
+
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			StringBundler.concat(
+				_journalArticle.getTitle(_locale), StringPool.SPACE,
+				journalArticle.getTitle(_locale)),
+			StringBundler.concat(
+				testGroup.getGroupId(), StringPool.COMMA,
+				testGroup2.getExternalReferenceCode()));
+
+		_assertSearchResultTitles(
+			searchPage, _journalArticle.getTitle(_locale),
+			journalArticle.getTitle(_locale));
+
+		GroupTestUtil.deleteGroup(testGroup2);
+	}
+
+	private void _testPostSearchPageWithGroupERCScope() throws Exception {
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			_journalArticle.getArticleId(),
+			String.valueOf(testGroup.getExternalReferenceCode()));
+
+		_assertSearchResultTitles(
+			searchPage, _journalArticle.getTitle(_locale));
+	}
+
+	private void _testPostSearchPageWithGroupIdScope() throws Exception {
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			_journalArticle.getArticleId(),
+			String.valueOf(testGroup.getGroupId()));
+
+		_assertSearchResultTitles(
+			searchPage, _journalArticle.getTitle(_locale));
 	}
 
 	private void _testPostSearchPageWithHighlightConfiguration()
@@ -582,6 +705,38 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				searchResult -> Objects.equals(
 					searchResult.getTitle(), _getUserHighlightedFullName())) >=
 						1);
+	}
+
+	private void _testPostSearchPageWithKeywords() throws Exception {
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			_journalArticle.getArticleId());
+
+		Assert.assertEquals(1L, searchPage.getPage());
+		Assert.assertEquals(1L, searchPage.getTotalCount());
+	}
+
+	private void _testPostSearchPageWithMultipleGroupIdsScope()
+		throws Exception {
+
+		Group testGroup2 = GroupTestUtil.addGroup();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup2.getGroupId(), StringUtil.randomString(),
+			StringUtil.randomString());
+
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			StringBundler.concat(
+				_journalArticle.getTitle(_locale), StringPool.SPACE,
+				journalArticle.getTitle(_locale)),
+			StringBundler.concat(
+				testGroup.getGroupId(), StringPool.COMMA,
+				testGroup2.getGroupId()));
+
+		_assertSearchResultTitles(
+			searchPage, _journalArticle.getTitle(_locale),
+			journalArticle.getTitle(_locale));
+
+		GroupTestUtil.deleteGroup(testGroup2);
 	}
 
 	private void _testPostSearchPageWithNestedFacetConfiguration()
@@ -707,6 +862,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
+	private String _baseURI;
 	private DDMStructure _ddmStructure;
 	private JournalArticle _journalArticle;
 

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseResultComparison;
 import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
@@ -129,7 +131,7 @@ public class TestrayRunComparisonResourceImpl
 	}
 
 	@Override
-	public TestrayRunComparison getTestrayRunComparisonDetail(
+	public TestrayRunComparison getTestrayRunComparisonRun(
 			Long testrayRunId1, Long testrayRunId2,
 			String testrayCaseResultError1, String testrayCaseResultError2,
 			String testrayCaseResultIssue1, String testrayCaseResultIssue2,

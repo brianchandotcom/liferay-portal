@@ -49,7 +49,7 @@ public class TestrayTestSuiteResourceImpl
 		if (fileName.endsWith(".tar")) {
 			_testrayManager.processArchive(
 				contextCompany.getCompanyId(),
-				multipartBody.getBinaryFileAsBytes("file"),
+				multipartBody.getBinaryFileAsBytes("file"), fileName,
 				_serviceContextHelper.getServiceContext(),
 				contextUser.getUserId());
 		}
@@ -75,9 +75,9 @@ public class TestrayTestSuiteResourceImpl
 					contextUser.getUserId());
 
 				_testrayManager.processDocument(
-					contextCompany.getCompanyId(), document,
-					_serviceContextHelper.getServiceContext(), testrayCache,
-					contextUser.getUserId());
+					contextCompany.getCompanyId(), document, fileName,
+					file.length(), _serviceContextHelper.getServiceContext(),
+					testrayCache, contextUser.getUserId());
 			}
 			finally {
 				FileUtil.delete(file);

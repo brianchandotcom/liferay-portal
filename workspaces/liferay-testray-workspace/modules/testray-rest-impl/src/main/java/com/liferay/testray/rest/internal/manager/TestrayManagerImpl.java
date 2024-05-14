@@ -79,12 +79,19 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	@Override
 	public void processArchive(
-			long companyId, byte[] bytes, ServiceContext serviceContext,
-			long userId)
+			long companyId, byte[] bytes, String fileName,
+			ServiceContext serviceContext, long userId)
 		throws Exception {
+
+		long startTime = System.currentTimeMillis();
+		String dueStatus = "successful";
 
 		Path tempDirectoryPath = null;
 		Path tempFilePath = null;
+
+		TestrayCache testrayCache = new TestrayCache();
+
+		loadTestrayCache(companyId, testrayCache, userId);
 
 		try {
 			tempDirectoryPath = Files.createTempDirectory(null);
@@ -105,10 +112,6 @@ public class TestrayManagerImpl implements TestrayManager {
 			DocumentBuilder documentBuilder =
 				documentBuilderFactory.newDocumentBuilder();
 
-			TestrayCache testrayCache = new TestrayCache();
-
-			loadTestrayCache(companyId, testrayCache, userId);
-
 			for (File file : tempDirectoryFile.listFiles()) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Processing " + file.getName());
@@ -118,16 +121,21 @@ public class TestrayManagerImpl implements TestrayManager {
 					Document document = documentBuilder.parse(file);
 
 					processDocument(
-						companyId, document, serviceContext, testrayCache,
-						userId);
+						companyId, document, null, 0, serviceContext,
+						testrayCache, userId);
 				}
 				catch (Exception exception) {
+					dueStatus = "failed";
 					_log.error(exception);
 				}
 				finally {
 					file.delete();
 				}
 			}
+		}
+		catch (Exception exception) {
+			dueStatus = "failed";
+			_log.error(exception);
 		}
 		finally {
 			if (tempDirectoryPath != null) {
@@ -137,40 +145,70 @@ public class TestrayManagerImpl implements TestrayManager {
 			if (tempFilePath != null) {
 				Files.deleteIfExists(tempFilePath);
 			}
+
+			_addTestrayTestSuite(
+				testrayCache.getBuildId(),
+				testrayCache.getTestrayCaseResultAmount(), dueStatus,
+				System.currentTimeMillis() - startTime, fileName, bytes.length,
+				serviceContext, testrayCache, userId);
 		}
 	}
 
 	@Override
 	public void processDocument(
-			long companyId, Document document, ServiceContext serviceContext,
-			TestrayCache testrayCache, long userId)
+			long companyId, Document document, String fileName, long fileSize,
+			ServiceContext serviceContext, TestrayCache testrayCache,
+			long userId)
 		throws Exception {
 
-		Element element = document.getDocumentElement();
+		long startTime = System.currentTimeMillis();
+		String dueStatus = "successful";
 
-		Map<String, String> propertiesMap = _getPropertiesMap(element);
+		try {
+			Element element = document.getDocumentElement();
 
-		long testrayProjectId = _getTestrayProjectId(
-			companyId, serviceContext, testrayCache,
-			propertiesMap.get("testray.project.name"), userId);
+			Map<String, String> propertiesMap = _getPropertiesMap(element);
 
-		long testrayRoutineId = _getTestrayRoutineId(
-			companyId, serviceContext, testrayCache, testrayProjectId,
-			propertiesMap.get("testray.build.type"), userId);
+			long testrayProjectId = _getTestrayProjectId(
+				companyId, serviceContext, testrayCache,
+				propertiesMap.get("testray.project.name"), userId);
 
-		long testrayBuildId = _getTestrayBuildId(
-			companyId, propertiesMap, serviceContext,
-			propertiesMap.get("testray.build.name"), testrayCache,
-			testrayProjectId, testrayRoutineId, userId);
+			long testrayRoutineId = _getTestrayRoutineId(
+				companyId, serviceContext, testrayCache, testrayProjectId,
+				propertiesMap.get("testray.build.type"), userId);
 
-		long testrayRunId = _getTestrayRunId(
-			companyId, element, serviceContext, propertiesMap, testrayBuildId,
-			testrayCache, propertiesMap.get("testray.run.id"), userId);
+			long testrayBuildId = _getTestrayBuildId(
+				companyId, propertiesMap, serviceContext,
+				propertiesMap.get("testray.build.name"), testrayCache,
+				testrayProjectId, testrayRoutineId, userId);
 
-		_addTestrayCases(
-			companyId, element, serviceContext,
-			propertiesMap.get("testray.build.date"), testrayBuildId,
-			testrayCache, testrayProjectId, testrayRunId, userId);
+			testrayCache.setBuildId(testrayBuildId);
+
+			long testrayRunId = _getTestrayRunId(
+				companyId, element, serviceContext, propertiesMap,
+				testrayBuildId, testrayCache,
+				propertiesMap.get("testray.run.id"), userId);
+
+			_addTestrayCases(
+				companyId, element, serviceContext,
+				propertiesMap.get("testray.build.date"), testrayBuildId,
+				testrayCache, testrayProjectId, testrayRunId, userId);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+			dueStatus = "failed";
+
+			throw exception;
+		}
+		finally {
+			if (fileName != null) {
+				_addTestrayTestSuite(
+					testrayCache.getBuildId(),
+					testrayCache.getTestrayCaseResultAmount(), dueStatus,
+					System.currentTimeMillis() - startTime, fileName, fileSize,
+					serviceContext, testrayCache, userId);
+			}
+		}
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -275,11 +313,15 @@ public class TestrayManagerImpl implements TestrayManager {
 			testrayCache.addObjectEntryId(
 				objectEntryIdsKey, objectEntry.getObjectEntryId());
 
+			testrayCache.incrementTestrayCaseResultAmount();
+
 			return;
 		}
 
 		_updateObjectEntry(
 			testrayCaseResultId, serviceContext, userId, properties);
+
+		testrayCache.incrementTestrayCaseResultAmount();
 	}
 
 	private JSONArray _addTestrayAttachments(Node testcaseNode)
@@ -453,6 +495,30 @@ public class TestrayManagerImpl implements TestrayManager {
 				testrayFactorOptionId
 			).put(
 				"r_runToFactors_c_runId", testrayRunId
+			).build());
+	}
+
+	private void _addTestrayTestSuite(
+			long buildId, long caseResultAmount, String dueStatus,
+			long executionTime, String fileName, long fileSize,
+			ServiceContext serviceContext, TestrayCache testrayCache,
+			long userId)
+		throws Exception {
+
+		_addObjectEntry(
+			"TestSuite", serviceContext, testrayCache, userId,
+			HashMapBuilder.<String, Serializable>put(
+				"caseResultAmount", caseResultAmount
+			).put(
+				"dueStatus", dueStatus
+			).put(
+				"executionTime", executionTime
+			).put(
+				"fileName", fileName
+			).put(
+				"fileSize", fileSize
+			).put(
+				"r_buildToTestSuite_c_buildId", buildId
 			).build());
 	}
 

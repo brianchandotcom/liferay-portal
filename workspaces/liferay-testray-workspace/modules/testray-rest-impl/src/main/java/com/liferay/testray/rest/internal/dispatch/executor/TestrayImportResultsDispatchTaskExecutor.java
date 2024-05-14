@@ -159,7 +159,8 @@ public class TestrayImportResultsDispatchTaskExecutor
 
 				try {
 					_testrayManager.processArchive(
-						companyId, blob.getContent(), serviceContext, userId);
+						companyId, blob.getContent(), name, serviceContext,
+						userId);
 
 					blob.copyTo(
 						unicodeProperties.getProperty("s3BucketName"),

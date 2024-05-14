@@ -124,16 +124,17 @@ const Submit = () => {
 
 						{header.contentType.type === 'embed-video-url' && (
 							<div className="d-flex flex-row">
-								<ContentReview.Video className="mr-3">
-									{header.contentType.content.headerVideoUrl}
-								</ContentReview.Video>
-
-								<ContentReview.Paragraph className="mt-3">
-									{
+								<ContentReview.Video
+									className="mr-3"
+									videoDescription={
 										header.contentType.content
 											.headerVideoDescription
 									}
-								</ContentReview.Paragraph>
+									videoUrl={
+										header.contentType.content
+											.headerVideoUrl
+									}
+								/>
 							</div>
 						)}
 					</ContentReview.Paragraph>
@@ -192,13 +193,13 @@ const Submit = () => {
 
 								{block.type === 'text-video-block' && (
 									<div className="d-flex">
-										<ContentReview.Video className="mr-3">
-											{block.content.videoUrl}
-										</ContentReview.Video>
-
-										<ContentReview.Paragraph className="mt-3">
-											{block.content.videoDescription}
-										</ContentReview.Paragraph>
+										<ContentReview.Video
+											className="mr-3"
+											videoDescription={
+												block.content.videoDescription
+											}
+											videoUrl={block.content.videoUrl}
+										/>
 									</div>
 								)}
 							</ContentReview.Block>
@@ -231,18 +232,21 @@ const Submit = () => {
 							href={company.website}
 							linkLabel={i18n.translate('publisher-website-url')}
 							symbol="globe"
+							type="url"
 						/>
 
 						<ContentReview.SupportLink
 							href={company.email}
 							linkLabel={i18n.translate('email')}
 							symbol="envelope-closed"
+							type="email"
 						/>
 
 						<ContentReview.SupportLink
 							href={company.phone}
 							linkLabel={i18n.translate('phone')}
 							symbol="phone"
+							type="phone"
 						/>
 					</ContentReview.Paragraph>
 				</ContentReview.Section>
@@ -261,6 +265,7 @@ const Submit = () => {
 						href={contactUs}
 						linkLabel={i18n.translate('email')}
 						symbol="envelope-closed"
+						type="email"
 					/>
 				</ContentReview.Section>
 			</ContentReview>
@@ -276,11 +281,26 @@ const Submit = () => {
 					}}
 				/>
 				<p className="ml-4">
-					Attention: this cannot be undone. I am aware I cannot edit
-					any data or information regarding this solution submission
-					until Liferay completes its review process and I agree with
-					the Liferay Marketplace&nbsp;<a>terms</a>&nbsp; and &nbsp;
-					<a>privacy</a>&nbsp;
+					<b>Attention: this cannot be undone.</b> I am aware I cannot
+					edit any data or information regarding this solution
+					submission until Liferay completes its review process and I
+					agree with the Liferay Marketplace&nbsp;
+					<a
+						href="https://www.liferay.com/it/legal/marketplace-terms-of-service"
+						rel="noopener"
+						target="_blank"
+					>
+						terms
+					</a>
+					&nbsp;and&nbsp;
+					<a
+						href="https://www.liferay.com/privacy-policy"
+						rel="noopener"
+						target="_blank"
+					>
+						privacy
+					</a>
+					&nbsp;
 				</p>
 			</div>
 		</div>

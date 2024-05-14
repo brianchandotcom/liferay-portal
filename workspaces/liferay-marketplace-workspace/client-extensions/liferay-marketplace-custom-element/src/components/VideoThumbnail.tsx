@@ -45,11 +45,22 @@ const VideoThumbnail: React.FC<VideoThumbnailProps> = ({videoURL}) => {
 
 	return (
 		<Wrapper>
-			<img
-				aria-label="video-thumbnail"
-				className="video-preview"
-				src={getThumbnail(videoURL)}
-			/>
+			<a
+				className="align-items-center d-flex justify-content-center position-relative"
+				href={videoURL}
+				target="_blank"
+			>
+				<img
+					aria-label="video-thumbnail"
+					className="video-preview"
+					src={getThumbnail(videoURL)}
+				/>
+				<ClayIcon
+					aria-label="video thumbnail empty"
+					className="video-thumbnail-play-symbol"
+					symbol="video"
+				/>
+			</a>
 		</Wrapper>
 	);
 };

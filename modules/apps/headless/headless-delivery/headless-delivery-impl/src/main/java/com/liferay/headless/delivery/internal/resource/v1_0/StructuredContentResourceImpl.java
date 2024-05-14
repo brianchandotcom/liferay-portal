@@ -89,12 +89,14 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -123,6 +125,8 @@ import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -513,6 +517,46 @@ public class StructuredContentResourceImpl
 			journalArticle.getDisplayDate(),
 			ZoneId.of(contextUser.getTimeZoneId()));
 
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+
+		boolean neverExpire = GetterUtil.getBoolean(
+			structuredContent.getNeverExpire());
+
+		if (!neverExpire) {
+			Date dateExpired = structuredContent.getDateExpired();
+
+			if (dateExpired == null) {
+				dateExpired = journalArticle.getExpirationDate();
+			}
+
+			if ((dateExpired != null) &&
+				dateExpired.after(
+					new Date(System.currentTimeMillis() + Time.MINUTE))) {
+
+				Calendar expirationCal = CalendarFactoryUtil.getCalendar(
+					contextUser.getTimeZone());
+
+				expirationCal.setTime(dateExpired);
+
+				expirationDateMonth = expirationCal.get(Calendar.MONTH);
+				expirationDateDay = expirationCal.get(Calendar.DATE);
+				expirationDateYear = expirationCal.get(Calendar.YEAR);
+				expirationDateHour = expirationCal.get(Calendar.HOUR);
+				expirationDateMinute = expirationCal.get(Calendar.MINUTE);
+
+				if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+					expirationDateHour += 12;
+				}
+			}
+			else {
+				neverExpire = true;
+			}
+		}
+
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(
 				journalArticle.getGroupId(), journalArticle.getFolderId(),
@@ -541,9 +585,10 @@ public class StructuredContentResourceImpl
 				journalArticle.getLayoutUuid(),
 				localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
-				null, null,
+				localDateTime.getHour(), localDateTime.getMinute(),
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0,
+				0, 0, true, true, false, 0, 0, null, null, null, null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetLinkEntryIds(journalArticle, structuredContent),
@@ -719,6 +764,42 @@ public class StructuredContentResourceImpl
 			structuredContent.getDatePublished(), null,
 			ZoneId.of(contextUser.getTimeZoneId()));
 
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+
+		boolean neverExpire = GetterUtil.getBoolean(
+			structuredContent.getNeverExpire());
+
+		if (!neverExpire) {
+			Date dateExpired = structuredContent.getDateExpired();
+
+			if ((dateExpired == null) ||
+				dateExpired.before(
+					new Date(System.currentTimeMillis() + Time.MINUTE))) {
+
+				neverExpire = true;
+			}
+			else {
+				Calendar expirationCal = CalendarFactoryUtil.getCalendar(
+					contextUser.getTimeZone());
+
+				expirationCal.setTime(dateExpired);
+
+				expirationDateMonth = expirationCal.get(Calendar.MONTH);
+				expirationDateDay = expirationCal.get(Calendar.DATE);
+				expirationDateYear = expirationCal.get(Calendar.YEAR);
+				expirationDateHour = expirationCal.get(Calendar.HOUR);
+				expirationDateMinute = expirationCal.get(Calendar.MINUTE);
+
+				if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+					expirationDateHour += 12;
+				}
+			}
+		}
+
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			structuredContent.getTitle(), structuredContent.getTitle_i18n());
@@ -770,9 +851,10 @@ public class StructuredContentResourceImpl
 				ddmStructure.getStructureId(), _getDDMTemplateKey(ddmStructure),
 				null, localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
-				null, null,
+				localDateTime.getHour(), localDateTime.getMinute(),
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0,
+				0, 0, true, true, false, 0, 0, null, null, null, null,
 				_createServiceContext(
 					structuredContent.getTaxonomyCategoryIds(),
 					assetLinkEntryIds, priority,
@@ -1310,6 +1392,46 @@ public class StructuredContentResourceImpl
 			journalArticle.getDisplayDate(),
 			ZoneId.of(contextUser.getTimeZoneId()));
 
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+
+		boolean neverExpire = GetterUtil.getBoolean(
+			structuredContent.getNeverExpire());
+
+		if (!neverExpire) {
+			Date dateExpired = structuredContent.getDateExpired();
+
+			if (dateExpired == null) {
+				dateExpired = journalArticle.getExpirationDate();
+			}
+
+			if ((dateExpired != null) &&
+				dateExpired.after(
+					new Date(System.currentTimeMillis() + Time.MINUTE))) {
+
+				Calendar expirationCal = CalendarFactoryUtil.getCalendar(
+					contextUser.getTimeZone());
+
+				expirationCal.setTime(dateExpired);
+
+				expirationDateMonth = expirationCal.get(Calendar.MONTH);
+				expirationDateDay = expirationCal.get(Calendar.DATE);
+				expirationDateYear = expirationCal.get(Calendar.YEAR);
+				expirationDateHour = expirationCal.get(Calendar.HOUR);
+				expirationDateMinute = expirationCal.get(Calendar.MINUTE);
+
+				if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+					expirationDateHour += 12;
+				}
+			}
+			else {
+				neverExpire = true;
+			}
+		}
+
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(
 				journalArticle.getGroupId(), journalArticle.getFolderId(),
@@ -1325,9 +1447,10 @@ public class StructuredContentResourceImpl
 				journalArticle.getLayoutUuid(),
 				localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null, null,
-				null, null,
+				localDateTime.getHour(), localDateTime.getMinute(),
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0,
+				0, 0, true, true, false, 0, 0, null, null, null, null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
 					_getAssetLinkEntryIds(journalArticle, structuredContent),

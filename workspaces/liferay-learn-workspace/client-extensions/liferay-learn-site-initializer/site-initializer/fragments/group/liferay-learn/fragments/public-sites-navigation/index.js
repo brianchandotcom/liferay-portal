@@ -100,9 +100,8 @@ const seeAllResultsLink = fragmentElement.querySelector(
 
 const searchSubmitLink = fragmentElement.querySelector('.search-submit');
 
-const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
-	'a'
-);
+const searchSuggestionItem =
+	searchSuggestionItemTemplate.content.querySelector('a');
 
 function updateSearch() {
 	searchSuggestions.innerHTML = '';
@@ -116,8 +115,7 @@ function updateSearch() {
 			searchSubmitURL + '?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
-	}
-	else {
+	} else {
 		suggestions.classList.remove(
 			'loading-search',
 			'performing-search',
@@ -200,15 +198,14 @@ function performSearch(query) {
 							suggestion.attributes.assetSearchSummary;
 
 						if (suggestionContentTextValue) {
-							suggestionContentTextValue = suggestionContentTextValue.substring(
-								0,
-								500
-							);
+							suggestionContentTextValue =
+								suggestionContentTextValue.substring(0, 500);
 
-							suggestionContent.innerHTML = suggestionContentTextValue.replace(
-								searchTermRegExp,
-								`<b>$1</b>`
-							);
+							suggestionContent.innerHTML =
+								suggestionContentTextValue.replace(
+									searchTermRegExp,
+									`<b>$1</b>`
+								);
 						}
 
 						const suggestionURL = suggestionLink.querySelector(
@@ -227,8 +224,7 @@ function performSearch(query) {
 						suggestions.classList.remove('loading-search');
 					}
 				}
-			}
-			else {
+			} else {
 				suggestions.classList.remove('search-results-found');
 				suggestions.classList.remove('loading-search');
 			}
@@ -323,3 +319,29 @@ window.addEventListener('keyup', (event) => {
 		siteSearchWrapper.classList.add('search-open');
 	}
 });
+
+const navTabs = document.querySelectorAll('.nav-item button');
+const navPanels = document.querySelectorAll('.tab-panel-item');
+
+navTabs.forEach((navTab, i) => {
+	navTab.classList.add(`nav-tab-${i + 1}`);
+});
+
+navPanels.forEach((navPanel, i) => {
+	navPanel.classList.add(`nav-panel-${i + 1}`);
+});
+
+function toggleNavPanel(tabSelector, panelSelector, initialState = false) {
+	const tab = document.querySelector(tabSelector);
+	const panel = document.querySelector(panelSelector);
+
+	let isPanelOpened = initialState;
+
+	tab.addEventListener('click', () => {
+		panel.style.display = isPanelOpened ? 'none' : 'block';
+		isPanelOpened = !isPanelOpened;
+	});
+}
+
+toggleNavPanel('.nav-tab-1', '.nav-panel-1');
+toggleNavPanel('.nav-tab-2', '.nav-panel-2');

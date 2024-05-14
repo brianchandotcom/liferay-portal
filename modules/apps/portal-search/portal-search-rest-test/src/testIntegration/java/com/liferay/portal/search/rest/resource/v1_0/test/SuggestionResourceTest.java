@@ -72,8 +72,7 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 	}
 
 	private void _assertSuggestionContributorResults(
-			String displayGroupName,
-			Page<SuggestionsContributorResults> page,
+			String displayGroupName, Page<SuggestionsContributorResults> page,
 			String... expectedTexts)
 		throws Exception {
 
@@ -205,7 +204,7 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 			testGroup2.getGroupId(), StringUtil.randomString(),
 			StringUtil.randomString());
 
-		Page<SuggestionsContributorResults> suggestionPage =
+		Page<SuggestionsContributorResults> page =
 			_postSuggestionsPageWithBasicSuggestionsContributor(
 				"everything",
 				StringBundler.concat(
@@ -214,7 +213,7 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 				"Suggestions");
 
 		_assertSuggestionTexts(
-			suggestionPage.fetchFirstItem(), _journalArticle.getTitle(_locale),
+			page.fetchFirstItem(), _journalArticle.getTitle(_locale),
 			journalArticle.getTitle(_locale));
 
 		GroupTestUtil.deleteGroup(testGroup2);
@@ -223,13 +222,13 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 	private void _testPostSuggestionsPageWithBasicSuggestionsContributorWithGroupERCScope()
 		throws Exception {
 
-		Page<SuggestionsContributorResults> suggestionPage =
+		Page<SuggestionsContributorResults> page =
 			_postSuggestionsPageWithBasicSuggestionsContributor(
 				testGroup.getExternalReferenceCode(),
 				_journalArticle.getArticleId(), "Suggestions");
 
 		_assertSuggestionTexts(
-			suggestionPage.fetchFirstItem(), _journalArticle.getTitle(_locale));
+			page.fetchFirstItem(), _journalArticle.getTitle(_locale));
 	}
 
 	private void _testPostSuggestionsPageWithBasicSuggestionsContributorWithThisSiteScope()
@@ -241,24 +240,23 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 			testGroup2.getGroupId(), StringUtil.randomString(),
 			StringUtil.randomString());
 
-		Page<SuggestionsContributorResults> suggestionPage =
-			_postSuggestionsPage(
-				"http://localhost:8080/web/guest/home", "/search",
-				testGroup.getGroupId(), "q", _layout.getPlid(), "this-site",
-				StringBundler.concat(
-					_journalArticle.getTitle(_locale), StringPool.SPACE,
-					journalArticle.getTitle(_locale)),
-				new SuggestionsContributorConfiguration[] {
-					new SuggestionsContributorConfiguration() {
-						{
-							contributorName = "basic";
-							displayGroupName = "Suggestions";
-						}
+		Page<SuggestionsContributorResults> page = _postSuggestionsPage(
+			"http://localhost:8080/web/guest/home", "/search",
+			testGroup.getGroupId(), "q", _layout.getPlid(), "this-site",
+			StringBundler.concat(
+				_journalArticle.getTitle(_locale), StringPool.SPACE,
+				journalArticle.getTitle(_locale)),
+			new SuggestionsContributorConfiguration[] {
+				new SuggestionsContributorConfiguration() {
+					{
+						contributorName = "basic";
+						displayGroupName = "Suggestions";
 					}
-				});
+				}
+			});
 
 		_assertSuggestionTexts(
-			suggestionPage.fetchFirstItem(), _journalArticle.getTitle(_locale));
+			page.fetchFirstItem(), _journalArticle.getTitle(_locale));
 
 		GroupTestUtil.deleteGroup(testGroup2);
 	}
@@ -276,25 +274,24 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup, TestPropsValues.getUserId()));
 
-		Page<SuggestionsContributorResults> suggestionPage =
-			_postSuggestionsPage(
-				"http://localhost:8080/web/guest/home", "/search",
-				testGroup.getGroupId(), "q", _layout.getPlid(), null,
-				_journalArticle.getArticleId(),
-				new SuggestionsContributorConfiguration[] {
-					new SuggestionsContributorConfiguration() {
-						{
-							attributes = JSONUtil.put(
-								"sxpBlueprintExternalReferenceCode",
-								sxpBlueprint.getExternalReferenceCode());
-							contributorName = "sxpBlueprint";
-							displayGroupName = suggestionsDisplayGroupGroupName;
-						}
+		Page<SuggestionsContributorResults> page = _postSuggestionsPage(
+			"http://localhost:8080/web/guest/home", "/search",
+			testGroup.getGroupId(), "q", _layout.getPlid(), null,
+			_journalArticle.getArticleId(),
+			new SuggestionsContributorConfiguration[] {
+				new SuggestionsContributorConfiguration() {
+					{
+						attributes = JSONUtil.put(
+							"sxpBlueprintExternalReferenceCode",
+							sxpBlueprint.getExternalReferenceCode());
+						contributorName = "sxpBlueprint";
+						displayGroupName = suggestionsDisplayGroupGroupName;
 					}
-				});
+				}
+			});
 
 		_assertSuggestionContributorResults(
-			suggestionsDisplayGroupGroupName, suggestionPage,
+			suggestionsDisplayGroupGroupName, page,
 			_journalArticle.getTitle(_locale));
 	}
 
@@ -311,25 +308,24 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 
 		String suggestionsDisplayGroupGroupName = "Suggestions";
 
-		Page<SuggestionsContributorResults> suggestionPage =
-			_postSuggestionsPage(
-				"http://localhost:8080/web/guest/home", "/search", null, "q",
-				_layout.getPlid(), testGroup.getExternalReferenceCode(),
-				_journalArticle.getArticleId(),
-				new SuggestionsContributorConfiguration[] {
-					new SuggestionsContributorConfiguration() {
-						{
-							attributes = JSONUtil.put(
-								"sxpBlueprintExternalReferenceCode",
-								sxpBlueprint.getExternalReferenceCode());
-							contributorName = "sxpBlueprint";
-							displayGroupName = suggestionsDisplayGroupGroupName;
-						}
+		Page<SuggestionsContributorResults> page = _postSuggestionsPage(
+			"http://localhost:8080/web/guest/home", "/search", null, "q",
+			_layout.getPlid(), testGroup.getExternalReferenceCode(),
+			_journalArticle.getArticleId(),
+			new SuggestionsContributorConfiguration[] {
+				new SuggestionsContributorConfiguration() {
+					{
+						attributes = JSONUtil.put(
+							"sxpBlueprintExternalReferenceCode",
+							sxpBlueprint.getExternalReferenceCode());
+						contributorName = "sxpBlueprint";
+						displayGroupName = suggestionsDisplayGroupGroupName;
 					}
-				});
+				}
+			});
 
 		_assertSuggestionContributorResults(
-			suggestionsDisplayGroupGroupName, suggestionPage,
+			suggestionsDisplayGroupGroupName, page,
 			_journalArticle.getTitle(_locale));
 	}
 

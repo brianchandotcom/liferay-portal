@@ -2387,22 +2387,6 @@ public class DLFileEntryLocalServiceImpl
 			new ServiceContext());
 	}
 
-	private void _checkFileVersionsByExpirationDate(
-			long companyId, Date expirationDate, long userId)
-		throws PortalException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Expiring file versions with expiration date prior to ",
-					expirationDate, " for company ", companyId));
-		}
-
-		_expireFileVersionsByCompanyId(
-			companyId, expirationDate, userId, Collections.emptyMap(),
-			new ServiceContext());
-	}
-
 	private void _checkFileEntriesByReviewDate(long companyId, Date reviewDate)
 		throws PortalException {
 
@@ -2435,6 +2419,22 @@ public class DLFileEntryLocalServiceImpl
 			_notify(
 				fileEntry.getUserId(), _EMAIL_TYPE_REVIEW, latestFileVersion);
 		}
+	}
+
+	private void _checkFileVersionsByExpirationDate(
+			long companyId, Date expirationDate, long userId)
+		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Expiring file versions with expiration date prior to ",
+					expirationDate, " for company ", companyId));
+		}
+
+		_expireFileVersionsByCompanyId(
+			companyId, expirationDate, userId, Collections.emptyMap(),
+			new ServiceContext());
 	}
 
 	private DLFileEntry _checkOutDLFileEntryModel(
@@ -2760,6 +2760,33 @@ public class DLFileEntryLocalServiceImpl
 			companyId, repositoryId, name, storeFileName + ".index");
 	}
 
+	private void _expireFileVersion(
+			long userId, DLFileEntry fileEntry, DLFileVersion fileVersion,
+			boolean notify, Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (fileVersion.isExpired()) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Expiring file entry ", fileEntry.getFileEntryId(),
+					" on version ", fileVersion.getVersion(),
+					" with expiration date ", fileEntry.getExpirationDate()));
+		}
+
+		updateStatus(
+			userId, fileEntry, fileVersion, WorkflowConstants.STATUS_EXPIRED,
+			serviceContext, workflowContext);
+
+		if (notify) {
+			_notify(userId, _EMAIL_TYPE_EXPIRED, fileVersion);
+		}
+	}
+
 	private void _expireFileVersionsByCompanyId(
 			long companyId, Date expirationDate, long userId,
 			Map<String, Serializable> workflowContext,
@@ -2767,9 +2794,8 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException {
 
 		List<DLFileVersion> dlFileVersions =
-			_getFileVersionByCompanyIdAndExpirationDate(companyId,
-				expirationDate);
-
+			_getFileVersionByCompanyIdAndExpirationDate(
+				companyId, expirationDate);
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			DLFileEntry fileEntry = dlFileEntryPersistence.findByPrimaryKey(
@@ -2802,36 +2828,9 @@ public class DLFileEntryLocalServiceImpl
 				_expireFileVersion(
 					userId, fileEntry, dlFileVersion,
 					dlFileVersion.getFileVersionId() ==
-					latestFileVersion.getFileVersionId(),
+						latestFileVersion.getFileVersionId(),
 					workflowContext, serviceContext);
 			}
-		}
-	}
-
-	private void _expireFileVersion(
-			long userId, DLFileEntry fileEntry, DLFileVersion fileVersion,
-			boolean notify, Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (fileVersion.isExpired()) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Expiring file entry ", fileEntry.getFileEntryId(),
-					" on version ", fileVersion.getVersion(),
-					" with expiration date ", fileEntry.getExpirationDate()));
-		}
-
-		updateStatus(
-			userId, fileEntry, fileVersion, WorkflowConstants.STATUS_EXPIRED,
-			serviceContext, workflowContext);
-
-		if (notify) {
-			_notify(userId, _EMAIL_TYPE_EXPIRED, fileVersion);
 		}
 	}
 
@@ -2897,32 +2896,6 @@ public class DLFileEntryLocalServiceImpl
 		return null;
 	}
 
-private List<DLFileVersion> _getFileVersionByCompanyIdAndExpirationDate(
-		long companyId, Date expirationDate) {
-
-		return _dlFileVersionPersistence.dslQuery(
-			DSLQueryFactoryUtil.select(
-				DLFileVersionTable.INSTANCE
-			).from(
-				DLFileVersionTable.INSTANCE
-			).where(
-				DLFileVersionTable.INSTANCE.companyId.eq(
-					companyId
-				).and(
-					DLFileVersionTable.INSTANCE.expirationDate.gte(
-						_dates.get(companyId))
-				).and(
-					DLFileVersionTable.INSTANCE.expirationDate.lte(expirationDate)
-				).and(
-					DLFileVersionTable.INSTANCE.status.in(
-						new Integer[] {
-							WorkflowConstants.STATUS_APPROVED,
-							WorkflowConstants.STATUS_DRAFT
-						})
-				)
-			));
-	}
-
 	private List<DLFileEntry> _getFileEntriesByReviewDate(
 		long companyId, Date reviewDateLT, Date reviewDateGT) {
 
@@ -2938,6 +2911,33 @@ private List<DLFileVersion> _getFileVersionByCompanyIdAndExpirationDate(
 					DLFileEntryTable.INSTANCE.reviewDate.gte(reviewDateGT)
 				).and(
 					DLFileEntryTable.INSTANCE.reviewDate.lte(reviewDateLT)
+				)
+			));
+	}
+
+	private List<DLFileVersion> _getFileVersionByCompanyIdAndExpirationDate(
+		long companyId, Date expirationDate) {
+
+		return _dlFileVersionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				DLFileVersionTable.INSTANCE
+			).from(
+				DLFileVersionTable.INSTANCE
+			).where(
+				DLFileVersionTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					DLFileVersionTable.INSTANCE.expirationDate.gte(
+						_dates.get(companyId))
+				).and(
+					DLFileVersionTable.INSTANCE.expirationDate.lte(
+						expirationDate)
+				).and(
+					DLFileVersionTable.INSTANCE.status.in(
+						new Integer[] {
+							WorkflowConstants.STATUS_APPROVED,
+							WorkflowConstants.STATUS_DRAFT
+						})
 				)
 			));
 	}

@@ -8,6 +8,11 @@ import ClayModal from '@clayui/modal';
 
 import ModalFormatedInformation from '../../../../common/components/ModalFormatedInformation';
 import {DealRegistrationColumnKey} from '../../../../common/enums/dealRegistrationColumnKey';
+import Project from '../../../../common/interfaces/project';
+import {LiferayAPIs} from '../../../../common/services/liferay/common/enums/apis';
+import LiferayItems from '../../../../common/services/liferay/common/interfaces/liferayItems';
+import {ResourceName} from '../../../../common/services/liferay/object/enum/resourceName';
+import useGet from '../../../../common/services/liferay/object/useGet';
 import {DealRegistrationItem} from '../../DealRegistrationList';
 
 interface ModalContentProps {
@@ -16,6 +21,17 @@ interface ModalContentProps {
 }
 
 export default function ModalContent({content, onClose}: ModalContentProps) {
+	const swrResponse = useGet<LiferayItems<Project[]>>(
+		content[DealRegistrationColumnKey.EXTERNAL_REFERENCE_CODE] &&
+			`/o/${LiferayAPIs.OBJECT}/${
+				ResourceName.PROJECT_SALESFORCE
+			}?filter=leadExternalReferenceCode eq '${
+				content[DealRegistrationColumnKey.EXTERNAL_REFERENCE_CODE]
+			}'`
+	);
+
+	const project = swrResponse.data?.items[0];
+
 	return (
 		<ClayModal.Body>
 			<div className="align-items-center d-flex justify-content-between mb-4">
@@ -195,68 +211,61 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 					</div>
 				)}
 
-				{content[
-					DealRegistrationColumnKey
-						.ADDITIONAL_INFORMATION_ABOUT_THE_OPPORTUNITY
-				] && (
-					<div>
-						<div className="mb-0 text-paragraph-md">
-							Deal Information
-						</div>
-
-						<hr className="mt-0" />
-
-						<ModalFormatedInformation
-							className="d-flex mb-4"
-							information={
-								content[
-									DealRegistrationColumnKey
-										.ADDITIONAL_INFORMATION_ABOUT_THE_OPPORTUNITY
-								]
-							}
-							label="Additional Information about the Opportunity"
-						/>
+				<div>
+					<div className="mb-0 text-paragraph-md">
+						Deal Information
 					</div>
-				)}
-				{content[DealRegistrationColumnKey.PROJECT_NEED] && (
-					<div>
-						<div className="mb-0 text-paragraph-md">
-							Project Information
-						</div>
 
-						<hr className="mt-0" />
+					<hr className="mt-0" />
 
-						<ModalFormatedInformation
-							className="d-flex mb-2"
-							information={
-								content[DealRegistrationColumnKey.PROJECT_NEED]
-							}
-							label="Project Need"
-						/>
+					<ModalFormatedInformation
+						className="d-flex mb-4"
+						information={
+							project?.additionalInformationAboutTheOpportunity
+								? project?.additionalInformationAboutTheOpportunity
+								: '-'
+						}
+						label="Additional Information about the Opportunity"
+					/>
+				</div>
+
+				<div>
+					<div className="mb-0 text-paragraph-md">
+						Project Information
 					</div>
-				)}
 
-				{content[DealRegistrationColumnKey.PROJECT_CATEGORIES] && (
+					<hr className="mt-0" />
+
 					<ModalFormatedInformation
 						className="d-flex mb-2"
 						information={
-							content[
-								DealRegistrationColumnKey.PROJECT_CATEGORIES
-							]
+							project?.projectNeed
+								? project?.projectNeed.replaceAll(';', '; ')
+								: '-'
 						}
-						label="Solution Categories"
+						label="Project Need"
 					/>
-				)}
+				</div>
 
-				{content[DealRegistrationColumnKey.PROJECT_TIMELINE] && (
-					<ModalFormatedInformation
-						className="d-flex mb-2"
-						information={
-							content[DealRegistrationColumnKey.PROJECT_TIMELINE]
-						}
-						label="Project Timeline"
-					/>
-				)}
+				<ModalFormatedInformation
+					className="d-flex mb-2"
+					information={
+						project?.projectCategories
+							? project?.projectCategories.replaceAll(';', '; ')
+							: '-'
+					}
+					label="Solution Categories"
+				/>
+
+				<ModalFormatedInformation
+					className="d-flex mb-2"
+					information={
+						project?.projectTimeline
+							? project?.projectTimeline
+							: '-'
+					}
+					label="Project Timeline"
+				/>
 			</div>
 
 			<div className="d-flex justify-content-end">

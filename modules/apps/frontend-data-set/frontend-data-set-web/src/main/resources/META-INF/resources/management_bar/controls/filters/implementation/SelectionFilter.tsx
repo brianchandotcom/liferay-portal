@@ -193,7 +193,7 @@ function SelectionFilter({
 		// @ts-ignore
 
 		(value: string) => {
-			setSearchOptions({currentPage: 1, query: '', search: value});
+			setSearchOptions({currentPage: 1, query: value, search: value});
 		},
 		DEFAULT_DEBOUNCE_DELAY
 	);
@@ -250,11 +250,11 @@ function SelectionFilter({
 		}
 		else if (localItems.length && autocompleteEnabled) {
 			setItems(
-				searchOptions.query
+				searchOptions.search
 					? localItems.filter(({label}) =>
 							label
 								.toLowerCase()
-								.match(searchOptions.query.toLowerCase())
+								.match(searchOptions.search.toLowerCase())
 					  )
 					: localItems
 			);

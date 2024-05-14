@@ -1592,36 +1592,36 @@ components:
                 assetLibraryKey:
                     # @review
                     description:
-                        The key of the asset library to which the folder is scoped.
+                        The key of the asset library to which the document shortcut is scoped.
                     readOnly: true
                     type: string
                 dateCreated:
                     description:
-                        The shorcut's creation date.
+                        The document shortcut's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
                     description:
-                        The last time a field of the shorcut changed.
+                        The last time a field of the document shortcut changed.
                     format: date-time
                     readOnly: true
                     type: string
                 folderId:
                     description:
-                        The shorcut's folder ID.
+                        The document shortcut's folder ID.
                     format: int64
                     readOnly: true
                     type: integer
                 id:
                     description:
-                        The shorcut's ID.
+                        The document shortcut's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 siteId:
                     description:
-                        The ID of the site to which this shortcut is scoped.
+                        The ID of the site to which this document shortcut is scoped.
                     format: int64
                     readOnly: true
                     type: integer

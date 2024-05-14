@@ -44,6 +44,7 @@ public class DocumentShortcutDTOConverter
 
 		return new DocumentShortcut() {
 			{
+				setActions(dtoConverterContext::getActions);
 				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
 				setDateCreated(fileShortcut::getCreateDate);
 				setDateModified(fileShortcut::getModifiedDate);

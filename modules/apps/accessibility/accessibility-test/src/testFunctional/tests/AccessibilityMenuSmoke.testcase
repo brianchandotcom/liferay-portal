@@ -237,8 +237,10 @@ definition {
 		task ("And accessibility menu is not available on virtual instance B") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
+			var password = PropsUtil.get("default.admin.password");
+
 			User.firstLoginUI(
-				password = "test",
+				password = ${password},
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@liferay.com");
 

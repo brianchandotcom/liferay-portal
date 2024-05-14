@@ -273,7 +273,7 @@ definition {
 
 		Type.typePause(
 			locator1 = "TextInput#PASSWORD",
-			value1 = "test");
+			value1 = ${password});
 
 		User._clickSignInButton(localization = ${localization});
 
@@ -674,7 +674,7 @@ definition {
 
 		Type.typePause(
 			locator1 = "TextInput#PASSWORD",
-			value1 = "test");
+			value1 = ${password});
 
 		User._clickSignInButton(localization = ${localization});
 

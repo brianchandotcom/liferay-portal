@@ -335,6 +335,8 @@ definition {
 		ACUtils.clickKebab();
 
 		Click(locator1 = "ACSegments#EDIT_SEGMENT");
+
+		ACUtils.waitForLoading();
 	}
 
 	@summary = "Default summary"

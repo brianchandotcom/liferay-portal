@@ -60,19 +60,8 @@ public class DefaultAccountGroupException extends PortalException {
 
 	}
 
-	private DefaultAccountGroupException() {
-	}
-
 	private DefaultAccountGroupException(String msg) {
 		super(msg);
-	}
-
-	private DefaultAccountGroupException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	private DefaultAccountGroupException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

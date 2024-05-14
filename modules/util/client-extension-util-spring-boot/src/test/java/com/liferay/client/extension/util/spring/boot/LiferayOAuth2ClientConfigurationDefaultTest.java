@@ -59,7 +59,7 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 
 	@Test
 	public void testMultipleLinkedOauthClients() {
-		OAuth2AccessTokenResponse accessTokenResponse =
+		OAuth2AccessTokenResponse oAuth2AccessTokenResponse =
 			OAuth2AccessTokenResponse.withToken(
 				"token"
 			).tokenType(
@@ -70,11 +70,11 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 			_oAuth2AccessTokenResponseClient.getTokenResponse(
 				ArgumentMatchers.any())
 		).willReturn(
-			accessTokenResponse
+			oAuth2AccessTokenResponse
 		);
 
 		OAuth2AccessToken oAuth2AccessToken =
-			accessTokenResponse.getAccessToken();
+			oAuth2AccessTokenResponse.getAccessToken();
 
 		String expected = "Bearer " + oAuth2AccessToken.getTokenValue();
 
@@ -91,20 +91,6 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 
 	@Test
 	public void testOauth2ClientNotFound() {
-		OAuth2AccessTokenResponse accessTokenResponse =
-			OAuth2AccessTokenResponse.withToken(
-				"token"
-			).tokenType(
-				OAuth2AccessToken.TokenType.BEARER
-			).build();
-
-		BDDMockito.given(
-			_oAuth2AccessTokenResponseClient.getTokenResponse(
-				ArgumentMatchers.any())
-		).willReturn(
-			accessTokenResponse
-		);
-
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(
 			"Could not find ClientRegistration with id 'none'");

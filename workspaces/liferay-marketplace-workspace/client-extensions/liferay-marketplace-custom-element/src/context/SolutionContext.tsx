@@ -273,7 +273,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 			} as HeaderContentType;
 
 			const headerVideoUrl = specificationsMap.get(
-				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_TITLE
+				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_URL
 			);
 
 			if (headerVideoUrl) {
@@ -489,7 +489,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 		}
 
 		case SolutionTypes.SET_TERMS_AND_CONDITIONS: {
-			return {...state, submit: action.payload};
+			return {...state, termsAndConditions: action.payload};
 		}
 
 		default:

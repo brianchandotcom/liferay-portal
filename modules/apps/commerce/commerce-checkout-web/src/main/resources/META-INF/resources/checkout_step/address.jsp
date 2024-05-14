@@ -22,7 +22,7 @@ boolean validCommerceAddressId = false;
 
 CommerceAddress orderCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
 
-if ((orderCommerceAddress == null) || (orderCommerceAddress.getClassNameId() != PortalUtil.getClassNameId(CommerceOrder.class))) {
+if ((orderCommerceAddress == null) || (orderCommerceAddress.getClassNameId() != PortalUtil.getClassNameId(AccountEntry.class))) {
 	commerceAddressId = baseAddressCheckoutStepDisplayContext.getDefaultCommerceAddressId(commerceContext.getCommerceChannelId());
 
 	for (CommerceAddress validCommerceAddress : commerceAddresses) {

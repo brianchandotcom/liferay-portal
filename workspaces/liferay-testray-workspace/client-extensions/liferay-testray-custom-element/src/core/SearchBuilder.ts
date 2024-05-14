@@ -115,7 +115,7 @@ export default class SearchBuilder {
 				!value ||
 				!(value as string).length ||
 				(Array.isArray(value) &&
-					value.some((item: any) => item.value === 0))
+					value.some((item: any) => item.value === ''))
 			) {
 				continue;
 			}

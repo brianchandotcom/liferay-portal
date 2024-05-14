@@ -147,8 +147,7 @@ public abstract class BaseBackgroundTaskTestCase {
 
 		Assert.assertTrue(MapUtil.isNotEmpty(threadLocalValues));
 		Assert.assertEquals(
-			threadLocalValues.toString(), 7, threadLocalValues.size());
-		Assert.assertEquals(_COMPANY_ID, threadLocalValues.get("companyId"));
+			threadLocalValues.toString(), 6, threadLocalValues.size());
 		Assert.assertEquals(
 			_CLUSTER_INVOKE_ENABLED, threadLocalValues.get("clusterInvoke"));
 		Assert.assertEquals(
@@ -177,8 +176,6 @@ public abstract class BaseBackgroundTaskTestCase {
 		return HashMapBuilder.<String, Serializable>put(
 			"clusterInvoke", _CLUSTER_INVOKE_ENABLED
 		).put(
-			"companyId", _COMPANY_ID
-		).put(
 			"defaultLocale", _defaultLocale
 		).put(
 			"groupId", _GROUP_ID
@@ -202,7 +199,7 @@ public abstract class BaseBackgroundTaskTestCase {
 
 	private static final boolean _CLUSTER_INVOKE_ENABLED = true;
 
-	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+	public static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 

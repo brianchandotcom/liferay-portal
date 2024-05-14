@@ -41,13 +41,13 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 	@Override
 	public void deserializeThreadLocals(
-		Map<String, Serializable> taskContextMap) {
+		Map<String, Serializable> taskContextMap, long companyId) {
 
 		Map<String, Serializable> threadLocalValues =
 			(Map<String, Serializable>)taskContextMap.get(
 				KEY_THREAD_LOCAL_VALUES);
 
-		setThreadLocalValues(threadLocalValues);
+		setThreadLocalValues(threadLocalValues, companyId);
 	}
 
 	@Override
@@ -56,7 +56,6 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 		threadLocalValues.put(
 			"clusterInvoke", ClusterInvokeThreadLocal.isEnabled());
-		threadLocalValues.put("companyId", CompanyThreadLocal.getCompanyId());
 		threadLocalValues.put(
 			"defaultLocale", LocaleThreadLocal.getDefaultLocale());
 		threadLocalValues.put("groupId", GroupThreadLocal.getGroupId());
@@ -92,13 +91,11 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 	@Override
 	public void setThreadLocalValues(
-		Map<String, Serializable> threadLocalValues) {
+		Map<String, Serializable> threadLocalValues, long companyId) {
 
 		if (MapUtil.isEmpty(threadLocalValues)) {
 			return;
 		}
-
-		long companyId = GetterUtil.getLong(threadLocalValues.get("companyId"));
 
 		if (companyId > 0) {
 			CompanyThreadLocal.setCompanyId(_requireCompany(companyId));

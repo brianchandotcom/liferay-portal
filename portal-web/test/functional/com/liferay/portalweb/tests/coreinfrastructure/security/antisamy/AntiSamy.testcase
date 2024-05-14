@@ -64,7 +64,6 @@ definition {
 	@description = "LPD-25553: AntiSamy Should be disabled without exceptions"
 	@priority = 3
 	test AntiSamyShouldBeDisabledWithoutExceptions {
-		property antisamy.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -220,7 +219,6 @@ definition {
 	@description = "LPD-25553: Assert AntiSamy is correctly disabled"
 	@priority = 3
 	test ScriptInWikiPortletShouldNotBeSanitizedWhenAntiSamyIsDisabled {
-		property antisamy.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

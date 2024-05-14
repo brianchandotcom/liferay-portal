@@ -30,7 +30,9 @@ export default function sortItems(
 	let notIncluded: IOrderable[] = [];
 
 	included = itemsOrderArray
-		.map((itemId) => items.find((item) => item.id === Number(itemId)))
+		.map((itemId) =>
+			items.find((item) => Number(item.id) === Number(itemId))
+		)
 		.filter(Boolean) as IOrderable[];
 
 	notIncluded = items.filter(

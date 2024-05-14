@@ -56,7 +56,7 @@ public class DatabaseUtilTest {
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			_connection);
 
-		_validate(liferayDatabase, true);
+		_assert(liferayDatabase, true);
 	}
 
 	@Test
@@ -90,7 +90,35 @@ public class DatabaseUtilTest {
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			_connection);
 
-		_validate(liferayDatabase, false);
+		_assert(liferayDatabase, false);
+	}
+
+	private void _assert(LiferayDatabase liferayDatabase, boolean isDefault) {
+		List<Company> companies = liferayDatabase.getCompanies();
+
+		Assert.assertEquals(companies.toString(), 2, companies.size());
+		Assert.assertEquals(_company1, companies.get(0));
+		Assert.assertEquals(_company2, companies.get(1));
+
+		Assert.assertEquals(
+			_COMPANY_ID, (Long)liferayDatabase.getExportedCompanyId());
+
+		List<Release> releases = liferayDatabase.getReleases();
+
+		Assert.assertEquals(releases.toString(), 2, releases.size());
+		Assert.assertEquals(_module1Release, releases.get(0));
+		Assert.assertEquals(_module2Release, releases.get(1));
+
+		List<String> tableNames = liferayDatabase.getTableNames();
+
+		Assert.assertEquals(tableNames.toString(), 2, tableNames.size());
+		Assert.assertFalse(tableNames.contains("Company"));
+		Assert.assertFalse(tableNames.contains("Object_x_25000"));
+		Assert.assertTrue(tableNames.contains("Table1"));
+		Assert.assertTrue(tableNames.contains("Table2"));
+
+		Assert.assertEquals(
+			isDefault, liferayDatabase.isExportedCompanyDefault());
 	}
 
 	private void _mockGetColumns(List<String> tableNames) throws SQLException {
@@ -694,34 +722,6 @@ public class DatabaseUtilTest {
 		).thenReturn(
 			defaultPartition
 		);
-	}
-
-	private void _validate(LiferayDatabase liferayDatabase, boolean isDefault) {
-		List<Company> companies = liferayDatabase.getCompanies();
-
-		Assert.assertEquals(companies.toString(), 2, companies.size());
-		Assert.assertEquals(_company1, companies.get(0));
-		Assert.assertEquals(_company2, companies.get(1));
-
-		Assert.assertEquals(
-			_COMPANY_ID, (Long)liferayDatabase.getExportedCompanyId());
-
-		List<Release> releases = liferayDatabase.getReleases();
-
-		Assert.assertEquals(releases.toString(), 2, releases.size());
-		Assert.assertEquals(_module1Release, releases.get(0));
-		Assert.assertEquals(_module2Release, releases.get(1));
-
-		List<String> tableNames = liferayDatabase.getTableNames();
-
-		Assert.assertEquals(tableNames.toString(), 2, tableNames.size());
-		Assert.assertFalse(tableNames.contains("Company"));
-		Assert.assertFalse(tableNames.contains("Object_x_25000"));
-		Assert.assertTrue(tableNames.contains("Table1"));
-		Assert.assertTrue(tableNames.contains("Table2"));
-
-		Assert.assertEquals(
-			isDefault, liferayDatabase.isExportedCompanyDefault());
 	}
 
 	private static final Long _COMPANY_ID = RandomTestUtil.randomLong();

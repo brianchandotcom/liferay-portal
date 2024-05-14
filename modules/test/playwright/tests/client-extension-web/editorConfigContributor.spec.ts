@@ -65,6 +65,10 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 
 	await clientExtensionsPage.editClientExtension(sampleName1);
 
+	// Synchronize test to avoid flakiness
+
+	expect(editEditorConfigContributorPage.descriptionCKEditor).toBeVisible();
+
 	const sampleName2 = getRandomString();
 
 	await editEditorConfigContributorPage.nameInput.fill(sampleName2);

@@ -15,13 +15,13 @@ import java.util.Map;
 public interface BackgroundTaskThreadLocalManager {
 
 	public void deserializeThreadLocals(
-		Map<String, Serializable> taskContextMap);
+		Map<String, Serializable> taskContextMap, long companyId);
 
 	public Map<String, Serializable> getThreadLocalValues();
 
 	public void serializeThreadLocals(Map<String, Serializable> taskContextMap);
 
 	public void setThreadLocalValues(
-		Map<String, Serializable> threadLocalValues);
+		Map<String, Serializable> threadLocalValues, long companyId);
 
 }

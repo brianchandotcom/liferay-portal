@@ -12,8 +12,8 @@ export const test = mergeTests(loginTest());
 
 const SAMPLE = {
 	erc: 'LXC:liferay-sample-global-js-1',
-	name: 'Liferay Sample Global JS',
-	url: '/o/liferay-sample-global-js-1/global.7d2b9f54c4f8f75ba0c6.js',
+	name: 'Liferay Sample Global JS 1',
+	url: '/o/liferay-sample-global-js-1/global.43071e33b4c5e905939f.js',
 };
 
 test(`${SAMPLE.name} is registered`, async ({page}) => {

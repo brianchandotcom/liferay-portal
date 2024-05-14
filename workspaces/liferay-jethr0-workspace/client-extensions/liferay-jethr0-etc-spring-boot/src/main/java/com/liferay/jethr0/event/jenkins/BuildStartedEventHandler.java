@@ -13,8 +13,12 @@ import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -62,11 +66,21 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 		updateJRPStatus(buildRunEntity, buildEntity, jobEntity, "running");
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Jenkins build ", buildRunEntity.getJenkinsBuildURL(),
+					" started at ", StringUtil.toString(new Date())));
+		}
+
 		return buildRunEntity.toString();
 	}
 
 	protected BuildStartedEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		BuildStartedEventHandler.class);
 
 }

@@ -36,13 +36,18 @@ public class JenkinsEventHandlerFactory implements EventHandlerFactory {
 		else if (eventType.equals("BUILD_STARTED")) {
 			return new BuildStartedEventHandler(messageJSONObject);
 		}
-		else if (eventType.equals("COMPUTER_BUSY") ||
-				 eventType.equals("COMPUTER_OFFLINE") ||
-				 eventType.equals("COMPUTER_ONLINE") ||
-				 eventType.equals("COMPUTER_TEMPORARILY_OFFLINE") ||
+		else if (eventType.equals("COMPUTER_BUSY")) {
+			return new ComputerBusyEventHandler(messageJSONObject);
+		}
+		else if (eventType.equals("COMPUTER_OFFLINE") ||
+				 eventType.equals("COMPUTER_TEMPORARILY_OFFLINE")) {
+
+			return new ComputerOfflineEventHandler(messageJSONObject);
+		}
+		else if (eventType.equals("COMPUTER_ONLINE") ||
 				 eventType.equals("COMPUTER_TEMPORARILY_ONLINE")) {
 
-			return new ComputerUpdateEventHandler(messageJSONObject);
+			return new ComputerOnlineEventHandler(messageJSONObject);
 		}
 		else if (eventType.equals("COMPUTER_IDLE")) {
 			return new ComputerIdleEventHandler(messageJSONObject);

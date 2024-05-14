@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class AMException extends PortalException {
 
-	public AMException() {
-	}
-
-	public AMException(String s) {
-		super(s);
-	}
-
-	public AMException(String s, Throwable throwable) {
-		super(s, throwable);
-	}
-
-	public AMException(Throwable throwable) {
-		super(throwable);
-	}
-
 	/**
 	 * This exception is raised when a requested media type or instance is not
 	 * found.
@@ -48,6 +33,21 @@ public class AMException extends PortalException {
 			super(throwable);
 		}
 
+	}
+
+	private AMException() {
+	}
+
+	private AMException(String s) {
+		super(s);
+	}
+
+	private AMException(String s, Throwable throwable) {
+		super(s, throwable);
+	}
+
+	private AMException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

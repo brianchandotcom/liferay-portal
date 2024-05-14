@@ -197,6 +197,8 @@ definition {
 
 			WebContentNavigator.gotoAddCP();
 
+			WaitForElementPresent(locator1 = "CKEditor#TOOLBAR_AI_CREATOR_BUTTON");
+
 			Click.javaScriptClick(locator1 = "CKEditor#TOOLBAR_AI_CREATOR_BUTTON");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");

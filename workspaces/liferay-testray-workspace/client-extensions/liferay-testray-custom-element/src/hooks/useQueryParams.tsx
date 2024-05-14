@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useMemo} from 'react';
 import {useParams, useSearchParams} from 'react-router-dom';
 import useSWR from 'swr';
 import i18n from '~/i18n';
@@ -28,15 +28,8 @@ type Params = {
 	[key: string]: string | number | boolean;
 };
 
-type FieldOptions = {
-	[fieldName: string]: string | Array<Options>;
-};
-
 const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [filterWithOptions, setFilterWithOptions] = useState<FieldOptions>(
-		{}
-	);
 
 	const params = useParams();
 	const page = searchParams.get('page');
@@ -102,56 +95,51 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 		}
 	);
 
-	const getFilterWithOptions = useCallback(() => {
-		const updatedFilterOptions: any = {...serializedFilter};
-
-		Object.keys(updatedFilterOptions).forEach((key) => {
-			if (
-				Array.isArray(updatedFilterOptions[key]) &&
-				updatedFilterOptions[key].some(
-					(item: Options) => typeof item !== 'object'
-				)
-			) {
-				updatedFilterOptions[key] = updatedFilterOptions[key].map(
-					(value: string) => ({
-						label: value,
-						value,
-					})
-				);
-			}
-		});
-
-		Object.keys(filterResponse).forEach((key) => {
-			if (Array.isArray(serializedFilter[key])) {
-				const filteredOptions = filterResponse[
-					key
-				]?.filter((option: Options) =>
-					serializedFilter[key].includes(option.value)
-				);
-
-				if (filteredOptions.length) {
-					updatedFilterOptions[key] = filteredOptions;
-				}
-			}
-			else {
-				const matchingValues = filterResponse[key]?.filter(
-					(options: Options) =>
-						options.value === serializedFilter[key]
-				);
-				if (matchingValues.length) {
-					updatedFilterOptions[key] = matchingValues;
-				}
-			}
-		});
-
-		setFilterWithOptions(updatedFilterOptions);
-	}, [filterResponse, serializedFilter]);
-
-	useEffect(() => {
+	const filterWithOptions = useMemo(() => {
 		if (serializedFilter || customFilterFields?.key) {
-			getFilterWithOptions();
+			const updatedFilterOptions: any = {...serializedFilter};
+
+			Object.keys(updatedFilterOptions).forEach((key) => {
+				if (
+					Array.isArray(updatedFilterOptions[key]) &&
+					updatedFilterOptions[key].some(
+						(item: Options) => typeof item !== 'object'
+					)
+				) {
+					updatedFilterOptions[key] = updatedFilterOptions[key].map(
+						(value: string) => ({
+							label: value,
+							value,
+						})
+					);
+				}
+			});
+
+			Object.keys(filterResponse).forEach((key) => {
+				if (Array.isArray(serializedFilter[key])) {
+					const filteredOptions = filterResponse[
+						key
+					]?.filter((option: Options) =>
+						serializedFilter[key].includes(option.value)
+					);
+
+					if (filteredOptions.length) {
+						updatedFilterOptions[key] = filteredOptions;
+					}
+				} else {
+					const matchingValues = filterResponse[key]?.filter(
+						(options: Options) =>
+							options.value === serializedFilter[key]
+					);
+					if (matchingValues.length) {
+						updatedFilterOptions[key] = matchingValues;
+					}
+				}
+			});
+
+			return updatedFilterOptions;
 		}
-	}, [customFilterFields, getFilterWithOptions, serializedFilter]);
+	}, [customFilterFields?.key, filterResponse, serializedFilter]);
 
 	const filterEntries = useMemo(
 		() =>
@@ -177,6 +165,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 			new URLSearchParams({
 				...(serializedFilter && {
 					filter: JSON.stringify(serializedFilter),
+					filterSchema: filterSchema?.name,
 				}),
 				...(page && {page}),
 				...(pageSize && {pageSize}),

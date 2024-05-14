@@ -101,9 +101,48 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			throw new ModelListenerException(portalException);
 		}
 
-		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, objectEntry,
-			objectEntry);
+		try {
+			long userId = PrincipalThreadLocal.getUserId();
+
+			if (userId == 0) {
+				userId = objectEntry.getUserId();
+			}
+
+			User user = _userLocalService.getUser(userId);
+
+			_executeObjectActions(
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, objectEntry,
+				objectEntry, user);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+				return;
+			}
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
+			if (!objectDefinition.isRootDescendantNode() ||
+				!objectDefinition.isRootNode()) {
+
+				return;
+			}
+
+			ObjectEntry rootObjectEntry =
+				_objectEntryLocalService.fetchObjectEntry(
+					objectEntry.getRootObjectEntryId());
+
+			if (rootObjectEntry == null) {
+				return;
+			}
+
+			_executeObjectActions(
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE, null,
+				rootObjectEntry, user);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 
 		_runRelevantObjectEntryModelListeners(
 			objectEntry,
@@ -180,56 +219,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	protected void activate(BundleContext bundleContext) {
 		_relevantObjectEntryModelListeners = ServiceTrackerListFactory.open(
 			bundleContext, RelevantObjectEntryModelListener.class);
-	}
-
-	private void _executeObjectActions(
-			String objectActionTriggerKey, ObjectEntry originalObjectEntry,
-			ObjectEntry objectEntry)
-		throws ModelListenerException {
-
-		try {
-			long userId = PrincipalThreadLocal.getUserId();
-
-			if (userId == 0) {
-				userId = objectEntry.getUserId();
-			}
-
-			User user = _userLocalService.getUser(userId);
-
-			_executeObjectActions(
-				objectActionTriggerKey, originalObjectEntry, objectEntry, user);
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
-				return;
-			}
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId());
-
-			if (!objectDefinition.isRootDescendantNode() &&
-				(!objectDefinition.isRootNode() ||
-				 StringUtil.equals(
-					 objectActionTriggerKey,
-					 ObjectActionTriggerConstants.KEY_ON_AFTER_ADD))) {
-
-				return;
-			}
-
-			objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				objectEntry.getRootObjectEntryId());
-
-			if (objectEntry == null) {
-				return;
-			}
-
-			_executeObjectActions(
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE, null,
-				objectEntry, user);
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
 	}
 
 	private void _executeObjectActions(

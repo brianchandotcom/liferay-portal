@@ -81,7 +81,7 @@ function deployClientExtension(
 		) {
 			copyFileSync(
 				join(workspaceDeployPath, `${projectName}.zip`),
-				portalDeployPath
+				join(portalDeployPath, `${projectName}.zip`)
 			);
 		}
 	}

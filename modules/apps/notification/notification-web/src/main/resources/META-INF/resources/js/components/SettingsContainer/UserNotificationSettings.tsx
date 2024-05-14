@@ -74,7 +74,10 @@ export function UserNotificationSettings({
 				.map(({externalReferenceCode, name}) => {
 					const selectedRole = !!(values.recipients as Partial<
 						UserNotificationRecipients
-					>[]).find((recipient) => recipient.roleName === name);
+					>[]).find(
+						(recipient) =>
+							recipient.roleName === externalReferenceCode
+					);
 
 					return {
 						checked: selectedRole,

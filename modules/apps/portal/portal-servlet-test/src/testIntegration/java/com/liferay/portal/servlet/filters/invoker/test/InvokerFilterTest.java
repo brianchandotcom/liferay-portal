@@ -38,7 +38,7 @@ public class InvokerFilterTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testOSGIComponentFilterInitParams() {
+	public void testFilterInitParams() {
 		BasePortalFilter testBasePortalFilter = new BasePortalFilter() {
 		};
 

@@ -240,7 +240,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				).build()),
 			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
 
-		_executeNotificationObjectAction(
+		executeNotificationObjectAction(
 			0,
 			_addNotificationTemplate(
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
@@ -278,7 +278,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				PermissionCheckerFactoryUtil.create(guestUser));
 			PrincipalThreadLocal.setName(guestUser.getUserId());
 
-			_executeNotificationObjectAction(
+			executeNotificationObjectAction(
 				0,
 				_addNotificationTemplate(
 					body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
@@ -310,7 +310,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				).build()),
 			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
 
-		_executeNotificationObjectAction(
+		executeNotificationObjectAction(
 			0,
 			_addNotificationTemplate(
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
@@ -1096,54 +1096,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntry);
 	}
 
-	private void _executeNotificationObjectAction(
-			long fileEntryId, NotificationTemplate notificationTemplate)
-		throws Exception {
-
-		ObjectAction objectAction = objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			childObjectDefinition.getObjectDefinitionId(), true,
-			StringPool.BLANK, RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				notificationTemplate.getNotificationTemplateId()
-			).build(),
-			false);
-
-		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
-			dtoConverterContext, parentObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = parentObjectEntryValues;
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		objectEntryManager.addObjectEntry(
-			dtoConverterContext, childObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.putAll(
-						childObjectEntryValues
-					).put(
-						getObjectRelationshipObjectField2Name(),
-						objectEntry.getId()
-					).put(
-						"attachmentObjectField", fileEntryId
-					).build();
-				}
-			},
-			group.getGroupKey());
-
-		objectActionLocalService.deleteObjectAction(
-			objectAction.getObjectActionId());
-	}
-
 	private Folder _getFolder(NotificationQueueEntry notificationQueueEntry)
 		throws Exception {
 
@@ -1174,7 +1126,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
 			ContentTypes.TEXT_PLAIN);
 
-		_executeNotificationObjectAction(
+		executeNotificationObjectAction(
 			fileEntry.getFileEntryId(),
 			_addNotificationTemplate(
 				ListUtil.toString(

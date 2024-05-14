@@ -17,6 +17,7 @@ export class EditClientExtensionsPage {
 	readonly clientExtensionsPage: ClientExtensionsPage;
 	readonly clientExtensionType: string;
 	readonly descriptionContentEditable: Locator;
+	readonly descriptionCKEditor: Locator;
 	readonly nameInput: Locator;
 	readonly newClientExtensionTypeMenuItem: Locator;
 	readonly page: Page;
@@ -32,6 +33,10 @@ export class EditClientExtensionsPage {
 		this.publishButton = page.getByRole('button', {
 			name: 'Publish',
 		});
+
+		this.descriptionCKEditor = page.locator(
+			'#cke__com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_description'
+		);
 
 		const descriptionIframe = page.frameLocator(
 			`#cke_${PORTLET_ID}_description iframe`

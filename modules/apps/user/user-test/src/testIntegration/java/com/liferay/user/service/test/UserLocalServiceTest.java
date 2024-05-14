@@ -148,11 +148,11 @@ public class UserLocalServiceTest {
 	public void testAddUserWithChangedAlgorithmAndDigest() throws Exception {
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
+					DigesterImpl.class, "_BASE_64", false);
 			AutoCloseable autoCloseable2 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					DigesterImpl.class, "_BASE_64", false)) {
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
 
 			User user = UserTestUtil.addUser();
 
@@ -630,11 +630,11 @@ public class UserLocalServiceTest {
 
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
+					DigesterImpl.class, "_BASE_64", false);
 			AutoCloseable autoCloseable2 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					DigesterImpl.class, "_BASE_64", false)) {
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
 
 			User user = UserTestUtil.addUser();
 
@@ -676,11 +676,11 @@ public class UserLocalServiceTest {
 
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
+					DigesterImpl.class, "_BASE_64", false);
 			AutoCloseable autoCloseable2 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					DigesterImpl.class, "_BASE_64", false)) {
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
 
 			Ticket ticket = _ticketLocalService.addDistinctTicket(
 				RandomTestUtil.randomLong(), null, RandomTestUtil.randomLong(),

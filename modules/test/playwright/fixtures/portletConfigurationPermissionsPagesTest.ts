@@ -7,10 +7,10 @@
 
 import {test} from '@playwright/test';
 
-import { PortletConfigurationPermissionsPage } from '../pages/portlet-configuration-web/PortletConfigurationPermissionsPage';
+import {PortletConfigurationPermissionsPage} from '../pages/portlet-configuration-web/PortletConfigurationPermissionsPage';
 
 const portletConfigurationPermissionsPageTest = test.extend<{
-	portletConfigurationPermissionsPage : PortletConfigurationPermissionsPage;
+	portletConfigurationPermissionsPage: PortletConfigurationPermissionsPage;
 }>({
 	portletConfigurationPermissionsPage: async ({page}, use) => {
 		await use(new PortletConfigurationPermissionsPage(page));

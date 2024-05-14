@@ -326,6 +326,13 @@ public abstract class CMISRepositoryHandler
 			folderIds, status);
 	}
 
+	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+
+		return _baseCmisRepository.getRepositoryFileShortcuts(groupId);
+	}
+
 	public String getLatestVersionId(String objectId) {
 		return _baseCmisRepository.getLatestVersionId(objectId);
 	}

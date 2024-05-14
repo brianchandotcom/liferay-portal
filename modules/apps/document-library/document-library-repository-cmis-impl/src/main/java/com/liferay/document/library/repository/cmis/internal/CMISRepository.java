@@ -849,6 +849,13 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+
+		return new ArrayList<>();
+	}
+
+	@Override
 	public String getObjectName(String objectId) throws PortalException {
 		Session session = getSession();
 

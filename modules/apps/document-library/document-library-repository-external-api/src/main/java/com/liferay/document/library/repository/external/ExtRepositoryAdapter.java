@@ -652,6 +652,13 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		return 0;
 	}
 
+	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+
+		return Collections.emptyList();
+	}
+
 	public ExtRepositoryFolderAdapter getParentFolder(
 			ExtRepositoryObjectAdapter<?> extRepositoryObjectAdapter)
 		throws PortalException {

@@ -39,7 +39,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBu
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -62,6 +64,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -123,6 +129,24 @@ public class DDLDisplayContext {
 				dropdownItem.setQuickAction(true);
 			}
 		).build();
+	}
+
+	public List<WorkflowDefinition> getActiveWorkflowDefinitions(long companyId)
+		throws WorkflowException {
+
+		List<WorkflowDefinition> workflowDefinitions = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinitions =
+				WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
+
+		return workflowDefinitions;
 	}
 
 	public String getAddDDMTemplateTitle() throws PortalException {

@@ -57,11 +57,13 @@ import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,8 +121,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.servlet.BrowserSnifferUtil;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.TrashHelper;
@@ -173,6 +179,24 @@ public class JournalDisplayContext {
 		}
 
 		return journalDisplayContext;
+	}
+
+	public List<WorkflowDefinition> getActiveWorkflowDefinitions(long companyId)
+		throws WorkflowException {
+
+		List<WorkflowDefinition> workflowDefinitions = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinitions =
+				WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
+
+		return workflowDefinitions;
 	}
 
 	public long[] getAddMenuFavItems() throws PortalException {

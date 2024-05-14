@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.util;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -25,6 +26,7 @@ import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
+import com.liferay.portal.workflow.util.KaleoDefinitionThreadLocal;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
 import java.util.Collections;
@@ -460,9 +462,18 @@ public class KaleoFormsUtil {
 			Predicate<WorkflowNode> workflowNodePredicate)
 		throws Exception {
 
-		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				companyId, workflowDefinitionName, workflowDefinitionVersion);
+		WorkflowDefinition workflowDefinition = null;
+
+		try (SafeCloseable safeCloseable =
+				KaleoDefinitionThreadLocal.
+					setSkipKaleoDefinitionResourcePermissionCheckWithSafeCloseable(
+						true)) {
+
+			workflowDefinition =
+				WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+					companyId, workflowDefinitionName,
+					workflowDefinitionVersion);
+		}
 
 		return TransformUtil.transform(
 			workflowDefinition.getWorkflowNodes(),

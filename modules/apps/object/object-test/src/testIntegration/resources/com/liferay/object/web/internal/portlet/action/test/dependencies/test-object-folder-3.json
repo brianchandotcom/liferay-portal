@@ -141,27 +141,6 @@
 						"unique": false
 					},
 					{
-						"DBType": "String",
-						"businessType": "Text",
-						"indexed": false,
-						"indexedAsKeyword": false,
-						"indexedLanguageId": "",
-						"label": {
-							"en_US": "Status"
-						},
-						"localized": false,
-						"name": "status",
-						"objectFieldSettings": [
-						],
-						"readOnly": "true",
-						"readOnlyConditionExpression": "",
-						"required": false,
-						"state": false,
-						"system": true,
-						"type": "String",
-						"unique": false
-					},
-					{
 						"DBType": "Long",
 						"businessType": "Relationship",
 						"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD",
@@ -192,6 +171,27 @@
 						"state": false,
 						"system": false,
 						"type": "Long",
+						"unique": false
+					},
+					{
+						"DBType": "String",
+						"businessType": "Text",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Status"
+						},
+						"localized": false,
+						"name": "status",
+						"objectFieldSettings": [
+						],
+						"readOnly": "true",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "String",
 						"unique": false
 					}
 				],

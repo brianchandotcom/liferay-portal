@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -251,6 +252,34 @@ public class UserLocalServiceTest {
 			user.getCompanyId(), User.class.getName(), user.getUserId());
 
 		Assert.assertEquals(tickets.toString(), 0, tickets.size());
+	}
+
+	@Test
+	public void testFailureCountResetWhenResetFailureTimeIsOver()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		user.setLastFailedLoginDate(
+			DateUtil.newDate(
+				new Date(
+				).getTime() - 5000L));
+		user.setFailedLoginAttempts(3);
+
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		passwordPolicy.setLockout(false);
+		passwordPolicy.setResetFailureCount(3000L);
+
+		_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+		_userLocalService.authenticateByEmailAddress(
+			user.getCompanyId(), user.getEmailAddress(),
+			RandomTestUtil.randomString(), null, null, null);
+
+		user = _userLocalService.fetchUser(user.getUserId());
+
+		Assert.assertEquals(1, user.getFailedLoginAttempts());
 	}
 
 	@Test
@@ -550,6 +579,32 @@ public class UserLocalServiceTest {
 			_userLocalService.authenticateByEmailAddress(
 				user.getCompanyId(), user.getEmailAddress(), password, null,
 				null, null));
+	}
+
+	@Test
+	public void testLockoutResetWhenLockoutResetTimeIsOver() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		user.setLockout(true);
+		user.setLockoutDate(
+			DateUtil.newDate(
+				new Date(
+				).getTime() - 5000L));
+
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		passwordPolicy.setLockout(true);
+		passwordPolicy.setLockoutDuration(3000L);
+
+		_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+		_userLocalService.authenticateByEmailAddress(
+			user.getCompanyId(), user.getEmailAddress(),
+			RandomTestUtil.randomString(), null, null, null);
+
+		user = _userLocalService.fetchUser(user.getUserId());
+
+		Assert.assertFalse(user.isLockout());
 	}
 
 	@Test

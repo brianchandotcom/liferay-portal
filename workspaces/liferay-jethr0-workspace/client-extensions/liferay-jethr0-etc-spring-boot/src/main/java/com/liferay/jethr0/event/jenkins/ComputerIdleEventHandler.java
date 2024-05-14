@@ -14,7 +14,13 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
+import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -37,6 +43,13 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 
 		if (jenkinsNodeEntity == null) {
 			return null;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Jenkins node ", jenkinsNodeEntity.getName(),
+					" is idle at ", StringUtil.toString(new Date())));
 		}
 
 		BuildQueue buildQueue = Jethr0ContextUtil.getBuildQueue();
@@ -88,5 +101,8 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 	protected ComputerIdleEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		ComputerIdleEventHandler.class);
 
 }

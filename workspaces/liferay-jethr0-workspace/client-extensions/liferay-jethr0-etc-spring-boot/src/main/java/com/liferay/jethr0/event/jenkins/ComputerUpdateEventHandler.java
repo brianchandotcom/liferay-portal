@@ -14,7 +14,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
+public abstract class ComputerUpdateEventHandler
+	extends BaseJenkinsEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException {

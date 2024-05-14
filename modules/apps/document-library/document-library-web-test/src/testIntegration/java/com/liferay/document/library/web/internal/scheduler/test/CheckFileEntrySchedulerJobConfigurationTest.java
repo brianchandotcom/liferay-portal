@@ -66,7 +66,11 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 	}
 
 	@Test
-	public void testExpireFileEntry() throws Exception {
+	public void testExpireFileVersions() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -74,20 +78,44 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), (byte[])null, null, null, null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			fileEntry.getFileEntryId());
+			serviceContext);
 
 		Date expirationDate = new Date(
 			System.currentTimeMillis() - Time.MINUTE);
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
 
 		dlFileEntry.setExpirationDate(expirationDate);
 
 		dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		dlFileVersion.setExpirationDate(expirationDate);
+
+		_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
+
+		fileEntry = _dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
+			(byte[])null, null, null, null, serviceContext);
+
+		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
+
+		dlFileEntry.setExpirationDate(expirationDate);
+
+		List<FileVersion> fileVersions = fileEntry.getFileVersions(
+			WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(fileVersions.toString(), 2, fileVersions.size());
+
+		dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+
+		dlFileVersion = dlFileEntry.getFileVersion();
 
 		dlFileVersion.setExpirationDate(expirationDate);
 
@@ -111,6 +139,11 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_EXPIRED, dlFileVersion.getStatus());
+
+		fileVersions = fileEntry.getFileVersions(
+			WorkflowConstants.STATUS_EXPIRED);
+
+		Assert.assertEquals(fileVersions.toString(), 2, fileVersions.size());
 	}
 
 	@FeatureFlags("LPD-10701")

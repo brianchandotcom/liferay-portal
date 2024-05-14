@@ -968,12 +968,13 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateToSitePageWithUser(actionType = null, submitText = null, emailList = null, documentTitleList = null, siteName = null, pageName = null) {
+	macro navigateToSitePageWithUser(actionType = null, commentText = null, submitText = null, emailList = null, documentTitleList = null, siteName = null, pageName = null) {
 		for (var email : list ${emailList}) {
 			User.logoutAndLoginPG(userLoginEmailAddress = ${email});
 
 			ACUtils.navigateToSitePage(
 				actionType = ${actionType},
+				commentText = ${commentText},
 				documentTitleList = ${documentTitleList},
 				pageName = ${pageName},
 				siteName = ${siteName},

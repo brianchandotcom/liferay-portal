@@ -104,7 +104,7 @@ public class DocumentShortcut implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
-		description = "The key of the asset library to which the folder is scoped."
+		description = "The key of the asset library to which the document shortcut is scoped."
 	)
 	public String getAssetLibraryKey() {
 		if (_assetLibraryKeySupplier != null) {
@@ -140,7 +140,7 @@ public class DocumentShortcut implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The key of the asset library to which the folder is scoped."
+		description = "The key of the asset library to which the document shortcut is scoped."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
@@ -148,7 +148,7 @@ public class DocumentShortcut implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
-	@Schema(description = "The shorcut's creation date.")
+	@Schema(description = "The document shortcut's creation date.")
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -182,14 +182,16 @@ public class DocumentShortcut implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The shorcut's creation date.")
+	@GraphQLField(description = "The document shortcut's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time a field of the shorcut changed.")
+	@Schema(
+		description = "The last time a field of the document shortcut changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -223,14 +225,16 @@ public class DocumentShortcut implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The last time a field of the shorcut changed.")
+	@GraphQLField(
+		description = "The last time a field of the document shortcut changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The shorcut's folder ID.")
+	@Schema(description = "The document shortcut's folder ID.")
 	public Long getFolderId() {
 		if (_folderIdSupplier != null) {
 			folderId = _folderIdSupplier.get();
@@ -264,14 +268,14 @@ public class DocumentShortcut implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The shorcut's folder ID.")
+	@GraphQLField(description = "The document shortcut's folder ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long folderId;
 
 	@JsonIgnore
 	private Supplier<Long> _folderIdSupplier;
 
-	@Schema(description = "The shorcut's ID.")
+	@Schema(description = "The document shortcut's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -303,7 +307,7 @@ public class DocumentShortcut implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The shorcut's ID.")
+	@GraphQLField(description = "The document shortcut's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -311,7 +315,7 @@ public class DocumentShortcut implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
-		description = "The ID of the site to which this shortcut is scoped."
+		description = "The ID of the site to which this document shortcut is scoped."
 	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
@@ -347,7 +351,7 @@ public class DocumentShortcut implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The ID of the site to which this shortcut is scoped."
+		description = "The ID of the site to which this document shortcut is scoped."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;

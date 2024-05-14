@@ -6,6 +6,7 @@
 import {expect} from '@playwright/test';
 
 import {liferayConfig} from '../../../liferay.config';
+import {createDataSource} from '../../osb-faro-web/utils/dataSource';
 
 export async function acceptsCookiesBanner(page) {
 	const cookiesBannerButton = page.getByRole('button', {name: 'Accept All'});
@@ -74,6 +75,24 @@ export async function syncAllContacts(page) {
 	}
 
 	await page.getByRole('button', {exact: true, name: 'Next'}).click();
+}
+
+export async function syncAnalyticsCloud(page) {
+	await createDataSource(page);
+
+	await goToAnalyticsCloudInstanceSettings(page);
+
+	await acceptsCookiesBanner(page);
+
+	await disconnectFromAnalyticsCloud(page);
+
+	await connectToAnalyticsCloud(page);
+
+	await syncSite(page);
+
+	await syncAllContacts(page);
+
+	await page.getByRole('button', {name: 'Finish'}).click();
 }
 
 export async function syncSite(page) {

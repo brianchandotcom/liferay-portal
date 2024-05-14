@@ -7,32 +7,10 @@ import {mergeTests} from '@playwright/test';
 
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {createDataSource} from '../osb-faro-web/utils/dataSource';
-import {
-	acceptsCookiesBanner,
-	connectToAnalyticsCloud,
-	disconnectFromAnalyticsCloud,
-	goToAnalyticsCloudInstanceSettings,
-	syncAllContacts,
-	syncSite,
-} from './utils/analyticsSettings';
+import {syncAnalyticsCloud} from './utils/analyticsSettings';
 
 export const test = mergeTests(loginAnalyticsCloudTest(), loginTest());
 
 test('creates a new data source and connects to DXP', async ({page}) => {
-	await createDataSource(page);
-
-	await goToAnalyticsCloudInstanceSettings(page);
-
-	await acceptsCookiesBanner(page);
-
-	await disconnectFromAnalyticsCloud(page);
-
-	await connectToAnalyticsCloud(page);
-
-	await syncSite(page);
-
-	await syncAllContacts(page);
-
-	await page.getByRole('button', {name: 'Finish'}).click();
+	syncAnalyticsCloud(page);
 });

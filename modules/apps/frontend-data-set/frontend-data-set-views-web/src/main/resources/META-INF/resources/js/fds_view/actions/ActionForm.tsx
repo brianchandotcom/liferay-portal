@@ -164,7 +164,6 @@ const ActionForm = ({
 	const [titleTranslations, setTitleTranslations] = useState(
 		initialValues?.title_i18n ?? {}
 	);
-	const [titleValidationError, setTitleValidationError] = useState(false);
 	const [urlValidationError, setURLValidationError] = useState(false);
 
 	const [actionData, setActionData] = useState({
@@ -274,16 +273,12 @@ const ActionForm = ({
 	const validateForm = ({
 		labelTranslations,
 		permissionKey,
-		titleTranslations,
 		url,
 	}: {
 		labelTranslations: Partial<
 			Liferay.Language.FullyLocalizedValue<string>
 		>;
 		permissionKey: string;
-		titleTranslations: Partial<
-			Liferay.Language.FullyLocalizedValue<string>
-		>;
 		url: string;
 	}) => {
 		let valid = true;
@@ -448,7 +443,6 @@ const ActionForm = ({
 									validateForm({
 										labelTranslations: translations,
 										permissionKey: actionData.permissionKey,
-										titleTranslations,
 										url: actionData.url,
 									});
 								}}
@@ -639,13 +633,6 @@ const ActionForm = ({
 						<ClayLayout.Row>
 							<ClayLayout.Col>
 								<InputLocalized
-									error={
-										titleValidationError
-											? Liferay.Language.get(
-													'this-field-is-required'
-											  )
-											: undefined
-									}
 									helpMessage={
 										actionData.type ===
 										ACTION_TYPE.SIDEPANEL
@@ -658,20 +645,6 @@ const ActionForm = ({
 									label={Liferay.Language.get('title')}
 									onChange={(translations) => {
 										setTitleTranslations(translations);
-
-										setTitleValidationError(
-											!translationExists({
-												translations,
-											})
-										);
-
-										validateForm({
-											labelTranslations,
-											permissionKey:
-												actionData.permissionKey,
-											titleTranslations: translations,
-											url: actionData.url,
-										});
 									}}
 									placeholder={
 										actionData.type === ACTION_TYPE.MODAL
@@ -681,10 +654,6 @@ const ActionForm = ({
 											: Liferay.Language.get(
 													'add-the-title-of-the-side-panel'
 											  )
-									}
-									required={
-										actionData.type !==
-										ACTION_TYPE.SIDEPANEL
 									}
 									translations={titleTranslations}
 								/>
@@ -723,7 +692,6 @@ const ActionForm = ({
 												labelTranslations,
 												permissionKey:
 													actionData.permissionKey,
-												titleTranslations,
 												url,
 											});
 										}}
@@ -791,7 +759,6 @@ const ActionForm = ({
 										validateForm({
 											labelTranslations,
 											permissionKey,
-											titleTranslations,
 											url: actionData.url,
 										});
 									}}

@@ -145,28 +145,6 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testAddUserWithChangedAlgorithmAndDigest() throws Exception {
-		try (AutoCloseable autoCloseable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					DigesterImpl.class, "_BASE_64", false);
-			AutoCloseable autoCloseable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
-
-			User user = UserTestUtil.addUser();
-
-			user = _userLocalService.updatePassword(
-				user.getUserId(), "password", "password", false, true);
-
-			Assert.assertEquals(
-				"{SHA-384}a8b64babd0aca91a59bdbb7761b421d4f2bb38280" +
-					"d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
-				user.getPassword());
-		}
-	}
-
-	@Test
 	public void testAuthenticateByEmailAddress() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -575,6 +553,110 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testModifyEncryptionAndUpdatePasswordWithActiveHistory()
+		throws Exception {
+
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DigesterImpl.class, "_BASE_64", false);
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
+
+			User user = UserTestUtil.addUser();
+
+			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+			passwordPolicy.setHistory(true);
+			passwordPolicy.setHistoryCount(2);
+
+			_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+			String password1 = "password1";
+			String password2 = "password2";
+
+			try {
+				ServiceContextThreadLocal.pushServiceContext(
+					ServiceContextTestUtil.getServiceContext(
+						user.getGroupId(), user.getUserId()));
+
+				user = _userLocalService.updatePassword(
+					user.getUserId(), password1, password1, false, false);
+
+				Assert.assertEquals(
+					"{SHA-384}f5e2dd85fe11cec4c913f0f1fcecddb4a654dd92852f9" +
+						"78d6345638a0779a5e77ea39d33d6254bde0e1afa7a6c8ef0b9",
+					user.getPassword());
+
+				user = _userLocalService.updatePassword(
+					user.getUserId(), password2, password2, false, false);
+
+				Assert.assertEquals(
+					"{SHA-384}66b6aa56af08dc8caf7e001683058338244f436de61d40" +
+						"e342d0c69bda9f73cd6d167fdb29925db579923bdcef1fe5ae",
+					user.getPassword());
+
+				Assert.assertEquals(
+					Authenticator.SUCCESS,
+					_userLocalService.authenticateByEmailAddress(
+						user.getCompanyId(), user.getEmailAddress(), password2,
+						null, null, null));
+
+				_userLocalService.updatePassword(
+					user.getUserId(), password1, password1, false, false);
+
+				Assert.fail();
+			}
+			catch (PortalException portalException) {
+				Assert.assertEquals(
+					UserPasswordException.MustNotBeRecentlyUsed.class,
+					portalException.getClass());
+
+				Assert.assertEquals(
+					Authenticator.SUCCESS,
+					_userLocalService.authenticateByEmailAddress(
+						user.getCompanyId(), user.getEmailAddress(), password2,
+						null, null, null));
+
+				Assert.assertEquals(
+					"{SHA-384}66b6aa56af08dc8caf7e001683058338244f436de61d40" +
+						"e342d0c69bda9f73cd6d167fdb29925db579923bdcef1fe5ae",
+					user.getPassword());
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
+		}
+	}
+
+	@Test
+	public void testModifyEncryptionAndUpdateTicket() throws Exception {
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DigesterImpl.class, "_BASE_64", false);
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
+
+			Ticket ticket = _ticketLocalService.addDistinctTicket(
+				RandomTestUtil.randomLong(), null, RandomTestUtil.randomLong(),
+				TicketConstants.TYPE_PASSWORD, null, RandomTestUtil.nextDate(),
+				null);
+
+			ticket.setKey(PasswordEncryptorUtil.encrypt("password"));
+
+			ticket = _ticketLocalService.updateTicket(ticket);
+
+			Assert.assertEquals(
+				"{SHA-384}a8b64babd0aca91a59bdbb7761b421d4f2bb38280" +
+					"d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
+				ticket.getKey());
+		}
+	}
+
+	@Test
 	public void testPasswordHistory() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -608,93 +690,21 @@ public class UserLocalServiceTest {
 			_userLocalService.updatePassword(
 				user.getUserId(), password1, password1, false, false);
 
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertEquals(
+				UserPasswordException.MustNotBeRecentlyUsed.class,
+				portalException.getClass());
+
 			Assert.assertEquals(
 				Authenticator.SUCCESS,
 				_userLocalService.authenticateByEmailAddress(
 					user.getCompanyId(), user.getEmailAddress(), password2,
 					null, null, null));
 		}
-		catch (PortalException portalException) {
-			Assert.assertEquals(
-				UserPasswordException.MustNotBeRecentlyUsed.class,
-				portalException.getClass());
-		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
-		}
-	}
-
-	@Test
-	public void testPasswordHistoryWithChangedAlgorithmAndDigest()
-		throws Exception {
-
-		try (AutoCloseable autoCloseable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					DigesterImpl.class, "_BASE_64", false);
-			AutoCloseable autoCloseable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
-
-			User user = UserTestUtil.addUser();
-
-			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-			passwordPolicy.setHistory(true);
-			passwordPolicy.setHistoryCount(1);
-
-			_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
-
-			try {
-				ServiceContextThreadLocal.pushServiceContext(
-					ServiceContextTestUtil.getServiceContext(
-						user.getGroupId(), user.getUserId()));
-
-				user = _userLocalService.updatePassword(
-					user.getUserId(), "password", "password", false, false);
-
-				Assert.assertEquals(
-					"{SHA-384}a8b64babd0aca91a59bdbb7761b421d4f2bb" +
-						"38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d" +
-							"19c30783a7",
-					user.getPassword());
-			}
-			catch (PortalException portalException) {
-				Assert.assertEquals(
-					UserPasswordException.MustNotBeRecentlyUsed.class,
-					portalException.getClass());
-			}
-			finally {
-				ServiceContextThreadLocal.popServiceContext();
-			}
-		}
-	}
-
-	@Test
-	public void testRecoverPasswordWithChangedAlgorithmAndDigest()
-		throws Exception {
-
-		try (AutoCloseable autoCloseable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					DigesterImpl.class, "_BASE_64", false);
-			AutoCloseable autoCloseable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PasswordEncryptorUtil.class,
-					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384")) {
-
-			Ticket ticket = _ticketLocalService.addDistinctTicket(
-				RandomTestUtil.randomLong(), null, RandomTestUtil.randomLong(),
-				TicketConstants.TYPE_PASSWORD, null, RandomTestUtil.nextDate(),
-				null);
-
-			ticket.setKey(PasswordEncryptorUtil.encrypt("password"));
-
-			ticket = _ticketLocalService.updateTicket(ticket);
-
-			Assert.assertEquals(
-				"{SHA-384}a8b64babd0aca91a59bdbb7761b421d4f2bb38280" +
-					"d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
-				ticket.getKey());
 		}
 	}
 

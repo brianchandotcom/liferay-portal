@@ -7,6 +7,7 @@
 
 export interface ICreationActionItem {
 	data?: {
+		disableHeader?: boolean;
 		permissionKey?: string;
 		size?: string;
 		title?: string;

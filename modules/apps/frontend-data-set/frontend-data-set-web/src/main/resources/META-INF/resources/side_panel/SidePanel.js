@@ -38,6 +38,7 @@ export default class SidePanel extends React.Component {
 			active: null,
 			closeButtonStyle: null,
 			currentURL: props.url || null,
+			disableHeader: props.disableHeader || false,
 			iframeHandlerModalId: subscribeModal(),
 			loading: true,
 			menuCoverTopDistance: 0,
@@ -94,6 +95,7 @@ export default class SidePanel extends React.Component {
 
 		exposeSidePanel(this.props.id, () => ({
 			activeMenuItem: this.state.active,
+			disableHeader: this.state.disableHeader,
 			size: this.state.size,
 			title: this.state.title,
 			url: this.state.currentURL,
@@ -109,6 +111,7 @@ export default class SidePanel extends React.Component {
 		this.open(event.url, event.slug);
 
 		this.setState({
+			disableHeader: event.disableHeader,
 			onAfterSubmit: event.onSubmit || null,
 			size: event.size || this.defaultSize,
 			title: event.title,
@@ -385,7 +388,7 @@ export default class SidePanel extends React.Component {
 						/>
 					)}
 
-					{this.state.title && (
+					{!this.state.disableHeader && (
 						<div className="fds-side-panel-header">
 							<div className="fds-side-panel-title">
 								<h3 className="mb-0">{this.state.title}</h3>

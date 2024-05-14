@@ -12,5 +12,5 @@ import {syncAnalyticsCloud} from './utils/analyticsSettings';
 export const test = mergeTests(loginAnalyticsCloudTest(), loginTest());
 
 test('creates a new data source and connects to DXP', async ({page}) => {
-	syncAnalyticsCloud(page);
+	syncAnalyticsCloud(page, 'My Property');
 });

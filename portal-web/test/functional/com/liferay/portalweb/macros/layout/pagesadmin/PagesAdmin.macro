@@ -344,10 +344,6 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var extensionName : list ${extensionNameList}) {
-			if ((IsElementNotPresent(key_listEntry = ${extensionName}, locator1 = "LexiconList#LIST_ENTRY_CHECKBOX")) && (IsElementPresent(locator1 = "Pagination#NEXT_LINK"))) {
-				Pagination.changePagination(itemsPerPage = 60);
-			}
-
 			Check(
 				key_listEntry = ${extensionName},
 				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");

@@ -9,10 +9,12 @@ import {EditObjectDefinitionPage} from '../pages/object-web/EditObjectDefinition
 import {ActionBuilderPage} from '../pages/object-web/object-action/ActionBuilderPage';
 import {SidePanelObjectActionPage} from '../pages/object-web/object-action/SidePanelObjectActionPage';
 import {ViewObjectActionsPage} from '../pages/object-web/object-action/ViewObjectActionsPage';
+import {ObjectLayoutsPage} from '../pages/object-web/object-layout/ObjectLayoutsPage';
 
 const editObjectDefinitionPagesTest = test.extend<{
 	actionBuilderPage: ActionBuilderPage;
 	editObjectDefinitionPage: EditObjectDefinitionPage;
+	objectLayoutsPage: ObjectLayoutsPage;
 	sidePanelObjectActionPage: SidePanelObjectActionPage;
 	viewObjectActionsPage: ViewObjectActionsPage;
 }>({
@@ -21,6 +23,9 @@ const editObjectDefinitionPagesTest = test.extend<{
 	},
 	editObjectDefinitionPage: async ({page}, use) => {
 		await use(new EditObjectDefinitionPage(page));
+	},
+	objectLayoutsPage: async ({page}, use) => {
+		await use(new ObjectLayoutsPage(page));
 	},
 	sidePanelObjectActionPage: async ({page}, use) => {
 		await use(new SidePanelObjectActionPage(page));

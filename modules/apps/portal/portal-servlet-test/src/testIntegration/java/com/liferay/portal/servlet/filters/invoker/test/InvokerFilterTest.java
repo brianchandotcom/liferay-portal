@@ -7,7 +7,6 @@ package com.liferay.portal.servlet.filters.invoker.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -22,7 +21,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -38,13 +39,15 @@ public class InvokerFilterTest {
 
 	@Test
 	public void testOSGIComponentFilterInitParams() {
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
 		BasePortalFilter testBasePortalFilter = new BasePortalFilter() {
 		};
 
 		String urlRegexIgnorePattern = "/test-regex-ignore-pattern";
 		String urlRegexPattern = "/test-regex-pattern";
+
+		Bundle bundle = FrameworkUtil.getBundle(InvokerFilterTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		ServiceRegistration<Filter> serviceRegistration =
 			bundleContext.registerService(

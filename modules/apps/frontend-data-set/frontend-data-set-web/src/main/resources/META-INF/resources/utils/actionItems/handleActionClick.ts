@@ -46,6 +46,7 @@ const handleActionClick = ({
 
 	const {
 		confirmationMessage,
+		disableHeader,
 		errorMessage,
 		size,
 		status,
@@ -64,6 +65,7 @@ const handleActionClick = ({
 			}
 			else {
 				openModal({
+					disableHeader,
 					size: size || resolveModalSize(target),
 					title,
 					url,
@@ -76,6 +78,7 @@ const handleActionClick = ({
 			highlightItems([itemId]);
 
 			openSidePanel({
+				disableHeader,
 				size: 'lg',
 				title,
 				url,

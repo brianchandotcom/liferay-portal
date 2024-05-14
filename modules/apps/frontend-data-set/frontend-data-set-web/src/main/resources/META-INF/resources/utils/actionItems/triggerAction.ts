@@ -38,6 +38,7 @@ export function triggerAction(
 		case MODAL_LARGE:
 		case MODAL_SMALL:
 			Liferay.fire(OPEN_MODAL, {
+				disableHeader: item.data?.disableHeader,
 				id: modalId,
 				onClose: loadData,
 				size: item.data?.size || resolveModalSize(actionTarget),
@@ -47,6 +48,7 @@ export function triggerAction(
 			break;
 		case SIDE_PANEL:
 			Liferay.fire(OPEN_SIDE_PANEL, {
+				disableHeader: item.data?.disableHeader,
 				id: sidePanelId,
 				onAfterSubmit: loadData,
 				title: item.data?.title,

@@ -361,6 +361,11 @@
 			<finder-column name="folderId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_E_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="expirationDate" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
 		<finder name="G_F_T_V" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />

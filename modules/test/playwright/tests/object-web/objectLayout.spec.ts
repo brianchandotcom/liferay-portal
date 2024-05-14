@@ -1,0 +1,72 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {loginTest} from '../../fixtures/loginTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import getRandomString from '../../utils/getRandomString';
+import getRandomObjectFieldText from './utils/getRandomObjectFieldText';
+
+export const test = mergeTests(
+	apiHelpersTest,
+	editObjectDefinitionPagesTest,
+	featureFlagsTest({
+		'LPS-187854': true,
+	}),
+	loginTest(),
+	objectPagesTest
+);
+
+test.describe('manage Object Layouts through the Object Layout tab', () => {
+	test('can view all fields of an object when creating its layout', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+	}) => {
+		const objectFields = getRandomObjectFieldText({
+			objectFieldsQuantity: 20,
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		const objectLayoutBlockName = getRandomString();
+
+		const objectLayoutName = getRandomString();
+
+		const objectLayoutTabName = getRandomString();
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutContent(
+			objectLayoutBlockName,
+			objectLayoutName,
+			objectLayoutTabName
+		);
+
+		objectFields.forEach(({label}) => {
+			expect(
+				page
+					.frameLocator('iframe')
+					.getByRole('option', {name: label.en_US})
+			).toBeVisible();
+		});
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition.id
+		);
+	});
+});

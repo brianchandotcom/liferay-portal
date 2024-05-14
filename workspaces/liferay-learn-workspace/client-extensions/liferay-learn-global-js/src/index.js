@@ -10,8 +10,6 @@ import 'prismjs';
 
 import './article';
 
-import './handleNavPanel';
-
 export default {
 	DropdownProvider,
 	SpatialNavigationProvider,

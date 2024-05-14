@@ -46,7 +46,6 @@
 						"widgetInstance": {
 							"widgetConfig": {
 								"displayStyle": "ddmTemplate_BREADCRUMB-HORIZONTAL-FTL",
-								"displayStyleGroupId": "20119",
 								"showCurrentGroup": "true",
 								"showGuestGroup": "false",
 								"showLayout": "true",

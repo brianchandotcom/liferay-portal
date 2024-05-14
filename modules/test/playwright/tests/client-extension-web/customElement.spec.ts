@@ -24,13 +24,6 @@ const SAMPLES = [
 			page.getByText('Portlet internal route'),
 	},
 	{
-		erc: 'LXC:liferay-sample-custom-element-2',
-		htmlElementName: 'liferay-sample-custom-element-2',
-		name: 'Liferay Sample Custom Element 2',
-		renderTestLocator: (page: Page) =>
-			page.getByRole('heading', {name: 'Hello Test'}),
-	},
-	{
 		erc: 'LXC:liferay-sample-custom-element-3',
 		htmlElementName: 'liferay-sample-custom-element-3',
 		name: 'Liferay Sample Custom Element 3',

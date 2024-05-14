@@ -1,26 +1,17 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.client.extension.util.spring.boot;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
-import org.mockito.Mockito;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.ClientCredentialsOAuth2AuthorizedClientProvider;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2ClientCredentialsGrantRequest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -43,9 +34,9 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 		ClientRegistrationRepository clientRegistrationRepository =
 			_liferayOAuth2ClientConfiguration.clientRegistrationRepository();
 
-		ClientRegistration
-			clientRegistration = clientRegistrationRepository.findByRegistrationId(
-			"foo-bar-headless-server");
+		ClientRegistration clientRegistration =
+			clientRegistrationRepository.findByRegistrationId(
+				"foo-bar-headless-server");
 
 		Assert.assertEquals("123456789", clientRegistration.getClientId());
 		Assert.assertEquals("Shibboleth", clientRegistration.getClientSecret());
@@ -53,7 +44,9 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 		ClientRegistration.ProviderDetails providerDetails =
 			clientRegistration.getProviderDetails();
 
-		Assert.assertEquals("http://localhost:8080/o/oauth2/token", providerDetails.getTokenUri());
+		Assert.assertEquals(
+			"http://localhost:8080/o/oauth2/token",
+			providerDetails.getTokenUri());
 	}
 
 	@Test
@@ -61,9 +54,9 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 		ClientRegistrationRepository clientRegistrationRepository =
 			_liferayOAuth2ClientConfiguration.clientRegistrationRepository();
 
-		ClientRegistration
-			clientRegistration = clientRegistrationRepository.findByRegistrationId(
-			"external-headless-server");
+		ClientRegistration clientRegistration =
+			clientRegistrationRepository.findByRegistrationId(
+				"external-headless-server");
 
 		Assert.assertEquals("987654321", clientRegistration.getClientId());
 		Assert.assertEquals("Sibboleth", clientRegistration.getClientSecret());
@@ -71,7 +64,9 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 		ClientRegistration.ProviderDetails providerDetails =
 			clientRegistration.getProviderDetails();
 
-		Assert.assertEquals("https://external-one-headless-server.com/oauth2/token", providerDetails.getTokenUri());
+		Assert.assertEquals(
+			"https://external-one-headless-server.com/oauth2/token",
+			providerDetails.getTokenUri());
 	}
 
 	@Autowired

@@ -5,8 +5,8 @@
 
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
-import ClayPanel from '@clayui/panel';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 
@@ -90,39 +90,43 @@ function JenkinsMasters({jenkinsCohort}) {
 						</tr>
 					</thead>
 					<tbody>
-						{jenkinsServersPage.jenkinsServers?.map((jenkinsServer) => {
-							return (
-								<tr key={jenkinsServer.id}>
-									<th className="font-weight-semi-bold">
-										<Link
-											title={jenkinsServer.id}
-											to={
-												'/jenkins-servers/' +
-												jenkinsServer.id
-											}
-										>
-											{jenkinsServer.id}
-										</Link>
-									</th>
-									<td>
-										<a href={jenkinsServer.url}>
-											{jenkinsServer.name}
-										</a>
-									</td>
-									<td>{jenkinsServer.jenkinsNodeCount}</td>
-									<td>
-										{toLocaleString(
-											jenkinsServer.dateCreated
-										)}
-									</td>
-									<td>
-										{toLocaleString(
-											jenkinsServer.dateModified
-										)}
-									</td>
-								</tr>
-							);
-						})}
+						{jenkinsServersPage.jenkinsServers?.map(
+							(jenkinsServer) => {
+								return (
+									<tr key={jenkinsServer.id}>
+										<th className="font-weight-semi-bold">
+											<Link
+												title={jenkinsServer.id}
+												to={
+													'/jenkins-servers/' +
+													jenkinsServer.id
+												}
+											>
+												{jenkinsServer.id}
+											</Link>
+										</th>
+										<td>
+											<a href={jenkinsServer.url}>
+												{jenkinsServer.name}
+											</a>
+										</td>
+										<td>
+											{jenkinsServer.jenkinsNodeCount}
+										</td>
+										<td>
+											{toLocaleString(
+												jenkinsServer.dateCreated
+											)}
+										</td>
+										<td>
+											{toLocaleString(
+												jenkinsServer.dateModified
+											)}
+										</td>
+									</tr>
+								);
+							}
+						)}
 					</tbody>
 				</Jethr0Table>
 
@@ -133,10 +137,18 @@ function JenkinsMasters({jenkinsCohort}) {
 						deltas={deltas}
 						ellipsisBuffer={3}
 						onActiveChange={(activePage) => {
-							setActivePage({activePage, jenkinsCohort, jenkinsServersPage});
+							setActivePage({
+								activePage,
+								jenkinsCohort,
+								jenkinsServersPage,
+							});
 						}}
 						onDeltaChange={(activeDelta) => {
-							setActiveDelta({activeDelta, jenkinsCohort, jenkinsServersPage});
+							setActiveDelta({
+								activeDelta,
+								jenkinsCohort,
+								jenkinsServersPage,
+							});
 						}}
 						showDeltasDropDown={true}
 						totalItems={jenkinsServersPage.totalCount}

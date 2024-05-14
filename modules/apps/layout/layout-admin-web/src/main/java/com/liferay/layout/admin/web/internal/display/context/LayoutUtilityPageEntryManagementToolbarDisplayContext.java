@@ -185,7 +185,7 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(
-			"/select_layout_utility_page_entry_master_layout.jsp"
+			"/layout_admin/select_layout_utility_page_entry_master_layout"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(

@@ -63,8 +63,8 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 				"data-select-layout-master-layout-url",
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
-				).setMVCPath(
-					"/select_layout_master_layout.jsp"
+				).setMVCRenderCommandName(
+					"/layout_admin/select_layout_master_layout"
 				).setRedirect(
 					ParamUtil.getString(_httpServletRequest, "redirect")
 				).setBackURL(

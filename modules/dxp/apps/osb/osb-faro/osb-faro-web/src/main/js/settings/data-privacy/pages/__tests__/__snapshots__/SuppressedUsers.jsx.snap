@@ -176,11 +176,11 @@ exports[`SuppressedUsers should render 1`] = `
                   <td
                     class="table-cell-expand"
                   >
-                    <h4
-                      class="table-title text-truncate"
+                    <div
+                      class="h4 table-title text-truncate"
                     >
                       Test@liferay.com
-                    </h4>
+                    </div>
                   </td>
                   <td>
                     123

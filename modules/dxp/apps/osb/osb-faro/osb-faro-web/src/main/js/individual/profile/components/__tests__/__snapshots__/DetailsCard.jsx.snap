@@ -13,9 +13,11 @@ exports[`IndividualDetailsCard should render 1`] = `
       >
         FB
       </div>
-      <h4>
+      <div
+        class="h4"
+      >
         Foo Bar
-      </h4>
+      </div>
       <div
         class="job-title"
       >

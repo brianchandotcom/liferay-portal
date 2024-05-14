@@ -67,11 +67,11 @@ exports[`AddDataSource should render 1`] = `
         class="select-data-source-root"
       >
         <section>
-          <h4
-            class="text-uppercase section-title"
+          <div
+            class="h4 text-uppercase section-title"
           >
             Choose Source
-          </h4>
+          </div>
           <div
             class="section-items"
           >
@@ -97,9 +97,11 @@ exports[`AddDataSource should render 1`] = `
                 <div
                   class="title"
                 >
-                  <h4>
+                  <div
+                    class="h4"
+                  >
                     Liferay DXP
-                  </h4>
+                  </div>
                 </div>
                 <div
                   class="subtitle"

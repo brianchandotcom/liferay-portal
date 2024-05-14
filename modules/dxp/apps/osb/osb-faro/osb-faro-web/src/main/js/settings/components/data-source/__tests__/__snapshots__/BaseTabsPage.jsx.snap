@@ -65,9 +65,11 @@ exports[`BaseTabsPage should render 1`] = `
                     href="/workspace/23/settings/data-source/test"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Authorization
-                    </h4>
+                    </div>
                   </a>
                 </li>
                 <li
@@ -79,9 +81,11 @@ exports[`BaseTabsPage should render 1`] = `
                     href="/workspace/23/settings/data-source"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Configure Data Source
-                    </h4>
+                    </div>
                     <span
                       class="badge badge-primary ml-2"
                     >

@@ -254,11 +254,11 @@ exports[`RequestList should render 1`] = `
               </div>
             </td>
             <td>
-              <h4
-                class="table-title text-truncate"
+              <div
+                class="h4 table-title text-truncate"
               >
                 1
-              </h4>
+              </div>
             </td>
             <td
               class="table-cell-expand"
@@ -309,11 +309,11 @@ exports[`RequestList should render 1`] = `
               </div>
             </td>
             <td>
-              <h4
-                class="table-title text-truncate"
+              <div
+                class="h4 table-title text-truncate"
               >
                 2
-              </h4>
+              </div>
             </td>
             <td
               class="table-cell-expand"
@@ -364,11 +364,11 @@ exports[`RequestList should render 1`] = `
               </div>
             </td>
             <td>
-              <h4
-                class="table-title text-truncate"
+              <div
+                class="h4 table-title text-truncate"
               >
                 3
-              </h4>
+              </div>
             </td>
             <td
               class="table-cell-expand"
@@ -422,11 +422,11 @@ exports[`RequestList should render 1`] = `
               </div>
             </td>
             <td>
-              <h4
-                class="table-title text-truncate"
+              <div
+                class="h4 table-title text-truncate"
               >
                 4
-              </h4>
+              </div>
             </td>
             <td
               class="table-cell-expand"
@@ -486,11 +486,11 @@ exports[`RequestList should render 1`] = `
               </div>
             </td>
             <td>
-              <h4
-                class="table-title text-truncate"
+              <div
+                class="h4 table-title text-truncate"
               >
                 5
-              </h4>
+              </div>
             </td>
             <td
               class="table-cell-expand"
@@ -541,11 +541,11 @@ exports[`RequestList should render 1`] = `
               </div>
             </td>
             <td>
-              <h4
-                class="table-title text-truncate"
+              <div
+                class="h4 table-title text-truncate"
               >
                 6
-              </h4>
+              </div>
             </td>
             <td
               class="table-cell-expand"
@@ -595,11 +595,11 @@ exports[`RequestList should render 1`] = `
               </div>
             </td>
             <td>
-              <h4
-                class="table-title text-truncate"
+              <div
+                class="h4 table-title text-truncate"
               >
                 7
-              </h4>
+              </div>
             </td>
             <td
               class="table-cell-expand"

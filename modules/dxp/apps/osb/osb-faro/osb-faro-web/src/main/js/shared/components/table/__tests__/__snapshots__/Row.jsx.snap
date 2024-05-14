@@ -14,11 +14,11 @@ exports[`Row should render with data 1`] = `
     class=""
   >
     <td>
-      <h4
-        class="table-title text-truncate"
+      <div
+        class="h4 table-title text-truncate"
       >
         Foo Bar
-      </h4>
+      </div>
     </td>
     <td>
       50,000

@@ -98,9 +98,11 @@ exports[`SalesforceConfigurationStatus should render 1`] = `
                     href="/workspace/23/settings/data-source/23"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Authorization
-                    </h4>
+                    </div>
                   </a>
                 </li>
                 <li
@@ -112,9 +114,11 @@ exports[`SalesforceConfigurationStatus should render 1`] = `
                     href="/workspace/23/settings/data-source/23/salesforce/configuration-status"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Configure Data Source
-                    </h4>
+                    </div>
                   </a>
                 </li>
               </ul>
@@ -313,9 +317,11 @@ exports[`SalesforceConfigurationStatus should render already configured items wi
                     href="/workspace/23/settings/data-source/23"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Authorization
-                    </h4>
+                    </div>
                   </a>
                 </li>
                 <li
@@ -327,9 +333,11 @@ exports[`SalesforceConfigurationStatus should render already configured items wi
                     href="/workspace/23/settings/data-source/23/salesforce/configuration-status"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Configure Data Source
-                    </h4>
+                    </div>
                   </a>
                 </li>
               </ul>
@@ -528,9 +536,11 @@ exports[`SalesforceConfigurationStatus should render as configuring items with a
                     href="/workspace/23/settings/data-source/23"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Authorization
-                    </h4>
+                    </div>
                   </a>
                 </li>
                 <li
@@ -542,9 +552,11 @@ exports[`SalesforceConfigurationStatus should render as configuring items with a
                     href="/workspace/23/settings/data-source/23/salesforce/configuration-status"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Configure Data Source
-                    </h4>
+                    </div>
                     <span
                       class="badge badge-primary ml-2"
                     >
@@ -752,9 +764,11 @@ exports[`SalesforceConfigurationStatus should render as read-only if the user is
                     href="/workspace/23/settings/data-source/23"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Authorization
-                    </h4>
+                    </div>
                   </a>
                 </li>
                 <li
@@ -766,9 +780,11 @@ exports[`SalesforceConfigurationStatus should render as read-only if the user is
                     href="/workspace/23/settings/data-source/23/salesforce/configuration-status"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Configure Data Source
-                    </h4>
+                    </div>
                   </a>
                 </li>
               </ul>

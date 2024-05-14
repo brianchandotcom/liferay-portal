@@ -26,9 +26,11 @@ exports[`Activities should render 1`] = `
         <div
           class="d-flex align-items-baseline"
         >
-          <h4>
+          <div
+            class="h4"
+          >
             Account's Activities - July 9, 2018 - July 10, 2018
-          </h4>
+          </div>
         </div>
         <div
           class="details"

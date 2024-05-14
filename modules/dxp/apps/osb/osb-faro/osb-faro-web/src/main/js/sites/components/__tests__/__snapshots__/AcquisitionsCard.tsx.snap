@@ -188,11 +188,11 @@ exports[`AcquisitionsCard renders 1`] = `
               <td
                 class="table-column-text-end"
               >
-                <h4
-                  class="table-title text-truncate"
+                <div
+                  class="h4 table-title text-truncate"
                 >
                   100.00%
-                </h4>
+                </div>
               </td>
             </tr>
           </tbody>

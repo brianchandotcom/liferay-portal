@@ -14,9 +14,11 @@ exports[`DistributionCard AddPropertyForm renders 1`] = `
         <div
           class="description"
         >
-          <h4>
+          <div
+            class="h4"
+          >
             Add a Breakdown by Individual Attribute
-          </h4>
+          </div>
           <p>
             Breakdown will display the top 10 results or be divided into a maximum of 10 bins depending on your attribute type.
           </p>

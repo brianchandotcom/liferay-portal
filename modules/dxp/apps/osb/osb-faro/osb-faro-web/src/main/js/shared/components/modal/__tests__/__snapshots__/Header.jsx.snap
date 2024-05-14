@@ -5,11 +5,11 @@ exports[`Modal Header renders 1`] = `
   <div
     class="modal-header"
   >
-    <h4
-      class="modal-title"
+    <div
+      class="h4 modal-title"
     >
       Foo
-    </h4>
+    </div>
   </div>
 </div>
 `;

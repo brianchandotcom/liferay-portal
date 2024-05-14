@@ -88,9 +88,11 @@ exports[`IndividualFieldMapping should render 1`] = `
               <div
                 class="sheet-section"
               >
-                <h4>
+                <div
+                  class="h4"
+                >
                   Individual Field Mapping
-                </h4>
+                </div>
                 <div
                   class="sheet-text"
                 >

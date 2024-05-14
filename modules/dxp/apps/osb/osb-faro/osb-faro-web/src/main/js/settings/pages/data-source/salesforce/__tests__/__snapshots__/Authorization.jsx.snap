@@ -88,9 +88,11 @@ exports[`SalesforceAuthorization should render 1`] = `
                     href="/workspace/23/settings/data-source/test"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Authorization
-                    </h4>
+                    </div>
                   </a>
                 </li>
                 <li
@@ -102,9 +104,11 @@ exports[`SalesforceAuthorization should render 1`] = `
                     href="/workspace/23/settings/data-source/test/salesforce/configuration-status"
                     role="tab"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Configure Data Source
-                    </h4>
+                    </div>
                     <span
                       class="badge badge-primary ml-2"
                     >

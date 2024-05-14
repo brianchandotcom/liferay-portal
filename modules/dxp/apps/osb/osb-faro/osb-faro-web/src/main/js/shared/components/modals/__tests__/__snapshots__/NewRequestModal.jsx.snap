@@ -13,11 +13,11 @@ exports[`NewRequestModal renders 1`] = `
       <div
         class="modal-header"
       >
-        <h4
-          class="modal-title"
+        <div
+          class="h4 modal-title"
         >
           New Request
-        </h4>
+        </div>
       </div>
       <form
         class="form-root"
@@ -33,9 +33,11 @@ exports[`NewRequestModal renders 1`] = `
           <div
             class="form-group"
           >
-            <h4>
+            <div
+              class="h4"
+            >
               Job Type
-            </h4>
+            </div>
             <div
               class="form-group-item"
             >
@@ -145,9 +147,11 @@ exports[`NewRequestModal renders 1`] = `
           <div
             class="form-group"
           >
-            <h4>
+            <div
+              class="h4"
+            >
               Data Subject ID
-            </h4>
+            </div>
             <div
               class="form-group-item"
             >

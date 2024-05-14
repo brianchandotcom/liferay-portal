@@ -88,9 +88,11 @@ exports[`AccountFieldMapping should render 1`] = `
               <div
                 class="sheet-section"
               >
-                <h4>
+                <div
+                  class="h4"
+                >
                   Account Field Mapping
-                </h4>
+                </div>
                 <div
                   class="sheet-text"
                 >

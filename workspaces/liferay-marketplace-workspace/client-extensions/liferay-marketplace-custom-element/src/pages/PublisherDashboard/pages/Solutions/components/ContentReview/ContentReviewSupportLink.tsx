@@ -9,14 +9,38 @@ interface ContentReviewSupportLinkProps {
 	href: string;
 	linkLabel: string;
 	symbol: string;
+	type: 'email' | 'phone' | 'url';
 }
+
+const PROTOCOLS = ['http://', 'https://'];
+
+const SUPPORT_LINK_TYPE = {
+	email: 'mailto:',
+	phone: 'tel:',
+	url: '',
+};
 
 export function ContentReviewSupportLink({
 	href,
 	linkLabel,
 	symbol,
+	type = 'url',
 }: ContentReviewSupportLinkProps) {
-	const hrefType = href.includes('@') ? 'mailto:' : '';
+	const getPrefixHref = (href: string) => {
+		const hasProtocol = PROTOCOLS.some((protocol) =>
+			href.includes(protocol)
+		);
+
+		if (type === 'url') {
+			if (hasProtocol) {
+				return href;
+			}
+
+			return `https://${href}`;
+		}
+
+		return `${SUPPORT_LINK_TYPE[type]}${href}`;
+	};
 
 	return (
 		<div className="align-items-center d-flex my-5">
@@ -25,7 +49,7 @@ export function ContentReviewSupportLink({
 			</div>
 			<div>
 				<p className="m-0">{linkLabel}</p>
-				<a href={`${hrefType}${href}`} target="_blank">
+				<a href={getPrefixHref(href)} target="_blank">
 					<h4 className="bold m-0 text-primary">{href}</h4>
 				</a>
 			</div>

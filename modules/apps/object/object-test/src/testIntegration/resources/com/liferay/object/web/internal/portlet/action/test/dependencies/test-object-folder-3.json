@@ -160,6 +160,39 @@
 						"system": true,
 						"type": "String",
 						"unique": false
+					},
+					{
+						"DBType": "Long",
+						"businessType": "Relationship",
+						"externalReferenceCode": "TESTOBJECTRELATIONSHIP1OBJECTFIELD",
+						"indexed": true,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Test Object Relationship 1 Object Field"
+						},
+						"localized": false,
+						"name": "r_testObjectRelationship1_c_testObjectDefinition1Id",
+						"objectDefinitionExternalReferenceCode1": "TESTOBJECTDEFINITION1",
+						"objectFieldSettings": [
+							{
+								"name": "objectDefinition1ShortName",
+								"value": "TestObjectDefinition1"
+							},
+							{
+								"name": "objectRelationshipERCObjectFieldName",
+								"value": "r_testObjectRelationship1_c_testObjectDefinition1ERC"
+							}
+						],
+						"objectRelationshipExternalReferenceCode": "TESTOBJECTRELATIONSHIP1",
+						"readOnly": "false",
+						"readOnlyConditionExpression": "",
+						"relationshipType": "oneToMany",
+						"required": false,
+						"state": false,
+						"system": false,
+						"type": "Long",
+						"unique": false
 					}
 				],
 				"objectFolderExternalReferenceCode": "TESTOBJECTFOLDER3",

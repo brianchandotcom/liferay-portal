@@ -302,11 +302,11 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
             <td
               class="table-cell-expand"
             >
-              <h4
+              <div
                 class="table-title text-truncate"
               >
                 Foo Bar
-              </h4>
+              </div>
             </td>
             <td>
               email0@liferay.com
@@ -318,11 +318,11 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
             <td
               class="table-cell-expand"
             >
-              <h4
+              <div
                 class="table-title text-truncate"
               >
                 Foo Bar
-              </h4>
+              </div>
             </td>
             <td>
               email1@liferay.com
@@ -334,11 +334,11 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
             <td
               class="table-cell-expand"
             >
-              <h4
+              <div
                 class="table-title text-truncate"
               >
                 Foo Bar
-              </h4>
+              </div>
             </td>
             <td>
               email2@liferay.com
@@ -350,11 +350,11 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
             <td
               class="table-cell-expand"
             >
-              <h4
+              <div
                 class="table-title text-truncate"
               >
                 Foo Bar
-              </h4>
+              </div>
             </td>
             <td>
               email3@liferay.com
@@ -366,11 +366,11 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
             <td
               class="table-cell-expand"
             >
-              <h4
+              <div
                 class="table-title text-truncate"
               >
                 Foo Bar
-              </h4>
+              </div>
             </td>
             <td>
               email4@liferay.com

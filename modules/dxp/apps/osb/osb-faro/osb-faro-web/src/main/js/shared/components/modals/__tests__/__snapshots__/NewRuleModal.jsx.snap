@@ -13,11 +13,11 @@ exports[`NewRuleModal should render 1`] = `
       <div
         class="modal-header"
       >
-        <h4
+        <div
           class="modal-title"
         >
           New Rule
-        </h4>
+        </div>
       </div>
       <div
         class="modal-body"

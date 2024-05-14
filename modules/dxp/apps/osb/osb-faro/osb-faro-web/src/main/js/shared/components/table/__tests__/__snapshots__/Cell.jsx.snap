@@ -3,13 +3,13 @@
 exports[`Cell should render 1`] = `
 <div>
   <td>
-    <h4
+    <div
       class="table-title text-truncate"
     >
       <span>
         Test
       </span>
-    </h4>
+    </div>
   </td>
 </div>
 `;

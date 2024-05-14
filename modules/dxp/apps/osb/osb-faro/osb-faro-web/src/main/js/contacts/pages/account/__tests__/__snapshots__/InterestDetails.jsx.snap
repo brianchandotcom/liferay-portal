@@ -88,9 +88,11 @@ exports[`InterestDetails should render 1`] = `
                       <span
                         class="navbar-text-truncate"
                       >
-                        <h4>
+                        <div
+                          class="h4"
+                        >
                           Individuals
-                        </h4>
+                        </div>
                       </span>
                     </a>
                   </li>
@@ -104,9 +106,11 @@ exports[`InterestDetails should render 1`] = `
                       <span
                         class="navbar-text-truncate"
                       >
-                        <h4>
+                        <div
+                          class="h4"
+                        >
                           Active Pages
-                        </h4>
+                        </div>
                       </span>
                     </a>
                   </li>
@@ -120,9 +124,11 @@ exports[`InterestDetails should render 1`] = `
                       <span
                         class="navbar-text-truncate"
                       >
-                        <h4>
+                        <div
+                          class="h4"
+                        >
                           Inactive Pages
-                        </h4>
+                        </div>
                       </span>
                     </a>
                   </li>
@@ -131,11 +137,11 @@ exports[`InterestDetails should render 1`] = `
             </div>
           </div>
         </nav>
-        <h4
-          class="list-title"
+        <div
+          class="h4 list-title"
         >
           Members Interested in "123" - As of December 31, 1969
-        </h4>
+        </div>
       </div>
       <div
         class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root interest-history-table d-flex flex-column flex-grow-1 searchable-table-borderless"

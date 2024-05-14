@@ -148,11 +148,11 @@ exports[`TopPagesCard renders 1`] = `
               <td
                 class="table-column-text-end"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   20
-                </h4>
+                </div>
               </td>
             </tr>
             <tr
@@ -183,11 +183,11 @@ exports[`TopPagesCard renders 1`] = `
               <td
                 class="table-column-text-end"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   20
-                </h4>
+                </div>
               </td>
             </tr>
           </tbody>

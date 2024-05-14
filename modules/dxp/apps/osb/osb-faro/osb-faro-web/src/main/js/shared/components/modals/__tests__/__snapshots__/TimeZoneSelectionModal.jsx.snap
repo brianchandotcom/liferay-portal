@@ -13,11 +13,11 @@ exports[`TimeZoneSelectionModal should render 1`] = `
       <div
         class="modal-header"
       >
-        <h4
+        <div
           class="modal-title"
         >
           Workspace Timezone
-        </h4>
+        </div>
       </div>
       <form
         class="form-root"

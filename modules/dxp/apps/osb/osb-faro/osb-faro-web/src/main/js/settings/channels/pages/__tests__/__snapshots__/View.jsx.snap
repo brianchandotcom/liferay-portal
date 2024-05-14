@@ -227,11 +227,11 @@ exports[`View Channel should render 1`] = `
                   />
                 </svg>
               </div>
-              <h4
-                class="no-results-title"
+              <div
+                class="h4 no-results-title"
               >
                 All Aboard!
-              </h4>
+              </div>
               <div
                 class="no-results-description"
               >

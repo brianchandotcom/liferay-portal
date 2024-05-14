@@ -15,11 +15,11 @@ exports[`SegmentGrowthChart should render 1`] = `
       <div
         class="no-results-content"
       >
-        <h4
-          class="no-results-title"
+        <div
+          class="h4 no-results-title"
         >
           There is no data for segment membership.
-        </h4>
+        </div>
         <div
           class="no-results-description"
         >
@@ -68,9 +68,11 @@ exports[`SegmentGrowthWithList should render 1`] = `
     <div
       class="selected-point-info"
     >
-      <h4>
+      <div
+        class="h4"
+      >
         Known Members
-      </h4>
+      </div>
     </div>
     <div
       class="base-results-root d-flex flex-column flex-grow-1 searchable-table-root searchable-table-borderless"
@@ -330,9 +332,11 @@ exports[`SelectedPointInfo should render 1`] = `
   <div
     class="selected-point-info"
   >
-    <h4>
+    <div
+      class="h4"
+    >
       Known Members
-    </h4>
+    </div>
   </div>
 </div>
 `;

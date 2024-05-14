@@ -146,11 +146,11 @@ exports[`Suppressed User List should render 1`] = `
               <td
                 class="table-cell-expand"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   foo@email
-                </h4>
+                </div>
               </td>
               <td>
                 00001
@@ -173,11 +173,11 @@ exports[`Suppressed User List should render 1`] = `
               <td
                 class="table-cell-expand"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   bar@email
-                </h4>
+                </div>
               </td>
               <td>
                 00002

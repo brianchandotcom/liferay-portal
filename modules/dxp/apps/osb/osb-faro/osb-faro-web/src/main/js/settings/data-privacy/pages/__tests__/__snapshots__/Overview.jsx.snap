@@ -62,9 +62,11 @@ exports[`Data Privacy Overview should render 1`] = `
                     class="col-lg-8"
                     data-aria-hidden="true"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Retention Period
-                    </h4>
+                    </div>
                     <p
                       class="text-secondary"
                     >
@@ -103,9 +105,11 @@ exports[`Data Privacy Overview should render 1`] = `
                   <div
                     class="col-lg-8"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Request Log
-                    </h4>
+                    </div>
                     <p
                       class="text-secondary"
                     >
@@ -141,9 +145,11 @@ exports[`Data Privacy Overview should render 1`] = `
                   <div
                     class="col-lg-8"
                   >
-                    <h4>
+                    <div
+                      class="h4"
+                    >
                       Suppressed Users
-                    </h4>
+                    </div>
                     <p
                       class="text-secondary"
                     >

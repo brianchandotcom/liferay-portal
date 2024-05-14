@@ -41,19 +41,21 @@ exports[`ReadyToGo renders 1`] = `
       <div
         class="d-flex description flex-column text-center"
       >
-        <h4
-          class="pb-3"
+        <div
+          class="h4 pb-3"
         >
           Your workspace is all set up.
-        </h4>
-        <h4
-          class="pb-3"
+        </div>
+        <div
+          class="h4 pb-3"
         >
           Tracking will start immediately, however it may take some time for data to appear in your workspace.
-        </h4>
-        <h4>
+        </div>
+        <div
+          class="h4"
+        >
           Make sure to set your time period to last 24 hours to see if your data is coming in correctly.
-        </h4>
+        </div>
       </div>
     </div>
     <div

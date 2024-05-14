@@ -65,11 +65,11 @@ exports[`OutputVersionsCard should render 1`] = `
               <td
                 class="table-cell-expand"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   Apr 24, 2020
-                </h4>
+                </div>
               </td>
               <td
                 class="table-column-text-end"
@@ -99,11 +99,11 @@ exports[`OutputVersionsCard should render 1`] = `
               <td
                 class="table-cell-expand"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   Apr 24, 2020
-                </h4>
+                </div>
               </td>
               <td
                 class="table-column-text-end"
@@ -133,11 +133,11 @@ exports[`OutputVersionsCard should render 1`] = `
               <td
                 class="table-cell-expand"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   Apr 24, 2020
-                </h4>
+                </div>
               </td>
               <td
                 class="table-column-text-end"
@@ -167,11 +167,11 @@ exports[`OutputVersionsCard should render 1`] = `
               <td
                 class="table-cell-expand"
               >
-                <h4
+                <div
                   class="table-title text-truncate"
                 >
                   Apr 24, 2020
-                </h4>
+                </div>
               </td>
               <td
                 class="table-column-text-end"

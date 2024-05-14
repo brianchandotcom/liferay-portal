@@ -10,10 +10,9 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,12 +61,21 @@ public class CPJSONUtil {
 				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys.
 					entrySet()) {
 
+			List<String> entryValue = entry.getValue();
+
 			jsonArray.put(
 				JSONUtil.put(
 					"key", entry.getKey()
 				).put(
+					"skuOptionName", entryValue.get(0)
+				).put(
+					"skuOptionValueNames",
+					JSONFactoryUtil.createJSONArray(
+						Collections.singletonList(entryValue.get(1)))
+				).put(
 					"value",
-					JSONUtil.toJSONArray(entry.getValue(), value -> value, _log)
+					JSONFactoryUtil.createJSONArray(
+						Collections.singletonList(entryValue.get(2)))
 				));
 		}
 
@@ -81,7 +89,5 @@ public class CPJSONUtil {
 
 		return JSONUtil.put(JSONFactoryUtil.createJSONObject(json));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(CPJSONUtil.class);
 
 }

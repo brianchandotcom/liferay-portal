@@ -209,7 +209,7 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletDisplayContext.setSuggestionsEnabled(
 				searchBarPortletPreferences.isSuggestionsEnabled());
 			searchBarPortletDisplayContext.setSuggestionsURL(
-				"/o/portal-search-rest/v1.0/suggestions");
+				"/o/search/v1.0/suggestions");
 		}
 
 		searchBarPortletDisplayContext.setSuggestionsEndpointEnabled(

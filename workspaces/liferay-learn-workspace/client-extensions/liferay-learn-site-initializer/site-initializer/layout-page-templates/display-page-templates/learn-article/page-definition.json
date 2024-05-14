@@ -65,14 +65,13 @@
 							"fragmentStyle": {
 								"marginRight": "3",
 								"maxWidth": "336px",
-								"minWidth": "336px"
+								"width": "100%"
 							},
 							"fragmentViewports": [
 								{
 									"fragmentViewportStyle": {
 										"marginRight": "0",
-										"maxWidth": "100%",
-										"width": "100%"
+										"maxWidth": "100%"
 									},
 									"id": "landscapeMobile"
 								}
@@ -141,5 +140,5 @@
 		},
 		"themeName": "Dialect"
 	},
-	"version": 1.1
+	"version": 1.0
 }

@@ -11,6 +11,11 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayout;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutBox;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutColumn;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutRow;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRuleSetting;
@@ -56,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -678,6 +684,184 @@ public class ObjectDefinitionResourceTest
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			postObjectDefinition.getId());
+	}
+
+	@Override
+	@Test
+	public void testPutObjectDefinitionByExternalReferenceCode()
+		throws Exception {
+
+		super.testPutObjectDefinitionByExternalReferenceCode();
+
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setExternalReferenceCode(
+			"TESTOBJECTDEFINITION2");
+		randomObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.RELATIONSHIP;
+						DBType = ObjectField.DBType.LONG;
+						indexed = true;
+						label = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						name = "relationshipObjectFieldName";
+						objectDefinitionExternalReferenceCode1 =
+							"TESTOBJECTDEFINITION1";
+						objectRelationshipExternalReferenceCode =
+							"TESTOBJECTRELATIONSHIP";
+					}
+				}
+			});
+
+		ObjectLayoutRow[] finalObjectLayoutRows = {
+			new ObjectLayoutRow() {
+				{
+					objectLayoutColumns = new ObjectLayoutColumn[] {
+						new ObjectLayoutColumn() {
+							{
+								objectFieldName = "relationshipObjectFieldName";
+								priority = 0;
+								size = 6;
+							}
+						}
+					};
+					priority = 0;
+				}
+			}
+		};
+
+		randomObjectDefinition.setObjectLayouts(
+			new ObjectLayout[] {
+				new ObjectLayout() {
+					{
+						defaultObjectLayout = true;
+						objectLayoutTabs = new ObjectLayoutTab[] {
+							new ObjectLayoutTab() {
+								{
+									objectLayoutBoxes = new ObjectLayoutBox[] {
+										new ObjectLayoutBox() {
+											{
+												collapsable = true;
+												objectLayoutRows =
+													finalObjectLayoutRows;
+												priority = 0;
+												type = Type.REGULAR;
+											}
+										}
+									};
+									priority = 0;
+								}
+							}
+						};
+					}
+				}
+			});
+
+		ObjectDefinition putObjectDefinition =
+			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
+				randomObjectDefinition.getExternalReferenceCode(),
+				randomObjectDefinition);
+
+		ObjectField[] objectFields = ArrayUtil.filter(
+			putObjectDefinition.getObjectFields(),
+			objectField -> !objectField.getSystem());
+
+		Assert.assertEquals(
+			Arrays.toString(objectFields), 1, objectFields.length);
+
+		ObjectField objectField = objectFields[0];
+
+		Assert.assertEquals(
+			"relationshipObjectFieldName", objectField.getName());
+		Assert.assertEquals(
+			"TESTOBJECTDEFINITION1",
+			objectField.getObjectDefinitionExternalReferenceCode1());
+		Assert.assertEquals(
+			"TESTOBJECTRELATIONSHIP",
+			objectField.getObjectRelationshipExternalReferenceCode());
+
+		ObjectLayout[] objectLayouts = putObjectDefinition.getObjectLayouts();
+
+		Assert.assertEquals(
+			Arrays.toString(objectLayouts), 1, objectLayouts.length);
+
+		Assert.assertNotNull(
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				"TESTOBJECTDEFINITION1"));
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setExternalReferenceCode(
+			"TESTOBJECTDEFINITION1");
+		randomObjectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.STRING;
+						indexed = true;
+						label = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						name = "titleObjectFieldName";
+					}
+				}
+			});
+
+		Map<String, String> objectRelationshipLabelMap =
+			Collections.singletonMap("en_US", RandomTestUtil.randomString());
+
+		randomObjectDefinition.setObjectRelationships(
+			new ObjectRelationship[] {
+				new ObjectRelationship() {
+					{
+						deletionType = ObjectRelationship.DeletionType.CASCADE;
+						externalReferenceCode = "TESTOBJECTRELATIONSHIP";
+						label = objectRelationshipLabelMap;
+						name = RandomTestUtil.randomString();
+						objectDefinitionExternalReferenceCode1 =
+							"TESTOBJECTDEFINITION1";
+						objectDefinitionExternalReferenceCode2 =
+							"TESTOBJECTDEFINITION2";
+					}
+				}
+			});
+
+		randomObjectDefinition.setTitleObjectFieldName("titleObjectFieldName");
+
+		putObjectDefinition =
+			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
+				randomObjectDefinition.getExternalReferenceCode(),
+				randomObjectDefinition);
+
+		ObjectRelationship[] objectRelationships =
+			putObjectDefinition.getObjectRelationships();
+
+		Assert.assertEquals(
+			Arrays.toString(objectRelationships), 1,
+			objectRelationships.length);
+
+		ObjectRelationship objectRelationship = objectRelationships[0];
+
+		Assert.assertEquals(
+			ObjectRelationship.DeletionType.CASCADE,
+			objectRelationship.getDeletionType());
+		Assert.assertEquals(
+			"TESTOBJECTRELATIONSHIP",
+			objectRelationship.getExternalReferenceCode());
+		Assert.assertEquals(
+			objectRelationshipLabelMap, objectRelationship.getLabel());
+		Assert.assertEquals(
+			"TESTOBJECTDEFINITION1",
+			objectRelationship.getObjectDefinitionExternalReferenceCode1());
+		Assert.assertEquals(
+			"TESTOBJECTDEFINITION2",
+			objectRelationship.getObjectDefinitionExternalReferenceCode2());
+
+		Assert.assertEquals(
+			"titleObjectFieldName",
+			randomObjectDefinition.getTitleObjectFieldName());
 	}
 
 	@Override

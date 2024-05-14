@@ -385,7 +385,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 
 		searchContext.setGroupIds(
-			ScopeUtil.parseGroupIds(contextCompany.getCompanyId(), scope));
+			ScopeUtil.toGroupIds(contextCompany.getCompanyId(), scope));
 		searchContext.setKeywords(search);
 		searchContext.setLocale(contextAcceptLanguage.getPreferredLocale());
 

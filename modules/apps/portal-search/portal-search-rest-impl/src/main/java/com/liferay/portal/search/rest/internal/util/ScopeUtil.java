@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ScopeUtil {
 
-	public static long[] parseGroupIds(long companyId, String scope) {
+	public static long[] toGroupIds(long companyId, String scope) {
 		List<Long> groupIds = new ArrayList<>();
 
 		String[] scopes = ValueUtil.toArray(scope);

@@ -244,7 +244,7 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 		}
 
 		searchContext.setGroupIds(
-			ScopeUtil.parseGroupIds(contextCompany.getCompanyId(), scope));
+			ScopeUtil.toGroupIds(contextCompany.getCompanyId(), scope));
 	}
 
 	@Reference

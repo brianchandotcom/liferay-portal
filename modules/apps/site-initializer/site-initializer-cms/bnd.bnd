@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Initializer CMS
+Bundle-SymbolicName: com.liferay.site.initializer.cms
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: CMS
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-cms

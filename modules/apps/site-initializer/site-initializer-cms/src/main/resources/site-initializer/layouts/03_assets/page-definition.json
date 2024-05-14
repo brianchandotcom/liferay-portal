@@ -1,0 +1,11 @@
+{
+	"pageElement": {
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "public"
+		}
+	},
+	"version": 1.1
+}

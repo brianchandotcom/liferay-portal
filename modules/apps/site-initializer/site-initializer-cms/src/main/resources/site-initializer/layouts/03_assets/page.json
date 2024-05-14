@@ -1,0 +1,12 @@
+{
+	"description": "",
+	"friendlyURL": "/assets",
+	"hidden": false,
+	"name": "Assets",
+	"name_i18n": {
+		"en_US": "Assets"
+	},
+	"private": false,
+	"system": false,
+	"type": "node"
+}

@@ -665,6 +665,7 @@
 		<copyField dest="all" source="title*" />
 		<copyField dest="all" source="type" />
 		<copyField dest="all" source="userName" />
+		<copyField dest="assetTagNames.lowercase" source="assetTagNames" />
 		<copyField dest="assetTagNames.raw" source="assetTagNames" />
 		<copyField dest="emailAddress.text" source="emailAddress" />
 		<copyField dest="screenName.text" source="screenName" />
@@ -682,6 +683,7 @@
 		<field docValues="true" indexed="true" name="assetTagId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetTagIds" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetTagNames" stored="true" termPositions="true" termVectors="true" type="text" />
+		<field indexed="true" multiValued="true" name="assetTagNames.lowercase" stored="false" type="string_keyword_lowercase" />
 		<field indexed="true" multiValued="true" name="assetTagNames.raw" stored="false" type="string" />
 		<field docValues="true" indexed="true" name="assetVocabularyId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetVocabularyIds" stored="true" type="string" />
@@ -726,7 +728,6 @@
 		<field docValues="true" indexed="true" name="languageId" stored="true" type="string" />
 		<field indexed="true" name="lastName" stored="true" type="text_lowercase" />
 		<field indexed="true" name="leftOrganizationId" stored="true" type="tlong" />
-		<field indexed="true" multiValued="true" name="lowerCaseAssetTagNames" stored="true" type="string" />
 		<field indexed="true" name="middleName" stored="true" type="text_lowercase" />
 		<field indexed="true" name="mimeType" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="modified" stored="true" type="string" />

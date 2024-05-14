@@ -1572,6 +1572,11 @@
 				},
 				"assetTagNames": {
 					"fields": {
+						"lowercase": {
+							"normalizer": "lowercase",
+							"store": true,
+							"type": "keyword"
+						},
 						"raw": {
 							"store": true,
 							"type": "keyword"

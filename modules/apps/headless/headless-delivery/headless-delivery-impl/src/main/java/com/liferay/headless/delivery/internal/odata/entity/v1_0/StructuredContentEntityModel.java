@@ -37,7 +37,7 @@ public class StructuredContentEntityModel implements EntityModel {
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
 			new CollectionEntityField(
 				new StringEntityField(
-					"keywords", locale -> "lowerCaseAssetTagNames")),
+					"keywords", locale -> "assetTagNames.lowercase")),
 			new ComplexEntityField("contentFields", entityFields),
 			new ComplexEntityField("customFields", customEntityFields),
 			new DateTimeEntityField(

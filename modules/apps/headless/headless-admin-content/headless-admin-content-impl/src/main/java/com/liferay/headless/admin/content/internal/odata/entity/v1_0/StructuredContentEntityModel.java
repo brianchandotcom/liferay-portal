@@ -28,7 +28,7 @@ public class StructuredContentEntityModel implements EntityModel {
 		_entityFieldsMap = EntityFieldsMapFactory.create(
 			new CollectionEntityField(
 				new StringEntityField(
-					"keywords", locale -> "lowerCaseAssetTagNames")),
+					"keywords", locale -> "assetTagNames.lowercase")),
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),

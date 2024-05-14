@@ -32,7 +32,7 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 			new BooleanEntityField("showAsQuestion", locale -> "question"),
 			new CollectionEntityField(
 				new StringEntityField(
-					"keywords", locale -> "lowerCaseAssetTagNames")),
+					"keywords", locale -> "assetTagNames.lowercase")),
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),

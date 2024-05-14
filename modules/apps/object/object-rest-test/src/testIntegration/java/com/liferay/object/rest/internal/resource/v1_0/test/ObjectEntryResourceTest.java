@@ -5004,49 +5004,59 @@ public class ObjectEntryResourceTest {
 	@Test
 	public void testGetObjectEntryFilteredByKeywords() throws Exception {
 		_postObjectEntryWithKeywords("tag1");
+		_postObjectEntryWithKeywords("TAG1");
 		_postObjectEntryWithKeywords("tag1", "tag2");
 		_postObjectEntryWithKeywords("tag1", "tag2", "tag3");
 
-		_assertFilteredObjectEntries(3, "keywords/any(k:k eq 'tag1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k eq 'tag1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k eq 'TAG1')");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k eq 'tag2')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k eq 'tag3')");
 		_assertFilteredObjectEntries(0, "keywords/any(k:k eq '1234')");
 
 		_assertFilteredObjectEntries(2, "keywords/any(k:k ne 'tag1')");
-		_assertFilteredObjectEntries(3, "keywords/any(k:k ne 'tag2')");
-		_assertFilteredObjectEntries(3, "keywords/any(k:k ne 'tag3')");
+		_assertFilteredObjectEntries(2, "keywords/any(k:k ne 'TAG1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k ne 'tag2')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k ne 'tag3')");
 
 		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'tag1')");
+		_assertFilteredObjectEntries(2, "keywords/any(k:k gt 'TAG1')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k gt 'tag2')");
 		_assertFilteredObjectEntries(0, "keywords/any(k:k gt 'tag3')");
 
-		_assertFilteredObjectEntries(3, "keywords/any(k:k ge 'tag1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k ge 'tag1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k ge 'TAG1')");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k ge 'tag2')");
 		_assertFilteredObjectEntries(1, "keywords/any(k:k ge 'tag3')");
 
 		_assertFilteredObjectEntries(0, "keywords/any(k:k lt 'tag1')");
-		_assertFilteredObjectEntries(3, "keywords/any(k:k lt 'tag2')");
-		_assertFilteredObjectEntries(3, "keywords/any(k:k lt 'tag3')");
+		_assertFilteredObjectEntries(0, "keywords/any(k:k lt 'TAG1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k lt 'tag2')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k lt 'tag3')");
 
-		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag1')");
-		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag2')");
-		_assertFilteredObjectEntries(3, "keywords/any(k:k le 'tag3')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'tag1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'TAG1')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'tag2')");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k le 'tag3')");
 
-		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'t'))");
-		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'ta'))");
-		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'tag'))");
-		_assertFilteredObjectEntries(3, "keywords/any(k:startswith(k,'tag1'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'t'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'ta'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'tag'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'tag1'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:startswith(k,'TAG1'))");
 		_assertFilteredObjectEntries(2, "keywords/any(k:startswith(k,'tag2'))");
 		_assertFilteredObjectEntries(1, "keywords/any(k:startswith(k,'tag3'))");
 		_assertFilteredObjectEntries(0, "keywords/any(k:startswith(k,'1234'))");
 
-		_assertFilteredObjectEntries(3, "keywords/any(k:contains(k,'tag'))");
-		_assertFilteredObjectEntries(3, "keywords/any(k:contains(k,'ag1'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'tag'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'ag1'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:contains(k,'AG1'))");
 		_assertFilteredObjectEntries(2, "keywords/any(k:contains(k,'ag2'))");
 		_assertFilteredObjectEntries(1, "keywords/any(k:contains(k,'ag3'))");
 		_assertFilteredObjectEntries(0, "keywords/any(k:contains(k,'1234'))");
 
-		_assertFilteredObjectEntries(3, "keywords/any(k:k in ('tag1','tag2'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k in ('tag1','tag2'))");
+		_assertFilteredObjectEntries(4, "keywords/any(k:k in ('TAG1','tag2'))");
 		_assertFilteredObjectEntries(2, "keywords/any(k:k in ('tag2','tag3'))");
 		_assertFilteredObjectEntries(0, "keywords/any(k:k in ('1234','5678'))");
 	}

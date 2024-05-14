@@ -503,6 +503,11 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_info_item_field_value")
 			).put(
+				"getInfoItemOneToManyRelationshipsURL",
+				_getResourceURL(
+					"/layout_content_page_editor" +
+						"/get_info_item_one_to_many_relationships")
+			).put(
 				"getLayoutFriendlyURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_layout_friendly_url")

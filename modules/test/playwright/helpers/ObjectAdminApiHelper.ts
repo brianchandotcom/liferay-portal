@@ -86,9 +86,11 @@ export class ObjectAdminApiHelper {
 	}
 
 	async postRandomObjectDefinition({
+		objectFields,
 		objectFolderExternalReferenceCode,
 		status,
 	}: {
+		objectFields?: ObjectField[];
 		objectFolderExternalReferenceCode?: string;
 		status: {code: number};
 	}) {
@@ -102,7 +104,7 @@ export class ObjectAdminApiHelper {
 				en_US: objectDefinitionExternalReferenceCode,
 			},
 			name: objectDefinitionExternalReferenceCode,
-			objectFields: [
+			objectFields: objectFields || [
 				{
 					DBType: 'String',
 					businessType: 'Text',

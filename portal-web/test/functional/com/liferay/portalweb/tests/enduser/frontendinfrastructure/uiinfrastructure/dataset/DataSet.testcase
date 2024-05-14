@@ -310,7 +310,7 @@ definition {
 	@description = "LPS-185990 Confirm that when creating a filter and selecting a picklist item, the item's checkbox remains selected when you click elsewhere and return to dropdown items"
 	@priority = 5
 	test CanAssertTheCheckBoxItemIsChecked {
-		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
@@ -532,6 +532,8 @@ definition {
 	@description = "LPS-185990 Confirm that when creating a filter, items added to the picklist appear in preselect value selecting Multiple radio button"
 	@priority = 3
 	test CanAssertTheItemsInPreselectValueMultiple {
+		property portal.upstream = "quarantine";
+
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1046,6 +1048,8 @@ definition {
 	@description = "LPS-185990 Confirm that when searching for a valid item value, it is displayed in the drop-down menu"
 	@priority = 4
 	test CanSearchASpecificItemCreated {
+		property portal.upstream = "quarantine";
+
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1135,6 +1139,8 @@ definition {
 	@description = "LPS-185990 Confirm that when searching for a invalid item value, it is not displayed in the drop-down menu"
 	@priority = 4
 	test CanSearchASpecificItemNotCreated {
+		property portal.upstream = "quarantine";
+
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -1689,6 +1695,8 @@ definition {
 	@description = "LPS-185990 Confirm that when selecting the single option in the created filter, it is possible to preselect an item value"
 	@priority = 3
 	test IsOnlyPossibleToSelectOneItem {
+		property portal.upstream = "quarantine";
+
 		task ("Given the creation of a new data set") {
 			DataSetAdmin.goToDataSetAdminPage();
 

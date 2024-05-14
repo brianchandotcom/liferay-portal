@@ -150,7 +150,7 @@ public class HTTPTestUtil {
 	}
 
 	private static String _baseURL = "http://localhost:8080";
-	private static String _credentials = "test@liferay.com:" + PropsUtil.get(
-		PropsKeys.DEFAULT_ADMIN_PASSWORD);
+	private static String _credentials =
+		"test@liferay.com:" + PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD);
 
 }

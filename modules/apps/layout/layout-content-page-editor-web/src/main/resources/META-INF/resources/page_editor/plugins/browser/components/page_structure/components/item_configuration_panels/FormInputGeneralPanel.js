@@ -565,7 +565,7 @@ function FormInputMappingOptions({
 							{relationship !== NOT_SELECTED_OPTION.value
 								? relationships.find(
 										({classNameId}) =>
-											classNameId === relationship
+											`${classNameId}` === relationship
 								  ).label
 								: type}
 						</p>

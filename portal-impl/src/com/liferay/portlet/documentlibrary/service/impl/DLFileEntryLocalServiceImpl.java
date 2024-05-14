@@ -2020,30 +2020,11 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
-		User user = _userPersistence.findByPrimaryKey(userId);
-
 		int oldStatus = dlFileVersion.getStatus();
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				dlFileVersion.getCompanyId(), "LPD-10701")) {
+		status = _getStatus(dlFileVersion, status);
 
-			Date date = new Date();
-
-			if ((status == WorkflowConstants.STATUS_APPROVED) &&
-				(dlFileVersion.getDisplayDate() != null) &&
-				date.before(dlFileVersion.getDisplayDate())) {
-
-				status = WorkflowConstants.STATUS_SCHEDULED;
-			}
-		}
-
-		dlFileVersion.setStatus(status);
-
-		dlFileVersion.setStatusByUserId(user.getUserId());
-		dlFileVersion.setStatusByUserName(user.getFullName());
-		dlFileVersion.setStatusDate(new Date());
-
-		dlFileVersion = _dlFileVersionPersistence.update(dlFileVersion);
+		dlFileVersion = _updateFileVersionStatus(dlFileVersion, status, userId);
 
 		// File entry
 
@@ -2762,7 +2743,8 @@ public class DLFileEntryLocalServiceImpl
 
 	private void _expireFileVersion(
 			long userId, DLFileEntry fileEntry, DLFileVersion fileVersion,
-			boolean notify, Map<String, Serializable> workflowContext,
+			boolean latestFileVersion,
+			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2775,15 +2757,20 @@ public class DLFileEntryLocalServiceImpl
 				StringBundler.concat(
 					"Expiring file entry ", fileEntry.getFileEntryId(),
 					" on version ", fileVersion.getVersion(),
-					" with expiration date ", fileEntry.getExpirationDate()));
+					" with expiration date ", fileVersion.getExpirationDate()));
 		}
 
-		updateStatus(
-			userId, fileEntry, fileVersion, WorkflowConstants.STATUS_EXPIRED,
-			serviceContext, workflowContext);
+		if (latestFileVersion) {
+			updateStatus(
+				userId, fileEntry, fileVersion,
+				WorkflowConstants.STATUS_EXPIRED, serviceContext,
+				workflowContext);
 
-		if (notify) {
 			_notify(userId, _EMAIL_TYPE_EXPIRED, fileVersion);
+		}
+		else {
+			_updateFileVersionStatus(
+				fileVersion, WorkflowConstants.STATUS_EXPIRED, userId);
 		}
 	}
 
@@ -3011,6 +2998,25 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	private int _getStatus(DLFileVersion dlFileVersion, int status) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				dlFileVersion.getCompanyId(), "LPD-10701")) {
+
+			return status;
+		}
+
+		Date date = new Date();
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(dlFileVersion.getDisplayDate() != null) &&
+			date.before(dlFileVersion.getDisplayDate())) {
+
+			status = WorkflowConstants.STATUS_SCHEDULED;
+		}
+
+		return status;
 	}
 
 	private long _getValidFileEntryTypeId(
@@ -3894,6 +3900,21 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileVersion;
+	}
+
+	private DLFileVersion _updateFileVersionStatus(
+			DLFileVersion dlFileVersion, int status, long userId)
+		throws PortalException {
+
+		User user = _userPersistence.findByPrimaryKey(userId);
+
+		dlFileVersion.setStatus(status);
+
+		dlFileVersion.setStatusByUserId(user.getUserId());
+		dlFileVersion.setStatusByUserName(user.getFullName());
+		dlFileVersion.setStatusDate(new Date());
+
+		return _dlFileVersionPersistence.update(dlFileVersion);
 	}
 
 	private void _validateExternalReferenceCode(

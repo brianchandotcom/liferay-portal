@@ -243,7 +243,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.mp4");
 
-		WaitForVisible(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+		WaitForElementPresent(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 

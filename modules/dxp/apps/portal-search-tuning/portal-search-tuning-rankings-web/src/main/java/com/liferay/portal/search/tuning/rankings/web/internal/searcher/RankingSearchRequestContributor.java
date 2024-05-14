@@ -45,12 +45,6 @@ public class RankingSearchRequestContributor
 			return searchRequest;
 		}
 
-		RankingIndexName rankingIndexName = _getRankingIndexName(searchRequest);
-
-		if (!rankingIndexReader.isExists(rankingIndexName)) {
-			return searchRequest;
-		}
-
 		SearchContext searchContext = _getSearchContext(searchRequest);
 
 		if (!GetterUtil.getBoolean(
@@ -58,6 +52,12 @@ public class RankingSearchRequestContributor
 					SearchContextAttributes.
 						ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS))) {
 
+			return searchRequest;
+		}
+
+		RankingIndexName rankingIndexName = _getRankingIndexName(searchRequest);
+
+		if (!rankingIndexReader.isExists(rankingIndexName)) {
 			return searchRequest;
 		}
 

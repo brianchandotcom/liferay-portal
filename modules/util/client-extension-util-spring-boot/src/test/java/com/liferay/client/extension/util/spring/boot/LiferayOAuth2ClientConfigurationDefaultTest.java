@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -40,21 +40,53 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @TestPropertySource("LiferayOAuth2ClientConfigurationDefaultTest.properties")
 public class LiferayOAuth2ClientConfigurationDefaultTest {
 
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
-
 	@Before
 	public void setUp() {
 		ClientCredentialsOAuth2AuthorizedClientProvider
 			clientCredentialsOAuth2AuthorizedClientProvider =
 				new ClientCredentialsOAuth2AuthorizedClientProvider();
+
 		_oAuth2AccessTokenResponseClient = Mockito.mock(
 			OAuth2AccessTokenResponseClient.class);
+
 		clientCredentialsOAuth2AuthorizedClientProvider.
 			setAccessTokenResponseClient(_oAuth2AccessTokenResponseClient);
+
 		_authorizedClientServiceOAuth2AuthorizedClientManager.
 			setAuthorizedClientProvider(
 				clientCredentialsOAuth2AuthorizedClientProvider);
+	}
+
+	@Test
+	public void testMultipleLinkedOauthClients() {
+		OAuth2AccessTokenResponse accessTokenResponse =
+			OAuth2AccessTokenResponse.withToken(
+				"token"
+			).tokenType(
+				OAuth2AccessToken.TokenType.BEARER
+			).build();
+
+		BDDMockito.given(
+			_oAuth2AccessTokenResponseClient.getTokenResponse(
+				ArgumentMatchers.any())
+		).willReturn(
+			accessTokenResponse
+		);
+
+		OAuth2AccessToken oAuth2AccessToken =
+			accessTokenResponse.getAccessToken();
+
+		String expected = "Bearer " + oAuth2AccessToken.getTokenValue();
+
+		Assert.assertEquals(
+			expected,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"fizz-buzz-headless-server"));
+
+		Assert.assertEquals(
+			expected,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"foo-bar-headless-server"));
 	}
 
 	@Test
@@ -74,37 +106,14 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 		);
 
 		expectedException.expect(IllegalArgumentException.class);
-		expectedException.expectMessage("Could not find ClientRegistration with id 'not-found-headless-server'");
+		expectedException.expectMessage(
+			"Could not find ClientRegistration with id 'none'");
 
-		_liferayOAuth2AccessTokenManager.getAuthorization("not-found-headless-server");
+		_liferayOAuth2AccessTokenManager.getAuthorization("none");
 	}
 
-	@Test
-	public void testMultipleLinkedOauthClients() {
-		OAuth2AccessTokenResponse accessTokenResponse =
-			OAuth2AccessTokenResponse.withToken(
-				"token"
-			).tokenType(
-				OAuth2AccessToken.TokenType.BEARER
-			).build();
-
-		BDDMockito.given(
-			_oAuth2AccessTokenResponseClient.getTokenResponse(
-				ArgumentMatchers.any())
-		).willReturn(
-			accessTokenResponse
-		);
-
-		OAuth2AccessToken oAuth2AccessToken = accessTokenResponse.getAccessToken();
-
-		String expected = "Bearer " + oAuth2AccessToken.getTokenValue();
-
-		Assert.assertEquals(expected, _liferayOAuth2AccessTokenManager.getAuthorization(
-				"fizz-buzz-headless-server"));
-
-		Assert.assertEquals(expected, _liferayOAuth2AccessTokenManager.getAuthorization(
-			"foo-bar-headless-server"));
-	}
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	@Autowired
 	private AuthorizedClientServiceOAuth2AuthorizedClientManager

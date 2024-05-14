@@ -308,7 +308,7 @@ function MappingSelector({
 
 	const relationships = useCache({
 		fetcher: () =>
-			InfoItemService.getStructureRelationships({
+			InfoItemService.getInfoItemRelationships({
 				classNameId: selectedMappingTypes?.type?.id,
 				classTypeId: selectedMappingTypes?.subtype?.id,
 			}),

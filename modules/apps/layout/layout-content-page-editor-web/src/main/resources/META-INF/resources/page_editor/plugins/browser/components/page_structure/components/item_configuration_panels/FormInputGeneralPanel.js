@@ -402,7 +402,7 @@ function FormInputMappingOptions({
 
 	const relationships = useCache({
 		fetcher: () =>
-			InfoItemService.getStructureRelationships({
+			InfoItemService.getInfoItemRelationships({
 				classNameId,
 				classTypeId,
 			}),

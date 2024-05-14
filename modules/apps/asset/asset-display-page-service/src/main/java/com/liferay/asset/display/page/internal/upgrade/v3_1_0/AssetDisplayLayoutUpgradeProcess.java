@@ -37,7 +37,7 @@ public class AssetDisplayLayoutUpgradeProcess extends UpgradeProcess {
 	private void _upgradeAssetDisplayLayouts() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select assetDisplayPageEntryId, ",
+					"select ctCollectionId, assetDisplayPageEntryId, ",
 					"layoutPageTemplateEntryId from AssetDisplayPageEntry ",
 					"where type_ = ", AssetDisplayPageConstants.TYPE_SPECIFIC,
 					" and (plid is null or plid = 0)"));
@@ -45,7 +45,7 @@ public class AssetDisplayLayoutUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update AssetDisplayPageEntry set plid = ? where " +
-						"assetDisplayPageEntryId = ?")) {
+						"ctCollectionId = ? and assetDisplayPageEntryId = ?")) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
@@ -69,10 +69,14 @@ public class AssetDisplayLayoutUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.setLong(1, plid);
 
+					long ctCollectionId = resultSet.getLong("ctCollectionId");
+
+					preparedStatement2.setLong(2, ctCollectionId);
+
 					long assetDisplayPageEntryId = resultSet.getLong(
 						"assetDisplayPageEntryId");
 
-					preparedStatement2.setLong(2, assetDisplayPageEntryId);
+					preparedStatement2.setLong(3, assetDisplayPageEntryId);
 
 					preparedStatement2.addBatch();
 				}

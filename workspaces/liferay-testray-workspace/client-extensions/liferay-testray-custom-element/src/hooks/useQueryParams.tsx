@@ -126,7 +126,8 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 					if (filteredOptions.length) {
 						updatedFilterOptions[key] = filteredOptions;
 					}
-				} else {
+				}
+				else {
 					const matchingValues = filterResponse[key]?.filter(
 						(options: Options) =>
 							options.value === serializedFilter[key]

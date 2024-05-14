@@ -10,7 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.servlet.filters.ignore.IgnoreFilter;
+import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import javax.servlet.Filter;
@@ -39,13 +39,16 @@ public class InvokerFilterTest {
 	@Test
 	public void testOSGIComponentFilterInitParams() {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-		IgnoreFilter filter = new IgnoreFilter();
+
+		BasePortalFilter testBasePortalFilter = new BasePortalFilter() {
+		};
+
 		String urlRegexIgnorePattern = "/test-regex-ignore-pattern";
 		String urlRegexPattern = "/test-regex-pattern";
 
 		ServiceRegistration<Filter> serviceRegistration =
 			bundleContext.registerService(
-				Filter.class, filter,
+				Filter.class, testBasePortalFilter,
 				HashMapDictionaryBuilder.put(
 					"init-param.url-regex-ignore-pattern", urlRegexIgnorePattern
 				).put(
@@ -57,7 +60,7 @@ public class InvokerFilterTest {
 				).build());
 
 		try {
-			FilterConfig filterConfig = filter.getFilterConfig();
+			FilterConfig filterConfig = testBasePortalFilter.getFilterConfig();
 
 			Assert.assertEquals(
 				urlRegexIgnorePattern,

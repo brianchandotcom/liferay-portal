@@ -29,6 +29,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.json.JSONObject;
 
 /**
@@ -53,35 +56,49 @@ public class MergeGitHubCommentEventHandler
 		if (!Objects.equals(
 				receiverGitHubUser.getName(), subrepoMergeReceiverName)) {
 
-			gitHubPullRequest.comment(
-				StringUtil.combine(
-					"Skip merge subrepo because the receiving user is not ",
-					subrepoMergeReceiverName, "."));
+			String message = StringUtil.combine(
+				"Skip merge subrepo because the receiving user is not ",
+				subrepoMergeReceiverName);
+
+			gitHubPullRequest.comment(message + ".");
 
 			gitHubPullRequest.close();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
 
 			return null;
 		}
 
 		if (!_isValidCIMergeFile()) {
-			gitHubPullRequest.comment(
-				StringUtil.combine(
-					"Closing pull request because a subrepo merge request must",
-					" only contain a single change to a single ci-merge ",
-					"file."));
+			String message = StringUtil.combine(
+				"Closing pull request because a subrepo merge request must",
+				" only contain a single change to a single ci-merge file");
+
+			gitHubPullRequest.comment(message + ".");
 
 			gitHubPullRequest.close();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
 
 			return null;
 		}
 
 		if (StringUtil.isNullOrEmpty(_getCIMergeSHA())) {
-			gitHubPullRequest.comment(
-				StringUtil.combine(
-					"Closing pull request because the ci-merge file ",
-					"modification is missing or incorrectly formatted."));
+			String message = StringUtil.combine(
+				"Closing pull request because the ci-merge file ",
+				"modification is missing or incorrectly formatted");
+
+			gitHubPullRequest.comment(message + ".");
 
 			gitHubPullRequest.close();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
 
 			return null;
 		}
@@ -97,15 +114,26 @@ public class MergeGitHubCommentEventHandler
 			String commenterGitHubUserName = commenterGitHubUser.getName();
 
 			if (!ciMergeForceUserNames.contains(commenterGitHubUserName)) {
-				gitHubPullRequest.comment("Only Brian Chan can force a merge.");
+				String message = "Only Brian Chan can force a merge";
+
+				gitHubPullRequest.comment(message + ".");
+
+				if (_log.isInfoEnabled()) {
+					_log.info(message);
+				}
 
 				return null;
 			}
 		}
 
 		if (!_hasRequiredPassingTests()) {
-			gitHubPullRequest.comment(
-				"Skip merge subrepo because tests have not passed.");
+			String message = "Skip merge subrepo because tests have not passed";
+
+			gitHubPullRequest.comment(message + ".");
+
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
 
 			return null;
 		}
@@ -338,6 +366,9 @@ public class MergeGitHubCommentEventHandler
 
 		return true;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		MergeGitHubCommentEventHandler.class);
 
 	private static final Pattern _ciMergeSHAPattern = Pattern.compile(
 		"\\+([0-9a-f]{40})");

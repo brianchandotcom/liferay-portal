@@ -14,12 +14,16 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -224,6 +228,16 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 		for (JobEntity jobEntity : jobEntities) {
 			invokeJobEntity(jobEntity);
 		}
+
+		if (_log.isInfoEnabled()) {
+			GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+			_log.info(
+				StringUtil.combine(
+					"Invoked ", jobEntities.size(), " jobs for ",
+					gitHubPullRequest.getHTMLURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
 	}
 
 	protected boolean skipAutoTestSenderBlacklist()
@@ -268,8 +282,19 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 				"To conserve resources, the PR Tester does not run for the ",
 				"sending user \"", senderGitHubUserName, "\"."));
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Skipped sender blacklist jobs for ",
+					gitHubPullRequest.getHTMLURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
+
 		return true;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		BaseOpenGitHubPullRequestEventHandler.class);
 
 	private static final Pattern _ciTestAutoRecipientPattern = Pattern.compile(
 		"(?<userName>[^\\]]+)\\[(?<testOptions>[^\\]]+)\\]");

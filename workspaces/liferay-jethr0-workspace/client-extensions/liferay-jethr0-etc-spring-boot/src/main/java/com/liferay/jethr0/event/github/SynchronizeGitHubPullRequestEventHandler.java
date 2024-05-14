@@ -12,7 +12,11 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.Objects;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -30,11 +34,26 @@ public class SynchronizeGitHubPullRequestEventHandler
 			return null;
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Synchronize GitHub pull ", gitHubPullRequest.getHTMLURL(),
+					" at ", StringUtil.toString(new Date())));
+		}
+
 		GitHubUser receiverGitHubUser =
 			gitHubPullRequest.getReceiverGitHubUser();
 
 		if ((receiverGitHubUser == null) ||
 			!Objects.equals(receiverGitHubUser.getName(), "brianchandotcom")) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringUtil.combine(
+						"Synchronization for GitHub pull ",
+						gitHubPullRequest.getHTMLURL(), " completed at ",
+						StringUtil.toString(new Date())));
+			}
 
 			return null;
 		}
@@ -49,6 +68,14 @@ public class SynchronizeGitHubPullRequestEventHandler
 
 		gitHubPullRequest.lock();
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Closed and locked GitHub pull ",
+					gitHubPullRequest.getHTMLURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
+
 		return gitHubComment.getBody();
 	}
 
@@ -57,5 +84,8 @@ public class SynchronizeGitHubPullRequestEventHandler
 
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		SynchronizeGitHubPullRequestEventHandler.class);
 
 }

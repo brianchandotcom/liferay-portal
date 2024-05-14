@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -195,6 +196,13 @@ public class StopGitHubCommentEventHandler
 		}
 
 		jenkinsClient.requestPost(StringUtil.toURL(buildURL + "/stop"));
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Stopping Jenkins build ", buildURL, " at ",
+					StringUtil.toString(new Date())));
+		}
 	}
 
 	private void _stopTopLevelBuild(String buildURL) throws IOException {

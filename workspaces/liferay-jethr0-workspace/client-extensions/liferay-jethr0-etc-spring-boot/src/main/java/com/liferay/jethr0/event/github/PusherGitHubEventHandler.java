@@ -111,6 +111,14 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		jobEntityRepository.update(mergeCentralSubrepositoryJobEntity);
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Created a merge central subrepository job ",
+					jobEntityRepository.getEntityDALO(), " at ",
+					StringUtil.toString(new Date())));
+		}
+
 		return mergeCentralSubrepositoryJobEntity;
 	}
 

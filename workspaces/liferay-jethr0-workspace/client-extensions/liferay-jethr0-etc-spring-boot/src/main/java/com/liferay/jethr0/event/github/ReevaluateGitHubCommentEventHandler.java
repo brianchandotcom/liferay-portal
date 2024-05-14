@@ -13,8 +13,12 @@ import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.Jethr0ContextUtil;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -52,6 +56,14 @@ public class ReevaluateGitHubCommentEventHandler
 			StringUtil.combine(
 				"CI is reevaluating the build with build ID: `", jenkinsBuildID,
 				"` against the latest valid upstream results."));
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Reevaluation completed for ",
+					gitHubPullRequest.getHTMLURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
 
 		return gitHubComment.toString();
 	}
@@ -94,6 +106,9 @@ public class ReevaluateGitHubCommentEventHandler
 
 		return portalEvaluatePullRequestJobEntity;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		StopGitHubCommentEventHandler.class);
 
 	private static final Pattern _reevaluatePattern = Pattern.compile(
 		"ci:reevaluate:(?<jenkinsBuildID>[\\d]+_[\\d]+)");

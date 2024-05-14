@@ -21,7 +21,11 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Date;
 import java.util.Properties;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -109,10 +113,20 @@ public abstract class BaseGitHubEventHandler extends BaseEventHandler {
 		JenkinsQueue jenkinsQueue = Jethr0ContextUtil.getJenkinsQueue();
 
 		jenkinsQueue.invoke();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Invoked job ", jobEntity.getEntityURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
 	}
 
 	private static final URL _JENKINS_GITHUB_URL = StringUtil.toURL(
 		"https://github.com/liferay/liferay-jenkins-ee");
+
+	private static final Log _log = LogFactory.getLog(
+		BaseGitHubEventHandler.class);
 
 	private GitBranchEntity _jenkinsGitBranchEntity;
 

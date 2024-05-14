@@ -8,6 +8,9 @@ package com.liferay.jethr0.event.github.comment;
 import com.liferay.jethr0.event.github.GitHubFactory;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.github.user.GitHubUser;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import org.json.JSONObject;
 
@@ -34,6 +37,10 @@ public class GitHubComment {
 
 	public GitHubClient getGitHubClient() {
 		return _gitHubFactory.getGitHubClient();
+	}
+
+	public URL getHTMLURL() {
+		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 
 	private final GitHubUser _commenterGitHubUser;

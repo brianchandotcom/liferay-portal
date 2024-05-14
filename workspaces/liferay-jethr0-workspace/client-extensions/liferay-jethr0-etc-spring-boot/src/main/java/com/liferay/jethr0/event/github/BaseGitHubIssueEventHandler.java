@@ -6,6 +6,7 @@
 package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.github.client.GitHubClient;
+import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.issue.GitHubIssue;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.event.github.repository.GitHubRepository;
@@ -23,6 +24,7 @@ import com.liferay.jethr0.util.StringUtil;
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Properties;
@@ -92,7 +94,14 @@ public abstract class BaseGitHubIssueEventHandler
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
-		gitHubPullRequest.comment(sb.toString());
+		GitHubComment gitHubComment = gitHubPullRequest.comment(sb.toString());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Ignore non-Liferay users for ", gitHubComment.getHTMLURL(),
+					" at ", StringUtil.toString(new Date())));
+		}
 
 		return true;
 	}

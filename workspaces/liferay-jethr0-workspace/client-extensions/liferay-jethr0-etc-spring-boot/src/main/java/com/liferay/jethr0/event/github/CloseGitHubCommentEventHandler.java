@@ -7,6 +7,12 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Date;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -38,11 +44,22 @@ public class CloseGitHubCommentEventHandler
 
 		gitHubPullRequest.close();
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"Close GitHub based on comment from ",
+					gitHubPullRequest.getHTMLURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
+
 		return gitHubPullRequest.toString();
 	}
 
 	protected CloseGitHubCommentEventHandler(JSONObject messageJSONObject) {
 		super(messageJSONObject);
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		CloseGitHubCommentEventHandler.class);
 
 }

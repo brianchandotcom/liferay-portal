@@ -18,11 +18,15 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -117,6 +121,14 @@ public class ForwardGitHubCommentEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		gitHubPullRequest.comment(sb.toString());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringUtil.combine(
+					"All required test suites have passed or completed for ",
+					gitHubPullRequest.getHTMLURL(), " at ",
+					StringUtil.toString(new Date())));
+		}
 
 		return true;
 	}
@@ -442,6 +454,9 @@ public class ForwardGitHubCommentEventHandler
 
 		return false;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		ForwardGitHubCommentEventHandler.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"ci:forward(\\:(?<forwardOptions>[^\\s]+))?");

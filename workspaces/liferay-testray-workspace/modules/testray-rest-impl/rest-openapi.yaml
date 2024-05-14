@@ -94,12 +94,6 @@ components:
                 testrayStatusMetric:
                     $ref: "#/components/schemas/TestrayStatusMetric"
             type: object
-        TestrayRunQuickComparison:
-            properties:
-                runId:
-                    format: int64
-                    type: integer
-            type: object
         TestrayStatusMetric:
             properties:
                 blocked:
@@ -201,7 +195,7 @@ paths:
             tags: ["TestrayBuildAutofill"]
     "/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}":
         get:
-            operationId: getTestrayRunComparisonByTestrayRoutineIdTestrayRoutinePage
+            operationId: getTestrayRunComparisonByTestrayRoutineIdTestrayRoutine
             parameters:
                 - in: path
                   name: testrayRoutineId
@@ -214,14 +208,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/TestrayRunQuickComparison"
-                                type: array
+                                type: object
                         application/xml:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/TestrayRunQuickComparison"
-                                type: array
+                                type: object
             tags: ["TestrayRunComparison"]
     "/testray-run-comparisons/{testrayRunId1}/{testrayRunId2}":
         get:

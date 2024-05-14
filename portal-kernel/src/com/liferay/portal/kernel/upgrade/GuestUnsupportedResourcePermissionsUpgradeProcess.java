@@ -76,7 +76,8 @@ public class GuestUnsupportedResourcePermissionsUpgradeProcess
 
 	private long _getGuestRoleId(long companyId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select roleId from Role_ where companyId = ? and name = ?")) {
+				"select roleId, ctCollectionId from Role_ where companyId = " +
+					"? and name = ?")) {
 
 			preparedStatement.setLong(1, companyId);
 			preparedStatement.setString(2, RoleConstants.GUEST);
@@ -99,7 +100,7 @@ public class GuestUnsupportedResourcePermissionsUpgradeProcess
 		long guestRoleId = _getGuestRoleId(companyId);
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select resourcePermissionId, actionIds from " +
+				"select resourcePermissionId, ctCollectionId, actionIds from " +
 					"ResourcePermission where companyId = ? and name = ? and " +
 						"roleId = ?")) {
 
@@ -112,13 +113,16 @@ public class GuestUnsupportedResourcePermissionsUpgradeProcess
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
 						"update ResourcePermission set actionIds = ? where " +
-							"resourcePermissionId = ?")) {
+							"resourcePermissionId = ? and ctCollectionId = " +
+								"?")) {
 
 				while (resultSet.next()) {
 					preparedStatement2.setLong(
 						1, resultSet.getLong("actionIds") & bitmask);
 					preparedStatement2.setLong(
 						2, resultSet.getLong("resourcePermissionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("ctCollectionId"));
 
 					preparedStatement2.addBatch();
 				}

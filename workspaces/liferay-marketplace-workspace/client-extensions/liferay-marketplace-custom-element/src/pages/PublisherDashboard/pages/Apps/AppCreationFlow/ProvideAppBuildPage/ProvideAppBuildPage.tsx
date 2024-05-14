@@ -411,7 +411,7 @@ export function ProvideAppBuildPage({
 						});
 					});
 
-					await addExpandoValue({
+					addExpandoValue({
 						attributeValues: {
 							'Liferay Version': versionKey,
 						},

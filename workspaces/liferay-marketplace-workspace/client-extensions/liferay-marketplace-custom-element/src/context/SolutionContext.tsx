@@ -282,9 +282,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 						headerVideoDescription: specificationsMap.get(
 							PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_DESCRIPTION
 						),
-						headerVideoUrl: specificationsMap.get(
-							PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_TITLE
-						),
+						headerVideoUrl,
 					},
 					type: 'embed-video-url',
 				} as HeaderContentTypeEmbeded;

@@ -297,6 +297,7 @@ export default {
 	'solution-details': 'Solution Details',
 	'solution-header': 'Solution Header',
 	'solution-submission': 'Solution Submission',
+	'solution-x-submitted': 'Solution <b>{0}</b> submitted',
 	'solutions': 'Solutions',
 	'solutions-info': 'Solutions Info',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',

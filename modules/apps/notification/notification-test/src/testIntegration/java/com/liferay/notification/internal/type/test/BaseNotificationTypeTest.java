@@ -12,11 +12,14 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipientSetting;
+import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -31,11 +34,13 @@ import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -71,6 +76,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -497,6 +503,54 @@ public class BaseNotificationTypeTest {
 		}
 
 		return notificationRecipientSetting;
+	}
+
+	protected void executeNotificationObjectAction(
+			long fileEntryId, NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		ObjectAction objectAction = objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			childObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				notificationTemplate.getNotificationTemplateId()
+			).build(),
+			false);
+
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			dtoConverterContext, parentObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = parentObjectEntryValues;
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		objectEntryManager.addObjectEntry(
+			dtoConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.putAll(
+						childObjectEntryValues
+					).put(
+						getObjectRelationshipObjectField2Name(),
+						objectEntry.getId()
+					).put(
+						"attachmentObjectField", fileEntryId
+					).build();
+				}
+			},
+			group.getGroupKey());
+
+		objectActionLocalService.deleteObjectAction(
+			objectAction.getObjectActionId());
 	}
 
 	protected String getObjectRelationshipObjectField2Name()

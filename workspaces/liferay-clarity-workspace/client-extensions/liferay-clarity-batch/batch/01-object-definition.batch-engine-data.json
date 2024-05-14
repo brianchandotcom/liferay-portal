@@ -107,6 +107,34 @@
 					"type": "Clob"
 				},
 				{
+					"DBType": "Long",
+					"businessType": "Relationship",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Application to Evaluations"
+					},
+					"name": "r_applicationToEvaluations_c_d4b8DistributorApplicationId",
+					"objectDefinitionExternalReferenceCode1": "D4B8_DISTRIBUTOR_APPLICATION",
+					"objectFieldSettings": [
+						{
+							"name": "objectDefinition1ShortName",
+							"value": "D4B8DistributorApplication"
+						},
+						{
+							"name": "objectRelationshipERCObjectFieldName",
+							"value": "r_applicationToEvaluations_c_d4b8DistributorApplicationERC"
+						}
+					],
+					"objectRelationshipExternalReferenceCode": "APPLICATION_TO_EVALUATIONS",
+					"readOnly": "false",
+					"relationshipType": "oneToMany",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
 					"DBType": "Clob",
 					"businessType": "RichText",
 					"indexed": true,
@@ -1954,6 +1982,7 @@
 			"pluralLabel": {
 				"en_US": "D4B8 Distributor Applications"
 			},
+			"portlet": true,
 			"restContextPath": "/o/c/d4b8distributorapplications",
 			"scope": "company",
 			"status": {

@@ -78,7 +78,7 @@ public class ObjectFieldUtil {
 			listTypeDefinition =
 				listTypeDefinitionLocalService.addListTypeDefinition(
 					objectField.getListTypeDefinitionExternalReferenceCode(),
-					userId, objectField.getSystem());
+					userId, GetterUtil.getBoolean(objectField.getSystem()));
 		}
 
 		Map<String, ListTypeEntry> listTypeEntries = new HashMap<>();

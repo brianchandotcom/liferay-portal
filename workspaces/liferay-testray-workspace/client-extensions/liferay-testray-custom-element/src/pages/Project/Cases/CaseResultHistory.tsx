@@ -4,6 +4,7 @@
  */
 
 import {useParams} from 'react-router-dom';
+import {testrayCaseResultHistoryImpl} from '~/services/rest/TestrayCaseResultHistory';
 import {getTruncateText} from '~/util/getTruncateText';
 
 import Code from '../../../components/Code';
@@ -13,7 +14,7 @@ import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {TableProps} from '../../../components/Table';
 import i18n from '../../../i18n';
-import {PickList, testrayCaseResultImpl} from '../../../services/rest';
+import {PickList} from '../../../services/rest';
 import dayjs from '../../../util/date';
 
 type CaseResultHistoryProps = {
@@ -33,7 +34,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 				pageSize: 200,
 				sort: {
 					direction: 'DESC',
-					key: 'dueDate',
+					key: 'dateCreated',
 				},
 			}}
 			managementToolbarProps={{
@@ -42,12 +43,12 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 				title: i18n.translate('test-history'),
 				visible: true,
 			}}
-			resource={testrayCaseResultImpl.resource}
+			resource={testrayCaseResultHistoryImpl.resource}
 			tableProps={{
 				columns: [
 					{
 						clickable: true,
-						key: 'dueDate',
+						key: 'dateCreated',
 						render: (date) => (
 							<p style={{maxWidth: '11ch'}}>
 								{dayjs(date).format('lll')}
@@ -127,7 +128,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 				...tableProps,
 			}}
 			transformData={(response) =>
-				testrayCaseResultImpl.transformDataFromList(response)
+				testrayCaseResultHistoryImpl.transformDataFromList(response)
 			}
 			{...listViewProps}
 		/>

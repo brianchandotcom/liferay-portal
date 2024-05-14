@@ -403,7 +403,7 @@ create unique index IX_1AAF62D7 on Team (uuid_[$COLUMN_LENGTH:75$], groupId, ctC
 
 create index IX_DAD135B4 on Ticket (classNameId, classPK, companyId, type_);
 create index IX_1E8DFB2E on Ticket (classNameId, classPK, type_);
-create index IX_B2468446 on Ticket (key_[$COLUMN_LENGTH:75$]);
+create index IX_B2468446 on Ticket (key_[$COLUMN_LENGTH:255$]);
 
 create unique index IX_A33BD191 on UserGroup (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_3F4FC96B on UserGroup (companyId, name[$COLUMN_LENGTH:255$], ctCollectionId);

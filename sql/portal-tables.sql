@@ -940,7 +940,7 @@ create table PasswordTracker (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
-	password_ VARCHAR(75) null
+	password_ VARCHAR(255) null
 );
 
 create table Phone (
@@ -1414,7 +1414,7 @@ create table Ticket (
 	createDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	key_ VARCHAR(75) null,
+	key_ VARCHAR(255) null,
 	type_ INTEGER,
 	extraInfo TEXT null,
 	expirationDate DATE null
@@ -1442,7 +1442,7 @@ create table User_ (
 	createDate DATE null,
 	modifiedDate DATE null,
 	contactId LONG,
-	password_ VARCHAR(75) null,
+	password_ VARCHAR(255) null,
 	passwordEncrypted BOOLEAN,
 	passwordReset BOOLEAN,
 	passwordModifiedDate DATE null,

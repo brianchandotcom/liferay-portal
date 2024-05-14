@@ -5,16 +5,27 @@
 
 package com.liferay.info.field.item.selector.web.internal;
 
+import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.localized.SingleValueInfoLocalizedValue;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.ResultRow;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -23,7 +34,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -44,6 +59,10 @@ public class InfoFieldItemSelectorViewDescriptor
 		_httpServletRequest = httpServletRequest;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_portletURL = portletURL;
+
+		_itemType = ParamUtil.getString(httpServletRequest, "itemType");
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -68,6 +87,39 @@ public class InfoFieldItemSelectorViewDescriptor
 		return new UUIDItemSelectorReturnType();
 	}
 
+	@Override
+	public ResultRowSplitter getResultRowSplitter() {
+		return resultRows -> {
+			Map<InfoFieldSet, List<ResultRow>> resultRowsMap = new HashMap<>();
+
+			Map<InfoField<?>, InfoFieldSet> infoFieldMap = _getInfoFieldMap();
+
+			for (ResultRow resultRow : resultRows) {
+				InfoField<?> infoField = (InfoField<?>)resultRow.getObject();
+
+				InfoFieldSet infoFieldSet = infoFieldMap.get(infoField);
+
+				List<ResultRow> infoFieldSetResultRows = resultRowsMap.get(
+					infoFieldSet);
+
+				if (infoFieldSetResultRows == null) {
+					infoFieldSetResultRows = new ArrayList<>();
+				}
+
+				infoFieldSetResultRows.add(resultRow);
+
+				resultRowsMap.putIfAbsent(infoFieldSet, infoFieldSetResultRows);
+			}
+
+			return TransformUtil.transform(
+				resultRowsMap.keySet(),
+				infoFieldSet -> new ResultRowSplitterEntry(
+					infoFieldSet.getLabel(_themeDisplay.getLocale()),
+					resultRowsMap.get(infoFieldSet)));
+		};
+	}
+
+	@Override
 	public SearchContainer<InfoField<?>> getSearchContainer()
 		throws PortalException {
 
@@ -78,22 +130,16 @@ public class InfoFieldItemSelectorViewDescriptor
 		SearchContainer<InfoField<?>> searchContainer = new SearchContainer<>(
 			portletRequest, _portletURL, null, "there-are-no-info-fields");
 
-		String itemType = ParamUtil.getString(_httpServletRequest, "itemType");
-
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, itemType);
+				InfoItemFormProvider.class, _itemType);
 
 		if (infoItemFormProvider == null) {
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			itemType, themeDisplay.getScopeGroupId());
+			_itemType, _themeDisplay.getScopeGroupId());
 
 		List<InfoField<?>> infoFields = ListUtil.filter(
 			infoForm.getAllInfoFields(), InfoField::isEditable);
@@ -105,7 +151,7 @@ public class InfoFieldItemSelectorViewDescriptor
 				infoFields,
 				infoField -> {
 					String label = StringUtil.toLowerCase(
-						infoField.getLabel(themeDisplay.getLocale()));
+						infoField.getLabel(_themeDisplay.getLocale()));
 
 					return label.contains(StringUtil.toLowerCase(keywords));
 				});
@@ -136,8 +182,70 @@ public class InfoFieldItemSelectorViewDescriptor
 		return true;
 	}
 
+	private Map<InfoField<?>, InfoFieldSet> _getInfoFieldMap() {
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, _itemType);
+
+		if (infoItemFormProvider == null) {
+			return Collections.emptyMap();
+		}
+
+		InfoForm infoForm = null;
+
+		try {
+			infoForm = infoItemFormProvider.getInfoForm(
+				StringPool.BLANK, _themeDisplay.getScopeGroupId());
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFormVariationException);
+			}
+
+			return Collections.emptyMap();
+		}
+
+		Map<InfoField<?>, InfoFieldSet> infoFieldsMap = new HashMap<>();
+
+		for (InfoFieldSetEntry infoFieldSetEntry :
+				infoForm.getInfoFieldSetEntries()) {
+
+			if (infoFieldSetEntry instanceof InfoField) {
+				InfoField<?> infoField = (InfoField<?>)infoFieldSetEntry;
+
+				if (infoField.isEditable()) {
+					infoFieldsMap.put(infoField, _DEFAULT_INFO_FIELD_SET);
+				}
+			}
+			else if (infoFieldSetEntry instanceof InfoFieldSet) {
+				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+				for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
+					if (infoField.isEditable()) {
+						infoFieldsMap.put(infoField, infoFieldSet);
+					}
+				}
+			}
+		}
+
+		return infoFieldsMap;
+	}
+
+	private static final InfoFieldSet _DEFAULT_INFO_FIELD_SET =
+		InfoFieldSet.builder(
+		).labelInfoLocalizedValue(
+			new SingleValueInfoLocalizedValue<>("default")
+		).name(
+			"default"
+		).build();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InfoFieldItemSelectorViewDescriptor.class);
+
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
+	private final String _itemType;
 	private final PortletURL _portletURL;
+	private final ThemeDisplay _themeDisplay;
 
 }

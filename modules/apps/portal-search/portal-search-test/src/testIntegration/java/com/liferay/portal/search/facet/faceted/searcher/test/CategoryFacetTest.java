@@ -72,15 +72,15 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		_assetVocabulary = _assetVocabularyLocalService.addDefaultVocabulary(
 			_group.getGroupId());
+
+		_user = UserTestUtil.addUser(_group.getGroupId());
 	}
 
 	@Test
 	public void testAggregation() throws Exception {
-		_addCategory(RandomTestUtil.randomString());
+		_addAssetCategoryToUserServiceContext(RandomTestUtil.randomString());
 
 		_addJournalArticle();
-
-		_addUser();
 
 		SearchContext searchContext = _getSearchContext();
 
@@ -105,9 +105,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		// See LPS-58543
 
-		_addCategory("To Do");
-
-		_addUser();
+		_addAssetCategoryToUserServiceContext("To Do");
 
 		SearchContext searchContext = _getSearchContext();
 
@@ -122,11 +120,9 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 	@Test
 	public void testSelection() throws Exception {
-		_addCategory(RandomTestUtil.randomString());
+		_addAssetCategoryToUserServiceContext(RandomTestUtil.randomString());
 
 		_addJournalArticle();
-
-		_addUser();
 
 		SearchContext searchContext = _getSearchContext();
 
@@ -147,15 +143,26 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 			Collections.singletonMap(_getAssetVocabularyCategoryId(), 1));
 	}
 
-	private void _addCategory(String title) throws Exception {
+	private void _addAssetCategoryToUserServiceContext(String title)
+		throws Exception {
+
 		_assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), title,
 			_assetVocabulary.getVocabularyId(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {_assetCategory.getCategoryId()});
+
+		UserTestUtil.updateUser(_user, serviceContext);
 	}
 
-	private void _addJournalArticle() throws Exception {
+	private void _addJournalArticle() {
 		journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
@@ -181,19 +188,6 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 						});
 				}
 			});
-	}
-
-	private void _addUser() throws Exception {
-		_user = UserTestUtil.addUser(_group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAssetCategoryIds(
-			new long[] {_assetCategory.getCategoryId()});
-
-		UserTestUtil.updateUser(_user, serviceContext);
 	}
 
 	private void _assertEntryClassNames(

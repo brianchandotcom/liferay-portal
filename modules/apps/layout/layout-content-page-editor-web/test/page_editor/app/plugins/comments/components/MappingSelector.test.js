@@ -115,7 +115,7 @@ jest.mock(
 				},
 			])
 		),
-		getStructureRelationships: jest.fn(() =>
+		getInfoItemRelationships: jest.fn(() =>
 			Promise.resolve([
 				{classNameId: 'relationship-1', label: 'Relationship 1'},
 				{classNameId: 'relationship-2', label: 'Relationship 2'},

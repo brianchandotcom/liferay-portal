@@ -4,6 +4,7 @@
  */
 
 import {Dispatch} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {
 	AppActions,
@@ -34,9 +35,13 @@ const updateSpecification = async (
 			productSpecification.specificationKey === specificationKey
 	);
 
-	if (specification && specification.value.en_US === value) {
+	if (
+		!value?.trim() ||
+		(specification && specification.value.en_US === value)
+	) {
 
-		// No need to update the specification if the value is equal.
+		// No need to update the specification if the value is equal
+		// the previous value or empty.
 
 		return;
 	}
@@ -71,6 +76,7 @@ const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
 	dispatch: Dispatch<AppActions>
 ) => {
+	const navigate = useNavigate();
 	const syncProfile = async () => {
 		const {
 			_product,
@@ -298,7 +304,7 @@ const usePublishSolutionSubmission = (
 		);
 	};
 
-	const onSave = async () => {
+	const onSaveSolution = async () => {
 		dispatch({payload: true, type: SolutionTypes.SET_LOADING});
 
 		try {
@@ -321,7 +327,7 @@ const usePublishSolutionSubmission = (
 	};
 
 	const onSaveAsDraft = async () => {
-		await onSave();
+		await onSaveSolution();
 
 		Liferay.Util.openToast({
 			message: i18n.sub('x-saved-as-a-draft-successfully', [
@@ -332,7 +338,19 @@ const usePublishSolutionSubmission = (
 		});
 	};
 
-	return {onSaveAsDraft};
+	const onSave = async () => {
+		await onSaveSolution();
+
+		Liferay.Util.openToast({
+			message: i18n.sub('solution-x-submitted', [context.profile.name]),
+			title: '',
+			type: 'info',
+		});
+
+		navigate('../');
+	};
+
+	return {onSave, onSaveAsDraft};
 };
 
 export default usePublishSolutionSubmission;

@@ -33,13 +33,17 @@ const PublishSolutionOutlet = () => {
 		activeIndex,
 		activeRoute,
 		id,
+		isLastStep,
 		onClickContinue,
 		onClickPrevious,
 		onExit,
 		publishSolutionSteps,
 	} = usePublishSolutionNavigation();
 
-	const {onSaveAsDraft} = usePublishSolutionSubmission(context, dispatch);
+	const {onSave, onSaveAsDraft} = usePublishSolutionSubmission(
+		context,
+		dispatch
+	);
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -109,12 +113,16 @@ const PublishSolutionOutlet = () => {
 								parsedSchema ? !parsedSchema.success : false
 							}
 							displayType="primary"
-							onClick={onClickContinue}
+							onClick={async () => {
+								if (isLastStep) {
+									return onSave().then(onExit);
+								}
+
+								onClickContinue();
+							}}
 						>
 							{i18n.translate(
-								activeRoute.path === 'submit'
-									? 'submit-solution'
-									: 'continue'
+								isLastStep ? 'submit-solution' : 'continue'
 							)}
 						</ClayButton>
 					</div>

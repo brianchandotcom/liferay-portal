@@ -20,6 +20,7 @@ export class PageEditorPage {
 	readonly redoButton: Locator;
 	readonly undoButton: Locator;
 	readonly undoHistory: Locator;
+	readonly selectItemMappingButton: Locator;
 
 	readonly segmentEditorPage: SegmentEditorPage;
 
@@ -33,6 +34,7 @@ export class PageEditorPage {
 		this.redoButton = page.getByTitle('Redo');
 		this.undoButton = page.getByTitle('Undo');
 		this.undoHistory = page.locator('.page-editor__undo-history');
+		this.selectItemMappingButton = page.getByLabel('Select Item');
 
 		this.segmentEditorPage = new SegmentEditorPage(page);
 	}
@@ -531,6 +533,48 @@ export class PageEditorPage {
 		await editable.click();
 
 		await expect(editable).toBeFocused();
+	}
+
+	async setMappingConfiguration({
+		entity,
+		entry,
+		field,
+		recentSelectedItem,
+		source,
+	}: {
+		entity: string;
+		entry: string;
+		field: string;
+		recentSelectedItem?: string;
+		source?: 'content' | 'structure';
+	}) {
+		if (source) {
+			await this.page.getByLabel('Source').selectOption(source);
+		}
+
+		await this.selectItemMappingButton.click();
+
+		if (recentSelectedItem) {
+			await this.page
+				.getByRole('menuitem', {name: recentSelectedItem})
+				.click();
+		}
+		else {
+			await this.page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('menuitem', {name: entity})
+				.click();
+
+			await this.page.waitForTimeout(1500);
+
+			await this.page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('paragraph')
+				.filter({hasText: entry})
+				.click();
+		}
+
+		await this.page.getByLabel('Field').selectOption(field);
 	}
 
 	async switchExperience(experience: string) {

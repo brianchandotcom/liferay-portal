@@ -27,7 +27,7 @@ public class ${className}PanelApp extends BasePanelApp {
 		return ${className}PortletKeys.${className.toUpperCase()};
 	}
 
-#if (${liferayVersion.startsWith("7.4")} || ${liferayVersion.startsWith("20")})
+#if (${liferayVersion.startsWith("20")} || ${liferayVersion.startsWith("7.4")})
 	@Override
 	public Portlet getPortlet() {
 		return _portlet;

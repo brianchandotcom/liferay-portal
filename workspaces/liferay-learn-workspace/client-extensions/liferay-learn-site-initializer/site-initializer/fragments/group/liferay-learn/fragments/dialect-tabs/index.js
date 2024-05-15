@@ -94,7 +94,8 @@ function openTabPanel(event, i) {
 			activeTab(null);
 			activeTabPanel(null);
 			tabIndex = -1;
-		} else {
+		}
+		else {
 			activeTab(currentTarget);
 			activeTabPanel(tabPanelItems[i]);
 			tabIndex = i;
@@ -134,7 +135,8 @@ function main() {
 				openTabPanel(event, i);
 			});
 		});
-	} else if (initialState) {
+	}
+	else if (initialState) {
 		tabItems.forEach((item, i) => {
 			if (!i) {
 				activeTab(item);
@@ -148,7 +150,8 @@ function main() {
 				activeTabPanel(item);
 			}
 		});
-	} else {
+	}
+	else {
 		tabItemSelected = tabItems[tabIndex];
 		tabItems.forEach((item, i) => {
 			activeTab(tabItems[tabIndex]);

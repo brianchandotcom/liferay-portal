@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -459,6 +460,12 @@ public class ObjectServiceUpgradeStepRegistrator
 			"9.1.1", "9.2.0",
 			new com.liferay.object.internal.upgrade.v9_2_0.
 				ObjectDefinitionUpgradeProcess());
+
+		registry.register(
+			"9.2.0", "9.2.1",
+			new com.liferay.object.internal.upgrade.v9_2_1.
+				ObjectDefinitionUpgradeProcess(
+					_companyLocalService, _userLocalService));
 	}
 
 	@Reference
@@ -472,5 +479,8 @@ public class ObjectServiceUpgradeStepRegistrator
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

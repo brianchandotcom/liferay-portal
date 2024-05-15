@@ -789,10 +789,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				"[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]");
 
-		User user = UserTestUtil.addOmniadminUser();
+		User omniadminUser = UserTestUtil.addOmniadminUser();
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			user.getUserId(), 0L, RandomTestUtil.randomString(),
+			omniadminUser.getUserId(), 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null, null,
 			RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
@@ -811,7 +811,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.size());
 
 		_assertNotificationQueueEntry(
-			user2.getEmailAddress(), true, user.getEmailAddress(),
+			user2.getEmailAddress(), true, omniadminUser.getEmailAddress(),
 			notificationQueueEntries.get(0));
 
 		objectActionLocalService.deleteObjectAction(accountEntryObjectAction);
@@ -852,28 +852,41 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			group.getGroupId(), commerceCurrency.getCode());
 
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
 
-		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
-			commerceCurrency);
+		User user = TestPropsValues.getUser();
 
-		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-			commerceOrder, TestPropsValues.getUserId());
+		try {
+			PrincipalThreadLocal.setName(user.getUserId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
-		Assert.assertEquals(
-			CommerceOrderConstants.ORDER_STATUS_PENDING,
-			commerceOrder.getPaymentStatus());
+			CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+				user.getUserId(), commerceChannel.getGroupId(),
+				commerceCurrency);
 
-		commerceOrder = _commerceOrderLocalService.updatePaymentStatus(
-			TestPropsValues.getUserId(), commerceOrder.getCommerceOrderId(),
-			CommerceOrderPaymentConstants.STATUS_COMPLETED);
+			commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, user.getUserId());
 
-		Assert.assertEquals(
-			CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-			commerceOrder.getPaymentStatus());
+			Assert.assertEquals(
+				CommerceOrderConstants.ORDER_STATUS_PENDING,
+				commerceOrder.getPaymentStatus());
+
+			commerceOrder = _commerceOrderLocalService.updatePaymentStatus(
+				user.getUserId(), commerceOrder.getCommerceOrderId(),
+				CommerceOrderPaymentConstants.STATUS_COMPLETED);
+
+			Assert.assertEquals(
+				CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+				commerceOrder.getPaymentStatus());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
 
 		notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(

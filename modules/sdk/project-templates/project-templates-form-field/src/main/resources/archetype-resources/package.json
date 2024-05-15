@@ -1,4 +1,4 @@
-#set ($after_74 = (${liferayVersion.startsWith("7.4")} || ${liferayVersion.startsWith("20")}))
+#set ($after_74 = (${liferayVersion.startsWith("20")} || ${liferayVersion.startsWith("7.4")}))
 #set ($before_73 = !(${liferayVersion.startsWith("7.3")} || $after_74))
 {
 	"dependencies": {

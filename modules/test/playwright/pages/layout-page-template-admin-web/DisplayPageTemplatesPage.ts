@@ -68,6 +68,21 @@ export class DisplayPageTemplatesPage {
 			.click();
 	}
 
+	async deleteAllDisplayPageTemplates() {
+		await this.goto();
+
+		await this.page
+			.getByLabel('Select All Items on the Page')
+			.setChecked(true);
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await this.page
+			.getByLabel('Delete Entries- Loading')
+			.getByRole('button', {name: 'Delete'})
+			.click();
+	}
+
 	async markAsDefault(name: string) {
 		await this.clickMoreActions(name);
 

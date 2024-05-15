@@ -130,7 +130,7 @@ definition {
 
 			PortletEntry.inputName(name = "Filter Transport");
 
-			DataSetAdmin.selectFilterBy(filterByField = "creator");
+			DataSetAdmin.selectFilterBy(filterByField = "externalReferenceCode");
 
 			Select(
 				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
@@ -262,7 +262,7 @@ definition {
 
 			PortletEntry.inputName(name = "Filter Transport");
 
-			DataSetAdmin.selectFilterBy(filterByField = "creator");
+			DataSetAdmin.selectFilterBy(filterByField = "externalReferenceCode");
 
 			Select(
 				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
@@ -396,7 +396,7 @@ definition {
 
 			PortletEntry.inputName(name = "Filter Transport");
 
-			DataSetAdmin.selectFilterBy(filterByField = "creator");
+			DataSetAdmin.selectFilterBy(filterByField = "externalReferenceCode");
 
 			Select(
 				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,7 +11,7 @@ import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Before;
@@ -36,10 +36,8 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 		_reindexIndexReindexerBackgroundTaskExecutor =
 			new ReindexIndexReindexerBackgroundTaskExecutor();
 
-		Collection<IndexReindexer> indexReindexers = new ArrayList<>();
-
-		indexReindexers.add(_indexReindexer1);
-		indexReindexers.add(_indexReindexer2);
+		Collection<IndexReindexer> indexReindexers = Arrays.asList(
+			_indexReindexer1, _indexReindexer2);
 
 		Mockito.when(
 			_indexReindexerRegistry.getIndexReindexers()
@@ -82,6 +80,7 @@ public class ReindexIndexReindexerBackgroundTaskExecutorTest {
 		).reindex(
 			_COMPANY_IDS[0], _EXECUTION_MODE
 		);
+
 		Mockito.verify(
 			_indexReindexer2, Mockito.never()
 		).reindex(

@@ -59,7 +59,7 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 				"external-headless-server");
 
 		Assert.assertEquals("987654321", clientRegistration.getClientId());
-		Assert.assertEquals("Sibboleth", clientRegistration.getClientSecret());
+		Assert.assertEquals("htelobbihS", clientRegistration.getClientSecret());
 
 		ClientRegistration.ProviderDetails providerDetails =
 			clientRegistration.getProviderDetails();

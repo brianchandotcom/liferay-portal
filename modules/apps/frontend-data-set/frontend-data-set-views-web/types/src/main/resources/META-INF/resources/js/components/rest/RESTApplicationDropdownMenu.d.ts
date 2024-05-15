@@ -5,11 +5,10 @@
 
 /// <reference types="react" />
 
-import {IFDSViewSectionProps} from '../FDSView';
-declare function Pagination({
-	backURL,
-	fdsView,
-	namespace,
-	onFDSViewUpdate,
-}: IFDSViewSectionProps): JSX.Element;
-export default Pagination;
+export default function RESTApplicationDropdownMenu({
+	onItemClick,
+	restApplications: initialRESTApplications,
+}: {
+	onItemClick: Function;
+	restApplications: Array<string>;
+}): JSX.Element;

@@ -61,10 +61,10 @@ const NAVIGATION_BAR_ITEMS = [
 ];
 
 interface IFDSViewSectionProps {
+	backURL: string;
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
-	fdsViewsURL: string;
 	fieldTreeItems: Array<IFieldTreeItem>;
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
@@ -74,20 +74,22 @@ interface IFDSViewSectionProps {
 }
 
 interface IFDSViewProps {
+	backURL: string;
+	dataSetERC: string;
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
-	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
 	spritemap: string;
 }
 
 const FDSView = ({
+	backURL,
+	dataSetERC,
 	fdsClientExtensionCellRenderers,
 	fdsFilterClientExtensions,
 	fdsViewId,
-	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
 	spritemap,
@@ -101,21 +103,28 @@ const FDSView = ({
 
 	useEffect(() => {
 		const getFDSView = async () => {
-			const response = await fetch(
-				`${API_URL.FDS_VIEWS}/${fdsViewId}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`,
-				{
-					headers: {
-						Accept: 'application/json',
-					},
-				}
-			);
+			const url = Liferay.FeatureFlags['LPD-15729']
+				? `${API_URL.FDS_VIEWS}/by-external-reference-code/${dataSetERC}`
+				: `${API_URL.FDS_VIEWS}/${fdsViewId}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`;
 
-			const responseJSON = await response.json();
+			const response = await fetch(url, {
+				headers: {
+					Accept: 'application/json',
+				},
+			});
 
-			if (responseJSON?.id) {
-				setFDSView(responseJSON);
+			const fdsView = await response.json();
 
-				getFields(responseJSON).then((fields) => {
+			if (fdsView?.id) {
+				setFDSView(fdsView);
+
+				const {restApplication, restSchema} = Liferay.FeatureFlags[
+					'LPD-15729'
+				]
+					? fdsView
+					: fdsView[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW];
+
+				getFields({restApplication, restSchema}).then((fields) => {
 					setFieldTreeItems(fields);
 
 					setLoading(false);
@@ -127,7 +136,7 @@ const FDSView = ({
 		};
 
 		getFDSView();
-	}, [fdsViewId]);
+	}, [dataSetERC, fdsViewId]);
 
 	const Content = NAVIGATION_BAR_ITEMS[activeIndex].Component;
 
@@ -153,12 +162,12 @@ const FDSView = ({
 			) : (
 				fdsView && (
 					<Content
+						backURL={backURL}
 						fdsClientExtensionCellRenderers={
 							fdsClientExtensionCellRenderers
 						}
 						fdsFilterClientExtensions={fdsFilterClientExtensions}
 						fdsView={fdsView}
-						fdsViewsURL={fdsViewsURL}
 						fieldTreeItems={fieldTreeItems}
 						namespace={namespace}
 						onActiveSectionChange={(tab) => setActiveIndex(tab)}

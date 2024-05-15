@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {notificationPagesTest} from '../../fixtures/notificationPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -18,6 +19,57 @@ export const test = mergeTests(
 	loginTest(),
 	notificationPagesTest
 );
+
+test('can add rich text source code and verify that the source code is being persisted', async ({
+	emailNotificationTemplatePage,
+	notificationTemplatesPage,
+	page,
+}) => {
+	await emailNotificationTemplatePage.goto();
+
+	const notificationTemplateName =
+		'Notification Template Name' + getRandomInt();
+
+	await emailNotificationTemplatePage.basicInfoName.fill(
+		notificationTemplateName
+	);
+
+	await emailNotificationTemplatePage.senderEmailAddress.fill(
+		'test@liferay.com'
+	);
+
+	await emailNotificationTemplatePage.senderName.fill('test user');
+
+	await emailNotificationTemplatePage.primaryRecipientUserEmailAddress.fill(
+		'test@liferay.com'
+	);
+
+	await emailNotificationTemplatePage.contentSubject.fill('Content subject');
+
+	await emailNotificationTemplatePage.richTextSourceButton.click();
+
+	await emailNotificationTemplatePage.richTextSourceField.fill(
+		'<h1>Hello World</h1>'
+	);
+
+	await emailNotificationTemplatePage.saveButton.click();
+
+	await notificationTemplatesPage
+		.getFrontEndDatasetItemLocator(notificationTemplateName)
+		.click();
+
+	await emailNotificationTemplatePage.richTextSourceButton.click();
+
+	await expect(page.getByText('<h1>Hello World</h1>')).toBeVisible();
+
+	// Clean up
+
+	await emailNotificationTemplatePage.backURLButton.click();
+
+	await notificationTemplatesPage.frontEndDatasetItemActions.click();
+
+	await notificationTemplatesPage.frontEndDatasetItemActionDelete.click();
+});
 
 test('can save recipients roles in email notification template', async ({
 	emailNotificationTemplatePage,

@@ -5,17 +5,14 @@
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
 const editMode = layoutMode === 'edit';
-const tabItems = [].slice.call(
-	fragmentElement.querySelectorAll(
-		'[data-fragment-namespace="' + fragmentNamespace + '"].nav-link'
-	)
+const tabItems = fragmentElement.querySelectorAll(
+	`[data-fragment-namespace="${fragmentNamespace}"].nav-link`
 );
+
 let tabIndex = 0;
 const tabPanel = fragmentElement.querySelector('.tab-panel');
-const tabPanelItems = [].slice.call(
-	fragmentElement.querySelectorAll(
-		'[data-fragment-namespace="' + fragmentNamespace + '"].tab-panel-item'
-	)
+const tabPanelItems = fragmentElement.querySelectorAll(
+	`[data-fragment-namespace="${fragmentNamespace}"].tab-panel-item`
 );
 
 function activeTab(item) {
@@ -34,9 +31,7 @@ function activeTab(item) {
 
 function activeTabPanel(item) {
 	tabPanelItems.forEach((tabPanelItem) => {
-		if (!tabPanelItem.classList.contains('d-none')) {
-			tabPanelItem.classList.add('d-none');
-		}
+		tabPanelItem.classList.add('d-none');
 	});
 
 	if (item === null) {
@@ -86,6 +81,8 @@ function openTabPanel(event, i) {
 		dropdownButton.getAttribute('aria-expanded')
 	);
 
+	const isCurrentTab = tabItems[i].classList.contains('active');
+
 	if (!isEditable || !editMode) {
 		if (dropdownIsOpen) {
 			handleDropdown(event, currentTarget);
@@ -93,10 +90,15 @@ function openTabPanel(event, i) {
 
 		currentTarget.focus();
 
-		activeTab(currentTarget, i);
-		activeTabPanel(tabPanelItems[i]);
-
-		tabIndex = i;
+		if (isCurrentTab) {
+			activeTab(null);
+			activeTabPanel(null);
+			tabIndex = -1;
+		} else {
+			activeTab(currentTarget);
+			activeTabPanel(tabPanelItems[i]);
+			tabIndex = i;
+		}
 	}
 
 	if (configuration.offClickHidePanel) {
@@ -132,8 +134,7 @@ function main() {
 				openTabPanel(event, i);
 			});
 		});
-	}
-	else if (initialState) {
+	} else if (initialState) {
 		tabItems.forEach((item, i) => {
 			if (!i) {
 				activeTab(item);
@@ -147,8 +148,7 @@ function main() {
 				activeTabPanel(item);
 			}
 		});
-	}
-	else {
+	} else {
 		tabItemSelected = tabItems[tabIndex];
 		tabItems.forEach((item, i) => {
 			activeTab(tabItems[tabIndex]);

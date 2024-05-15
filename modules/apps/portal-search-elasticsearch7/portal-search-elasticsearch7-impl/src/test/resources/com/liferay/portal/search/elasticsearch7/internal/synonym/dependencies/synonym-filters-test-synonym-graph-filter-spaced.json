@@ -1,13 +1,11 @@
 {
 	"mappings": {
-		"_doc": {
-			"properties": {
-				"content": {
-					"analyzer": "english",
-					"search_analyzer": "english_with_synonym_analyzer",
-					"store": true,
-					"type": "text"
-				}
+		"properties": {
+			"content": {
+				"analyzer": "english",
+				"search_analyzer": "english_with_synonym_analyzer",
+				"store": true,
+				"type": "text"
 			}
 		}
 	},

@@ -121,9 +121,9 @@ public class ProjectTemplatesSimulationPanelEntryTest
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
 			mavenExecutor);
 
-		if ((_liferayVersion.startsWith("7.4") &&
-			 _liferayProduct.equals("dxp")) ||
-			_liferayVersion.startsWith("20")) {
+		if (_liferayVersion.startsWith("20") ||
+			(_liferayVersion.startsWith("7.4") &&
+			 _liferayProduct.equals("dxp"))) {
 
 			updateMavenPomProperties(
 				mavenWorkspaceDir, "liferay.bom.version", "liferay.bom.version",
@@ -180,7 +180,10 @@ public class ProjectTemplatesSimulationPanelEntryTest
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private String _getLiferayWorkspaceProduct() {
-		if (_liferayVersion.startsWith("7.0")) {
+		if (_liferayVersion.startsWith("20")) {
+			return "dxp-2024.q1.1";
+		}
+		else if (_liferayVersion.startsWith("7.0")) {
 			return "dxp-7.0-sp17";
 		}
 		else if (_liferayVersion.startsWith("7.1")) {
@@ -198,9 +201,6 @@ public class ProjectTemplatesSimulationPanelEntryTest
 			}
 
 			return "portal-7.4-ga56";
-		}
-		else if (_liferayVersion.startsWith("20")) {
-			return "dxp-2024.q1.1";
 		}
 
 		return null;

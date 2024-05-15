@@ -44,6 +44,8 @@ import org.mockito.Mockito;
  */
 public abstract class BaseBackgroundTaskTestCase {
 
+	public static final long COMPANY_ID = RandomTestUtil.randomLong();
+
 	@Before
 	public void setUp() throws Exception {
 		backgroundTaskThreadLocalManagerImpl =
@@ -69,7 +71,7 @@ public abstract class BaseBackgroundTaskTestCase {
 		Mockito.when(
 			group.getCompanyId()
 		).thenReturn(
-			_COMPANY_ID
+			COMPANY_ID
 		);
 
 		Mockito.when(
@@ -106,7 +108,7 @@ public abstract class BaseBackgroundTaskTestCase {
 		Mockito.when(
 			user.getCompanyId()
 		).thenReturn(
-			_COMPANY_ID
+			COMPANY_ID
 		);
 
 		Mockito.when(
@@ -127,7 +129,7 @@ public abstract class BaseBackgroundTaskTestCase {
 
 	protected void assertThreadLocalValues() {
 		Assert.assertEquals(
-			Long.valueOf(_COMPANY_ID), CompanyThreadLocal.getCompanyId());
+			Long.valueOf(COMPANY_ID), CompanyThreadLocal.getCompanyId());
 		Assert.assertEquals(
 			_CLUSTER_INVOKE_ENABLED, ClusterInvokeThreadLocal.isEnabled());
 		Assert.assertEquals(
@@ -163,7 +165,7 @@ public abstract class BaseBackgroundTaskTestCase {
 	}
 
 	protected void initalizeThreadLocals() {
-		CompanyThreadLocal.setCompanyId(_COMPANY_ID);
+		CompanyThreadLocal.setCompanyId(COMPANY_ID);
 		ClusterInvokeThreadLocal.setEnabled(true);
 		GroupThreadLocal.setGroupId(_GROUP_ID);
 		LocaleThreadLocal.setDefaultLocale(_defaultLocale);
@@ -198,8 +200,6 @@ public abstract class BaseBackgroundTaskTestCase {
 	}
 
 	private static final boolean _CLUSTER_INVOKE_ENABLED = true;
-
-	public static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 

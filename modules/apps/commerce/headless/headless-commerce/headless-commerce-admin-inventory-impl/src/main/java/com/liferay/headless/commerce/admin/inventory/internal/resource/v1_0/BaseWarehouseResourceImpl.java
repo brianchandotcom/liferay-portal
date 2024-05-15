@@ -90,6 +90,10 @@ public abstract class BaseWarehouseResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "sort"
 			)
 		}
@@ -102,6 +106,9 @@ public abstract class BaseWarehouseResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Warehouse> getWarehousesPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
 			@javax.ws.rs.core.Context Filter filter,
 			@javax.ws.rs.core.Context Pagination pagination,
 			@javax.ws.rs.core.Context Sort[] sorts)
@@ -120,6 +127,10 @@ public abstract class BaseWarehouseResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -148,6 +159,9 @@ public abstract class BaseWarehouseResourceImpl
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response postWarehousesPageExportBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
 			@javax.ws.rs.core.Context Filter filter,
 			@javax.ws.rs.core.Context Sort[] sorts,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -509,7 +523,7 @@ public abstract class BaseWarehouseResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getWarehousesPage(filter, pagination, sorts);
+		return getWarehousesPage(search, filter, pagination, sorts);
 	}
 
 	@Override

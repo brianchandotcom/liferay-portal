@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -43,10 +42,8 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,18 +62,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PrincipalThreadLocal.setName(_originalName);
-	}
 
 	@Before
 	@Override
@@ -219,8 +204,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		return FileUtil.getBytes(
 			LayoutPageTemplateStructureRelExportImportTest.class, fileName);
 	}
-
-	private static String _originalName;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

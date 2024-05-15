@@ -35,8 +35,15 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onAfterRemove(User user) throws ModelListenerException {
 		try {
 			User defaultServiceAccountUser =
-				_userLocalService.getUserByScreenName(
+				_userLocalService.fetchUserByScreenName(
 					user.getCompanyId(), "default-service-account");
+
+			// Adding conditional to check default user existence
+			// If removed, deleting virtual instances will no longer work
+
+			if (defaultServiceAccountUser == null) {
+				return;
+			}
 
 			_objectDefinitionLocalService.updateUserId(
 				user.getCompanyId(), user.getUserId(),

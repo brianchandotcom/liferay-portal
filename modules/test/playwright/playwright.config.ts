@@ -15,6 +15,7 @@ import {config as blogsWebConfig} from './tests/blogs-web/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
+import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/config';
 import {config as dynamicDataMappingFormWebConfig} from './tests/dynamic-data-mapping-form-web/config';
@@ -56,6 +57,7 @@ export default defineConfig({
 		announcementsWebConfig,
 		batchPlannerConfig,
 		blogsWebConfig,
+		cookiesBannerWebConfig,
 		changeTrackingWebConfig,
 		clientExtensionWebConfig,
 		commerceConfig,

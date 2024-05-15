@@ -64,39 +64,41 @@ public class AddDefaultLayoutInitialRequestPortalInstanceLifecycleListener
 		Layout defaultLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), false, friendlyURL);
 
-		if (defaultLayout == null) {
-			defaultLayout = _layoutLocalService.fetchFirstLayout(
-				group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
+		if (defaultLayout != null) {
+			return;
+		}
 
-			if (defaultLayout == null) {
-				String name = PrincipalThreadLocal.getName();
+		defaultLayout = _layoutLocalService.fetchFirstLayout(
+			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			false);
 
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
+		if (defaultLayout != null) {
+			return;
+		}
 
-				try {
-					User user = _getUser(companyId);
+		String name = PrincipalThreadLocal.getName();
 
-					PrincipalThreadLocal.setName(user.getUserId());
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-					PermissionThreadLocal.setPermissionChecker(
-						_defaultPermissionCheckerFactory.create(user));
+		try {
+			User user = _getUser(companyId);
 
-					ServiceContextThreadLocal.pushServiceContext(
-						new ServiceContext());
+			PrincipalThreadLocal.setName(user.getUserId());
 
-					_siteInitializer.initialize(group.getGroupId());
-				}
-				finally {
-					PrincipalThreadLocal.setName(name);
+			PermissionThreadLocal.setPermissionChecker(
+				_defaultPermissionCheckerFactory.create(user));
 
-					PermissionThreadLocal.setPermissionChecker(
-						permissionChecker);
+			ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 
-					ServiceContextThreadLocal.popServiceContext();
-				}
-			}
+			_siteInitializer.initialize(group.getGroupId());
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 

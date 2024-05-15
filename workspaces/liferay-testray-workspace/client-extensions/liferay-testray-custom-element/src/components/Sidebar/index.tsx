@@ -34,7 +34,7 @@ const Sidebar = () => {
 	const CompareRunsContent = (
 		<div
 			className={classNames(
-				'tr-sidebar__content__list__item tr-sidebar__content__list__item__compare-runs-options'
+				'tr-sidebar__content__list__item tr-sidebar__content__list__item'
 			)}
 		>
 			<TestrayIcons
@@ -57,7 +57,7 @@ const Sidebar = () => {
 	const AutofillContent = (
 		<div
 			className={classNames(
-				'tr-sidebar__content__list__item tr-sidebar__content__list__item__compare-runs-options'
+				'tr-sidebar__content__list__item tr-sidebar__content__list__item'
 			)}
 		>
 			<ClayIcon
@@ -219,8 +219,6 @@ const Sidebar = () => {
 								visible={visible}
 							/>
 						)}
-
-						<div className="tr-sidebar__content__divider" />
 					</div>
 
 					<div className="pb-1">

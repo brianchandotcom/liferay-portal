@@ -30,8 +30,8 @@ const NOT_CONFIGURED_VISUALIZATION_MODE = {
 };
 
 const Settings = ({
+	backURL,
 	fdsView,
-	fdsViewsURL,
 	onActiveSectionChange,
 	onFDSViewUpdate,
 	spritemap,
@@ -291,7 +291,7 @@ const Settings = ({
 
 					<ClayButton
 						displayType="secondary"
-						onClick={() => navigate(fdsViewsURL)}
+						onClick={() => navigate(backURL)}
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>

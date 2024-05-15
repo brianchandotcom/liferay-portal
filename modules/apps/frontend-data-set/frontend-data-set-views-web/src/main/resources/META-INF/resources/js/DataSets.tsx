@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
@@ -13,8 +12,7 @@ import classNames from 'classnames';
 import {fetch, navigate, openModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import '../css/FDSEntries.scss';
-import {FDSViewType} from './FDSViews';
+import '../css/DataSets.scss';
 import RequiredMark from './components/RequiredMark';
 import ValidationFeedback from './components/ValidationFeedback';
 import RESTApplicationDropdownItem from './components/rest/RESTApplicationDropdownItem';
@@ -25,15 +23,13 @@ import {
 	ALLOWED_ENDPOINTS_PARAMETERS,
 	API_URL,
 	FDS_DEFAULT_PROPS,
-	OBJECT_RELATIONSHIP,
 } from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 
-const VIEWS_COUNT_TABLE_CELL_RENDERER_NAME = 'viewsCountTableCellRenderer';
-
-type FDSEntryType = {
-	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
+const LIST_OF_ITEMS_PER_PAGE = '4, 8, 20, 40, 60';
+const DEFAULT_ITEMS_PER_PAGE = 20;
+export interface IDataSet {
 	actions: {
 		delete: {
 			href: string;
@@ -50,17 +46,9 @@ type FDSEntryType = {
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;
-};
+}
 
-const ViewsCountTableCell = ({itemData}: {itemData: FDSEntryType}) => {
-	const count = itemData[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW].length;
-
-	return (
-		<ClayBadge displayType={!count ? 'warning' : 'info'} label={count} />
-	);
-};
-
-const FDSEntryLabelInput = ({
+const LabelInput = ({
 	labelValidationError,
 	namespace,
 	onBlur,
@@ -78,14 +66,14 @@ const FDSEntryLabelInput = ({
 			'has-error': labelValidationError,
 		})}
 	>
-		<label htmlFor={`${namespace}fdsEntryLabelInput`}>
+		<label htmlFor={`${namespace}labelInput`}>
 			{Liferay.Language.get('name')}
 
 			<RequiredMark />
 		</label>
 
 		<ClayInput
-			id={`${namespace}fdsEntryLabelInput`}
+			id={`${namespace}labelInput`}
 			onBlur={onBlur}
 			onChange={(event) => onChange(event.target.value)}
 			type="text"
@@ -96,20 +84,18 @@ const FDSEntryLabelInput = ({
 	</ClayForm.Group>
 );
 
-interface IAddFDSEntryModalContentInterface {
-	closeModal: Function;
-	loadData: Function;
-	namespace: string;
-	restApplications?: Array<string>;
-}
-
-const AddFDSEntryModalContent = ({
+const NewDataSetModalContent = ({
 	closeModal,
 	loadData,
 	namespace,
 	restApplications,
-}: IAddFDSEntryModalContentInterface) => {
-	const [fdsEntryLabel, setFDSEntryLabel] = useState('');
+}: {
+	closeModal: Function;
+	loadData: Function;
+	namespace: string;
+	restApplications?: Array<string>;
+}) => {
+	const [label, setLabel] = useState('');
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [
@@ -140,7 +126,7 @@ const AddFDSEntryModalContent = ({
 		string | null
 	>();
 
-	const addFDSEntry = async () => {
+	const saveDataSet = async () => {
 		if (!selectedRESTApplication) {
 			return;
 		}
@@ -148,13 +134,15 @@ const AddFDSEntryModalContent = ({
 		selectedRESTApplication;
 
 		const body = {
-			label: fdsEntryLabel,
+			defaultItemsPerPage: DEFAULT_ITEMS_PER_PAGE,
+			label,
+			listOfItemsPerPage: LIST_OF_ITEMS_PER_PAGE,
 			restApplication: selectedRESTApplication,
 			restEndpoint: selectedRESTEndpoint,
 			restSchema: selectedRESTSchema,
 		};
 
-		const response = await fetch(API_URL.FDS_ENTRIES, {
+		const response = await fetch(API_URL.FDS_VIEWS, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
@@ -169,9 +157,9 @@ const AddFDSEntryModalContent = ({
 			return;
 		}
 
-		const fdsEntry = await response.json();
+		const dataSet: IDataSet = await response.json();
 
-		if (fdsEntry?.id) {
+		if (dataSet?.id) {
 			closeModal();
 
 			openDefaultSuccessToast();
@@ -275,7 +263,7 @@ const AddFDSEntryModalContent = ({
 	};
 
 	const validate = () => {
-		if (!fdsEntryLabel) {
+		if (!label) {
 			setLabelValidationError(true);
 
 			return false;
@@ -416,14 +404,14 @@ const AddFDSEntryModalContent = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<FDSEntryLabelInput
+				<LabelInput
 					labelValidationError={labelValidationError}
 					namespace={namespace}
 					onBlur={() => {
-						setLabelValidationError(!fdsEntryLabel);
+						setLabelValidationError(!label);
 					}}
-					onChange={setFDSEntryLabel}
-					value={fdsEntryLabel}
+					onChange={setLabel}
+					value={label}
 				/>
 
 				{restApplications && (
@@ -513,7 +501,7 @@ const AddFDSEntryModalContent = ({
 								const success = validate();
 
 								if (success) {
-									addFDSEntry();
+									saveDataSet();
 								}
 								else {
 									setSaveButtonDisabled(false);
@@ -536,19 +524,17 @@ const AddFDSEntryModalContent = ({
 	);
 };
 
-interface IFDSEntriesInterface {
-	fdsViewsURL: string;
-	namespace: string;
-	permissionsURL: string;
-	restApplications: Array<string>;
-}
-
-const FDSEntries = ({
-	fdsViewsURL,
+const DataSets = ({
+	editDataSetURL,
 	namespace,
 	permissionsURL,
 	restApplications,
-}: IFDSEntriesInterface) => {
+}: {
+	editDataSetURL: string;
+	namespace: string;
+	permissionsURL: string;
+	restApplications: Array<string>;
+}) => {
 	const creationMenu = {
 		primaryItems: [
 			{
@@ -560,7 +546,7 @@ const FDSEntries = ({
 						}: {
 							closeModal: Function;
 						}) => (
-							<AddFDSEntryModalContent
+							<NewDataSetModalContent
 								closeModal={closeModal}
 								loadData={loadData}
 								namespace={namespace}
@@ -573,16 +559,19 @@ const FDSEntries = ({
 		],
 	};
 
-	const getEditURL = (itemData: FDSEntryType) => {
-		const url = new URL(fdsViewsURL);
+	const getEditURL = (itemData: IDataSet) => {
+		const url = new URL(editDataSetURL);
 
-		url.searchParams.set(`${namespace}fdsEntryId`, itemData.id);
-		url.searchParams.set(`${namespace}fdsEntryLabel`, itemData.label);
+		url.searchParams.set(
+			`${namespace}dataSetERC`,
+			itemData.externalReferenceCode
+		);
+		url.searchParams.set(`${namespace}dataSetLabel`, itemData.label);
 
 		return url;
 	};
 
-	const onEditClick = ({itemData}: {itemData: FDSEntryType}) => {
+	const onEditClick = ({itemData}: {itemData: IDataSet}) => {
 		navigate(getEditURL(itemData));
 	};
 
@@ -590,7 +579,7 @@ const FDSEntries = ({
 		itemData,
 		loadData,
 	}: {
-		itemData: FDSEntryType;
+		itemData: IDataSet;
 		loadData: Function;
 	}) => {
 		openModal({
@@ -667,20 +656,11 @@ const FDSEntries = ({
 	];
 
 	return (
-		<div className="fds-entries">
+		<div className="data-sets">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
-				apiURL={`${API_URL.FDS_ENTRIES}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
+				apiURL={API_URL.FDS_VIEWS}
 				creationMenu={creationMenu}
-				customRenderers={{
-					tableCell: [
-						{
-							component: ViewsCountTableCell,
-							name: VIEWS_COUNT_TABLE_CELL_RENDERER_NAME,
-							type: 'internal',
-						},
-					],
-				}}
 				emptyState={{
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'
@@ -688,7 +668,7 @@ const FDSEntries = ({
 					image: '/states/empty_state.svg',
 					title: Liferay.Language.get('no-data-sets-created'),
 				}}
-				id={`${namespace}FDSEntries`}
+				id={`${namespace}DataSets`}
 				itemsActions={[
 					{
 						data: {
@@ -734,5 +714,4 @@ const FDSEntries = ({
 	);
 };
 
-export {FDSEntryType};
-export default FDSEntries;
+export default DataSets;

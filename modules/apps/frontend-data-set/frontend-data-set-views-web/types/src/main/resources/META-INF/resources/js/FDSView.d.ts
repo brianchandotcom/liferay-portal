@@ -9,10 +9,10 @@ import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {FDSViewType} from './FDSViews';
 import {IFieldTreeItem} from './utils/types';
 interface IFDSViewSectionProps {
+	backURL: string;
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
-	fdsViewsURL: string;
 	fieldTreeItems: Array<IFieldTreeItem>;
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
@@ -21,19 +21,21 @@ interface IFDSViewSectionProps {
 	spritemap: string;
 }
 interface IFDSViewProps {
+	backURL: string;
+	dataSetERC: string;
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
-	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
 	spritemap: string;
 }
 declare const FDSView: ({
+	backURL,
+	dataSetERC,
 	fdsClientExtensionCellRenderers,
 	fdsFilterClientExtensions,
 	fdsViewId,
-	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
 	spritemap,

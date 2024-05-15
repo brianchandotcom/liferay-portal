@@ -39,7 +39,7 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
-	async postObjectDefinition(data: DataObject) {
+	async postObjectDefinition(data: DataObject): Promise<ObjectDefinition> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
 			{data}

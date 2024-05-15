@@ -14,9 +14,12 @@ import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import getCollectionDefinition from '../layout-content-page-editor-web/utils/getCollectionDefinition';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {getPageEditorDateFormat} from './utils/dateFormat';
+import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -25,6 +28,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
+	journalPagesTest,
 	loginTest(),
 	objectPagesTest,
 	pageEditorPagesTest
@@ -234,6 +238,157 @@ test.describe('Manage object entries through page templates', () => {
 		await apiHelpers.objectAdmin.deleteObjectDefinition(
 			objectDefinition.id
 		);
+	});
+
+	test('verify if the object entries are displayed when selecting to preview an object entry on a page template', async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+	}) => {
+		test.slow();
+
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
+
+		const {
+			listTypeDefinition,
+			objectEntry,
+			objectFields,
+			titleObjectFieldName,
+		} = await mockObjectFields({
+			apiHelpers,
+			objectEntryReturn: {format: 'API'},
+			objectFieldBusinessTypes: [
+				'autoIncrement',
+				'boolean',
+				'date',
+				'decimal',
+				'encrypted',
+				'integer',
+				'longInteger',
+				'longText',
+				'multiselectPicklist',
+				'picklist',
+				'precisionDecimal',
+				'richText',
+				'text',
+			],
+			titleObjectFieldName: 'text',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: objectDefinitionLabel,
+				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+				titleObjectFieldName,
+			});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			objectEntry,
+			applicationName
+		);
+
+		await displayPageTemplatesPage.goto();
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.publishNewTemplate({
+			contentType: objectDefinition.label['en_US'],
+			name: displayPageTemplateName,
+		});
+
+		await page.getByTitle(displayPageTemplateName).click();
+
+		for (const [index, objectField] of objectDefinition.objectFields
+			.filter((objectField) => !objectField.system)
+			.entries()) {
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			await page.getByText('Heading Example', {exact: true}).click();
+
+			await page.getByLabel('Select element-text').click();
+
+			await pageEditorPage.setMappingConfiguration({
+				entity: objectDefinitionLabel,
+				entry: objectEntry[titleObjectFieldName],
+				field: objectField.label.en_US,
+				recentSelectedItem:
+					index >= 1 ? objectEntry[titleObjectFieldName] : undefined,
+				source: 'content',
+			});
+
+			let matchString: string;
+
+			switch (objectField.businessType) {
+				case 'AutoIncrement': {
+					matchString = '1';
+
+					break;
+				}
+				case 'Date': {
+					const date = new Date(
+						Date.parse(objectEntry[objectField.name])
+					);
+
+					matchString = getPageEditorDateFormat(date);
+
+					break;
+				}
+				case 'Picklist': {
+					matchString = (
+						objectEntry[objectField.name] as {key: string}
+					).key;
+
+					break;
+				}
+				case 'MultiselectPicklist': {
+					(objectEntry[objectField.name] as string[]).forEach(
+						(listTypeEntry, index) => {
+							index < 1
+								? (matchString = `${listTypeEntry}`)
+								: (matchString += `, ${listTypeEntry}`);
+						}
+					);
+
+					break;
+				}
+				default: {
+					matchString = objectEntry[objectField.name].toString();
+				}
+			}
+
+			await expect(
+				page.getByTitle('Edit Text').filter({hasText: matchString})
+			).toBeVisible();
+		}
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition.id
+		);
+
+		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+			listTypeDefinition.id
+		);
+
+		await displayPageTemplatesPage.deleteAllDisplayPageTemplates();
 	});
 });
 

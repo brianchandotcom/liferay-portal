@@ -12,15 +12,16 @@ import classNames from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
+import {IDataSet} from '../DataSets';
 import {IFDSViewSectionProps} from '../FDSView';
 import RequiredMark from '../components/RequiredMark';
-import {API_URL} from '../utils/constants';
+import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 const Details = ({
+	backURL,
 	fdsView,
-	fdsViewsURL,
 	namespace,
 	onFDSViewUpdate,
 }: IFDSViewSectionProps) => {
@@ -73,6 +74,12 @@ const Details = ({
 			openDefaultFailureToast();
 		}
 	};
+
+	const {restApplication, restEndpoint, restSchema} = Liferay.FeatureFlags[
+		'LPD-15729'
+	]
+		? ((fdsView as unknown) as IDataSet)
+		: fdsView[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW];
 
 	return (
 		<ClayLayout.Sheet className="mt-3" size="lg">
@@ -148,10 +155,7 @@ const Details = ({
 							</ClayList.ItemTitle>
 
 							<ClayList.ItemText>
-								{
-									fdsView.fdsEntryFDSViewRelationship
-										.restApplication
-								}
+								{restApplication}
 							</ClayList.ItemText>
 						</ClayList.ItemField>
 					</ClayList.Item>
@@ -166,9 +170,7 @@ const Details = ({
 								{Liferay.Language.get('schema')}
 							</ClayList.ItemTitle>
 
-							<ClayList.ItemText>
-								{fdsView.fdsEntryFDSViewRelationship.restSchema}
-							</ClayList.ItemText>
+							<ClayList.ItemText>{restSchema}</ClayList.ItemText>
 						</ClayList.ItemField>
 					</ClayList.Item>
 
@@ -183,10 +185,7 @@ const Details = ({
 							</ClayList.ItemTitle>
 
 							<ClayList.ItemText>
-								{
-									fdsView.fdsEntryFDSViewRelationship
-										.restEndpoint
-								}
+								{restEndpoint}
 							</ClayList.ItemText>
 						</ClayList.ItemField>
 					</ClayList.Item>
@@ -201,7 +200,7 @@ const Details = ({
 
 					<ClayButton
 						displayType="secondary"
-						onClick={() => navigate(fdsViewsURL)}
+						onClick={() => navigate(backURL)}
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>

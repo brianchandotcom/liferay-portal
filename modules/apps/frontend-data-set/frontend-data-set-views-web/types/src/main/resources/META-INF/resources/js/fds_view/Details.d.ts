@@ -7,8 +7,8 @@
 
 import {IFDSViewSectionProps} from '../FDSView';
 declare const Details: ({
+	backURL,
 	fdsView,
-	fdsViewsURL,
 	namespace,
 	onFDSViewUpdate,
 }: IFDSViewSectionProps) => JSX.Element;

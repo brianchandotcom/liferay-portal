@@ -1,6 +1,6 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
@@ -8,25 +8,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String fdsViewsURL = fdsViewsDisplayContext.getFDSViewsURL(ParamUtil.getString(request, "fdsEntryId"), ParamUtil.getString(request, "fdsEntryLabel"));
+String backURL = ParamUtil.getString(request, "backURL");
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(fdsViewsURL);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL"));
 
-renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
+renderResponse.setTitle(ParamUtil.getString(request, "dataSetLabel"));
 %>
 
 <react:component
 	module="{FDSView} from frontend-data-set-views-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"backURL", fdsViewsURL
+			"backURL", backURL
+		).put(
+			"dataSetERC", ParamUtil.getString(request, "dataSetERC")
 		).put(
 			"fdsClientExtensionCellRenderers", fdsViewsDisplayContext.getFDSCellRendererCETsJSONArray()
 		).put(
 			"fdsFilterClientExtensions", fdsViewsDisplayContext.getFDSFilterCETsJSONArray()
-		).put(
-			"fdsViewId", ParamUtil.getString(request, "fdsViewId")
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(

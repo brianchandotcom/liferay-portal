@@ -10,7 +10,6 @@ source .env
 
 if [[ -z "${LIFERAY_LEARN_DIR}" ]]
 then
-
 	default=../../../../liferay-learn
 
 	echo "Please enter the value for 'LIFERAY_LEARN_DIR': [${default}]"
@@ -28,7 +27,7 @@ then
 	source .env
 fi
 
-docker build -t liferay-learn-workspace/build:latest docker/build
+docker build -t liferay-learn-workspace/build:latest --build-arg TARGETPLATFORM=linux/arm64 docker/build
 
 cd ..
 

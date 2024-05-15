@@ -85,7 +85,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -119,7 +118,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -185,10 +183,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		if (Objects.equals(
-				PortletKeys.SERVER_ADMIN,
-				GetterUtil.getString(
-					actionRequest.getAttribute(WebKeys.PORTLET_ID))) &&
+		if (!cmd.equals("addLogLevel") &&
 			!cmd.equals("dlGenerateAudioPreviews") &&
 			!cmd.equals("dlGenerateOpenOfficePreviews") &&
 			!cmd.equals("dlGenerateVideoPreviews") &&

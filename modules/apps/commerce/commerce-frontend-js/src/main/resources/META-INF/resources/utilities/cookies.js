@@ -19,7 +19,11 @@ class CommerceCookie {
 		return getCookie(this.scope + key, this.cookieType);
 	}
 
-	setValue(key, value, expires, path = '/') {
+	setValue(key, value, expires, path) {
+		if (!path) {
+			path = themeDisplay.getPathContext() || '/';
+		}
+
 		const options = {path};
 
 		if (expires) {

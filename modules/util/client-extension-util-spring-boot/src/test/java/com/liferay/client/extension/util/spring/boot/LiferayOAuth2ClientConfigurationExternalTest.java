@@ -65,7 +65,7 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 			clientRegistration.getProviderDetails();
 
 		Assert.assertEquals(
-			"https://external-one-headless-server.com/oauth2/token",
+			"https://external-headless-server.com/oauth2/token",
 			providerDetails.getTokenUri());
 	}
 

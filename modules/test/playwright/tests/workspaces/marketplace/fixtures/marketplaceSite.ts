@@ -20,13 +20,14 @@ const SITE_NAME = 'Marketplace';
 export const marketplaceSiteFixture = test.extend<Marketplace>({
 	marketplace: [
 		async ({apiHelpers, page}, use) => {
-			let site = await apiHelpers.headlessSite.getSiteByExternalReferenceCode(
+			let site = await apiHelpers.headlessSite.getSiteByERC(
 				SITE_EXTERNAL_REFERENCE_CODE
 			);
 
-			if (site.status === 'NOT_FOUND') {
-				site = await apiHelpers.headlessSite.createSite(SITE_NAME, {
+			if ((site as any).status === 'NOT_FOUND') {
+				site = await apiHelpers.headlessSite.createSite({
 					externalReferenceCode: SITE_EXTERNAL_REFERENCE_CODE,
+					name: SITE_NAME,
 					templateKey:
 						'com.liferay.site.initializer.liferay.marketplace',
 					templateType: 'site-initializer',

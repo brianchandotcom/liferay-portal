@@ -26,7 +26,7 @@ dependencies {
 #if (${framework.equals("springportletmvc")} && ${frameworkDependencies.equals("provided")})
 	implementation group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.thin", version: "4.1.9", transitive: false
 #end
-#if ((${liferayVersion.startsWith("7.4")} || ${liferayVersion.startsWith("20")}) && ${framework.equals("springportletmvc")})
+#if ((${liferayVersion.startsWith("20")} || ${liferayVersion.startsWith("7.4")}) && ${framework.equals("springportletmvc")})
 	implementation(group: "com.rometools", name: "rome", version: "1.16.0") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}

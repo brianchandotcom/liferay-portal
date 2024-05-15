@@ -835,14 +835,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				String friendlyURL = null;
 				boolean site = true;
 
-				if (groupKey.equals(GroupConstants.CONTROL_PANEL)) {
-					type = GroupConstants.TYPE_SITE_PRIVATE;
-					friendlyURL = GroupConstants.CONTROL_PANEL_FRIENDLY_URL;
-					site = false;
-				}
-				else if (groupKey.equals(GroupConstants.CMS)) {
+				if (groupKey.equals(GroupConstants.CMS)) {
 					type = GroupConstants.TYPE_SITE_PRIVATE;
 					friendlyURL = GroupConstants.CMS_FRIENDLY_URL;
+					site = false;
+				}
+				else if (groupKey.equals(GroupConstants.CONTROL_PANEL)) {
+					type = GroupConstants.TYPE_SITE_PRIVATE;
+					friendlyURL = GroupConstants.CONTROL_PANEL_FRIENDLY_URL;
 					site = false;
 				}
 				else if (groupKey.equals(GroupConstants.FORMS)) {

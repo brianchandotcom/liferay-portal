@@ -483,7 +483,9 @@ class Analytics {
 			);
 		}
 		else {
-			document.cookie = `${key}=${data}; expires=${expires.toUTCString()}; path=/; Secure`;
+			const path = themeDisplay.getPathContext() || '/';
+
+			document.cookie = `${key}=${data}; expires=${expires.toUTCString()}; path=${path}; Secure`;
 		}
 
 		return;

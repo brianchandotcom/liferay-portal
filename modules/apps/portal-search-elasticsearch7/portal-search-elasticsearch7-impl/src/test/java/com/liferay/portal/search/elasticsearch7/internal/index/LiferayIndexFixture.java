@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
 
 import java.io.IOException;
 
@@ -43,16 +42,15 @@ public class LiferayIndexFixture {
 		RestHighLevelClient restHighLevelClient = getRestHighLevelClient();
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_indexName.getName(), restHighLevelClient.indices());
+			analyzer, field, _indexName.getName(),
+			restHighLevelClient.indices());
 	}
 
 	public void assertType(String field, String type) throws Exception {
 		RestHighLevelClient restHighLevelClient = getRestHighLevelClient();
 
 		FieldMappingAssert.assertType(
-			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_indexName.getName(), restHighLevelClient.indices());
+			type, field, _indexName.getName(), restHighLevelClient.indices());
 	}
 
 	public RestHighLevelClient getRestHighLevelClient() {

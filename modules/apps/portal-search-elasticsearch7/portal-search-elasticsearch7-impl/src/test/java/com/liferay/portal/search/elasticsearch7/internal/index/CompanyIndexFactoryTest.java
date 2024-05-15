@@ -17,7 +17,6 @@ import com.liferay.portal.search.elasticsearch7.internal.configuration.Elasticse
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch7.internal.document.SingleFieldFixture;
-import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
 import com.liferay.portal.search.elasticsearch7.internal.query.QueryBuilderFactories;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
@@ -122,8 +121,7 @@ public class CompanyIndexFactoryTest {
 
 		_singleFieldFixture = new SingleFieldFixture(
 			_elasticsearchFixture.getRestHighLevelClient(),
-			new IndexName(_companyIndexFactoryFixture.getIndexName()),
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			new IndexName(_companyIndexFactoryFixture.getIndexName()));
 
 		_singleFieldFixture.setQueryBuilderFactory(QueryBuilderFactories.MATCH);
 	}
@@ -551,8 +549,7 @@ public class CompanyIndexFactoryTest {
 			_elasticsearchFixture.getRestHighLevelClient();
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_companyIndexFactoryFixture.getIndexName(),
+			analyzer, field, _companyIndexFactoryFixture.getIndexName(),
 			restHighLevelClient.indices());
 	}
 
@@ -561,8 +558,7 @@ public class CompanyIndexFactoryTest {
 			_elasticsearchFixture.getRestHighLevelClient();
 
 		FieldMappingAssert.assertType(
-			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			_companyIndexFactoryFixture.getIndexName(),
+			type, field, _companyIndexFactoryFixture.getIndexName(),
 			restHighLevelClient.indices());
 	}
 

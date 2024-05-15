@@ -27,17 +27,17 @@ import org.junit.Assert;
 public class FieldMappingAssert {
 
 	public static void assertAnalyzer(
-			String expectedValue, String field, String type, String index,
+			String expectedValue, String field, String index,
 			IndicesClient indicesClient)
 		throws Exception {
 
 		assertFieldMappingMetadata(
-			expectedValue, "analyzer", field, type, index, indicesClient);
+			expectedValue, "analyzer", field, index, indicesClient);
 	}
 
 	public static void assertFieldMappingMetadata(
-			String expectedValue, String key, String field, String type,
-			String index, IndicesClient indicesClient)
+			String expectedValue, String key, String field, String index,
+			IndicesClient indicesClient)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
@@ -47,12 +47,12 @@ public class FieldMappingAssert {
 	}
 
 	public static void assertType(
-			String expectedValue, String field, String type, String index,
+			String expectedValue, String field, String index,
 			IndicesClient indicesClient)
 		throws Exception {
 
 		assertFieldMappingMetadata(
-			expectedValue, "type", field, type, index, indicesClient);
+			expectedValue, "type", field, index, indicesClient);
 	}
 
 	private static void _assertFieldMappingMetadata(

@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch7.internal.document.SingleFieldFixture;
-import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
 import com.liferay.portal.search.elasticsearch7.internal.query.QueryBuilderFactories;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -36,8 +35,7 @@ public class LiferayTypeMappingsJapaneseTest {
 		_liferayIndexFixture.setUp();
 
 		_singleFieldFixture = new SingleFieldFixture(
-			_liferayIndexFixture.getRestHighLevelClient(), indexName,
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+			_liferayIndexFixture.getRestHighLevelClient(), indexName);
 
 		_singleFieldFixture.setField(_PREFIX + "_ja");
 		_singleFieldFixture.setQueryBuilderFactory(QueryBuilderFactories.MATCH);

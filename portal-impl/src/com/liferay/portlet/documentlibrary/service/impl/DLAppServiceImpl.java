@@ -2169,6 +2169,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@Override
 	public List<FileShortcut> getGroupFileShortcuts(long groupId)
 		throws PortalException {
+
 		Repository repository = getRepository(groupId);
 
 		return repository.getRepositoryFileShortcuts(groupId);

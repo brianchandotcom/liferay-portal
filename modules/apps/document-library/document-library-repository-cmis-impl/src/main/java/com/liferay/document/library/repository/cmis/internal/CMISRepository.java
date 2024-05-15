@@ -849,13 +849,6 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	@Override
-	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
-		throws PortalException {
-
-		return new ArrayList<>();
-	}
-
-	@Override
 	public String getObjectName(String objectId) throws PortalException {
 		Session session = getSession();
 
@@ -879,6 +872,13 @@ public class CMISRepository extends BaseCmisRepository {
 
 		throw new RepositoryException(
 			"CMIS object is unfileable for id " + objectId);
+	}
+
+	@Override
+	public List<FileShortcut> getRepositoryFileShortcuts(long groupId)
+		throws PortalException {
+
+		return new ArrayList<>();
 	}
 
 	public Session getSession() throws PortalException {

@@ -25,9 +25,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.elasticsearch.action.ActionResponse;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.GetMappingsRequest;
 import org.elasticsearch.client.indices.GetMappingsResponse;
 import org.elasticsearch.client.indices.PutMappingRequest;
@@ -81,7 +81,7 @@ public class LiferayDocumentTypeFactory
 		}
 
 		createIndexRequest.mapping(
-			"_doc", mappingsJSONObject.toString(), XContentType.JSON);
+			mappingsJSONObject.toString(), XContentType.JSON);
 	}
 
 	public void createOptionalDefaultTypeMappings(String indexName) {

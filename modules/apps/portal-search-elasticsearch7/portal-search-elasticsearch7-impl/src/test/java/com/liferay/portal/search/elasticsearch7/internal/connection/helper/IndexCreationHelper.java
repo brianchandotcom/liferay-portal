@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection.helper;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.common.settings.Settings;
 
 /**

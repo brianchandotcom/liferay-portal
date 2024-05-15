@@ -34,11 +34,11 @@ public class CreateIndexRequestExecutorImpl
 
 	@Override
 	public CreateIndexResponse execute(CreateIndexRequest createIndexRequest) {
-		org.elasticsearch.action.admin.indices.create.CreateIndexRequest
+		org.elasticsearch.client.indices.CreateIndexRequest
 			elasticsearchCreateIndexRequest = createCreateIndexRequest(
 				createIndexRequest);
 
-		org.elasticsearch.action.admin.indices.create.CreateIndexResponse
+		org.elasticsearch.client.indices.CreateIndexResponse
 			elasticsearchCreateIndexResponse = _getCreateIndexResponse(
 				elasticsearchCreateIndexRequest, createIndexRequest);
 
@@ -50,19 +50,18 @@ public class CreateIndexRequestExecutorImpl
 			elasticsearchCreateIndexResponse.index());
 	}
 
-	protected org.elasticsearch.action.admin.indices.create.CreateIndexRequest
+	protected org.elasticsearch.client.indices.CreateIndexRequest
 		createCreateIndexRequest(CreateIndexRequest createIndexRequest) {
 
-		org.elasticsearch.action.admin.indices.create.CreateIndexRequest
+		org.elasticsearch.client.indices.CreateIndexRequest
 			elasticsearchCreateIndexRequest =
-				new org.elasticsearch.action.admin.indices.create.
-					CreateIndexRequest(createIndexRequest.getIndexName());
+				new org.elasticsearch.client.indices.CreateIndexRequest(
+					createIndexRequest.getIndexName());
 
 		if (createIndexRequest.getMappings() != null) {
 			ClassLoaderUtil.getWithContextClassLoader(
 				() -> elasticsearchCreateIndexRequest.mapping(
-					"_doc", createIndexRequest.getMappings(),
-					XContentType.JSON),
+					createIndexRequest.getMappings(), XContentType.JSON),
 				getClass());
 		}
 
@@ -83,9 +82,9 @@ public class CreateIndexRequestExecutorImpl
 		return elasticsearchCreateIndexRequest;
 	}
 
-	private org.elasticsearch.action.admin.indices.create.CreateIndexResponse
+	private org.elasticsearch.client.indices.CreateIndexResponse
 		_getCreateIndexResponse(
-			org.elasticsearch.action.admin.indices.create.CreateIndexRequest
+			org.elasticsearch.client.indices.CreateIndexRequest
 				elasticsearchCreateIndexRequest,
 			CreateIndexRequest createIndexRequest) {
 

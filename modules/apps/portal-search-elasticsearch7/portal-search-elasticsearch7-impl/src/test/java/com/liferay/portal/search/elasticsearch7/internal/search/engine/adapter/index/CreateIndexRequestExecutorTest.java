@@ -61,7 +61,7 @@ public class CreateIndexRequestExecutorTest {
 			createIndexRequestExecutorImpl, "_elasticsearchClientResolver",
 			_elasticsearchFixture);
 
-		org.elasticsearch.action.admin.indices.create.CreateIndexRequest
+		org.elasticsearch.client.indices.CreateIndexRequest
 			elasticsearchCreateIndexRequest =
 				createIndexRequestExecutorImpl.createCreateIndexRequest(
 					createIndexRequest);

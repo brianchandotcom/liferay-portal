@@ -215,8 +215,9 @@ public class CookiesManagerImpl implements CookiesManager {
 		cookieSupportCookie.setMaxAge(CookiesConstants.MAX_AGE);
 
 		return addCookie(
-			CookiesConstants.CONSENT_TYPE_NECESSARY, cookieSupportCookie, null,
-			httpServletResponse, _portal.isSecure(httpServletRequest));
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookieSupportCookie,
+			httpServletRequest, httpServletResponse,
+			_portal.isSecure(httpServletRequest));
 	}
 
 	@Override

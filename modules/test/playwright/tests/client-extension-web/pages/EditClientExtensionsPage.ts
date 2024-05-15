@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {ClientExtensionsPage} from './ClientExtensionsPage';
 
 const EDIT_CLIENT_EXTENSION_BASE_URL =
@@ -55,6 +56,6 @@ export class EditClientExtensionsPage {
 	async publish() {
 		await this.publishButton.click();
 
-		await this.page.waitForLoadState();
+		await waitForSuccessAlert(this.page);
 	}
 }

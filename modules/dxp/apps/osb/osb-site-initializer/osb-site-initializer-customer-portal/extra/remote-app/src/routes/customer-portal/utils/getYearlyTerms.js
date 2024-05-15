@@ -4,52 +4,69 @@
  */
 
 const getYearlyTerms = ({endDate, startDate}) => {
-	const yearStartDate = new Date(startDate).getFullYear();
-	const yearEndDate = new Date(endDate).getFullYear();
+	const subscriptionStartDate = new Date(startDate);
+	const subscriptionEndDate = new Date(endDate);
 
-	if (yearStartDate + 1 < yearEndDate) {
-		const yearDateSplitted = new Array(yearEndDate - yearStartDate + 1)
+	if (
+		subscriptionStartDate.getFullYear() + 1 <
+		subscriptionEndDate.getFullYear()
+	) {
+		let arraySize =
+			subscriptionEndDate.getFullYear() -
+			subscriptionStartDate.getFullYear();
+
+		if (subscriptionEndDate.getMonth() > subscriptionStartDate.getMonth()) {
+			arraySize = arraySize + 1;
+		}
+
+		if (
+			subscriptionEndDate.getMonth() === subscriptionStartDate.getMonth()
+		) {
+			if (
+				subscriptionEndDate.getDate() > subscriptionStartDate.getDate()
+			) {
+				arraySize = arraySize + 1;
+			}
+		}
+
+		const yearDateSplitted = new Array(arraySize)
 			.fill()
 			.map((_, index, array) => {
-				const currentYear = yearStartDate + index;
+				const currentYear = subscriptionStartDate.getFullYear() + index;
 				const yearNumEndDate = currentYear + 1;
-
-				const yearNumStartDate = new Date(startDate).setFullYear(
+				const indexNumStartDate = new Date(startDate).setFullYear(
 					currentYear
 				);
 
-				const daysEndDate = new Date(startDate).getDate();
-				const monthsEndDate = new Date(startDate).getMonth();
-				const hasLastElement = index + 1 === array.length;
+				const daysEndDate = subscriptionStartDate.getDate();
+				const monthsEndDate = subscriptionStartDate.getMonth();
 
-				if (hasLastElement) {
-					const lastTermStartDate = new Date(yearNumStartDate);
+				const indexEndDate = new Date(
+					yearNumEndDate,
+					monthsEndDate,
+					daysEndDate - 1
+				);
+				const indexStartDate = new Date(indexNumStartDate);
 
-					if (lastTermStartDate > new Date(endDate)) {
-						return null;
-					}
-
+				if (index === array.length - 1) {
 					return {
-						endDate: new Date(endDate),
-						startDate: lastTermStartDate,
+						endDate: subscriptionEndDate,
+						startDate: indexStartDate,
 					};
 				}
-
-				return {
-					endDate: new Date(
-						yearNumEndDate,
-						monthsEndDate,
-						daysEndDate - 1
-					),
-					startDate: new Date(yearNumStartDate),
-				};
+				else {
+					return {
+						endDate: indexEndDate,
+						startDate: indexStartDate,
+					};
+				}
 			})
 			.filter((item) => item);
 
 		return yearDateSplitted;
 	}
 
-	return [{endDate: new Date(endDate), startDate: new Date(startDate)}];
+	return [{endDate: subscriptionEndDate, startDate: subscriptionStartDate}];
 };
 
 export {getYearlyTerms};

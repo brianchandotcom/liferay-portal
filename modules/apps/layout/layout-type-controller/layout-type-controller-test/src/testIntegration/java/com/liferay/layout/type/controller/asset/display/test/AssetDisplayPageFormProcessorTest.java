@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.PortletServlet;
@@ -60,10 +59,8 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.Cookie;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -82,18 +79,6 @@ public class AssetDisplayPageFormProcessorTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PrincipalThreadLocal.setName(_originalName);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -340,8 +325,6 @@ public class AssetDisplayPageFormProcessorTest {
 		testFunction.accept(
 			_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()));
 	}
-
-	private static String _originalName;
 
 	@Inject
 	private AssetDisplayPageEntryFormProcessor

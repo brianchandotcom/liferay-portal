@@ -110,6 +110,11 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 			new com.liferay.commerce.payment.internal.upgrade.v1_7_0.
 				CommercePaymentEntryUpgradeProcess());
 
+		registry.register(
+			"1.7.0", "1.8.0",
+			UpgradeProcessFactory.addColumns(
+				"CommercePaymentEntry", "payload VARCHAR(75) null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce payment upgrade step registrator finished");
 		}

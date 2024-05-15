@@ -58,7 +58,7 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 	}
 
 	@Test
-	public void testMultipleLinkedOAuthClients() {
+	public void testMultipleLinkedOAuth2Clients() {
 		OAuth2AccessTokenResponse oAuth2AccessTokenResponse =
 			OAuth2AccessTokenResponse.withToken(
 				"token"
@@ -82,7 +82,6 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 			expected,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"fizz-buzz-headless-server"));
-
 		Assert.assertEquals(
 			expected,
 			_liferayOAuth2AccessTokenManager.getAuthorization(

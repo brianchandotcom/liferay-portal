@@ -35,21 +35,23 @@ public interface WarehouseResource {
 	}
 
 	public Page<Warehouse> getWarehousesPage(
-			String filterString, Pagination pagination, String sortString)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWarehousesPageHttpResponse(
-			String filterString, Pagination pagination, String sortString)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public void postWarehousesPageExportBatch(
-			String filterString, String sortString, String callbackURL,
-			String contentType, String fieldNames)
+			String search, String filterString, String sortString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWarehousesPageExportBatchHttpResponse(
-			String filterString, String sortString, String callbackURL,
-			String contentType, String fieldNames)
+			String search, String filterString, String sortString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public Warehouse postWarehouse(Warehouse warehouse) throws Exception;
@@ -217,12 +219,13 @@ public interface WarehouseResource {
 	public static class WarehouseResourceImpl implements WarehouseResource {
 
 		public Page<Warehouse> getWarehousesPage(
-				String filterString, Pagination pagination, String sortString)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWarehousesPageHttpResponse(
-					filterString, pagination, sortString);
+					search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -284,7 +287,8 @@ public interface WarehouseResource {
 		}
 
 		public HttpInvoker.HttpResponse getWarehousesPageHttpResponse(
-				String filterString, Pagination pagination, String sortString)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -307,6 +311,10 @@ public interface WarehouseResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
 
 			if (filterString != null) {
 				httpInvoker.parameter("filter", filterString);
@@ -335,13 +343,13 @@ public interface WarehouseResource {
 		}
 
 		public void postWarehousesPageExportBatch(
-				String filterString, String sortString, String callbackURL,
-				String contentType, String fieldNames)
+				String search, String filterString, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postWarehousesPageExportBatchHttpResponse(
-					filterString, sortString, callbackURL, contentType,
+					search, filterString, sortString, callbackURL, contentType,
 					fieldNames);
 
 			String content = httpResponse.getContent();
@@ -394,8 +402,8 @@ public interface WarehouseResource {
 
 		public HttpInvoker.HttpResponse
 				postWarehousesPageExportBatchHttpResponse(
-					String filterString, String sortString, String callbackURL,
-					String contentType, String fieldNames)
+					String search, String filterString, String sortString,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -420,6 +428,10 @@ public interface WarehouseResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
 
 			if (filterString != null) {
 				httpInvoker.parameter("filter", filterString);

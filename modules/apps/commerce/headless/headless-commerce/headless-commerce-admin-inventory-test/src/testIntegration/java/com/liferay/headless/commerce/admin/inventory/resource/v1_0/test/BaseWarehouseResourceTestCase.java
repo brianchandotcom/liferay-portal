@@ -203,7 +203,7 @@ public abstract class BaseWarehouseResourceTestCase {
 	@Test
 	public void testGetWarehousesPage() throws Exception {
 		Page<Warehouse> page = warehouseResource.getWarehousesPage(
-			null, Pagination.of(1, 10), null);
+			null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -214,7 +214,7 @@ public abstract class BaseWarehouseResourceTestCase {
 			randomWarehouse());
 
 		page = warehouseResource.getWarehousesPage(
-			null, Pagination.of(1, 10), null);
+			null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -249,7 +249,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Warehouse> page = warehouseResource.getWarehousesPage(
-				getFilterString(entityField, "between", warehouse1),
+				null, getFilterString(entityField, "between", warehouse1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -301,7 +301,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Warehouse> page = warehouseResource.getWarehousesPage(
-				getFilterString(entityField, operator, warehouse1),
+				null, getFilterString(entityField, operator, warehouse1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -313,7 +313,7 @@ public abstract class BaseWarehouseResourceTestCase {
 	@Test
 	public void testGetWarehousesPageWithPagination() throws Exception {
 		Page<Warehouse> warehousePage = warehouseResource.getWarehousesPage(
-			null, null, null);
+			null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(warehousePage.getTotalCount());
 
@@ -332,7 +332,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<Warehouse> page1 = warehouseResource.getWarehousesPage(
-				null,
+				null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -343,7 +343,7 @@ public abstract class BaseWarehouseResourceTestCase {
 			assertContains(warehouse1, (List<Warehouse>)page1.getItems());
 
 			Page<Warehouse> page2 = warehouseResource.getWarehousesPage(
-				null,
+				null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -352,7 +352,7 @@ public abstract class BaseWarehouseResourceTestCase {
 			assertContains(warehouse2, (List<Warehouse>)page2.getItems());
 
 			Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
-				null,
+				null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -362,7 +362,7 @@ public abstract class BaseWarehouseResourceTestCase {
 		}
 		else {
 			Page<Warehouse> page1 = warehouseResource.getWarehousesPage(
-				null, Pagination.of(1, totalCount + 2), null);
+				null, null, Pagination.of(1, totalCount + 2), null);
 
 			List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
 
@@ -370,7 +370,7 @@ public abstract class BaseWarehouseResourceTestCase {
 				warehouses1.toString(), totalCount + 2, warehouses1.size());
 
 			Page<Warehouse> page2 = warehouseResource.getWarehousesPage(
-				null, Pagination.of(2, totalCount + 2), null);
+				null, null, Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -379,7 +379,7 @@ public abstract class BaseWarehouseResourceTestCase {
 			Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
 
 			Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
-				null, Pagination.of(1, (int)totalCount + 3), null);
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(warehouse1, (List<Warehouse>)page3.getItems());
 			assertContains(warehouse2, (List<Warehouse>)page3.getItems());
@@ -495,18 +495,18 @@ public abstract class BaseWarehouseResourceTestCase {
 		warehouse2 = testGetWarehousesPage_addWarehouse(warehouse2);
 
 		Page<Warehouse> page = warehouseResource.getWarehousesPage(
-			null, null, null);
+			null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<Warehouse> ascPage = warehouseResource.getWarehousesPage(
-				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
 			assertContains(warehouse1, (List<Warehouse>)ascPage.getItems());
 			assertContains(warehouse2, (List<Warehouse>)ascPage.getItems());
 
 			Page<Warehouse> descPage = warehouseResource.getWarehousesPage(
-				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
 			assertContains(warehouse2, (List<Warehouse>)descPage.getItems());

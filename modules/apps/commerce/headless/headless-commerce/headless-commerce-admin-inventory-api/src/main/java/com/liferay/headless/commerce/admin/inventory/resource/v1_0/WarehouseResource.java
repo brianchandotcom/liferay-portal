@@ -49,12 +49,12 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WarehouseResource {
 
 	public Page<Warehouse> getWarehousesPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Response postWarehousesPageExportBatch(
-			Filter filter, Sort[] sorts, String callbackURL, String contentType,
-			String fieldNames)
+			String search, Filter filter, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Warehouse postWarehouse(Warehouse warehouse) throws Exception;

@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class AMImageConfigurationException extends PortalException {
 
-	public AMImageConfigurationException() {
-	}
-
-	public AMImageConfigurationException(String s) {
-		super(s);
-	}
-
-	public AMImageConfigurationException(String s, Throwable throwable) {
-		super(s, throwable);
-	}
-
-	public AMImageConfigurationException(Throwable throwable) {
-		super(throwable);
-	}
-
 	/**
 	 * This exception is raised when a configuration with the same name already
 	 * exists.
@@ -240,6 +225,21 @@ public class AMImageConfigurationException extends PortalException {
 			super(throwable);
 		}
 
+	}
+
+	private AMImageConfigurationException() {
+	}
+
+	private AMImageConfigurationException(String s) {
+		super(s);
+	}
+
+	private AMImageConfigurationException(String s, Throwable throwable) {
+		super(s, throwable);
+	}
+
+	private AMImageConfigurationException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

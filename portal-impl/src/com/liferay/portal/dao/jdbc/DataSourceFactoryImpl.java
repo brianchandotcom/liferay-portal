@@ -54,6 +54,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -76,10 +77,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	@Override
 	public void destroyDataSource(DataSource dataSource) throws Exception {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-
 		while (dataSource instanceof DataSourceWrapper) {
 			DataSourceWrapper dataSourceWrapper = (DataSourceWrapper)dataSource;
 
@@ -88,6 +85,13 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 
 			dataSource = dataSourceWrapper.getWrappedDataSource();
+		}
+
+		ServiceRegistration<?> serviceRegistration =
+			_serviceRegistrations.remove(dataSource);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
 		}
 
 		if (dataSource instanceof Closeable) {
@@ -251,9 +255,11 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			ConnectionPoolMetrics.class,
-			new HikariConnectionPoolMetrics(hikariDataSource), null);
+		_serviceRegistrations.put(
+			hikariDataSource,
+			bundleContext.registerService(
+				ConnectionPoolMetrics.class,
+				new HikariConnectionPoolMetrics(hikariDataSource), null));
 
 		return hikariDataSource;
 	}
@@ -429,7 +435,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataSourceFactoryImpl.class);
 
-	private ServiceRegistration<?> _serviceRegistration;
+	private final Map<DataSource, ServiceRegistration<?>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 
 	private static class JNDIDataSourceWrapper extends DataSourceWrapper {
 

@@ -34,6 +34,7 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet',
 	scriptManagement:
 		'/~/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_configurationScreenKey=script-management',
+	siteSettings: '/~/control_panel/manage/-/site/settings',
 	styleBooks: '/~/control_panel/manage/-/style_books/style_books',
 	utilityPages:
 		'/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages',

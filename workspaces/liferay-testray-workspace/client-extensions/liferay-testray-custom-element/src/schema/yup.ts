@@ -143,10 +143,6 @@ const yupSchema = {
 		id: yup.string(),
 		number: yup.number(),
 	}),
-	jiraImportRequirement: yup.object({
-		issues: yup.string().required(),
-		projectId: yup.number().required(),
-	}),
 	jiraIssues: yup.object({
 		issues: yup.array(
 			yup.object({

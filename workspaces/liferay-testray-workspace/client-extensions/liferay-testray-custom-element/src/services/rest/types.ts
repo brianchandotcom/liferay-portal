@@ -86,7 +86,6 @@ export type UserAccount = {
 	givenName: string;
 	id: number;
 	image: string;
-	jiraAuthorization: boolean;
 	name: string;
 	roleBriefs: Role[];
 	userGroupBriefs: UserGroup[];
@@ -231,11 +230,6 @@ export type TestrayFactorOption = {
 
 export type TestrayOptionsByCategory = {
 	[key: string]: any;
-};
-
-export type TestrayJiraImportRequirement = {
-	actions: ObjectActionsItems;
-	issues: string;
 };
 
 export type TestrayProductVersion = {

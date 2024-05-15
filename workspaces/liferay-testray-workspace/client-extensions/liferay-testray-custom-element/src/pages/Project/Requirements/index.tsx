@@ -17,7 +17,6 @@ import {ListViewContextProviderProps} from '../../../context/ListViewContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
 import {Action} from '../../../types';
-import ImportJiraIssuesFormModal from './ImportJiraIssuesFormModal';
 import useRequirementActions from './useRequirementActions';
 
 type RequirementListViewProps = {
@@ -143,11 +142,6 @@ const Requirements = () => {
 				variables={{
 					filter: SearchBuilder.eq('projectId', projectId as string),
 				}}
-			/>
-
-			<ImportJiraIssuesFormModal
-				forceRefetch={formModal.forceRefetch}
-				modal={formModal.modal}
 			/>
 		</Container>
 	);

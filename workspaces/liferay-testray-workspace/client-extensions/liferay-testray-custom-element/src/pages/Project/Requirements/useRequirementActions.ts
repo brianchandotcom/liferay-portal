@@ -8,7 +8,6 @@ import {useNavigate} from 'react-router-dom';
 import useFormModal from '~/hooks/useFormModal';
 import usePusher from '~/hooks/usePusher';
 import {Liferay} from '~/services/liferay';
-import {JiraClientExtensionRestImpl} from '~/services/rest/JiraClientExtension';
 
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
@@ -27,10 +26,6 @@ const useRequirementActions = ({
 	} = useFormModal();
 	const {removeItemFromList} = useMutate();
 	const navigate = useNavigate();
-
-	const resyncWithJira = async (testrayRequirement: TestrayRequirement) => {
-		await JiraClientExtensionRestImpl.resyncWithJira(testrayRequirement);
-	};
 
 	const pusher = usePusher();
 
@@ -63,17 +58,6 @@ const useRequirementActions = ({
 				navigate(isHeaderActions ? 'update' : `${id}/update`),
 			icon: 'pencil',
 			name: i18n.translate(isHeaderActions ? 'edit-requirement' : 'edit'),
-			permission: 'UPDATE',
-		},
-		{
-			action: (testrayRequirement) =>
-				resyncWithJira(testrayRequirement).then(() => {
-					Liferay.Util.openToast({
-						message: `${testrayRequirement.key} Started Jira Sync Asynchronous`,
-					});
-				}),
-			icon: 'reload',
-			name: i18n.translate('resync-with-jira'),
 			permission: 'UPDATE',
 		},
 		{

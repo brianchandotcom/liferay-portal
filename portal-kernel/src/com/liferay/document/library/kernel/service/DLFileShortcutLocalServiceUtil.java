@@ -439,6 +439,10 @@ public class DLFileShortcutLocalServiceUtil {
 			groupId, folderId, active, status);
 	}
 
+	public static List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
+		return getService().getGroupFileShortcuts(groupId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

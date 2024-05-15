@@ -1725,6 +1725,13 @@ public class DLAppServiceUtil {
 			groupId, userId, rootFolderId, mimeTypes, status);
 	}
 
+	public static List<com.liferay.portal.kernel.repository.model.FileShortcut>
+			getGroupFileShortcuts(long groupId)
+		throws PortalException {
+
+		return getService().getGroupFileShortcuts(groupId);
+	}
+
 	/**
 	 * Returns all immediate subfolders of the parent folder that are used for
 	 * mounting third-party repositories. This method is only supported by the

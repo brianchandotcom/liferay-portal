@@ -492,6 +492,11 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
+		return _dlFileShortcutLocalService.getGroupFileShortcuts(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

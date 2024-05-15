@@ -532,6 +532,253 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
+	 * Returns all the document library file shortcuts where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching document library file shortcuts
+	 */
+	public static List<DLFileShortcut> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the document library file shortcuts where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileShortcutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library file shortcuts
+	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	 * @return the range of matching document library file shortcuts
+	 */
+	public static List<DLFileShortcut> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file shortcuts where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileShortcutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library file shortcuts
+	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file shortcuts
+	 */
+	public static List<DLFileShortcut> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<DLFileShortcut> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file shortcuts where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileShortcutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library file shortcuts
+	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file shortcuts
+	 */
+	public static List<DLFileShortcut> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<DLFileShortcut> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first document library file shortcut in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file shortcut
+	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	 */
+	public static DLFileShortcut findByGroupId_First(
+			long groupId, OrderByComparator<DLFileShortcut> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileShortcutException {
+
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first document library file shortcut in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 */
+	public static DLFileShortcut fetchByGroupId_First(
+		long groupId, OrderByComparator<DLFileShortcut> orderByComparator) {
+
+		return getPersistence().fetchByGroupId_First(
+			groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library file shortcut in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file shortcut
+	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	 */
+	public static DLFileShortcut findByGroupId_Last(
+			long groupId, OrderByComparator<DLFileShortcut> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileShortcutException {
+
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library file shortcut in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 */
+	public static DLFileShortcut fetchByGroupId_Last(
+		long groupId, OrderByComparator<DLFileShortcut> orderByComparator) {
+
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set where groupId = &#63;.
+	 *
+	 * @param fileShortcutId the primary key of the current document library file shortcut
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file shortcut
+	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	 */
+	public static DLFileShortcut[] findByGroupId_PrevAndNext(
+			long fileShortcutId, long groupId,
+			OrderByComparator<DLFileShortcut> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileShortcutException {
+
+		return getPersistence().findByGroupId_PrevAndNext(
+			fileShortcutId, groupId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the document library file shortcuts that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching document library file shortcuts that the user has permission to view
+	 */
+	public static List<DLFileShortcut> filterFindByGroupId(long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the document library file shortcuts that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileShortcutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library file shortcuts
+	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	 * @return the range of matching document library file shortcuts that the user has permission to view
+	 */
+	public static List<DLFileShortcut> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file shortcuts that the user has permissions to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileShortcutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library file shortcuts
+	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file shortcuts that the user has permission to view
+	 */
+	public static List<DLFileShortcut> filterFindByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<DLFileShortcut> orderByComparator) {
+
+		return getPersistence().filterFindByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the document library file shortcuts before and after the current document library file shortcut in the ordered set of document library file shortcuts that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param fileShortcutId the primary key of the current document library file shortcut
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file shortcut
+	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
+	 */
+	public static DLFileShortcut[] filterFindByGroupId_PrevAndNext(
+			long fileShortcutId, long groupId,
+			OrderByComparator<DLFileShortcut> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFileShortcutException {
+
+		return getPersistence().filterFindByGroupId_PrevAndNext(
+			fileShortcutId, groupId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the document library file shortcuts where groupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 */
+	public static void removeByGroupId(long groupId) {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	 * Returns the number of document library file shortcuts where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching document library file shortcuts
+	 */
+	public static int countByGroupId(long groupId) {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	 * Returns the number of document library file shortcuts that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching document library file shortcuts that the user has permission to view
+	 */
+	public static int filterCountByGroupId(long groupId) {
+		return getPersistence().filterCountByGroupId(groupId);
+	}
+
+	/**
 	 * Returns all the document library file shortcuts where companyId = &#63;.
 	 *
 	 * @param companyId the company ID

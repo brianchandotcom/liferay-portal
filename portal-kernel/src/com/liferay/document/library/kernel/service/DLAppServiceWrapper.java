@@ -1796,6 +1796,15 @@ public class DLAppServiceWrapper
 			groupId, userId, rootFolderId, mimeTypes, status);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.portal.kernel.repository.model.FileShortcut>
+				getGroupFileShortcuts(long groupId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.getGroupFileShortcuts(groupId);
+	}
+
 	/**
 	 * Returns all immediate subfolders of the parent folder that are used for
 	 * mounting third-party repositories. This method is only supported by the

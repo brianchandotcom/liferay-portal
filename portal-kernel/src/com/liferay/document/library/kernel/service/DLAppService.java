@@ -1435,6 +1435,10 @@ public interface DLAppService extends BaseService {
 			int status)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FileShortcut> getGroupFileShortcuts(long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns all immediate subfolders of the parent folder that are used for
 	 * mounting third-party repositories. This method is only supported by the

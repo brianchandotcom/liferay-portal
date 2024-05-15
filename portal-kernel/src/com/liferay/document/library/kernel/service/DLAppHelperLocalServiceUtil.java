@@ -118,6 +118,12 @@ public class DLAppHelperLocalServiceUtil {
 			groupId, folderId, active, status);
 	}
 
+	public static List<com.liferay.document.library.kernel.model.DLFileShortcut>
+		getGroupFileShortcuts(long groupId) {
+
+		return getService().getGroupFileShortcuts(groupId);
+	}
+
 	public static List<com.liferay.portal.kernel.repository.model.FileEntry>
 		getNoAssetFileEntries() {
 

@@ -8,6 +8,8 @@ package com.liferay.document.library.kernel.service;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 /**
  * Provides the remote service utility for DLFileShortcut. This utility wraps
  * <code>com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl</code> and is an
@@ -46,6 +48,10 @@ public class DLFileShortcutServiceUtil {
 		throws PortalException {
 
 		return getService().getFileShortcut(fileShortcutId);
+	}
+
+	public static List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
+		return getService().getGroupFileShortcuts(groupId);
 	}
 
 	/**

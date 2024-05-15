@@ -58,7 +58,7 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 	}
 
 	@Test
-	public void testMultipleLinkedOauthClients() {
+	public void testMultipleLinkedOAuthClients() {
 		OAuth2AccessTokenResponse oAuth2AccessTokenResponse =
 			OAuth2AccessTokenResponse.withToken(
 				"token"
@@ -90,7 +90,7 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 	}
 
 	@Test
-	public void testOauth2ClientNotFound() {
+	public void testOAuth2ClientNotFound() {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(
 			"Could not find ClientRegistration with id 'none'");

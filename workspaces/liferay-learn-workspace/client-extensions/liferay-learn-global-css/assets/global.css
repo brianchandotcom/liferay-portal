@@ -336,6 +336,10 @@ pre[class*='language-'] {
 			color: var(--color-neutral-8, #54555f);
 		}
 
+		.learn-card:has(.subsection a) h4 {
+			color: var(--color-neutral-10);
+		}
+
 		table {
 			border-spacing: 0;
 			color: var(--color-neutral-8, #54555f);
@@ -387,7 +391,9 @@ pre[class*='language-'] {
 		table,
 		.table-striped {
 			tbody
-				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
+				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+					.table-divider
+				) {
 				&,
 				td,
 				th {
@@ -397,6 +403,10 @@ pre[class*='language-'] {
 					);
 				}
 			}
+		}
+
+		.section-card:has(.subsection-wrapper a) .primary-heading-link {
+			color: var(--color-neutral-10);
 		}
 	}
 

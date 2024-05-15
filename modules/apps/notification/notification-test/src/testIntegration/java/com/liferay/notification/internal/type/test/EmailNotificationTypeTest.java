@@ -783,45 +783,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				TestPropsValues.getCompanyId(),
 				AccountEntry.class.getSimpleName());
 
-		NotificationTemplate notificationTemplate =
-			notificationTemplateLocalService.addNotificationTemplate(
-				NotificationTemplateUtil.createNotificationContext(
-					TestPropsValues.getUser(),
-					childObjectDefinition.getObjectDefinitionId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
-					Arrays.asList(
-						createNotificationRecipientSetting(
-							"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							"cc",
-							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-						createNotificationRecipientSetting(
-							"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							"fromName",
-							Collections.singletonMap(
-								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-						createNotificationRecipientSetting(
-							"to", "[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]")),
-					RandomTestUtil.randomString(),
-					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
-
-		ObjectAction objectAction = objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			accountEntryObjectDefinition.getObjectDefinitionId(), true,
-			StringPool.BLANK, RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				notificationTemplate.getNotificationTemplateId()
-			).build(),
-			false);
+		ObjectAction accountEntryObjectAction =
+			_addObjectActionWithNotification(
+				accountEntryObjectDefinition,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				"[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]");
 
 		User user = UserTestUtil.addOmniadminUser();
 
@@ -848,7 +814,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			user2.getEmailAddress(), true, user.getEmailAddress(),
 			notificationQueueEntries.get(0));
 
-		objectActionLocalService.deleteObjectAction(objectAction);
+		objectActionLocalService.deleteObjectAction(accountEntryObjectAction);
 
 		// On Commerce Order payment status update
 
@@ -867,47 +833,15 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		Assert.assertTrue(
 			objectActionTriggerKeys.contains(
 				DestinationNames.COMMERCE_ORDER_STATUS));
-
 		Assert.assertTrue(
 			objectActionTriggerKeys.contains(
 				DestinationNames.COMMERCE_PAYMENT_STATUS));
 
-		NotificationTemplate commerceOrderNotificationTemplate =
-			notificationTemplateLocalService.addNotificationTemplate(
-				NotificationTemplateUtil.createNotificationContext(
-					TestPropsValues.getUser(),
-					commerceOrderObjectDefinition.getObjectDefinitionId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
-					Arrays.asList(
-						createNotificationRecipientSetting(
-							"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							"fromName",
-							Collections.singletonMap(
-								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-						createNotificationRecipientSetting(
-							"to", "[%CURRENT_USER_EMAIL_ADDRESS%]")),
-					RandomTestUtil.randomString(),
-					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
-
 		ObjectAction commerceOrderObjectAction =
-			_objectActionLocalService.addObjectAction(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				commerceOrderObjectDefinition.getObjectDefinitionId(), true,
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(),
-				ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			_addObjectActionWithNotification(
+				commerceOrderObjectDefinition,
 				DestinationNames.COMMERCE_PAYMENT_STATUS,
-				UnicodePropertiesBuilder.put(
-					"notificationTemplateId",
-					commerceOrderNotificationTemplate.
-						getNotificationTemplateId()
-				).build(),
-				false);
+				"[%CURRENT_USER_EMAIL_ADDRESS%]");
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -1001,6 +935,51 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
 				NotificationConstants.TYPE_EMAIL,
 				Collections.singletonList(objectField.getObjectFieldId())));
+	}
+
+	private ObjectAction _addObjectActionWithNotification(
+			ObjectDefinition objectDefinition, String objectActionTriggerKey,
+			String to)
+		throws Exception {
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateLocalService.addNotificationTemplate(
+				NotificationTemplateUtil.createNotificationContext(
+					TestPropsValues.getUser(),
+					objectDefinition.getObjectDefinitionId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+					Arrays.asList(
+						createNotificationRecipientSetting(
+							"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						createNotificationRecipientSetting(
+							"cc",
+							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
+						createNotificationRecipientSetting(
+							"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						createNotificationRecipientSetting(
+							"fromName",
+							Collections.singletonMap(
+								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
+						createNotificationRecipientSetting("to", to)),
+					RandomTestUtil.randomString(),
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
+
+		return objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			objectActionTriggerKey,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				notificationTemplate.getNotificationTemplateId()
+			).build(),
+			false);
 	}
 
 	private Role _addRole(int type, User user) throws Exception {

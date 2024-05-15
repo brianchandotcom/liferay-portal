@@ -7,8 +7,8 @@
 
 import {IFDSViewSectionProps} from '../FDSView';
 declare const Settings: ({
+	backURL,
 	fdsView,
-	fdsViewsURL,
 	onActiveSectionChange,
 	onFDSViewUpdate,
 	spritemap,

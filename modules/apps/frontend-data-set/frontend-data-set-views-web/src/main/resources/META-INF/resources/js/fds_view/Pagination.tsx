@@ -17,8 +17,8 @@ import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 function Pagination({
+	backURL,
 	fdsView,
-	fdsViewsURL,
 	namespace,
 	onFDSViewUpdate,
 }: IFDSViewSectionProps) {
@@ -287,7 +287,7 @@ function Pagination({
 
 					<ClayButton
 						displayType="secondary"
-						onClick={() => navigate(fdsViewsURL)}
+						onClick={() => navigate(backURL)}
 					>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>

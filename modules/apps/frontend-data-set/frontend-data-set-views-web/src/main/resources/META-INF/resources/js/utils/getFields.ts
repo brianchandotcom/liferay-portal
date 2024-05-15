@@ -11,8 +11,6 @@ import {
 } from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 
-import {FDSViewType} from '../FDSViews';
-import {OBJECT_RELATIONSHIP} from './constants';
 import openDefaultFailureToast from './openDefaultFailureToast';
 import {EFieldFormat, EFieldType, IField} from './types';
 
@@ -146,11 +144,13 @@ function getValidFields({
 	return fields;
 }
 
-export default async function getFields(fdsView: FDSViewType) {
-	const {restApplication, restSchema} = fdsView[
-		OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW
-	];
-
+export default async function getFields({
+	restApplication,
+	restSchema,
+}: {
+	restApplication: string;
+	restSchema: string;
+}) {
 	const response = await fetch(`/o${restApplication}/openapi.json`);
 
 	if (!response.ok) {

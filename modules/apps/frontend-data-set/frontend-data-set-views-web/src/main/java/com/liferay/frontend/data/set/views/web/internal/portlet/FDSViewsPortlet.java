@@ -62,7 +62,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.layout-cacheable=true",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/fds_entries.jsp",
+		"javax.portlet.init-param.view-template=/data_sets.jsp",
 		"javax.portlet.name=" + FDSViewsPortletKeys.FDS_VIEWS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,power-user,user",
@@ -711,6 +711,90 @@ public class FDSViewsPortlet extends MVCPortlet {
 	}
 
 	private ObjectDefinition _createFDSViewObjectDefinition(
+			Locale locale, long userId)
+		throws Exception {
+
+		ObjectDefinition fdsViewObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSView", userId, 0, "FDSView", null, false, true,
+				LocalizedMapUtil.getLocalizedMap("FDS View"), true, "FDSView",
+				null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Views"), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "label", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "description"), "description",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-application"),
+						"restApplication", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-endpoint"), "restEndpoint",
+						true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-schema"), "restSchema",
+						true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "list-of-items-per-page"),
+						"listOfItemsPerPage", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+						ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
+						_language.get(locale, "default-items-per-page"),
+						"defaultItemsPerPage", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "creation-actions-order"),
+						"fdsCreationActionsOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "fields-order"), "fdsFieldsOrder",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "filters-order"),
+						"fdsFiltersOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "item-actions-order"),
+						"fdsItemActionsOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "sorts-order"), "fdsSortsOrder",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "default-visualization-mode"),
+						"defaultVisualizationMode", false)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId());
+
+		return fdsViewObjectDefinition;
+	}
+
+	private ObjectDefinition _createFDSViewObjectDefinition(
 			ObjectDefinition fdsEntryObjectDefinition, Locale locale,
 			long userId)
 		throws Exception {
@@ -802,20 +886,33 @@ public class FDSViewsPortlet extends MVCPortlet {
 			long companyId, Locale locale, long userId)
 		throws Exception {
 
-		ObjectDefinition fdsEntryObjectDefinition =
+		ObjectDefinition fdsViewObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, "FDSEntry");
+				companyId, "FDSView");
 
-		if (fdsEntryObjectDefinition != null) {
+		if (fdsViewObjectDefinition != null) {
 			return;
 		}
 
-		fdsEntryObjectDefinition = _createFDSEntryObjectDefinition(
-			locale, userId);
+		if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+			fdsViewObjectDefinition = _createFDSViewObjectDefinition(
+				locale, userId);
+		}
+		else {
+			ObjectDefinition fdsEntryObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					companyId, "FDSEntry");
 
-		ObjectDefinition fdsViewObjectDefinition =
-			_createFDSViewObjectDefinition(
+			if (fdsEntryObjectDefinition != null) {
+				return;
+			}
+
+			fdsEntryObjectDefinition = _createFDSEntryObjectDefinition(
+				locale, userId);
+
+			fdsViewObjectDefinition = _createFDSViewObjectDefinition(
 				fdsEntryObjectDefinition, locale, userId);
+		}
 
 		_createFDSActionObjectDefintion(
 			fdsViewObjectDefinition, locale, userId);

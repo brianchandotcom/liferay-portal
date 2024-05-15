@@ -212,6 +212,7 @@ public class Mutation {
 
 	@GraphQLField
 	public Response createWarehousesPageExportBatch(
+			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
@@ -224,6 +225,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			warehouseResource ->
 				warehouseResource.postWarehousesPageExportBatch(
+					search,
 					_filterBiFunction.apply(warehouseResource, filterString),
 					_sortsBiFunction.apply(warehouseResource, sortsString),
 					callbackURL, contentType, fieldNames));

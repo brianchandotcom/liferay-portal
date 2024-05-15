@@ -17,13 +17,15 @@ window.addEventListener('DOMContentLoaded', () => {
 			body.classList.add('has-alert-container');
 		}
 
+		const path = themeDisplay.getPathContext() || '/';
+
 		closeButton.addEventListener('click', () => {
 			if (document.cookie.length) {
 				body.classList.remove('has-alert-container');
-				document.cookie = cookieName + '=true;path=/;max-age=604800;';
+				document.cookie = `${cookieName}=true;path=${path};max-age=604800;`;
 			}
 			else {
-				document.cookie = cookieName + '=true;path=/;';
+				document.cookie = `${cookieName}=true;path=${path};`;
 			}
 		});
 	}

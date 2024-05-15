@@ -7,7 +7,7 @@ Liferay-Service: true
 #if (${buildType} != "gradle")
 -consumer-policy: ${versionPolicy}
 #end
-#if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")} || (${liferayVersion.startsWith("7.4")} || ${liferayVersion.startsWith("20")})) && (${dependencyInjector} == "ds"))
+#if ((${liferayVersion.startsWith("20")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")} || ${liferayVersion.startsWith("7.4")}) && (${dependencyInjector} == "ds"))
 -dsannotations-options: inherit
 #end
 #if (${buildType} != "gradle")

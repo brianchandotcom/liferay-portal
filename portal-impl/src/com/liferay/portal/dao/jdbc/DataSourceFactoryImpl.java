@@ -249,8 +249,11 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 		}
 
-		registerConnectionPoolMetrics(
-			new HikariConnectionPoolMetrics(hikariDataSource));
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			ConnectionPoolMetrics.class,
+			new HikariConnectionPoolMetrics(hikariDataSource), null);
 
 		return hikariDataSource;
 	}
@@ -261,15 +264,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 
 		return false;
-	}
-
-	protected void registerConnectionPoolMetrics(
-		ConnectionPoolMetrics connectionPoolMetrics) {
-
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		_serviceRegistration = bundleContext.registerService(
-			ConnectionPoolMetrics.class, connectionPoolMetrics, null);
 	}
 
 	protected void testDatabaseClass(String driverClassName) throws Exception {

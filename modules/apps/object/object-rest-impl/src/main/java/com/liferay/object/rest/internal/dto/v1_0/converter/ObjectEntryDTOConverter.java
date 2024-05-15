@@ -429,6 +429,14 @@ public class ObjectEntryDTOConverter
 		DTOConverterContext dtoConverterContext, String key,
 		long listTypeDefinitionId) {
 
+		if (StringUtil.equals(key, StringPool.BLANK)) {
+			return new ListEntry() {
+				{
+					setKey(() -> StringPool.BLANK);
+				}
+			};
+		}
+
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.fetchListTypeEntry(
 				listTypeDefinitionId, key);

@@ -59,11 +59,11 @@ export class FDSFragmentPage {
 	}
 
 	async configureDataSetFragment({
+		dataSetLabel = DEFAULT_LABEL.DATA_SET,
 		layout,
-		viewLabel = DEFAULT_LABEL.VIEW,
 	}: {
+		dataSetLabel?: string;
 		layout: Layout;
-		viewLabel: string;
 	}) {
 		await this.editPage({layout});
 
@@ -98,7 +98,7 @@ export class FDSFragmentPage {
 		await this.page
 			.frameLocator('iframe[title="Select"]')
 			.locator('li')
-			.filter({hasText: viewLabel})
+			.filter({hasText: dataSetLabel})
 			.first()
 			.click();
 

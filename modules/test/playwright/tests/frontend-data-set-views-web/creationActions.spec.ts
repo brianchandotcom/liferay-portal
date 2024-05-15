@@ -33,40 +33,30 @@ export const test = mergeTests(
 	dataSetManagerSetupTest
 );
 
-let actionsDataSetERC: string;
-let actionsDataSetLabel: string;
-let actionsDataSetViewERC: string;
-let actionsDataSetViewLabel: string;
+let dataSetERC: string;
+let dataSetLabel: string;
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
-	actionsDataSetERC = getRandomString();
-	actionsDataSetLabel = getRandomString();
-	actionsDataSetViewERC = getRandomString();
-	actionsDataSetViewLabel = getRandomString();
+	dataSetERC = getRandomString();
+	dataSetLabel = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
-		erc: actionsDataSetERC,
-		label: actionsDataSetLabel,
-	});
-	await dataSetManagerApiHelpers.createDataSetView({
-		erc: actionsDataSetViewERC,
-		label: actionsDataSetViewLabel,
-		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: actionsDataSetERC,
+		erc: dataSetERC,
+		label: dataSetLabel,
 	});
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers}) => {
-	await dataSetManagerApiHelpers.deleteDataSet({erc: actionsDataSetERC});
+	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-test.describe('Creation Actions in the Data Set Manager', () => {
+test.describe('Creation Actions in Data Set Manager', () => {
 	test('There is a message if no Creation Action has been created', async ({
 		actionsPage,
 	}) => {
 		await test.step('Navigate to the Actions tab', async () => {
 			await actionsPage.goto({
-				dataSetLabel: actionsDataSetLabel,
-				viewLabel: actionsDataSetViewLabel,
+				dataSetLabel,
 			});
 
 			await expect(actionsPage.creationActionsTab).toBeInViewport();
@@ -90,8 +80,7 @@ test.describe('Creation Actions in the Data Set Manager', () => {
 	}) => {
 		await test.step('Navigate to the Actions tab', async () => {
 			await actionsPage.goto({
-				dataSetLabel: actionsDataSetLabel,
-				viewLabel: actionsDataSetViewLabel,
+				dataSetLabel,
 			});
 
 			await expect(actionsPage.creationActionsTab).toBeInViewport();
@@ -129,8 +118,7 @@ test.describe('Creation Actions in the Data Set Manager', () => {
 	}) => {
 		await test.step('Navigate to the Actions tab', async () => {
 			await actionsPage.goto({
-				dataSetLabel: actionsDataSetLabel,
-				viewLabel: actionsDataSetViewLabel,
+				dataSetLabel,
 			});
 
 			await expect(actionsPage.creationActionsTab).toBeInViewport();
@@ -170,8 +158,7 @@ test.describe('Creation Actions in the Data Set Manager', () => {
 	}) => {
 		await test.step('Navigate to the Actions tab', async () => {
 			await actionsPage.goto({
-				dataSetLabel: actionsDataSetLabel,
-				viewLabel: actionsDataSetViewLabel,
+				dataSetLabel,
 			});
 
 			await expect(actionsPage.creationActionsTab).toBeInViewport();
@@ -217,7 +204,7 @@ export const fragmentTest = mergeTests(
 	loginTest()
 );
 
-fragmentTest.describe('Creation Actions in the fragment', () => {
+fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 	fragmentTest(
 		'Creation Action button does not appear if no creation action is defined',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
@@ -225,8 +212,7 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			});
@@ -235,8 +221,8 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: actionsDataSetViewLabel,
 					});
 				}
 			);
@@ -259,8 +245,7 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			});
@@ -268,10 +253,10 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			const actionLabel = 'Custom Creation Action';
 
 			await fragmentTest.step('Create Creation Action', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: actionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+						dataSetERC,
 				});
 			});
 
@@ -279,8 +264,8 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: actionsDataSetViewLabel,
 					});
 				}
 			);
@@ -323,8 +308,7 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			});
@@ -333,18 +317,18 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			const secondActionLabel = 'Another Creation Action';
 
 			await fragmentTest.step('Create Creation Actions', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: firstActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+						dataSetERC,
 					title_i18n: {en_US: 'Modal title'},
 					type: 'modal',
 				});
 
-				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: secondActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+						dataSetERC,
 				});
 			});
 
@@ -352,8 +336,8 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: actionsDataSetViewLabel,
 					});
 				}
 			);
@@ -450,14 +434,13 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 	);
 
 	fragmentTest(
-		'Creation Actions of type Modal in the fragment',
+		'Creation Actions of type Modal in Data Set fragment',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
 			await fragmentTest.step('Create table field', async () => {
 				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			});
@@ -469,19 +452,19 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			const modalTitle = 'Create New Product';
 
 			await fragmentTest.step('Create Creation Actions', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: firstActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+						dataSetERC,
 					title_i18n: {en_US: modalTitle},
 					type: 'modal',
 					url: actionURL,
 				});
 
-				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: secondActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+						dataSetERC,
 					type: 'modal',
 					url: actionURL,
 				});
@@ -491,8 +474,8 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: actionsDataSetViewLabel,
 					});
 				}
 			);
@@ -622,14 +605,13 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 	);
 
 	fragmentTest(
-		'Creation Actions of type Side Panel in the fragment',
+		'Creation Actions of type Side Panel in Data Set fragment',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
 			await fragmentTest.step('Create table field', async () => {
 				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			});
@@ -641,19 +623,19 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			const sidePanelTitle = 'Create New Product';
 
 			await fragmentTest.step('Create Creation Actions', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: firstActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+						dataSetERC,
 					title_i18n: {en_US: sidePanelTitle},
 					type: 'sidePanel',
 					url: actionURL,
 				});
 
-				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: secondActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						actionsDataSetViewERC,
+						dataSetERC,
 					type: 'sidePanel',
 					url: actionURL,
 				});
@@ -663,8 +645,8 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: actionsDataSetViewLabel,
 					});
 				}
 			);

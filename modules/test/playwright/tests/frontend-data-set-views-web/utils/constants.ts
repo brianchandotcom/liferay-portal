@@ -5,7 +5,6 @@
 
 const DEFAULT_LABEL = {
 	DATA_SET: 'Sample Data Set',
-	VIEW: 'Sample View',
 };
 
 export {DEFAULT_LABEL};

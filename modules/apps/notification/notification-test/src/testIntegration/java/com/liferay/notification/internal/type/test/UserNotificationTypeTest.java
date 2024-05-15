@@ -125,28 +125,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 							"roleName", role.getName())),
 					NotificationRecipientConstants.TYPE_ROLE)));
 
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationQueueEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		NotificationQueueEntry notificationQueueEntry =
-			notificationQueueEntries.get(0);
-
-		NotificationRecipient notificationRecipient =
-			notificationQueueEntry.getNotificationRecipient();
-
-		List<NotificationRecipientSetting> notificationRecipientSettings =
-			notificationRecipient.getNotificationRecipientSettings();
-
-		Assert.assertEquals(
-			notificationRecipientSettings.toString(), 1,
-			notificationRecipientSettings.size());
-		_assertNotificationRecipientSetting(
-			notificationRecipientSettings.get(0), user.getFullName());
+		_assertNotificationQueueEntry(user.getFullName());
 	}
 
 	@Test
@@ -227,31 +206,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				},
 				group.getGroupKey());
 
-			notificationQueueEntries =
-				notificationQueueEntryLocalService.getNotificationQueueEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			Assert.assertEquals(
-				notificationQueueEntries.toString(), 1,
-				notificationQueueEntries.size());
-
-			NotificationQueueEntry notificationQueueEntry =
-				notificationQueueEntries.get(0);
-
-			NotificationRecipient notificationRecipient =
-				notificationQueueEntry.getNotificationRecipient();
-
-			List<NotificationRecipientSetting> notificationRecipientSettings =
-				notificationRecipient.getNotificationRecipientSettings();
-
-			Assert.assertEquals(
-				notificationRecipientSettings.toString(), 1,
-				notificationRecipientSettings.size());
-			_assertNotificationRecipientSetting(
-				notificationRecipientSettings.get(0), user.getFullName());
-
-			notificationQueueEntryLocalService.deleteNotificationQueueEntry(
-				notificationQueueEntries.get(0));
+			_assertNotificationQueueEntry(user.getFullName());
 
 			_userNotificationEventLocalService.deleteUserNotificationEvents(
 				user.getUserId());
@@ -334,6 +289,36 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		return user;
+	}
+
+	private void _assertNotificationQueueEntry(String expectedUserFullName)
+		throws PortalException {
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationQueueEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationQueueEntries.get(0);
+
+		NotificationRecipient notificationRecipient =
+			notificationQueueEntry.getNotificationRecipient();
+
+		List<NotificationRecipientSetting> notificationRecipientSettings =
+			notificationRecipient.getNotificationRecipientSettings();
+
+		Assert.assertEquals(
+			notificationRecipientSettings.toString(), 1,
+			notificationRecipientSettings.size());
+		_assertNotificationRecipientSetting(
+			notificationRecipientSettings.get(0), expectedUserFullName);
+
+		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntry);
 	}
 
 	private void _assertNotificationRecipientSetting(

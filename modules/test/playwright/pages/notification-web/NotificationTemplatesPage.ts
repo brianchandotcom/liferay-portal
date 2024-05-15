@@ -19,9 +19,11 @@ export class NotificationTemplatesPage {
 		this.emailNotificationDropdownItem = page
 			.getByRole('menuitem')
 			.filter({hasText: 'Email'});
-		this.frontEndDatasetItemActions = page.getByRole('button', {
-			name: 'Actions',
-		});
+		this.frontEndDatasetItemActions = page
+			.getByRole('button', {
+				name: 'Actions',
+			})
+			.nth(-1);
 		this.frontEndDatasetItemActionDelete = page.getByRole('menuitem', {
 			name: 'Delete',
 		});

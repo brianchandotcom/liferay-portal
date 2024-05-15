@@ -16,8 +16,11 @@ export class EmailNotificationTemplatePage {
 	readonly notificationTemplatesPage: NotificationTemplatesPage;
 	readonly organizationRolesGroupTitle: Locator;
 	readonly primaryRecipientRoles: Locator;
+	readonly primaryRecipientUserEmailAddress: Locator;
 	readonly primaryRecipientType: Locator;
 	readonly regularRolesGroupTitle: Locator;
+	readonly richTextSourceButton: Locator;
+	readonly richTextSourceField: Locator;
 	readonly saveButton: Locator;
 	readonly secondaryRecipientRolesBCC: Locator;
 	readonly secondaryRecipientRolesCC: Locator;
@@ -40,9 +43,16 @@ export class EmailNotificationTemplatePage {
 			.locator('visible=true');
 		this.primaryRecipientType = page.getByLabel('Type' + 'Mandatory');
 		this.primaryRecipientRoles = page.getByLabel('Role' + 'Mandatory');
+		this.primaryRecipientUserEmailAddress = page.locator(
+			'input[id="primaryRecipients"]'
+		);
 		this.regularRolesGroupTitle = page
 			.getByText('Regular Roles')
 			.locator('visible=true');
+		this.richTextSourceButton = page.getByTitle('Source');
+		this.richTextSourceField = page
+			.getByLabel('Rich Text Editor, richTextLocalizedEditor')
+			.getByRole('textbox');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.secondaryRecipientRolesBCC = page
 			.getByLabel('Role', {exact: true})

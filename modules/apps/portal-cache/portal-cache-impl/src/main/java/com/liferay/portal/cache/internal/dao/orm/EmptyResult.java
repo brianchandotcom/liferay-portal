@@ -65,7 +65,10 @@ public class EmptyResult implements Externalizable {
 			int start = (Integer)args[args.length - 3];
 			int end = (Integer)args[args.length - 2];
 
-			if ((start == end) && (start != QueryUtil.ALL_POS)) {
+			if (start == end) {
+				if (start == QueryUtil.ALL_POS) {
+					return Arrays.copyOf(args, args.length - 3);
+				}
 
 				// Account for a empty page
 
@@ -77,7 +80,7 @@ public class EmptyResult implements Externalizable {
 				return args;
 			}
 
-			return Arrays.copyOf(args, args.length - 3);
+			return Arrays.copyOf(args, args.length - 2);
 		}
 
 		return args;

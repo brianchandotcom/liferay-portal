@@ -155,7 +155,7 @@ public class EmptyResultTest {
 
 			Assert.assertTrue(deserializedEmptyResult.matches(args));
 			Assert.assertTrue(
-				deserializedEmptyResult.matches(Arrays.copyOf(args, 3)));
+				deserializedEmptyResult.matches(Arrays.copyOf(args, 4)));
 		}
 	}
 
@@ -223,7 +223,7 @@ public class EmptyResultTest {
 		Object[] savedArgs = ReflectionTestUtil.getFieldValue(
 			emptyResult, "_args");
 
-		Assert.assertEquals(Arrays.toString(savedArgs), 3, savedArgs.length);
+		Assert.assertEquals(Arrays.toString(savedArgs), 4, savedArgs.length);
 
 		Assert.assertTrue(emptyResult.matches(args));
 
@@ -242,12 +242,19 @@ public class EmptyResultTest {
 
 		Assert.assertTrue(emptyResult.matches(args));
 
-		// Start 3 and end 5
+		// Different end
 
-		args[4] = 5;
-		args[3] = 3;
+		args[4] = 3;
 
 		Assert.assertTrue(emptyResult.matches(args));
+
+		// Different start
+
+		args = Arrays.copyOf(args, args.length);
+
+		args[3] = 2;
+
+		Assert.assertFalse(emptyResult.matches(args));
 
 		// Different first parameter
 
@@ -259,7 +266,7 @@ public class EmptyResultTest {
 
 		args[0] = 1;
 
-		Assert.assertTrue(emptyResult.matches(Arrays.copyOf(args, 3)));
+		Assert.assertFalse(emptyResult.matches(Arrays.copyOf(args, 3)));
 
 		// Strip start QueryUtil.ALL_POS and end QueryUtil.ALL_POS
 
@@ -282,6 +289,10 @@ public class EmptyResultTest {
 		Assert.assertEquals(Arrays.toString(savedArgs), 3, savedArgs.length);
 
 		Assert.assertTrue(emptyResult.matches(args));
+
+		// No pagination
+
+		Assert.assertTrue(emptyResult.matches(Arrays.copyOf(args, 3)));
 	}
 
 }

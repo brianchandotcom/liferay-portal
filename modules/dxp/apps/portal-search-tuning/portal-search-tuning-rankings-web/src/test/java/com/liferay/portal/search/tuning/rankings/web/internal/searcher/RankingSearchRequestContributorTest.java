@@ -86,9 +86,40 @@ public class RankingSearchRequestContributorTest
 
 	@Test
 	public void testContributeRankingIndexReaderIsExistsFalse() {
-		_setUpContributorMocks(false);
+		SearchRequestBuilder searchRequestBuilder = _setUpContributorMocks(
+			false);
+
+		Mockito.doReturn(
+			Mockito.mock(List.class)
+		).when(
+			_rankingIndexReader
+		).fetch(
+			Mockito.anyString(), Mockito.anyString(), Mockito.any(),
+			Mockito.anyString()
+		);
+
+		Mockito.doNothing(
+		).when(
+			_rankingSearchRequestHelper
+		).contribute(
+			Mockito.any(), Mockito.any()
+		);
 
 		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
+
+		Mockito.doReturn(
+			searchRequest
+		).when(
+			searchRequestBuilder
+		).build();
+
+		Mockito.doReturn(
+			Mockito.mock(SearchContext.class)
+		).when(
+			searchRequestBuilder
+		).withSearchContextGet(
+			Function.identity()
+		);
 
 		Assert.assertEquals(
 			searchRequest,

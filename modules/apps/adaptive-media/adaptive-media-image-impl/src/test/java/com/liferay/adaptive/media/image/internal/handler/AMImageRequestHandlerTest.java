@@ -96,7 +96,7 @@ public class AMImageRequestHandlerTest {
 		Mockito.when(
 			_amImageFinder.getAdaptiveMedias(Mockito.any(Function.class))
 		).thenThrow(
-			AMException.class
+			AMException.AMNotFound.class
 		);
 
 		_amImageRequestHandler.handleRequest(httpServletRequest);

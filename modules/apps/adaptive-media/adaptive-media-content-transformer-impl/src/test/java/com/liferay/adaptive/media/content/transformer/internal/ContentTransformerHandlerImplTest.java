@@ -137,7 +137,7 @@ public class ContentTransformerHandlerImplTest {
 		Mockito.when(
 			invalidContentTransformer.transform(originalContent)
 		).thenThrow(
-			new AMException("This is expected")
+			new AMException.AMNotFound("This is expected")
 		);
 	}
 

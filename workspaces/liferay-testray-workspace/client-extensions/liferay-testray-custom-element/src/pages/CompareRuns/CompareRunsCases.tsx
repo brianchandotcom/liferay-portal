@@ -21,6 +21,12 @@ type RunStatusProps = {
 	run: TestrayRun;
 };
 
+type RunErrorProps = {
+	caseResultId: number;
+	error: string;
+	run: TestrayRun;
+};
+
 type CompareRunsOutlet = {
 	runs: TestrayRun[];
 };
@@ -50,7 +56,20 @@ const RunStatus: React.FC<RunStatusProps> = ({
 	);
 };
 
+const RunError: React.FC<RunErrorProps> = ({caseResultId, error, run}) => {
+	const LinkWrapper = Link;
+
+	return (
+		<LinkWrapper
+			to={`/project/${run?.build?.project?.id}/routines/${run?.build?.routine?.id}/build/${run?.build?.id}/case-result/${caseResultId}`}
+		>
+			<Code title={error as string}>{getTruncateText(error, 200)}</Code>
+		</LinkWrapper>
+	);
+};
+
 const RunStatusMemoized = memo(RunStatus);
+const RunErrorMemoized = memo(RunError);
 
 const CompareRunsCases = () => {
 	const {runA: runAId, runB: runBId} = useParams();
@@ -123,18 +142,26 @@ const CompareRunsCases = () => {
 						},
 						{
 							key: 'error1',
-							render: (error1: string) =>
+							render: (error1: string, data: any) =>
 								error1 && (
-									<Code>{getTruncateText(error1, 200)}</Code>
+									<RunErrorMemoized
+										caseResultId={data?.id1}
+										error={error1}
+										run={runA}
+									/>
 								),
 							size: 'lg',
 							value: i18n.sub('error-in-x', 'run-a'),
 						},
 						{
 							key: 'error2',
-							render: (error2: string) =>
+							render: (error2: string, data: any) =>
 								error2 && (
-									<Code>{getTruncateText(error2, 200)}</Code>
+									<RunErrorMemoized
+										caseResultId={data?.id2}
+										error={error2}
+										run={runB}
+									/>
 								),
 							size: 'lg',
 							value: i18n.sub('error-in-x', 'run-b'),

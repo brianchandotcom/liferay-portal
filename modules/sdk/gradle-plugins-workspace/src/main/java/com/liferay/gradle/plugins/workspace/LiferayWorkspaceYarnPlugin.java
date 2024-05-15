@@ -65,16 +65,6 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 				TaskContainer taskContainer = project1.getTasks();
 
 				taskContainer.withType(
-					PackageRunTask.class,
-					packageRunTask -> {
-						if (packageRunTask instanceof PackageRunTestTask) {
-							return;
-						}
-
-						packageRunTask.mustRunAfter(yarnInstallTaskProvider);
-					});
-
-				taskContainer.withType(
 					NpmInstallTask.class,
 					npmInstallTask -> {
 						NodeExtension nodeExtension = GradleUtil.getExtension(
@@ -83,6 +73,15 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 						nodeExtension.setUseNpm(false);
 
 						npmInstallTask.finalizedBy(yarnInstallTaskProvider);
+					});
+				taskContainer.withType(
+					PackageRunTask.class,
+					packageRunTask -> {
+						if (packageRunTask instanceof PackageRunTestTask) {
+							return;
+						}
+
+						packageRunTask.mustRunAfter(yarnInstallTaskProvider);
 					});
 			});
 	}

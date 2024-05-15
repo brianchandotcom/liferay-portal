@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.poshi.core.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
@@ -410,7 +409,7 @@ public class DXPCloudClientTestrayImporter {
 			attachmentElement.addAttribute("value", key + "?authuser=0");
 		}
 
-		if (Validator.isNotNull(testName)) {
+		if (testName != null) {
 			Element poshiLogAttachmentElement = _getPoshiLogAttachmentElement(
 				testName);
 
@@ -817,7 +816,7 @@ public class DXPCloudClientTestrayImporter {
 			if ((nodes != null) && !nodes.isEmpty()) {
 				int i = 1;
 
-				for (Object node : nodes) {
+				for (Node node : nodes) {
 					if (!(node instanceof Element)) {
 						continue;
 					}

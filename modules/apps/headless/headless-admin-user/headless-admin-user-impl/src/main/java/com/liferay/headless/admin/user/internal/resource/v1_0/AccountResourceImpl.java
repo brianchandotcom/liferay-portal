@@ -504,8 +504,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		_accountEntryUserRelLocalService.setAccountEntryUserRels(
 			accountId, _getAccountUserAccountIds(account));
 
-		_addAddresses(accountId, account);
-
 		AccountEntry accountEntry = _accountEntryService.updateAccountEntry(
 			accountId, _getParentAccountId(account), account.getName(),
 			account.getDescription(), _isDeleteLogo(account, null),
@@ -564,6 +562,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					0, true, 0, 1, 1970, null, null, null, null, null, null);
 			}
 		}
+
+		_addAddresses(accountId, account);
 
 		return _toAccount(accountEntry);
 	}

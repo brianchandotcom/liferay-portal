@@ -6,6 +6,7 @@
 package com.liferay.content.dashboard.item.filter;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.portal.kernel.search.filter.Filter;
 
 import java.util.List;
 import java.util.Locale;
@@ -16,6 +17,10 @@ import java.util.Locale;
 public interface ContentDashboardItemFilter {
 
 	public DropdownItem getDropdownItem();
+
+	public default Filter getFilter() {
+		return null;
+	}
 
 	public String getIcon();
 

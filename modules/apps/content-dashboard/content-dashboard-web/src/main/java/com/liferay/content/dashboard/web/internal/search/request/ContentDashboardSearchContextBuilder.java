@@ -10,6 +10,9 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
+import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
+import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -281,6 +284,37 @@ public class ContentDashboardSearchContextBuilder {
 
 			if (filter != null) {
 				booleanFilter.add(filter, BooleanClauseOccur.MUST);
+			}
+		}
+
+		for (ContentDashboardItemFilterProvider
+				contentDashboardItemFilterProvider :
+					_contentDashboardItemFilterProviderRegistry.
+						getContentDashboardItemFilterProviders()) {
+
+			if (!contentDashboardItemFilterProvider.isShow(
+					_httpServletRequest)) {
+
+				continue;
+			}
+
+			try {
+				ContentDashboardItemFilter contentDashboardItemFilter =
+					contentDashboardItemFilterProvider.
+						getContentDashboardItemFilter(_httpServletRequest);
+
+				Filter filter = contentDashboardItemFilter.getFilter();
+
+				if (filter != null) {
+					booleanFilter.add(filter, BooleanClauseOccur.MUST);
+				}
+			}
+			catch (ContentDashboardItemActionException
+						contentDashboardItemActionException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(contentDashboardItemActionException);
+				}
 			}
 		}
 

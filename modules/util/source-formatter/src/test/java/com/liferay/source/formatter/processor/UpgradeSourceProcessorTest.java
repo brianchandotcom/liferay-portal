@@ -264,7 +264,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 		sourceFormatterProperties.add(
 			"upgrade.to.liferay.version=" + _UPGRADE_TO_LIFERAY_VERSION);
-
 		sourceFormatterProperties.add(
 			"upgrade.to.release.version=" + _UPGRADE_TO_RELEASE_VERSION);
 

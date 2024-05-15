@@ -6,10 +6,11 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ICreationAction, IItemAction} from '../../../utils/types';
-import {ViewPage} from '../ViewPage';
+import {DataSetPage} from '../DataSetPage';
 
 export class ActionsPage {
 	readonly creationActionsTab: Locator;
+	readonly dataSetPage: DataSetPage;
 	readonly itemActionsTab: Locator;
 	readonly newItemActionPlusButton: Locator;
 	readonly newCreationActionPlusButton: Locator;
@@ -33,12 +34,12 @@ export class ActionsPage {
 	readonly newItemActionButton: Locator;
 	readonly noActionsWereCreatedMessage: Locator;
 	readonly page: Page;
-	readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
 		this.creationActionsTab = page.getByRole('tab', {
 			name: 'Creation Actions',
 		});
+		this.dataSetPage = new DataSetPage(page);
 		this.itemActionsTab = page.getByRole('tab', {name: 'Item Actions'});
 		this.newItemActionPlusButton = page.getByTitle('New Item Action');
 		this.newCreationActionPlusButton = page.getByText(
@@ -74,22 +75,14 @@ export class ActionsPage {
 			.nth(0)
 			.locator('.c-empty-state-title');
 		this.page = page;
-		this.viewPage = new ViewPage(page);
 	}
 
-	async goto({
-		dataSetLabel,
-		viewLabel,
-	}: {
-		dataSetLabel: string;
-		viewLabel: string;
-	}) {
-		await this.viewPage.goto({
+	async goto({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.goto({
 			dataSetLabel,
-			viewLabel,
 		});
 
-		await this.viewPage.selectTab('Actions');
+		await this.dataSetPage.selectTab('Actions');
 	}
 
 	async createCreationAction(creationActionProps: ICreationAction) {

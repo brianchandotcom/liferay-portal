@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {FiltersPage} from '../pages/view/tabs/FiltersPage';
+import {FiltersPage} from '../pages/data_set/tabs/FiltersPage';
 
 const filtersPageTest = test.extend<{
 	filtersPage: FiltersPage;

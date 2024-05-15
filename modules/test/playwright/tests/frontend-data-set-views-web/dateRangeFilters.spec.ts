@@ -14,7 +14,6 @@ import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersT
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
-import {viewsPageTest} from './fixtures/viewsPageTest';
 
 export const dsmTest = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -23,30 +22,19 @@ export const dsmTest = mergeTests(
 		'LPS-178052': true,
 	}),
 	filtersPageTest,
-	loginTest(),
-	viewsPageTest
+	loginTest()
 );
 
 let dataSetERC: string;
 let dataSetLabel: string;
-let dataSetViewERC: string;
-let dataSetViewLabel: string;
 
 dsmTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
-	dataSetViewERC = getRandomString();
-	dataSetViewLabel = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
 		erc: dataSetERC,
 		label: dataSetLabel,
-	});
-
-	await dataSetManagerApiHelpers.createDataSetView({
-		erc: dataSetViewERC,
-		label: dataSetViewLabel,
-		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: dataSetERC,
 	});
 });
 
@@ -60,7 +48,6 @@ dsmTest(
 		await dsmTest.step('Navigate to Filters section', async () => {
 			await filtersPage.goto({
 				dataSetLabel,
-				viewLabel: dataSetViewLabel,
 			});
 		});
 
@@ -106,7 +93,7 @@ fragmentTest(
 				fieldName: 'dateCreated',
 				from: '2020-01-01',
 				label_i18n: {en_US: filterLabel},
-				r_fdsViewFDSDateFilterRelationship_c_fdsViewERC: dataSetViewERC,
+				r_fdsViewFDSDateFilterRelationship_c_fdsViewERC: dataSetERC,
 				to: '3020-01-02',
 				type: 'date-time',
 			});
@@ -120,7 +107,7 @@ fragmentTest(
 				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: fieldLabel},
 					name: 'rendererType',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetViewERC,
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			}
@@ -128,8 +115,8 @@ fragmentTest(
 
 		await fragmentTest.step('Configure Data Set fragment', async () => {
 			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
 				layout,
-				viewLabel: dataSetViewLabel,
 			});
 		});
 

@@ -6,9 +6,10 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {ISelectionFilter} from '../../../utils/types';
-import {ViewPage} from '../ViewPage';
+import {DataSetPage} from '../DataSetPage';
 
 export class FiltersPage {
+	private readonly dataSetPage: DataSetPage;
 	readonly newDateRangeFilterModal: {
 		filterBySelect: Locator;
 	};
@@ -28,9 +29,9 @@ export class FiltersPage {
 		sourceDropdown: Locator;
 	};
 	readonly page: Page;
-	private readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
+		this.dataSetPage = new DataSetPage(page);
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
 			.and(page.getByTitle('New Filter'));
@@ -56,29 +57,14 @@ export class FiltersPage {
 			sourceDropdown: page.getByLabel('Choose an Option'),
 		};
 		this.page = page;
-		this.viewPage = new ViewPage(page);
 	}
 
-	async goto({
-		dataSetLabel,
-		viewLabel,
-	}: {
-		dataSetLabel: string;
-		viewLabel: string;
-	}) {
-		await this.viewPage.goto({
+	async goto({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.goto({
 			dataSetLabel,
-			viewLabel,
 		});
 
-		await Promise.all([
-			this.viewPage.selectTab('Filters'),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp.url().includes('/openapi.json')
-			),
-		]);
+		await this.dataSetPage.selectTab('Filters');
 	}
 
 	async createSelectionFilter({

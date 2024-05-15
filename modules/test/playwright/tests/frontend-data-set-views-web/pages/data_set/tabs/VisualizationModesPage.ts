@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ViewPage} from '../ViewPage';
+import {DataSetPage} from '../DataSetPage';
 
 export class VisualizationModesPage {
 	private readonly addFieldsButton: Locator;
@@ -17,10 +17,10 @@ export class VisualizationModesPage {
 	};
 	readonly cardsVisualizationModeContainer: Locator;
 	private readonly container: Locator;
+	private readonly dataSetPage: DataSetPage;
 	readonly fieldSelectModalContainer: Locator;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
-	private readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
 		this.addFieldsButton = page.getByLabel('Add Fields');
@@ -34,12 +34,12 @@ export class VisualizationModesPage {
 			'.cards-visualization-mode'
 		);
 		this.container = page.locator('.visualization-modes');
+		this.dataSetPage = new DataSetPage(page);
 		this.listVisualizationModeContainer = page.locator(
 			'.list-visualization-mode'
 		);
 		this.fieldSelectModalContainer = page.locator('.field-select-modal');
 		this.page = page;
-		this.viewPage = new ViewPage(page);
 	}
 
 	async cancelAddFieldsModal() {
@@ -71,19 +71,12 @@ export class VisualizationModesPage {
 			.locator('input[type="checkbox"]');
 	}
 
-	async goto({
-		dataSetLabel,
-		viewLabel,
-	}: {
-		dataSetLabel: string;
-		viewLabel: string;
-	}) {
-		await this.viewPage.goto({
+	async goto({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.goto({
 			dataSetLabel,
-			viewLabel,
 		});
 
-		await this.viewPage.selectTab('Visualization Modes');
+		await this.dataSetPage.selectTab('Visualization Modes');
 	}
 
 	async openAddFieldsModal() {

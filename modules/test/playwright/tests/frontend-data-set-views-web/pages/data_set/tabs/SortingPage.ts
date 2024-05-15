@@ -5,10 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ViewPage} from '../ViewPage';
+import {DataSetPage} from '../DataSetPage';
 
 export class SortingPage {
 	private readonly addSortingButton: Locator;
+	private readonly dataSetPage: DataSetPage;
 	readonly sortingTable: Locator;
 	private readonly addSortingDialog: {
 		cancelButton: Locator;
@@ -18,10 +19,10 @@ export class SortingPage {
 		sortByInput: Locator;
 	};
 	readonly page: Page;
-	private readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
 		this.addSortingButton = page.getByLabel('New Sort');
+		this.dataSetPage = new DataSetPage(page);
 		this.sortingTable = page.locator('.table-responsive');
 		this.addSortingDialog = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
@@ -31,22 +32,14 @@ export class SortingPage {
 			sortByInput: page.getByLabel('Sort By'),
 		};
 		this.page = page;
-		this.viewPage = new ViewPage(page);
 	}
 
-	async goto({
-		dataSetLabel,
-		viewLabel,
-	}: {
-		dataSetLabel: string;
-		viewLabel: string;
-	}) {
-		await this.viewPage.goto({
+	async goto({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.goto({
 			dataSetLabel,
-			viewLabel,
 		});
 
-		await this.viewPage.selectTab('Sorting');
+		await this.dataSetPage.selectTab('Sorting');
 	}
 
 	async openAddSortingModal() {

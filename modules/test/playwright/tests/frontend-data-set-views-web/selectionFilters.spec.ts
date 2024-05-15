@@ -31,27 +31,18 @@ export const test = mergeTests(
 	picklistApiHelpersTest
 );
 
-let filtersDataSetERC: string;
-let filtersDataSetLabel: string;
-let filtersDataSetViewERC: string;
-let filtersDataSetViewLabel: string;
+let dataSetERC: string;
+let dataSetLabel: string;
 let picklistName: string;
 
 test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
-	filtersDataSetERC = getRandomString();
-	filtersDataSetLabel = getRandomString();
-	filtersDataSetViewERC = getRandomString();
-	filtersDataSetViewLabel = getRandomString();
+	dataSetERC = getRandomString();
+	dataSetLabel = getRandomString();
 	picklistName = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
-		erc: filtersDataSetERC,
-		label: filtersDataSetLabel,
-	});
-	await dataSetManagerApiHelpers.createDataSetView({
-		erc: filtersDataSetViewERC,
-		label: filtersDataSetViewLabel,
-		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: filtersDataSetERC,
+		erc: dataSetERC,
+		label: dataSetLabel,
 	});
 
 	await picklistApiHelpers.createPicklist({
@@ -66,17 +57,16 @@ test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
-	await dataSetManagerApiHelpers.deleteDataSet({erc: filtersDataSetERC});
+	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 
 	await picklistApiHelpers.deletePicklist(picklistName);
 });
 
-test.describe('Filters in the Data Set Manager', () => {
+test.describe('Filters in Data Set Manager', () => {
 	test('Can create a selection filter', async ({filtersPage, page}) => {
 		await test.step('Navigate to the Filters tab', async () => {
 			await filtersPage.goto({
-				dataSetLabel: filtersDataSetLabel,
-				viewLabel: filtersDataSetViewLabel,
+				dataSetLabel,
 			});
 		});
 
@@ -115,7 +105,7 @@ export const fragmentTest = mergeTests(
 	picklistApiHelpersTest
 );
 
-fragmentTest.describe('Filters in the fragment', () => {
+fragmentTest.describe('Filters in Data Set fragment', () => {
 	fragmentTest(
 		'Selection filter is displayed in fragment, and applied to data @LPD-10754',
 		async ({
@@ -148,15 +138,13 @@ fragmentTest.describe('Filters in the fragment', () => {
 					await dataSetManagerApiHelpers.createDataSetField({
 						label_i18n: {en_US: 'Renderer'},
 						name: 'renderer',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC:
-							filtersDataSetViewERC,
+						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					});
 
 					await dataSetManagerApiHelpers.createDataSetField({
 						label_i18n: {en_US: 'Sortable'},
 						name: 'sortable',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC:
-							filtersDataSetViewERC,
+						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 						renderer: 'boolean',
 					});
 				}
@@ -174,7 +162,7 @@ fragmentTest.describe('Filters in the fragment', () => {
 							fieldName: 'renderer',
 							label_i18n: {en_US: filterLabel},
 							r_fdsViewFDSDynamicFilterRelationship_c_fdsViewERC:
-								filtersDataSetViewERC,
+								dataSetERC,
 							source: picklist.externalReferenceCode,
 							sourceType: 'PICKLIST',
 						}
@@ -184,8 +172,8 @@ fragmentTest.describe('Filters in the fragment', () => {
 
 			await fragmentTest.step('Configure Data Set fragment', async () => {
 				await fdsFragmentPage.configureDataSetFragment({
+					dataSetLabel,
 					layout,
-					viewLabel: filtersDataSetViewLabel,
 				});
 			});
 

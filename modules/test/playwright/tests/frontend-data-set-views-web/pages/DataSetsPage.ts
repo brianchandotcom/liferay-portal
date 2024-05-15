@@ -53,7 +53,7 @@ export class DataSetsPage {
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
 		this.page = page;
-		this.pageContainer = page.locator('.fds-entries');
+		this.pageContainer = page.locator('.data-sets');
 	}
 
 	async createDataSet({

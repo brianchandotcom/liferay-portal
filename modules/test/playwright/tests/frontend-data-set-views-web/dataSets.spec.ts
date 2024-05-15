@@ -33,165 +33,163 @@ const dataSetConfig = {
 
 const DEFAULT_DATA_SET_ERC = getRandomString();
 
-test.describe('Data Set Table', () => {
-	test('Data Set created via UI', async ({dataSetsPage, page}) => {
-		await test.step('Create Data Set', async () => {
-			await dataSetsPage.goto();
-			await dataSetsPage.createDataSet(dataSetConfig);
-		});
+test('Create data set via UI', async ({dataSetsPage, page}) => {
+	await test.step('Create Data Set', async () => {
+		await dataSetsPage.goto();
+		await dataSetsPage.createDataSet(dataSetConfig);
+	});
 
-		await test.step('Assert table column labels', async () => {
-			await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
+	await test.step('Assert table column labels', async () => {
+		await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
 
-			const tableColumnLabels = await page
-				.locator('.dnd-thead > .dnd-tr')
-				.first()
-				.locator('.dnd-th')
-				.allInnerTexts();
+		const tableColumnLabels = await page
+			.locator('.dnd-thead > .dnd-tr')
+			.first()
+			.locator('.dnd-th')
+			.allInnerTexts();
 
-			const expectedLabels = [
-				'Name',
-				'REST Application',
-				'REST Schema',
-				'REST Endpoint',
-				'Modified Date',
-				'',
-			];
+		const expectedLabels = [
+			'Name',
+			'REST Application',
+			'REST Schema',
+			'REST Endpoint',
+			'Modified Date',
+			'',
+		];
 
-			await expect(tableColumnLabels).toEqual(expectedLabels);
-		});
+		expect(tableColumnLabels).toEqual(expectedLabels);
+	});
 
-		await test.step('Assert table cell content', async () => {
-			await page
-				.locator('.dnd-table > .dnd-tbody > .dnd-tr')
-				.first()
-				.waitFor();
+	await test.step('Assert table cell content', async () => {
+		await page
+			.locator('.dnd-table > .dnd-tbody > .dnd-tr')
+			.first()
+			.waitFor();
 
-			const tableRowContent = await page
-				.locator('.dnd-tbody > .dnd-tr')
-				.first()
-				.locator('.dnd-td');
+		const tableRowContent = await page
+			.locator('.dnd-tbody > .dnd-tr')
+			.first()
+			.locator('.dnd-td');
 
-			const expectedRowContent = [
-				dataSetConfig.name,
-				dataSetConfig.restApplication,
-				dataSetConfig.restSchema,
-				dataSetConfig.restEndpoint,
-			];
+		const expectedRowContent = [
+			dataSetConfig.name,
+			dataSetConfig.restApplication,
+			dataSetConfig.restSchema,
+			dataSetConfig.restEndpoint,
+		];
 
-			await expect(tableRowContent).toContainText(expectedRowContent);
-		});
+		await expect(tableRowContent).toContainText(expectedRowContent);
+	});
 
-		await test.step('Assert table action labels', async () => {
-			await page.locator('.dnd-td.item-actions').first().waitFor();
+	await test.step('Assert table action labels', async () => {
+		await page.locator('.dnd-td.item-actions').first().waitFor();
 
-			await page
-				.locator('.dnd-td.item-actions')
-				.first()
-				.locator('.dropdown-toggle')
-				.click();
+		await page
+			.locator('.dnd-td.item-actions')
+			.first()
+			.locator('.dropdown-toggle')
+			.click();
 
-			const tableItemActions = await page
-				.locator('.dropdown-menu')
-				.filter({has: page.locator('span.pr-2')})
-				.first()
-				.locator('.dropdown-item')
-				.allInnerTexts();
+		const tableItemActions = await page
+			.locator('.dropdown-menu')
+			.filter({has: page.locator('span.pr-2')})
+			.first()
+			.locator('.dropdown-item')
+			.allInnerTexts();
 
-			const expectedLabels = ['Edit', 'Permissions', 'Delete'];
+		const expectedLabels = ['Edit', 'Permissions', 'Delete'];
 
-			await expect(tableItemActions).toEqual(expectedLabels);
-		});
+		await expect(tableItemActions).toEqual(expectedLabels);
+	});
 
-		await test.step('Delete Data Set', async () => {
-			await dataSetsPage.deleteDataSet(dataSetConfig.name);
+	await test.step('Delete Data Set', async () => {
+		await dataSetsPage.deleteDataSet(dataSetConfig.name);
+	});
+});
+
+test('Create data set via API', async ({
+	dataSetManagerApiHelpers,
+	dataSetsPage,
+	page,
+}) => {
+	await test.step('Create Data Set', async () => {
+		await dataSetManagerApiHelpers.createDataSet({
+			...dataSetConfig,
+			erc: DEFAULT_DATA_SET_ERC,
+			label: dataSetConfig.name,
 		});
 	});
 
-	test('Data Set created via API', async ({
-		dataSetManagerApiHelpers,
-		dataSetsPage,
-		page,
-	}) => {
-		await test.step('Create Data Set', async () => {
-			await dataSetManagerApiHelpers.createDataSet({
-				...dataSetConfig,
-				erc: DEFAULT_DATA_SET_ERC,
-				label: dataSetConfig.name,
-			});
-		});
+	await test.step('Navigate to Data Sets page', async () => {
+		await dataSetsPage.goto();
+	});
 
-		await test.step('Navigate to Data Sets page', async () => {
-			await dataSetsPage.goto();
-		});
+	await test.step('Assert table column labels', async () => {
+		await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
 
-		await test.step('Assert table column labels', async () => {
-			await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
+		const tableColumnLabels = await page
+			.locator('.dnd-thead > .dnd-tr')
+			.first()
+			.locator('.dnd-th')
+			.allInnerTexts();
 
-			const tableColumnLabels = await page
-				.locator('.dnd-thead > .dnd-tr')
-				.first()
-				.locator('.dnd-th')
-				.allInnerTexts();
+		const expectedLabels = [
+			'Name',
+			'REST Application',
+			'REST Schema',
+			'REST Endpoint',
+			'Modified Date',
+			'',
+		];
 
-			const expectedLabels = [
-				'Name',
-				'REST Application',
-				'REST Schema',
-				'REST Endpoint',
-				'Modified Date',
-				'',
-			];
+		await expect(tableColumnLabels).toEqual(expectedLabels);
+	});
 
-			await expect(tableColumnLabels).toEqual(expectedLabels);
-		});
+	await test.step('Assert table cell content', async () => {
+		await page
+			.locator('.dnd-table > .dnd-tbody > .dnd-tr')
+			.first()
+			.waitFor();
 
-		await test.step('Assert table cell content', async () => {
-			await page
-				.locator('.dnd-table > .dnd-tbody > .dnd-tr')
-				.first()
-				.waitFor();
+		const tableRowContent = await page
+			.locator('.dnd-tbody > .dnd-tr')
+			.first()
+			.locator('.dnd-td');
 
-			const tableRowContent = await page
-				.locator('.dnd-tbody > .dnd-tr')
-				.first()
-				.locator('.dnd-td');
+		const expectedRowContent = [
+			dataSetConfig.name,
+			dataSetConfig.restApplication,
+			dataSetConfig.restSchema,
+			dataSetConfig.restEndpoint,
+		];
 
-			const expectedRowContent = [
-				dataSetConfig.name,
-				dataSetConfig.restApplication,
-				dataSetConfig.restSchema,
-				dataSetConfig.restEndpoint,
-			];
+		await expect(tableRowContent).toContainText(expectedRowContent);
+	});
 
-			await expect(tableRowContent).toContainText(expectedRowContent);
-		});
+	await test.step('Assert table action labels', async () => {
+		await page.locator('.dnd-td.item-actions').first().waitFor();
 
-		await test.step('Assert table action labels', async () => {
-			await page.locator('.dnd-td.item-actions').first().waitFor();
+		await page
+			.locator('.dnd-td.item-actions')
+			.first()
+			.locator('.dropdown-toggle')
+			.click();
 
-			await page
-				.locator('.dnd-td.item-actions')
-				.first()
-				.locator('.dropdown-toggle')
-				.click();
+		const tableItemActions = await page
+			.locator('.dropdown-menu')
+			.filter({has: page.locator('span.pr-2')})
+			.first()
+			.locator('.dropdown-item')
+			.allInnerTexts();
 
-			const tableItemActions = await page
-				.locator('.dropdown-menu')
-				.filter({has: page.locator('span.pr-2')})
-				.first()
-				.locator('.dropdown-item')
-				.allInnerTexts();
+		const expectedLabels = ['Edit', 'Permissions', 'Delete'];
 
-			const expectedLabels = ['Edit', 'Permissions', 'Delete'];
+		await expect(tableItemActions).toEqual(expectedLabels);
+	});
 
-			await expect(tableItemActions).toEqual(expectedLabels);
-		});
-
-		await test.step('Delete Data Set', async () => {
-			await dataSetManagerApiHelpers.deleteDataSet({
-				erc: DEFAULT_DATA_SET_ERC,
-			});
+	await test.step('Delete Data Set', async () => {
+		await dataSetManagerApiHelpers.deleteDataSet({
+			erc: DEFAULT_DATA_SET_ERC,
 		});
 	});
 });

@@ -16,40 +16,15 @@ import {
 const DEFAULT_DATA_SET_ERC = 'sampleDataSetERC';
 export class DataSetManagerApiHelpers extends ApiHelpers {
 	async createDataSet({
-		erc = DEFAULT_DATA_SET_ERC,
-		label = DEFAULT_LABEL.DATA_SET,
-		restApplication = '/data-set-manager/fields',
-		restEndpoint = '/',
-		restSchema = 'FDSField',
-	}: {
-		erc?: string;
-		label?: string;
-		restApplication?: string;
-		restEndpoint?: string;
-		restSchema?: string;
-	}) {
-		const url = `${this.baseUrl}data-set-manager/entries`;
-
-		const data = {
-			externalReferenceCode: erc,
-			label,
-			restApplication,
-			restEndpoint,
-			restSchema,
-		};
-
-		return this.post(url, {data});
-	}
-
-	async createDataSetView({
 		defaultItemsPerPage = 20,
 		defaultVisualizationMode,
 		description = 'Sample description',
 		erc = 'sampleDataSetERC',
-		label = DEFAULT_LABEL.VIEW,
+		label = DEFAULT_LABEL.DATA_SET,
 		listOfItemsPerPage = '4, 8, 20, 40, 60',
-		r_fdsEntryFDSViewRelationship_c_fdsEntryERC = DEFAULT_DATA_SET_ERC,
-		symbol = 'catalog',
+		restApplication = '/data-set-manager/fields',
+		restEndpoint = '/',
+		restSchema = 'FDSField',
 	}: {
 		defaultItemsPerPage?: number;
 		defaultVisualizationMode?: string;
@@ -57,8 +32,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		erc?: string;
 		label?: string;
 		listOfItemsPerPage?: string;
-		r_fdsEntryFDSViewRelationship_c_fdsEntryERC?: string;
-		symbol?: string;
+		restApplication?: string;
+		restEndpoint?: string;
+		restSchema?: string;
 	}) {
 		const url = `${this.baseUrl}data-set-manager/views`;
 
@@ -69,14 +45,15 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			externalReferenceCode: erc,
 			label,
 			listOfItemsPerPage,
-			r_fdsEntryFDSViewRelationship_c_fdsEntryERC,
-			symbol,
+			restApplication,
+			restEndpoint,
+			restSchema,
 		};
 
 		return this.post(url, {data});
 	}
 
-	async createDataSetViewCardsSection({
+	async createDataSetCardsSection({
 		fieldName = 'name',
 		name = 'title',
 		r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
@@ -96,7 +73,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(url, {data});
 	}
 
-	async createDataSetViewCreationAction({
+	async createDataSetCreationAction({
 		icon,
 		label_i18n = {en_US: 'Default Creation Action'},
 		modalSize = 'full-screen',
@@ -227,7 +204,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(url, {data});
 	}
 
-	async createDataSetViewItemAction({
+	async createDataSetItemAction({
 		confirmationMessage_i18n,
 		confirmationMessageType,
 		errorMessage_i18n,
@@ -277,7 +254,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(endpointUrl, {data});
 	}
 
-	async createDataSetViewListSection({
+	async createDataSetListSection({
 		fieldName = 'name',
 		name = 'title',
 		r_fdsViewFDSListSectionRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
@@ -298,12 +275,12 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async deleteDataSet({erc = DEFAULT_DATA_SET_ERC}: {erc?: string}) {
-		const url = `${this.baseUrl}data-set-manager/entries/by-external-reference-code/${erc}`;
+		const url = `${this.baseUrl}data-set-manager/views/by-external-reference-code/${erc}`;
 
 		return this.delete(url);
 	}
 
-	async updateDataSetView({
+	async updateDataSet({
 		defaultVisualizationMode,
 		erc = DEFAULT_DATA_SET_ERC,
 		label,

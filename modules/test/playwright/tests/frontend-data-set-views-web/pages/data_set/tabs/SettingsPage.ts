@@ -5,20 +5,21 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ViewPage} from '../ViewPage';
+import {DataSetPage} from '../DataSetPage';
 
 export class SettingsPage {
 	readonly cancelButton: Locator;
+	readonly dataSetPage: DataSetPage;
 	readonly goToVisualizationModesLink: Locator;
 	readonly defaultVisualizationModeLabel: Locator;
 	readonly notConfiguredPlaceholder: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly toastContainer: Locator;
-	readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
+		this.dataSetPage = new DataSetPage(page);
 		this.goToVisualizationModesLink = page.getByText(
 			'Go to Visualization Modes'
 		);
@@ -30,21 +31,13 @@ export class SettingsPage {
 		this.notConfiguredPlaceholder = page.getByPlaceholder('Not Configured');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.toastContainer = page.locator('.alert-container');
-		this.viewPage = new ViewPage(page);
 	}
 
-	async goto({
-		dataSetLabel,
-		viewLabel,
-	}: {
-		dataSetLabel: string;
-		viewLabel: string;
-	}) {
-		await this.viewPage.goto({
+	async goto({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.goto({
 			dataSetLabel,
-			viewLabel,
 		});
 
-		await this.viewPage.selectTab('Settings');
+		await this.dataSetPage.selectTab('Settings');
 	}
 }

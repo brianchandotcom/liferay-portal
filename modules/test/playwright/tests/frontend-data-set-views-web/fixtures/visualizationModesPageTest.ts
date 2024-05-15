@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {VisualizationModesPage} from '../pages/view/tabs/VisualizationModesPage';
+import {VisualizationModesPage} from '../pages/data_set/tabs/VisualizationModesPage';
 
 const visualizationModesPageTest = test.extend<{
 	visualizationModesPage: VisualizationModesPage;

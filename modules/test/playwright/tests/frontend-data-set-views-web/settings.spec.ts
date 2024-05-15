@@ -27,24 +27,15 @@ export const test = mergeTests(
 );
 
 let settingsDataSetERC: string;
-let settingsDataSetLabel: string;
-let settingsDataSetViewERC: string;
-let settingsDataSetViewLabel: string;
+let dataSetLabel: string;
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	settingsDataSetERC = getRandomString();
-	settingsDataSetLabel = getRandomString();
-	settingsDataSetViewERC = getRandomString();
-	settingsDataSetViewLabel = getRandomString();
+	dataSetLabel = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
 		erc: settingsDataSetERC,
-		label: settingsDataSetLabel,
-	});
-	await dataSetManagerApiHelpers.createDataSetView({
-		erc: settingsDataSetViewERC,
-		label: settingsDataSetViewLabel,
-		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: settingsDataSetERC,
+		label: dataSetLabel,
 	});
 });
 
@@ -60,8 +51,7 @@ test.describe('Data Set Settings', () => {
 		}) => {
 			await test.step('Navigate to Settings section', async () => {
 				await settingsPage.goto({
-					dataSetLabel: settingsDataSetLabel,
-					viewLabel: settingsDataSetViewLabel,
+					dataSetLabel,
 				});
 
 				await expect(
@@ -96,9 +86,9 @@ test.describe('Data Set Settings', () => {
 			settingsPage,
 		}) => {
 			await test.step('Assign a field to a Card title section', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewCardsSection({
+				await dataSetManagerApiHelpers.createDataSetCardsSection({
 					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						settingsDataSetViewERC,
+						settingsDataSetERC,
 				});
 
 				await page.reload();
@@ -106,8 +96,7 @@ test.describe('Data Set Settings', () => {
 
 			await test.step('Navigate to Settings section', async () => {
 				await settingsPage.goto({
-					dataSetLabel: settingsDataSetLabel,
-					viewLabel: settingsDataSetViewLabel,
+					dataSetLabel,
 				});
 
 				await expect(
@@ -128,13 +117,13 @@ test.describe('Data Set Settings', () => {
 			settingsPage,
 		}) => {
 			await test.step('Assign a field to title section for Cards and List', async () => {
-				await dataSetManagerApiHelpers.createDataSetViewCardsSection({
+				await dataSetManagerApiHelpers.createDataSetCardsSection({
 					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						settingsDataSetViewERC,
+						settingsDataSetERC,
 				});
-				await dataSetManagerApiHelpers.createDataSetViewListSection({
+				await dataSetManagerApiHelpers.createDataSetListSection({
 					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-						settingsDataSetViewERC,
+						settingsDataSetERC,
 				});
 
 				await page.reload();
@@ -142,8 +131,7 @@ test.describe('Data Set Settings', () => {
 
 			await test.step('Navigate to Settings section', async () => {
 				await settingsPage.goto({
-					dataSetLabel: settingsDataSetLabel,
-					viewLabel: settingsDataSetViewLabel,
+					dataSetLabel,
 				});
 
 				await expect(
@@ -211,12 +199,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Assign a field to a Card title section',
 				async () => {
-					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
-						{
-							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-								settingsDataSetViewERC,
-						}
-					);
+					await dataSetManagerApiHelpers.createDataSetCardsSection({
+						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+							settingsDataSetERC,
+					});
 				}
 			);
 
@@ -224,8 +210,8 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);
@@ -246,18 +232,14 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
-					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
-						{
-							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-								settingsDataSetViewERC,
-						}
-					);
-					await dataSetManagerApiHelpers.createDataSetViewListSection(
-						{
-							r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-								settingsDataSetViewERC,
-						}
-					);
+					await dataSetManagerApiHelpers.createDataSetCardsSection({
+						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+							settingsDataSetERC,
+					});
+					await dataSetManagerApiHelpers.createDataSetListSection({
+						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+							settingsDataSetERC,
+					});
 				}
 			);
 
@@ -265,8 +247,8 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);
@@ -307,27 +289,23 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
-					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
-						{
-							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-								settingsDataSetViewERC,
-						}
-					);
-					await dataSetManagerApiHelpers.createDataSetViewListSection(
-						{
-							r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-								settingsDataSetViewERC,
-						}
-					);
+					await dataSetManagerApiHelpers.createDataSetCardsSection({
+						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+							settingsDataSetERC,
+					});
+					await dataSetManagerApiHelpers.createDataSetListSection({
+						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+							settingsDataSetERC,
+					});
 				}
 			);
 
 			await fragmentTest.step(
 				'Set List as default visualization mode',
 				async () => {
-					await dataSetManagerApiHelpers.updateDataSetView({
+					await dataSetManagerApiHelpers.updateDataSet({
 						defaultVisualizationMode: 'list',
-						erc: settingsDataSetViewERC,
+						erc: settingsDataSetERC,
 					});
 				}
 			);
@@ -336,8 +314,8 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);
@@ -383,27 +361,23 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
-					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
-						{
-							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-								settingsDataSetViewERC,
-						}
-					);
-					await dataSetManagerApiHelpers.createDataSetViewListSection(
-						{
-							r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-								settingsDataSetViewERC,
-						}
-					);
+					await dataSetManagerApiHelpers.createDataSetCardsSection({
+						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+							settingsDataSetERC,
+					});
+					await dataSetManagerApiHelpers.createDataSetListSection({
+						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+							settingsDataSetERC,
+					});
 				}
 			);
 
 			await fragmentTest.step(
 				'Set List as default visualization mode',
 				async () => {
-					await dataSetManagerApiHelpers.updateDataSetView({
+					await dataSetManagerApiHelpers.updateDataSet({
 						defaultVisualizationMode: 'list',
-						erc: settingsDataSetViewERC,
+						erc: settingsDataSetERC,
 					});
 				}
 			);
@@ -412,8 +386,8 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
+						dataSetLabel,
 						layout,
-						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);
@@ -454,9 +428,9 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Change default visualization mode to Cards',
 				async () => {
-					await dataSetManagerApiHelpers.updateDataSetView({
+					await dataSetManagerApiHelpers.updateDataSet({
 						defaultVisualizationMode: 'cards',
-						erc: settingsDataSetViewERC,
+						erc: settingsDataSetERC,
 					});
 				}
 			);
@@ -470,9 +444,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 						.getByTestId('visualization-mode-cards')
 						.waitFor({state: 'visible'});
 
-					expect(
-						await fdsFragmentPage.fdsCardsWrapper
-					).toBeInViewport();
+					expect(fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
 
 					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
 						state: 'visible',

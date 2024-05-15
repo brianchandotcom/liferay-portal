@@ -11,7 +11,6 @@ import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {sortingPageTest} from './fixtures/sortingPageTest';
-import {viewsPageTest} from './fixtures/viewsPageTest';
 import saveFromModal from './utils/saveFromModal';
 
 export const test = mergeTests(
@@ -22,34 +21,24 @@ export const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	sortingPageTest,
-	loginTest(),
-	viewsPageTest
+	loginTest()
 );
 
-let sortingDataSetERC: string;
-let sortingDataSetLabel: string;
-let sortingDataSetViewERC: string;
-let sortingDataSetViewLabel: string;
+let dataSetERC: string;
+let dataSetLabel: string;
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
-	sortingDataSetERC = getRandomString();
-	sortingDataSetLabel = getRandomString();
-	sortingDataSetViewERC = getRandomString();
-	sortingDataSetViewLabel = getRandomString();
+	dataSetERC = getRandomString();
+	dataSetLabel = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
-		erc: sortingDataSetERC,
-		label: sortingDataSetLabel,
-	});
-	await dataSetManagerApiHelpers.createDataSetView({
-		erc: sortingDataSetViewERC,
-		label: sortingDataSetViewLabel,
-		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: sortingDataSetERC,
+		erc: dataSetERC,
+		label: dataSetLabel,
 	});
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers}) => {
-	await dataSetManagerApiHelpers.deleteDataSet({erc: sortingDataSetERC});
+	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
 test.describe('Configure sorting in Data Set Manager', () => {
@@ -59,8 +48,7 @@ test.describe('Configure sorting in Data Set Manager', () => {
 	}) => {
 		await test.step('Navigate to Sorting section', async () => {
 			await sortingPage.goto({
-				dataSetLabel: sortingDataSetLabel,
-				viewLabel: sortingDataSetViewLabel,
+				dataSetLabel,
 			});
 		});
 
@@ -83,8 +71,7 @@ test.describe('Configure sorting in Data Set Manager', () => {
 	}) => {
 		await test.step('Navigate to Sorting section', async () => {
 			await sortingPage.goto({
-				dataSetLabel: sortingDataSetLabel,
-				viewLabel: sortingDataSetViewLabel,
+				dataSetLabel,
 			});
 		});
 

@@ -16,7 +16,7 @@ const dataSetManagerSetupTest = test.extend<{
 
 			await setupPage.goToDataSetManager();
 
-			await page.locator('.fds-entries').waitFor();
+			await page.locator('.data-sets').waitFor();
 
 			await use(setupPage);
 		},

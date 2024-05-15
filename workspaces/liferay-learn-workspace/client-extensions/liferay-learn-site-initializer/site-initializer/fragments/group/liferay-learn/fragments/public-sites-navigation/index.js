@@ -319,29 +319,3 @@ window.addEventListener('keyup', (event) => {
 		siteSearchWrapper.classList.add('search-open');
 	}
 });
-
-const navTabs = document.querySelectorAll('.nav-item button');
-const navPanels = document.querySelectorAll('.tab-panel-item');
-
-navTabs.forEach((navTab, i) => {
-	navTab.classList.add(`nav-tab-${i + 1}`);
-});
-
-navPanels.forEach((navPanel, i) => {
-	navPanel.classList.add(`nav-panel-${i + 1}`);
-});
-
-function toggleNavPanel(tabSelector, panelSelector, initialState = false) {
-	const tab = document.querySelector(tabSelector);
-	const panel = document.querySelector(panelSelector);
-
-	let isPanelOpened = initialState;
-
-	tab.addEventListener('click', () => {
-		panel.style.display = isPanelOpened ? 'none' : 'block';
-		isPanelOpened = !isPanelOpened;
-	});
-}
-
-toggleNavPanel('.nav-tab-1', '.nav-panel-1');
-toggleNavPanel('.nav-tab-2', '.nav-panel-2');

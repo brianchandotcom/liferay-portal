@@ -92,7 +92,6 @@ public class ContentDashboardSearchContextBuilder {
 				ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
 				ParamUtil.getLongValues(_httpServletRequest, "authorIds"),
 				PortalUtil.getCompanyId(_httpServletRequest),
-				ParamUtil.getStringValues(_httpServletRequest, "fileExtension"),
 				ParamUtil.getString(_httpServletRequest, "reviewDate")));
 
 		String[] contentDashboardItemSubtypePayloads =
@@ -266,8 +265,7 @@ public class ContentDashboardSearchContextBuilder {
 
 	private BooleanClause[] _getBooleanClauses(
 		AssetCategoryIds assetCategoryIds, String[] assetTagNames,
-		long[] authorIds, long companyId, String[] fileExtensions,
-		String reviewDate) {
+		long[] authorIds, long companyId, String reviewDate) {
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
@@ -278,7 +276,6 @@ public class ContentDashboardSearchContextBuilder {
 					_getAssetCategoryIdsFilter(assetCategoryIds),
 					_getAssetTagNamesFilter(assetTagNames),
 					_getAuthorIdsFilter(authorIds),
-					_getFileExtensionsFilter(fileExtensions),
 					_getGoogleDriveShortcutFilter(companyId),
 					_getReviewDateFilter(reviewDate))) {
 
@@ -324,20 +321,6 @@ public class ContentDashboardSearchContextBuilder {
 			BooleanClauseFactoryUtil.create(
 				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
 		};
-	}
-
-	private Filter _getFileExtensionsFilter(String[] fileExtensions) {
-		if (ArrayUtil.isEmpty(fileExtensions)) {
-			return null;
-		}
-
-		TermsFilter termsFilter = new TermsFilter("fileExtension");
-
-		for (String fileExtension : fileExtensions) {
-			termsFilter.addValue(fileExtension);
-		}
-
-		return termsFilter;
 	}
 
 	private Filter _getGoogleDriveShortcutFilter(long companyId) {

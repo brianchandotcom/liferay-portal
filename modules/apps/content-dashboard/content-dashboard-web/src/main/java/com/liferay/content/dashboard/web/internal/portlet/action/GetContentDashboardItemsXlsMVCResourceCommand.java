@@ -14,6 +14,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
+import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
@@ -293,7 +294,8 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			_contentDashboardSearchRequestBuilderFactory.builder(
 				new ContentDashboardSearchContextBuilder(
 					_portal.getHttpServletRequest(resourceRequest),
-					_assetCategoryLocalService, _assetVocabularyLocalService
+					_assetCategoryLocalService, _assetVocabularyLocalService,
+					_contentDashboardItemFilterProviderRegistry
 				).withEnd(
 					end
 				).withSort(
@@ -381,6 +383,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	@Reference
 	private ContentDashboardItemFactoryRegistry
 		_contentDashboardItemFactoryRegistry;
+
+	@Reference
+	private ContentDashboardItemFilterProviderRegistry
+		_contentDashboardItemFilterProviderRegistry;
 
 	@Reference
 	private ContentDashboardSearchRequestBuilderFactory

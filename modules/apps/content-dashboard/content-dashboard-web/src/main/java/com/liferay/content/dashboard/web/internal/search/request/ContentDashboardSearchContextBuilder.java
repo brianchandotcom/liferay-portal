@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -53,11 +54,15 @@ public class ContentDashboardSearchContextBuilder {
 	public ContentDashboardSearchContextBuilder(
 		HttpServletRequest httpServletRequest,
 		AssetCategoryLocalService assetCategoryLocalService,
-		AssetVocabularyLocalService assetVocabularyLocalService) {
+		AssetVocabularyLocalService assetVocabularyLocalService,
+		ContentDashboardItemFilterProviderRegistry
+			contentDashboardItemFilterProviderRegistry) {
 
 		_httpServletRequest = httpServletRequest;
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
+		_contentDashboardItemFilterProviderRegistry =
+			contentDashboardItemFilterProviderRegistry;
 	}
 
 	public SearchContext build() {
@@ -359,6 +364,8 @@ public class ContentDashboardSearchContextBuilder {
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
+	private final ContentDashboardItemFilterProviderRegistry
+		_contentDashboardItemFilterProviderRegistry;
 	private Integer _end;
 	private final HttpServletRequest _httpServletRequest;
 	private Sort[] _sort;

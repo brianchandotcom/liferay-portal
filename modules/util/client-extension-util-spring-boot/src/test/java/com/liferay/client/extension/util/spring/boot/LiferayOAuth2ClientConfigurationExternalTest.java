@@ -36,7 +36,7 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 
 		ClientRegistration clientRegistration =
 			clientRegistrationRepository.findByRegistrationId(
-				"foo-bar-headless-server");
+				"default-headless-server");
 
 		Assert.assertEquals("123456789", clientRegistration.getClientId());
 		Assert.assertEquals("Shibboleth", clientRegistration.getClientSecret());

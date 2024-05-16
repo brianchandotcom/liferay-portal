@@ -41,6 +41,7 @@ import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -146,6 +147,63 @@ public class ExpandoValueLocalServiceTest {
 
 		Assert.assertEquals("Test", stringMap.get(_enLocale));
 		Assert.assertEquals("Teste", stringMap.get(_ptLocale));
+	}
+
+	@Test
+	public void testAddLocalizedStringValues() throws Exception {
+		ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column One",
+			ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column Two",
+			ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column Three",
+			ExpandoColumnConstants.STRING_LOCALIZED);
+
+		Serializable dataMapOne = HashMapBuilder.put(
+			_enLocale, "one"
+		).put(
+			_ptLocale, "um"
+		).build();
+
+		Serializable dataMapTwo = HashMapBuilder.put(
+			_enLocale, "two"
+		).build();
+
+		long classPK = _counterLocalService.increment();
+
+		ExpandoTestUtil.addValues(
+			_expandoTable, classPK,
+			new HashMapBuilder<>().<String, Serializable>put(
+				"Test Column One", dataMapOne
+			).put(
+				"Test Column Two", dataMapTwo
+			).put(
+				"Test Column Three", new HashMap<Locale, String>()
+			).build());
+
+		Assert.assertEquals(
+			dataMapOne,
+			_expandoValueLocalService.getData(
+				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
+				_expandoTable.getName(), "Test Column One", classPK));
+
+		Assert.assertEquals(
+			HashMapBuilder.put(
+				_enLocale, "two"
+			).build(),
+			_expandoValueLocalService.getData(
+				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
+				_expandoTable.getName(), "Test Column Two", classPK));
+
+		Assert.assertEquals(
+			new HashMap<Locale, String>(),
+			_expandoValueLocalService.getData(
+				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
+				_expandoTable.getName(), "Test Column Three", classPK));
 	}
 
 	@Test

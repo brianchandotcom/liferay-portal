@@ -6,10 +6,17 @@
 package com.liferay.expando.util;
 
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -25,6 +32,13 @@ public class ExpandoConverterUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testGetAttributeFromEmptyStringArray() {
+		Assert.assertNull(
+			ExpandoConverterUtil.getAttributeFromStringArray(
+				ExpandoColumnConstants.DATE_ARRAY, new String[0]));
+	}
 
 	@Test
 	public void testGetDateArrayAttributeFromString() {
@@ -88,6 +102,49 @@ public class ExpandoConverterUtilTest {
 				ExpandoColumnConstants.DATE, expectedTimeStrings);
 
 		Assert.assertEquals(expectedTime, actualDate.getTime());
+	}
+
+	@Test
+	public void testGetStringFromStringLocalizedAttribute() {
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		Locale nondefaultLocale = LocaleUtil.BRAZIL;
+
+		if (defaultLocale.equals(nondefaultLocale)) {
+			nondefaultLocale = LocaleUtil.GERMANY;
+		}
+
+		String str = ExpandoConverterUtil.getStringFromAttribute(
+			ExpandoColumnConstants.STRING_LOCALIZED,
+			HashMapBuilder.put(
+				defaultLocale, "used"
+			).put(
+				nondefaultLocale, "notUsed"
+			).build());
+
+		Assert.assertEquals("used", str);
+	}
+
+	@Test
+	public void testGetStringLocalizedAttributeFromStringArray() {
+		String[] stringArray = {"used", "notUsed"};
+
+		Serializable attribute =
+			ExpandoConverterUtil.getAttributeFromStringArray(
+				ExpandoColumnConstants.STRING_LOCALIZED, stringArray);
+
+		Class<?> attributeClass = attribute.getClass();
+
+		Assert.assertTrue(
+			"Localized String attribute was converted to " +
+				attributeClass.getSimpleName() + " instead of HashMap.",
+			attribute instanceof HashMap);
+
+		Map<Locale, String> localizations = (HashMap<Locale, String>)attribute;
+
+		Assert.assertEquals(localizations.toString(), 1, localizations.size());
+
+		Assert.assertEquals("used", localizations.get(LocaleUtil.getDefault()));
 	}
 
 }

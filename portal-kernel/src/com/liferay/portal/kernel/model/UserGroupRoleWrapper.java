@@ -216,6 +216,16 @@ public class UserGroupRoleWrapper
 	}
 
 	@Override
+	public boolean hasOrganizationRole() {
+		return model.hasOrganizationRole();
+	}
+
+	@Override
+	public boolean hasSiteRole() {
+		return model.hasSiteRole();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

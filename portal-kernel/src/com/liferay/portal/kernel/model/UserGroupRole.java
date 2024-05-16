@@ -117,4 +117,8 @@ public interface UserGroupRole extends PersistedModel, UserGroupRoleModel {
 
 	public int hashCode();
 
+	public boolean hasOrganizationRole();
+
+	public boolean hasSiteRole();
+
 }

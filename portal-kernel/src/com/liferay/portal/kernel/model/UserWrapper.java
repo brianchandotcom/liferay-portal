@@ -394,6 +394,20 @@ public class UserWrapper
 		return model.getAgreedToTermsOfUse();
 	}
 
+	@Override
+	public java.util.List<Group> getAllGroups()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAllGroups();
+	}
+
+	@Override
+	public java.util.List<Role> getAllRoles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getAllRoles();
+	}
+
 	/**
 	 * Returns the user's birth date.
 	 *
@@ -742,6 +756,32 @@ public class UserWrapper
 	}
 
 	@Override
+	public java.util.List<Group> getInheritedGroups()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getInheritedGroups();
+	}
+
+	@Override
+	public java.util.List<Role> getInheritedRoles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getInheritedRoles();
+	}
+
+	@Override
+	public java.util.List<Group> getInheritedSiteGroups()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getInheritedSiteGroups();
+	}
+
+	@Override
+	public java.util.List<Role> getInheritedSiteRoles() {
+		return model.getInheritedSiteRoles();
+	}
+
+	@Override
 	public String getInitials() {
 		return model.getInitials();
 	}
@@ -972,6 +1012,29 @@ public class UserWrapper
 	}
 
 	@Override
+	public java.util.List<Organization> getOrganizations(
+			boolean includeAdministrative, boolean includeParentOrganizations)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getOrganizations(
+			includeAdministrative, includeParentOrganizations);
+	}
+
+	@Override
+	public java.util.List<Group> getOrganizationsGroups()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getOrganizationsGroups();
+	}
+
+	@Override
+	public java.util.List<Role> getOrganizationsRoles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getOrganizationsRoles();
+	}
+
+	@Override
 	public String getOriginalEmailAddress() {
 		return model.getOriginalEmailAddress();
 	}
@@ -1141,6 +1204,13 @@ public class UserWrapper
 		return model.getSiteGroups(includeAdministrative);
 	}
 
+	@Override
+	public java.util.List<Role> getSiteRoles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getSiteRoles();
+	}
+
 	/**
 	 * Returns the status of this user.
 	 *
@@ -1201,6 +1271,13 @@ public class UserWrapper
 	@Override
 	public long[] getUserGroupIds() {
 		return model.getUserGroupIds();
+	}
+
+	@Override
+	public java.util.List<UserGroupRole> getUserGroupRoles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getUserGroupRoles();
 	}
 
 	@Override

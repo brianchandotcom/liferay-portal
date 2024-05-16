@@ -387,9 +387,7 @@ pre[class*='language-'] {
 		table,
 		.table-striped {
 			tbody
-				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
-					.table-divider
-				) {
+				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
 				&,
 				td,
 				th {

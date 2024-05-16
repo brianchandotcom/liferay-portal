@@ -10,6 +10,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -149,6 +151,11 @@ public class ExpandoConverterUtil {
 		}
 		else if (type == ExpandoColumnConstants.STRING) {
 			return attribute[0];
+		}
+		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			return new HashMapBuilder<>().put(
+				LocaleUtil.getDefault(), attribute[0]
+			).build();
 		}
 
 		return attribute;

@@ -15,6 +15,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,11 +34,32 @@ public class DocumentShortcutResourceImpl
 	extends BaseDocumentShortcutResourceImpl {
 
 	@Override
+	public Page<DocumentShortcut> getAssetLibraryDocumentShortcutsPage(
+			Long assetLibraryId)
+		throws Exception {
+
+		return getSiteDocumentShortcutsPage(assetLibraryId);
+	}
+
+	@Override
 	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
 		throws Exception {
 
 		return _toDocumentShortcut(
 			_dlAppService.getFileShortcut(documentShortcutId));
+	}
+
+	@Override
+	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(Long siteId)
+		throws Exception {
+
+		List<FileShortcut> fileShortcuts = _dlAppService.getGroupFileShortcuts(
+			siteId);
+
+		return Page.of(
+			transform(
+				fileShortcuts,
+				fileShortcut -> _toDocumentShortcut(fileShortcut)));
 	}
 
 	private DocumentShortcut _toDocumentShortcut(FileShortcut fileShortcut)

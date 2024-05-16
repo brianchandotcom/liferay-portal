@@ -1,31 +1,58 @@
 import {BetweenNumber} from '../BetweenNumberInput';
-import {
-	BOOLEAN_LABELS_MAP,
-	DATE_OPERATOR_LONGHAND_LABELS_MAP,
-	DATE_OPTIONS,
-	DURATION_OPERATOR_LONGHAND_LABELS_MAP,
-	DURATION_OPTIONS,
-	NUMBER_OPERATOR_LONGHAND_LABELS_MAP,
-	NUMBER_OPTIONS
-} from 'event-analysis/utils/utils';
-import {DataTypes} from 'event-analysis/utils/types';
+import {BOOLEAN_LABELS_MAP} from 'event-analysis/utils/utils';
+import {DataTypes, Operators} from 'event-analysis/utils/types';
 import {DateRange} from 'shared/components/DateRangeInput';
 import {
 	FunctionalOperators,
+	NotOperators,
 	RelationalOperators,
-	STRING_OPERATOR_LABELS_MAP,
 	STRING_OPTIONS
 } from '../../../utils/constants';
 import {isNumber} from 'lodash';
 import {isValid} from '../../../utils/utils';
 
+const ATTRIBUTES_DATE_AND_DURATION_OPERATORS_LONGHAND_LABELS_MAP = {
+	[Operators.EQ]: Liferay.Language.get('is-fragment'),
+	[Operators.GT]: Liferay.Language.get('is-after-fragment'),
+	[Operators.LT]: Liferay.Language.get('is-before-fragment')
+};
+
+const ATTRIBUTES_DATE_AND_DURATION_OPTIONS = [
+	Operators.LT,
+	Operators.EQ,
+	Operators.GT
+];
+
+export const ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP = {
+	[Operators.EQ]: Liferay.Language.get('is-equal-to-fragment'),
+	[Operators.GT]: Liferay.Language.get('greater-than-fragment'),
+	[Operators.LT]: Liferay.Language.get('less-than-fragment'),
+	[Operators.NE]: Liferay.Language.get('is-not-equal-to-fragment')
+};
+
+const ATTRIBUTE_NUMBER_OPTIONS = [
+	Operators.EQ,
+	Operators.GT,
+	Operators.LT,
+	Operators.NE
+];
+
+const ATTRIBUTES_STRING_OPERATOR_LABELS_MAP = {
+	[FunctionalOperators.Contains]: Liferay.Language.get('contains-fragment'),
+	[NotOperators.NotContains]: Liferay.Language.get(
+		'does-not-contain-fragment'
+	),
+	[RelationalOperators.EQ]: Liferay.Language.get('is-fragment'),
+	[RelationalOperators.NE]: Liferay.Language.get('is-not-fragment')
+};
+
 export const createOption = (option, dataType: DataTypes) => {
 	const LABELS_MAP = {
 		[DataTypes.Boolean]: BOOLEAN_LABELS_MAP,
-		[DataTypes.Date]: DATE_OPERATOR_LONGHAND_LABELS_MAP,
-		[DataTypes.Duration]: DURATION_OPERATOR_LONGHAND_LABELS_MAP,
-		[DataTypes.Number]: NUMBER_OPERATOR_LONGHAND_LABELS_MAP,
-		[DataTypes.String]: STRING_OPERATOR_LABELS_MAP // STRING_OPERATOR_LABELS_MAP is provided from the segment-editor utils as "NotContains" differs from segment-editor and event-analysis. We should be able to use the evente-analysis version once we move away from odata.
+		[DataTypes.Date]: ATTRIBUTES_DATE_AND_DURATION_OPERATORS_LONGHAND_LABELS_MAP,
+		[DataTypes.Duration]: ATTRIBUTES_DATE_AND_DURATION_OPERATORS_LONGHAND_LABELS_MAP,
+		[DataTypes.Number]: ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP,
+		[DataTypes.String]: ATTRIBUTES_STRING_OPERATOR_LABELS_MAP // "NotContains" differs from segment-editor and event-analysis. We should be able to use the evente-analysis version once we move away from odata.
 	};
 
 	return {
@@ -36,9 +63,9 @@ export const createOption = (option, dataType: DataTypes) => {
 
 export const getOperatorOptions = (dataType: DataTypes) => {
 	const OPERATOR_OPTIONS = {
-		[DataTypes.Date]: DATE_OPTIONS,
-		[DataTypes.Duration]: DURATION_OPTIONS,
-		[DataTypes.Number]: NUMBER_OPTIONS,
+		[DataTypes.Date]: ATTRIBUTES_DATE_AND_DURATION_OPTIONS,
+		[DataTypes.Duration]: ATTRIBUTES_DATE_AND_DURATION_OPTIONS,
+		[DataTypes.Number]: ATTRIBUTE_NUMBER_OPTIONS,
 		[DataTypes.String]: STRING_OPTIONS // STRING_OPTIONS is provided from the segment-editor utils as "NotContains" differs from segment-editor and event-analysis. We should be able to use the evente-analysis version once we move away from odata.
 	};
 

@@ -15,7 +15,7 @@ import removeAlert from './removeAlert';
 import showAlert from './showAlert';
 
 export default function SaveButtons({
-	articleId,
+	articleId: initialArticleId,
 	defaultLanguageId,
 	displayDate,
 	editingDefaultValues,
@@ -28,6 +28,8 @@ export default function SaveButtons({
 	workflowEnabled,
 }) {
 	const formId = `${portletNamespace}fm1`;
+
+	const [articleId, setArticleId] = useState(initialArticleId);
 
 	const [
 		{publishModalAction, publishModalVisible},
@@ -157,6 +159,19 @@ export default function SaveButtons({
 			}
 		);
 	};
+
+	useEffect(() => {
+		if (Liferay.FeatureFlags['LPS-141392']) {
+			const updateArticleId = ({articleId}) => {
+				setArticleId(articleId);
+			};
+			Liferay.on('asyncFormSubmission', updateArticleId);
+
+			return () => {
+				Liferay.detach('asyncFormSubmission', updateArticleId);
+			};
+		}
+	}, []);
 
 	return (
 		<div className="d-flex">

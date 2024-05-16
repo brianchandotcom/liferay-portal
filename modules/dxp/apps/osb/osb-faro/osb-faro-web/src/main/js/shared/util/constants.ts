@@ -118,6 +118,7 @@ export enum AssetTypes {
 	Blog = 'Blog',
 	Document = 'Document',
 	Form = 'Form',
+	Journal = 'Journal',
 	WebContent = 'WebContent',
 	WebPage = 'Page'
 }

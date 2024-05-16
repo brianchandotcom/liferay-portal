@@ -2,8 +2,12 @@ import AudienceReportCard from 'shared/components/audience-report/AudienceReport
 import DevicesCard from 'assets/web-content/hocs/DevicesCard';
 import LocationsCard from 'assets/web-content/hocs/LocationsCard';
 import React from 'react';
-import TouchpointsListCard from 'assets/hocs/TouchpointsListCard';
 import WebContentMetricCard from 'assets/web-content/components/WebContentMetricCard';
+import {
+	Accessor,
+	AssetAppearsOnCard
+} from 'assets/components/AssetAppearsOnCard';
+import {AssetTypes} from 'shared/util/constants';
 import {MetricName} from 'shared/types/MetricName';
 import {Name} from 'shared/components/audience-report/types';
 
@@ -49,10 +53,9 @@ const Overview = () => (
 
 		<div className='row'>
 			<div className='col-sm-12'>
-				<TouchpointsListCard
-					assetType='JOURNAL'
-					label={Liferay.Language.get('asset-appears-on')}
-					legacyDropdownRangeKey={false}
+				<AssetAppearsOnCard
+					accessors={[Accessor.ViewsMetric]}
+					assetType={AssetTypes.Journal}
 				/>
 			</div>
 		</div>

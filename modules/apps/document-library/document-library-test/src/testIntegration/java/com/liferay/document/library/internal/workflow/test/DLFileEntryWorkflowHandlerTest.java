@@ -89,6 +89,62 @@ public class DLFileEntryWorkflowHandlerTest {
 			WorkflowConstants.STATUS_APPROVED, fileVersion.getStatus());
 	}
 
+	@Test
+	public void testWorkflowApprovesFileEntryExpireFutureDate()
+		throws PortalException {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		Date expirationDate = new Date(System.currentTimeMillis() + Time.DAY);
+
+		FileEntry fileEntry = _addFileEntry(null, expirationDate);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
+
+		_updateStatus(fileVersion, WorkflowConstants.STATUS_APPROVED);
+
+		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
+
+		fileVersion = fileEntry.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, fileVersion.getStatus());
+		Assert.assertEquals(expirationDate, fileVersion.getExpirationDate());
+	}
+
+	@Test
+	public void testWorkflowApprovesFileEntryExpirePastDate()
+		throws PortalException {
+
+		FileEntry fileEntry = _addFileEntry(null, null);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+			fileEntry.getFileEntryId());
+
+		dlFileEntry.setExpirationDate(
+			new Date(System.currentTimeMillis() - Time.DAY));
+
+		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+
+		_updateStatus(fileVersion, WorkflowConstants.STATUS_APPROVED);
+
+		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
+
+		fileVersion = fileEntry.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, fileVersion.getStatus());
+		Assert.assertNull(fileVersion.getExpirationDate());
+	}
+
 	@FeatureFlags("LPD-10701")
 	@Test
 	public void testWorkflowApprovesFileEntryScheduledFutureDate()

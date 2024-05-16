@@ -3,35 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useContext} from 'react';
-
-import {TestrayContext} from '../../context/TestrayContext';
 import useModalContext from '../../hooks/useModalContext';
 import i18n from '../../i18n';
 import CaseTypeModal from '../../pages/Standalone/CaseType/CaseTypeModal';
 import FactorCategoryModal from '../../pages/Standalone/FactorCategory/FactorCategoryModal';
 import OptionsModal from '../../pages/Standalone/FactorOptions/FactorOptionsModal';
 import {LIFERAY_URLS} from '../../services/liferay';
-import {DispatchTriggerStatuses} from '../../util/statuses';
-import JobSchedulerModal from '../JobSchedulerModal';
 
 const useSidebarActions = () => {
 	const {onOpenModal} = useModalContext();
-	const [{testrayDispatchTriggers}] = useContext(TestrayContext);
-
-	const jobsInProgress =
-		testrayDispatchTriggers?.facets[0]?.facetValues
-			.filter((facetValue) =>
-				([
-					DispatchTriggerStatuses.INPROGRESS,
-					DispatchTriggerStatuses.SCHEDULED,
-				] as string[]).includes(facetValue.term)
-			)
-			.map((facetValue) => facetValue.numberOfOccurrences)
-			.reduce(
-				(previousValue, currentValue) => previousValue + currentValue,
-				0
-			) ?? 0;
 
 	const MANAGE_DROPDOWN = [
 		{
@@ -108,26 +88,6 @@ const useSidebarActions = () => {
 				},
 			],
 			title: '',
-		},
-		{
-			items: [
-				{
-					icon: 'bell-on',
-					label: i18n.sub('job-scheduler-x', `[ ${jobsInProgress} ]`),
-					onClick: () =>
-						onOpenModal({
-							body: (
-								<JobSchedulerModal
-									testrayDispatchTriggers={
-										testrayDispatchTriggers
-									}
-								/>
-							),
-							size: 'lg',
-							title: i18n.translate('job-scheduler'),
-						}),
-				},
-			],
 		},
 	];
 

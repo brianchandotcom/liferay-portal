@@ -61,32 +61,25 @@ public class DLFileEntryWorkflowHandlerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		_folder = _getSingleApproverFolder(_serviceContext);
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 	}
 
 	@Test
 	public void testWorkflowApprovesFileEntry() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		Folder folder = _getSingleApproverFolder(serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		FileEntry fileEntry = _dlAppService.addFileEntry(
-			null, _group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(), "text",
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			StringPool.SPACE.getBytes(), null, null, null, serviceContext);
+		FileEntry fileEntry = _addFileEntry(null, null);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
 
-		_updateStatus(
-			fileVersion, WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_updateStatus(fileVersion, WorkflowConstants.STATUS_APPROVED);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
 
@@ -101,30 +94,15 @@ public class DLFileEntryWorkflowHandlerTest {
 	public void testWorkflowApprovesFileEntryScheduledFutureDate()
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		Folder folder = _getSingleApproverFolder(serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		FileEntry fileEntry = _dlAppService.addFileEntry(
-			null, _group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(), "text",
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			StringPool.SPACE.getBytes(),
-			new Date(System.currentTimeMillis() + Time.DAY), null, null,
-			serviceContext);
+		FileEntry fileEntry = _addFileEntry(
+			new Date(System.currentTimeMillis() + Time.DAY), null);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
 
-		_updateStatus(
-			fileVersion, WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_updateStatus(fileVersion, WorkflowConstants.STATUS_APPROVED);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
 
@@ -139,20 +117,7 @@ public class DLFileEntryWorkflowHandlerTest {
 	public void testWorkflowApprovesFileEntryScheduledPastDate()
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		Folder folder = _getSingleApproverFolder(serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		FileEntry fileEntry = _dlAppService.addFileEntry(
-			null, _group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(), "text",
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			StringPool.SPACE.getBytes(), null, null, null, serviceContext);
+		FileEntry fileEntry = _addFileEntry(null, null);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -167,8 +132,7 @@ public class DLFileEntryWorkflowHandlerTest {
 
 		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
-		_updateStatus(
-			fileVersion, WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_updateStatus(fileVersion, WorkflowConstants.STATUS_APPROVED);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
 
@@ -180,28 +144,14 @@ public class DLFileEntryWorkflowHandlerTest {
 
 	@Test
 	public void testWorkflowRejectsFileEntry() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		Folder folder = _getSingleApproverFolder(serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		FileEntry fileEntry = _dlAppService.addFileEntry(
-			null, _group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(), "text",
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			StringPool.SPACE.getBytes(), null, null, null, serviceContext);
+		FileEntry fileEntry = _addFileEntry(null, null);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
 
-		_updateStatus(
-			fileVersion, WorkflowConstants.STATUS_DENIED, serviceContext);
+		_updateStatus(fileVersion, WorkflowConstants.STATUS_DENIED);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
 
@@ -211,8 +161,20 @@ public class DLFileEntryWorkflowHandlerTest {
 			WorkflowConstants.STATUS_DENIED, fileVersion.getStatus());
 	}
 
-	private Folder _getSingleApproverFolder(ServiceContext serviceContext)
+	private FileEntry _addFileEntry(Date displayDate, Date expirationDate)
 		throws PortalException {
+
+		return _dlAppService.addFileEntry(
+			null, _group.getGroupId(), _folder.getFolderId(),
+			RandomTestUtil.randomString(), "text",
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			StringPool.SPACE.getBytes(), displayDate, expirationDate, null,
+			_serviceContext);
+	}
+
+	private Folder _getSingleApproverFolder(ServiceContext serviceContext)
+		throws Exception {
 
 		Folder folder = _dlAppService.addFolder(
 			null, _group.getGroupId(),
@@ -232,8 +194,7 @@ public class DLFileEntryWorkflowHandlerTest {
 			serviceContext);
 	}
 
-	private void _updateStatus(
-			FileVersion fileVersion, int status, ServiceContext serviceContext)
+	private void _updateStatus(FileVersion fileVersion, int status)
 		throws PortalException {
 
 		WorkflowHandler<DLFileEntry> workflowHandler =
@@ -249,7 +210,7 @@ public class DLFileEntryWorkflowHandlerTest {
 				WorkflowConstants.CONTEXT_USER_ID,
 				String.valueOf(TestPropsValues.getUserId())
 			).put(
-				"serviceContext", serviceContext
+				"serviceContext", _serviceContext
 			).build());
 	}
 
@@ -259,7 +220,11 @@ public class DLFileEntryWorkflowHandlerTest {
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
+	private Folder _folder;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private ServiceContext _serviceContext;
 
 }

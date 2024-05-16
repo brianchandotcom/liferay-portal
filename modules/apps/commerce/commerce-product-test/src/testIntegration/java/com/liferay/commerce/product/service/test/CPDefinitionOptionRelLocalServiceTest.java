@@ -38,6 +38,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.frutilla.FrutillaRule;
 
@@ -249,6 +251,93 @@ public class CPDefinitionOptionRelLocalServiceTest {
 			randomCPDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
 			preselectedCPDefinitionOptionValueRel.
 				getCPDefinitionOptionValueRelId());
+	}
+
+	@Test
+	public void testGetCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Verify keys combination for JSON payload"
+		).given(
+			"I have a product definition"
+		).when(
+			"a SKU contributor option is added to definition"
+		).and(
+			"the option has one"
+		).then(
+			"the generated combination contains key, skuOptionName, " +
+				"skuOptionValueName and value"
+		);
+
+		int cpOptionsCount = 1;
+		int cpOptionValuesCount = 1;
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			CPTestUtil.addCPOption(
+				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
+				cpOptionsCount, cpOptionValuesCount);
+
+		List<CPInstance> cpInstances = _cpInstanceLocalService.buildCPInstances(
+			cpDefinition.getCPDefinitionId(),
+			ServiceContextTestUtil.getServiceContext(
+				cpDefinition.getGroupId()));
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		Map<String, List<String>>
+			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys =
+				_cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+						cpInstance.getCPInstanceId());
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRels.get(0);
+
+		Assert.assertTrue(
+			"Key map does not contain the key: " +
+				cpDefinitionOptionRel.getKey(),
+			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys.containsKey(
+				cpDefinitionOptionRel.getKey()));
+
+		List<String> strings =
+			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys.get(
+				cpDefinitionOptionRel.getKey());
+
+		Assert.assertTrue("The value is not of size 3", strings.size() == 3);
+
+		Assert.assertTrue(
+			"SkuOptionName is not: " +
+				cpDefinitionOptionRel.getName(
+					cpDefinitionOptionRel.getDefaultLanguageId()),
+			Objects.equals(
+				cpDefinitionOptionRel.getName(
+					cpDefinitionOptionRel.getDefaultLanguageId()),
+				strings.get(0)));
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRels.get(0);
+
+		Assert.assertTrue(
+			"SkuOptionValueName is not: " +
+				cpDefinitionOptionValueRel.getName(
+					cpDefinitionOptionRel.getDefaultLanguageId()),
+			Objects.equals(
+				cpDefinitionOptionValueRel.getName(
+					cpDefinitionOptionRel.getDefaultLanguageId()),
+				strings.get(1)));
+
+		Assert.assertTrue(
+			"Value is not: " + cpDefinitionOptionValueRel.getKey(),
+			Objects.equals(
+				cpDefinitionOptionValueRel.getKey(), strings.get(2)));
 	}
 
 	@Test

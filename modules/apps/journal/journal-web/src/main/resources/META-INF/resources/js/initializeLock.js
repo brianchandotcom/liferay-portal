@@ -5,11 +5,17 @@
 
 export default function initializeLock(
 	name,
-	{lockedIndicator, namespace, onLockChange, unlockedIndicator}
+	{
+		errorIndicator,
+		lockedIndicator,
+		namespace,
+		onLockChange,
+		unlockedIndicator,
+	}
 ) {
 	let locked = false;
 
-	const toggle = (nextValue) => {
+	const toggle = (nextValue, error = false) => {
 		if (nextValue === locked) {
 			throw new Error(
 				`${name} is already ${locked ? 'locked' : 'unlocked'}`
@@ -21,20 +27,29 @@ export default function initializeLock(
 		requestAnimationFrame(() => {
 			onLockChange?.({isLocked: locked});
 
-			if (locked) {
-				lockedIndicator?.classList.replace('d-none', 'd-flex');
+			if (error) {
+				lockedIndicator?.classList.replace('d-flex', 'd-none');
 				unlockedIndicator?.classList.replace('d-flex', 'd-none');
+				errorIndicator?.classList.replace('d-none', 'd-flex');
 			}
 			else {
-				lockedIndicator?.classList.replace('d-flex', 'd-none');
-				unlockedIndicator?.classList.replace('d-none', 'd-flex');
+				if (locked) {
+					lockedIndicator?.classList.replace('d-none', 'd-flex');
+					unlockedIndicator?.classList.replace('d-flex', 'd-none');
+					errorIndicator?.classList.replace('d-flex', 'd-none');
+				}
+				else {
+					lockedIndicator?.classList.replace('d-flex', 'd-none');
+					unlockedIndicator?.classList.replace('d-none', 'd-flex');
+					errorIndicator?.classList.replace('d-flex', 'd-none');
+				}
 			}
 		});
 	};
 
 	Liferay.component(`${namespace}${name}`, {
 		isLocked: () => locked,
-		lock: () => toggle(true),
-		unlock: () => toggle(false),
+		lock: (error) => toggle(true, error),
+		unlock: (error) => toggle(false, error),
 	});
 }

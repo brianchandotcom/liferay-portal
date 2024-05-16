@@ -24,8 +24,10 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -47,6 +49,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
+import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.internal.filter.parser.CurrentUserObjectFilterParser;
 import com.liferay.object.internal.filter.parser.DateRangeObjectFilterParser;
 import com.liferay.object.internal.filter.parser.EqualityOperatorsObjectFilterParser;
@@ -187,6 +190,7 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -305,16 +309,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getUserId(), objectDefinition.getClassName(),
 			objectEntry.getPrimaryKey(), false, false, false);
 
-		boolean clearObjectEntryIdsMap =
-			ObjectActionThreadLocal.isClearObjectEntryIdsMap();
-
 		try {
-			if (clearObjectEntryIdsMap) {
-				ObjectActionThreadLocal.clearObjectEntryIdsMap();
-			}
-
-			ObjectActionThreadLocal.setClearObjectEntryIdsMap(false);
-
 			if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 				ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
 			}
@@ -322,9 +317,6 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry = objectEntryPersistence.update(objectEntry);
 		}
 		finally {
-			ObjectActionThreadLocal.setClearObjectEntryIdsMap(
-				clearObjectEntryIdsMap);
-
 			ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
 		}
 
@@ -338,6 +330,26 @@ public class ObjectEntryLocalServiceImpl
 		_startWorkflowInstance(userId, objectEntry, serviceContext);
 
 		_reindex(objectEntry);
+
+		boolean clearObjectEntryIdsMap =
+			ObjectActionThreadLocal.isClearObjectEntryIdsMap();
+
+		try {
+			if (clearObjectEntryIdsMap) {
+				ObjectActionThreadLocal.clearObjectEntryIdsMap();
+			}
+
+			ObjectActionThreadLocal.setClearObjectEntryIdsMap(false);
+
+			_triggerObjectAction(
+				objectEntry.getCompanyId(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, objectDefinition,
+				objectEntry, user);
+		}
+		finally {
+			ObjectActionThreadLocal.setClearObjectEntryIdsMap(
+				clearObjectEntryIdsMap);
+		}
 
 		return objectEntry;
 	}
@@ -4063,6 +4075,21 @@ public class ObjectEntryLocalServiceImpl
 			'.');
 	}
 
+	private void _triggerObjectAction(
+		long companyId, String objectActionTrigger,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry, User user) {
+
+		ObjectActionEngine objectActionEngine =
+			_objectActionEngineSnapshot.get();
+
+		objectActionEngine.executeObjectActions(
+			objectDefinition.getClassName(), companyId, objectActionTrigger,
+			() -> ObjectEntryUtil.getPayloadJSONObject(
+				_dtoConverterRegistry, _jsonFactory, objectActionTrigger,
+				objectDefinition, objectEntry, null, user),
+			user.getUserId());
+	}
+
 	private void _updateTable(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			long objectEntryId, Map<String, Serializable> values,
@@ -4853,6 +4880,9 @@ public class ObjectEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);
 
+	private static final Snapshot<ObjectActionEngine>
+		_objectActionEngineSnapshot = new Snapshot<>(
+			ObjectEntryLocalServiceImpl.class, ObjectActionEngine.class, null);
 	private static final Snapshot<ObjectRelationshipLocalService>
 		_objectRelationshipLocalServiceSnapshot = new Snapshot<>(
 			ObjectEntryLocalServiceImpl.class,
@@ -4885,6 +4915,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Encryptor _encryptor;

@@ -82,9 +82,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		_route(EventTypes.ADD, null, objectEntry);
 
-		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, objectEntry);
-
 		_runRelevantObjectEntryModelListeners(
 			objectEntry,
 			relevantObjectEntryModelListener ->

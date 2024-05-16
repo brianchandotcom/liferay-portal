@@ -27,12 +27,4 @@ public class CPOptionKeyException extends PortalException {
 		super(throwable);
 	}
 
-	public static class MustNotBeDuplicate extends CPOptionKeyException {
-
-		public MustNotBeDuplicate(String key) {
-			super("Duplicate key " + key);
-		}
-
-	}
-
 }

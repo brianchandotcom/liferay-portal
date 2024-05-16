@@ -75,7 +75,7 @@ public class PathInterpreter {
 			return Tuple.of(fileVersion, curProperties);
 		}
 		catch (PortalException portalException) {
-			throw new AMRuntimeException(portalException);
+			throw new AMRuntimeException.IOException(portalException);
 		}
 	}
 

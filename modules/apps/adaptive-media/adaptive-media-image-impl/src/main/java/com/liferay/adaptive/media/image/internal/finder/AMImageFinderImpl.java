@@ -200,7 +200,7 @@ public class AMImageFinderImpl implements AMImageFinder {
 					return fileVersion.getContentStream(false);
 				}
 				catch (PortalException portalException) {
-					throw new AMRuntimeException(portalException);
+					throw new AMRuntimeException.IOException(portalException);
 				}
 			},
 			AMImageAttributeMapping.fromFileVersion(fileVersion), null);

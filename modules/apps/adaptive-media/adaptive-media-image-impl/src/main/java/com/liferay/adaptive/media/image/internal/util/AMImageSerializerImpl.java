@@ -67,7 +67,7 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 				URI.create(uri));
 		}
 		catch (JSONException jsonException) {
-			throw new AMRuntimeException(jsonException);
+			throw new AMRuntimeException.IOException(jsonException);
 		}
 	}
 

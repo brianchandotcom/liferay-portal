@@ -86,7 +86,7 @@ public class AMImageRequestHandler
 					return fileVersion.getContentStream(false);
 				}
 				catch (PortalException portalException) {
-					throw new AMRuntimeException(portalException);
+					throw new AMRuntimeException.IOException(portalException);
 				}
 			},
 			AMImageAttributeMapping.fromFileVersion(fileVersion), null);
@@ -139,7 +139,7 @@ public class AMImageRequestHandler
 			return adaptiveMedias.get(0);
 		}
 		catch (PortalException portalException) {
-			throw new AMRuntimeException(portalException);
+			throw new AMRuntimeException.IOException(portalException);
 		}
 	}
 
@@ -173,7 +173,7 @@ public class AMImageRequestHandler
 			return _createRawAdaptiveMedia(fileVersion);
 		}
 		catch (PortalException portalException) {
-			throw new AMRuntimeException(portalException);
+			throw new AMRuntimeException.IOException(portalException);
 		}
 	}
 

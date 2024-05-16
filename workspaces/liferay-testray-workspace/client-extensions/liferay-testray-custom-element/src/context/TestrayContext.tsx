@@ -10,12 +10,7 @@ import {STORAGE_KEYS} from '~/core/Storage';
 
 import {useFetch} from '../hooks/useFetch';
 import useStorage from '../hooks/useStorage';
-import {
-	APIResponse,
-	TestrayDispatchTrigger,
-	UserAccount,
-} from '../services/rest';
-import {testrayDispatchTriggerImpl} from '../services/rest/TestrayDispatchTrigger';
+import {UserAccount} from '../services/rest';
 import {ActionMap} from '../types';
 
 export type BuildId = number | null;
@@ -36,7 +31,6 @@ type InitialState = {
 	compareRuns: CompareRuns;
 	myUserAccount?: UserAccount;
 	runNumber: number;
-	testrayDispatchTriggers: APIResponse<TestrayDispatchTrigger>;
 };
 
 const initialState: InitialState = {
@@ -50,15 +44,6 @@ const initialState: InitialState = {
 	},
 	myUserAccount: undefined,
 	runNumber: 0,
-	testrayDispatchTriggers: {
-		actions: {},
-		facets: [],
-		items: [],
-		lastPage: 1,
-		page: 1,
-		pageSize: 1,
-		totalCount: 1,
-	},
 };
 
 export const enum TestrayTypes {
@@ -153,16 +138,6 @@ const TestrayContextProvider: React.FC<{
 		compareRuns: compareRunsValue?.compareRuns,
 	});
 
-	const {data: testrayDispatchTriggers} = useFetch<
-		APIResponse<TestrayDispatchTrigger>
-	>(testrayDispatchTriggerImpl.resource, {
-		params: {
-			aggregationTerms: 'dueStatus',
-			pageSize: 10,
-			sort: 'dateCreated:asc',
-		},
-	});
-
 	const {data: myUserAccount, mutate} = useFetch('/my-user-account', {
 		transformData: (user: UserAccount) => ({
 			actions: user?.actions,
@@ -217,9 +192,6 @@ const TestrayContextProvider: React.FC<{
 			value={[
 				{
 					...state,
-					testrayDispatchTriggers: testrayDispatchTriggers as APIResponse<
-						TestrayDispatchTrigger
-					>,
 				},
 				dispatch,
 				mutate,

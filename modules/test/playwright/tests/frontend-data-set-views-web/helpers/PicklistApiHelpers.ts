@@ -18,12 +18,12 @@ export class PicklistApiHelpers extends ApiHelpers {
 		return this.post(url, {data});
 	}
 
-	async getPicklist(name: string) {
-		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions`;
+	async deletePicklist(name: string) {
+		const picklist = await this.getPicklist(name);
 
-		const picklists = await this.get(url);
+		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}`;
 
-		return picklists.items.find((item) => item.name === name);
+		return this.delete(url);
 	}
 
 	async editPicklist({
@@ -46,5 +46,13 @@ export class PicklistApiHelpers extends ApiHelpers {
 		};
 
 		return this.post(url, {data});
+	}
+
+	async getPicklist(name: string) {
+		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions`;
+
+		const picklists = await this.get(url);
+
+		return picklists.items.find((item) => item.name === name);
 	}
 }

@@ -53,6 +53,7 @@ export class PortletConfigurationPermissionsPage {
 	}
 
 	async goto() {
+		await this.productMenuPage.openProductMenuIfClosed();
 		await this.productMenuPage.goToPages();
 		await this.pageOptionsMenu.first().click();
 		await this.permissionsMenuItem.click();

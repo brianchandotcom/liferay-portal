@@ -118,10 +118,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		_route(EventTypes.UPDATE, originalObjectEntry, objectEntry);
 
-		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			originalObjectEntry, objectEntry);
-
 		_runRelevantObjectEntryModelListeners(
 			objectEntry,
 			relevantObjectEntryModelListener ->

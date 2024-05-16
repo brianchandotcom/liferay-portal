@@ -38,6 +38,7 @@ import com.liferay.object.entry.ObjectEntryContext;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryStatusException;
@@ -124,6 +125,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -1579,6 +1581,11 @@ public class ObjectEntryLocalServiceImpl
 
 		_reindex(objectEntry);
 
+		_executeObjectActions(
+			objectEntry.getCompanyId(),
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, objectDefinition,
+			objectEntry, user);
+
 		return objectEntry;
 	}
 
@@ -2008,8 +2015,10 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _executeObjectActions(
-		long companyId, String objectActionTrigger,
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry, User user) {
+			long companyId, String objectActionTrigger,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			User user)
+		throws NoSuchObjectDefinitionException {
 
 		ObjectActionEngine objectActionEngine =
 			_objectActionEngineSnapshot.get();
@@ -2019,6 +2028,34 @@ public class ObjectEntryLocalServiceImpl
 			() -> ObjectEntryUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory, objectActionTrigger,
 				objectDefinition, objectEntry, null, user),
+			user.getUserId());
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+			(!objectDefinition.isRootDescendantNode() &&
+			 (!objectDefinition.isRootNode() ||
+			  StringUtil.equals(
+				  objectActionTrigger,
+				  ObjectActionTriggerConstants.KEY_ON_AFTER_ADD)))) {
+
+			return;
+		}
+
+		ObjectEntry rootObjectEntry = fetchObjectEntry(
+			objectEntry.getRootObjectEntryId());
+
+		if (rootObjectEntry == null) {
+			return;
+		}
+
+		objectActionEngine.executeObjectActions(
+			rootObjectEntry.getModelClassName(), companyId,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+			() -> ObjectEntryUtil.getPayloadJSONObject(
+				_dtoConverterRegistry, _jsonFactory,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+				_objectDefinitionPersistence.findByPrimaryKey(
+					rootObjectEntry.getObjectDefinitionId()),
+				rootObjectEntry, null, user),
 			user.getUserId());
 	}
 

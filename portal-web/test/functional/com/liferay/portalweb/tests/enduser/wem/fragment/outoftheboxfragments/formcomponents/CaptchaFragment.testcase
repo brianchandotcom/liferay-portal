@@ -141,9 +141,9 @@ definition {
 
 			Button.clickSubmitButton();
 
-			Alert.viewFieldErrorMessage(
-				errorMessage = "CAPTCHA verification failed. Please try again.",
-				fieldLabel = "Text Verification");
+			AssertTextEquals(
+				locator1 = "//div[contains(@class,'lfr-layout-structure-item-inputs-captcha')]//p[contains(@class,'text-danger')]",
+				value1 = "CAPTCHA verification failed. Please try again.");
 		}
 	}
 

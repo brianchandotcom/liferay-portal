@@ -1,0 +1,27 @@
+{
+	"parameterConfiguration": {
+		"parameters": {
+			"search.experiences.entry.class.pk": {
+				"type": "Long"
+			}
+		}
+	},
+	"queryConfiguration": {
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"context": "query",
+						"occur": "filter",
+						"query": {
+							"term": {
+								"entryClassPK": "${search.experiences.entry.class.pk}"
+							}
+						}
+					}
+				],
+				"enabled": true
+			}
+		]
+	}
+}

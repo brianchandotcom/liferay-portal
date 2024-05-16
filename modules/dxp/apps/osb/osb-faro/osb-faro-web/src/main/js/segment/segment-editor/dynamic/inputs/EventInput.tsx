@@ -236,7 +236,9 @@ const EventInput: React.FC<IEventInputProps> = ({
 										label
 										shrink
 									>
-										{Liferay.Language.get('where-fragment')}
+										{Liferay.Language.get(
+											'where-attribute-fragment'
+										)}
 									</Form.GroupItem>
 
 									<AttributeConjunctionInput

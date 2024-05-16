@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -56,6 +58,8 @@ public interface RememberMeTokenLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RememberMeTokenLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remember me token local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RememberMeTokenLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public RememberMeToken addRememberMeToken(
+		long companyId, long userId, Date expirationDate);
 
 	/**
 	 * Adds the remember me token to the database. Also notifies the appropriate model listeners.
@@ -69,6 +73,8 @@ public interface RememberMeTokenLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RememberMeToken addRememberMeToken(RememberMeToken rememberMeToken);
+
+	public void checkUserExpiredRememberMeTokens(long userId);
 
 	/**
 	 * @throws PortalException
@@ -250,6 +256,9 @@ public interface RememberMeTokenLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRememberMeTokensCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RememberMeToken> getUserRememberMeTokens(long userId);
+
 	/**
 	 * Updates the remember me token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -263,5 +272,8 @@ public interface RememberMeTokenLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RememberMeToken updateRememberMeToken(
 		RememberMeToken rememberMeToken);
+
+	public KeyValuePair validateToken(long rememberMeTokenId, String token)
+		throws PortalException;
 
 }

@@ -46,4 +46,6 @@ public interface RememberMeToken extends PersistedModel, RememberMeTokenModel {
 
 		};
 
+	public boolean isExpired();
+
 }

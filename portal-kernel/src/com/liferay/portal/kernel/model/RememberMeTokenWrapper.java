@@ -184,6 +184,11 @@ public class RememberMeTokenWrapper
 	}
 
 	@Override
+	public boolean isExpired() {
+		return model.isExpired();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

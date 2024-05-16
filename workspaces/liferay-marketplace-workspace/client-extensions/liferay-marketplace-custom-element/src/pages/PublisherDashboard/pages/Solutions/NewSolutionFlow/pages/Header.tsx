@@ -6,7 +6,6 @@
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import {filesize} from 'filesize';
-import ReactQuill from 'react-quill';
 
 import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
 import {
@@ -144,121 +143,105 @@ const Header = () => {
 
 			<hr />
 
-			<Form.Label className="mt-2" htmlFor="title" info="Title" required>
-				{i18n.translate('title')}
-			</Form.Label>
+			<Form.FormControl>
+				<Form.Label
+					className="mt-2"
+					htmlFor="title"
+					info="Title"
+					required
+				>
+					{i18n.translate('title')}
+				</Form.Label>
 
-			<Form.Input
-				name="title"
-				onChange={(event) =>
-					dispatch({
-						payload: {[event.target.name]: event.target.value},
-						type: SolutionTypes.SET_HEADER,
-					})
-				}
-				placeholder={i18n.translate('enter-title-header')}
-				type="text"
-				value={title}
-			/>
-
-			<Form.Label
-				className="mt-5"
-				htmlFor="description"
-				info="Description"
-				required
-			>
-				{i18n.translate('description')}
-			</Form.Label>
-
-			<div className="rich-text-editor">
-				<ReactQuill
-					onChange={(event: any) =>
+				<Form.Input
+					maxLength={110}
+					name="title"
+					onChange={(event) =>
 						dispatch({
-							payload: {description: event},
+							payload: {[event.target.name]: event.target.value},
 							type: SolutionTypes.SET_HEADER,
 						})
 					}
-					placeholder={i18n.translate('insert-text-here')}
-					value={description as any}
+					placeholder={i18n.translate('enter-title-header')}
+					type="text"
+					value={title}
 				/>
-			</div>
+			</Form.FormControl>
 
-			<Form.Label className="mt-5" htmlFor="text" required>
-				{i18n.translate('content-media-type')}
-			</Form.Label>
+			<Form.FormControl>
+				<Form.Label
+					className="mt-5"
+					htmlFor="description"
+					info="Description"
+					required
+				>
+					{i18n.translate('description')}
+				</Form.Label>
 
-			<ClayRadioGroup
-				className="d-flex flex-column mt-1"
-				onChange={(event: any) =>
-					dispatch({
-						payload: {
-							contentType: {
-								content: {
-									headerImages: [],
-									headerVideoDescription: '',
-									headerVideoUrl: '',
-								},
-								type: event,
-							},
-						},
-						type: SolutionTypes.SET_HEADER,
-					})
-				}
-				value={contentType.type}
-			>
-				<ClayRadio label="Upload images" value="upload-images" />
-
-				<ClayRadio label="Embed video URL" value="embed-video-url" />
-			</ClayRadioGroup>
-
-			{contentType.type === ContentMediaType.EMBED_VIDEO_URL && (
-				<>
-					<Form.Label className="mt-5" htmlFor="url" required>
-						{i18n.translate('video-url')}
-					</Form.Label>
-
-					<Form.Input
-						name="headerVideoUrl"
-						onChange={(event) =>
+				<div className="rich-text-editor">
+					<Form.RichTextEditor
+						maxLength={700}
+						onChange={(value) =>
 							dispatch({
-								payload: {
-									contentType: {
-										content: {
-											...contentType.content,
-											headerVideoUrl: event.target.value,
-										},
-										type: ContentMediaType.EMBED_VIDEO_URL,
-									},
-								},
+								payload: {description: value},
 								type: SolutionTypes.SET_HEADER,
 							})
 						}
-						placeholder="https://"
-						type="text"
-						value={contentType.content.headerVideoUrl}
+						placeholder={i18n.translate('insert-text-here')}
+						value={description as any}
 					/>
+				</div>
+			</Form.FormControl>
 
-					<Form.HelpMessage>
-						{i18n.translate(
-							'you-can-paste-links-directly-from-youtube'
-						)}
-					</Form.HelpMessage>
+			<Form.FormControl>
+				<Form.Label className="mt-5" htmlFor="text" required>
+					{i18n.translate('content-media-type')}
+				</Form.Label>
 
-					<div className="border d-flex flex-row mt-5 p-4 rounded">
-						<VideoThumbnail
-							videoURL={contentType.content.headerVideoUrl}
-						/>
+				<ClayRadioGroup
+					className="d-flex flex-column mt-1"
+					onChange={(event: any) =>
+						dispatch({
+							payload: {
+								contentType: {
+									content: {
+										headerImages: [],
+										headerVideoDescription: '',
+										headerVideoUrl: '',
+									},
+									type: event,
+								},
+							},
+							type: SolutionTypes.SET_HEADER,
+						})
+					}
+					value={contentType.type}
+				>
+					<ClayRadio label="Upload images" value="upload-images" />
+
+					<ClayRadio
+						label="Embed video URL"
+						value="embed-video-url"
+					/>
+				</ClayRadioGroup>
+			</Form.FormControl>
+
+			{contentType.type === ContentMediaType.EMBED_VIDEO_URL && (
+				<>
+					<Form.FormControl>
+						<Form.Label className="mt-5" htmlFor="url" required>
+							{i18n.translate('video-url')}
+						</Form.Label>
 
 						<Form.Input
-							className="ml-3"
-							name="headerVideoDescription"
+							name="headerVideoUrl"
 							onChange={(event) =>
 								dispatch({
 									payload: {
 										contentType: {
 											content: {
 												...contentType.content,
-												headerVideoDescription:
+												headerVideoUrl:
 													event.target.value,
 											},
 											type:
@@ -268,16 +251,58 @@ const Header = () => {
 									type: SolutionTypes.SET_HEADER,
 								})
 							}
-							placeholder={i18n.translate('video-description')}
+							placeholder="https://"
 							type="text"
-							value={contentType.content.headerVideoDescription}
+							value={contentType.content.headerVideoUrl}
 						/>
-					</div>
+
+						<Form.HelpMessage>
+							{i18n.translate(
+								'you-can-paste-links-directly-from-youtube'
+							)}
+						</Form.HelpMessage>
+					</Form.FormControl>
+
+					<Form.FormControl>
+						<div className="border d-flex flex-row mt-5 p-4 rounded">
+							<VideoThumbnail
+								videoURL={contentType.content.headerVideoUrl}
+							/>
+
+							<Form.Input
+								className="ml-3"
+								name="headerVideoDescription"
+								onChange={(event) =>
+									dispatch({
+										payload: {
+											contentType: {
+												content: {
+													...contentType.content,
+													headerVideoDescription:
+														event.target.value,
+												},
+												type:
+													ContentMediaType.EMBED_VIDEO_URL,
+											},
+										},
+										type: SolutionTypes.SET_HEADER,
+									})
+								}
+								placeholder={i18n.translate(
+									'video-description'
+								)}
+								type="text"
+								value={
+									contentType.content.headerVideoDescription
+								}
+							/>
+						</div>
+					</Form.FormControl>
 				</>
 			)}
 
 			{contentType.type === ContentMediaType.UPLOAD_IMAGES && (
-				<>
+				<Form.FormControl>
 					<Form.Label className="mb-4 mt-2" htmlFor="description">
 						{i18n.sub(
 							'add-up-to-x-images',
@@ -331,7 +356,7 @@ const Header = () => {
 						onHandleUpload={handleUpload}
 						title={i18n.translate('drag-and-drop-to-upload-or')}
 					/>
-				</>
+				</Form.FormControl>
 			)}
 
 			{open && (

@@ -5,7 +5,6 @@
 
 import ClayModal, {useModal} from '@clayui/modal';
 import {filesize} from 'filesize';
-import ReactQuill from 'react-quill';
 
 import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
 import {
@@ -28,104 +27,116 @@ const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 
 	return (
 		<div className="p-4">
-			<Form.Label className="mt-2" htmlFor="title" info="title" required>
-				{i18n.translate('title')}
-			</Form.Label>
+			<Form.FormControl>
+				<Form.Label
+					className="mt-2"
+					htmlFor="title"
+					info="title"
+					required
+				>
+					{i18n.translate('title')}
+				</Form.Label>
 
-			<Form.Input
-				name="title"
-				onChange={(event) => onChange({title: event.target.value})}
-				placeholder="Enter title header"
-				type="text"
-				value={content.title || ''}
-			/>
-
-			<Form.Label
-				className="mt-5"
-				htmlFor="description"
-				info="description"
-				required
-			>
-				{i18n.translate('description')}
-			</Form.Label>
-
-			<div className="mb-4 rich-text-editor">
-				<ReactQuill
-					onChange={(text) => onChange({description: text})}
-					placeholder="Insert text here"
-					value={content.description || ''}
+				<Form.Input
+					maxLength={170}
+					name="title"
+					onChange={(event) => onChange({title: event.target.value})}
+					placeholder="Enter title header"
+					type="text"
+					value={content.title || ''}
 				/>
-			</div>
+			</Form.FormControl>
 
-			<Form.Label info="images">
-				Add up to {MAX_IMAGE_QUANTITY} images
-			</Form.Label>
+			<Form.FormControl>
+				<Form.Label
+					className="mt-5"
+					htmlFor="description"
+					info="description"
+					required
+				>
+					{i18n.translate('description')}
+				</Form.Label>
 
-			{!!content.files?.length && (
-				<FileList
-					isProcessing={false}
-					onChangeInput={(files) => onChange({files})}
-					onDelete={(id) => {
-						const files = content?.files?.filter(
-							(uploadedFile: any) => uploadedFile.id !== id
+				<div className="rich-text-editor">
+					<Form.RichTextEditor
+						maxLength={700}
+						onChange={(text) => onChange({description: text})}
+						placeholder="Insert text here"
+						value={content.description || ''}
+					/>
+				</div>
+			</Form.FormControl>
+
+			<Form.FormControl>
+				<Form.Label info="images">
+					Add up to {MAX_IMAGE_QUANTITY} images
+				</Form.Label>
+
+				{!!content.files?.length && (
+					<FileList
+						isProcessing={false}
+						onChangeInput={(files) => onChange({files})}
+						onDelete={(id) => {
+							const files = content?.files?.filter(
+								(uploadedFile: any) => uploadedFile.id !== id
+							);
+							onDeleteImage(id);
+
+							onChange({files});
+						}}
+						type="image"
+						uploadedFiles={content?.files}
+						uploadedImages={content?.files}
+					/>
+				)}
+
+				<DropzoneUpload
+					acceptFileTypes={ACCEPT_FILE_TYPES}
+					buttonText={i18n.translate('select-a-file')}
+					description={i18n.translate(
+						'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb'
+					)}
+					disabled={content?.files?.length === MAX_IMAGE_QUANTITY}
+					maxFiles={MAX_IMAGE_QUANTITY}
+					maxSize={MAX_SIZE_5MBS}
+					multiple={true}
+					onDropRejected={(fileList) => {
+						if (fileList.length > MAX_IMAGE_QUANTITY) {
+							onOpenChange(true);
+						}
+					}}
+					onHandleUpload={(files: File[]) => {
+						const totalImages =
+							(content.files?.length || 0) + files?.length;
+
+						if (totalImages > MAX_IMAGE_QUANTITY) {
+							return onOpenChange(true);
+						}
+
+						const newUploadedFiles: UploadedFile[] = files.map(
+							(file, index) => ({
+								changed: false,
+								error: false,
+								file,
+								fileName: file.name,
+								id: crypto.randomUUID(),
+								index,
+								preview: URL.createObjectURL(file),
+								progress: 0,
+								readableSize: filesize(file.size),
+								uploaded: false,
+							})
 						);
 
-						onDeleteImage(id);
-
-						onChange({files});
+						onChange({
+							files: content.files
+								? [...content.files, ...newUploadedFiles]
+								: newUploadedFiles,
+						});
 					}}
-					type="image"
-					uploadedFiles={content?.files}
-					uploadedImages={content?.files}
+					title="Drag and drop to upload or"
 				/>
-			)}
-
-			<DropzoneUpload
-				acceptFileTypes={ACCEPT_FILE_TYPES}
-				buttonText={i18n.translate('select-a-file')}
-				description={i18n.translate(
-					'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb'
-				)}
-				disabled={content?.files?.length === MAX_IMAGE_QUANTITY}
-				maxFiles={MAX_IMAGE_QUANTITY}
-				maxSize={MAX_SIZE_5MBS}
-				multiple={true}
-				onDropRejected={(fileList) => {
-					if (fileList.length > MAX_IMAGE_QUANTITY) {
-						onOpenChange(true);
-					}
-				}}
-				onHandleUpload={(files: File[]) => {
-					const totalImages =
-						(content.files?.length || 0) + files?.length;
-
-					if (totalImages > MAX_IMAGE_QUANTITY) {
-						return onOpenChange(true);
-					}
-
-					const newUploadedFiles: UploadedFile[] = files.map(
-						(file, index) => ({
-							changed: false,
-							error: false,
-							file,
-							fileName: file.name,
-							id: crypto.randomUUID(),
-							index,
-							preview: URL.createObjectURL(file),
-							progress: 0,
-							readableSize: filesize(file.size),
-							uploaded: false,
-						})
-					);
-
-					onChange({
-						files: content.files
-							? [...content.files, ...newUploadedFiles]
-							: newUploadedFiles,
-					});
-				}}
-				title="Drag and drop to upload or"
-			/>
+			</Form.FormControl>
 
 			{open && (
 				<ClayModal

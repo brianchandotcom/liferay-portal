@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ReactQuill from 'react-quill';
-
 import Form from '../../../../../../components/MarketplaceForm';
 import {Tooltip} from '../../../../../../components/Tooltip/Tooltip';
 import {
@@ -49,75 +47,84 @@ const CompanyProfile = () => {
 
 			<hr />
 
-			<Form.Label
-				className="mt-3"
-				htmlFor="description"
-				info={tooltipInfo.descriptionInfo}
-			>
-				{i18n.translate('description')}
-			</Form.Label>
+			<Form.FormControl>
+				<Form.Label
+					className="mt-3"
+					htmlFor="description"
+					info={tooltipInfo.descriptionInfo}
+				>
+					{i18n.translate('description')}
+				</Form.Label>
 
-			<div className="rich-text-editor">
-				<ReactQuill
-					onChange={(value) =>
-						dispatch({
-							payload: {description: value},
-							type: SolutionTypes.SET_COMPANY,
-						})
-					}
-					placeholder="Insert text here"
-					value={description}
+				<div className="rich-text-editor">
+					<Form.RichTextEditor
+						maxLength={700}
+						onChange={(value) =>
+							dispatch({
+								payload: {description: value},
+								type: SolutionTypes.SET_COMPANY,
+							})
+						}
+						placeholder="Insert text here"
+						value={description}
+					/>
+				</div>
+			</Form.FormControl>
+
+			<Form.FormControl>
+				<Form.Label
+					className="mt-5"
+					htmlFor="website"
+					info={tooltipInfo.websiteInfo}
+				>
+					{i18n.translate('website')}
+				</Form.Label>
+
+				<Form.Input
+					name="website"
+					onChange={onChange}
+					placeholder="http://www.yourdomain.com"
+					type="text"
+					value={website}
 				/>
-			</div>
+			</Form.FormControl>
 
-			<Form.Label
-				className="mt-5"
-				htmlFor="website"
-				info={tooltipInfo.websiteInfo}
-			>
-				{i18n.translate('website')}
-			</Form.Label>
+			<Form.FormControl>
+				<Form.Label
+					className="mt-5"
+					htmlFor="email"
+					info={tooltipInfo.emailInfo}
+					required
+				>
+					{i18n.translate('email')}
+				</Form.Label>
 
-			<Form.Input
-				name="website"
-				onChange={onChange}
-				placeholder="http://www.yourdomain.com"
-				type="text"
-				value={website}
-			/>
+				<Form.Input
+					name="email"
+					onChange={onChange}
+					placeholder="name@yourdomain.com"
+					type="email"
+					value={email}
+				/>
+			</Form.FormControl>
 
-			<Form.Label
-				className="mt-5"
-				htmlFor="email"
-				info={tooltipInfo.emailInfo}
-				required
-			>
-				{i18n.translate('email')}
-			</Form.Label>
+			<Form.FormControl>
+				<Form.Label
+					className="mt-5"
+					htmlFor="phone"
+					info={tooltipInfo.phoneInfo}
+					required
+				>
+					{i18n.translate('phone')}
+				</Form.Label>
 
-			<Form.Input
-				name="email"
-				onChange={onChange}
-				placeholder="name@yourdomain.com"
-				type="email"
-				value={email}
-			/>
-
-			<Form.Label
-				className="mt-5"
-				htmlFor="phone"
-				info={tooltipInfo.phoneInfo}
-				required
-			>
-				{i18n.translate('phone')}
-			</Form.Label>
-
-			<Form.Input
-				name="phone"
-				onChange={onChange}
-				placeholder="+1 (123) 456-7890"
-				value={phone}
-			/>
+				<Form.Input
+					name="phone"
+					onChange={onChange}
+					placeholder="+1 (123) 456-7890"
+					value={phone}
+				/>
+			</Form.FormControl>
 		</div>
 	);
 };

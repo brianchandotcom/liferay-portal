@@ -6,9 +6,11 @@
 import {FormHTMLAttributes, ReactNode} from 'react';
 import {FormProvider} from 'react-hook-form';
 
+import FormControl from './FormControl';
 import {HelpMessage} from './HelpMessage';
 import {Input} from './Input';
 import {Label} from './Label';
+import RichTextEditor from './RichText';
 import {SectionWithControllers} from './SectionWithControllers';
 
 type FormProps = {
@@ -17,9 +19,11 @@ type FormProps = {
 } & FormHTMLAttributes<HTMLFormElement>;
 
 type FormChildrens = {
+	FormControl: typeof FormControl;
 	HelpMessage: typeof HelpMessage;
 	Input: typeof Input;
 	Label: typeof Label;
+	RichTextEditor: typeof RichTextEditor;
 	SectionWithControllers: typeof SectionWithControllers;
 };
 
@@ -35,9 +39,11 @@ const Form: React.FC<FormProps> & FormChildrens = ({
 	</FormProvider>
 );
 
+Form.FormControl = FormControl;
 Form.HelpMessage = HelpMessage;
 Form.Input = Input;
 Form.Label = Label;
+Form.RichTextEditor = RichTextEditor;
 Form.SectionWithControllers = SectionWithControllers;
 
 export default Form;

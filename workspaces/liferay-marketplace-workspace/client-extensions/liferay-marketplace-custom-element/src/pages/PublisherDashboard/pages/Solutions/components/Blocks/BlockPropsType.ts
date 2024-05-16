@@ -8,4 +8,5 @@ import {ContentBlock} from '../../../../../../context/SolutionContext';
 export type BlockTypeProps<T = ContentBlock> = {
 	block: T;
 	onChange: (content: any) => void;
+	onDeleteImage: (payload: string) => void;
 };

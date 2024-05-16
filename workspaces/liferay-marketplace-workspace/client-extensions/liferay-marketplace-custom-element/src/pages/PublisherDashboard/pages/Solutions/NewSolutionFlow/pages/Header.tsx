@@ -95,6 +95,11 @@ const Header = () => {
 		);
 
 		dispatch({
+			payload: id,
+			type: SolutionTypes.SET_DELETE_IMAGE,
+		});
+
+		dispatch({
 			payload: {
 				contentType: {
 					content: {

@@ -81,6 +81,7 @@ export enum SolutionTypes {
 	SET_CLEANUP = 'SET_CLEANUP',
 	SET_COMPANY = 'SET_COMPANY',
 	SET_CONTACT_US = 'SET_CONTACT_US',
+	SET_DELETE_IMAGE = 'SET_DELETE_IMAGE',
 	SET_DETAILS = 'SET_DETAILS',
 	SET_HEADER = 'SET_HEADER',
 	SET_LOADING = 'SET_LOADING',
@@ -105,6 +106,7 @@ type SolutionPayload = {
 		website: string;
 	}>;
 	[SolutionTypes.SET_CONTACT_US]: string;
+	[SolutionTypes.SET_DELETE_IMAGE]: string;
 	[SolutionTypes.SET_DETAILS]: ContentBlock[];
 	[SolutionTypes.SET_HEADER]: Partial<{
 		contentType: HeaderContentType;
@@ -158,6 +160,7 @@ export type SolutionInitialState = {
 		}[];
 	};
 	references: {
+		imagesToDelete: string[];
 		vocabulariesAndCategories: any;
 	};
 	termsAndConditions: boolean;
@@ -192,7 +195,7 @@ const solutionInitialState: SolutionInitialState = {
 		name: '',
 		tags: [],
 	},
-	references: {vocabulariesAndCategories: {}},
+	references: {imagesToDelete: [], vocabulariesAndCategories: {}},
 	termsAndConditions: false,
 };
 
@@ -224,6 +227,19 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 			return {
 				...state,
 				contactUs: action.payload,
+			};
+		}
+
+		case SolutionTypes.SET_DELETE_IMAGE: {
+			return {
+				...state,
+				references: {
+					...state.references,
+					imagesToDelete: [
+						...state.references.imagesToDelete,
+						action.payload,
+					],
+				},
 			};
 		}
 
@@ -540,6 +556,7 @@ export default function SolutionContextProvider({
 					...state,
 					catalogId,
 					references: {
+						...state.references,
 						vocabulariesAndCategories: data,
 					},
 				},

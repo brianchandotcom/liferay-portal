@@ -121,7 +121,7 @@ const Details = () => {
 						<Component
 							block={block}
 							key={index}
-							onChange={(content: any) =>
+							onChange={(content: any) => {
 								dispatch({
 									payload: {
 										block: {
@@ -134,6 +134,12 @@ const Details = () => {
 										index,
 									},
 									type: SolutionTypes.SET_UPDATE_BLOCK,
+								});
+							}}
+							onDeleteImage={(payload: string) =>
+								dispatch({
+									payload,
+									type: SolutionTypes.SET_DELETE_IMAGE,
 								})
 							}
 						/>

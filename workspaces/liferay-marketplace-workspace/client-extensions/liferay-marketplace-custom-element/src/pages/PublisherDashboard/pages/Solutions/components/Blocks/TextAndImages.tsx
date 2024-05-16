@@ -22,6 +22,7 @@ import {BlockTypeProps} from './BlockPropsType';
 const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 	block: {content},
 	onChange,
+	onDeleteImage,
 }) => {
 	const {observer, onOpenChange, open} = useModal();
 
@@ -68,6 +69,8 @@ const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 						const files = content?.files?.filter(
 							(uploadedFile: any) => uploadedFile.id !== id
 						);
+
+						onDeleteImage(id);
 
 						onChange({files});
 					}}

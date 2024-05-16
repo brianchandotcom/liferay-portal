@@ -120,6 +120,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	@Override
 	@Test
 	public void testPostSearchPage() throws Exception {
+		_testPostSearchPageAggregationNameAsFacetName();
 		_testPostSearchPageWithCategoryTreeFacetConfiguration();
 		_testPostSearchPageWithCustomFacetConfiguration();
 		_testPostSearchPageWithDateRangeFacetConfiguration();
@@ -493,6 +494,41 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		return _postSearchPage(
 			entryClassNames, null, keywords, null, null, searchRequestBody);
+	}
+
+	private void _testPostSearchPageAggregationNameAsFacetName()
+		throws Exception {
+
+		String facetAggregationName = StringUtil.randomString();
+
+		SearchPage<SearchResult> searchPage1 =
+			_postSearchPageWithFacetConfiguration(
+				null,
+				new FacetConfiguration() {
+					{
+						aggregationName = facetAggregationName;
+						name = "tag";
+					}
+				});
+
+		Map<String, Object> map1 =
+			(Map<String, Object>)searchPage1.getSearchFacets();
+
+		Assert.assertTrue(map1.containsKey(facetAggregationName));
+
+		SearchPage<SearchResult> searchPage2 =
+			_postSearchPageWithFacetConfiguration(
+				null,
+				new FacetConfiguration() {
+					{
+						name = "tag";
+					}
+				});
+
+		Map<String, Object> map2 =
+			(Map<String, Object>)searchPage2.getSearchFacets();
+
+		Assert.assertTrue(map2.containsKey("tag"));
 	}
 
 	private void _testPostSearchPageWithCategoryTreeFacetConfiguration()

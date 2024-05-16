@@ -251,7 +251,7 @@ const TeamMembersTable = ({
 					return role?.name;
 				}
 
-				return ['User'];
+				return 'User';
 			});
 		}
 	};

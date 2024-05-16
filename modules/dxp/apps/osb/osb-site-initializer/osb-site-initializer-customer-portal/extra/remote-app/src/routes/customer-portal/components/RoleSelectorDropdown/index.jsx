@@ -207,7 +207,7 @@ const RoleSelectorDropdown = ({
 												getKebabCase(role.label)
 											)
 												? i18n.translate(
-													getKebabCase(role.label)
+														getKebabCase(role.label)
 												  )
 												: role.label}
 										</ClayCheckbox>
@@ -239,8 +239,9 @@ const RoleSelectorDropdown = ({
 									).filter((role) => role.active);
 
 									if (
-										accountRoleActiveItem[0].label ===
-										selectedAccountRoleName[0]
+										selectedAccountRoleName.includes(
+											accountRoleActiveItem[0].label
+										)
 									) {
 										setAtLeastOneFieldIsFilled(false);
 									} else {
@@ -253,7 +254,7 @@ const RoleSelectorDropdown = ({
 							>
 								{i18n.translate(getKebabCase(accountRole.label))
 									? i18n.translate(
-										getKebabCase(accountRole.label)
+											getKebabCase(accountRole.label)
 									  )
 									: accountRole.label}
 							</RadioRoles>

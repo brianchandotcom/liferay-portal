@@ -17,12 +17,11 @@ const RolesColumn = ({
 	onClick,
 	supportSeatsCount,
 }) => {
-	const roleProductNames = currentRoleBriefName.map(
-		(roleBriefName, index) =>
-			`${index === 0 ? '' : ' '}${i18n.translate(
-				getKebabCase(roleBriefName)
-			)}`
-	);
+	const roleProductNames = currentRoleBriefName
+		.map((roleBriefName) => {
+			return i18n.translate(getKebabCase(roleBriefName));
+		})
+		.join(', ');
 
 	return edit ? (
 		<RolesDropdown

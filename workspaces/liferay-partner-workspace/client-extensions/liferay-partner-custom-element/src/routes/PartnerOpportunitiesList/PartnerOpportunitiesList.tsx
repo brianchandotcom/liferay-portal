@@ -160,7 +160,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 				component: (
 					<CheckboxFilter
 						availableItems={
-							Filters.OPPORTUNITY_LISTING.opportunityOpenListStage
+							Filters.OPPORTUNITY_LISTING.opportunityListStage
 						}
 						clearCheckboxes={!filters.stage.value?.length}
 						initialCheckedItems={filters.stage.value}

@@ -44,7 +44,7 @@ const mdfClaimOpenListStatus = [
 
 const mdfClaimCompletedListStatus = ['Canceled', 'Rejected', 'Claim Paid'];
 
-const opportunityListStage = [
+const stageList = [
 	'Closed Lost',
 	'Closed Won',
 	'Committed',
@@ -125,7 +125,7 @@ export const Filters = {
 	OPPORTUNITY_LISTING: {
 		closed: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Lost' or stage eq 'Closed Won' or stage eq 'Disqualified' or stage eq 'Rejected') and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
 		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
-		opportunityOpenListStage: opportunityListStage,
+		opportunityListStage: stageList,
 	},
 	RENEWAL_DASHBOARD: {
 		renewals: `stage ne 'Closed Won' and stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and closeDate le ${thirtyDaysFromToday}`,

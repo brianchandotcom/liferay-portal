@@ -103,19 +103,8 @@ public class CommerceShippingEngineException extends PortalException {
 
 	}
 
-	private CommerceShippingEngineException() {
-	}
-
 	private CommerceShippingEngineException(String msg) {
 		super(msg);
-	}
-
-	private CommerceShippingEngineException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	private CommerceShippingEngineException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

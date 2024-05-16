@@ -19,6 +19,30 @@ definition {
 		}
 	}
 
+	@description = "Ensure Liferay's log manager is working for libraries using JBoss Logging, such as Hibernate"
+	@priority = 3
+	test HibernateSQLQueriesViewableWithDebugLogLevel {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		User.firstLoginPG();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "org.hibernate.SQL");
+
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "com.liferay.portal.kernel.service.CompanyLocalServiceUtil.getCompanies()");
+
+		AssertConsoleTextPresent(value1 = "select .*companyId .* from Company");
+	}
+
 	@description = "Ensure that Portal is logging into expected log files, both .xml and .log"
 	@priority = 5
 	test Smoke {

@@ -16,6 +16,35 @@ import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editJSClientExtensionsPageTest} from './fixtures/editJSClientExtensionsPageTest';
 import {ClientExtensionsPage} from './pages/ClientExtensionsPage';
 import {EditJSClientExtensionsPage} from './pages/EditJSClientExtensionsPage';
+import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
+
+const SAMPLE = {
+	erc: 'LXC:liferay-sample-global-js-1',
+	name: 'Liferay Sample Global JS',
+	url: '/o/liferay-sample-global-js-1/global.7d2b9f54c4f8f75ba0c6.js',
+};
+
+export const testSample = mergeTests(loginTest());
+
+testSample(`${SAMPLE.name} is registered`, async ({page}) => {
+	const viewClientExtensionPage = new ViewClientExtensionPage(
+		page,
+		SAMPLE.erc
+	);
+
+	await viewClientExtensionPage.goto();
+
+	expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
+	expect(viewClientExtensionPage.fieldLocator('JavaScript URL')).toHaveValue(
+		SAMPLE.url
+	);
+});
+
+testSample(`${SAMPLE.name}'s .js file can be downloaded`, async ({page}) => {
+	const response = await page.goto(SAMPLE.url);
+
+	expect(response.status()).toBe(200);
+});
 
 export const test = mergeTests(
 	clientExtensionsPageTest,
@@ -109,7 +138,7 @@ type TScriptAttribute = {
 	valueWhenInPage: string | null;
 };
 
-type TGlobalJSClientExtensionWithAttributes = {
+type TJSClientExtensionWithAttributes = {
 	clientExtensionName: string;
 	clientExtensionsPage: ClientExtensionsPage;
 	defaultSelectedLoadType?: string;
@@ -119,7 +148,7 @@ type TGlobalJSClientExtensionWithAttributes = {
 	scriptAttributes: TScriptAttribute[];
 };
 
-const testGlobalJSClientExtensionWithAttributes = async ({
+const testJSClientExtensionWithAttributes = async ({
 	clientExtensionName,
 	clientExtensionsPage,
 	defaultSelectedLoadType,
@@ -127,9 +156,9 @@ const testGlobalJSClientExtensionWithAttributes = async ({
 	page,
 	pagesAdminPage,
 	scriptAttributes,
-}: TGlobalJSClientExtensionWithAttributes) => {
+}: TJSClientExtensionWithAttributes) => {
 
-	// Create the Global JS Client Extension
+	// Create the JS Client Extension
 
 	await editJSClientExtensionsPage.goto();
 
@@ -145,7 +174,7 @@ const testGlobalJSClientExtensionWithAttributes = async ({
 
 	await editJSClientExtensionsPage.publish();
 
-	// Apply the Global JS client extension and assert its attributes
+	// Apply the JS client extension and assert its attributes
 
 	await pagesAdminPage.selectJavaScriptClientExtension(clientExtensionName);
 
@@ -176,7 +205,7 @@ const testGlobalJSClientExtensionWithAttributes = async ({
 	await clientExtensionsPage.deleteClientExtension(clientExtensionName);
 };
 
-test('GlobalJS client extension with async and defer attributes set to true', async ({
+test('JS client extension with async and defer attributes set to true', async ({
 	clientExtensionsPage,
 	editJSClientExtensionsPage,
 	page,
@@ -184,7 +213,7 @@ test('GlobalJS client extension with async and defer attributes set to true', as
 }) => {
 	const clientExtensionName = getRandomString();
 
-	await testGlobalJSClientExtensionWithAttributes({
+	await testJSClientExtensionWithAttributes({
 		clientExtensionName,
 		clientExtensionsPage,
 		defaultSelectedLoadType: 'async',
@@ -214,7 +243,7 @@ test('GlobalJS client extension with async and defer attributes set to true', as
 	});
 });
 
-test('GlobalJS client extension with async attribute set to true', async ({
+test('JS client extension with async attribute set to true', async ({
 	clientExtensionsPage,
 	editJSClientExtensionsPage,
 	page,
@@ -222,7 +251,7 @@ test('GlobalJS client extension with async attribute set to true', async ({
 }) => {
 	const clientExtensionName = getRandomString();
 
-	await testGlobalJSClientExtensionWithAttributes({
+	await testJSClientExtensionWithAttributes({
 		clientExtensionName,
 		clientExtensionsPage,
 		defaultSelectedLoadType: 'async',
@@ -246,7 +275,7 @@ test('GlobalJS client extension with async attribute set to true', async ({
 	});
 });
 
-test('GlobalJS client extension with defer attribute set to true', async ({
+test('JS client extension with defer attribute set to true', async ({
 	clientExtensionsPage,
 	editJSClientExtensionsPage,
 	page,
@@ -254,7 +283,7 @@ test('GlobalJS client extension with defer attribute set to true', async ({
 }) => {
 	const clientExtensionName = getRandomString();
 
-	await testGlobalJSClientExtensionWithAttributes({
+	await testJSClientExtensionWithAttributes({
 		clientExtensionName,
 		clientExtensionsPage,
 		defaultSelectedLoadType: 'defer',
@@ -278,7 +307,7 @@ test('GlobalJS client extension with defer attribute set to true', async ({
 	});
 });
 
-test('GlobalJS client extension with async and defer attributes set to false and data-senna-track and type are overridden', async ({
+test('JS client extension with async and defer attributes set to false and data-senna-track and type are overridden', async ({
 	clientExtensionsPage,
 	editJSClientExtensionsPage,
 	page,
@@ -286,7 +315,7 @@ test('GlobalJS client extension with async and defer attributes set to false and
 }) => {
 	const clientExtensionName = getRandomString();
 
-	await testGlobalJSClientExtensionWithAttributes({
+	await testJSClientExtensionWithAttributes({
 		clientExtensionName,
 		clientExtensionsPage,
 		editJSClientExtensionsPage,
@@ -327,7 +356,7 @@ test('GlobalJS client extension with async and defer attributes set to false and
 	});
 });
 
-test('GlobalJS client extension can be created with name translations while having a language configuration for the site settings', async ({
+test('JS client extension can be created with name translations while having a language configuration for the site settings', async ({
 	clientExtensionsPage,
 	editJSClientExtensionsPage,
 	localizationSiteSettingsPage,

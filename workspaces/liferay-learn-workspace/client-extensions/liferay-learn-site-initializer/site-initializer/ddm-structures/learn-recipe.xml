@@ -9,6 +9,22 @@
 						"en_US"
 					],
 					"contentType": "journal",
+					"dataDefinitionKey": "85801",
+					"defaultDataLayout": {
+						"dataLayoutFields": {
+						},
+						"dataRules": [
+						],
+						"description": {
+						},
+						"name": {
+							"en_US": "LEARN-RECIPE"
+						},
+						"paginationMode": "single-page"
+					},
+					"defaultLanguageId": "en_US",
+					"description": {
+					},
 					"fields": [
 						{
 							"customProperties": {
@@ -20,7 +36,6 @@
 							},
 							"defaultValue": {
 							},
-							"type": "rich_text",
 							"indexType": "text",
 							"indexable": true,
 							"label": {
@@ -36,7 +51,8 @@
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
-							}
+							},
+							"type": "rich_text"
 						},
 						{
 							"customProperties": {
@@ -48,7 +64,6 @@
 							},
 							"defaultValue": {
 							},
-							"type": "rich_text",
 							"indexType": "text",
 							"indexable": true,
 							"label": {
@@ -64,7 +79,8 @@
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
-							}
+							},
+							"type": "rich_text"
 						},
 						{
 							"customProperties": {
@@ -76,7 +92,6 @@
 							},
 							"defaultValue": {
 							},
-							"type": "rich_text",
 							"indexType": "text",
 							"indexable": true,
 							"label": {
@@ -92,7 +107,8 @@
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
-							}
+							},
+							"type": "rich_text"
 						},
 						{
 							"customProperties": {
@@ -104,7 +120,6 @@
 							},
 							"defaultValue": {
 							},
-							"type": "rich_text",
 							"indexType": "text",
 							"indexable": true,
 							"label": {
@@ -120,7 +135,8 @@
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
-							}
+							},
+							"type": "rich_text"
 						},
 						{
 							"customProperties": {
@@ -132,7 +148,6 @@
 							},
 							"defaultValue": {
 							},
-							"type": "rich_text",
 							"indexType": "text",
 							"indexable": true,
 							"label": {
@@ -148,7 +163,8 @@
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
-							}
+							},
+							"type": "rich_text"
 						},
 						{
 							"customProperties": {
@@ -194,7 +210,6 @@
 							},
 							"defaultValue": {
 							},
-							"type": "numeric",
 							"indexType": "keyword",
 							"indexable": true,
 							"label": {
@@ -210,25 +225,10 @@
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
-							}
+							},
+							"type": "numeric"
 						}
 					],
-					"dataDefinitionKey": "85801",
-					"defaultDataLayout": {
-						"dataLayoutFields": {
-						},
-						"dataRules": [
-						],
-						"description": {
-						},
-						"name": {
-							"en_US": "LEARN-RECIPE"
-						},
-						"paginationMode": "single-page"
-					},
-					"defaultLanguageId": "en_US",
-					"description": {
-					},
 					"name": {
 						"en_US": "LEARN-RECIPE"
 					},

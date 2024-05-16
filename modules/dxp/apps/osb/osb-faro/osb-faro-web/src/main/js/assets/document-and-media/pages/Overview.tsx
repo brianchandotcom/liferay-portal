@@ -3,7 +3,11 @@ import DevicesCard from 'assets/document-and-media/hocs/DevicesCard';
 import DocumentsAndMediaMetricCard from 'assets/document-and-media/components/DocumentsAndMediaMetricCard';
 import LocationsCard from 'assets/document-and-media/hocs/LocationsCard';
 import React from 'react';
-import TouchpointsListCard from 'assets/hocs/TouchpointsListCard';
+import {
+	Accessor,
+	AssetAppearsOnCard
+} from 'assets/components/AssetAppearsOnCard';
+import {AssetTypes} from 'shared/util/constants';
 import {MetricName} from 'shared/types/MetricName';
 import {Name} from 'shared/components/audience-report/types';
 
@@ -53,10 +57,12 @@ const Overview = () => (
 
 		<div className='row'>
 			<div className='col-sm-12'>
-				<TouchpointsListCard
-					assetType='DOCUMENT'
-					label={Liferay.Language.get('asset-appears-on')}
-					legacyDropdownRangeKey={false}
+				<AssetAppearsOnCard
+					accessors={[
+						Accessor.DownloadsMetric,
+						Accessor.PreviewsMetric
+					]}
+					assetType={AssetTypes.Document}
 				/>
 			</div>
 		</div>

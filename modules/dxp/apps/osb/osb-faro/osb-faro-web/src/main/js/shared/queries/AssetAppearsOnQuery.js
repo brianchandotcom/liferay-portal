@@ -1,30 +1,39 @@
 import {gql} from 'apollo-boost';
 
 export default gql`
-	query AssetsTouchpointQuery(
-		$assetType: AssetType!
+	query AssetAppearsOnQuery(
 		$assetId: String!
+		$assetType: AssetType!
 		$channelId: String
 		$rangeEnd: String
 		$rangeKey: Int
 		$rangeStart: String
-		$location: String
-		$devices: String
+		$selectedMetrics: [String]
+		$size: Int!
+		$start: Int!
 		$title: String
 	) {
 		assetPages(
-			assetType: $assetType
 			assetId: $assetId
+			assetType: $assetType
 			channelId: $channelId
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
-			country: $location
-			deviceType: $devices
+			selectedMetrics: $selectedMetrics
+			size: $size
+			start: $start
 			title: $title
 		) {
-			assetTitle
-			assetId
+			assetMetrics {
+				assetTitle
+				assetId
+				selectedMetrics {
+					name
+					value
+				}
+			}
+			total
 		}
 	}
 `;

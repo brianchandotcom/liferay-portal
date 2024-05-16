@@ -30,19 +30,8 @@ public class CPSpecificationOptionKeyException extends PortalException {
 
 	}
 
-	private CPSpecificationOptionKeyException() {
-	}
-
 	private CPSpecificationOptionKeyException(String msg) {
 		super(msg);
-	}
-
-	private CPSpecificationOptionKeyException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	private CPSpecificationOptionKeyException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

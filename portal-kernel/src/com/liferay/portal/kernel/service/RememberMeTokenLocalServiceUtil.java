@@ -36,10 +36,12 @@ public class RememberMeTokenLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RememberMeTokenLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static RememberMeToken addRememberMeToken(
-		long companyId, long userId, java.util.Date expirationDate) {
+			long companyId, long userId, java.util.Date expirationDate,
+			java.util.function.Consumer<String> tokenConsumer)
+		throws com.liferay.portal.kernel.exception.PwdEncryptorException {
 
 		return getService().addRememberMeToken(
-			companyId, userId, expirationDate);
+			companyId, userId, expirationDate, tokenConsumer);
 	}
 
 	/**

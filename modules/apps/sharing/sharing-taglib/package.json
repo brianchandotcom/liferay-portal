@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.113.0",
+		"@clayui/button": "3.115.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/layout": "3.111.0",
 		"@clayui/sticker": "3.111.0",

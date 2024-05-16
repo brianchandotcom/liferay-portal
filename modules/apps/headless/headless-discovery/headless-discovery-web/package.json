@@ -1,12 +1,12 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.111.0",
-		"@clayui/button": "3.113.0",
-		"@clayui/css": "3.114.0",
-		"@clayui/drop-down": "3.114.0",
+		"@clayui/button": "3.115.0",
+		"@clayui/css": "3.115.0",
+		"@clayui/drop-down": "3.115.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/layout": "3.111.0",
-		"@clayui/modal": "3.113.0",
+		"@clayui/modal": "3.115.0",
 		"graphiql": "1.4.7",
 		"graphql": "^15.0.0",
 		"html-webpack-plugin": "5.5.0",

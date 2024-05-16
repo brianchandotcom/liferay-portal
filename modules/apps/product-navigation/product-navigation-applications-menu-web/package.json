@@ -1,12 +1,12 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.113.0",
+		"@clayui/button": "3.115.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/label": "3.111.0",
 		"@clayui/layout": "3.111.0",
-		"@clayui/modal": "3.113.0",
+		"@clayui/modal": "3.115.0",
 		"@clayui/sticker": "3.111.0",
-		"@clayui/tabs": "3.113.0",
+		"@clayui/tabs": "3.115.0",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-components-web": "*",

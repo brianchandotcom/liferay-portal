@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.113.0",
+		"@clayui/button": "3.115.0",
 		"@clayui/link": "3.111.0",
-		"@clayui/popover": "3.113.0",
+		"@clayui/popover": "3.115.0",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0"

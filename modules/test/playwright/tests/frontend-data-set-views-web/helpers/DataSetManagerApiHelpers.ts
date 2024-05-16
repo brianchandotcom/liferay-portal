@@ -192,6 +192,41 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(url, {data});
 	}
 
+	async createDataSetSelectionFilter({
+		fieldName,
+		include = true,
+		label_i18n,
+		multiple = false,
+		preselectedValues = '[]',
+		r_fdsViewFDSDynamicFilterRelationship_c_fdsViewERC,
+		source,
+		sourceType,
+	}: {
+		fieldName: string;
+		include?: boolean;
+		label_i18n?: {[key: string]: string};
+		multiple?: boolean;
+		preselectedValues?: string;
+		r_fdsViewFDSDynamicFilterRelationship_c_fdsViewERC?: string;
+		source: string;
+		sourceType: string;
+	}) {
+		const url = `${this.baseUrl}data-set-manager/dynamic-filters`;
+
+		const data = {
+			fieldName,
+			include,
+			label_i18n,
+			multiple,
+			preselectedValues,
+			r_fdsViewFDSDynamicFilterRelationship_c_fdsViewERC,
+			source,
+			sourceType,
+		};
+
+		return this.post(url, {data});
+	}
+
 	async createDataSetViewItemAction({
 		confirmationMessage_i18n,
 		confirmationMessageType,

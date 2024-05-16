@@ -9,13 +9,14 @@
 		date: $fieldPurple,
 		number: $fieldLightBlue,
 		point: $chartLimeGreen,
-		string: $fieldDarkBlue
+		string: $fieldDarkBlue,
+		secondary: $mainLighten74
 	);
 
 	@each $name, $color in $displays {
 		&.sticker-#{$name} {
 			background-color: $color;
-			color: $white;
+			color: $main;
 		}
 	}
 

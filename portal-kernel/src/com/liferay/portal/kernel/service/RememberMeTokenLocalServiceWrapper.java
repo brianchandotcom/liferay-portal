@@ -30,10 +30,12 @@ public class RememberMeTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.RememberMeToken addRememberMeToken(
-		long companyId, long userId, java.util.Date expirationDate) {
+			long companyId, long userId, java.util.Date expirationDate,
+			java.util.function.Consumer<String> tokenConsumer)
+		throws com.liferay.portal.kernel.exception.PwdEncryptorException {
 
 		return _rememberMeTokenLocalService.addRememberMeToken(
-			companyId, userId, expirationDate);
+			companyId, userId, expirationDate, tokenConsumer);
 	}
 
 	/**

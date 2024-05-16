@@ -1,4 +1,5 @@
 import AcquisitionsQuery from 'shared/queries/AcquisitionsQuery';
+import AssetAppearsOnQuery from 'shared/queries/AssetAppearsOnQuery';
 import BlockedCustomEventDefinitionsQuery from 'settings/definitions/events/queries/BlockedCustomEventDefinitionsQuery';
 import EventAnalysisResultQuery from 'event-analysis/queries/EventAnalysisResultQuery';
 import EventAttributeDefinitionQuery, {
@@ -61,6 +62,101 @@ const METRIC_TYPENAME_MAP = {
 	histogram: 'HistogramMetric',
 	trend: 'Trend'
 };
+
+export function mockAssetAppearsOnReq(variables) {
+	return {
+		request: {
+			query: AssetAppearsOnQuery,
+			variables: {
+				assetId: 'myBlogId',
+				channelId: '123',
+				page: 1,
+				rangeEnd: null,
+				rangeKey: 30,
+				rangeStart: null,
+				size: 2,
+				start: 0,
+				title: 'Blog Title',
+				...variables
+			}
+		},
+		result: {
+			data: {
+				assetPages: {
+					__typename: 'AssetPages',
+					assetMetrics: [
+						{
+							__typename: 'BlogMetric',
+							assetId:
+								'http://liferay.com/web/test/abc/123/a42d8ae1-d145-40da-8150-3fe28deb04ad',
+							assetTitle: 'a42d8ae1-d145-40da-8150-3fe28deb04ad',
+							selectedMetrics: [
+								{
+									__typename: 'AssetMetric',
+									name: 'viewsMetric',
+									value: 113948
+								}
+							]
+						},
+						{
+							__typename: 'BlogMetric',
+							assetId:
+								'http://liferay.com/web/test/abc/123/a9bd5ff0-d623-4743-a2b5-3dbafd8d2a86',
+							assetTitle: 'a9bd5ff0-d623-4743-a2b5-3dbafd8d2a86',
+							selectedMetrics: [
+								{
+									__typename: 'AssetMetric',
+									name: 'viewsMetric',
+									value: 912285
+								}
+							]
+						},
+						{
+							__typename: 'BlogMetric',
+							assetId:
+								'http://liferay.com/web/test/abc/123/b8cbb4b5-5a1f-425d-a06b-c0544e2991ce',
+							assetTitle: 'b8cbb4b5-5a1f-425d-a06b-c0544e2991ce',
+							selectedMetrics: [
+								{
+									__typename: 'AssetMetric',
+									name: 'viewsMetric',
+									value: 431627
+								}
+							]
+						},
+						{
+							__typename: 'BlogMetric',
+							assetId:
+								'http://liferay.com/web/test/abc/123/280b69a6-b2dc-4d8f-a0d4-421b450c257b',
+							assetTitle: '280b69a6-b2dc-4d8f-a0d4-421b450c257b',
+							selectedMetrics: [
+								{
+									__typename: 'AssetMetric',
+									name: 'viewsMetric',
+									value: 273970
+								}
+							]
+						},
+						{
+							__typename: 'BlogMetric',
+							assetId:
+								'http://liferay.com/web/test/abc/123/a9ca649d-fc1f-4499-ab8a-c39f2ca1b024',
+							assetTitle: 'a9ca649d-fc1f-4499-ab8a-c39f2ca1b024',
+							selectedMetrics: [
+								{
+									__typename: 'AssetMetric',
+									name: 'viewsMetric',
+									value: 95519
+								}
+							]
+						}
+					],
+					total: 1000
+				}
+			}
+		}
+	};
+}
 
 export function mockExperimentDraftReq() {
 	return {

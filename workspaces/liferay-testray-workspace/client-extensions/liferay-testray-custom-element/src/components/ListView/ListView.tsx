@@ -452,8 +452,11 @@ const ListView: React.FC<ListViewProps> = ({
 					</ClayLayout.Col>
 				) : (
 					<div className="d-flex flex-wrap">
-						{Object.entries(itemsMemoized).map(
-							([name, data], index) => (
+						{Object.entries(itemsMemoized)
+							.sort(([nameA], [nameB]) =>
+								nameA.localeCompare(nameB)
+							)
+							.map(([name, data], index) => (
 								<div className="my-4" key={index}>
 									<TableChart
 										fieldName={title}
@@ -461,8 +464,7 @@ const ListView: React.FC<ListViewProps> = ({
 										title={name}
 									/>
 								</div>
-							)
-						)}
+							))}
 					</div>
 				))}
 		</>

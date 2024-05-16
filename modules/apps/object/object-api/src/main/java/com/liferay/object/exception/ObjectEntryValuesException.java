@@ -120,10 +120,13 @@ public class ObjectEntryValuesException extends PortalException {
 
 		public ExceedsMaxFileSize(long maxFileSize, String objectFieldName) {
 			super(
+				Arrays.asList(maxFileSize, objectFieldName),
 				String.format(
 					"File exceeds the maximum permitted size of %s MB for " +
 						"object field \"%s\"",
-					maxFileSize, objectFieldName));
+					maxFileSize, objectFieldName),
+				"file-exceeds-the-maximum-permitted-size-of-x-mb-for-object-" +
+					"field-x");
 
 			_maxFileSize = maxFileSize;
 			_objectFieldName = objectFieldName;

@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class AMRuntimeException extends SystemException {
 
-	public AMRuntimeException() {
-	}
-
-	public AMRuntimeException(String s) {
-		super(s);
-	}
-
-	public AMRuntimeException(String s, Throwable throwable) {
-		super(s, throwable);
-	}
-
-	public AMRuntimeException(Throwable throwable) {
-		super(throwable);
-	}
-
 	/**
 	 * This exception is thrown when a value serialized as a <code>String</code>
 	 * cannot be converted by an {@link com.liferay.adaptive.media.AMAttribute}.
@@ -119,6 +104,21 @@ public class AMRuntimeException extends SystemException {
 			super(throwable);
 		}
 
+	}
+
+	private AMRuntimeException() {
+	}
+
+	private AMRuntimeException(String s) {
+		super(s);
+	}
+
+	private AMRuntimeException(String s, Throwable throwable) {
+		super(s, throwable);
+	}
+
+	private AMRuntimeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

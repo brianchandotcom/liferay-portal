@@ -4,6 +4,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import {InputHTMLAttributes} from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -11,13 +12,24 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	name: string;
 }
 
-export function Input({component, ...props}: InputProps) {
+export function Input({component, maxLength, ...props}: InputProps) {
 	return (
-		<ClayInput
-			className="marketplace-form-input"
-			component={component}
-			id={props.name}
-			{...props}
-		/>
+		<>
+			<ClayInput
+				className={classNames('marketplace-form-input', {
+					'mb-1': maxLength,
+				})}
+				component={component}
+				id={props.name}
+				maxLength={maxLength}
+				{...props}
+			/>
+
+			{maxLength && (
+				<small className="text-black-50">
+					{`${(props.value as string).length} / ${maxLength}`}
+				</small>
+			)}
+		</>
 	);
 }

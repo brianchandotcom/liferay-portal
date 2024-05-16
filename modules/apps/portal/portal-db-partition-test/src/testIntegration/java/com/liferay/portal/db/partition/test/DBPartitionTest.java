@@ -12,6 +12,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -555,6 +556,12 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 			DBPartitionUtil.checkDatabasePartitionSchemaNamePrefix();
 		}
+	}
+
+	@Test
+	public void testInitResourceActions() throws Exception {
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> StartupHelperUtil.initResourceActions());
 	}
 
 	@Test

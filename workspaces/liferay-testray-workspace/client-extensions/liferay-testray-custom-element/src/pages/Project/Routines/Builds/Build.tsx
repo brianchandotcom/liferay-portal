@@ -43,6 +43,7 @@ const Build = () => {
 			<ListView
 				initialContext={{
 					columns: {environment: false},
+					pageSize: 50,
 					sort: [
 						{
 							direction: 'ASC',

@@ -58,7 +58,19 @@ public class DBPartitionMigrationValidatorTest {
 	}
 
 	@Test
-	public void testExportMultipleCompanyDefaultDatabase() throws Exception {
+	public void testExportDefaultDatabase() throws Exception {
+		_export(
+			_generateCompanies(),
+			Arrays.asList(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
+			Collections.singletonList(RandomTestUtil.randomLong()), true,
+			_generateReleases());
+	}
+
+	@Test
+	public void testExportDefaultDatabaseWithMultipleCompanies()
+		throws Exception {
+
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -69,7 +81,19 @@ public class DBPartitionMigrationValidatorTest {
 	}
 
 	@Test
-	public void testExportMultipleCompanyNondefaultDatabase() throws Exception {
+	public void testExportNondefaultDatabase() throws Exception {
+		_export(
+			_generateCompanies(),
+			Arrays.asList(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
+			Collections.singletonList(RandomTestUtil.randomLong()), false,
+			_generateReleases());
+	}
+
+	@Test
+	public void testExportNondefaultDatabaseWithMultipleCompanies()
+		throws Exception {
+
 		_export(
 			_generateCompanies(),
 			Arrays.asList(
@@ -77,26 +101,6 @@ public class DBPartitionMigrationValidatorTest {
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
 			false, _generateReleases());
-	}
-
-	@Test
-	public void testExportSingleCompanyDefaultDatabase() throws Exception {
-		_export(
-			_generateCompanies(),
-			Arrays.asList(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
-			Collections.singletonList(RandomTestUtil.randomLong()), true,
-			_generateReleases());
-	}
-
-	@Test
-	public void testExportSingleCompanyNondefaultDatabase() throws Exception {
-		_export(
-			_generateCompanies(),
-			Arrays.asList(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
-			Collections.singletonList(RandomTestUtil.randomLong()), false,
-			_generateReleases());
 	}
 
 	@Test

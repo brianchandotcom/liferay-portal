@@ -1,29 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AttributeConjunctionInput should render 1`] = `
-<div>
+<div
+  aria-hidden="true"
+  data-aria-hidden="true"
+>
   <div
     class="form-group-item form-group-item-shrink"
   >
-    <button
-      aria-activedescendant="1"
-      aria-controls="clay-id-2"
-      aria-expanded="true"
-      aria-haspopup="listbox"
-      aria-owns="clay-id-2"
-      class="form-control form-control-select form-control-select-secondary attribute-input show"
-      role="combobox"
-      style=""
-      tabindex="0"
-      type="button"
+    <div
+      class="dropdown"
     >
-      displayName-1
-    </button>
+      <button
+        aria-controls="clay-dropdown-menu-1"
+        aria-expanded="true"
+        aria-haspopup="true"
+        class="dropdown-toggle form-control form-control-select form-control-select-secondary btn btn-secondary"
+        style=""
+        type="button"
+      >
+        displayName-1
+      </button>
+    </div>
   </div>
   <div
-    aria-hidden="true"
     class="form-group-item form-group-item-shrink"
-    data-aria-hidden="true"
   >
     <button
       aria-activedescendant=""
@@ -38,9 +39,7 @@ exports[`AttributeConjunctionInput should render 1`] = `
     </button>
   </div>
   <div
-    aria-hidden="true"
     class="form-group-item form-group-item-shrink"
-    data-aria-hidden="true"
   >
     <input
       class="input-root form-control"

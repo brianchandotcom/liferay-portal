@@ -1,0 +1,14 @@
+task yarnFormat(type: Exec)
+
+formatSource {
+	// Run "yarn format" before formatSource
+	// dependsOn yarnFormat
+
+	// Run "yarn format" after formatSource
+	finalizedBy yarnFormat
+}
+
+yarnFormat {
+	commandLine "yarn", "format"
+	workingDir ".."
+}

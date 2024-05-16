@@ -336,10 +336,6 @@ pre[class*='language-'] {
 			color: var(--color-neutral-8, #54555f);
 		}
 
-		.learn-card:has(.subsection a) h4 {
-			color: var(--color-neutral-10);
-		}
-
 		table {
 			border-spacing: 0;
 			color: var(--color-neutral-8, #54555f);
@@ -403,10 +399,6 @@ pre[class*='language-'] {
 					);
 				}
 			}
-		}
-
-		.section-card:has(.subsection-wrapper a) .primary-heading-link {
-			color: var(--color-neutral-10);
 		}
 	}
 
@@ -763,6 +755,14 @@ pre[class*='language-'] {
 	.subsection-wrapper {
 		margin-top: var(--spacer-2);
 	}
+}
+
+.learn-card:has(.subsection a) h4 {
+	color: var(--color-neutral-10);
+}
+
+.section-card:has(.subsection-wrapper a) .primary-heading-link {
+	color: var(--color-neutral-10);
 }
 
 .learn-category a {

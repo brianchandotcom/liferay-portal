@@ -12,9 +12,10 @@ interface Actions {
 }
 
 interface CreateObjectField {
+	attachmentSource?: string;
 	listTypeDefinitionName?: string;
-	mandatory: boolean;
-	objectDefinitionName: string;
+	mandatory?: boolean;
+	objectDefinitionName?: string;
 	objectFieldBusinessType: string;
 	objectFieldLabel: string;
 }

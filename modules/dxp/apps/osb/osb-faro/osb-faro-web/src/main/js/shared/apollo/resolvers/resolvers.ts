@@ -1,3 +1,4 @@
+import AssetAppearsOnResolver from './AssetAppearsOnResolver';
 import CommerceAverageOrderValueResolver from './CommerceAverageOrderValueResolver';
 import CommerceAverageRevenuePerAccountResolver from './CommerceAverageRevenuePerAccountResolver';
 import CommerceIncompleteOrdersResolver from './CommerceIncompleteOrdersResolver';
@@ -23,6 +24,7 @@ import PagePathResolver from './PagePathResolver';
  */
 
 export const resolvers = {
+	assetPages: AssetAppearsOnResolver,
 	dashboards: CustomAssetsListResolver,
 	document: DocumentsAndMediaMetricsResolver,
 	documents: DocumentsAndMediaListResolver,

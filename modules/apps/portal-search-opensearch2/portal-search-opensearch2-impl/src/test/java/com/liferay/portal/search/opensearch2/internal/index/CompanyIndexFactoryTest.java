@@ -330,6 +330,25 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 	}
 
 	@Test
+	public void testExecuteCompanyIndexListenerOnBeforeDelete()
+		throws Exception {
+
+		CompanyIndexListener companyIndexListener = Mockito.mock(
+			CompanyIndexListener.class);
+
+		addCompanyIndexListener(companyIndexListener);
+
+		createIndices();
+		deleteIndices();
+
+		Mockito.verify(
+			companyIndexListener, Mockito.times(1)
+		).onBeforeDelete(
+			Mockito.anyString()
+		);
+	}
+
+	@Test
 	public void testIndexConfigurations() throws Exception {
 		Mockito.when(
 			_openSearchConfigurationWrapper.indexNumberOfReplicas()

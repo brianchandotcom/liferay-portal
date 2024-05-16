@@ -231,7 +231,7 @@ function ImportForm({
 		<>
 			{formIsVisible && (
 				<div className="card import-mapping-table">
-					<div className="card-header">
+					<div className="card-header h4">
 						{Liferay.Language.get('import-mappings')}
 					</div>
 

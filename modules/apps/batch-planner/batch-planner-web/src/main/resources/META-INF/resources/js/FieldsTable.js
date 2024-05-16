@@ -116,7 +116,7 @@ function FieldsTable({portletNamespace}) {
 
 	return (
 		<div className="card d-flex flex-column">
-			<div className="card-header py-3">
+			<div className="card-header h4 py-3">
 				{Liferay.Language.get('fields')}
 			</div>
 

@@ -244,7 +244,9 @@ const ActionContentAutoFill = ({
 const ActionAutoFill = ({children}) => (
 	<>
 		<Timeline.FormGroupItem className="form-group-item-label form-group-item-shrink">
-			<h4>{Liferay.Language.get('from-data-provider')}</h4>
+			<div className="h4">
+				{Liferay.Language.get('from-data-provider')}
+			</div>
 		</Timeline.FormGroupItem>
 		{children}
 	</>
@@ -463,11 +465,11 @@ export function Actions({
 									openModal({
 										payload: {
 											body: (
-												<h4>
+												<div className="h4">
 													{Liferay.Language.get(
 														'are-you-sure-you-want-to-delete-this-action'
 													)}
-												</h4>
+												</div>
 											),
 											footer: [
 												null,

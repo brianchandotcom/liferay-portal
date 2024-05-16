@@ -654,7 +654,7 @@ AUI.add(
 					const removeOnComplete = instance.get('removeOnComplete');
 
 					if (removeOnComplete) {
-						instance._listInfo.one('h4').hide();
+						instance._listInfo.one('.h4').hide();
 
 						instance._allRowIdsCheckbox.hide();
 					}
@@ -1167,7 +1167,7 @@ AUI.add(
 
 					const strings = instance.get(STRINGS);
 
-					const infoTitle = instance._listInfo.one('h4');
+					const infoTitle = instance._listInfo.one('.h4');
 
 					if (!instance.get('multipleFiles')) {
 						infoTitle.html('');

@@ -19,6 +19,7 @@ import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.rest.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -333,6 +334,39 @@ public class SystemObjectRelatedObjectEntriesTest {
 				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
+
+		ObjectField titleObjectField = ObjectFieldTestUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
+			"a" + RandomTestUtil.randomString());
+
+		_userSystemObjectDefinition =
+			_objectDefinitionLocalService.updateTitleObjectFieldId(
+				_userSystemObjectDefinition.getObjectDefinitionId(),
+				titleObjectField.getObjectFieldId());
+
+		String titleObjectFieldValue = RandomTestUtil.randomString();
+
+		_userSystemObjectDefinitionManager.updateBaseModel(
+			_userAccountJSONObject.getLong("id"), TestPropsValues.getUser(),
+			HashMapBuilder.<String, Object>put(
+				titleObjectField.getName(), titleObjectFieldValue
+			).putAll(
+				_userAccountJSONObject.toMap()
+			).build());
+
+		_testGetSystemObjectRelatedObjectEntries(
+			2, objectRelationship.getName(),
+			new String[][] {
+				{titleObjectField.getName(), titleObjectFieldValue},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
+				{titleObjectField.getName(), titleObjectFieldValue}
+			},
+			Type.ONE_TO_MANY);
+
+		_objectFieldLocalService.deleteObjectField(
+			titleObjectField.getObjectFieldId());
 
 		_testGetSystemObjectRelatedObjectEntries(
 			2, objectRelationship.getName(),
@@ -1184,6 +1218,9 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private final List<ObjectRelationship> _objectRelationships =
 		new ArrayList<>();

@@ -12,17 +12,15 @@ describe('Utils', () => {
 			option                          | dataType              | label
 			${'true'}                       | ${DataTypes.Boolean}  | ${'True'}
 			${'false'}                      | ${DataTypes.Boolean}  | ${'False'}
-			${FunctionalOperators.Between}  | ${DataTypes.Date}     | ${'is between'}
 			${RelationalOperators.EQ}       | ${DataTypes.Date}     | ${'is'}
-			${RelationalOperators.GT}       | ${DataTypes.Date}     | ${'after'}
-			${RelationalOperators.LT}       | ${DataTypes.Date}     | ${'before'}
-			${RelationalOperators.GT}       | ${DataTypes.Duration} | ${'is greater than'}
-			${RelationalOperators.LT}       | ${DataTypes.Duration} | ${'is less than'}
-			${FunctionalOperators.Between}  | ${DataTypes.Number}   | ${'between'}
-			${RelationalOperators.GT}       | ${DataTypes.Number}   | ${'is greater than'}
-			${RelationalOperators.LT}       | ${DataTypes.Number}   | ${'is less than'}
+			${RelationalOperators.GT}       | ${DataTypes.Date}     | ${'is after'}
+			${RelationalOperators.LT}       | ${DataTypes.Date}     | ${'is before'}
+			${RelationalOperators.GT}       | ${DataTypes.Duration} | ${'is after'}
+			${RelationalOperators.LT}       | ${DataTypes.Duration} | ${'is before'}
+			${RelationalOperators.GT}       | ${DataTypes.Number}   | ${'greater than'}
+			${RelationalOperators.LT}       | ${DataTypes.Number}   | ${'less than'}
 			${FunctionalOperators.Contains} | ${DataTypes.String}   | ${'contains'}
-			${NotOperators.NotContains}     | ${DataTypes.String}   | ${'not contains'}
+			${NotOperators.NotContains}     | ${DataTypes.String}   | ${'does not contain'}
 			${RelationalOperators.EQ}       | ${DataTypes.String}   | ${'is'}
 			${RelationalOperators.NE}       | ${DataTypes.String}   | ${'is not'}
 		`(
@@ -39,9 +37,9 @@ describe('Utils', () => {
 	describe('getOperatorOptions', () => {
 		it.each`
 			dataType              | count
-			${DataTypes.Date}     | ${4}
-			${DataTypes.Duration} | ${2}
-			${DataTypes.Number}   | ${3}
+			${DataTypes.Date}     | ${3}
+			${DataTypes.Duration} | ${3}
+			${DataTypes.Number}   | ${4}
 			${DataTypes.String}   | ${4}
 		`(
 			'should return $count options when dataType is $dataType',

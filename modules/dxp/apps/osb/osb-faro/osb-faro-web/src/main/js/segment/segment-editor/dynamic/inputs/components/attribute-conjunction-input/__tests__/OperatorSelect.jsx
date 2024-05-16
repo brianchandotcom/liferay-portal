@@ -1,8 +1,8 @@
 import OperatorSelect from '../OperatorSelect';
 import React from 'react';
-import {DataTypes} from 'event-analysis/utils/types';
+import {ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP} from '../utils';
+import {DataTypes, Operators} from 'event-analysis/utils/types';
 import {fireEvent, render} from '@testing-library/react';
-import {FunctionalOperators} from '../../../../utils/constants';
 
 jest.unmock('react-dom');
 
@@ -12,14 +12,17 @@ describe('OperatorSelect', () => {
 			<OperatorSelect
 				dataType={DataTypes.Number}
 				onChange={jest.fn()}
-				operatorsName={FunctionalOperators.Between}
+				operatorsName={
+					ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP[Operators.EQ]
+				}
 			/>
 		);
 		fireEvent.click(getByText('Select an option'));
 
-		expect(getByText('is greater than')).toBeTruthy();
-		expect(getByText('is less than')).toBeTruthy();
-		expect(getByText('between')).toBeTruthy();
+		expect(getByText('greater than')).toBeTruthy();
+		expect(getByText('less than')).toBeTruthy();
+		expect(getByText('is equal to')).toBeTruthy();
+		expect(getByText('is not equal to')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();
 	});

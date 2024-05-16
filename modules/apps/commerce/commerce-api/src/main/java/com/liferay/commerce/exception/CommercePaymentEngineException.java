@@ -27,13 +27,4 @@ public class CommercePaymentEngineException extends PortalException {
 		super(throwable);
 	}
 
-	public static class MustSetPrimaryCurrency
-		extends CommercePaymentEngineException {
-
-		public MustSetPrimaryCurrency() {
-			super("Unable to get primary currency");
-		}
-
-	}
-
 }

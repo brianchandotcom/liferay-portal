@@ -28,6 +28,14 @@ public class RememberMeTokenLocalServiceWrapper
 		_rememberMeTokenLocalService = rememberMeTokenLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.RememberMeToken addRememberMeToken(
+		long companyId, long userId, java.util.Date expirationDate) {
+
+		return _rememberMeTokenLocalService.addRememberMeToken(
+			companyId, userId, expirationDate);
+	}
+
 	/**
 	 * Adds the remember me token to the database. Also notifies the appropriate model listeners.
 	 *
@@ -43,6 +51,11 @@ public class RememberMeTokenLocalServiceWrapper
 		com.liferay.portal.kernel.model.RememberMeToken rememberMeToken) {
 
 		return _rememberMeTokenLocalService.addRememberMeToken(rememberMeToken);
+	}
+
+	@Override
+	public void checkUserExpiredRememberMeTokens(long userId) {
+		_rememberMeTokenLocalService.checkUserExpiredRememberMeTokens(userId);
 	}
 
 	/**
@@ -312,6 +325,13 @@ public class RememberMeTokenLocalServiceWrapper
 		return _rememberMeTokenLocalService.getRememberMeTokensCount();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.RememberMeToken>
+		getUserRememberMeTokens(long userId) {
+
+		return _rememberMeTokenLocalService.getUserRememberMeTokens(userId);
+	}
+
 	/**
 	 * Updates the remember me token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -329,6 +349,15 @@ public class RememberMeTokenLocalServiceWrapper
 
 		return _rememberMeTokenLocalService.updateRememberMeToken(
 			rememberMeToken);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.KeyValuePair validateToken(
+			long rememberMeTokenId, String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _rememberMeTokenLocalService.validateToken(
+			rememberMeTokenId, token);
 	}
 
 	@Override

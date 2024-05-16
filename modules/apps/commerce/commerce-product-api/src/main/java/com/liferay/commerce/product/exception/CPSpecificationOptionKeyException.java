@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class CPSpecificationOptionKeyException extends PortalException {
 
-	public CPSpecificationOptionKeyException() {
-	}
-
-	public CPSpecificationOptionKeyException(String msg) {
-		super(msg);
-	}
-
-	public CPSpecificationOptionKeyException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public CPSpecificationOptionKeyException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MustNotBeDuplicate
 		extends CPSpecificationOptionKeyException {
 
@@ -43,6 +28,21 @@ public class CPSpecificationOptionKeyException extends PortalException {
 			super("Key must not be null");
 		}
 
+	}
+
+	private CPSpecificationOptionKeyException() {
+	}
+
+	private CPSpecificationOptionKeyException(String msg) {
+		super(msg);
+	}
+
+	private CPSpecificationOptionKeyException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	private CPSpecificationOptionKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -915,9 +915,9 @@ pre[class*='language-'] {
 		}
 	}
 
-	.page-item.active {
+	.active.page-item {
 		z-index: 2;
-	} 
+	}
 
 	.active.page-item .page-link,
 	.page-link:hover {

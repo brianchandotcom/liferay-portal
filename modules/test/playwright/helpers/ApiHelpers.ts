@@ -251,6 +251,10 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'accountGroup':
+					await this.headlessAdminUser.deleteAccountGroup(item.id);
+
+					break;
 				case 'catalog':
 					await this.headlessCommerceAdminCatalog.deleteCatalog(
 						item.id

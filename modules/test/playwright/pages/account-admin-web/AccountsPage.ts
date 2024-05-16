@@ -37,6 +37,7 @@ export const searchTableRowByValue = async function (
 };
 
 export class AccountsPage {
+	readonly accountGroupsTab: Locator;
 	readonly accountsTable: Locator;
 	readonly accountsTableRow: (
 		colPosition: number,
@@ -50,6 +51,9 @@ export class AccountsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.accountGroupsTab = page.getByRole('link', {
+			name: 'Account Groups',
+		});
 		this.page = page;
 		this.pageTitle = page.getByTestId('headerTitle');
 		this.accountsTableRow = async (

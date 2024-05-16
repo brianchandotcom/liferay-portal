@@ -13,6 +13,13 @@ type TAccount = {
 	type?: string;
 };
 
+type TAccountGroup = {
+	description?: string;
+	externalReferenceCode?: string;
+	id?: number;
+	name: string;
+};
+
 type THoursAvailable = {
 	closes: string;
 	dayOfWeek?: string;
@@ -39,6 +46,15 @@ export class HeadlessAdminUserApiHelper {
 		this.basePath = 'headless-admin-user/v1.0/';
 	}
 
+	async assignAccountToAccountGroup(
+		accountExternalReferenceCode: string,
+		accountGroupExternalReferenceCode: string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/account-groups/by-external-reference-code/${accountExternalReferenceCode}/accounts/by-external-reference-code/${accountGroupExternalReferenceCode}`
+		);
+	}
+
 	async assignUserToAccountByEmailAddress(
 		accountId: number,
 		emails: string[]
@@ -52,6 +68,12 @@ export class HeadlessAdminUserApiHelper {
 	async deleteAccount(accountId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}`
+		);
+	}
+
+	async deleteAccountGroup(accountGroupId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/account-groups/${accountGroupId}`
 		);
 	}
 
@@ -92,6 +114,20 @@ export class HeadlessAdminUserApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,
 			{data: {name: 'Account' + getRandomInt(), ...(account || {})}}
+		);
+	}
+
+	async postAccountGroup(
+		accountGroup?: TAccountGroup
+	): Promise<TAccountGroup> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/account-groups`,
+			{
+				data: {
+					name: 'AccountGroup' + getRandomInt(),
+					...(accountGroup || {}),
+				},
+			}
 		);
 	}
 

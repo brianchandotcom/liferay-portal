@@ -43,7 +43,7 @@ String layoutBreadcrumb = categoryCPDisplayLayoutDisplayContext.getLayoutBreadcr
 				<aui:fieldset>
 					<liferay-asset:asset-categories-error />
 
-					<div class="h4"><liferay-ui:message key="select-categories" /></div>
+					<h4><liferay-ui:message key="select-categories" /></h4>
 
 					<div id="<portlet:namespace />categoriesContainer"></div>
 

@@ -22,7 +22,7 @@
 
 <div class="row" id="<portlet:namespace />termsOfUseSettings">
 	<div class="col-md-3">
-		<div class="h4 text-default"><liferay-ui:message key="select-existing-content-or-add-terms-of-use-in-the-space-below" /></div>
+		<h4 class="text-default"><liferay-ui:message key="select-existing-content-or-add-terms-of-use-in-the-space-below" /></h4>
 	</div>
 
 	<div class="col-md-9">
@@ -52,7 +52,7 @@
 			<aui:button name="selectArticle" value="select-web-content" />
 
 			<aui:field-wrapper cssClass="lfr-definition-virtual-setting-content">
-				<div class="h4 text-default"><liferay-ui:message key="or" /></div>
+				<h4 class="text-default"><liferay-ui:message key="or" /></h4>
 
 				<div class="entry-content form-group">
 					<liferay-ui:input-localized

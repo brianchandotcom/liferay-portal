@@ -61,9 +61,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<ul class="commerce-order-items-header">
 		<li class="autofit-row">
 			<div class="autofit-col autofit-col-expand">
-				<div class="commerce-title h4">
+				<h4 class="commerce-title">
 					<liferay-ui:message arguments="<%= commerceCartContentMiniDisplayContext.getCommerceOrderItemsQuantity() %>" key="items-x" translateArguments="<%= false %>" />
-				</div>
+				</h4>
 			</div>
 
 			<div class="autofit-col">

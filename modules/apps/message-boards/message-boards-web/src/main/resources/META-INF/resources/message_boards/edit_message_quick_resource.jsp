@@ -85,7 +85,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				<%= userDisplayText %>
 			</span>
 
-			<div class="h4" title="<%= HtmlUtil.escape(message.getSubject()) %>">
+			<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
 				<c:choose>
 					<c:when test='<%= GetterUtil.getBoolean(request.getAttribute("edit-message.jsp-showPermanentLink")) %>'>
 						<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />">
@@ -96,7 +96,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 						<%= HtmlUtil.escape(message.getSubject()) %>
 					</c:otherwise>
 				</c:choose>
-			</div>
+			</h4>
 
 			<%
 			String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), message.getUserId());

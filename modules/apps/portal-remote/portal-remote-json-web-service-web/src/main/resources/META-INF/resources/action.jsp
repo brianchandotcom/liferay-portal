@@ -23,9 +23,9 @@ String signature = ParamUtil.getString(request, "signature");
 				<h2 class="mb-0"><%= jsonWebServiceActionMapping.getPath() %></h2>
 
 				<dl class="align-items-center d-flex lfr-api-http-method mb-0">
-					<div class="h4 mb-0 text-secondary">
+					<h4 class="mb-0 text-secondary">
 						<liferay-ui:message key="http-method" />
-					</div>
+					</h4>
 
 					<span class="label label-inverse-success label-lg ml-3">
 						<span class="label-item label-item-expand">

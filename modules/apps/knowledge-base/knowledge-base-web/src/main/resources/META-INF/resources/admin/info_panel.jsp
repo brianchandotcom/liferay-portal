@@ -48,7 +48,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		<div class="sidebar-header">
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
-					<div class="component-title"><%= (kbFolder != null) ? HtmlUtil.escape(kbFolder.getName()) : LanguageUtil.get(request, "home") %></div>
+					<h4 class="component-title"><%= (kbFolder != null) ? HtmlUtil.escape(kbFolder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
 					<h5 class="component-subtitle">
 						<liferay-ui:message key="folder" />
@@ -157,7 +157,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 					expand="<%= true %>"
 				>
 					<clay:content-section>
-						<div class="component-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></div>
+						<h4 class="component-title"><%= HtmlUtil.escape(kbArticle.getTitle()) %></h4>
 
 						<clay:label
 							displayType="info"
@@ -288,7 +288,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 		<div class="sidebar-header">
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
-					<div class="component-title"><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></div>
+					<h4 class="component-title"><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></h4>
 				</div>
 			</div>
 		</div>

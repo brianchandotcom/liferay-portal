@@ -42,10 +42,10 @@
 
 					<c:choose>
 						<c:when test="<%= exported && !validated %>">
-							<div class="h4 upload-error-message"><liferay-ui:message key="the-publish-process-did-not-start-due-to-validation-errors" /></div>
+							<h4 class="upload-error-message"><liferay-ui:message key="the-publish-process-did-not-start-due-to-validation-errors" /></h4>
 						</c:when>
 						<c:otherwise>
-							<div class="h4 upload-error-message"><liferay-ui:message key="an-unexpected-error-occurred-with-the-publish-process.-please-check-your-portal-and-publishing-configuration" /></div>
+							<h4 class="upload-error-message"><liferay-ui:message key="an-unexpected-error-occurred-with-the-publish-process.-please-check-your-portal-and-publishing-configuration" /></h4>
 						</c:otherwise>
 					</c:choose>
 

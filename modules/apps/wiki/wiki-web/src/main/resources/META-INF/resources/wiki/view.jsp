@@ -470,9 +470,9 @@ if (portletTitleBasedNavigation) {
 		</div>
 
 		<c:if test="<%= Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) && !childPages.isEmpty() %>">
-			<div class="h4 text-default">
+			<h4 class="text-default">
 				<liferay-ui:message arguments="<%= childPages.size() %>" key="child-pages-x" translateArguments="<%= false %>" />
-			</div>
+			</h4>
 
 			<div>
 				<ul class="list-group">

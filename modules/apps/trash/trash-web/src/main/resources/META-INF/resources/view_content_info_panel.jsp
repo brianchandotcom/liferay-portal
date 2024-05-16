@@ -23,7 +23,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<div class="component-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></div>
+				<h4 class="component-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 			</clay:content-col>
 
 			<clay:content-col>

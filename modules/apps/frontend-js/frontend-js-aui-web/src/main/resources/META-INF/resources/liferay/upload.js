@@ -85,7 +85,7 @@ AUI.add(
 
 			'<tpl if="values.error && !this.multipleFiles">',
 			'<li class="alert alert-danger upload-error" data-fileId="{id}" id="{id}">',
-			'<div class="h4 upload-error-message">{[ Lang.sub(this.strings.fileCannotBeSavedText, [LString.escapeHTML(values.name)]) ]}</div>',
+			'<h4 class="upload-error-message">{[ Lang.sub(this.strings.fileCannotBeSavedText, [LString.escapeHTML(values.name)]) ]}</h4>',
 
 			'<span class="error-message" title="{[ LString.escapeHTML(values.error) ]}">{[ LString.escapeHTML(values.error) ]}</span>',
 
@@ -135,7 +135,7 @@ AUI.add(
 			'</div>',
 
 			'<div class="hide upload-list-info" id="{$ns}listInfo">',
-			'<div class="h4">{[ this.strings.uploadsCompleteText ]}</div>',
+			'<h4>{[ this.strings.uploadsCompleteText ]}</h4>',
 			'</div>',
 
 			'<div class="alert alert-warning hide pending-files-info" role="alert">',

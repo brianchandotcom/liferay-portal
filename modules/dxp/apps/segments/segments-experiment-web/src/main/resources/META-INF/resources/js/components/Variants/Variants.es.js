@@ -47,7 +47,7 @@ function Variants({selectedSegmentsExperienceId}) {
 
 	return (
 		<>
-			<div className="h4 mb-3 mt-4 sheet-subtitle">
+			<h4 className="mb-3 mt-4 sheet-subtitle">
 				{Liferay.Language.get('variants')}
 
 				{experiment.status.value === STATUS_DRAFT && (
@@ -57,7 +57,7 @@ function Variants({selectedSegmentsExperienceId}) {
 						symbol="asterisk"
 					/>
 				)}
-			</div>
+			</h4>
 
 			{variants.length === 1 && (
 				<>

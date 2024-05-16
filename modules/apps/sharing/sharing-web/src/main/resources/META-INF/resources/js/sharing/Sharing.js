@@ -338,9 +338,9 @@ const Sharing = ({
 					/>
 				</ClayForm.Group>
 
-				<div className="sheet-tertiary-title">
+				<h4 className="sheet-tertiary-title">
 					{Liferay.Language.get('sharing-permissions')}
-				</div>
+				</h4>
 
 				<ClayForm.Group>
 					<ClayRadioGroup

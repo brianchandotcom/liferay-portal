@@ -168,14 +168,14 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 												{
 													message: (
 														<div>
-															<div className='h4 text-secondary'>
+															<h4 className='text-secondary'>
 																{sub(
 																	Liferay.Language.get(
 																		'delete-x-and-its-historical-training-output-data'
 																	),
 																	[name]
 																)}
-															</div>
+															</h4>
 
 															<p>
 																{Liferay.Language.get(

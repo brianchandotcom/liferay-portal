@@ -43,7 +43,7 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 			%>
 
 			<c:if test="<%= !validMoveFolders.isEmpty() %>">
-				<div class="h4"><liferay-ui:message arguments="<%= validMoveFolders.size() %>" key="x-folders-are-ready-to-be-moved" translateArguments="<%= false %>" /></div>
+				<h4><liferay-ui:message arguments="<%= validMoveFolders.size() %>" key="x-folders-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
 
 				<ul class="list-unstyled">
 
@@ -69,7 +69,7 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 			%>
 
 			<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
-				<div class="h4"><liferay-ui:message arguments="<%= invalidMoveFolders.size() %>" key="x-folders-cannot-be-moved" translateArguments="<%= false %>" /></div>
+				<h4><liferay-ui:message arguments="<%= invalidMoveFolders.size() %>" key="x-folders-cannot-be-moved" translateArguments="<%= false %>" /></h4>
 
 				<ul class="list-unstyled">
 
@@ -100,7 +100,7 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 			%>
 
 			<c:if test="<%= !validMoveArticles.isEmpty() %>">
-				<div class="h4"><liferay-ui:message arguments="<%= validMoveArticles.size() %>" key="x-web-content-instances-are-ready-to-be-moved" translateArguments="<%= false %>" /></div>
+				<h4><liferay-ui:message arguments="<%= validMoveArticles.size() %>" key="x-web-content-instances-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
 
 				<ul class="list-unstyled">
 
@@ -126,7 +126,7 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 			%>
 
 			<c:if test="<%= !invalidMoveArticles.isEmpty() %>">
-				<div class="h4"><liferay-ui:message arguments="<%= invalidMoveArticles.size() %>" key="x-web-content-instances-cannot-be-moved" translateArguments="<%= false %>" /></div>
+				<h4><liferay-ui:message arguments="<%= invalidMoveArticles.size() %>" key="x-web-content-instances-cannot-be-moved" translateArguments="<%= false %>" /></h4>
 
 				<ul class="list-unstyled">
 

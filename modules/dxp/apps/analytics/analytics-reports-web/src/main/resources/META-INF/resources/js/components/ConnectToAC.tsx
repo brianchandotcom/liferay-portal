@@ -43,9 +43,9 @@ export default function ConnectToAC({
 
 			{isAnalyticsConnected ? (
 				<>
-					<div className="font-weight-semi-bold h5 mt-3">
+					<h4 className="font-weight-semi-bold h5 mt-3">
 						{Liferay.Language.get('sync-to-analytics-cloud')}
-					</div>
+					</h4>
 
 					<p className="text-secondary">
 						{Liferay.Language.get(
@@ -68,11 +68,11 @@ export default function ConnectToAC({
 				</>
 			) : (
 				<>
-					<div className="font-weight-semi-bold h5 mt-3">
+					<h4 className="font-weight-semi-bold h5 mt-3">
 						{Liferay.Language.get(
 							'connect-to-liferay-analytics-cloud'
 						)}
-					</div>
+					</h4>
 
 					<p className="text-secondary">
 						{Liferay.Language.get(

@@ -33,7 +33,7 @@ if (kbArticle != null) {
 	<div class="hide selected" id="<portlet:namespace />selectedFileNameMetadataContainer"></div>
 
 	<c:if test="<%= !attachmentsFileEntries.isEmpty() %>">
-		<div class="h4"><liferay-ui:message key="saved-attachments" /></div>
+		<h4><liferay-ui:message key="saved-attachments" /></h4>
 
 		<div id="<portlet:namespace />existingAttachmentsContainer">
 

@@ -190,9 +190,9 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 									open(modalTypes.CONFIRMATION_MODAL, {
 										message: (
 											<div>
-												<div className='h4 text-secondary'>
+												<h4 className='text-secondary'>
 													{confirmationMessage}
-												</div>
+												</h4>
 
 												<p>
 													{singleSelectedItem

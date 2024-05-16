@@ -222,13 +222,13 @@ function PreviewSidebar({
 			data-testid={TEST_IDS.PREVIEW_SIDEBAR}
 		>
 			<div className="sidebar-header">
-				<div className="component-title">
+				<h4 className="component-title">
 					<span className="text-truncate-inline">
 						<span className="text-truncate">
 							{Liferay.Language.get('preview')}
 						</span>
 					</span>
-				</div>
+				</h4>
 
 				<span>
 					<PreviewAttributesModal

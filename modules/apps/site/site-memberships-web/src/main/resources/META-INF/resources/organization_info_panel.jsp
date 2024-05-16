@@ -14,7 +14,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 <c:choose>
 	<c:when test="<%= ListUtil.isEmpty(organizations) %>">
 		<div class="sidebar-header">
-			<div class="h4"><liferay-ui:message key="organizations" /></div>
+			<h4><liferay-ui:message key="organizations" /></h4>
 		</div>
 
 		<div class="sheet-row">
@@ -47,9 +47,9 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 		%>
 
 		<div class="sidebar-header">
-			<div class="h4">
+			<h4>
 				<%= organization.getName() %>
-			</div>
+			</h4>
 
 			<div class="h6">
 				<liferay-ui:message key="<%= organization.getType() %>" />
@@ -124,7 +124,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(organizations) && (organizations.size() > 1) %>">
 		<div class="sidebar-header">
-			<div class="h4"><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></div>
+			<h4><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<div class="sheet-row">

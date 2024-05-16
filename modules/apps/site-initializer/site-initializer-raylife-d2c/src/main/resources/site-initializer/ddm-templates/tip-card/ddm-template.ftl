@@ -114,7 +114,7 @@
 
 <div class="bg-neutral-1 p-4 rounded" id="tip">
 	<#if (title.getData())??>
-		<div class="font-weight-bolder h4 title">${title.getData()}</div>
+		<h4 class="title font-weight-bolder">${title.getData()}</h4>
 	</#if>
 
 	<#if (subtitle.getData())??>

@@ -59,7 +59,7 @@ if (!LanguageUtil.isInheritLocales(siteGroup.getGroupId()) && !siteAdminConfigur
 boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 %>
 
-<div class="sheet-subtitle"><liferay-ui:message key="public-pages" /></div>
+<h4 class="sheet-subtitle"><liferay-ui:message key="public-pages" /></h4>
 
 <aui:field-wrapper cssClass="form-group">
 	<c:choose>
@@ -152,7 +152,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 	</c:choose>
 </aui:field-wrapper>
 
-<div class="sheet-subtitle"><liferay-ui:message key="private-pages" /></div>
+<h4 class="sheet-subtitle"><liferay-ui:message key="private-pages" /></h4>
 
 <aui:field-wrapper cssClass="form-group">
 	<c:choose>

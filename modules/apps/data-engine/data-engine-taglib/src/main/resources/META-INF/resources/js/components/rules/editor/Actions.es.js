@@ -67,9 +67,7 @@ const ActionContentCalculate = ({
 const ActionCalculate = ({children}) => (
 	<>
 		<Timeline.FormGroupItem className="form-group-item-label form-group-item-shrink">
-			<div className="h4">
-				{Liferay.Language.get('choose-a-field-to-show-the-result')}
-			</div>
+			<h4>{Liferay.Language.get('choose-a-field-to-show-the-result')}</h4>
 		</Timeline.FormGroupItem>
 		{children}
 	</>

@@ -78,7 +78,7 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 			<div class="row">
 				<c:if test="<%= subtotalCommerceDiscountValue != null %>">
 					<div class="col-auto">
-						<div class="h4"><liferay-ui:message key="subtotal-discount" /></div>
+						<h4><liferay-ui:message key="subtotal-discount" /></h4>
 					</div>
 
 					<div class="col-auto">
@@ -112,7 +112,7 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 			<div class="row">
 				<c:if test="<%= totalCommerceDiscountValue != null %>">
 					<div class="col-auto">
-						<div class="h4"><liferay-ui:message key="total-discount" /></div>
+						<h4><liferay-ui:message key="total-discount" /></h4>
 					</div>
 
 					<div class="col-auto">

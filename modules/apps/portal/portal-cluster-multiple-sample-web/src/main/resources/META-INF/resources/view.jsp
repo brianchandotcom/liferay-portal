@@ -17,7 +17,7 @@
 ClusterSampleData clusterSampleData = new ClusterSampleData();
 %>
 
-<div class="h4">Server Data:</div>
+<h4>Server Data:</h4>
 
 <p>Following data is from the server that generated this response:</p>
 
@@ -33,7 +33,7 @@ ClusterSampleData clusterSampleData = new ClusterSampleData();
 	</li>
 </ul>
 
-<div class="h4">Session Data:</div>
+<h4>Session Data:</h4>
 
 <%
 ClusterSampleData portletSessionClusterSampleData = (ClusterSampleData)portletSession.getAttribute(ClusterSampleData.class.getName());

@@ -39,7 +39,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		%>
 
 		<div class="sidebar-header">
-			<div class="h4"><%= HtmlUtil.escape(faroProjectAdminDisplay.getName()) %></div>
+			<h4><%= HtmlUtil.escape(faroProjectAdminDisplay.getName()) %></h4>
 		</div>
 
 		<clay:navigation-bar
@@ -106,14 +106,14 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 			</c:when>
 			<c:otherwise>
 				<div class="sidebar-header">
-					<div class="h4"><liferay-ui:message arguments="<%= faroProjectAdminDisplays.size() %>" key="x-items-are-selected" /></div>
+					<h4><liferay-ui:message arguments="<%= faroProjectAdminDisplays.size() %>" key="x-items-are-selected" /></h4>
 				</div>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<div class="h4"><liferay-ui:message arguments="<%= (int)request.getAttribute(FaroAdminWebKeys.FARO_PROJECT_ENTRIES_COUNT) %>" key="x-items-are-selected" /></div>
+			<h4><liferay-ui:message arguments="<%= (int)request.getAttribute(FaroAdminWebKeys.FARO_PROJECT_ENTRIES_COUNT) %>" key="x-items-are-selected" /></h4>
 		</div>
 	</c:otherwise>
 </c:choose>

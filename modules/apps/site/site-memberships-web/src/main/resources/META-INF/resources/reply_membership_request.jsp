@@ -60,7 +60,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 				%>
 
 				<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
-					<div class="h4 text-default"><liferay-ui:message key="description" /></div>
+					<h4 class="text-default"><liferay-ui:message key="description" /></h4>
 
 					<p class="text-default">
 						<%= HtmlUtil.escape(group.getDescription(locale)) %>

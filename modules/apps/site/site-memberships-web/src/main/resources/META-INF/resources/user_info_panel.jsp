@@ -16,7 +16,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 <c:choose>
 	<c:when test="<%= ListUtil.isEmpty(users) %>">
 		<div class="sidebar-header">
-			<div class="h4">
+			<h4>
 				<liferay-ui:message key="membership-type" />: <liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" />
 
 				<%
@@ -35,7 +35,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 
 					<aui:a cssClass="badge badge-primary badge-sm" href="<%= viewMembershipRequestsURL %>" label="<%= String.valueOf(pendingRequests) %>" title='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>' />
 				</c:if>
-			</div>
+			</h4>
 
 			<div class="h6 text-secondary">
 				<liferay-ui:message arguments="<%= GroupUtil.getGroupTypeLabel(group, locale) %>" key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>' translateArguments="<%= false %>" />
@@ -71,9 +71,9 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		%>
 
 		<div class="sidebar-header">
-			<div class="h4">
+			<h4>
 				<%= HtmlUtil.escape(curUser.getFullName()) %>
-			</div>
+			</h4>
 
 			<div class="h6">
 				<%= curUser.getScreenName() %>
@@ -140,7 +140,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(users) && (users.size() > 1) %>">
 		<div class="sidebar-header">
-			<div class="h4"><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></div>
+			<h4><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<div class="sheet-row">

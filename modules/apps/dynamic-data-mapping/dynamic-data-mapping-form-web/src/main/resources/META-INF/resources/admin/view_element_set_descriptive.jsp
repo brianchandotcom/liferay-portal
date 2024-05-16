@@ -18,11 +18,11 @@ dateSearchEntry.setDate(ddmStructure.getModifiedDate());
 %>
 
 <div class="clamp-container">
-	<div class="h4 text-truncate">
+	<h4 class="text-truncate">
 		<aui:a cssClass="form-instance-name" href="<%= (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF) %>">
 			<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
 		</aui:a>
-	</div>
+	</h4>
 
 	<h5 class="text-default">
 		<div class="form-instance-description text-truncate">

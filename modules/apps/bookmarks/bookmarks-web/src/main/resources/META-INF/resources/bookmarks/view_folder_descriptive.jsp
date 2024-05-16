@@ -15,7 +15,7 @@ BookmarksFolder folder = (BookmarksFolder)row.getObject();
 folder = folder.toEscapedModel();
 %>
 
-<div class="h4">
+<h4>
 	<aui:a
 		href='<%=
 			PortletURLBuilder.createRenderURL(
@@ -31,7 +31,7 @@ folder = folder.toEscapedModel();
 	>
 		<%= folder.getName() %>
 	</aui:a>
-</div>
+</h4>
 
 <h5 class="text-default">
 	<%= folder.getDescription() %>

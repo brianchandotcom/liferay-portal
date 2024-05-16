@@ -58,9 +58,9 @@ List<DropdownItem> dropdownItems = inputAssetLinksDisplayContext.getActionDropdo
 		<liferay-ui:search-container-column-text
 			name="title"
 		>
-			<div class="list-group-title">
+			<h4 class="list-group-title">
 				<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
-			</div>
+			</h4>
 
 			<p class="list-group-subtitle">
 				<%= inputAssetLinksDisplayContext.getAssetType(assetLinkEntry) %>

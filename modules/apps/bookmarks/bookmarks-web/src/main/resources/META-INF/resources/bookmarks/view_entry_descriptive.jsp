@@ -26,11 +26,11 @@ else {
 entry = entry.toEscapedModel();
 %>
 
-<div class="h4">
+<h4>
 	<aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() %>'>
 		<%= entry.getName() %>
 	</aui:a>
-</div>
+</h4>
 
 <h5 class="text-default">
 	<%= entry.getDescription() %>

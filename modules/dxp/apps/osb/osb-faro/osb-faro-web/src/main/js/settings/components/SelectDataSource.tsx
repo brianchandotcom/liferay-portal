@@ -25,7 +25,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 	<div className={getCN('select-data-source-root', className)}>
 		{sections.map(({dataSources, title}) => (
 			<section key={title}>
-				<div className='h4 section-title text-uppercase'>{title}</div>
+				<h4 className='text-uppercase section-title'>{title}</h4>
 
 				<div className='section-items'>
 					{dataSources.map(
@@ -47,7 +47,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 
 									<div className='details'>
 										<div className='title'>
-											<div className="h4">{name}</div>
+											<h4>{name}</h4>
 										</div>
 
 										<div className='subtitle'>
@@ -71,7 +71,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 
 									<div className='details'>
 										<div className='title'>
-											<div className="h4">{name}</div>
+											<h4>{name}</h4>
 										</div>
 
 										<div className='subtitle'>

@@ -104,10 +104,10 @@ else if (metadataField.equals("view-count")) {
 			<div class="autofit-col autofit-col-expand">
 				<c:choose>
 					<c:when test="<%= assetRendererUser != null %>">
-						<div class="component-title mt-0"><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></div>
+						<h4 class="component-title mt-0"><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></h4>
 					</c:when>
 					<c:otherwise>
-						<div class="component-title mt-0"><liferay-ui:message key="anonymous"></liferay-ui:message></div>
+						<h4 class="component-title mt-0"><liferay-ui:message key="anonymous"></liferay-ui:message></h4>
 					</c:otherwise>
 				</c:choose>
 

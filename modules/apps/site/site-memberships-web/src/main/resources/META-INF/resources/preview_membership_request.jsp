@@ -35,9 +35,9 @@ renderResponse.setTitle(userName);
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
-				<div class="h4 text-default">
+				<h4 class="text-default">
 					<liferay-ui:message arguments="<%= userName %>" key="requested-by-x" />
-				</div>
+				</h4>
 
 				<div class="nameplate">
 					<div class="nameplate-field">
@@ -77,9 +77,9 @@ renderResponse.setTitle(userName);
 				}
 				%>
 
-				<div class="h4 text-default">
+				<h4 class="text-default">
 					<liferay-ui:message arguments="<%= replier %>" key="replied-by-x" />
-				</div>
+				</h4>
 
 				<div class="nameplate">
 					<c:if test="<%= membershipRequestReplierUser != null %>">
@@ -101,9 +101,9 @@ renderResponse.setTitle(userName);
 					</div>
 				</div>
 
-				<div class="h4 text-default">
+				<h4 class="text-default">
 					<strong><liferay-ui:message key="status" /></strong>
-				</div>
+				</h4>
 
 				<c:choose>
 					<c:when test="<%= membershipRequest.getStatusId() == MembershipRequestConstants.STATUS_APPROVED %>">

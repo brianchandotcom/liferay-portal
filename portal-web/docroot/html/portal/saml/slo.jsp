@@ -43,9 +43,9 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 	<liferay-ui:message key="signing-out-from-services" />
 </h3>
 
-<div class="h4">
+<h4>
 	<liferay-ui:icon image="activate" /> <liferay-ui:message key="please-do-not-leave-this-page-in-order-to-avoid-inconsistencies" />
-</div>
+</h4>
 
 <div id="samlSloResults"></div>
 

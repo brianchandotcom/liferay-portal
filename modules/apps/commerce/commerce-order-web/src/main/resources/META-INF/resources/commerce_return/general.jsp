@@ -205,11 +205,11 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 				</div>
 
 				<div class="col-6 col-md-9">
-					<div class="h4 my-2 summary-table-item-big"><liferay-ui:message key="total-estimated-refund" /></div>
+					<h4 class="my-2 summary-table-item-big"><liferay-ui:message key="total-estimated-refund" /></h4>
 				</div>
 
 				<div class="col-6 col-md-3">
-					<div class="h4 my-2 summary-table-item-big"><%= commerceReturnEditDisplayContext.getAmountFormatted(commerceReturn.getTotalAmount()) %></div>
+					<h4 class="my-2 summary-table-item-big"><%= commerceReturnEditDisplayContext.getAmountFormatted(commerceReturn.getTotalAmount()) %></h4>
 				</div>
 			</div>
 		</commerce-ui:panel>

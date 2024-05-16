@@ -19,7 +19,7 @@ function TimelineEntry({date, description, title}) {
 				<div className="panel-body">
 					<div className="mb-2 row">
 						<div className="col">
-							<div className="h4 mb-0">{title}</div>
+							<h4 className="mb-0">{title}</h4>
 						</div>
 
 						<div className="col-auto">{description}</div>

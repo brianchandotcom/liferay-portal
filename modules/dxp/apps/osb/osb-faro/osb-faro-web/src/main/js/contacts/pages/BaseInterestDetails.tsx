@@ -223,13 +223,13 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 						{navigationItems.map(({active, href, label}) => (
 							<ClayNavigationBar.Item active={active} key={label}>
 								<ClayLink href={href}>
-									<div className="h4">{label}</div>
+									<h4>{label}</h4>
 								</ClayLink>
 							</ClayNavigationBar.Item>
 						))}
 					</ClayNavigationBar>
 
-					<div className='h4 list-title'>
+					<h4 className='list-title'>
 						{tabId === tabIds.INDIVIDUALS
 							? sub(
 									Liferay.Language.get(
@@ -248,7 +248,7 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 									),
 									[interestName]
 							  )}
-					</div>
+					</h4>
 				</Card.Header>
 
 				<InterestDetailsList

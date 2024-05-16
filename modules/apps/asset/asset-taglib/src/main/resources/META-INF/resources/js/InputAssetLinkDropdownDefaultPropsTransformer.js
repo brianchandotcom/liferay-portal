@@ -54,9 +54,9 @@ export default function propsTransformer({
 									) {
 										const rowColumns = [];
 
-										rowColumns.push(`<div class="list-group-title">
+										rowColumns.push(`<h4 class="list-group-title">
 												${Liferay.Util.escapeHTML(assetEntry.title)}
-											</div>
+											</h4>
 											<p class="list-group-subtitle">
 												${Liferay.Util.escapeHTML(assetEntry.assetType)}
 											</p>

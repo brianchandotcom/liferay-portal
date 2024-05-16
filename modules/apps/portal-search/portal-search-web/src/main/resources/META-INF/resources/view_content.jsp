@@ -44,7 +44,7 @@ SearchResultContentDisplayContext searchResultContentDisplayContext = searchResu
 
 <c:if test="<%= searchResultContentDisplayContext.isVisible() %>">
 	<div class="mb-2">
-		<div class="component-title">
+		<h4 class="component-title">
 			<span class="asset-title d-inline">
 				<%= HtmlUtil.escape(searchResultContentDisplayContext.getHeaderTitle()) %>
 			</span>
@@ -62,7 +62,7 @@ SearchResultContentDisplayContext searchResultContentDisplayContext = searchResu
 					/>
 				</span>
 			</c:if>
-		</div>
+		</h4>
 	</div>
 
 	<liferay-asset:asset-display

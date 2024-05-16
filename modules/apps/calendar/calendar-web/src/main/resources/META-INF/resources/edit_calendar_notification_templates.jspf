@@ -88,7 +88,7 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 	</aui:fieldset>
 
 	<div class="definition-of-terms">
-		<div class="h4"><liferay-ui:message key="definition-of-terms" /></div>
+		<h4><liferay-ui:message key="definition-of-terms" /></h4>
 
 		<dl>
 			<dt>

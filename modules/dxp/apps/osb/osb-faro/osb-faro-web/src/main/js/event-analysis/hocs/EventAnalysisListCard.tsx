@@ -91,7 +91,7 @@ const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
 
 		const message = (
 			<div>
-				<div className='h4 text-secondary'>
+				<h4 className='text-secondary'>
 					{getPluralMessage(
 						Liferay.Language.get(
 							'are-you-sure-you-want-to-delete-this-analysis'
@@ -101,7 +101,7 @@ const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
 						),
 						eventAnalysisIds.length
 					)}
-				</div>
+				</h4>
 
 				<p>
 					{getPluralMessage(

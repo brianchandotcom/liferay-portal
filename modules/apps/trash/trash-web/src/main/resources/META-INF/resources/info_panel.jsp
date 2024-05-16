@@ -31,7 +31,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 						<clay:content-col
 							expand="<%= true %>"
 						>
-							<div class="component-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></div>
+							<h4 class="component-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 
 							<p class="component-subtitle">
 								<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
@@ -100,7 +100,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 						<clay:content-col
 							expand="<%= true %>"
 						>
-							<div class="component-title"><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></div>
+							<h4 class="component-title"><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
 						</clay:content-col>
 
 						<clay:content-col>

@@ -110,9 +110,9 @@ function SkuContent({
 					</ClayLabel>
 				</div>
 
-				<div className="component-title mb-1">
+				<h4 className="component-title mb-1">
 					<a href={productURL}>{product.sku}</a>
-				</div>
+				</h4>
 
 				<p className="component-subtitle mb-1">
 					<a href={productURL}>{productName}</a>
@@ -183,9 +183,9 @@ function DiagramContent({product, productBaseURL}) {
 			)}
 
 			<div className="col">
-				<div className="component-title">
+				<h4 className="component-title">
 					<a href={productURL}>{productName}</a>
-				</div>
+				</h4>
 			</div>
 
 			<div className="col-auto">
@@ -200,7 +200,7 @@ function DiagramContent({product, productBaseURL}) {
 function ExternalContent({product}) {
 	return (
 		<>
-			<div className="h4 mb-1">{product.sku || product.name}</div>
+			<h4 className="mb-1">{product.sku || product.name}</h4>
 
 			{!!product.quantity && (
 				<p className="mb-0">

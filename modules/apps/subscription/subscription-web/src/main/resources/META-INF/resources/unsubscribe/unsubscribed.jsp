@@ -49,9 +49,9 @@ if (manageSubscriptionsURL != null) {
 
 	<c:if test="<%= manageSubscriptionsURL != null %>">
 		<p class="help">
-			<div class="h4">
+			<h4>
 				<liferay-ui:message key="did-you-unsubscribe-by-accident" />
-			</div>
+			</h4>
 
 			<a href="<%= manageSubscriptionsURL.toString() %>">
 				<liferay-ui:message key="manage-your-subscriptions" />

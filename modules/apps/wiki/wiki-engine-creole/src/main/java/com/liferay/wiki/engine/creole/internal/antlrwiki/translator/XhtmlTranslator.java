@@ -169,7 +169,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		append("<div class=\"toc\">");
 		append("<div class=\"collapsebox\">");
-		append("<div class=\"h4\">");
+		append("<h4>");
 
 		String title = tableOfContentsNode.getTitle();
 
@@ -185,7 +185,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		append(StringPool.NBSP);
 		append("<a class=\"toc-trigger\" href=\"javascript:void(0);\">[-]");
-		append("</a></div>");
+		append("</a></h4>");
 		append("<div class=\"toc-index\">");
 
 		_appendTableOfContents(tableOfContents, 1);

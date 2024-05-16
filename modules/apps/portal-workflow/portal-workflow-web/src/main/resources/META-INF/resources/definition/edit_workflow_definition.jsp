@@ -123,11 +123,11 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						<clay:content-col
 							expand="<%= true %>"
 						>
-							<div class="component-title">
+							<h4 class="component-title">
 								<span class="text-truncate-inline">
 									<span class="text-truncate"><%= HtmlUtil.escape(workflowDefinition.getTitle(LanguageUtil.getLanguageId(request))) %></span>
 								</span>
-							</div>
+							</h4>
 						</clay:content-col>
 					</clay:content-row>
 				</div>

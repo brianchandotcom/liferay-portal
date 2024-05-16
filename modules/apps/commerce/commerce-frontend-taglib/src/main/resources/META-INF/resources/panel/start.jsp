@@ -13,7 +13,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 
 <div class="card d-flex flex-column<%= Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK %>">
 	<c:if test="<%= Validator.isNotNull(actionLabel) || Validator.isNotNull(actionIcon) || Validator.isNotNull(title) %>">
-		<div class="align-items-center card-header d-flex h4 justify-content-between py-3">
+		<h4 class="align-items-center card-header d-flex justify-content-between py-3">
 			<%= HtmlUtil.escape(title) %>
 
 			<c:if test="<%= Validator.isNotNull(actionTargetId) %>">
@@ -116,7 +116,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 					</span>
 				</c:when>
 			</c:choose>
-		</div>
+		</h4>
 	</c:if>
 
 	<div class="collapse<%= collapsed ? StringPool.BLANK : " show" %>" id="<%= randomNamespace %>collapse">

@@ -15,7 +15,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 
 <div class="container pt-4">
 	<div class="card">
-		<div class="card-header"><liferay-ui:message key="batch-engine-task-details" /></div>
+		<h4 class="card-header"><liferay-ui:message key="batch-engine-task-details" /></h4>
 
 		<div class="card-body">
 			<clay:content-row>

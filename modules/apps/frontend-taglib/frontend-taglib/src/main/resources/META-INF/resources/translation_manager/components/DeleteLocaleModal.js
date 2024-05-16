@@ -11,11 +11,11 @@ export default function DeleteLocaleModal({observer, onCancel, onConfirm}) {
 	return (
 		<ClayModal observer={observer} size="sm">
 			<ClayModal.Body>
-				<div className="h4">
+				<h4>
 					{Liferay.Language.get(
 						'are-you-sure-you-want-to-deactivate-this-language'
 					)}
-				</div>
+				</h4>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

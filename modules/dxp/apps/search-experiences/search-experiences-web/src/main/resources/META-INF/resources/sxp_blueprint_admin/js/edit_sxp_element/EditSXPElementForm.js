@@ -629,7 +629,7 @@ function EditSXPElementForm({
 				{!readOnly && (
 					<>
 						<div className="sidebar-header">
-							<div className="component-title">
+							<h4 className="component-title">
 								<span className="text-truncate-inline">
 									<span className="text-truncate">
 										{Liferay.Language.get(
@@ -637,7 +637,7 @@ function EditSXPElementForm({
 										)}
 									</span>
 								</span>
-							</div>
+							</h4>
 						</div>
 
 						<div className="container-fluid">

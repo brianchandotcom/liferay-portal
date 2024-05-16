@@ -214,11 +214,11 @@ export const List: React.FC<IListProps> = ({
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
 				<div>
-					<div className='h4 text-secondary'>
+					<h4 className='text-secondary'>
 						{Liferay.Language.get(
 							'are-you-sure-you-want-to-delete-this-segment'
 						)}
-					</div>
+					</h4>
 
 					<p>
 						{Liferay.Language.get(

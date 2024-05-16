@@ -217,11 +217,11 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 
 					<div class="row summary-table text-right">
 						<div class="col-6 col-md-9">
-							<div class="h4 my-2 summary-table-item-big"><liferay-ui:message key="total-estimated-refund" /></div>
+							<h4 class="my-2 summary-table-item-big"><liferay-ui:message key="total-estimated-refund" /></h4>
 						</div>
 
 						<div class="col-6 col-md-3">
-							<div class="h4 my-2 summary-table-item-big"><%= commerceReturnContentDisplayContext.getTotalEstimatedRefund() %></div>
+							<h4 class="my-2 summary-table-item-big"><%= commerceReturnContentDisplayContext.getTotalEstimatedRefund() %></h4>
 						</div>
 					</div>
 				</commerce-ui:panel>

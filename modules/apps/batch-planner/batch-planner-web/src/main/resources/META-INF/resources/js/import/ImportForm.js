@@ -231,9 +231,9 @@ function ImportForm({
 		<>
 			{formIsVisible && (
 				<div className="card import-mapping-table">
-					<div className="card-header">
+					<h4 className="card-header">
 						{Liferay.Language.get('import-mappings')}
-					</div>
+					</h4>
 
 					<div className="card-body p-0">
 						<ClayTable borderless hover={false}>

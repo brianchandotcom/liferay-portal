@@ -86,7 +86,7 @@ if (portletTitleBasedNavigation) {
 				<aui:fieldset>
 					<c:if test="<%= !validMoveFolders.isEmpty() %>">
 						<div class="move-list-info">
-							<div class="h4"><liferay-ui:message arguments="<%= validMoveFolders.size() %>" key="x-folders-are-ready-to-be-moved" translateArguments="<%= false %>" /></div>
+							<h4><liferay-ui:message arguments="<%= validMoveFolders.size() %>" key="x-folders-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
 						</div>
 
 						<div class="move-list">
@@ -120,7 +120,7 @@ if (portletTitleBasedNavigation) {
 
 					<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
 						<div class="move-list-info">
-							<div class="h4"><liferay-ui:message arguments="<%= invalidMoveFolders.size() %>" key="x-folders-cannot-be-moved" translateArguments="<%= false %>" /></div>
+							<h4><liferay-ui:message arguments="<%= invalidMoveFolders.size() %>" key="x-folders-cannot-be-moved" translateArguments="<%= false %>" /></h4>
 						</div>
 
 						<div class="move-list">
@@ -159,7 +159,7 @@ if (portletTitleBasedNavigation) {
 
 					<c:if test="<%= !validMoveEntries.isEmpty() %>">
 						<div class="move-list-info">
-							<div class="h4"><liferay-ui:message arguments="<%= validMoveEntries.size() %>" key="x-entries-are-ready-to-be-moved" translateArguments="<%= false %>" /></div>
+							<h4><liferay-ui:message arguments="<%= validMoveEntries.size() %>" key="x-entries-are-ready-to-be-moved" translateArguments="<%= false %>" /></h4>
 						</div>
 
 						<div class="move-list">
@@ -193,7 +193,7 @@ if (portletTitleBasedNavigation) {
 
 					<c:if test="<%= !invalidMoveEntries.isEmpty() %>">
 						<div class="move-list-info">
-							<div class="h4"><liferay-ui:message arguments="<%= invalidMoveEntries.size() %>" key="x-entries-cannot-be-moved" translateArguments="<%= false %>" /></div>
+							<h4><liferay-ui:message arguments="<%= invalidMoveEntries.size() %>" key="x-entries-cannot-be-moved" translateArguments="<%= false %>" /></h4>
 						</div>
 
 						<div class="move-list">

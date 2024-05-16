@@ -91,9 +91,9 @@ function Body({data, setRetry, tasks}) {
 					versionedCard.map(([taskLabel, tasks], cardIndex) => (
 						<ClayPanel key={`${versionIndex}_${cardIndex}`}>
 							<ClayPanel.Header>
-								<div className="h4 mt-2">
+								<h4 className="mt-2">
 									{capitalize(taskLabel)}
-								</div>
+								</h4>
 							</ClayPanel.Header>
 
 							<Body.Card

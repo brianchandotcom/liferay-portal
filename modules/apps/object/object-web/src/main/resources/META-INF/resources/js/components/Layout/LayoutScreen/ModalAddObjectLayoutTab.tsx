@@ -107,7 +107,7 @@ function TabType({
 				onClick={() => onChangeType(type)}
 				{...(disabled && tabProps)}
 			>
-				<div className="h4 layout-tab__tab-types__title">{label}</div>
+				<h4 className="layout-tab__tab-types__title">{label}</h4>
 
 				<span className="tab__tab-types__description">
 					{description}

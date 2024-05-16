@@ -196,7 +196,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 
 				<aui:input cssClass="lfr-input-text-container" helpMessage="ignore-user-search-filter-for-auth-help" label="ignore-user-search-filter-for-auth" name='<%= "ldap--" + LDAPConstants.INGORE_USER_SEARCH_FILTER_FOR_AUTH + "--" %>' type="checkbox" value="<%= ignoreUserAuthFilterForAuth %>" />
 
-				<div class="h4"><liferay-ui:message key="user-mapping" /></div>
+				<h4><liferay-ui:message key="user-mapping" /></h4>
 
 				<aui:input cssClass="lfr-input-text-container" label="uuid" name="userMappingUuid" type="text" value="<%= userMappingUuid %>" />
 
@@ -241,7 +241,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 
 				<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.GROUP_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapGroupSearchFilter %>" />
 
-				<div class="h4"><liferay-ui:message key="group-mapping" /></div>
+				<h4><liferay-ui:message key="group-mapping" /></h4>
 
 				<aui:input cssClass="lfr-input-text-container" label="group-name" name="groupMappingGroupName" type="text" value="<%= groupMappingGroupName %>" />
 

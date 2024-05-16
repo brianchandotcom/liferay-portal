@@ -69,7 +69,7 @@ const NoResultsDisplay: React.FC<INoResultsDisplayProps> = ({
 			<div className={getCN('no-results-content', {spacer})}>
 				{icon && <NoResultsDisplayIcon {...icon} />}
 
-				{title && <div className='h4 no-results-title'>{title}</div>}
+				{title && <h4 className='no-results-title'>{title}</h4>}
 
 				{description && (
 					<div className='no-results-description'>{description}</div>

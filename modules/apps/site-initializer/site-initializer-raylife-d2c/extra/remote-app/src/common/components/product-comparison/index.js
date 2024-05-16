@@ -141,9 +141,9 @@ const ProductComparison = ({
 
 			<div className="d-flex flex-column justify-content-between pb-5 pt-4 px-4 quote-content">
 				<div className="quote-header text-center">
-					<div className="font-weight-bolder h4 text-brand-primary text-capitalize">
+					<h4 className="font-weight-bolder text-brand-primary text-capitalize">
 						{category}
-					</div>
+					</h4>
 
 					<div className="d-flex display-3 flex-row font-weight-bolder justify-content-center text-neutral-10 value">
 						<span>

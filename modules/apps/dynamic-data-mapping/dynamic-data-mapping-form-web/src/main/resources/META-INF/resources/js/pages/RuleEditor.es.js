@@ -30,11 +30,11 @@ export function RuleEditor({onCancel, onSave, rule, ...otherProps}) {
 			<div className="form-rule-builder-header">
 				<h2 className="text-default">{Liferay.Language.get('rule')}</h2>
 
-				<div className="h4 text-default">
+				<h4 className="text-default">
 					{Liferay.Language.get(
 						'define-condition-and-action-to-change-fields-and-elements-on-the-form'
 					)}
-				</div>
+				</h4>
 			</div>
 
 			<DataEngineRuleEditor

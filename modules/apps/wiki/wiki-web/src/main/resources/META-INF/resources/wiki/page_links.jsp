@@ -39,7 +39,7 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 									%>
 
 										<dt class="h5">
-											<div class="h4">
+											<h4>
 												<a
 													class="text-default" href="<%=
 	PortletURLBuilder.createRenderURL(
@@ -54,7 +54,7 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 											"title", incomingLinkPage.getTitle()
 										).buildString() %>"><%= incomingLinkPage.getTitle() %></a
 												>
-											</div>
+											</h4>
 										</dt>
 										<dd>
 											<small>
@@ -97,9 +97,9 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 										<c:choose>
 											<c:when test="<%= outgoingLinkPage.isNew() %>">
 												<dt class="h5">
-													<div class="h4 text-truncate">
+													<h4 class="text-truncate">
 														<a class="text-default" href="<%= outgoingLinkPage.getTitle() %>"><%= outgoingLinkPage.getTitle() %></a>
-													</div>
+													</h4>
 												</dt>
 											</c:when>
 											<c:otherwise>
@@ -109,7 +109,7 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 												%>
 
 												<dt class="h5">
-													<div class="h4 text-truncate">
+													<h4 class="text-truncate">
 														<a
 															class="text-default" href="<%=
 	PortletURLBuilder.createRenderURL(
@@ -124,7 +124,7 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 													"title", outgoingLinkPage.getTitle()
 												).buildString() %>"><%= outgoingLinkPage.getTitle() %></a
 														>
-													</div>
+													</h4>
 												</dt>
 												<dd>
 													<small>

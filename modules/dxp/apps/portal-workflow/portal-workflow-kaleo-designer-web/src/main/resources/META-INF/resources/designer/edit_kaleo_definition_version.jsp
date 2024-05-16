@@ -154,11 +154,11 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 				<div class="sidebar-header">
 					<div class="sidebar-section">
-						<div class="component-title">
+						<h4 class="component-title">
 							<span class="text-truncate-inline">
 								<span class="text-truncate"><%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(locale)) %></span>
 							</span>
-						</div>
+						</h4>
 					</div>
 				</div>
 			</div>

@@ -44,7 +44,7 @@ if (!LanguageUtil.isInheritLocales(siteGroup.getGroupId()) && !siteAdminConfigur
 boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 %>
 
-<div class="sheet-subtitle"><liferay-ui:message key="pages" /></div>
+<h4 class="sheet-subtitle"><liferay-ui:message key="pages" /></h4>
 
 <aui:field-wrapper cssClass="form-group">
 	<c:choose>

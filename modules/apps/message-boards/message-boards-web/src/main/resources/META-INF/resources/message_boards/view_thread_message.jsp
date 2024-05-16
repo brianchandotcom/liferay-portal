@@ -62,7 +62,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 					<%= HtmlUtil.escape(userDisplayText) %>
 				</span>
 
-				<div class="h4" title="<%= HtmlUtil.escape(message.getSubject()) %>">
+				<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
 					<c:choose>
 						<c:when test="<%= showPermanentLink %>">
 							<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />">
@@ -77,7 +77,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 					<c:if test="<%= message.isAnswer() %>">
 						(<liferay-ui:message key="answer[noun]" />)
 					</c:if>
-				</div>
+				</h4>
 
 				<%
 				int messageCount = 0;

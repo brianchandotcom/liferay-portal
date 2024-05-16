@@ -272,7 +272,7 @@ class LiferayOverview extends React.Component<ILiferayOverviewProps> {
 						}: ConfigurationItem) => (
 							<Sheet.Section key={title} lastChildMargin>
 								<div className='mb-1 d-flex align-items-center'>
-									<div className='h4 mb-0 mr-2'>{title}</div>
+									<h4 className='mb-0 mr-2'>{title}</h4>
 
 									{getStatusLabel(
 										getConfigurationStatus(dataSource)

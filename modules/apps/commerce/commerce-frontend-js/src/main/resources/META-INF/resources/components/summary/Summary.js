@@ -42,14 +42,10 @@ function SummaryItemBigVariant(props) {
 	return (
 		<>
 			<div className="col-6 col-md-9">
-				<div className="h4 my-2 summary-table-item-big">
-					{props.label}
-				</div>
+				<h4 className="my-2 summary-table-item-big">{props.label}</h4>
 			</div>
 			<div className="col-6 col-md-3">
-				<div className="h4 my-2 summary-table-item-big">
-					{props.value}
-				</div>
+				<h4 className="my-2 summary-table-item-big">{props.value}</h4>
 			</div>
 		</>
 	);

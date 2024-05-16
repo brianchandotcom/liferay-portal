@@ -7,18 +7,18 @@
 
 <%@ include file="/wiki/init.jsp" %>
 
-<div class="h4">
+<h4>
 	<liferay-ui:message key="text-styles" />
-</div>
+</h4>
 
 <pre>
 //italics//
 **bold**
 </pre>
 
-<div class="h4">
+<h4>
 	<liferay-ui:message key="headers" />
-</div>
+</h4>
 
 <pre>
 == Large heading ==
@@ -26,18 +26,18 @@
 ==== Small heading ====
 </pre>
 
-<div class="h4">
+<h4>
 	<liferay-ui:message key="links" />
-</div>
+</h4>
 
 <pre>
 [[Link to a page]]
 [[http://www.liferay.com|Link to website]]
 </pre>
 
-<div class="h4">
+<h4>
 	<liferay-ui:message key="lists" />
-</div>
+</h4>
 
 <pre>
 * Item
@@ -46,18 +46,18 @@
 ## Ordered Subitem
 </pre>
 
-<div class="h4">
+<h4>
 	<liferay-ui:message key="images" />
-</div>
+</h4>
 
 <pre>
 {{attached-image.png}}
 {{Page Name/other-image.jpg|label}}
 </pre>
 
-<div class="h4">
+<h4>
 	<liferay-ui:message key="other" />
-</div>
+</h4>
 
 <pre>
 &lt;&lt;TableOfContents&gt;&gt;

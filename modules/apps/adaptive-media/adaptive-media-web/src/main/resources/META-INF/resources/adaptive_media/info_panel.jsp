@@ -26,9 +26,9 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 		<c:when test="<%= selectedConfigurationEntriesSize == 1 %>">
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
-					<div class="component-title">
+					<h4 class="component-title">
 						<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>
-					</div>
+					</h4>
 
 					<h5 class="component-subtitle">
 						<liferay-ui:message key="image-resolution" />
@@ -48,14 +48,14 @@ if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
 		<c:when test="<%= selectedConfigurationEntriesSize > 1 %>">
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
-					<div class="component-title"><liferay-ui:message arguments="<%= selectedConfigurationEntriesSize %>" key="x-items-are-selected" /></div>
+					<h4 class="component-title"><liferay-ui:message arguments="<%= selectedConfigurationEntriesSize %>" key="x-items-are-selected" /></h4>
 				</div>
 			</div>
 		</c:when>
 		<c:otherwise>
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
-					<div class="component-title"><liferay-ui:message key="adaptive-media" /></div>
+					<h4 class="component-title"><liferay-ui:message key="adaptive-media" /></h4>
 				</div>
 			</div>
 		</c:otherwise>

@@ -24,7 +24,7 @@
 		<liferay-frontend:fieldset
 			cssClass="display-style-icon"
 		>
-			<div class="h4"><liferay-ui:message key="layout-template" /></div>
+			<h4><liferay-ui:message key="layout-template" /></h4>
 
 			<clay:row>
 

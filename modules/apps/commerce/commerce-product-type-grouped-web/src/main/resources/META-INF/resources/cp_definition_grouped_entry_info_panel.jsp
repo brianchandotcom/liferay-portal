@@ -31,7 +31,7 @@ if (cpDefinitionGroupedEntries == null) {
 		<div class="sidebar-header">
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
-					<div class="component-title"><%= HtmlUtil.escape(cProductCPDefinition.getName(themeDisplay.getLanguageId())) %></div>
+					<h4 class="component-title"><%= HtmlUtil.escape(cProductCPDefinition.getName(themeDisplay.getLanguageId())) %></h4>
 				</div>
 
 				<div class="autofit-col">
@@ -59,7 +59,7 @@ if (cpDefinitionGroupedEntries == null) {
 		<div class="sidebar-header">
 			<div class="autofit-row sidebar-section">
 				<div class="autofit-col autofit-col-expand">
-					<div class="component-title"><liferay-ui:message arguments="<%= cpDefinitionGroupedEntries.size() %>" key="x-items-are-selected" /></div>
+					<h4 class="component-title"><liferay-ui:message arguments="<%= cpDefinitionGroupedEntries.size() %>" key="x-items-are-selected" /></h4>
 				</div>
 			</div>
 		</div>

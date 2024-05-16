@@ -174,7 +174,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 </clay:row>
 
 <c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
-	<div class="h4"><liferay-ui:message key="description" /></div>
+	<h4><liferay-ui:message key="description" /></h4>
 
 	<p class="text-default">
 		<%= HtmlUtil.escape(selPluginPackage.getShortDescription()) %>

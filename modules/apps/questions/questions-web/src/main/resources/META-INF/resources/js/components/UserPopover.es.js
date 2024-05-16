@@ -24,9 +24,9 @@ export default function UserPopover({creator, statistics}) {
 					/>
 
 					<div className="c-ml-2">
-						<div className="font-weight-light h6 text-secondary">
+						<h4 className="font-weight-light h6 text-secondary">
 							{statistics?.rank}
-						</div>
+						</h4>
 
 						<h3 className="h5">
 							{creator?.name ||

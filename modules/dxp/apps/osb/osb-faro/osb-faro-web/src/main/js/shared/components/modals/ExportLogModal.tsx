@@ -46,7 +46,7 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 			<Modal.Body>
 				<p className='text-secondary'>{description}</p>
 
-				<div className="h4">{Liferay.Language.get('request-date-range')}</div>
+				<h4>{Liferay.Language.get('request-date-range')}</h4>
 
 				<div className='d-flex'>
 					<DateRangeInput

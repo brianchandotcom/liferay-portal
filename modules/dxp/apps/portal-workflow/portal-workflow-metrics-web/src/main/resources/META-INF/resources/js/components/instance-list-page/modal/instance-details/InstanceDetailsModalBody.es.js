@@ -250,9 +250,9 @@ function Body({
 }
 
 function SectionTitle({children, className = ''}) {
-	const classNames = `${className} font-weight-medium mb-4 h4`;
+	const classNames = `${className} font-weight-medium mb-4`;
 
-	return <div className={classNames}>{children}</div>;
+	return <h4 className={classNames}>{children}</h4>;
 }
 
 function SectionSubTitle({children}) {

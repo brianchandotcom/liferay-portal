@@ -15,7 +15,7 @@ import {useQuery} from '@apollo/react-hooks';
 
 const AudienceReportTitle: React.FC<IInfoPopoverProps> = ({content, title}) => (
 	<div className='d-inline-flex gap'>
-		<div className='h4 mb-3 text-center text-secondary title'>{title}</div>
+		<h4 className='mb-3 text-center text-secondary title'>{title}</h4>
 
 		{content && <InfoPopover content={content} title={title} />}
 	</div>

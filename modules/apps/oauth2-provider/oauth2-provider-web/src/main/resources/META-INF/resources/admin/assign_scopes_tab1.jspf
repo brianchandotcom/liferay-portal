@@ -82,7 +82,7 @@
 								</div>
 
 								<div class="autofit-col autofit-col-expand">
-									<div class="list-group-title text-truncate">
+									<h4 class="list-group-title text-truncate">
 
 										<%
 										AssignableScopes assignableScopes = applicationAssignableScopesRelationsEntry.getKey();
@@ -145,7 +145,7 @@
 												</label>
 											</c:otherwise>
 										</c:choose>
-									</div>
+									</h4>
 
 									<c:if test="<%= !globalScopeAliases.isEmpty() %>">
 										<c:choose>

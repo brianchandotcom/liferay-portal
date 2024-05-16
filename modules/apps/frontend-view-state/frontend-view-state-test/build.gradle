@@ -1,5 +1,0 @@
-dependencies {
-	testIntegrationImplementation project(":apps:frontend-view-state:frontend-view-state-api")
-	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
-}

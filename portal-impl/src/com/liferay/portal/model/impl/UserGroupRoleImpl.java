@@ -7,10 +7,13 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -65,5 +68,42 @@ public class UserGroupRoleImpl extends UserGroupRoleBaseImpl {
 
 		return HashUtil.hash(hash, getRoleId());
 	}
+
+	@Override
+	public boolean hasOrganizationRole() {
+		Role role = RoleLocalServiceUtil.fetchRole(getRoleId());
+
+		if ((role != null) &&
+			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean hasSiteRole() {
+		try {
+			Group group = getGroup();
+			Role role = getRole();
+
+			if ((group != null) && group.isSite() && (role != null) &&
+				(role.getType() == RoleConstants.TYPE_SITE)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserGroupRoleImpl.class);
 
 }

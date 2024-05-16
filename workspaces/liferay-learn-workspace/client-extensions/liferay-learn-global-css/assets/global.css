@@ -915,6 +915,10 @@ pre[class*='language-'] {
 		}
 	}
 
+	.page-item.active {
+		z-index: 2;
+	} 
+
 	.active.page-item .page-link,
 	.page-link:hover {
 		background-color: var(--color-action-neutral-hover-10);

@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>INDIVIDUALS_EVENTS_DATE</td>
-	<td>//div[contains(@class,'activities-date')]//div[contains(@class,'h4')]</td>
+	<td>//div[contains(@class,'activities-date')]//h4</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>INDIVIDUAL_DETAILS_CARD_FULL_NAME</td>
-	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'card-body')]//div[contains(@class,'h4') and normalize-space(text())='${fullName}']</td>
+	<td>//div[contains(@class,'individual-details-card')]//div[contains(@class,'card-body')]//h4[normalize-space(text())='${fullName}']</td>
 	<td></td>
 </tr>
 

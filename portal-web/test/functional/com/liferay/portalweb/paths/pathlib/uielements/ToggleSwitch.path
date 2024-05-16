@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>ENABLE_SPECIFIC_TOGGLE_SWITCH</td>
-	<td>//div[contains(@class,'h4') and contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]</td>
+	<td>//h4[contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]</td>
 	<td></td>
 </tr>
 <tr>

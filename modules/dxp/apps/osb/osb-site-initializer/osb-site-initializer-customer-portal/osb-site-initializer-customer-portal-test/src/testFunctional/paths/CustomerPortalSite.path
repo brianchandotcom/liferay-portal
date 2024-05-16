@@ -207,7 +207,7 @@
 </tr>
 <tr>
 	<td>PROJECT_TABLE_NAME</td>
-	<td>//div[contains(@class,'card-body')]//div[contains(@title,'${key_projectName}')]</td>
+	<td>//div[contains(@class,'card-body')]//h4[contains(@title,'${key_projectName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -242,7 +242,7 @@
 </tr>
 <tr>
 	<td>PROJECT_TITLE_MAIN_PAGE</td>
-	<td>//div[contains(@class, 'card-body')]//div[contains(@class,'h4') and contains(@class, 'text-truncate')]</td>
+	<td>//div[contains(@class, 'card-body')]//h4[contains(@class, 'text-truncate')]</td>
 	<td></td>
 </tr>
 <tr>

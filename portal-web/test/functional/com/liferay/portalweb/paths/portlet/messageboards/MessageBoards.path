@@ -144,7 +144,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_LIST_CATEGORY_DESCRIPTION</td>
-	<td>//*[@data-qa-id='rowItemContent']/div[contains(@class,'h4')]/a[contains(.,'${key_categoryName}')]/../..//h5[contains(.,'${key_categoryDescription}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_categoryName}')]/../..//h5[contains(.,'${key_categoryDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

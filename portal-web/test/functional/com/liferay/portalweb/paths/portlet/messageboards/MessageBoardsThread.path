@@ -65,17 +65,17 @@
 </tr>
 <tr>
 	<td>THREAD_REPLY_SUBJECT</td>
-	<td>//div[contains(@class,'autofit-col')]//div[contains(@class,'h4') and contains(.,'${key_threadSubject}')]</td>
+	<td>//div[contains(@class,'autofit-col')]//h4[contains(.,'${key_threadSubject}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_SUBJECT</td>
-	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//div[contains(@class,'h4') and contains(.,'${key_threadSubject}')]</td>
+	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h4[contains(.,'${key_threadSubject}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_SUBJECT_2</td>
-	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//div[contains(@class,'h4') and contains(.,'${key_threadSubject}')])[2]</td>
+	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h4[contains(.,'${key_threadSubject}')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_ANSWER_1</td>
-	<td>//div[contains(@class,'h4') and contains(.,'Answer')]</td>
+	<td>//h4[contains(.,'Answer')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -156,7 +156,7 @@
 
 <tr>
 	<td>DIAGRAM_PRODUCT_DETAIL_NAME</td>
-	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'h4') and contains(text(),'${key_productName}')]</td>
+	<td>//div[contains(@class,'portlet-content')]//h4[contains(text(),'${key_productName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -184,7 +184,7 @@
 </tr>
 <tr>
 	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU</td>
-	<td>//div[contains(@class,'diagram-tooltip')]//div[contains(@class,'h4')]//a[contains(text(),'${key_sku}')]</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//h4//a[contains(text(),'${key_sku}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,7 +209,7 @@
 </tr>
 <tr>
 	<td>DIAGRAM_PRODUCT_TOOLTIP_UNLINKED_PRODUCT_NAME</td>
-	<td>//div[contains(@class,'diagram-tooltip')]//div[contains(@class,'h4') and contains(text(),'${key_productName}')]</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//h4[contains(text(),'${key_productName}')]</td>
 	<td></td>
 </tr>
 

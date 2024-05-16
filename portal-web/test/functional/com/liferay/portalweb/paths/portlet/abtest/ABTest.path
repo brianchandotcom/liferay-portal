@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>CONNECTED_NOT_SYNC_BUTTON</td>
-	<td>//div[div[h1[contains(.,'Tests')]]] //div[contains(.,'Sync to Liferay Analytics Cloud')]</td>
+	<td>//div[div[h1[contains(.,'Tests')]]] //h4[contains(.,'Sync to Liferay Analytics Cloud')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>NO_HAVE_HISTORY_AB_TEST_MESSAGE</td>
-	<td>//div[@class="text-center"]//div[text()="There is no test history for this experience."]</td>
+	<td>//div[@class="text-center"]//h4[text()="There is no test history for this experience."]</td>
 	<td></td>
 </tr>
 <tr>

@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>DATASET_SEARCH_FIELD_BY_LABEL</td>
-	<td>//div[contains(@class,'h4') and normalize-space(text())='${key_label}']//following::input[@aria-label='Search']</td>
+	<td>//h4[normalize-space(text())='${key_label}']//following::input[@aria-label='Search']</td>
 	<td></td>
 </tr>
 <tr>

@@ -86,7 +86,7 @@
 
 <tr>
 	<td>MESSAGE_BOARDS_THREAD_TITLE</td>
-	<td>//div[@title='${key_assetTitle}']</td>
+	<td>//h4[@title='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 <tr>

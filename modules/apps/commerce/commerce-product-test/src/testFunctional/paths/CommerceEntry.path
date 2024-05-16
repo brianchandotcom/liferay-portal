@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ACCOUNT_ORDER_DEFAULTS_ENTRY</td>
-	<td>//div[contains(.,'${key_defaultOption}')][@class='sheet-section']//div[@class='sheet-text']/following-sibling::span | //div[contains(.,'${key_defaultOption}')][@class='sheet-section']//div[@class='sheet-text']/following-sibling::div[contains(@class,'h4')]</td>
+	<td>//div[contains(.,'${key_defaultOption}')][@class='sheet-section']//div[@class='sheet-text']/following-sibling::span | //div[contains(.,'${key_defaultOption}')][@class='sheet-section']//div[@class='sheet-text']/following-sibling::h4</td>
 	<td></td>
 </tr>
 <tr>
@@ -367,7 +367,7 @@
 </tr>
 <tr>
 	<td>OVERRIDE_DEFAULT_DISPLAY_PAGE</td>
-	<td>//div[contains(@class,'h4') and contains(.,'Override Default')]//..//div[contains(@class,'dnd-tr')][contains(.,'${key_entryName}') and contains(.,'${key_layout}')]</td>
+	<td>//h4[contains(.,'Override Default')]//..//div[contains(@class,'dnd-tr')][contains(.,'${key_entryName}') and contains(.,'${key_layout}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -402,7 +402,7 @@
 </tr>
 <tr>
 	<td>ADD_BUTTON</td>
-	<td>//*[@data-qa-id='addButton'] | //a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button/span[contains(@class,'icon-plus')] | //button[@type='button']/*[contains(@class,'icon-plus')] | //div[contains(@class,'section-header') and contains (.,'Options')]/button</td>
+	<td>//*[@data-qa-id='addButton'] | //a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button/span[contains(@class,'icon-plus')] | //button[@type='button']/*[contains(@class,'icon-plus')] | //h4[contains(@class,'section-header') and contains (.,'Options')]/button</td>
 	<td></td>
 </tr>
 <tr>
@@ -837,12 +837,12 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td'][2][contains(.,'${key_entryDescription}')]</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td'][2][contains(.,'${key_entryDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ENTRY_NAME</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -852,7 +852,7 @@
 </tr>
 <tr>
 	<td>ELIGIBILITY_CARD_TITLE</td>
-	<td>//div/div[contains(@class,'h4') and contains(.,'${key_eligibilityCardTitle}')]</td>
+	<td>//div/h4[contains(.,'${key_eligibilityCardTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -862,7 +862,7 @@
 </tr>
 <tr>
 	<td>ELIGIBILITY_RELATION_FIELD_CLEAR_BUTTON</td>
-	<td>//div[div[contains(@class,'h4') and contains(.,'${key_eligibilityCardTitle}')]]//input[@type='text']/..//span[contains(@class,'input-group-inset-item')]//button[contains(@class,'btn')]</td>
+	<td>//div[h4[contains(.,'${key_eligibilityCardTitle}')]]//input[@type='text']/..//span[contains(@class,'input-group-inset-item')]//button[contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -892,12 +892,12 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_STATUS</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td']/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td']/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ENTRY_NAME_NOT_CONTAINS</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[(text()='${key_entryName}')]</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[(text()='${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -907,7 +907,7 @@
 </tr>
 <tr>
 	<td>TABLE_ELIGIBILITY_ENTRY</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div[@class='dnd-td'][contains(.,'${key_entryName}')]</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div[@class='dnd-td'][contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -922,12 +922,12 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_DELETE_BUTTON</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/*[contains(.,'Delete')] | //div[contains(.,'${key_table}')]//div[@class='dnd-tr'][contains(.,'${key_entryName}')]//*[contains(text(),'Delete')]</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/*[contains(.,'Delete')] | //div[contains(.,'${key_table}')]//div[@class='dnd-tr'][contains(.,'${key_entryName}')]//*[contains(text(),'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TABLE_ENTRY_EDIT_BUTTON</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//..//div/a[text()='${key_entryName}']//..//..//../div/*[contains(.,'Edit')] | //div[contains(.,'${key_table}')]//div[@class='dnd-tr']//*[text()='${key_entryName}']/..//*[contains(text(),'Edit')]</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[text()='${key_entryName}']//..//..//../div/*[contains(.,'Edit')] | //div[contains(.,'${key_table}')]//div[@class='dnd-tr']//*[text()='${key_entryName}']/..//*[contains(text(),'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1094,7 +1094,7 @@
 
 <tr>
 	<td>ADD_RELATION_FIELD</td>
-	<td>//div[div[contains(@class,'h4') and contains(.,'${key_title}')]]//input[@type='text']</td>
+	<td>//div[h4[contains(.,'${key_title}')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -1109,7 +1109,7 @@
 </tr>
 <tr>
 	<td>ADD_RELATION_FIELD_SELECT</td>
-	<td>//div[div[contains(@class,'h4') and contains(.,'${key_title}')]]//td[p[text()='${key_entryName}']]/..//button[contains(.,'Select')]</td>
+	<td>//div[h4[contains(.,'${key_title}')]]//td[p[text()='${key_entryName}']]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1124,7 +1124,7 @@
 </tr>
 <tr>
 	<td>ADD_RELATION_CLEAN_INPUT_BUTTON</td>
-	<td>//div[div[contains(@class,'h4') and contains(.,'${key_title}')]]//span</td>
+	<td>//div[h4[contains(.,'${key_title}')]]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -1178,7 +1178,7 @@
 
 <tr>
 	<td>IMAGES_PLUS_BUTTON</td>
-	<td>//div[contains(@class,'h4') and contains(.,'Images')]//..//button[contains(@class,'btn-primary')]</td>
+	<td>//h4[contains(.,'Images')]//..//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1206,7 +1206,7 @@
 
 <tr>
 	<td>ATTACHMENT_PLUS_BUTTON</td>
-	<td>//div[contains(@class,'h4') and contains(.,'Attachments')]//..//button[contains(@class,'btn-primary')]</td>
+	<td>//h4[contains(.,'Attachments')]//..//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 
@@ -1254,12 +1254,12 @@
 </tr>
 <tr>
 	<td>ORDER_PAYMENT_STATUS</td>
-	<td>//div[contains(@class,'h4') and contains(.,'Payment Status')]//..//div//span[contains(@class,'label')]//*[contains(.,'${paymentStatus}')]</td>
+	<td>//h4[contains(.,'Payment Status')]//..//div//span[contains(@class,'label')]//*[contains(.,'${paymentStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_PAYMENT_METHOD</td>
-	<td>//div[contains(@class,'h4') and contains(.,'Payment Method')]//..//div//span[contains(@class,'payment-name') and contains(.,'${paymentMethod}')]</td>
+	<td>//h4[contains(.,'Payment Method')]//..//div//span[contains(@class,'payment-name') and contains(.,'${paymentMethod}')]</td>
 	<td></td>
 </tr>
 
@@ -1267,7 +1267,7 @@
 
 <tr>
 	<td>SEARCH_TABLES_CHANNELS</td>
-	<td>//div[contains(@class,'h4') and contains(text(),'${key_nameTableChannels}')]</td>
+	<td>//h4[contains(text(),'${key_nameTableChannels}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1300,7 +1300,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAIL_VIEW_OPTION</td>
-	<td>//div[contains(@class,'card d-flex')]//div[contains(@class,'h4') and contains(.,'Option')]/..//a</td>
+	<td>//div[contains(@class,'card d-flex')]//h4[contains(.,'Option')]/..//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -1310,7 +1310,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAIL_CARD_HEADER</td>
-	<td>//div[contains(@class,'card d-flex')]//div[contains(@class,'h4') and contains(.,'${key_cardName}')]</td>
+	<td>//div[contains(@class,'card d-flex')]//h4[contains(.,'${key_cardName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1320,37 +1320,37 @@
 </tr>
 <tr>
 	<td>PAYMENT_SUBSCRIPTION_TOGGLE</td>
-	<td>//div[contains(@class,'h4') and contains(text(), 'Payment Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
+	<td>//h4[contains(text(), 'Payment Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAYMENT_SUBSCRIPTION_TOGGLE_ACTIVE</td>
-	<td>//div[contains(@class,'h4') and contains(text(), 'Payment Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]//following::div[contains(@class,'collapse show')]</td>
+	<td>//h4[contains(text(), 'Payment Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]//following::div[contains(@class,'collapse show')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELIVERY_SUBSCRIPTION_TOGGLE</td>
-	<td>//div[contains(@class,'h4') and contains(text(), 'Delivery Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
+	<td>//h4[contains(text(), 'Delivery Subscription')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTION_TOGGLE</td>
-	<td>//div[contains(@class,'h4') and contains(text(), '${key_subscriptionName}')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
+	<td>//h4[contains(text(), '${key_subscriptionName}')]//following-sibling::span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTION_FIELD_LABEL</td>
-	<td>//div[contains(@class,'h4') and contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//select</td>
+	<td>//h4[contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//select</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTION_FIELD_LABEL_N</td>
-	<td>xpath=(//div[contains(@class,'h4') and contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//select)[${key_indexNumber}]</td>
+	<td>xpath=(//h4[contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//select)[${key_indexNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIPTION_TYPE_IN_LENGTH</td>
-	<td>//div[contains(@class,'h4') and contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//span</td>
+	<td>//h4[contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -1423,7 +1423,7 @@
 
 <tr>
 	<td>DELETE_OPTION_BUTTON</td>
-	<td>//div[contains(@class,'h4') and contains(.,'Option')]//..//button[contains(.,'Delete')]</td>
+	<td>//h4[contains(.,'Option')]//..//button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1538,7 +1538,7 @@
 </tr>
 <tr>
 	<td>ENTRY_SUBSCRIPTIONS</td>
-	<td>//div[contains(@class,'h4') and contains(text(),'${key_entryName}')]</td>
+	<td>//h4[contains(text(),'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1617,7 +1617,7 @@
 
 <tr>
 	<td>CHECK_SPECIFIC_TOGGLE_SWITCH</td>
-	<td>//div[contains(@class,'h4') and contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]//..//..//..//div[contains(@class,'collapse show')]</td>
+	<td>//h4[contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]//..//..//..//div[contains(@class,'collapse show')]</td>
 	<td></td>
 </tr>
 

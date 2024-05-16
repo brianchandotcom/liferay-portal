@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>DETAIL_FIELD_NAME</td>
-	<td>//div[contains(@class,'dialect-text')]//div[contains(@class,'h4') and contains(text(), '${key_name}')]</td>
+	<td>//div[contains(@class,'dialect-text')]//h4[contains(text(), '${key_name}')]</td>
 	<td></td>
 </tr>
 <tr>

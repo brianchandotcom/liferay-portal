@@ -58,7 +58,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_ICON</td>
-	<td>//*[@data-qa-id='rowItemContent']//div[contains(@title,'${key_userName}')]/../../div/div[contains(@class,'user-icon')]</td>
+	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]/../../div/div[contains(@class,'user-icon')]</td>
 	<td></td>
 </tr>
 <tr>

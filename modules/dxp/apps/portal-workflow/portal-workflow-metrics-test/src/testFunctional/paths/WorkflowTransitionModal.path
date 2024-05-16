@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>TASK_PANEL</td>
-	<td>//div[@class='panel']//div[contains(@class,'h4') and text()='${key_taskName}']</td>
+	<td>//div[@class='panel']//h4[text()='${key_taskName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -22,12 +22,12 @@
 </tr>
 <tr>
 	<td>TRANSITION_TO_BUTTON</td>
-	<td>//div[contains(@class,'h4') and text()='${key_taskName}']/parent::div/following-sibling::div[1]//select</td>
+	<td>//h4[text()='${key_taskName}']/parent::div/following-sibling::div[1]//select</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TRANSITION_TO_OPTION</td>
-	<td>//div[contains(@class,'h4') and text()='${key_taskName}']/parent::div/following-sibling::div[1]//select//option[@value='${key_transitionOption}']</td>
+	<td>//h4[text()='${key_taskName}']/parent::div/following-sibling::div[1]//select//option[@value='${key_transitionOption}']</td>
 	<td></td>
 </tr>
 <tr>

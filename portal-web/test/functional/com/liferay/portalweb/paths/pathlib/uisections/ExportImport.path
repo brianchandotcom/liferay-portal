@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>VALIDATION_ERROR_MESSAGE_HEADER</td>
-	<td>//div[contains(@class,'upload-error-message')]</td>
+	<td>//h4[@class='upload-error-message']</td>
 	<td></td>
 </tr>
 <tr>

@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>NO_RESULTS_TITLE</td>
-	<td>//div[contains(@class,'no-results-title') and contains(.,'${key_cardTitle}')]</td>
+	<td>//h4[@class='no-results-title' and contains(.,'${key_cardTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

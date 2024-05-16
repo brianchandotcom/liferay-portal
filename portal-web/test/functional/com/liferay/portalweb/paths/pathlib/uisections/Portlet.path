@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>H4_COMPONENT_TITLE</td>
-	<td>//div[contains(@class,'component-title') and contains(@class,'h4')]/span</td>
+	<td>//h4[@class='component-title']/span</td>
 	<td></td>
 </tr>
 <tr>

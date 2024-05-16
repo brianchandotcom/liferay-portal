@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>APPLICATION_ID</td>
-	<td>//div[@id='content-agent-text-your-application']</td>
+	<td>//h4[@id='content-agent-text-your-application']</td>
 	<td></td>
 </tr>
 <tr>

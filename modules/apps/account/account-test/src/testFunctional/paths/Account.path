@@ -141,7 +141,7 @@
 </tr>
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY_INACTIVE_ICON</td>
-	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::div[contains(@class,'h4')]/strong[contains(@style,'orange')]</td>
+	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::h4/strong[contains(@style,'orange')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,12 +151,12 @@
 </tr>
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_ENTRY</td>
-	<td>//a[@data-type='payment-terms']/../../preceding-sibling::div[contains(@class,'h4')]</td>
+	<td>//a[@data-type='payment-terms']/../../preceding-sibling::h4</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_ENTRY_INACTIVE_ICON</td>
-	<td>//a[@data-type='payment-terms']/../../preceding-sibling::div[contains(@class,'h4')]/strong[contains(@style,'orange')]</td>
+	<td>//a[@data-type='payment-terms']/../../preceding-sibling::h4/strong[contains(@style,'orange')]</td>
 	<td></td>
 </tr>
 <tr>

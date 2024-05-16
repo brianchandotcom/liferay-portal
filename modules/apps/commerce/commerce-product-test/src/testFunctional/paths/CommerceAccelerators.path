@@ -352,7 +352,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_SUBSCRIPTION_INFO</td>
-	<td>//div[@contains(@class,'commerce-subscription-info')]/div/div[contains(.,'${key_subscriptionName} Subscription')]/..//span</td>
+	<td>//h4[contains(@class,'commerce-subscription-info')]/div/div[contains(.,'${key_subscriptionName} Subscription')]/..//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -796,7 +796,7 @@
 </tr>
 <tr>
 	<td>MINI_CART_SUMMARY_TABLE_TOTAL</td>
-	<td>//div[contains(@class,'summary-table')]//*[contains(.,'Total')]/following::div[contains(@class,'h4')]</td>
+	<td>//div[contains(@class,'summary-table')]//*[contains(.,'Total')]/following::h4</td>
 	<td></td>
 </tr>
 <tr>

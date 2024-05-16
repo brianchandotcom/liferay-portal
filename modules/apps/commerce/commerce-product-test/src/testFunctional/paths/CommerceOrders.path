@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_EDIT_BUTTON</td>
-	<td>//div[contains(@class,'h4') and contains(text(),'${key_titleName}')]/a[contains(text(),'Edit')]</td>
+	<td>//h4[contains(text(),'${key_titleName}')]/a[contains(text(),'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PAYMENT_EDIT_BUTTON</td>
-	<td>//div[contains(@class,'h4') and contains(.,'${key_table}')]//a[contains(.,'${key_title}')]</td>
+	<td>//h4[contains(.,'${key_table}')]//a[contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -365,7 +365,7 @@
 </tr>
 <tr>
 	<td>ORDER_VIEW_SUMMARY_FIELDS_TOTAL</td>
-	<td>//div[contains(@class,'summary-table')]//*[contains(text(),'${key_label}')]/..//following-sibling::div[1]//div[contains(@class,'h4')]</td>
+	<td>//div[contains(@class,'summary-table')]//*[contains(text(),'${key_label}')]/..//following-sibling::div[1]//h4</td>
 	<td></td>
 </tr>
 </tbody>

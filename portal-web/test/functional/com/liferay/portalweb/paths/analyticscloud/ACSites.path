@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>TOP_VISITED_PAGES</td>
-	<td>//*[contains(text(),'${key_entryName}')]/ancestor::tr//td//div[contains(text(),'${key_resultNumber}')]</td>
+	<td>//*[contains(text(),'${key_entryName}')]/ancestor::tr//td//h4[contains(text(),'${key_resultNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

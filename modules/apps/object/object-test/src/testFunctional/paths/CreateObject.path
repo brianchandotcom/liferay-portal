@@ -82,7 +82,7 @@
 	</tr>
 	<tr>
 		<td>DISABLED_TAB_TYPE_RELATIONSHIPS</td>
-		<td>//div[@class = 'layout-tab__tab-types disabled']//div[contains(@class,'layout-tab__tab-types__title') and contains(text(),'Relationships')]</td>
+		<td>//div[@class = 'layout-tab__tab-types disabled']//h4[@class = 'layout-tab__tab-types__title' and contains(text(),'Relationships')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -1182,7 +1182,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_FILE_NAME</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(.,'${key_uploadFileName}')] | //div//label[text()='${key_fieldName}']/..//div[contains(.,'Document_1.jpg')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//h4[contains(.,'${key_uploadFileName}')] | //div//label[text()='${key_fieldName}']/..//h4[contains(.,'Document_1.jpg')]</td>
 	<td></td>
 </tr>
 <tr>

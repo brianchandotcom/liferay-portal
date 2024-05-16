@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>MEMBERSHIP_TYPE</td>
-	<td>//div[contains(@class,'sidebar-header') and contains(.,'Membership Type')]/div[contains(@class,'h4')]</td>
+	<td>//div[contains(@class,'sidebar-header') and contains(.,'Membership Type')]/h4</td>
 	<td></td>
 </tr>
 <tr>

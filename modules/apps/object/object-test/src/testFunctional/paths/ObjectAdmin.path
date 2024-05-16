@@ -372,7 +372,7 @@
 	</tr>
 	<tr>
 		<td>TAB_TYPE</td>
-		<td>//div[@class = 'form-group']//div[contains(@class,'layout-tab__tab-types__title') and contains(text(),'${key_type}')]</td>
+		<td>//div[@class = 'form-group']//h4[@class = 'layout-tab__tab-types__title' and contains(text(),'${key_type}')]</td>
 		<td></td>
 	</tr>
 	<tr>

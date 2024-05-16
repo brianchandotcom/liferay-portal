@@ -96,7 +96,7 @@
 
 <tr>
 	<td>CHILD_PAGE_HEADER</td>
-	<td>//div[contains(@class,'container-fluid')]//div[contains(@class,'h4')]</td>
+	<td>//div[contains(@class,'container-fluid')]//h4</td>
 	<td></td>
 </tr>
 <tr>
@@ -175,7 +175,7 @@
 
 <tr>
 	<td>DESCRIPTIVE_VIEW_ENTRY_TITLE</td>
-	<td>//*[@data-qa-id='row']/*[@data-qa-id='rowItemContent']/div[contains(.,'${key_wikiPageTitle}')]/a</td>
+	<td>//*[@data-qa-id='row']/*[@data-qa-id='rowItemContent']/h4[contains(.,'${key_wikiPageTitle}')]/a</td>
 	<td></td>
 </tr>
 <tr>

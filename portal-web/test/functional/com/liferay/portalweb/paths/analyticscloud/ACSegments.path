@@ -250,7 +250,7 @@
 </tr>
 <tr>
 	<td>SEGMENT_BREAKDOWN_CARD</td>
-	<td>//div[contains(@class,'distribution-card')]//*[@class='description']/div[contains(@class,'h4')]</td>
+	<td>//div[contains(@class,'distribution-card')]//*[@class='description']/h4</td>
 	<td></td>
 </tr>
 <tr>
@@ -383,7 +383,7 @@
 </tr>
 <tr>
 	<td>NO_MEMBER_TITLE</td>
-	<td>//div[contains(@class,'no-results-title')]</td>
+	<td>//h4[@class='no-results-title']</td>
 	<td></td>
 </tr>
 <tr>

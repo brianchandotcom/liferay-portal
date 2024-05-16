@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENTS_SAVED_STATUS</td>
-	<td>//div[contains(.,'All files ready to be saved')]</td>
+	<td>//h4[contains(.,'All files ready to be saved')]</td>
 	<td></td>
 </tr>
 <tr>

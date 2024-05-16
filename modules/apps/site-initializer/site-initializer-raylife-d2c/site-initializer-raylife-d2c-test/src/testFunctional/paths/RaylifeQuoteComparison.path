@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>BUTTON_PURCHASE_THIS_POLICY</td>
-	<td>//div[contains(@class,'h4') and contains(text(),'${policy}')]//..//..//button[contains(text(),'PURCHASE THIS POLICY')]</td>
+	<td>//h4[contains(text(),'${policy}')]//..//..//button[contains(text(),'PURCHASE THIS POLICY')]</td>
 	<td></td>
 </tr>
 <tr>

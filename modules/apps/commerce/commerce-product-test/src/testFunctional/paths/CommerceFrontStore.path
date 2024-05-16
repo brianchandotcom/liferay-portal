@@ -277,7 +277,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_REPLACEMENTS_SKU</td>
-	<td>//div[contains(@class,'h4') and contains(text(),'Replacements')]/..//div[contains(@class,'content-wrapper')]//a[text()='${key_productSku}']</td>
+	<td>//h4[contains(text(),'Replacements')]/..//div[contains(@class,'content-wrapper')]//a[text()='${key_productSku}']</td>
 	<td></td>
 </tr>
 <tr>

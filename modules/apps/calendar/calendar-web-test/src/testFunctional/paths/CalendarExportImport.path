@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>UPLOAD_ERROR_MESSAGE</td>
-	<td>//div[@class='upload-list']//[@class='upload-error-message']</td>
+	<td>//div[@class='upload-list']//h4[@class='upload-error-message']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>CONTENT_DUPLICATE</td>
-	<td>//dl[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')][2]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/div[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//dl[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')][2]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>

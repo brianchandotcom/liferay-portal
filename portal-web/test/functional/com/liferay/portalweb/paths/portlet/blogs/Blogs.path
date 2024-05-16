@@ -45,7 +45,7 @@
 
 <tr>
 	<td>DESCRIPTIVE_VIEW_ENTRY_TITLE</td>
-	<td>//div[contains(@id,'blogEntriesSearchContainer')]//*[@data-qa-id='rowItemContent']/div[contains(@class,'h4')]/a[contains(.,'${key_entryTitle}')]</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

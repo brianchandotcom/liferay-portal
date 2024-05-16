@@ -35,6 +35,12 @@ public class RememberMeTokenLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RememberMeTokenLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static RememberMeToken addRememberMeToken(
+		long companyId, long userId, java.util.Date expirationDate) {
+
+		return getService().addRememberMeToken(
+			companyId, userId, expirationDate);
+	}
 
 	/**
 	 * Adds the remember me token to the database. Also notifies the appropriate model listeners.
@@ -50,6 +56,10 @@ public class RememberMeTokenLocalServiceUtil {
 		RememberMeToken rememberMeToken) {
 
 		return getService().addRememberMeToken(rememberMeToken);
+	}
+
+	public static void checkUserExpiredRememberMeTokens(long userId) {
+		getService().checkUserExpiredRememberMeTokens(userId);
 	}
 
 	/**
@@ -276,6 +286,10 @@ public class RememberMeTokenLocalServiceUtil {
 		return getService().getRememberMeTokensCount();
 	}
 
+	public static List<RememberMeToken> getUserRememberMeTokens(long userId) {
+		return getService().getUserRememberMeTokens(userId);
+	}
+
 	/**
 	 * Updates the remember me token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -290,6 +304,13 @@ public class RememberMeTokenLocalServiceUtil {
 		RememberMeToken rememberMeToken) {
 
 		return getService().updateRememberMeToken(rememberMeToken);
+	}
+
+	public static com.liferay.portal.kernel.util.KeyValuePair validateToken(
+			long rememberMeTokenId, String token)
+		throws PortalException {
+
+		return getService().validateToken(rememberMeTokenId, token);
 	}
 
 	public static RememberMeTokenLocalService getService() {

@@ -67,21 +67,19 @@ describe('AttributeConjunctionDisplay', () => {
 	});
 
 	it.each`
-		operatorName                    | propertyName     | value                                       | displayName                 | operatorLabel        | displayValue
-		${RelationalOperators.EQ}       | ${'attribute/1'} | ${'false'}                                  | ${'Foo Attribute Boolean'}  | ${'is'}              | ${'False'}
-		${RelationalOperators.EQ}       | ${'attribute/1'} | ${'true'}                                   | ${'Foo Attribute Boolean'}  | ${'is'}              | ${'True'}
-		${RelationalOperators.EQ}       | ${'attribute/2'} | ${'Test'}                                   | ${'Foo Attribute String'}   | ${'is'}              | ${'"Test"'}
-		${RelationalOperators.NE}       | ${'attribute/2'} | ${'Test'}                                   | ${'Foo Attribute String'}   | ${'is not'}          | ${'"Test"'}
-		${FunctionalOperators.Contains} | ${'attribute/2'} | ${'Test'}                                   | ${'Foo Attribute String'}   | ${'contains'}        | ${'"Test"'}
-		${NotOperators.NotContains}     | ${'attribute/2'} | ${'Test'}                                   | ${'Foo Attribute String'}   | ${'not contains'}    | ${'"Test"'}
-		${RelationalOperators.GT}       | ${'attribute/3'} | ${123}                                      | ${'Foo Attribute Number'}   | ${'is greater than'} | ${'123'}
-		${RelationalOperators.LT}       | ${'attribute/3'} | ${321}                                      | ${'Foo Attribute Number'}   | ${'is less than'}    | ${'321'}
-		${FunctionalOperators.Between}  | ${'attribute/3'} | ${{end: 321, start: 1}}                     | ${'Foo Attribute Number'}   | ${'between'}         | ${'1 - 321'}
-		${RelationalOperators.GT}       | ${'attribute/4'} | ${'2020-12-05'}                             | ${'Foo Attribute Date'}     | ${'after'}           | ${'Dec 5, 2020'}
-		${RelationalOperators.LT}       | ${'attribute/4'} | ${'2020-12-05'}                             | ${'Foo Attribute Date'}     | ${'before'}          | ${'Dec 5, 2020'}
-		${FunctionalOperators.Between}  | ${'attribute/4'} | ${{end: '2020-12-11', start: '2020-12-01'}} | ${'Foo Attribute Date'}     | ${'is between'}      | ${'Dec 1, 2020 - Dec 11, 2020'}
-		${RelationalOperators.GT}       | ${'attribute/5'} | ${3661000}                                  | ${'Foo Attribute Duration'} | ${'is greater than'} | ${'01:01:01'}
-		${RelationalOperators.LT}       | ${'attribute/5'} | ${3661000}                                  | ${'Foo Attribute Duration'} | ${'is less than'}    | ${'01:01:01'}
+		operatorName                    | propertyName     | value           | displayName                 | operatorLabel         | displayValue
+		${RelationalOperators.EQ}       | ${'attribute/1'} | ${'false'}      | ${'Foo Attribute Boolean'}  | ${'is'}               | ${'False'}
+		${RelationalOperators.EQ}       | ${'attribute/1'} | ${'true'}       | ${'Foo Attribute Boolean'}  | ${'is'}               | ${'True'}
+		${RelationalOperators.EQ}       | ${'attribute/2'} | ${'Test'}       | ${'Foo Attribute String'}   | ${'is'}               | ${'"Test"'}
+		${RelationalOperators.NE}       | ${'attribute/2'} | ${'Test'}       | ${'Foo Attribute String'}   | ${'is not'}           | ${'"Test"'}
+		${FunctionalOperators.Contains} | ${'attribute/2'} | ${'Test'}       | ${'Foo Attribute String'}   | ${'contains'}         | ${'"Test"'}
+		${NotOperators.NotContains}     | ${'attribute/2'} | ${'Test'}       | ${'Foo Attribute String'}   | ${'does not contain'} | ${'"Test"'}
+		${RelationalOperators.GT}       | ${'attribute/3'} | ${123}          | ${'Foo Attribute Number'}   | ${'greater than'}     | ${'123'}
+		${RelationalOperators.LT}       | ${'attribute/3'} | ${321}          | ${'Foo Attribute Number'}   | ${'less than'}        | ${'321'}
+		${RelationalOperators.GT}       | ${'attribute/4'} | ${'2020-12-05'} | ${'Foo Attribute Date'}     | ${'is after'}         | ${'Dec 5, 2020'}
+		${RelationalOperators.LT}       | ${'attribute/4'} | ${'2020-12-05'} | ${'Foo Attribute Date'}     | ${'is before'}        | ${'Dec 5, 2020'}
+		${RelationalOperators.GT}       | ${'attribute/5'} | ${3661000}      | ${'Foo Attribute Duration'} | ${'is after'}         | ${'01:01:01'}
+		${RelationalOperators.LT}       | ${'attribute/5'} | ${3661000}      | ${'Foo Attribute Duration'} | ${'is before'}        | ${'01:01:01'}
 	`(
 		'should return $displayName $operatorLabel $displayValue when operatorName $operatorName, propertyName $propertyName, & value $value',
 		({

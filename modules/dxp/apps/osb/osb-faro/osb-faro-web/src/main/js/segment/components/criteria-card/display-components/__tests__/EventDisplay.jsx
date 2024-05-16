@@ -83,6 +83,11 @@ describe('EventDisplay', () => {
 									value: '123'
 								}),
 								Map({
+									operatorName: FunctionalOperators.Contains,
+									propertyName: 'attribute/1',
+									value: 'Test String'
+								}),
+								Map({
 									operatorName: RelationalOperators.GT,
 									propertyName: 'day',
 									value: TimeSpans.Last24Hours

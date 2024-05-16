@@ -24,7 +24,7 @@ describe('AttributeConjunctionInput', () => {
 				valid={{attribute: true, attributeValue: true}}
 			/>
 		);
-		fireEvent.click(getByText('displayName-1'));
+		fireEvent.click(getAllByText('displayName-1')[0]);
 
 		expect(getByText('displayName-0')).toBeTruthy();
 		expect(getAllByText('displayName-1')[1]).toBeTruthy();

@@ -13,7 +13,7 @@ public interface CompanyIndexListener {
 	public default void onAfterCreate(String indexName) {
 	}
 
-	public default void onBeforeRemove(String indexName) {
+	public default void onBeforeDelete(String indexName) {
 	}
 
 }

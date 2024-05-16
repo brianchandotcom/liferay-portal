@@ -21,6 +21,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Edward Han
@@ -198,6 +200,11 @@ public class ExpandoConverterUtil {
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
 			return StringUtil.merge(
 				ArrayUtil.toStringArray((Date[])attribute, _getDateFormat()));
+		}
+		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			Map<Locale, String> values = (Map<Locale, String>)attribute;
+
+			return values.get(LocaleUtil.getDefault());
 		}
 
 		return attribute.toString();

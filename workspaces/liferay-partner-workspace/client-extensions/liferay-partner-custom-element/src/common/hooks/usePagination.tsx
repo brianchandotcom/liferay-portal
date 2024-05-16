@@ -33,8 +33,6 @@ export default function usePagination(urlParams?: URLSearchParams) {
 		activeDelta: pageSize,
 		activePage: page,
 		deltas,
-		maxItems: -1,
-		maxItemsSF: 200,
 		onDeltaChange: setPageSize,
 		onPageChange: setPage,
 	};

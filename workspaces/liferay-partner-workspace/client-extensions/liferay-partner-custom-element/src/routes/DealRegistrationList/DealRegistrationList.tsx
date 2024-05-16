@@ -37,6 +37,7 @@ import {
 	currentFiscalYearStart,
 	previousFiscalYearStart,
 } from '../../common/utils/constants/filters';
+import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import setURLParams from '../../common/utils/setURLParams';
@@ -95,7 +96,7 @@ const DealRegistrationList = () => {
 
 	const {data: dataCSV} = useGetListItemsFromDealRegistration(
 		pagination.activePage,
-		pagination.maxItemsSF,
+		maxPagination.MAX_ITEMS_SF.size,
 		setURLParams({filter: filtersTerm, urlParams})
 	);
 

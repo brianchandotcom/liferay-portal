@@ -31,6 +31,7 @@ import useQueryParams from '../../common/hooks/useQueryParams';
 import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Filters} from '../../common/utils/constants/filters';
+import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import setURLParams from '../../common/utils/setURLParams';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
@@ -80,7 +81,7 @@ const MDFClaimList = () => {
 
 	const {data: dataCSV} = useGetListItemsFromMDFClaims(
 		pagination.activePage,
-		pagination.maxItems,
+		maxPagination.MAX_ITEMS.size,
 		setURLParams({filter: filtersTerm, urlParams})
 	);
 

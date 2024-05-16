@@ -33,6 +33,7 @@ import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import {Filters} from '../../common/utils/constants/filters';
+import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import setURLParams from '../../common/utils/setURLParams';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
@@ -84,7 +85,7 @@ const MDFRequestList = () => {
 	const {data: dataCSV} = useGetListItemsFromMDFRequests(
 		true,
 		pagination.activePage,
-		pagination.maxItems,
+		maxPagination.MAX_ITEMS.size,
 		setURLParams({
 			filter: filtersTerm,
 			nestedFields: 'mdfReqToMDFClms',

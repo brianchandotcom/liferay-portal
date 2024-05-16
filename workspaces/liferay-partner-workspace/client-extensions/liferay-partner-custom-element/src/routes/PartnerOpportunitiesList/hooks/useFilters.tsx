@@ -7,6 +7,7 @@ import {useCallback, useEffect, useState} from 'react';
 
 import {Filters} from '../../../common/utils/constants/filters';
 import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
+import getCloseDateFilterTerm from '../utils/constants/getCloseDateFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 
 export default function useFilters(
@@ -46,6 +47,7 @@ export default function useFilters(
 
 	useEffect(() => {
 		let initialFilter = ``;
+		let hasFilter = false;
 
 		if (opportunitiesInitialFilter) {
 			initialFilter = initialFilter
@@ -59,8 +61,44 @@ export default function useFilters(
 				: getSearchFilterTerm(filters.searchTerm);
 		}
 
-		setFilterTerm(initialFilter);
-	}, [filters.searchTerm, opportunitiesInitialFilter, setFilters]);
+		if (
+			filters.closeDate?.dates?.endDate ||
+			filters.closeDate?.dates?.startDate
+		) {
+			hasFilter = true;
+			initialFilter = getCloseDateFilterTerm(
+				initialFilter,
+				filters.closeDate
+			);
+		}
 
-	return {filters, filtersTerm, onFilter};
+		if (filters.stage.value.length) {
+			hasFilter = true;
+
+			const stageFilter = filters.stage.value
+				.map((stage) => {
+					return `(stage eq '${stage}')`;
+				})
+				.join(' or ');
+
+			initialFilter = initialFilter
+				? initialFilter.concat(` and (${stageFilter})`)
+				: initialFilter.concat(`(${stageFilter})`);
+		}
+
+		onFilter({
+			hasValue: hasFilter,
+		});
+
+		setFilterTerm(initialFilter);
+	}, [
+		filters.closeDate,
+		filters.searchTerm,
+		filters.stage,
+		onFilter,
+		opportunitiesInitialFilter,
+		setFilters,
+	]);
+
+	return {filters, filtersTerm, onFilter, setFilters};
 }

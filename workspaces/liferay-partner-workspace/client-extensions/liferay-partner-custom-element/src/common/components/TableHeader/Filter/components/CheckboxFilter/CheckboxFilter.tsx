@@ -22,6 +22,11 @@ const CheckboxFilter = ({
 	const [checkedItems, setCheckedItems] = useState<string[]>(
 		initialCheckedItems ? initialCheckedItems : []
 	);
+
+	const [showAll, setShowAll] = useState<boolean>(false);
+
+	const itemsToShow = showAll ? availableItems : availableItems?.slice(0, 5);
+
 	const handleSelectedCheckbox = (checkedItem: string) => {
 		if (checkedItems.includes(checkedItem)) {
 			return setCheckedItems(
@@ -41,7 +46,7 @@ const CheckboxFilter = ({
 	return (
 		<div className="w-100">
 			<div className="pt-2 px-3">
-				{availableItems?.map((item: string, index: number) => (
+				{itemsToShow?.map((item, index) => (
 					<ClayCheckbox
 						checked={checkedItems.includes(item)}
 						key={`${item}-${index}`}
@@ -49,9 +54,18 @@ const CheckboxFilter = ({
 						onChange={() => handleSelectedCheckbox(item)}
 					/>
 				))}
+				{(availableItems?.length as number) > 5 && (
+					<a
+						className="font-weight-semi-bold text-neutral-8"
+						onClick={() => setShowAll(!showAll)}
+						style={{cursor: 'pointer'}}
+					>
+						{showAll ? 'Show less' : 'Show more'}
+					</a>
+				)}
 			</div>
 
-			<div className="mb-3 mt-2 mx-3">
+			<div className="mb-3 mt-3 mx-3">
 				<ClayButton
 					className="w-100"
 					onClick={() => updateFilters(checkedItems)}

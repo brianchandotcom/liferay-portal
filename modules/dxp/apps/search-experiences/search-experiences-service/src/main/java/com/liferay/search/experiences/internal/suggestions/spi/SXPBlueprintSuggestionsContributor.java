@@ -40,6 +40,8 @@ import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResults;
 import com.liferay.portal.search.suggestions.SuggestionsContributorResultsBuilderFactory;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -94,12 +96,9 @@ public class SXPBlueprintSuggestionsContributor
 
 		SearchResponse searchResponse = _searcher.search(
 			_getSearchRequest(
-				searchContext,
+				attributes, searchContext,
 				GetterUtil.getInteger(
-					suggestionsContributorConfiguration.getSize(), 5),
-				MapUtil.getString(
-					attributes, "sxpBlueprintExternalReferenceCode"),
-				MapUtil.getLong(attributes, "sxpBlueprintId")));
+					suggestionsContributorConfiguration.getSize(), 5)));
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
@@ -184,8 +183,8 @@ public class SXPBlueprintSuggestionsContributor
 	}
 
 	private SearchRequest _getSearchRequest(
-		SearchContext searchContext1, int size,
-		String sxpBlueprintExternalReferenceCode, long sxpBlueprintId) {
+		Map<String, Object> attributes, SearchContext searchContext1,
+		int size) {
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
@@ -198,27 +197,15 @@ public class SXPBlueprintSuggestionsContributor
 			size
 		).withSearchContext(
 			searchContext2 -> {
+				_setSearchExperiencesSearchContextAttributes(
+					attributes, searchContext1, searchContext2);
+
 				searchContext2.setAttribute(
 					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH,
 					searchContext1.getAttribute(
 						SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH));
 				searchContext2.setAttribute(
 					"search.contribute.tuning.rankings", Boolean.TRUE);
-				searchContext2.setAttribute(
-					"search.experiences.blueprint.external.reference.code",
-					sxpBlueprintExternalReferenceCode);
-				searchContext2.setAttribute(
-					"search.experiences.blueprint.id", sxpBlueprintId);
-				searchContext2.setAttribute(
-					"search.experiences.ip.address",
-					GetterUtil.getString(
-						searchContext1.getAttribute(
-							"search.experiences.ip.address")));
-				searchContext2.setAttribute(
-					"search.experiences.scope.group.id",
-					GetterUtil.getLong(
-						searchContext1.getAttribute(
-							"search.experiences.scope.group.id")));
 				searchContext2.setCompanyId(searchContext1.getCompanyId());
 				searchContext2.setGroupIds(searchContext1.getGroupIds());
 				searchContext2.setKeywords(searchContext1.getKeywords());
@@ -375,6 +362,36 @@ public class SXPBlueprintSuggestionsContributor
 	private String _replaceLanguageId(Locale locale, String fieldName) {
 		return StringUtil.replace(
 			fieldName, "${language_id}", LocaleUtil.toLanguageId(locale));
+	}
+
+	private void _setSearchExperiencesSearchContextAttributes(
+		Map<String, Object> attributes, SearchContext sourceSearchContext,
+		SearchContext targetSearchContext) {
+
+		MapUtil.isNotEmptyForEach(
+			attributes,
+			(key, value) -> {
+				if (key.startsWith("search.experiences.") && (value != null) &&
+					(value instanceof Serializable)) {
+
+					targetSearchContext.setAttribute(key, (Serializable)value);
+				}
+			});
+
+		MapUtil.isNotEmptyForEach(
+			sourceSearchContext.getAttributes(),
+			(key, value) -> {
+				if (key.startsWith("search.experiences.") && (value != null)) {
+					targetSearchContext.setAttribute(key, value);
+				}
+			});
+
+		targetSearchContext.setAttribute(
+			"search.experiences.blueprint.external.reference.code",
+			MapUtil.getString(attributes, "sxpBlueprintExternalReferenceCode"));
+		targetSearchContext.setAttribute(
+			"search.experiences.blueprint.id",
+			MapUtil.getLong(attributes, "sxpBlueprintId"));
 	}
 
 	private static final int _CHARACTER_THRESHOLD = 2;

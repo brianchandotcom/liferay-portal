@@ -1,4 +1,5 @@
 {
+	"enableIndexSearch": false,
 	"label": {
 		"en_US": "Testray Requirements Cases"
 	},

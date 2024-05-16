@@ -4,5 +4,16 @@
  */
 
 export const INITIAL_FILTER = {
+	closeDate: {
+		dates: {
+			endDate: '',
+			startDate: '',
+		},
+	},
+	hasValue: false,
 	searchTerm: '',
+	stage: {
+		name: 'Stage',
+		value: [] as string[],
+	},
 };

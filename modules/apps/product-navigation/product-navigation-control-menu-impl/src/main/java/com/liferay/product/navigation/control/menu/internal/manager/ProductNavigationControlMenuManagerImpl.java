@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -74,10 +73,9 @@ public class ProductNavigationControlMenuManagerImpl
 				String[] accessToControlMenuRoleIds =
 					menuAccessConfiguration.accessToControlMenuRoleIds();
 
-				for (Role role :
-						_roleLocalService.getUserRoles(
-							themeDisplay.getUserId())) {
+				User user = themeDisplay.getUser();
 
+				for (Role role : user.getAllRoles()) {
 					if (Objects.equals(
 							role.getName(), RoleConstants.ADMINISTRATOR) ||
 						Objects.equals(
@@ -150,8 +148,5 @@ public class ProductNavigationControlMenuManagerImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

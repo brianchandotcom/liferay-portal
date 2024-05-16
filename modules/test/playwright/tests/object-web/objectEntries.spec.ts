@@ -29,6 +29,7 @@ export const test = mergeTests(
 	objectPagesTest,
 	pageEditorPagesTest
 );
+
 test.describe('Manage object entries through page templates', () => {
 	test('can view all entries related to an object in the relationship field', async ({
 		apiHelpers,
@@ -233,5 +234,326 @@ test.describe('Manage object entries through page templates', () => {
 		await apiHelpers.objectAdmin.deleteObjectDefinition(
 			objectDefinition.id
 		);
+	});
+});
+
+test.describe('Manage object entries through View Object Entries', () => {
+	test('can add an entry with all object fields', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const picklist = await apiHelpers.post(
+			'/o/headless-admin-list-type/v1.0/list-type-definitions',
+			{
+				data: {
+					externalReferenceCode: 'picklistERC',
+					name: 'picklist',
+					name_i18n: {
+						en_US: 'picklist',
+					},
+				},
+			}
+		);
+
+		await apiHelpers.post(
+			`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}/list-type-entries`,
+			{
+				data: {
+					key: 'item1',
+					name: 'item1',
+					name_i18n: {
+						en_US: 'item1',
+					},
+				},
+			}
+		);
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postObjectDefinition({
+				active: true,
+				externalReferenceCode: 'NewObjectERC',
+				label: {
+					en_US: 'NewObject',
+				},
+				name: 'NewObject',
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						externalReferenceCode: 'text',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'text',
+						},
+						name: 'text',
+						required: false,
+						system: false,
+						type: 'String',
+					},
+					{
+						DBType: 'Long',
+						businessType: 'LongInteger',
+						externalReferenceCode: 'longInteger',
+						id: 33573,
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {
+							en_US: 'longInteger',
+						},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'longInteger',
+						required: false,
+						system: false,
+						type: 'Long',
+					},
+					{
+						DBType: 'Date',
+						businessType: 'Date',
+						externalReferenceCode: 'date',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {
+							en_US: 'date',
+						},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'date',
+						required: false,
+						system: false,
+						type: 'Date',
+					},
+					{
+						DBType: 'Integer',
+						businessType: 'Integer',
+						externalReferenceCode: 'integer',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {
+							en_US: 'integer',
+						},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'integer',
+						required: false,
+						system: false,
+						type: 'Integer',
+					},
+					{
+						DBType: 'Double',
+						businessType: 'Decimal',
+						externalReferenceCode: 'decimal',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {
+							en_US: 'decimal',
+						},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'decimal',
+						required: false,
+						system: false,
+						type: 'Double',
+					},
+					{
+						DBType: 'Clob',
+						businessType: 'RichText',
+						externalReferenceCode: 'richText',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: 'en_US',
+						label: {
+							en_US: 'richText',
+						},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'richText',
+						required: false,
+						system: false,
+						type: 'Clob',
+					},
+					{
+						DBType: 'Boolean',
+						businessType: 'Boolean',
+						externalReferenceCode: 'boolean',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {en_US: 'boolean'},
+						listTypeDefinitionId: 0,
+						name: 'boolean',
+						required: false,
+						system: false,
+						type: 'Boolean',
+					},
+					{
+						DBType: 'Clob',
+						businessType: 'LongText',
+						externalReferenceCode: 'longText',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {en_US: 'longText'},
+						listTypeDefinitionId: 0,
+						name: 'longText',
+						required: false,
+						system: false,
+						type: 'Clob',
+					},
+					{
+						DBType: 'BigDecimal',
+						businessType: 'PrecisionDecimal',
+						externalReferenceCode: 'precisionDecimal',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {en_US: 'precisionDecimal'},
+						listTypeDefinitionId: 0,
+						name: 'precisionDecimal',
+						required: false,
+						system: false,
+						type: 'BigDecimal',
+					},
+					{
+						DBType: 'String',
+						businessType: 'Picklist',
+						externalReferenceCode: 'picklist',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: 'en_US',
+						label: {
+							en_US: 'picklist',
+						},
+						listTypeDefinitionExternalReferenceCode: 'picklistERC',
+						name: 'picklist',
+						required: false,
+						state: false,
+					},
+					{
+						DBType: 'Long',
+						businessType: 'Attachment',
+						indexed: true,
+						indexedAsKeyword: false,
+						label: {
+							en_US: 'attachment',
+						},
+						name: 'attachment',
+						objectFieldSettings: [
+							{
+								name: 'acceptedFileExtensions',
+								value: 'jpeg, jpg, pdf, png',
+							},
+							{
+								name: 'fileSource',
+								value: 'documentsAndMedia',
+							},
+							{
+								name: 'maximumFileSize',
+								value: '100',
+							},
+						],
+						required: false,
+						type: 'Long',
+					},
+				],
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'NewObject',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		await viewObjectEntriesPage.goto(objectDefinition.id);
+
+		await viewObjectEntriesPage.addObjectEntryButton.click();
+
+		await viewObjectEntriesPage.selectFileFromDocumentsAndMedia();
+
+		await page.getByLabel('boolean').check();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'date',
+			objectFieldValue: '05/14/2024',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'decimal',
+			objectFieldValue: '12.34',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'integer',
+			objectFieldValue: '1234',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'longInteger',
+			objectFieldValue: '1122334455',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'longText',
+			objectFieldValue: 'Text written on long text',
+		});
+
+		await viewObjectEntriesPage.selectDropdownItem('picklist', 'item1');
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'precisionDecimal',
+			objectFieldValue: '1.5',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'RichText',
+			objectFieldValue: 'Text written on rich text',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'text',
+			objectFieldValue: 'Text written on simple text',
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		const objectEntries = [
+			'Yes',
+			'12.34',
+			'1234',
+			'1122334455',
+			'1.5',
+			'Text written on long text',
+			'Text written on simple text',
+			'Text written on rich text',
+			'item1',
+			'astronaut.png',
+		];
+
+		for (let i = 0; i < objectEntries.length; i++) {
+			const entry = objectEntries[i];
+
+			await expect(page.getByText(entry)).toBeVisible();
+		}
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition.id
+		);
+
+		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(picklist.id);
 	});
 });

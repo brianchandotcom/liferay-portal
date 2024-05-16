@@ -19,21 +19,6 @@ import java.util.List;
  */
 public class CommerceShippingEngineException extends PortalException {
 
-	public CommerceShippingEngineException() {
-	}
-
-	public CommerceShippingEngineException(String msg) {
-		super(msg);
-	}
-
-	public CommerceShippingEngineException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public CommerceShippingEngineException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MustSetCurrency
 		extends CommerceShippingEngineException {
 
@@ -116,6 +101,21 @@ public class CommerceShippingEngineException extends PortalException {
 
 		private final List<KeyValuePair> _errorKVPs;
 
+	}
+
+	private CommerceShippingEngineException() {
+	}
+
+	private CommerceShippingEngineException(String msg) {
+		super(msg);
+	}
+
+	private CommerceShippingEngineException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	private CommerceShippingEngineException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

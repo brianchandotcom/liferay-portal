@@ -248,6 +248,15 @@ public class RememberMeTokenLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.RememberMeToken fetchRememberMeToken(
+			long rememberMeTokenId, String token)
+		throws com.liferay.portal.kernel.exception.PwdEncryptorException {
+
+		return _rememberMeTokenLocalService.fetchRememberMeToken(
+			rememberMeTokenId, token);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -351,15 +360,6 @@ public class RememberMeTokenLocalServiceWrapper
 
 		return _rememberMeTokenLocalService.updateRememberMeToken(
 			rememberMeToken);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.KeyValuePair validateToken(
-			long rememberMeTokenId, String token)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _rememberMeTokenLocalService.validateToken(
-			rememberMeTokenId, token);
 	}
 
 	@Override

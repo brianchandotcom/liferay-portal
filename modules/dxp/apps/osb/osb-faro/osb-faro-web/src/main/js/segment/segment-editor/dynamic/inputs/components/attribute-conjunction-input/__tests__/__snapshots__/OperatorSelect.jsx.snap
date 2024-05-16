@@ -6,7 +6,7 @@ exports[`OperatorSelect should render 1`] = `
     class="form-group-item form-group-item-shrink"
   >
     <button
-      aria-activedescendant="gt"
+      aria-activedescendant="eq"
       aria-controls="clay-id-2"
       aria-expanded="true"
       aria-haspopup="listbox"

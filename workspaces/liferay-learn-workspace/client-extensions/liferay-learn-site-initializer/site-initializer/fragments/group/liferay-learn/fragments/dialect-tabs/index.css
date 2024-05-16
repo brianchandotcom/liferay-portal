@@ -3,21 +3,21 @@
 	border: none;
 	border-radius: 0.4rem;
 	height: 3rem;
-}
 
-.nav-segment .nav-link.active {
-	background-color: var(--color-action-primary-active-20, #e6edfb);
-	box-shadow: none;
-	color: var(--color-neutral-10, #282934);
-	opacity: 1;
-}
+	.nav-link {
+		border-radius: 0.25rem;
+		color: var(--color-neutral-10, #282934);
+		font-family: var(--font-family-sans-serif);
+		height: 2.5rem;
+		opacity: 0.8;
+		padding-bottom: 0;
+		padding-top: 0;
 
-.nav-segment .nav-link {
-	border-radius: 0.25rem;
-	color: var(--color-neutral-10, #282934);
-	font-family: var(--font-family-sans-serif);
-	height: 2.5rem;
-	opacity: 0.8;
-	padding-bottom: 0;
-	padding-top: 0;
+		&.active {
+			background-color: var(--color-action-primary-active-20, #e6edfb);
+			box-shadow: none;
+			color: var(--color-neutral-10, #282934);
+			opacity: 1;
+		}
+	}
 }

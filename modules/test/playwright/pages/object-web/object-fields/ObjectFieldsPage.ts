@@ -8,12 +8,17 @@ import {Locator, Page} from '@playwright/test';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectFieldsPage {
+	readonly addObjectFieldButton: Locator;
 	readonly deleteObjectFieldOption: Locator;
 	readonly fieldsTabItem: Locator;
 	readonly page: Page;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
+	readonly saveButton: Locator;
+	readonly objectFieldLabelInput: Locator;
+	readonly objectFieldOptionsDropdown: Locator;
 
 	constructor(page: Page) {
+		this.addObjectFieldButton = page.getByTestId('fdsCreationActionButton');
 		this.deleteObjectFieldOption = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
@@ -21,7 +26,48 @@ export class ObjectFieldsPage {
 			hasText: 'Fields',
 		});
 		this.page = page;
+		this.objectFieldLabelInput = page.locator('input[name="label"]');
+		this.objectFieldOptionsDropdown = page.getByText('Select an Option');
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
+	}
+
+	async addObjectField({
+		attachmentSource,
+		listTypeDefinitionName,
+		objectFieldBusinessType,
+		objectFieldLabel,
+	}: CreateObjectField) {
+		await this.addObjectFieldButton.waitFor();
+		await this.addObjectFieldButton.click();
+
+		await this.objectFieldLabelInput.waitFor();
+		await this.objectFieldLabelInput.fill(objectFieldLabel);
+
+		await this.objectFieldOptionsDropdown.click();
+
+		await this.page
+			.getByRole('option', {exact: true, name: objectFieldBusinessType})
+			.click();
+
+		if (objectFieldBusinessType === 'Attachment') {
+			await this.objectFieldOptionsDropdown.click();
+			await this.page
+				.getByRole('option', {name: attachmentSource})
+				.click();
+		}
+
+		if (
+			objectFieldBusinessType === 'Multiselect Picklist' ||
+			objectFieldBusinessType === 'Picklist'
+		) {
+			await this.objectFieldOptionsDropdown.click();
+			await this.page
+				.getByRole('option', {name: listTypeDefinitionName})
+				.click();
+		}
+
+		await this.saveButton.click();
 	}
 
 	async deleteObjectField(nth: number) {

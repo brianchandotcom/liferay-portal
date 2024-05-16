@@ -410,4 +410,113 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			)
 		).toBeVisible();
 	});
+
+	test('can create object fields of multiple types (except AutoIncrement, Date and Time, Encrypted and Aggregation)', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const {listTypeDefinitionIds, objectDefinition} = createdEntities;
+
+		const listTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		listTypeDefinitionIds.push(listTypeDefinition.id);
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		const objectFieldsMock = [
+			{
+				objectFieldBusinessType: 'Attachment',
+				objectFieldLabel: 'Custom Attachment',
+			},
+			{
+				objectFieldBusinessType: 'Boolean',
+				objectFieldLabel: 'Custom Boolean',
+			},
+			{
+				objectFieldBusinessType: 'Date',
+				objectFieldLabel: 'Custom Date',
+			},
+			{
+				objectFieldBusinessType: 'Decimal',
+				objectFieldLabel: 'Custom Decimal',
+			},
+			{
+				objectFieldBusinessType: 'Integer',
+				objectFieldLabel: 'Custom Integer',
+			},
+			{
+				objectFieldBusinessType: 'Long Integer',
+				objectFieldLabel: 'Custom Long Integer',
+			},
+			{
+				objectFieldBusinessType: 'Long Text',
+				objectFieldLabel: 'Custom Long Text',
+			},
+			{
+				objectFieldBusinessType: 'Multiselect Picklist',
+				objectFieldLabel: 'Custom Multiselect Picklist',
+			},
+			{
+				objectFieldBusinessType: 'Picklist',
+				objectFieldLabel: 'Custom Picklist',
+			},
+
+			{
+				objectFieldBusinessType: 'Precision Decimal',
+				objectFieldLabel: 'Custom Precision Decimal',
+			},
+			{
+				objectFieldBusinessType: 'Rich Text',
+				objectFieldLabel: 'Custom Rich Text',
+			},
+			{
+				objectFieldBusinessType: 'Text',
+				objectFieldLabel: 'Custom Text',
+			},
+		] as {
+			objectFieldBusinessType: string;
+			objectFieldLabel: string;
+		}[];
+
+		for (let i = 0; i < objectFieldsMock.length; i++) {
+			const {objectFieldBusinessType, objectFieldLabel} =
+				objectFieldsMock[i];
+
+			if (objectFieldBusinessType === 'Attachment') {
+				await objectFieldsPage.addObjectField({
+					attachmentSource: 'Upload Directly from the User',
+					objectFieldBusinessType,
+					objectFieldLabel,
+				});
+
+				continue;
+			}
+
+			if (
+				objectFieldBusinessType === 'Picklist' ||
+				objectFieldBusinessType === `Multiselect Picklist`
+			) {
+				await objectFieldsPage.addObjectField({
+					listTypeDefinitionName: listTypeDefinition.name,
+					objectFieldBusinessType,
+					objectFieldLabel,
+				});
+
+				continue;
+			}
+
+			await objectFieldsPage.addObjectField({
+				objectFieldBusinessType,
+				objectFieldLabel,
+			});
+		}
+
+		for (let i = 0; i < objectFieldsMock.length; i++) {
+			const {objectFieldLabel} = objectFieldsMock[i];
+
+			await expect(page.getByText(objectFieldLabel)).toBeVisible();
+		}
+	});
 });

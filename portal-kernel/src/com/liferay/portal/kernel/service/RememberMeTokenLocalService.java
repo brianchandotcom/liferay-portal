@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -207,6 +206,11 @@ public interface RememberMeTokenLocalService
 	public RememberMeToken fetchRememberMeToken(long rememberMeTokenId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RememberMeToken fetchRememberMeToken(
+			long rememberMeTokenId, String token)
+		throws PwdEncryptorException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -276,8 +280,5 @@ public interface RememberMeTokenLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RememberMeToken updateRememberMeToken(
 		RememberMeToken rememberMeToken);
-
-	public KeyValuePair validateToken(long rememberMeTokenId, String token)
-		throws PortalException;
 
 }

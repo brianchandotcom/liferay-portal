@@ -218,6 +218,13 @@ public class RememberMeTokenLocalServiceUtil {
 		return getService().fetchRememberMeToken(rememberMeTokenId);
 	}
 
+	public static RememberMeToken fetchRememberMeToken(
+			long rememberMeTokenId, String token)
+		throws com.liferay.portal.kernel.exception.PwdEncryptorException {
+
+		return getService().fetchRememberMeToken(rememberMeTokenId, token);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -306,13 +313,6 @@ public class RememberMeTokenLocalServiceUtil {
 		RememberMeToken rememberMeToken) {
 
 		return getService().updateRememberMeToken(rememberMeToken);
-	}
-
-	public static com.liferay.portal.kernel.util.KeyValuePair validateToken(
-			long rememberMeTokenId, String token)
-		throws PortalException {
-
-		return getService().validateToken(rememberMeTokenId, token);
 	}
 
 	public static RememberMeTokenLocalService getService() {

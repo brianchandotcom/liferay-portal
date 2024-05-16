@@ -1,0 +1,102 @@
+{
+	"enableIndexSearch": false,
+	"label": {
+		"en_US": "Testray Test Suite"
+	},
+	"name": "TestSuite",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Execution Time"
+			},
+			"localized": false,
+			"name": "executionTime",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Long",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "File Name"
+			},
+			"localized": false,
+			"name": "fileName",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "File Size"
+			},
+			"localized": false,
+			"name": "fileSize",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Long",
+			"unique": false
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Case Result Amount"
+			},
+			"localized": false,
+			"name": "caseResultAmount",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Integer",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Due Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Test Suite Statuses$]",
+			"localized": false,
+			"name": "dueStatus",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Test Suites"
+	},
+	"scope": "company"
+}

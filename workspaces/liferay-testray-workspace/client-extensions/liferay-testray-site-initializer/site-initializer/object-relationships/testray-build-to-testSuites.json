@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Testray Build Test Suites"
+	},
+	"name": "buildToTestSuite",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestSuite$]",
+	"objectDefinitionName2": "Build",
+	"type": "oneToMany"
+}

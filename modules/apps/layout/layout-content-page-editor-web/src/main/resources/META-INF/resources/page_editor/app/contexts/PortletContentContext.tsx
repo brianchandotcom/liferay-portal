@@ -35,12 +35,13 @@ function PortletContentContextProvider({children}: {children: ReactNode}) {
 		(state) => state.selectedViewportSize
 	);
 
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
 	const fragmentEntryLinksRef = useSelectorRef(
 		(state) => state.fragmentEntryLinks
 	);
 
 	const languageIdRef = useSelectorRef((state) => state.languageId);
-	const segmentsExperienceIdRef = useSelectorRef(selectSegmentsExperienceId);
 
 	useEffect(() => {
 		const updateContents = async () => {
@@ -53,7 +54,7 @@ function PortletContentContextProvider({children}: {children: ReactNode}) {
 					fragmentEntryLinkId,
 				})),
 				languageId: languageIdRef.current!,
-				segmentsExperienceId: segmentsExperienceIdRef.current!,
+				segmentsExperienceId: segmentsExperienceId!,
 			}).then((response) => {
 				dispatch(
 					updateFragmentEntryLinksContent({
@@ -68,7 +69,7 @@ function PortletContentContextProvider({children}: {children: ReactNode}) {
 		dispatch,
 		fragmentEntryLinksRef,
 		languageIdRef,
-		segmentsExperienceIdRef,
+		segmentsExperienceId,
 		selectedViewportSize,
 	]);
 

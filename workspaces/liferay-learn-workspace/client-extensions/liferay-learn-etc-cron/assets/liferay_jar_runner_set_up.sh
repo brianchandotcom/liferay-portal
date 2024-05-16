@@ -82,6 +82,8 @@ function copy_resources {
 function generate_docs {
 	pushd ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}
 
+	export LIFERAY_LEARN_SKIP_DIFF_CHECK=${LIFERAY_LEARN_ETC_SKIP_DIFF_CHECK}
+
 	./generate_docs.sh
 
 	popd
@@ -90,11 +92,11 @@ function generate_docs {
 function main {
 	clone_repository
 
+	replace_tokens
+
 	generate_docs
 
 	copy_resources
-
-	replace_tokens
 
 	prepare_import
 }

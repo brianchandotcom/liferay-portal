@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.RememberMeToken;
@@ -27,6 +28,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -59,7 +61,9 @@ public interface RememberMeTokenLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RememberMeTokenLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remember me token local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RememberMeTokenLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public RememberMeToken addRememberMeToken(
-		long companyId, long userId, Date expirationDate);
+			long companyId, long userId, Date expirationDate,
+			Consumer<String> tokenConsumer)
+		throws PwdEncryptorException;
 
 	/**
 	 * Adds the remember me token to the database. Also notifies the appropriate model listeners.

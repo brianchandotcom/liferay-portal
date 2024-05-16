@@ -439,8 +439,7 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	private void _addTestrayFactor(
 			ServiceContext serviceContext, TestrayCache testrayCache,
-			long testrayFactorCategoryId, String testrayFactorCategoryName,
-			long testrayFactorOptionId, String testrayFactorOptionName,
+			long testrayFactorCategoryId, long testrayFactorOptionId,
 			long testrayRunId, long userId)
 		throws Exception {
 
@@ -454,10 +453,6 @@ public class TestrayManagerImpl implements TestrayManager {
 				testrayFactorOptionId
 			).put(
 				"r_runToFactors_c_runId", testrayRunId
-			).put(
-				"testrayFactorCategoryName", testrayFactorCategoryName
-			).put(
-				"testrayFactorOptionName", testrayFactorOptionName
 			).build());
 	}
 
@@ -911,8 +906,7 @@ public class TestrayManagerImpl implements TestrayManager {
 
 			_addTestrayFactor(
 				serviceContext, testrayCache, testrayFactorCategoryId,
-				testrayFactorCategoryName, testrayFactorOptionId,
-				testrayFactorOptionName, testrayRunId, userId);
+				testrayFactorOptionId, testrayRunId, userId);
 
 			sb.append(testrayFactorCategoryId);
 			sb.append(testrayFactorOptionId);

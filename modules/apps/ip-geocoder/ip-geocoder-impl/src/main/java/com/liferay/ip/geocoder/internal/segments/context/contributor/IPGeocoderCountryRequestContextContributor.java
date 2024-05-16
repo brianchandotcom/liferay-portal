@@ -7,11 +7,10 @@ package com.liferay.ip.geocoder.internal.segments.context.contributor;
 
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.context.contributor.RequestContextContributor;
+
+import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,19 +36,19 @@ public class IPGeocoderCountryRequestContextContributor
 	public void contribute(
 		Context context, HttpServletRequest httpServletRequest) {
 
-		IPInfo ipInfo = _ipGeocoder.getIPInfo(httpServletRequest);
+		context.put(
+			KEY,
+			new Serializable() {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(ipInfo);
-		}
+				@Override
+				public String toString() {
+					IPInfo ipInfo = _ipGeocoder.getIPInfo(httpServletRequest);
 
-		if (Validator.isNotNull(ipInfo.getCountryCode())) {
-			context.put(KEY, ipInfo.getCountryCode());
-		}
+					return ipInfo.getCountryCode();
+				}
+
+			});
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		IPGeocoderCountryRequestContextContributor.class);
 
 	@Reference
 	private IPGeocoder _ipGeocoder;

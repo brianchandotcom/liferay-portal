@@ -380,6 +380,7 @@ const filterSchema = {
 			},
 			overrides(baseFilters.routine, {
 				name: 'buildToCaseResult/routineId',
+				type: 'multiselect',
 			}),
 			overrides(baseFilters.assignee, {
 				name: 'userId',

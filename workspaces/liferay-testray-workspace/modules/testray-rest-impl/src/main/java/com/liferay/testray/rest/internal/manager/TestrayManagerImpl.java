@@ -211,6 +211,31 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 	}
 
+	private void _addDefaultFactors(
+			long companyId, ServiceContext serviceContext,
+			TestrayCache testrayCache, long testrayRoutineId, long userId)
+		throws Exception {
+
+		List<Map<String, Serializable>> valuesList = _getValuesList(
+			companyId,
+			"externalReferenceCode in ('TRFCAT-001', 'TRFCAT-002', " +
+				"'TRFCAT-003', 'TRFCAT-004', 'TRFCAT-009')",
+			"FactorCategory", testrayCache, userId);
+
+		if (ListUtil.isNotEmpty(valuesList)) {
+			for (Map<String, Serializable> values : valuesList) {
+				_addObjectEntry(
+					"Factor", serviceContext, testrayCache, userId,
+					HashMapBuilder.<String, Serializable>put(
+						"r_factorCategoryToFactors_c_factorCategoryId",
+						GetterUtil.getLong(values.get("c_factorCategoryId"))
+					).put(
+						"r_routineToFactors_c_routineId", testrayRoutineId
+					).build());
+			}
+		}
+	}
+
 	private ObjectEntry _addObjectEntry(
 			String shortName, ServiceContext serviceContext,
 			TestrayCache testrayCache, long userId,
@@ -937,6 +962,9 @@ public class TestrayManagerImpl implements TestrayManager {
 		testrayRoutineId = objectEntry.getObjectEntryId();
 
 		testrayCache.addObjectEntryId(objectEntryIdsKey, testrayRoutineId);
+
+		_addDefaultFactors(
+			companyId, serviceContext, testrayCache, testrayRoutineId, userId);
 
 		return testrayRoutineId;
 	}

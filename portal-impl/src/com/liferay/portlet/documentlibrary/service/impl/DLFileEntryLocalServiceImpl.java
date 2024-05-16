@@ -2806,16 +2806,14 @@ public class DLFileEntryLocalServiceImpl
 				for (DLFileVersion fileVersion : fileVersions) {
 					_expireFileVersion(
 						userId, fileEntry, fileVersion,
-						fileVersion.getFileVersionId() ==
-							latestFileVersion.getFileVersionId(),
+						_isLatestFileVersion(fileVersion, latestFileVersion),
 						workflowContext, serviceContext);
 				}
 			}
 			else {
 				_expireFileVersion(
 					userId, fileEntry, dlFileVersion,
-					dlFileVersion.getFileVersionId() ==
-						latestFileVersion.getFileVersionId(),
+					_isLatestFileVersion(dlFileVersion, latestFileVersion),
 					workflowContext, serviceContext);
 			}
 		}
@@ -3052,6 +3050,18 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return trashHelper.isInTrashExplicitly(trashedModel);
+	}
+
+	private boolean _isLatestFileVersion(
+		DLFileVersion fileVersion, DLFileVersion latestFileVersion) {
+
+		if (fileVersion.getFileVersionId() ==
+				latestFileVersion.getFileVersionId()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isValidFileVersionNumber(String version) {

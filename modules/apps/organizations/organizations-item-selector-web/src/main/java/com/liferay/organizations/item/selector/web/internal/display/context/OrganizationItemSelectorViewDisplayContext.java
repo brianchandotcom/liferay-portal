@@ -16,12 +16,8 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
-
-import java.util.LinkedHashMap;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -37,12 +33,10 @@ public class OrganizationItemSelectorViewDisplayContext {
 	public OrganizationItemSelectorViewDisplayContext(
 		OrganizationItemSelectorCriterion organizationItemSelectorCriterion,
 		OrganizationLocalService organizationLocalService,
-		HttpServletRequest httpServletRequest, Portal portal,
-		PortletURL portletURL) {
+		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
 		_organizationItemSelectorCriterion = organizationItemSelectorCriterion;
 		_organizationLocalService = organizationLocalService;
-		_portal = portal;
 		_portletURL = portletURL;
 
 		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
@@ -80,25 +74,17 @@ public class OrganizationItemSelectorViewDisplayContext {
 		OrganizationSearchTerms organizationSearchTerms =
 			(OrganizationSearchTerms)_searchContainer.getSearchTerms();
 
-		LinkedHashMap<String, Object> params =
-			LinkedHashMapBuilder.<String, Object>put(
-				"organizationsTree",
-				_organizationLocalService.getUserOrganizations(
-					_portal.getUserId(_renderRequest), true)
-			).build();
-
 		_searchContainer.setResultsAndTotal(
 			() -> _organizationLocalService.search(
 				CompanyThreadLocal.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				organizationSearchTerms.getKeywords(), null, null, null, params,
+				organizationSearchTerms.getKeywords(), null, null, null, null,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				_searchContainer.getOrderByComparator()),
 			_organizationLocalService.searchCount(
 				CompanyThreadLocal.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-				organizationSearchTerms.getKeywords(), null, null, null,
-				params));
+				organizationSearchTerms.getKeywords(), null, null, null, null));
 
 		_searchContainer.setRowChecker(
 			new OrganizationItemSelectorChecker(
@@ -112,7 +98,6 @@ public class OrganizationItemSelectorViewDisplayContext {
 	private final OrganizationItemSelectorCriterion
 		_organizationItemSelectorCriterion;
 	private final OrganizationLocalService _organizationLocalService;
-	private final Portal _portal;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

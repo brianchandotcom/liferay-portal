@@ -5,8 +5,11 @@
 
 package com.liferay.object.web.internal.portlet.action.test;
 
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -36,6 +39,8 @@ import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import java.util.Objects;
 
+import org.junit.Before;
+
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
@@ -48,6 +53,27 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
  * @author Guilherme Sá
  */
 public abstract class BaseExportImportTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		user = TestPropsValues.getUser();
+
+		ObjectDefinitionResource.Builder builder =
+			objectDefinitionResourceFactory.create();
+
+		objectDefinitionResource = builder.user(
+			user
+		).build();
+
+		Class<?> clazz = getClazz();
+
+		defaultDraftObjectDefinitionJSONString = StringUtil.read(
+			clazz.getResourceAsStream(
+				"dependencies/test-default-draft-object-definition.json"));
+		defaultObjectRelationshipJSONString = StringUtil.read(
+			clazz.getResourceAsStream(
+				"dependencies/test-default-object-relationship.json"));
+	}
 
 	public void testExportImport(
 			String actualFileName, String expectedFileName,
@@ -115,6 +141,31 @@ public abstract class BaseExportImportTestCase {
 			JSONCompareMode.LENIENT);
 	}
 
+	protected JSONObject createOneToManyObjectRelationship(
+			String objectDefinitionExternalReferenceCode1,
+			String objectDefinitionExternalReferenceCode2,
+			String objectDefinitionName2, String objectRelationshipName)
+		throws Exception {
+
+		return jsonFactory.createJSONObject(
+			defaultObjectRelationshipJSONString
+		).put(
+			"edge", true
+		).put(
+			"name", objectRelationshipName
+		).put(
+			"objectDefinitionExternalReferenceCode1",
+			objectDefinitionExternalReferenceCode1
+		).put(
+			"objectDefinitionExternalReferenceCode2",
+			objectDefinitionExternalReferenceCode2
+		).put(
+			"objectDefinitionName2", objectDefinitionName2
+		).put(
+			"type", "oneToMany"
+		);
+	}
+
 	protected abstract ClassLoader getClassLoader();
 
 	protected abstract Class<?> getClazz();
@@ -128,6 +179,17 @@ public abstract class BaseExportImportTestCase {
 	protected abstract MVCActionCommand getMVCActionCommand();
 
 	protected abstract MVCResourceCommand getMVCResourceCommand();
+
+	protected String defaultDraftObjectDefinitionJSONString;
+	protected String defaultObjectRelationshipJSONString;
+
+	@Inject
+	protected JSONFactory jsonFactory;
+
+	protected ObjectDefinitionResource objectDefinitionResource;
+
+	@Inject
+	protected ObjectDefinitionResource.Factory objectDefinitionResourceFactory;
 
 	protected User user;
 

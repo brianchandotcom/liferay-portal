@@ -6355,6 +6355,38 @@ paths:
                                     $ref: "#/components/schemas/DocumentFolder"
                                 type: array
             tags: ["DocumentFolder"]
+    "/asset-libraries/{assetLibraryId}/document-shortcuts":
+        get:
+            operationId: getAssetLibraryDocumentShortcutsPage
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentShortcut"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentShortcut"
+                                type: array
+            tags: ["DocumentShortcut"]
     "/asset-libraries/{assetLibraryId}/documents":
         get:
             operationId: getAssetLibraryDocumentsPage
@@ -12514,6 +12546,38 @@ paths:
                                     $ref: "#/components/schemas/DocumentFolder"
                                 type: array
             tags: ["DocumentFolder"]
+    "/sites/{siteId}/document-shortcuts":
+        get:
+            operationId: getSiteDocumentShortcutsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentShortcut"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentShortcut"
+                                type: array
+            tags: ["DocumentShortcut"]
     "/sites/{siteId}/documents":
         get:
             description:

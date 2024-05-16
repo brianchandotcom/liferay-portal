@@ -22,6 +22,10 @@ import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCom
 import {base64ToText, fileToBase64} from '../../../utils/file';
 import {getTemporaryProductIdForSpefication} from '../../../utils/util';
 
+type ProductConfig = {
+	isDraft: boolean;
+};
+
 const updateSpecification = async (
 	product: Product,
 	specificationKey: PRODUCT_SPECIFICATION_KEY,
@@ -75,7 +79,7 @@ const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
 	dispatch: Dispatch<AppActions>
 ) => {
-	const syncProfile = async () => {
+	const syncProfile = async (config: ProductConfig) => {
 		const {
 			_product,
 			catalogId,
@@ -97,6 +101,10 @@ const usePublishSolutionSubmission = (
 			name: category.label,
 		}));
 
+		const productStatus = config.isDraft
+			? PRODUCT_WORKFLOW_STATUS_CODE.DRAFT
+			: PRODUCT_WORKFLOW_STATUS_CODE.PENDING;
+
 		if (_product) {
 			await headlessCommerceAdminCatalogImpl.updateProduct(
 				_product.productId as number,
@@ -104,7 +112,7 @@ const usePublishSolutionSubmission = (
 					categories: productCategories,
 					description: {en_US: description},
 					name: {en_US: name},
-					productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
+					productStatus,
 				}
 			);
 
@@ -117,6 +125,7 @@ const usePublishSolutionSubmission = (
 				categories: productCategories,
 				description,
 				name,
+				productStatus,
 			}
 		);
 
@@ -302,13 +311,24 @@ const usePublishSolutionSubmission = (
 		);
 	};
 
-	const onSaveSolution = async () => {
+	const deleteReferences = async () => {
+		const imagesToDelete = context.references.imagesToDelete;
+
+		for (const externalReferenceCode of imagesToDelete) {
+			await headlessCommerceAdminCatalogImpl.deleteAttachmentByExternalReferenceCode(
+				externalReferenceCode
+			);
+		}
+	};
+
+	const onSaveSolution = async (config: ProductConfig) => {
 		dispatch({payload: true, type: SolutionTypes.SET_LOADING});
 
 		try {
-			const product = await syncProfile();
+			const product = await syncProfile(config);
 
 			for (const sync of [
+				deleteReferences,
 				syncSolutionHeader,
 				syncCompanyProfileAndContactUs,
 				syncBlockDetails,
@@ -325,7 +345,7 @@ const usePublishSolutionSubmission = (
 	};
 
 	const onSaveAsDraft = async () => {
-		await onSaveSolution();
+		await onSaveSolution({isDraft: true});
 
 		Liferay.Util.openToast({
 			message: i18n.sub('x-saved-as-a-draft-successfully', [
@@ -337,7 +357,7 @@ const usePublishSolutionSubmission = (
 	};
 
 	const onSave = async () => {
-		await onSaveSolution();
+		await onSaveSolution({isDraft: false});
 
 		Liferay.Util.openToast({
 			message: i18n.sub('solution-x-submitted', [context.profile.name]),

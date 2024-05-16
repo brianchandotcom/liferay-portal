@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="learn-article-wrapper">
-			<div class="learn-article-content language-log">
+			<div class="language-log learn-article-content">
 				<#if (content.getData())??>
 					${content.getData()}
 				</#if>

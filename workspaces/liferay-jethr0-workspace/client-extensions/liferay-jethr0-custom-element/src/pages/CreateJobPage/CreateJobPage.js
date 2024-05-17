@@ -4,7 +4,7 @@
  */
 
 import {Heading} from '@clayui/core';
-import ClayForm from '@clayui/form';
+import ClayForm,{ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
@@ -22,6 +22,7 @@ import {createJob, getJobParameter} from '../../objects/jobs/JobUtil';
 import {getRoutineById} from '../../objects/routines/RoutineUtil';
 
 function CreateJobPage() {
+	const [jobBlessed, setJobBlessed] = useState(null);
 	const [jobDefinitionKey, setJobDefinitionKey] = useState(null);
 	const [jobDefinitions, setJobDefinitions] = useState(null);
 	const [jobName, setJobName] = useState(null);
@@ -156,6 +157,7 @@ function CreateJobPage() {
 	});
 
 	const jobData = {
+		blessed: jobBlessed,
 		name: jobName,
 		parameters: JSON.stringify(jobParameters),
 		priority: jobPriority,
@@ -174,6 +176,23 @@ function CreateJobPage() {
 				<Heading level={3} weight="lighter">
 					Create Job
 				</Heading>
+
+				<ClayForm.Group>
+					<Jethr0JobFieldLabel
+						labelKey="jobBlessed"
+						labelName="Job Blessed"
+					/>
+
+					<ClayCheckbox
+						id="jobBlessed"
+						onChange={(event) => {
+							console.log(event.target.checked);
+
+							setJobBlessed(event.target.checked);
+						}}
+						value={jobBlessed}
+					/>
+				</ClayForm.Group>
 
 				<ClayForm.Group>
 					<Jethr0JobFieldLabel

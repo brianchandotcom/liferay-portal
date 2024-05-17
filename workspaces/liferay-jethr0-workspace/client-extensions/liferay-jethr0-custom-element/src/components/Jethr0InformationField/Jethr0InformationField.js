@@ -11,6 +11,16 @@ function Jethr0InformationField({
 	fieldURLValue,
 	fieldValue,
 }) {
+	if (fieldType === 'BOOLEAN') {
+		return (
+			<>
+				<strong>{fieldLabel + ': '}</strong>
+				{fieldValue ? 'yes' : 'no'}
+				<br />
+			</>
+		);
+	}
+
 	if (!fieldValue || fieldValue === '') {
 		return <></>;
 	}

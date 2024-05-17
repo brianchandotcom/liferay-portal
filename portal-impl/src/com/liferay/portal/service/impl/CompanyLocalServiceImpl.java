@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -1473,6 +1474,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		String[] systemGroups = PortalUtil.getSystemGroups();
 
 		for (String groupName : systemGroups) {
+			if (groupName.equals(GroupConstants.CMS) &&
+				!FeatureFlagManagerUtil.isEnabled("LPD-17809")) {
+
+				continue;
+			}
+
 			deleteGroupActionableDynamicQuery.deleteGroup(
 				_groupLocalService.getGroup(companyId, groupName));
 		}

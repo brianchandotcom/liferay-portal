@@ -142,6 +142,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_testUser = _userLocalService.getUserByEmailAddress(
 			testGroup.getCompanyId(), "test@liferay.com");
 
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
 		_userLocalService.deleteGroupUser(
 			testGroup.getGroupId(), _testUser.getUserId());
 
@@ -1384,6 +1386,23 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	protected UserAccount testGetUserGroupUsersPage_addUserAccount(
+			Long userGroupId, UserAccount userAccount)
+		throws Exception {
+
+		userAccount = _addUserAccount(testGroup.getGroupId(), userAccount);
+
+		_userLocalService.addUserGroupUser(userGroupId, userAccount.getId());
+
+		return userAccount;
+	}
+
+	@Override
+	protected Long testGetUserGroupUsersPage_getUserGroupId() throws Exception {
+		return _userGroup.getUserGroupId();
+	}
+
+	@Override
 	protected UserAccount testGraphQLUserAccount_addUserAccount()
 		throws Exception {
 
@@ -1869,6 +1888,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private SAPEntryLocalService _sapEntryLocalService;
 
 	private User _testUser;
+	private UserGroup _userGroup;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

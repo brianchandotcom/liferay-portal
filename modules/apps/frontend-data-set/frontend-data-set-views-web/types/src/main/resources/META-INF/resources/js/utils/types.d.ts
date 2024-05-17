@@ -62,6 +62,10 @@ export interface IFieldTreeItem extends IField {
 	savedId?: string;
 	selected?: boolean;
 }
+export declare type TSaveState = {
+	saveUrl: string;
+	bodyData: {};
+};
 export interface IFilter extends IOrderable {
 	fieldName: string;
 	filterType?: EFilterType;

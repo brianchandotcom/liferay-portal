@@ -5,24 +5,19 @@
 
 /// <reference types="react" />
 
+import {IFilter} from '../../../utils/types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
-	from: string;
-	isValidDateRange: boolean;
+	filter?: IFilter;
 	namespace: string;
-	onFromChange: (val: string) => void;
-	onToChange: (val: string) => void;
-	onValidDateChange: (val: boolean) => void;
-	to: string;
+	onChange: Function;
+	onValidation: Function;
 }
 declare function Body({
-	from,
-	isValidDateRange,
+	filter,
 	namespace,
-	onFromChange,
-	onToChange,
-	onValidDateChange,
-	to,
+	onChange,
+	onValidation,
 }: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;

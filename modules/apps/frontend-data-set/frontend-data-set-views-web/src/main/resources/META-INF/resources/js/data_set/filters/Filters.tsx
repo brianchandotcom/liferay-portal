@@ -33,6 +33,7 @@ import {
 	IFilter,
 	IPickList,
 	ISelectionFilter,
+	TSaveState,
 } from '../../utils/types';
 import {IDataSetSectionProps} from '../DataSet';
 import ClientExtensionFilterModalContent from './modal_content/ClientExtensionFilter';
@@ -84,14 +85,10 @@ function AddFDSFilterModalContent({
 	const [fieldInUseValidationError, setFieldInUseValidationError] =
 		useState<boolean>();
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
-	const [from, setFrom] = useState<string>(
-		(filter as IDateFilter)?.from ?? ''
-	);
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
 	);
 	const [includeMode, setIncludeMode] = useState<string>('include');
-	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
 	const [multiple, setMultiple] = useState<boolean>(
 		(filter as ISelectionFilter)?.multiple ?? true
 	);
@@ -107,11 +104,12 @@ function AddFDSFilterModalContent({
 	const [sourceType, setSourceType] = useState<
 		ESelectionFilterSourceType | undefined
 	>();
-	const [to, setTo] = useState<string>((filter as IDateFilter)?.to ?? '');
-
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
 		fieldNames?.includes(item.name) ? item.name : undefined
 	);
+
+	const [isFilterValid, setIsFilterValid] = useState<boolean>(false);
+	const [saveState, setSaveState] = useState<TSaveState>({saveUrl: "", bodyData: {}});
 
 	useEffect(() => {
 		getAllPicklists().then((items) => {
@@ -156,14 +154,12 @@ function AddFDSFilterModalContent({
 
 	const isFormInvalid = ({
 		i18nFilterLabels,
-		isValidDateRange,
 		selectedClientExtension,
 		selectedField,
 		selectedPicklist,
 		sourceType,
 	}: {
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
-		isValidDateRange: boolean;
 		selectedClientExtension: IClientExtensionRenderer | undefined;
 		selectedField: IField | undefined;
 		selectedPicklist: IPickList | undefined;
@@ -206,16 +202,23 @@ function AddFDSFilterModalContent({
 			return true;
 		}
 
-		if (filterType === EFilterType.DATE_RANGE && !isValidDateRange) {
-			return true;
-		}
-
 		return false;
 	};
 
+	useEffect(() => {
+		setSaveButtonDisabled(
+			isFormInvalid({
+				i18nFilterLabels,
+				selectedClientExtension,
+				selectedField,
+				selectedPicklist,
+				sourceType,
+			}) || !isFilterValid)
+	}, [isFilterValid])
+
 	const handleFilterSave = async () => {
 		setSaveButtonDisabled(true);
-
+	
 		if (!selectedField) {
 			openDefaultFailureToast();
 
@@ -231,14 +234,13 @@ function AddFDSFilterModalContent({
 		let url: string = '';
 
 		if (filterType === EFilterType.DATE_RANGE) {
-			url = API_URL.DATE_FILTERS;
+			url = saveState.saveUrl;
 
 			body = {
 				...body,
 				[OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER_ID]: dataSet.id,
-				from,
-				to,
 				type: selectedField.format,
+				...saveState.bodyData
 			};
 
 			displayType = Liferay.Language.get('date-filter');
@@ -427,7 +429,6 @@ function AddFDSFilterModalContent({
 							setSaveButtonDisabled(
 								isFormInvalid({
 									i18nFilterLabels: values,
-									isValidDateRange,
 									selectedClientExtension,
 									selectedField,
 									selectedPicklist,
@@ -468,7 +469,6 @@ function AddFDSFilterModalContent({
 								setSaveButtonDisabled(
 									isFormInvalid({
 										i18nFilterLabels,
-										isValidDateRange,
 										selectedClientExtension,
 										selectedField: newVal,
 										selectedPicklist,
@@ -501,7 +501,6 @@ function AddFDSFilterModalContent({
 									setSaveButtonDisabled(
 										isFormInvalid({
 											i18nFilterLabels,
-											isValidDateRange,
 											selectedClientExtension: values,
 											selectedField,
 											selectedPicklist,
@@ -517,26 +516,10 @@ function AddFDSFilterModalContent({
 
 						{filterType === EFilterType.DATE_RANGE && (
 							<DateRangeFilterModalContent.Body
-								from={from}
-								isValidDateRange={isValidDateRange}
+								filter={filter}
 								namespace={namespace}
-								onFromChange={setFrom}
-								onToChange={setTo}
-								onValidDateChange={(values) => {
-									setIsValidDateRange(values);
-									setSaveButtonDisabled(
-										isFormInvalid({
-											i18nFilterLabels,
-											isValidDateRange: values,
-											selectedClientExtension,
-											selectedField,
-											selectedPicklist,
-											sourceType,
-										})
-									);
-								}}
-								to={to}
-							/>
+								onChange={setSaveState}
+								onValidation={setIsFilterValid}/>
 						)}
 
 						{filterType === EFilterType.SELECTION && (
@@ -566,7 +549,6 @@ function AddFDSFilterModalContent({
 									setSaveButtonDisabled(
 										isFormInvalid({
 											i18nFilterLabels,
-											isValidDateRange,
 											selectedClientExtension,
 											selectedField,
 											selectedPicklist: values,
@@ -579,7 +561,6 @@ function AddFDSFilterModalContent({
 									setSaveButtonDisabled(
 										isFormInvalid({
 											i18nFilterLabels,
-											isValidDateRange,
 											selectedClientExtension,
 											selectedField,
 											selectedPicklist,

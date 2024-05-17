@@ -7,33 +7,35 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import { IDateFilter, IFilter } from '../../../utils/types';
+import { API_URL } from '../../../utils/constants';
 
 function Header() {
 	return <>{Liferay.Language.get('new-date-range-filter')}</>;
 }
 
 interface IBodyProps {
-	from: string;
-	isValidDateRange: boolean;
+	filter?: IFilter;
 	namespace: string;
-	onFromChange: (val: string) => void;
-	onToChange: (val: string) => void;
-	onValidDateChange: (val: boolean) => void;
-	to: string;
+	onChange: Function;
+	onValidation: Function;
 }
 
 function Body({
-	from,
-	isValidDateRange,
+	filter,
 	namespace,
-	onFromChange,
-	onToChange,
-	onValidDateChange,
-	to,
+	onChange,
+	onValidation,
 }: IBodyProps) {
 	const fromFormElementId = `${namespace}From`;
 	const toFormElementId = `${namespace}To`;
+
+	const [from, setFrom] = useState<string>(
+		(filter as IDateFilter)?.from ?? ''
+	);
+	const [to, setTo] = useState<string>((filter as IDateFilter)?.to ?? '');
+	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
 
 	useEffect(() => {
 		let isValid = true;
@@ -46,8 +48,10 @@ function Body({
 			isValid = isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo);
 		}
 
-		onValidDateChange(isValid);
-	}, [from, to, onValidDateChange]);
+		setIsValidDateRange(isValid);
+		onValidation(isValid);
+		onChange({saveUrl: API_URL.FDS_DATE_FILTERS, bodyData: {from, to}});
+	}, [from, to]);
 
 	return (
 		<ClayForm.Group className="form-group-autofit">
@@ -62,7 +66,7 @@ function Body({
 
 				<ClayDatePicker
 					inputName={fromFormElementId}
-					onChange={onFromChange}
+					onChange={(value: any) => setFrom(value)}
 					placeholder="YYYY-MM-DD"
 					value={from ? format(new Date(from), 'yyyy-MM-dd') : ''}
 					years={{
@@ -91,7 +95,7 @@ function Body({
 
 				<ClayDatePicker
 					inputName={toFormElementId}
-					onChange={onToChange}
+					onChange={(value: any) => setTo(value)}
 					placeholder="YYYY-MM-DD"
 					value={to ? format(new Date(to), 'yyyy-MM-dd') : ''}
 					years={{

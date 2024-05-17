@@ -48,6 +48,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SearchResultResource {
 
+	public Page<SearchResult> getSearchPage(
+			String blueprintExternalReferenceCode, Boolean emptySearch,
+			String entryClassNames, String scope, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<SearchResult> postSearchPage(
 			String entryClassNames, String scope, String search, Filter filter,
 			Pagination pagination, Sort[] sorts,

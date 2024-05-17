@@ -40,6 +40,9 @@ public class ServletDataImpl implements ServletData {
 			_searchResultResourceComponentServiceObjects);
 		Mutation.setSuggestionResourceComponentServiceObjects(
 			_suggestionResourceComponentServiceObjects);
+
+		Query.setSearchResultResourceComponentServiceObjects(
+			_searchResultResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -85,6 +88,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SuggestionResourceImpl.class,
 							"postSuggestionsPage"));
+
+					put(
+						"query#search",
+						new ObjectValuePair<>(
+							SearchResultResourceImpl.class, "getSearchPage"));
 				}
 			};
 

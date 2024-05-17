@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class RequiredTemplateException extends PortalException {
 
-	public RequiredTemplateException() {
-	}
-
-	public RequiredTemplateException(String msg) {
-		super(msg);
-	}
-
-	public RequiredTemplateException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public RequiredTemplateException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MustNotDeleteTemplateReferencedByTemplateLinks
 		extends RequiredTemplateException {
 
@@ -38,6 +23,21 @@ public class RequiredTemplateException extends PortalException {
 					templateId));
 		}
 
+	}
+
+	private RequiredTemplateException() {
+	}
+
+	private RequiredTemplateException(String msg) {
+		super(msg);
+	}
+
+	private RequiredTemplateException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	private RequiredTemplateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

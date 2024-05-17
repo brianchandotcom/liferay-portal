@@ -4,53 +4,49 @@
  */
 
 const getYearlyTerms = ({endDate, startDate}) => {
-	const subscriptionStartDate = new Date(startDate);
-	const subscriptionEndDate = new Date(endDate);
+	const endDateFull = new Date(endDate);
+	const startDateFull = new Date(startDate);
 
-	if (
-		subscriptionStartDate.getFullYear() + 1 <
-		subscriptionEndDate.getFullYear()
-	) {
-		let arraySize =
-			subscriptionEndDate.getFullYear() -
-			subscriptionStartDate.getFullYear();
+	const endDateDay = endDateFull.getDate();
+	const endDateMonth = endDateFull.getMonth();
+	const endDateYear = endDateFull.getFullYear();
 
-		if (subscriptionEndDate.getMonth() > subscriptionStartDate.getMonth()) {
+	const startDateDay = startDateFull.getDate();
+	const startDateMonth = startDateFull.getMonth();
+	const startDateYear = startDateFull.getFullYear();
+
+	if (startDateYear + 1 < endDateYear) {
+		let arraySize = endDateYear - startDateYear;
+
+		if (endDateMonth > startDateMonth) {
 			arraySize = arraySize + 1;
 		}
-
-		if (
-			subscriptionEndDate.getMonth() === subscriptionStartDate.getMonth()
+		else if (
+			endDateMonth === startDateMonth &&
+			endDateDay > startDateDay
 		) {
-			if (
-				subscriptionEndDate.getDate() > subscriptionStartDate.getDate()
-			) {
-				arraySize = arraySize + 1;
-			}
+			arraySize = arraySize + 1;
 		}
 
 		const yearDateSplitted = new Array(arraySize)
 			.fill()
 			.map((_, index, array) => {
-				const currentYear = subscriptionStartDate.getFullYear() + index;
-				const yearNumEndDate = currentYear + 1;
+				const indexYear = startDateYear + index;
 				const indexNumStartDate = new Date(startDate).setFullYear(
-					currentYear
+					indexYear
 				);
-
-				const daysEndDate = subscriptionStartDate.getDate();
-				const monthsEndDate = subscriptionStartDate.getMonth();
+				const yearNumEndDate = indexYear + 1;
 
 				const indexEndDate = new Date(
 					yearNumEndDate,
-					monthsEndDate,
-					daysEndDate - 1
+					startDateMonth,
+					startDateDay - 1
 				);
 				const indexStartDate = new Date(indexNumStartDate);
 
 				if (index === array.length - 1) {
 					return {
-						endDate: subscriptionEndDate,
+						endDate: endDateFull,
 						startDate: indexStartDate,
 					};
 				}
@@ -66,7 +62,7 @@ const getYearlyTerms = ({endDate, startDate}) => {
 		return yearDateSplitted;
 	}
 
-	return [{endDate: subscriptionEndDate, startDate: subscriptionStartDate}];
+	return [{endDate: endDateFull, startDate: startDateFull}];
 };
 
 export {getYearlyTerms};

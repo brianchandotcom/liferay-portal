@@ -25,19 +25,8 @@ public class RequiredTemplateException extends PortalException {
 
 	}
 
-	private RequiredTemplateException() {
-	}
-
 	private RequiredTemplateException(String msg) {
 		super(msg);
-	}
-
-	private RequiredTemplateException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	private RequiredTemplateException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

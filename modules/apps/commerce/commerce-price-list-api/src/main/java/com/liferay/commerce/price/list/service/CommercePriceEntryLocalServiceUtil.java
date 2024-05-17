@@ -491,6 +491,14 @@ public class CommercePriceEntryLocalServiceUtil {
 			cpInstanceUuid, priceListType, unitOfMeasureKey);
 	}
 
+	public static List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		String cpInstanceUuid, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		return getService().getInstanceCommercePriceEntries(
+			cpInstanceUuid, start, end, orderByComparator);
+	}
+
 	public static int getInstanceCommercePriceEntriesCount(
 		String cpInstanceUuid) {
 

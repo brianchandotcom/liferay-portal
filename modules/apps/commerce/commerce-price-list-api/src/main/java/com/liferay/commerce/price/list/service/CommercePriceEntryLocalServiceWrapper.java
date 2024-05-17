@@ -556,6 +556,16 @@ public class CommercePriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		String cpInstanceUuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommercePriceEntry>
+			orderByComparator) {
+
+		return _commercePriceEntryLocalService.getInstanceCommercePriceEntries(
+			cpInstanceUuid, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid) {
 		return _commercePriceEntryLocalService.
 			getInstanceCommercePriceEntriesCount(cpInstanceUuid);

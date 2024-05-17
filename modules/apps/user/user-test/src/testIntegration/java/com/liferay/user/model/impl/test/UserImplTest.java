@@ -57,31 +57,31 @@ public class UserImplTest {
 
 		Assert.assertEquals(roles.toString(), 1, roles.size());
 
-		_setRole();
+		_addRole();
 
 		roles = _user.getAllRoles();
 
 		Assert.assertEquals(roles.toString(), 2, roles.size());
 
-		_setInheritedRole();
+		_addInheritedRole();
 
 		roles = _user.getAllRoles();
 
 		Assert.assertEquals(roles.toString(), 3, roles.size());
 
-		_setOrganizationRole();
+		_addOrganizationRole();
 
 		roles = _user.getAllRoles();
 
 		Assert.assertEquals(roles.toString(), 4, roles.size());
 
-		_setSiteRole();
+		_addSiteRole();
 
 		roles = _user.getAllRoles();
 
 		Assert.assertEquals(roles.toString(), 5, roles.size());
 
-		_setInheritedSiteRole();
+		_addInheritedSiteRole();
 
 		roles = _user.getAllRoles();
 
@@ -94,7 +94,7 @@ public class UserImplTest {
 
 		Assert.assertEquals(roles.toString(), 0, roles.size());
 
-		_setInheritedRole();
+		_addInheritedRole();
 
 		roles = _user.getInheritedRoles();
 
@@ -107,7 +107,7 @@ public class UserImplTest {
 
 		Assert.assertEquals(roles.toString(), 0, roles.size());
 
-		_setInheritedSiteRole();
+		_addInheritedSiteRole();
 
 		roles = _user.getInheritedSiteRoles();
 
@@ -120,7 +120,7 @@ public class UserImplTest {
 
 		Assert.assertEquals(roles.toString(), 0, roles.size());
 
-		_setOrganizationRole();
+		_addOrganizationRole();
 
 		roles = _user.getOrganizationsRoles();
 
@@ -133,14 +133,14 @@ public class UserImplTest {
 
 		Assert.assertEquals(roles.toString(), 0, roles.size());
 
-		_setSiteRole();
+		_addSiteRole();
 
 		roles = _user.getSiteRoles();
 
 		Assert.assertEquals(roles.toString(), 1, roles.size());
 	}
 
-	private void _setInheritedRole() throws Exception {
+	private void _addInheritedRole() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		Role role = RoleTestUtil.addRole(
@@ -153,7 +153,7 @@ public class UserImplTest {
 			userGroup.getUserGroupId(), _user.getUserId());
 	}
 
-	private void _setInheritedSiteRole() throws Exception {
+	private void _addInheritedSiteRole() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		Group group = GroupTestUtil.addGroup();
@@ -172,7 +172,7 @@ public class UserImplTest {
 			userGroup.getUserGroupId(), _user.getUserId());
 	}
 
-	private void _setOrganizationRole() throws Exception {
+	private void _addOrganizationRole() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		Role role = RoleTestUtil.addRole(
@@ -182,14 +182,14 @@ public class UserImplTest {
 			_user.getUserId(), organization.getGroupId(), role.getRoleId());
 	}
 
-	private void _setRole() throws Exception {
+	private void _addRole() throws Exception {
 		Role role = RoleTestUtil.addRole(
 			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
 
 		_userLocalService.addRoleUser(role.getRoleId(), _user.getUserId());
 	}
 
-	private void _setSiteRole() throws Exception {
+	private void _addSiteRole() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		Role role = RoleTestUtil.addRole(

@@ -21,10 +21,6 @@ public class SegmentsEntryNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public SegmentsEntryNameComparator() {
-		this(false);
-	}
-
 	public SegmentsEntryNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}

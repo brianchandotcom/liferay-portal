@@ -8,7 +8,7 @@
 		<field name="userId" type="long" />
 		<field name="modifiedDate" type="Date" />
 		<field name="accessToken" type="String">
-			<hint name="max-length">3000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="accessTokenExpirationDate" type="Date" />
 		<field name="authServerWellKnownURI" type="String">
@@ -18,7 +18,7 @@
 			<hint name="max-length">256</hint>
 		</field>
 		<field name="idToken" type="String">
-			<hint name="max-length">3999</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="refreshToken" type="String">
 			<hint name="max-length">2000</hint>

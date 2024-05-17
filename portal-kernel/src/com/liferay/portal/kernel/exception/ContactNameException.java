@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.FullNameValidator;
 import com.liferay.portal.kernel.util.ClassUtil;
 
@@ -16,7 +17,7 @@ public class ContactNameException extends PortalException {
 	public static class MustHaveFirstName extends ContactNameException {
 
 		public MustHaveFirstName() {
-			super("Contacts must have a first name");
+			super("Contact must have a first name");
 		}
 
 	}
@@ -24,7 +25,7 @@ public class ContactNameException extends PortalException {
 	public static class MustHaveLastName extends ContactNameException {
 
 		public MustHaveLastName() {
-			super("Contacts must have a last name");
+			super("Contact must have a last name");
 		}
 
 	}
@@ -32,7 +33,7 @@ public class ContactNameException extends PortalException {
 	public static class MustHaveMiddleName extends ContactNameException {
 
 		public MustHaveMiddleName() {
-			super("Contacts must have a middle name");
+			super("Contact must have a middle name");
 		}
 
 	}
@@ -49,6 +50,18 @@ public class ContactNameException extends PortalException {
 		}
 
 		public final FullNameValidator fullNameValidator;
+
+	}
+
+	public static class MustNotExceedMaximumLength
+		extends ContactNameException {
+
+		public MustNotExceedMaximumLength(int firstNameMaximumLength) {
+			super(
+				StringBundler.concat(
+					"Contact first name must have fewer than ",
+					firstNameMaximumLength, " characters"));
+		}
 
 	}
 

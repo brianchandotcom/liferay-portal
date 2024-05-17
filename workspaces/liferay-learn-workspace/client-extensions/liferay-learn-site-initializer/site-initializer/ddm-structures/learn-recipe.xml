@@ -8,43 +8,19 @@
 					"availableLanguageIds": [
 						"en_US"
 					],
-					"contentType": "journal",
-					"dataDefinitionKey": "85801",
-					"defaultDataLayout": {
-						"dataLayoutFields": {
-						},
-						"dataRules": [
-						],
-						"description": {
-						},
-						"name": {
-							"en_US": "LEARN-RECIPE"
-						},
-						"paginationMode": "single-page"
-					},
 					"defaultLanguageId": "en_US",
-					"description": {
-					},
 					"fields": [
 						{
-							"customProperties": {
-								"dataType": "string",
-								"editorConfig": null,
-								"fieldNamespace": "",
-								"fieldReference": "introduction",
-								"visibilityExpression": ""
-							},
-							"defaultValue": {
-							},
+							"dataType": "string",
 							"indexType": "text",
-							"indexable": true,
 							"label": {
 								"en_US": "Introduction"
 							},
 							"localizable": true,
 							"name": "introduction",
-							"nestedDataDefinitionFields": [
-							],
+							"predefinedValue": {
+								"en_US": ""
+							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
@@ -55,24 +31,16 @@
 							"type": "rich_text"
 						},
 						{
-							"customProperties": {
-								"dataType": "string",
-								"editorConfig": null,
-								"fieldNamespace": "",
-								"fieldReference": "prerequisites",
-								"visibilityExpression": ""
-							},
-							"defaultValue": {
-							},
+							"dataType": "string",
 							"indexType": "text",
-							"indexable": true,
 							"label": {
 								"en_US": "Prerequisites"
 							},
 							"localizable": true,
 							"name": "prerequisites",
-							"nestedDataDefinitionFields": [
-							],
+							"predefinedValue": {
+								"en_US": ""
+							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
@@ -83,24 +51,16 @@
 							"type": "rich_text"
 						},
 						{
-							"customProperties": {
-								"dataType": "string",
-								"editorConfig": null,
-								"fieldNamespace": "",
-								"fieldReference": "stepByStep",
-								"visibilityExpression": ""
-							},
-							"defaultValue": {
-							},
+							"dataType": "string",
 							"indexType": "text",
-							"indexable": true,
 							"label": {
 								"en_US": "Step-by-Step"
 							},
 							"localizable": true,
 							"name": "stepByStep",
-							"nestedDataDefinitionFields": [
-							],
+							"predefinedValue": {
+								"en_US": ""
+							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
@@ -110,25 +70,17 @@
 							},
 							"type": "rich_text"
 						},
-						{
-							"customProperties": {
-								"dataType": "string",
-								"editorConfig": null,
-								"fieldNamespace": "",
-								"fieldReference": "conclusion",
-								"visibilityExpression": ""
-							},
-							"defaultValue": {
-							},
+							{
+							"dataType": "string",
 							"indexType": "text",
-							"indexable": true,
 							"label": {
 								"en_US": "Conclusion"
 							},
 							"localizable": true,
 							"name": "conclusion",
-							"nestedDataDefinitionFields": [
-							],
+							"predefinedValue": {
+								"en_US": ""
+							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
@@ -138,25 +90,17 @@
 							},
 							"type": "rich_text"
 						},
-						{
-							"customProperties": {
-								"dataType": "string",
-								"editorConfig": null,
-								"fieldNamespace": "",
-								"fieldReference": "tips",
-								"visibilityExpression": ""
-							},
-							"defaultValue": {
-							},
+							{
+							"dataType": "string",
 							"indexType": "text",
-							"indexable": true,
 							"label": {
 								"en_US": "Tips"
 							},
 							"localizable": true,
 							"name": "tips",
-							"nestedDataDefinitionFields": [
-							],
+							"predefinedValue": {
+								"en_US": ""
+							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
@@ -166,59 +110,17 @@
 							},
 							"type": "rich_text"
 						},
-						{
-							"customProperties": {
-								"characterOptions": false,
-								"confirmationErrorMessage": {
-									"en_US": ""
-								},
-								"confirmationLabel": {
-									"en_US": ""
-								},
-								"dataType": "integer",
-								"direction": [
-									"vertical"
-								],
-								"fieldNamespace": "",
-								"fieldReference": "timeToComplete",
-								"hideField": false,
-								"inputMask": false,
-								"inputMaskFormat": {
-									"en_US": ""
-								},
-								"labelAtStructureLevel": true,
-								"nativeField": false,
-								"numericInputMask": {
-									"en_US": {
-										"append": "",
-										"appendType": "prefix",
-										"decimalPlaces": 2,
-										"symbols": {
-											"decimalSymbol": ".",
-											"thousandsSeparator": "none"
-										}
-									}
-								},
-								"placeholder": {
-									"en_US": "Time to complete"
-								},
-								"requireConfirmation": false,
-								"tooltip": {
-									"en_US": ""
-								},
-								"visibilityExpression": ""
-							},
-							"defaultValue": {
-							},
+							{
+							"dataType": "numeric",
 							"indexType": "keyword",
-							"indexable": true,
 							"label": {
 								"en_US": "Time to Finish (in minutes)"
 							},
 							"localizable": true,
 							"name": "timeToFinish",
-							"nestedDataDefinitionFields": [
-							],
+							"predefinedValue": {
+								"en_US": ""
+							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": true,
@@ -227,12 +129,15 @@
 								"en_US": ""
 							},
 							"type": "numeric"
-						}
+						},
 					],
-					"name": {
-						"en_US": "LEARN-RECIPE"
-					},
-					"storageType": "default"
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
 				}
 			]]>
 		</definition>

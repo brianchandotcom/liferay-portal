@@ -27,104 +27,6 @@ export const testFeatureFlagsDisabled = mergeTests(
 	loginTest()
 );
 
-testFeatureFlagsDisabled(
-	'can see all available object defitions on schema creation',
-	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
-		const objectDefinitions = [];
-
-		for (let i = 0; i <= 21; i++) {
-			objectDefinitions.push(
-				await apiHelpers.objectAdmin.postObjectDefinition({
-					active: true,
-					externalReferenceCode: `objectDefinition${i}`,
-					label: {
-						en_US: `objectDefinition${i}`,
-					},
-					name: `ObjectDefinition${i}`,
-					objectFields: [
-						{
-							DBType: 'String',
-							businessType: 'Text',
-							externalReferenceCode: 'ObjectFieldERC',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: 'en_US',
-							label: {
-								en_US: 'Object Field',
-							},
-							listTypeDefinitionId: 0,
-							name: 'objectField',
-							required: false,
-							state: false,
-							system: false,
-							type: 'String',
-						},
-					],
-					pluralLabel: {
-						en_US: `objectDefinitions${i}`,
-					},
-					portlet: true,
-					scope: 'company',
-					status: {
-						code: 0,
-					},
-				})
-			);
-		}
-
-		const application = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				apiApplicationToAPISchemas: [
-					{
-						description: 'API Application Schema',
-						externalReferenceCode: 'api-application-schema',
-						mainObjectDefinitionERC: 'L_API_APPLICATION',
-						name: 'API Application Schema',
-					},
-				],
-				applicationStatus: 'published',
-				baseURL: 'basic-application',
-				description: 'Test API Application',
-				externalReferenceCode: 'basic-application',
-				title: 'Basic application',
-			},
-			'headless-builder/applications'
-		);
-
-		await headlessBuilderPage.goto();
-		await headlessBuilderPage.goToEditApplication(application.title);
-		await applicationPage.goToSchemasTab();
-		await applicationPage.addSchemaButton.click();
-		await applicationPage.schemaObjectDefinitionSelector.click();
-
-		objectDefinitions.forEach((objectDefinition) => {
-			expect(
-				applicationPage.page.getByRole('menuitem', {
-					exact: true,
-					name: objectDefinition.name,
-				})
-			).toBeVisible();
-		});
-
-		for (const objectDefinition of objectDefinitions) {
-			await expect
-				.poll(async () =>
-					(
-						await apiHelpers.objectAdmin.deleteObjectDefinition(
-							objectDefinition.id
-						)
-					).status()
-				)
-				.toBe(204);
-		}
-
-		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
-			'headless-builder/applications',
-			application.externalReferenceCode
-		);
-	}
-);
-
 const objectDefinitionData = {
 	active: true,
 	externalReferenceCode: `objectDefinition`,
@@ -278,6 +180,104 @@ const applicationData = {
 	externalReferenceCode: 'basic-application',
 	title: 'Basic application',
 };
+
+testFeatureFlagsDisabled(
+	'can see all available object defitions on schema creation',
+	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
+		const objectDefinitions = [];
+
+		for (let i = 0; i <= 21; i++) {
+			objectDefinitions.push(
+				await apiHelpers.objectAdmin.postObjectDefinition({
+					active: true,
+					externalReferenceCode: `objectDefinition${i}`,
+					label: {
+						en_US: `objectDefinition${i}`,
+					},
+					name: `ObjectDefinition${i}`,
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'ObjectFieldERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: 'en_US',
+							label: {
+								en_US: 'Object Field',
+							},
+							listTypeDefinitionId: 0,
+							name: 'objectField',
+							required: false,
+							state: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					pluralLabel: {
+						en_US: `objectDefinitions${i}`,
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				})
+			);
+		}
+
+		const application = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				apiApplicationToAPISchemas: [
+					{
+						description: 'API Application Schema',
+						externalReferenceCode: 'api-application-schema',
+						mainObjectDefinitionERC: 'L_API_APPLICATION',
+						name: 'API Application Schema',
+					},
+				],
+				applicationStatus: 'published',
+				baseURL: 'basic-application',
+				description: 'Test API Application',
+				externalReferenceCode: 'basic-application',
+				title: 'Basic application',
+			},
+			'headless-builder/applications'
+		);
+
+		await headlessBuilderPage.goto();
+		await headlessBuilderPage.goToEditApplication(application.title);
+		await applicationPage.goToSchemasTab();
+		await applicationPage.addSchemaButton.click();
+		await applicationPage.schemaObjectDefinitionSelector.click();
+
+		objectDefinitions.forEach((objectDefinition) => {
+			expect(
+				applicationPage.page.getByRole('menuitem', {
+					exact: true,
+					name: objectDefinition.name,
+				})
+			).toBeVisible();
+		});
+
+		for (const objectDefinition of objectDefinitions) {
+			await expect
+				.poll(async () =>
+					(
+						await apiHelpers.objectAdmin.deleteObjectDefinition(
+							objectDefinition.id
+						)
+					).status()
+				)
+				.toBe(204);
+		}
+
+		await apiHelpers.objectEntry.deleteObjectEntryByExternalReferenceCode(
+			'headless-builder/applications',
+			application.externalReferenceCode
+		);
+	}
+);
 
 testFeatureFlagsDisabled(
 	'can see allowed object definitions on schema creation',

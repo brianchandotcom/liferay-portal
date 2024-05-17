@@ -67,6 +67,7 @@ const AssetAppearsOnStateRenderer = ({
 	});
 
 	const {data, error, loading} = useQuery(AssetAppearsOnQuery, {
+		fetchPolicy: 'network-only',
 		variables: {
 			assetId,
 			assetType: assetType.toUpperCase(),
@@ -216,6 +217,7 @@ const getTableColumns = ({accessors, channelId, groupId, rangeSelectors}) => {
 					</td>
 				);
 			},
+			className: 'table-cell-expand',
 			label: Liferay.Language.get('page-name'),
 			sortable: false,
 			title: true
@@ -236,6 +238,7 @@ const getTableColumns = ({accessors, channelId, groupId, rangeSelectors}) => {
 					</td>
 				);
 			},
+			className: 'table-cell-expand',
 			label: Liferay.Language.get('canonical-url'),
 			sortable: false
 		},

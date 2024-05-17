@@ -851,7 +851,9 @@ public class ExpandoValueLocalServiceImpl
 
 				Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-				if (Validator.isNull(defaultValuesMap.get(defaultLocale))) {
+				if ((defaultValuesMap != null) &&
+					Validator.isNull(defaultValuesMap.get(defaultLocale))) {
+
 					for (String defaultValue : defaultValuesMap.values()) {
 						if (Validator.isNotNull(defaultValue)) {
 							throw new ValueDataException.

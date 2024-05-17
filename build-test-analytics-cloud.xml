@@ -682,6 +682,8 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 				touch local.env
 
+				docker system prune --volumes -f
+
 				docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach
 
 				while [[ -n $(docker ps | grep "health: starting") ]] || [[ -n $(docker ps | grep "unhealthy") ]]

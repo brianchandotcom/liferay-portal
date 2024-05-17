@@ -40,7 +40,7 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 	);
 
 	const columnsNotFixed = columns?.filter(
-		({key}) => !columnsFixed.includes(key)
+		({key, value}) => !columnsFixed.includes(key) && value !== ''
 	);
 
 	const [selectedColumns, setSelectedColumns] = useState<ColumnsState>(() => {
@@ -89,22 +89,27 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 
 					<div className="dropdown-columns-content">
 						{columnsNotFixed?.map((column, index) => (
-							<Form.Checkbox
-								checked={selectedColumns[column.key]}
-								key={index}
-								label={column.value}
-								onChange={(event) =>
-									setSelectedColumns({
-										...selectedColumns,
-										[column.key]: event.target.checked,
-									})
-								}
-								value={
-									(selectedColumns[
-										column.key
-									] as unknown) as string
-								}
-							/>
+							<>
+								{column.value !== '' && (
+									<Form.Checkbox
+										checked={selectedColumns[column.key]}
+										key={index}
+										label={column.value}
+										onChange={(event) =>
+											setSelectedColumns({
+												...selectedColumns,
+												[column.key]:
+													event.target.checked,
+											})
+										}
+										value={
+											(selectedColumns[
+												column.key
+											] as unknown) as string
+										}
+									/>
+								)}
+							</>
 						))}
 					</div>
 

@@ -73,26 +73,30 @@ function SortDropdown() {
 			}
 		>
 			<DropDown.ItemList items={sorts}>
-				{(sort: TSort) => (
-					<DropDown.Item
-						key={sort.key}
-						onClick={() => {
-							setSelectedKey(sort.key);
+				{(sort: TSort) =>
+					sort.label ? (
+						<DropDown.Item
+							key={sort.key}
+							onClick={() => {
+								setSelectedKey(sort.key);
 
-							viewsDispatch({
-								type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
-								value: sorts.map((sortItem) =>
-									sort.key === sortItem.key
-										? {...sortItem, active: true}
-										: {...sortItem, active: false}
-								),
-							});
-						}}
-						symbolLeft={selectedKey === sort.key ? 'check' : ''}
-					>
-						{sort.label}
-					</DropDown.Item>
-				)}
+								viewsDispatch({
+									type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
+									value: sorts.map((sortItem) =>
+										sort.key === sortItem.key
+											? {...sortItem, active: true}
+											: {...sortItem, active: false}
+									),
+								});
+							}}
+							symbolLeft={selectedKey === sort.key ? 'check' : ''}
+						>
+							{sort.label}
+						</DropDown.Item>
+					) : (
+						<></>
+					)
+				}
 			</DropDown.ItemList>
 
 			<DropDown.Divider />

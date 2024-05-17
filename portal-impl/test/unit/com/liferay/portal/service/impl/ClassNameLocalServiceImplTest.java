@@ -59,10 +59,7 @@ public class ClassNameLocalServiceImplTest {
 			_classNameLocalServiceImpl.getLazyClassNameId(
 				_CLASS_NAME_VALUE1
 			).get());
-	}
 
-	@Test
-	public void testGetLazyClassNameIdLaziness() {
 		_testLaziness(
 			() -> {
 				Supplier<Long> lazyClassNameId =
@@ -86,10 +83,7 @@ public class ClassNameLocalServiceImplTest {
 			_classNameLocalServiceImpl.getLazyClassNameIds(
 				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
 			).get());
-	}
 
-	@Test
-	public void testGetLazyClassNameIdsLaziness() {
 		_testLaziness(
 			() -> {
 				Supplier<Long[]> lazyClassNameIds =
@@ -113,15 +107,12 @@ public class ClassNameLocalServiceImplTest {
 			_classNameLocalServiceImpl.getLazyClassNameIdsLongArray(
 				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
 			).get());
-	}
 
-	@Test
-	public void testGetLazyClassNameIdsLongArrayLaziness() {
 		_testLaziness(
 			() -> {
 				Supplier<long[]> lazyClassNameIds =
 					_classNameLocalServiceImpl.getLazyClassNameIdsLongArray(
-						new String[] {"wrong.value"});
+						new String[] {"wrong.class.name"});
 
 				Mockito.verify(
 					_classNamePersistence, Mockito.never()

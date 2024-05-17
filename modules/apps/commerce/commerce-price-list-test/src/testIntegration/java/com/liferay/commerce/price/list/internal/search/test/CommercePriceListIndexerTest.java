@@ -79,9 +79,7 @@ public class CommercePriceListIndexerTest {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
-
+	public static void tearDownClass() {
 		PrincipalThreadLocal.setName(_originalName);
 	}
 

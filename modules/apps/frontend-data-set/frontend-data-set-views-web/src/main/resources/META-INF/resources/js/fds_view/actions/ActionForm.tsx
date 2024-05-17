@@ -288,11 +288,7 @@ const ActionForm = ({
 			(!permissionKey && actionData.type === ACTION_TYPE.HEADLESS) ||
 			!translationExists({
 				translations: labelTranslations,
-			}) ||
-			(actionData.type === ACTION_TYPE.MODAL &&
-				!translationExists({
-					translations: titleTranslations,
-				}))
+			})
 		) {
 			valid = false;
 		}

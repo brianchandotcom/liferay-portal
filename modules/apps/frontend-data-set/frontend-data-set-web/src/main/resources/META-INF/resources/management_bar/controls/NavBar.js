@@ -36,11 +36,13 @@ function NavBar({creationMenu, showSearch}) {
 					</ManagementToolbar.Item>
 				)}
 
-				{!!sorts.length && Liferay.FeatureFlags['LPD-19465'] && (
-					<ManagementToolbar.Item>
-						<SortDropdown />
-					</ManagementToolbar.Item>
-				)}
+				{!!sorts.length &&
+					sorts.some((sort) => !!sort.label) &&
+					Liferay.FeatureFlags['LPD-19465'] && (
+						<ManagementToolbar.Item>
+							<SortDropdown />
+						</ManagementToolbar.Item>
+					)}
 			</ManagementToolbar.ItemList>
 
 			{showSearch && (

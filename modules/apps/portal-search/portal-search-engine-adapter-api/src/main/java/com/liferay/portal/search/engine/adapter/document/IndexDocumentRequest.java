@@ -88,6 +88,10 @@ public class IndexDocumentRequest
 		return _indexName;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getType() {
 		return _type;
 	}
@@ -104,6 +108,10 @@ public class IndexDocumentRequest
 		_refresh = refresh;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setType(String type) {
 		_type = type;
 	}

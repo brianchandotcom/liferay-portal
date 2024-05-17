@@ -87,6 +87,10 @@ public class UpdateDocumentRequest
 		return _script;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getType() {
 		return _type;
 	}
@@ -119,6 +123,10 @@ public class UpdateDocumentRequest
 		_scriptedUpsert = scriptedUpsert;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setType(String type) {
 		_type = type;
 	}

@@ -250,6 +250,23 @@ fragmentTest.describe('Filters in the fragment', () => {
 			});
 
 			await fragmentTest.step('Check that the filter works', async () => {
+				await fdsFragmentPage.page
+					.locator('.filter-resume')
+					.waitFor({state: 'visible'});
+
+				await expect(
+					fdsFragmentPage.page.getByRole('button', {
+						name: `${filterLabel}: ${picklistBooleanOption}`,
+					})
+				).toBeVisible();
+
+				await expect(
+					fdsFragmentPage.page
+						.locator('.dnd-tbody > div')
+						.first()
+						.locator('.dnd-td')
+				).toHaveText(['boolean', 'No', '']);
+
 				await expect(
 					fdsFragmentPage.page.getByText(
 						'Showing 1 to 1 of 1 entries.'

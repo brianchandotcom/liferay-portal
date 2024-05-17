@@ -6,7 +6,6 @@
 import {mergeTests} from '@playwright/test';
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
-import {Layout} from '../helpers/json-web-services/JSONWebServicesLayoutApiHelper';
 import getRandomString from '../utils/getRandomString';
 import {backendPageTest} from './backendPageTest';
 

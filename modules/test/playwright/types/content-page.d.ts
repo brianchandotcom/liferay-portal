@@ -34,8 +34,23 @@ type FormConfig = {
 };
 
 type Layout = {
+	companyId: string;
+	friendlyURL: string;
 	friendlyUrlPath: string;
+	groupId: string;
+	hidden: boolean;
 	id: string;
+	layoutId: string;
+	nameCurrentValue: string;
+	parentPlid: string;
+	plid: string;
+	privateLayout: boolean;
+	status: number;
+	system: boolean;
+	themeId: string;
+	titleCurrentValue: string;
+	type: string;
+	uuid: string;
 };
 
 type PageDefinition = {

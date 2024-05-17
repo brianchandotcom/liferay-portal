@@ -6,7 +6,6 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {Layout} from '../../../helpers/json-web-services/JSONWebServicesLayoutApiHelper';
 import {DEFAULT_LABEL} from '../utils/constants';
 import {VisualizationMode} from '../utils/types';
 

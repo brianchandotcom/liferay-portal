@@ -45,44 +45,51 @@ const CaseTypes = () => {
 						},
 						{
 							clickable: true,
-							key: 'testrayStatusMetric',
-							render: ({total}) => total,
+							key: 'total',
+							render: (_, {testrayStatusMetric}) =>
+								testrayStatusMetric.total,
 							value: i18n.translate('total'),
 						},
 						{
 							clickable: true,
-							key: 'testrayStatusMetric',
-							render: ({failed}) => failed,
+							key: 'failed',
+							render: (_, {testrayStatusMetric}) =>
+								testrayStatusMetric.failed,
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
-							key: 'testrayStatusMetric',
-							render: ({blocked}) => blocked,
+							key: 'blocked',
+							render: (_, {testrayStatusMetric}) =>
+								testrayStatusMetric.blocked,
 							value: i18n.translate('blocked'),
 						},
 						{
 							clickable: true,
-							key: 'testrayStatusMetric',
-							render: ({untested}) => untested,
+							key: 'untested',
+							render: (_, {testrayStatusMetric}) =>
+								testrayStatusMetric.untested,
 							value: i18n.translate('untested'),
 						},
 						{
 							clickable: true,
-							key: 'testrayStatusMetric',
-							render: ({inProgress}) => inProgress,
+							key: 'in-progress',
+							render: (_, {testrayStatusMetric}) =>
+								testrayStatusMetric.inProgress,
 							value: i18n.translate('in-progress'),
 						},
 						{
 							clickable: true,
-							key: 'testrayStatusMetric',
-							render: ({passed}) => passed,
+							key: 'passed',
+							render: (_, {testrayStatusMetric}) =>
+								testrayStatusMetric.passed,
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
-							key: 'testrayStatusMetric',
-							render: ({testfix}) => testfix,
+							key: 'test-fix',
+							render: (_, {testrayStatusMetric}) =>
+								testrayStatusMetric.testfix,
 							value: i18n.translate('test-fix'),
 						},
 						{

@@ -85,7 +85,7 @@ public class DLFileEntryWorkflowHandlerTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
 
-		_updateStatusUserWorkflowTasks(
+		_updateStatus(
 			fileVersion, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
@@ -123,7 +123,7 @@ public class DLFileEntryWorkflowHandlerTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
 
-		_updateStatusUserWorkflowTasks(
+		_updateStatus(
 			fileVersion, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
@@ -167,7 +167,7 @@ public class DLFileEntryWorkflowHandlerTest {
 
 		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
-		_updateStatusUserWorkflowTasks(
+		_updateStatus(
 			fileVersion, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
@@ -200,7 +200,7 @@ public class DLFileEntryWorkflowHandlerTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, fileVersion.getStatus());
 
-		_updateStatusUserWorkflowTasks(
+		_updateStatus(
 			fileVersion, WorkflowConstants.STATUS_DENIED, serviceContext);
 
 		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
@@ -232,7 +232,7 @@ public class DLFileEntryWorkflowHandlerTest {
 			serviceContext);
 	}
 
-	private void _updateStatusUserWorkflowTasks(
+	private void _updateStatus(
 			FileVersion fileVersion, int status, ServiceContext serviceContext)
 		throws PortalException {
 

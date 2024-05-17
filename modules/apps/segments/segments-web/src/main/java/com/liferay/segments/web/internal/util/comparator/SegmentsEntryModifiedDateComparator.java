@@ -22,10 +22,6 @@ public class SegmentsEntryModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public SegmentsEntryModifiedDateComparator() {
-		this(false);
-	}
-
 	public SegmentsEntryModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}

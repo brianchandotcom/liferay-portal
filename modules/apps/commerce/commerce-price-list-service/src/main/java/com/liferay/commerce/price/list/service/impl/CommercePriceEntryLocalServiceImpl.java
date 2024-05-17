@@ -18,7 +18,6 @@ import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListTable;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
-import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -584,8 +583,18 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		String cpInstanceUuid, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		return commercePriceEntryPersistence.findByCPInstanceUuid(
+			cpInstanceUuid, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid) {
-		return _commercePriceListFinder.countByCPInstanceUuid(cpInstanceUuid);
+		return commercePriceEntryPersistence.countByCPInstanceUuid(
+			cpInstanceUuid);
 	}
 
 	@Override
@@ -1201,9 +1210,6 @@ public class CommercePriceEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceEntryLocalServiceImpl.class);
-
-	@Reference
-	private CommercePriceListFinder _commercePriceListFinder;
 
 	@Reference
 	private CommercePriceListPersistence _commercePriceListPersistence;

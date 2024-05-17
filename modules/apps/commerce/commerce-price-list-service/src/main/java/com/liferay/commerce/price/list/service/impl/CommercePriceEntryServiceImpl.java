@@ -8,7 +8,7 @@ package com.liferay.commerce.price.list.service.impl;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryServiceBaseImpl;
-import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
+import com.liferay.commerce.price.list.util.comparator.CommercePriceEntryUOMCreateDateComparator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -272,8 +272,9 @@ public class CommercePriceEntryServiceImpl
 		}
 
 		List<CommercePriceEntry> commercePriceEntries =
-			_commercePriceListFinder.findByCPInstanceUuid(
-				cpInstance.getCPInstanceUuid(), start, end, false);
+			commercePriceEntryLocalService.getInstanceCommercePriceEntries(
+				cpInstance.getCPInstanceUuid(), start, end,
+				new CommercePriceEntryUOMCreateDateComparator(true));
 
 		Iterator<CommercePriceEntry> iterator = commercePriceEntries.iterator();
 
@@ -308,9 +309,10 @@ public class CommercePriceEntryServiceImpl
 		int count = 0;
 
 		List<CommercePriceEntry> commercePriceEntries =
-			_commercePriceListFinder.findByCPInstanceUuid(
+			commercePriceEntryLocalService.getInstanceCommercePriceEntries(
 				cpInstance.getCPInstanceUuid(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, false);
+				QueryUtil.ALL_POS,
+				new CommercePriceEntryUOMCreateDateComparator(true));
 
 		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
 			if (_commercePriceListModelResourcePermission.contains(
@@ -414,9 +416,6 @@ public class CommercePriceEntryServiceImpl
 			commercePriceEntryId, bulkPricing, price, priceOnApplication,
 			promoPrice, unitOfMeasureKey, serviceContext);
 	}
-
-	@Reference
-	private CommercePriceListFinder _commercePriceListFinder;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"

@@ -638,11 +638,14 @@ public class GetEntryRenderDataMVCResourceCommand
 			(ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION) &&
 			FeatureFlagManagerUtil.isEnabled("LPD-10703")) {
 
-			JSONArray workflowActionsJSONArray = _getWorkflowActionsJSONArray(
-				ctEntry, rightModel, themeDisplay, resourceResponse);
+			if (ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+				JSONArray workflowActionsJSONArray =
+					_getWorkflowActionsJSONArray(
+						ctEntry, rightModel, themeDisplay, resourceResponse);
 
-			if (workflowActionsJSONArray != null) {
-				jsonObject.put("workflowActions", workflowActionsJSONArray);
+				if (workflowActionsJSONArray != null) {
+					jsonObject.put("workflowActions", workflowActionsJSONArray);
+				}
 			}
 
 			JSONObject workflowDataJSONObject = _getWorkflowDataJSONObject(
@@ -1129,9 +1132,21 @@ public class GetEntryRenderDataMVCResourceCommand
 		long currentCTCollectionId =
 			CTCollectionThreadLocal.getCTCollectionId();
 
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctEntry.getCtCollectionId());
+
+		long safeCloseableCTCollectionId = ctEntry.getCtCollectionId();
+
+		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+			Map<String, Object> modelAttributes = model.getModelAttributes();
+
+			safeCloseableCTCollectionId = (long)modelAttributes.get(
+				"ctCollectionId");
+		}
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctEntry.getCtCollectionId())) {
+					safeCloseableCTCollectionId)) {
 
 			WorkflowInstanceLink workflowInstanceLink =
 				_getWorkflowInstanceLink(ctEntry, model);

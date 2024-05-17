@@ -70,7 +70,7 @@
 							},
 							"type": "rich_text"
 						},
-							{
+						{
 							"dataType": "string",
 							"indexType": "text",
 							"label": {
@@ -90,7 +90,7 @@
 							},
 							"type": "rich_text"
 						},
-							{
+						{
 							"dataType": "string",
 							"indexType": "text",
 							"label": {
@@ -110,7 +110,7 @@
 							},
 							"type": "rich_text"
 						},
-							{
+						{
 							"dataType": "numeric",
 							"indexType": "keyword",
 							"label": {
@@ -129,7 +129,7 @@
 								"en_US": ""
 							},
 							"type": "numeric"
-						},
+						}
 					],
 					"successPage": {
 						"body": {

@@ -308,12 +308,8 @@ public class CPDefinitionOptionRelLocalServiceTest {
 			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys.get(
 				cpDefinitionOptionRel.getKey());
 
-		Assert.assertTrue("The value is not of size 3", strings.size() == 3);
-
+		Assert.assertTrue(strings.size() == 3);
 		Assert.assertTrue(
-			"SkuOptionName is not: " +
-				cpDefinitionOptionRel.getName(
-					cpDefinitionOptionRel.getDefaultLanguageId()),
 			Objects.equals(
 				cpDefinitionOptionRel.getName(
 					cpDefinitionOptionRel.getDefaultLanguageId()),
@@ -326,18 +322,13 @@ public class CPDefinitionOptionRelLocalServiceTest {
 			cpDefinitionOptionValueRels.get(0);
 
 		Assert.assertTrue(
-			"SkuOptionValueName is not: " +
-				cpDefinitionOptionValueRel.getName(
-					cpDefinitionOptionRel.getDefaultLanguageId()),
+			Objects.equals(
+				cpDefinitionOptionValueRel.getKey(), strings.get(2)));
+		Assert.assertTrue(
 			Objects.equals(
 				cpDefinitionOptionValueRel.getName(
 					cpDefinitionOptionRel.getDefaultLanguageId()),
 				strings.get(1)));
-
-		Assert.assertTrue(
-			"Value is not: " + cpDefinitionOptionValueRel.getKey(),
-			Objects.equals(
-				cpDefinitionOptionValueRel.getKey(), strings.get(2)));
 	}
 
 	@Test

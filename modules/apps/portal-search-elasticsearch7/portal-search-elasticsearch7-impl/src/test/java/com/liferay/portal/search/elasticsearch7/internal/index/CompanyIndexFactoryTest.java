@@ -329,7 +329,9 @@ public class CompanyIndexFactoryTest {
 	}
 
 	@Test
-	public void testExecuteIndexContributorOnBeforeRemove() throws Exception {
+	public void testExecuteCompanyIndexListenerOnBeforeDelete()
+		throws Exception {
+
 		CompanyIndexListener companyIndexListener = Mockito.mock(
 			CompanyIndexListener.class);
 

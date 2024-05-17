@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -99,7 +97,6 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @return the added activity counter
 	 */
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int totalValue, long previousActivityCounterId,

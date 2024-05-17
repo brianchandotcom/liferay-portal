@@ -98,7 +98,6 @@ public interface SocialActivityCounterLocalService
 	 {@link SocialActivityCounterConstants}.
 	 * @return the added activity counter
 	 */
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
 			int ownerType, int totalValue, long previousActivityCounterId,

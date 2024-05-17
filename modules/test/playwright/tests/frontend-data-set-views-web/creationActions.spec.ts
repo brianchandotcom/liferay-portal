@@ -448,4 +448,355 @@ fragmentTest.describe('Creation Actions in the fragment', () => {
 			});
 		}
 	);
+
+	fragmentTest(
+		'Creation Actions of type Modal in the fragment',
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+			await fragmentTest.step('Create table field', async () => {
+				await dataSetManagerApiHelpers.createDataSetField({
+					label_i18n: {en_US: 'Id'},
+					name: 'id',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+			});
+
+			const actionURL =
+				'/group/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_mvcRenderCommandName=%2Fcp_definitions%2Fadd_cp_definition&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_backURL=http%3A%2F%2Flocalhost%3A8080%2Fgroup%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26p_p_auth%3DXpBXNq2M&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_productTypeName=simple';
+			const firstActionLabel = 'Modal Creation Action (title).';
+			const secondActionLabel = 'Modal Creation Action (no title).';
+			const modalTitle = 'Create New Product';
+
+			await fragmentTest.step('Create Creation Actions', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+					label_i18n: {en_US: firstActionLabel},
+					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					title_i18n: {en_US: modalTitle},
+					type: 'modal',
+					url: actionURL,
+				});
+
+				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+					label_i18n: {en_US: secondActionLabel},
+					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'modal',
+					url: actionURL,
+				});
+			});
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						viewLabel: actionsDataSetViewLabel,
+					});
+				}
+			);
+
+			const actionDropdownMenuId = await fragmentTest.step(
+				'Check that the Creation Action menu is present',
+				async () => {
+					await fdsFragmentPage.creationMenuButton
+						.first()
+						.isVisible();
+
+					const button =
+						await fdsFragmentPage.creationMenuButton.first();
+
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await fdsFragmentPage.page
+						.locator(`#${dropdownId}`)
+						.filter({has: fdsFragmentPage.page.getByRole('menu')})
+						.waitFor();
+
+					await expect(
+						fdsFragmentPage.page
+							.locator(`#${dropdownId}`)
+							.getByRole('menuitem')
+					).toHaveCount(2);
+
+					await expect(
+						fdsFragmentPage.page
+							.locator(`#${dropdownId}`)
+							.getByRole('menuitem', {
+								exact: true,
+								name: firstActionLabel,
+							})
+					).toBeVisible();
+
+					await expect(
+						fdsFragmentPage.page
+							.locator(`#${dropdownId}`)
+							.getByRole('menuitem', {
+								exact: true,
+								name: secondActionLabel,
+							})
+					).toBeVisible();
+
+					await fdsFragmentPage.page.keyboard.press('Escape');
+
+					return dropdownId;
+				}
+			);
+
+			await test.step('Creation Action of type "modal" opens a modal with duplicated title', async () => {
+				await fdsFragmentPage.creationMenuButton.first().click();
+
+				await fdsFragmentPage.page
+					.locator(`#${actionDropdownMenuId}`)
+					.getByRole('menuitem', {
+						exact: true,
+						name: firstActionLabel,
+					})
+					.click();
+
+				await fdsFragmentPage.page.getByRole('dialog').waitFor();
+
+				const dialog = await fdsFragmentPage.page.getByRole('dialog');
+
+				await expect(dialog).toBeInViewport();
+
+				// Verify that modal title exists
+
+				await expect(dialog.getByText(modalTitle)).toHaveCount(1);
+
+				const iframeElement = await dialog
+					.locator('iframe')
+					.elementHandle();
+
+				const frame = await iframeElement.contentFrame();
+
+				// Verify that iframe title exists
+
+				await expect(frame.getByText(modalTitle)).toHaveCount(1);
+
+				await dialog
+					.getByRole('button', {name: 'close'})
+					.first()
+					.click();
+
+				await expect(dialog).not.toBeInViewport();
+			});
+
+			await test.step('Creation Action of type "modal" opens a modal with one title', async () => {
+				await fdsFragmentPage.creationMenuButton.first().click();
+
+				await fdsFragmentPage.page
+					.locator(`#${actionDropdownMenuId}`)
+					.getByRole('menuitem', {
+						exact: true,
+						name: secondActionLabel,
+					})
+					.click();
+
+				await fdsFragmentPage.page.getByRole('dialog').waitFor();
+
+				const dialog = await fdsFragmentPage.page.getByRole('dialog');
+
+				await expect(dialog).toBeInViewport();
+
+				const iframeElement = await dialog
+					.locator('iframe')
+					.elementHandle();
+
+				const frame = await iframeElement.contentFrame();
+
+				// Verify that iframe title exists
+
+				await expect(frame.getByText(modalTitle)).toHaveCount(1);
+
+				await fdsFragmentPage.page.keyboard.press('Escape');
+
+				await expect(dialog).not.toBeInViewport();
+			});
+		}
+	);
+
+	fragmentTest(
+		'Creation Actions of type Side Panel in the fragment',
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+			await fragmentTest.step('Create table field', async () => {
+				await dataSetManagerApiHelpers.createDataSetField({
+					label_i18n: {en_US: 'Id'},
+					name: 'id',
+					r_fdsViewFDSFieldRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'string',
+				});
+			});
+
+			const actionURL =
+				'/group/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_mvcRenderCommandName=%2Fcp_definitions%2Fadd_cp_definition&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_backURL=http%3A%2F%2Flocalhost%3A8080%2Fgroup%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26p_p_auth%3DXpBXNq2M&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_productTypeName=simple';
+			const firstActionLabel = 'Side Pannel Creation Action (title).';
+			const secondActionLabel = 'Side Panel Creation Action (no title).';
+			const sidePanelTitle = 'Create New Product';
+
+			await fragmentTest.step('Create Creation Actions', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+					label_i18n: {en_US: firstActionLabel},
+					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					title_i18n: {en_US: sidePanelTitle},
+					type: 'sidePanel',
+					url: actionURL,
+				});
+
+				await dataSetManagerApiHelpers.createDataSetViewCreationAction({
+					label_i18n: {en_US: secondActionLabel},
+					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
+						actionsDataSetViewERC,
+					type: 'sidePanel',
+					url: actionURL,
+				});
+			});
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						viewLabel: actionsDataSetViewLabel,
+					});
+				}
+			);
+
+			const actionDropdownMenuId = await fragmentTest.step(
+				'Check that the Creation Action menu is present',
+				async () => {
+					await fdsFragmentPage.creationMenuButton
+						.first()
+						.isVisible();
+
+					const button =
+						await fdsFragmentPage.creationMenuButton.first();
+
+					const dropdownId = await button.evaluate((node) =>
+						node.getAttribute('aria-controls')
+					);
+
+					await button.click();
+
+					await fdsFragmentPage.page
+						.locator(`#${dropdownId}`)
+						.filter({has: fdsFragmentPage.page.getByRole('menu')})
+						.waitFor();
+
+					await expect(
+						fdsFragmentPage.page
+							.locator(`#${dropdownId}`)
+							.getByRole('menuitem')
+					).toHaveCount(2);
+
+					await expect(
+						fdsFragmentPage.page
+							.locator(`#${dropdownId}`)
+							.getByRole('menuitem', {
+								exact: true,
+								name: firstActionLabel,
+							})
+					).toBeVisible();
+
+					await expect(
+						fdsFragmentPage.page
+							.locator(`#${dropdownId}`)
+							.getByRole('menuitem', {
+								exact: true,
+								name: secondActionLabel,
+							})
+					).toBeVisible();
+
+					await fdsFragmentPage.page.keyboard.press('Escape');
+
+					return dropdownId;
+				}
+			);
+
+			await test.step('Creation Action of type "side panel" opens a side panel with one title', async () => {
+				await fdsFragmentPage.creationMenuButton.first().click();
+
+				await fdsFragmentPage.page
+					.locator(`#${actionDropdownMenuId}`)
+					.getByRole('menuitem', {
+						exact: true,
+						name: secondActionLabel,
+					})
+					.click();
+
+				await fdsFragmentPage.page.getByRole('tabpanel').waitFor();
+
+				const sidePanel = await fdsFragmentPage.page.getByRole(
+					'tabpanel'
+				);
+
+				await expect(sidePanel).toBeInViewport();
+
+				const iframeElement = await sidePanel
+					.locator('iframe')
+					.elementHandle();
+
+				const frame = await iframeElement.contentFrame();
+
+				// Verify that iframe title exists
+
+				await frame.getByText(sidePanelTitle).waitFor();
+				await expect(frame.getByText(sidePanelTitle)).toHaveCount(1);
+
+				await fdsFragmentPage.page.keyboard.press('Escape');
+
+				await expect(sidePanel).not.toBeInViewport();
+			});
+
+			await test.step('Creation Action of type "side panel" opens a side panel with duplicated title', async () => {
+				await fdsFragmentPage.creationMenuButton.first().click();
+
+				await fdsFragmentPage.page
+					.locator(`#${actionDropdownMenuId}`)
+					.getByRole('menuitem', {
+						exact: true,
+						name: firstActionLabel,
+					})
+					.click();
+
+				await fdsFragmentPage.page.getByRole('tabpanel').waitFor();
+
+				const sidePanel = await fdsFragmentPage.page.getByRole(
+					'tabpanel'
+				);
+
+				await expect(sidePanel).toBeInViewport();
+
+				await expect(
+					fdsFragmentPage.page.getByRole('heading', {
+						name: sidePanelTitle,
+					})
+				).toBeVisible();
+
+				const iframeElement = await sidePanel
+					.locator('iframe')
+					.elementHandle();
+
+				const frame = await iframeElement.contentFrame();
+
+				// Verify that iframe title exists
+
+				await frame.getByText(sidePanelTitle).waitFor();
+				await expect(frame.getByText(sidePanelTitle)).toHaveCount(1);
+
+				await fdsFragmentPage.page.keyboard.press('Escape');
+
+				await expect(sidePanel).not.toBeInViewport();
+
+				await fdsFragmentPage.page.reload();
+			});
+		}
+	);
 });

@@ -2020,9 +2020,19 @@ public class DLFileEntryLocalServiceImpl
 
 		// File version
 
-		int oldStatus = dlFileVersion.getStatus();
+		Date date = new Date();
 
-		status = _getStatus(dlFileVersion, status);
+		status = _getStatus(date, dlFileVersion, status);
+
+		Date expirationDate = dlFileVersion.getExpirationDate();
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(expirationDate != null) && expirationDate.before(date)) {
+
+			dlFileVersion.setExpirationDate(null);
+		}
+
+		int oldStatus = dlFileVersion.getStatus();
 
 		dlFileVersion = _updateFileVersionStatus(dlFileVersion, status, userId);
 
@@ -2998,14 +3008,12 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
-	private int _getStatus(DLFileVersion dlFileVersion, int status) {
+	private int _getStatus(Date date, DLFileVersion dlFileVersion, int status) {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				dlFileVersion.getCompanyId(), "LPD-10701")) {
 
 			return status;
 		}
-
-		Date date = new Date();
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(dlFileVersion.getDisplayDate() != null) &&

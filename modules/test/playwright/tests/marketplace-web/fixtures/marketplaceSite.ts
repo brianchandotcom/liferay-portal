@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {loginTest} from '../../../../fixtures/loginTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {loginTest} from '../../../fixtures/loginTest';
 
 export const test = mergeTests(apiHelpersTest, loginTest({screenName: 'test'}));
 

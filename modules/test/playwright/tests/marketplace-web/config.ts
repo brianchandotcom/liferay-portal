@@ -7,7 +7,7 @@ import {devices} from '@playwright/test';
 
 export const config = {
 	name: 'marketplace',
-	testDir: 'tests/workspaces/marketplace',
+	testDir: 'tests/marketplace-web',
 	use: {
 		...devices['Desktop Chrome'],
 		testIdAttribute: 'data-qa-id',

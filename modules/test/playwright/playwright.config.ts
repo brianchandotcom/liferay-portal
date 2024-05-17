@@ -30,6 +30,7 @@ import {config as layoutContentPageEditorWebConfig} from './tests/layout-content
 import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototype-web/config';
 import {config as lockedItemsConfig} from './tests/locked-items-web/config';
 import {config as loginWebConfig} from './tests/login-web/config';
+import {config as marketplaceConfig} from './tests/marketplace-web/config';
 import {config as notificationWebConfig} from './tests/notification-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
@@ -42,7 +43,6 @@ import {config as productNavigationUserPersonalBarWebConfig} from './tests/produ
 import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
-import {config as marketplaceConfig} from './tests/workspaces/marketplace/config';
 
 const setupProjects = [wemSiteSetup, wemSiteTeardown];
 
@@ -53,8 +53,8 @@ export default defineConfig({
 	forbidOnly: !!process.env.CI,
 	projects: [
 		accountAdminWebConfig,
-		analyticsWebConfig,
 		analyticsSettingsWebConfig,
+		analyticsWebConfig,
 		announcementsWebConfig,
 		batchPlannerConfig,
 		blogsWebConfig,
@@ -62,8 +62,8 @@ export default defineConfig({
 		clientExtensionWebConfig,
 		commerceConfig,
 		dispatchWebConfig,
-		dynamicDataMappingFormWebConfig,
 		documentLibraryWebConfig,
+		dynamicDataMappingFormWebConfig,
 		exportImportWebConfig,
 		frontendDataSetViewsWebConfig,
 		frontendDataSetWebConfig,
@@ -76,8 +76,8 @@ export default defineConfig({
 		layoutSetPrototypeWebConfig,
 		lockedItemsConfig,
 		loginWebConfig,
-		notificationWebConfig,
 		marketplaceConfig,
+		notificationWebConfig,
 		objectWebConfig,
 		osbFaroWebConfig,
 		portalDefaultPermissionsWebConfig,

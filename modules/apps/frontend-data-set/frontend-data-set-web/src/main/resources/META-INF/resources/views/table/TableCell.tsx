@@ -16,7 +16,7 @@ import {getInputRendererById} from '../../utils/renderer';
 import ViewsContext from '../ViewsContext';
 import DndTableCell from './dnd_table/Cell';
 
-function InlineEditInputRenderer({
+export function InlineEditInputRenderer({
 	itemId,
 	options,
 	rootPropertyName,

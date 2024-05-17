@@ -199,7 +199,9 @@ function ActionsDropdown({
 			return (
 				<DropdownItem
 					action={item}
-					closeMenu={() => onMenuActiveChange(false)}
+					closeMenu={() =>
+						onMenuActiveChange && onMenuActiveChange(false)
+					}
 					key={i}
 					onClick={onClick}
 					setLoading={setLoading}
@@ -221,7 +223,9 @@ function ActionsDropdown({
 
 			<ClayDropDown
 				active={menuActive}
-				onActiveChange={() => onMenuActiveChange(!menuActive)}
+				onActiveChange={() =>
+					onMenuActiveChange && onMenuActiveChange(!menuActive)
+				}
 				trigger={
 					<ClayButton
 						className="component-action dropdown-toggle"

@@ -19,10 +19,6 @@ public class EntryTypeComparator extends OrderByComparator<TrashEntry> {
 
 	public static final String[] ORDER_BY_FIELDS = {"classNameId"};
 
-	public EntryTypeComparator() {
-		this(false);
-	}
-
 	public EntryTypeComparator(boolean ascending) {
 		_ascending = ascending;
 	}

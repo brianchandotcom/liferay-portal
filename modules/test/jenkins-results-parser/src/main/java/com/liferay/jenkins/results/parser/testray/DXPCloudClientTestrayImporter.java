@@ -36,6 +36,8 @@ public class DXPCloudClientTestrayImporter {
 	public static void main(String[] args) throws Exception {
 		_initEnvironmentVariables();
 
+		_setTestType();
+
 		Element rootElement = Dom4JUtil.getNewElement("testsuite");
 
 		rootElement.add(_getTestSuiteEnvironmentsElement());
@@ -309,13 +311,11 @@ public class DXPCloudClientTestrayImporter {
 			return attachmentsElement;
 		}
 
-		String className = testCaseResultElement.attributeValue("classname");
-
-		File testDir = new File(_projectDir, "playwright/playwright-report");
+		File testDir = new File(_projectDir, "playwright-report");
 
 		String testName = null;
 
-		if (!className.endsWith("spec.ts")) {
+		if (_testType.equals("poshi")) {
 			Matcher matcher = _pattern.matcher(
 				testCaseResultElement.attributeValue("name"));
 
@@ -350,7 +350,7 @@ public class DXPCloudClientTestrayImporter {
 				continue;
 			}
 
-			if (!fileName.endsWith(".gz") || !fileName.endsWith(".zip")) {
+			if (!fileName.endsWith(".gz") && !fileName.endsWith(".zip")) {
 				File gzipFile = new File(parentFile, file.getName() + ".gz");
 
 				JenkinsResultsParserUtil.gzip(file, gzipFile);
@@ -371,27 +371,33 @@ public class DXPCloudClientTestrayImporter {
 
 			String attachmentName;
 
-			if (fileName.equals("console.txt.gz")) {
-				attachmentName = "Poshi Console";
+			if (_testType.equals("poshi")) {
+				if (fileName.equals("console.txt.gz")) {
+					attachmentName = "Poshi Console";
+				}
+				else if (fileName.equals("index.html.gz")) {
+					attachmentName = "Poshi Report";
+				}
+				else if (fileName.equals("summary.html.gz")) {
+					attachmentName = "Poshi Summary";
+				}
+				else {
+					continue;
+				}
 			}
-			else if (fileName.equals("index.html.gz") &&
-					 key.contains("playwright")) {
-
-				attachmentName = "Playwright Report";
-			}
-			else if (fileName.endsWith(".zip") && parentFile.contains("data")) {
-				attachmentName = "Trace Zip";
-			}
-			else if (fileName.endsWith(".png.gz") &&
-					 parentFile.contains("data")) {
-
-				attachmentName = "Failure Screenshot";
-			}
-			else if (fileName.equals("index.html.gz")) {
-				attachmentName = "Poshi Report";
-			}
-			else if (fileName.equals("summary.html.gz")) {
-				attachmentName = "Poshi Summary";
+			else if (_testType.equals("playwright")) {
+				if (fileName.equals("index.html.gz")) {
+					attachmentName = "Playwright Report";
+				}
+				else if (fileName.endsWith(".zip")) {
+					attachmentName = "Trace Zip";
+				}
+				else if (fileName.endsWith(".png.gz")) {
+					attachmentName = "Failure Screenshot";
+				}
+				else {
+					continue;
+				}
 			}
 			else {
 				continue;
@@ -496,15 +502,14 @@ public class DXPCloudClientTestrayImporter {
 					"/TEST-com.liferay.poshi.runner.ParallelPoshiRunner.xml");
 		}
 
-		if (!xmlFile.exists()) {
-			xmlFile = new File(
-				_projectDir, "playwright/test-results/TEST-playwright.xml");
+		if (_testType.equals("playwright")) {
+			xmlFile = new File(_projectDir, "test-results/TEST-playwright.xml");
 
 			_splitTestSuitesJUnitReport(xmlFile.getPath());
 
 			List<Element> testCaseElements = new ArrayList<>();
 
-			File parentDir = new File(_projectDir, "playwright/test-results");
+			File parentDir = new File(_projectDir, "test-results");
 
 			for (File childFile : parentDir.listFiles()) {
 				String childFileName = childFile.getName();
@@ -797,6 +802,25 @@ public class DXPCloudClientTestrayImporter {
 		}
 	}
 
+	private static void _setTestType() {
+		File xmlFile = new File(
+			_projectDir,
+			"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml");
+
+		_testType = "poshi";
+
+		if (!xmlFile.exists()) {
+			xmlFile = new File(
+				_projectDir,
+				"test-results" +
+					"/TEST-com.liferay.poshi.runner.ParallelPoshiRunner.xml");
+		}
+
+		if (!xmlFile.exists()) {
+			_testType = "playwright";
+		}
+	}
+
 	private static void _splitTestSuitesJUnitReport(String filePath) {
 		File testSuitesReportFile = new File(filePath);
 
@@ -864,5 +888,6 @@ public class DXPCloudClientTestrayImporter {
 	private static String _testrayTeamName = "DXP Cloud Client Team";
 	private static String _testrayUserName;
 	private static String _testrayUserPassword;
+	private static String _testType;
 
 }

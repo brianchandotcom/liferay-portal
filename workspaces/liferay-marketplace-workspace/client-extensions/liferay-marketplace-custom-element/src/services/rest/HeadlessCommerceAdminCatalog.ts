@@ -41,7 +41,8 @@ class HeadlessCommerceAdminCatalog {
 		description,
 		name,
 		productChannels,
-		productStatus = 2,
+		productStatus,
+		workflowStatusInfo,
 	}: {
 		catalogId: number;
 		categories: Partial<Categories>[];
@@ -49,6 +50,7 @@ class HeadlessCommerceAdminCatalog {
 		name: string;
 		productChannels?: Partial<Channel>[];
 		productStatus?: number;
+		workflowStatusInfo?: number;
 	}) {
 		return fetcher.post(
 			`/o/headless-commerce-admin-catalog/v1.0/products`,
@@ -66,6 +68,7 @@ class HeadlessCommerceAdminCatalog {
 				productStatus,
 				productType: 'virtual',
 				productVirtualSettings: {},
+				workflowStatusInfo,
 			}
 		);
 	}

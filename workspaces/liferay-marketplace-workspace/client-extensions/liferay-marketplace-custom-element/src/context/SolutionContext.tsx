@@ -81,6 +81,7 @@ export enum SolutionTypes {
 	SET_CLEANUP = 'SET_CLEANUP',
 	SET_COMPANY = 'SET_COMPANY',
 	SET_CONTACT_US = 'SET_CONTACT_US',
+	SET_CONTEXT = 'SET_CONTEXT',
 	SET_DELETE_IMAGE = 'SET_DELETE_IMAGE',
 	SET_DETAILS = 'SET_DETAILS',
 	SET_HEADER = 'SET_HEADER',
@@ -106,6 +107,7 @@ type SolutionPayload = {
 		website: string;
 	}>;
 	[SolutionTypes.SET_CONTACT_US]: string;
+	[SolutionTypes.SET_CONTEXT]: Product;
 	[SolutionTypes.SET_DELETE_IMAGE]: string;
 	[SolutionTypes.SET_DETAILS]: ContentBlock[];
 	[SolutionTypes.SET_HEADER]: Partial<{
@@ -254,7 +256,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 			};
 		}
 
-		case SolutionTypes.SET_PRODUCT: {
+		case SolutionTypes.SET_CONTEXT: {
 			const newState = {...state};
 			const _product = action.payload;
 			const productSpecifications = _product.productSpecifications || [];
@@ -268,17 +270,18 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 				);
 			}
 
-			const solutionHeaderImages = _product.images.filter(({tags}) =>
+			const solutionHeaderImages = _product?.images?.filter(({tags}) =>
 				tags?.includes(PRODUCT_TAGS.SOLUTION_HEADER)
 			);
 
 			let contentType = {
 				content: {
-					headerImages: solutionHeaderImages.map(
+					headerImages: solutionHeaderImages?.map(
 						({externalReferenceCode, src, title}) => ({
 							changed: false,
 							fileName: title.en_US,
 							id: externalReferenceCode,
+							imageDescription: title?.en_US,
 							preview: new URL(src).pathname,
 							progress: 100,
 							uploaded: true,
@@ -349,7 +352,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 							...block,
 							content: {
 								...block.content,
-								files: block.content.files.map((file) => {
+								files: block.content.files?.map((file) => {
 									const image = solutionDetailsImages.find(
 										({externalReferenceCode}) =>
 											externalReferenceCode ===
@@ -360,6 +363,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 										changed: false,
 										fileName: image?.title?.en_US,
 										id: image?.externalReferenceCode,
+										imageDescription: image?.title?.en_US,
 										preview: image?.src
 											? new URL(image.src).pathname
 											: '',
@@ -425,6 +429,13 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 					...state.profile,
 					...action.payload,
 				},
+			};
+		}
+
+		case SolutionTypes.SET_PRODUCT: {
+			return {
+				...state,
+				_product: action.payload,
 			};
 		}
 
@@ -525,7 +536,8 @@ export default function SolutionContextProvider({
 	children,
 }: SolutionContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, solutionInitialState);
-	const {id: productId} = useParams();
+	const {productId} = useParams();
+
 	const {data = {}} = useGetVocabulariesAndCategories([
 		ProductVocabulary.PRODUCT_TYPE,
 		ProductVocabulary.SOLUTION_CATEGORY,
@@ -544,7 +556,7 @@ export default function SolutionContextProvider({
 			})
 		)
 			.then((response) =>
-				dispatch({payload: response, type: SolutionTypes.SET_PRODUCT})
+				dispatch({payload: response, type: SolutionTypes.SET_CONTEXT})
 			)
 			.catch(console.error);
 	}, [productId]);

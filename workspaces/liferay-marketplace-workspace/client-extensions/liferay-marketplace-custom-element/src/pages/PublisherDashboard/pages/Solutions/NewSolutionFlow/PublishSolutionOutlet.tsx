@@ -139,10 +139,7 @@ const PublishSolutionOutlet = () => {
 							{i18n.translate('save-as-a-draft-exit')}
 						</ClayButton>
 
-						<Link
-							className="btn btn-primary ml-2"
-							to="../solutions"
-						>
+						<Link className="btn btn-primary ml-2" to="/solutions">
 							{i18n.translate('exit')}
 						</Link>
 					</>

@@ -5,20 +5,11 @@
 
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import useSWR from 'swr';
-
-import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
-import {
-	getThumbnailByProductAttachment,
-	showAppImage,
-} from '../../../../../utils/util';
-import {ReviewAndSubmitSolutions} from './ReviewAndSubmitSolutions';
+import {useState} from 'react';
 
 import './index.scss';
-import {PRODUCT_CATEGORIES} from '../../../../../enums/Product';
-import {getProductCategoriesByVocabularyName} from '../../../../../utils/productUtils';
+import {useSolutionContext} from '../../../../../context/SolutionContext';
+import {Submit} from '../../../../PublisherDashboard/pages/Solutions/NewSolutionFlow/pages';
 import SolutionsDetailsHeader from './SolutionDetailsHeader/SolutionDetailsHeader';
 
 export type Solution = {
@@ -36,80 +27,16 @@ const NAVIGATION_BAR_OPTIONS = {
 };
 
 const SolutionsDetails = () => {
+	const [context] = useSolutionContext();
+
+	const {_product} = context;
+
 	const [active, setActive] = useState(NAVIGATION_BAR_OPTIONS.DETAILS);
-	const [solution, setSolution] = useState<Solution>();
-
-	const {appId} = useParams();
-
-	const productId = Number(appId) + 1;
-
-	const {data: selectedSolution, isLoading} = useSWR(
-		`/published-app/${productId}`,
-		() =>
-			HeadlessCommerceAdminCatalogImpl.getProduct(
-				productId,
-				new URLSearchParams({
-					nestedFields: 'attachments,images,productSpecifications',
-				})
-			)
-	);
-
-	useEffect(() => {
-		if (!selectedSolution) {
-			return;
-		}
-
-		const {attachments, categories, description, images} = selectedSolution;
-
-		const getData = async () => {
-			const solutionCategories = getProductCategoriesByVocabularyName(
-				categories,
-				PRODUCT_CATEGORIES.MARKETPLACE_SOLUTION_CATEGORY
-			);
-
-			const solutionTags = getProductCategoriesByVocabularyName(
-				categories,
-				PRODUCT_CATEGORIES.MARKETPLACE_SOLUTION_TAGS
-			);
-
-			const attachment = attachments?.find(
-				(attachment: ProductAttachment) => {
-					return (attachment.tags || []).indexOf('app icon') < 0;
-				}
-			);
-
-			const thumbnail = showAppImage(
-				getThumbnailByProductAttachment(images)
-			);
-
-			const newSolution = {
-				attachmentTitle: attachment?.title['en_US'] as string,
-				categories: solutionCategories,
-				description: description['en_US'],
-				name: selectedSolution.name['en_US'],
-				storefront: (selectedSolution.images || []).filter(
-					(image: ProductAttachment) => {
-						return image.galleryEnabled;
-					}
-				),
-				tags: solutionTags,
-				thumbnail,
-			};
-
-			setSolution(newSolution);
-		};
-
-		getData();
-	}, [selectedSolution]);
-
-	if (!selectedSolution || isLoading) {
-		return null;
-	}
 
 	return (
 		<div className="solutions-details-page-container w-100">
 			<div className="mb-5 solutions-details-header">
-				<SolutionsDetailsHeader selectedSolution={selectedSolution} />
+				<SolutionsDetailsHeader product={_product} />
 
 				<ClayNavigationBar className="w-100" triggerLabel={active}>
 					<ClayNavigationBar.Item
@@ -128,10 +55,7 @@ const SolutionsDetails = () => {
 
 			<div className="solution-details-page-content">
 				{active === NAVIGATION_BAR_OPTIONS.DETAILS && (
-					<ReviewAndSubmitSolutions
-						loading={isLoading}
-						solution={solution}
-					/>
+					<Submit readOnly />
 				)}
 			</div>
 		</div>

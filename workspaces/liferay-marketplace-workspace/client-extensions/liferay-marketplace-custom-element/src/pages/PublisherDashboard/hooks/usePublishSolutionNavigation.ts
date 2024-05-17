@@ -42,7 +42,7 @@ const usePublishSolutionNavigation = () => {
 		navigate(publishSolutionSteps[activeIndex + 1].path);
 	};
 
-	const onExit = () => navigate('../solutions');
+	const onExit = () => navigate('/solutions');
 
 	return {
 		activeIndex,

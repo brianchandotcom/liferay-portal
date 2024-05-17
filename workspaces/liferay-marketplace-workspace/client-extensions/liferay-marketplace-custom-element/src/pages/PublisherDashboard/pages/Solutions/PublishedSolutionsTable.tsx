@@ -23,6 +23,7 @@ import {
 	showAppImage,
 } from '../../../../utils/util';
 import {formatDate} from '../../PublisherDashboardPageUtil';
+import {STATUSES} from './constants';
 
 type PublishedSolutionsTableProps = {
 	items: Order[];
@@ -73,8 +74,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 			modal.onClose();
 
 			setSelectedApp({} as Product);
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
@@ -150,14 +150,18 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 						key: 'workflowStatusInfo',
 						render: (workflowStatusInfo) => (
 							<OrderStatus orderStatus={workflowStatusInfo.label}>
-								{workflowStatusInfo.label}
+								{
+									STATUSES[
+										workflowStatusInfo.code as keyof typeof STATUSES
+									]
+								}
 							</OrderStatus>
 						),
 						title: 'Status',
 					},
 				]}
 				hasKebabButton
-				onClickRow={({id}) => navigate(`${id}`)}
+				onClickRow={({productId}) => navigate(`${productId}`)}
 				rows={items}
 			/>
 

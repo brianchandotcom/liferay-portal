@@ -13,6 +13,14 @@ import com.liferay.portal.kernel.util.ClassUtil;
  */
 public class ContactNameException extends PortalException {
 
+	public static class InvalidFirstName extends ContactNameException {
+
+		public InvalidFirstName() {
+			super("Contacts must have a shorter first name");
+		}
+
+	}
+
 	public static class MustHaveFirstName extends ContactNameException {
 
 		public MustHaveFirstName() {

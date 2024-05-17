@@ -7160,6 +7160,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (Validator.isNull(firstName)) {
 			throw new ContactNameException.MustHaveFirstName();
 		}
+		else if (firstName.length() > 75) {
+			throw new ContactNameException.InvalidFirstName();
+		}
 		else if (Validator.isNull(middleName) &&
 				 fullNameDefinition.isFieldRequired("middle-name")) {
 

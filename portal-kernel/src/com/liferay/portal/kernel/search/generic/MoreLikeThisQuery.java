@@ -122,6 +122,10 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 		return _termBoost;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getType() {
 		return _type;
 	}
@@ -182,6 +186,10 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 		_termBoost = termBoost;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setType(String type) {
 		_type = type;
 	}

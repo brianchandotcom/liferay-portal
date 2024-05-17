@@ -4151,6 +4151,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateExpired", additionalAssertFieldName)) {
+				if (structuredContent.getDateExpired() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (structuredContent.getDatePublished() == null) {
 					valid = false;
@@ -4213,6 +4221,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (structuredContent.getKeywords() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
+				if (structuredContent.getNeverExpire() == null) {
 					valid = false;
 				}
 
@@ -4614,6 +4630,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("dateExpired", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContent1.getDateExpired(),
+						structuredContent2.getDateExpired())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						structuredContent1.getDateModified(),
@@ -4721,6 +4748,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContent1.getKeywords(),
 						structuredContent2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContent1.getNeverExpire(),
+						structuredContent2.getNeverExpire())) {
 
 					return false;
 				}
@@ -5192,6 +5230,38 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("dateExpired")) {
+			if (operator.equals("between")) {
+				Date date = structuredContent.getDateExpired();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(structuredContent.getDateExpired()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("dateModified")) {
 			if (operator.equals("between")) {
 				Date date = structuredContent.getDateModified();
@@ -5460,6 +5530,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("neverExpire")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("numberOfComments")) {
 			sb.append(String.valueOf(structuredContent.getNumberOfComments()));
 
@@ -5662,6 +5737,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 					RandomTestUtil.randomString());
 				contentStructureId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
+				dateExpired = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -5672,6 +5748,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				neverExpire = RandomTestUtil.randomBoolean();
 				numberOfComments = RandomTestUtil.randomInt();
 				priority = RandomTestUtil.randomDouble();
 				siteId = testGroup.getGroupId();

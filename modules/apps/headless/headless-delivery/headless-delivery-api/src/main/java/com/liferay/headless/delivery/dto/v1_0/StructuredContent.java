@@ -463,6 +463,49 @@ public class StructuredContent implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
+	@Schema(description = "The expiration date of the structured content.")
+	public Date getDateExpired() {
+		if (_dateExpiredSupplier != null) {
+			dateExpired = _dateExpiredSupplier.get();
+
+			_dateExpiredSupplier = null;
+		}
+
+		return dateExpired;
+	}
+
+	public void setDateExpired(Date dateExpired) {
+		this.dateExpired = dateExpired;
+
+		_dateExpiredSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDateExpired(
+		UnsafeSupplier<Date, Exception> dateExpiredUnsafeSupplier) {
+
+		_dateExpiredSupplier = () -> {
+			try {
+				return dateExpiredUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The expiration date of the structured content."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateExpired;
+
+	@JsonIgnore
+	private Supplier<Date> _dateExpiredSupplier;
+
 	@Schema(
 		description = "The last time any field of the structured content was changed."
 	)
@@ -902,6 +945,51 @@ public class StructuredContent implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
+
+	@Schema(
+		description = "Whether the web content article is not set to auto expire"
+	)
+	public Boolean getNeverExpire() {
+		if (_neverExpireSupplier != null) {
+			neverExpire = _neverExpireSupplier.get();
+
+			_neverExpireSupplier = null;
+		}
+
+		return neverExpire;
+	}
+
+	public void setNeverExpire(Boolean neverExpire) {
+		this.neverExpire = neverExpire;
+
+		_neverExpireSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setNeverExpire(
+		UnsafeSupplier<Boolean, Exception> neverExpireUnsafeSupplier) {
+
+		_neverExpireSupplier = () -> {
+			try {
+				return neverExpireUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Whether the web content article is not set to auto expire"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean neverExpire;
+
+	@JsonIgnore
+	private Supplier<Boolean> _neverExpireSupplier;
 
 	@Schema(
 		description = "The number of comments the structured content has received."
@@ -1729,6 +1817,22 @@ public class StructuredContent implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateExpired = getDateExpired();
+
+		if (dateExpired != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateExpired\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateExpired));
+
+			sb.append("\"");
+		}
+
 		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
@@ -1885,6 +1989,18 @@ public class StructuredContent implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		Boolean neverExpire = getNeverExpire();
+
+		if (neverExpire != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"neverExpire\": ");
+
+			sb.append(neverExpire);
 		}
 
 		Integer numberOfComments = getNumberOfComments();

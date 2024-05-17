@@ -202,6 +202,22 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
+		if (structuredContent.getDateExpired() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateExpired\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					structuredContent.getDateExpired()));
+
+			sb.append("\"");
+		}
+
 		if (structuredContent.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -342,6 +358,16 @@ public class StructuredContentSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (structuredContent.getNeverExpire() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"neverExpire\": ");
+
+			sb.append(structuredContent.getNeverExpire());
 		}
 
 		if (structuredContent.getNumberOfComments() != null) {
@@ -667,6 +693,16 @@ public class StructuredContentSerDes {
 					structuredContent.getDateCreated()));
 		}
 
+		if (structuredContent.getDateExpired() == null) {
+			map.put("dateExpired", null);
+		}
+		else {
+			map.put(
+				"dateExpired",
+				liferayToJSONDateFormat.format(
+					structuredContent.getDateExpired()));
+		}
+
 		if (structuredContent.getDateModified() == null) {
 			map.put("dateModified", null);
 		}
@@ -752,6 +788,15 @@ public class StructuredContentSerDes {
 		else {
 			map.put(
 				"keywords", String.valueOf(structuredContent.getKeywords()));
+		}
+
+		if (structuredContent.getNeverExpire() == null) {
+			map.put("neverExpire", null);
+		}
+		else {
+			map.put(
+				"neverExpire",
+				String.valueOf(structuredContent.getNeverExpire()));
 		}
 
 		if (structuredContent.getNumberOfComments() == null) {
@@ -975,6 +1020,12 @@ public class StructuredContentSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateExpired")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setDateExpired(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setDateModified(
@@ -1038,6 +1089,12 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setNeverExpire(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {

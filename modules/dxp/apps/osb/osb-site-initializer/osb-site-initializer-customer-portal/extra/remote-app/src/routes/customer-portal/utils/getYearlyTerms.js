@@ -4,65 +4,38 @@
  */
 
 const getYearlyTerms = ({endDate, startDate}) => {
-	const endDateFull = new Date(endDate);
-	const startDateFull = new Date(startDate);
+	endDate = new Date(endDate);
+	startDate = new Date(startDate);
 
-	const endDateDay = endDateFull.getDate();
-	const endDateMonth = endDateFull.getMonth();
-	const endDateYear = endDateFull.getFullYear();
+	const endDateYear = endDate.getFullYear();
+	const startDateYear = startDate.getFullYear();
+	const yearlyTerms = [];
 
-	const startDateDay = startDateFull.getDate();
-	const startDateMonth = startDateFull.getMonth();
-	const startDateYear = startDateFull.getFullYear();
+	if (startDateYear === endDateYear) {
+		yearlyTerms.push({endDate, startDate});
 
-	if (startDateYear + 1 < endDateYear) {
-		let arraySize = endDateYear - startDateYear;
-
-		if (endDateMonth > startDateMonth) {
-			arraySize = arraySize + 1;
-		}
-		else if (
-			endDateMonth === startDateMonth &&
-			endDateDay > startDateDay
-		) {
-			arraySize = arraySize + 1;
-		}
-
-		const yearDateSplitted = new Array(arraySize)
-			.fill()
-			.map((_, index, array) => {
-				const indexYear = startDateYear + index;
-				const indexNumStartDate = new Date(startDate).setFullYear(
-					indexYear
-				);
-				const yearNumEndDate = indexYear + 1;
-
-				const indexEndDate = new Date(
-					yearNumEndDate,
-					startDateMonth,
-					startDateDay - 1
-				);
-				const indexStartDate = new Date(indexNumStartDate);
-
-				if (index === array.length - 1) {
-					return {
-						endDate: endDateFull,
-						startDate: indexStartDate,
-					};
-				}
-				else {
-					return {
-						endDate: indexEndDate,
-						startDate: indexStartDate,
-					};
-				}
-			})
-			.filter((item) => item);
-
-		return yearDateSplitted;
+		return yearlyTerms;
 	}
 
-	return [{endDate: endDateFull, startDate: startDateFull}];
+	for (let year = startDateYear; year <= endDateYear; year++) {
+		const startDateForYear = new Date(startDate.setFullYear(year));
+		const endDateForYear = new Date(
+			year + 1,
+			startDate.getMonth(),
+			startDate.getDate() - 1
+		);
+
+		if (year === endDateYear && endDateForYear > endDate) {
+			continue;
+		}
+
+		yearlyTerms.push({
+			startDate: startDateForYear,
+			endDate: endDateForYear,
+		});
+	}
+
+	return yearlyTerms;
 };
 
 export {getYearlyTerms};

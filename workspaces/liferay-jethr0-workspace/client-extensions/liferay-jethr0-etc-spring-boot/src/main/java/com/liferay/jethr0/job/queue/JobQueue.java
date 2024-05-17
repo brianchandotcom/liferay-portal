@@ -248,6 +248,8 @@ public class JobQueue {
 			_liferayJobPrioritizer);
 
 		_jobComparatorEntityRepository.create(
+			jobPrioritizerEntity, 0, JobComparatorEntity.Type.BLESSED, null);
+		_jobComparatorEntityRepository.create(
 			jobPrioritizerEntity, 1, JobComparatorEntity.Type.JOB_START_DATE,
 			null);
 		_jobComparatorEntityRepository.create(

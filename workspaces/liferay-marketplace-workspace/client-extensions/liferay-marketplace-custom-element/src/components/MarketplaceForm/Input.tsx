@@ -12,7 +12,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	name: string;
 }
 
-export function Input({component, maxLength, ...props}: InputProps) {
+export function Input({component, ...props}: InputProps) {
+	const maxLength = props.maxLength;
+
 	return (
 		<>
 			<ClayInput
@@ -21,13 +23,14 @@ export function Input({component, maxLength, ...props}: InputProps) {
 				})}
 				component={component}
 				id={props.name}
-				maxLength={maxLength}
 				{...props}
 			/>
 
 			{maxLength && (
 				<small className="text-black-50">
-					{`${(props.value as string)?.length} / ${maxLength}`}
+					{`${
+						props.value ? (props.value as string).length : 0
+					} / ${maxLength}`}
 				</small>
 			)}
 		</>

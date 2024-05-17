@@ -113,7 +113,7 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 						)
 					}
 				>
-					{i18n.translate('aprove')}
+					{i18n.translate('approve')}
 				</ClayButton>
 			)}
 		</>

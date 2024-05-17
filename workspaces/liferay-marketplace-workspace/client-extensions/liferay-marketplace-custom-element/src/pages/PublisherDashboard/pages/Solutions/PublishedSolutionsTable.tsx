@@ -14,7 +14,10 @@ import Modal from '../../../../components/Modal';
 import OrderStatus from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
 import TableKebabButton from '../../../../components/Table/TableButtons/TableKebabButton';
-import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
+import {
+	PRODUCT_WORKFLOW_STATUS_CODE,
+	PRODUCT_WORKFLOW_STATUS_LABEL,
+} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -23,7 +26,6 @@ import {
 	showAppImage,
 } from '../../../../utils/util';
 import {formatDate} from '../../PublisherDashboardPageUtil';
-import {STATUSES} from './constants';
 
 type PublishedSolutionsTableProps = {
 	items: Order[];
@@ -74,7 +76,8 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 			modal.onClose();
 
 			setSelectedApp({} as Product);
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
@@ -132,7 +135,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 								</span>
 							</div>
 						),
-						title: 'Name',
+						title: i18n.translate('name'),
 					},
 					{
 						key: 'solutionType',
@@ -151,13 +154,13 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 						render: (workflowStatusInfo) => (
 							<OrderStatus orderStatus={workflowStatusInfo.label}>
 								{
-									STATUSES[
-										workflowStatusInfo.code as keyof typeof STATUSES
+									PRODUCT_WORKFLOW_STATUS_LABEL[
+										workflowStatusInfo.code as keyof typeof PRODUCT_WORKFLOW_STATUS_LABEL
 									]
 								}
 							</OrderStatus>
 						),
-						title: 'Status',
+						title: i18n.translate('status'),
 					},
 				]}
 				hasKebabButton

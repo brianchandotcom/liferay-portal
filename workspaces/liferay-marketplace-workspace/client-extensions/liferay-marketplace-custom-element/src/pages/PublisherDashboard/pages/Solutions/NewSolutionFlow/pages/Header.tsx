@@ -189,7 +189,7 @@ const Header = () => {
 							})
 						}
 						placeholder={i18n.translate('insert-text-here')}
-						value={description as any}
+						value={description}
 					/>
 				</div>
 			</Form.FormControl>
@@ -343,14 +343,14 @@ const Header = () => {
 							'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb'
 						)}
 						disabled={
-							contentType?.content?.headerImages?.length ===
+							contentType.content.headerImages?.length ===
 							MAX_IMAGE_QUANTITY
 						}
 						maxFiles={MAX_IMAGE_QUANTITY}
 						maxSize={MAX_SIZE_5MBS}
 						multiple
 						onDropRejected={(fileList) => {
-							if (fileList?.length > MAX_IMAGE_QUANTITY) {
+							if (fileList.length > MAX_IMAGE_QUANTITY) {
 								onOpenChange(true);
 							}
 						}}

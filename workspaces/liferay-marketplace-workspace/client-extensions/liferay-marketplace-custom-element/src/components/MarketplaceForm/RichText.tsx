@@ -16,13 +16,15 @@ type RichTextProps = {
 	value: string;
 };
 
+const VALIDATE_TIMEOUT = 1000;
+
 const RichTextEditor: React.FC<RichTextProps> = ({
 	maxLength,
 	onChange,
 	placeholder,
 	value = '',
 }) => {
-	const [validate, setValidate] = useState<boolean>(false);
+	const [validate, setValidate] = useState(false);
 
 	function handleKeyDown(event: any) {
 		setValidate(false);
@@ -32,7 +34,7 @@ const RichTextEditor: React.FC<RichTextProps> = ({
 		if (event.key === 'Backspace') {
 			return setTimeout(() => {
 				setValidate(false);
-			}, 1000);
+			}, VALIDATE_TIMEOUT);
 		}
 
 		if (text.length === maxLength) {
@@ -41,7 +43,7 @@ const RichTextEditor: React.FC<RichTextProps> = ({
 
 		setTimeout(() => {
 			setValidate(false);
-		}, 1000);
+		}, VALIDATE_TIMEOUT);
 	}
 
 	return (
@@ -59,7 +61,9 @@ const RichTextEditor: React.FC<RichTextProps> = ({
 
 			{maxLength && (
 				<small className="text-black-50">
-					{`${removeHTMLTags(value)?.length}/ ${maxLength}`}
+					{`${
+						value ? removeHTMLTags(value).length : 0
+					}/ ${maxLength}`}
 				</small>
 			)}
 		</>

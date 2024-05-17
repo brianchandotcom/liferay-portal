@@ -42,6 +42,7 @@ const updateSpecification = async (
 		!value?.trim() ||
 		(specification && specification.value.en_US === value)
 	) {
+
 		// No need to update the specification if the value is equal
 		// the previous value or empty.
 
@@ -191,39 +192,40 @@ const usePublishSolutionSubmission = (
 			return;
 		}
 
+		const headerImages = contentType.content?.headerImages ?? [];
+
 		// Process Upload Images, priority starts in 1 to not conflict with
 		// the app icon defined as priority 0
 
 		let priority = 0;
+		for (const headerImage of headerImages) {
+			priority++;
 
-		if (contentType.content.headerImages) {
-			for (const image of contentType.content.headerImages) {
-				priority++;
-
-				if (image.uploaded) {
-					continue;
-				}
-
-				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
-					product.externalReferenceCode,
-					{
-						attachment: base64ToText(
-							(await fileToBase64(image.file)) as string
-						),
-						galleryEnabled: false,
-						neverExpire: true,
-						priority,
-						tags: [PRODUCT_TAGS.SOLUTION_HEADER],
-						title: {
-							en_US: image.imageDescription || image.file.name,
-						},
-					},
-					(progress) => {
-						image.progress = progress;
-						image.uploaded = progress === 100;
-					}
-				);
+			if (headerImage.uploaded) {
+				continue;
 			}
+
+			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+				product.externalReferenceCode,
+				{
+					attachment: base64ToText(
+						(await fileToBase64(headerImage.file)) as string
+					),
+					galleryEnabled: false,
+					neverExpire: true,
+					priority,
+					tags: [PRODUCT_TAGS.SOLUTION_HEADER],
+					title: {
+						en_US:
+							headerImage.imageDescription ||
+							headerImage.file.name,
+					},
+				},
+				(progress) => {
+					headerImage.progress = progress;
+					headerImage.uploaded = progress === 100;
+				}
+			);
 		}
 	};
 
@@ -341,9 +343,11 @@ const usePublishSolutionSubmission = (
 			]) {
 				await sync(product);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
-		} finally {
+		}
+		finally {
 			dispatch({payload: false, type: SolutionTypes.SET_LOADING});
 		}
 	};

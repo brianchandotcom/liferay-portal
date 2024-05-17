@@ -56,10 +56,7 @@ const Submit: React.FC<SubmitProps> = ({readOnly = false}) => {
 			<ContentReview>
 				<ContentReview.Section>
 					{!readOnly && (
-						<ContentReview.Header
-							as="h2"
-							path={readOnly ? '' : '../profile'}
-						>
+						<ContentReview.Header as="h2" path="../profile">
 							<div className="align-items-center d-flex">
 								<img
 									alt=""
@@ -166,72 +163,70 @@ const Submit: React.FC<SubmitProps> = ({readOnly = false}) => {
 				<ContentReview.Separator />
 
 				{!!details.length && (
-					<>
-						<ContentReview.Section>
-							<ContentReview.Header
-								as="h2"
-								path={readOnly ? '' : '../details'}
+					<ContentReview.Section>
+						<ContentReview.Header
+							as="h2"
+							path={readOnly ? '' : '../details'}
+						>
+							{i18n.translate('solution-details')}
+						</ContentReview.Header>
+
+						{details.map((block, index) => (
+							<ContentReview.Block
+								key={index}
+								title={i18n.translate(
+									block.type as keyof typeof en_US
+								)}
 							>
-								{i18n.translate('solution-details')}
-							</ContentReview.Header>
-							{details.map((block, index) => (
-								<ContentReview.Block
-									key={index}
-									title={i18n.translate(
-										block.type as keyof typeof en_US
-									)}
+								<ContentReview.Paragraph
+									title={i18n.translate('title')}
 								>
-									<ContentReview.Paragraph
-										title={i18n.translate('title')}
-									>
-										{i18n.translate(
-											block.content
-												.title as keyof typeof en_US
-										)}
-									</ContentReview.Paragraph>
-									<ContentReview.Paragraph
-										title={i18n.translate('description')}
-									>
-										<p
-											dangerouslySetInnerHTML={{
-												__html: DOMPurify.sanitize(
-													block.content.description
-												),
-											}}
-										/>
-									</ContentReview.Paragraph>
-
-									{block.type === 'text-images-block' &&
-										block.content.files?.map(
-											(file, fileIndex) => (
-												<ContentReview.ImageInfo
-													icon="document-image"
-													imageFile={file}
-													key={fileIndex}
-												/>
-											)
-										)}
-
-									{block.type === 'text-video-block' && (
-										<div className="d-flex">
-											<ContentReview.Video
-												className="mr-3"
-												videoDescription={
-													block.content
-														.videoDescription
-												}
-												videoUrl={
-													block.content.videoUrl
-												}
-											/>
-										</div>
+									{i18n.translate(
+										block.content
+											.title as keyof typeof en_US
 									)}
-								</ContentReview.Block>
-							))}
-						</ContentReview.Section>
-						<ContentReview.Separator />
-					</>
+								</ContentReview.Paragraph>
+								<ContentReview.Paragraph
+									title={i18n.translate('description')}
+								>
+									<p
+										dangerouslySetInnerHTML={{
+											__html: DOMPurify.sanitize(
+												block.content.description
+											),
+										}}
+									/>
+								</ContentReview.Paragraph>
+
+								{block.type === 'text-images-block' &&
+									block.content.files?.map(
+										(file, fileIndex) => (
+											<ContentReview.ImageInfo
+												icon="document-image"
+												imageFile={file}
+												key={fileIndex}
+											/>
+										)
+									)}
+
+								{block.type === 'text-video-block' && (
+									<div className="d-flex">
+										<ContentReview.Video
+											className="mr-3"
+											videoDescription={
+												block.content.videoDescription
+											}
+											videoUrl={block.content.videoUrl}
+										/>
+									</div>
+								)}
+							</ContentReview.Block>
+						))}
+					</ContentReview.Section>
 				)}
+
+				{!!details.length && <ContentReview.Separator />}
+
 				<ContentReview.Section>
 					<ContentReview.Header
 						as="h2"
@@ -304,6 +299,7 @@ const Submit: React.FC<SubmitProps> = ({readOnly = false}) => {
 							});
 						}}
 					/>
+
 					<p className="ml-4">
 						<b>Attention: this cannot be undone.</b> I am aware I
 						cannot edit any data or information regarding this

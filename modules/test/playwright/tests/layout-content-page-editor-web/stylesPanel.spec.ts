@@ -9,9 +9,9 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -80,7 +80,7 @@ test('allows changing and resetting spacing', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Check Saved icon is not visible at the beggining
 
@@ -137,7 +137,7 @@ test('renders all selectors with correct default values', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -199,7 +199,7 @@ test('renders correct sections in color picker', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -245,7 +245,7 @@ test('changes the value in the Color Picker when the reset button is clicked', a
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 

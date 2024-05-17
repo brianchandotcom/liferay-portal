@@ -9,9 +9,9 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {expectElementToHaveClass} from '../../utils/expectElementToHaveClass';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -53,7 +53,7 @@ test('allows moving through layout content with keyboard', async ({
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Check we can move with arrows
 
@@ -124,7 +124,7 @@ test('focus order is correct', async ({
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Check focus order is correct:
 	// Sidebar > Fragment > Editable > Breadcrumb > Config sidebar

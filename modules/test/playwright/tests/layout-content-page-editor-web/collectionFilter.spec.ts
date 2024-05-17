@@ -10,12 +10,12 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import createPageWithCollectionAndFilterCollection from './utils/createPageWithCollectionAndFilterCollection';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
@@ -128,7 +128,7 @@ test('filters a web content collection by single and multiple categories', async
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
 	// Go to edit mode of the created page and select the Collection Filter fragment
 
@@ -269,7 +269,7 @@ testWithIsolatedSite(
 
 		// Go to edit mode of the created page and select the Collection Filter fragment
 
-		await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 		await pageEditorPage.selectFragment(collectionFilterId);
 
@@ -367,7 +367,7 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	// Go to edit mode of the created page and select the Collection Filter fragment
 
-	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(collectionFilterId);
 
@@ -473,7 +473,7 @@ test('filters the collection content by keywords using two filters', async ({
 
 	// Go to edit mode
 
-	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
 	// Configure the first filter by keywords
 

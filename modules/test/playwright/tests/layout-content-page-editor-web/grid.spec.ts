@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getGridDefinition from './utils/getGridDefinition';
@@ -55,7 +55,7 @@ test('grid content is also duplicated', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Check there's one heading
 
@@ -89,7 +89,7 @@ test('can nest grids', async ({apiHelpers, pageEditorPage, site}) => {
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Check nested grid is rendered properly
 
@@ -120,7 +120,7 @@ test('can configure grid', async ({apiHelpers, page, pageEditorPage, site}) => {
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Change grid config and check it's applied
 
@@ -170,7 +170,7 @@ test('can duplicate a grid inside a container', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Duplicate grid and check the copy is added properly inside the container
 
@@ -199,7 +199,7 @@ test('can resize a grid', async ({apiHelpers, page, pageEditorPage, site}) => {
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Select grid and resize last column
 

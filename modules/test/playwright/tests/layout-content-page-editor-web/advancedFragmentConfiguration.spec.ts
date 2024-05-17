@@ -10,8 +10,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 import getWidgetDefinition from './utils/getWidgetDefinition';
@@ -66,7 +66,7 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layouts.fragment, site.friendlyUrlPath);
+	await pageEditorPage.goto(layouts.fragment, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -96,7 +96,7 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 
 	// Go back to the fragment page and hide the fragment from the search results
 
-	await pageEditorPage.goToEditMode(layouts.fragment, site.friendlyUrlPath);
+	await pageEditorPage.goto(layouts.fragment, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 

@@ -7,7 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {PageEditorPage} from './pages/PageEditorPage';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
 export const test = mergeTests(

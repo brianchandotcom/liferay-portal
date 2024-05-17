@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -305,7 +305,7 @@ test('correct viewport configuration is set when adding a Grid', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Add a grid and change number of columns to 6
 

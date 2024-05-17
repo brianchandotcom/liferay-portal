@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -47,7 +47,7 @@ test('allows editing inline text from Page Content Panel', async ({
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Go to Page Contents panel and edit inline text
 

@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -38,7 +38,7 @@ test('allows renaming an experience', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Create experience and rename it
 
@@ -65,7 +65,7 @@ test('allows changing the segment of an existing experience', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Create experience and rename it
 
@@ -103,7 +103,7 @@ test('creates new experiences as expected', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Create new experience and check it's the last one and inactive
 
@@ -149,7 +149,7 @@ test('keeps modal open when canceling segment creation', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Open experience creation modal and go to create new segment
 
@@ -192,7 +192,7 @@ test('styles changes affect to current experience only', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Change heading margin top
 
@@ -240,7 +240,7 @@ test('allows duplicating an experience', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Create new experience and duplicate it
 
@@ -278,7 +278,7 @@ test('allows creating experiences with different fragments', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Create new experience and remove the fragment
 
@@ -307,7 +307,7 @@ test('allows editing and deleting an experience', async ({
 		title: getRandomString(),
 	});
 
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Create new experienc
 

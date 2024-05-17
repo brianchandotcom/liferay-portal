@@ -11,9 +11,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from '../layout-content-page-editor-web/fixtures/pageEditorPagesTest';
 import getCollectionDefinition from '../layout-content-page-editor-web/utils/getCollectionDefinition';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
@@ -186,7 +186,7 @@ test.describe('Manage object entries through page templates', () => {
 			title: 'Collection Display filtered by boolean type',
 		});
 
-		await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 		await pageEditorPage.selectFragment(collectionDefinition.id);
 

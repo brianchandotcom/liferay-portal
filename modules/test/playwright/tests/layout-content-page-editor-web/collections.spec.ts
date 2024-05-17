@@ -9,9 +9,9 @@ import {collectionsPagesTest} from '../../fixtures/CollectionsPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import getRandomString from '../../utils/getRandomString';
-import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -81,7 +81,7 @@ test('allows adding a Collection Display with a manual collection into another C
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(layout, wemSite.friendlyUrlPath);
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
 	// Calculate the number of recent contents
 

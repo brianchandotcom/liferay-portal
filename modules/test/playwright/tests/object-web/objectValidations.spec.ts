@@ -175,8 +175,15 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await viewObjectEntriesPage.addObjectEntryButton.click();
 
-		await viewObjectEntriesPage.fillObjectEntry('integerField', '0');
-		await viewObjectEntriesPage.fillObjectEntry('textField', 'entry');
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: integerFieldName,
+			objectFieldValue: '0',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'textField',
+			objectFieldValue: 'entry',
+		});
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 		await viewObjectEntriesPage.assertErrorWithDuplicateEntryValue();
@@ -185,8 +192,15 @@ test.describe('Object Unique Composite Key Validation', () => {
 
 		await viewObjectEntriesPage.addObjectEntryButton.click();
 
-		await viewObjectEntriesPage.fillObjectEntry('integerField', '123');
-		await viewObjectEntriesPage.fillObjectEntry('textField', 'entry 2');
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: integerFieldName,
+			objectFieldValue: '123',
+		});
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldName: 'textField',
+			objectFieldValue: 'entry 2',
+		});
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 		await expect(viewObjectEntriesPage.successMessage).toBeVisible();

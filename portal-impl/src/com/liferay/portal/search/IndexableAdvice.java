@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
@@ -12,6 +14,7 @@ import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -54,7 +57,7 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 
 		return new IndexableContext(
-			returnType.getName(), indexable.type(),
+			returnType.getName(), indexable.type(), indexable.callbackKey(),
 			_getServiceContextParameterIndex(method));
 	}
 
@@ -162,23 +165,39 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			indexer.delete(result);
 		}
 		else {
-			indexer.reindex(result);
+			Indexable.Callback callback = _callbacks.getService(
+				indexableContext._callbackKey);
+
+			if (callback == null) {
+				indexer.reindex(result);
+			}
+			else {
+				callback.reindex((BaseModel<?>)result);
+			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexableAdvice.class);
 
+	private static final ServiceTrackerMap<String, Indexable.Callback>
+		_callbacks = ServiceTrackerMapFactory.openSingleValueMap(
+			SystemBundleUtil.getBundleContext(), Indexable.Callback.class,
+			"key");
+
 	private static class IndexableContext {
 
 		private IndexableContext(
-			String name, IndexableType indexableType, int serviceContextIndex) {
+			String name, IndexableType indexableType, String callbackKey,
+			int serviceContextIndex) {
 
 			_name = name;
 			_indexableType = indexableType;
+			_callbackKey = callbackKey;
 			_serviceContextIndex = serviceContextIndex;
 		}
 
+		private final String _callbackKey;
 		private final IndexableType _indexableType;
 		private final String _name;
 		private final int _serviceContextIndex;

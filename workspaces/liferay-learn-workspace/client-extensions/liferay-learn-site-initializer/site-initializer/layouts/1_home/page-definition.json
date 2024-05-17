@@ -152,6 +152,9 @@
 				"pageElements": [
 					{
 						"definition": {
+							"cssClasses": [
+								"page-tabs"
+							],
 							"customCSS": ".[$FRAGMENT_CLASS$] {\n.navbar-collapse{\njustify-content: center;\n}\n.show {\nz-index: 2 !important;\n}\n}",
 							"fragment": {
 								"key": "dialect-tabs",

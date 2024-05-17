@@ -14,10 +14,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class ArchivedSettingsNameComparator
 	extends OrderByComparator<ArchivedSettings> {
 
-	public ArchivedSettingsNameComparator() {
-		this(false);
-	}
-
 	public ArchivedSettingsNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}

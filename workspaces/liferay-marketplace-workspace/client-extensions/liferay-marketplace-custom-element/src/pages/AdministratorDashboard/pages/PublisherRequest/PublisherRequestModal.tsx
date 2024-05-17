@@ -74,7 +74,7 @@ const PublisherRequestModal: React.FC<PublisherRequestModalProps> = ({
 							displayType="primary"
 							onClick={() => onUpdateRequestStatus('completed')}
 						>
-							{i18n.translate('aprove')}
+							{i18n.translate('approve')}
 						</ClayButton>
 					</div>
 				) : undefined

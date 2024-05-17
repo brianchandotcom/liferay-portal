@@ -7,31 +7,29 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import {
+	PRODUCT_WORKFLOW_STATUS_CODE,
+	PRODUCT_WORKFLOW_STATUS_LABEL,
+} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import {
 	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../../../../utils/util';
-import {STATUSES} from '../../../../../PublisherDashboard/pages/Solutions/constants';
 
 const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 	const navigate = useNavigate();
 
-	const appVersion = useMemo(
-		() =>
-			getProductVersionFromSpecifications(
-				product?.productSpecifications ?? []
-			),
-		[product?.productSpecifications]
-	);
-
 	if (!product) {
 		return null;
 	}
+
+	const appVersion = getProductVersionFromSpecifications(
+		product.productSpecifications ?? []
+	);
 
 	return (
 		<>
@@ -44,7 +42,8 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 				<h5 className="mt-1">{i18n.translate('back-to-solutions')}</h5>
 			</ClayButton>
 
-			{product.workflowStatusInfo.code === 1 && (
+			{product.workflowStatusInfo.code ===
+				PRODUCT_WORKFLOW_STATUS_CODE.PENDING && (
 				<ClayAlert className="my-4" displayType="info">
 					{i18n.translate(
 						'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-the-solution-will-be-published-automatically-to-the-marketplace-meanwhile-any-information-or-data-from-this-solution-submission-cannot-be-updated'
@@ -75,6 +74,7 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 									{appVersion}
 								</span>
 							)}
+
 							<ClayIcon
 								className={classNames(
 									'solution-details-page-header-subtitle-icon',
@@ -95,9 +95,9 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 
 							<span className="solution-details-page-header-subtitle-text">
 								{
-									STATUSES[
+									PRODUCT_WORKFLOW_STATUS_LABEL[
 										product.workflowStatusInfo
-											.code as keyof typeof STATUSES
+											.code as keyof typeof PRODUCT_WORKFLOW_STATUS_LABEL
 									]
 								}
 							</span>

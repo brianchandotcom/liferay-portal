@@ -143,7 +143,7 @@ export type SolutionInitialState = {
 	details: ContentBlock[];
 	header: {
 		contentType: HeaderContentType;
-		description: any;
+		description: string;
 		title: string;
 	};
 	loading: boolean;
@@ -270,18 +270,18 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 				);
 			}
 
-			const solutionHeaderImages = _product?.images?.filter(({tags}) =>
-				tags?.includes(PRODUCT_TAGS.SOLUTION_HEADER)
-			);
+			const solutionHeaderImages = (
+				_product.images ?? []
+			).filter(({tags}) => tags?.includes(PRODUCT_TAGS.SOLUTION_HEADER));
 
 			let contentType = {
 				content: {
-					headerImages: solutionHeaderImages?.map(
+					headerImages: solutionHeaderImages.map(
 						({externalReferenceCode, src, title}) => ({
 							changed: false,
 							fileName: title.en_US,
 							id: externalReferenceCode,
-							imageDescription: title?.en_US,
+							imageDescription: title.en_US,
 							preview: new URL(src).pathname,
 							progress: 100,
 							uploaded: true,
@@ -537,7 +537,6 @@ export default function SolutionContextProvider({
 }: SolutionContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, solutionInitialState);
 	const {productId} = useParams();
-
 	const {data = {}} = useGetVocabulariesAndCategories([
 		ProductVocabulary.PRODUCT_TYPE,
 		ProductVocabulary.SOLUTION_CATEGORY,

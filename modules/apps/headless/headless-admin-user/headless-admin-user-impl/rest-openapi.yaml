@@ -6003,6 +6003,51 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["UserGroup"]
+        get:
+            description:
+                Retrieves the list of users in a user group.
+            operationId: getUserGroupUsersPage
+            parameters:
+                - in: path
+                  name: userGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+            tags: ["UserAccount"]
         post:
             operationId: postUserGroupUsers
             parameters:

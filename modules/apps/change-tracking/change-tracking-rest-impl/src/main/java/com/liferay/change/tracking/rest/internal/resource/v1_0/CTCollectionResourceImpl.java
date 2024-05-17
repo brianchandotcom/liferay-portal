@@ -374,9 +374,18 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 				}
 			).put(
 				"update",
-				() -> addAction(
-					ActionKeys.UPDATE, ctCollection.getCtCollectionId(),
-					"putCTCollection", _ctCollectionModelResourcePermission)
+				() -> {
+					if (ctCollection.getStatus() !=
+							WorkflowConstants.STATUS_DRAFT) {
+
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.UPDATE, ctCollection.getCtCollectionId(),
+						"putCTCollection",
+						_ctCollectionModelResourcePermission);
+				}
 			).build(),
 			null, contextHttpServletRequest, ctCollection.getCtCollectionId(),
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
@@ -412,6 +421,13 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			_ctCollectionLocalService.getCTMappingTableInfos(ctCollectionId);
 
 		if (!mappingTableInfos.isEmpty()) {
+			return true;
+		}
+
+		com.liferay.change.tracking.model.CTCollection ctCollection =
+			_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
 			return true;
 		}
 

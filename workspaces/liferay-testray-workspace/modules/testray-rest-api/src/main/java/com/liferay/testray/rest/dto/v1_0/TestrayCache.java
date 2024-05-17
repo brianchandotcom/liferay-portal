@@ -24,10 +24,6 @@ public class TestrayCache {
 		_objectEntryIds.put(key, value);
 	}
 
-	public long getTestrayBuildId() {
-		return _testrayBuildId;
-	}
-
 	public long getNextTestrayRunNumber() {
 		return _testrayRunNumber++;
 	}
@@ -38,6 +34,10 @@ public class TestrayCache {
 
 	public Long getObjectEntryId(String key) {
 		return _objectEntryIds.get(key);
+	}
+
+	public long getTestrayBuildId() {
+		return _testrayBuildId;
 	}
 
 	public long getTestrayCaseResultAmount() {

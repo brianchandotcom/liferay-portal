@@ -14,10 +14,6 @@ import com.liferay.site.admin.web.internal.util.SiteInitializerItem;
 public class SiteInitializerNameComparator
 	extends OrderByComparator<SiteInitializerItem> {
 
-	public SiteInitializerNameComparator() {
-		this(false);
-	}
-
 	public SiteInitializerNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}

@@ -82,11 +82,7 @@ public class SummarySerDes {
 			for (int i = 0; i < summary.getShippingDiscountPercentages().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(summary.getShippingDiscountPercentages()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(summary.getShippingDiscountPercentages()[i]));
 
 				if ((i + 1) < summary.getShippingDiscountPercentages().length) {
 					sb.append(", ");
@@ -191,11 +187,7 @@ public class SummarySerDes {
 			for (int i = 0; i < summary.getSubtotalDiscountPercentages().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(summary.getSubtotalDiscountPercentages()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(summary.getSubtotalDiscountPercentages()[i]));
 
 				if ((i + 1) < summary.getSubtotalDiscountPercentages().length) {
 					sb.append(", ");
@@ -289,11 +281,7 @@ public class SummarySerDes {
 			for (int i = 0; i < summary.getTotalDiscountPercentages().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(summary.getTotalDiscountPercentages()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(summary.getTotalDiscountPercentages()[i]));
 
 				if ((i + 1) < summary.getTotalDiscountPercentages().length) {
 					sb.append(", ");
@@ -554,6 +542,102 @@ public class SummarySerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "currency")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "itemsQuantity")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingDiscountPercentages")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingDiscountValue")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingDiscountValueFormatted")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "shippingValue")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingValueFormatted")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingValueWithTaxAmount")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingValueWithTaxAmountFormatted")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtotal")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "subtotalDiscountPercentages")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "subtotalDiscountValue")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"subtotalDiscountValueFormatted")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtotalFormatted")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "taxValue")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "taxValueFormatted")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "total")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "totalDiscountPercentages")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "totalDiscountValue")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "totalDiscountValueFormatted")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "totalFormatted")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			Summary summary, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -739,36 +823,7 @@ public class SummarySerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -778,6 +833,37 @@ public class SummarySerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

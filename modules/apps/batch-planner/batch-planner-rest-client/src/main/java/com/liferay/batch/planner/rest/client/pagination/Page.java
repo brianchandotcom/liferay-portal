@@ -165,18 +165,43 @@ public class Page<T> {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "facets")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "items")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "lastPage")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "page")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageSize")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "totalCount")) {
+				return false;
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+		@Override
 		protected void setField(
 			Page page, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
-					PageJSONParser pageJSONParser = new PageJSONParser(
-						_toDTOFunction);
-
 					page.setActions(
-						pageJSONParser.parseToMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "facets")) {

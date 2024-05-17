@@ -351,11 +351,7 @@ public class UserAccountSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < userAccount.getKeywords().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(userAccount.getKeywords()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(userAccount.getKeywords()[i]));
 
 				if ((i + 1) < userAccount.getKeywords().length) {
 					sb.append(", ");
@@ -861,6 +857,119 @@ public class UserAccountSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "accountBriefs")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "additionalName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "alternateName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "birthDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "currentPassword")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dashboardURL")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "familyName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "givenName")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "honorificPrefix")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "honorificSuffix")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "image")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "imageId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "jobTitle")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywords")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "languageDisplayName")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "languageId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "lastLoginDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "organizationBriefs")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "password")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteBriefs")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "userAccountContactInformation")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "userGroupBriefs")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			UserAccount userAccount, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -884,8 +993,7 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setActions(
-						(Map)UserAccountSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "additionalName")) {
@@ -1155,36 +1263,7 @@ public class UserAccountSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -1194,6 +1273,37 @@ public class UserAccountSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

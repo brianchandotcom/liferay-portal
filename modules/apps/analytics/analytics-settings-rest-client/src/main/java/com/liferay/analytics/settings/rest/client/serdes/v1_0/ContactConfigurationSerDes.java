@@ -79,13 +79,9 @@ public class ContactConfigurationSerDes {
 				 i < contactConfiguration.getSyncedAccountGroupIds().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(
+					_toJSON(
 						contactConfiguration.getSyncedAccountGroupIds()[i]));
-
-				sb.append("\"");
 
 				if ((i + 1) <
 						contactConfiguration.
@@ -111,13 +107,9 @@ public class ContactConfigurationSerDes {
 				 i < contactConfiguration.getSyncedOrganizationIds().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(
+					_toJSON(
 						contactConfiguration.getSyncedOrganizationIds()[i]));
-
-				sb.append("\"");
 
 				if ((i + 1) <
 						contactConfiguration.
@@ -142,12 +134,8 @@ public class ContactConfigurationSerDes {
 			for (int i = 0;
 				 i < contactConfiguration.getSyncedUserGroupIds().length; i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(contactConfiguration.getSyncedUserGroupIds()[i]));
-
-				sb.append("\"");
+					_toJSON(contactConfiguration.getSyncedUserGroupIds()[i]));
 
 				if ((i + 1) <
 						contactConfiguration.getSyncedUserGroupIds().length) {
@@ -244,6 +232,33 @@ public class ContactConfigurationSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "syncAllAccounts")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "syncAllContacts")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "syncedAccountGroupIds")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "syncedOrganizationIds")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "syncedUserGroupIds")) {
+
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			ContactConfiguration contactConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -316,36 +331,7 @@ public class ContactConfigurationSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -355,6 +341,37 @@ public class ContactConfigurationSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

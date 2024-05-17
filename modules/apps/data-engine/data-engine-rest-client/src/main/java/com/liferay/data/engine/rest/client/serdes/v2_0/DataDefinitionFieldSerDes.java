@@ -408,6 +408,62 @@ public class DataDefinitionFieldSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "customProperties")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "defaultValue")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "fieldType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "indexType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "indexable")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "localizable")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "nestedDataDefinitionFields")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "readOnly")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "repeatable")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "required")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "showLabel")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "tip")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "visible")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			DataDefinitionField dataDefinitionField, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -415,15 +471,13 @@ public class DataDefinitionFieldSerDes {
 			if (Objects.equals(jsonParserFieldName, "customProperties")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setCustomProperties(
-						(Map)DataDefinitionFieldSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Object>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "defaultValue")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setDefaultValue(
-						(Map)DataDefinitionFieldSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Object>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fieldType")) {
@@ -454,8 +508,7 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "label")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setLabel(
-						(Map)DataDefinitionFieldSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Object>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "localizable")) {
@@ -518,8 +571,7 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "tip")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setTip(
-						(Map)DataDefinitionFieldSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Object>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "visible")) {
@@ -560,36 +612,7 @@ public class DataDefinitionFieldSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -599,6 +622,37 @@ public class DataDefinitionFieldSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

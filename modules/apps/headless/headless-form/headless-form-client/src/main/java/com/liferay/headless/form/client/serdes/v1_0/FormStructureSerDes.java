@@ -65,11 +65,7 @@ public class FormStructureSerDes {
 			for (int i = 0; i < formStructure.getAvailableLanguages().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(formStructure.getAvailableLanguages()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(formStructure.getAvailableLanguages()[i]));
 
 				if ((i + 1) < formStructure.getAvailableLanguages().length) {
 					sb.append(", ");
@@ -353,6 +349,48 @@ public class FormStructureSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "availableLanguages")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "formPages")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "formSuccessPage")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			FormStructure formStructure, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -389,8 +427,7 @@ public class FormStructureSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
 				if (jsonParserFieldValue != null) {
 					formStructure.setDescription_i18n(
-						(Map)FormStructureSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formPages")) {
@@ -430,8 +467,7 @@ public class FormStructureSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				if (jsonParserFieldValue != null) {
 					formStructure.setName_i18n(
-						(Map)FormStructureSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
@@ -472,36 +508,7 @@ public class FormStructureSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -511,6 +518,37 @@ public class FormStructureSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

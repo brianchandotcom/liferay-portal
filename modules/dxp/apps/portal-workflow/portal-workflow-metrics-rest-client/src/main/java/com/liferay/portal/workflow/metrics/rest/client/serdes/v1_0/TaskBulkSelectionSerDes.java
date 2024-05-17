@@ -112,11 +112,7 @@ public class TaskBulkSelectionSerDes {
 			for (int i = 0; i < taskBulkSelection.getSlaStatuses().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(taskBulkSelection.getSlaStatuses()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(taskBulkSelection.getSlaStatuses()[i]));
 
 				if ((i + 1) < taskBulkSelection.getSlaStatuses().length) {
 					sb.append(", ");
@@ -136,11 +132,7 @@ public class TaskBulkSelectionSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < taskBulkSelection.getTaskNames().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(taskBulkSelection.getTaskNames()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(taskBulkSelection.getTaskNames()[i]));
 
 				if ((i + 1) < taskBulkSelection.getTaskNames().length) {
 					sb.append(", ");
@@ -231,6 +223,27 @@ public class TaskBulkSelectionSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "assigneeIds")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "instanceIds")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "processId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "slaStatuses")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "taskNames")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			TaskBulkSelection taskBulkSelection, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -297,36 +310,7 @@ public class TaskBulkSelectionSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -336,6 +320,37 @@ public class TaskBulkSelectionSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

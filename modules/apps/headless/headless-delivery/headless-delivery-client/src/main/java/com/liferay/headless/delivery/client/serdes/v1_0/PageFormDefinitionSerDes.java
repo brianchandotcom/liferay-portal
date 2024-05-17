@@ -60,11 +60,7 @@ public class PageFormDefinitionSerDes {
 			for (int i = 0; i < pageFormDefinition.getCssClasses().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(pageFormDefinition.getCssClasses()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(pageFormDefinition.getCssClasses()[i]));
 
 				if ((i + 1) < pageFormDefinition.getCssClasses().length) {
 					sb.append(", ");
@@ -306,6 +302,41 @@ public class PageFormDefinitionSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "cssClasses")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "customCSSViewports")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "formConfig")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "indexed")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "layout")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			PageFormDefinition pageFormDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -422,36 +453,7 @@ public class PageFormDefinitionSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -461,6 +463,37 @@ public class PageFormDefinitionSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

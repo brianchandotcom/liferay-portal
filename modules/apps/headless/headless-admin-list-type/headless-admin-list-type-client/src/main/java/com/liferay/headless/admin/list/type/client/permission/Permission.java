@@ -95,6 +95,20 @@ public class Permission {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "actionIds")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleName")) {
+				return false;
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+		@Override
 		protected void setField(
 			Permission permission, String jsonParserFieldName,
 			Object jsonParserFieldValue) {

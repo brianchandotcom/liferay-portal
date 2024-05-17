@@ -6,6 +6,7 @@
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
 import com.liferay.search.experiences.rest.client.dto.v1_0.HighlightConfiguration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.HighlightField;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -88,11 +89,7 @@ public class HighlightConfigurationSerDes {
 			for (int i = 0; i < highlightConfiguration.getPost_tags().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(highlightConfiguration.getPost_tags()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(highlightConfiguration.getPost_tags()[i]));
 
 				if ((i + 1) < highlightConfiguration.getPost_tags().length) {
 					sb.append(", ");
@@ -114,11 +111,7 @@ public class HighlightConfigurationSerDes {
 			for (int i = 0; i < highlightConfiguration.getPre_tags().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(highlightConfiguration.getPre_tags()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(highlightConfiguration.getPre_tags()[i]));
 
 				if ((i + 1) < highlightConfiguration.getPre_tags().length) {
 					sb.append(", ");
@@ -252,6 +245,37 @@ public class HighlightConfigurationSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "fields")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragment_size")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "number_of_fragments")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "post_tags")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "pre_tags")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "require_field_match")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			HighlightConfiguration highlightConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -259,8 +283,7 @@ public class HighlightConfigurationSerDes {
 			if (Objects.equals(jsonParserFieldName, "fields")) {
 				if (jsonParserFieldValue != null) {
 					highlightConfiguration.setFields(
-						(Map)HighlightConfigurationSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, HighlightField>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragment_size")) {
@@ -335,36 +358,7 @@ public class HighlightConfigurationSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -374,6 +368,37 @@ public class HighlightConfigurationSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

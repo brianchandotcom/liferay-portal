@@ -83,11 +83,7 @@ public class SitePageSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < sitePage.getAvailableLanguages().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(sitePage.getAvailableLanguages()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(sitePage.getAvailableLanguages()[i]));
 
 				if ((i + 1) < sitePage.getAvailableLanguages().length) {
 					sb.append(", ");
@@ -226,11 +222,7 @@ public class SitePageSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < sitePage.getKeywords().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(sitePage.getKeywords()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(sitePage.getKeywords()[i]));
 
 				if ((i + 1) < sitePage.getKeywords().length) {
 					sb.append(", ");
@@ -660,6 +652,98 @@ public class SitePageSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "availableLanguages")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "datePublished")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "experience")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyUrlPath_i18n")) {
+
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywords")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageDefinition")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "pagePermissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageSettings")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "parentSitePage")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "renderedPage")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryIds")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "uuid")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			SitePage sitePage, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -667,8 +751,7 @@ public class SitePageSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					sitePage.setActions(
-						(Map)SitePageSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
@@ -742,8 +825,7 @@ public class SitePageSerDes {
 
 				if (jsonParserFieldValue != null) {
 					sitePage.setFriendlyUrlPath_i18n(
-						(Map)SitePageSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -848,8 +930,7 @@ public class SitePageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
 				if (jsonParserFieldValue != null) {
 					sitePage.setTitle_i18n(
-						(Map)SitePageSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {
@@ -896,36 +977,7 @@ public class SitePageSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -935,6 +987,37 @@ public class SitePageSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

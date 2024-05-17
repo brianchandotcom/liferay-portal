@@ -308,11 +308,7 @@ public class InstanceSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < instance.getTaskNames().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(instance.getTaskNames()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(instance.getTaskNames()[i]));
 
 				if ((i + 1) < instance.getTaskNames().length) {
 					sb.append(", ");
@@ -536,6 +532,75 @@ public class InstanceSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "active")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetTitle")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetTitle_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetType_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assignees")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "className")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "classPK")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "completed")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "duration")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "processId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "processVersion")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "slaResults")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "slaStatus")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "taskNames")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "transitions")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			Instance instance, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -553,8 +618,7 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "assetTitle_i18n")) {
 				if (jsonParserFieldValue != null) {
 					instance.setAssetTitle_i18n(
-						(Map)InstanceSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "assetType")) {
@@ -565,8 +629,7 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "assetType_i18n")) {
 				if (jsonParserFieldValue != null) {
 					instance.setAssetType_i18n(
-						(Map)InstanceSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "assignees")) {
@@ -724,36 +787,7 @@ public class InstanceSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -763,6 +797,37 @@ public class InstanceSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

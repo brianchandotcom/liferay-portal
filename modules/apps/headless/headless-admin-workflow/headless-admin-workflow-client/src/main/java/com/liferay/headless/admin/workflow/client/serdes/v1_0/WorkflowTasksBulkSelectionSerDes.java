@@ -118,12 +118,8 @@ public class WorkflowTasksBulkSelectionSerDes {
 			for (int i = 0;
 				 i < workflowTasksBulkSelection.getAssetTypes().length; i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(workflowTasksBulkSelection.getAssetTypes()[i]));
-
-				sb.append("\"");
+					_toJSON(workflowTasksBulkSelection.getAssetTypes()[i]));
 
 				if ((i + 1) <
 						workflowTasksBulkSelection.getAssetTypes().length) {
@@ -270,13 +266,9 @@ public class WorkflowTasksBulkSelectionSerDes {
 				 i < workflowTasksBulkSelection.getWorkflowTaskNames().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(
+					_toJSON(
 						workflowTasksBulkSelection.getWorkflowTaskNames()[i]));
-
-				sb.append("\"");
 
 				if ((i + 1) <
 						workflowTasksBulkSelection.
@@ -455,6 +447,55 @@ public class WorkflowTasksBulkSelectionSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "andOperator")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetPrimaryKeys")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetTitle")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetTypes")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "assigneeIds")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "completed")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateDueEnd")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateDueStart")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "searchByRoles")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "searchByUserRoles")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowDefinitionId")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowInstanceIds")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "workflowTaskNames")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			WorkflowTasksBulkSelection workflowTasksBulkSelection,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -573,36 +614,7 @@ public class WorkflowTasksBulkSelectionSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -612,6 +624,37 @@ public class WorkflowTasksBulkSelectionSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

@@ -61,14 +61,10 @@ public class GeneralConfigurationSerDes {
 						 getClauseContributorsExcludes().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(
+					_toJSON(
 						generalConfiguration.getClauseContributorsExcludes()
 							[i]));
-
-				sb.append("\"");
 
 				if ((i + 1) < generalConfiguration.
 						getClauseContributorsExcludes().length) {
@@ -95,14 +91,10 @@ public class GeneralConfigurationSerDes {
 						 getClauseContributorsIncludes().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(
+					_toJSON(
 						generalConfiguration.getClauseContributorsIncludes()
 							[i]));
-
-				sb.append("\"");
 
 				if ((i + 1) < generalConfiguration.
 						getClauseContributorsIncludes().length) {
@@ -185,12 +177,8 @@ public class GeneralConfigurationSerDes {
 				 i < generalConfiguration.getSearchableAssetTypes().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(generalConfiguration.getSearchableAssetTypes()[i]));
-
-				sb.append("\"");
+					_toJSON(generalConfiguration.getSearchableAssetTypes()[i]));
 
 				if ((i + 1) <
 						generalConfiguration.getSearchableAssetTypes().length) {
@@ -337,6 +325,49 @@ public class GeneralConfigurationSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(
+					jsonParserFieldName, "clauseContributorsExcludes")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "clauseContributorsIncludes")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "emptySearchEnabled")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "explain")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "includeResponseString")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "languageId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "queryString")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "searchableAssetTypes")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "timeZoneId")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			GeneralConfiguration generalConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -437,36 +468,7 @@ public class GeneralConfigurationSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -476,6 +478,37 @@ public class GeneralConfigurationSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

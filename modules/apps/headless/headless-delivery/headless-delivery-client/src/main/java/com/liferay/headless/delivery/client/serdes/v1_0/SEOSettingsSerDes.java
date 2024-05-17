@@ -304,6 +304,47 @@ public class SEOSettingsSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "customCanonicalURL")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "customCanonicalURL_i18n")) {
+
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "htmlTitle")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "htmlTitle_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "robots")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "robots_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "seoKeywords")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "seoKeywords_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteMapSettings")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			SEOSettings seoSettings, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -319,8 +360,7 @@ public class SEOSettingsSerDes {
 
 				if (jsonParserFieldValue != null) {
 					seoSettings.setCustomCanonicalURL_i18n(
-						(Map)SEOSettingsSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -331,8 +371,7 @@ public class SEOSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
 				if (jsonParserFieldValue != null) {
 					seoSettings.setDescription_i18n(
-						(Map)SEOSettingsSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "htmlTitle")) {
@@ -343,8 +382,7 @@ public class SEOSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "htmlTitle_i18n")) {
 				if (jsonParserFieldValue != null) {
 					seoSettings.setHtmlTitle_i18n(
-						(Map)SEOSettingsSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "robots")) {
@@ -355,8 +393,7 @@ public class SEOSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "robots_i18n")) {
 				if (jsonParserFieldValue != null) {
 					seoSettings.setRobots_i18n(
-						(Map)SEOSettingsSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "seoKeywords")) {
@@ -367,8 +404,7 @@ public class SEOSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "seoKeywords_i18n")) {
 				if (jsonParserFieldValue != null) {
 					seoSettings.setSeoKeywords_i18n(
-						(Map)SEOSettingsSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteMapSettings")) {
@@ -410,36 +446,7 @@ public class SEOSettingsSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -449,6 +456,37 @@ public class SEOSettingsSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

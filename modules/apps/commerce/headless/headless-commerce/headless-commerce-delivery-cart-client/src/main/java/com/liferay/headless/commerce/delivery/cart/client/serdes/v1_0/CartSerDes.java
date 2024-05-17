@@ -202,11 +202,7 @@ public class CartSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < cart.getErrorMessages().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(cart.getErrorMessages()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(cart.getErrorMessages()[i]));
 
 				if ((i + 1) < cart.getErrorMessages().length) {
 					sb.append(", ");
@@ -850,6 +846,138 @@ public class CartSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "account")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "author")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "billingAddress")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "billingAddressId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "cartItems")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "channelId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "couponCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "createDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "lastPriceUpdateDate")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "notes")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderStatusInfo")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"orderTypeExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderTypeId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "orderUUID")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentMethod")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "paymentMethodLabel")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentStatus")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentStatusInfo")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "paymentStatusLabel")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "printedNote")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "purchaseOrderNumber")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "shippingAddress")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "shippingAddressId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "shippingMethod")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "shippingOption")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "summary")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "useAsBilling")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "valid")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowStatusInfo")) {
+
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			Cart cart, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -921,8 +1049,7 @@ public class CartSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
-					cart.setCustomFields(
-						(Map)CartSerDes.toMap((String)jsonParserFieldValue));
+					cart.setCustomFields((Map<String, ?>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "errorMessages")) {
@@ -1124,36 +1251,7 @@ public class CartSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -1163,6 +1261,37 @@ public class CartSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

@@ -602,6 +602,92 @@ public class DiscountSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "active")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "couponCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				return true;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "discountAccountGroups")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "discountCategories")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "discountProducts")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "discountRules")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "displayDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "expirationDate")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "limitationTimes")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "limitationType")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "maximumDiscountAmount")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfUse")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "percentageLevel1")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "percentageLevel2")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "percentageLevel3")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "percentageLevel4")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "target")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "useCouponCode")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "usePercentage")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			Discount discount, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
@@ -619,8 +705,7 @@ public class DiscountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
 					discount.setCustomFields(
-						(Map)DiscountSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, ?>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -827,36 +912,7 @@ public class DiscountSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -866,6 +922,37 @@ public class DiscountSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

@@ -78,15 +78,11 @@ public class NotificationTemplateSerDes {
 					 getAttachmentObjectFieldExternalReferenceCodes().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(
+					_toJSON(
 						notificationTemplate.
 							getAttachmentObjectFieldExternalReferenceCodes()
 							[i]));
-
-				sb.append("\"");
 
 				if ((i + 1) < notificationTemplate.
 						getAttachmentObjectFieldExternalReferenceCodes().
@@ -299,11 +295,7 @@ public class NotificationTemplateSerDes {
 			for (int i = 0; i < notificationTemplate.getRecipients().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(notificationTemplate.getRecipients()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(notificationTemplate.getRecipients()[i]));
 
 				if ((i + 1) < notificationTemplate.getRecipients().length) {
 					sb.append(", ");
@@ -582,6 +574,84 @@ public class NotificationTemplateSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"attachmentObjectFieldExternalReferenceCodes")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "attachmentObjectFieldIds")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "body")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "editorType")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				return true;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectDefinitionExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "objectDefinitionId")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "recipientType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "recipients")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subject")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeLabel")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			NotificationTemplate notificationTemplate,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -589,8 +659,7 @@ public class NotificationTemplateSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setActions(
-						(Map)NotificationTemplateSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -614,8 +683,7 @@ public class NotificationTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "body")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setBody(
-						(Map)NotificationTemplateSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -665,8 +733,7 @@ public class NotificationTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setName_i18n(
-						(Map)NotificationTemplateSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -702,8 +769,7 @@ public class NotificationTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "subject")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setSubject(
-						(Map)NotificationTemplateSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "system")) {
@@ -755,36 +821,7 @@ public class NotificationTemplateSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -794,6 +831,37 @@ public class NotificationTemplateSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

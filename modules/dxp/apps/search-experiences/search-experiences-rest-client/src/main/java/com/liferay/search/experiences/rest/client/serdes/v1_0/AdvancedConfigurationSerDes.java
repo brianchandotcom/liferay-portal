@@ -78,11 +78,7 @@ public class AdvancedConfigurationSerDes {
 			for (int i = 0; i < advancedConfiguration.getStored_fields().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(advancedConfiguration.getStored_fields()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(advancedConfiguration.getStored_fields()[i]));
 
 				if ((i + 1) < advancedConfiguration.getStored_fields().length) {
 					sb.append(", ");
@@ -156,6 +152,21 @@ public class AdvancedConfigurationSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "collapse")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "source")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "stored_fields")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			AdvancedConfiguration advancedConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -210,36 +221,7 @@ public class AdvancedConfigurationSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -249,6 +231,37 @@ public class AdvancedConfigurationSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+		else if (value.getClass(
+				).isArray()) {
+
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+		else if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+		else {
+			return String.valueOf(value);
+		}
 	}
 
 }

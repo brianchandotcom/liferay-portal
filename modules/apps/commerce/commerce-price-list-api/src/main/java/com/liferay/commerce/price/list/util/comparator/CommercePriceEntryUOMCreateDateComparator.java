@@ -12,20 +12,22 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommercePriceEntryCreateDateComparator
+public class CommercePriceEntryUOMCreateDateComparator
 	extends OrderByComparator<CommercePriceEntry> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC =
+		"unitOfMeasureKey ASC, createDate ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC =
+		"unitOfMeasureKey DESC, createDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommercePriceEntryCreateDateComparator() {
+	public CommercePriceEntryUOMCreateDateComparator() {
 		this(false);
 	}
 
-	public CommercePriceEntryCreateDateComparator(boolean ascending) {
+	public CommercePriceEntryUOMCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -34,9 +36,16 @@ public class CommercePriceEntryCreateDateComparator
 		CommercePriceEntry commercePriceEntry1,
 		CommercePriceEntry commercePriceEntry2) {
 
-		int value = DateUtil.compareTo(
-			commercePriceEntry1.getCreateDate(),
-			commercePriceEntry2.getCreateDate());
+		String uom1 = commercePriceEntry1.getUnitOfMeasureKey();
+		String uom2 = commercePriceEntry2.getUnitOfMeasureKey();
+
+		int value = uom1.compareTo(uom2);
+
+		if (value == 0) {
+			value = DateUtil.compareTo(
+				commercePriceEntry1.getCreateDate(),
+				commercePriceEntry2.getCreateDate());
+		}
 
 		if (_ascending) {
 			return value;

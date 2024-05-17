@@ -37,6 +37,14 @@ public class ContactNameException extends PortalException {
 
 	}
 
+	public static class MustHaveValidFirstName extends ContactNameException {
+
+		public MustHaveValidFirstName() {
+			super("Contacts must have a valid first name");
+		}
+
+	}
+
 	public static class MustHaveValidFullName extends ContactNameException {
 
 		public MustHaveValidFullName(FullNameValidator fullNameValidator) {

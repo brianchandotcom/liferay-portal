@@ -256,7 +256,7 @@
 									/>
 
 									<div class="d-flex features-box">
-										<a class="features-container" href="javascript:;">
+										<a class="features-container openSidetab" data-request-id="${relatedContentsId}" href="javascript:;">
 											<@clay["icon"] symbol="check-square" />
 
 											<span>

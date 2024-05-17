@@ -46,6 +46,8 @@ public interface JobEntity extends Entity {
 
 	public void addTestSuiteEntity(TestSuiteEntity testSuiteEntity);
 
+	public boolean getBlessed();
+
 	public Set<BuildEntity> getBuildEntities();
 
 	public GitCommitEntity getGitCommitEntity();
@@ -99,6 +101,8 @@ public interface JobEntity extends Entity {
 	public void removeTestSuiteEntities(Set<TestSuiteEntity> testSuiteEntities);
 
 	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity);
+
+	public void setBlessed(boolean blessed);
 
 	public void setGitCommitEntity(GitCommitEntity gitCommitEntity);
 

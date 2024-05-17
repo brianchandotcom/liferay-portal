@@ -86,6 +86,11 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
+	public boolean getBlessed() {
+		return _blessed;
+	}
+
+	@Override
 	public Set<BuildEntity> getBuildEntities() {
 		return getRelatedEntities(BuildEntity.class);
 	}
@@ -150,6 +155,8 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		JobEntity.Type type = getType();
 
 		jsonObject.put(
+			"blessed", getBlessed()
+		).put(
 			"name", getName()
 		).put(
 			"parameters", String.valueOf(_getParametersJSONArray())
@@ -271,6 +278,10 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		removeRelatedEntity(testSuiteEntity);
 	}
 
+	public void setBlessed(boolean blessed) {
+		_blessed = blessed;
+	}
+
 	@Override
 	public void setGitCommitEntity(GitCommitEntity gitCommitEntity) {
 		_gitCommitEntity = gitCommitEntity;
@@ -292,6 +303,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	public void setJSONObject(JSONObject jsonObject) {
 		super.setJSONObject(jsonObject);
 
+		_blessed = jsonObject.optBoolean("blessed");
 		_gitCommitEntityId = jsonObject.optLong(
 			"r_gitCommitToJobs_c_gitCommitId");
 		_name = jsonObject.getString("name");
@@ -556,6 +568,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		"https://github.com/(?<userName>[^/]+)/(?<repositoryName>[^/]+)/tree/" +
 			"(?<branchName>[^/]+)");
 
+	private boolean _blessed;
 	private GitCommitEntity _gitCommitEntity;
 	private long _gitCommitEntityId;
 	private String _name;

@@ -937,6 +937,15 @@
 			],
 			"objectFields": [
 				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Blessed"
+					},
+					"name": "blessed",
+					"type": "Boolean"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {

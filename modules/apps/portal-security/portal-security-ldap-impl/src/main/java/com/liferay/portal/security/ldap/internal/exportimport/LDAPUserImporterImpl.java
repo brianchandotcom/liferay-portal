@@ -6,7 +6,9 @@
 package com.liferay.portal.security.ldap.internal.exportimport;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.util.ExpandoConverterUtil;
 import com.liferay.petra.string.StringBundler;
@@ -47,6 +49,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -89,6 +92,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -1612,6 +1616,27 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 					ExpandoConverterUtil.getAttributeFromStringArray(
 						type, expandoAttribute.getValue());
 
+				if ((type == ExpandoColumnConstants.STRING_LOCALIZED) &&
+					(value != null)) {
+
+					ExpandoValue existingValue =
+						_expandoValueLocalService.getValue(
+							expandoBridge.getCompanyId(),
+							expandoBridge.getClassName(),
+							ExpandoTableConstants.DEFAULT_TABLE_NAME, name,
+							expandoBridge.getClassPK());
+
+					if (existingValue != null) {
+						Map<Locale, String> existingValuesMap =
+							_localization.getLocalizationMap(
+								existingValue.getData());
+
+						existingValuesMap.putAll((Map<Locale, String>)value);
+
+						value = (Serializable)existingValuesMap;
+					}
+				}
+
 				serializedExpandoAttributes.put(name, value);
 			}
 		}
@@ -2043,6 +2068,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile LDAPToPortalConverter _ldapToPortalConverter;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private LockManager _lockManager;

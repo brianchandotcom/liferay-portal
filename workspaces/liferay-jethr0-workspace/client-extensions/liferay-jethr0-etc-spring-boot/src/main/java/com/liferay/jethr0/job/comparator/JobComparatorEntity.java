@@ -37,7 +37,7 @@ public interface JobComparatorEntity extends Entity {
 
 	public static enum Type {
 
-		FIFO("fifo"), JOB_PRIORITY("jobPriority"),
+		BLESSED("blessed"), FIFO("fifo"), JOB_PRIORITY("jobPriority"),
 		JOB_START_DATE("jobStartDate"), JOB_TYPE("jobType"),
 		TEST_SUITE_NAME("testSuiteName"),
 		UPSTREAM_GIT_BRANCH_NAME("upstreamGitBranchName");

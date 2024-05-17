@@ -23,7 +23,10 @@ public class JobComparatorEntityFactory
 		JobComparatorEntity.Type type = JobComparatorEntity.Type.get(
 			jsonObject.getJSONObject("type"));
 
-		if (type == JobComparatorEntity.Type.FIFO) {
+		if (type == JobComparatorEntity.Type.BLESSED) {
+			return new BlessedJobComparatorEntity(jsonObject);
+		}
+		else if (type == JobComparatorEntity.Type.FIFO) {
 			return new FIFOJobComparatorEntity(jsonObject);
 		}
 		else if (type == JobComparatorEntity.Type.JOB_PRIORITY) {

@@ -228,6 +228,14 @@
 			"externalReferenceCode": "jobComparatorType",
 			"listTypeEntries": [
 				{
+					"externalReferenceCode": "blessed",
+					"key": "blessed",
+					"name": "Blessed",
+					"name_i18n": {
+						"en-US": "Blessed"
+					}
+				},
+				{
 					"externalReferenceCode": "fifo",
 					"key": "fifo",
 					"name": "First In First Out",

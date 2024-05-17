@@ -69,6 +69,10 @@ public interface MoreLikeThisQuery extends Query {
 
 	public Float getTermBoost();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getType();
 
 	public boolean isDocumentUIDsEmpty();
@@ -97,6 +101,10 @@ public interface MoreLikeThisQuery extends Query {
 
 	public void setTermBoost(Float termBoost);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setType(String type);
 
 	public interface DocumentIdentifier {
@@ -105,6 +113,10 @@ public interface MoreLikeThisQuery extends Query {
 
 		public String getIndex();
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
+		@Deprecated
 		public String getType();
 
 	}

@@ -70,18 +70,6 @@ function AddFDSFilterModalContent({
 	namespace: string;
 	onSave: (newFilter: IFilter) => void;
 }) {
-	const [selectedClientExtension, setSelectedClientExtension] = useState<
-		IClientExtensionRenderer | undefined
-	>(
-		filter && filterType === EFilterType.CLIENT_EXTENSION
-			? fdsFilterClientExtensions.find(
-					(clientExtensionRenderer: IClientExtensionRenderer) =>
-						clientExtensionRenderer.externalReferenceCode ===
-						(filter as IClientExtensionFilter)
-							.fdsFilterClientExtensionERC
-				)
-			: undefined
-	);
 	const [fieldInUseValidationError, setFieldInUseValidationError] =
 		useState<boolean>();
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
@@ -108,8 +96,11 @@ function AddFDSFilterModalContent({
 		fieldNames?.includes(item.name) ? item.name : undefined
 	);
 
-	const [isFilterValid, setIsFilterValid] = useState<boolean>(false);
-	const [saveState, setSaveState] = useState<TSaveState>({saveUrl: "", bodyData: {}});
+	const [saveState, setSaveState] = useState<TSaveState>({
+		bodyData: {},
+		isValid: false,
+		saveUrl: '',
+	});
 
 	useEffect(() => {
 		getAllPicklists().then((items) => {
@@ -154,13 +145,11 @@ function AddFDSFilterModalContent({
 
 	const isFormInvalid = ({
 		i18nFilterLabels,
-		selectedClientExtension,
 		selectedField,
 		selectedPicklist,
 		sourceType,
 	}: {
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
-		selectedClientExtension: IClientExtensionRenderer | undefined;
 		selectedField: IField | undefined;
 		selectedPicklist: IPickList | undefined;
 		sourceType: ESelectionFilterSourceType | undefined;
@@ -195,30 +184,12 @@ function AddFDSFilterModalContent({
 			}
 		}
 
-		if (
-			filterType === EFilterType.CLIENT_EXTENSION &&
-			!selectedClientExtension
-		) {
-			return true;
-		}
-
 		return false;
 	};
 
-	useEffect(() => {
-		setSaveButtonDisabled(
-			isFormInvalid({
-				i18nFilterLabels,
-				selectedClientExtension,
-				selectedField,
-				selectedPicklist,
-				sourceType,
-			}) || !isFilterValid)
-	}, [isFilterValid])
-
 	const handleFilterSave = async () => {
 		setSaveButtonDisabled(true);
-	
+
 		if (!selectedField) {
 			openDefaultFailureToast();
 
@@ -240,7 +211,7 @@ function AddFDSFilterModalContent({
 				...body,
 				[OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER_ID]: dataSet.id,
 				type: selectedField.format,
-				...saveState.bodyData
+				...saveState.bodyData,
 			};
 
 			displayType = Liferay.Language.get('date-filter');
@@ -275,18 +246,14 @@ function AddFDSFilterModalContent({
 
 			displayType = Liferay.Language.get('dynamic-filter');
 		}
-		else if (
-			filterType === EFilterType.CLIENT_EXTENSION &&
-			selectedClientExtension
-		) {
-			url = API_URL.CLIENT_EXTENSION_FILTERS;
+		else if (filterType === EFilterType.CLIENT_EXTENSION) {
+			url = saveState.saveUrl;
 
 			body = {
 				...body,
-				fdsFilterClientExtensionERC:
-					selectedClientExtension.externalReferenceCode,
 				[OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER_ID]:
 					dataSet.id,
+				...saveState.bodyData,
 			};
 
 			displayType = Liferay.Language.get('client-extension-filter');
@@ -429,7 +396,6 @@ function AddFDSFilterModalContent({
 							setSaveButtonDisabled(
 								isFormInvalid({
 									i18nFilterLabels: values,
-									selectedClientExtension,
 									selectedField,
 									selectedPicklist,
 									sourceType,
@@ -469,7 +435,6 @@ function AddFDSFilterModalContent({
 								setSaveButtonDisabled(
 									isFormInvalid({
 										i18nFilterLabels,
-										selectedClientExtension,
 										selectedField: newVal,
 										selectedPicklist,
 										sourceType,
@@ -495,22 +460,19 @@ function AddFDSFilterModalContent({
 								fdsFilterClientExtensions={
 									fdsFilterClientExtensions
 								}
+								filter={filter}
 								namespace={namespace}
-								onSelectedClientExtensionChange={(values) => {
-									setSelectedClientExtension(values);
+								onChange={(newState) => {
+									setSaveState(newState);
 									setSaveButtonDisabled(
 										isFormInvalid({
 											i18nFilterLabels,
-											selectedClientExtension: values,
 											selectedField,
 											selectedPicklist,
 											sourceType,
-										})
+										}) || !newState.isValid
 									);
 								}}
-								selectedClientExtension={
-									selectedClientExtension
-								}
 							/>
 						)}
 
@@ -518,8 +480,18 @@ function AddFDSFilterModalContent({
 							<DateRangeFilterModalContent.Body
 								filter={filter}
 								namespace={namespace}
-								onChange={setSaveState}
-								onValidation={setIsFilterValid}/>
+								onChange={(newState) => {
+									setSaveState(newState);
+									setSaveButtonDisabled(
+										isFormInvalid({
+											i18nFilterLabels,
+											selectedField,
+											selectedPicklist,
+											sourceType,
+										}) || !newState.isValid
+									);
+								}}
+							/>
 						)}
 
 						{filterType === EFilterType.SELECTION && (
@@ -549,7 +521,6 @@ function AddFDSFilterModalContent({
 									setSaveButtonDisabled(
 										isFormInvalid({
 											i18nFilterLabels,
-											selectedClientExtension,
 											selectedField,
 											selectedPicklist: values,
 											sourceType,
@@ -561,7 +532,6 @@ function AddFDSFilterModalContent({
 									setSaveButtonDisabled(
 										isFormInvalid({
 											i18nFilterLabels,
-											selectedClientExtension,
 											selectedField,
 											selectedPicklist,
 											sourceType: values,

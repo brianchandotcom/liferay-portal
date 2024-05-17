@@ -8,8 +8,9 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
 import React, {useEffect, useState} from 'react';
-import { IDateFilter, IFilter } from '../../../utils/types';
-import { API_URL } from '../../../utils/constants';
+
+import {API_URL} from '../../../utils/constants';
+import {IDateFilter, IFilter, TSaveState} from '../../../utils/types';
 
 function Header() {
 	return <>{Liferay.Language.get('new-date-range-filter')}</>;
@@ -18,16 +19,10 @@ function Header() {
 interface IBodyProps {
 	filter?: IFilter;
 	namespace: string;
-	onChange: Function;
-	onValidation: Function;
+	onChange: (newState: TSaveState) => void;
 }
 
-function Body({
-	filter,
-	namespace,
-	onChange,
-	onValidation,
-}: IBodyProps) {
+function Body({filter, namespace, onChange}: IBodyProps) {
 	const fromFormElementId = `${namespace}From`;
 	const toFormElementId = `${namespace}To`;
 
@@ -49,8 +44,6 @@ function Body({
 		}
 
 		setIsValidDateRange(isValid);
-		onValidation(isValid);
-		onChange({saveUrl: API_URL.FDS_DATE_FILTERS, bodyData: {from, to}});
 	}, [from, to]);
 
 	return (
@@ -66,7 +59,14 @@ function Body({
 
 				<ClayDatePicker
 					inputName={fromFormElementId}
-					onChange={(value: any) => setFrom(value)}
+					onChange={(value: any) => {
+						onChange({
+							bodyData: {from: value, to},
+							isValid: isValidDateRange,
+							saveUrl: API_URL.FDS_DATE_FILTERS,
+						});
+						setFrom(value);
+					}}
 					placeholder="YYYY-MM-DD"
 					value={from ? format(new Date(from), 'yyyy-MM-dd') : ''}
 					years={{
@@ -95,7 +95,14 @@ function Body({
 
 				<ClayDatePicker
 					inputName={toFormElementId}
-					onChange={(value: any) => setTo(value)}
+					onChange={(value: any) => {
+						onChange({
+							bodyData: {from, to: value},
+							isValid: isValidDateRange,
+							saveUrl: API_URL.FDS_DATE_FILTERS,
+						});
+						setTo(value);
+					}}
 					placeholder="YYYY-MM-DD"
 					value={to ? format(new Date(to), 'yyyy-MM-dd') : ''}
 					years={{

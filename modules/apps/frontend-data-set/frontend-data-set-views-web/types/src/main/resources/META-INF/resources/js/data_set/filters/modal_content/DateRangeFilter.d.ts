@@ -5,20 +5,14 @@
 
 /// <reference types="react" />
 
-import {IFilter} from '../../../utils/types';
+import {IFilter, TSaveState} from '../../../utils/types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
 	filter?: IFilter;
 	namespace: string;
-	onChange: Function;
-	onValidation: Function;
+	onChange: (newState: TSaveState) => void;
 }
-declare function Body({
-	filter,
-	namespace,
-	onChange,
-	onValidation,
-}: IBodyProps): JSX.Element;
+declare function Body({filter, namespace, onChange}: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;
 	Header: typeof Header;

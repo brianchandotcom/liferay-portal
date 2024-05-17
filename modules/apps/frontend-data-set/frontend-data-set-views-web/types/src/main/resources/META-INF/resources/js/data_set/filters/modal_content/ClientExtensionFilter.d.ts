@@ -6,18 +6,19 @@
 /// <reference types="react" />
 
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
+import {IFilter, TSaveState} from '../../../utils/types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];
+	filter?: IFilter;
 	namespace: string;
-	onSelectedClientExtensionChange: (val: IClientExtensionRenderer) => void;
-	selectedClientExtension?: IClientExtensionRenderer;
+	onChange: (newState: TSaveState) => void;
 }
 declare function Body({
 	fdsFilterClientExtensions,
+	filter,
 	namespace,
-	onSelectedClientExtensionChange,
-	selectedClientExtension,
+	onChange,
 }: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;

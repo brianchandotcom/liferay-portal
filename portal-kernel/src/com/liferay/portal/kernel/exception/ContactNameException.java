@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.FullNameValidator;
 import com.liferay.portal.kernel.util.ClassUtil;
 
@@ -49,6 +50,18 @@ public class ContactNameException extends PortalException {
 		}
 
 		public final FullNameValidator fullNameValidator;
+
+	}
+
+	public static class MustNotExceedMaximumLength
+		extends ContactNameException {
+
+		public MustNotExceedMaximumLength(int firstNameMaximumLength) {
+			super(
+				StringBundler.concat(
+					"Contacts first name must have fewer than ",
+					firstNameMaximumLength, " characters"));
+		}
 
 	}
 

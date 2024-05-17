@@ -420,6 +420,37 @@
 					}
 				],
 				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"textAlign": "center"
+					},
+					"indexed": true,
+					"layout": {
+						"align": "End",
+						"contentDisplay": "FlexColumn",
+						"flexWrap": "Wrap",
+						"justify": "End"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "release-notes-sidetab",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
 			}
 		],
 		"type": "Root"

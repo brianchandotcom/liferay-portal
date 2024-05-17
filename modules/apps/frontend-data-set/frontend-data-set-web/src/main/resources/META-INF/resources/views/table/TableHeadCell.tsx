@@ -65,6 +65,14 @@ const TableHeadCell = ({
 							active: false,
 					  }
 			);
+
+			if (!sortingMatch && sortingKey) {
+				updatedSortedElements.push({
+					active: true,
+					direction: 'asc',
+					key: sortingKey,
+				});
+			}
 		}
 		else {
 			updatedSortedElements = sortingMatch
@@ -128,29 +136,27 @@ const TableHeadCell = ({
 		>
 			{!hideColumnLabel && label}
 
-			{(Liferay.FeatureFlags['LPD-19465'] ? sortingMatch : true) && (
-				<span className="inline-item inline-item-after sorting-icons-wrapper">
-					<ClayIcon
-						className={classNames('sorting-icon', {
-							active: Liferay.FeatureFlags['LPD-19465']
-								? sortingMatch?.direction === 'asc' &&
-								  sortingMatch?.active
-								: sortingMatch?.direction === 'asc',
-						})}
-						symbol="order-arrow-up"
-					/>
+			<span className="inline-item inline-item-after sorting-icons-wrapper">
+				<ClayIcon
+					className={classNames('sorting-icon', {
+						active: Liferay.FeatureFlags['LPD-19465']
+							? sortingMatch?.direction === 'asc' &&
+							  sortingMatch?.active
+							: sortingMatch?.direction === 'asc',
+					})}
+					symbol="order-arrow-up"
+				/>
 
-					<ClayIcon
-						className={classNames('sorting-icon', {
-							active: Liferay.FeatureFlags['LPD-19465']
-								? sortingMatch?.direction === 'desc' &&
-								  sortingMatch?.active
-								: sortingMatch?.direction === 'desc',
-						})}
-						symbol="order-arrow-down"
-					/>
-				</span>
-			)}
+				<ClayIcon
+					className={classNames('sorting-icon', {
+						active: Liferay.FeatureFlags['LPD-19465']
+							? sortingMatch?.direction === 'desc' &&
+							  sortingMatch?.active
+							: sortingMatch?.direction === 'desc',
+					})}
+					symbol="order-arrow-down"
+				/>
+			</span>
 		</ClayButton>
 	);
 

@@ -50,12 +50,12 @@ exports[`AssetAppearsOnCard should render 1`] = `
         <thead>
           <tr>
             <th
-              class="table-head-title"
+              class="table-head-title table-cell-expand"
             >
               Page Name
             </th>
             <th
-              class="table-head-title"
+              class="table-head-title table-cell-expand"
             >
               Canonical URL
             </th>

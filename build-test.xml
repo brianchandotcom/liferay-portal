@@ -7297,9 +7297,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<lstopwatch action="total" name="start.app.server.@{app.server.bundle.index}" />
 
-			<print-docker-database-logs />
+			<get-database-property property.name="database.docker.image" />
 
-			<print-docker-stats />
+			<if>
+				<isset property="database.docker.image" />
+				<then>
+					<print-docker-database-logs />
+
+					<print-docker-stats />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -7914,9 +7921,16 @@ ${docker.start.error}</fail>
 				</else>
 			</if>
 
-			<print-docker-database-logs />
+			<get-database-property property.name="database.docker.image" />
 
-			<print-docker-stats />
+			<if>
+				<isset property="database.docker.image" />
+				<then>
+					<print-docker-database-logs />
+
+					<print-docker-stats />
+				</then>
+			</if>
 
 			<lstopwatch action="total" name="stop.app.server.@{app.server.bundle.index}" />
 		</sequential>

@@ -11,8 +11,15 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
+import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -30,6 +37,81 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setSearchResultResourceComponentServiceObjects(
+		ComponentServiceObjects<SearchResultResource>
+			searchResultResourceComponentServiceObjects) {
+
+		_searchResultResourceComponentServiceObjects =
+			searchResultResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {search(blueprintExternalReferenceCode: ___, emptySearch: ___, entryClassNames: ___, filter: ___, page: ___, pageSize: ___, scope: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Search the company index for matching content. This endpoint is beta and requires setting the portal property 'feature.flag.LPS-179669' to true or enabling via Instance Settings > Feature Flags: Beta."
+	)
+	public SearchResultPage search(
+			@GraphQLName("blueprintExternalReferenceCode") String
+				blueprintExternalReferenceCode,
+			@GraphQLName("emptySearch") Boolean emptySearch,
+			@GraphQLName("entryClassNames") String entryClassNames,
+			@GraphQLName("scope") String scope,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_searchResultResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			searchResultResource -> new SearchResultPage(
+				searchResultResource.getSearchPage(
+					blueprintExternalReferenceCode, emptySearch,
+					entryClassNames, scope, search,
+					_filterBiFunction.apply(searchResultResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						searchResultResource, sortsString))));
+	}
+
+	@GraphQLName("SearchResultPage")
+	public class SearchResultPage {
+
+		public SearchResultPage(Page searchResultPage) {
+			actions = searchResultPage.getActions();
+
+			items = searchResultPage.getItems();
+			lastPage = searchResultPage.getLastPage();
+			page = searchResultPage.getPage();
+			pageSize = searchResultPage.getPageSize();
+			totalCount = searchResultPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SearchResult> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
@@ -49,6 +131,24 @@ public class Query {
 			componentServiceObjects.ungetService(resource);
 		}
 	}
+
+	private void _populateResourceContext(
+			SearchResultResource searchResultResource)
+		throws Exception {
+
+		searchResultResource.setContextAcceptLanguage(_acceptLanguage);
+		searchResultResource.setContextCompany(_company);
+		searchResultResource.setContextHttpServletRequest(_httpServletRequest);
+		searchResultResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		searchResultResource.setContextUriInfo(_uriInfo);
+		searchResultResource.setContextUser(_user);
+		searchResultResource.setGroupLocalService(_groupLocalService);
+		searchResultResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private static ComponentServiceObjects<SearchResultResource>
+		_searchResultResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

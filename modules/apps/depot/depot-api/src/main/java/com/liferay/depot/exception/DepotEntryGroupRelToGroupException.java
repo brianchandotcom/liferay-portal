@@ -52,21 +52,8 @@ public class DepotEntryGroupRelToGroupException extends PortalException {
 
 	}
 
-	private DepotEntryGroupRelToGroupException() {
-	}
-
 	private DepotEntryGroupRelToGroupException(String msg) {
 		super(msg);
-	}
-
-	private DepotEntryGroupRelToGroupException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	private DepotEntryGroupRelToGroupException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

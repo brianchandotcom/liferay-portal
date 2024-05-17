@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
@@ -168,6 +169,31 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		finally {
 			_layoutLocalService.deleteLayout(layout);
 		}
+	}
+
+	@Test
+	public void testPermissionActionsForExpiredCTCollection() throws Exception {
+		CTCollection ctCollection = ctCollectionResource.postCTCollection(
+			randomCTCollection());
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollection.getId());
+
+		serviceBuilderCTCollection.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+		_ctCollectionLocalService.updateCTCollection(
+			serviceBuilderCTCollection);
+
+		ctCollection = ctCollectionResource.getCTCollection(
+			ctCollection.getId());
+
+		Map<String, Map<String, String>> actions = ctCollection.getActions();
+
+		Assert.assertEquals(actions.toString(), 2, actions.size());
+
+		Assert.assertTrue(actions.containsKey("delete"));
+		Assert.assertTrue(actions.containsKey("get"));
 	}
 
 	@Override

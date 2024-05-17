@@ -54,9 +54,15 @@ public class ClassNameLocalServiceImplTest {
 
 	@Test
 	public void testGetClassNameIdsSupplierLaziness() {
+		Assert.assertArrayEquals(
+			new Long[] {_CLASS_NAME_ID1, _CLASS_NAME_ID2},
+			_classNameLocalServiceImpl.getClassNameIdsSupplier(
+				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
+			).get());
+
 		_testLaziness(
 			() -> {
-				Supplier<Long[]> lazyClassNameIds =
+				Supplier<Long[]> classNameIds =
 					_classNameLocalServiceImpl.getClassNameIdsSupplier(
 						new String[] {"wrong.value"});
 
@@ -66,7 +72,7 @@ public class ClassNameLocalServiceImplTest {
 					Mockito.anyLong()
 				);
 
-				lazyClassNameIds.get();
+				classNameIds.get();
 			});
 	}
 
@@ -77,13 +83,10 @@ public class ClassNameLocalServiceImplTest {
 			_classNameLocalServiceImpl.getClassNameIdsLongArraySupplier(
 				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
 			).get());
-	}
 
-	@Test
-	public void testGetClassNameIdsSupplierLongArrayLaziness() {
 		_testLaziness(
 			() -> {
-				Supplier<long[]> lazyClassNameIds =
+				Supplier<long[]> classNameIds =
 					_classNameLocalServiceImpl.getClassNameIdsLongArraySupplier(
 						new String[] {"wrong.value"});
 
@@ -93,17 +96,8 @@ public class ClassNameLocalServiceImplTest {
 					Mockito.anyLong()
 				);
 
-				lazyClassNameIds.get();
+				classNameIds.get();
 			});
-	}
-
-	@Test
-	public void testGetClassNameIdsSuppliers() {
-		Assert.assertArrayEquals(
-			new Long[] {_CLASS_NAME_ID1, _CLASS_NAME_ID2},
-			_classNameLocalServiceImpl.getClassNameIdsSupplier(
-				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
-			).get());
 	}
 
 	@Test
@@ -113,13 +107,10 @@ public class ClassNameLocalServiceImplTest {
 			_classNameLocalServiceImpl.getClassNameIdSupplier(
 				_CLASS_NAME_VALUE1
 			).get());
-	}
 
-	@Test
-	public void testGetClassNameIdSupplierLaziness() {
 		_testLaziness(
 			() -> {
-				Supplier<Long> lazyClassNameId =
+				Supplier<Long> classNameId =
 					_classNameLocalServiceImpl.getClassNameIdSupplier(
 						"wrong.value");
 
@@ -129,7 +120,7 @@ public class ClassNameLocalServiceImplTest {
 					Mockito.anyLong()
 				);
 
-				lazyClassNameId.get();
+				classNameId.get();
 			});
 	}
 

@@ -360,18 +360,6 @@ public class GraphQLServletTest {
 				"Object/code"));
 
 		Assert.assertEquals(
-			"Forbidden",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"testPath_v1_0",
-						new GraphQLField(
-							"testNonauthorizedUser", new GraphQLField("id"))),
-					"query"),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				_invoke(
@@ -379,6 +367,18 @@ public class GraphQLServletTest {
 						"testPath_v1_0",
 						new GraphQLField(
 							"testNotFoundDTO", new GraphQLField("id"))),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		Assert.assertEquals(
+			"Forbidden",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"testPath_v1_0",
+						new GraphQLField(
+							"testUnauthorizedUser", new GraphQLField("id"))),
 					"query"),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
@@ -407,20 +407,20 @@ public class GraphQLServletTest {
 				"Object/code"));
 
 		Assert.assertEquals(
-			"Forbidden",
+			"Not Found",
 			JSONUtil.getValueAsString(
 				_invoke(
-					new GraphQLField(
-						"testNonauthorizedUser", new GraphQLField("id")),
+					new GraphQLField("testNotFoundDTO", new GraphQLField("id")),
 					"query"),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 
 		Assert.assertEquals(
-			"Not Found",
+			"Forbidden",
 			JSONUtil.getValueAsString(
 				_invoke(
-					new GraphQLField("testNotFoundDTO", new GraphQLField("id")),
+					new GraphQLField(
+						"testUnauthorizedUser", new GraphQLField("id")),
 					"query"),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
@@ -612,11 +612,6 @@ public class GraphQLServletTest {
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public TestDTO testNonauthorizedUser() throws SecurityException {
-			throw new SecurityException();
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public TestDTO testNoPermissionOverDTO()
 			throws PrincipalException.MustHavePermission {
 
@@ -627,6 +622,11 @@ public class GraphQLServletTest {
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public TestDTO testNotFoundDTO() {
 			throw new NotFoundException();
+		}
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public TestDTO testUnauthorizedUser() throws SecurityException {
+			throw new SecurityException();
 		}
 
 		@GraphQLTypeExtension(TestDTO.class)

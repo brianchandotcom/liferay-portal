@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.model.BaseModel;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -19,6 +21,14 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Indexable {
 
+	public String callbackKey() default "";
+
 	public IndexableType type();
+
+	public interface Callback {
+
+		public void reindex(BaseModel<?> baseModel);
+
+	}
 
 }

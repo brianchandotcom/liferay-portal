@@ -20,10 +20,6 @@ public class OrganizationNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public OrganizationNameComparator() {
-		this(false);
-	}
-
 	public OrganizationNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}

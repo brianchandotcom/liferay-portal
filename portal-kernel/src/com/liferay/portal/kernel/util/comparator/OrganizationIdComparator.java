@@ -21,10 +21,6 @@ public class OrganizationIdComparator extends OrderByComparator<Organization> {
 
 	public static final String[] ORDER_BY_FIELDS = {"organizationId"};
 
-	public OrganizationIdComparator() {
-		this(false);
-	}
-
 	public OrganizationIdComparator(boolean ascending) {
 		_ascending = ascending;
 	}

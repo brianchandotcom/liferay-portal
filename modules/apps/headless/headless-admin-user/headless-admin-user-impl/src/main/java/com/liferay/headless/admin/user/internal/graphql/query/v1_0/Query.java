@@ -1627,6 +1627,32 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userGroupUsers(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___, userGroupId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the list of users in a user group.")
+	public UserAccountPage userGroupUsers(
+			@GraphQLName("userGroupId") Long userGroupId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> new UserAccountPage(
+				userAccountResource.getUserGroupUsersPage(
+					userGroupId, search,
+					_filterBiFunction.apply(userAccountResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(userAccountResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccountFullNameDefinition(languageId: ___){userAccountFullNameDefinitionFields}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -2612,6 +2638,41 @@ public class Query {
 		}
 
 		private UserAccount _userAccount;
+
+	}
+
+	@GraphQLTypeExtension(UserGroup.class)
+	public class GetUserGroupUsersPageTypeExtension {
+
+		public GetUserGroupUsersPageTypeExtension(UserGroup userGroup) {
+			_userGroup = userGroup;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the list of users in a user group."
+		)
+		public UserAccountPage users(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_userAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				userAccountResource -> new UserAccountPage(
+					userAccountResource.getUserGroupUsersPage(
+						_userGroup.getId(), search,
+						_filterBiFunction.apply(
+							userAccountResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							userAccountResource, sortsString))));
+		}
+
+		private UserGroup _userGroup;
 
 	}
 

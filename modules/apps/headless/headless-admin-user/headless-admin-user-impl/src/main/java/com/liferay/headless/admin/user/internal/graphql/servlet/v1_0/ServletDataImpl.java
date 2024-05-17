@@ -1151,6 +1151,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class, "getUserAccount"));
 					put(
+						"query#userGroupUsers",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getUserGroupUsersPage"));
+					put(
 						"query#userAccountFullNameDefinition",
 						new ObjectValuePair<>(
 							UserAccountFullNameDefinitionResourceImpl.class,
@@ -1349,6 +1354,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PhoneResourceImpl.class,
 							"getUserAccountPhonesPage"));
+					put(
+						"query#UserGroup.users",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getUserGroupUsersPage"));
 					put(
 						"query#Account.accountRoles",
 						new ObjectValuePair<>(

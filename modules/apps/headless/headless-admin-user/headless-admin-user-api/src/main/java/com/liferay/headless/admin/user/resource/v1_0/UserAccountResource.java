@@ -211,6 +211,11 @@ public interface UserAccountResource {
 			Long userAccountId, MultipartBody multipartBody)
 		throws Exception;
 
+	public Page<UserAccount> getUserGroupUsersPage(
+			Long userGroupId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

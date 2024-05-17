@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -97,6 +98,28 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _searchResultEntityModel;
+	}
+
+	@Override
+	public Page<SearchResult> getSearchPage(
+			String blueprintExternalReferenceCode, Boolean emptySearch,
+			String entryClassNames, String scope, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		SearchRequestBody searchRequestBody = new SearchRequestBody();
+
+		searchRequestBody.setAttributes(
+			() -> HashMapBuilder.<String, Object>put(
+				"search.empty.search", emptySearch
+			).put(
+				"search.experiences.blueprint.external.reference.code",
+				blueprintExternalReferenceCode
+			).build());
+
+		return postSearchPage(
+			entryClassNames, scope, search, filter, pagination, sorts,
+			searchRequestBody);
 	}
 
 	@Override

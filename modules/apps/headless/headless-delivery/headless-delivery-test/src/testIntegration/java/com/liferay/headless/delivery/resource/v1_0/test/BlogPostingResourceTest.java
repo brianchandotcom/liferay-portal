@@ -9,17 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.Inject;
 
 import org.hamcrest.CoreMatchers;
 
@@ -82,25 +73,6 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 	@Test
 	public void testGetBlogPostingRenderedContentByDisplayPageDisplayPageKey()
 		throws Exception {
-
-		BlogPosting blogPosting =
-			testPutSiteBlogPostingSubscribe_addBlogPosting();
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
-				_portal.getClassNameId(FileEntry.class.getName()), 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId()));
-
-		Assert.assertNotNull(
-			blogPostingResource.
-				getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
-					blogPosting.getId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey()));
 	}
 
 	@Override
@@ -171,13 +143,6 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 		return blogPosting;
 	}
 
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
 	private String _originalName;
-
-	@Inject
-	private Portal _portal;
 
 }

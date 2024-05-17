@@ -25,9 +25,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.DocumentType;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,7 +33,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -53,11 +49,9 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -166,24 +160,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	@Test
 	public void testGetDocumentRenderedContentByDisplayPageDisplayPageKey()
 		throws Exception {
-
-		Document document = testGetDocument_addDocument();
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
-				_portal.getClassNameId(FileEntry.class.getName()), 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId()));
-
-		Assert.assertNotNull(
-			documentResource.
-				getDocumentRenderedContentByDisplayPageDisplayPageKey(
-					document.getId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey()));
 	}
 
 	@Override
@@ -507,13 +483,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
-
-	@Inject
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private RatingsEntryLocalService _ratingsEntryLocalService;

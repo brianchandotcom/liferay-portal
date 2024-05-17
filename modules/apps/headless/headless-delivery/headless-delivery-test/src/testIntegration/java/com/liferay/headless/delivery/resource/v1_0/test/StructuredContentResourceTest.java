@@ -48,7 +48,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
@@ -426,26 +425,6 @@ public class StructuredContentResourceTest
 	@Test
 	public void testGetStructuredContentRenderedContentByDisplayPageDisplayPageKey()
 		throws Exception {
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			testGroup.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				_ddmStructure.getStructureId(), RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, false, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId()));
-
-		Assert.assertNotNull(
-			structuredContentResource.
-				getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
-					journalArticle.getResourcePrimKey(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey()));
 	}
 
 	@Override

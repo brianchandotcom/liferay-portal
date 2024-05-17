@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DepotEntryGroupRelToGroupException extends PortalException {
 
-	public DepotEntryGroupRelToGroupException() {
-	}
-
-	public DepotEntryGroupRelToGroupException(String msg) {
-		super(msg);
-	}
-
-	public DepotEntryGroupRelToGroupException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public DepotEntryGroupRelToGroupException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MustBeLocallyStaged extends DepotEntryGroupException {
 
 		public MustBeLocallyStaged() {
@@ -65,6 +50,23 @@ public class DepotEntryGroupRelToGroupException extends PortalException {
 					"site");
 		}
 
+	}
+
+	private DepotEntryGroupRelToGroupException() {
+	}
+
+	private DepotEntryGroupRelToGroupException(String msg) {
+		super(msg);
+	}
+
+	private DepotEntryGroupRelToGroupException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	private DepotEntryGroupRelToGroupException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

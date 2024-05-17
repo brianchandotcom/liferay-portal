@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -90,6 +91,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -414,6 +416,8 @@ public class StructuredContentResourceTest
 		_testGetStructuredContentAssetLibrary();
 		_testGetStructuredContentWithAllTypesOfContentFields(false);
 		_testGetStructuredContentWithAllTypesOfContentFields(true);
+		_testGetStructuredContentWithDateExpired();
+		_testGetStructuredContentWithDateExpiredNeverExpire();
 		_testGetStructuredContentWithDifferentFolder();
 		_testGetStructuredContentWithDifferentLocale();
 		_testGetStructuredContentWithDifferentTimeZone();
@@ -473,25 +477,9 @@ public class StructuredContentResourceTest
 	public void testPatchStructuredContent() throws Exception {
 		super.testPatchStructuredContent();
 
-		StructuredContent structuredContent = randomStructuredContent();
-
-		structuredContent.setPriority(1.0);
-
-		StructuredContent postStructuredContent =
-			structuredContentResource.postSiteStructuredContent(
-				testGroup.getGroupId(), structuredContent);
-
-		StructuredContent patchStructuredContent =
-			structuredContentResource.patchStructuredContent(
-				postStructuredContent.getId(),
-				new StructuredContent() {
-					{
-						title = RandomTestUtil.randomString();
-					}
-				});
-
-		Assert.assertEquals(
-			Double.valueOf(1.0), patchStructuredContent.getPriority());
+		_testPatchStructuredContentWithDateExpired();
+		_testPatchStructuredContentWithDateExpiredNeverExpired();
+		_testPatchStructuredContentWithRandomTitle();
 	}
 
 	@Override
@@ -1372,6 +1360,16 @@ public class StructuredContentResourceTest
 		return simpleDateFormat.format(new Date());
 	}
 
+	private Date _randomDatePlusAYear() {
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.add(Calendar.YEAR, 1);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
+	}
+
 	private String _randomGrid() {
 		return StringBundler.concat(
 			"{", _COMPLETE_STRUCTURED_CONTENT_OPTIONS[0], ":",
@@ -1720,6 +1718,48 @@ public class StructuredContentResourceTest
 		assertValid(getStructuredContent);
 	}
 
+	private void _testGetStructuredContentWithDateExpired() throws Exception {
+		StructuredContent structuredContent = randomStructuredContent();
+
+		Date dateExpired = _randomDatePlusAYear();
+
+		structuredContent.setDateExpired(dateExpired);
+
+		structuredContent.setNeverExpire(false);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertFalse(getStructuredContent.getNeverExpire());
+		Assert.assertEquals(dateExpired, getStructuredContent.getDateExpired());
+	}
+
+	private void _testGetStructuredContentWithDateExpiredNeverExpire()
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setDateExpired(_randomDatePlusAYear());
+
+		structuredContent.setNeverExpire(true);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertTrue(getStructuredContent.getNeverExpire());
+		Assert.assertNull(getStructuredContent.getDateExpired());
+	}
+
 	private void _testGetStructuredContentWithDifferentFolder()
 		throws Exception {
 
@@ -1995,6 +2035,77 @@ public class StructuredContentResourceTest
 			_userLocalService.deleteUser(ownerUser);
 			_userLocalService.deleteUser(regularUser);
 		}
+	}
+
+	private void _testPatchStructuredContentWithDateExpired() throws Exception {
+		StructuredContent structuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		Date randomDate = _randomDatePlusAYear();
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent.getId(),
+				new StructuredContent() {
+					{
+						dateExpired = randomDate;
+						neverExpire = false;
+					}
+				});
+
+		Assert.assertFalse(patchStructuredContent.getNeverExpire());
+		Assert.assertEquals(
+			randomDate, patchStructuredContent.getDateExpired());
+	}
+
+	private void _testPatchStructuredContentWithDateExpiredNeverExpired()
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		Date randomDate = _randomDatePlusAYear();
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent.getId(),
+				new StructuredContent() {
+					{
+						dateExpired = randomDate;
+						neverExpire = true;
+					}
+				});
+
+		Assert.assertTrue(patchStructuredContent.getNeverExpire());
+		Assert.assertNull(patchStructuredContent.getDateExpired());
+	}
+
+	private void _testPatchStructuredContentWithRandomTitle() throws Exception {
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setPriority(1.0);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), structuredContent);
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent.getId(),
+				new StructuredContent() {
+					{
+						title = RandomTestUtil.randomString();
+					}
+				});
+
+		Assert.assertEquals(
+			Double.valueOf(1.0), patchStructuredContent.getPriority());
 	}
 
 	private void _testPostAssetLibraryStructuredContent(

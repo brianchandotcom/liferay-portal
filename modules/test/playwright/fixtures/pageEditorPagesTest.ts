@@ -7,7 +7,7 @@
 
 import {test} from '@playwright/test';
 
-import {PageEditorPage} from '../pages/PageEditorPage';
+import {PageEditorPage} from '../pages/layout-content-page-editor-web/PageEditorPage';
 
 const pageEditorPagesTest = test.extend<{
 	pageEditorPage: PageEditorPage;

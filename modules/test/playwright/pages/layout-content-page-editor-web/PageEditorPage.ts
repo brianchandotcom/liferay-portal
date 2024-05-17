@@ -7,12 +7,12 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {liferayConfig} from '../../../liferay.config';
-import {SegmentEditorPage} from '../../../pages/segments-web/SegmentEditorPage';
-import fillAndClickOutside from '../../../utils/fillAndClickOutside';
-import getRandomString from '../../../utils/getRandomString';
-import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
-import getPageDefinition from '../utils/getPageDefinition';
+import {liferayConfig} from '../../liferay.config';
+import getPageDefinition from '../../tests/layout-content-page-editor-web/utils/getPageDefinition';
+import fillAndClickOutside from '../../utils/fillAndClickOutside';
+import getRandomString from '../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {SegmentEditorPage} from '../segments-web/SegmentEditorPage';
 
 type FragmentSet = 'Layout Elements';
 
@@ -41,6 +41,12 @@ export class PageEditorPage {
 		this.segmentEditorPage = new SegmentEditorPage(page);
 	}
 
+	async goto(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/web${siteUrl || '/guest'}${layout.friendlyUrlPath}?p_l_mode=edit`
+		);
+	}
+
 	async addFragment(setName: FragmentSet, name: string) {
 		await this.goToSidebarTab('Fragments and Widgets');
 
@@ -63,6 +69,29 @@ export class PageEditorPage {
 		await this.page.keyboard.press('Enter');
 
 		await this.waitForChangesSaved();
+	}
+
+	async addWidget(category: string, name: string) {
+		await this.page
+			.getByRole('tab', {exact: true, name: 'Widgets'})
+			.click();
+
+		const categoryDropdown = this.page.getByRole('menuitem', {
+			name: category,
+		});
+
+		if (!categoryDropdown.getAttribute('aria-expanded')) {
+			await categoryDropdown.click();
+		}
+
+		await this.page.getByText(name).click();
+		await this.page
+			.getByRole('menuitem', {
+				name: `${name} Add ${name} Mark ${name} as Favorite`,
+			})
+			.press('Tab');
+		await this.page.getByLabel(`Add ${name}`).press('Enter');
+		await this.page.getByLabel(`Add ${name}`).press('Enter');
 	}
 
 	async changeFragmentConfiguration(
@@ -206,7 +235,7 @@ export class PageEditorPage {
 
 		// Go to edit mode of page
 
-		await this.goToEditMode(layout, site.friendlyUrlPath);
+		await this.goto(layout, site.friendlyUrlPath);
 	}
 
 	async deleteExperience(name: string) {
@@ -388,12 +417,6 @@ export class PageEditorPage {
 
 	async goToConfigurationTab(tab: ConfigurationTab) {
 		await this.page.getByRole('tab', {exact: true, name: tab}).click();
-	}
-
-	async goToEditMode(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`/web${siteUrl || '/guest'}${layout.friendlyUrlPath}?p_l_mode=edit`
-		);
 	}
 
 	async goToSidebarTab(tab: SidebarTab) {

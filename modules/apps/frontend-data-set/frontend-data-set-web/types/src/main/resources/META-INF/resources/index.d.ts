@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {TRenderer} from './FrontendDataSetContext';
+/// <reference types="react" />
 
+import {TRenderer} from './FrontendDataSetContext';
 export declare function FrontendDataSet({
 	actionParameterName,
 	activeViewSettings,
@@ -46,13 +47,11 @@ export declare function FrontendDataSet({
 	style,
 	views,
 }: IFrontendDataSetProps): JSX.Element;
-
 export declare function DateTimeRenderer({
 	options,
 	value,
 }: DateTimeRendererProps): string;
-
-type DateTimeRendererProps = {
+declare type DateTimeRendererProps = {
 	options?: {
 		format: {
 			day?: string;
@@ -66,17 +65,14 @@ type DateTimeRendererProps = {
 	};
 	value: string;
 };
-
-type TDelta = {
+declare type TDelta = {
 	href?: string;
 	label: number;
 };
-
 export interface IInlineEditingSettings {
 	alwaysOn: boolean;
 	defaultBodyContent: object;
 }
-
 export interface IActionsDropdown extends IBaseActions {
 	loading: boolean;
 	menuActive?: boolean;
@@ -84,13 +80,11 @@ export interface IActionsDropdown extends IBaseActions {
 	onMenuActiveChange?: Function;
 	setLoading: Function;
 }
-
 export interface IBaseActions {
 	actions: IItemsActions[];
 	itemData: any;
 	itemId: number | string;
 }
-
 export interface IItemsActions {
 	data?: IItemActionsData;
 	href?: string;
@@ -113,7 +107,6 @@ export interface IItemsActions {
 		| 'event';
 	type?: string;
 }
-
 export interface IItemActionsData {
 	confirmationMessage?: string;
 	disableHeader?: boolean;
@@ -126,20 +119,17 @@ export interface IItemActionsData {
 	successMessage?: string;
 	title?: string;
 }
-
 export interface IQuickActions extends IBaseActions {
 	onClick: Function;
 }
-
-export type TSort = {
+export declare type TSort = {
 	active?: boolean;
 	default?: boolean;
 	direction?: 'asc' | 'desc';
 	key?: string;
 	label?: string;
 };
-
-type TViews = {
+declare type TViews = {
 	component?: any;
 	contentRenderer?: string;
 	contentRendererClientExtension?: boolean;
@@ -149,7 +139,6 @@ type TViews = {
 	schema?: object;
 	thumbnail?: string;
 };
-
 export interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	activeViewSettings?: string;
@@ -162,7 +151,9 @@ export interface IFrontendDataSetProps {
 	};
 	currentURL?: string;
 	customDataRenderers?: any;
-	customRenderers?: {tableCell: Array<TRenderer>};
+	customRenderers?: {
+		tableCell: Array<TRenderer>;
+	};
 	customViews?: string;
 	customViewsEnabled?: boolean;
 	emptyState?: {
@@ -212,7 +203,6 @@ export interface IFrontendDataSetProps {
 	views: TViews[];
 	viewsTitle?: string;
 }
-
 export {
 	IClientExtensionRenderer,
 	IInternalRenderer,

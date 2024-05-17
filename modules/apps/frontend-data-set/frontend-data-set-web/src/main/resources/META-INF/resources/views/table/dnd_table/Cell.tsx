@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {throttle} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useRef} from 'react';
@@ -25,7 +24,6 @@ const Cell = ({
 	defaultWidth = 'auto',
 	heading = false,
 	resizable = false,
-	...otherProps
 }: {
 	children?: React.ReactNode;
 	className?: string;
@@ -117,22 +115,6 @@ const Cell = ({
 			)}
 		</>
 	);
-
-	if (Liferay.FeatureFlags['LPS-193005']) {
-		return (
-			<ClayTable.Cell
-				className={className}
-				headingCell={heading}
-				ref={cellRef}
-				{...otherProps}
-				style={{
-					width: width ?? defaultWidth,
-				}}
-			>
-				{content}
-			</ClayTable.Cell>
-		);
-	}
 
 	return (
 		<div

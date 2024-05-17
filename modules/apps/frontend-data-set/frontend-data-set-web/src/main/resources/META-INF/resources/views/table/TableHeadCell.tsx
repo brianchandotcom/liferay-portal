@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -102,64 +101,6 @@ const TableHeadCell = ({
 		});
 	}
 
-	const content = Liferay.FeatureFlags['LPS-193005'] ? (
-		<ClayLink
-			className="inline-item text-truncate-inline"
-			href="#"
-			onClick={handleSortingCellClick}
-		>
-			{!hideColumnLabel && <span className="text-truncate">{label}</span>}
-
-			{sortingMatch && (
-				<span className="inline-item inline-item-after">
-					<ClayIcon
-						symbol={
-							Liferay.FeatureFlags['LPD-19465']
-								? sortingMatch?.active &&
-									sortingMatch?.direction === 'asc'
-									? 'order-arrow-up'
-									: 'order-arrow-down'
-								: sortingMatch?.direction === 'asc'
-									? 'order-arrow-up'
-									: 'order-arrow-down'
-						}
-					/>
-				</span>
-			)}
-		</ClayLink>
-	) : (
-		<ClayButton
-			className="btn-sorting inline-item text-nowrap text-truncate-inline"
-			displayType="unstyled"
-			onClick={handleSortingCellClick}
-			size="sm"
-		>
-			{!hideColumnLabel && label}
-
-			<span className="inline-item inline-item-after sorting-icons-wrapper">
-				<ClayIcon
-					className={classNames('sorting-icon', {
-						active: Liferay.FeatureFlags['LPD-19465']
-							? sortingMatch?.direction === 'asc' &&
-								sortingMatch?.active
-							: sortingMatch?.direction === 'asc',
-					})}
-					symbol="order-arrow-up"
-				/>
-
-				<ClayIcon
-					className={classNames('sorting-icon', {
-						active: Liferay.FeatureFlags['LPD-19465']
-							? sortingMatch?.direction === 'desc' &&
-								sortingMatch?.active
-							: sortingMatch?.direction === 'desc',
-					})}
-					symbol="order-arrow-down"
-				/>
-			</span>
-		</ClayButton>
-	);
-
 	return (
 		<Cell
 			className={classNames({
@@ -169,7 +110,40 @@ const TableHeadCell = ({
 			heading
 			resizable
 		>
-			{sortable ? content : !hideColumnLabel && label}
+			{sortable ? (
+				<ClayButton
+					className="btn-sorting inline-item text-nowrap text-truncate-inline"
+					displayType="unstyled"
+					onClick={handleSortingCellClick}
+					size="sm"
+				>
+					{!hideColumnLabel && label}
+		
+					<span className="inline-item inline-item-after sorting-icons-wrapper">
+						<ClayIcon
+							className={classNames('sorting-icon', {
+								active: Liferay.FeatureFlags['LPD-19465']
+									? sortingMatch?.direction === 'asc' &&
+										sortingMatch?.active
+									: sortingMatch?.direction === 'asc',
+							})}
+							symbol="order-arrow-up"
+						/>
+		
+						<ClayIcon
+							className={classNames('sorting-icon', {
+								active: Liferay.FeatureFlags['LPD-19465']
+									? sortingMatch?.direction === 'desc' &&
+										sortingMatch?.active
+									: sortingMatch?.direction === 'desc',
+							})}
+							symbol="order-arrow-down"
+						/>
+					</span>
+				</ClayButton>
+			) : (
+				!hideColumnLabel && label
+			)}
 		</Cell>
 	);
 };

@@ -64,4 +64,12 @@ async function performLogin(
 	return await page.context().cookies();
 }
 
+export async function performLogout(page: Page) {
+	await page.goto('/');
+
+	await page.getByTestId('userPersonalMenu').click();
+
+	await page.getByRole('menuitem', {name: 'Sign Out'}).click();
+}
+
 export default performLogin;

@@ -42,6 +42,7 @@ export class UsersAndOrganizationsPage {
 	readonly page: Page;
 	readonly pageTitle: Locator;
 	readonly exportUsersOptionsMenuItem: Locator;
+	readonly exportPersonalDataItem: Locator;
 	readonly manageCustomFieldsOptionsMenuItem: Locator;
 	readonly organizationActionsMenu: (
 		organizationName: string
@@ -60,6 +61,7 @@ export class UsersAndOrganizationsPage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly usersTableRowLink: (screenName: string) => Promise<Locator>;
+	readonly usersTableRowActions: (screenName: string) => Promise<Locator>;
 	readonly usersLink: Locator;
 	readonly usersTable: Locator;
 
@@ -70,6 +72,9 @@ export class UsersAndOrganizationsPage {
 		});
 		this.exportUsersOptionsMenuItem = page.getByRole('menuitem', {
 			name: 'Export Users',
+		});
+		this.exportPersonalDataItem = page.getByRole('menuitem', {
+			name: 'Export Personal Data',
 		});
 		this.manageCustomFieldsOptionsMenuItem = page.getByRole('menuitem', {
 			name: 'Manage Custom Fields',
@@ -145,18 +150,29 @@ export class UsersAndOrganizationsPage {
 				`Cannot locate user row with screenName ${screenName}`
 			);
 		};
+		this.usersTableRowActions = async (screenName: string) => {
+			const usersTableRow = await this.usersTableRow(2, screenName, true);
+
+			if (usersTableRow && usersTableRow.column) {
+				return usersTableRow.row.getByLabel('Show Actions');
+			}
+
+			throw new Error(
+				`Cannot locate user row with screenName ${screenName}`
+			);
+		};
 		this.usersLink = page.getByRole('link', {name: 'Users'});
 		this.usersTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersSearchContainer'
 		);
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToUsersAndOrganizations();
+	async goto(forceReload?: boolean) {
+		await this.applicationsMenuPage.goToUsersAndOrganizations(forceReload);
 	}
 
-	async goToOrganizations() {
-		await this.goto();
+	async goToOrganizations(forceReload?: boolean) {
+		await this.goto(forceReload);
 		await Promise.all([
 			this.organizationsLink.click(),
 			this.page.waitForResponse(
@@ -169,8 +185,8 @@ export class UsersAndOrganizationsPage {
 		]);
 	}
 
-	async goToUsers() {
-		await this.goto();
+	async goToUsers(forceReload?: boolean) {
+		await this.goto(forceReload);
 		await Promise.all([
 			this.usersLink.click(),
 			this.page.waitForResponse(

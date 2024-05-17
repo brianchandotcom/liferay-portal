@@ -301,8 +301,16 @@ export class ApplicationsMenuPage {
 		await this.serviceAccountsItem.click();
 	}
 
-	async goToUsersAndOrganizations() {
-		await this.goto();
+	async goToUsersAndOrganizations(forceReload = true) {
+		if (forceReload) {
+			await this.goto();
+		}
+		else {
+			await this.homePage.openApplicationMenu();
+
+			await expect(this.applicationsMenuTabButton).toBeVisible();
+		}
+
 		await this.controlPanelButton.click();
 		await this.usersAndOrganizationsItem.click();
 	}

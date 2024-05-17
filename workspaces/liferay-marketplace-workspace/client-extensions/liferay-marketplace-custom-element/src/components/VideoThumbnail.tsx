@@ -15,13 +15,15 @@ const getThumbnail = (videoURL: string) => {
 		return;
 	}
 
-	const url = new URL(videoURL) as URL;
+	try {
+		const url = new URL(videoURL) as URL;
 
-	if (url.hostname.includes('youtube.com')) {
-		const videoId = url.searchParams.get('v');
+		if (url?.hostname?.includes('youtube.com')) {
+			const videoId = url?.searchParams?.get('v');
 
-		return videoId ? `https://img.youtube.com/vi/${videoId}/0.jpg` : '';
-	}
+			return videoId ? `https://img.youtube.com/vi/${videoId}/0.jpg` : '';
+		}
+	} catch (error) {}
 
 	return '';
 };

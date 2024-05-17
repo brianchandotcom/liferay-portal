@@ -82,3 +82,10 @@ export const SOLUTION_FLOW_ITEMS = [
 		title: 'Review and submit solution',
 	},
 ];
+
+export const STATUSES = {
+	0: 'approved',
+	1: 'Under Review',
+	2: 'draft',
+	3: 'processing',
+};

@@ -27,7 +27,7 @@ export function Input({component, maxLength, ...props}: InputProps) {
 
 			{maxLength && (
 				<small className="text-black-50">
-					{`${(props.value as string).length} / ${maxLength}`}
+					{`${(props.value as string)?.length} / ${maxLength}`}
 				</small>
 			)}
 		</>

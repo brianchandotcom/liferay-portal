@@ -41,16 +41,17 @@ const Header = () => {
 
 	const handleUpload = (files: File[]) => {
 		if (
-			files.length +
+			files?.length +
 				(contentType as HeaderContentTypeImages).content?.headerImages
-					.length >
+					?.length >
 			MAX_IMAGE_QUANTITY
 		) {
 			return onOpenChange(true);
 		}
 		if (contentType.type === ContentMediaType.UPLOAD_IMAGES) {
 			const totalImages =
-				(contentType.content.headerImages?.length || 0) + files.length;
+				(contentType.content?.headerImages?.length || 0) +
+				files?.length;
 
 			if (totalImages > MAX_IMAGE_QUANTITY) {
 				return;
@@ -342,14 +343,14 @@ const Header = () => {
 							'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb'
 						)}
 						disabled={
-							contentType.content.headerImages.length ===
+							contentType?.content?.headerImages?.length ===
 							MAX_IMAGE_QUANTITY
 						}
 						maxFiles={MAX_IMAGE_QUANTITY}
 						maxSize={MAX_SIZE_5MBS}
 						multiple
 						onDropRejected={(fileList) => {
-							if (fileList.length > MAX_IMAGE_QUANTITY) {
+							if (fileList?.length > MAX_IMAGE_QUANTITY) {
 								onOpenChange(true);
 							}
 						}}

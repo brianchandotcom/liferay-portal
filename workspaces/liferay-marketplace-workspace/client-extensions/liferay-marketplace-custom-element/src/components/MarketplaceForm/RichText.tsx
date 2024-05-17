@@ -20,7 +20,7 @@ const RichTextEditor: React.FC<RichTextProps> = ({
 	maxLength,
 	onChange,
 	placeholder,
-	value,
+	value = '',
 }) => {
 	const [validate, setValidate] = useState<boolean>(false);
 
@@ -59,7 +59,7 @@ const RichTextEditor: React.FC<RichTextProps> = ({
 
 			{maxLength && (
 				<small className="text-black-50">
-					{`${removeHTMLTags(value || '').length}/ ${maxLength}`}
+					{`${removeHTMLTags(value)?.length}/ ${maxLength}`}
 				</small>
 			)}
 		</>

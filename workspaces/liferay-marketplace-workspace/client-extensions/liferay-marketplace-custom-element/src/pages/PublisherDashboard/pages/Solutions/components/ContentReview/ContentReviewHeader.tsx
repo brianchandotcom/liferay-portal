@@ -13,7 +13,7 @@ interface ContentReviewHeaderProps {
 	as?: 'h1' | 'h2' | 'h3' | 'span';
 	children: ReactNode;
 	className?: string;
-	path: string;
+	path?: string;
 }
 
 export function ContentReviewHeader({
@@ -33,9 +33,11 @@ export function ContentReviewHeader({
 		>
 			<Wrapper>{children}</Wrapper>
 
-			<Link className="font-weight-bold" to={path}>
-				{i18n.translate('edit')}
-			</Link>
+			{path && (
+				<Link className="font-weight-bold" to={path}>
+					{i18n.translate('edit')}
+				</Link>
+			)}
 		</div>
 	);
 }

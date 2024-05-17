@@ -349,6 +349,8 @@ export default {
 		'This key is expired and cannot be downloaded.',
 	'this-order-must-be-completed-before-downloading-this-app.':
 		'This order must be completed before downloading this app.',
+	'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-the-solution-will-be-published-automatically-to-the-marketplace-meanwhile-any-information-or-data-from-this-solution-submission-cannot-be-updated':
+		'This submission is currently under review by Liferay. Once the process is complete the solution will be published automatically to the Marketplace. Meanwhile, any information or data from this solution submission cannot be updated.',
 	'title': 'Title',
 	'total': 'Total',
 	'trial': 'Trial',

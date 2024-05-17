@@ -42,7 +42,6 @@ const updateSpecification = async (
 		!value?.trim() ||
 		(specification && specification.value.en_US === value)
 	) {
-
 		// No need to update the specification if the value is equal
 		// the previous value or empty.
 
@@ -113,6 +112,7 @@ const usePublishSolutionSubmission = (
 					description: {en_US: description},
 					name: {en_US: name},
 					productStatus,
+					workflowStatusInfo: productStatus,
 				}
 			);
 
@@ -126,26 +126,31 @@ const usePublishSolutionSubmission = (
 				description,
 				name,
 				productStatus,
+				workflowStatusInfo: productStatus,
 			}
 		);
 
 		product.productSpecifications = [];
 
-		await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
-			product.externalReferenceCode,
-			{
-				attachment: base64ToText(
-					(await fileToBase64(file.file)) as string
-				),
-				galleryEnabled: false,
-				neverExpire: true,
-				priority: 0,
-				tags: [PRODUCT_TAGS.APP_ICON],
-				title: {
-					en_US: file.fileName,
-				},
-			}
-		);
+		if (file.file) {
+			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+				product.externalReferenceCode,
+				{
+					attachment: base64ToText(
+						(await fileToBase64(file.file)) as string
+					),
+					galleryEnabled: false,
+					neverExpire: true,
+					priority: 0,
+					tags: [PRODUCT_TAGS.APP_ICON],
+					title: {
+						en_US: file.fileName,
+					},
+				}
+			);
+		}
+
+		dispatch({payload: product, type: SolutionTypes.SET_PRODUCT});
 
 		return product;
 	};
@@ -190,32 +195,35 @@ const usePublishSolutionSubmission = (
 		// the app icon defined as priority 0
 
 		let priority = 0;
-		for (const image of contentType.content.headerImages) {
-			priority++;
 
-			if (image.uploaded) {
-				continue;
-			}
+		if (contentType.content.headerImages) {
+			for (const image of contentType.content.headerImages) {
+				priority++;
 
-			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
-				product.externalReferenceCode,
-				{
-					attachment: base64ToText(
-						(await fileToBase64(image.file)) as string
-					),
-					galleryEnabled: false,
-					neverExpire: true,
-					priority,
-					tags: [PRODUCT_TAGS.SOLUTION_HEADER],
-					title: {
-						en_US: image.imageDescription || image.file.name,
-					},
-				},
-				(progress) => {
-					image.progress = progress;
-					image.uploaded = progress === 100;
+				if (image.uploaded) {
+					continue;
 				}
-			);
+
+				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+					product.externalReferenceCode,
+					{
+						attachment: base64ToText(
+							(await fileToBase64(image.file)) as string
+						),
+						galleryEnabled: false,
+						neverExpire: true,
+						priority,
+						tags: [PRODUCT_TAGS.SOLUTION_HEADER],
+						title: {
+							en_US: image.imageDescription || image.file.name,
+						},
+					},
+					(progress) => {
+						image.progress = progress;
+						image.uploaded = progress === 100;
+					}
+				);
+			}
 		}
 	};
 
@@ -259,14 +267,12 @@ const usePublishSolutionSubmission = (
 				context.header.contentType.type === 'upload-images'
 					? context.header.contentType.content.headerImages.length
 					: 0;
-
 			for (const file of files) {
 				priority++;
 
 				if (file.uploaded) {
 					continue;
 				}
-
 				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
 					product.externalReferenceCode,
 					{
@@ -296,7 +302,7 @@ const usePublishSolutionSubmission = (
 					...block,
 					content: {
 						...block.content,
-						files: block.content.files.map(({id}) => id),
+						files: block.content?.files.map(({id}) => id),
 					},
 				};
 			}
@@ -335,11 +341,9 @@ const usePublishSolutionSubmission = (
 			]) {
 				await sync(product);
 			}
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
-		}
-		finally {
+		} finally {
 			dispatch({payload: false, type: SolutionTypes.SET_LOADING});
 		}
 	};

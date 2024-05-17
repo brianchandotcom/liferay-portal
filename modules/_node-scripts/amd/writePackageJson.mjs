@@ -14,7 +14,7 @@ export default async function writePackageJson(projectDescription) {
 	const {main, name, version} = projectDescription;
 
 	const json = {
-		main,
+		main: main.replace(/\.ts$/, '.js'),
 		name,
 		version,
 	};

@@ -7,13 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {
-	Dispatch,
-	SetStateAction,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import React, {Dispatch, SetStateAction, useContext, useState} from 'react';
 
 import {EditSchemaContext} from '../EditAPIApplicationContext';
 import {
@@ -43,8 +37,14 @@ export default function BaseAPISchemaProperty({
 	setSchemaUIData,
 }: BaseAPISchemaPropertyProps) {
 	const {apiSchemaId} = useContext(EditSchemaContext);
-	const [disabled, setDisabled] = useState(false);
 	const [focused, setFocused] = useState(false);
+
+	const disabled =
+		added ||
+		(!objectDefinition.modifiable &&
+			!ALLOWED_UNMODIFIABLE_OBJECTS.includes(
+				objectDefinition.externalReferenceCode
+			));
 
 	const localizedPropertyName = objectField.label[
 		Liferay.ThemeDisplay.getDefaultLanguageId()
@@ -76,16 +76,6 @@ export default function BaseAPISchemaProperty({
 			return previous;
 		});
 	};
-
-	useEffect(() => {
-		setDisabled(
-			added ||
-				(!objectDefinition.modifiable &&
-					!ALLOWED_UNMODIFIABLE_OBJECTS.includes(
-						objectDefinition.externalReferenceCode
-					))
-		);
-	}, [added, objectDefinition]);
 
 	return (
 		<ClayButton

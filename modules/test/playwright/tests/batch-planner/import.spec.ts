@@ -1264,7 +1264,7 @@ test('can see correct custom object name in dropdown', async ({
 		},
 	});
 
-	await apiHelpers.object.postObjectEntry(
+	await apiHelpers.objectEntry.postObjectEntry(
 		{
 			externalReferenceCode: 'nameERC',
 			name: 'Stock Entry',

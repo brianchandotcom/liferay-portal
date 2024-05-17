@@ -377,7 +377,7 @@ test('can see correct custom object name in dropdown', async ({
 	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
 		stockObjectDefinition
 	);
-	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
+	await apiHelpers.objectEntry.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToExportFile();

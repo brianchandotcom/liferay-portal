@@ -49,6 +49,10 @@ function PortletContentContextProvider({children}: {children: ReactNode}) {
 
 			pendingItemsRef.current = [];
 
+			if (!pendingItems.length) {
+				return;
+			}
+
 			FragmentService.renderFragmentEntryLinksContent({
 				data: pendingItems.map((fragmentEntryLinkId) => ({
 					fragmentEntryLinkId,

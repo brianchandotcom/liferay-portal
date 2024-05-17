@@ -24,7 +24,7 @@ public class TestrayCache {
 		_objectEntryIds.put(key, value);
 	}
 
-	public long getBuildId() {
+	public long getTestrayBuildId() {
 		return _testrayBuildId;
 	}
 

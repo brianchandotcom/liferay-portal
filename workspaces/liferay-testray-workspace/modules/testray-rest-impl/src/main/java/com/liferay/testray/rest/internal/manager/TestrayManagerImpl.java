@@ -147,7 +147,7 @@ public class TestrayManagerImpl implements TestrayManager {
 			}
 
 			_addTestrayTestSuite(
-				testrayCache.getBuildId(),
+				testrayCache.getTestrayBuildId(),
 				testrayCache.getTestrayCaseResultAmount(), dueStatus,
 				System.currentTimeMillis() - startTime, fileName, bytes.length,
 				serviceContext, testrayCache, userId);
@@ -203,7 +203,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		finally {
 			if (fileName != null) {
 				_addTestrayTestSuite(
-					testrayCache.getBuildId(),
+					testrayCache.getTestrayBuildId(),
 					testrayCache.getTestrayCaseResultAmount(), dueStatus,
 					System.currentTimeMillis() - startTime, fileName, fileSize,
 					serviceContext, testrayCache, userId);

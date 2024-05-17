@@ -113,6 +113,78 @@ info:
 openapi: 3.0.1
 paths:
     "/search":
+        get:
+            description:
+                "Search the company index for matching content. This endpoint is beta and requires setting the
+                portal property 'feature.flag.LPS-179669' to true or enabling via Instance Settings > Feature Flags: Beta."
+            operationId: getSearchPage
+            parameters:
+                - in: query
+                  name: blueprintExternalReferenceCode
+                  schema:
+                      type: string
+                - in: query
+                  name: emptySearch
+                  schema:
+                      type: boolean
+                - in: query
+                  description:
+                      Model class names to be searched for. Defaults to all.
+                  name: entryClassNames
+                  schema:
+                      type: string
+                - in: query
+                  description:
+                      The list of fields to be returned.
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: scope
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchResult"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchResult"
+                                type: array
+            tags: ["SearchResult"]
         post:
             description:
                 "Search the company index for matching content. This endpoint is beta and requires setting the

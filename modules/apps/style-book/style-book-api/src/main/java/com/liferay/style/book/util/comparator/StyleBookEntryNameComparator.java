@@ -21,10 +21,6 @@ public class StyleBookEntryNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public StyleBookEntryNameComparator() {
-		this(false);
-	}
-
 	public StyleBookEntryNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}

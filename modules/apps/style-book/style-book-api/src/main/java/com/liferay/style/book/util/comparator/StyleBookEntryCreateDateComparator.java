@@ -21,10 +21,6 @@ public class StyleBookEntryCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public StyleBookEntryCreateDateComparator() {
-		this(true);
-	}
-
 	public StyleBookEntryCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}

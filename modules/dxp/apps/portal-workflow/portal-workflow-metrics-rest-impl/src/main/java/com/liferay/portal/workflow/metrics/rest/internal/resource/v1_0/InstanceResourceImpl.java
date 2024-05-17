@@ -1172,16 +1172,14 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private Transition _toTransition(String name) {
-		Transition transition = new Transition() {
-			{
-				setLabel(
-					() -> _language.get(
-						ResourceBundleUtil.getModuleAndPortalResourceBundle(
-							contextAcceptLanguage.getPreferredLocale(),
-							InstanceResourceImpl.class),
-						name));
-			}
-		};
+		Transition transition = new Transition();
+
+		transition.setLabel(
+			() -> _language.get(
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					InstanceResourceImpl.class),
+				name));
 
 		transition.setName(() -> name);
 

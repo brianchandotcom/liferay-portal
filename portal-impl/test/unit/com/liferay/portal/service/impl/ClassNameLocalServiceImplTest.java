@@ -14,6 +14,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.junit.Assert;
@@ -132,10 +133,14 @@ public class ClassNameLocalServiceImplTest {
 		_classNamePersistence = Mockito.mock(
 			ClassNamePersistence.class, Answers.RETURNS_MOCKS);
 
+		List<ClassName> classNames = Arrays.asList(
+			_getMockedClassName(_CLASS_NAME_ID1, _CLASS_NAME_VALUE1),
+			_getMockedClassName(_CLASS_NAME_ID2, _CLASS_NAME_VALUE2));
+
 		Mockito.when(
 			_classNamePersistence.findAll()
 		).thenReturn(
-			Arrays.asList(_CLASS_NAME_1, _CLASS_NAME_2)
+			classNames
 		);
 
 		ReflectionTestUtil.setFieldValue(
@@ -171,12 +176,6 @@ public class ClassNameLocalServiceImplTest {
 			Mockito.anyLong()
 		);
 	}
-
-	private static final ClassName _CLASS_NAME_1 = _getMockedClassName(
-		1L, "com.liferay.test1");
-
-	private static final ClassName _CLASS_NAME_2 = _getMockedClassName(
-		2L, "com.liferay.test2");
 
 	private static final Long _CLASS_NAME_ID1 = 1L;
 

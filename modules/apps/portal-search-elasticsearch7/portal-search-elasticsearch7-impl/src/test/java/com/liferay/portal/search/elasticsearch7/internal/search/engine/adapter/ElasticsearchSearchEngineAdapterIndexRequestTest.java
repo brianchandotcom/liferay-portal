@@ -306,12 +306,10 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			StringBundler.concat(
 				"{\n", "    \"settings\": {\n",
 				"        \"number_of_shards\": 1\n", "    },\n",
-				"    \"mappings\": {\n", "        \"type1\": {\n",
-				"            \"properties\": {\n",
+				"    \"mappings\": {\n", "            \"properties\": {\n",
 				"                \"field1\": {\n",
 				"                    \"type\": \"text\"\n",
-				"                }\n", "            }\n", "        }\n",
-				"    }\n", "}"));
+				"                }\n", "            }\n", "    }\n", "}"));
 
 		CreateIndexResponse createIndexResponse = _searchEngineAdapter.execute(
 			createIndexRequest);

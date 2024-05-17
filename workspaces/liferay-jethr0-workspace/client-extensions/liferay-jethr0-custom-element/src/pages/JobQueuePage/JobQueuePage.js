@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -72,6 +73,7 @@ function JobQueuePage() {
 					<thead>
 						<tr>
 							<th>Position</th>
+							<th>Blessed</th>
 							<th>ID</th>
 							<th>Name</th>
 							<th>Priority</th>
@@ -113,6 +115,9 @@ function JobQueuePage() {
 							return (
 								<tr key={job.id}>
 									<td>{index + 1}</td>
+									<td>
+										{job.blessed && (<ClayBadge displayType="success" label="blessed" />)}
+									</td>
 									<th className="font-weight-semi-bold">
 										<Link
 											title={job.id}

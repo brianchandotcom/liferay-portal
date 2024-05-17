@@ -12,6 +12,7 @@
 		]
 	},
 	"dependencies": {
+		"@clayui/badge": "^3.111.0",
 		"@clayui/button": "^3.100.0",
 		"@clayui/card": "^3.104.0",
 		"@clayui/core": "^3.104.0",

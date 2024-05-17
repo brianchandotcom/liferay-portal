@@ -65,8 +65,9 @@ export async function getJobById({id, setJob}) {
 						}
 					}
 				}
-				jobs(filter: \\"id eq '${id}'\\") {
+				jobs (filter: \\"id eq '${id}'\\") {
 					items {
+						blessed
 						dateCreated
 						dateModified
 						id
@@ -186,8 +187,9 @@ export async function getJobsPage({
 	const response = await liferayRequest({
 		graphqlQuery: `{
 			c {
-				jobs(filter: \\"${filter}\\", page: ${page}, pageSize: ${pageSize}) {
+				jobs (filter: \\"${filter}\\", page: ${page}, pageSize: ${pageSize}) {
 					items {
+						blessed
 						dateCreated
 						dateModified
 						id

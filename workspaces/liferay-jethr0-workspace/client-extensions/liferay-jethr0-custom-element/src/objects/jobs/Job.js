@@ -5,6 +5,7 @@
 
 export default class Job {
 	constructor({
+		blessed,
 		dateCreated,
 		dateModified,
 		id,
@@ -15,6 +16,7 @@ export default class Job {
 		state,
 		type,
 	}) {
+		this.blessed = blessed;
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
 		this.id = id;

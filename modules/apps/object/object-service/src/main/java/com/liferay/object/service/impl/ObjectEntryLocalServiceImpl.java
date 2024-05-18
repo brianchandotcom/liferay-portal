@@ -3883,8 +3883,10 @@ public class ObjectEntryLocalServiceImpl
 				preparedStatement.setString(index, String.valueOf(value));
 			}
 			else {
+				String valueString = String.valueOf(value);
+
 				preparedStatement.setClob(
-					index, new StringReader(String.valueOf(value)));
+					index, new StringReader(valueString), valueString.length());
 			}
 		}
 		else if ((sqlType == Types.DATE) || (sqlType == Types.TIMESTAMP)) {

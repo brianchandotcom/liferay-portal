@@ -116,7 +116,12 @@ function JobQueuePage() {
 								<tr key={job.id}>
 									<td>{index + 1}</td>
 									<td>
-										{job.blessed && (<ClayBadge displayType="success" label="blessed" />)}
+										{job.blessed && (
+											<ClayBadge
+												displayType="success"
+												label="blessed"
+											/>
+										)}
 									</td>
 									<th className="font-weight-semi-bold">
 										<Link

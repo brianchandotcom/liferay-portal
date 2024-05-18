@@ -4,7 +4,7 @@
  */
 
 import {Heading} from '@clayui/core';
-import ClayForm,{ClayCheckbox} from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
@@ -186,8 +186,6 @@ function CreateJobPage() {
 					<ClayCheckbox
 						id="jobBlessed"
 						onChange={(event) => {
-							console.log(event.target.checked);
-
 							setJobBlessed(event.target.checked);
 						}}
 						value={jobBlessed}

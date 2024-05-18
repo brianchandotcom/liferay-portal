@@ -107,7 +107,12 @@ function JobsPage() {
 									</th>
 									<td>{job.name}</td>
 									<td>
-										{job.blessed && (<ClayBadge displayType="success" label="blessed" />)}
+										{job.blessed && (
+											<ClayBadge
+												displayType="success"
+												label="blessed"
+											/>
+										)}
 									</td>
 									<td>{job.priority}</td>
 									<td>{toLocaleString(job.dateCreated)}</td>

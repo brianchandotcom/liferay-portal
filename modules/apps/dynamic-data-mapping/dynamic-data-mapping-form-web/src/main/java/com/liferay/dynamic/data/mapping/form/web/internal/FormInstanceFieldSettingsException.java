@@ -37,21 +37,8 @@ public class FormInstanceFieldSettingsException extends PortalException {
 
 	}
 
-	private FormInstanceFieldSettingsException() {
-	}
-
 	private FormInstanceFieldSettingsException(String msg) {
 		super(msg);
-	}
-
-	private FormInstanceFieldSettingsException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	private FormInstanceFieldSettingsException(Throwable throwable) {
-		super(throwable);
 	}
 
 	private static final long serialVersionUID = 1L;

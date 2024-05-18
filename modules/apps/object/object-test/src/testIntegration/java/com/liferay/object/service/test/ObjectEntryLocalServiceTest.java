@@ -40,8 +40,10 @@ import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
 import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
+import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -760,17 +762,39 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		_addCustomObjectField(
+			new LongTextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"longTextLocalized"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).localized(
+				true
+			).build());
+		_addCustomObjectField(
+			new RichTextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"richTextLocalized"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).localized(
+				true
+			).build());
+		_addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
-				"nameLocalized"
+				"textLocalized"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
 			).localized(
 				true
 			).objectFieldSettings(
-				Arrays.asList(
+				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
 					).name(
 						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
@@ -782,9 +806,23 @@ public class ObjectEntryLocalServiceTest {
 		String value1 = "en_US " + RandomTestUtil.randomString();
 		String value2 = "pt_BR " + RandomTestUtil.randomString();
 
-		Map<String, Serializable> localizedValue =
+		Map<String, Serializable> localizedValues =
 			HashMapBuilder.<String, Serializable>put(
-				"nameLocalized_i18n",
+				"longTextLocalized_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).put(
+					"pt_BR", RandomTestUtil.randomString()
+				).build()
+			).put(
+				"richTextLocalized_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).put(
+					"pt_BR", RandomTestUtil.randomString()
+				).build()
+			).put(
+				"textLocalized_i18n",
 				HashMapBuilder.put(
 					"en_US", value1
 				).put(
@@ -792,29 +830,41 @@ public class ObjectEntryLocalServiceTest {
 				).build()
 			).build();
 
-		_addObjectEntry(
+		ObjectEntry objectEntry = _addObjectEntry(
 			group.getGroupId(), objectDefinition.getObjectDefinitionId(),
-			localizedValue);
+			localizedValues);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(
+			localizedValues.get("longTextLocalized_i18n"),
+			values.get("longTextLocalized_i18n"));
+		Assert.assertEquals(
+			localizedValues.get("richTextLocalized_i18n"),
+			values.get("richTextLocalized_i18n"));
+		Assert.assertEquals(
+			localizedValues.get("textLocalized_i18n"),
+			values.get("textLocalized_i18n"));
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
 			StringBundler.concat(
 				"Unique value constraint violation for ",
 				objectDefinition.getLocalizationDBTableName(),
-				".nameLocalized_ with value ", value1),
+				".textLocalized_ with value ", value1),
 			() -> _addObjectEntry(
-				group.getGroupId(), finalObjectDefinitionId, localizedValue));
+				group.getGroupId(), finalObjectDefinitionId, localizedValues));
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
 			StringBundler.concat(
 				"Unique value constraint violation for ",
 				objectDefinition.getLocalizationDBTableName(),
-				".nameLocalized_ with value ", value2),
+				".textLocalized_ with value ", value2),
 			() -> _addObjectEntry(
 				group.getGroupId(), finalObjectDefinitionId,
 				HashMapBuilder.<String, Serializable>put(
-					"nameLocalized_i18n",
+					"textLocalized_i18n",
 					HashMapBuilder.put(
 						"en_US", "en_US " + RandomTestUtil.randomString()
 					).put(

@@ -160,6 +160,9 @@ public class LanguageTag extends IncludeTag {
 
 		Layout layout = themeDisplay.getLayout();
 
+		formAction = HttpComponentsUtil.setParameter(
+			formAction, "privateLayout", layout.isPrivateLayout());
+
 		return HttpComponentsUtil.setParameter(
 			formAction, "layoutId", layout.getLayoutId());
 	}

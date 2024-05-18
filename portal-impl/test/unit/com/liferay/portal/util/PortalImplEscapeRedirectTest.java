@@ -50,6 +50,8 @@ public class PortalImplEscapeRedirectTest {
 				String.valueOf(2)
 			).put(
 				PropsKeys.DNS_SECURITY_THREAD_LIMIT, String.valueOf(10)
+			).put(
+				PropsKeys.DNS_SECURITY_THREAD_QUEUE_LIMIT, String.valueOf(5)
 			).build());
 	}
 

@@ -15,21 +15,6 @@ import java.util.Set;
  */
 public class FormInstanceFieldSettingsException extends PortalException {
 
-	public FormInstanceFieldSettingsException() {
-	}
-
-	public FormInstanceFieldSettingsException(String msg) {
-		super(msg);
-	}
-
-	public FormInstanceFieldSettingsException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public FormInstanceFieldSettingsException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MustSetValidValueForProperties
 		extends FormInstanceFieldSettingsException {
 
@@ -50,6 +35,23 @@ public class FormInstanceFieldSettingsException extends PortalException {
 
 		private final Map<String, Set<String>> _fieldNamePropertiesMap;
 
+	}
+
+	private FormInstanceFieldSettingsException() {
+	}
+
+	private FormInstanceFieldSettingsException(String msg) {
+		super(msg);
+	}
+
+	private FormInstanceFieldSettingsException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	private FormInstanceFieldSettingsException(Throwable throwable) {
+		super(throwable);
 	}
 
 	private static final long serialVersionUID = 1L;

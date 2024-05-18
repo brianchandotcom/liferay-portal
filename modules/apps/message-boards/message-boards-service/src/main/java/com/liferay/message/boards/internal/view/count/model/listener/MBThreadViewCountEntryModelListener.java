@@ -9,10 +9,9 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.index.UpdateDocumentIndexWriter;
+import com.liferay.portal.search.indexer.BaseModelDocumentFactory;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.model.listener.ViewCountEntryModelListener;
 
@@ -39,21 +38,24 @@ public class MBThreadViewCountEntryModelListener
 		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(
 			mbThread.getRootMessageId());
 
-		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBMessage.class);
+		Document document = _baseModelDocumentFactory.createDocument(mbMessage);
 
-		try {
-			indexer.reindex(mbMessage);
-		}
-		catch (SearchException searchException) {
-			ReflectionUtil.throwException(searchException);
-		}
+		document.addNumber("viewCount", viewCountEntry.getViewCount());
+
+		_updateDocumentIndexWriter.updateDocumentPartially(
+			mbMessage.getCompanyId(), document, false);
 	}
+
+	@Reference
+	private BaseModelDocumentFactory _baseModelDocumentFactory;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
+	private UpdateDocumentIndexWriter _updateDocumentIndexWriter;
 
 }

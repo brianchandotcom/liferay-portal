@@ -7,10 +7,9 @@ package com.liferay.document.library.internal.view.count.model.listener;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.index.UpdateDocumentIndexWriter;
+import com.liferay.portal.search.indexer.BaseModelDocumentFactory;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.model.listener.ViewCountEntryModelListener;
 
@@ -38,18 +37,23 @@ public class DLFileEntryViewCountEntryModelListener
 			return;
 		}
 
-		try {
-			Indexer<DLFileEntry> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
+		Document document = _baseModelDocumentFactory.createDocument(
+			dlFileEntry);
 
-			indexer.reindex(dlFileEntry);
-		}
-		catch (SearchException searchException) {
-			ReflectionUtil.throwException(searchException);
-		}
+		document.addNumber("readCount", viewCountEntry.getViewCount());
+		document.addNumber("viewCount", viewCountEntry.getViewCount());
+
+		_updateDocumentIndexWriter.updateDocumentPartially(
+			dlFileEntry.getCompanyId(), document, false);
 	}
 
 	@Reference
+	private BaseModelDocumentFactory _baseModelDocumentFactory;
+
+	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private UpdateDocumentIndexWriter _updateDocumentIndexWriter;
 
 }

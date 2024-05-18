@@ -31,6 +31,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -574,6 +575,39 @@ public class SiteInitializerSerializerImpl
 				);
 			});
 
+		JSONArray objectRelationshipsJSONArray = JSONUtil.toJSONArray(
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId()),
+			objectRelationship -> {
+				String objectDefinition2Name = StringUtil.removeSubstring(
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2()
+					).getName(),
+					"C_");
+
+				return JSONUtil.put(
+					"deletionType", objectRelationship.getDeletionType()
+				).put(
+					"label",
+					JSONUtil.put(
+						"en_US", objectRelationship.getLabel(LocaleUtil.US))
+				).put(
+					"name", objectRelationship.getName()
+				).put(
+					"objectDefinitionId1",
+					"[$OBJECT_DEFINITION_ID:" +
+						StringUtil.removeSubstring(
+							objectDefinition.getName(), "C_") + "$]"
+				).put(
+					"objectDefinitionId2",
+					"[$OBJECT_DEFINITION_ID:" + objectDefinition2Name + "$]"
+				).put(
+					"objectDefinitionName2", objectDefinition2Name
+				).put(
+					"type", objectRelationship.getType()
+				);
+			});
+
 		_addZipEntry(
 			"object-definitions/" +
 				_normalize(objectDefinition.getLabel(LocaleUtil.US)),
@@ -585,6 +619,8 @@ public class SiteInitializerSerializerImpl
 				StringUtil.removeSubstring(objectDefinition.getName(), "C_")
 			).put(
 				"objectFields", objectFieldsJSONArray
+			).put(
+				"objectRelationships", objectRelationshipsJSONArray
 			).put(
 				"pluralLabel", objectDefinition.getPluralLabel(LocaleUtil.US)
 			).put(
@@ -843,6 +879,9 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

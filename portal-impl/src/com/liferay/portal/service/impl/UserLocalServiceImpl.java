@@ -4973,7 +4973,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the user
 	 */
 	@CTAware(onProduction = true)
-	@Indexable(type = IndexableType.REINDEX)
+	@Indexable(
+		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
+		type = IndexableType.REINDEX
+	)
 	@Override
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException {

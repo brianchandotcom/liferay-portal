@@ -2285,7 +2285,10 @@ public interface UserLocalService
 	 * @return the user
 	 */
 	@CTAware(onProduction = true)
-	@Indexable(type = IndexableType.REINDEX)
+	@Indexable(
+		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
+		type = IndexableType.REINDEX
+	)
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException;
 

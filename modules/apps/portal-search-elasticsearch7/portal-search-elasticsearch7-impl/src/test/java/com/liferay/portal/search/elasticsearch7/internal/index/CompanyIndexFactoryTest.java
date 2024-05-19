@@ -338,6 +338,7 @@ public class CompanyIndexFactoryTest {
 		addCompanyIndexListener(companyIndexListener);
 
 		createIndices();
+
 		deleteIndices();
 
 		Mockito.verify(

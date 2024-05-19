@@ -339,6 +339,7 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		addCompanyIndexListener(companyIndexListener);
 
 		createIndices();
+
 		deleteIndices();
 
 		Mockito.verify(

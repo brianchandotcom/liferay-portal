@@ -44,7 +44,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
 import javax.sql.DataSource;
 
@@ -495,29 +495,35 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetLazyClassNameId() throws Exception {
-		Set<Long> classNames = Collections.synchronizedSet(
-			Collections.newSetFromMap(new IdentityHashMap<>()));
+		_assertGetLazyClassNameId(
+			classNames -> classNames.add(
+				_classNameLocalService.getLazyClassNameId(
+					"class.name.test"
+				).get()));
+	}
 
-		try {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					Supplier<Long> lazyClassNameIdSupplier =
-						_classNameLocalService.getLazyClassNameId(
-							"class.name.test");
+	@Test
+	public void testGetLazyClassNameIds() throws Exception {
+		_assertGetLazyClassNameId(
+			classNames -> Collections.addAll(
+				classNames,
+				_classNameLocalService.getLazyClassNameIds(
+					new String[] {"class.name.test"}
+				).get()));
+	}
 
-					Assert.assertTrue(
-						classNames.add(lazyClassNameIdSupplier.get()));
-				});
+	@Test
+	public void testGetLazyClassNameIdsLongArray() throws Exception {
+		_assertGetLazyClassNameId(
+			classNames -> {
+				for (Long className :
+						_classNameLocalService.getLazyClassNameIdsLongArray(
+							new String[] {"class.name.test"}
+						).get()) {
 
-			Assert.assertEquals(
-				classNames.toString(), companyLocalService.getCompaniesCount(),
-				classNames.size());
-		}
-		finally {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> _classNameLocalService.deleteClassName(
-					_classNameLocalService.fetchClassName("class.name.test")));
-		}
+					classNames.add(className);
+				}
+			});
 	}
 
 	@Test
@@ -676,6 +682,27 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		private volatile List<Long> _companyIds = new CopyOnWriteArrayList<>();
 
+	}
+
+	private void _assertGetLazyClassNameId(Consumer<Set<Long>> consumer)
+		throws Exception {
+
+		Set<Long> classNames = Collections.synchronizedSet(
+			Collections.newSetFromMap(new IdentityHashMap<>()));
+
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> consumer.accept(classNames));
+
+			Assert.assertEquals(
+				classNames.toString(), companyLocalService.getCompaniesCount(),
+				classNames.size());
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _classNameLocalService.deleteClassName(
+					_classNameLocalService.fetchClassName("class.name.test")));
+		}
 	}
 
 	private static final String _CLASS_NAME = DBPartitionTest.class.getName();

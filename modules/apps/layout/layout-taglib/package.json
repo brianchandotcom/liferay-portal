@@ -22,5 +22,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "16.1.15"
+	"version": "16.1.16"
 }

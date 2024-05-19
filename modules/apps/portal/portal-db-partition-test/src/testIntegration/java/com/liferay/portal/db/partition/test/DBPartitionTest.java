@@ -495,7 +495,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetLazyClassNameId() throws Exception {
-		_assertGetLazyClassNameId(
+		_assertGetLazyClassNameIds(
 			classNameIds -> classNameIds.add(
 				_classNameLocalService.getLazyClassNameId(
 					"class.name.test"
@@ -504,7 +504,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetLazyClassNameIds() throws Exception {
-		_assertGetLazyClassNameId(
+		_assertGetLazyClassNameIds(
 			classNameIds -> Collections.addAll(
 				classNameIds,
 				_classNameLocalService.getLazyClassNameIds(
@@ -514,7 +514,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetLazyClassNameIdsLongArray() throws Exception {
-		_assertGetLazyClassNameId(
+		_assertGetLazyClassNameIds(
 			classNameIds -> {
 				for (Long classNameId :
 						_classNameLocalService.getLazyClassNameIdsLongArray(
@@ -684,7 +684,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
-	private void _assertGetLazyClassNameId(Consumer<Set<Long>> consumer)
+	private void _assertGetLazyClassNameIds(Consumer<Set<Long>> consumer)
 		throws Exception {
 
 		Set<Long> classNameIds = Collections.synchronizedSet(

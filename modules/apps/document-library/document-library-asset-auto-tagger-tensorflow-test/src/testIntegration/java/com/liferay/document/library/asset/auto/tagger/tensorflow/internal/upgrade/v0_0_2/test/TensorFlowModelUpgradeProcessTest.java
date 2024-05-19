@@ -107,9 +107,6 @@ public class TensorFlowModelUpgradeProcessTest {
 			"configuration." +
 				"TensorFlowImageAssetAutoTagProviderCompanyConfiguration";
 
-	private static final String _UPGRADE_PROCESS_CLASS_NAME =
-		;
-
 	@Inject(
 		filter = "(&(component.name=com.liferay.document.library.asset.auto.tagger.tensorflow.internal.upgrade.registry.TensorFlowAssetAutoTagProviderUpgradeStepRegistrator))"
 	)

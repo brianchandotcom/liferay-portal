@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-wcm"
 definition {
 
 	property ci.retries.disabled = "true";

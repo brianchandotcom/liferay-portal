@@ -1,4 +1,4 @@
-@component-name = "portal-page-audit"
+@component-name = "portal-wcm"
 definition {
 
 	property ci.retries.disabled = "true";

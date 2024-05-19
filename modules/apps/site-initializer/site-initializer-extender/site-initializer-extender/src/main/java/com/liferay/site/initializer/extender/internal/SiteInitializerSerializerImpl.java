@@ -574,7 +574,6 @@ public class SiteInitializerSerializerImpl
 					"state", objectField.isState()
 				);
 			});
-
 		JSONArray objectRelationshipsJSONArray = JSONUtil.toJSONArray(
 			_objectRelationshipLocalService.getObjectRelationships(
 				objectDefinition.getObjectDefinitionId()),

@@ -67,3 +67,8 @@ a7fd06f1e955d4efbd161ceb442869022c48b983^..00dcba8a1a07bdefb6ba680be19f85033e918
 # Bundle Version 2.0.15
 #
 00dcba8a1a07bdefb6ba680be19f85033e918d28^..bc32a40e4fc9d1f05f7099f8d71c0e4df17301c0=LPD-7837
+
+#
+# Bundle Version 2.0.16
+#
+bc32a40e4fc9d1f05f7099f8d71c0e4df17301c0^..599fcf1cfdd93e1dea985bbfd8aa5015696d6ead=LPD-24855

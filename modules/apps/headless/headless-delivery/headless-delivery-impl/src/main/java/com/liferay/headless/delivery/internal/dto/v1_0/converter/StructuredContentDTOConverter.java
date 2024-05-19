@@ -172,9 +172,7 @@ public class StructuredContentDTOConverter
 						AssetTag.NAME_ACCESSOR));
 				setNeverExpire(
 					() -> {
-						Date dateExpired = journalArticle.getExpirationDate();
-
-						if (dateExpired == null) {
+						if (journalArticle.getExpirationDate() == null) {
 							return true;
 						}
 

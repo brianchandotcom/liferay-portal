@@ -404,11 +404,17 @@ public class ObjectDefinitionResourceTest
 		randomObjectDefinition = randomObjectDefinition();
 
 		randomObjectDefinition.setEnableIndexSearch((Boolean)null);
+		randomObjectDefinition.setObjectFields((ObjectField[])null);
 
 		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
 			randomObjectDefinition);
 
 		Assert.assertTrue(postObjectDefinition.getEnableIndexSearch());
+		Assert.assertTrue(
+			ArrayUtil.isEmpty(
+				ArrayUtil.filter(
+					postObjectDefinition.getObjectFields(),
+					objectField -> !objectField.getSystem())));
 	}
 
 	@Override

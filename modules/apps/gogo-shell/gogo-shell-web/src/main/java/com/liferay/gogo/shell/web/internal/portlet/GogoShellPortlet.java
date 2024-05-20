@@ -144,6 +144,12 @@ public class GogoShellPortlet extends MVCPortlet {
 			if (Validator.isNotNull(errorContent)) {
 				throw new Exception(errorContent);
 			}
+
+			String successMessage = ParamUtil.getString(
+				actionRequest, "successMessage");
+
+			SessionMessages.add(
+				actionRequest, "requestProcessed", successMessage);
 		}
 		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);

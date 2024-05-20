@@ -32,11 +32,11 @@ const restArticle = async (requestId) => {
 };
 
 function createContentDiv(htmlContent) {
-	const div = document.createElement('div');
+	const divElement = document.createElement('div');
 
-	div.innerHTML = htmlContent;
+	divElement.innerHTML = htmlContent;
 
-	return div;
+	return divElement;
 }
 
 function updateArticleContent(contentFields) {
@@ -81,25 +81,25 @@ function updateArticleLinks(contentFields) {
 			});
 
 			if (urlTitle && urlTitle.trim() !== '' && urlTitle !== 'null') {
-				const div = document.createElement('div');
+				const divElement = document.createElement('div');
 
-				div.classList.add('d-flex', 'mb-2');
+				divElement.classList.add('d-flex', 'mb-2');
 
-				const a = document.createElement('a');
+				const anchorElement = document.createElement('a');
 
-				a.classList.add('link-container');
-				a.href = url;
-				a.target = '_blank';
-				a.innerHTML =
+				anchorElement.classList.add('link-container');
+				anchorElement.href = url;
+				anchorElement.target = '_blank';
+				anchorElement.innerHTML =
 					'<svg class="lexicon-icon lexicon-icon-link" role="presentation" viewBox="0 0 512 512">\n  <use xlink:href="/o/dialect-theme/images/clay/icons.svg#link"></use>\n </svg>';
 
 				const titleSpan = document.createElement('span');
 
 				titleSpan.innerHTML = urlTitle;
 
-				a.appendChild(titleSpan);
-				div.appendChild(a);
-				articleLink.appendChild(div);
+				anchorElement.appendChild(titleSpan);
+				divElement.appendChild(anchorElement);
+				articleLink.appendChild(divElement);
 			}
 		});
 	}
@@ -130,9 +130,9 @@ function updateLabelProductCapabilities(taxonomyCategoryBriefs) {
 				.parentTaxonomyVocabulary.name;
 
 		if (taxonomyVocabularyName === 'Product Capabilities') {
-			const span = document.createElement('span');
+			const spanElement = document.createElement('span');
 
-			span.classList.add(
+			spanElement.classList.add(
 				'font-weight-normal',
 				'label',
 				'label-secondary',
@@ -142,20 +142,20 @@ function updateLabelProductCapabilities(taxonomyCategoryBriefs) {
 				'px-2',
 				'text-paragraph-sm'
 			);
-			span.innerHTML = taxonomyCategoryBrief.taxonomyCategoryName;
+			spanElement.innerHTML = taxonomyCategoryBrief.taxonomyCategoryName;
 
-			labelProductCapabilities.appendChild(span);
+			labelProductCapabilities.appendChild(spanElement);
 		}
 	});
 }
 
 function createLabelSpan(text, classList) {
-	const span = document.createElement('span');
+	const spanElement = document.createElement('span');
 
-	span.textContent = text;
-	classList.forEach((className) => span.classList.add(className));
+	spanElement.textContent = text;
+	classList.forEach((className) => spanElement.classList.add(className));
 
-	return span;
+	return spanElement;
 }
 
 function updateLabelStatus(taxonomyCategoryBriefs) {

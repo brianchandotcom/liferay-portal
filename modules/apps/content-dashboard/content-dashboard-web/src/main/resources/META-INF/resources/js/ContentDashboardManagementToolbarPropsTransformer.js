@@ -11,6 +11,8 @@ import {
 	openTagSelectionModal,
 } from 'frontend-js-web';
 
+import openCustomDateModal from './utils/openCustomDateModal';
+
 const DEFAULT_VALUES = {
 	buttonAddLabel: Liferay.Language.get('select'),
 	iframeBodyCssClass: '',
@@ -211,7 +213,10 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				size = DEFAULT_VALUES.size,
 			} = data;
 
-			if (action === 'selectAssetCategory') {
+			if (action === 'customDate') {
+				openCustomDateModal(JSON.parse(data.props));
+			}
+			else if (action === 'selectAssetCategory') {
 				selectAssetCategory(data);
 			}
 			else if (action === 'selectAssetTag') {

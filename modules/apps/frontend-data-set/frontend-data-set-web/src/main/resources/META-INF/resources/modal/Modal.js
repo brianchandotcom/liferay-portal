@@ -33,7 +33,7 @@ function Modal({
 	const [url, setURL] = useState(urlProp);
 	const [size, setSize] = useState(INITIAL_MODAL_SIZE);
 	const [disableHeader, setDisableHeader] = useState(
-		disableHeaderProp || false
+		disableHeaderProp || true
 	);
 
 	const iframeRef = useRef(null);
@@ -78,9 +78,7 @@ function Modal({
 				setTitle(data.title);
 			}
 
-			if (data.disableHeader) {
-				setDisableHeader(data.disableHeader);
-			}
+			setDisableHeader(data.disableHeader ?? true);
 
 			setSize(data.size || INITIAL_MODAL_SIZE);
 		}

@@ -38,7 +38,7 @@ export default class SidePanel extends React.Component {
 			active: null,
 			closeButtonStyle: null,
 			currentURL: props.url || null,
-			disableHeader: props.disableHeader || false,
+			disableHeader: props.disableHeader || true,
 			iframeHandlerModalId: subscribeModal(),
 			loading: true,
 			menuCoverTopDistance: 0,
@@ -111,7 +111,10 @@ export default class SidePanel extends React.Component {
 		this.open(event.url, event.slug);
 
 		this.setState({
-			disableHeader: event.disableHeader,
+			disableHeader:
+				event.disableHeader !== undefined
+					? event.disableHeader
+					: this.state.disableHeader,
 			onAfterSubmit: event.onSubmit || null,
 			size: event.size || this.defaultSize,
 			title: event.title,

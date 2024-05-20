@@ -10,37 +10,41 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {blogsPagesTest} from './fixtures/blogsPagesTest';
 
-const baseTest = mergeTests(isolatedSiteTest, blogsPagesTest, loginTest());
+const test = mergeTests(isolatedSiteTest, blogsPagesTest, loginTest());
 
-const blogEntryAutoSaved = mergeTests(baseTest);
+test('LPD-22497: Permission sets are differing depending on autosaving of a blog entry', async ({
+	blogsEditBlogEntryPage,
+	blogsPage,
+	page,
+	site,
+}) => {
+	await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
 
-blogEntryAutoSaved(
-	'LPD-22497: Permission sets are differing depending on autosaving of a blog entry',
-	async ({blogsEditBlogEntryPage, blogsPage, page, site}) => {
-		await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+	const title = getRandomString();
 
-		const title = getRandomString();
+	await blogsEditBlogEntryPage.editBlogEntry({
+		content: getRandomString(),
+		publish: false,
+		title,
+	});
 
-		await blogsEditBlogEntryPage.editBlogEntry(getRandomString(), title);
+	await expect(
+		page.locator(
+			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_saveStatus'
+		)
+	).toContainText('Draft Saved at', {
+		timeout: 40000,
+	});
 
-		await expect(
-			page.locator(
-				'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_saveStatus'
-			)
-		).toContainText('Draft Saved at', {
-			timeout: 40000,
-		});
+	await blogsPage.goto(site.friendlyUrlPath);
 
-		await blogsPage.goto(site.friendlyUrlPath);
-
-		await blogsPage.assertBlogEntryPermissions(
-			[
-				{enabled: true, locator: '#guest_ACTION_ADD_DISCUSSION'},
-				{enabled: true, locator: '#guest_ACTION_VIEW'},
-				{enabled: true, locator: '#site-member_ACTION_ADD_DISCUSSION'},
-				{enabled: true, locator: '#site-member_ACTION_VIEW'},
-			],
-			title
-		);
-	}
-);
+	await blogsPage.assertBlogEntryPermissions(
+		[
+			{enabled: true, locator: '#guest_ACTION_ADD_DISCUSSION'},
+			{enabled: true, locator: '#guest_ACTION_VIEW'},
+			{enabled: true, locator: '#site-member_ACTION_ADD_DISCUSSION'},
+			{enabled: true, locator: '#site-member_ACTION_VIEW'},
+		],
+		title
+	);
+});

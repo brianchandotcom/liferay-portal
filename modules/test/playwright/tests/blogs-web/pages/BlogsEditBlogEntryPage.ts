@@ -25,7 +25,15 @@ export class BlogsEditBlogEntryPage {
 		await this.blogsPage.goToCreateBlogEntry();
 	}
 
-	async editBlogEntry(content: string, title: string) {
+	async editBlogEntry({
+		content,
+		publish = true,
+		title,
+	}: {
+		content: string;
+		publish?: boolean;
+		title: string;
+	}) {
 		await this.page.getByPlaceholder('Title *').waitFor();
 
 		await this.page.getByPlaceholder('Title *').fill(title);
@@ -37,5 +45,9 @@ export class BlogsEditBlogEntryPage {
 				'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor'
 			)
 			.fill(content);
+
+		if (publish) {
+			await this.publishButton.click();
+		}
 	}
 }

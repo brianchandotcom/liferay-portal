@@ -11,19 +11,13 @@ export class BlogsEditBlogEntryPage {
 	readonly page: Page;
 
 	readonly blogsPage: BlogsPage;
-	readonly propertiesTab: Locator;
 	readonly publishButton: Locator;
-	readonly titlePlaceholder: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.blogsPage = new BlogsPage(page);
-		this.propertiesTab = page.getByRole('tab', {name: 'Properties'});
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
-		this.titlePlaceholder = page.getByPlaceholder(
-			'Untitled Basic Web Content'
-		);
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -40,7 +34,7 @@ export class BlogsEditBlogEntryPage {
 
 		await this.page
 			.locator(
-				'[id="_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor"]'
+				'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor'
 			)
 			.fill(content);
 	}

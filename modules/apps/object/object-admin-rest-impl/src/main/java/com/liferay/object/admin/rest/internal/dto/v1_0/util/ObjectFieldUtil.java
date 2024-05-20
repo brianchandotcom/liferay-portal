@@ -275,6 +275,8 @@ public class ObjectFieldUtil {
 			}
 		}
 
+		labelMap.putIfAbsent(siteDefaultLocale, objectField.getName());
+
 		serviceBuilderObjectField.setLabelMap(labelMap);
 
 		serviceBuilderObjectField.setLocalized(

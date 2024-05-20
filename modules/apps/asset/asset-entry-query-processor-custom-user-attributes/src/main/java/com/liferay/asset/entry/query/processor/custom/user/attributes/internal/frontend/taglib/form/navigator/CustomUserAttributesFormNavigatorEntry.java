@@ -62,6 +62,11 @@ public class CustomUserAttributesFormNavigatorEntry
 	}
 
 	@Override
+	public boolean isDeprecated() {
+		return true;
+	}
+
+	@Override
 	public boolean isVisible(User user, Object object) {
 		if (_isDynamicAssetSelection()) {
 			return true;

@@ -5,29 +5,15 @@
 
 /// <reference types="react" />
 
-import {IPickList} from '../../../../../utils/types';
+import {IFilter} from '../../../../../utils/types';
 interface IObjectPicklistProps {
-	includeMode: string;
-	multiple: boolean;
+	filter?: IFilter;
 	namespace: string;
-	onIncludeModeChange: (val: string) => void;
-	onMultipleChange: (val: boolean) => void;
-	onPreselectedValuesChange: (val: any[]) => void;
-	onSelectedPicklistChange: (val?: IPickList) => void;
-	picklists: IPickList[];
-	preselectedValues: any[];
-	selectedPicklist?: IPickList;
+	onChange: Function;
 }
 declare function ObjectPicklist({
-	includeMode,
-	multiple,
+	filter,
 	namespace,
-	onIncludeModeChange,
-	onMultipleChange,
-	onPreselectedValuesChange,
-	onSelectedPicklistChange,
-	picklists,
-	preselectedValues,
-	selectedPicklist,
+	onChange,
 }: IObjectPicklistProps): JSX.Element;
 export default ObjectPicklist;

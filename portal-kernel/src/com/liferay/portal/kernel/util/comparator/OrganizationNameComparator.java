@@ -14,12 +14,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class OrganizationNameComparator
 	extends OrderByComparator<Organization> {
 
-	public static final String ORDER_BY_ASC = "orgName ASC";
-
-	public static final String ORDER_BY_DESC = "orgName DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"name"};
-
 	public static OrganizationNameComparator get(boolean ascending) {
 		if (ascending) {
 			return _ASCENDING;
@@ -45,15 +39,15 @@ public class OrganizationNameComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
@@ -70,6 +64,12 @@ public class OrganizationNameComparator
 
 	private static final OrganizationNameComparator _DESCENDING =
 		new OrganizationNameComparator(false);
+
+	private static final String _ORDER_BY_ASC = "orgName ASC";
+
+	private static final String _ORDER_BY_DESC = "orgName DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"name"};
 
 	private final boolean _ascending;
 

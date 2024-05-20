@@ -44,7 +44,7 @@ public class ContactOrganizationResourceImpl
 		Sort sort = sorts[0];
 
 		if (StringUtil.equals(sort.getFieldName(), "name")) {
-			orderByComparator = new OrganizationNameComparator(
+			orderByComparator = OrganizationNameComparator.get(
 				!sort.isReverse());
 		}
 

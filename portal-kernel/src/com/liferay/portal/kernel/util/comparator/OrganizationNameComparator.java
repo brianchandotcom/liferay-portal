@@ -20,8 +20,12 @@ public class OrganizationNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public OrganizationNameComparator(boolean ascending) {
-		_ascending = ascending;
+	public static OrganizationNameComparator get(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -56,6 +60,16 @@ public class OrganizationNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private OrganizationNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final OrganizationNameComparator _ASCENDING =
+		new OrganizationNameComparator(true);
+
+	private static final OrganizationNameComparator _DESCENDING =
+		new OrganizationNameComparator(false);
 
 	private final boolean _ascending;
 

@@ -21,8 +21,12 @@ public class OrganizationIdComparator extends OrderByComparator<Organization> {
 
 	public static final String[] ORDER_BY_FIELDS = {"organizationId"};
 
-	public OrganizationIdComparator(boolean ascending) {
-		_ascending = ascending;
+	public static OrganizationIdComparator get(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -64,6 +68,16 @@ public class OrganizationIdComparator extends OrderByComparator<Organization> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private OrganizationIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final OrganizationIdComparator _ASCENDING =
+		new OrganizationIdComparator(true);
+
+	private static final OrganizationIdComparator _DESCENDING =
+		new OrganizationIdComparator(false);
 
 	private final boolean _ascending;
 

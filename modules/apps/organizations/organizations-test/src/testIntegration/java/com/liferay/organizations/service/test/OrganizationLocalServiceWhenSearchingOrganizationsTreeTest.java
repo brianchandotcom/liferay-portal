@@ -225,7 +225,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 				_user.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null,
 				null, null, organizationParams, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new OrganizationNameComparator(true));
+				QueryUtil.ALL_POS, OrganizationNameComparator.get(true));
 
 		AssertUtils.assertEquals(
 			String.valueOf(organizationParams),

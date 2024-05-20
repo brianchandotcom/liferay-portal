@@ -851,13 +851,13 @@ public class UsersAdminUtil {
 		OrderByComparator<Organization> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
-			orderByComparator = new OrganizationNameComparator(orderByAsc);
+			orderByComparator = OrganizationNameComparator.get(orderByAsc);
 		}
 		else if (orderByCol.equals("type")) {
 			orderByComparator = new OrganizationTypeComparator(orderByAsc);
 		}
 		else {
-			orderByComparator = new OrganizationNameComparator(orderByAsc);
+			orderByComparator = OrganizationNameComparator.get(orderByAsc);
 		}
 
 		return orderByComparator;

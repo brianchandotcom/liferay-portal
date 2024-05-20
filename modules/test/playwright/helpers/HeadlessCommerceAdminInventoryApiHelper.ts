@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApiHelpers} from './ApiHelpers';
+import {getRandomInt} from '../utils/getRandomInt';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 export class HeadlessCommerceAdminInventoryApiHelper {
 	readonly apiHelpers: ApiHelpers;
@@ -23,5 +24,25 @@ export class HeadlessCommerceAdminInventoryApiHelper {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/warehouses`
 		);
+	}
+
+	async postWarehouse(name: string = 'Warehouse' + getRandomInt()) {
+		const warehouse = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/warehouses`,
+			{
+				data: {
+					active: 'false',
+					name: {
+						en_US: name,
+					},
+				},
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: warehouse.id, type: 'warehouse'});
+		}
+
+		return warehouse;
 	}
 }

@@ -19,6 +19,7 @@ import {CommerceAdminProductDetailsDiagramPage} from '../pages/commerce/commerce
 import {CommerceAdminProductDetailsPage} from '../pages/commerce/commerceAdminProductDetailsPage';
 import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce/commerceAdminProductDetailsProductRelationsPage';
 import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPage';
+import {CommerceAdminWarehousesPage} from '../pages/commerce/commerceAdminWarehousesPage';
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceChannelDefaultsPage} from '../pages/commerce/commerceChannelDefaultsPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
@@ -38,6 +39,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
 	commerceAdminProductDetailsProductRelationsPage: CommerceAdminProductDetailsProductRelationsPage;
 	commerceAdminProductPage: CommerceAdminProductPage;
+	commerceAdminWarehousesPage: CommerceAdminWarehousesPage;
 	commerceCatalogSystemSettingsPage: CommerceCatalogSystemSettingsPage;
 	commerceChannelDefaultsPage: CommerceChannelDefaultsPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
@@ -81,6 +83,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminProductPage: async ({page}, use) => {
 		await use(new CommerceAdminProductPage(page));
+	},
+	commerceAdminWarehousesPage: async ({page}, use) => {
+		await use(new CommerceAdminWarehousesPage(page));
 	},
 	commerceCatalogSystemSettingsPage: async ({page}, use) => {
 		await use(new CommerceCatalogSystemSettingsPage(page));

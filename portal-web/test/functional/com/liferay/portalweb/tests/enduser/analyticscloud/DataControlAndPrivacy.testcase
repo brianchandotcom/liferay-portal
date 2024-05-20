@@ -103,7 +103,7 @@ definition {
 		task ("Go to the Home Page") {
 			ACUtils.navigateToSitePage(
 				actionType = "View WC",
-				documentTitleList = "View Page,View Page",
+				documentTitleList = "1,2,3,4,5",
 				pageName = "Home",
 				siteName = "guest");
 		}
@@ -181,7 +181,7 @@ definition {
 		task ("Go to the Home Page") {
 			ACUtils.navigateToSitePage(
 				actionType = "View WC",
-				documentTitleList = "View Page,View Page",
+				documentTitleList = "1,2,3,4,5",
 				pageName = "Home",
 				siteName = "guest");
 		}
@@ -258,7 +258,8 @@ definition {
 
 		task ("Go to Site Page") {
 			ACUtils.navigateToSitePage(
-				documentTitleList = "View WC,View WC",
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4,5",
 				pageName = "Home",
 				siteName = "guest");
 		}

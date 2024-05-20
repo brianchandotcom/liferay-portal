@@ -105,7 +105,7 @@ public abstract class BaseSkuResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/skus"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -161,7 +161,7 @@ public abstract class BaseSkuResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/skus"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -221,7 +221,7 @@ public abstract class BaseSkuResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus/by-externalReferenceCode/{skuExternalReferenceCode}"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/skus/by-externalReferenceCode/{skuExternalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -284,7 +284,7 @@ public abstract class BaseSkuResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus/by-sku-option"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/skus/by-sku-option"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

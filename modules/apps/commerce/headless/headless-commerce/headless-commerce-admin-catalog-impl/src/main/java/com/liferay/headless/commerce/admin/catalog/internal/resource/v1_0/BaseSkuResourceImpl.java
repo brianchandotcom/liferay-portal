@@ -95,7 +95,7 @@ public abstract class BaseSkuResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/skus"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/skus"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -128,7 +128,7 @@ public abstract class BaseSkuResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/skus"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/skus"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -399,7 +399,9 @@ public abstract class BaseSkuResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Sku")}
 	)
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@javax.ws.rs.Path(
+		"/skus/by-externalReferenceCode/{externalReferenceCode: .+}"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Response deleteSkuByExternalReferenceCode(
@@ -431,7 +433,9 @@ public abstract class BaseSkuResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Sku")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@javax.ws.rs.Path(
+		"/skus/by-externalReferenceCode/{externalReferenceCode: .+}"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Sku getSkuByExternalReferenceCode(
@@ -462,7 +466,9 @@ public abstract class BaseSkuResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@javax.ws.rs.Path(
+		"/skus/by-externalReferenceCode/{externalReferenceCode: .+}"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Sku patchSkuByExternalReferenceCode(

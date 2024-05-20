@@ -113,7 +113,7 @@ public abstract class BaseListTypeEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/list-type-definitions/by-external-reference-code/{externalReferenceCode}/list-type-entries"
+		"/list-type-definitions/by-external-reference-code/{externalReferenceCode: .+}/list-type-entries"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -157,7 +157,7 @@ public abstract class BaseListTypeEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/list-type-definitions/by-external-reference-code/{externalReferenceCode}/list-type-entries"
+		"/list-type-definitions/by-external-reference-code/{externalReferenceCode: .+}/list-type-entries"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

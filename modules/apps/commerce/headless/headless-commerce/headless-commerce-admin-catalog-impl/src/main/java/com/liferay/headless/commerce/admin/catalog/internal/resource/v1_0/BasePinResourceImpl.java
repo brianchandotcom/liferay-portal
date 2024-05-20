@@ -207,7 +207,7 @@ public abstract class BasePinResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/pins"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/pins"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -244,7 +244,7 @@ public abstract class BasePinResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/pins"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/pins"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

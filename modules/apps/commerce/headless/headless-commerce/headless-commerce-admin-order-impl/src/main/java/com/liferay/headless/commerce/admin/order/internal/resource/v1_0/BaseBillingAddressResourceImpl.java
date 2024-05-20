@@ -63,7 +63,7 @@ public abstract class BaseBillingAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress"
+		"/orders/by-externalReferenceCode/{externalReferenceCode: .+}/billingAddress"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -98,7 +98,7 @@ public abstract class BaseBillingAddressResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress"
+		"/orders/by-externalReferenceCode/{externalReferenceCode: .+}/billingAddress"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

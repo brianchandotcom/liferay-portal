@@ -89,7 +89,7 @@ public abstract class BasePhoneResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode}/phones"
+		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/phones"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -225,7 +225,7 @@ public abstract class BasePhoneResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode}/phones"
+		"/organizations/by-external-reference-code/{externalReferenceCode: .+}/phones"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -394,7 +394,7 @@ public abstract class BasePhoneResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/user-accounts/by-external-reference-code/{externalReferenceCode}/phones"
+		"/user-accounts/by-external-reference-code/{externalReferenceCode: .+}/phones"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

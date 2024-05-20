@@ -62,7 +62,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode}/billing-address"
+		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/billing-address"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -97,7 +97,7 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode}/shipping-address"
+		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/shipping-address"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

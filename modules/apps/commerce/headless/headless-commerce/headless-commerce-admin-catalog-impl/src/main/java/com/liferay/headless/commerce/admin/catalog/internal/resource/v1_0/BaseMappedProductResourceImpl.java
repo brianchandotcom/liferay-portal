@@ -215,7 +215,7 @@ public abstract class BaseMappedProductResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/mapped-products"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -255,7 +255,7 @@ public abstract class BaseMappedProductResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/mapped-products"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -295,7 +295,7 @@ public abstract class BaseMappedProductResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/mapped-products/by-sequence/{sequence}"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/mapped-products/by-sequence/{sequence}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

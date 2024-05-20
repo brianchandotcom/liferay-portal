@@ -696,7 +696,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode}/message-board-attachments/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode: .+}/message-board-attachments/by-external-reference-code/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -760,7 +760,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode}/message-board-attachments/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteId}/message-board-messages/by-external-reference-code/{messageBoardMessageExternalReferenceCode: .+}/message-board-attachments/by-external-reference-code/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

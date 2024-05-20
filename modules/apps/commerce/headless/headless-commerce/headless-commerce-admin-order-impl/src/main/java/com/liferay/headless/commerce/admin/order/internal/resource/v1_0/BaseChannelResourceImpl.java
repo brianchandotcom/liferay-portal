@@ -119,7 +119,7 @@ public abstract class BaseChannelResourceImpl implements ChannelResource {
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode}/channel"
+		"/orders/by-externalReferenceCode/{externalReferenceCode: .+}/channel"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

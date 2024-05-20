@@ -62,7 +62,7 @@ public abstract class BaseSkuVirtualSettingsResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/skus/by-externalReferenceCode/{externalReferenceCode}/sku-virtual-settings"
+		"/skus/by-externalReferenceCode/{externalReferenceCode: .+}/sku-virtual-settings"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

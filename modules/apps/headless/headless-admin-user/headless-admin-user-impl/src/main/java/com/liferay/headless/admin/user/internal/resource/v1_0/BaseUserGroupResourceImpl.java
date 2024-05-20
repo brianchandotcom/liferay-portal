@@ -307,7 +307,7 @@ public abstract class BaseUserGroupResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/user-groups/by-external-reference-code/{externalReferenceCode}"
+		"/user-groups/by-external-reference-code/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -337,7 +337,7 @@ public abstract class BaseUserGroupResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/user-groups/by-external-reference-code/{externalReferenceCode}"
+		"/user-groups/by-external-reference-code/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -370,7 +370,7 @@ public abstract class BaseUserGroupResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/user-groups/by-external-reference-code/{externalReferenceCode}"
+		"/user-groups/by-external-reference-code/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -422,7 +422,7 @@ public abstract class BaseUserGroupResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/user-groups/by-external-reference-code/{externalReferenceCode}"
+		"/user-groups/by-external-reference-code/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

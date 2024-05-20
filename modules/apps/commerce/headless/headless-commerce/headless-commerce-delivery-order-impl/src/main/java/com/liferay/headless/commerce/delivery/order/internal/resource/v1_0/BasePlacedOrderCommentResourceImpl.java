@@ -88,7 +88,7 @@ public abstract class BasePlacedOrderCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-order-comments/by-externalReferenceCode/{externalReferenceCode}"
+		"/placed-order-comments/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -162,7 +162,7 @@ public abstract class BasePlacedOrderCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-comments"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode: .+}/placed-order-comments"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

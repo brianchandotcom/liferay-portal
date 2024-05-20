@@ -988,7 +988,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-billing-addresses"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-billing-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1026,7 +1026,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-billing-addresses"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-billing-addresses"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1073,7 +1073,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-currencies"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-currencies"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1111,7 +1111,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-currencies"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-currencies"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1158,7 +1158,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-delivery-terms"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-delivery-terms"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1196,7 +1196,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-delivery-terms"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-delivery-terms"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1243,7 +1243,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-discounts"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-discounts"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1281,7 +1281,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-discounts"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-discounts"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1328,7 +1328,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-payment-methods"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-payment-methods"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1366,7 +1366,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-payment-methods"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-payment-methods"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1413,7 +1413,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-payment-terms"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-payment-terms"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1451,7 +1451,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-payment-terms"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-payment-terms"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1498,7 +1498,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-price-lists"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-price-lists"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1536,7 +1536,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-price-lists"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-price-lists"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1583,7 +1583,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-addresses"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-shipping-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1621,7 +1621,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-shipping-addresses"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-shipping-addresses"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -1668,7 +1668,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-users"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-users"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1706,7 +1706,7 @@ public abstract class BaseAccountChannelEntryResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-channel-users"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/account-channel-users"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

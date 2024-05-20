@@ -289,6 +289,28 @@ public class ClassNameLocalServiceWrapper
 		return _classNameLocalService.getClassNameId(value);
 	}
 
+	@Override
+	public java.util.function.Supplier<long[]> getClassNameIdsLongArraySupplier(
+		String[] classNames) {
+
+		return _classNameLocalService.getClassNameIdsLongArraySupplier(
+			classNames);
+	}
+
+	@Override
+	public java.util.function.Supplier<Long[]> getClassNameIdsSupplier(
+		String[] classNames) {
+
+		return _classNameLocalService.getClassNameIdsSupplier(classNames);
+	}
+
+	@Override
+	public java.util.function.Supplier<Long> getClassNameIdSupplier(
+		String className) {
+
+		return _classNameLocalService.getClassNameIdSupplier(className);
+	}
+
 	/**
 	 * Returns a range of all the class names.
 	 *

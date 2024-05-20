@@ -23,9 +23,8 @@ public interface SingleLogoutProfile {
 		HttpServletRequest httpServletRequest);
 
 	public void logout(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception;
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 	public void processIdpLogout(
 			HttpServletRequest httpServletRequest,

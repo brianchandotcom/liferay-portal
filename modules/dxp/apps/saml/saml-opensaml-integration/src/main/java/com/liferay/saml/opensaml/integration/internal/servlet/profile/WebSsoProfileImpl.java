@@ -1873,10 +1873,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	private void _redirectToLogin(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			SamlSsoRequestContext samlSsoRequestContext, boolean forceAuthn)
-		throws Exception {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
+		SamlSsoRequestContext samlSsoRequestContext, boolean forceAuthn) {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 

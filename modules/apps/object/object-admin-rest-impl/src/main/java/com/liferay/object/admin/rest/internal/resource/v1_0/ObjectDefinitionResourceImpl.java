@@ -82,6 +82,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -219,6 +220,9 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.setEnableIndexSearch(() -> true);
 		}
 
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			objectDefinition.getDefaultLanguageId());
+
 		if (GetterUtil.getBoolean(objectDefinition.getSystem())) {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addSystemObjectDefinition(
@@ -252,9 +256,6 @@ public class ObjectDefinitionResourceImpl
 							_objectFilterLocalService)));
 		}
 		else {
-			Locale defaultLocale = LocaleUtil.fromLanguageId(
-				objectDefinition.getDefaultLanguageId());
-
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
 					_getObjectFolderId(
@@ -343,7 +344,8 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		_addObjectDefinitionResources(
-			Collections.emptySet(), objectDefinition.getObjectActions(),
+			Collections.emptySet(), LocaleUtil.toLanguageId(defaultLocale),
+			objectDefinition.getObjectActions(),
 			serviceBuilderObjectDefinition.getObjectDefinitionId(),
 			objectDefinition.getObjectLayouts(),
 			objectDefinition.getObjectRelationships(),
@@ -787,6 +789,8 @@ public class ObjectDefinitionResourceImpl
 
 		_addObjectDefinitionResources(
 			accountEntryRestrictedObjectRelationshipsNames,
+			_localization.getDefaultLanguageId(
+				serviceBuilderObjectDefinition.getLabel()),
 			objectActions.toArray(new ObjectAction[0]), objectDefinitionId,
 			objectLayouts,
 			objectRelationships.toArray(new ObjectRelationship[0]),
@@ -845,8 +849,8 @@ public class ObjectDefinitionResourceImpl
 
 	private void _addObjectDefinitionResources(
 			Set<String> accountEntryRestrictedObjectRelationshipsNames,
-			ObjectAction[] objectActions, long objectDefinitionId,
-			ObjectLayout[] objectLayouts,
+			String defaultLanguageId, ObjectAction[] objectActions,
+			long objectDefinitionId, ObjectLayout[] objectLayouts,
 			ObjectRelationship[] objectRelationships,
 			ObjectValidationRule[] objectValidationRules,
 			ObjectView[] objectViews)
@@ -874,6 +878,25 @@ public class ObjectDefinitionResourceImpl
 
 					continue;
 				}
+
+				String siteDefaultLanguageId = LocaleUtil.toLanguageId(
+					LocaleUtil.getSiteDefault());
+
+				Map<String, String> labelMap = new HashMap<>(
+					objectAction.getLabel());
+
+				if (!Objects.equals(defaultLanguageId, siteDefaultLanguageId) &&
+					Validator.isNull(labelMap.get(siteDefaultLanguageId)) &&
+					Validator.isNotNull(labelMap.get(defaultLanguageId))) {
+
+					labelMap.put(
+						siteDefaultLanguageId, labelMap.get(defaultLanguageId));
+				}
+
+				labelMap.putIfAbsent(
+					siteDefaultLanguageId, objectAction.getName());
+
+				objectAction.setLabel(() -> labelMap);
 
 				objectActionResource.postObjectDefinitionObjectAction(
 					objectDefinitionId, objectAction);

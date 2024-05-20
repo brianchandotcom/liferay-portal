@@ -44,7 +44,8 @@ function expiredTotalActivites(mdfRequests: any, chartColumns: any) {
 		)
 		.flat();
 	const totalExpiredActivities = expiredActivities?.reduce(
-		(acc: any, value: any) => acc + parseFloat(value.mdfRequestAmount),
+		(acc: any, value: any) =>
+			acc + parseFloat(value.convertedMDFRequestAmount),
 		0
 	);
 
@@ -70,7 +71,8 @@ function expiringSoonTotalActivities(mdfRequests: any, chartColumns: any) {
 		.flat();
 
 	const totalExpiringSoonActivites = expiringSoonActivitiesDate?.reduce(
-		(acc: any, value: any) => acc + parseFloat(value.mdfRequestAmount),
+		(acc: any, value: any) =>
+			acc + parseFloat(value.convertedMDFRequestAmount),
 		0
 	);
 
@@ -96,7 +98,7 @@ function totalRequestedMDFToClaims(mdfRequests: any, chartColumns: any) {
 		.flat();
 
 	const totalClaimsRequestedAmount = claimesRequested?.reduce(
-		(acc: any, value: any) => acc + value?.totalClaimAmount || 0,
+		(acc: any, value: any) => acc + value?.convertedTotalClaimAmount || 0,
 		0
 	);
 
@@ -124,7 +126,7 @@ function totalApprovedMDFToClaims(mdfRequests: any, chartColumns: any) {
 		.flat();
 
 	const totalClaimesApprovedAmount = claimsApproved?.reduce(
-		(acc: any, value: any) => acc + value?.totalClaimAmount || 0,
+		(acc: any, value: any) => acc + value?.convertedTotalClaimAmount || 0,
 		0
 	);
 
@@ -151,7 +153,8 @@ function totalPaidMDFToClaims(mdfRequests: any, chartColumns: any) {
 		.flat();
 
 	const totalClaimsPaidAmount = claimsPaid?.reduce(
-		(acc: any, value: any) => acc + parseFloat(value.totalClaimAmount || 0),
+		(acc: any, value: any) =>
+			acc + parseFloat(value.convertedClaimPaid || 0),
 		0
 	);
 
@@ -171,7 +174,8 @@ function totalPaidMDFToClaims(mdfRequests: any, chartColumns: any) {
 function totalMDFRequested(mdfRequests: any, chartColumns: any) {
 	const totalMDFActivitiesAmount = mdfRequests?.items?.reduce(
 		(prevValue: any, currValue: any) =>
-			prevValue + (parseFloat(currValue.totalMDFRequestAmount) || 0),
+			prevValue +
+			(parseFloat(currValue.convertedTotalMDFRequestAmount) || 0),
 		0
 	);
 
@@ -194,7 +198,8 @@ function totalMDFApprovedRequests(mdfRequests: any, chartColumns: any) {
 		(request: any) => request.mdfRequestStatus.key === 'approved'
 	);
 	const totalMDFApprovedRequestsAmount = mdfApprovedRequests?.reduce(
-		(acc: any, value: any) => acc + parseFloat(value.totalMDFRequestAmount),
+		(acc: any, value: any) =>
+			acc + parseFloat(value.convertedTotalMDFRequestAmount),
 		0
 	);
 

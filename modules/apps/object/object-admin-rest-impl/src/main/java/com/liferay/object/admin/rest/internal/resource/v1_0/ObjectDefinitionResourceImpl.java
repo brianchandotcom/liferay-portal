@@ -329,7 +329,9 @@ public class ObjectDefinitionResourceImpl
 					serviceBuilderObjectField.getObjectFieldId());
 		}
 
-		for (ObjectField objectField : objectDefinition.getObjectFields()) {
+		for (ObjectField objectField :
+				ListUtil.fromArray(objectDefinition.getObjectFields())) {
+
 			if (StringUtil.equals(
 					objectField.getBusinessTypeAsString(),
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {

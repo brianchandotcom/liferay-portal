@@ -19,19 +19,16 @@ import {FDSViewType} from '../../FDSViews';
 import OrderableTable from '../../components/OrderableTable';
 import ValidationFeedback from '../../components/ValidationFeedback';
 import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
-import getAllPicklists from '../../utils/getAllPicklists';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {
 	EFieldFormat,
 	EFieldType,
 	EFilterType,
-	ESelectionFilterSourceType,
 	IClientExtensionFilter,
 	IDateFilter,
 	IField,
 	IFilter,
-	IPickList,
 	ISelectionFilter,
 	TSaveState,
 } from '../../utils/types';
@@ -98,7 +95,7 @@ function AddFDSFilterModalContent({
 
 	const [saveState, setSaveState] = useState<TSaveState>({
 		bodyData: {},
-		isValid: false,
+		isValid: filter ? true : false,
 		saveUrl: '',
 	});
 
@@ -164,22 +161,19 @@ function AddFDSFilterModalContent({
 			}
 		}
 
-		if (
-			Liferay.FeatureFlags['LPD-10754'] &&
-			filterType === EFilterType.SELECTION
-		) {
-			if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
-				return true;
-			}
-			else {
-				Object.values(i18nFilterLabels).forEach((value) => {
-					if (!value) {
-						return true;
-					}
-				});
-			}
+		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
+			return true;
+		}
+		else {
+			let isI18nFilterLabelInvalid = false;
 
-			if (!selectedPicklist || !sourceType) {
+			Object.values(i18nFilterLabels).forEach((value) => {
+				if (!value) {
+					isI18nFilterLabelInvalid = true;
+				}
+			});
+
+			if (isI18nFilterLabelInvalid) {
 				return true;
 			}
 		}

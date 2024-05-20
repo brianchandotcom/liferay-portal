@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
@@ -91,16 +90,12 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 						getVulcanBatchEngineTaskItemDelegate(
 							companyId, entityClassName);
 
-			String[] internalClassNameKeyParts = StringUtil.split(
-				entityClassName, StringPool.PERIOD);
-
 			internalClassNameKeyCategories.put(
 				entityClassName,
 				String.format(
 					"%s (%s - %s)",
 					vulcanBatchEngineTaskItemDelegate.getResourceName(),
-					internalClassNameKeyParts
-						[internalClassNameKeyParts.length - 2],
+					vulcanBatchEngineTaskItemDelegate.getVersion(),
 					_getInternalClassNameKeyCategory(
 						FrameworkUtil.getBundle(
 							vulcanBatchEngineTaskItemDelegate.getClass()))));

@@ -515,11 +515,11 @@ public class SegmentsDisplayContext {
 		OrderByComparator<SegmentsEntry> orderByComparator = null;
 
 		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new SegmentsEntryModifiedDateComparator(
+			orderByComparator = SegmentsEntryModifiedDateComparator.get(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new SegmentsEntryNameComparator(orderByAsc);
+			orderByComparator = SegmentsEntryNameComparator.get(orderByAsc);
 		}
 
 		return orderByComparator;

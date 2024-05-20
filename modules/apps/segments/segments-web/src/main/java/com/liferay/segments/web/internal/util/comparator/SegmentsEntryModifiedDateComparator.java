@@ -15,13 +15,6 @@ import com.liferay.segments.model.SegmentsEntry;
 public class SegmentsEntryModifiedDateComparator
 	extends OrderByComparator<SegmentsEntry> {
 
-	public static final String ORDER_BY_ASC = "SegmentsEntry.modifiedDate ASC";
-
-	public static final String ORDER_BY_DESC =
-		"SegmentsEntry.modifiedDate DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
-
 	public static SegmentsEntryModifiedDateComparator getInstance(
 		boolean ascending) {
 
@@ -47,15 +40,15 @@ public class SegmentsEntryModifiedDateComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
@@ -72,6 +65,14 @@ public class SegmentsEntryModifiedDateComparator
 
 	private static final SegmentsEntryModifiedDateComparator _DESCENDING =
 		new SegmentsEntryModifiedDateComparator(false);
+
+	private static final String _ORDER_BY_ASC =
+		"SegmentsEntry.modifiedDate ASC";
+
+	private static final String _ORDER_BY_DESC =
+		"SegmentsEntry.modifiedDate DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"modifiedDate"};
 
 	private final boolean _ascending;
 

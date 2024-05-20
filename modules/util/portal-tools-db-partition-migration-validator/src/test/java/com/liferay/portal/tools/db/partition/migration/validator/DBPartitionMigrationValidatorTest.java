@@ -184,7 +184,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				"companies", new JSONArray(companies)
 			).toString(),
 			content, false);
-
 		JSONAssert.assertEquals(
 			new JSONObject(
 			).put(
@@ -211,7 +210,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				"releases", new JSONArray(releases)
 			).toString(),
 			content, false);
-
 		JSONAssert.assertEquals(
 			new JSONObject(
 			).put(

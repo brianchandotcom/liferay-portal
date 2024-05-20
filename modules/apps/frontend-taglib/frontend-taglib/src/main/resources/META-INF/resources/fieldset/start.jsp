@@ -29,7 +29,12 @@ else if (collapsible) {
 					<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 					<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-						<liferay-ui:icon-help message="<%= helpMessage %>" />
+						<clay:icon
+							aria-label='<%= helpMessage %>'
+							cssClass="lfr-portal-tooltip"
+							symbol="question-circle-full"
+							title='<%= helpMessage %>'
+						/>
 					</c:if>
 
 					<c:if test="<%= deprecated %>">

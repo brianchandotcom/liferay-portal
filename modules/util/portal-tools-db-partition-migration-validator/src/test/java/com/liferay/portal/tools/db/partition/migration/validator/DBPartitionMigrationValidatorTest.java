@@ -70,6 +70,20 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			boolean defaultPartition, List<Release> releases)
 		throws Exception {
 
+		JSONAssert.assertEquals(
+			new JSONObject(
+			).put(
+				"companies", new JSONArray(companies)
+			).toString(),
+			content, false);
+
+		JSONAssert.assertEquals(
+			new JSONObject(
+			).put(
+				"exportedCompanyDefault", defaultPartition
+			).toString(),
+			content, false);
+
 		Long exportedCompanyId = null;
 
 		if (companyInfoIds.size() == 1) {
@@ -86,20 +100,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		JSONAssert.assertEquals(
 			new JSONObject(
 			).put(
-				"exportedCompanyDefault", defaultPartition
-			).toString(),
-			content, false);
-
-		JSONAssert.assertEquals(
-			new JSONObject(
-			).put(
-				"tableNames", new JSONArray(Arrays.asList("Table1", "Table2"))
-			).toString(),
-			content, false);
-
-		JSONAssert.assertEquals(
-			new JSONObject(
-			).put(
 				"releases", new JSONArray(releases)
 			).toString(),
 			content, false);
@@ -107,7 +107,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		JSONAssert.assertEquals(
 			new JSONObject(
 			).put(
-				"companies", new JSONArray(companies)
+				"tableNames", new JSONArray(Arrays.asList("Table1", "Table2"))
 			).toString(),
 			content, false);
 	}
@@ -170,18 +170,17 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		_mockDatabase(
 			companies, companyIds, companyInfoIds, defaultPartition, releases,
 			Arrays.asList(
-				"Table1", "Company", "Table2",
-				"Object_x_" + companyIds.get(0)));
+				"Company", "Object_x_" + companyIds.get(0), "Table1",
+				"Table2"));
 
 		File outputDirectory = temporaryFolder.newFolder("tempExports");
 
 		try {
 			DBPartitionMigrationValidator.main(
 				new String[] {
-					"--export", "--jdbc-url", _URL, "--user", _USER,
-					"--password", _PASSWORD, "--output-dir",
-					outputDirectory.getAbsolutePath(), "--schema-name",
-					_SCHEMA_NAME
+					"--export", "--jdbc-url", _URL, "--output-dir",
+					outputDirectory.getAbsolutePath(), "--password", _PASSWORD,
+					"--schema-name", _SCHEMA_NAME, "--user", _USER
 				});
 		}
 		catch (RuntimeException runtimeException) {

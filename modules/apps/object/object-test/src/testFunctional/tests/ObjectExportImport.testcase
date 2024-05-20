@@ -271,7 +271,6 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to cancel importing an object"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanCancelImport {
 		ObjectAdmin.openObjectAdmin();

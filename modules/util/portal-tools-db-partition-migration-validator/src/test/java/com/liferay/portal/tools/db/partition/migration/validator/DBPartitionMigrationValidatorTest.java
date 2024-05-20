@@ -173,7 +173,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				"Company", "Object_x_" + companyIds.get(0), "Table1",
 				"Table2"));
 
-		File outputDirectory = temporaryFolder.newFolder("tempExports");
+		File outputDirectory = temporaryFolder.newFolder();
 
 		try {
 			DBPartitionMigrationValidator.main(

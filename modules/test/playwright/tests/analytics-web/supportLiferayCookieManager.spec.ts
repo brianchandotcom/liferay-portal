@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
+import getRandomString from '../../utils/getRandomString';
 import {
 	connectToAnalyticsCloud,
 	disconnectFromAnalyticsCloud,
@@ -85,7 +86,7 @@ async function connectACToDXP(page) {
 
 	await connectToAnalyticsCloud(page);
 
-	await syncSite(page);
+	await syncSite(page, 'My Property - ' + getRandomString());
 
 	await syncAllContacts(page);
 

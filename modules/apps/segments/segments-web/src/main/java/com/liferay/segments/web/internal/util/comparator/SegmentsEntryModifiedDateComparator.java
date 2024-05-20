@@ -22,8 +22,14 @@ public class SegmentsEntryModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public SegmentsEntryModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public static SegmentsEntryModifiedDateComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -56,6 +62,16 @@ public class SegmentsEntryModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SegmentsEntryModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SegmentsEntryModifiedDateComparator _ASCENDING =
+		new SegmentsEntryModifiedDateComparator(true);
+
+	private static final SegmentsEntryModifiedDateComparator _DESCENDING =
+		new SegmentsEntryModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

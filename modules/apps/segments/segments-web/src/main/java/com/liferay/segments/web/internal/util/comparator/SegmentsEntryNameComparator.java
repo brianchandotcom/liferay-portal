@@ -21,8 +21,12 @@ public class SegmentsEntryNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public SegmentsEntryNameComparator(boolean ascending) {
-		_ascending = ascending;
+	public static SegmentsEntryNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -59,6 +63,16 @@ public class SegmentsEntryNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SegmentsEntryNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SegmentsEntryNameComparator _ASCENDING =
+		new SegmentsEntryNameComparator(true);
+
+	private static final SegmentsEntryNameComparator _DESCENDING =
+		new SegmentsEntryNameComparator(false);
 
 	private final boolean _ascending;
 

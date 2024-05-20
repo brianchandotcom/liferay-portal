@@ -20,7 +20,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -707,9 +706,6 @@ public class AssetPublisherHelperTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private FeatureFlagManager _featureFlagManager;
 
 	@DeleteAfterTestRun
 	private Group _group1;

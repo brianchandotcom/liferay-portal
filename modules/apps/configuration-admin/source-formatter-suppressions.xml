@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaConfigurationCategoryCheck" files="configuration-admin-test/src/testIntegration/java/com/liferay/configuration/admin/internal/configuration/TestCompanyConfiguration.java" />
+		<suppress checks="JavaConfigurationCategoryCheck" files="configuration-admin-test/src/testIntegration/java/com/liferay/configuration/admin/internal/configuration/TestSystemConfiguration.java" />
+		<suppress checks="LanguageKeysCheck" files="configuration-admin-test/src/testIntegration/java/com/liferay/configuration/admin/internal/configuration/TestCompanyConfiguration.java" />
+		<suppress checks="LanguageKeysCheck" files="configuration-admin-test/src/testIntegration/java/com/liferay/configuration/admin/internal/configuration/TestSystemConfiguration.java" />
+	</source-check>
+</suppressions>

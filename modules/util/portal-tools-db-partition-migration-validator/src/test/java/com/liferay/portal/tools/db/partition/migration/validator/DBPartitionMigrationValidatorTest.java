@@ -285,7 +285,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(file))) {
 
-			String line;
+			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
 				sb.append(line);

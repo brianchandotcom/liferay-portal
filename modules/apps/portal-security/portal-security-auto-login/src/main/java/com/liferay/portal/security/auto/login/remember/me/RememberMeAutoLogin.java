@@ -81,23 +81,20 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 		RememberMeToken rememberMeToken = null;
 
-		if (Validator.isNotNull(rememberMe) &&
-			Validator.isNotNull(rememberMeTokenId) &&
+		if (Validator.isNotNull(rememberMeTokenId) &&
 			Validator.isNotNull(rememberMeTokenToken)) {
 
-			Company company = _portal.getCompany(httpServletRequest);
-
-			if (company.isAutoLogin()) {
-				rememberMeToken =
-					_rememberMeTokenLocalService.fetchRememberMeToken(
-						GetterUtil.getLong(rememberMeTokenId),
-						rememberMeTokenToken);
-			}
+			rememberMeToken =
+				_rememberMeTokenLocalService.fetchRememberMeToken(
+					GetterUtil.getLong(rememberMeTokenId),
+					rememberMeTokenToken);
 		}
 
 		// LPS-11218
 
 		if (rememberMeToken == null) {
+			removeCookies(httpServletRequest, httpServletResponse);
+
 			return null;
 		}
 
@@ -109,12 +106,13 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		User guestUser = _userLocalService.getGuestUser(company.getCompanyId());
 
 		if ((user == null) || (guestUser.getUserId() == user.getUserId()) ||
-			!user.isActive() || rememberMeToken.isExpired()) {
+			!user.isActive() || rememberMeToken.isExpired() ||
+			!GetterUtil.getBoolean(rememberMe) || !company.isAutoLogin()) {
 
 			removeCookies(httpServletRequest, httpServletResponse);
 
 			_rememberMeTokenLocalService.deleteRememberMeToken(
-				GetterUtil.getLong(rememberMeTokenId));
+				rememberMeToken.getRememberMeTokenId());
 
 			return null;
 		}

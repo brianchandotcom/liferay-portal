@@ -63,7 +63,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			"TestObjectDefinition");
 
 		testExportImport(
-			"test-object-definition.portuguese-locale.json",
+			"test-object-definition.portuguese-default-locale.json",
 			"test-object-definition.site-default-locale.json",
 			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionPortuguese");
 	}

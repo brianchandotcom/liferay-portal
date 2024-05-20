@@ -1,13 +1,4 @@
-$product-menu-width: 320px;
-$upper-tbar-height: 4rem;
-
 .upper-tbar {
-	background-color: #fff;
-	border-color: #e7e7ed;
-	border-style: solid;
-	border-width: 0 0 1px;
-	height: $upper-tbar-height;
-
 	.tbar-nav {
 		padding: 0 calc(1.25rem - 12px);
 	}
@@ -15,10 +6,6 @@ $upper-tbar-height: 4rem;
 	.tbar-item {
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
-
-		&:first-child {
-			padding-left: 0;
-		}
 
 		&:last-child {
 			padding-right: 0;
@@ -29,30 +16,5 @@ $upper-tbar-height: 4rem;
 .upper-tbar-title {
 	color: #272833;
 	font-size: 1.125rem;
-	font-weight: bold;
-	line-height: 1.25;
 	margin: 0;
-}
-
-.upper-tbar-container-fixed {
-	height: $upper-tbar-height;
-
-	.upper-tbar {
-		left: 0;
-		position: fixed;
-		right: 0;
-		z-index: 1;
-
-		@include media-breakpoint-up(sm) {
-			body.open & {
-				left: $product-menu-width;
-			}
-
-			body.sidenav-transition & {
-				@media (prefers-reduced-motion: no-preference) {
-					transition: left 0.5s ease;
-				}
-			}
-		}
-	}
 }

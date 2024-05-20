@@ -89,10 +89,15 @@ public class AssetPublisherConfigurationFormNavigatorTest {
 	public void testViewOrderOfFieldsetsInAssetSelectionWhenSelectionStyleIsDynamic()
 		throws PortalException {
 
-		String[] formNavigatorEntryKeys = {
-			"asset-selection", "scope", "source", "filter",
-			"custom-user-attributes", "ordering", "create-asset-list"
-		};
+		_assertFormNavigatorEntryKeys(
+			new String[] {
+				"asset-selection", "scope", "source", "filter",
+				"custom-user-attributes", "ordering", "create-asset-list"
+			});
+	}
+
+	private void _assertFormNavigatorEntryKeys(String[] formNavigatorEntryKeys)
+		throws PortalException {
 
 		List<FormNavigatorCategory> formNavigatorCategories =
 			_formNavigatorCategoryProvider.getFormNavigatorCategories(

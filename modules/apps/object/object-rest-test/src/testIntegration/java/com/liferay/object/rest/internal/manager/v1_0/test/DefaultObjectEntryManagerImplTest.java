@@ -2271,18 +2271,18 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				buildRangeExpression(
-					childObjectEntry1.getDateCreated(), new Date(),
+					childObjectEntry2.getDateCreated(), new Date(),
 					"dateCreated", pattern)
 			).build(),
-			childObjectEntry1, childObjectEntry2);
+			childObjectEntry2);
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				buildRangeExpression(
-					childObjectEntry1.getDateModified(), new Date(),
+					childObjectEntry2.getDateModified(), new Date(),
 					"dateModified", pattern)
 			).build(),
-			childObjectEntry1, childObjectEntry2);
+			childObjectEntry2);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(

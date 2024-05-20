@@ -43,7 +43,7 @@ public class DatabaseUtilTest extends BaseTestCase {
 	@Test
 	public void testExportLiferayDatabaseWithDefaultCompany() throws Exception {
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			getConnection());
+			connection);
 
 		_assert(liferayDatabase, true);
 	}
@@ -57,7 +57,7 @@ public class DatabaseUtilTest extends BaseTestCase {
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()));
 
 		try {
-			DatabaseUtil.exportLiferayDatabase(getConnection());
+			DatabaseUtil.exportLiferayDatabase(connection);
 
 			Assert.fail();
 		}
@@ -78,7 +78,7 @@ public class DatabaseUtilTest extends BaseTestCase {
 		mockGetTables(false);
 
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
-			getConnection());
+			connection);
 
 		_assert(liferayDatabase, false);
 	}

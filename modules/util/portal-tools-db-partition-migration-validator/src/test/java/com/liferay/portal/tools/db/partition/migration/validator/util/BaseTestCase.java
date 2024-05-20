@@ -28,10 +28,6 @@ import org.mockito.stubbing.Answer;
  */
 public abstract class BaseTestCase {
 
-	protected Connection getConnection() {
-		return _connection;
-	}
-
 	protected void mockGetColumns(List<String> tableNames) throws SQLException {
 		ResultSet resultSet1 = Mockito.mock(ResultSet.class);
 
@@ -107,7 +103,7 @@ public abstract class BaseTestCase {
 			PreparedStatement.class);
 
 		Mockito.when(
-			_connection.prepareStatement(
+			connection.prepareStatement(
 				"select Company.companyId, webId, name, hostname from " +
 					"Company left join VirtualHost on Company.companyId = " +
 						"VirtualHost.companyId")
@@ -239,7 +235,7 @@ public abstract class BaseTestCase {
 			PreparedStatement.class);
 
 		Mockito.when(
-			_connection.prepareStatement("select companyId from Company")
+			connection.prepareStatement("select companyId from Company")
 		).thenReturn(
 			preparedStatement
 		);
@@ -300,7 +296,7 @@ public abstract class BaseTestCase {
 			PreparedStatement.class);
 
 		Mockito.when(
-			_connection.prepareStatement("select companyId from CompanyInfo")
+			connection.prepareStatement("select companyId from CompanyInfo")
 		).thenReturn(
 			preparedStatement
 		);
@@ -360,11 +356,11 @@ public abstract class BaseTestCase {
 		_driverManagerMockedStatic.when(
 			() -> DriverManager.getConnection(url, user, password)
 		).thenReturn(
-			_connection
+			connection
 		);
 
 		Mockito.when(
-			_connection.getMetaData()
+			connection.getMetaData()
 		).thenReturn(
 			_databaseMetaData
 		);
@@ -381,7 +377,7 @@ public abstract class BaseTestCase {
 			PreparedStatement.class);
 
 		Mockito.when(
-			_connection.prepareStatement(
+			connection.prepareStatement(
 				"select servletContextName, schemaVersion, state_, verified " +
 					"from Release_")
 		).thenReturn(
@@ -525,8 +521,9 @@ public abstract class BaseTestCase {
 		);
 	}
 
-	private static final Connection _connection = Mockito.mock(
+	protected static final Connection connection = Mockito.mock(
 		Connection.class);
+
 	private static final DatabaseMetaData _databaseMetaData = Mockito.mock(
 		DatabaseMetaData.class);
 	private static final MockedStatic<DriverManager>

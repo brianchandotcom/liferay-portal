@@ -5,9 +5,10 @@
 
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
-function createEditor(element) {
-	element.setAttribute('contenteditable', 'true');
-	element.contentEditable = 'true';
+function createEditor(_element, _changeCallback, destroyCallback) {
+	if (destroyCallback) {
+		destroyCallback();
+	}
 }
 
 function destroyEditor() {}

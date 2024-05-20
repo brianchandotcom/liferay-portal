@@ -10,58 +10,20 @@
 <%
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
+AccountEntry accountEntry = commerceContext.getAccountEntry();
+CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
 BaseAddressCheckoutStepDisplayContext baseAddressCheckoutStepDisplayContext = (BaseAddressCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 List<CommerceAddress> commerceAddresses = baseAddressCheckoutStepDisplayContext.getCommerceAddresses();
 
-String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
-
-long commerceAddressId = BeanParamUtil.getLong(baseAddressCheckoutStepDisplayContext.getCommerceOrder(), request, paramName);
-
-boolean validCommerceAddressId = false;
-
-CommerceAddress orderCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
-
-if ((orderCommerceAddress == null) || (orderCommerceAddress.getClassNameId() != PortalUtil.getClassNameId(AccountEntry.class))) {
-	commerceAddressId = baseAddressCheckoutStepDisplayContext.getDefaultCommerceAddressId(commerceContext.getCommerceChannelId());
-
-	for (CommerceAddress validCommerceAddress : commerceAddresses) {
-		if (commerceAddressId == validCommerceAddress.getCommerceAddressId()) {
-			validCommerceAddressId = true;
-
-			break;
-		}
-	}
-}
-else {
-	for (CommerceAddress validCommerceAddress : commerceAddresses) {
-		if (Objects.equals(orderCommerceAddress.getName(), validCommerceAddress.getName()) && Objects.equals(orderCommerceAddress.getStreet1(), validCommerceAddress.getStreet1()) && Objects.equals(orderCommerceAddress.getStreet2(), validCommerceAddress.getStreet2()) && Objects.equals(orderCommerceAddress.getStreet3(), validCommerceAddress.getStreet3()) && Objects.equals(orderCommerceAddress.getZip(), validCommerceAddress.getZip()) && (orderCommerceAddress.getCountryId() == validCommerceAddress.getCountryId()) && (orderCommerceAddress.getRegionId() == validCommerceAddress.getRegionId()) && (orderCommerceAddress.getType() == validCommerceAddress.getType()) && (orderCommerceAddress.getLatitude() == validCommerceAddress.getLatitude()) && (orderCommerceAddress.getLongitude() == validCommerceAddress.getLongitude())) {
-			validCommerceAddressId = true;
-
-			commerceAddressId = validCommerceAddress.getCommerceAddressId();
-
-			break;
-		}
-	}
-}
-
-if (!validCommerceAddressId) {
-	commerceAddressId = 0;
-}
-
-String selectLabel = "choose-" + baseAddressCheckoutStepDisplayContext.getTitle();
-
-CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
-
-if (commerceOrder.isGuestOrder()) {
-	commerceAddressId = 0;
-}
+long commerceAddressId = baseAddressCheckoutStepDisplayContext.getCommerceAddressId(request);
 
 CommerceAddress currentCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
 
-AccountEntry accountEntry = commerceContext.getAccountEntry();
-
 boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, accountEntry, AccountActionKeys.MANAGE_ADDRESSES);
+
+String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 %>
 
 <liferay-ui:error exception="<%= CommerceOrderDefaultBillingAddressException.class %>" message="no-default-billing-address" />
@@ -70,7 +32,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 	<div class="form-group-autofit">
 		<c:if test="<%= !commerceOrder.isGuestOrder() %>">
 			<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, accountEntry, AccountActionKeys.VIEW_ADDRESSES) %>">
-				<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= liferayPortletResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
+				<aui:select label='<%= "choose-" + baseAddressCheckoutStepDisplayContext.getTitle() %>' name="commerceAddress" onChange='<%= liferayPortletResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
 					<c:choose>
 						<c:when test="<%= hasManageAddressesPermission %>">
 							<aui:option label="add-new-address" value="0" />

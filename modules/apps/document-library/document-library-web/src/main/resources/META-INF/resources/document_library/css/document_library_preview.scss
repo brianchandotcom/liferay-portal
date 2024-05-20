@@ -10,7 +10,17 @@
 	text-align: center;
 }
 
+.document-libray-preview-container {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+
 .sidebar-preview {
+	height: 100%;
+	position: absolute;
+	right: 0;
+	transform: translateX(0);
+
 	.sidebar-panel {
 		background-color: #fff;
 	}
@@ -26,4 +36,5 @@
 		top: auto;
 		z-index: 1;
 	}
+}
 }

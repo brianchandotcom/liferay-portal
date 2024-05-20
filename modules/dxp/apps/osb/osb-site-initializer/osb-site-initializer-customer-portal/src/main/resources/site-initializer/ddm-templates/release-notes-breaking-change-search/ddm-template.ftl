@@ -46,7 +46,7 @@
 			word-break: break-word;
 		}
 
-		.link-container>svg {
+		.link-container > svg {
 			fill: var(--link-color, #0B5FFF);
 			height: 0.75rem;
 			width: 0.75rem;
@@ -72,7 +72,6 @@
 			border-width: 0rem;
 			color: var(--color-action-neutral-default, #2B3A4B);
 			display: flex;
-			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.875rem;
 			font-style: normal;
 			font-weight: 600;
@@ -111,7 +110,6 @@
 			border-width: 0rem;
 			color: var(--color-action-neutral-default, #2B3A4B);
 			display: flex;
-			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.875rem;
 			font-style: normal;
 			font-weight: 600;
@@ -131,7 +129,6 @@
 			align-items: flex-start;
 			color: var(--color-neutral-10, #282934);
 			display: flex;
-			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 0.8125rem;
 			font-style: normal;
 			font-weight: 400;
@@ -157,7 +154,6 @@
 		.search-results .search-results-entry .search-results-entry-title {
 			color: var(--color-neutral-10, #282934);
 			border-radius: 0.625rem;
-			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 1.125rem;
 			font-style: normal;
 			font-weight: 600 !important;
@@ -167,7 +163,6 @@
 
 		.search-results .search-results-entry .search-results-entry-title .search-results-entry-content {
 			color: var(--color-neutral-10, #282934);
-			font-family: 'Source Sans Pro', sans-serif;
 			font-size: 1rem;
 			font-style: normal;
 			font-weight: 400;

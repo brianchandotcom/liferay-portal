@@ -35,7 +35,7 @@
         word-break: break-word;
     }
   
-    .link-container>svg {
+    .link-container > svg {
         fill: var(--link-color, #0B5FFF);
         height: 0.75rem;
         width: 0.75rem;
@@ -47,7 +47,6 @@
     
     .search-results .search-results-entry .search-results-entry-title {
         color: var(--color-neutral-10, #282934);			
-        font-family: 'Source Sans Pro', sans-serif;
         font-size: 1.438rem;
         font-style: normal;
         font-weight: 600 !important;
@@ -56,7 +55,6 @@
     
     .search-results .search-results-entry .search-results-entry-content {
         color: var(--color-neutral-10, #282934);
-        font-family: 'Source Sans Pro', sans-serif;
         font-size: 1rem;
         font-style: normal;
         font-weight: 400;				

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.asset.AssetURLViewProvider;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -124,7 +125,9 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 		searchRequestBuilder.withSearchContext(
 			searchContext2 -> {
 				searchContext2.setAttribute(
-					"search.contribute.tuning.rankings", Boolean.TRUE);
+					SearchContextAttributes.
+						ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS,
+					Boolean.TRUE);
 				searchContext2.setCompanyId(searchContext1.getCompanyId());
 				searchContext2.setGroupIds(searchContext1.getGroupIds());
 				searchContext2.setKeywords(searchContext1.getKeywords());

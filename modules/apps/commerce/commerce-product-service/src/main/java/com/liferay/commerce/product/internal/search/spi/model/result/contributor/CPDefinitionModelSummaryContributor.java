@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.Locale;
@@ -19,6 +20,10 @@ import java.util.Locale;
 public class CPDefinitionModelSummaryContributor
 	implements ModelSummaryContributor {
 
+	public CPDefinitionModelSummaryContributor(HtmlParser htmlParser) {
+		_htmlParser = htmlParser;
+	}
+
 	@Override
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
@@ -26,8 +31,11 @@ public class CPDefinitionModelSummaryContributor
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
 		String title = document.get(prefix + Field.NAME, Field.NAME);
+
 		String content = document.get(
 			prefix + Field.DESCRIPTION, Field.DESCRIPTION);
+
+		content = _htmlParser.extractText(content);
 
 		Summary summary = new Summary(title, content);
 
@@ -35,5 +43,7 @@ public class CPDefinitionModelSummaryContributor
 
 		return summary;
 	}
+
+	private final HtmlParser _htmlParser;
 
 }

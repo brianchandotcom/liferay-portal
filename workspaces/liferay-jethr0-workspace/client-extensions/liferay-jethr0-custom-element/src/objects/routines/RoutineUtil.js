@@ -23,12 +23,6 @@ export async function createRoutine({data, redirect}) {
 
 	const routinesResult = JSON.parse(await routinesResponse.text());
 
-	await liferayRequest({
-		headers,
-		method: 'PUT',
-		urlPath: `/o/c/routines/${routinesResult.id}/object-actions/Jethr0EtcSpringBootAddRoutine`,
-	});
-
 	if (routinesResult && redirect) {
 		redirect(routinesResult);
 	}

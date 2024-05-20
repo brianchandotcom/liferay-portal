@@ -904,7 +904,7 @@
 					},
 					"name": "Jethr0EtcSpringBootAddJob",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
-					"objectActionTriggerKey": "standalone",
+					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					}
 				},
@@ -1075,7 +1075,7 @@
 					},
 					"name": "Jethr0EtcSpringBootAddRoutine",
 					"objectActionExecutorKey": "function#liferay-jethr0-etc-spring-boot-object-actions",
-					"objectActionTriggerKey": "standalone",
+					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					}
 				},

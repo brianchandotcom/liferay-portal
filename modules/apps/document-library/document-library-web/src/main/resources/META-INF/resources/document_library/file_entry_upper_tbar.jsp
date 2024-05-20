@@ -14,8 +14,7 @@ FileEntry fileEntry = dlViewFileEntryDisplayContext.getFileEntry();
 FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 %>
 
-<div class="upper-tbar-container-fixed">
-	<div class="tbar upper-tbar">
+	<nav class="component-tbar subnav-tbar-light tbar upper-tbar" role="navigation">
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
@@ -88,5 +87,4 @@ FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 				</li>
 			</ul>
 		</clay:container-fluid>
-	</div>
-</div>
+	</nav>

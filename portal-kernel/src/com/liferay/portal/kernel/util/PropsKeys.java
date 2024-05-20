@@ -1189,6 +1189,14 @@ public interface PropsKeys {
 	public static final String INITIAL_SYSTEM_CHECK_ENABLED =
 		"initial.system.check.enabled";
 
+	public static final String
+		INVOKER_FILTER_CHAIN_CACHE_QUERY_STRING_IGNORED_KEYS =
+			"invoker.filter.chain.cache.query.string.ignored.keys";
+
+	public static final String
+		INVOKER_FILTER_CHAIN_CACHE_SKIP_QUERY_STRING_URIS =
+			"invoker.filter.chain.cache.skip.query.string.uris";
+
 	public static final String INVOKER_FILTER_CHAIN_ENABLED =
 		"invoker.filter.chain.cache.enabled";
 

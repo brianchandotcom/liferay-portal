@@ -40,7 +40,15 @@ for (FormNavigatorEntry<Object> curFormNavigatorEntry : formNavigatorEntries) {
 				size='<%= (categoryKeys.length == 1) ? "full" : "lg" %>'
 			>
 				<clay:sheet-section>
-					<h3 class="mb-4"><%= label %></h3>
+					<h3 class="d-flex mb-4">
+						<%= label %>
+
+						<c:if test="<%= curFormNavigatorEntry.isDeprecated() %>">
+							<liferay-frontend:feature-indicator
+								type="deprecated"
+							/>
+						</c:if>
+					</h3>
 
 					<%
 					PortalIncludeUtil.include(pageContext, curFormNavigatorEntry::include);
@@ -54,6 +62,7 @@ for (FormNavigatorEntry<Object> curFormNavigatorEntry : formNavigatorEntries) {
 				collapsed="<%= i != 0 %>"
 				collapsible="<%= (i != 0) || (formNavigatorEntries.size() > 1) %>"
 				cssClass="<%= formNavigatorDisplayContext.getFieldSetCssClass() %>"
+				deprecated="<%= curFormNavigatorEntry.isDeprecated() %>"
 				id="<%= formNavigatorDisplayContext.getSectionId(curFormNavigatorEntry.getKey()) %>"
 				label="<%= label %>"
 			>

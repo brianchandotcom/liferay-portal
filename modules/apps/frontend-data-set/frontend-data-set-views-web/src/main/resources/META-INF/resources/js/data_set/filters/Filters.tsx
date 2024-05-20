@@ -73,22 +73,12 @@ function AddFDSFilterModalContent({
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
 	);
-	const [includeMode, setIncludeMode] = useState<string>('include');
-	const [multiple, setMultiple] = useState<boolean>(
-		(filter as ISelectionFilter)?.multiple ?? true
-	);
-	const [picklists, setPicklists] = useState<IPickList[]>([]);
-	const [preselectedValues, setPreselectedValues] = useState<any[]>([]);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
 		filter ? false : true
 	);
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
 	);
-	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
-	const [sourceType, setSourceType] = useState<
-		ESelectionFilterSourceType | undefined
-	>();
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
 		fieldNames?.includes(item.name) ? item.name : undefined
 	);
@@ -99,57 +89,12 @@ function AddFDSFilterModalContent({
 		saveUrl: '',
 	});
 
-	useEffect(() => {
-		getAllPicklists().then((items) => {
-			setPicklists(items);
-
-			const picklist = items.find((item) =>
-				Liferay.FeatureFlags['LPD-10754']
-					? String(item.externalReferenceCode) ===
-						(filter as any)?.source
-					: String(item.externalReferenceCode) ===
-						(filter as any)?.listTypeDefinitionERC
-			);
-
-			if (picklist) {
-				setSelectedPicklist(picklist);
-
-				const validSavedPreselectedValues =
-					picklist.listTypeEntries.filter((item) =>
-						JSON.parse(
-							(filter as ISelectionFilter).preselectedValues ||
-								'[]'
-						).includes(item.externalReferenceCode)
-					);
-
-				setPreselectedValues(validSavedPreselectedValues);
-
-				setIncludeMode(
-					validSavedPreselectedValues?.length
-						? filter && (filter as ISelectionFilter).include
-							? 'include'
-							: 'exclude'
-						: 'include'
-				);
-			}
-		});
-
-		if (filter?.filterType === EFilterType.SELECTION) {
-			const selectionFilter = filter as ISelectionFilter;
-			setSourceType(selectionFilter.sourceType);
-		}
-	}, [filter]);
-
 	const isFormInvalid = ({
 		i18nFilterLabels,
 		selectedField,
-		selectedPicklist,
-		sourceType,
 	}: {
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
 		selectedField: IField | undefined;
-		selectedPicklist: IPickList | undefined;
-		sourceType: ESelectionFilterSourceType | undefined;
 	}) => {
 		if (!selectedField) {
 			return true;
@@ -177,6 +122,14 @@ function AddFDSFilterModalContent({
 				return true;
 			}
 		}
+		else {
+			Object.values(i18nFilterLabels).forEach((value) => {
+				if (!value) {
+					return true;
+				}
+			});
+		}
+		
 
 		return false;
 	};
@@ -211,31 +164,13 @@ function AddFDSFilterModalContent({
 			displayType = Liferay.Language.get('date-filter');
 		}
 		else if (filterType === EFilterType.SELECTION) {
-			url = API_URL.SELECTION_FILTERS;
-
-			if (Liferay.FeatureFlags['LPD-10754']) {
-				body = {
-					...body,
-					source: selectedPicklist?.externalReferenceCode,
-					sourceType,
-				};
-			}
-			else {
-				body = {
-					...body,
-					listTypeDefinitionERC:
-						selectedPicklist?.externalReferenceCode,
-				};
-			}
+			url = saveState.saveUrl;
 
 			body = {
 				...body,
-				[OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER_ID]: dataSet.id,
-				include: includeMode === 'include',
-				multiple,
-				preselectedValues: JSON.stringify(
-					preselectedValues.map((item) => item.externalReferenceCode)
-				),
+				[OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER_ID]:
+					dataSet.id,
+				...saveState.bodyData,
 			};
 
 			displayType = Liferay.Language.get('dynamic-filter');
@@ -319,11 +254,7 @@ function AddFDSFilterModalContent({
 					{fields.map((field) => (
 						<ClayDropDown.Item
 							className="align-items-center d-flex justify-content-between"
-							disabled={
-								!!filter ||
-								(filterType === EFilterType.SELECTION &&
-									!picklists.length)
-							}
+							disabled={!!filter}
 							key={field.name}
 							onClick={() => onItemClick(field)}
 							roleItem="option"
@@ -391,9 +322,7 @@ function AddFDSFilterModalContent({
 								isFormInvalid({
 									i18nFilterLabels: values,
 									selectedField,
-									selectedPicklist,
-									sourceType,
-								})
+								}) || !saveState.isValid
 							);
 						}}
 						placeholder={Liferay.Language.get('add-a-name')}
@@ -430,9 +359,7 @@ function AddFDSFilterModalContent({
 									isFormInvalid({
 										i18nFilterLabels,
 										selectedField: newVal,
-										selectedPicklist,
-										sourceType,
-									})
+									}) || !saveState.isValid
 								);
 							}
 						}}
@@ -462,8 +389,6 @@ function AddFDSFilterModalContent({
 										isFormInvalid({
 											i18nFilterLabels,
 											selectedField,
-											selectedPicklist,
-											sourceType,
 										}) || !newState.isValid
 									);
 								}}
@@ -480,8 +405,6 @@ function AddFDSFilterModalContent({
 										isFormInvalid({
 											i18nFilterLabels,
 											selectedField,
-											selectedPicklist,
-											sourceType,
 										}) || !newState.isValid
 									);
 								}}
@@ -490,52 +413,17 @@ function AddFDSFilterModalContent({
 
 						{filterType === EFilterType.SELECTION && (
 							<SelectionFilterModalContent.Body
-								includeMode={includeMode}
-								multiple={multiple}
+								filter={filter}
 								namespace={namespace}
-								onIncludeModeChange={setIncludeMode}
-								onMultipleChange={setMultiple}
-								onPreselectedValuesChange={(values) => {
-									setPreselectedValues(values);
-
-									setIncludeMode(
-										values.length
-											? filter &&
-												(filter as ISelectionFilter)
-													.include
-												? 'include'
-												: 'exclude'
-											: 'include'
-									);
-								}}
-								onSelectedPicklistChange={(
-									values: IPickList | undefined
-								) => {
-									setSelectedPicklist(values);
+								onChange={(newState) => {
+									setSaveState(newState);
 									setSaveButtonDisabled(
 										isFormInvalid({
 											i18nFilterLabels,
 											selectedField,
-											selectedPicklist: values,
-											sourceType,
-										})
+										}) || !newState.isValid
 									);
 								}}
-								onSourceChange={(values) => {
-									setSourceType(values);
-									setSaveButtonDisabled(
-										isFormInvalid({
-											i18nFilterLabels,
-											selectedField,
-											selectedPicklist,
-											sourceType: values,
-										})
-									);
-								}}
-								picklists={picklists}
-								preselectedValues={preselectedValues}
-								selectedPicklist={selectedPicklist}
-								sourceType={sourceType}
 							/>
 						)}
 					</>

@@ -5,36 +5,14 @@
 
 /// <reference types="react" />
 
-import {ESelectionFilterSourceType, IPickList} from '../../../../utils/types';
+import {IFilter, TSaveState} from '../../../../utils/types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
-	includeMode: string;
-	multiple: boolean;
+	filter?: IFilter;
 	namespace: string;
-	onIncludeModeChange: (val: string) => void;
-	onMultipleChange: (val: boolean) => void;
-	onPreselectedValuesChange: (val: any[]) => void;
-	onSelectedPicklistChange: (val?: IPickList) => void;
-	onSourceChange: (val: ESelectionFilterSourceType | undefined) => void;
-	picklists: IPickList[];
-	preselectedValues?: any[];
-	selectedPicklist?: IPickList;
-	sourceType: ESelectionFilterSourceType | undefined;
+	onChange: (newState: TSaveState) => void;
 }
-declare function Body({
-	includeMode,
-	multiple,
-	namespace,
-	onIncludeModeChange,
-	onMultipleChange,
-	onPreselectedValuesChange,
-	onSelectedPicklistChange,
-	onSourceChange,
-	picklists,
-	preselectedValues,
-	selectedPicklist,
-	sourceType,
-}: IBodyProps): JSX.Element;
+declare function Body({filter, namespace, onChange}: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;
 	Header: typeof Header;

@@ -5002,6 +5002,49 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryByExternalReferenceCodeWithSlash()
+		throws Exception {
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", "a/b"
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
+
+			Assert.assertEquals(
+				405,
+				HTTPTestUtil.invokeToHttpCode(
+					null,
+					_objectDefinition1.getRESTContextPath() +
+						"/by-external-reference-code/a/b",
+					Http.Method.GET));
+		}
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/a%252Fb",
+				Http.Method.GET));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/a%2Fb",
+				Http.Method.GET));
+	}
+
+	@Test
 	public void testGetObjectEntryFilteredByKeywords() throws Exception {
 		_postObjectEntryWithKeywords("tag1");
 		_postObjectEntryWithKeywords("TAG1");

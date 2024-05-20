@@ -7,15 +7,15 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
-<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
-<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
-
 <portlet:actionURL name="executeCommand" var="executeCommandURL" />
 
 <clay:container-fluid>
 	<aui:form action="<%= executeCommandURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "executeCommand();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+		<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+		<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
+		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 
 		<liferay-ui:error key="gogo">
 

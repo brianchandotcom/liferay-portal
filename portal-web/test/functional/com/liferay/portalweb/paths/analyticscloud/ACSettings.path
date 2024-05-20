@@ -79,7 +79,7 @@
 </tr>
 <tr>
 	<td>KEYWORD_CHECKBOX</td>
-	<td>//h4[text()='${key_keywordName}']/parent::td/preceding-sibling::td//input</td>
+	<td>//div[text()='${key_keywordName}']/parent::td/preceding-sibling::td//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -355,12 +355,12 @@
 </tr>
 <tr>
 	<td>USER_LIST</td>
-	<td>//h4[contains(@class,'table')]</td>
+	<td>//div[contains(@class,'table-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_LIST_EMAIL</td>
-	<td>//h4[contains(@class,'table')]/parent::td/following-sibling::td</td>
+	<td>//div[contains(@class,'table')]/parent::td/following-sibling::td</td>
 	<td></td>
 </tr>
 <tr>

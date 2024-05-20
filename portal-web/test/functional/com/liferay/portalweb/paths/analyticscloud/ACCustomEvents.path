@@ -52,7 +52,7 @@
 
 <tr>
 	<td>EDIT_MODAL_TITLE</td>
-	<td>//*[@class='modal-title']</td>
+	<td>//*[contains(@class,'modal-title')]</td>
 	<td></td>
 </tr>
 <tr>

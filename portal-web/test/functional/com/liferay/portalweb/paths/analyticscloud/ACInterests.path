@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>INTEREST_ACTIVE_MEMBERS_PERCENTAGE</td>
-	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='table-column-text-end']/h4</td>
+	<td>//tr[contains(.,'${key_interestTopic}')]/td[@class='table-column-text-end']//div</td>
 	<td></td>
 </tr>
 <tr>

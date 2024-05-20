@@ -6,8 +6,8 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.portal.kernel.json.JSONArray;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -65,6 +65,14 @@ public class DropdownItemBuilder {
 		return dropdownItemStep.setDisabled(disabledUnsafeSupplier);
 	}
 
+	public static AfterDropdownItemsStep setDropdownItems(
+		List<DropdownItem> dropdownItems) {
+
+		DropdownItemStep dropdownItemStep = new DropdownItemStep();
+
+		return dropdownItemStep.setDropdownItems(dropdownItems);
+	}
+
 	public static AfterHrefStep setHref(Object href) {
 		DropdownItemStep dropdownItemStep = new DropdownItemStep();
 
@@ -99,12 +107,6 @@ public class DropdownItemBuilder {
 		DropdownItemStep dropdownItemStep = new DropdownItemStep();
 
 		return dropdownItemStep.setIcon(iconUnsafeSupplier);
-	}
-
-	public static AfterItemsStep setItems(JSONArray itemsJSONArray) {
-		DropdownItemStep dropdownItemStep = new DropdownItemStep();
-
-		return dropdownItemStep.setItems(itemsJSONArray);
 	}
 
 	public static AfterLabelStep setLabel(String label) {
@@ -179,12 +181,13 @@ public class DropdownItemBuilder {
 
 	public static class DropdownItemStep
 		implements ActiveStep, AfterActiveStep, AfterDisabledStep,
-				   AfterHrefStep, AfterIconStep, AfterItemsStep, AfterKeyStep,
-				   AfterLabelStep, AfterPutDataStep, AfterQuickActionStep,
-				   AfterSeparatorStep, AfterSetDataStep, AfterTargetStep,
-				   AfterTypeStep, BuildStep, DisabledStep, HrefStep, IconStep,
-				   ItemsStep, LabelStep, PutDataStep, QuickActionStep,
-				   SeparatorStep, SetDataStep, TargetStep, TypeStep {
+				   AfterDropdownItemsStep, AfterHrefStep, AfterIconStep,
+				   AfterKeyStep, AfterLabelStep, AfterPutDataStep,
+				   AfterQuickActionStep, AfterSeparatorStep, AfterSetDataStep,
+				   AfterTargetStep, AfterTypeStep, BuildStep, DisabledStep,
+				   DropdownItemsStep, HrefStep, IconStep, LabelStep,
+				   PutDataStep, QuickActionStep, SeparatorStep, SetDataStep,
+				   TargetStep, TypeStep {
 
 		@Override
 		public DropdownItem build() {
@@ -274,6 +277,15 @@ public class DropdownItemBuilder {
 		}
 
 		@Override
+		public AfterDropdownItemsStep setDropdownItems(
+			List<DropdownItem> dropdownItems) {
+
+			_dropdownItem.setDropdownItems(dropdownItems);
+
+			return this;
+		}
+
+		@Override
 		public AfterHrefStep setHref(Object href) {
 			_dropdownItem.setHref(href);
 
@@ -330,13 +342,6 @@ public class DropdownItemBuilder {
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
-		}
-
-		@Override
-		public AfterItemsStep setItems(JSONArray itemsJSONArray) {
-			_dropdownItem.setItems(itemsJSONArray);
-
-			return this;
 		}
 
 		@Override
@@ -503,29 +508,29 @@ public class DropdownItemBuilder {
 	}
 
 	public interface AfterActiveStep
-		extends BuildStep, DisabledStep, HrefStep, IconStep, ItemsStep,
+		extends BuildStep, DisabledStep, DropdownItemsStep, HrefStep, IconStep,
 				LabelStep, QuickActionStep, SeparatorStep, SetDataStep,
 				TargetStep, TypeStep {
 	}
 
 	public interface AfterDisabledStep
-		extends BuildStep, HrefStep, IconStep, ItemsStep, LabelStep,
+		extends BuildStep, DropdownItemsStep, HrefStep, IconStep, LabelStep,
 				QuickActionStep, SeparatorStep, TargetStep, TypeStep {
 	}
 
+	public interface AfterDropdownItemsStep
+		extends BuildStep, IconStep, KeyStep, LabelStep, QuickActionStep,
+				SeparatorStep, TargetStep, TypeStep {
+	}
+
 	public interface AfterHrefStep
-		extends BuildStep, IconStep, ItemsStep, KeyStep, LabelStep,
+		extends BuildStep, DropdownItemsStep, IconStep, KeyStep, LabelStep,
 				QuickActionStep, SeparatorStep, TargetStep, TypeStep {
 	}
 
 	public interface AfterIconStep
-		extends BuildStep, ItemsStep, KeyStep, LabelStep, QuickActionStep,
-				SeparatorStep, TargetStep, TypeStep {
-	}
-
-	public interface AfterItemsStep
-		extends BuildStep, IconStep, KeyStep, LabelStep, QuickActionStep,
-				SeparatorStep, TargetStep, TypeStep {
+		extends BuildStep, DropdownItemsStep, KeyStep, LabelStep,
+				QuickActionStep, SeparatorStep, TargetStep, TypeStep {
 	}
 
 	public interface AfterKeyStep
@@ -539,9 +544,10 @@ public class DropdownItemBuilder {
 	}
 
 	public interface AfterPutDataStep
-		extends ActiveStep, BuildStep, DisabledStep, HrefStep, IconStep,
-				ItemsStep, KeyStep, LabelStep, PutDataStep, QuickActionStep,
-				SeparatorStep, SetDataStep, TargetStep, TypeStep {
+		extends ActiveStep, BuildStep, DisabledStep, DropdownItemsStep,
+				HrefStep, IconStep, KeyStep, LabelStep, PutDataStep,
+				QuickActionStep, SeparatorStep, SetDataStep, TargetStep,
+				TypeStep {
 	}
 
 	public interface AfterQuickActionStep
@@ -553,7 +559,7 @@ public class DropdownItemBuilder {
 	}
 
 	public interface AfterSetDataStep
-		extends BuildStep, DisabledStep, HrefStep, IconStep, ItemsStep,
+		extends BuildStep, DisabledStep, DropdownItemsStep, HrefStep, IconStep,
 				LabelStep, QuickActionStep, SeparatorStep, TargetStep,
 				TypeStep {
 	}
@@ -579,6 +585,13 @@ public class DropdownItemBuilder {
 
 	}
 
+	public interface DropdownItemsStep {
+
+		public AfterDropdownItemsStep setDropdownItems(
+			List<DropdownItem> dropdownItems);
+
+	}
+
 	public interface HrefStep {
 
 		public AfterHrefStep setHref(Object href);
@@ -597,12 +610,6 @@ public class DropdownItemBuilder {
 
 		public AfterIconStep setIcon(
 			UnsafeSupplier<String, Exception> iconUnsafeSupplier);
-
-	}
-
-	public interface ItemsStep {
-
-		public AfterItemsStep setItems(JSONArray itemsJSONArray);
 
 	}
 

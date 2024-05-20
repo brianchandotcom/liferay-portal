@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.portal.kernel.json.JSONArray;
+import java.util.List;
 
 /**
  * @author Carlos Lancha
@@ -16,12 +16,12 @@ public class DropdownItem extends NavigationItem {
 		put("type", "item");
 	}
 
-	public void setIcon(String icon) {
-		put("icon", icon);
+	public void setDropdownItems(List<DropdownItem> dropdownItems) {
+		put("items", dropdownItems);
 	}
 
-	public void setItems(JSONArray itemsJSONArray) {
-		put("items", itemsJSONArray);
+	public void setIcon(String icon) {
+		put("icon", icon);
 	}
 
 	public void setKey(String key) {

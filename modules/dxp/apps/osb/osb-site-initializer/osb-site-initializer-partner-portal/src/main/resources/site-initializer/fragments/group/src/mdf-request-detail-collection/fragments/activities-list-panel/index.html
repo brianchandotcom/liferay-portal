@@ -2,7 +2,7 @@
 [#setting date_format="yyyy-MM-dd" /]
 
 [#assign claim_status_style = { "claimed": "ml-3 label label-tonal-info ml-2", "unclaimed": "ml-3 label label-tonal-warning ml-2" } /]
-[#assign request_status_style = { "active": "label label-tonal-info ml-2", "approved": "label label-tonal-success ml-2", "canceled": "label label-tonal-danger ml-2", "expired": "label label-tonal-danger ml-2", "submitted": "label label-tonal-warning ml-2" } /]
+[#assign activity_status_style = { "active": "label label-tonal-info ml-2", "completed": "label label-tonal-success ml-2", "expired": "label label-tonal-danger ml-2", "moreInfoRequested": "label label-tonal-warning ml-2", "rejected": "label label-tonal-danger ml-2", "submitted": "label label-tonal-warning ml-2" } /]
 
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
@@ -156,8 +156,8 @@
 [#macro request_status activity_status end_date is_claimed]
 	<div class="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
 		<p class="mb-0">
-			Request Status:
-			<span class="${request_status_style[activity_status.key]}">
+			Activity Status:
+			<span class="${activity_status_style[activity_status.key]}">
 				${(activity_status.name)!}
 			</span>
 			[#if end_date?has_content && activity_status.key == 'active' && !is_claimed]

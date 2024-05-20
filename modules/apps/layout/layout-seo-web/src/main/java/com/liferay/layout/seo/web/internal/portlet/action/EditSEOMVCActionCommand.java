@@ -131,7 +131,7 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 		serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
 		serviceContext.setAssetTagNames(assetEntry.getTagNames());
 
-		if (layout.isTypeAssetDisplay()) {
+		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
 			serviceContext.setAttribute(
 				"layout.instanceable.allowed", Boolean.TRUE);
 		}

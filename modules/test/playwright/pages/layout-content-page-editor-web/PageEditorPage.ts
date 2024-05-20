@@ -70,26 +70,31 @@ export class PageEditorPage {
 	}
 
 	async addWidget(category: string, name: string) {
+		await this.goToSidebarTab('Fragments and Widgets');
+
 		await this.page
 			.getByRole('tab', {exact: true, name: 'Widgets'})
 			.click();
 
-		const categoryDropdown = this.page.getByRole('menuitem', {
+		const header = this.page.getByRole('menuitem', {
+			exact: true,
 			name: category,
 		});
 
-		if (!categoryDropdown.getAttribute('aria-expanded')) {
-			await categoryDropdown.click();
+		const isOpen = await header.evaluate(
+			(element) => element.getAttribute('aria-expanded') === 'true'
+		);
+
+		if (!isOpen) {
+			await header.click();
 		}
 
-		await this.page.getByText(name).click();
-		await this.page
-			.getByRole('menuitem', {
-				name: `${name} Add ${name} Mark ${name} as Favorite`,
-			})
-			.press('Tab');
-		await this.page.getByLabel(`Add ${name}`).press('Enter');
-		await this.page.getByLabel(`Add ${name}`).press('Enter');
+		await this.page.getByLabel(`Add ${name}`).first().focus();
+
+		await this.page.keyboard.press('Enter');
+		await this.page.keyboard.press('Enter');
+
+		await this.waitForChangesSaved();
 	}
 
 	async changeFragmentConfiguration(

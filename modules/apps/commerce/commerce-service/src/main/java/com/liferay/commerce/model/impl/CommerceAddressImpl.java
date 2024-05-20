@@ -219,16 +219,19 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 
 	@Override
 	public boolean isSameAddress(CommerceAddress commerceAddress) {
-		if (Objects.equals(getName(), commerceAddress.getName()) &&
+		if (Objects.equals(getCity(), commerceAddress.getCity()) &&
+			Objects.equals(getName(), commerceAddress.getName()) &&
+			Objects.equals(
+				getPhoneNumber(), commerceAddress.getPhoneNumber()) &&
 			Objects.equals(getStreet1(), commerceAddress.getStreet1()) &&
 			Objects.equals(getStreet2(), commerceAddress.getStreet2()) &&
 			Objects.equals(getStreet3(), commerceAddress.getStreet3()) &&
-			Objects.equals(getCity(), commerceAddress.getCity()) &&
 			Objects.equals(getZip(), commerceAddress.getZip()) &&
-			(getRegionId() == commerceAddress.getRegionId()) &&
 			(getCountryId() == commerceAddress.getCountryId()) &&
-			Objects.equals(
-				getPhoneNumber(), commerceAddress.getPhoneNumber())) {
+			(getLatitude() == commerceAddress.getLatitude()) &&
+			(getLongitude() == commerceAddress.getLongitude()) &&
+			(getRegionId() == commerceAddress.getRegionId()) &&
+			(getType() == commerceAddress.getType())) {
 
 			return true;
 		}

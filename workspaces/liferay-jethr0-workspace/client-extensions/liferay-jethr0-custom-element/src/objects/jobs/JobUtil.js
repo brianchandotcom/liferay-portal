@@ -23,12 +23,6 @@ export async function createJob({data, redirect}) {
 
 	const jobsResult = JSON.parse(await jobsResponse.text());
 
-	await liferayRequest({
-		headers,
-		method: 'PUT',
-		urlPath: `/o/c/jobs/${jobsResult.id}/object-actions/Jethr0EtcSpringBootAddJob`,
-	});
-
 	if (jobsResult && redirect) {
 		redirect(jobsResult);
 	}

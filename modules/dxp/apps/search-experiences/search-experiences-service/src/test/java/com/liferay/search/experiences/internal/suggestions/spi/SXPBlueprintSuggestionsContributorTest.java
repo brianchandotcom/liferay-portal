@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.asset.AssetURLViewProvider;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -48,6 +49,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -144,6 +146,36 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_liferayPortletRequest, Mockito.never()
 		).getAttribute(
 			Mockito.anyString()
+		);
+	}
+
+	@Test
+	public void testSearchTuningRankingsIsContributed() {
+		_setUpSearcher(0);
+		_setUpSuggestionsContributorConfiguration(null);
+		_getSuggestionsContributorResults();
+
+		ArgumentCaptor<Consumer<SearchContext>> argumentCaptor =
+			ArgumentCaptor.forClass(
+				(Class<Consumer<SearchContext>>)(Class)Consumer.class);
+
+		Mockito.verify(
+			_searchRequestBuilder
+		).withSearchContext(
+			argumentCaptor.capture()
+		);
+
+		Consumer<SearchContext> argumentCaptorValue = argumentCaptor.getValue();
+
+		SearchContext searchContext = Mockito.mock(SearchContext.class);
+
+		argumentCaptorValue.accept(searchContext);
+
+		Mockito.verify(
+			searchContext
+		).setAttribute(
+			SearchContextAttributes.ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS,
+			Boolean.TRUE
 		);
 	}
 
@@ -401,49 +433,46 @@ public class SXPBlueprintSuggestionsContributorTest {
 	}
 
 	private void _setUpSearchRequestBuilderFactory() {
-		SearchRequestBuilder searchRequestBuilder = Mockito.mock(
-			SearchRequestBuilder.class);
-
 		Mockito.doReturn(
 			Mockito.mock(SearchRequest.class)
 		).when(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).build();
 
 		Mockito.doReturn(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).when(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).from(
 			Mockito.anyInt()
 		);
 
 		Mockito.doReturn(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).when(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).queryString(
 			Mockito.anyString()
 		);
 
 		Mockito.doReturn(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).when(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).size(
 			Mockito.anyInt()
 		);
 
 		Mockito.doReturn(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).when(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).withSearchContext(
 			Mockito.any(Consumer.class)
 		);
 
 		Mockito.doReturn(
-			searchRequestBuilder
+			_searchRequestBuilder
 		).when(
 			_searchRequestBuilderFactory
 		).builder();
@@ -508,6 +537,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 	@Mock
 	private Searcher _searcher;
+
+	private final SearchRequestBuilder _searchRequestBuilder = Mockito.mock(
+		SearchRequestBuilder.class);
 
 	@Mock
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

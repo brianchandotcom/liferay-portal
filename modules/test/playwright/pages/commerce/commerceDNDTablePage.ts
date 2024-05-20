@@ -41,6 +41,7 @@ export class CommerceDNDTablePage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly tableRows: () => Promise<Locator[]>;
+	readonly tableRowLink: ({colIndex, rowValue}) => Promise<Locator>;
 
 	constructor(page: Page, tableIdentifier: string) {
 		this.emptyTableMessage = page.getByText('No Results Found');
@@ -61,6 +62,23 @@ export class CommerceDNDTablePage {
 			await this.table.elementHandle();
 
 			return await this.table.locator('div.dnd-tbody div.dnd-tr').all();
+		};
+		this.tableRowLink = async ({
+			colIndex = 1,
+			rowValue,
+		}: {
+			colIndex: number;
+			rowValue: number | string;
+		}) => {
+			const tableRow = await this.tableRow(colIndex, rowValue, true);
+
+			if (tableRow && tableRow.column) {
+				return tableRow.column.getByRole('link', {
+					name: String(rowValue),
+				});
+			}
+
+			throw new Error(`Cannot locate row with rowValue: ${rowValue}`);
 		};
 	}
 }

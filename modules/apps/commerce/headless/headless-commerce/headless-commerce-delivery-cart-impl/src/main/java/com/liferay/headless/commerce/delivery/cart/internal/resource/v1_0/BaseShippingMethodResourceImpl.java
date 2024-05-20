@@ -91,7 +91,7 @@ public abstract class BaseShippingMethodResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode}/shipping-methods"
+		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/shipping-methods"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

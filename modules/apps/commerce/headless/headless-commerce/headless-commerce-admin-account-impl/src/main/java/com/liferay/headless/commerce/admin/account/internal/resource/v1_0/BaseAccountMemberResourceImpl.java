@@ -98,7 +98,7 @@ public abstract class BaseAccountMemberResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/accountMembers"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -134,7 +134,7 @@ public abstract class BaseAccountMemberResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/accountMembers"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -174,7 +174,7 @@ public abstract class BaseAccountMemberResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/accountMembers/{userId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -218,7 +218,7 @@ public abstract class BaseAccountMemberResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/accountMembers/{userId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -261,7 +261,7 @@ public abstract class BaseAccountMemberResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/accountMembers/{userId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

@@ -173,7 +173,7 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels"
+		"/order-types/by-externalReferenceCode/{externalReferenceCode: .+}/order-type-channels"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -209,7 +209,7 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/order-types/by-externalReferenceCode/{externalReferenceCode}/order-type-channels"
+		"/order-types/by-externalReferenceCode/{externalReferenceCode: .+}/order-type-channels"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

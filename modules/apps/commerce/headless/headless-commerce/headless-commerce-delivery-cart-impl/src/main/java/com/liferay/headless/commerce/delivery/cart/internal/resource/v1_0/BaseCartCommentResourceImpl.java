@@ -90,7 +90,7 @@ public abstract class BaseCartCommentResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/cart-comments/by-externalReferenceCode/{externalReferenceCode}"
+		"/cart-comments/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -123,7 +123,7 @@ public abstract class BaseCartCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/cart-comments/by-externalReferenceCode/{externalReferenceCode}"
+		"/cart-comments/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -159,7 +159,7 @@ public abstract class BaseCartCommentResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/cart-comments/by-externalReferenceCode/{externalReferenceCode}"
+		"/cart-comments/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -209,7 +209,7 @@ public abstract class BaseCartCommentResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/cart-comments/by-externalReferenceCode/{externalReferenceCode}"
+		"/cart-comments/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -473,7 +473,7 @@ public abstract class BaseCartCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode}/comments"
+		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/comments"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -506,7 +506,7 @@ public abstract class BaseCartCommentResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode}/comments"
+		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/comments"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

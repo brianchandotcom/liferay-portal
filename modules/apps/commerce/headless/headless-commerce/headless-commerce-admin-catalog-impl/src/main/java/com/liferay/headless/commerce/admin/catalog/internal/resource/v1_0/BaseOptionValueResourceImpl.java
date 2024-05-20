@@ -87,7 +87,7 @@ public abstract class BaseOptionValueResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/optionValues/by-externalReferenceCode/{externalReferenceCode}"
+		"/optionValues/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -121,7 +121,7 @@ public abstract class BaseOptionValueResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/optionValues/by-externalReferenceCode/{externalReferenceCode}"
+		"/optionValues/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -154,7 +154,7 @@ public abstract class BaseOptionValueResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/optionValues/by-externalReferenceCode/{externalReferenceCode}"
+		"/optionValues/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -342,7 +342,7 @@ public abstract class BaseOptionValueResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/options/by-externalReferenceCode/{externalReferenceCode}/optionValues"
+		"/options/by-externalReferenceCode/{externalReferenceCode: .+}/optionValues"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -379,7 +379,7 @@ public abstract class BaseOptionValueResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/options/by-externalReferenceCode/{externalReferenceCode}/optionValues"
+		"/options/by-externalReferenceCode/{externalReferenceCode: .+}/optionValues"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

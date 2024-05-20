@@ -109,7 +109,7 @@ public abstract class BaseObjectRelationshipResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode: .+}/object-relationships"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -150,7 +150,7 @@ public abstract class BaseObjectRelationshipResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-relationships"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode: .+}/object-relationships"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -429,7 +429,7 @@ public abstract class BaseObjectRelationshipResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-relationships/by-external-reference-code/{externalReferenceCode}"
+		"/object-relationships/by-external-reference-code/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

@@ -65,7 +65,7 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/subscriptionConfiguration"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -103,7 +103,7 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/subscriptionConfiguration"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

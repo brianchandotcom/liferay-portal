@@ -65,7 +65,7 @@ public abstract class BasePlacedOrderAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-billing-address"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode: .+}/placed-order-billing-address"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -103,7 +103,7 @@ public abstract class BasePlacedOrderAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-shipping-address"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode: .+}/placed-order-shipping-address"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

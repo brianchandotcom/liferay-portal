@@ -273,7 +273,7 @@ public abstract class BaseProductResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -303,7 +303,7 @@ public abstract class BaseProductResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -336,7 +336,7 @@ public abstract class BaseProductResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -375,7 +375,7 @@ public abstract class BaseProductResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/by-version/{version}"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/by-version/{version}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -413,7 +413,7 @@ public abstract class BaseProductResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/by-version/{version}"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/by-version/{version}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -452,7 +452,7 @@ public abstract class BaseProductResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Product")}
 	)
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode}/clone"
+		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/clone"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

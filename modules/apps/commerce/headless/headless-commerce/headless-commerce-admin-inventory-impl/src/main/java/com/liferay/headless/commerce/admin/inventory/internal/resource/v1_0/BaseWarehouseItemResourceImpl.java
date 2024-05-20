@@ -91,7 +91,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode}"
+		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -127,7 +127,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode}"
+		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -162,7 +162,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode}"
+		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -199,7 +199,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode}"
+		"/warehouseItems/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -435,7 +435,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouseItems"
+		"/warehouses/by-externalReferenceCode/{externalReferenceCode: .+}/warehouseItems"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -471,7 +471,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouseItems"
+		"/warehouses/by-externalReferenceCode/{externalReferenceCode: .+}/warehouseItems"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

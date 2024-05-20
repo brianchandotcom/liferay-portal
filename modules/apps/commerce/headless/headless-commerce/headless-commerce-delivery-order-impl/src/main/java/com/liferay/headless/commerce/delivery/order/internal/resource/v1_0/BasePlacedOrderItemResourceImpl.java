@@ -91,7 +91,7 @@ public abstract class BasePlacedOrderItemResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-order-items/by-externalReferenceCode/{externalReferenceCode}"
+		"/placed-order-items/by-externalReferenceCode/{externalReferenceCode: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -183,7 +183,7 @@ public abstract class BasePlacedOrderItemResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/placed-order-items"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode: .+}/placed-order-items"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

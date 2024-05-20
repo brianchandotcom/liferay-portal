@@ -7,10 +7,16 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
+
+import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,14 +28,54 @@ public class FTLStylingCheck extends BaseStylingCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		content = _formatAssignBlock(content);
 
 		return formatStyling(content);
 	}
 
-	private String _formatAssignBlock(String content) {
+	private String _fixIndentation(String content, String indent)
+		throws IOException {
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (Validator.isNull(line)) {
+					sb.append("\n");
+
+					continue;
+				}
+
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				if (trimmedLine.matches("\\w+=.*")) {
+					sb.append(indent);
+					sb.append("\t");
+					sb.append(trimmedLine);
+				}
+				else {
+					sb.append(line);
+				}
+
+				sb.append("\n");
+			}
+
+			if (sb.length() > 0) {
+				sb.setIndex(sb.index() - 1);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String _formatAssignBlock(String content) throws IOException {
 		int x = -1;
 
 		while (true) {
@@ -70,7 +116,15 @@ public class FTLStylingCheck extends BaseStylingCheck {
 					continue;
 				}
 
-				String newAssignContent = _formatJsonAssign(assignContent);
+				assignContent = StringUtil.trimTrailing(assignContent);
+				int lineNumber = SourceUtil.getLineNumber(content, x);
+
+				String newAssignContent = _fixIndentation(
+					assignContent,
+					SourceUtil.getIndent(
+						SourceUtil.getLine(content, lineNumber)));
+
+				newAssignContent = _formatJsonAssign(newAssignContent);
 
 				if (assignContent.equals(newAssignContent)) {
 					break;

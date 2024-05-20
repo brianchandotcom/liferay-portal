@@ -21,6 +21,12 @@ export class ListTypeAdminApiHelper {
 		);
 	}
 
+	async getListTypeDefinitions() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/list-type-definitions`
+		);
+	}
+
 	async postRandomListTypeDefinition() {
 		const listTypeDefinitionExternalReferenceCode =
 			'ListTypeDefinition' + getRandomInt();

@@ -29,6 +29,7 @@ export class ApplicationsMenuPage {
 	private readonly objectsMenuItem: Locator;
 	private readonly page: Page;
 	private readonly paymentsMenuItem: Locator;
+	private readonly picklistsMenuItem: Locator;
 	private readonly processBuilderItem: Locator;
 	private readonly productsMenuItem: Locator;
 	private readonly queueMenuItem: Locator;
@@ -114,6 +115,10 @@ export class ApplicationsMenuPage {
 		this.paymentsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Payments',
+		});
+		this.picklistsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Picklists',
 		});
 		this.processBuilderItem = page.getByRole('menuitem', {
 			exact: true,
@@ -218,6 +223,11 @@ export class ApplicationsMenuPage {
 	async goToObjects() {
 		await this.goToControlPanel();
 		await this.objectsMenuItem.click();
+	}
+
+	async goToPicklists() {
+		await this.goToControlPanel();
+		await this.picklistsMenuItem.click();
 	}
 
 	async goToSearch() {

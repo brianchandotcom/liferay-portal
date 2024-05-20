@@ -47,8 +47,38 @@ public class DocumentShortcutResourceTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
+	protected DocumentShortcut
+			testGetAssetLibraryDocumentShortcutsPage_addDocumentShortcut(
+				Long assetLibraryId, DocumentShortcut documentShortcut)
+		throws Exception {
+
+		if (assetLibraryId.equals(
+				testGetAssetLibraryDocumentShortcutsPage_getIrrelevantAssetLibraryId())) {
+
+			return randomIrrelevantDocumentShortcut();
+		}
+
+		return _addDocumentShortcut(testDepotEntry.getGroup());
+	}
+
+	@Override
 	protected DocumentShortcut testGetDocumentShortcut_addDocumentShortcut()
 		throws Exception {
+
+		return _addDocumentShortcut();
+	}
+
+	@Override
+	protected DocumentShortcut
+			testGetSiteDocumentShortcutsPage_addDocumentShortcut(
+				Long siteId, DocumentShortcut documentShortcut)
+		throws Exception {
+
+		if (siteId.equals(
+				testGetSiteDocumentShortcutsPage_getIrrelevantSiteId())) {
+
+			return _addDocumentShortcut(irrelevantGroup);
+		}
 
 		return _addDocumentShortcut();
 	}

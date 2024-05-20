@@ -159,9 +159,9 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		JSONArray companiesJSONArray = new JSONArray();
 
 		for (Company company : companies) {
-			JSONObject companyJSONObject = new JSONObject();
+			JSONObject jsonObject = new JSONObject();
 
-			companyJSONObject.put(
+			jsonObject.put(
 				"companyId", company.getCompanyId()
 			).put(
 				"companyName", company.getCompanyName()
@@ -171,35 +171,35 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				"webId", company.getWebId()
 			);
 
-			companiesJSONArray.put(companyJSONObject);
+			companiesJSONArray.put(jsonObject);
 		}
 
-		JSONObject outputJSONObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 
-		outputJSONObject.put("companies", companiesJSONArray);
+		jsonObject.put("companies", companiesJSONArray);
 
-		return outputJSONObject.toString();
+		return jsonObject.toString();
 	}
 
 	private String _getExportedCompanyDefaultOutput(boolean defaultPartition) {
-		JSONObject outputJSONObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 
-		outputJSONObject.put("exportedCompanyDefault", defaultPartition);
+		jsonObject.put("exportedCompanyDefault", defaultPartition);
 
-		return outputJSONObject.toString();
+		return jsonObject.toString();
 	}
 
 	private String _getExportedCompanyIdOutput(List<Long> companyInfoIds) {
-		JSONObject outputJSONObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 
 		if (companyInfoIds.size() > 1) {
-			outputJSONObject.put("exportedCompanyId", (Collection<?>)null);
+			jsonObject.put("exportedCompanyId", (Collection<?>)null);
 		}
 		else {
-			outputJSONObject.put("exportedCompanyId", companyInfoIds.get(0));
+			jsonObject.put("exportedCompanyId", companyInfoIds.get(0));
 		}
 
-		return outputJSONObject.toString();
+		return jsonObject.toString();
 	}
 
 	private String _getFileContent(File file) throws Exception {
@@ -222,8 +222,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		JSONArray releasesJSONArray = new JSONArray();
 
 		for (Release release : releases) {
-			JSONObject releaseJSONObject = new JSONObject();
-
 			JSONObject schemaVersionJSONObject = new JSONObject();
 
 			schemaVersionJSONObject.put(
@@ -244,6 +242,8 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				).getQualifier()
 			);
 
+			JSONObject releaseJSONObject = new JSONObject();
+
 			releaseJSONObject.put(
 				"schemaVersion", schemaVersionJSONObject
 			).put(
@@ -257,11 +257,11 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			releasesJSONArray.put(releaseJSONObject);
 		}
 
-		JSONObject outputJSONObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 
-		outputJSONObject.put("releases", releasesJSONArray);
+		jsonObject.put("releases", releasesJSONArray);
 
-		return outputJSONObject.toString();
+		return jsonObject.toString();
 	}
 
 	private String _getTableNamesOutput(List<String> tableNames) {
@@ -271,11 +271,11 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			tableNamesJSONArray.put(tableName);
 		}
 
-		JSONObject tableNamesJSONObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 
-		tableNamesJSONObject.put("tableNames", tableNamesJSONArray);
+		jsonObject.put("tableNames", tableNamesJSONArray);
 
-		return tableNamesJSONObject.toString();
+		return jsonObject.toString();
 	}
 
 	private void _mockDatabase(

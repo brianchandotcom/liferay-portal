@@ -21,11 +21,13 @@ import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalS
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.util.comparator.CommerceAddressNameComparator;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 
@@ -77,6 +79,53 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 			_commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 			_commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new CommerceAddressNameComparator());
+	}
+
+	public long getCommerceAddressId(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder.isGuestOrder()) {
+			return 0;
+		}
+
+		long commerceAddressId = BeanParamUtil.getLong(
+			commerceOrder, httpServletRequest, getParamName());
+
+		CommerceAddress orderCommerceAddress = getCommerceAddress(
+			commerceAddressId);
+
+		if ((orderCommerceAddress == null) ||
+			(orderCommerceAddress.getClassNameId() != PortalUtil.getClassNameId(
+				AccountEntry.class))) {
+
+			CommerceContext commerceContext = getCommerceContext();
+
+			commerceAddressId = getDefaultCommerceAddressId(
+				commerceContext.getCommerceChannelId());
+
+			for (CommerceAddress validCommerceAddress :
+					getCommerceAddresses()) {
+
+				if (commerceAddressId ==
+						validCommerceAddress.getCommerceAddressId()) {
+
+					return commerceAddressId;
+				}
+			}
+		}
+		else {
+			for (CommerceAddress validCommerceAddress :
+					getCommerceAddresses()) {
+
+				if (orderCommerceAddress.isSameAddress(validCommerceAddress)) {
+					return validCommerceAddress.getCommerceAddressId();
+				}
+			}
+		}
+
+		return 0;
 	}
 
 	public CommerceContext getCommerceContext() {

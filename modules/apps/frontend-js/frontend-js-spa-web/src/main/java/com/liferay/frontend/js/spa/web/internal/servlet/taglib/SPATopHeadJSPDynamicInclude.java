@@ -7,6 +7,7 @@ package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper.SPAHelper;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -49,6 +51,20 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		throws IOException {
 
 		SPAHelper spaHelper = _spaHelperSnapshot.get();
+
+		JSONArray excludedPathsJSONArray =
+			spaHelper.getExcludedPathsJSONArray();
+
+		String urlPath = _portal.getCurrentURL(httpServletRequest);
+
+		for (Object excludedPath : excludedPathsJSONArray) {
+			String excludedPathString = excludedPath.toString();
+
+			if (excludedPathString.equals(urlPath)) {
+				return;
+			}
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -63,7 +79,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		).put(
 			"debugEnabled", spaHelper.isDebugEnabled()
 		).put(
-			"excludedPaths", spaHelper.getExcludedPathsJSONArray()
+			"excludedPaths", excludedPathsJSONArray
 		).put(
 			"excludedTargetPortlets",
 			spaHelper.getExcludedTargetPortletsJSONArray()
@@ -152,6 +168,9 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Props _props;

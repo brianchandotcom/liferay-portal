@@ -15,8 +15,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class ArchivedSettingsModifiedDateComparator
 	extends OrderByComparator<ArchivedSettings> {
 
-	public ArchivedSettingsModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public static ArchivedSettingsModifiedDateComparator get(
+		boolean ascending) {
+
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -34,6 +40,16 @@ public class ArchivedSettingsModifiedDateComparator
 
 		return -value;
 	}
+
+	private ArchivedSettingsModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ArchivedSettingsModifiedDateComparator _ASCENDING =
+		new ArchivedSettingsModifiedDateComparator(true);
+
+	private static final ArchivedSettingsModifiedDateComparator _DESCENDING =
+		new ArchivedSettingsModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

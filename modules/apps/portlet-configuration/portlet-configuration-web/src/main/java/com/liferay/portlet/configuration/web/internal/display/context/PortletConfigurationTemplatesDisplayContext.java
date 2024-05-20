@@ -96,11 +96,11 @@ public class PortletConfigurationTemplatesDisplayContext {
 		OrderByComparator<ArchivedSettings> orderByComparator = null;
 
 		if (Objects.equals(getOrderByCol(), "modified-date")) {
-			orderByComparator = new ArchivedSettingsModifiedDateComparator(
+			orderByComparator = ArchivedSettingsModifiedDateComparator.get(
 				orderByAsc);
 		}
 		else {
-			orderByComparator = new ArchivedSettingsNameComparator(orderByAsc);
+			orderByComparator = ArchivedSettingsNameComparator.get(orderByAsc);
 		}
 
 		archivedSettingsSearchContainer.setOrderByComparator(orderByComparator);

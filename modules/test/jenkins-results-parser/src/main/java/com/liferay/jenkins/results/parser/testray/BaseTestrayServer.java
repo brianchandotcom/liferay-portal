@@ -216,6 +216,8 @@ public abstract class BaseTestrayServer implements TestrayServer {
 			throw new RuntimeException(ioException);
 		}
 
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
 		for (File gcpResultFile :
 				JenkinsResultsParserUtil.findFiles(gcpResultsDir, ".*.xml")) {
 
@@ -257,6 +259,10 @@ public abstract class BaseTestrayServer implements TestrayServer {
 						"value=\"\\d+\")>\\s+<\\/property>",
 					"$1/>");
 
+				gcpResultFileContent = gcpResultFileContent.replaceAll(
+					getURL() + "/?reports/production/logs",
+					testrayS3Bucket.getTestrayS3BaseURL());
+
 				JenkinsResultsParserUtil.write(
 					gcpResultFile, gcpResultFileContent);
 			}
@@ -268,8 +274,6 @@ public abstract class BaseTestrayServer implements TestrayServer {
 			gcpResultsDir.getParentFile(), sb.toString());
 
 		JenkinsResultsParserUtil.tarGzip(gcpResultsDir, resultsTarGzFile);
-
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		testrayS3Bucket.createTestrayS3Object(
 			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);

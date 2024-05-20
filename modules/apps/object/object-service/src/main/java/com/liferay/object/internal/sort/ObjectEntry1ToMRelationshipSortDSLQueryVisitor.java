@@ -67,7 +67,7 @@ public class ObjectEntry1ToMRelationshipSortDSLQueryVisitor
 			dslQuery = addLeftJoin(
 				(Column<DynamicObjectDefinitionTable, Long>)
 					dynamicObjectDefinitionTable.getColumn(dbColumnName),
-				dslQuery, null, dynamicObjectDefinitionTable);
+				null, dslQuery, dynamicObjectDefinitionTable);
 		}
 
 		Stack<BaseASTNode> allBaseASTNodes = getAllBaseASTNodes(

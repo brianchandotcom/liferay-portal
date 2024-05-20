@@ -78,16 +78,16 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 
 		if (!contains(dslQuery, dynamicObjectDefinitionTable)) {
 			dslQuery = addLeftJoin(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn(), dslQuery,
-				null, dynamicObjectDefinitionTable);
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn(), null,
+				dslQuery, dynamicObjectDefinitionTable);
 		}
 
 		if (!contains(dslQuery, relatedDynamicObjectDefinitionTable)) {
 			dslQuery = addLeftJoin(
 				(Column<DynamicObjectDefinitionTable, Long>)
 					dynamicObjectDefinitionTable.getColumn(dbColumnName),
-				dslQuery, relatedDynamicObjectDefinitionTable,
-				relatedDynamicObjectDefinitionTable);
+				relatedDynamicObjectDefinitionTable.getPrimaryKeyColumn(),
+				dslQuery, relatedDynamicObjectDefinitionTable);
 		}
 
 		Stack<BaseASTNode> allBaseASTNodes = getAllBaseASTNodes(

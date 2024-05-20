@@ -21,10 +21,10 @@ public class ClassNamesUpgradeProcess extends UpgradeKernelPackage {
 		try {
 			upgradeTable(
 				"ResourcePermission", "primKey", getClassNames(),
-				WildcardMode.LEADING);
+				WildcardMode.LEADING, true);
 			upgradeTable(
 				"ResourcePermission", "primKey", getResourceNames(),
-				WildcardMode.LEADING);
+				WildcardMode.LEADING, true);
 		}
 		catch (Exception exception) {
 			throw new UpgradeException(exception);

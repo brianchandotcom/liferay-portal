@@ -12,6 +12,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.processor.RawMetadataProcessorUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
@@ -22,6 +24,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -30,11 +34,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -119,6 +127,18 @@ public class DLFileEntryModelDocumentContributorTest {
 					PortalUtil.getSiteDefaultLocale(dlFileEntry.getGroupId()),
 					Field.CONTENT));
 		}
+	}
+
+	@FeatureFlags("LPD-30087")
+	@Test
+	public void testFileEntryMetadataAttributes() throws Exception {
+		_testFileEntryMetadataAttributesBasicFileEntry();
+		_testFileEntryMetadataAttributesImageFileEntry(
+			"square", 225, 225, "dependencies/225x225.jpeg");
+		_testFileEntryMetadataAttributesImageFileEntry(
+			"wide", 182, 277, "dependencies/277x182.jpeg");
+		_testFileEntryMetadataAttributesImageFileEntry(
+			"tall", 275, 183, "dependencies/183x275.jpeg");
 	}
 
 	@Test
@@ -221,14 +241,20 @@ public class DLFileEntryModelDocumentContributorTest {
 	private DLFileEntry _addDLFileEntry() throws Exception {
 		String content = StringUtil.randomString();
 
-		byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
+		return _addDLFileEntry(
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private DLFileEntry _addDLFileEntry(String mimeType, byte[] bytes)
+		throws Exception {
 
 		return _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			StringUtil.randomString(), null, StringPool.BLANK, StringPool.BLANK,
+			StringUtil.randomString(), mimeType, StringUtil.randomString(),
+			null, StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, new UnsyncByteArrayInputStream(bytes), bytes.length, null,
 			null, null, ServiceContextTestUtil.getServiceContext());
@@ -267,8 +293,53 @@ public class DLFileEntryModelDocumentContributorTest {
 			dlFileEntry.getName(), dlFileVersion.getStoreFileName() + ".index");
 	}
 
+	private void _testFileEntryMetadataAttributesBasicFileEntry()
+		throws Exception {
+
+		DLFileEntry dlFileEntry = _addDLFileEntry();
+
+		FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+		RawMetadataProcessorUtil.generateMetadata(fileEntry.getFileVersion());
+
+		Document document = new DocumentImpl();
+
+		_dlFileEntryModelDocumentContributor.contribute(document, dlFileEntry);
+
+		Assert.assertEquals(
+			0L, GetterUtil.getLong(document.get("imageLength")));
+		Assert.assertEquals(0L, GetterUtil.getLong(document.get("imageWidth")));
+	}
+
+	private void _testFileEntryMetadataAttributesImageFileEntry(
+			String expectedAspectRatio, long expectedImageLength,
+			long expectedImageWidth, String fileName)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = _addDLFileEntry(
+			ContentTypes.IMAGE_PNG, FileUtil.getBytes(getClass(), fileName));
+
+		FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+		RawMetadataProcessorUtil.generateMetadata(fileEntry.getFileVersion());
+
+		Document document = new DocumentImpl();
+
+		_dlFileEntryModelDocumentContributor.contribute(document, dlFileEntry);
+
+		Assert.assertEquals(expectedAspectRatio, document.get("aspectRatio"));
+		Assert.assertEquals(
+			expectedImageLength,
+			GetterUtil.getLong(document.get("imageLength")));
+		Assert.assertEquals(
+			expectedImageWidth, GetterUtil.getLong(document.get("imageWidth")));
+	}
+
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
@@ -281,5 +352,8 @@ public class DLFileEntryModelDocumentContributorTest {
 
 	@Inject
 	private DLStore _dlStore;
+
+	@Inject
+	private RawMetadataProcessor _rawMetadataProcessor;
 
 }

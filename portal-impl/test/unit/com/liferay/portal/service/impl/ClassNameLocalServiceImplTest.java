@@ -61,7 +61,7 @@ public class ClassNameLocalServiceImplTest {
 				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
 			).get());
 
-		_testLaziness(
+		_assertLaziness(
 			() -> {
 				Supplier<Long[]> classNameIds =
 					_classNameLocalServiceImpl.getClassNameIdsSupplier(
@@ -85,7 +85,7 @@ public class ClassNameLocalServiceImplTest {
 				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
 			).get());
 
-		_testLaziness(
+		_assertLaziness(
 			() -> {
 				Supplier<long[]> classNameIds =
 					_classNameLocalServiceImpl.getClassNameIdsLongArraySupplier(
@@ -109,7 +109,7 @@ public class ClassNameLocalServiceImplTest {
 				_CLASS_NAME_VALUE1
 			).get());
 
-		_testLaziness(
+		_assertLaziness(
 			() -> {
 				Supplier<Long> classNameId =
 					_classNameLocalServiceImpl.getClassNameIdSupplier(
@@ -174,7 +174,7 @@ public class ClassNameLocalServiceImplTest {
 		);
 	}
 
-	private void _testLaziness(Runnable runnable) {
+	private void _assertLaziness(Runnable runnable) {
 		Mockito.reset(_classNamePersistence);
 
 		Mockito.when(

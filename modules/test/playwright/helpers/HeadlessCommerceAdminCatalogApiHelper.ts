@@ -293,7 +293,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 
 	async postProduct(product: TProduct): Promise<TProduct> {
 		product = await this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products?nestedFields=productSpecifications,skus`,
+			`${this.apiHelpers.baseUrl}${this.basePath}/products?nestedFields=productOptions,productSpecifications,skus`,
 			{
 				data: {
 					active: true,

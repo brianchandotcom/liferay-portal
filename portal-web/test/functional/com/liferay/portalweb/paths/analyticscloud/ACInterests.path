@@ -25,11 +25,6 @@
 	<td>//span[text()='Segment Members']/parent::a[contains(@href,'orderByField')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>NO_INTEREST_TITLE</td>
-	<td>//h4[@class='no-results-title']</td>
-	<td></td>
-</tr>
 
 <!-- Individuals Interest -->
 
@@ -92,11 +87,6 @@
 <tr>
 	<td>INTEREST_DETAIL_ORDER_BY_PAGE_TITLE</td>
 	<td>//span[text()='Page Title']/parent::a[contains(@href,'orderByField')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAB_NAME</td>
-	<td>//ul[contains(@class,'nav-root')]//h4[text()='${key_tabName}']</td>
 	<td></td>
 </tr>
 <tr>

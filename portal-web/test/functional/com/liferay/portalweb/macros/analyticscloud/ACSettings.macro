@@ -1,109 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCSVDataSource(sourceFileName = null, fieldName = null, fieldType = null, fieldNameList = null, dataSourceName = null) {
-
-		// CSV data source tests are no longer possible to run due to this ticket LRAC-11651
-
-		var n = 1;
-
-		if (!(isSet(index))) {
-			var index = 2;
-		}
-
-		ACSettings.goToDataSources();
-
-		Button.click(button = "Add Data Source");
-
-		Click(
-			key_sourceType = "CSV File",
-			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
-
-		UploadDependencyFile.uploadFile(fileName = ${sourceFileName});
-
-		WaitForVisible(locator1 = "ACSettings#FILE_UPLOAD_SUCCESS_ICON");
-
-		Type(
-			key_text = "Name Data Source",
-			locator1 = "TextInput#ANY",
-			value1 = ${dataSourceName});
-
-		while (IsElementPresent(key_text = "Next", locator1 = "Button#ANY_DISABLED")) {
-			Type(
-				key_text = "Name Data Source",
-				locator1 = "TextInput#ANY",
-				value1 = "${dataSourceName} ${n}");
-
-			var n = ${n} + 1;
-		}
-
-		WaitForElementPresent(
-			key_text = "Next",
-			locator1 = "Button#ANY_ENABLED");
-
-		Button.clickNext();
-
-		if (isSet(selectAnalyticsCloudField)) {
-			if (IsElementNotPresent(key_fieldName = ${fieldName}, key_index = ${index}, locator1 = "ACSettings#DATA_SOURCE_FIELD_NAME")) {
-				Button.click(button = "Select Analytics Cloud Field");
-
-				if (isSet(newField)) {
-					Button.click(button = "New Field");
-
-					Type(
-						key_text = "New Field Name",
-						locator1 = "TextInput#ANY",
-						value1 = ${fieldName});
-
-					Button.click(button = "Select");
-
-					MenuItem.click(menuItem = ${fieldType});
-
-					WaitForElementNotPresent(
-						key_text = "Create",
-						locator1 = "Button#ANY_DISABLED");
-
-					Button.click(button = "Create");
-				}
-				else {
-					if (isSet(fieldNameList)) {
-						for (var item : list ${fieldNameList}) {
-							ACUtils.searchBar(searchItem = ${item});
-
-							MenuItem.click(menuItem = ${item});
-
-							if (IsElementPresent(key_text = "Select Analytics Cloud Field", locator1 = "Button#ANY")) {
-								Button.click(button = "Select Analytics Cloud Field");
-							}
-						}
-					}
-					else {
-						MenuItem.click(menuItem = ${fieldName});
-					}
-				}
-			}
-		}
-
-		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
-
-		WaitForElementNotPresent(
-			key_text = "Done",
-			locator1 = "Button#ANY_DISABLED");
-
-		Button.click(button = "Done");
-
-		WaitForElementNotPresent(
-			key_text = "Done",
-			locator1 = "Button#ANY_DISABLED");
-
-		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
-
-		AssertVisible(
-			key_title = ${dataSourceName},
-			locator1 = "Header#H3_TITLE");
-	}
-
-	@summary = "Default summary"
 	macro addKeywords(keyword = null) {
 		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
 
@@ -129,38 +26,6 @@ definition {
 		}
 
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro addSalesforceAndCancel(consumerSecret = null, salesforceName = null, consumerKey = null) {
-		var key_salesforceName = ${salesforceName};
-		var key_consumerKey = ${consumerKey};
-		var key_consumerSecret = ${consumerSecret};
-
-		ACSettings.clickGenericAddOrConfirmationButton();
-
-		Click(
-			key_sourceType = "Salesforce",
-			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
-
-		Type(
-			key_text = "Name",
-			locator1 = "TextInput#ANY",
-			value1 = ${key_salesforceName});
-
-		Type(
-			key_text = "Consumer Key/Client ID",
-			locator1 = "TextInput#ANY",
-			value1 = ${key_consumerKey});
-
-		Type(
-			key_text = "Consumer Secret/Client Secret",
-			locator1 = "TextInput#ANY",
-			value1 = ${key_consumerSecret});
-
-		ACNavigation.clickCancelButton();
-
-		Button.click(button = "Leave Page");
 	}
 
 	@summary = "Default summary"
@@ -195,36 +60,6 @@ definition {
 				key_planLimit = ${pageViewsAddons},
 				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
 		}
-	}
-
-	@summary = "Default summary"
-	macro assertCanChooseDataSourceOptions() {
-
-		// Accounts and Salesforce tests are no longer possible to run after this one from LRAC-11571
-
-		Click(
-			key_sourceType = "Liferay DXP",
-			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
-
-		AssertElementPresent(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
-
-		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
-
-		//Click(
-		//	key_sourceType = "Salesforce",
-		//	locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
-		//ACUtils.assertItemsName(itemList = "Configure Salesforce");
-		//Click(
-		//	key_breadcrumbName = "Add Data Source",
-		//	locator1 = "BreadcrumbPortlet#BREADCRUMB_PAGE");
-
-		Click(
-			key_sourceType = "CSV File",
-			locator1 = "ACSettings#DXP_DATA_SOURCE_CHOOSE_OPTION");
-
-		AssertElementPresent(
-			key_title = "CSV File",
-			locator1 = "Header#H3_TITLE");
 	}
 
 	@summary = "Default summary"
@@ -664,32 +499,6 @@ definition {
 	//		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
 	//}
 	//}
-
-	@summary = "Default summary"
-	macro deleteKeywordCheckbox(keyword = null) {
-		var key_keywordName = ${keyword};
-
-		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME")) {
-			KeyPress(
-				locator1 = "ACSettings#KEYWORD_CHECKBOX",
-				value1 = "\SPACE");
-
-			Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
-
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-		}
-	}
-
-	@summary = "Default summary"
-	macro deleteKeywordIcon(keyword = null) {
-		var key_keywordName = ${keyword};
-
-		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME")) {
-			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
-
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-		}
-	}
 
 	@summary = "Default summary"
 	macro deletePropertyByCheckbox(propertyName) {

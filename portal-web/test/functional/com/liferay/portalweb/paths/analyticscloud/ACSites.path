@@ -56,11 +56,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOP_VISITED_PAGES</td>
-	<td>//*[contains(text(),'${key_entryName}')]/ancestor::tr//td//h4[contains(text(),'${key_resultNumber}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACQUISITIONS_CARD</td>
 	<td>//div[contains(@class,'acquisitions')]//h5[text()='Acquisitions']</td>
 	<td></td>

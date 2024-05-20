@@ -234,23 +234,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEGMENT_MEMBERSHIP_CARD</td>
-	<td>//div[@class='criteria-row']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEGMENT_OVERVIEW_ATTRIBUTE</td>
 	<td>//div[contains(@class, 'input-group-item')]//input[contains(@id, 'property')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEGMENT_TOP_INTERESTS_CARD</td>
-	<td>//div[contains(@class,'interests-card')]//*[@class='card-header']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEGMENT_BREAKDOWN_CARD</td>
-	<td>//div[contains(@class,'distribution-card')]//*[@class='description']/h4</td>
 	<td></td>
 </tr>
 <tr>

@@ -54,14 +54,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro noViewTopVisitedPages(key_entry = null, key_result = null) {
-		AssertElementNotPresent(
-			key_entryName = ${key_entry},
-			key_resultNumber = ${key_result},
-			locator1 = "ACSites#TOP_VISITED_PAGES");
-	}
-
-	@summary = "Default summary"
 	macro selectInterval(cardName = null, interval = null) {
 		if (isSet(cardName)) {
 			Click(
@@ -250,14 +242,6 @@ definition {
 		AssertElementPresent(
 			key_indexNumber = ${key_index},
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
-	}
-
-	@summary = "Default summary"
-	macro viewTopVisitedPages(key_entry = null, key_result = null) {
-		AssertElementPresent(
-			key_entryName = ${key_entry},
-			key_resultNumber = ${key_result},
-			locator1 = "ACSites#TOP_VISITED_PAGES");
 	}
 
 	@summary = "Default summary"

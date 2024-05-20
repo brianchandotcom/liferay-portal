@@ -79,11 +79,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NO_RESULTS_TITLE</td>
-	<td>//h4[@class='no-results-title' and contains(.,'${key_cardTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RECHARTS_CARTESIAN_X_AXIS_TICK</td>
 	<td>xpath=(//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//div[contains(@class,'recharts')]//*[name()='g'][contains(@class,'xAxis')]//*[name()='tspan'])[${index}]</td>
 	<td></td>

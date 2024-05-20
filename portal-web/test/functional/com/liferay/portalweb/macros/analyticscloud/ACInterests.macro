@@ -23,13 +23,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertNoCurrentInterests() {
-		AssertVisible(
-			key_cardTitle = "interests",
-			locator1 = "ACCards#NO_RESULTS_TITLE");
-	}
-
-	@summary = "Default summary"
 	macro clickInterest(interestTopic = null) {
 		var key_interestTopic = ${interestTopic};
 
@@ -65,13 +58,6 @@ definition {
 	@summary = "Default summary"
 	macro clickOrderInterestsByTopicsLink() {
 		Click(locator1 = "ACInterests#INTEREST_ORDER_BY_TOPIC");
-	}
-
-	@summary = "Default summary"
-	macro switchTab(tabName = null) {
-		var key_tabName = ${tabName};
-
-		Click(locator1 = "ACInterests#TAB_NAME");
 	}
 
 	@summary = "Default summary"

@@ -1000,26 +1000,4 @@ definition {
 		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
 
-	@summary = "Default summary"
-	macro viewSegmentProfileCards() {
-		AssertTextPresent(
-			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CARD",
-			value1 = "Segment Membership");
-
-		AssertTextPresent(
-			locator1 = "ACSegments#SEGMENT_TOP_INTERESTS_CARD",
-			value1 = "Top Interests");
-
-		AssertTextPresent(
-			locator1 = "ACSegments#SEGMENT_BREAKDOWN_CARD",
-			value1 = "Add a Breakdown by Attribute");
-	}
-
-	@summary = "Default summary"
-	macro viewSegmentProfileTopInterestCard() {
-		AssertTextPresent(
-			locator1 = "ACSegments#SEGMENT_TOP_INTERESTS_CARD",
-			value1 = "Top Interests");
-	}
-
 }

@@ -88,11 +88,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>KEYWORD_DELETE_ICON</td>
-	<td>//h4[text()='${key_keywordName}']/parent::td/following-sibling::td[contains(@class,'row-inline-actions')]/span/button</td>
-	<td></td>
-</tr>
-<tr>
 	<td>KEYWORD_NAME</td>
 	<td>//*[contains(@class,'table-title') and (text()='${key_keywordName}')]</td>
 	<td></td>
@@ -146,11 +141,6 @@
 <tr>
 	<td>CLOSE_ONBOARDING_MODAL</td>
 	<td>//button[contains(@class,'close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DXP_DATA_SOURCE_CHOOSE_OPTION</td>
-	<td>//h4[contains(@class,'section-title') and contains(.,'Choose Source')]/..//*[contains(@class,'data-source-item') and contains(.,'${key_sourceType}')]</td>
 	<td></td>
 </tr>
 <tr>

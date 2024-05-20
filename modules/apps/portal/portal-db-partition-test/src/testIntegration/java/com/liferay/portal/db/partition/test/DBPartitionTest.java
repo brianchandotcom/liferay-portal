@@ -497,13 +497,13 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testGetClassNameIdsLongArraySupplier() throws Exception {
 		_assertGetClassNameId(
-			classNames -> {
-				for (Long className :
+			classNamesIds -> {
+				for (Long classNameId :
 						_classNameLocalService.getClassNameIdsLongArraySupplier(
 							new String[] {"class.name.test"}
 						).get()) {
 
-					classNames.add(className);
+					classNamesIds.add(classNameId);
 				}
 			});
 	}
@@ -511,8 +511,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testGetClassNameIdsSupplier() throws Exception {
 		_assertGetClassNameId(
-			classNames -> Collections.addAll(
-				classNames,
+			classNamesIds -> Collections.addAll(
+				classNamesIds,
 				_classNameLocalService.getClassNameIdsSupplier(
 					new String[] {"class.name.test"}
 				).get()));
@@ -521,7 +521,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testGetClassNameIdSupplier() throws Exception {
 		_assertGetClassNameId(
-			classNames -> classNames.add(
+			classNamesIds -> classNamesIds.add(
 				_classNameLocalService.getClassNameIdSupplier(
 					"class.name.test"
 				).get()));
@@ -694,16 +694,16 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	private void _assertGetClassNameId(Consumer<Set<Long>> consumer)
 		throws Exception {
 
-		Set<Long> classNames = Collections.synchronizedSet(
+		Set<Long> classNameIds = Collections.synchronizedSet(
 			Collections.newSetFromMap(new IdentityHashMap<>()));
 
 		try {
 			DBPartitionUtil.forEachCompanyId(
-				companyId -> consumer.accept(classNames));
+				companyId -> consumer.accept(classNameIds));
 
 			Assert.assertEquals(
-				classNames.toString(), companyLocalService.getCompaniesCount(),
-				classNames.size());
+				classNameIds.toString(),
+				companyLocalService.getCompaniesCount(), classNameIds.size());
 		}
 		finally {
 			DBPartitionUtil.forEachCompanyId(

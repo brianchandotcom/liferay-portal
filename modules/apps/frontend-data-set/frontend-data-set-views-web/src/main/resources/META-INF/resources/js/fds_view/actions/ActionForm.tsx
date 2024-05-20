@@ -629,14 +629,9 @@ const ActionForm = ({
 						<ClayLayout.Row>
 							<ClayLayout.Col>
 								<InputLocalized
-									helpMessage={
-										actionData.type ===
-										ACTION_TYPE.SIDEPANEL
-											? Liferay.Language.get(
-													'side-panel-title-help'
-											  )
-											: ''
-									}
+									helpMessage={Liferay.Language.get(
+										'side-panel-title-help'
+									)}
 									id={titleFormElementId}
 									label={Liferay.Language.get('title')}
 									onChange={(translations) => {

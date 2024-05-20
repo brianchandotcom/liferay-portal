@@ -35,6 +35,11 @@ html#{$cadmin-selector} .cadmin {
 
 		.field-feedback {
 			font-size: 14px;
+
+			&:last-child {
+				color: #6b6c7e;
+				font-weight: 600;
+			}
 		}
 	}
 }

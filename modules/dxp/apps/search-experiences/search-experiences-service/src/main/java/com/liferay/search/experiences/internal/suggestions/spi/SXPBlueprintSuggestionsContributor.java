@@ -201,11 +201,13 @@ public class SXPBlueprintSuggestionsContributor
 					attributes, searchContext1, searchContext2);
 
 				searchContext2.setAttribute(
+					SearchContextAttributes.
+						ATTRIBUTE_KEY_CONTRIBUTE_TUNING_RANKINGS,
+					Boolean.TRUE);
+				searchContext2.setAttribute(
 					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH,
 					searchContext1.getAttribute(
 						SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH));
-				searchContext2.setAttribute(
-					"search.contribute.tuning.rankings", Boolean.TRUE);
 				searchContext2.setCompanyId(searchContext1.getCompanyId());
 				searchContext2.setGroupIds(searchContext1.getGroupIds());
 				searchContext2.setKeywords(searchContext1.getKeywords());

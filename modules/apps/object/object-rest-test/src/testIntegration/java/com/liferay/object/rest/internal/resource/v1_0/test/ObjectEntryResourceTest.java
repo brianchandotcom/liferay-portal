@@ -5022,19 +5022,13 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
-
-			Assert.assertEquals(
-				405,
-				HTTPTestUtil.invokeToHttpCode(
-					null,
-					_objectDefinition1.getRESTContextPath() +
-						"/by-external-reference-code/a/b",
-					Http.Method.GET));
-		}
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/a/b",
+				Http.Method.GET));
 
 		Assert.assertEquals(
 			200,
@@ -7092,6 +7086,131 @@ public class ObjectEntryResourceTest {
 				_objectDefinitionLocalService.updateObjectDefinition(
 					_objectDefinition1);
 		}
+	}
+
+	@Test
+	public void testPutByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCodeWithSlash()
+		throws Exception {
+
+		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", "a"
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", "a/b"
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", "c"
+			).toString(),
+			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", "c/d"
+			).toString(),
+			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
+
+		// Slash on the left side
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a/b/",
+					_objectRelationship1.getName(), "/c"),
+				Http.Method.PUT));
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a%252Fb/",
+					_objectRelationship1.getName(), "/c"),
+				Http.Method.PUT));
+
+		// Slash on the right side
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a/",
+					_objectRelationship1.getName(), "/c/d"),
+				Http.Method.PUT));
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a/",
+					_objectRelationship1.getName(), "/c%252Fd"),
+				Http.Method.PUT));
+
+		// Slash on the both sides
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a/b/",
+					_objectRelationship1.getName(), "/c/d"),
+				Http.Method.PUT));
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a%252Fb/",
+					_objectRelationship1.getName(), "/c%252Fd"),
+				Http.Method.PUT));
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a%252Fb/",
+					_objectRelationship1.getName(), "/c/d"),
+				Http.Method.PUT));
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/a/b/",
+					_objectRelationship1.getName(), "/c%252Fd"),
+				Http.Method.PUT));
 	}
 
 	@Test

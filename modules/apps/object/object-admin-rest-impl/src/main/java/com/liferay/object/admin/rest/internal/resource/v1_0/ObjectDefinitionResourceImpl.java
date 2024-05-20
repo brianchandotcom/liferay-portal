@@ -219,6 +219,8 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.setEnableIndexSearch(() -> true);
 		}
 
+		ObjectField[] objectFields = objectDefinition.getObjectFields();
+
 		if (GetterUtil.getBoolean(objectDefinition.getSystem())) {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addSystemObjectDefinition(
@@ -240,7 +242,7 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(objectDefinition.getPortlet()),
 					objectDefinition.getScope(),
 					transformToList(
-						objectDefinition.getObjectFields(),
+						objectFields,
 						objectField -> ObjectFieldUtil.toObjectField(
 							LocaleUtil.fromLanguageId(
 								objectDefinition.getDefaultLanguageId()),
@@ -283,7 +285,7 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getStorageType(),
 					transformToList(
 						ArrayUtil.filter(
-							objectDefinition.getObjectFields(),
+							objectFields,
 							objectField ->
 								!StringUtil.equals(
 									objectField.getBusinessTypeAsString(),
@@ -329,14 +331,16 @@ public class ObjectDefinitionResourceImpl
 					serviceBuilderObjectField.getObjectFieldId());
 		}
 
-		for (ObjectField objectField : objectDefinition.getObjectFields()) {
-			if (StringUtil.equals(
-					objectField.getBusinessTypeAsString(),
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+		if (objectFields != null) {
+			for (ObjectField objectField : objectFields) {
+				if (StringUtil.equals(
+						objectField.getBusinessTypeAsString(),
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-				_addObjectRelationship(
-					objectDefinition.getDefaultLanguageId(), objectField,
-					serviceBuilderObjectDefinition);
+					_addObjectRelationship(
+						objectDefinition.getDefaultLanguageId(), objectField,
+						serviceBuilderObjectDefinition);
+				}
 			}
 		}
 
@@ -352,7 +356,7 @@ public class ObjectDefinitionResourceImpl
 				aggregationServiceBuilderObjectField :
 					transformToList(
 						ArrayUtil.filter(
-							objectDefinition.getObjectFields(),
+							objectFields,
 							objectField -> StringUtil.equals(
 								objectField.getBusinessTypeAsString(),
 								ObjectFieldConstants.

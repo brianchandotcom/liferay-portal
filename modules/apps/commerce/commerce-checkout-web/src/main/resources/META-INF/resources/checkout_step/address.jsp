@@ -28,15 +28,19 @@ if ((orderCommerceAddress == null) || (orderCommerceAddress.getClassNameId() != 
 	for (CommerceAddress validCommerceAddress : commerceAddresses) {
 		if (commerceAddressId == validCommerceAddress.getCommerceAddressId()) {
 			validCommerceAddressId = true;
+
+			break;
 		}
 	}
 }
 else {
 	for (CommerceAddress validCommerceAddress : commerceAddresses) {
-		if (Objects.equals(orderCommerceAddress.getName(), validCommerceAddress.getName()) && Objects.equals(orderCommerceAddress.getStreet1(), validCommerceAddress.getStreet1()) && Objects.equals(orderCommerceAddress.getStreet2(), validCommerceAddress.getStreet2()) && Objects.equals(orderCommerceAddress.getStreet3(), validCommerceAddress.getStreet3()) && (orderCommerceAddress.getZip() == validCommerceAddress.getZip()) && (orderCommerceAddress.getCountryId() == validCommerceAddress.getCountryId()) && (orderCommerceAddress.getRegionId() == validCommerceAddress.getRegionId()) && (orderCommerceAddress.getType() == validCommerceAddress.getType()) && (orderCommerceAddress.getLatitude() == validCommerceAddress.getLatitude()) && (orderCommerceAddress.getLongitude() == validCommerceAddress.getLongitude())) {
+		if (Objects.equals(orderCommerceAddress.getName(), validCommerceAddress.getName()) && Objects.equals(orderCommerceAddress.getStreet1(), validCommerceAddress.getStreet1()) && Objects.equals(orderCommerceAddress.getStreet2(), validCommerceAddress.getStreet2()) && Objects.equals(orderCommerceAddress.getStreet3(), validCommerceAddress.getStreet3()) && Objects.equals(orderCommerceAddress.getZip(), validCommerceAddress.getZip()) && (orderCommerceAddress.getCountryId() == validCommerceAddress.getCountryId()) && (orderCommerceAddress.getRegionId() == validCommerceAddress.getRegionId()) && (orderCommerceAddress.getType() == validCommerceAddress.getType()) && (orderCommerceAddress.getLatitude() == validCommerceAddress.getLatitude()) && (orderCommerceAddress.getLongitude() == validCommerceAddress.getLongitude())) {
 			validCommerceAddressId = true;
 
 			commerceAddressId = validCommerceAddress.getCommerceAddressId();
+
+			break;
 		}
 	}
 }

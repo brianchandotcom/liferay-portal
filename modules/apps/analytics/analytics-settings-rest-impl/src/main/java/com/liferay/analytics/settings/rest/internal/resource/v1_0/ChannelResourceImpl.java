@@ -133,7 +133,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 							channel.getChannelId(), contextUser.getCompanyId()),
 						commerceChannelId -> _groupLocalService.fetchGroup(
 							contextUser.getCompanyId(),
-							_commerceChannelClassNameId.get(),
+							_commerceChannelClassNameIdSupplier.get(),
 							commerceChannelId),
 						Group.class),
 					_configurationProvider.getCompanyConfiguration(
@@ -172,7 +172,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 					dataSource.getCommerceChannelIds(),
 					commerceChannelId -> _groupLocalService.fetchGroup(
 						contextUser.getCompanyId(),
-						_commerceChannelClassNameId.get(), commerceChannelId),
+						_commerceChannelClassNameIdSupplier.get(),
+						commerceChannelId),
 					Group.class),
 				_configurationProvider.getCompanyConfiguration(
 					AnalyticsConfiguration.class, contextUser.getCompanyId()),
@@ -239,7 +240,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	protected void activate() {
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
 
-		_commerceChannelClassNameId =
+		_commerceChannelClassNameIdSupplier =
 			_classNameLocalService.getClassNameIdSupplier(
 				"com.liferay.commerce.product.model.CommerceChannel");
 	}
@@ -273,7 +274,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private Supplier<Long> _commerceChannelClassNameId;
+	private Supplier<Long> _commerceChannelClassNameIdSupplier;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

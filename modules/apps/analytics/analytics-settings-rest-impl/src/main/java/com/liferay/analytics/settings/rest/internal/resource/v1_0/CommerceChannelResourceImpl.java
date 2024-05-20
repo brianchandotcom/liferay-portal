@@ -67,7 +67,7 @@ public class CommerceChannelResourceImpl
 		return Page.of(
 			transform(
 				_groupService.search(
-					contextCompany.getCompanyId(), _classNameIds.get(),
+					contextCompany.getCompanyId(), _classNameIdsSupplier.get(),
 					keywords, _getParams(), pagination.getStartPosition(),
 					pagination.getEndPosition(),
 					SortUtil.getIgnoreCaseOrderByComparator(
@@ -80,18 +80,19 @@ public class CommerceChannelResourceImpl
 					group)),
 			pagination,
 			_groupService.searchCount(
-				contextCompany.getCompanyId(), _classNameIds.get(), keywords,
-				_getParams()));
+				contextCompany.getCompanyId(), _classNameIdsSupplier.get(),
+				keywords, _getParams()));
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
 
-		_classNameIds = _classNameLocalService.getClassNameIdsLongArraySupplier(
-			new String[] {
-				"com.liferay.commerce.product.model.CommerceChannel"
-			});
+		_classNameIdsSupplier =
+			_classNameLocalService.getClassNameIdsLongArraySupplier(
+				new String[] {
+					"com.liferay.commerce.product.model.CommerceChannel"
+				});
 	}
 
 	private LinkedHashMap<String, Object> _getParams() {
@@ -101,7 +102,7 @@ public class CommerceChannelResourceImpl
 	}
 
 	private AnalyticsCloudClient _analyticsCloudClient;
-	private Supplier<long[]> _classNameIds;
+	private Supplier<long[]> _classNameIdsSupplier;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

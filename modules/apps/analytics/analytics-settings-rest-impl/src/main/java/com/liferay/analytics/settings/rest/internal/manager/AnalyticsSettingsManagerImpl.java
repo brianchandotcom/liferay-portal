@@ -107,7 +107,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 				analyticsConfiguration.syncedCommerceChannelIds()) {
 
 			Group group = _groupLocalService.fetchGroup(
-				companyId, _commerceChannelClassNameId.get(),
+				companyId, _commerceChannelClassNameIdSupplier.get(),
 				GetterUtil.getLong(commerceChannelId));
 
 			if (group == null) {
@@ -253,8 +253,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		throws Exception {
 
 		_updateTypeSetting(
-			analyticsChannelId, _commerceChannelClassNameId.get(), companyId,
-			dataSourceCommerceChannelIds, false);
+			analyticsChannelId, _commerceChannelClassNameIdSupplier.get(),
+			companyId, dataSourceCommerceChannelIds, false);
 
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
@@ -272,8 +272,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 				dataSourceCommerceChannelIds, commerceChannelId));
 
 		_updateTypeSetting(
-			analyticsChannelId, _commerceChannelClassNameId.get(), companyId,
-			removeCommerceChannelIds, true);
+			analyticsChannelId, _commerceChannelClassNameIdSupplier.get(),
+			companyId, removeCommerceChannelIds, true);
 
 		return ArrayUtil.filter(
 			commerceChannelIds.toArray(new String[0]),
@@ -333,7 +333,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		throws Exception {
 
 		_updateTypeSetting(
-			analyticsChannelId, _groupClassNameId.get(), companyId,
+			analyticsChannelId, _groupClassNameIdSupplier.get(), companyId,
 			dataSourceSiteIds, false);
 
 		AnalyticsConfiguration analyticsConfiguration =
@@ -351,7 +351,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			siteId -> !ArrayUtil.contains(dataSourceSiteIds, siteId));
 
 		_updateTypeSetting(
-			analyticsChannelId, _groupClassNameId.get(), companyId,
+			analyticsChannelId, _groupClassNameIdSupplier.get(), companyId,
 			removeSiteIds, true);
 
 		return ArrayUtil.filter(
@@ -362,12 +362,13 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_commerceChannelClassNameId =
+		_commerceChannelClassNameIdSupplier =
 			_classNameLocalService.getClassNameIdSupplier(
 				_CLASS_NAME_COMMERCE_CHANNEL);
 
-		_groupClassNameId = _classNameLocalService.getClassNameIdSupplier(
-			Group.class.getName());
+		_groupClassNameIdSupplier =
+			_classNameLocalService.getClassNameIdSupplier(
+				Group.class.getName());
 	}
 
 	private String _getConfigurationPid() {
@@ -494,7 +495,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private Supplier<Long> _commerceChannelClassNameId;
+	private Supplier<Long> _commerceChannelClassNameIdSupplier;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
@@ -502,7 +503,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private Supplier<Long> _groupClassNameId;
+	private Supplier<Long> _groupClassNameIdSupplier;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

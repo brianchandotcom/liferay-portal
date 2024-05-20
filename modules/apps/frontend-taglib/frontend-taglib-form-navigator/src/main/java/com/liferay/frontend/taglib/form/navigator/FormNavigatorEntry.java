@@ -80,6 +80,10 @@ public interface FormNavigatorEntry<T> {
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
+	public default boolean isDeprecated() {
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the form navigator entry should be
 	 * displayed.

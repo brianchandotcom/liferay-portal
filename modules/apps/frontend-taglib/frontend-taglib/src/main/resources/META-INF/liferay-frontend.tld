@@ -447,6 +447,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>deprecated</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

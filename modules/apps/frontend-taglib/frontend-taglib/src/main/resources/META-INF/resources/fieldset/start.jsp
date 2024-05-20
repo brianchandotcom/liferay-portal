@@ -25,11 +25,19 @@ else if (collapsible) {
 			<liferay-util:buffer
 				var="header"
 			>
-				<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+				<div class="d-flex">
+					<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
+					<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+						<liferay-ui:icon-help message="<%= helpMessage %>" />
+					</c:if>
+
+					<c:if test="<%= deprecated %>">
+						<liferay-frontend:feature-indicator
+							type="deprecated"
+						/>
+					</c:if>
+				</div>
 			</liferay-util:buffer>
 
 			<c:choose>

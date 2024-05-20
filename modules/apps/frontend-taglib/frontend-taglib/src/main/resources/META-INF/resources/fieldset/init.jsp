@@ -15,6 +15,7 @@ boolean collapsed = GetterUtil.getBoolean(String.valueOf(request.getAttribute("l
 boolean collapsible = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:fieldset:collapsible")));
 boolean column = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:fieldset:column")));
 String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:fieldset:cssClass"));
+boolean deprecated = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:fieldset:deprecated")));
 boolean disabled = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:fieldset:disabled")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:fieldset:dynamicAttributes");
 String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:fieldset:helpMessage"));

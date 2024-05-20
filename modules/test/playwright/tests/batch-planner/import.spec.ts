@@ -1279,7 +1279,7 @@ test('can see correct custom object name in dropdown', async ({
 		await dataMigrationCenterPage.page
 			.getByLabel('Entity Type')
 			.textContent()
-	).toContain('Stock (v1_0 - Liferay Object REST)');
+	).toContain('Stock (v1.0 - Liferay Object REST)');
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });

@@ -14,8 +14,6 @@ import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {SegmentEditorPage} from '../segments-web/SegmentEditorPage';
 
-type FragmentSet = 'Layout Elements';
-
 export class PageEditorPage {
 	readonly page: Page;
 
@@ -47,7 +45,7 @@ export class PageEditorPage {
 		);
 	}
 
-	async addFragment(setName: FragmentSet, name: string) {
+	async addFragment(setName: string, name: string) {
 		await this.goToSidebarTab('Fragments and Widgets');
 
 		const header = this.page.getByRole('menuitem', {
@@ -60,7 +58,7 @@ export class PageEditorPage {
 		);
 
 		if (!isOpen) {
-			await this.experienceSelector.click();
+			await header.click();
 		}
 
 		await this.page.getByLabel(`Add ${name}`).focus();

@@ -15,12 +15,6 @@ import com.liferay.segments.model.SegmentsEntry;
 public class SegmentsEntryNameComparator
 	extends OrderByComparator<SegmentsEntry> {
 
-	public static final String ORDER_BY_ASC = "SegmentsEntry.name ASC";
-
-	public static final String ORDER_BY_DESC = "SegmentsEntry.name DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"name"};
-
 	public static SegmentsEntryNameComparator get(boolean ascending) {
 		if (ascending) {
 			return _ASCENDING;
@@ -48,15 +42,15 @@ public class SegmentsEntryNameComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
@@ -73,6 +67,12 @@ public class SegmentsEntryNameComparator
 
 	private static final SegmentsEntryNameComparator _DESCENDING =
 		new SegmentsEntryNameComparator(false);
+
+	private static final String _ORDER_BY_ASC = "SegmentsEntry.name ASC";
+
+	private static final String _ORDER_BY_DESC = "SegmentsEntry.name DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"name"};
 
 	private final boolean _ascending;
 

@@ -23,8 +23,12 @@ public class MembershipRequestCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public MembershipRequestCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public static MembershipRequestCreateDateComparator get(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -61,6 +65,16 @@ public class MembershipRequestCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private MembershipRequestCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final MembershipRequestCreateDateComparator _ASCENDING =
+		new MembershipRequestCreateDateComparator(true);
+
+	private static final MembershipRequestCreateDateComparator _DESCENDING =
+		new MembershipRequestCreateDateComparator(false);
 
 	private final boolean _ascending;
 

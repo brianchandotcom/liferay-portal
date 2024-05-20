@@ -26,8 +26,8 @@ definition {
 				fieldValue = "Stock Entry");
 		}
 
-		task ("When in Import/Export: Export File exporting Entity Type C_Stock (v1_0 - Liferay Object REST) in Export File Format: JSONT") {
-			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "C_Stock (v1_0 - Liferay Object REST)");
+		task ("When in Import/Export: Export File exporting Entity Type Stock (v1.0 - Liferay Object REST) in Export File Format: JSONT") {
+			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "Stock (v1.0 - Liferay Object REST)");
 		}
 	}
 

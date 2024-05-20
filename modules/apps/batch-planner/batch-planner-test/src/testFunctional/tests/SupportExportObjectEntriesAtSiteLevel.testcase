@@ -103,8 +103,8 @@ definition {
 	test CanDownloadFileWithAllFieldsSelected {
 		property portal.acceptance = "true";
 
-		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
 
 		task ("When exporting file in JSON format with all fields selected") {
@@ -150,11 +150,11 @@ definition {
 	test CanExportSpecificFieldsWithJSONTConfigurationNode {
 		property portal.acceptance = "true";
 
-		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type and current site as Scope in Data Migration Center --> Export File") {
+		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type and current site as Scope in Data Migration Center --> Export File") {
 			var scope = TestCase.getSiteName();
 
 			ImportExport.configureExport(
-				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				entityType = "Student (v1.0 - Liferay Object REST)",
 				exportFileFormat = "JSONT",
 				scope = ${scope});
 		}
@@ -191,8 +191,8 @@ definition {
 	test CannotSeeScopeSelectorForObjectDefinitionsScopedByCompany {
 		property portal.acceptance = "true";
 
-		task ("When 'C_University (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_University (v1_0 - Liferay Object REST)");
+		task ("When 'University (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "University (v1.0 - Liferay Object REST)");
 		}
 
 		task ("Then 'Scope' selector is not present") {
@@ -208,8 +208,8 @@ definition {
 			HeadlessSite.addSite(siteName = "test");
 		}
 
-		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type and default site as scope in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type and default site as scope in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
 
 		task ("When click the scope selector") {
@@ -227,8 +227,8 @@ definition {
 	test CanSelectAllExistingFields {
 		property portal.acceptance = "true";
 
-		task ("When selecting 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		task ("When selecting 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
 
 		task ("Then the list of fields to select contains all the fields available with GET request") {
@@ -242,8 +242,8 @@ definition {
 	test CanSelectGlobalSiteAsScope {
 		property portal.acceptance = "true";
 
-		task ("When 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		task ("When 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
 
 		task ("Then Global site available as scope") {

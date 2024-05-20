@@ -54,7 +54,7 @@ definition {
 
 		task ("When selecting custom object entity type with CSV format") {
 			ImportExport.configureExport(
-				entityType = "C_Test (v1_0 - Liferay Object REST)",
+				entityType = "Test (v1.0 - Liferay Object REST)",
 				exportFileFormat = "CSV");
 		}
 
@@ -77,7 +77,7 @@ definition {
 
 		task ("And Given selecting custom object entity type with CSV format") {
 			ImportExport.configureExport(
-				entityType = "C_Test (v1_0 - Liferay Object REST)",
+				entityType = "Test (v1.0 - Liferay Object REST)",
 				exportFileFormat = "CSV");
 		}
 
@@ -102,7 +102,7 @@ definition {
 
 		task ("When selecting custom object entity type with CSV format") {
 			ImportExport.configureExport(
-				entityType = "C_Test (v1_0 - Liferay Object REST)",
+				entityType = "Test (v1.0 - Liferay Object REST)",
 				exportFileFormat = "CSV");
 		}
 

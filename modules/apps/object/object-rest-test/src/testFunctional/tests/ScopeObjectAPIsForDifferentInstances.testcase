@@ -220,8 +220,8 @@ definition {
 			ImportExport.gotoExport();
 		}
 
-		task ("Then C_Student is not in the available Entity Type list") {
-			AssertTextNotPresent(value1 = "C_Student (v1_0 - Liferay Object REST)");
+		task ("Then Student is not in the available Entity Type list") {
+			AssertTextNotPresent(value1 = "Student (v1.0 - Liferay Object REST)");
 		}
 	}
 

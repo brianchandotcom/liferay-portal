@@ -55,31 +55,11 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	@Test
 	public void testExportDefaultDatabase() throws Exception {
 		_testExport(
-			_generateCompanies(),
-			Arrays.asList(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
-			Collections.singletonList(RandomTestUtil.randomLong()), true,
-			_generateReleases());
+			Collections.singletonList(RandomTestUtil.randomLong()), true);
 	}
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-	private List<Company> _generateCompanies() {
-		return Arrays.asList(
-			new Company(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString()),
-			new Company(
-				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
-	}
-
-	private List<Release> _generateReleases() {
-		return Arrays.asList(
-			new Release(Version.parseVersion("14.2.4"), "module1", 0, true),
-			new Release(Version.parseVersion("2.0.1"), "module2", 1, false));
-	}
 
 	private void _mockDatabase(
 			List<Company> companies, List<Long> companyIds,
@@ -114,11 +94,21 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		return sb.toString();
 	}
 
-	private void _testExport(
-			List<Company> companies, List<Long> companyIds,
-			List<Long> companyInfoIds, boolean defaultPartition,
-			List<Release> releases)
+	private void _testExport(List<Long> companyIds, boolean defaultPartition)
 		throws Exception {
+
+		List<Company> companies = Arrays.asList(
+			new Company(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()),
+			new Company(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
+		List<Long> companyInfoIds = Arrays.asList(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
+		List<Release> releases = Arrays.asList(
+			new Release(Version.parseVersion("14.2.4"), "module1", 0, true),
+			new Release(Version.parseVersion("2.0.1"), "module2", 1, false));
 
 		_mockDatabase(
 			companies, companyIds, companyInfoIds, defaultPartition, releases,

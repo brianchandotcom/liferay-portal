@@ -31,7 +31,7 @@ definition {
 		task ("When I select OrderItem entity type to import") {
 			ImportExport.gotoImport();
 
-			ImportExport.selectEntity(entityType = "OrderItem (v1_0 - Liferay Headless Commerce Admin Order)");
+			ImportExport.selectEntity(entityType = "OrderItem (v1.0 - Liferay Headless Commerce Admin Order)");
 		}
 
 		task ("Then the available Import Strategy is Add or Update Records") {
@@ -55,13 +55,13 @@ definition {
 
 		task ("Then the available Import Strategy is Only Add New Records for BlogPostingImage,DispatchTrigger") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "BlogPostingImage (v1_0 - Liferay Headless Delivery),DispatchTrigger (v1_0 - Liferay Dispatch REST)",
+				entityTypes = "BlogPostingImage (v1.0 - Liferay Headless Delivery),DispatchTrigger (v1.0 - Liferay Dispatch REST)",
 				importStrategy = "Only Add New Records");
 		}
 
 		task ("And Then the available Update Strategy is empty for BlogPostingImage,DispatchTrigger") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "BlogPostingImage (v1_0 - Liferay Headless Delivery),DispatchTrigger (v1_0 - Liferay Dispatch REST)",
+				entityTypes = "BlogPostingImage (v1.0 - Liferay Headless Delivery),DispatchTrigger (v1.0 - Liferay Dispatch REST)",
 				updateStrategy = "");
 		}
 	}
@@ -74,13 +74,13 @@ definition {
 
 		task ("Then the available Import Strategy is Only Add New Records for Comment,keyword, WorkflowDefinition") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "Comment (v1_0 - Liferay Headless Delivery),Keyword (v1_0 - Liferay Headless Admin Taxonomy),WorkflowDefinition (v1_0 - Liferay Headless Admin Workflow)",
+				entityTypes = "Comment (v1.0 - Liferay Headless Delivery),Keyword (v1.0 - Liferay Headless Admin Taxonomy),WorkflowDefinition (v1.0 - Liferay Headless Admin Workflow)",
 				importStrategy = "Only Add New Records");
 		}
 
 		task ("And Then the available Update Strategy is Overwrite Records for Comment,keyword, WorkflowDefinition") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "Comment (v1_0 - Liferay Headless Delivery),Keyword (v1_0 - Liferay Headless Admin Taxonomy),WorkflowDefinition (v1_0 - Liferay Headless Admin Workflow)",
+				entityTypes = "Comment (v1.0 - Liferay Headless Delivery),Keyword (v1.0 - Liferay Headless Admin Taxonomy),WorkflowDefinition (v1.0 - Liferay Headless Admin Workflow)",
 				updateStrategy = "Overwrite Records");
 		}
 	}
@@ -93,13 +93,13 @@ definition {
 
 		task ("Then the available Import Strategy is Only Add New Records for ObjectAction,DocumentFolder") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "ObjectAction (v1_0 - Liferay Object Admin REST),DocumentFolder (v1_0 - Liferay Headless Delivery)",
+				entityTypes = "ObjectAction (v1.0 - Liferay Object Admin REST),DocumentFolder (v1.0 - Liferay Headless Delivery)",
 				importStrategy = "Only Add New Records");
 		}
 
 		task ("And Then the available Update Strategy are Update Changed Record Fields/Overwrite Records for ObjectAction,DocumentFolder") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "ObjectAction (v1_0 - Liferay Object Admin REST),DocumentFolder (v1_0 - Liferay Headless Delivery)",
+				entityTypes = "ObjectAction (v1.0 - Liferay Object Admin REST),DocumentFolder (v1.0 - Liferay Headless Delivery)",
 				updateStrategy = "Update Changed Record Fields Overwrite Records");
 		}
 	}
@@ -112,13 +112,13 @@ definition {
 
 		task ("Then the available Import Strategy is Only Add New Records for CommerceAccount,Catalog") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "Account (v1_0 - Liferay Headless Commerce Admin Account),Catalog (v1_0 - Liferay Headless Commerce Admin Catalog)",
+				entityTypes = "Account (v1.0 - Liferay Headless Commerce Admin Account),Catalog (v1.0 - Liferay Headless Commerce Admin Catalog)",
 				importStrategy = "Only Add New Records");
 		}
 
 		task ("And Then the available Update Strategy is empty for CommerceAccount,Catalog") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "Account (v1_0 - Liferay Headless Commerce Admin Account),Catalog (v1_0 - Liferay Headless Commerce Admin Catalog)",
+				entityTypes = "Account (v1.0 - Liferay Headless Commerce Admin Account),Catalog (v1.0 - Liferay Headless Commerce Admin Catalog)",
 				updateStrategy = "Update Changed Record Fields");
 		}
 	}
@@ -143,13 +143,13 @@ definition {
 
 		task ("Then the available Import Strategy are Add or Update Records/Only Add New Records for Account,blogPosting,StructuredContent,ObjectDefinition,C_Student") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "Account (v1_0 - Liferay Headless Admin User), BlogPosting (v1_0 - Liferay Headless Delivery), StructuredContent (v1_0 - Liferay Headless Delivery),ObjectDefinition (v1_0 - Liferay Object Admin REST), C_Student (v1_0 - Liferay Object REST)",
+				entityTypes = "Account (v1.0 - Liferay Headless Admin User), BlogPosting (v1.0 - Liferay Headless Delivery), StructuredContent (v1.0 - Liferay Headless Delivery),ObjectDefinition (v1.0 - Liferay Object Admin REST), Student (v1.0 - Liferay Object REST)",
 				importStrategy = "Only Add New Records Add or Update Records");
 		}
 
 		task ("And Then the available Update Strategy are Update Changed Record Fields/Overwrite Records for Account,blogPosting,StructuredContent,ObjectDefinition,C_Student") {
 			ImportExport.assertStrategiesForEntityTypes(
-				entityTypes = "Account (v1_0 - Liferay Headless Admin User), BlogPosting (v1_0 - Liferay Headless Delivery), StructuredContent (v1_0 - Liferay Headless Delivery),ObjectDefinition (v1_0 - Liferay Object Admin REST), C_Student (v1_0 - Liferay Object REST)",
+				entityTypes = "Account (v1.0 - Liferay Headless Admin User), BlogPosting (v1.0 - Liferay Headless Delivery), StructuredContent (v1.0 - Liferay Headless Delivery),ObjectDefinition (v1.0 - Liferay Object Admin REST), Student (v1.0 - Liferay Object REST)",
 				updateStrategy = "Update Changed Record Fields Overwrite Records");
 		}
 	}
@@ -159,7 +159,7 @@ definition {
 		task ("When I select Shipment as the entity type to import") {
 			ImportExport.gotoImport();
 
-			ImportExport.selectEntity(entityType = "Shipment (v1_0 - Liferay Headless Commerce Admin Shipment)");
+			ImportExport.selectEntity(entityType = "Shipment (v1.0 - Liferay Headless Commerce Admin Shipment)");
 		}
 
 		task ("Then the available Import Strategy are Add or Update Reconds/Only Add New Records") {
@@ -183,7 +183,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "BlogPosting (v1_0 - Liferay Headless Delivery)",
+				entityType = "BlogPosting (v1.0 - Liferay Headless Delivery)",
 				exportFileFormat = "JSONL");
 		}
 
@@ -202,7 +202,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				exportFileFormat = "JSONT");
 		}
 
@@ -221,7 +221,7 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				entityType = "Account (v1.0 - Liferay Headless Admin User)",
 				exportFileFormat = "JSONT");
 		}
 

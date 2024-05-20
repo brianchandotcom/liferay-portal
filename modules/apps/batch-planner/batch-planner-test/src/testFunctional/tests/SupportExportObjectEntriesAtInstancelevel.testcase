@@ -82,13 +82,13 @@ definition {
 	test ActionsNodeAreAvailableInDonwloadedFile {
 		property portal.acceptance = "true";
 
-		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
 
 		task ("When exporting file in JSONL format with all fields selected") {
 			ImportExport.configureExport(
-				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				entityType = "Student (v1.0 - Liferay Object REST)",
 				exportFields = "Attribute Code",
 				exportFileFormat = "JSONL");
 
@@ -113,8 +113,8 @@ definition {
 		property custom.properties = "feature.flag.LPS-186620=true";
 		property portal.acceptance = "true";
 
-		task ("When 'Account (v1_0 - Liferay Headless Admin User)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
+		task ("When 'Account (v1.0 - Liferay Headless Admin User)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Account (v1.0 - Liferay Headless Admin User)");
 		}
 
 		task ("Then the list of fields to select contains all the fields available with GET request except the relationship nodes") {
@@ -132,9 +132,9 @@ definition {
 	test CanDownloadFiledWithAllFieldsSelected {
 		property portal.acceptance = "true";
 
-		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
 			ImportExport.configureExport(
-				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				entityType = "Student (v1.0 - Liferay Object REST)",
 				exportFileFormat = "JSON");
 		}
 
@@ -177,13 +177,13 @@ definition {
 	test CanExportSpecificFieldsWithJSONTConfigurationNode {
 		property portal.acceptance = "true";
 
-		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		task ("And Given 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
 
 		task ("When exporting file in JSONT format with field 'name' selected") {
 			ImportExport.configureExport(
-				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				entityType = "Student (v1.0 - Liferay Object REST)",
 				exportFields = "name",
 				exportFileFormat = "JSONT");
 
@@ -217,13 +217,13 @@ definition {
 		property custom.properties = "feature.flag.LPS-186620=true";
 		property portal.acceptance = "true";
 
-		task ("And Given 'Account (v1_0 - Liferay Headless Admin User)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
+		task ("And Given 'Account (v1.0 - Liferay Headless Admin User)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Account (v1.0 - Liferay Headless Admin User)");
 		}
 
 		task ("When exporting file in JSONT format with all fields selected") {
 			ImportExport.configureExport(
-				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				entityType = "Account (v1.0 - Liferay Headless Admin User)",
 				exportFields = "Attribute Code",
 				exportFileFormat = "JSONT");
 
@@ -265,8 +265,8 @@ definition {
 	test CanSelectFromAllExistingFields {
 		property portal.acceptance = "true";
 
-		task ("When selecting 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
-			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		task ("When selecting 'Student (v1.0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Student (v1.0 - Liferay Object REST)");
 		}
 
 		task ("Then the list of fields to select contains all the fields available with GET request except the relationship nodes") {

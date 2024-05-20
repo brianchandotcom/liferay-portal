@@ -40,7 +40,7 @@ definition {
 
 		task ("When I import the JSON file which contains the student object definition extended by a new field and a new object definition") {
 			ImportExport.importFile(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				fileName = "multiple_objectDefinitions_import_create_update.json");
 		}
 
@@ -75,7 +75,7 @@ definition {
 
 		task ("When I import with select Only Add New Records in Import Strategy and uncheck Stop the Import on Error") {
 			ImportExport.importFile(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				fileName = "multiple_objectDefinitions_import_create_update.json",
 				importStrategy = "Only Add New Records",
 				stopImportOnError = "false");
@@ -92,7 +92,7 @@ definition {
 
 		task ("When I use import/export center to import the object definition with JSONL file") {
 			ImportExport.importFile(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				fileName = "student_objectDefinition_import_create.jsonl");
 		}
 
@@ -115,7 +115,7 @@ definition {
 
 		task ("And Given I export ObjectDefinition to a JSONL format file in Import/Export center") {
 			ImportExport.exportAndUnzipFile(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				exportFields = "externalReferenceCode,label,name,objectFields,pluralLabel,scope,status",
 				exportFileFormat = "JSONL");
 		}
@@ -126,7 +126,7 @@ definition {
 
 		task ("When I import the exported student object with JSONL file") {
 			ImportExport.importFile(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				tempFile = "export.jsonl");
 		}
 
@@ -141,7 +141,7 @@ definition {
 
 		task ("When importing the object definition with fields externalReferenceCode,name,label,pluralLabel,scope,status and custom text field in the JSON file") {
 			ImportExport.importFile(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				fileName = "student_additional_objectDefinition_import_create.json",
 				noImport = "true");
 		}
@@ -167,7 +167,7 @@ definition {
 
 		task ("When I import a JSONL file with an additional custom field and unchecking Stop the Import on Error and choosing Only Add New Records as Import Strategy") {
 			ImportExport.importFile(
-				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
+				entityType = "ObjectDefinition (v1.0 - Liferay Object Admin REST)",
 				fileName = "student_additional_objectDefinition_import_create.jsonl",
 				importStrategy = "Only Add New Records",
 				stopImportOnError = "false");

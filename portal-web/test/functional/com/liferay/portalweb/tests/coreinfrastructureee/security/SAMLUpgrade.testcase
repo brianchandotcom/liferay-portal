@@ -45,7 +45,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				entityType = "SamlProvider (v1.0 - Liferay SAML Admin REST)",
 				fileName = "identity-provider-configuration.json",
 				importStrategy = "Only Add New Records");
 
@@ -98,7 +98,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				entityType = "SamlProvider (v1.0 - Liferay SAML Admin REST)",
 				fileName = "identity-provider-configuration.json",
 				importStrategy = "Only Add New Records");
 
@@ -151,7 +151,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				entityType = "SamlProvider (v1.0 - Liferay SAML Admin REST)",
 				fileName = "identity-provider-configuration.json",
 				importStrategy = "Only Add New Records");
 
@@ -205,7 +205,7 @@ definition {
 			ImportExport.gotoImport();
 
 			ImportExport.configureImport(
-				entityType = "SamlProvider (v1_0 - Liferay SAML Admin REST)",
+				entityType = "SamlProvider (v1.0 - Liferay SAML Admin REST)",
 				fileName = "identity-provider-configuration.json",
 				importStrategy = "Only Add New Records");
 

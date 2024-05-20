@@ -45,7 +45,7 @@ definition {
 			var siteName = TestCase.getSiteName();
 
 			ImportExport.configureImport(
-				entityType = "BlogPosting (v1_0 - Liferay Headless Delivery)",
+				entityType = "BlogPosting (v1.0 - Liferay Headless Delivery)",
 				fieldMappings = "articleBody:articleBody,headline:headline,externalReferenceCode:externalReferenceCode",
 				fileName = "json_blogPosting_import.json",
 				importStrategy = "Only Add New Records",
@@ -92,7 +92,7 @@ definition {
 
 		task ("And Given Add or Update records with Update Changed Record Fields selectd include uploading valid JSON file with 3 accounts including existing one with only required fields") {
 			ImportExport.configureImport(
-				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				entityType = "Account (v1.0 - Liferay Headless Admin User)",
 				fieldMappings = "name:name,type:type,externalReferenceCode:externalReferenceCode",
 				fileName = "json_account_import.json",
 				importStrategy = "Add or Update Records",
@@ -141,7 +141,7 @@ definition {
 
 		task ("And Given Add or Update records and Overwrite Records by default selected with uploading valid JSON file with 2 accounts including existing one with only required fields") {
 			ImportExport.configureImport(
-				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				entityType = "Account (v1.0 - Liferay Headless Admin User)",
 				fieldMappings = "name:name,externalReferenceCode:externalReferenceCode",
 				fileName = "json_account_import_name_only.json",
 				importStrategy = "Add or Update Records",

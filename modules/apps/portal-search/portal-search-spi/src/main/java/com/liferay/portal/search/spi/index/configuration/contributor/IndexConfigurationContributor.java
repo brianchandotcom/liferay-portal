@@ -13,8 +13,7 @@ import com.liferay.portal.search.spi.index.configuration.contributor.helper.Type
  */
 public interface IndexConfigurationContributor {
 
-	public void contributeMappings(
-		String indexName, TypeMappingsHelper typeMappingsHelper);
+	public void contributeMappings(TypeMappingsHelper typeMappingsHelper);
 
 	public void contributeSettings(IndexSettingsHelper indexSettingsHelper);
 

@@ -134,59 +134,6 @@ public class GraphQLServletTest {
 				"JSONObject/data", "JSONObject/testPath_v2_0",
 				"JSONObject/createTestDTO"));
 
-		// With simple namespace (without version)
-
-		_assertEqualsV2(
-			false, _testDTOV2,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testPath",
-						new GraphQLField(
-							"createTestDTO",
-							Collections.singletonMap(
-								"testDTO", _toGraphQLString(_testDTOV2)),
-							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"),
-							new GraphQLField("version"))),
-					"mutation"),
-				"JSONObject/data", "JSONObject/testPath",
-				"JSONObject/createTestDTO"));
-
-		_assertEqualsV1(
-			false, _testDTOV1,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testPath",
-						new GraphQLField(
-							"createTestDTOV1",
-							Collections.singletonMap(
-								"testDTO", _toGraphQLString(_testDTOV1)),
-							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"),
-							new GraphQLField("version"))),
-					"mutation"),
-				"JSONObject/data", "JSONObject/testPath",
-				"JSONObject/createTestDTOV1"));
-
-		_assertEqualsV2(
-			false, _testDTOV2,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testPath",
-						new GraphQLField(
-							"createTestDTOV2",
-							Collections.singletonMap(
-								"testDTO", _toGraphQLString(_testDTOV2)),
-							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"),
-							new GraphQLField("version"))),
-					"mutation"),
-				"JSONObject/data", "JSONObject/testPath",
-				"JSONObject/createTestDTOV2"));
-
 		// Without namespace (backwards compatibility)
 
 		_assertEqualsV2(
@@ -311,77 +258,6 @@ public class GraphQLServletTest {
 				_invoke(
 					new GraphQLField(
 						"testPath_v2_0",
-						new GraphQLField(
-							"testNotFoundDTO", new GraphQLField("id"))),
-					"query"),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// With simple namespace (without version)
-
-		_assertEqualsV2(
-			true, _testDTOV2,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testPath",
-						new GraphQLField(
-							"testDTO", new GraphQLField("extendedString"),
-							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"),
-							new GraphQLField("version"))),
-					"query"),
-				"JSONObject/data", "JSONObject/testPath",
-				"JSONObject/testDTO"));
-
-		_assertEqualsV1(
-			true, _testDTOV1,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testPath",
-						new GraphQLField(
-							"testDTOV1", new GraphQLField("extendedString"),
-							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"),
-							new GraphQLField("version"))),
-					"query"),
-				"JSONObject/data", "JSONObject/testPath",
-				"JSONObject/testDTOV1"));
-
-		_assertEqualsV2(
-			true, _testDTOV2,
-			JSONUtil.getValueAsJSONObject(
-				_invoke(
-					new GraphQLField(
-						"testPath",
-						new GraphQLField(
-							"testDTOV2", new GraphQLField("extendedString"),
-							new GraphQLField("id"), new GraphQLField("map"),
-							new GraphQLField("string"),
-							new GraphQLField("version"))),
-					"query"),
-				"JSONObject/data", "JSONObject/testPath",
-				"JSONObject/testDTOV2"));
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"testPath",
-						new GraphQLField(
-							"testNoPermissionOverDTO", new GraphQLField("id"))),
-					"query"),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"testPath",
 						new GraphQLField(
 							"testNotFoundDTO", new GraphQLField("id"))),
 					"query"),

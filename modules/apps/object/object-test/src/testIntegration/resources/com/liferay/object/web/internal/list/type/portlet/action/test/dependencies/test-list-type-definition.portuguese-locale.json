@@ -1,0 +1,24 @@
+{
+	"listTypeEntries": [
+		{
+			"key": "br",
+			"name": "Brasil",
+			"name_i18n": {
+				"pt-BR": "Brasil"
+			}
+		},
+		{
+			"key": "al",
+			"name": "Argentina",
+			"name_i18n": {
+				"pt-BR": "Argentina"
+			},
+			"type": ""
+		}
+	],
+	"name": "TestListTypeDefinitionPortuguese",
+	"name_i18n": {
+		"pt-BR": "Países"
+	},
+	"system": false
+}

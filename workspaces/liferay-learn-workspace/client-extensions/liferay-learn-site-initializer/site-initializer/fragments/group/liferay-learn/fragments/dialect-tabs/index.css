@@ -23,17 +23,17 @@
 }
 
 .page-tabs {
+	.d-md-none {
+		display: none;
+	}
+
 	.nav-segment,
 	.navbar-collapse {
 		display: flex;
 		justify-content: center;
 	}
 
-	.d-md-none {
-		display: none;
-	}
-
-	.navbar-expand-md.navbar-collapse-absolute .navbar-collapse {
+	.navbar-collapse-absolute.navbar-expand-md .navbar-collapse {
 		position: relative;
 		z-index: 1;
 	}

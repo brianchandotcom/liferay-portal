@@ -150,7 +150,7 @@ const ListView: React.FC<ListViewProps> = ({
 			defaultFilter: variables?.filter,
 			filterSchema,
 		}),
-		[filters.filter, variables?.filter, filterSchema]
+		[filters, variables?.filter, filterSchema]
 	);
 
 	const buildSort = (sort: Sort | Sort[]) => {

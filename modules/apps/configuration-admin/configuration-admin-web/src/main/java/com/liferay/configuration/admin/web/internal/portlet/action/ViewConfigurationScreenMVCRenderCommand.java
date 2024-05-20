@@ -13,6 +13,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenC
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -56,6 +57,14 @@ public class ViewConfigurationScreenMVCRenderCommand
 		ConfigurationScreen configurationScreen =
 			_configurationEntryRetriever.getConfigurationScreen(
 				configurationScreenKey);
+
+		if (!configurationScreen.isVisible()) {
+			throw new PortletException(
+				StringBundler.concat(
+					"The ", configurationScreen.getScope(), " configuration \"",
+					configurationScreen.getName(themeDisplay.getLocale()),
+					"\" is not accessible"));
+		}
 
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 			ConfigurationScopeDisplayContextFactory.create(renderRequest);

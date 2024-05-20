@@ -58,6 +58,32 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			Collections.singletonList(RandomTestUtil.randomLong()), true);
 	}
 
+	@Test
+	public void testExportDefaultDatabaseWithMultipleCompanies()
+		throws Exception {
+
+		_testExport(
+			Arrays.asList(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
+			true);
+	}
+
+	@Test
+	public void testExportNondefaultDatabase() throws Exception {
+		_testExport(
+			Collections.singletonList(RandomTestUtil.randomLong()), false);
+	}
+
+	@Test
+	public void testExportNondefaultDatabaseWithMultipleCompanies()
+		throws Exception {
+
+		_testExport(
+			Arrays.asList(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
+			false);
+	}
+
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 

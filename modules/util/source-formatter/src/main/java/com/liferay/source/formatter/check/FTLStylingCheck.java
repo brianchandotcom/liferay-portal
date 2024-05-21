@@ -147,7 +147,11 @@ public class FTLStylingCheck extends BaseStylingCheck {
 			while (true) {
 				x = content.indexOf("}\n", x + 1);
 
-				if ((x == -1) || ToolsUtil.isInsideQuotes(content, x)) {
+				if (x == -1) {
+					break;
+				}
+
+				if (ToolsUtil.isInsideQuotes(content, x)) {
 					continue;
 				}
 

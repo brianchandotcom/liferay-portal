@@ -87,6 +87,18 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 	}
 
 	@Override
+	public StyleBookEntry deleteStyleBookEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.fetchByERC_G_Head(
+				externalReferenceCode, groupId, true);
+
+		return deleteStyleBookEntry(styleBookEntry);
+	}
+
+	@Override
 	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
 		throws PortalException {
 
@@ -109,6 +121,19 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		return styleBookEntryLocalService.deleteDraft(styleBookEntry);
+	}
+
+	@Override
+	public StyleBookEntry getStyleBookEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
+
+		return styleBookEntryPersistence.findByERC_G_Head(
+			externalReferenceCode, groupId, true);
 	}
 
 	@Override

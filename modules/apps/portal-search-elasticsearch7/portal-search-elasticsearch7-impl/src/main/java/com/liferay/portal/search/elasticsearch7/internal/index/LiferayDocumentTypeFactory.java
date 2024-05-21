@@ -49,24 +49,6 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		_jsonFactory = jsonFactory;
 	}
 
-	@Override
-	public void putTypeMappings(String source) {
-		PutMappingRequest putMappingRequest = new PutMappingRequest(_indexName);
-
-		putMappingRequest.source(
-			_mergeDynamicTemplates(source, _indexName), XContentType.JSON);
-
-		try {
-			ActionResponse actionResponse = _indicesClient.putMapping(
-				putMappingRequest, RequestOptions.DEFAULT);
-
-			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	public void createLiferayDocumentTypeMappings(
 		CreateIndexRequest createIndexRequest, String mappings) {
 
@@ -81,18 +63,6 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 		createIndexRequest.mapping(
 			mappingsJSONObject.toString(), XContentType.JSON);
-	}
-
-	public void putDefaultTypeMappingTemplate() {
-		String name = StringUtil.replace(
-			LiferayTypeMappingsConstants.
-				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME,
-			".json", "-default-template.json");
-
-		String defaultTypeMappingTemplate = ResourceUtil.getResourceAsString(
-			getClass(), name);
-
-		putTypeMappings(defaultTypeMappingTemplate);
 	}
 
 	public void createRequiredDefaultAnalyzers(
@@ -114,6 +84,36 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 		createLiferayDocumentTypeMappings(
 			createIndexRequest, requiredDefaultMappings);
+	}
+
+	public void putDefaultTypeMappingTemplate() {
+		String name = StringUtil.replace(
+			LiferayTypeMappingsConstants.
+				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME,
+			".json", "-default-template.json");
+
+		String defaultTypeMappingTemplate = ResourceUtil.getResourceAsString(
+			getClass(), name);
+
+		putTypeMappings(defaultTypeMappingTemplate);
+	}
+
+	@Override
+	public void putTypeMappings(String source) {
+		PutMappingRequest putMappingRequest = new PutMappingRequest(_indexName);
+
+		putMappingRequest.source(
+			_mergeDynamicTemplates(source, _indexName), XContentType.JSON);
+
+		try {
+			ActionResponse actionResponse = _indicesClient.putMapping(
+				putMappingRequest, RequestOptions.DEFAULT);
+
+			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected JSONObject createJSONObject(String mappings) {

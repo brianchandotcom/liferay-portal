@@ -400,7 +400,6 @@ public class IndexHelperImpl implements IndexHelper {
 	}
 
 	private void _executeMappingsContributors(MappingsFactory mappingsFactory) {
-
 		for (IndexConfigurationContributor indexConfigurationContributor :
 				_indexConfigurationContributorServiceTrackerList) {
 

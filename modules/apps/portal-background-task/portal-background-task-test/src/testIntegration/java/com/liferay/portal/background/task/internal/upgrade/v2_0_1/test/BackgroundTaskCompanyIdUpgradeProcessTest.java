@@ -51,7 +51,7 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 		backgroundTask.setTaskContextMap(
 			HashMapBuilder.<String, Serializable>put(
-				_KEY_THREAD_LOCAL_VALUES, initializeThreadLocalValues()
+				_KEY_THREAD_LOCAL_VALUES, _initializeThreadLocalValues()
 			).build());
 
 		_backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
@@ -102,7 +102,7 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 		Assert.assertNull(threadLocalValues.get("companyId"));
 	}
 
-	protected HashMap<String, Serializable> initializeThreadLocalValues() {
+	private HashMap<String, Serializable> _initializeThreadLocalValues() {
 		return HashMapBuilder.<String, Serializable>put(
 			"clusterInvoke", _CLUSTER_INVOKE_ENABLED
 		).put(

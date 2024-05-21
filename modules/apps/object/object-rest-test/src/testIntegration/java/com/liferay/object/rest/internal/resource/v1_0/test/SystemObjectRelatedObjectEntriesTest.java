@@ -314,6 +314,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testGetOneToManySystemObjectRelatedObjectEntries()
 		throws Exception {
 
+		// Default nested fields depth
+
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition,
 			_userAccountJSONObject.getLong("id"), _objectEntry.getPrimaryKey(),
@@ -327,6 +329,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 			},
 			Type.ONE_TO_MANY);
 
+		// Nested fields depth 1
+
 		_testGetSystemObjectRelatedObjectEntries(
 			1, objectRelationship.getName(),
 			new String[][] {
@@ -334,6 +338,19 @@ public class SystemObjectRelatedObjectEntriesTest {
 				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
+
+		// Nested fields depth 2
+
+		_testGetSystemObjectRelatedObjectEntries(
+			2, objectRelationship.getName(),
+			new String[][] {
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
+				{_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE}
+			},
+			Type.ONE_TO_MANY);
+
+		// Nested fields depth 2 with updated title object field ID
 
 		ObjectField titleObjectField = ObjectFieldTestUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),

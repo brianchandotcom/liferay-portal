@@ -83,7 +83,7 @@ export default function AttributeFields({
 						id={nameId}
 						onChange={(event) => {
 							const value = event.target.value
-								.split(' ')
+								.split(/\s/)
 								.join('');
 
 							if (value.toLowerCase() === 'src') {

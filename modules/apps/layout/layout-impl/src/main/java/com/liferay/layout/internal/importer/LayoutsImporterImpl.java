@@ -488,7 +488,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (layoutPageTemplateCollection == null) {
 				return _layoutPageTemplateCollectionService.
 					addLayoutPageTemplateCollection(
-						pageTemplateCollection.getUuid(), groupId,
+						null, groupId,
 						LayoutPageTemplateConstants.
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						pageTemplateCollection.getName(),

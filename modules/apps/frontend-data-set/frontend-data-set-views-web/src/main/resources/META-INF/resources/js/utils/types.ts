@@ -73,12 +73,6 @@ export interface IFieldTreeItem extends IField {
 	selected?: boolean;
 }
 
-export type TSaveState = {
-	bodyData: {};
-	isValid: boolean;
-	saveUrl: string;
-};
-
 export interface IFilter extends IOrderable {
 	fieldName: string;
 	filterType?: EFilterType;

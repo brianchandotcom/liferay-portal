@@ -16,16 +16,17 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import CheckboxMultiSelect from '../../../../components/CheckboxMultiSelect';
+import FilterModalConfiguration from '../../../../components/FilterModalConfiguration';
+import FilterModalFooter from '../../../../components/FilterModalFooter';
 import RequiredMark from '../../../../components/RequiredMark';
-import {API_URL} from '../../../../utils/constants';
 import getAllPicklists from '../../../../utils/getAllPicklists';
 import {
 	EFilterType,
 	ESelectionFilterSourceType,
+	IField,
 	IFilter,
 	IPickList,
 	ISelectionFilter,
-	TSaveState,
 } from '../../../../utils/types';
 import ObjectPicklist from './source_type/ObjectPicklist';
 
@@ -34,24 +35,47 @@ function Header() {
 }
 
 interface IBodyProps {
+	closeModal: Function;
+	fieldNames?: string[];
+	fields: IField[];
 	filter?: IFilter;
+	handleSave: Function;
 	namespace: string;
-	onChange: (newState: TSaveState) => void;
 }
 
-function Body({filter, namespace, onChange}: IBodyProps) {
+function Body({
+	closeModal,
+	fieldNames,
+	fields,
+	filter,
+	handleSave,
+	namespace,
+}: IBodyProps) {
 	const [preselectedValueInput, setPreselectedValueInput] = useState('');
-
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
+		filter ? false : true
+	);
 	const [includeMode, setIncludeMode] = useState<string>('include');
+	const inUseFields: (string | undefined)[] = fields.map((item) =>
+		fieldNames?.includes(item.name) ? item.name : undefined
+	);
 	const [multiple, setMultiple] = useState<boolean>(
 		(filter as ISelectionFilter)?.multiple ?? true
 	);
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
 	const [preselectedValues, setPreselectedValues] = useState<any[]>([]);
+	const [selectedField, setSelectedField] = useState<IField | undefined>(
+		fields.find((item) => item.name === filter?.fieldName)
+	);
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
 	const [sourceType, setSourceType] = useState<
 		ESelectionFilterSourceType | undefined
 	>();
+	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
+	const [i18nFilterLabels, setI18nFilterLabels] = useState(
+		fdsFilterLabelTranslations
+	);
+
 	const includeModeFormElementId = `${namespace}IncludeMode`;
 	const multipleFormElementId = `${namespace}Multiple`;
 	const sourceOptionFormElementId = `${namespace}SourceOption`;
@@ -69,29 +93,22 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 					value: String(item.externalReferenceCode),
 				}));
 
-	const handleValueChange = ({
-		includeMode,
-		multiple,
-		preselectedValues,
-		selectedPicklist,
-		sourceType,
-	}: {
-		includeMode: string;
-		multiple: boolean;
-		preselectedValues: any;
-		selectedPicklist?: IPickList;
-		sourceType?: ESelectionFilterSourceType;
-	}) => {
-		let body = {};
+	const handleFilterSave = () => {
+		let body: any = {
+			fieldName: selectedField?.name,
+			label_i18n: i18nFilterLabels,
+		};
 
 		if (Liferay.FeatureFlags['LPD-10754']) {
 			body = {
+				...body,
 				source: selectedPicklist?.externalReferenceCode,
 				sourceType,
 			};
 		}
 		else {
 			body = {
+				...body,
 				listTypeDefinitionERC: selectedPicklist?.externalReferenceCode,
 			};
 		}
@@ -105,15 +122,55 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 			),
 		};
 
-		onChange({
-			bodyData: body,
-			isValid:
-				Liferay.FeatureFlags['LPD-10754'] &&
-				(!selectedPicklist || !sourceType)
-					? false
-					: true,
-			saveUrl: API_URL.FDS_DYNAMIC_FILTERS,
-		});
+		handleSave(body);
+	};
+
+	const isFormInvalid = ({
+		i18nFilterLabels,
+		selectedField,
+		selectedPicklist,
+		sourceType,
+	}: {
+		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
+		selectedField: IField | undefined;
+		selectedPicklist?: IPickList;
+		sourceType?: string;
+	}) => {
+		if (!selectedField) {
+			return true;
+		}
+
+		if (selectedField && !filter) {
+			if (inUseFields.includes(selectedField.name)) {
+				return true;
+			}
+		}
+
+		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
+			return true;
+		}
+		else {
+			let isI18nFilterLabelInvalid = false;
+
+			Object.values(i18nFilterLabels).forEach((value) => {
+				if (!value) {
+					isI18nFilterLabelInvalid = true;
+				}
+			});
+
+			if (isI18nFilterLabelInvalid) {
+				return true;
+			}
+		}
+
+		if (
+			Liferay.FeatureFlags['LPD-10754'] &&
+			(!selectedPicklist || !sourceType)
+		) {
+			return true;
+		}
+
+		return false;
 	};
 
 	useEffect(() => {
@@ -172,6 +229,26 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 
 	return (
 		<>
+			<FilterModalConfiguration
+				fieldNames={fieldNames}
+				fields={fields}
+				filter={filter}
+				namespace={namespace}
+				onChange={({i18nFilterLabels, selectedField}) => {
+					setI18nFilterLabels(i18nFilterLabels);
+					setSelectedField(selectedField);
+
+					setSaveButtonDisabled(
+						isFormInvalid({
+							i18nFilterLabels,
+							selectedField,
+							selectedPicklist,
+							sourceType,
+						})
+					);
+				}}
+			/>
+
 			{Liferay.FeatureFlags['LPD-10754'] && (
 				<>
 					<ClayLayout.SheetSection className="mb-4">
@@ -204,13 +281,14 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 
 								setSourceType(newSourceType);
 
-								handleValueChange({
-									includeMode,
-									multiple,
-									preselectedValues,
-									selectedPicklist,
-									sourceType: newSourceType,
-								});
+								setSaveButtonDisabled(
+									isFormInvalid({
+										i18nFilterLabels,
+										selectedField,
+										selectedPicklist,
+										sourceType: newSourceType,
+									})
+								);
 							}}
 							options={[
 								{
@@ -245,13 +323,14 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 							onChange={(item: IPickList) => {
 								setSelectedPicklist(item);
 
-								handleValueChange({
-									includeMode,
-									multiple,
-									preselectedValues,
-									selectedPicklist: item,
-									sourceType,
-								});
+								setSaveButtonDisabled(
+									isFormInvalid({
+										i18nFilterLabels,
+										selectedField,
+										selectedPicklist: item,
+										sourceType,
+									})
+								);
 							}}
 						/>
 					)}
@@ -361,14 +440,6 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 												const newMultiple =
 													newVal === 'true';
 												setMultiple(newMultiple);
-
-												handleValueChange({
-													includeMode,
-													multiple: newMultiple,
-													preselectedValues,
-													selectedPicklist,
-													sourceType,
-												});
 											}}
 											value={multiple ? 'true' : 'false'}
 										>
@@ -415,14 +486,6 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 												name={includeModeFormElementId}
 												onChange={(val: any) => {
 													setIncludeMode(val);
-
-													handleValueChange({
-														includeMode: val,
-														multiple,
-														preselectedValues,
-														selectedPicklist,
-														sourceType,
-													});
 												}}
 												value={includeMode}
 											>
@@ -467,13 +530,21 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 							aria-label={Liferay.Language.get('source-options')}
 							name={sourceOptionFormElementId}
 							onChange={(event) => {
-								setSelectedPicklist(
-									picklists.find(
-										(item) =>
-											String(
-												item.externalReferenceCode
-											) === event.target.value
-									)
+								const picklist = picklists.find(
+									(item) =>
+										String(item.externalReferenceCode) ===
+										event.target.value
+								);
+
+								setSelectedPicklist(picklist);
+
+								setSaveButtonDisabled(
+									isFormInvalid({
+										i18nFilterLabels,
+										selectedField,
+										selectedPicklist: picklist,
+										sourceType,
+									})
 								);
 
 								setPreselectedValues([]);
@@ -648,6 +719,12 @@ function Body({filter, namespace, onChange}: IBodyProps) {
 					)}
 				</>
 			)}
+
+			<FilterModalFooter
+				closeModal={closeModal}
+				handleSave={handleFilterSave}
+				saveButtonDisabled={saveButtonDisabled}
+			/>
 		</>
 	);
 }

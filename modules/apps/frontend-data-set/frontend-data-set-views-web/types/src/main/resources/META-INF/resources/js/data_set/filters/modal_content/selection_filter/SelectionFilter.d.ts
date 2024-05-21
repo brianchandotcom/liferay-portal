@@ -5,14 +5,24 @@
 
 /// <reference types="react" />
 
-import {IFilter, TSaveState} from '../../../../utils/types';
+import {IField, IFilter} from '../../../../utils/types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
+	closeModal: Function;
+	fieldNames?: string[];
+	fields: IField[];
 	filter?: IFilter;
+	handleSave: Function;
 	namespace: string;
-	onChange: (newState: TSaveState) => void;
 }
-declare function Body({filter, namespace, onChange}: IBodyProps): JSX.Element;
+declare function Body({
+	closeModal,
+	fieldNames,
+	fields,
+	filter,
+	handleSave,
+	namespace,
+}: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;
 	Header: typeof Header;

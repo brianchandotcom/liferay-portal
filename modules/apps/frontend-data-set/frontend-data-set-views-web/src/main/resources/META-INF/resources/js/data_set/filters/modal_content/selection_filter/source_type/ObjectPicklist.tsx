@@ -4,14 +4,12 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayForm, {
-	ClaySelectWithOption,
-} from '@clayui/form';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
 import RequiredMark from '../../../../../components/RequiredMark';
-import {IFilter, IPickList} from '../../../../../utils/types';
 import getAllPicklists from '../../../../../utils/getAllPicklists';
+import {IFilter, IPickList} from '../../../../../utils/types';
 
 interface IObjectPicklistProps {
 	filter?: IFilter;
@@ -19,11 +17,7 @@ interface IObjectPicklistProps {
 	onChange: Function;
 }
 
-function ObjectPicklist({
-	filter,
-	namespace,
-	onChange
-}: IObjectPicklistProps) {
+function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
 
@@ -71,9 +65,9 @@ function ObjectPicklist({
 								(item) =>
 									String(item.externalReferenceCode) ===
 									event.target.value
-							)
+							);
 							setSelectedPicklist(picklist);
-							onChange(picklist);	
+							onChange(picklist);
 						}}
 						options={[
 							{

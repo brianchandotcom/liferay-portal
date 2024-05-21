@@ -3,21 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
-import ClayForm from '@clayui/form';
-import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
-import classNames from 'classnames';
-import {InputLocalized} from 'frontend-js-components-web';
 import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {FDSViewType} from '../../FDSViews';
 import OrderableTable from '../../components/OrderableTable';
-import ValidationFeedback from '../../components/ValidationFeedback';
 import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
@@ -25,12 +18,9 @@ import {
 	EFieldFormat,
 	EFieldType,
 	EFilterType,
-	IClientExtensionFilter,
 	IDateFilter,
 	IField,
 	IFilter,
-	ISelectionFilter,
-	TSaveState,
 } from '../../utils/types';
 import {IDataSetSectionProps} from '../DataSet';
 import ClientExtensionFilterModalContent from './modal_content/ClientExtensionFilter';
@@ -42,9 +32,55 @@ import {IDataSet} from '../../DataSets';
 import RequiredMark from '../../components/RequiredMark';
 import sortItems from '../../utils/sortItems';
 
-type FilterCollection = Array<
-	IClientExtensionFilter | IDateFilter | ISelectionFilter
->;
+const FILTER_TYPES = {
+	[EFilterType.CLIENT_EXTENSION]: {
+		Component: ClientExtensionFilterModalContent,
+		availableFieldsFilter: (item: IField) => !!item,
+		displayType: Liferay.Language.get('client-extension-filter'),
+		fdsViewRelationship:
+			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER,
+		fdsViewRelationshipId:
+			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID,
+		label: Liferay.Language.get('client-extension'),
+		url: API_URL.FDS_CLIENT_EXTENSION_FILTERS,
+	},
+	[EFilterType.DATE_RANGE]: {
+		Component: DateRangeFilterModalContent,
+		availableFieldsFilter: (item: IField) =>
+			item.format === EFieldFormat.DATE ||
+			item.format === EFieldFormat.DATE_TIME,
+		displayType: Liferay.Language.get('date-filter'),
+		fdsViewRelationship: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER,
+		fdsViewRelationshipId: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER_ID,
+		label: Liferay.Language.get('date-range'),
+		url: API_URL.FDS_DATE_FILTERS,
+	},
+	[EFilterType.SELECTION]: {
+		Component: SelectionFilterModalContent,
+		availableFieldsFilter: (item: IField) =>
+			item.type === EFieldType.STRING && !item.format,
+		displayType: Liferay.Language.get('dynamic-filter'),
+		fdsViewRelationship: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER,
+		fdsViewRelationshipId:
+			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID,
+		label: Liferay.Language.get('selection'),
+		url: API_URL.FDS_DYNAMIC_FILTERS,
+	},
+};
+
+type FilterCollection = Array<IFilter>;
+
+interface IPropsAddFDSFilterModalContent {
+	closeModal: Function;
+	fdsFilterClientExtensions?: IClientExtensionRenderer[];
+	fdsView: FDSViewType;
+	fieldNames?: string[];
+	fields: IField[];
+	filter?: IFilter;
+	filterType?: EFilterType;
+	namespace: string;
+	onSave: (newFilter: IFilter) => void;
+}
 
 function AddFDSFilterModalContent({
 	closeModal,
@@ -56,138 +92,18 @@ function AddFDSFilterModalContent({
 	filterType,
 	namespace,
 	onSave,
-}: {
-	closeModal: Function;
-	dataSet: IDataSet | FDSViewType;
-	fdsFilterClientExtensions?: IClientExtensionRenderer[];
-	fieldNames?: string[];
-	fields: IField[];
-	filter?: IClientExtensionFilter | IDateFilter | ISelectionFilter;
-	filterType?: EFilterType;
-	namespace: string;
-	onSave: (newFilter: IFilter) => void;
-}) {
-	const [fieldInUseValidationError, setFieldInUseValidationError] =
-		useState<boolean>();
-	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
-	const [i18nFilterLabels, setI18nFilterLabels] = useState(
-		fdsFilterLabelTranslations
-	);
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		filter ? false : true
-	);
-	const [selectedField, setSelectedField] = useState<IField | undefined>(
-		fields.find((item) => item.name === filter?.fieldName)
-	);
-	const inUseFields: (string | undefined)[] = fields.map((item) =>
-		fieldNames?.includes(item.name) ? item.name : undefined
-	);
+}: IPropsAddFDSFilterModalContent) {
+	const {Component, displayType, fdsViewRelationshipId} = FILTER_TYPES[
+		filterType as EFilterType
+	];
 
-	const [saveState, setSaveState] = useState<TSaveState>({
-		bodyData: {},
-		isValid: filter ? true : false,
-		saveUrl: '',
-	});
-
-	const isFormInvalid = ({
-		i18nFilterLabels,
-		selectedField,
-	}: {
-		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
-		selectedField: IField | undefined;
-	}) => {
-		if (!selectedField) {
-			return true;
-		}
-
-		if (selectedField && !filter) {
-			if (inUseFields.includes(selectedField.name)) {
-				return true;
-			}
-		}
-
-		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
-			return true;
-		}
-		else {
-			let isI18nFilterLabelInvalid = false;
-
-			Object.values(i18nFilterLabels).forEach((value) => {
-				if (!value) {
-					isI18nFilterLabelInvalid = true;
-				}
-			});
-
-			if (isI18nFilterLabelInvalid) {
-				return true;
-			}
-		}
-		else {
-			Object.values(i18nFilterLabels).forEach((value) => {
-				if (!value) {
-					return true;
-				}
-			});
-		}
-		
-
-		return false;
-	};
-
-	const handleFilterSave = async () => {
-		setSaveButtonDisabled(true);
-
-		if (!selectedField) {
-			openDefaultFailureToast();
-
-			return null;
-		}
-
-		let body: any = {
-			fieldName: selectedField.name,
-			label_i18n: i18nFilterLabels,
+	const handleFilterSave = async (body: any) => {
+		body = {
+			...body,
+			[fdsViewRelationshipId]: dataSet.id,
 		};
 
-		let displayType: string = '';
-		let url: string = '';
-
-		if (filterType === EFilterType.DATE_RANGE) {
-			url = saveState.saveUrl;
-
-			body = {
-				...body,
-				[OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER_ID]: dataSet.id,
-				type: selectedField.format,
-				...saveState.bodyData,
-			};
-
-			displayType = Liferay.Language.get('date-filter');
-		}
-		else if (filterType === EFilterType.SELECTION) {
-			url = saveState.saveUrl;
-
-			body = {
-				...body,
-				[OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER_ID]:
-					dataSet.id,
-				...saveState.bodyData,
-			};
-
-			displayType = Liferay.Language.get('dynamic-filter');
-		}
-		else if (filterType === EFilterType.CLIENT_EXTENSION) {
-			url = saveState.saveUrl;
-
-			body = {
-				...body,
-				[OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER_ID]:
-					dataSet.id,
-				...saveState.bodyData,
-			};
-
-			displayType = Liferay.Language.get('client-extension-filter');
-		}
-
+		let url = FILTER_TYPES[filterType as EFilterType].url;
 		let method = 'POST';
 
 		if (filter) {
@@ -205,8 +121,6 @@ function AddFDSFilterModalContent({
 		});
 
 		if (!response.ok) {
-			setSaveButtonDisabled(false);
-
 			openDefaultFailureToast();
 
 			return null;
@@ -221,235 +135,26 @@ function AddFDSFilterModalContent({
 		closeModal();
 	};
 
-	const nameFormElementId = `${namespace}Name`;
-	const selectedFieldFormElementId = `${namespace}SelectedField`;
-
-	const FieldNameDropdown = ({
-		fields,
-		onItemClick,
-	}: {
-		fields: IField[];
-		namespace: string;
-		onItemClick: Function;
-	}) => {
-		return (
-			<ClayDropDown
-				closeOnClick
-				menuElementAttrs={{
-					className: 'fds-field-name-dropdown-menu',
-				}}
-				trigger={
-					<ClayButton
-						className="form-control form-control-select form-control-select-secondary"
-						displayType="secondary"
-						id={selectedFieldFormElementId}
-					>
-						{selectedField
-							? selectedField.label
-							: Liferay.Language.get('select')}
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList items={fields} role="listbox">
-					{fields.map((field) => (
-						<ClayDropDown.Item
-							className="align-items-center d-flex justify-content-between"
-							disabled={!!filter}
-							key={field.name}
-							onClick={() => onItemClick(field)}
-							roleItem="option"
-						>
-							{field.label}
-
-							{inUseFields.includes(field.name) && (
-								<ClayLabel displayType="info">
-									{Liferay.Language.get('in-use')}
-								</ClayLabel>
-							)}
-						</ClayDropDown.Item>
-					))}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
-		);
-	};
-
 	return (
 		<>
 			<ClayModal.Header>
 				{filter &&
 					sub(Liferay.Language.get('edit-x-filter'), [filter.label])}
 
-				{!filter && (
-					<>
-						{filterType === EFilterType.CLIENT_EXTENSION && (
-							<ClientExtensionFilterModalContent.Header />
-						)}
-
-						{filterType === EFilterType.DATE_RANGE && (
-							<DateRangeFilterModalContent.Header />
-						)}
-
-						{filterType === EFilterType.SELECTION && (
-							<SelectionFilterModalContent.Header />
-						)}
-					</>
-				)}
+				{!filter && <Component.Header />}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{Liferay.FeatureFlags['LPD-10754'] && (
-					<ClayLayout.SheetSection className="mb-4">
-						<h3 className="sheet-subtitle">
-							{Liferay.Language.get('configuration')}
-						</h3>
-
-						<ClayForm.Text>
-							{Liferay.Language.get(
-								'add-a-name-for-your-filter-and-select-a-field-to-start-creating-it'
-							)}
-						</ClayForm.Text>
-					</ClayLayout.SheetSection>
-				)}
-
-				<ClayForm.Group>
-					<InputLocalized
-						id={nameFormElementId}
-						label={Liferay.Language.get('name')}
-						name="label"
-						onChange={(values) => {
-							setI18nFilterLabels(values);
-							setSaveButtonDisabled(
-								isFormInvalid({
-									i18nFilterLabels: values,
-									selectedField,
-								}) || !saveState.isValid
-							);
-						}}
-						placeholder={Liferay.Language.get('add-a-name')}
-						required={Liferay.FeatureFlags['LPD-10754']}
-						translations={i18nFilterLabels}
-					/>
-				</ClayForm.Group>
-
-				<ClayForm.Group
-					className={classNames({
-						'has-error': fieldInUseValidationError,
-					})}
-				>
-					<label htmlFor={selectedFieldFormElementId}>
-						{Liferay.Language.get('filter-by')}
-
-						{Liferay.FeatureFlags['LPD-10754'] && <RequiredMark />}
-					</label>
-
-					<FieldNameDropdown
-						fields={fields}
-						namespace={namespace}
-						onItemClick={(item: IField) => {
-							const newVal = fields.find((field) => {
-								return field.name === item.label;
-							});
-
-							if (newVal) {
-								setSelectedField(newVal);
-								setFieldInUseValidationError(
-									inUseFields.includes(newVal.name)
-								);
-								setSaveButtonDisabled(
-									isFormInvalid({
-										i18nFilterLabels,
-										selectedField: newVal,
-									}) || !saveState.isValid
-								);
-							}
-						}}
-					/>
-
-					{fieldInUseValidationError && (
-						<ValidationFeedback
-							message={Liferay.Language.get(
-								'this-field-is-being-used-by-another-filter'
-							)}
-						/>
-					)}
-				</ClayForm.Group>
-
-				{!fieldInUseValidationError && (
-					<>
-						{filterType === EFilterType.CLIENT_EXTENSION && (
-							<ClientExtensionFilterModalContent.Body
-								fdsFilterClientExtensions={
-									fdsFilterClientExtensions
-								}
-								filter={filter}
-								namespace={namespace}
-								onChange={(newState) => {
-									setSaveState(newState);
-									setSaveButtonDisabled(
-										isFormInvalid({
-											i18nFilterLabels,
-											selectedField,
-										}) || !newState.isValid
-									);
-								}}
-							/>
-						)}
-
-						{filterType === EFilterType.DATE_RANGE && (
-							<DateRangeFilterModalContent.Body
-								filter={filter}
-								namespace={namespace}
-								onChange={(newState) => {
-									setSaveState(newState);
-									setSaveButtonDisabled(
-										isFormInvalid({
-											i18nFilterLabels,
-											selectedField,
-										}) || !newState.isValid
-									);
-								}}
-							/>
-						)}
-
-						{filterType === EFilterType.SELECTION && (
-							<SelectionFilterModalContent.Body
-								filter={filter}
-								namespace={namespace}
-								onChange={(newState) => {
-									setSaveState(newState);
-									setSaveButtonDisabled(
-										isFormInvalid({
-											i18nFilterLabels,
-											selectedField,
-										}) || !newState.isValid
-									);
-								}}
-							/>
-						)}
-					</>
-				)}
+				<Component.Body
+					closeModal={closeModal}
+					fdsFilterClientExtensions={fdsFilterClientExtensions}
+					fieldNames={fieldNames}
+					fields={fields}
+					filter={filter}
+					handleSave={(body: any) => handleFilterSave(body)}
+					namespace={namespace}
+				/>
 			</ClayModal.Body>
-
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={saveButtonDisabled}
-							onClick={handleFilterSave}
-							type="submit"
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="secondary"
-							onClick={() => closeModal()}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
 		</>
 	);
 }
@@ -465,40 +170,32 @@ function Filters({
 	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
-				`${API_URL.DATA_SETS}/${dataSet.id}?nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER},${OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER},${OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER}`
+				`${API_URL.DATA_SETS}/${
+					dataSet.id
+				}?nestedFields=${Object.values(FILTER_TYPES)
+					.map((filter) => filter.fdsViewRelationship)
+					.join(',')}`
 			);
 
 			const responseJSON = await response.json();
 
-			const clientExtensionFiltersOrderer = responseJSON[
-				OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER
-			] as IClientExtensionFilter[];
-			const dateFiltersOrderer = responseJSON[
-				OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER
-			] as IDateFilter[];
-			const dynamicFiltersOrderer = responseJSON[
-				OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER
-			] as ISelectionFilter[];
+			let filtersOrdered: FilterCollection = [];
 
-			let filtersOrdered: FilterCollection = [
-				...clientExtensionFiltersOrderer.map((item) => ({
-					...item,
-					displayType: Liferay.Language.get(
-						'client-extension-filter'
-					),
-					filterType: EFilterType.CLIENT_EXTENSION,
-				})),
-				...dateFiltersOrderer.map((item) => ({
-					...item,
-					displayType: Liferay.Language.get('date-filter'),
-					filterType: EFilterType.DATE_RANGE,
-				})),
-				...dynamicFiltersOrderer.map((item) => ({
-					...item,
-					displayType: Liferay.Language.get('dynamic-filter'),
-					filterType: EFilterType.SELECTION,
-				})),
-			];
+			Object.keys(FILTER_TYPES).forEach((type) => {
+				const filtersArray =
+					responseJSON[
+						FILTER_TYPES[type as EFilterType].fdsViewRelationship
+					];
+
+				filtersArray.forEach((filter: any) => {
+					filtersOrdered.push({
+						...filter,
+						displayType:
+							FILTER_TYPES[type as EFilterType].displayType,
+						filterType: type as EFilterType,
+					});
+				});
+			});
 
 			filtersOrdered = sortItems(
 				filtersOrdered,
@@ -569,15 +266,8 @@ function Filters({
 	};
 
 	const onCreationButtonClick = (filterType: EFilterType) => {
-		const availableFields = fields.filter(
-			(item) =>
-				filterType === EFilterType.CLIENT_EXTENSION ||
-				(filterType === EFilterType.SELECTION &&
-					item.type === EFieldType.STRING &&
-					!item.format) ||
-				(filterType === EFilterType.DATE_RANGE &&
-					(item.format === EFieldFormat.DATE ||
-						item.format === EFieldFormat.DATE_TIME))
+		const availableFields = fields.filter((item) =>
+			FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(item)
 		);
 
 		if (!availableFields.length) {
@@ -625,11 +315,7 @@ function Filters({
 		}
 	};
 
-	const handleEdit = ({
-		item,
-	}: {
-		item: IClientExtensionFilter | IDateFilter | ISelectionFilter;
-	}) =>
+	const handleEdit = ({item}: {item: IFilter}) =>
 		openModal({
 			className: 'overflow-auto',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
@@ -687,12 +373,7 @@ function Filters({
 						processClose();
 
 						const url = `${
-							item.filterType === EFilterType.DATE_RANGE
-								? API_URL.DATE_FILTERS
-								: item.filterType ===
-									  EFilterType.CLIENT_EXTENSION
-									? API_URL.CLIENT_EXTENSION_FILTERS
-									: API_URL.SELECTION_FILTERS
+							FILTER_TYPES[item.filterType as EFilterType].url
 						}/${item.id}`;
 
 						fetch(url, {
@@ -733,23 +414,10 @@ function Filters({
 						onClick: handleDelete,
 					},
 				]}
-				creationMenuItems={[
-					{
-						label: Liferay.Language.get('client-extension'),
-						onClick: () =>
-							onCreationButtonClick(EFilterType.CLIENT_EXTENSION),
-					},
-					{
-						label: Liferay.Language.get('date-range'),
-						onClick: () =>
-							onCreationButtonClick(EFilterType.DATE_RANGE),
-					},
-					{
-						label: Liferay.Language.get('selection'),
-						onClick: () =>
-							onCreationButtonClick(EFilterType.SELECTION),
-					},
-				]}
+				creationMenuItems={Object.keys(FILTER_TYPES).map((type) => ({
+					label: FILTER_TYPES[type as EFilterType].label,
+					onClick: () => onCreationButtonClick(type as EFilterType),
+				}))}
 				creationMenuLabel={Liferay.Language.get('new-filter')}
 				fields={[
 					{

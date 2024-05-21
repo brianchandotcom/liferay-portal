@@ -360,6 +360,33 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	public void testGetFieldValueFromURLStringValue() throws Exception {
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.TEXT);
+		String fieldValue = "testurl.com?test=info&param=info2";
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter, fieldValue, _group.getGroupId(),
+			_journalConverter);
+
+		Assert.assertEquals(
+			fieldValue,
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "DDMStructure_" + ddmFormField.getName()
+				),
+				LocaleUtil.SPAIN));
+	}
+
+	@Test
 	public void testGetFieldValueFromWebImage() throws Exception {
 		String fieldId = "ImageFieldName";
 

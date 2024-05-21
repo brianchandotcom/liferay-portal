@@ -6,8 +6,8 @@
 import getGlobalImports from '../configuration/getGlobalImports.mjs';
 import getOverridenPackageSymbols from '../configuration/getOverridenPackageSymbols.mjs';
 import getProjectDescription from '../configuration/getProjectDescription.mjs';
+import getProjectEntryPoints from '../configuration/getProjectEntryPoints.mjs';
 import getProjectExports from '../configuration/getProjectExports.mjs';
-import getProjectMain from '../configuration/getProjectMain.mjs';
 import getProjectNpmScriptsConfig from '../configuration/getProjectNpmScriptsConfig.mjs';
 import getProjectWebContextPath from '../configuration/getProjectWebContextPath.mjs';
 import writeExportBridges from './amd/writeExportBridges.mjs';
@@ -28,16 +28,16 @@ export default async function main() {
 		globalImports,
 		overridenPackageSymbols,
 		projectDescription,
+		projectEntryPoints,
 		projectExports,
-		projectMain,
 		projectNpmScriptsConfig,
 		projectWebContextPath,
 	] = await Promise.all([
 		getGlobalImports(),
 		getOverridenPackageSymbols(),
 		getProjectDescription(),
+		getProjectEntryPoints(),
 		getProjectExports(),
-		getProjectMain(),
 		getProjectNpmScriptsConfig(),
 		getProjectWebContextPath(),
 	]);
@@ -51,7 +51,7 @@ export default async function main() {
 		bundleJavaScriptMain(
 			globalImports,
 			overridenPackageSymbols,
-			projectMain,
+			projectEntryPoints,
 			projectWebContextPath
 		),
 		bundleJavaScriptExports(

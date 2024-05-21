@@ -12,8 +12,8 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  *	 version: 'x.y.z',
  * }
  */
-export default function getProjectDescription() {
-	const {main, name, version} = projectScopeRequire('./package.json');
+export default function getProjectDescription(projectDir = '.') {
+	const {main, name, version} = projectScopeRequire('./package.json', projectDir);
 
 	return {main, name, version};
 }

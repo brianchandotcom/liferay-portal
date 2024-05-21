@@ -224,8 +224,11 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 	openSidetabButtons.forEach((button) => {
 		button.addEventListener('click', (event) => {
 			event.preventDefault();
+
 			const requestId = button.getAttribute('data-request-id');
+
 			restArticle(requestId);
+
 			document.getElementById('sidetabFeature').style.right = '0';
 		});
 	});

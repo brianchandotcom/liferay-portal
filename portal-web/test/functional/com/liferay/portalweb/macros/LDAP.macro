@@ -2,10 +2,11 @@ definition {
 
 	@description = "Add Apache DS server and test the connection between it and Liferay DXP"
 	@summary = "Default summary"
-	macro addLDAPServerAndTestConnection(baseURL = null, ldapServerName = null) {
+	macro addLDAPServerAndTestConnection(baseURL = null, ldapServerName = null, userCustomMappings = null) {
 		PortalSettings.addLDAPServer(
 			baseURL = ${baseURL},
-			ldapServerName = ${ldapServerName});
+			ldapServerName = ${ldapServerName},
+			userCustomMappings = ${userCustomMappings});
 
 		PortalSettings.editLDAPServer(
 			baseURL = ${baseURL},

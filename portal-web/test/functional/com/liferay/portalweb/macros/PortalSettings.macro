@@ -27,6 +27,12 @@ definition {
 
 		Click(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO");
 
+		if (isSet(userCustomMappings)) {
+			Type(
+				locator1 = "PortalSettingsAuthentication#LDAP_SERVER_USER_CUSTOM_MAPPINGS_FIELD",
+				value1 = ${userCustomMappings});
+		}
+
 		Button.clickSave();
 	}
 

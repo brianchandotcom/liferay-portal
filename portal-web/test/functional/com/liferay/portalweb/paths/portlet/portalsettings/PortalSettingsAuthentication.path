@@ -307,6 +307,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LDAP_SERVER_USER_CUSTOM_MAPPINGS_FIELD</td>
+	<td>//textarea[contains(@name,'ldap--userCustomMappings')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

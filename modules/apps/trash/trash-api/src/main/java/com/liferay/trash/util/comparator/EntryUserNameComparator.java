@@ -14,14 +14,12 @@ import com.liferay.trash.model.TrashEntry;
  */
 public class EntryUserNameComparator extends OrderByComparator<TrashEntry> {
 
-	public static final String ORDER_BY_ASC = "TrashEntry.userName ASC";
+	public static EntryUserNameComparator get(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
 
-	public static final String ORDER_BY_DESC = "TrashEntry.userName DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"userName"};
-
-	public EntryUserNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _DESCENDING;
 	}
 
 	@Override
@@ -41,21 +39,37 @@ public class EntryUserNameComparator extends OrderByComparator<TrashEntry> {
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private EntryUserNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final EntryUserNameComparator _ASCENDING =
+		new EntryUserNameComparator(true);
+
+	private static final EntryUserNameComparator _DESCENDING =
+		new EntryUserNameComparator(false);
+
+	private static final String _ORDER_BY_ASC = "TrashEntry.userName ASC";
+
+	private static final String _ORDER_BY_DESC = "TrashEntry.userName DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"userName"};
 
 	private final boolean _ascending;
 

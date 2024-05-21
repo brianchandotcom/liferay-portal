@@ -39,7 +39,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -213,7 +212,7 @@ public class ConfigurationPersistenceManager
 			}
 		}
 
-		_createConfigurationTable();
+		_loadConfigurationTable();
 
 		for (Bundle bundle : _bundleContext.getBundles()) {
 			if (Objects.equals(
@@ -326,27 +325,6 @@ public class ConfigurationPersistenceManager
 		return newDictionary;
 	}
 
-	private void _createConfigurationTable() {
-		try (Connection connection = _dataSource.getConnection();
-			Statement statement = connection.createStatement()) {
-
-			statement.executeUpdate(
-				_db.buildSQL(
-					"create table Configuration_ (configurationId " +
-						"VARCHAR(512) not null primary key, dictionary TEXT)"));
-		}
-		catch (IOException | SQLException exception) {
-			ReflectionUtil.throwException(exception);
-		}
-
-		Map<String, Map<String, Object>> overridePropertiesMap =
-			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap();
-
-		overridePropertiesMap.forEach(
-			(key, value) -> _dictionaries.put(
-				key, new HashMapDictionary<>((Map)value)));
-	}
-
 	private void _deleteFromDatabase(String pid) throws IOException {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -417,6 +395,15 @@ public class ConfigurationPersistenceManager
 		}
 
 		return true;
+	}
+
+	private void _loadConfigurationTable() {
+		Map<String, Map<String, Object>> overridePropertiesMap =
+			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap();
+
+		overridePropertiesMap.forEach(
+			(key, value) -> _dictionaries.put(
+				key, new HashMapDictionary<>((Map)value)));
 	}
 
 	private Dictionary<Object, Object> _overrideDictionary(

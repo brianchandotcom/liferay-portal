@@ -6,12 +6,17 @@
 import {test} from '@playwright/test';
 
 import {ExportImportFramePage} from '../pages/ExportImportFramePage';
+import {ExportImportPage} from '../pages/ExportImportPage';
 
 const exportImportPagesTest = test.extend<{
 	exportImportFramePage: ExportImportFramePage;
+	exportImportPage: ExportImportPage;
 }>({
 	exportImportFramePage: async ({page}, use) => {
 		await use(new ExportImportFramePage(page));
+	},
+	exportImportPage: async ({page}, use) => {
+		await use(new ExportImportPage(page));
 	},
 });
 

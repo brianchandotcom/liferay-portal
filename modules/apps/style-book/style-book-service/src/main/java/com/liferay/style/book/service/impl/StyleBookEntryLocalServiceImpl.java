@@ -142,6 +142,18 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public StyleBookEntry deleteStyleBookEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.fetchByERC_G_Head(
+				externalReferenceCode, groupId, true);
+
+		return deleteStyleBookEntry(styleBookEntry);
+	}
+
+	@Override
 	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
 		throws PortalException {
 

@@ -1,0 +1,2855 @@
+{
+	"companies": [
+		{
+			"companyId": 3007447931789165977,
+			"companyName": "Liferay DXP",
+			"virtualHostname": "localhost",
+			"webId": "liferay.com"
+		}
+	],
+	"date": "2024-04-02T11:42:38Z",
+	"exportedCompanyDefault": true,
+	"exportedCompanyId": 3007447931789165977,
+	"releases": [
+		{
+			"schemaVersion": {
+				"major": 30,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "portal",
+			"state": 0,
+			"verified": false
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.component.blacklist.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.configuration.persistence.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.hello.velocity.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.organizations.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.ratings.page.ratings.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.sso.token.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.message.boards.layout.set.prototype",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.messaging",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.push.notifications.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.publisher.layout.prototype",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.remote.soap.extender.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.license.manager.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.auth.verifier",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.repository.cmis.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.tags.compiler.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.layout.set.prototype",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.display.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.wiki.layout.prototype",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.monitoring",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.blogs.layout.prototype",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.scheduler",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.ai.creator.openai.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portlet.configuration.sharing.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.microblogs.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.saml.addon.keep.alive.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.dynamic.data.mapping.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.template.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.release.feature.flag.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.search.tuning.synonyms.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.segments.asah.connector",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 3,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.workflow.kaleo.forms.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.settings.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.blogs.recent.bloggers.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portlet.configuration.css.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.item.selector.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.iframe.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.navigation.language.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.dynamic.data.mapping.form.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.navigation.breadcrumb.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.navigation.site.map.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.monitoring.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.contacts.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.user.associated.data.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.instances.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.tags.navigation.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.announcements.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.server.admin.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.flags.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.navigation.directory.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.categories.navigation.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.saml.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.product.navigation.personal.menu.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.social.activities.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portlet.configuration.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.search.elasticsearch.monitoring.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.audit.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.my.sites.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.search.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.product.navigation.product.menu.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.rss.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.trash.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.product.content.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.nested.portlets.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.navigation.menu.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.saved.content.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.search",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 6,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.comment.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.captcha.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.document.conversion",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.upload",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.login.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.image.uploader.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.scheduler.quartz",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.bookmarks.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.exportimport.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.saml.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.search.tuning.rankings.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 17,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.content.dashboard.document.library.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.bundle.blacklist",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.users.admin.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.calendar.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.antivirus.async.store",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.staging.bar.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.dynamic.data.lists.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.notifications.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.blogs.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 0,
+				"micro": 5,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.wiki.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.message.boards.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.address.impl",
+			"state": 0,
+			"verified": false
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.ldap.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.wiki.navigation.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.my.subscriptions.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.reports.engine.console.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.depot.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.audit.storage.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.auto.tagger.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 1,
+				"minor": 5,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.client.extension.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.client.extension.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 2,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.adaptive.media.image.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 11,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.notifications.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.workflow.metrics.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.order.rule.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.content.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.list.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.workflow.kaleo.forms.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.tax.engine.fixed.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.view.count.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.json.storage.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 2,
+				"minor": 11,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.inventory.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.term.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 5,
+				"micro": 4,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.dynamic.data.mapping.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.batch.planner.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.subscription.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.saved.content.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.currency.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.sharing.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.translation.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.shipping.engine.fixed.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.layout.seo.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.invitation.invite.members.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 6,
+				"micro": 1,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.journal.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 4,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.dispatch.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.link.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.pricing.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.sso.openid.connect.persistence.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.machine.learning.forecast.alert.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.lock.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.dynamic.data.lists.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 3,
+				"minor": 10,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.fragment.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 11,
+				"micro": 2,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 9,
+				"micro": 1,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.object.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.product.type.virtual.order.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 3,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.layout.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.wiki.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 1,
+				"minor": 8,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.price.list.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.multi.factor.authentication.timebased.otp.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.template.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.analytics.message.storage.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.contacts.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 7,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.payment.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.image.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 6,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.push.notifications.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.multi.factor.authentication.fido2.credential.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.segments.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 4,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.workflow.kaleo.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 4,
+				"micro": 1,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.calendar.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 5,
+				"micro": 0,
+				"minor": 5,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.layout.page.template.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.display.page.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.blogs.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.product.type.grouped.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.layout.utility.page.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.oauth.client.persistence.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.bookmarks.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.notification.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.category.property.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.trash.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 3,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.saml.persistence.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 1,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.shop.by.diagram.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.site.navigation.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 1,
+				"minor": 10,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.notification.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 6,
+				"micro": 0,
+				"minor": 5,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.message.boards.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.language.override.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 4,
+				"micro": 6,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.oauth2.provider.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 1,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.friendly.url.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.qualifier.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.wish.list.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 9,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.opener.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.changeset.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 4,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.redirect.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 1,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.search.experiences.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.service.access.policy.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.questions.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 2,
+				"minor": 12,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.change.tracking.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.segments.content.targeting.upgrade",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.comment.page.comments.web",
+			"state": 1,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 3,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.layout.admin.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.adaptive.media.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 9,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.discount.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 4,
+				"micro": 0,
+				"minor": 7,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.knowledge.base.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.sync.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 5,
+				"micro": 0,
+				"minor": 15,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.product.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.sharepoint.rest.oauth2.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 3,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.marketplace.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.change.tracking.store.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 0,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.asset.auto.tagger.tensorflow",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.image.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.frontend.view.state.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 4,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.style.book.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 4,
+				"minor": 10,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.account.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.product.type.virtual.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 4,
+				"micro": 3,
+				"minor": 6,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.batch.engine.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.analytics.settings.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.background.task.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 8,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.change.tracking.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.multi.factor.authentication.email.otp.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 3,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.list.type.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.reading.time.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 3,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.asset.entry.rel.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.microblogs.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.commerce.tax.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.reports.engine.console.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 1,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.data.engine.service",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 2,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.google.docs",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 2,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.workflow.kaleo.designer.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.message.boards.moderation",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 0,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.headless.builder.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.journal.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 1,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.journal.content.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 1,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.adaptive.media.document.library.thumbnails",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 1,
+				"micro": 0,
+				"minor": 2,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.knowledge.base.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 0,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.frontend.js.a11y.web",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 0,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.sso.facebook.connect.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 0,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.portal.security.sso.opensso.impl",
+			"state": 0,
+			"verified": true
+		},
+		{
+			"schemaVersion": {
+				"major": 0,
+				"micro": 0,
+				"minor": 0,
+				"qualifier": ""
+			},
+			"servletContextName": "com.liferay.document.library.video",
+			"state": 0,
+			"verified": true
+		}
+	],
+	"tableNames": [
+		"AMImageEntry",
+		"AccountEntry",
+		"AccountEntryOrganizationRel",
+		"AccountEntryUserRel",
+		"AccountGroup",
+		"AccountGroupRel",
+		"AccountRole",
+		"Address",
+		"AnalyticsAssociation",
+		"AnalyticsDeleteMessage",
+		"AnalyticsMessage",
+		"AnnouncementsDelivery",
+		"AnnouncementsEntry",
+		"AnnouncementsFlag",
+		"AssetAutoTaggerEntry",
+		"AssetCategory",
+		"AssetCategoryProperty",
+		"AssetDisplayPageEntry",
+		"AssetEntries_AssetTags",
+		"AssetEntry",
+		"AssetEntryAssetCategoryRel",
+		"AssetLink",
+		"AssetListEntry",
+		"AssetListEntryAssetEntryRel",
+		"AssetListEntrySegmentsEntryRel",
+		"AssetListEntryUsage",
+		"AssetTag",
+		"AssetVocabulary",
+		"Audit_AuditEvent",
+		"BackgroundTask",
+		"BatchEngineExportTask",
+		"BatchEngineImportTask",
+		"BatchEngineImportTaskError",
+		"BatchPlannerMapping",
+		"BatchPlannerPlan",
+		"BatchPlannerPolicy",
+		"BlogsEntry",
+		"BookmarksEntry",
+		"BookmarksFolder",
+		"BrowserTracker",
+		"CChannelAccountEntryRel",
+		"CDiscountCAccountGroupRel",
+		"CIAudit",
+		"CIBookedQuantity",
+		"CIReplenishmentItem",
+		"CIWarehouse",
+		"CIWarehouseGroupRel",
+		"CIWarehouseItem",
+		"CIWarehouseRel",
+		"CNTemplateCAccountGroupRel",
+		"CNotificationAttachment",
+		"COREntry",
+		"COREntryRel",
+		"CPAttachmentFileEntry",
+		"CPDAvailabilityEstimate",
+		"CPDSpecificationOptionValue",
+		"CPDVirtualSettingFileEntry",
+		"CPDefinition",
+		"CPDefinitionGroupedEntry",
+		"CPDefinitionInventory",
+		"CPDefinitionLink",
+		"CPDefinitionLocalization",
+		"CPDefinitionOptionRel",
+		"CPDefinitionOptionValueRel",
+		"CPDefinitionVirtualSetting",
+		"CPDisplayLayout",
+		"CPInstance",
+		"CPInstanceOptionValueRel",
+		"CPInstanceUOM",
+		"CPLCommerceGroupAccountRel",
+		"CPMeasurementUnit",
+		"CPMethodGroupRelQualifier",
+		"CPOption",
+		"CPOptionCategory",
+		"CPOptionValue",
+		"CPSpecificationOption",
+		"CPTaxCategory",
+		"CPricingClassCPDefinitionRel",
+		"CProduct",
+		"CSDiagramEntry",
+		"CSDiagramPin",
+		"CSDiagramSetting",
+		"CSFixedOptionQualifier",
+		"CSOptionAccountEntryRel",
+		"CShippingFixedOptionRel",
+		"CTAutoResolutionInfo",
+		"CTCollection",
+		"CTCollectionTemplate",
+		"CTComment",
+		"CTEntry",
+		"CTMessage",
+		"CTPreferences",
+		"CTProcess",
+		"CTRemote",
+		"CTSContent",
+		"CTSchemaVersion",
+		"CTermEntryLocalization",
+		"CVirtualOrderItemFileEntry",
+		"Calendar",
+		"CalendarBooking",
+		"CalendarNotificationTemplate",
+		"CalendarResource",
+		"ChangesetCollection",
+		"ChangesetEntry",
+		"ClassName_",
+		"ClientExtensionEntry",
+		"ClientExtensionEntryRel",
+		"CommerceAddressRestriction",
+		"CommerceAvailabilityEstimate",
+		"CommerceCatalog",
+		"CommerceChannel",
+		"CommerceChannelRel",
+		"CommerceCurrency",
+		"CommerceDiscount",
+		"CommerceDiscountAccountRel",
+		"CommerceDiscountOrderTypeRel",
+		"CommerceDiscountRel",
+		"CommerceDiscountRule",
+		"CommerceDiscountUsageEntry",
+		"CommerceMLForecastAlertEntry",
+		"CommerceNotificationQueueEntry",
+		"CommerceNotificationTemplate",
+		"CommerceOrder",
+		"CommerceOrderItem",
+		"CommerceOrderNote",
+		"CommerceOrderPayment",
+		"CommerceOrderType",
+		"CommerceOrderTypeRel",
+		"CommercePaymentEntry",
+		"CommercePaymentEntryAudit",
+		"CommercePaymentMethodGroupRel",
+		"CommercePriceEntry",
+		"CommercePriceListAccountRel",
+		"CommercePriceListChannelRel",
+		"CommercePriceListDiscountRel",
+		"CommercePriceListOrderTypeRel",
+		"CommercePriceModifier",
+		"CommercePriceModifierRel",
+		"CommercePricingClass",
+		"CommerceQualifierEntry",
+		"CommerceShipment",
+		"CommerceShipmentItem",
+		"CommerceShippingFixedOption",
+		"CommerceShippingMethod",
+		"CommerceSubscriptionEntry",
+		"CommerceTaxFixedRate",
+		"CommerceTaxFixedRateAddressRel",
+		"CommerceTaxMethod",
+		"CommerceTermEntry",
+		"CommerceTermEntryRel",
+		"CommerceTierPriceEntry",
+		"CommerceVirtualOrderItem",
+		"CommerceWishList",
+		"CommerceWishListItem",
+		"CompanyInfo",
+		"Configuration_",
+		"Contact_",
+		"Contacts_Entry",
+		"Counter",
+		"Country",
+		"CountryLocalization",
+		"DDLRecord",
+		"DDLRecordSet",
+		"DDLRecordSetVersion",
+		"DDLRecordVersion",
+		"DDMContent",
+		"DDMDataProviderInstance",
+		"DDMDataProviderInstanceLink",
+		"DDMField",
+		"DDMFieldAttribute",
+		"DDMFormInstance",
+		"DDMFormInstanceRecord",
+		"DDMFormInstanceRecordVersion",
+		"DDMFormInstanceReport",
+		"DDMFormInstanceVersion",
+		"DDMStorageLink",
+		"DDMStructure",
+		"DDMStructureLayout",
+		"DDMStructureLink",
+		"DDMStructureVersion",
+		"DDMTemplate",
+		"DDMTemplateLink",
+		"DDMTemplateVersion",
+		"DEDataDefinitionFieldLink",
+		"DEDataListView",
+		"DLContent",
+		"DLFileEntry",
+		"DLFileEntryMetadata",
+		"DLFileEntryType",
+		"DLFileEntryTypes_DLFolders",
+		"DLFileShortcut",
+		"DLFileVersion",
+		"DLFileVersionPreview",
+		"DLFolder",
+		"DLOpenerFileEntryReference",
+		"DLStorageQuota",
+		"DLSyncEvent",
+		"DepotAppCustomization",
+		"DepotEntry",
+		"DepotEntryGroupRel",
+		"DispatchLog",
+		"DispatchTrigger",
+		"EmailAddress",
+		"ExpandoColumn",
+		"ExpandoRow",
+		"ExpandoTable",
+		"ExpandoValue",
+		"ExportImportConfiguration",
+		"FVSActiveEntry",
+		"FVSCustomEntry",
+		"FVSEntry",
+		"FragmentCollection",
+		"FragmentComposition",
+		"FragmentEntry",
+		"FragmentEntryLink",
+		"FragmentEntryVersion",
+		"FriendlyURLEntry",
+		"FriendlyURLEntryLocalization",
+		"FriendlyURLEntryMapping",
+		"Group_",
+		"Groups_Orgs",
+		"Groups_Roles",
+		"Groups_UserGroups",
+		"IM_MemberRequest",
+		"Image",
+		"JSONStorageEntry",
+		"JournalArticle",
+		"JournalArticleLocalization",
+		"JournalArticleResource",
+		"JournalContentSearch",
+		"JournalFeed",
+		"JournalFolder",
+		"KBArticle",
+		"KBComment",
+		"KBFolder",
+		"KBTemplate",
+		"KaleoAction",
+		"KaleoCondition",
+		"KaleoDefinition",
+		"KaleoDefinitionVersion",
+		"KaleoInstance",
+		"KaleoInstanceToken",
+		"KaleoLog",
+		"KaleoNode",
+		"KaleoNotification",
+		"KaleoNotificationRecipient",
+		"KaleoProcess",
+		"KaleoProcessLink",
+		"KaleoTask",
+		"KaleoTaskAssignment",
+		"KaleoTaskAssignmentInstance",
+		"KaleoTaskForm",
+		"KaleoTaskFormInstance",
+		"KaleoTaskInstanceToken",
+		"KaleoTimer",
+		"KaleoTimerInstanceToken",
+		"KaleoTransition",
+		"Layout",
+		"LayoutBranch",
+		"LayoutClassedModelUsage",
+		"LayoutFriendlyURL",
+		"LayoutLocalization",
+		"LayoutPageTemplateCollection",
+		"LayoutPageTemplateEntry",
+		"LayoutPageTemplateStructure",
+		"LayoutPageTemplateStructureRel",
+		"LayoutPrototype",
+		"LayoutRevision",
+		"LayoutSEOEntry",
+		"LayoutSEOSite",
+		"LayoutSet",
+		"LayoutSetBranch",
+		"LayoutSetPrototype",
+		"LayoutUtilityPageEntry",
+		"ListType",
+		"ListTypeDefinition",
+		"ListTypeEntry",
+		"Lock_",
+		"MBBan",
+		"MBCategory",
+		"MBDiscussion",
+		"MBMailingList",
+		"MBMessage",
+		"MBSuspiciousActivity",
+		"MBThread",
+		"MBThreadFlag",
+		"MFAEmailOTPEntry",
+		"MFAFIDO2CredentialEntry",
+		"MFATimeBasedOTPEntry",
+		"Marketplace_App",
+		"Marketplace_Module",
+		"MembershipRequest",
+		"MicroblogsEntry",
+		"NQueueEntryAttachment",
+		"NTemplateAttachment",
+		"NotificationQueueEntry",
+		"NotificationRecipient",
+		"NotificationRecipientSetting",
+		"NotificationTemplate",
+		"OA2Auths_OA2ScopeGrants",
+		"OAuth2Application",
+		"OAuth2ApplicationScopeAliases",
+		"OAuth2Authorization",
+		"OAuth2ScopeGrant",
+		"OAuthClientASLocalMetadata",
+		"OAuthClientEntry",
+		"ObjectAction",
+		"ObjectDefinition",
+		"ObjectEntry",
+		"ObjectField",
+		"ObjectFieldSetting",
+		"ObjectFilter",
+		"ObjectFolder",
+		"ObjectFolderItem",
+		"ObjectLayout",
+		"ObjectLayoutBox",
+		"ObjectLayoutColumn",
+		"ObjectLayoutRow",
+		"ObjectLayoutTab",
+		"ObjectRelationship",
+		"ObjectState",
+		"ObjectStateFlow",
+		"ObjectStateTransition",
+		"ObjectValidationRule",
+		"ObjectValidationRuleSetting",
+		"ObjectView",
+		"ObjectViewColumn",
+		"ObjectViewFilterColumn",
+		"ObjectViewSortColumn",
+		"OpenIdConnectSession",
+		"OrgLabor",
+		"Organization_",
+		"PLOEntry",
+		"PasswordPolicy",
+		"PasswordPolicyRel",
+		"PasswordTracker",
+		"Phone",
+		"PluginSetting",
+		"PortalPreferenceValue",
+		"PortalPreferences",
+		"Portlet",
+		"PortletItem",
+		"PortletPreferenceValue",
+		"PortletPreferences",
+		"PushNotificationsDevice",
+		"RatingsEntry",
+		"RatingsStats",
+		"ReadingTimeEntry",
+		"RecentLayoutBranch",
+		"RecentLayoutRevision",
+		"RecentLayoutSetBranch",
+		"RedirectEntry",
+		"RedirectNotFoundEntry",
+		"Region",
+		"RegionLocalization",
+		"Reports_Definition",
+		"Reports_Entry",
+		"Reports_Source",
+		"Repository",
+		"RepositoryEntry",
+		"ResourceAction",
+		"ResourcePermission",
+		"Role_",
+		"SAPEntry",
+		"SXPBlueprint",
+		"SXPElement",
+		"SamlIdpSpConnection",
+		"SamlIdpSpSession",
+		"SamlIdpSsoSession",
+		"SamlPeerBinding",
+		"SamlSpAuthRequest",
+		"SamlSpIdpConnection",
+		"SamlSpMessage",
+		"SamlSpSession",
+		"SavedContentEntry",
+		"SegmentsEntry",
+		"SegmentsEntryRel",
+		"SegmentsEntryRole",
+		"SegmentsExperience",
+		"SegmentsExperiment",
+		"SegmentsExperimentRel",
+		"SharepointOAuth2TokenEntry",
+		"SharingEntry",
+		"SiteFriendlyURL",
+		"SiteNavigationMenu",
+		"SiteNavigationMenuItem",
+		"SocialActivity",
+		"SocialActivityAchievement",
+		"SocialActivityCounter",
+		"SocialActivityLimit",
+		"SocialActivitySet",
+		"SocialActivitySetting",
+		"SocialRelation",
+		"SocialRequest",
+		"StyleBookEntry",
+		"StyleBookEntryVersion",
+		"Subscription",
+		"SystemEvent",
+		"Team",
+		"TemplateEntry",
+		"Ticket",
+		"TranslationEntry",
+		"TrashEntry",
+		"TrashVersion",
+		"UserGroup",
+		"UserGroupGroupRole",
+		"UserGroupRole",
+		"UserGroups_Teams",
+		"UserIdMapper",
+		"UserNotificationDelivery",
+		"UserNotificationEvent",
+		"UserTracker",
+		"UserTrackerPath",
+		"User_",
+		"Users_Groups",
+		"Users_Orgs",
+		"Users_Roles",
+		"Users_Teams",
+		"Users_UserGroups",
+		"ViewCountEntry",
+		"WMSLADefinition",
+		"WMSLADefinitionVersion",
+		"WebDAVProps",
+		"Website",
+		"WikiNode",
+		"WikiPage",
+		"WikiPageResource",
+		"WorkflowDefinitionLink",
+		"WorkflowInstanceLink"
+	]
+}

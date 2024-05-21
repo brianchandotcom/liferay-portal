@@ -218,9 +218,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 									<>
 										<span className='legend-text-color'>
 											{label}
-											<b className='ml-1'>
-												{value}
-											</b>
+											<b className='ml-1'>{value}</b>
 										</span>
 									</>
 								);

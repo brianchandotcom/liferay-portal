@@ -14,8 +14,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class DDMFormInstanceRecordIdComparator
 	extends OrderByComparator<DDMFormInstanceRecord> {
 
-	public DDMFormInstanceRecordIdComparator(boolean ascending) {
-		_ascending = ascending;
+	public static DDMFormInstanceRecordIdComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -51,6 +57,16 @@ public class DDMFormInstanceRecordIdComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DDMFormInstanceRecordIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DDMFormInstanceRecordIdComparator _ASCENDING =
+		new DDMFormInstanceRecordIdComparator(true);
+
+	private static final DDMFormInstanceRecordIdComparator _DESCENDING =
+		new DDMFormInstanceRecordIdComparator(false);
 
 	private static final String _ORDER_BY_ASC =
 		"DDMFormInstanceRecord.formInstanceRecordId ASC";

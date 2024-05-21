@@ -691,6 +691,7 @@ AUI.add(
 						if (portlet) {
 							portlet.removeClass(CSS_OPEN);
 						}
+						menuInstance._closeActiveMenu();
 					}
 					else {
 						menuInstance._closeActiveMenu();

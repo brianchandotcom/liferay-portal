@@ -63,13 +63,13 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 	public void testDeleteStyleBookEntries() throws Exception {
 		StyleBookEntry styleBookEntry1 =
 			_styleBookEntryLocalService.addStyleBookEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				StringPool.BLANK, _serviceContext);
 
 		StyleBookEntry styleBookEntry2 =
 			_styleBookEntryLocalService.addStyleBookEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				StringPool.BLANK, _serviceContext);
 
@@ -98,7 +98,7 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, name, StringPool.BLANK, _serviceContext);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -127,7 +127,7 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				StringPool.BLANK, _serviceContext);
 

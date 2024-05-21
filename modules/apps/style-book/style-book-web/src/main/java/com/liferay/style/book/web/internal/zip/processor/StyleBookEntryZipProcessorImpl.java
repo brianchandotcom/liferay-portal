@@ -120,7 +120,8 @@ public class StyleBookEntryZipProcessorImpl
 		try {
 			if (styleBookEntry == null) {
 				styleBookEntry = _styleBookEntryEntryService.addStyleBookEntry(
-					groupId, frontendTokensValues, name, styleBookEntryKey,
+					null, groupId, frontendTokensValues, name,
+					styleBookEntryKey,
 					ServiceContextThreadLocal.getServiceContext());
 			}
 			else {

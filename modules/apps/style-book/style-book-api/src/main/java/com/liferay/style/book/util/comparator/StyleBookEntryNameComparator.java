@@ -15,14 +15,12 @@ import com.liferay.style.book.model.StyleBookEntry;
 public class StyleBookEntryNameComparator
 	extends OrderByComparator<StyleBookEntry> {
 
-	public static final String ORDER_BY_ASC = "StyleBookEntry.name ASC";
+	public static StyleBookEntryNameComparator get(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
 
-	public static final String ORDER_BY_DESC = "StyleBookEntry.name DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"name"};
-
-	public StyleBookEntryNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _DESCENDING;
 	}
 
 	@Override
@@ -44,21 +42,37 @@ public class StyleBookEntryNameComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private StyleBookEntryNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final StyleBookEntryNameComparator _ASCENDING =
+		new StyleBookEntryNameComparator(true);
+
+	private static final StyleBookEntryNameComparator _DESCENDING =
+		new StyleBookEntryNameComparator(false);
+
+	private static final String _ORDER_BY_ASC = "StyleBookEntry.name ASC";
+
+	private static final String _ORDER_BY_DESC = "StyleBookEntry.name DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"name"};
 
 	private final boolean _ascending;
 

@@ -110,7 +110,7 @@ public class StyleBookEntryItemSelectorViewDescriptor
 			StyleBookEntryLocalServiceUtil.getStyleBookEntries(
 				StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StyleBookEntryNameComparator(true)));
+				StyleBookEntryNameComparator.get(true)));
 
 		styleBookEntrySearchContainer.setResultsAndTotal(styleBookEntries);
 

@@ -1877,7 +1877,7 @@ public class ContentPageEditorDisplayContext {
 			_styleBookEntryLocalService.getStyleBookEntries(
 				_staging.getLiveGroupId(themeDisplay.getScopeGroupId()),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StyleBookEntryNameComparator(true));
+				StyleBookEntryNameComparator.get(true));
 
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 			styleBooks.add(

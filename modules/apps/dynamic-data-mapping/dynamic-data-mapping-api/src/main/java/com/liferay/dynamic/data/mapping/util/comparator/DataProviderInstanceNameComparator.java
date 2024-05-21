@@ -15,14 +15,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class DataProviderInstanceNameComparator
 	extends OrderByComparator<DDMDataProviderInstance> {
 
-	public static final String ORDER_BY_ASC =
-		"DDMDataProviderInstance.name ASC";
-
-	public static final String ORDER_BY_DESC =
-		"DDMDataProviderInstance.name DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"name"};
-
 	public DataProviderInstanceNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
@@ -49,21 +41,29 @@ public class DataProviderInstanceNameComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private static final String _ORDER_BY_ASC =
+		"DDMDataProviderInstance.name ASC";
+
+	private static final String _ORDER_BY_DESC =
+		"DDMDataProviderInstance.name DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"name"};
 
 	private final boolean _ascending;
 

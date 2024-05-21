@@ -16,17 +16,19 @@ import runEsbuild from './runEsbuild.mjs';
 export default async function bundleJavaScriptMain(
 	globalImports,
 	overridenPackageSymbols,
-	projectMain,
+	projectEntryPoints,
 	projectWebContextPath
 ) {
-	if (!projectMain) {
+	const {main: mainEntryPoint} = projectEntryPoints;
+
+	if (!mainEntryPoint) {
 		return;
 	}
 
 	const esbuildConfig = {
 		bundle: true,
 		entryNames: 'index',
-		entryPoints: [path.resolve(projectMain)],
+		entryPoints: [path.resolve(mainEntryPoint)],
 		external: getExternals(globalImports, 'main'),
 		format: 'esm',
 		loader: {

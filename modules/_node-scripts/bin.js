@@ -11,6 +11,7 @@ const path = require('path');
 
 const COMMAND_DESCRIPTIONS = {
 	build: 'builds frontend stuff of current project',
+	'generate:tsconfig': 'generates tsconfig.json files for all projects',
 };
 
 const command = process.argv[2];

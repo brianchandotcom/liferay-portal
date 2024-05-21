@@ -6,10 +6,15 @@
 import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**
- * @returns the proejct relative path of the main entry point
+ * @returns
+ * {
+ *	 'dep-a': 'x.y.z',
+ *	 'dep-b': 'x.y.z',
+ *	 ...
+ * }
  */
-export default function getProjectMain() {
-	const {main} = projectScopeRequire('./node-scripts.config.js');
+export default function getProjectDependencies(projectDir = '.') {
+	const {dependencies} = projectScopeRequire('./package.json', projectDir);
 
-	return main;
+	return dependencies || {};
 }

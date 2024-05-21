@@ -6,13 +6,13 @@
 package com.liferay.portal.background.task.internal.upgrade.v2_0_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -21,8 +21,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -41,114 +40,92 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(new LiferayIntegrationTestRule());
+		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() {
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.createBackgroundTask(
-				_BACKGROUND_TASK_ID);
+	public void setUp() throws Exception {
+		_backgroundTask = _backgroundTaskLocalService.createBackgroundTask(
+			_counterLocalService.increment());
 
-		backgroundTask.setTaskContextMap(
-			HashMapBuilder.<String, Serializable>put(
-				"companyId", _COMPANY_ID
-			).put(
-				_KEY_THREAD_LOCAL_VALUES, _initializeThreadLocalValues()
-			).build());
+		_backgroundTask.setTaskContextMap(_getTaskContextMap(true));
 
-		_backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
-	}
+		_backgroundTask = _backgroundTaskLocalService.updateBackgroundTask(
+			_backgroundTask);
 
-	@Test
-	public void testUpgradeProcess() throws PortalException {
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+		_upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
 			"com.liferay.portal.background.task.internal.upgrade.v2_0_1." +
 				"BackgroundTaskCompanyIdUpgradeProcess");
+	}
 
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.getBackgroundTask(_BACKGROUND_TASK_ID);
-
+	@Test
+	public void testUpgradeProcess() throws Exception {
 		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		Assert.assertEquals(_COMPANY_ID, taskContextMap.get("companyId"));
-
-		Map<String, Serializable> threadLocalValues =
-			(Map<String, Serializable>)taskContextMap.get(
-				_KEY_THREAD_LOCAL_VALUES);
-
-		Assert.assertEquals(_COMPANY_ID, threadLocalValues.get("companyId"));
-
-		upgradeProcess.upgrade();
-
-		backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
-			_BACKGROUND_TASK_ID);
-
-		taskContextMap = backgroundTask.getTaskContextMap();
-
-		Assert.assertNull(taskContextMap.get("companyId"));
-
-		threadLocalValues = (Map<String, Serializable>)taskContextMap.get(
-			_KEY_THREAD_LOCAL_VALUES);
+			_backgroundTask.getTaskContextMap();
 
 		Assert.assertEquals(
-			_CLUSTER_INVOKE_ENABLED, threadLocalValues.get("clusterInvoke"));
-		Assert.assertEquals(
-			_defaultLocale, threadLocalValues.get("defaultLocale"));
-		Assert.assertEquals(_GROUP_ID, threadLocalValues.get("groupId"));
-		Assert.assertEquals(
-			_PRINCIPAL_NAME, threadLocalValues.get("principalName"));
-		Assert.assertNull(threadLocalValues.get("principalPassword"));
-		Assert.assertEquals(
-			_siteDefaultLocale, threadLocalValues.get("siteDefaultLocale"));
-		Assert.assertEquals(
-			_themeDisplayLocale, threadLocalValues.get("themeDisplayLocale"));
+			_getTaskContextMap(
+				true
+			).toString(),
+			taskContextMap.toString());
 
-		Assert.assertNull(threadLocalValues.get("companyId"));
+		_upgradeProcess.upgrade();
+
+		_backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
+			_backgroundTask.getBackgroundTaskId());
+
+		taskContextMap = _backgroundTask.getTaskContextMap();
+
+		Assert.assertEquals(
+			_getTaskContextMap(
+				false
+			).toString(),
+			taskContextMap.toString());
 	}
 
-	private HashMap<String, Serializable> _initializeThreadLocalValues() {
-		return HashMapBuilder.<String, Serializable>put(
-			"clusterInvoke", _CLUSTER_INVOKE_ENABLED
-		).put(
-			"companyId", _COMPANY_ID
-		).put(
-			"defaultLocale", _defaultLocale
-		).put(
-			"groupId", _GROUP_ID
-		).put(
-			"principalName", _PRINCIPAL_NAME
-		).put(
-			"siteDefaultLocale", _siteDefaultLocale
-		).put(
-			"themeDisplayLocale", _themeDisplayLocale
-		).build();
+	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId)
+		throws Exception {
+
+		LinkedHashMap<String, Serializable> threadLocalValues =
+			LinkedHashMapBuilder.<String, Serializable>put(
+				"clusterInvoke", true
+			).put(
+				"defaultLocale", LocaleUtil.US
+			).put(
+				"groupId", 0
+			).put(
+				"principalName", "test"
+			).put(
+				"siteDefaultLocale", LocaleUtil.CANADA
+			).put(
+				"themeDisplayLocale", LocaleUtil.FRANCE
+			).build();
+
+		Map<String, Serializable> taskContextMap = new LinkedHashMap<>();
+
+		if (addCompanyId) {
+			taskContextMap.put("companyId", TestPropsValues.getCompanyId());
+			threadLocalValues.put("companyId", TestPropsValues.getCompanyId());
+		}
+
+		taskContextMap.put("threadLocalValues", threadLocalValues);
+
+		return taskContextMap;
 	}
 
-	private static final long _BACKGROUND_TASK_ID = RandomTestUtil.randomLong();
-
-	private static final boolean _CLUSTER_INVOKE_ENABLED = true;
-
-	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
-
-	private static final long _GROUP_ID = RandomTestUtil.randomLong();
-
-	private static final String _KEY_THREAD_LOCAL_VALUES = "threadLocalValues";
-
-	private static final String _PRINCIPAL_NAME = String.valueOf(
-		RandomTestUtil.randomLong());
+	private static UpgradeProcess _upgradeProcess;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.background.task.internal.upgrade.registry.BackgroundTaskServiceUpgradeStepRegistrator"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
+	private BackgroundTask _backgroundTask;
+
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
-	private final Locale _defaultLocale = LocaleUtil.US;
-	private final Locale _siteDefaultLocale = LocaleUtil.CANADA;
-	private final Locale _themeDisplayLocale = LocaleUtil.FRANCE;
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 }

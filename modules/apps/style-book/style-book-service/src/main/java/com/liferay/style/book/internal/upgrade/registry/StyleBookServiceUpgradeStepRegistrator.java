@@ -5,6 +5,7 @@
 
 package com.liferay.style.book.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
@@ -55,6 +56,19 @@ public class StyleBookServiceUpgradeStepRegistrator
 				@Override
 				protected String[] getTableNames() {
 					return new String[] {"StyleBookEntryVersion"};
+				}
+
+			});
+
+		registry.register(
+			"1.4.1", "1.5.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"StyleBookEntry", "styleBookEntryId"}
+					};
 				}
 
 			});

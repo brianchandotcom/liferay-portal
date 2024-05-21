@@ -51,7 +51,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			return null;
 		}
 
-		if (!html.contains("/documents/") || !html.contains("<img")) {
+		if (!html.contains("/documents/") || !_hasStandaloneImgTag(html)) {
 			return html;
 		}
 
@@ -156,6 +156,28 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		User user = _userLocalService.getUserByScreenName(companyId, name);
 
 		return user.getGroup();
+	}
+
+	private boolean _hasStandaloneImgTag(String html) {
+		int index = -1;
+
+		while ((index = html.indexOf("<img", index)) != -1) {
+			int openStart = html.lastIndexOf("<picture", index);
+
+			if (openStart == -1) {
+				return true;
+			}
+
+			int closeStart = html.lastIndexOf("</picture>", index);
+
+			if ((closeStart != -1) && (openStart > closeStart)) {
+				return true;
+			}
+
+			index += 4;
+		}
+
+		return false;
 	}
 
 	private Document _parseDocument(String html) {

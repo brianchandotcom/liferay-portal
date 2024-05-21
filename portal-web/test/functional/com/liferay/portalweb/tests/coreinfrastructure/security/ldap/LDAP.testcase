@@ -48,6 +48,65 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPD-23115. Localizable String custom fields can be imported from and exported to LDAP."
+	@priority = 3
+	test AttributesCanBeImportedIntoLocalizableStringCustomUserMappings {
+		property apacheds.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: User adds Custom Localizable Text Field to User object") {
+			CustomFields.openCustomFieldAdmin();
+
+			CustomFields.addCP(
+				customFieldName = "User Custom Field",
+				customFieldType = "Text Area",
+				customInputDataType = "Text",
+				localization = "true",
+				resourceName = "User");
+		}
+
+		task ("And: User adds LDAP server with userCustomMapping and configure settings with group import method") {
+			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
+
+			LDAP.addLDAPServerAndTestConnection(userCustomMappings = "user custom field=title");
+
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+		}
+
+		task ("And: creates a new user on LDAP with attribute and imports it") {
+			LDAP.installLDAPCommandUtil();
+
+			LDAP.importLDIFOnLDAPAndTriggerSync(ldifName = "addUserWithAttribute");
+
+			LDAP.verifyUserFirstNameIsChangedInLDAP(userFirstName = "attribute");
+
+			LDAP.verifyUserIsImported(userScreenName = "testUser");
+		}
+
+		task ("When: Admin changes new user custom field") {
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "testuser");
+
+			User.viewUserCustomFieldsCP(
+				customFieldName = "User Custom Field",
+				customFieldType = "Text Area",
+				startingValue = "attribute");
+
+			User.editUserInformation(
+				userCustomField = "Updated Custom Field",
+				userCustomFieldLabel = "user custom field",
+				userCustomFieldType = "Text Area");
+
+			PortletEntry.save();
+		}
+
+		task ("Then: The new user information will be present in the LDAP database") {
+			LDAP.verifyUserFirstNameIsChangedInLDAP(userFirstName = "Updated Custom Field");
+		}
+	}
+
 	@description = "This is a use case for LPS-188257. Verify user is able to edit user info after enabling Use LDAP Password Policy."
 	@priority = 3
 	test CanEditUserAfterEnablingUseLDAPPasswordPolicy {

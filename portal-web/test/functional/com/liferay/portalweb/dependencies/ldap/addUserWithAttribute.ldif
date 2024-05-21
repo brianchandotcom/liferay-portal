@@ -1,0 +1,12 @@
+changetype: add
+cn: testUser
+dn: cn=testUser,dc=example,dc=com
+givenName: firstName
+mail: testUser@liferay.com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+sn: lastName
+title: attribute
+userPassword: test

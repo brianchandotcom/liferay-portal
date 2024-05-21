@@ -54,8 +54,6 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String rememberMe = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false);
 		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest,
 			false);
@@ -63,31 +61,13 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, httpServletRequest,
 			false);
 
-		// LEP-5188
-
-		String proxyPath = _portal.getPathProxy();
-		String contextPath = _portal.getPathContext();
-
-		if (proxyPath.equals(contextPath)) {
-			if (Validator.isNotNull(httpServletRequest.getContextPath())) {
-				rememberMe = Boolean.TRUE.toString();
-			}
-		}
-		else {
-			if (!contextPath.equals(httpServletRequest.getContextPath())) {
-				rememberMe = Boolean.TRUE.toString();
-			}
-		}
-
 		RememberMeToken rememberMeToken = null;
 
 		if (Validator.isNotNull(rememberMeTokenId) &&
 			Validator.isNotNull(rememberMeTokenToken)) {
 
-			rememberMeToken =
-				_rememberMeTokenLocalService.fetchRememberMeToken(
-					GetterUtil.getLong(rememberMeTokenId),
-					rememberMeTokenToken);
+			rememberMeToken = _rememberMeTokenLocalService.fetchRememberMeToken(
+				GetterUtil.getLong(rememberMeTokenId), rememberMeTokenToken);
 		}
 
 		// LPS-11218
@@ -105,9 +85,29 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 		User guestUser = _userLocalService.getGuestUser(company.getCompanyId());
 
+		// LEP-5188
+
+		String proxyPath = _portal.getPathProxy();
+		String contextPath = _portal.getPathContext();
+
+		boolean rememberMe = GetterUtil.getBoolean(
+			CookiesManagerUtil.getCookieValue(
+				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false));
+
+		if (proxyPath.equals(contextPath)) {
+			if (Validator.isNotNull(httpServletRequest.getContextPath())) {
+				rememberMe = true;
+			}
+		}
+		else {
+			if (!contextPath.equals(httpServletRequest.getContextPath())) {
+				rememberMe = false;
+			}
+		}
+
 		if ((user == null) || (guestUser.getUserId() == user.getUserId()) ||
-			!user.isActive() || rememberMeToken.isExpired() ||
-			!GetterUtil.getBoolean(rememberMe) || !company.isAutoLogin()) {
+			!user.isActive() || !rememberMe || rememberMeToken.isExpired() ||
+			!company.isAutoLogin()) {
 
 			removeCookies(httpServletRequest, httpServletResponse);
 

@@ -28,7 +28,7 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 		</clay:content-col>
 	</clay:content-row>
 
-	<div id="<portlet:namespace />defaultCommercePriceLists">
+	<div data-qa-id="defaultCommercePriceLists" id="<portlet:namespace />defaultCommercePriceLists">
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(

@@ -106,7 +106,7 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 			orderByComparator = EntryCreateDateComparator.get(orderByAsc);
 		}
 		else if (orderByCol.equals("type")) {
-			orderByComparator = new EntryTypeComparator(orderByAsc);
+			orderByComparator = EntryTypeComparator.get(orderByAsc);
 		}
 
 		return orderByComparator;

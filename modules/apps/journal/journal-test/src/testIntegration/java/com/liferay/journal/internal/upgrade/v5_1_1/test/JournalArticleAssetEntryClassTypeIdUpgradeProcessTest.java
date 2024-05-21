@@ -8,16 +8,21 @@ package com.liferay.journal.internal.upgrade.v5_1_1.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -25,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -41,6 +47,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,7 +57,8 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
+public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -59,10 +67,17 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testUpgradeProcess() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
+	@Test
+	public void testUpgradeProcess() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
@@ -95,8 +110,6 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeProcessNoChanges() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
@@ -120,6 +133,39 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 			logEntry.getMessage());
 
 		_assertClassTypeId(approvedJournalArticle, draftJournalArticle);
+	}
+
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		return _assetEntryLocalService.fetchEntry(
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			_journalArticle.getResourcePrimKey());
+	}
+
+	@Override
+	protected CTPersistence<?> getCTPersistence() {
+		return _assetEntryLocalService.getCTPersistence();
+	}
+
+	@Override
+	protected void runUpgrade() throws Exception {
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, _CLASS_NAME);
+
+		upgradeProcess.upgrade();
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		_journalArticle.setDDMStructureId(0);
+
+		_journalArticleLocalService.updateJournalArticle(_journalArticle);
+
+		AssetEntry assetEntry = (AssetEntry)ctModel;
+
+		assetEntry.setClassTypeId(0);
+
+		return _assetEntryLocalService.updateAssetEntry(assetEntry);
 	}
 
 	private JournalArticle _addApprovedJournalArticle(
@@ -284,10 +330,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, logPriority)) {
 
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
+			runUpgrade();
 
 			_multiVMPool.clear();
 
@@ -310,7 +353,16 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@DeleteAfterTestRun
+	private JournalArticle _journalArticle;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private Portal _portal;
 
 }

@@ -47,6 +47,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPEARS_ON_PAGE_METRIC</td>
+	<td>xpath=(//h5[contains(.,'${key_cardTitle}')]/parent::div/following-sibling::div//td[@class='table-column-text-end'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPEARS_ON_PAGE_NAME</td>
 	<td>//h5[contains(.,'${key_cardTitle}')]/parent::div/following-sibling::div//a[contains(@class,'text-dark')]//span</td>
 	<td></td>

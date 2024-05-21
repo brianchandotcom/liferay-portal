@@ -104,7 +104,6 @@ import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.auth.FullNameValidator;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
@@ -153,7 +152,6 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1941,59 +1939,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		else if (adminEmailUserAddedEnabled && sendEmail) {
 			notifyUser(user, serviceContext);
 		}
-	}
-
-	/**
-	 * Decrypts the user's primary key and password from their encrypted forms.
-	 * Used for decrypting a user's credentials from the values stored in an
-	 * automatic login cookie.
-	 *
-	 * @param  companyId the primary key of the user's company
-	 * @param  name the encrypted primary key of the user
-	 * @param  password the encrypted password of the user
-	 * @return the user's primary key and password
-	 */
-	@Override
-	public KeyValuePair decryptUserId(
-			long companyId, String name, String password)
-		throws PortalException {
-
-		Company company = _companyPersistence.findByPrimaryKey(companyId);
-
-		try {
-			name = EncryptorUtil.decrypt(company.getKeyObj(), name);
-		}
-		catch (EncryptorException encryptorException) {
-			throw new SystemException(encryptorException);
-		}
-
-		try {
-			password = EncryptorUtil.decrypt(company.getKeyObj(), password);
-		}
-		catch (EncryptorException encryptorException) {
-			throw new SystemException(encryptorException);
-		}
-
-		long userId = GetterUtil.getLong(name);
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		String userPassword = user.getPassword();
-
-		String encPassword = PasswordEncryptorUtil.encrypt(
-			password, userPassword);
-
-		if (userPassword.equals(encPassword)) {
-			if (isPasswordExpired(user)) {
-				user.setPasswordReset(true);
-
-				userPersistence.update(user);
-			}
-
-			return new KeyValuePair(name, password);
-		}
-
-		throw new PrincipalException.MustBeAuthenticated(userId);
 	}
 
 	/**

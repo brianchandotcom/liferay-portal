@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URI;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,13 +53,18 @@ public class LayoutAdaptiveMediaProcessorImpl
 	public String processAdaptiveMediaContent(String content) {
 		String processedContent = _contentTransformerHandler.transform(content);
 
+		if (!_needParsing(processedContent)) {
+			return processedContent;
+		}
+
 		Document document = Jsoup.parse(processedContent);
 
 		try {
-			for (ViewportSize viewportSize : _viewportSizes) {
+			for (Map.Entry<ViewportSize, String> entry :
+					_viewportSizeMap.entrySet()) {
+
 				Elements elements = document.getElementsByAttribute(
-					"data-" + viewportSize.getViewportSizeId() +
-						"-configuration");
+					entry.getValue());
 
 				for (Element element : elements) {
 					if (!StringUtil.equalsIgnoreCase(
@@ -66,9 +73,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 						continue;
 					}
 
-					String configuration = element.attr(
-						"data-" + viewportSize.getViewportSizeId() +
-							"-configuration");
+					String configuration = element.attr(entry.getValue());
 
 					long fileEntryId = GetterUtil.getLong(
 						element.attr(
@@ -93,7 +98,8 @@ public class LayoutAdaptiveMediaProcessorImpl
 					URI uri = _amImageURLFactory.createFileEntryURL(
 						fileEntry.getFileVersion(), amImageConfigurationEntry);
 
-					_appendSourceElement(document, element, uri, viewportSize);
+					_appendSourceElement(
+						document, element, uri, entry.getKey());
 				}
 			}
 
@@ -109,6 +115,19 @@ public class LayoutAdaptiveMediaProcessorImpl
 		Element bodyElement = document.body();
 
 		return bodyElement.html();
+	}
+
+	private static EnumMap<ViewportSize, String> _getViewportSizeMap() {
+		EnumMap<ViewportSize, String> viewportSizeMap = new EnumMap<>(
+			ViewportSize.class);
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			viewportSizeMap.put(
+				viewportSize,
+				"data-" + viewportSize.getViewportSizeId() + "-configuration");
+		}
+
+		return viewportSizeMap;
 	}
 
 	private void _appendSourceElement(
@@ -173,6 +192,20 @@ public class LayoutAdaptiveMediaProcessorImpl
 		return sb.toString();
 	}
 
+	private boolean _needParsing(String html) {
+		for (String viewportSizeConfiguration : _viewportSizeMap.values()) {
+			if (html.contains(viewportSizeConfiguration)) {
+				return true;
+			}
+		}
+
+		if (html.contains("--background-image-file-entry-id:")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _replaceCSSProperties(Document document)
 		throws PortalException {
 
@@ -216,7 +249,8 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 	private static final Pattern _cssPropertyPattern = Pattern.compile(
 		"--background-image-file-entry-id:\\s*(\\d+);");
-	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
+	private static final EnumMap<ViewportSize, String> _viewportSizeMap =
+		_getViewportSizeMap();
 
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

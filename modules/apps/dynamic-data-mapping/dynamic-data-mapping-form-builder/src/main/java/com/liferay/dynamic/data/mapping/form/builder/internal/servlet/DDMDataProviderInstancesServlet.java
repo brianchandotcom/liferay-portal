@@ -97,7 +97,7 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 			httpServletRequest, "end", QueryUtil.ALL_POS);
 
 		DataProviderInstanceNameComparator dataProviderInstanceNameComparator =
-			new DataProviderInstanceNameComparator(true);
+			DataProviderInstanceNameComparator.getInstance(true);
 
 		List<DDMDataProviderInstance> ddmDataProviderInstances =
 			ListUtil.concat(

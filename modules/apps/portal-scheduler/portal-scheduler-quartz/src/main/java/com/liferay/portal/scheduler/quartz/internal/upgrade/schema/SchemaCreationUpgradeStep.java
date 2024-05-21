@@ -10,9 +10,10 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.upgrade.release.BaseSchemaCreationUpgradeStep;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
@@ -20,24 +21,15 @@ import java.sql.Connection;
 /**
  * @author Shuyang Zhou
  */
-public class SchemaCreationUpgradeStep implements UpgradeStep {
+public class SchemaCreationUpgradeStep extends BaseSchemaCreationUpgradeStep {
+
+	public SchemaCreationUpgradeStep() {
+		super(_getTemplateSQL());
+	}
 
 	@Override
 	public void upgrade() throws UpgradeException {
-		ClassLoader classLoader =
-			SchemaCreationUpgradeStep.class.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"/META-INF/sql/quartz-tables.sql");
-
-		if (inputStream == null) {
-			throw new SystemException(
-				"Unable to read /META-INF/sql/quartz-tables.sql");
-		}
-
 		try (Connection connection = DataAccess.getConnection()) {
-			String template = StringUtil.read(inputStream);
-
 			DB db = DBManagerUtil.getDB();
 
 			boolean autoCommit = connection.getAutoCommit();
@@ -45,7 +37,7 @@ public class SchemaCreationUpgradeStep implements UpgradeStep {
 			try {
 				connection.setAutoCommit(false);
 
-				db.runSQLTemplateString(connection, template, false);
+				db.runSQLTemplateString(connection, sqlTemplate, false);
 
 				connection.commit();
 			}
@@ -60,6 +52,25 @@ public class SchemaCreationUpgradeStep implements UpgradeStep {
 		}
 		catch (Exception exception) {
 			throw new UpgradeException(exception);
+		}
+	}
+
+	private static String _getTemplateSQL() {
+		ClassLoader classLoader =
+			SchemaCreationUpgradeStep.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				"/META-INF/sql/quartz-tables.sql")) {
+
+			if (inputStream == null) {
+				throw new SystemException(
+					"Unable to read /META-INF/sql/quartz-tables.sql");
+			}
+
+			return StringUtil.read(inputStream);
+		}
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

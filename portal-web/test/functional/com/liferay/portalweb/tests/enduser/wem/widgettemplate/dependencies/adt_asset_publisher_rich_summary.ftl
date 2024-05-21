@@ -38,17 +38,17 @@
 			</a>
 		</h3>
 
-		<@getMetadataField fieldName="tags" />
+		<@getMetadataField fieldName = "tags" />
 
-		<@getMetadataField fieldName="create-date" />
+		<@getMetadataField fieldName = "create-date" />
 
-		<@getMetadataField fieldName="view-count" />
+		<@getMetadataField fieldName = "view-count" />
 
 		<div class="asset-content">
 			<@getSocialBookmarks />
 
 			<div class="asset-summary">
-				<@getMetadataField fieldName="author" />
+				<@getMetadataField fieldName = "author" />
 
 				${htmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse))}
 

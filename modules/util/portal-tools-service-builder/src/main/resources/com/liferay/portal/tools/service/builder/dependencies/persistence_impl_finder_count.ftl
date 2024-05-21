@@ -196,7 +196,7 @@ public int countBy${entityFinder.name}(
 					QueryPos queryPos = QueryPos.getInstance(query);
 				</#if>
 
-				<@finderQPos _arrayable=true />
+				<@finderQPos _arrayable = true />
 
 				count = (Long)query.uniqueResult();
 
@@ -409,7 +409,7 @@ public int countBy${entityFinder.name}(
 				QueryPos queryPos = QueryPos.getInstance(query);
 			</#if>
 
-			<@finderQPos _arrayable=true />
+			<@finderQPos _arrayable = true />
 
 			count = (Long)query.uniqueResult();
 		}
@@ -655,7 +655,7 @@ public int countBy${entityFinder.name}(
 						QueryPos queryPos = QueryPos.getInstance(query);
 					</#if>
 
-					<@finderQPos _arrayable=true />
+					<@finderQPos _arrayable = true />
 
 					Long count = (Long)query.uniqueResult();
 
@@ -701,7 +701,7 @@ public int countBy${entityFinder.name}(
 						QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 					</#if>
 
-					<@finderQPos _arrayable=true />
+					<@finderQPos _arrayable = true />
 
 					Long count = (Long)sqlQuery.uniqueResult();
 

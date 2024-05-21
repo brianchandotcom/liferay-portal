@@ -9,12 +9,12 @@
 <#else>
 	<div aria-label="<@liferay.language key="site-pages" />" class="list-menu">
 		<@buildNavigation
-			branchNavItems=branchNavItems
-			cssClass="layouts"
-			displayDepth=displayDepth
-			includeAllChildNavItems=true
-			navItemLevel=1
-			navItems=entries
+			branchNavItems = branchNavItems
+			cssClass = "layouts"
+			displayDepth = displayDepth
+			includeAllChildNavItems = true
+			navItemLevel = 1
+			navItems = entries
 		/>
 	</div>
 </#if>

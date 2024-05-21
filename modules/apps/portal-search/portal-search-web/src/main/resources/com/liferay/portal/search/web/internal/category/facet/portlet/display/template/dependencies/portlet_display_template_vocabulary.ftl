@@ -100,13 +100,13 @@
 				<ul class="treeview-group" role="group">
 					<#list termDisplayContexts as termDisplayContext>
 						<@treeview_item
-							cssClassTreeItem="tree-item-category"
-							frequency=termDisplayContext.getFrequency()
-							frequencyVisible=termDisplayContext.isFrequencyVisible()
-							id=termDisplayContext.getFilterValue()
-							name=htmlUtil.escape(termDisplayContext.getBucketText())
-							selectable=true
-							selected=termDisplayContext.isSelected()
+							cssClassTreeItem = "tree-item-category"
+							frequency = termDisplayContext.getFrequency()
+							frequencyVisible = termDisplayContext.isFrequencyVisible()
+							id = termDisplayContext.getFilterValue()
+							name = htmlUtil.escape(termDisplayContext.getBucketText())
+							selectable = true
+							selected = termDisplayContext.isSelected()
 						/>
 					</#list>
 				</ul>
@@ -146,11 +146,11 @@
 			<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
 				<#list vocabularyNames as vocabularyName>
 					<@treeview_item
-						cssClassTreeItem="tree-item-vocabulary"
-						frequencyVisible=false
-						id=vocabularyName?replace("[^\\w]|_", '', 'r') + vocabularyName?index
-						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
-						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
+						cssClassTreeItem = "tree-item-vocabulary"
+						frequencyVisible = false
+						id = vocabularyName?replace("[^\\w]|_", '', 'r') + vocabularyName?index
+						name = "${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
+						termDisplayContexts = assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
 					/>
 				</#list>
 			</ul>

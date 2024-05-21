@@ -10,19 +10,19 @@
 	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
 
 	<@insertAssetEntry
-		_categoryAndTag=true
-		_entry=blogsEntryModel
+		_categoryAndTag = true
+		_entry = blogsEntryModel
 	/>
 
 	<#assign mbRootMessageId = dataFactory.getCounterNext() />
 
 	<@insertMBDiscussion
-		_classNameId=dataFactory.blogsEntryClassNameId
-		_classPK=blogsEntryModel.entryId
-		_groupId=groupId
-		_maxCommentCount=dataFactory.maxBlogsEntryCommentCount
-		_mbRootMessageId=mbRootMessageId
-		_mbThreadId=dataFactory.getCounterNext()
+		_classNameId = dataFactory.blogsEntryClassNameId
+		_classPK = blogsEntryModel.entryId
+		_groupId = groupId
+		_maxCommentCount = dataFactory.maxBlogsEntryCommentCount
+		_mbRootMessageId = mbRootMessageId
+		_mbThreadId = dataFactory.getCounterNext()
 	/>
 
 	${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(blogsEntryModel))}

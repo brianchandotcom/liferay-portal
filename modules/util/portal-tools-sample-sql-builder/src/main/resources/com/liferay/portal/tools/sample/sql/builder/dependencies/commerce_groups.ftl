@@ -59,7 +59,7 @@
 				${dataFactory.toInsertSQL(portletPreferenceValueModel)}
 			</#list>
 
-			<@insertLayout _layoutModel=commerceLayoutModel />
+			<@insertLayout _layoutModel = commerceLayoutModel />
 		</#list>
 	</#list>
 

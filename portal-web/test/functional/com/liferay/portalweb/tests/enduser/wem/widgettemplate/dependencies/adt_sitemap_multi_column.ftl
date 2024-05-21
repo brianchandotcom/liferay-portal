@@ -17,8 +17,8 @@
 				</div>
 
 				<@displayPages
-					depth=1
-					pages=entry.getChildren()
+					depth = 1
+					pages = entry.getChildren()
 				/>
 			</@clay.col>
 		</#list>
@@ -44,8 +44,8 @@
 					>${page.getName(locale)}</a>
 
 					<@displayPages
-						depth=depth + 1
-						pages=page.getChildren()
+						depth = depth + 1
+						pages = page.getChildren()
 					/>
 				</li>
 			</#list>

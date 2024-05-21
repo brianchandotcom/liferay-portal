@@ -3,7 +3,7 @@
 <div class="row">
 <div class="speedwell-category-nav__content col-lg-12">
 
-				<@commerce_category_navigation_menu default_preferences=freeMarkerPortletPreferences
+				<@commerce_category_navigation_menu default_preferences = freeMarkerPortletPreferences
 						.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 
 <div class="show-more">

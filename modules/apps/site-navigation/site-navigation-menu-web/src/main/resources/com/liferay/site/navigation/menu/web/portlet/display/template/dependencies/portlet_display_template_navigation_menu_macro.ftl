@@ -34,10 +34,10 @@
 		<#if childNavigationItem.hasBrowsableChildren() && ((displayDepth == 0) || (navItemLevel < displayDepth))>
 			<ul class="list-unstyled pl-3">
 				<@buildChildrenNavItems
-					displayDepth=displayDepth
-					menuItem=false
-					navItem=childNavigationItem
-					navItemLevel=(navItemLevel + 1)
+					displayDepth = displayDepth
+					menuItem = false
+					navItem = childNavigationItem
+					navItemLevel = (navItemLevel + 1)
 				/>
 			</ul>
 		</#if>
@@ -78,12 +78,12 @@
 
 					<#if includeAllChildNavItems || navItem.isInNavigation(branchNavItems)>
 						<@buildNavigation
-							branchNavItems=branchNavItems
-							cssClass=cssClass
-							displayDepth=displayDepth
-							includeAllChildNavItems=includeAllChildNavItems
-							navItemLevel=(navItemLevel + 1)
-							navItems=navItem.getChildren()
+							branchNavItems = branchNavItems
+							cssClass = cssClass
+							displayDepth = displayDepth
+							includeAllChildNavItems = includeAllChildNavItems
+							navItemLevel = (navItemLevel + 1)
+							navItems = navItem.getChildren()
 						/>
 					</#if>
 				</li>

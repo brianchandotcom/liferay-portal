@@ -11,7 +11,7 @@
 
 	${csvFileWriter.write("layout", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + layoutModel.friendlyURL + "\n")}
 
-	<@insertLayout _layoutModel=layoutModel />
+	<@insertLayout _layoutModel = layoutModel />
 
 	<#list dataFactory.getSequence(dataFactory.maxJournalArticleCount) as journalArticleCount>
 		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId) />
@@ -24,20 +24,20 @@
 			/>
 
 			<@insertJournalArticle
-				_insertAssetEntry=(versionCount==dataFactory.maxJournalArticleVersionCount)
-				_journalArticleModel=journalArticleModel
-				_journalDDMStructureModel=defaultJournalDDMStructureModel
-				_journalDDMTemplateModel=defaultJournalDDMTemplateModel
+				_insertAssetEntry = (versionCount==dataFactory.maxJournalArticleVersionCount)
+				_journalArticleModel = journalArticleModel
+				_journalDDMStructureModel = defaultJournalDDMStructureModel
+				_journalDDMTemplateModel = defaultJournalDDMTemplateModel
 			/>
 		</#list>
 
 		<@insertMBDiscussion
-			_classNameId=dataFactory.journalArticleClassNameId
-			_classPK=journalArticleResourceModel.resourcePrimKey
-			_groupId=groupId
-			_maxCommentCount=0
-			_mbRootMessageId=dataFactory.getCounterNext()
-			_mbThreadId=dataFactory.getCounterNext()
+			_classNameId = dataFactory.journalArticleClassNameId
+			_classPK = journalArticleResourceModel.resourcePrimKey
+			_groupId = groupId
+			_maxCommentCount = 0
+			_mbRootMessageId = dataFactory.getCounterNext()
+			_mbThreadId = dataFactory.getCounterNext()
 		/>
 
 		${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel))}

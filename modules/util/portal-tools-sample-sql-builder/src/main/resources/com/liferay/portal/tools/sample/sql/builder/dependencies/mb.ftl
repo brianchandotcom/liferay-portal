@@ -9,12 +9,12 @@
 
 		${dataFactory.toInsertSQL(dataFactory.newSubscriptionModel(mbThreadModel))}
 
-		<@insertAssetEntry _entry=mbThreadModel />
+		<@insertAssetEntry _entry = mbThreadModel />
 
 		${dataFactory.toInsertSQL(dataFactory.newMBThreadFlagModel(mbThreadModel))}
 
 		<#list dataFactory.newMBMessageModels(mbThreadModel) as mbMessageModel>
-			<@insertMBMessage _mbMessageModel=mbMessageModel />
+			<@insertMBMessage _mbMessageModel = mbMessageModel />
 
 			${dataFactory.toInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel))}
 		</#list>

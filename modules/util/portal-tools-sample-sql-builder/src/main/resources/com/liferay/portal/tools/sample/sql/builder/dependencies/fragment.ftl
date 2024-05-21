@@ -8,10 +8,10 @@
 	${dataFactory.toInsertSQL(journalArticleResourceModel)}
 
 	<@insertJournalArticle
-		_insertAssetEntry=true
-		_journalArticleModel=journalArticleModel
-		_journalDDMStructureModel=defaultJournalDDMStructureModel
-		_journalDDMTemplateModel=defaultJournalDDMTemplateModel
+		_insertAssetEntry = true
+		_journalArticleModel = journalArticleModel
+		_journalDDMStructureModel = defaultJournalDDMStructureModel
+		_journalDDMTemplateModel = defaultJournalDDMTemplateModel
 	/>
 
 	<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
@@ -24,9 +24,9 @@
 
 	<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
 		<@insertContentLayout
-			_fragmentEntryModel=fragmentEntryModel
-			_journalArticleModel=journalArticleModel
-			_layoutModel=contentLayoutModel
+			_fragmentEntryModel = fragmentEntryModel
+			_journalArticleModel = journalArticleModel
+			_layoutModel = contentLayoutModel
 		/>
 
 		${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}

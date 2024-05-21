@@ -1260,7 +1260,7 @@ that may or may not be enforced with a unique index at the database level. Case
 							QueryPos queryPos = QueryPos.getInstance(query);
 						</#if>
 
-						<@finderQPos _arrayable=true />
+						<@finderQPos _arrayable = true />
 
 						return (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 					}
@@ -1335,7 +1335,7 @@ that may or may not be enforced with a unique index at the database level. Case
 							QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 						</#if>
 
-						<@finderQPos _arrayable=true />
+						<@finderQPos _arrayable = true />
 
 						return (List<${entity.name}>)QueryUtil.list(sqlQuery, getDialect(), start, end);
 					}
@@ -1704,7 +1704,7 @@ that may or may not be enforced with a unique index at the database level. Case
 					QueryPos queryPos = QueryPos.getInstance(query);
 				</#if>
 
-				<@finderQPos _arrayable=true />
+				<@finderQPos _arrayable = true />
 
 				list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 
@@ -2155,7 +2155,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				QueryPos queryPos = QueryPos.getInstance(query);
 			</#if>
 
-			<@finderQPos _arrayable=true />
+			<@finderQPos _arrayable = true />
 
 			list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 		}

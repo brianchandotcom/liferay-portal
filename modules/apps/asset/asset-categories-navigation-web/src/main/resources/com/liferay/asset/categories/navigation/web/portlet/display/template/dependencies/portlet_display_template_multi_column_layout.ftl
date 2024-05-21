@@ -15,7 +15,7 @@
 						</h3>
 					</div>
 
-					<@displayCategories categories=categories />
+					<@displayCategories categories = categories />
 				</@clay.col>
 			</#if>
 		</#list>
@@ -51,7 +51,7 @@
 							childCategories = assetCategoryService.getChildCategories(category.getCategoryId())
 						/>
 
-						<@displayCategories categories=childCategories />
+						<@displayCategories categories = childCategories />
 					</#if>
 				</li>
 			</#list>

@@ -17,7 +17,7 @@
 
 	${dataFactory.toInsertSQL(dlFileVersionModel)}
 
-	<@insertAssetEntry _entry=dlFileEntryModel />
+	<@insertAssetEntry _entry = dlFileEntryModel />
 </#list>
 
 <#list dataFactory.getSequence(dataFactory.maxCPDefinitionAttachmentTypePDFCount) as cpDefinitionAttachmentTypePDFCount>
@@ -39,5 +39,5 @@
 
 	${dataFactory.toInsertSQL(dlFileVersionModel)}
 
-	<@insertAssetEntry _entry=dlFileEntryModel />
+	<@insertAssetEntry _entry = dlFileEntryModel />
 </#list>

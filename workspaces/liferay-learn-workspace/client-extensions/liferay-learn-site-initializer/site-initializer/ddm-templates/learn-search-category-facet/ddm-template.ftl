@@ -128,27 +128,27 @@
 
 						<#if termDisplayContextCount lte 8>
 							<@treeview_item
-								cssClassTreeItem="tree-item-category"
-								frequency=termDisplayContext.getFrequency()
-								frequencyVisible=termDisplayContext.isFrequencyVisible()
-								id=termDisplayContext.getFilterValue()
-								name=htmlUtil.escape(termDisplayContext.getBucketText())
-								selectable=true
-								selected=termDisplayContext.isSelected()
-								termDisplayContextClass=hideClass
-								vocabularyName=vocabularyName
+								cssClassTreeItem = "tree-item-category"
+								frequency = termDisplayContext.getFrequency()
+								frequencyVisible = termDisplayContext.isFrequencyVisible()
+								id = termDisplayContext.getFilterValue()
+								name = htmlUtil.escape(termDisplayContext.getBucketText())
+								selectable = true
+								selected = termDisplayContext.isSelected()
+								termDisplayContextClass = hideClass
+								vocabularyName = vocabularyName
 							/>
 						<#else>
 							<@treeview_item
-								cssClassTreeItem="tree-item-category d-none"
-								frequency=termDisplayContext.getFrequency()
-								frequencyVisible=termDisplayContext.isFrequencyVisible()
-								id=termDisplayContext.getFilterValue()
-								name=htmlUtil.escape(termDisplayContext.getBucketText())
-								selectable=true
-								selected=termDisplayContext.isSelected()
-								termDisplayContextClass=hideClass
-								vocabularyName=vocabularyName
+								cssClassTreeItem = "tree-item-category d-none"
+								frequency = termDisplayContext.getFrequency()
+								frequencyVisible = termDisplayContext.isFrequencyVisible()
+								id = termDisplayContext.getFilterValue()
+								name = htmlUtil.escape(termDisplayContext.getBucketText())
+								selectable = true
+								selected = termDisplayContext.isSelected()
+								termDisplayContextClass = hideClass
+								vocabularyName = vocabularyName
 							/>
 						</#if>
 
@@ -189,11 +189,11 @@
 			<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
 				<#list vocabularyNames as vocabularyName>
 					<@treeview_item
-						cssClassTreeItem="tree-item-vocabulary"
-						frequencyVisible=false
-						id=vocabularyName + vocabularyName?index
-						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
-						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
+						cssClassTreeItem = "tree-item-vocabulary"
+						frequencyVisible = false
+						id = vocabularyName + vocabularyName?index
+						name = "${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
+						termDisplayContexts = assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
 					/>
 				</#list>
 			</ul>

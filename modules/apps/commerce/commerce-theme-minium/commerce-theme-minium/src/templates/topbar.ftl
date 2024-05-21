@@ -15,7 +15,7 @@
 
 	<div class="minium-topbar__middle">
 		<#if show_top_menu>
-			<@site_navigation_menu_sub_navigation default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
+			<@site_navigation_menu_sub_navigation default_preferences = freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 		</#if>
 	</div>
 

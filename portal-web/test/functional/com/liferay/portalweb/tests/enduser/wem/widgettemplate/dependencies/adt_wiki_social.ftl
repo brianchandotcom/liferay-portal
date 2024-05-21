@@ -40,8 +40,8 @@
 	<br />
 
 	<@getRatings
-		cssClass="page-ratings"
-		entry=entry
+		cssClass = "page-ratings"
+		entry = entry
 	/>
 
 	<@getRelatedAssets />
@@ -113,8 +113,8 @@
 					</td>
 					<td>
 						<@getRatings
-							cssClass="child-ratings"
-							entry=childPage
+							cssClass = "child-ratings"
+							entry = childPage
 						/>
 					</td>
 				</tr>

@@ -69,8 +69,8 @@
 						<#if showChildrenNavItems>
 							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
 								<@buildChildrenNavItems
-									displayDepth=displayDepth
-									navItem=navItem
+									displayDepth = displayDepth
+									navItem = navItem
 								/>
 							</ul>
 						</#if>

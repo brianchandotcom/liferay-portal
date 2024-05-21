@@ -5,8 +5,8 @@
 
 <#include "guest_user.ftl">
 
-<@insertGroup _groupModel=globalGroupModel />
+<@insertGroup _groupModel = globalGroupModel />
 
-<@insertGroup _groupModel=guestGroupModel />
+<@insertGroup _groupModel = guestGroupModel />
 
-<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
+<@insertGroup _groupModel = dataFactory.newUserPersonalSiteGroupModel() />

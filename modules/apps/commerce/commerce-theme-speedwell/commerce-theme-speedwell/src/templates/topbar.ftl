@@ -15,7 +15,7 @@
 			</button>
 
 			<div class="speedwell-main-menu__links">
-				<@site_navigation_menu_main default_preferences=freeMarkerPortletPreferences
+				<@site_navigation_menu_main default_preferences = freeMarkerPortletPreferences
 					.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 
 				<#include "${full_templates_path}/category_navigation.ftl" />

@@ -8,7 +8,7 @@
 	</div>
 
 	<div class="minium-sidebar__middle">
-		<@site_navigation_menu_main default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
+		<@site_navigation_menu_main default_preferences = freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 	</div>
 
 	<div class="minium-sidebar__end">

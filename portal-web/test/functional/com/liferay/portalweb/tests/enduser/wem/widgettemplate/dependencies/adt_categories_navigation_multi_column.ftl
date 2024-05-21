@@ -10,7 +10,7 @@
 
 				<#assign categories = entry.getCategories() />
 
-				<@displayCategories categories=categories />
+				<@displayCategories categories = categories />
 			</@clay.col>
 		</#list>
 	</@clay.row>
@@ -37,7 +37,7 @@
 							childCategories = assetCategoryService.getChildCategories(category.getCategoryId())
 						/>
 
-						<@displayCategories categories=childCategories />
+						<@displayCategories categories = childCategories />
 					</#if>
 				</li>
 			</#list>

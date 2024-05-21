@@ -14,12 +14,19 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.osgi.framework.Bundle;
 
 /**
  * @author Mariano Álvaro Sáiz
  */
 public class DBResourceUtil {
+
+	public static List<String> getMiscellaneousSQLTemplates() {
+		return _miscellaneousSQLTemplates;
+	}
 
 	public static String getModuleIndexesSQL(Bundle bundle) {
 		return _getSQLTemplateString(bundle, "indexes.sql");
@@ -43,6 +50,10 @@ public class DBResourceUtil {
 		return StringUtil.read(
 			DBResourceUtil.class,
 			"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+	}
+
+	public static void registerMiscellaneousSQLTemplate(String sqlTemplate) {
+		_miscellaneousSQLTemplates.add(sqlTemplate);
 	}
 
 	private static String _getSQLTemplateString(
@@ -70,5 +81,8 @@ public class DBResourceUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DBResourceUtil.class);
+
+	private static final List<String> _miscellaneousSQLTemplates =
+		new ArrayList<>();
 
 }

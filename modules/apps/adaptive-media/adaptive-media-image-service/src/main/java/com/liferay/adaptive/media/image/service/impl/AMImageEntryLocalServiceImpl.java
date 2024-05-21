@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.InputStream;
 
@@ -76,6 +78,7 @@ public class AMImageEntryLocalServiceImpl
 	 *         file version and configuration
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public AMImageEntry addAMImageEntry(
 			AMImageConfigurationEntry amImageConfigurationEntry,
 			FileVersion fileVersion, int height, int width,

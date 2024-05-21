@@ -20,7 +20,7 @@
 		</clay:content-col>
 	</clay:content-row>
 
-	<div id="<portlet:namespace />defaultUsers">
+	<div data-qa-id="defaultUsers" id="<portlet:namespace />defaultUsers">
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(

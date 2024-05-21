@@ -28,7 +28,7 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 		</clay:content-col>
 	</clay:content-row>
 
-	<div id="<portlet:namespace />defaultDeliveryCommerceTermEntries">
+	<div data-qa-id="defaultDeliveryCommerceTermEntries" id="<portlet:namespace />defaultDeliveryCommerceTermEntries">
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
@@ -58,7 +58,7 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 		</clay:content-col>
 	</clay:content-row>
 
-	<div id="<portlet:namespace />defaultPaymentCommerceTermEntries">
+	<div data-qa-id="defaultPaymentCommerceTermEntries" id="<portlet:namespace />defaultPaymentCommerceTermEntries">
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(

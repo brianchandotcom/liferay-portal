@@ -26,7 +26,7 @@ CommerceChannelAccountEntryRelDisplayContext commerceChannelAccountEntryRelDispl
 		</clay:content-col>
 	</clay:content-row>
 
-	<div class="form-group-autofit">
+	<div class="form-group-autofit" data-qa-id="defaultCommercePaymentMethod">
 		<div class="form-group-item">
 			<div class="sheet-text">
 				<frontend-data-set:classic-display

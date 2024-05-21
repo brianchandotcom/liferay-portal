@@ -258,7 +258,6 @@ public abstract class BaseTestrayServer implements TestrayServer {
 					"(<property name=\"testray.testcase.warnings\" " +
 						"value=\"\\d+\")>\\s+<\\/property>",
 					"$1/>");
-
 				gcpResultFileContent = gcpResultFileContent.replaceAll(
 					getURL() + "/?reports/production/logs",
 					testrayS3Bucket.getTestrayS3BaseURL());

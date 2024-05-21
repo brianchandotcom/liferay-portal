@@ -22,7 +22,8 @@ export class NodePropertiesSidebarPage {
 	readonly nodeLabelInput: Locator;
 	readonly notificationPage: NotificationSectionPage;
 	readonly page: Page;
-	readonly taskNodeSideBarItem: Locator;
+	readonly sidebarBackButton: Locator;
+	readonly sideBarNodes: Locator;
 	readonly timerPage: TimerPage;
 
 	constructor(page: Page) {
@@ -51,9 +52,11 @@ export class NodePropertiesSidebarPage {
 		this.nodeLabelInput = page.locator('#nodeLabel');
 		this.notificationPage = new NotificationSectionPage(page, 0);
 		this.page = page;
-		this.taskNodeSideBarItem = page.getByText('Task', {
-			exact: true,
-		});
+		this.sidebarBackButton = page
+			.locator('div.sidebar-header')
+			.getByRole('button')
+			.first();
+		this.sideBarNodes = page.locator('div.sidebar-body div.base-node');
 		this.timerPage = new TimerPage(page);
 		this.actionPage = new ActionPage(page);
 	}
@@ -117,10 +120,11 @@ export class NodePropertiesSidebarPage {
 		await this.deleteNotificationsButton.click();
 	}
 
-	async dragTaskNodeToDiagram() {
-		await this.taskNodeSideBarItem.dragTo(
-			this.diagramViewPage.diagramArea,
-			{targetPosition: {x: 200, y: 200}}
-		);
+	async dragNodeToDiagram(nodeLabel: string, targetX: number, targetY) {
+		await this.sideBarNodes
+			.getByText(nodeLabel, {exact: true})
+			.dragTo(this.diagramViewPage.diagramArea, {
+				targetPosition: {x: targetX, y: targetY},
+			});
 	}
 }

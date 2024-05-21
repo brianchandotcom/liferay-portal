@@ -70,13 +70,11 @@ function updateArticleLinks(contentFields) {
 			field.nestedContentFields.forEach((nestedField) => {
 				const nestedData = nestedField.contentFieldValue?.data;
 
-				if (nestedData) {
-					if (nestedField.label.includes('Title')) {
-						urlTitle = nestedData;
-					}
-					else {
-						url = nestedData;
-					}
+				if (nestedData && nestedField.label.includes('Title')) {
+					urlTitle = nestedData;
+				}
+				else {
+					url = nestedData;
 				}
 			});
 
@@ -225,9 +223,7 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 		button.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			const requestId = button.getAttribute('data-request-id');
-
-			restArticle(requestId);
+			restArticle(button.getAttribute('data-request-id'));
 
 			document.getElementById('sidetabFeature').style.right = '0';
 		});

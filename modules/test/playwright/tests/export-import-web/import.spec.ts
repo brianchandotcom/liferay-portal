@@ -9,11 +9,13 @@ import * as path from 'path';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {loginTest} from '../../fixtures/loginTest';
+import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	documentLibraryPagesTest,
+	productMenuPageTest,
 	exportImportPagesTest,
 	loginTest()
 );
@@ -39,5 +41,14 @@ test('can import a folder with document type restrictions and workflow', async (
 
 	await apiHelpers.headlessDelivery.deleteSiteDocumentsFolderByExternalReferenceCode(
 		'LPS-205933'
+	);
+});
+
+test('can import a lar file selecting some items to import', async ({
+	exportImportPage,
+}) => {
+	await exportImportPage.goTo();
+	await exportImportPage.createNewImportProcess(
+		path.join(__dirname, 'dependencies', 'content.portlet.lar')
 	);
 });

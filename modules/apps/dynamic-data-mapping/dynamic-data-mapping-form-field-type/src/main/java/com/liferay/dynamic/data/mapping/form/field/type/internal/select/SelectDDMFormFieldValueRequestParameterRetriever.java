@@ -7,12 +7,12 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.select;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,20 +39,38 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 
-		return jsonFactory.serialize(
-			_getParameterValues(
-				httpServletRequest, ddmFormFieldParameterName,
+		String ddmFormFieldParameterValue = httpServletRequest.getParameter(
+			ddmFormFieldParameterName);
+
+		if (ddmFormFieldParameterValue == null) {
+			return jsonFactory.serialize(
 				_getDefaultDDMFormFieldParameterValues(
-					defaultDDMFormFieldParameterValue)));
+					defaultDDMFormFieldParameterValue,
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)));
+		}
+
+		try {
+			return String.valueOf(
+				jsonFactory.createJSONArray(ddmFormFieldParameterValue));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return "[]";
+		}
 	}
 
 	@Reference
 	protected JSONFactory jsonFactory;
 
 	private String[] _getDefaultDDMFormFieldParameterValues(
-		String defaultDDMFormFieldParameterValue) {
+		String defaultDDMFormFieldParameterValue, ThemeDisplay themeDisplay) {
 
-		if (Validator.isNull(defaultDDMFormFieldParameterValue) ||
+		if (themeDisplay.isLifecycleAction() ||
+			Validator.isNull(defaultDDMFormFieldParameterValue) ||
 			Objects.equals(defaultDDMFormFieldParameterValue, "[]")) {
 
 			return GetterUtil.DEFAULT_STRING_VALUES;
@@ -69,24 +87,6 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 
 			return StringUtil.split(defaultDDMFormFieldParameterValue);
 		}
-	}
-
-	private String[] _getParameterValues(
-		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
-		String[] defaultDDMFormFieldParameterValues) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay.isLifecycleAction()) {
-			return ParamUtil.getParameterValues(
-				httpServletRequest, ddmFormFieldParameterName);
-		}
-
-		return ParamUtil.getParameterValues(
-			httpServletRequest, ddmFormFieldParameterName,
-			defaultDDMFormFieldParameterValues);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

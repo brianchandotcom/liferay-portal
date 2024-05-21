@@ -315,10 +315,10 @@ const Main = ({
 				type="hidden"
 				value={
 					multiple
-						? newValue
+						? JSON.stringify(newValue)
 						: newValue?.[0] === 'chooseAnOption'
 						? undefined
-						: newValue
+						: JSON.stringify(newValue)
 				}
 			/>
 		</FieldBase>

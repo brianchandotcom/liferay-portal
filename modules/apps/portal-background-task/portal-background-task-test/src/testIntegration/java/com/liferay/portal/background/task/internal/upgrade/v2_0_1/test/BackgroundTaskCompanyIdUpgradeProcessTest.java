@@ -51,6 +51,8 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 		backgroundTask.setTaskContextMap(
 			HashMapBuilder.<String, Serializable>put(
+				"companyId", _COMPANY_ID
+			).put(
 				_KEY_THREAD_LOCAL_VALUES, _initializeThreadLocalValues()
 			).build());
 
@@ -70,6 +72,8 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
+		Assert.assertEquals(_COMPANY_ID, taskContextMap.get("companyId"));
+
 		Map<String, Serializable> threadLocalValues =
 			(Map<String, Serializable>)taskContextMap.get(
 				_KEY_THREAD_LOCAL_VALUES);
@@ -82,6 +86,8 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 			_BACKGROUND_TASK_ID);
 
 		taskContextMap = backgroundTask.getTaskContextMap();
+
+		Assert.assertNull(taskContextMap.get("companyId"));
 
 		threadLocalValues = (Map<String, Serializable>)taskContextMap.get(
 			_KEY_THREAD_LOCAL_VALUES);

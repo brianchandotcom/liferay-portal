@@ -91,7 +91,7 @@ test('cannot see scripted recipient option when script management configuration 
 		workflowDefinitionName
 	);
 
-	await nodePropertiesSidebarPage.dragTaskNodeToDiagram();
+	await nodePropertiesSidebarPage.dragNodeToDiagram('Task', 200, 200);
 
 	await nodePropertiesSidebarPage.addNotificationButton.click();
 
@@ -114,7 +114,7 @@ test('cannot save a workflow definition with a scripted recipient notification w
 		workflowDefinitionName
 	);
 
-	await nodePropertiesSidebarPage.dragTaskNodeToDiagram();
+	await nodePropertiesSidebarPage.dragNodeToDiagram('Task', 200, 200);
 
 	await nodePropertiesSidebarPage.nodeLabelInput.fill('Notification Node');
 

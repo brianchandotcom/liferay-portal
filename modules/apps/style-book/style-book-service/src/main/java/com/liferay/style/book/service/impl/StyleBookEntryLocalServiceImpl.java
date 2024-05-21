@@ -49,8 +49,9 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, boolean defaultStyleBookEntry,
-			String frontendTokensValues, String name, String styleBookEntryKey,
+			String externalReferenceCode, long userId, long groupId,
+			boolean defaultStyleBookEntry, String frontendTokensValues,
+			String name, String styleBookEntryKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -84,6 +85,7 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntry.setUuid(uuid);
 		}
 
+		styleBookEntry.setExternalReferenceCode(externalReferenceCode);
 		styleBookEntry.setGroupId(groupId);
 		styleBookEntry.setCompanyId(companyId);
 		styleBookEntry.setUserId(user.getUserId());
@@ -109,7 +111,7 @@ public class StyleBookEntryLocalServiceImpl
 		String name = _getUniqueCopyName(sourceStyleBookEntry);
 
 		StyleBookEntry targetStyleBookEntry = addStyleBookEntry(
-			userId, groupId, false,
+			null, userId, groupId, false,
 			sourceStyleBookEntry.getFrontendTokensValues(), name,
 			StringPool.BLANK, serviceContext);
 

@@ -129,9 +129,9 @@
 
 					<#if product.categories?has_content && product.productSpecifications?has_content>
 						<#assign
-								productCategories = product.categories?filter(productCategory -> productCategory.vocabulary == "marketplace app category")![]
-								categoriesListSize = productCategories?size-1
-								productSpecifications = product.productSpecifications![]
+							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary == "marketplace app category")![]
+							categoriesListSize = productCategories?size-1
+							productSpecifications = product.productSpecifications![]
 						/>
 					</#if>
 

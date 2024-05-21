@@ -33,8 +33,8 @@
 		<#assign
 			specificationCPUs = specifications?filter(item -> stringUtil.equals(item.specificationKey, "cpu"))
 			specificationRAMs = specifications?filter(item -> stringUtil.equals(item.specificationKey, "ram"))
-			 cpuQuantity = ""
-				  memoryQuantity = ""
+			cpuQuantity = ""
+			memoryQuantity = ""
 		/>
 
 		<#if specificationCPUs?has_content>

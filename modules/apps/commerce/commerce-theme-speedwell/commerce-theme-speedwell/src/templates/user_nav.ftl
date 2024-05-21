@@ -1,12 +1,12 @@
 <div class="speedwell-user-nav" tabindex="0">
 	<#if is_signed_in>
 		<#assign
-		userImageCssClass = ""
+			userImageCssClass = ""
 		/>
 
 		<#if notification_count gt 0>
 			<#assign
-			userImageCssClass = "has-notification"
+				userImageCssClass = "has-notification"
 			/>
 		</#if>
 

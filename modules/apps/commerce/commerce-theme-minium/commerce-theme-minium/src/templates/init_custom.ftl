@@ -22,7 +22,7 @@
 
 <#if wide_layout>
 	<#assign
-	minium_content_css_class = "minium-content minium-content--wide"
+		minium_content_css_class = "minium-content minium-content--wide"
 	/>
 </#if>
 

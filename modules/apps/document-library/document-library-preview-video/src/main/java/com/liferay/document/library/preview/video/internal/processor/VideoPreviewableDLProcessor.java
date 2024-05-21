@@ -85,8 +85,6 @@ public class VideoPreviewableDLProcessor
 						HashMapBuilder.<String, Serializable>put(
 							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
 							true
-						).put(
-							"companyId", companyId
 						).build(),
 						new ServiceContext());
 				}

@@ -4277,10 +4277,8 @@ public class ObjectEntryLocalServiceImpl
 			objectFieldId, !guestUser);
 
 		if ((maximumFileSize > 0) && (fileSize > maximumFileSize)) {
-			long fileLengthMB = 1024 * 1024;
-
 			throw new ObjectEntryValuesException.ExceedsMaxFileSize(
-				maximumFileSize / fileLengthMB, objectFieldName);
+				maximumFileSize / (1024 * 1024), objectFieldName);
 		}
 	}
 

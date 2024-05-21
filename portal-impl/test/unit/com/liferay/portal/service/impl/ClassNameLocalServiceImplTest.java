@@ -54,17 +54,17 @@ public class ClassNameLocalServiceImplTest {
 	}
 
 	@Test
-	public void testGetClassNameIdsSupplierLaziness() {
+	public void testGetClassNameIdsLongArraySupplier() {
 		Assert.assertArrayEquals(
-			new Long[] {_CLASS_NAME_ID1, _CLASS_NAME_ID2},
-			_classNameLocalServiceImpl.getClassNameIdsSupplier(
+			new long[] {_CLASS_NAME_ID1, _CLASS_NAME_ID2},
+			_classNameLocalServiceImpl.getClassNameIdsLongArraySupplier(
 				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
 			).get());
 
-		_assertLaziness(
+		_assertSupplier(
 			() -> {
-				Supplier<Long[]> classNameIdsSupplier =
-					_classNameLocalServiceImpl.getClassNameIdsSupplier(
+				Supplier<long[]> classNameIdsLongArraySupplier =
+					_classNameLocalServiceImpl.getClassNameIdsLongArraySupplier(
 						new String[] {"wrong.value"});
 
 				Mockito.verify(
@@ -73,22 +73,22 @@ public class ClassNameLocalServiceImplTest {
 					Mockito.anyLong()
 				);
 
-				classNameIdsSupplier.get();
+				classNameIdsLongArraySupplier.get();
 			});
 	}
 
 	@Test
-	public void testGetClassNameIdsSupplierLongArray() {
+	public void testGetClassNameIdsSupplier() {
 		Assert.assertArrayEquals(
-			new long[] {_CLASS_NAME_ID1, _CLASS_NAME_ID2},
-			_classNameLocalServiceImpl.getClassNameIdsLongArraySupplier(
+			new Long[] {_CLASS_NAME_ID1, _CLASS_NAME_ID2},
+			_classNameLocalServiceImpl.getClassNameIdsSupplier(
 				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
 			).get());
 
-		_assertLaziness(
+		_assertSupplier(
 			() -> {
-				Supplier<long[]> classNameIdsSupplier =
-					_classNameLocalServiceImpl.getClassNameIdsLongArraySupplier(
+				Supplier<Long[]> classNameIdsSupplier =
+					_classNameLocalServiceImpl.getClassNameIdsSupplier(
 						new String[] {"wrong.value"});
 
 				Mockito.verify(
@@ -109,7 +109,7 @@ public class ClassNameLocalServiceImplTest {
 				_CLASS_NAME_VALUE1
 			).get());
 
-		_assertLaziness(
+		_assertSupplier(
 			() -> {
 				Supplier<Long> classNameIdSupplier =
 					_classNameLocalServiceImpl.getClassNameIdSupplier(
@@ -174,7 +174,7 @@ public class ClassNameLocalServiceImplTest {
 		);
 	}
 
-	private void _assertLaziness(Runnable runnable) {
+	private void _assertSupplier(Runnable runnable) {
 		Mockito.reset(_classNamePersistence);
 
 		Mockito.when(

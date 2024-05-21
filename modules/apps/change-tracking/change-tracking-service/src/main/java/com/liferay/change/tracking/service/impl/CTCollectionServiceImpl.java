@@ -190,6 +190,11 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 				"CTCollection is already published");
 		}
 
+		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+			throw new CTCollectionStatusException(
+				"CTCollection is unable to be published");
+		}
+
 		_ctProcessLocalService.addCTProcess(userId, ctCollectionId);
 	}
 

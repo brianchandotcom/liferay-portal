@@ -85,6 +85,7 @@ definition {
 			ACAssets.viewAssetAppearsOnMetric(
 				canonicalURL = "${portalURL}/web/site-name",
 				cardTitle = "Asset Appears On",
+				metricTitle = "Views",
 				pageName = "AC Page - Site Name - ${dataSourceName}");
 		}
 	}

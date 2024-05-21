@@ -91,6 +91,15 @@ definition {
 				canonicalURL = "${portalURL}/web/site-name/ac-page/-/document_library",
 				canonicalURLSuffix = "/view_file/${fileEntryId}",
 				cardTitle = "Asset Appears On",
+				metricTitle = "Downloads",
+				pageName = "AC Page - Site Name - ${dataSourceName}");
+
+			ACAssets.viewAssetAppearsOnMetric(
+				canonicalURL = "${portalURL}/web/site-name/ac-page/-/document_library",
+				canonicalURLSuffix = "/view_file/${fileEntryId}",
+				cardTitle = "Asset Appears On",
+				index = 2,
+				metricTitle = "Previews",
 				pageName = "AC Page - Site Name - ${dataSourceName}");
 		}
 	}

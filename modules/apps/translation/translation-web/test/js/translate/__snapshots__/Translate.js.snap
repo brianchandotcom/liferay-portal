@@ -125,39 +125,27 @@ exports[`Translate renders with auto-translate disabled 1`] = `
             class="align-items-end tbar-item tbar-item-expand"
           >
             <div
-              class="btn-group"
+              class="btn-group-spaced"
               role="group"
             >
-              <div
-                class="btn-group-item"
+              <a
+                class="btn btn-sm btn-secondary"
+                href="http://redirect-url"
               >
-                <a
-                  class="btn btn-sm btn-secondary"
-                  href="http://redirect-url"
-                >
-                  cancel
-                </a>
-              </div>
-              <div
-                class="btn-group-item"
+                cancel
+              </a>
+              <button
+                class="btn btn-sm btn-secondary"
+                type="submit"
               >
-                <button
-                  class="btn btn-sm btn-secondary"
-                  type="submit"
-                >
-                  Save as Draft
-                </button>
-              </div>
-              <div
-                class="btn-group-item"
+                Save as Draft
+              </button>
+              <button
+                class="btn btn-sm btn-primary"
+                type="submit"
               >
-                <button
-                  class="btn btn-sm btn-primary"
-                  type="submit"
-                >
-                  Publish
-                </button>
-              </div>
+                Publish
+              </button>
             </div>
           </li>
         </ul>
@@ -723,39 +711,27 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             class="align-items-end tbar-item tbar-item-expand"
           >
             <div
-              class="btn-group"
+              class="btn-group-spaced"
               role="group"
             >
-              <div
-                class="btn-group-item"
+              <a
+                class="btn btn-sm btn-secondary"
+                href="http://redirect-url"
               >
-                <a
-                  class="btn btn-sm btn-secondary"
-                  href="http://redirect-url"
-                >
-                  cancel
-                </a>
-              </div>
-              <div
-                class="btn-group-item"
+                cancel
+              </a>
+              <button
+                class="btn btn-sm btn-secondary"
+                type="submit"
               >
-                <button
-                  class="btn btn-sm btn-secondary"
-                  type="submit"
-                >
-                  Save as Draft
-                </button>
-              </div>
-              <div
-                class="btn-group-item"
+                Save as Draft
+              </button>
+              <button
+                class="btn btn-sm btn-primary"
+                type="submit"
               >
-                <button
-                  class="btn btn-sm btn-primary"
-                  type="submit"
-                >
-                  Publish
-                </button>
-              </div>
+                Publish
+              </button>
             </div>
           </li>
         </ul>
@@ -1544,39 +1520,27 @@ exports[`Translate renders with experiences selector 1`] = `
             class="align-items-end tbar-item tbar-item-expand"
           >
             <div
-              class="btn-group"
+              class="btn-group-spaced"
               role="group"
             >
-              <div
-                class="btn-group-item"
+              <a
+                class="btn btn-sm btn-secondary"
+                href="http://redirect-url"
               >
-                <a
-                  class="btn btn-sm btn-secondary"
-                  href="http://redirect-url"
-                >
-                  cancel
-                </a>
-              </div>
-              <div
-                class="btn-group-item"
+                cancel
+              </a>
+              <button
+                class="btn btn-sm btn-secondary"
+                type="submit"
               >
-                <button
-                  class="btn btn-sm btn-secondary"
-                  type="submit"
-                >
-                  Save as Draft
-                </button>
-              </div>
-              <div
-                class="btn-group-item"
+                Save as Draft
+              </button>
+              <button
+                class="btn btn-sm btn-primary"
+                type="submit"
               >
-                <button
-                  class="btn btn-sm btn-primary"
-                  type="submit"
-                >
-                  Publish
-                </button>
-              </div>
+                Publish
+              </button>
             </div>
           </li>
         </ul>

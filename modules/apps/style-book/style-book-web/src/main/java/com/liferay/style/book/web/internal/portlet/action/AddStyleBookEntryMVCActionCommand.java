@@ -80,7 +80,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		return _styleBookEntryService.addStyleBookEntry(
-			serviceContext.getScopeGroupId(), name, StringPool.BLANK,
+			null, serviceContext.getScopeGroupId(), name, StringPool.BLANK,
 			serviceContext);
 	}
 

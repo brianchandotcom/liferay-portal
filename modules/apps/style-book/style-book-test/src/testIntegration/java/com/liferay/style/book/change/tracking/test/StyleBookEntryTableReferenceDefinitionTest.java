@@ -39,9 +39,9 @@ public class StyleBookEntryTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _styleBookEntryLocalService.addStyleBookEntry(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false,
-			StringPool.BLANK, RandomTestUtil.randomString(), StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext());
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			false, StringPool.BLANK, RandomTestUtil.randomString(),
+			StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Inject

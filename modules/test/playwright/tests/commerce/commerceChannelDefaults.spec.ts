@@ -1,0 +1,331 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
+import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout} from '../../utils/performLogin';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
+
+export const test = mergeTests(
+	applicationsMenuPageTest,
+	commercePagesTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
+	loginTest()
+);
+
+test.describe('LPD-26142 Refactor of CommerceSalesAgent#CanSalesAgentWithPermissionManageChannelDefaults', () => {
+	test('A Sales Agent can manage channel defaults', async ({
+		apiHelpers,
+		commerceAccountManagementPage,
+		commerceChannelDefaultsPage,
+		page,
+	}) => {
+		test.setTimeout(180000);
+
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'Sales Agent ' + getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: [
+						'MANAGE_ORGANIZATIONS',
+						'MANAGE_USERS',
+						'MANAGE_CHANNEL_DEFAULTS',
+						'UPDATE',
+					],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.account.model.AccountRole',
+					scope: 1,
+				},
+				{
+					actionIds: ['MANAGE_AVAILABLE_ACCOUNTS'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.portal.kernel.model.Organization',
+					scope: 1,
+				},
+				{
+					actionIds: ['UPDATE', 'VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.commerce.product.model.CommerceChannel',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.commerce.price.list.model.CommercePriceList',
+					scope: 1,
+				},
+				{
+					actionIds: ['MANAGE_COMMERCE_CURRENCIES'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.commerce.currency',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.commerce.term.model.CommerceTermEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW_COMMERCE_TERM_ENTRY'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.commerce.term',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.commerce.discount.model.CommerceDiscount',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW_COMMERCE_DISCOUNTS'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.commerce.discount',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.User',
+					scope: 1,
+				},
+				{
+					actionIds: ['UPDATE', 'VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel',
+					scope: 1,
+				},
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: companyId,
+					resourceName:
+						'com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet',
+					scope: 1,
+				},
+			],
+		});
+
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
+
+		await apiHelpers.headlessAdminUser.assingUserToRole(role.name, user.id);
+
+		const account1 = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account1.id, type: 'account'});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account1.id,
+			[user.emailAddress]
+		);
+
+		await apiHelpers.headlessCommerceAdminAccount.postAddress(account1.id);
+
+		const account2 = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account2.id, type: 'account'});
+
+		const deliveryTerms =
+			await apiHelpers.headlessCommerceAdminOrder.postTerms({
+				type: 'delivery-terms',
+			});
+
+		const paymentTerms =
+			await apiHelpers.headlessCommerceAdminOrder.postTerms({
+				type: 'payment-terms',
+			});
+
+		const discount =
+			await apiHelpers.headlessCommerceAdminPricing.postDiscount();
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			siteGroupId: site.id,
+		});
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		try {
+			await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+			await expect(
+				commerceAccountManagementPage.accountsTableRowLink(account1.id)
+			).toBeVisible();
+
+			await expect(
+				commerceAccountManagementPage.accountsTableRowLink(account2.id)
+			).toHaveCount(0);
+
+			await commerceAccountManagementPage
+				.accountsTableRowLink(account1.id)
+				.click();
+
+			await commerceAccountManagementPage.channelDefaultsLink.click();
+
+			await expect(
+				commerceChannelDefaultsPage.defaultBillingCommerceAddresses
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultBillingCommerceAddressesActions.click();
+			await commerceChannelDefaultsPage.editMenuItem.click();
+			await expect(
+				commerceChannelDefaultsPage.editFrameChannelSelect
+			).not.toBeEmpty();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await commerceChannelDefaultsPage.defaultShippingCommerceAddressesActions.click();
+			await commerceChannelDefaultsPage.editMenuItem.click();
+			await expect(
+				commerceChannelDefaultsPage.editFrameChannelSelect
+			).not.toBeEmpty();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+
+			await commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntriesButton.click();
+			await expect(
+				commerceChannelDefaultsPage.editFrameChannelSelect
+			).not.toBeEmpty();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultDeliveryCommerceTermEntries.getByText(
+					deliveryTerms.label['en_US']
+				)
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultPaymentCommerceTermEntriesButton.click();
+			await expect(
+				commerceChannelDefaultsPage.editFrameChannelSelect
+			).not.toBeEmpty();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultPaymentCommerceTermEntries.getByText(
+					paymentTerms.label['en_US']
+				)
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultCommerceShippingOptionButton.click();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultCommerceShippingOption
+					.getByText('Use Priority Settings')
+					.first()
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultCommercePriceListsButton.click();
+			await commerceChannelDefaultsPage.editFramePriceListSelect.selectOption(
+				{label: 'Master Base Price List'}
+			);
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultCommercePriceLists.getByText(
+					'Master Base Price List'
+				)
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultCommerceDiscountsButton.click();
+			await expect(
+				commerceChannelDefaultsPage.editFrameChannelSelect
+			).not.toBeEmpty();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultCommerceDiscounts.getByText(
+					discount.title
+				)
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultCommerceCurrenciesButton.click();
+			await expect(
+				commerceChannelDefaultsPage.editFrameChannelSelect
+			).not.toBeEmpty();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultCommerceCurrencies.getByText(
+					'US Dollar'
+				)
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultCommercePaymentMethodButton.click();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultCommercePaymentMethod
+					.getByText('Use Priority Settings')
+					.first()
+			).toBeVisible();
+
+			await commerceChannelDefaultsPage.defaultUsersButton.click();
+			await expect(
+				commerceChannelDefaultsPage.editFrameChannelSelect
+			).not.toBeEmpty();
+			await commerceChannelDefaultsPage.editFrameSaveButton.click();
+			await expect(
+				commerceChannelDefaultsPage.defaultUsers.getByText('Test')
+			).toBeVisible();
+		}
+		catch (error: any) {
+			throw new Error(error);
+		}
+		finally {
+			await performLogout(page);
+
+			await performLogin(page, 'test');
+		}
+	});
+});

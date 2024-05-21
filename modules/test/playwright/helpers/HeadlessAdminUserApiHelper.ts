@@ -25,6 +25,19 @@ type TOrganization = {
 	services?: TServices[];
 };
 
+type TRole = {
+	externalReferenceCode?: string;
+	id?: number;
+	name: string;
+	rolePermissions?: Array<{
+		actionIds: string[];
+		primaryKey: string;
+		resourceName: string;
+		scope: number;
+	}>;
+	roleType?: number | string;
+};
+
 type TServices = {
 	hoursAvailable: THoursAvailable[];
 	serviceType: string;
@@ -91,7 +104,10 @@ export class HeadlessAdminUserApiHelper {
 	async postAccount(account?: TAccount): Promise<TAccount> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,
-			{data: {name: 'Account' + getRandomInt(), ...(account || {})}}
+			{
+				data: {name: 'Account' + getRandomInt(), ...(account || {})},
+				failOnStatusCode: true,
+			}
 		);
 	}
 
@@ -101,7 +117,7 @@ export class HeadlessAdminUserApiHelper {
 	) {
 		return this.apiHelpers.postResponse(
 			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}/association/user-account/${userAccountId}`,
-			{data: {}}
+			{data: {}, failOnStatusCode: true}
 		);
 	}
 
@@ -115,6 +131,22 @@ export class HeadlessAdminUserApiHelper {
 					name: 'Organization' + getRandomInt(),
 					...(organization || {}),
 				},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postRole(role: TRole) {
+		role = {
+			roleType: 'regular',
+			...role,
+		};
+
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles`,
+			{
+				data: role,
+				failOnStatusCode: true,
 			}
 		);
 	}
@@ -125,6 +157,16 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async assingUserToRole(
+		roleExternalReferenceCode: string,
+		userId: number | string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}roles/by-external-reference-code/${roleExternalReferenceCode}/association/user-account/${userId}`,
+			{data: {}, failOnStatusCode: true}
+		);
+	}
+
 	async assignAccountRoles(
 		accountERC: string,
 		roleId: number,
@@ -132,7 +174,7 @@ export class HeadlessAdminUserApiHelper {
 	) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/by-external-reference-code/${accountERC}/account-roles/${roleId}/user-accounts/by-email-address/${userEmail}`,
-			{data: {}}
+			{data: {}, failOnStatusCode: true}
 		);
 	}
 }

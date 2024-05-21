@@ -16,11 +16,13 @@ import {HeadlessAdminTaxonomyApiHelper} from './HeadlessAdminTaxonomyApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
 import {HeadlessAdminWorkflowApiHelper} from './HeadlessAdminWorkflowApiHelper';
 import {HeadlessChangeTrackingApiHelper} from './HeadlessChangeTrackingApiHelper';
+import {HeadlessCommerceAdminAccountApiHelper} from './HeadlessCommerceAdminAccountApiHelper';
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
 import {HeadlessCommerceAdminInventoryApiHelper} from './HeadlessCommerceAdminInventoryApiHelper';
 import {HeadlessCommerceAdminOrderApiHelper} from './HeadlessCommerceAdminOrderApiHelper';
 import {HeadlessCommerceAdminPaymentApiHelper} from './HeadlessCommerceAdminPaymentApiHelper';
+import {HeadlessCommerceAdminPricingApiHelper} from './HeadlessCommerceAdminPricingApiHelper';
 import {HeadlessCommerceDeliveryCartApiHelper} from './HeadlessCommerceDeliveryCartApiHelper';
 import {HeadlessCommerceDeliveryCatalogApiHelper} from './HeadlessCommerceDeliveryCatalogApiHelper';
 import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
@@ -61,11 +63,13 @@ export class ApiHelpers {
 	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
 	readonly headlessAdminWorkflow: HeadlessAdminWorkflowApiHelper;
 	readonly headlessChangeTracking: HeadlessChangeTrackingApiHelper;
+	readonly headlessCommerceAdminAccount: HeadlessCommerceAdminAccountApiHelper;
 	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
 	readonly headlessCommerceAdminChannel: HeadlessCommerceAdminChannelApiHelper;
 	readonly headlessCommerceAdminInventoryApiHelper: HeadlessCommerceAdminInventoryApiHelper;
 	readonly headlessCommerceAdminOrder: HeadlessCommerceAdminOrderApiHelper;
 	readonly headlessCommerceAdminPaymentApiHelper: HeadlessCommerceAdminPaymentApiHelper;
+	readonly headlessCommerceAdminPricing: HeadlessCommerceAdminPricingApiHelper;
 	readonly headlessCommerceDeliveryCatalog: HeadlessCommerceDeliveryCatalogApiHelper;
 	readonly headlessCommerceDeliveryCart: HeadlessCommerceDeliveryCartApiHelper;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
@@ -99,6 +103,8 @@ export class ApiHelpers {
 		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
 		this.headlessAdminWorkflow = new HeadlessAdminWorkflowApiHelper(this);
 		this.headlessChangeTracking = new HeadlessChangeTrackingApiHelper(this);
+		this.headlessCommerceAdminAccount =
+			new HeadlessCommerceAdminAccountApiHelper(this);
 		this.headlessCommerceAdminCatalog =
 			new HeadlessCommerceAdminCatalogApiHelper(this);
 		this.headlessCommerceAdminChannel =
@@ -109,6 +115,8 @@ export class ApiHelpers {
 			new HeadlessCommerceAdminOrderApiHelper(this);
 		this.headlessCommerceAdminPaymentApiHelper =
 			new HeadlessCommerceAdminPaymentApiHelper(this);
+		this.headlessCommerceAdminPricing =
+			new HeadlessCommerceAdminPricingApiHelper(this);
 		this.headlessCommerceDeliveryCatalog =
 			new HeadlessCommerceDeliveryCatalogApiHelper(this);
 		this.headlessCommerceDeliveryCart =
@@ -263,6 +271,12 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'discount':
+					await this.headlessCommerceAdminPricing.deleteDiscount(
+						item.id
+					);
+
+					break;
 				case 'option':
 					await this.headlessCommerceAdminCatalog.deleteOption(
 						item.id
@@ -305,6 +319,10 @@ export class DataApiHelpers extends ApiHelpers {
 					await this.headlessCommerceAdminCatalog.deleteSpecification(
 						item.id
 					);
+
+					break;
+				case 'terms':
+					await this.headlessCommerceAdminOrder.deleteTerms(item.id);
 
 					break;
 				case 'warehouse':

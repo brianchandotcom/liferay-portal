@@ -9,6 +9,7 @@ import {ExportUserDataPage} from '../pages/user-associated-data-web/ExportUserDa
 import {EditOrganizationPage} from '../pages/users-admin-web/EditOrganizationPage';
 import {EditUserPage} from '../pages/users-admin-web/EditUserPage';
 import {ServiceAccountsPage} from '../pages/users-admin-web/ServiceAccountsPage';
+import {UserPersonalSitePage} from '../pages/users-admin-web/UserPersonalSitePage';
 import {UsersAndOrganizationsPage} from '../pages/users-admin-web/UsersAndOrganizationsPage';
 
 const usersAndOrganizationsPagesTest = test.extend<{
@@ -16,6 +17,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	editUserPage: EditUserPage;
 	exportUserDataPage: ExportUserDataPage;
 	serviceAccountsPage: ServiceAccountsPage;
+	userPersonalSitePage: UserPersonalSitePage;
 	usersAndOrganizationsPage: UsersAndOrganizationsPage;
 }>({
 	editOrganizationPage: async ({page}, use) => {
@@ -29,6 +31,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	serviceAccountsPage: async ({page}, use) => {
 		await use(new ServiceAccountsPage(page));
+	},
+	userPersonalSitePage: async ({page}, use) => {
+		await use(new UserPersonalSitePage(page));
 	},
 	usersAndOrganizationsPage: async ({page}, use) => {
 		await use(new UsersAndOrganizationsPage(page));

@@ -11,9 +11,14 @@ import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircul
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.base.CPDisplayLayoutLocalServiceBaseImpl;
+import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
@@ -28,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -60,7 +66,7 @@ public class CPDisplayLayoutLocalServiceImpl
 			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws PortalException {
 
-		_validate(classPK, layoutPageTemplateEntryUuid, layoutUuid);
+		_validate(groupId, classPK, layoutPageTemplateEntryUuid, layoutUuid);
 
 		long classNameId = _classNameLocalService.getClassNameId(clazz);
 
@@ -211,8 +217,8 @@ public class CPDisplayLayoutLocalServiceImpl
 			cpDisplayLayoutPersistence.findByPrimaryKey(cpDisplayLayoutId);
 
 		_validate(
-			cpDisplayLayout.getClassPK(), layoutPageTemplateEntryUuid,
-			layoutUuid);
+			cpDisplayLayout.getGroupId(), cpDisplayLayout.getClassPK(),
+			layoutPageTemplateEntryUuid, layoutUuid);
 
 		cpDisplayLayout.setClassPK(classPK);
 		cpDisplayLayout.setLayoutPageTemplateEntryUuid(
@@ -318,7 +324,8 @@ public class CPDisplayLayoutLocalServiceImpl
 	}
 
 	private void _validate(
-			long classPK, String layoutPageTemplateEntryUuid, String layoutUuid)
+			long groupId, long classPK, String layoutPageTemplateEntryUuid,
+			String layoutUuid)
 		throws PortalException {
 
 		if (classPK <= 0) {
@@ -330,6 +337,31 @@ public class CPDisplayLayoutLocalServiceImpl
 
 			throw new CPDisplayLayoutEntryUuidException();
 		}
+
+		if (Validator.isNotNull(layoutPageTemplateEntryUuid)) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByUuidAndGroupId(
+						layoutPageTemplateEntryUuid, groupId);
+
+			if (layoutPageTemplateEntry == null) {
+				throw new NoSuchPageTemplateEntryException();
+			}
+		}
+
+		if (Validator.isNotNull(layoutUuid)) {
+			Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+				layoutUuid, groupId, false);
+
+			if (layout == null) {
+				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layoutUuid, groupId, true);
+			}
+
+			if (layout == null) {
+				throw new NoSuchLayoutException();
+			}
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {
@@ -338,6 +370,13 @@ public class CPDisplayLayoutLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

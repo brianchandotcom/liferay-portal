@@ -79,6 +79,7 @@ public interface AMImageEntryLocalService
 	 * @throws PortalException if an adaptive media image already exists for the
 	 file version and configuration
 	 */
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public AMImageEntry addAMImageEntry(
 			AMImageConfigurationEntry amImageConfigurationEntry,
 			FileVersion fileVersion, int height, int width,

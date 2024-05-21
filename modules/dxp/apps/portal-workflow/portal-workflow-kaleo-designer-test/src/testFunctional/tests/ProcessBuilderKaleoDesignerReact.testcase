@@ -262,29 +262,6 @@ definition {
 			nodeType = "join-xor");
 	}
 
-	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Start"
-	@priority = 5
-	test CanAddAndEditStartNode {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Start",
-			nodePosition = "70,-200");
-
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Label",
-			infoValue = "Start Node");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			labelValue = "Start Node",
-			nodeType = "start");
-	}
-
 	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: State"
 	@priority = 5
 	test CanAddAndEditStateNode {

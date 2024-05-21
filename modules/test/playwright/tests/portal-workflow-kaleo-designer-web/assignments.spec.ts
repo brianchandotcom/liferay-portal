@@ -60,7 +60,7 @@ test('can see Scripted Assignment option when script management configuration is
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickUpdateNodeLink();
+	await diagramViewPage.clickNode('update');
 
 	await nodePropertiesSidebarPage.editAssignmentButton.click();
 
@@ -84,7 +84,7 @@ test('cannot see Scripted Assignment option when script management configuration
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickUpdateNodeLink();
+	await diagramViewPage.clickNode('update');
 
 	await nodePropertiesSidebarPage.editAssignmentButton.click();
 

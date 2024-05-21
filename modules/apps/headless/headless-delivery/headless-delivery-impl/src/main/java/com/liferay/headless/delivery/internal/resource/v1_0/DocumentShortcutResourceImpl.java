@@ -6,12 +6,15 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileShortcutService;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.DocumentShortcut;
 import com.liferay.headless.delivery.resource.v1_0.DocumentShortcutResource;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -64,6 +67,41 @@ public class DocumentShortcutResourceImpl
 					new LiferayFileShortcut(dlFileShortcut))),
 			pagination,
 			_dlFileShortcutService.getGroupFileShortcutsCount(siteId));
+	}
+
+	@Override
+	public DocumentShortcut postAssetLibraryDocumentShortcut(
+			Long assetLibraryId, DocumentShortcut documentShortcut)
+		throws Exception {
+
+		return postSiteDocumentShortcut(assetLibraryId, documentShortcut);
+	}
+
+	@Override
+	public DocumentShortcut postSiteDocumentShortcut(
+			Long siteId, DocumentShortcut documentShortcut)
+		throws Exception {
+
+		Long documentFolderId = documentShortcut.getFolderId();
+
+		if (documentFolderId == null) {
+			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		return _toDocumentShortcut(
+			_dlAppService.addFileShortcut(
+				siteId, documentFolderId,
+				documentShortcut.getTargetDocumentId(),
+				_createServiceContext(documentShortcut, siteId)));
+	}
+
+	private ServiceContext _createServiceContext(
+		DocumentShortcut documentShortcut, long groupId) {
+
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			documentShortcut.getViewableByAsString()
+		).build();
 	}
 
 	private DocumentShortcut _toDocumentShortcut(FileShortcut fileShortcut)

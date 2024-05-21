@@ -254,6 +254,32 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(endpointUrl, {data});
 	}
 
+	async createDataSetSort({
+		defaultValue = false,
+		fieldName = 'dateCreated',
+		label_i18n = {en_US: 'Date Created'},
+		orderType = 'asc',
+		r_fdsViewFDSSortRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
+	}: {
+		defaultValue?: boolean;
+		fieldName?: string;
+		label_i18n?: {[key: string]: string};
+		orderType?: string;
+		r_fdsViewFDSSortRelationship_c_fdsViewERC?: string;
+	}) {
+		const url = `${this.baseUrl}data-set-manager/sorts`;
+
+		const data = {
+			default: defaultValue,
+			fieldName,
+			label_i18n,
+			orderType,
+			r_fdsViewFDSSortRelationship_c_fdsViewERC,
+		};
+
+		return this.post(url, {data});
+	}
+
 	async createDataSetListSection({
 		fieldName = 'name',
 		name = 'title',

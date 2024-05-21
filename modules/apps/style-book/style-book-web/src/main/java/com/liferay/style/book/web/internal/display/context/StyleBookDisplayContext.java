@@ -190,7 +190,7 @@ public class StyleBookDisplayContext {
 		OrderByComparator<StyleBookEntry> orderByComparator = null;
 
 		if (Objects.equals(_getOrderByCol(), "create-date")) {
-			orderByComparator = new StyleBookEntryCreateDateComparator(
+			orderByComparator = StyleBookEntryCreateDateComparator.get(
 				orderByAsc);
 		}
 		else if (Objects.equals(_getOrderByCol(), "name")) {

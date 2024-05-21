@@ -29,13 +29,13 @@
 
 <#if wide_layout>
 	<#assign
-	speedwell_content_css_class = "speedwell-content speedwell-content--wide"
+		speedwell_content_css_class = "speedwell-content speedwell-content--wide"
 	/>
 </#if>
 
 <#if translucent_topbar>
 	<#assign
-	speedwell_topbar_css_class = "speedwell-topbar speedwell-topbar--translucent"
+		speedwell_topbar_css_class = "speedwell-topbar speedwell-topbar--translucent"
 	/>
 </#if>
 

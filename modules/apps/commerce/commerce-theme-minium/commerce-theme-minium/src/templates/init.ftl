@@ -1,22 +1,22 @@
 <#-- ---------- Common variables ---------- -->
 
 <#assign
-theme_display = themeDisplay
-portlet_display = portletDisplay
+	theme_display = themeDisplay
+	portlet_display = portletDisplay
 
-layoutSet = layout.getLayoutSet()
+	layoutSet = layout.getLayoutSet()
 
-theme_timestamp = themeDisplay.getTheme().getTimestamp()
-theme_settings = themeDisplay.getThemeSettings()
+	theme_timestamp = themeDisplay.getTheme().getTimestamp()
+	theme_settings = themeDisplay.getThemeSettings()
 
-root_css_class = languageUtil.get(locale, "lang.dir")
-css_class = htmlUtil.escape(bodyCssClass!)
+	root_css_class = languageUtil.get(locale, "lang.dir")
+	css_class = htmlUtil.escape(bodyCssClass!)
 
-css_class = css_class + " " + htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam"
+	css_class = css_class + " " + htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam"
 
-page_group = layout.getGroup()
+	page_group = layout.getGroup()
 
-layoutIsSystem = true
+	layoutIsSystem = true
 
 />
 
@@ -53,10 +53,10 @@ layoutIsSystem = true
 </#if>
 
 <#assign
-time_zone = user.getTimeZoneId()
-is_login_redirect_required = portalUtil.isLoginRedirectRequired(request)
-is_signed_in = theme_display.isSignedIn()
-group_id = theme_display.getScopeGroupId()
+	time_zone = user.getTimeZoneId()
+	is_login_redirect_required = portalUtil.isLoginRedirectRequired(request)
+	is_signed_in = theme_display.isSignedIn()
+	group_id = theme_display.getScopeGroupId()
 />
 
 <#-- ---------- LPS-66428 ---------- -->
@@ -95,8 +95,8 @@ group_id = theme_display.getScopeGroupId()
 
 <#if show_control_panel>
 	<#assign
-	control_panel_text = languageUtil.get(locale, "control-panel")
-	control_panel_url = htmlUtil.escape(theme_display.getURLControlPanel())
+		control_panel_text = languageUtil.get(locale, "control-panel")
+		control_panel_url = htmlUtil.escape(theme_display.getURLControlPanel())
 	/>
 </#if>
 
@@ -104,8 +104,8 @@ group_id = theme_display.getScopeGroupId()
 
 <#if show_home>
 	<#assign
-	home_text = languageUtil.get(locale, "home")
-	home_url = htmlUtil.escape(theme_display.getURLHome())
+		home_text = languageUtil.get(locale, "home")
+		home_url = htmlUtil.escape(theme_display.getURLHome())
 	/>
 
 	<#if !request.isRequestedSessionIdFromCookie()>
@@ -132,30 +132,30 @@ group_id = theme_display.getScopeGroupId()
 
 <#if show_sign_out>
 	<#assign
-	sign_out_text = languageUtil.get(locale, "sign-out")
-	sign_out_url = htmlUtil.escape(theme_display.getURLSignOut())
+		sign_out_text = languageUtil.get(locale, "sign-out")
+		sign_out_url = htmlUtil.escape(theme_display.getURLSignOut())
 	/>
 </#if>
 
 <#-- ---------- Page ---------- -->
 
 <#assign
-the_title = ""
-selectable = theme_display.isTilesSelectable()
-is_maximized = layoutTypePortlet.hasStateMax()
+	the_title = ""
+	selectable = theme_display.isTilesSelectable()
+	is_maximized = layoutTypePortlet.hasStateMax()
 
-page_javascript_1 = ""
-page_javascript_2 = ""
-page_javascript_3 = ""
+	page_javascript_1 = ""
+	page_javascript_2 = ""
+	page_javascript_3 = ""
 
-page = layout
+	page = layout
 
-is_first_child = page.isFirstChild()
-is_first_parent = page.isFirstParent()
+	is_first_child = page.isFirstChild()
+	is_first_parent = page.isFirstParent()
 
-the_title = languageUtil.get(locale, the_title, page.getName(locale))
+	the_title = languageUtil.get(locale, the_title, page.getName(locale))
 
-is_portlet_page = false
+	is_portlet_page = false
 />
 
 <#if stringUtil.equals(page.getType(), "portlet")>
@@ -169,11 +169,11 @@ is_portlet_page = false
 </#if>
 
 <#assign
-site_name = htmlUtil.escape(page_group.getDescriptiveName())
+	site_name = htmlUtil.escape(page_group.getDescriptiveName())
 
-community_name = site_name
+	community_name = site_name
 
-is_guest_group = page_group.isGuest()
+	is_guest_group = page_group.isGuest()
 />
 
 <#if is_guest_group>
@@ -211,26 +211,26 @@ is_guest_group = page_group.isGuest()
 </#if>
 
 <#assign
-css_class = css_class + " " + site_type
+	css_class = css_class + " " + site_type
 
-site_default_public_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, false))
+	site_default_public_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, false))
 
-community_default_public_url = site_default_public_url
+	community_default_public_url = site_default_public_url
 
-site_default_private_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, true))
+	site_default_private_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, true))
 
-community_default_private_url = site_default_private_url
+	community_default_private_url = site_default_private_url
 
-site_default_url = site_default_public_url
+	site_default_url = site_default_public_url
 
-community_default_url = site_default_url
+	community_default_url = site_default_url
 />
 
 <#if layout.isPrivateLayout()>
 	<#assign
-	site_default_url = site_default_private_url
+		site_default_url = site_default_private_url
 
-	community_default_url = site_default_url
+		community_default_url = site_default_url
 	/>
 </#if>
 
@@ -261,9 +261,9 @@ community_default_url = site_default_url
 </#if>
 
 <#assign
-layout_friendly_url = layout.getFriendlyURL()
+	layout_friendly_url = layout.getFriendlyURL()
 
-portlet_id = paramUtil.getString(request, "p_p_id")
+	portlet_id = paramUtil.getString(request, "p_p_id")
 />
 
 <#if validator.isNotNull(portlet_id) && layoutIsSystem && !layout.isTypeControlPanel() && stringUtil.equals(layout_friendly_url, "/manage")>
@@ -281,10 +281,10 @@ portlet_id = paramUtil.getString(request, "p_p_id")
 <#-- ---------- Logo ---------- -->
 
 <#assign
-logo_css_class = "logo"
-use_company_logo = !layoutSet.isLogo()
-site_logo_height = company_logo_height
-site_logo_width = company_logo_width
+	logo_css_class = "logo"
+	use_company_logo = !layoutSet.isLogo()
+	site_logo_height = company_logo_height
+	site_logo_width = company_logo_width
 />
 
 <#if (company.getLogoId() == 0) && use_company_logo>
@@ -306,11 +306,11 @@ site_logo_width = company_logo_width
 </#if>
 
 <#assign
-show_site_name = getterUtil.getBoolean(layoutSet.getSettingsProperty("showSiteName"), show_site_name_default)
+	show_site_name = getterUtil.getBoolean(layoutSet.getSettingsProperty("showSiteName"), show_site_name_default)
 
-site_logo = company_logo
+	site_logo = company_logo
 
-logo_description = ""
+	logo_description = ""
 />
 
 <#if !show_site_name>
@@ -337,16 +337,16 @@ logo_description = ""
 <#-- ---------- My sites ---------- -->
 
 <#assign
-show_my_sites = user.hasMySites()
+	show_my_sites = user.hasMySites()
 
-show_my_places = show_my_sites
+	show_my_places = show_my_sites
 />
 
 <#if show_my_sites>
 	<#assign
-	my_sites_text = languageUtil.get(locale, "my-sites")
+		my_sites_text = languageUtil.get(locale, "my-sites")
 
-	my_places_text = my_sites_text
+		my_places_text = my_sites_text
 	/>
 </#if>
 
@@ -372,10 +372,10 @@ show_my_places = show_my_sites
 <#-- ---------- Date ---------- -->
 
 <#assign
-date = dateUtil
+	date = dateUtil
 
-current_time = date.newDate()
-the_year = current_time?date?string("yyyy")
+	current_time = date.newDate()
+	the_year = current_time?date?string("yyyy")
 />
 
 <#-- ---------- Custom init ---------- -->

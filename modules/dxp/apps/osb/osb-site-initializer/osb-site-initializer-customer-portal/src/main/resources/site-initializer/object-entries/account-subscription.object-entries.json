@@ -2,7 +2,7 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
-			"accountSubscriptionGroupERC": "ERC-001_lxc---sm",
+			"accountSubscriptionGroupERC": "ERC-001_liferay-paas",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -12,7 +12,7 @@
 		},
 		{
 			"accountKey": "ERC-001",
-			"accountSubscriptionGroupERC": "ERC-001_lxc---sm",
+			"accountSubscriptionGroupERC": "ERC-001_liferay-paas",
 			"endDate": "2022-03-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Non-Production",
@@ -22,7 +22,7 @@
 		},
 		{
 			"accountKey": "ERC-002",
-			"accountSubscriptionGroupERC": "ERC-002_dxp",
+			"accountSubscriptionGroupERC": "ERC-002_liferay-self-hosted",
 			"endDate": "2028-01-14 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Non-Production",
@@ -32,7 +32,7 @@
 		},
 		{
 			"accountKey": "ERC-002",
-			"accountSubscriptionGroupERC": "ERC-002_dxp",
+			"accountSubscriptionGroupERC": "ERC-002_liferay-self-hosted",
 			"endDate": "2028-01-14 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -82,7 +82,7 @@
 		},
 		{
 			"accountKey": "ERC-004",
-			"accountSubscriptionGroupERC": "ERC-004_lxc---sm",
+			"accountSubscriptionGroupERC": "ERC-004_liferay-paas",
 			"endDate": "2024-03-14 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -162,7 +162,7 @@
 		},
 		{
 			"accountKey": "ERC-007",
-			"accountSubscriptionGroupERC": "ERC-007_dxp",
+			"accountSubscriptionGroupERC": "ERC-007_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -172,7 +172,7 @@
 		},
 		{
 			"accountKey": "ERC-008",
-			"accountSubscriptionGroupERC": "ERC-008_dxp",
+			"accountSubscriptionGroupERC": "ERC-008_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -182,7 +182,7 @@
 		},
 		{
 			"accountKey": "ERC-008",
-			"accountSubscriptionGroupERC": "ERC-008_lxc---sm",
+			"accountSubscriptionGroupERC": "ERC-008_liferay-paas",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -222,7 +222,7 @@
 		},
 		{
 			"accountKey": "ERC-009",
-			"accountSubscriptionGroupERC": "ERC-009_dxp",
+			"accountSubscriptionGroupERC": "ERC-009_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -232,7 +232,7 @@
 		},
 		{
 			"accountKey": "ERC-010",
-			"accountSubscriptionGroupERC": "ERC-010_dxp",
+			"accountSubscriptionGroupERC": "ERC-010_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -242,7 +242,7 @@
 		},
 		{
 			"accountKey": "ERC-011",
-			"accountSubscriptionGroupERC": "ERC-011_dxp",
+			"accountSubscriptionGroupERC": "ERC-011_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -252,7 +252,7 @@
 		},
 		{
 			"accountKey": "ERC-012",
-			"accountSubscriptionGroupERC": "ERC-012_dxp",
+			"accountSubscriptionGroupERC": "ERC-012_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -272,7 +272,7 @@
 		},
 		{
 			"accountKey": "ERC-013",
-			"accountSubscriptionGroupERC": "ERC-013_dxp",
+			"accountSubscriptionGroupERC": "ERC-013_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -282,7 +282,7 @@
 		},
 		{
 			"accountKey": "ERC-014",
-			"accountSubscriptionGroupERC": "ERC-014_dxp",
+			"accountSubscriptionGroupERC": "ERC-014_liferay-self-hosted",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",

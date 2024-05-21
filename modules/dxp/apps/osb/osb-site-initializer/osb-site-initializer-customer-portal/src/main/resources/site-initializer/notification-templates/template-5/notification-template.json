@@ -18,7 +18,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "LXC Activation request for [%PROJECT_CODE%]"
+		"en_US": "Liferay SaaS Activation request for [%PROJECT_CODE%]"
 	},
 	"type": "email"
 }

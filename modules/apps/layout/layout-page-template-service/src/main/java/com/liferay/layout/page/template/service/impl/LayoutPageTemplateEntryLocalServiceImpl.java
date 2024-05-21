@@ -125,7 +125,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validate(groupId, name, type);
+		_validate(groupId, layoutPageTemplateCollectionId, name, type);
 
 		long layoutPageTemplateEntryId = counterLocalService.increment();
 
@@ -453,14 +453,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long groupId, String name, int type) {
-
-		return layoutPageTemplateEntryPersistence.fetchByG_N_T(
-			groupId, name, type);
-	}
-
-	@Override
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByPlid(
 		long plid) {
 
@@ -731,8 +723,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		if (!Objects.equals(layoutPageTemplateEntry.getName(), name)) {
 			_validate(
-				layoutPageTemplateEntry.getGroupId(), name,
-				layoutPageTemplateEntry.getType());
+				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+				name, layoutPageTemplateEntry.getType());
 		}
 
 		layoutPageTemplateEntry.setModifiedDate(new Date());
@@ -763,7 +756,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		_validate(
-			layoutPageTemplateEntry.getGroupId(), name,
+			layoutPageTemplateEntry.getGroupId(),
+			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(), name,
 			layoutPageTemplateEntry.getType());
 
 		layoutPageTemplateEntry.setModifiedDate(new Date());
@@ -1090,7 +1084,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 	}
 
-	private void _validate(long groupId, String name, int type)
+	private void _validate(
+			long groupId, long layoutPageTemplateCollectionId, String name,
+			int type)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -1116,8 +1112,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			layoutPageTemplateEntryPersistence.fetchByG_N_T(
-				groupId, name, type);
+			layoutPageTemplateEntryPersistence.fetchByG_L_N_T(
+				groupId, layoutPageTemplateCollectionId, name, type);
 
 		if (layoutPageTemplateEntry != null) {
 			throw new LayoutPageTemplateEntryNameException.MustNotBeDuplicate(

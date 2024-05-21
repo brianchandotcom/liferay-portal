@@ -274,14 +274,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
-		long groupId, String name, int type) {
-
-		return layoutPageTemplateCollectionPersistence.fetchByG_N_T(
-			groupId, name, type);
-	}
-
-	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId) {
 

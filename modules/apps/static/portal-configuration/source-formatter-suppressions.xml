@@ -7,5 +7,6 @@
 	<source-check>
 		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="portal-configuration-metatype-api/src/test/java/com/liferay/portal/configuration/metatype/bnd/util/ConfigurableUtilTest\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="portal-configuration-persistence-api/src/main/java/com/liferay/portal/configuration/persistence/ConfigurationOverridePropertiesUtil\.java" />
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-configuration-persistence-impl/src/main/java/com/liferay/portal/configuration/persistence/internal/upgrade/schema/SchemaCreationUpgradeStep\.java" />
 	</source-check>
 </suppressions>

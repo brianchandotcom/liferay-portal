@@ -78,8 +78,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAssetAppearsOnMetric(canonicalURLSuffix = null, canonicalURL = null, cardTitle = null, pageName = null) {
+	macro viewAssetAppearsOnMetric(canonicalURLSuffix = null, canonicalURL, cardTitle, index = null, metricTitle, pageName) {
 		var key_cardTitle = ${cardTitle};
+		var key_index = ${index};
+		var key_metricTitle = ${metricTitle};
+
+		ACUtils.waitForLoading();
+
+		var visitorsBehaviorMetricValue = selenium.getText("ACCards#METRIC_VALUE_BY_METRIC_TITLE");
 
 		ScrollWebElementIntoView(locator1 = "ACCards#CARD_TITLE");
 
@@ -98,6 +104,14 @@ definition {
 				locator1 = "ACAssets#APPEARS_ON_CANONICAL_URL",
 				value1 = ${canonicalURLSuffix});
 		}
+
+		if (!(isSet(index))) {
+			var key_index = 1;
+		}
+
+		AssertTextEquals(
+			locator1 = "ACAssets#APPEARS_ON_PAGE_METRIC",
+			value1 = ${visitorsBehaviorMetricValue});
 	}
 
 	@summary = "Default summary"

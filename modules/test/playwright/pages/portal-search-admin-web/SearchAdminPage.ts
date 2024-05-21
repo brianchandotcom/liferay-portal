@@ -56,15 +56,15 @@ export class SearchAdminPage {
 	}
 
 	async goToConnectionsTab() {
-		this.connectionsTab.click();
+		await this.connectionsTab.click();
 	}
 
 	async goToFieldMappingsTab() {
-		this.fieldMappingsTab.click();
+		await this.fieldMappingsTab.click();
 	}
 
 	async goToIndexActionsTab() {
-		this.indexActionsTab.click();
+		await this.indexActionsTab.click();
 	}
 
 	async reindexAllSearchIndexes() {

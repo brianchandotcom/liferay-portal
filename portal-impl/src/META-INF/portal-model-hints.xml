@@ -1325,7 +1325,9 @@
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
-		<field name="token" type="String" />
+		<field name="token" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="expirationDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.Repository">

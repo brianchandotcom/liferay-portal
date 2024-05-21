@@ -17,14 +17,6 @@ public class TestDTOPage {
 		this.pageSize = pageSize;
 	}
 
-	public int getPage() {
-		return page;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
 	@GraphQLField
 	protected int page;
 

@@ -2005,6 +2005,10 @@ public class ObjectEntryLocalServiceTest {
 				objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(0));
 		}
+		finally {
+			_objectValidationRuleLocalService.deleteObjectValidationRule(
+				objectValidationRule);
+		}
 	}
 
 	@Test

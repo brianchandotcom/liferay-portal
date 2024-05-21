@@ -215,7 +215,7 @@ public class TrashDisplayContext {
 		}
 
 		entrySearch.setOrderByComparator(
-			new EntryCreateDateComparator(orderByAsc));
+			EntryCreateDateComparator.get(orderByAsc));
 		entrySearch.setOrderByType(getOrderByType());
 
 		EntrySearchTerms searchTerms =

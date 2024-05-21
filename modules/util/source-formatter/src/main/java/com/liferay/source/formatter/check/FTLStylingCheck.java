@@ -55,7 +55,7 @@ public class FTLStylingCheck extends BaseStylingCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (trimmedLine.matches("\\w+=.*")) {
+				if (trimmedLine.matches("\\w+ =.*")) {
 					sb.append(indent);
 					sb.append("\t");
 					sb.append(trimmedLine);

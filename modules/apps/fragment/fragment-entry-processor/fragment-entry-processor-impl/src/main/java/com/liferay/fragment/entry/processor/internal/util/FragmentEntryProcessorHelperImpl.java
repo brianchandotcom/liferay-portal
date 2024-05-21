@@ -52,11 +52,15 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -432,6 +436,21 @@ public class FragmentEntryProcessorHelperImpl
 			}
 			else if (infoField.getInfoFieldType() instanceof
 						TextInfoFieldType) {
+
+				URI uri = null;
+
+				try {
+					uri = HttpComponentsUtil.getURI((String)value);
+				}
+				catch (URISyntaxException uriSyntaxException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(uriSyntaxException);
+					}
+				}
+
+				if (uri != null) {
+					return value;
+				}
 
 				return HtmlUtil.escape((String)value);
 			}

@@ -10,7 +10,11 @@ switch (args[0]) {
 	case 'build':
 		import('./index.mjs')
 			.then(({default: main}) => main())
-			.catch(console.error);
+			.catch((error) => {
+				console.error(error);
+
+				process.exit(1);
+			});
 		break;
 
 	default:

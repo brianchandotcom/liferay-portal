@@ -13,12 +13,11 @@ export const test = mergeTests(loginTest(), searchAdminPageTest);
 test('should have a human-readable label for every index action', async ({
 	searchAdminPage,
 }) => {
+	await test.step('Navigate to Search Admin page', async () => {
+		await searchAdminPage.goto();
 
-	// Navigate to Search Admin page
-
-	await searchAdminPage.goto();
-
-	await searchAdminPage.goToIndexActionsTab();
+		await searchAdminPage.goToIndexActionsTab();
+	});
 
 	// Assert that the first two items would reindex all indexes and dictionaries
 

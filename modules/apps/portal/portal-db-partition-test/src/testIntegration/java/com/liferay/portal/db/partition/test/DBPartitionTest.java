@@ -496,7 +496,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetClassNameIdsSupplier() throws Exception {
-		_assertGetClassNameIds(
+		_assertClassNameIds(
 			classNameIds -> {
 				for (Long classNameId :
 						_classNameLocalService.getClassNameIdsSupplier(
@@ -510,8 +510,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetClassNameIdSupplier() throws Exception {
-		_assertGetClassNameIds(
-			classNamesIds -> classNamesIds.add(
+		_assertClassNameIds(
+			classNameIds -> classNameIds.add(
 				_classNameLocalService.getClassNameIdSupplier(
 					"class.name.test"
 				).get()));
@@ -681,7 +681,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
-	private void _assertGetClassNameIds(Consumer<Set<Long>> consumer)
+	private void _assertClassNameIds(Consumer<Set<Long>> consumer)
 		throws Exception {
 
 		Set<Long> classNameIds = Collections.synchronizedSet(

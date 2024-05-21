@@ -16,32 +16,8 @@ import java.util.Map;
  */
 public class TestDTO {
 
-	public TestDTO() {
-		this(
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			HashMapBuilder.put(
-				"a" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()
-			).put(
-				"a" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()
-			).build(),
-			RandomTestUtil.randomString());
-	}
-
-	public TestDTO(
-		String extendedString, long id, Map<String, String> map,
-		String string) {
-
-		_extendedString = extendedString;
-
-		this.id = id;
-		this.map = map;
-		this.string = string;
-	}
-
 	public String getExtendedString() {
-		return _extendedString;
+		return _EXTENDED_STRING;
 	}
 
 	public long getId() {
@@ -61,17 +37,22 @@ public class TestDTO {
 	}
 
 	@GraphQLField
-	protected long id;
+	protected long id = RandomTestUtil.randomLong();
 
 	@GraphQLField
-	protected Map<String, String> map;
+	protected Map<String, String> map = HashMapBuilder.put(
+		"a" + RandomTestUtil.randomString(), RandomTestUtil.randomString()
+	).put(
+		"a" + RandomTestUtil.randomString(), RandomTestUtil.randomString()
+	).build();
 
 	@GraphQLField
-	protected String string;
+	protected String string = RandomTestUtil.randomString();
 
 	@GraphQLField
 	protected int version = 1;
 
-	private String _extendedString;
+	private static final String _EXTENDED_STRING =
+		RandomTestUtil.randomString();
 
 }

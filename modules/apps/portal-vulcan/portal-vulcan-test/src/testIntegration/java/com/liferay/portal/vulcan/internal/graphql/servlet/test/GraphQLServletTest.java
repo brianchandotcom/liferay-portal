@@ -69,22 +69,19 @@ public class GraphQLServletTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_testDTOV1 = new TestDTO();
+		_v1TestDTO = new TestDTO();
 
-		TestServletData servletDataV1 = new TestServletData(_testDTOV1);
-
-		_testDTOV2 =
+		_v2TestDTO =
 			new com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.
 				TestDTO();
 
-		ServletData servletDataV2 =
-			new com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.
-				TestServletData(_testDTOV2);
-
 		_serviceRegistration1 = bundleContext.registerService(
-			ServletData.class, servletDataV1, null);
+			ServletData.class, new TestServletData(_v1TestDTO), null);
 		_serviceRegistration2 = bundleContext.registerService(
-			ServletData.class, servletDataV2, null);
+			ServletData.class,
+			new com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.
+				TestServletData(_v2TestDTO),
+			null);
 	}
 
 	@After
@@ -99,7 +96,7 @@ public class GraphQLServletTest {
 		// With namespace v1
 
 		_assertEqualsV1(
-			false, _testDTOV1,
+			false, _v1TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
@@ -107,7 +104,7 @@ public class GraphQLServletTest {
 						new GraphQLField(
 							"createTestDTO",
 							Collections.singletonMap(
-								"testDTO", _toGraphQLString(_testDTOV1)),
+								"testDTO", _toGraphQLString(_v1TestDTO)),
 							new GraphQLField("id"), new GraphQLField("map"),
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
@@ -118,7 +115,7 @@ public class GraphQLServletTest {
 		// With namespace v2
 
 		_assertEqualsV2(
-			false, _testDTOV2,
+			false, _v2TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
@@ -126,7 +123,7 @@ public class GraphQLServletTest {
 						new GraphQLField(
 							"createTestDTO",
 							Collections.singletonMap(
-								"testDTO", _toGraphQLString(_testDTOV2)),
+								"testDTO", _toGraphQLString(_v2TestDTO)),
 							new GraphQLField("id"), new GraphQLField("map"),
 							new GraphQLField("string"),
 							new GraphQLField("version"))),
@@ -137,13 +134,13 @@ public class GraphQLServletTest {
 		// Without namespace (backwards compatibility)
 
 		_assertEqualsV2(
-			false, _testDTOV2,
+			false, _v2TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
 						"createTestDTO",
 						Collections.singletonMap(
-							"testDTO", _toGraphQLString(_testDTOV2)),
+							"testDTO", _toGraphQLString(_v2TestDTO)),
 						new GraphQLField("id"), new GraphQLField("map"),
 						new GraphQLField("string"),
 						new GraphQLField("version")),
@@ -151,13 +148,13 @@ public class GraphQLServletTest {
 				"JSONObject/data", "JSONObject/createTestDTO"));
 
 		_assertEqualsV1(
-			false, _testDTOV1,
+			false, _v1TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
 						"createTestDTOV1",
 						Collections.singletonMap(
-							"testDTO", _toGraphQLString(_testDTOV1)),
+							"testDTO", _toGraphQLString(_v1TestDTO)),
 						new GraphQLField("id"), new GraphQLField("map"),
 						new GraphQLField("string"),
 						new GraphQLField("version")),
@@ -165,13 +162,13 @@ public class GraphQLServletTest {
 				"JSONObject/data", "JSONObject/createTestDTOV1"));
 
 		_assertEqualsV2(
-			false, _testDTOV2,
+			false, _v2TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
 						"createTestDTOV2",
 						Collections.singletonMap(
-							"testDTO", _toGraphQLString(_testDTOV2)),
+							"testDTO", _toGraphQLString(_v2TestDTO)),
 						new GraphQLField("id"), new GraphQLField("map"),
 						new GraphQLField("string"),
 						new GraphQLField("version")),
@@ -185,7 +182,7 @@ public class GraphQLServletTest {
 		// With namespace v1
 
 		_assertEqualsV1(
-			true, _testDTOV1,
+			true, _v1TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
@@ -226,7 +223,7 @@ public class GraphQLServletTest {
 		// With namespace v2
 
 		_assertEqualsV2(
-			true, _testDTOV2,
+			true, _v2TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
@@ -267,7 +264,7 @@ public class GraphQLServletTest {
 		// Without namespace (backwards compatibility)
 
 		_assertEqualsV2(
-			true, _testDTOV2,
+			true, _v2TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
@@ -279,7 +276,7 @@ public class GraphQLServletTest {
 				"JSONObject/data", "JSONObject/testDTO"));
 
 		_assertEqualsV1(
-			true, _testDTOV1,
+			true, _v1TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
@@ -291,7 +288,7 @@ public class GraphQLServletTest {
 				"JSONObject/data", "JSONObject/testDTOV1"));
 
 		_assertEqualsV2(
-			true, _testDTOV2,
+			true, _v2TestDTO,
 			JSONUtil.getValueAsJSONObject(
 				_invoke(
 					new GraphQLField(
@@ -376,7 +373,7 @@ public class GraphQLServletTest {
 				).build());
 
 			_assertEqualsV2(
-				true, _testDTOV2,
+				true, _v2TestDTO,
 				JSONUtil.getValueAsJSONObject(
 					_invoke(
 						new GraphQLField(
@@ -834,8 +831,8 @@ public class GraphQLServletTest {
 
 	private ServiceRegistration<ServletData> _serviceRegistration1;
 	private ServiceRegistration<ServletData> _serviceRegistration2;
-	private TestDTO _testDTOV1;
+	private TestDTO _v1TestDTO;
 	private com.liferay.portal.vulcan.internal.graphql.servlet.test.v2_0.TestDTO
-		_testDTOV2;
+		_v2TestDTO;
 
 }

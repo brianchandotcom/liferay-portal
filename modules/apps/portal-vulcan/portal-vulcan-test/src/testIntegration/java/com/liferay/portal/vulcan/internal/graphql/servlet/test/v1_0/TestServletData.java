@@ -23,7 +23,7 @@ public class TestServletData implements ServletData {
 
 	@Override
 	public Object getMutation() {
-		return _testMutationV1;
+		return _testMutation;
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class TestServletData implements ServletData {
 		return false;
 	}
 
-	private final TestMutation _testMutationV1 = new TestMutation();
+	private final TestMutation _testMutation = new TestMutation();
 	private final TestQuery _testQuery;
 
 }

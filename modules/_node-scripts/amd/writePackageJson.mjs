@@ -14,13 +14,10 @@ export default async function writePackageJson(projectDescription) {
 	const {main, name, version} = projectDescription;
 
 	const json = {
+		main: 'index.js',
 		name,
 		version,
 	};
-
-	if (main) {
-		json.main = main.replace(/\.ts$/, '.js');
-	}
 
 	await fs.mkdir(path.dirname(filePath), {recursive: true});
 	await fs.writeFile(filePath, JSON.stringify(json, null, '\t'), 'utf-8');

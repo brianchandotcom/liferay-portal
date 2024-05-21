@@ -1,0 +1,15 @@
+{
+	"devDependencies": {
+		"webpack": "5.90.1",
+		"webpack-cli": "5.1.4"
+	},
+	"liferayDesignPack": {
+		"baseTheme": "styled"
+	},
+	"main": "package.json",
+	"name": "@liferay/liferay-sample-theme-css-3",
+	"scripts": {
+		"build": "webpack"
+	},
+	"version": "0.0.0"
+}

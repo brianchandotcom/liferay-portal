@@ -321,20 +321,25 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 																<li>
 																	<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></span>
 
-																	<aui:a
-																		cssClass="content-link modify-link"
-																		data='<%=
-																			HashMapBuilder.<String, Object>put(
-																				"portletid", portlet.getRootPortletId()
-																			).put(
-																				"portlettitle", portletTitle
-																			).build()
-																		%>'
-																		href="javascript:void(0);"
-																		id='<%= "contentLink_" + portlet.getRootPortletId() %>'
+																	<clay:button
+																		cssClass="content-link modify-link pr-1"
+																		id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getRootPortletId() %>'
+																		data-portletid="<%= portlet.getRootPortletId() %>"
+																		data-portlettitle="<%= portletTitle %>"
+																		displayType="link"
 																		label="change"
-																		method="get"
 																	/>
+
+																	<span id="<portlet:namespace />rightContentArrow_<%= portlet.getRootPortletId() %>">
+																		<clay:icon
+																			symbol="angle-right-small"
+																		/>
+																	</span>
+																	<span class="hide" id="<portlet:namespace />downContentArrow_<%= portlet.getRootPortletId() %>">
+																		<clay:icon
+																			symbol="angle-down-small"
+																		/>
+																	</span>
 																</li>
 															</ul>
 
@@ -357,7 +362,23 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 										<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-import-their">
 											<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-											<aui:a cssClass="modify-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" />
+											<clay:button
+												cssClass="modify-link options-link pr-1"
+												displayType="link"
+												id='<%= liferayPortletResponse.getNamespace() + "contentOptionsLink" %>'
+												label="change"
+											/>
+
+											<span id="<portlet:namespace />rightContentOptionsArrow">
+												<clay:icon
+													symbol="angle-right-small"
+												/>
+											</span>
+											<span class="hide" id="<portlet:namespace />downContentOptionsArrow">
+												<clay:icon
+													symbol="angle-down-small"
+												/>
+											</span>
 
 											<div class="hide" id="<portlet:namespace />contentOptions">
 												<ul class="lfr-tree list-unstyled">

@@ -15,8 +15,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class DataProviderInstanceModifiedDateComparator
 	extends OrderByComparator<DDMDataProviderInstance> {
 
-	public DataProviderInstanceModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public static DataProviderInstanceModifiedDateComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -53,6 +59,16 @@ public class DataProviderInstanceModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DataProviderInstanceModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DataProviderInstanceModifiedDateComparator _ASCENDING =
+		new DataProviderInstanceModifiedDateComparator(true);
+
+	private static final DataProviderInstanceModifiedDateComparator
+		_DESCENDING = new DataProviderInstanceModifiedDateComparator(false);
 
 	private static final String _ORDER_BY_ASC =
 		"DDMDataProviderInstance.modifiedDate ASC";

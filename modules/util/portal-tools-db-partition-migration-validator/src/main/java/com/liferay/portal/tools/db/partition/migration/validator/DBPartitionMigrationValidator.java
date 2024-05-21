@@ -5,22 +5,15 @@
 
 package com.liferay.portal.tools.db.partition.migration.validator;
 
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
 import com.liferay.portal.tools.db.partition.migration.validator.util.ValidatorUtil;
 
@@ -214,16 +207,7 @@ public class DBPartitionMigrationValidator {
 	}
 
 	private static LiferayDatabase _read(String path) throws IOException {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				SimpleModule simpleModule = new SimpleModule();
-
-				simpleModule.addDeserializer(
-					Version.class, new VersionStdDeserializer());
-
-				registerModule(simpleModule);
-			}
-		};
+		ObjectMapper objectMapper = new ObjectMapper();
 
 		return objectMapper.readValue(new File(path), LiferayDatabase.class);
 	}
@@ -357,44 +341,5 @@ public class DBPartitionMigrationValidator {
 	private static Connection _connection;
 	private static LiferayDatabase _sourceLiferayDatabase;
 	private static LiferayDatabase _targetLiferayDatabase;
-
-	private static class VersionStdDeserializer
-		extends StdDeserializer<Version> {
-
-		public VersionStdDeserializer() {
-			this(null);
-		}
-
-		@Override
-		public Version deserialize(
-				JsonParser jsonParser,
-				DeserializationContext deserializationContext)
-			throws IOException, JacksonException {
-
-			JsonNode jsonNode = jsonParser.getCodec(
-			).readTree(
-				jsonParser
-			);
-
-			return new Version(
-				(Integer)jsonNode.get(
-					"major"
-				).numberValue(),
-				(Integer)jsonNode.get(
-					"minor"
-				).numberValue(),
-				(Integer)jsonNode.get(
-					"micro"
-				).numberValue(),
-				jsonNode.get(
-					"qualifier"
-				).asText());
-		}
-
-		protected VersionStdDeserializer(Class<?> clazz) {
-			super(clazz);
-		}
-
-	}
 
 }

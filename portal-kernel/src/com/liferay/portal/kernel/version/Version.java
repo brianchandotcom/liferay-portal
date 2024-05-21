@@ -45,6 +45,9 @@ public class Version implements Comparable<Version> {
 			GetterUtil.getString(matcher.group(7)));
 	}
 
+	public Version() {
+	}
+
 	public Version(int major, int minor, int micro) {
 		_major = major;
 		_minor = minor;
@@ -141,6 +144,22 @@ public class Version implements Comparable<Version> {
 		return HashUtil.hash(hash, _qualifier);
 	}
 
+	public void setMajor(int major) {
+		_major = major;
+	}
+
+	public void setMicro(int micro) {
+		_micro = micro;
+	}
+
+	public void setMinor(int minor) {
+		_minor = minor;
+	}
+
+	public void setQualifier(String qualifier) {
+		_qualifier = qualifier;
+	}
+
 	@Override
 	public String toString() {
 		if (Objects.equals(getQualifier(), StringPool.BLANK)) {
@@ -157,9 +176,9 @@ public class Version implements Comparable<Version> {
 		"(\\d{1,10})(\\.(\\d{1,10})(\\.(\\d{1,10})" +
 			"(\\.([-_\\da-zA-Z]+))?)?)?");
 
-	private final int _major;
-	private final int _micro;
-	private final int _minor;
-	private final String _qualifier;
+	private int _major;
+	private int _micro;
+	private int _minor;
+	private String _qualifier;
 
 }

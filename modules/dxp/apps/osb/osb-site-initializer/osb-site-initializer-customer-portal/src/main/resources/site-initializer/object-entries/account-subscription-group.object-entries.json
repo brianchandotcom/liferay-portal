@@ -2,18 +2,18 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
-			"externalReferenceCode": "ERC-001_lxc---sm",
+			"externalReferenceCode": "ERC-001_liferay-paas",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "LXC - SM",
+			"name": "Liferay PaaS",
 			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-002",
-			"externalReferenceCode": "ERC-002_dxp",
+			"externalReferenceCode": "ERC-002_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 2
 		},
 		{
@@ -34,10 +34,10 @@
 		},
 		{
 			"accountKey": "ERC-004",
-			"externalReferenceCode": "ERC-004_lxc---sm",
+			"externalReferenceCode": "ERC-004_liferay-paas",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "LXC - SM",
+			"name": "Liferay PaaS",
 			"tabOrder": 2
 		},
 		{
@@ -66,18 +66,18 @@
 		},
 		{
 			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_lxc---sm",
+			"externalReferenceCode": "ERC-008_liferay-paas",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "LXC - SM",
+			"name": "Liferay PaaS",
 			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_dxp",
+			"externalReferenceCode": "ERC-008_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 2,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 3
 		},
 		{
@@ -122,10 +122,10 @@
 		},
 		{
 			"accountKey": "ERC-009",
-			"externalReferenceCode": "ERC-009_dxp",
+			"externalReferenceCode": "ERC-009_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 2
 		},
 		{
@@ -138,10 +138,10 @@
 		},
 		{
 			"accountKey": "ERC-010",
-			"externalReferenceCode": "ERC-010_dxp",
+			"externalReferenceCode": "ERC-010_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 4
 		},
 		{
@@ -154,10 +154,10 @@
 		},
 		{
 			"accountKey": "ERC-011",
-			"externalReferenceCode": "ERC-011_dxp",
+			"externalReferenceCode": "ERC-011_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 4
 		},
 		{
@@ -170,10 +170,10 @@
 		},
 		{
 			"accountKey": "ERC-012",
-			"externalReferenceCode": "ERC-012_dxp",
+			"externalReferenceCode": "ERC-012_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 4
 		},
 		{
@@ -194,10 +194,10 @@
 		},
 		{
 			"accountKey": "ERC-013",
-			"externalReferenceCode": "ERC-013_dxp",
+			"externalReferenceCode": "ERC-013_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 4
 		},
 		{
@@ -210,10 +210,10 @@
 		},
 		{
 			"accountKey": "ERC-014",
-			"externalReferenceCode": "ERC-014_dxp",
+			"externalReferenceCode": "ERC-014_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "DXP",
+			"name": "Liferay Self-Hosted",
 			"tabOrder": 1
 		}
 	],

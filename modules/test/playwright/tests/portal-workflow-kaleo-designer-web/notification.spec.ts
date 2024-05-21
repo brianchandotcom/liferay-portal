@@ -151,7 +151,7 @@ test('create a notification using role type', async ({
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickReviewNodeLink();
+	await diagramViewPage.clickNode('review');
 
 	await nodePropertiesSidebarPage.deleteNotifications();
 
@@ -159,7 +159,7 @@ test('create a notification using role type', async ({
 
 	await processBuilderPage.switchToSourceViewAndBackToDiagram();
 
-	await diagramViewPage.clickReviewNodeLink();
+	await diagramViewPage.clickNode('review');
 
 	const notificationEntry = processBuilderPage.page.getByRole('link', {
 		name: 'Role Type Notification',
@@ -182,7 +182,7 @@ test('create a notification using role type', async ({
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickReviewNodeLink();
+	await diagramViewPage.clickNode('review');
 
 	await expect(notificationEntry).toBeVisible();
 

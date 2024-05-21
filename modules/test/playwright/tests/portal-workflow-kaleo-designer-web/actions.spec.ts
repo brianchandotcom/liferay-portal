@@ -62,7 +62,7 @@ test('can see groovy and java options in the action type select when script mana
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickReviewNodeLink();
+	await diagramViewPage.clickNode('review');
 
 	await nodePropertiesSidebarPage.addActionButton.click();
 
@@ -85,7 +85,7 @@ test('cannot see groovy and java options in the action type select when script m
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickReviewNodeLink();
+	await diagramViewPage.clickNode('review');
 
 	await nodePropertiesSidebarPage.addActionButton.click();
 
@@ -107,7 +107,7 @@ test('cannot save a workflow definition that has a groovy action when script man
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickReviewNodeLink();
+	await diagramViewPage.clickNode('review');
 
 	await nodePropertiesSidebarPage.addActionButton.click();
 
@@ -146,7 +146,7 @@ test('cannot save a workflow definition that has a java action when the script m
 		workflowDefinitionName
 	);
 
-	await diagramViewPage.clickReviewNodeLink();
+	await diagramViewPage.clickNode('review');
 
 	await nodePropertiesSidebarPage.addActionButton.click();
 

@@ -363,7 +363,6 @@ definition {
 
 	@description = "Ignore tests unitl LPS-169348 fixed"
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = 3
 	test CannotCreateCustomObjectsEntriesWithNonexistentNestedFieldInManyToManyRelationships {
 		property portal.acceptance = "true";

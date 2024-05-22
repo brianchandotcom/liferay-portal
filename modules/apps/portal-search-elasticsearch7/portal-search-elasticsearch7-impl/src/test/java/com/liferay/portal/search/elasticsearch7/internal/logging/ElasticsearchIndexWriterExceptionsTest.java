@@ -174,33 +174,18 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testPartiallyUpdateDocument() {
-		expectedException.expect(ElasticsearchStatusException.class);
-		expectedException.expectMessage(
-			"type=document_missing_exception, reason=[_doc]");
-
+	public void testPartiallyUpdateDocument() throws SearchException {
 		Document document = new DocumentImpl();
 
 		document.addKeyword(Field.UID, "1");
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		try {
-			indexWriter.partiallyUpdateDocument(
-				createSearchContext(), document);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
-		}
+		indexWriter.partiallyUpdateDocument(createSearchContext(), document);
 	}
 
 	@Test
-	public void testPartiallyUpdateDocuments() {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage("Bulk partial update failed");
-
+	public void testPartiallyUpdateDocuments() throws SearchException {
 		Document document = new DocumentImpl();
 
 		List<Document> documents = new ArrayList<>();
@@ -211,15 +196,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		try {
-			indexWriter.partiallyUpdateDocuments(
-				createSearchContext(), documents);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
-		}
+		indexWriter.partiallyUpdateDocuments(createSearchContext(), documents);
 	}
 
 	@Test

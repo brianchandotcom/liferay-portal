@@ -496,6 +496,135 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Company copyBPartitionCompany(
+			String name, long sourceCompanyId, long targetCompanyId,
+			String virtualHostname, String webId)
+		throws PortalException {
+
+		if (!DBPartition.isPartitionEnabled()) {
+			throw new UnsupportedOperationException(
+				"Database partitioning must be enabled");
+		}
+
+		if (Validator.isNull(name)) {
+			throw new IllegalArgumentException("Name must not be null");
+		}
+
+		if (Validator.isNull(virtualHostname)) {
+			throw new IllegalArgumentException(
+				"VirtualHostname must not be null");
+		}
+
+		if (Validator.isNull(webId)) {
+			throw new IllegalArgumentException("Web ID must not be null");
+		}
+
+		if (sourceCompanyId == PortalInstancePool.getDefaultCompanyId()) {
+			throw new IllegalArgumentException(
+				"Company ID " + sourceCompanyId + " is the default company ID");
+		}
+
+		Company sourceCompany = companyPersistence.findByPrimaryKey(
+			sourceCompanyId);
+
+		if (sourceCompany == null) {
+			throw new IllegalArgumentException(
+				"Source company ID " + sourceCompanyId + " does not exist");
+		}
+
+		if (targetCompanyId == 0) {
+			targetCompanyId = _getNextCompanyId();
+		}
+
+		if (fetchCompanyById(targetCompanyId) != null) {
+			throw new IllegalArgumentException(
+				"Target company ID " + targetCompanyId + " already exists");
+		}
+
+		validateName(targetCompanyId, name);
+
+		String lowerCaseVirtualHostname = StringUtil.toLowerCase(
+			StringUtil.trim(virtualHostname));
+
+		validateVirtualHost(webId, lowerCaseVirtualHostname);
+
+		validateWebId(webId);
+
+		DBPartitionUtil.copyDBPartition(sourceCompanyId, targetCompanyId);
+
+		long addedCompanyId = targetCompanyId;
+
+		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
+			targetCompanyId);
+
+		Company targetCompany = sourceCompany.cloneWithOriginalValues();
+
+		try {
+			return _transactionAwareInvoke(
+				() -> {
+					companyPersistence.clearCache();
+					_virtualHostPersistence.clearCache();
+
+					targetCompany.setCompanyId(addedCompanyId);
+					targetCompany.setWebId(webId);
+					targetCompany.setName(name);
+					targetCompany.setNew(true);
+
+					companyPersistence.update(targetCompany);
+
+					Company updatedCompany = updateVirtualHostname(
+						addedCompanyId, virtualHostname);
+
+					preregisterCompany(updatedCompany);
+
+					_resourceActionLocalService.checkResourceActions();
+
+					_portletLocalService.checkPortlets(
+						updatedCompany.getCompanyId());
+
+					TransactionCommitCallbackUtil.registerCallback(
+						() -> {
+							Company dbPartitionCompany =
+								companyPersistence.findByPrimaryKey(
+									addedCompanyId);
+
+							registerCompany(dbPartitionCompany);
+
+							PortalInstances.initCompany(
+								dbPartitionCompany, true);
+
+							return null;
+						});
+
+					return updatedCompany;
+				});
+		}
+		catch (Throwable throwable) {
+			try {
+				_transactionAwareInvoke(
+					() -> {
+						DBPartitionUtil.removeDBPartition(addedCompanyId);
+
+						return null;
+					});
+			}
+			finally {
+				safeCloseable.close();
+			}
+
+			throw new PortalException(throwable);
+		}
+		finally {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					safeCloseable.close();
+
+					return null;
+				});
+		}
+	}
+
+	@Override
 	public Company deleteCompany(Company company) throws PortalException {
 		return deleteCompany(company.getCompanyId());
 	}

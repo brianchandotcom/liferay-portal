@@ -504,6 +504,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 	}
 
+	public void method(String className, long classPK, Locale locale, ThemeDisplay themeDisplay) {
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL(className, classPK, locale, themeDisplay);
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, locale, themeDisplay);
+	}
+
 	public void method(
 		String className, long classPK, long accountGroupId,
 		ServiceContext serviceContext) {
@@ -522,6 +527,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 		_commercePriceEntryLocalService.addCommercePriceEntry("test123", cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
+	}
+
+	public void method(String className, long classPK, ThemeDisplay themeDisplay) {
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL(className, classPK, themeDisplay);
+		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, themeDisplay);
 	}
 
 	public void method(String name, String label, BigDecimal amount) {
@@ -552,6 +562,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider _assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

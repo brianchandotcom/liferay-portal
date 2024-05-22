@@ -26,6 +26,55 @@ type ProductConfig = {
 	isDraft: boolean;
 };
 
+const addOrUpdateImages = async (
+	images: any[],
+	tag: string,
+	product: Product
+) => {
+	let priority = 0;
+	for (const image of images) {
+		priority++;
+
+		if (!image.changed && image.uploaded) {
+			continue;
+		}
+
+		const uploadedProductImage = product?.images?.find(
+			(uploadedImage) => uploadedImage.externalReferenceCode === image.id
+		);
+
+		const imageMetadata = {
+			...(uploadedProductImage && {
+				fileEntryId: uploadedProductImage.fileEntryId,
+				id: uploadedProductImage.id,
+			}),
+			...(image?.file && {
+				attachment: base64ToText(
+					(await fileToBase64(image.file)) as string
+				),
+			}),
+			externalReferenceCode: image.id,
+			galleryEnabled: false,
+			neverExpire: true,
+			priority,
+			tags: [tag],
+			title: {
+				en_US: image.imageDescription || image.file.name,
+			},
+		};
+
+		await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+			product?.externalReferenceCode,
+			imageMetadata,
+			(progress) => {
+				image.changed = false;
+				image.progress = progress;
+				image.uploaded = progress === 100;
+			}
+		);
+	}
+};
+
 const updateSpecification = async (
 	product: Product,
 	specificationKey: PRODUCT_SPECIFICATION_KEY,
@@ -214,48 +263,11 @@ const usePublishSolutionSubmission = (
 		// Process Upload Images, priority starts in 1 to not conflict with
 		// the app icon defined as priority 0
 
-		let priority = 0;
-		for (const headerImage of headerImages) {
-			priority++;
-
-			if (!headerImage.changed && headerImage.uploaded) {
-				continue;
-			}
-
-			const uploadedProductImage = context._product?.images.find(
-				(image) => image.externalReferenceCode === headerImage.id
-			);
-
-			const imageMetadata = {
-				...(uploadedProductImage && {
-					fileEntryId: uploadedProductImage.fileEntryId,
-					id: uploadedProductImage.id,
-				}),
-				...(headerImage?.file && {
-					attachment: base64ToText(
-						(await fileToBase64(headerImage.file)) as string
-					),
-				}),
-				galleryEnabled: false,
-				neverExpire: true,
-				priority,
-				tags: [PRODUCT_TAGS.SOLUTION_HEADER],
-				title: {
-					en_US:
-						headerImage.imageDescription || headerImage.file.name,
-				},
-			};
-
-			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
-				product.externalReferenceCode,
-				imageMetadata,
-				(progress) => {
-					headerImage.changed = false;
-					headerImage.progress = progress;
-					headerImage.uploaded = progress === 100;
-				}
-			);
-		}
+		await addOrUpdateImages(
+			headerImages,
+			PRODUCT_TAGS.SOLUTION_HEADER,
+			product
+		);
 	};
 
 	const syncCompanyProfileAndContactUs = async (product: Product) => {
@@ -294,51 +306,7 @@ const usePublishSolutionSubmission = (
 
 			const files = block.content.files;
 
-			let priority =
-				context.header.contentType.type === 'upload-images'
-					? context.header.contentType.content.headerImages.length
-					: 0;
-			for (const file of files) {
-				priority++;
-
-				if (!file.changed && file.uploaded) {
-					continue;
-				}
-
-				const uploadedProductImage = context._product?.images.find(
-					(image) => image.externalReferenceCode === file.id
-				);
-
-				const imageMetadata = {
-					...(uploadedProductImage && {
-						fileEntryId: uploadedProductImage.fileEntryId,
-						id: uploadedProductImage.id,
-					}),
-					...(file?.file && {
-						attachment: base64ToText(
-							(await fileToBase64(file.file)) as string
-						),
-					}),
-					externalReferenceCode: file.id,
-					galleryEnabled: false,
-					neverExpire: true,
-					priority,
-					tags: [PRODUCT_TAGS.SOLUTION_DETAILS],
-					title: {
-						en_US: file.imageDescription || file.file.name,
-					},
-				};
-
-				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
-					product.externalReferenceCode,
-					imageMetadata,
-					(progress) => {
-						file.changed = false;
-						file.progress = progress;
-						file.uploaded = progress === 100;
-					}
-				);
-			}
+			addOrUpdateImages(files, PRODUCT_TAGS.SOLUTION_DETAILS, product);
 		}
 
 		const newBlocks = blocks.map((block) => {

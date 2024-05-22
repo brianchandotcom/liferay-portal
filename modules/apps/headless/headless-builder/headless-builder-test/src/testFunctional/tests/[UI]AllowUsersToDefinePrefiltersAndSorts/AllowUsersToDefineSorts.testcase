@@ -201,7 +201,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = 3
 	test SortingIsLimitedByODataCharacterLimit {
 		task ("When setting the Sorting with 10001 characters") {

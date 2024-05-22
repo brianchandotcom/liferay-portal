@@ -88,9 +88,9 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 					</ClayDropDown.Section>
 
 					<div className="dropdown-columns-content">
-						{columnsNotFixed?.map((column, index) => (
-							<>
-								{column.value !== '' && (
+						{columnsNotFixed?.map(
+							(column, index) =>
+								column.value !== '' && (
 									<Form.Checkbox
 										checked={selectedColumns[column.key]}
 										key={index}
@@ -108,9 +108,8 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 											] as unknown) as string
 										}
 									/>
-								)}
-							</>
-						))}
+								)
+						)}
 					</div>
 
 					<ClayDropDown.Section className="dropdown-footer">

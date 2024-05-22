@@ -136,12 +136,12 @@ const Details = () => {
 									type: SolutionTypes.SET_UPDATE_BLOCK,
 								});
 							}}
-							onDeleteImage={(payload: string) => {
+							onDeleteImage={(payload: string) =>
 								dispatch({
 									payload,
 									type: SolutionTypes.SET_DELETE_IMAGE,
-								});
-							}}
+								})
+							}
 						/>
 					</Form.SectionWithControllers>
 				);

@@ -5,6 +5,7 @@
 
 import {Dispatch} from 'react';
 
+import {UploadedFile} from '../../../components/FileList/FileList';
 import {
 	AppActions,
 	SolutionInitialState,
@@ -27,11 +28,12 @@ type ProductConfig = {
 };
 
 const addOrUpdateImages = async (
-	images: any[],
+	images: UploadedFile[],
 	tag: string,
-	product: Product
+	product: Product,
+	priorityInitialValue: number
 ) => {
-	let priority = 0;
+	let priority = priorityInitialValue;
 	for (const image of images) {
 		priority++;
 
@@ -91,6 +93,7 @@ const updateSpecification = async (
 		!value?.trim() ||
 		(specification && specification.value.en_US === value)
 	) {
+
 		// No need to update the specification if the value is equal
 		// the previous value or empty.
 
@@ -266,7 +269,8 @@ const usePublishSolutionSubmission = (
 		await addOrUpdateImages(
 			headerImages,
 			PRODUCT_TAGS.SOLUTION_HEADER,
-			product
+			product,
+			0
 		);
 	};
 
@@ -306,7 +310,14 @@ const usePublishSolutionSubmission = (
 
 			const files = block.content.files;
 
-			addOrUpdateImages(files, PRODUCT_TAGS.SOLUTION_DETAILS, product);
+			addOrUpdateImages(
+				files,
+				PRODUCT_TAGS.SOLUTION_DETAILS,
+				product,
+				context.header.contentType.type === 'upload-images'
+					? context.header.contentType.content.headerImages.length
+					: 0
+			);
 		}
 
 		const newBlocks = blocks.map((block) => {
@@ -354,9 +365,11 @@ const usePublishSolutionSubmission = (
 			]) {
 				await sync(product);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
-		} finally {
+		}
+		finally {
 			dispatch({payload: false, type: SolutionTypes.SET_LOADING});
 		}
 	};

@@ -11,7 +11,11 @@ import {BOOLEAN_OPTIONS} from 'event-analysis/utils/utils';
 import {createOption, validateAttributeValue} from './utils';
 import {Criterion} from '../../../utils/types';
 import {DataTypes} from 'event-analysis/utils/types';
-import {FunctionalOperators} from '../../../utils/constants';
+import {
+	FunctionalOperators,
+	INPUT_DATE_FORMAT,
+	INPUT_DATE_TIME_FORMAT
+} from '../../../utils/constants';
 import {isValid} from '../../../utils/utils';
 import {Option, Picker} from '@clayui/core';
 
@@ -64,6 +68,7 @@ const ValueInput: React.FC<IValueInputProps> = ({
 							}
 						});
 					}}
+					placeholder={Liferay.Language.get('true')}
 				>
 					{({label, value}) => <Option key={value}>{label}</Option>}
 				</Picker>
@@ -106,6 +111,8 @@ const ValueInput: React.FC<IValueInputProps> = ({
 					shrink
 				>
 					<DateInput
+						displayFormat={value ? INPUT_DATE_FORMAT : null}
+						format={INPUT_DATE_TIME_FORMAT}
 						onDateInputBlur={handleAttributeValueBlur}
 						onDateInputChange={value => {
 							onChange({
@@ -122,6 +129,7 @@ const ValueInput: React.FC<IValueInputProps> = ({
 							});
 						}}
 						overlayAlignment='rightCenter'
+						showRetentionPeriod={false}
 						value={value}
 					/>
 				</Form.GroupItem>

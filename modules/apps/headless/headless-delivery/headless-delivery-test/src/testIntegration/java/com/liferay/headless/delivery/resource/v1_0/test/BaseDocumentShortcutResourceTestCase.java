@@ -413,6 +413,14 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (documentShortcut.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
 				if (documentShortcut.getAssetLibraryKey() == null) {
 					valid = false;
@@ -567,6 +575,17 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)documentShortcut1.getActions(),
+						(Map)documentShortcut2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -740,6 +759,11 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("assetLibraryKey")) {
 			Object object = documentShortcut.getAssetLibraryKey();

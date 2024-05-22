@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -71,6 +72,8 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 		_upgradeProcess.upgrade();
 
+		_entityCache.clearCache();
+
 		_backgroundTask = _backgroundTaskLocalService.getBackgroundTask(
 			_backgroundTask.getBackgroundTaskId());
 
@@ -127,5 +130,8 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 	@Inject
 	private CounterLocalService _counterLocalService;
+
+	@Inject
+	private EntityCache _entityCache;
 
 }

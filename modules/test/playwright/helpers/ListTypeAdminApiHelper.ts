@@ -27,7 +27,24 @@ export class ListTypeAdminApiHelper {
 		);
 	}
 
-	async postRandomListTypeDefinition() {
+	async postListTypeEntry(
+		listTypeDefinitionExternalReferenceCode: string,
+		listTypeEntryName: string
+	): Promise<PickList> {
+		const requestBody = {
+			key: listTypeEntryName.toLocaleLowerCase(),
+			name_i18n: {
+				en_US: listTypeEntryName,
+			},
+		};
+
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/list-type-definitions/by-external-reference-code/${listTypeDefinitionExternalReferenceCode}/list-type-entries`,
+			{data: requestBody}
+		);
+	}
+
+	async postRandomListTypeDefinition(): Promise<PickList> {
 		const listTypeDefinitionExternalReferenceCode =
 			'ListTypeDefinition' + getRandomInt();
 

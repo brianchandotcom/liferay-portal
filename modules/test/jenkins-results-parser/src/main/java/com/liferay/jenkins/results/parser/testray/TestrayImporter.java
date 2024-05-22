@@ -957,7 +957,7 @@ public class TestrayImporter {
 						TestrayBuild testrayBuild = getTestrayBuild(
 							axisTestClassGroup.getTestBaseDir());
 
-						TestrayRun testrayRun = new TestrayRun(
+						TestrayRun testrayRun = TestrayFactory.newTestrayRun(
 							testrayBuild, axisTestClassGroup.getBatchName(),
 							job.getJobPropertiesFiles());
 

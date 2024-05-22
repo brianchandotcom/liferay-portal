@@ -12,26 +12,9 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class RequiredSegmentsExperienceException extends PortalException {
 
-	public RequiredSegmentsExperienceException() {
-	}
-
-	public RequiredSegmentsExperienceException(String msg) {
-		super(msg);
-	}
-
-	public RequiredSegmentsExperienceException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public RequiredSegmentsExperienceException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class
 		MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments
-			extends RequiredSegmentsEntryException {
+			extends RequiredSegmentsExperienceException {
 
 		public MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments(
 			long segmentsExperienceId) {
@@ -43,6 +26,23 @@ public class RequiredSegmentsExperienceException extends PortalException {
 					segmentsExperienceId));
 		}
 
+	}
+
+	private RequiredSegmentsExperienceException() {
+	}
+
+	private RequiredSegmentsExperienceException(String msg) {
+		super(msg);
+	}
+
+	private RequiredSegmentsExperienceException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	private RequiredSegmentsExperienceException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

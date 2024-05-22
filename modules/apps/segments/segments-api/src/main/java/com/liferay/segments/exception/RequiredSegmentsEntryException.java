@@ -12,21 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class RequiredSegmentsEntryException extends PortalException {
 
-	public RequiredSegmentsEntryException() {
-	}
-
-	public RequiredSegmentsEntryException(String msg) {
-		super(msg);
-	}
-
-	public RequiredSegmentsEntryException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public RequiredSegmentsEntryException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class
 		MustNotDeleteSegmentsEntryReferencedBySegmentsExperiences
 			extends RequiredSegmentsEntryException {
@@ -41,6 +26,21 @@ public class RequiredSegmentsEntryException extends PortalException {
 					segmentsEntryId));
 		}
 
+	}
+
+	private RequiredSegmentsEntryException() {
+	}
+
+	private RequiredSegmentsEntryException(String msg) {
+		super(msg);
+	}
+
+	private RequiredSegmentsEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	private RequiredSegmentsEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

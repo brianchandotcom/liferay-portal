@@ -734,16 +734,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		Set<String> modelResourceNames) {
 
 		for (String modelResourceName : modelResourceNames) {
-			try {
-				DBPartitionUtil.forEachCompanyId(
-					companyId ->
-						resourceActionLocalService.checkResourceActions(
-							modelResourceName,
-							getModelResourceActions(modelResourceName)));
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
+			_checkResourceActions(
+				getModelResourceActions(modelResourceName), modelResourceName);
 		}
 	}
 

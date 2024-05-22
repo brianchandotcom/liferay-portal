@@ -33,7 +33,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.junit.After;
@@ -80,7 +79,9 @@ public class AMImageEntryTableReferenceDefinitionTest
 
 	@After
 	public void tearDown() throws Exception {
-		_deleteAllAMImageConfigurationEntries();
+		_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(),
+			_amImageConfigurationEntry.getUUID());
 	}
 
 	@Override
@@ -103,21 +104,6 @@ public class AMImageEntryTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return new LiferayFileEntry(dlFileEntry);
-	}
-
-	private void _deleteAllAMImageConfigurationEntries() throws Exception {
-		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
-			_amImageConfigurationHelper.getAMImageConfigurationEntries(
-				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry -> true);
-
-		for (AMImageConfigurationEntry amImageConfigurationEntry :
-				amImageConfigurationEntries) {
-
-			_amImageConfigurationHelper.forceDeleteAMImageConfigurationEntry(
-				TestPropsValues.getCompanyId(),
-				amImageConfigurationEntry.getUUID());
-		}
 	}
 
 	private AMImageConfigurationEntry _amImageConfigurationEntry;

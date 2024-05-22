@@ -2155,24 +2155,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<get-poshi-java-jdk-opts />
 
-					<local name="poshi.gradle.jvm.args" />
-
-					<if>
-						<os family="windows" />
-						<then>
-							<propertyregex
-								input="${poshi.java.jdk.opts}"
-								property="poshi.gradle.jvm.args"
-								regexp="&quot;"
-								replace=""
-							/>
-						</then>
-						<else>
-							<property name="poshi.gradle.jvm.args" value="${poshi.java.jdk.opts}" />
-						</else>
-					</if>
-
-					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" gradlejvmargs="${poshi.gradle.jvm.args}" setupbinariescache="false" stacktrace="false" task="@{task}">
+					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" setupbinariescache="false" stacktrace="false" task="@{task}">
 						<arg value="--build-file=@{build.gradle.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 						<env key="ANT_OPTS" value="${poshi.java.jdk.opts}" />

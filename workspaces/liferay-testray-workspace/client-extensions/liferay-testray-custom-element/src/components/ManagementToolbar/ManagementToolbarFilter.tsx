@@ -193,8 +193,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						valueOption ? options?.label : options?.value || options
 					),
 				};
-			}
-			else {
+			} else {
 				return {
 					name: key,
 					value: filterCleaned[key],
@@ -291,6 +290,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						filterSchema={filterSchema?.name as string}
 						form={form}
 						isLoading={isLoading}
+						onApply={onApply}
 						onChange={onChange}
 					/>
 				</div>

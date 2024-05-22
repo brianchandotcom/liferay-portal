@@ -48,6 +48,7 @@ type RendererProps = {
 	filterSchema: string;
 	form: any;
 	isLoading?: boolean;
+	onApply: () => void;
 	onChange: (event: any) => void;
 };
 
@@ -57,6 +58,7 @@ const Renderer: React.FC<RendererProps> = ({
 	filter,
 	form,
 	isLoading = false,
+	onApply,
 	onChange,
 }) => {
 	const [fieldDisabled, setFieldDisabled] = useState({});
@@ -147,6 +149,11 @@ const Renderer: React.FC<RendererProps> = ({
 							<Form.Input
 								disabled={isFieldDisabled()}
 								onChange={onChange}
+								onKeyDown={(event) => {
+									if (event.key === 'Enter') {
+										onApply();
+									}
+								}}
 								value={getFieldValue()}
 								{...(field as any)}
 							/>

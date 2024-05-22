@@ -111,8 +111,9 @@ const TestFlowTasks = () => {
 		const subtasksWithDifferentAssignedUsers = subtasks
 			?.filter(
 				(subtask) =>
+					subtask?.user?.id.toString() &&
 					subtask?.user?.id.toString() !==
-						Liferay.ThemeDisplay.getUserId() || !subtask?.user?.id
+						Liferay.ThemeDisplay.getUserId()
 			)
 			?.map((subtask) => ({
 				text: i18n.sub(
@@ -449,7 +450,7 @@ const TestFlowTasks = () => {
 									)
 								}
 								primaryButtonProps={{
-									disabled: !!alerts.length && isLoading,
+									disabled: !!alerts.length,
 									loading: isLoading,
 									title: i18n.translate('merge-subtasks'),
 								}}

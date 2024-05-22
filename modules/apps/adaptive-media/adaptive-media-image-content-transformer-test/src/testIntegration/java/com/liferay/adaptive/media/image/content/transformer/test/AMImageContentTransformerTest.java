@@ -92,7 +92,7 @@ public class AMImageContentTransformerTest {
 
 		String transformedHTML = _contentTransformerHandler.transform(rawHTML);
 
-		Assert.assertTrue(transformedHTML.matches(regex));
+		Assert.assertTrue(transformedHTML, transformedHTML.matches(regex));
 	}
 
 	private FileEntry _addImageFileEntry(ServiceContext serviceContext)

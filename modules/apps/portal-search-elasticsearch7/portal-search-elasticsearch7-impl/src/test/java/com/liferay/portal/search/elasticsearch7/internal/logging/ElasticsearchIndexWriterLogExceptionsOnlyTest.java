@@ -249,37 +249,19 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		}
 	}
 
-	@ExpectedLog(
-		expectedClass = ElasticsearchIndexWriter.class,
-		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "document missing"
-	)
 	@Test
-	public void testPartiallyUpdateDocument() {
+	public void testPartiallyUpdateDocument() throws SearchException {
 		Document document = new DocumentImpl();
 
 		document.addKeyword(Field.UID, "1");
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		try {
-			indexWriter.partiallyUpdateDocument(
-				createSearchContext(), document);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
-		}
+		indexWriter.partiallyUpdateDocument(createSearchContext(), document);
 	}
 
-	@ExpectedLog(
-		expectedClass = ElasticsearchIndexWriter.class,
-		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "Bulk partial update failed"
-	)
 	@Test
-	public void testPartiallyUpdateDocuments() {
+	public void testPartiallyUpdateDocuments() throws SearchException {
 		Document document = new DocumentImpl();
 
 		List<Document> documents = new ArrayList<>();
@@ -290,24 +272,13 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		try {
-			indexWriter.partiallyUpdateDocuments(
-				createSearchContext(), documents);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
-		}
+		indexWriter.partiallyUpdateDocuments(createSearchContext(), documents);
 	}
 
-	@ExpectedLog(
-		expectedClass = BulkDocumentRequestExecutorImpl.class,
-		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "document missing"
-	)
 	@Test
-	public void testPartiallyUpdateDocumentsBulkExecutor() {
+	public void testPartiallyUpdateDocumentsBulkExecutor()
+		throws SearchException {
+
 		Document document = new DocumentImpl();
 
 		List<Document> documents = new ArrayList<>();
@@ -318,15 +289,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		try {
-			indexWriter.partiallyUpdateDocuments(
-				createSearchContext(), documents);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
-		}
+		indexWriter.partiallyUpdateDocuments(createSearchContext(), documents);
 	}
 
 	@ExpectedLog(

@@ -466,10 +466,8 @@ public class ObjectFieldLocalServiceTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition1.getObjectDefinitionId());
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition2.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 
 		String[] reservedNames = {
 			"actions", "companyId", "createDate", "creator", "dateCreated",
@@ -992,10 +990,9 @@ public class ObjectFieldLocalServiceTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			relatedObjectDefinition.getObjectDefinitionId());
+			relatedObjectDefinition);
 
 		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectRelationshipLocalService,
@@ -1111,7 +1108,7 @@ public class ObjectFieldLocalServiceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			modifiableSystemObjectDefinition.getObjectDefinitionId());
+			modifiableSystemObjectDefinition);
 	}
 
 	@Test
@@ -1295,7 +1292,7 @@ public class ObjectFieldLocalServiceTest {
 				"able", Collections.emptyList()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			modifiableSystemObjectDefinition.getObjectDefinitionId());
+			modifiableSystemObjectDefinition);
 	}
 
 	@Test
@@ -1515,9 +1512,9 @@ public class ObjectFieldLocalServiceTest {
 		_assertDeleteObjectField(true, systemObjectDefinition, "baker");
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			customObjectDefinition.getObjectDefinitionId());
+			customObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			systemObjectDefinition.getObjectDefinitionId());
+			systemObjectDefinition);
 
 		// Delete system object field from modifiable system object definition
 
@@ -1570,7 +1567,7 @@ public class ObjectFieldLocalServiceTest {
 			true, modifiableSystemObjectDefinition, "able");
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			modifiableSystemObjectDefinition.getObjectDefinitionId());
+			modifiableSystemObjectDefinition);
 	}
 
 	@Test
@@ -1777,8 +1774,7 @@ public class ObjectFieldLocalServiceTest {
 						"-private"
 					).build())));
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		// Business type integer
 
@@ -1979,8 +1975,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_SHOW_COUNTER, "false"
 			).build());
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
@@ -2044,10 +2039,8 @@ public class ObjectFieldLocalServiceTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition1.getObjectDefinitionId());
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition2.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
 	private void _addCustomObjectDefinitionWithAutoIncrementObjectField(
@@ -2732,8 +2725,7 @@ public class ObjectFieldLocalServiceTest {
 					objectDefinition1.getObjectDefinitionId(),
 					ObjectFieldConstants.READ_ONLY_TRUE, null)));
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition1.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 	}
 
 	private void _testAddOrUpdateCustomObjectField(

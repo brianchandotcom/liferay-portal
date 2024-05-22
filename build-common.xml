@@ -2273,7 +2273,7 @@ rerun your task.
 	</target>
 
 	<target name="gradle-execute-modules">
-		<gradle-execute dir="${dir}" task="${test.task}" test.name="${test.name}" />
+		<gradle-execute dir="${dir}" gradlejvmargs="${gradle.jvm.args}" task="${test.task}" test.name="${test.name}" />
 	</target>
 
 	<target name="print-properties">

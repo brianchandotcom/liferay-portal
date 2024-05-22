@@ -2612,9 +2612,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 	<macrodef name="run-modules-junit-test">
 		<attribute name="test.class.group" />
+		<attribute default="" name="test.junit.args" />
 		<attribute name="test.task" />
-
-		<element implicit="true" name="args" optional="true" />
 
 		<sequential>
 			<sequential>
@@ -2768,6 +2767,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							parameters.put("test.name", sb.toString());
 
 							parameters.put("dir", "modules");
+
+							parameters.put("gradle.jvm.args", "@{test.junit.args}");
 
 							int timeout = Integer.parseInt(project.getProperty("test.class.timeout.minutes"));
 
@@ -7340,15 +7341,21 @@ information. Make sure to commit in all format-javadoc results.
 					</then>
 				</if>
 
-				<run-modules-junit-test test.class.group="${test.class.group}" test.task="test">
-					<arg value="--continue" />
-					<arg value="-Dbuild.exclude.ant.plugin=true" />
-					<arg if:true="${run.opensearch2.unit.tests}" value="-Dcom.liferay.portal.search.opensearch2.test.unit.enabled=true" />
-					<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
-					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
-					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
-					<arg value="-Dtest.class.group.index=${axis.variable}" />
-				</run-modules-junit-test>
+				<condition else="" property="test.arg.opensearch2.unit.tests" value="-Dcom.liferay.portal.search.opensearch2.test.unit.enabled=true">
+					<istrue value="${run.opensearch2.unit.tests}" />
+				</condition>
+
+				<condition else="" property="test.arg.solr.unit.tests" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true">
+					<istrue value="${run.solr.unit.tests}" />
+				</condition>
+
+				<condition else="" property="test.arg.project.templates" value="-Dproject.templates.test.builds=${project.templates.test.builds}">
+					<isset property="project.templates.test.builds" />
+				</condition>
+
+				<property name="test.junit.args" value="--continue -Dbuild.exclude.ant.plugin=true ${test.arg.project.templates} ${test.arg.opensearch2.unit.tests} ${test.arg.solr.unit.tests} -Djunit.code.coverage=${test.batch.code.coverage} -Dtest.class.group.index=${axis.variable}" />
+
+				<run-modules-junit-test test.class.group="${test.class.group}" test.junit.args="${test.junit.args}" test.task="test" />
 
 				<lstopwatch action="total" name="test.execution.duration" />
 			</test-action>

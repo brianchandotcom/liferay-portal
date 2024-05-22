@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -64,7 +65,7 @@ public class ClassNameLocalServiceImplTest {
 			() -> {
 				Supplier<long[]> classNameIdsSupplier =
 					_classNameLocalServiceImpl.getClassNameIdsSupplier(
-						new String[] {"wrong.value"});
+						new String[] {RandomTestUtil.randomString()});
 
 				Mockito.verify(
 					_classNamePersistence, Mockito.never()
@@ -88,7 +89,7 @@ public class ClassNameLocalServiceImplTest {
 			() -> {
 				Supplier<Long> classNameIdSupplier =
 					_classNameLocalServiceImpl.getClassNameIdSupplier(
-						"wrong.value");
+						RandomTestUtil.randomString());
 
 				Mockito.verify(
 					_classNamePersistence, Mockito.never()

@@ -44,7 +44,7 @@ const WrapperComponent = ({children}) => (
 
 describe('ValueInput', () => {
 	it('should render', () => {
-		const {container, getByText} = render(
+		const {container, getAllByText, getByText} = render(
 			<WrapperComponent>
 				<ValueInput
 					dataType={DataTypes.Boolean}
@@ -56,9 +56,9 @@ describe('ValueInput', () => {
 				/>
 			</WrapperComponent>
 		);
-		fireEvent.click(getByText('Select an option'));
+		fireEvent.click(getByText('True'));
 
-		expect(getByText('True')).toBeTruthy();
+		expect(getAllByText('True')[1]).toBeTruthy();
 		expect(getByText('False')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();

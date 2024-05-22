@@ -34,6 +34,9 @@ const SubtaskOutlet = () => {
 		data: {testrayTask},
 	} = useOutletContext<OutletContext>();
 
+	const buildId = String(testrayTask?.build?.id);
+	const projectId = String(testrayTask?.build?.project?.id);
+
 	const {
 		data: testraySubtask,
 		mutate: mutateSubtask,
@@ -115,8 +118,10 @@ const SubtaskOutlet = () => {
 		<Outlet
 			context={{
 				data: {
+					buildId,
 					mbMessage,
 					mergedSubtaskNames,
+					projectId,
 					splitSubtaskNames,
 					testraySubtask,
 					testrayTask,

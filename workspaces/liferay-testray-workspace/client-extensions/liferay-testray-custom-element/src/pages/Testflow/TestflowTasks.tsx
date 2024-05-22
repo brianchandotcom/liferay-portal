@@ -47,6 +47,7 @@ import TaskHeaderActions from './TaskHeaderActions';
 
 type OutletContext = {
 	data: {
+		projectId: string;
 		testrayTask: TestrayTask & {
 			actions: {
 				[key: string]: string;
@@ -62,15 +63,13 @@ const ShortcutIcon = () => (
 
 const TestFlowTasks = () => {
 	const {
-		data: {testrayTask, testrayTaskUser},
+		data: {projectId, testrayTask, testrayTaskUser},
 		revalidate: {revalidateSubtask},
 	} = useOutletContext<OutletContext>();
 	const {actions, completeModal, forceRefetch} = useSubtasksActions();
 	const {taskId} = useParams();
 	const {updateItemFromList} = useMutate();
 	const [isLoading, setIsLoading] = useState(false);
-
-	const projectId = String(testrayTask.build?.project?.id);
 
 	const [{myUserAccount}] = useContext(TestrayContext);
 

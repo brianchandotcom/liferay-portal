@@ -825,21 +825,21 @@ public class ObjectEntryResourceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition1.getObjectDefinitionId());
+			_objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition2.getObjectDefinitionId());
+			_objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition3.getObjectDefinitionId());
+			_objectDefinition3);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition4.getObjectDefinitionId());
+			_objectDefinition4);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition5.getObjectDefinitionId());
+			_objectDefinition5);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition6.getObjectDefinitionId());
+			_objectDefinition6);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_siteScopedObjectDefinition1.getObjectDefinitionId());
+			_siteScopedObjectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_siteScopedObjectDefinition2.getObjectDefinitionId());
+			_siteScopedObjectDefinition2);
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			_listTypeDefinition);
@@ -5850,8 +5850,7 @@ public class ObjectEntryResourceTest {
 			PrincipalThreadLocal.setName(originalName);
 		}
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			listTypeDefinition);
@@ -6505,8 +6504,7 @@ public class ObjectEntryResourceTest {
 		_assertItem(1, jsonObject, "autoIncrement", "90-private");
 		_assertItem(2, jsonObject, "autoIncrement", "10-private");
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test

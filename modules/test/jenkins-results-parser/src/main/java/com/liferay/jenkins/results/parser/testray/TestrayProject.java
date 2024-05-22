@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -29,7 +29,7 @@ public class TestrayProject {
 	}
 
 	public long getID() {
-		return _id;
+		return -1;
 	}
 
 	public JSONObject getJSONObject() {
@@ -73,11 +73,8 @@ public class TestrayProject {
 
 		_testrayServer = testrayServer;
 		_jsonObject = jsonObject;
-
-		_id = jsonObject.getLong("id");
 	}
 
-	private final long _id;
 	private final JSONObject _jsonObject;
 	private final TestrayServer _testrayServer;
 

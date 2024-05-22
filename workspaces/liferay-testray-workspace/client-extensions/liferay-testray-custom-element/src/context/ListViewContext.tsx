@@ -7,7 +7,7 @@
 import {ReactNode, createContext, useEffect, useReducer} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import TestrayStorage, {STORAGE_KEYS} from '~/core/Storage';
-import useQueryParams from '~/hooks/useQueryParams';
+import useFilterUrlParams from '~/hooks/useFilterUrlParams';
 import useStorage from '~/hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '~/types';
 import {getUniqueList, safeJSONParse} from '~/util';
@@ -144,8 +144,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll
 					? selectedRows.filter((row) => !rowIds.includes(row))
 					: getUniqueList([...rowIds, ...selectedRows]);
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -238,8 +237,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 					JSON.stringify(action.payload),
 					CONSENT_TYPE.NECESSARY
 				);
-			}
-			else {
+			} else {
 				testrayStorage.removeItem(storageName);
 				testrayStorage.removeItem(schemaName);
 			}
@@ -335,8 +333,7 @@ const ListViewContextProvider: React.FC<
 							(options: Option) => options.value || options
 						),
 					};
-				}
-				else {
+				} else {
 					return {
 						name: key,
 						value: filterPinnedStorage?.filter[key],
@@ -383,7 +380,7 @@ const ListViewContextProvider: React.FC<
 		id,
 	});
 
-	const {filterInitialContext} = useQueryParams(state.customFilterFields);
+	const {filterInitialContext} = useFilterUrlParams(state.customFilterFields);
 
 	return (
 		<ListViewContext.Provider

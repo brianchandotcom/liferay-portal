@@ -982,12 +982,12 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				name:
-					'subtaskToSubtasksCasesResults/caseResultToSubtasksCasesResults/componentToCaseResult/r_teamToComponents_c_teamId',
+					'subtaskToCaseResults/componentToCaseResult/r_teamToComponents_c_teamId',
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.component, {
 				name:
-					'subtaskToSubtasksCasesResults/caseResultToSubtasksCasesResults/r_componentToCaseResult_c_componentId',
+					'subtaskToCaseResults/r_componentToCaseResult_c_componentId',
 				type: 'multiselect',
 			}),
 		] as RendererFields[],

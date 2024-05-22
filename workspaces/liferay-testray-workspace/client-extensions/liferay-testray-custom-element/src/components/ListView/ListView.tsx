@@ -16,7 +16,7 @@ import {
 } from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
-import useQueryParams from '~/hooks/useQueryParams';
+import useUpdateUrlParams from '~/hooks/useUpdateUrlParams';
 
 import ListViewContextProvider, {
 	AppActions,
@@ -110,7 +110,8 @@ const ListView: React.FC<ListViewProps> = ({
 	variables,
 }) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
-	const {updateUrlParams} = useQueryParams();
+	const updateUrlParams = useUpdateUrlParams();
+
 	const [searchParams] = useSearchParams();
 
 	const currentPage = searchParams.get('page');

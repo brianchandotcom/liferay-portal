@@ -3,9 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import path from 'path';
+
 const VALID_TYPES = ['main', 'exports'];
 
-export const IMPORT_BRIDGE_FILTER = /\/\$\/bridge\/.*$/;
+export const IMPORT_BRIDGE_FILTER =
+	path.sep === '/'
+		? /\/\$\/bridge\/.*$/
+		: /.?.?\\\$\\bridge\\.*$/;
 
 /**
  * Get a virtual import bridge path.
@@ -35,7 +40,7 @@ export default function getImportBridgePath(moduleName, type) {
  * `getImportBridgePath()` method.
  */
 export function decodeBridgePath(bridgePath) {
-	const parts = bridgePath.split('/');
+	const parts = bridgePath.split(path.sep);
 
 	return {
 		moduleName: parts.slice(5).join('/'),

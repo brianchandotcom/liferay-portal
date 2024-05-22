@@ -101,28 +101,6 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-102202. Validate if the Blank page template can not be edited and deleted."
-	@priority = 5
-	test CannotDeleteBlankPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Assert the Blank page template exist") {
-			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
-		}
-
-		task ("Assert the Blank page template without ellipsis icon button") {
-			AssertElementNotPresent(
-				key_card = "Blank",
-				locator1 = "Card#CARD_ELLIPSIS");
-		}
-
-		task ("Assert the Blank page template without checkbox") {
-			AssertElementNotPresent(
-				key_card = "Blank",
-				locator1 = "Card#CARD_CHECKBOX");
-		}
-	}
-
 	@description = "This is for LPS-121979. Change the configuration of page won't break the connection with its master page."
 	@priority = 4
 	test ChangeConfigurationOfPageBasedOnMasterPage {

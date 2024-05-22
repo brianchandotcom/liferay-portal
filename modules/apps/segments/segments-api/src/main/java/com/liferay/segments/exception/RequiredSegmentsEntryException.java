@@ -28,19 +28,8 @@ public class RequiredSegmentsEntryException extends PortalException {
 
 	}
 
-	private RequiredSegmentsEntryException() {
-	}
-
 	private RequiredSegmentsEntryException(String msg) {
 		super(msg);
-	}
-
-	private RequiredSegmentsEntryException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	private RequiredSegmentsEntryException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

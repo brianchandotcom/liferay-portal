@@ -28,21 +28,8 @@ public class RequiredSegmentsExperienceException extends PortalException {
 
 	}
 
-	private RequiredSegmentsExperienceException() {
-	}
-
 	private RequiredSegmentsExperienceException(String msg) {
 		super(msg);
-	}
-
-	private RequiredSegmentsExperienceException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	private RequiredSegmentsExperienceException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

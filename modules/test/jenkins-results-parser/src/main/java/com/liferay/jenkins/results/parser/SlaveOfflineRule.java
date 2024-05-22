@@ -63,6 +63,10 @@ public class SlaveOfflineRule {
 		return notificationRecipients;
 	}
 
+	public boolean getOfflineSibling() {
+		return Boolean.parseBoolean(offlineSibling);
+	}
+
 	public boolean matches(Build build) {
 		if (consolePattern != null) {
 			String consoleText = build.getConsoleText();
@@ -120,6 +124,12 @@ public class SlaveOfflineRule {
 			sb.append("\n");
 		}
 
+		if (offlineSibling != null) {
+			sb.append("offlineSibling=");
+			sb.append(offlineSibling);
+			sb.append("\n");
+		}
+
 		return sb.toString();
 	}
 
@@ -165,6 +175,7 @@ public class SlaveOfflineRule {
 	protected Pattern consolePattern;
 	protected String name;
 	protected String notificationRecipients;
+	protected String offlineSibling;
 	protected boolean shutdown;
 
 	private SlaveOfflineRule(String configurations, String ruleName) {
@@ -182,6 +193,10 @@ public class SlaveOfflineRule {
 
 		notificationRecipients = configurationsMap.get(
 			"notificationRecipients");
+
+		validateRequiredConfigurationParameter(configurationsMap, "offlineSibling");
+
+		offlineSibling = configurationsMap.get("offlineSibling");
 
 		if (configurationsMap.containsKey("shutdown")) {
 			shutdown = Boolean.parseBoolean(configurationsMap.get("shutdown"));

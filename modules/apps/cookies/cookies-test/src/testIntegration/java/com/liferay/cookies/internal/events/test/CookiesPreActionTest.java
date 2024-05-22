@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.cookies.internal.events;
+package com.liferay.cookies.internal.events.test;
 
-import com.liferay.cookies.internal.manager.CookiesManagerImpl;
-import com.liferay.portal.kernel.cookies.CookiesManager;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.events.Action;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,15 +20,11 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -36,23 +33,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Carol Alonso
  * @author Olivér Kecskeméty
  */
+@RunWith(Arquillian.class)
 public class CookiesPreActionTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		_cookiesManagerServiceRegistration = _bundleContext.registerService(
-			CookiesManager.class, new CookiesManagerImpl(), null);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_cookiesManagerServiceRegistration.unregister();
-	}
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testDeleteUserConsentCookieWhenAnyOptionalConsentCookiesAreMissing()
@@ -101,11 +88,10 @@ public class CookiesPreActionTest {
 		Assert.assertEquals("", userConsentConfiguredCookie.getValue());
 	}
 
-	private static final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
-	private static ServiceRegistration<CookiesManager>
-		_cookiesManagerServiceRegistration;
-
-	private final CookiesPreAction _cookiesPreAction = new CookiesPreAction();
+	@Inject(
+		filter = "component.name=com.liferay.cookies.internal.events.CookiesPreAction",
+		type = LifecycleAction.class
+	)
+	private Action _cookiesPreAction;
 
 }

@@ -78,8 +78,8 @@ function Modal({
 				setTitle(data.title);
 			}
 
-			if (data.disableHeader) {
-				setDisableHeader(data.disableHeader ?? true);
+			if (data.disableHeader !== undefined) {
+				setDisableHeader(data.disableHeader);
 			}
 
 			setSize(data.size || INITIAL_MODAL_SIZE);

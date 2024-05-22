@@ -5,13 +5,11 @@
 
 // @ts-ignore
 
-import {devices} from '@playwright/test';
 
 export const config = {
 	name: 'users-admin-web',
 	testDir: 'tests/users-admin-web',
 	use: {
-		...devices['Desktop Chrome'],
 		testIdAttribute: 'data-qa-id',
 	},
 };

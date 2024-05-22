@@ -5,12 +5,8 @@
 
 // @ts-ignore
 
-import {devices} from '@playwright/test';
 
 export const config = {
 	name: 'style-book-web',
 	testDir: 'tests/style-book-web',
-	use: {
-		...devices['Desktop Chrome'],
-	},
 };

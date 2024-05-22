@@ -34,6 +34,8 @@ type SubtasksCaseResultsProps = {
 
 type OutletContext = {
 	data: {
+		buildId: string;
+		projectId: string;
 		testraySubtask: TestraySubtask;
 	};
 	mutate: {
@@ -50,7 +52,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 	const [isLoading, setIsLoading] = useState(false);
 
 	const {
-		data: {testraySubtask},
+		data: {buildId, projectId, testraySubtask},
 		mutate: {mutateSubtask},
 	} = useOutletContext<OutletContext>();
 
@@ -156,7 +158,11 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 			forceRefetch={forceRefetch}
 			managementToolbarProps={{
 				applyFilters: true,
-				visible: false,
+				customFilterFields: {
+					buildId,
+					projectId,
+				},
+				filterSchema: 'subtaskCaseResults',
 			}}
 			resource={testraySubtaskCaseResultImpl.resource}
 			tableProps={{

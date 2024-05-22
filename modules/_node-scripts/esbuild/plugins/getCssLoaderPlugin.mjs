@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import path from 'path';
+
 import getFlatName from '../../util/getFlatName.mjs';
 import getPathPrefix from '../getPathPrefix.mjs';
 
@@ -21,27 +23,42 @@ export default function getCssLoaderPlugin(globalImports, type) {
 				{
 					filter: /\.css$/,
 				},
-				(args) => ({path: `/$/css/${args.path}`})
+				(args) => (
+					{
+						path:
+							path.sep === '/'
+								? `/$/css/${args.path}`
+								: `C:\\$\\css\\${args.path}`
+					}
+				)
 			);
 
 			build.onLoad(
 				{
-					filter: /\/\$\/css\/.*$/,
+					filter:
+						path.sep === '/'
+							? /\/\$\/css\/.*$/
+							: /.?.?\\\$\\css\\.*$/
 				},
 				async (args) => {
-					const path = args.path.replace('/$/css/', '');
+					const loadPath = args.path.replace(
+						path.sep === '/'
+							? '/$/css/'
+							: /.?.?\\\$\\css\\/,
+						''
+					);
 
-					if (!globalImports[path]) {
-						throw new Error(`Cannot rewrite CSS import: ${path}`);
+					if (!globalImports[loadPath]) {
+						throw new Error(`Cannot rewrite CSS import: ${loadPath}`);
 					}
 
-					const {webContextPath} = globalImports[path];
+					const {webContextPath} = globalImports[loadPath];
 
 					const contents = `
 import '${getPathPrefix(
 						type
 					)}/${webContextPath}/__liferay__/exports/${getFlatName(
-						path
+						loadPath
 					)}.js';
 `;
 

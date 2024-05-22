@@ -26,7 +26,7 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 		{basedir: '.'}
 	);
 
-	const child = childProcess.spawn(npmScriptsPath, ['build'], {
+	const child = childProcess.fork(npmScriptsPath, ['build'], {
 		stdio: 'inherit',
 	});
 

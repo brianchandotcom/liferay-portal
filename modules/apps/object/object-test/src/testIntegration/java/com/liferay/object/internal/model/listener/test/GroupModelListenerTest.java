@@ -85,9 +85,9 @@ public class GroupModelListenerTest {
 			_objectRelationship);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition1.getObjectDefinitionId());
+			_objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition2.getObjectDefinitionId());
+			_objectDefinition2);
 	}
 
 	@Test

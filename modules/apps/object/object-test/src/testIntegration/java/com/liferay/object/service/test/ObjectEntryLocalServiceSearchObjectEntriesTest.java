@@ -582,7 +582,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	private void _testAttachment(ObjectField objectField) throws Exception {
 		if (_objectDefinition != null) {
 			_objectDefinitionLocalService.deleteObjectDefinition(
-				_objectDefinition.getObjectDefinitionId());
+				_objectDefinition);
 		}
 
 		_addObjectDefinition(objectField);
@@ -620,7 +620,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		if (_objectDefinition != null) {
 			_objectDefinitionLocalService.deleteObjectDefinition(
-				_objectDefinition.getObjectDefinitionId());
+				_objectDefinition);
 		}
 
 		_addObjectDefinition(

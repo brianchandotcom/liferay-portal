@@ -58,8 +58,7 @@ public class ObjectDefinitionUpgradeProcessTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 	}
 
 	@Test

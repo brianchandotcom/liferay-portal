@@ -136,11 +136,11 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition1.getObjectDefinitionId());
+			_objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition2.getObjectDefinitionId());
+			_objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition3.getObjectDefinitionId());
+			_objectDefinition3);
 	}
 
 	@Test

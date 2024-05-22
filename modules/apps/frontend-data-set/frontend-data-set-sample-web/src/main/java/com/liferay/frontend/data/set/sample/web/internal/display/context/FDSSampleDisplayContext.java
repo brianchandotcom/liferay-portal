@@ -80,9 +80,11 @@ public class FDSSampleDisplayContext {
 				).buildRenderURL(
 				).toString(),
 				"rectangle-split", "open-side-panel-no-title",
-				"Open Side Panel With No Title", null, null, "sidePanel");
+				"Side Panel With Action Title", null, null, "sidePanel");
 
-		openEmptySidePanelAction.putData("title", "Side panel title via props");
+		openEmptySidePanelAction.putData("disableHeader", false);
+		openEmptySidePanelAction.putData(
+			"title", "Side panel title provided by action");
 
 		FDSActionDropdownItem openFullSidePanelAction =
 			new FDSActionDropdownItem(
@@ -95,7 +97,7 @@ public class FDSSampleDisplayContext {
 				).buildRenderURL(
 				).toString(),
 				"rectangle-split", "open-side-panel-title",
-				"Open Side Panel With Title", null, null, "sidePanel");
+				"Side Panel With Content Title", null, null, "sidePanel");
 
 		openFullSidePanelAction.putData("disableHeader", true);
 
@@ -110,10 +112,25 @@ public class FDSSampleDisplayContext {
 				).buildRenderURL(
 				).toString(),
 				"rectangle-split", "open-side-panel-title",
-				"Open Side Panel Double Title", null, null, "sidePanel");
+				"Side Panel With Action & Content Title", null, null,
+				"sidePanel");
 
 		openFullSidePanelActionDuplicatedTitle.putData("disableHeader", false);
-		openFullSidePanelActionDuplicatedTitle.putData("title", "Side panel title provided by action");
+		openFullSidePanelActionDuplicatedTitle.putData(
+			"title", "Side panel title provided by action");
+
+		FDSActionDropdownItem openEmptySidePanelActionNoTitle =
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/side_panel/empty"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildRenderURL(
+				).toString(),
+				"rectangle-split", "open-side-panel-without-title",
+				"Side Panel With No Title", null, null, "sidePanel");
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
@@ -134,7 +151,9 @@ public class FDSSampleDisplayContext {
 				"http://localhost", "times-circle",
 				"asyncErrorConnectionRefused", "Async Connection Refused",
 				"get", null, "async"),
-			openFullSidePanelAction, openEmptySidePanelAction, openFullSidePanelActionDuplicatedTitle,
+			openFullSidePanelAction, openEmptySidePanelAction,
+			openFullSidePanelActionDuplicatedTitle,
+			openEmptySidePanelActionNoTitle,
 			new FDSActionDropdownItem(
 				portalURL + "/abc", "staging", "asyncErrorResourceNotFound",
 				"Async Resource Not Found", "get", null, "async"),

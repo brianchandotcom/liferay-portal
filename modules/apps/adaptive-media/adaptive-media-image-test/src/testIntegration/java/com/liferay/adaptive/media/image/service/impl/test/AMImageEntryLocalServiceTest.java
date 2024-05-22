@@ -75,7 +75,7 @@ public class AMImageEntryLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		deleteAllAMImageConfigurationEntries();
+		_amImageConfigurationEntries = deleteAllAMImageConfigurationEntries();
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			AMImageEntryLocalServiceTest.class);
@@ -86,6 +86,17 @@ public class AMImageEntryLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		deleteAllAMImageConfigurationEntries();
+
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				_amImageConfigurationEntries) {
+
+			_amImageConfigurationHelper.addAMImageConfigurationEntry(
+				TestPropsValues.getCompanyId(),
+				amImageConfigurationEntry.getName(),
+				amImageConfigurationEntry.getDescription(),
+				amImageConfigurationEntry.getUUID(),
+				amImageConfigurationEntry.getProperties());
+		}
 	}
 
 	@Test
@@ -609,7 +620,8 @@ public class AMImageEntryLocalServiceTest {
 				amImageConfigurationEntry.getUUID(), fileVersion));
 	}
 
-	protected void deleteAllAMImageConfigurationEntries()
+	protected Collection<AMImageConfigurationEntry>
+			deleteAllAMImageConfigurationEntries()
 		throws IOException, PortalException {
 
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
@@ -624,6 +636,8 @@ public class AMImageEntryLocalServiceTest {
 				TestPropsValues.getCompanyId(),
 				amImageConfigurationEntry.getUUID());
 		}
+
+		return amImageConfigurationEntries;
 	}
 
 	private AMImageConfigurationEntry _addAMImageConfigurationEntry(
@@ -698,6 +712,8 @@ public class AMImageEntryLocalServiceTest {
 			serviceRegistration.unregister();
 		}
 	}
+
+	private Collection<AMImageConfigurationEntry> _amImageConfigurationEntries;
 
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

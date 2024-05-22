@@ -1,5 +1,27 @@
 [
 	{
+		"classNames": [
+			"AssetDisplayPageFriendlyURLProvider"
+		],
+		"from": "getFriendlyURL(String paramName, long paramName, Locale paramName, ThemeDisplay paramName)",
+		"issueKey": "LPD-7996",
+		"newImports": [
+			"com.liferay.info.item.InfoItemReference"
+		],
+		"to": "getFriendlyURL(new InfoItemReference(param#0#, param#1#), param#2#, param#3#)"
+	},
+	{
+		"classNames": [
+			"AssetDisplayPageFriendlyURLProvider"
+		],
+		"from": "getFriendlyURL(String paramName, long paramName, ThemeDisplay paramName)",
+		"issueKey": "LPD-7996",
+		"newImports": [
+			"com.liferay.info.item.InfoItemReference"
+		],
+		"to": "getFriendlyURL(new InfoItemReference(param#0#, param#1#), param#2#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

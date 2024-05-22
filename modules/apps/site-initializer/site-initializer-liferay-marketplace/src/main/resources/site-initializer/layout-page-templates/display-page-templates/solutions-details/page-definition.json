@@ -16,21 +16,31 @@
 				"id": "a75cb294-9350-6b75-7c6d-cac72a885efc",
 				"pageElements": [
 					{
-						"definition": {"indexed": true, "layout": {}},
+						"definition": {
+							"indexed": true,
+							"layout": {
+							}
+						},
 						"id": "9c6cd20d-f36c-ae67-5817-66e24e8fbfbb",
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"marginBottom": "2.5rem"},
+									"fragmentStyle": {
+										"marginBottom": "2.5rem"
+									},
 									"indexed": true,
-									"layout": {"contentDisplay": "FlexColumn"}
+									"layout": {
+										"contentDisplay": "FlexColumn"
+									}
 								},
 								"id": "a82e8e1e-85f9-3f0a-9a7c-904a6cee43ba",
 								"pageElements": [
 									{
 										"definition": {
 											"indexed": true,
-											"layout": {"widthType": "Fixed"},
+											"layout": {
+												"widthType": "Fixed"
+											},
 											"name": "Breadcrumb Container"
 										},
 										"id": "e3781102-a791-8e21-7a0d-c5afcaf5769f",
@@ -41,7 +51,8 @@
 														"paddingTop": "4"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 													}
 												},
@@ -70,7 +81,7 @@
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nimg{\n    height: 96px;\n    object-fit: contain;\n\nobject-position: 50% 50%;\nborder-radius:10px;\n}\n}",
 													"fragment": {
 														"key": "image",
-														"siteKey": "Marketplace"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"imageSize": "w-100"
@@ -79,7 +90,8 @@
 														{
 															"id": "icon",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_apps_icon$]",
@@ -133,7 +145,7 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$] {\nline-height: 32px;\n}",
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "Marketplace"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-paragraph-base",
@@ -144,7 +156,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"mapping": {
 																						"fieldKey": "CPDefinition_name",
@@ -170,7 +183,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "Marketplace"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-paragraph-base",
@@ -181,7 +194,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"mapping": {
 																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_solutions_details_page_catalog$]",
@@ -205,7 +219,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "Marketplace"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-paragraph-base",
@@ -216,7 +230,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"mapping": {
 																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_solutions_details_page_tags$]",
@@ -272,9 +287,9 @@
 																		"key": "BASIC_COMPONENT-button"
 																	},
 																	"fragmentConfig": {
+																		"buttonSize": "nm",
 																		"buttonType": "primary",
-																		"type": "link",
-																		"buttonSize": "nm"
+																		"type": "link"
 																	},
 																	"fragmentFields": [
 																		{
@@ -317,101 +332,54 @@
 							},
 							{
 								"definition": {
-									"fragmentStyle": {
-										"backgroundColor": "#0B5FFF",
-										"paddingBottom": "5rem",
-										"paddingTop": "5rem"
+									"fragment": {
+										"key": "text",
+										"siteKey": "[$GROUP_KEY$]"
 									},
-									"indexed": true,
-									"layout": {
-										"align": "Center",
-										"contentDisplay": "FlexRow",
-										"justify": "Center"
-									}
-								},
-								"id": "135839fb-0e45-71c1-345a-c7f4b72c6a84",
-								"pageElements": [
-									{
-										"definition": {
-											"indexed": true,
-											"layout": {
-												"align": "Center",
-												"contentDisplay": "FlexRow",
-												"justify": "Center",
-												"widthType": "Fixed"
-											}
-										},
-										"id": "29170c41-b96c-50ed-8ddb-2f76e63b3e66",
-										"pageElements": [
-											{
-												"definition": {
-													"indexed": true,
-													"layout": {}
+									"fragmentConfig": {
+										"fontSize": "font-size-paragraph-base",
+										"smallCaps": false,
+										"tabletScreenCenter": false
+									},
+									"fragmentFields": [
+										{
+											"id": "text",
+											"value": {
+												"fragmentLink": {
 												},
-												"id": "cdf9b8a5-0173-faf3-4504-1508a5be27fb",
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "text",
-																"siteKey": "[$GROUP_KEY$]"
-															},
-															"fragmentConfig": {
-																"fontSize": "font-size-paragraph-base",
-																"smallCaps": false,
-																"tabletScreenCenter": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "text",
-																	"value": {
-																		"fragmentLink": {},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_solutions_header$]",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textColor": "whiteColor"
-															},
-															"indexed": true
-														},
-														"id": "8458ee05-1ac0-fe90-6d07-d6b66c4b3eec",
-														"type": "Fragment"
+												"text": {
+													"mapping": {
+														"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_solutions_header$]",
+														"itemReference": {
+															"contextSource": "DisplayPageItem"
+														}
 													}
-												],
-												"type": "Section"
+												}
 											}
-										],
-										"type": "Section"
-									}
-								],
-								"type": "Section"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {"minHeight": "100vh"},
-									"indexed": true,
-									"layout": {}
+										}
+									],
+									"fragmentStyle": {
+										"textColor": "whiteColor"
+									},
+									"indexed": true
 								},
-								"id": "2810af4e-be7e-e639-24f6-9cb2633e02d3",
-								"type": "Section"
+								"id": "8458ee05-1ac0-fe90-6d07-d6b66c4b3eec",
+								"type": "Fragment"
 							}
 						],
 						"type": "Section"
 					},
 					{
 						"definition": {
-							"cssClasses": ["#solutions-details-form"],
-							"fragmentStyle": {"backgroundColor": "#EBEEF2"},
+							"cssClasses": [
+								"#solutions-details-form"
+							],
+							"fragmentStyle": {
+								"backgroundColor": "#EBEEF2"
+							},
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"id": "a58238d8-74c2-a21c-9bdb-4133a5d46e1f",
 						"pageElements": [
@@ -423,7 +391,9 @@
 										"paddingTop": "4rem"
 									},
 									"indexed": true,
-									"layout": {"widthType": "Fixed"}
+									"layout": {
+										"widthType": "Fixed"
+									}
 								},
 								"id": "dd9b522b-9578-5b76-e0a3-e8c5d08d3aa8",
 								"pageElements": [
@@ -433,7 +403,9 @@
 												"marginBottom": "4"
 											},
 											"indexed": true,
-											"layout": {"marginBottom": 2}
+											"layout": {
+												"marginBottom": 2
+											}
 										},
 										"id": "3ccc3899-44f2-4831-18c1-4555f62a47b4",
 										"pageElements": [
@@ -441,7 +413,7 @@
 												"definition": {
 													"fragment": {
 														"key": "text",
-														"siteKey": "Marketplace"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"fontSize": "font-size-heading-f1",
@@ -452,7 +424,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Contact Us"
@@ -470,7 +443,7 @@
 												"definition": {
 													"fragment": {
 														"key": "text",
-														"siteKey": "Marketplace"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"fontSize": "font-size-paragraph-base",
@@ -481,7 +454,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Find out more about Solution Long Name Example"
@@ -501,7 +475,8 @@
 									{
 										"definition": {
 											"indexed": true,
-											"layout": {}
+											"layout": {
+											}
 										},
 										"id": "9f4984a4-f58d-5e81-dd18-c6f6f2f913ed",
 										"pageElements": [
@@ -509,16 +484,17 @@
 												"definition": {
 													"fragment": {
 														"key": "marketo-form",
-														"siteKey": "Marketplace"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"formId": "1025",
-														"redirectUrl": "",
 														"munchkinId": "212-DQY-814",
-														"submitButtonText": "Submit",
-														"podId": "//pages.liferay.com"
+														"podId": "//pages.liferay.com",
+														"redirectUrl": "",
+														"submitButtonText": "Submit"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"id": "1508a60a-e29f-a9ee-efed-a12e2c7ac4e6",

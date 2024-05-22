@@ -1650,7 +1650,7 @@ public abstract class BaseBuild implements Build {
 			"\n\n\nOffline Slave URL: https://", jenkinsMaster.getName(),
 			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 
-		if (slaveOfflineRule.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
+		if (slave.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
 			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
 
 			message.replaceFirst("will be taken offline", 
@@ -2891,6 +2891,27 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return testResults;
+	}
+
+	protected boolean isSlaveOfflineSiblingSupportedMaster(JenkinsMaster jenkinsMaster) {
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+					"Unable to get build.properties", ioException);
+		}
+
+		String supportedMasters = JenkinsResultsParserUtil.getProperty(buildProperties, "slave.offline.sibling.supported.masters");
+		String masterName = jenkinsMaster.getName();
+
+		if (supportedMasters.contains(masterName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isParentBuildRoot() {

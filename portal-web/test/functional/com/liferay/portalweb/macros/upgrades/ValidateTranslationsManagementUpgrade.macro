@@ -85,6 +85,10 @@ definition {
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
+		WaitForElementPresent(
+			key_text = "Contenidoweb",
+			locator1 = "CKEditor#BODY");
+
 		WebContent.viewCP(
 			upgradedFieldLabel = "true",
 			webContentContent = "Contenidoweb",

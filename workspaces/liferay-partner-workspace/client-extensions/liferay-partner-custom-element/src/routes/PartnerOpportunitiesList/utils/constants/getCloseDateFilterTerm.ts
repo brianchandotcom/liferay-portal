@@ -14,6 +14,7 @@ export default function getCloseDateFilterTerm(
 	if (activityPeriod.dates.startDate) {
 		filterDates.push(`closeDate ge ${activityPeriod.dates.startDate}`);
 	}
+
 	if (activityPeriod.dates.endDate) {
 		filterDates.push(`closeDate le ${activityPeriod.dates.endDate}`);
 	}

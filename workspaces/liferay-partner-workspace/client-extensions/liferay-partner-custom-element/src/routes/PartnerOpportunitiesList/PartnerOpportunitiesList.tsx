@@ -143,6 +143,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 	];
 
 	const todayDate = new Date();
+
 	const formattedDate = todayDate.toISOString().slice(0, 10);
 
 	const rangeDataPicker = openOpportunitiesFilter

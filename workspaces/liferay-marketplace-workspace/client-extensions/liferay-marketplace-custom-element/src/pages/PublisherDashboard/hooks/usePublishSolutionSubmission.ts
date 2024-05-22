@@ -42,7 +42,6 @@ const updateSpecification = async (
 		!value?.trim() ||
 		(specification && specification.value.en_US === value)
 	) {
-
 		// No need to update the specification if the value is equal
 		// the previous value or empty.
 
@@ -106,6 +105,24 @@ const usePublishSolutionSubmission = (
 			: PRODUCT_WORKFLOW_STATUS_CODE.PENDING;
 
 		if (_product) {
+			if (file && (!file?.uploaded || file?.changed)) {
+				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+					_product.externalReferenceCode,
+					{
+						attachment: base64ToText(
+							(await fileToBase64(file.file)) as string
+						),
+						galleryEnabled: false,
+						neverExpire: true,
+						priority: 0,
+						tags: [PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON],
+						title: {
+							en_US: file.fileName,
+						},
+					}
+				);
+			}
+
 			await headlessCommerceAdminCatalogImpl.updateProduct(
 				_product.productId as number,
 				{
@@ -143,7 +160,7 @@ const usePublishSolutionSubmission = (
 					galleryEnabled: false,
 					neverExpire: true,
 					priority: 0,
-					tags: [PRODUCT_TAGS.APP_ICON],
+					tags: [PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON],
 					title: {
 						en_US: file.fileName,
 					},
@@ -201,27 +218,39 @@ const usePublishSolutionSubmission = (
 		for (const headerImage of headerImages) {
 			priority++;
 
-			if (headerImage.uploaded) {
+			if (!headerImage.changed && headerImage.uploaded) {
 				continue;
 			}
 
-			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
-				product.externalReferenceCode,
-				{
+			const uploadedProductImage = context._product?.images.find(
+				(image) => image.externalReferenceCode === headerImage.id
+			);
+
+			const imageMetadata = {
+				...(uploadedProductImage && {
+					fileEntryId: uploadedProductImage.fileEntryId,
+					id: uploadedProductImage.id,
+				}),
+				...(headerImage?.file && {
 					attachment: base64ToText(
 						(await fileToBase64(headerImage.file)) as string
 					),
-					galleryEnabled: false,
-					neverExpire: true,
-					priority,
-					tags: [PRODUCT_TAGS.SOLUTION_HEADER],
-					title: {
-						en_US:
-							headerImage.imageDescription ||
-							headerImage.file.name,
-					},
+				}),
+				galleryEnabled: false,
+				neverExpire: true,
+				priority,
+				tags: [PRODUCT_TAGS.SOLUTION_HEADER],
+				title: {
+					en_US:
+						headerImage.imageDescription || headerImage.file.name,
 				},
+			};
+
+			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+				product.externalReferenceCode,
+				imageMetadata,
 				(progress) => {
+					headerImage.changed = false;
 					headerImage.progress = progress;
 					headerImage.uploaded = progress === 100;
 				}
@@ -272,25 +301,39 @@ const usePublishSolutionSubmission = (
 			for (const file of files) {
 				priority++;
 
-				if (file.uploaded) {
+				if (!file.changed && file.uploaded) {
 					continue;
 				}
-				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
-					product.externalReferenceCode,
-					{
+
+				const uploadedProductImage = context._product?.images.find(
+					(image) => image.externalReferenceCode === file.id
+				);
+
+				const imageMetadata = {
+					...(uploadedProductImage && {
+						fileEntryId: uploadedProductImage.fileEntryId,
+						id: uploadedProductImage.id,
+					}),
+					...(file?.file && {
 						attachment: base64ToText(
 							(await fileToBase64(file.file)) as string
 						),
-						externalReferenceCode: file.id,
-						galleryEnabled: false,
-						neverExpire: true,
-						priority,
-						tags: [PRODUCT_TAGS.SOLUTION_DETAILS],
-						title: {
-							en_US: file.fileName,
-						},
+					}),
+					externalReferenceCode: file.id,
+					galleryEnabled: false,
+					neverExpire: true,
+					priority,
+					tags: [PRODUCT_TAGS.SOLUTION_DETAILS],
+					title: {
+						en_US: file.imageDescription || file.file.name,
 					},
+				};
+
+				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
+					product.externalReferenceCode,
+					imageMetadata,
 					(progress) => {
+						file.changed = false;
 						file.progress = progress;
 						file.uploaded = progress === 100;
 					}
@@ -343,11 +386,9 @@ const usePublishSolutionSubmission = (
 			]) {
 				await sync(product);
 			}
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
-		}
-		finally {
+		} finally {
 			dispatch({payload: false, type: SolutionTypes.SET_LOADING});
 		}
 	};

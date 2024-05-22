@@ -270,6 +270,10 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 				);
 			}
 
+			const appIcon = (_product.images ?? []).find(({tags}) =>
+				tags?.includes(PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON)
+			);
+
 			const solutionHeaderImages = (
 				_product.images ?? []
 			).filter(({tags}) => tags?.includes(PRODUCT_TAGS.SOLUTION_HEADER));
@@ -411,7 +415,12 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 					),
 					description: _product.description.en_US,
 					file: {
+						changed: false,
+						fileName: appIcon?.title.en_US as string,
+						id: (appIcon?.externalReferenceCode as unknown) as string,
 						preview: _product.thumbnail,
+						progress: 100,
+						uploaded: true,
 					},
 					name: _product.name.en_US,
 					tags: filterProductVocabularies(

@@ -14,6 +14,7 @@ import {
 import Form from '../../../../../../components/MarketplaceForm';
 import {TextImageBlock} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
+import {swapImageElements} from '../../../../constants';
 import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../../constants';
 import {BlockTypeProps} from './BlockPropsType';
@@ -75,13 +76,27 @@ const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 				{!!content.files?.length && (
 					<FileList
 						isProcessing={false}
+						onArrowClick={(index, direction) => {
+							const newIndex =
+								direction === 'up' ? index - 1 : index + 1;
+
+							const files = swapImageElements(
+								content?.files,
+								index,
+								newIndex
+							);
+
+							files[index].changed = true;
+							files[newIndex].changed = true;
+							onChange({files});
+						}}
 						onChangeInput={(files) => onChange({files})}
 						onDelete={(id) => {
 							const files = content?.files?.filter(
-								(uploadedFile: any) => uploadedFile.id !== id
+								(uploadedFile) => uploadedFile?.id !== id
 							);
-							onDeleteImage(id);
 
+							onDeleteImage(id);
 							onChange({files});
 						}}
 						type="image"

@@ -90,7 +90,10 @@ const PublisherDashboardRouter = () => {
 					<Route element={<Accounts />} path="accounts" />
 					<Route element={<Members />} path="members" />
 					<Route element={<Projects />} path="projects" />
-					<Route element={<Solutions />} path="solutions" />
+
+					<Route path="solutions">
+						<Route element={<Solutions />} index />
+					</Route>
 				</Route>
 
 				<Route path="solutions">

@@ -519,6 +519,7 @@ interface DeliveryProduct {
 interface ProductAttachment {
 	customFields?: CustomField[];
 	externalReferenceCode: string;
+	fileEntryId: number;
 	galleryEnabled: boolean;
 	id: number;
 	priority: number;

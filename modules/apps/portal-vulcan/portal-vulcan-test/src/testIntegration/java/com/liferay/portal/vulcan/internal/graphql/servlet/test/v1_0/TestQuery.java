@@ -55,6 +55,11 @@ public class TestQuery {
 		throw new NotFoundException();
 	}
 
+	@GraphQLField
+	public TestDTO testUnauthorizedUser() throws SecurityException {
+		throw new SecurityException();
+	}
+
 	@GraphQLTypeExtension(TestDTO.class)
 	public class TestGraphQLTypeExtension {
 

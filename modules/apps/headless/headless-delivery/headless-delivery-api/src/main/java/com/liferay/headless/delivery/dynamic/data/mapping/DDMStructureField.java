@@ -5,15 +5,23 @@
 
 package com.liferay.headless.delivery.dynamic.data.mapping;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Javier de Arcos
@@ -67,12 +75,40 @@ public class DDMStructureField {
 	}
 
 	public String getDDMStructureNestedTypeSortableFieldName() {
-		return StringBundler.concat(
+		String ddmStructureNestedTypeSortableFieldName = StringBundler.concat(
 			DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
 			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
 			StringUtil.upperCaseFirstLetter(_indexType), _getLocaleSuffix(),
 			StringPool.UNDERLINE, _type, StringPool.UNDERLINE,
 			Field.SORTABLE_FIELD_SUFFIX);
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructure(
+				GetterUtil.getLong(_ddmStructureId));
+
+		if (ddmStructure != null) {
+			try {
+				DDMFormField ddmFormField =
+					ddmStructure.getDDMFormFieldByFieldReference(
+						_fieldReference);
+
+				if ((ddmFormField != null) &&
+					Objects.equals(
+						ddmFormField.getDataType(), FieldConstants.STRING)) {
+
+					ddmStructureNestedTypeSortableFieldName =
+						ddmStructureNestedTypeSortableFieldName +
+							".keyword_lowercase";
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+
+		return ddmStructureNestedTypeSortableFieldName;
 	}
 
 	public String getLocale() {
@@ -110,6 +146,9 @@ public class DDMStructureField {
 
 		return StringPool.UNDERLINE.concat(_locale);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureField.class);
 
 	private final String _ddmStructureId;
 	private final String _fieldReference;

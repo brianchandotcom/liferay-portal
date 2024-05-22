@@ -83,7 +83,7 @@ public class FDSSamplePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT,
 			new FDSSampleDisplayContext(
-				_portal.getHttpServletRequest(renderRequest)));
+				_portal.getHttpServletRequest(renderRequest), renderResponse));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

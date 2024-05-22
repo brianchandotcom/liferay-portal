@@ -11,25 +11,29 @@ const getYearlyTerms = ({endDate, startDate}) => {
 	const startDateYear = startDate.getFullYear();
 	const yearlyTerms = [];
 
+	if (startDateYear + 1 >= endDateYear) {
+		return [{endDate, startDate}];
+	}
+
 	for (let year = startDateYear; year <= endDateYear; year++) {
-		let endDateForYear = new Date(
+		let endDateIterationYear = new Date(
 			year + 1,
 			startDate.getMonth(),
 			startDate.getDate() - 1
 		);
-		const startDateForYear = new Date(startDate.setFullYear(year));
+		const startDateIterationYear = new Date(startDate.setFullYear(year));
 
-		if (startDateForYear > endDate) {
+		if (startDateIterationYear > endDate) {
 			break;
 		}
-		
-		if (endDateForYear > endDate) {
-			endDateForYear = endDate;
+
+		if (endDateIterationYear > endDate) {
+			endDateIterationYear = endDate;
 		}
 
 		yearlyTerms.push({
-			startDate: startDateForYear,
-			endDate: endDateForYear,
+			endDate: endDateIterationYear,
+			startDate: startDateIterationYear,
 		});
 	}
 

@@ -27,7 +27,9 @@ function clone_repository {
 	then
 		pushd ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}
 
-		git reset --hard origin/master && git pull
+		rm -f .git/index.lock
+
+		git reset --hard origin/master && git clean -xfe .latest_hash && git pull
 
 		popd
 	else

@@ -77,8 +77,7 @@ public class FDSSampleDisplayContext {
 					"/side_panel/empty"
 				).setWindowState(
 					LiferayWindowState.POP_UP
-				).buildRenderURL(
-				).toString(),
+				).buildString(),
 				"rectangle-split", "open-side-panel-no-title",
 				"Side Panel With Action Title", null, null, "sidePanel");
 
@@ -94,8 +93,7 @@ public class FDSSampleDisplayContext {
 					"/side_panel/full"
 				).setWindowState(
 					LiferayWindowState.POP_UP
-				).buildRenderURL(
-				).toString(),
+				).buildString(),
 				"rectangle-split", "open-side-panel-title",
 				"Side Panel With Content Title", null, null, "sidePanel");
 
@@ -109,8 +107,7 @@ public class FDSSampleDisplayContext {
 					"/side_panel/full"
 				).setWindowState(
 					LiferayWindowState.POP_UP
-				).buildRenderURL(
-				).toString(),
+				).buildString(),
 				"rectangle-split", "open-side-panel-title",
 				"Side Panel With Action & Content Title", null, null,
 				"sidePanel");
@@ -127,8 +124,7 @@ public class FDSSampleDisplayContext {
 					"/side_panel/empty"
 				).setWindowState(
 					LiferayWindowState.POP_UP
-				).buildRenderURL(
-				).toString(),
+				).buildString(),
 				"rectangle-split", "open-side-panel-without-title",
 				"Side Panel With No Title", null, null, "sidePanel");
 

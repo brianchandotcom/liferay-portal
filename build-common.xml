@@ -2065,13 +2065,20 @@ rerun your task.
 				</then>
 			</if>
 
+			<propertyregex
+				input="${junit.jvm.override}"
+				property="java.installation.paths.override"
+				regexp="[\/]bin[\/]java[\/]?$"
+				replace=""
+			/>
+
 			<propertyfile file="${gradle.properties.file}">
 				<entry key="database.jdbc.drivers.url" value="${test.jdbc.drivers.url}" />
 				<entry key="database.jdbc.oracle.driver" value="${jdbc.oracle.driver}" />
 				<entry key="database.oracle.version" value="${database.oracle.version}" />
 				<entry if:set="build.java.version.source.compatibility" key="java.version.source.compatibility" unless:blank="${build.java.version.source.compatibility}" value="${build.java.version.source.compatibility}" />
 				<entry if:set="build.java.version.target.compatibility" key="java.version.target.compatibility" unless:blank="${build.java.version.target.compatibility}" value="${build.java.version.target.compatibility}" />
-				<entry if:set="junit.jvm.override" key="org.gradle.java.installations.paths" unless:blank="${junit.jvm.override}" value="${junit.jvm.override}" />
+				<entry if:set="junit.jvm.override" key="org.gradle.java.installations.paths" unless:blank="${junit.jvm.override}" value="${java.installation.paths.override}" />
 				<entry key="systemProp.build.bnd.print.enabled" value="${build.bnd.print.enabled}" />
 				<entry key="systemProp.build.performance.logger.enabled" value="${build.performance.logger.enabled}" />
 				<entry key="systemProp.maven.repo.local" unless:blank="${build.repository.local.dir}" value="${build.repository.local.dir}" />

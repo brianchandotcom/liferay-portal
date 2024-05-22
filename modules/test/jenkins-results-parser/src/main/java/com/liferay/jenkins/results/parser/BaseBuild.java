@@ -842,9 +842,9 @@ public abstract class BaseBuild implements Build {
 		String[] slaveNameParts = slaveName.split("-");
 
 		try {
-			Int slaveNumber = Integer.parseInt(slaveNameParts[slaveNameParts.length - 1]);
+			int slaveNumber = Integer.parseInt(slaveNameParts[slaveNameParts.length - 1]);
 
-			if (slaveNumber % 2) {
+			if (slaveNumber % 2 == 0) {
 				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber - 1);
 			} else {
 				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber + 1);
@@ -1650,7 +1650,7 @@ public abstract class BaseBuild implements Build {
 			"\n\n\nOffline Slave URL: https://", jenkinsMaster.getName(),
 			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 
-		if (jenkinsSlave.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
+		if (slaveOfflineRule.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
 			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
 
 			message.replaceFirst("will be taken offline", 

@@ -8,7 +8,7 @@ import {fireEvent, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
-import {mockEventAttributeDefinitionsReq} from 'test/graphql-data';
+import {mockEventPropertiesReq} from 'test/graphql-data';
 import {range} from 'lodash';
 import {RelationalOperators} from '../../utils/constants';
 import {Routes} from 'shared/util/router';
@@ -17,26 +17,24 @@ import {waitForLoading} from 'test/helpers';
 jest.unmock('react-dom');
 
 describe('EventInput', () => {
-	// TODO: remove "skip" when LPD-23023 is merged and before sending LPD-23024
-	it.skip('should render', async () => {
+	it('should render', async () => {
 		const {container, getAllByRole, getAllByText, getByText} = render(
 			<MockedProvider
 				mocks={[
-					mockEventAttributeDefinitionsReq(
+					mockEventPropertiesReq(
 						range(10).map(i =>
 							data.mockEventAttributeDefinition(i, {
-								__typename: 'EventAttributeDefinition'
+								__typename: 'EventProperty'
 							})
 						),
 						{
-							eventDefinitionId: '3',
+							eventId: '3',
 							page: 0,
 							size: 25,
 							sort: {
 								column: 'name',
 								type: 'ASC'
-							},
-							type: AttributeTypes.Global
+							}
 						}
 					)
 				]}
@@ -99,7 +97,7 @@ describe('EventInput', () => {
 		fireEvent.click(getAllByRole('combobox')[0]);
 		fireEvent.click(getByText('since'));
 		fireEvent.click(getByText('Last 24 hours'));
-		fireEvent.click(getByText('displayName-2'));
+		fireEvent.click(getAllByText('displayName-2')[0]);
 
 		expect(getByText('at least')).toBeTruthy();
 		expect(getByText('at most')).toBeTruthy();

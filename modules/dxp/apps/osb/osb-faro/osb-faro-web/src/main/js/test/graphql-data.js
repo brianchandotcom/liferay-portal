@@ -10,6 +10,7 @@ import EventAttributeValuesQuery from 'event-analysis/queries/EventAttributeValu
 import EventDefinitionQuery from 'event-analysis/queries/EventDefinitionQuery';
 import EventDefinitionsQuery from 'event-analysis/queries/EventDefinitionsQuery';
 import EventMetricQuery from 'shared/queries/EventMetricQuery';
+import EventPropertiesQuery from 'segment/segment-editor/dynamic/queries/EventPropertiesQuery';
 import getInterestsQuery from 'contacts/queries/InterestsQuery';
 import IndividualInterestsQuery from 'shared/queries/IndividualInterestsQuery';
 import IndividualMetricsQuery from 'shared/queries/IndividualMetricsQuery';
@@ -1335,6 +1336,33 @@ export function mockEventAnalysisListReq(items) {
 				eventAnalyses: {
 					__typename: 'EventAnalysisBag',
 					eventAnalyses: items,
+					total: items.length
+				}
+			}
+		}
+	};
+}
+
+export function mockEventPropertiesReq(items, mockVariables = {}) {
+	return {
+		request: {
+			query: EventPropertiesQuery,
+			variables: {
+				keyword: '',
+				page: 0,
+				size: items.length,
+				sort: {
+					column: NAME,
+					type: OrderByDirections.Ascending
+				},
+				...mockVariables
+			}
+		},
+		result: {
+			data: {
+				eventProperties: {
+					__typename: 'EventPropertyBag',
+					eventProperties: items,
 					total: items.length
 				}
 			}

@@ -266,7 +266,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				sourceLayoutPageTemplateEntryId);
 
 		String name = _getUniqueCopyName(
-			groupId, sourceLayoutPageTemplateEntry.getName(),
+			groupId, layoutPageTemplateCollectionId,
+			sourceLayoutPageTemplateEntry.getName(),
 			sourceLayoutPageTemplateEntry.getType());
 
 		long masterLayoutPlid = 0;
@@ -605,11 +606,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public String getUniqueLayoutPageTemplateEntryName(
-		long groupId, String name, int type) {
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			layoutPageTemplateEntryPersistence.fetchByG_N_T(
-				groupId, name, type);
+			layoutPageTemplateEntryPersistence.fetchByG_L_N_T(
+				groupId, layoutPageTemplateCollectionId, name, type);
 
 		if (layoutPageTemplateEntry == null) {
 			return name;
@@ -622,8 +624,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				name, count++);
 
 			layoutPageTemplateEntry =
-				layoutPageTemplateEntryPersistence.fetchByG_N_T(
-					groupId, newName, type);
+				layoutPageTemplateEntryPersistence.fetchByG_L_N_T(
+					groupId, layoutPageTemplateCollectionId, newName, type);
 
 			if (layoutPageTemplateEntry == null) {
 				return newName;
@@ -1017,7 +1019,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	private String _getUniqueCopyName(
-		long groupId, String sourceName, int type) {
+		long groupId, long layoutPageTemplateCollectionId, String sourceName,
+		int type) {
 
 		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
@@ -1025,8 +1028,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		for (int i = 1;; i++) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				layoutPageTemplateEntryPersistence.fetchByG_N_T(
-					groupId, name, type);
+				layoutPageTemplateEntryPersistence.fetchByG_L_N_T(
+					groupId, layoutPageTemplateCollectionId, name, type);
 
 			if (layoutPageTemplateEntry == null) {
 				break;

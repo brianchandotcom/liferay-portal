@@ -14,8 +14,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class BackgroundTaskNameComparator
 	extends OrderByComparator<BackgroundTask> {
 
-	public BackgroundTaskNameComparator(boolean ascending) {
-		_ascending = ascending;
+	public static BackgroundTaskNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -52,6 +56,16 @@ public class BackgroundTaskNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private BackgroundTaskNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final BackgroundTaskNameComparator _ASCENDING =
+		new BackgroundTaskNameComparator(true);
+
+	private static final BackgroundTaskNameComparator _DESCENDING =
+		new BackgroundTaskNameComparator(false);
 
 	private static final String _ORDER_BY_ASC = "BackgroundTask.name ASC";
 

@@ -578,8 +578,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 					orderByComparator.isAscending());
 		}
 		else if (orderByComparator instanceof BackgroundTaskNameComparator) {
-			return new com.liferay.portal.background.task.internal.comparator.
-				BackgroundTaskNameComparator(orderByComparator.isAscending());
+			return com.liferay.portal.background.task.internal.comparator.
+				BackgroundTaskNameComparator.getInstance(
+					orderByComparator.isAscending());
 		}
 
 		throw new IllegalArgumentException(

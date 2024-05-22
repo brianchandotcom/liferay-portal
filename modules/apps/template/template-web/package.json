@@ -2,7 +2,7 @@
 	"dependencies": {
 		"@clayui/alert": "3.111.0",
 		"@clayui/button": "3.115.0",
-		"@clayui/empty-state": "3.114.0",
+		"@clayui/empty-state": "3.115.1",
 		"@clayui/form": "3.115.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/loading-indicator": "3.111.0",

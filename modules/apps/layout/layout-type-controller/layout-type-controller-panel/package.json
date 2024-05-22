@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/core": "3.115.0",
+		"@clayui/core": "3.115.1",
 		"@clayui/form": "3.115.0",
 		"@clayui/icon": "3.111.0",
 		"prop-types": "15.7.2",

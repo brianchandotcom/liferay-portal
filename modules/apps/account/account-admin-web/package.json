@@ -4,7 +4,7 @@
 		"@clayui/form": "3.115.0",
 		"@clayui/icon": "3.111.0",
 		"@clayui/layout": "3.111.0",
-		"@clayui/multi-select": "3.115.0",
+		"@clayui/multi-select": "3.115.1",
 		"@liferay/address-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0"

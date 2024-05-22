@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -18,7 +19,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -48,7 +51,8 @@ import org.junit.runner.RunWith;
  * @author Jürgen Kappler
  */
 @RunWith(Arquillian.class)
-public class AssetDisplayLayoutUpgradeProcessTest {
+public class AssetDisplayLayoutUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -148,7 +152,45 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 			layoutPageTemplateEntry.getPlid());
 	}
 
-	private void _addAssetDisplayPageEntry(
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(journalArticle.getDDMStructureId());
+
+		return _addAssetDisplayPageEntry(
+			journalArticle.getResourcePrimKey(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_SPECIFIC,
+			layoutPageTemplateEntry.getPlid());
+	}
+
+	@Override
+	protected CTPersistence<?> getCTPersistence() {
+		return _assetDisplayPageEntryLocalService.getCTPersistence();
+	}
+
+	@Override
+	protected void runUpgrade() throws Exception {
+		_runUpgrade();
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			(AssetDisplayPageEntry)ctModel;
+
+		assetDisplayPageEntry.setLayoutPageTemplateEntryId(0);
+		assetDisplayPageEntry.setType(AssetDisplayPageConstants.TYPE_NONE);
+
+		return _assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
+			assetDisplayPageEntry);
+	}
+
+	private AssetDisplayPageEntry _addAssetDisplayPageEntry(
 		long classPK, long layoutPageTemplateEntryId, int type, long plid) {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
@@ -166,7 +208,7 @@ public class AssetDisplayLayoutUpgradeProcessTest {
 		assetDisplayPageEntry.setType(type);
 		assetDisplayPageEntry.setPlid(plid);
 
-		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
+		return _assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntry);
 	}
 

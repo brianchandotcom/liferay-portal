@@ -789,8 +789,7 @@ public class ObjectViewLocalServiceTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship.getObjectRelationshipId());
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition1.getObjectDefinitionId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 	}
 
 	@Inject

@@ -418,7 +418,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -437,7 +437,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -455,7 +455,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -476,7 +476,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (deleteObjectDefinition == null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -494,7 +494,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -513,7 +513,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -537,7 +537,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -561,7 +561,7 @@ public class ObjectDefinitionServiceTest {
 						objectDefinition.getObjectDefinitionId(), 0);
 
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -582,7 +582,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}
@@ -615,7 +615,7 @@ public class ObjectDefinitionServiceTest {
 		finally {
 			if (objectDefinition != null) {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getObjectDefinitionId());
+					objectDefinition);
 			}
 		}
 	}

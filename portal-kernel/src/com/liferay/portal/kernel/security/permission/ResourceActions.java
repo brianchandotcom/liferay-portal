@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -122,7 +121,7 @@ public interface ResourceActions {
 
 	public void removeModelResource(String name, String action);
 
-	public void removeModelResources(Document document) throws PortalException;
+	public void removeModelResources(Document document);
 
 	public void removePortletResources(Document document);
 

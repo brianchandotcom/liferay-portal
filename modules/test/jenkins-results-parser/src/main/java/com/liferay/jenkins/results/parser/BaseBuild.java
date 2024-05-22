@@ -836,7 +836,7 @@ public abstract class BaseBuild implements Build {
 		return _jenkinsSlave;
 	}
 
-	public String getJenkinsSlavePartner(JenkinsSlave jenkinsSlave) {
+	public JenkinsSlave getJenkinsSlavePartner(JenkinsSlave jenkinsSlave) {
 		String slaveName = jenkinsSlave.getName();
 		
 		String[] slaveNameParts = slaveName.split("-");
@@ -850,7 +850,11 @@ public abstract class BaseBuild implements Build {
 				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber + 1);
 			}
 
-			return String.join("-", slaveNameParts);
+			String partnerSlaveName = String.join("-", slaveNameParts);
+
+			JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+			return jenkinsMaster.getJenkinsSlave(partnerSlaveName);
 
 		} catch (NumberFormatException numberFormatException) {
 			throw new RuntimeException(

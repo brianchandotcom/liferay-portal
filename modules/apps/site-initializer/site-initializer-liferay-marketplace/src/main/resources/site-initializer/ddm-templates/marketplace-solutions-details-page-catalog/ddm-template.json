@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "MARKETPLACE SOLUTION DETAILS PAGE CATALOG",
+	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
+	"name": "marketplace_solutions_details_page_catalog",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

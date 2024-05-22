@@ -836,7 +836,7 @@ public abstract class BaseBuild implements Build {
 		return _jenkinsSlave;
 	}
 
-	public JenkinsSlave getJenkinsSlavePartner(JenkinsSlave jenkinsSlave) {
+	public JenkinsSlave getJenkinsSlaveSibling(JenkinsSlave jenkinsSlave) {
 		String slaveName = jenkinsSlave.getName();
 		
 		String[] slaveNameParts = slaveName.split("-");
@@ -850,11 +850,11 @@ public abstract class BaseBuild implements Build {
 				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber + 1);
 			}
 
-			String partnerSlaveName = String.join("-", slaveNameParts);
+			String siblingSlaveName = String.join("-", slaveNameParts);
 
 			JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
-			return jenkinsMaster.getJenkinsSlave(partnerSlaveName);
+			return jenkinsMaster.getJenkinsSlave(siblingSlaveName);
 
 		} catch (NumberFormatException numberFormatException) {
 			throw new RuntimeException(
@@ -1660,6 +1660,14 @@ public abstract class BaseBuild implements Build {
 		}
 
 		jenkinsSlave.takeSlavesOffline(message);
+		
+		if (jenkinsSlave.getOfflineSibling()) {
+			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
+
+			String siblingMessage = JenkinsResultsParserUtil.combine(pinnedMessage, "Offline sibling: ",jenkinsSlave.getName(), " Reason: ", slaveOfflineRule.getName());
+
+			siblingSlave.takeSlavesOffline(siblingMessage);
+		}
 
 		String notificationRecipients =
 			slaveOfflineRule.getNotificationRecipients();

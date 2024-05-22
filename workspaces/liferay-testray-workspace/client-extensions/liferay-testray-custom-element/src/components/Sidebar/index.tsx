@@ -88,7 +88,8 @@ const Sidebar = () => {
 		{
 			icon: 'merge',
 			label: i18n.translate('testflow'),
-			path: '/testflow',
+			path:
+				'/testflow?filter=%7B"dueStatus"%3A%5B"INANALYSIS"%5D%7D&filterSchema=testflow',
 		},
 		{
 			element: (

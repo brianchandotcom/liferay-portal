@@ -19,6 +19,8 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet',
 	lockedItems:
 		'/~/control_panel/manage?p_p_id=com_liferay_locked_items_web_internal_portlet_LockedItemsPortlet',
+	masterPages:
+		'/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=master-layouts',
 	modelBuilder:
 		'/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_mvcRenderCommandName=/object_definitions/view_model_builder',
 	myWorkflowTasks:

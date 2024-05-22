@@ -27,28 +27,4 @@ public class DefaultSegmentsEntryException extends PortalException {
 		super(throwable);
 	}
 
-	public static class MustNotDeleteDefaultSegmentsEntry
-		extends DefaultSegmentsEntryException {
-
-		public MustNotDeleteDefaultSegmentsEntry(long segmentsEntryId) {
-			super(
-				String.format(
-					"The default segments entry %s cannot be deleted",
-					segmentsEntryId));
-		}
-
-	}
-
-	public static class MustNotUpdateDefaultSegmentsEntry
-		extends DefaultSegmentsEntryException {
-
-		public MustNotUpdateDefaultSegmentsEntry(long segmentsEntryId) {
-			super(
-				String.format(
-					"The default segments entry %s cannot be updated",
-					segmentsEntryId));
-		}
-
-	}
-
 }

@@ -1661,7 +1661,7 @@ public abstract class BaseBuild implements Build {
 
 		jenkinsSlave.takeSlavesOffline(message);
 		
-		if (jenkinsSlave.getOfflineSibling()) {
+		if (jenkinsSlave.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
 			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
 
 			String siblingMessage = JenkinsResultsParserUtil.combine(pinnedMessage, "Offline sibling: ",jenkinsSlave.getName(), " Reason: ", slaveOfflineRule.getName());

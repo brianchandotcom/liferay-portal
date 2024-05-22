@@ -1,12 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.io.IOException;
 
@@ -120,15 +119,13 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 
 		TestrayServer testrayServer = getTestrayServer();
 
-		String testrayCaseURL = JenkinsResultsParserUtil.combine(
-				String.valueOf(testrayServer.getURL()), "/home/-/testray/cases/",
-				getCaseID(), ".json");
+		String testrayCaseURLPath = JenkinsResultsParserUtil.combine(
+			"/home/-/testray/cases/", getCaseID(), ".json");
 
 		try {
 			_testrayCase = TestrayFactory.newTestrayCase(
-					getTestrayProject(),
-					JenkinsResultsParserUtil.toJSONObject(
-							testrayCaseURL, testrayServer.getHTTPAuthorization()));
+				getTestrayProject(),
+				new JSONObject(testrayServer.requestGet(testrayCaseURLPath)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -185,11 +182,11 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 
 		for (String name : attachmentsJSONObject.keySet()) {
 			TestrayAttachment testrayAttachment =
-					TestrayFactory.newTestrayAttachment(
-							this, name, attachmentsJSONObject.getString(name));
+				TestrayFactory.newTestrayAttachment(
+					this, name, attachmentsJSONObject.getString(name));
 
 			_testrayAttachments.put(
-					testrayAttachment.getName(), testrayAttachment);
+				testrayAttachment.getName(), testrayAttachment);
 		}
 	}
 

@@ -35,6 +35,19 @@ export class DocumentLibraryEditFilePage {
 		await this.documentLibraryPage.goToCreateNewFile();
 	}
 
+	async publishNewBasicFileEntry(title: string) {
+		await this.goto();
+
+		await this.titleSelector.fill(title);
+
+		if (await this.saveButton.isVisible()) {
+			await this.saveButton.click();
+		}
+		else {
+			await this.publishButton.click();
+		}
+	}
+
 	async publishNewFileWithScheduleDate(scheduleDate: string, title: string) {
 		await this.goto();
 

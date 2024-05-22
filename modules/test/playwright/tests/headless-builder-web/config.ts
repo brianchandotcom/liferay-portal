@@ -5,13 +5,11 @@
 
 // @ts-ignore
 
-import {devices} from '@playwright/test';
 
 export const config = {
 	name: 'headless-builder-web',
 	testDir: 'tests/headless-builder-web',
 	use: {
-		...devices['Desktop Chrome'],
 		testIdAttribute: 'data-qa-id',
 	},
 };

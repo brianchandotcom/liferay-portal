@@ -5,13 +5,11 @@
 
 // @ts-ignore
 
-import {devices} from '@playwright/test';
 
 export const config = {
 	name: 'portlet-configuration-web',
 	testDir: 'tests/portlet-configuration-web',
 	use: {
-		...devices['Desktop Chrome'],
 		testIdAttribute: 'data-qa-id',
 	},
 };

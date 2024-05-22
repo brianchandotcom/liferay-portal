@@ -5,13 +5,11 @@
 
 // @ts-ignore
 
-import {devices} from '@playwright/test';
 
 export const config = {
 	name: 'portal-default-permissions-web',
 	testDir: 'tests/portal-default-permissions-web',
 	use: {
-		...devices['Desktop Chrome'],
 		testIdAttribute: 'data-qa-id',
 	},
 };

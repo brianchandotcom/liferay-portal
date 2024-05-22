@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -12,6 +14,12 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.layout.admin.kernel.util.Sitemap;
+import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -38,6 +46,7 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CookieUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;

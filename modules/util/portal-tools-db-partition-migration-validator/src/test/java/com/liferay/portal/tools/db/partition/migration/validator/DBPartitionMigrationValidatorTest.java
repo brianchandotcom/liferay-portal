@@ -130,8 +130,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			new Company(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
-		List<Long> companyInfoIds = Arrays.asList(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 		String password = RandomTestUtil.randomString();
 		List<Release> releases = Arrays.asList(
 			new Release(Version.parseVersion("14.2.4"), "module1", 0, true),
@@ -141,7 +139,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		String user = RandomTestUtil.randomString();
 
 		_mockDatabase(
-			companies, companyIds, companyInfoIds, defaultPartition, password,
+			companies, companyIds, companyIds, defaultPartition, password,
 			releases, schemaName,
 			Arrays.asList(
 				"Company", "Object_x_" + companyIds.get(0), "Table1", "Table2"),
@@ -158,7 +156,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				});
 		}
 		catch (RuntimeException runtimeException) {
-			if (companyInfoIds.size() > 1) {
+			if (companyIds.size() > 1) {
 				Assert.assertTrue(
 					_errByteArrayOutputStream.toString(
 					).contains(
@@ -198,8 +196,8 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 
 		Long exportedCompanyId = null;
 
-		if (companyInfoIds.size() == 1) {
-			exportedCompanyId = companyInfoIds.get(0);
+		if (companyIds.size() == 1) {
+			exportedCompanyId = companyIds.get(0);
 		}
 
 		JSONAssert.assertEquals(

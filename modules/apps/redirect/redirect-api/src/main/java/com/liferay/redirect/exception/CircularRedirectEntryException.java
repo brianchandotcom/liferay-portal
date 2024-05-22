@@ -13,21 +13,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class CircularRedirectEntryException extends PortalException {
 
-	public CircularRedirectEntryException() {
-	}
-
-	public CircularRedirectEntryException(String msg) {
-		super(msg);
-	}
-
-	public CircularRedirectEntryException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public CircularRedirectEntryException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class DestinationURLMustNotBeEqualToSourceURL
 		extends CircularRedirectEntryException {
 
@@ -45,6 +30,21 @@ public class CircularRedirectEntryException extends PortalException {
 
 	public static class MustNotFormALoopWithAnotherRedirectEntry
 		extends CircularRedirectEntryException {
+	}
+
+	private CircularRedirectEntryException() {
+	}
+
+	private CircularRedirectEntryException(String msg) {
+		super(msg);
+	}
+
+	private CircularRedirectEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	private CircularRedirectEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -15,11 +15,16 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -78,6 +83,32 @@ public class UserServiceTest {
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
+		}
+	}
+
+	@Test
+	public void testAddUserWithInvalidName() {
+		try {
+			UserTestUtil.addUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE),
+				LocaleUtil.getDefault(), RandomTestUtil.randomString(76),
+				RandomTestUtil.randomString(),
+				new long[] {
+					ServiceContextTestUtil.getServiceContext(
+					).getScopeGroupId()
+				},
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Contacts must have a valid first name"));
 		}
 	}
 

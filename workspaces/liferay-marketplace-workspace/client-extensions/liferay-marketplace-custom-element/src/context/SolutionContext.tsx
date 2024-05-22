@@ -416,7 +416,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 					description: _product.description.en_US,
 					file: {
 						changed: false,
-						fileName: appIcon?.title.en_US as string,
+						fileName: appIcon?.title?.en_US as string,
 						id: (appIcon?.externalReferenceCode as unknown) as string,
 						preview: _product.thumbnail,
 						progress: 100,

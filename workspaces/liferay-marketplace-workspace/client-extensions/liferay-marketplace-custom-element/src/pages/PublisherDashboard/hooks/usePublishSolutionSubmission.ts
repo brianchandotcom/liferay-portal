@@ -310,7 +310,7 @@ const usePublishSolutionSubmission = (
 
 			const files = block.content.files;
 
-			addOrUpdateImages(
+			await addOrUpdateImages(
 				files,
 				PRODUCT_TAGS.SOLUTION_DETAILS,
 				product,

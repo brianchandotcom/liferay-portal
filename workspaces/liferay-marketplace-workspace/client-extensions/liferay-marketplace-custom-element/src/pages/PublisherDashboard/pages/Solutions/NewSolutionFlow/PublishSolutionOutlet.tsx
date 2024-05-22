@@ -56,6 +56,8 @@ const PublishSolutionOutlet = () => {
 		return null;
 	}, [activeRoute, context]);
 
+	const isDisabled = parsedSchema ? !parsedSchema.success : false;
+
 	return (
 		<>
 			<AppToolbar
@@ -75,7 +77,7 @@ const PublishSolutionOutlet = () => {
 					onClick: () => alert('Preview...'),
 				}}
 				saveAsDraftProps={{
-					disabled: parsedSchema ? !parsedSchema.success : false,
+					disabled: isDisabled,
 					onClick: onSaveAsDraft,
 				}}
 			/>
@@ -108,9 +110,7 @@ const PublishSolutionOutlet = () => {
 						)}
 
 						<ClayButton
-							disabled={
-								parsedSchema ? !parsedSchema.success : false
-							}
+							disabled={isDisabled}
 							displayType="primary"
 							onClick={async () => {
 								if (isLastStep) {

@@ -24,17 +24,10 @@ type Options = {
 	value: string;
 };
 
-type Params = {
-	[key: string]: string | number | boolean;
-};
-
-const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
-	const [searchParams, setSearchParams] = useSearchParams();
+const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
+	const [searchParams] = useSearchParams();
 
 	const params = useParams();
-	const page = searchParams.get('page');
-
-	const pageSize = searchParams.get('pageSize');
 
 	const serializedFilter = useMemo(() => {
 		return JSON.parse(searchParams.get('filter') as string) || '';
@@ -126,8 +119,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 					if (filteredOptions.length) {
 						updatedFilterOptions[key] = filteredOptions;
 					}
-				}
-				else {
+				} else {
 					const matchingValues = filterResponse[key]?.filter(
 						(options: Options) =>
 							options.value === serializedFilter[key]
@@ -161,20 +153,6 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 		[filterFields, serializedFilter, filterWithOptions]
 	);
 
-	const updateUrlParams = (param: Params) => {
-		setSearchParams(
-			new URLSearchParams({
-				...(serializedFilter && {
-					filter: JSON.stringify(serializedFilter),
-					filterSchema: filterSchema?.name,
-				}),
-				...(page && {page}),
-				...(pageSize && {pageSize}),
-				...param,
-			})
-		);
-	};
-
 	const filterInitialContext = useMemo(
 		() => ({
 			entries: filterEntries,
@@ -185,8 +163,7 @@ const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 
 	return {
 		filterInitialContext,
-		updateUrlParams,
 	};
 };
 
-export default useQueryParams;
+export default useFilterUrlParams;

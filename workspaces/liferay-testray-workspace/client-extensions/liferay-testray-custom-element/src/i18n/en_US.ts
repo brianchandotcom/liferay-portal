@@ -459,6 +459,7 @@ export default {
 	'warnings-x': 'Warnings ({0})',
 	'x-case-results-were-autofilled': '{0} case results were autofilled.',
 	'x-create-date': '{0}. Create Date',
+	'x-execution-date': '{0}. Execution Date',
 	'x-is-a-required-field': '{0} is a required field.',
 	'x-items': '{0} Items',
 	'x-items-cannot-be-deleted': '{0} items cannot be deleted',

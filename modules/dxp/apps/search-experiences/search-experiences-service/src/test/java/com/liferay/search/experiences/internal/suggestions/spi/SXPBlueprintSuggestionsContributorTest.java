@@ -153,6 +153,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 	public void testSearchTuningRankingsIsContributed() {
 		_setUpSearcher(0);
 		_setUpSuggestionsContributorConfiguration(null);
+
 		_getSuggestionsContributorResults();
 
 		ArgumentCaptor<Consumer<SearchContext>> argumentCaptor =

@@ -180,6 +180,7 @@ public class BasicSuggestionsContributorTest {
 	@Test
 	public void testSearchTuningRankingsIsContributed() throws Exception {
 		_setUpSearcher(0);
+
 		_getSuggestionsContributorResults();
 
 		SearchContext searchContext = Mockito.mock(SearchContext.class);

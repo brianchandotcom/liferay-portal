@@ -247,6 +247,18 @@ public class ClassNameLocalServiceUtil {
 		return getService().getClassNameId(value);
 	}
 
+	public static java.util.function.Supplier<long[]> getClassNameIdsSupplier(
+		String[] classNames) {
+
+		return getService().getClassNameIdsSupplier(classNames);
+	}
+
+	public static java.util.function.Supplier<Long> getClassNameIdSupplier(
+		String className) {
+
+		return getService().getClassNameIdSupplier(className);
+	}
+
 	/**
 	 * Returns a range of all the class names.
 	 *

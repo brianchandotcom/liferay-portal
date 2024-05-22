@@ -46,6 +46,7 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -153,6 +154,19 @@ public class DBPartitionUtil {
 					"\"database.partition.schema.name.prefix\" is greater " +
 						"than 11 characters");
 		}
+	}
+
+	public static boolean copyDBPartition(
+			long sourceCompanyId, long targetCompanyId)
+		throws PortalException {
+
+		if (!DBPartition.isPartitionEnabled()) {
+			return false;
+		}
+
+		_copyDBPartition(sourceCompanyId, targetCompanyId);
+
+		return true;
 	}
 
 	public static boolean extractDBPartition(long companyId)
@@ -345,6 +359,176 @@ public class DBPartitionUtil {
 		};
 	}
 
+	private static void _copyDBPartition(
+			long sourceCompanyId, long targetCompanyId)
+		throws PortalException {
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		List<String> quartzTableNames = new ArrayList<>();
+
+		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				_dbPartitionDB.getCreatePartitionSQL(
+					connection, _getPartitionName(targetCompanyId)))) {
+
+			preparedStatement.executeUpdate();
+
+			String sourcePartitionName = _getPartitionName(sourceCompanyId);
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+					sourceCompanyId);
+				ResultSet resultSet = databaseMetaData.getTables(
+					_dbPartitionDB.getCatalog(connection, sourcePartitionName),
+					_dbPartitionDB.getSchema(connection, sourcePartitionName),
+					null, new String[] {"TABLE", "VIEW"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String elementName = resultSet.getString("TABLE_NAME");
+
+					if (Objects.equals(
+							resultSet.getString("TABLE_TYPE"), "VIEW")) {
+
+						statement.executeUpdate(
+							_dbPartitionDB.getCreateViewSQL(
+								sourcePartitionName,
+								_getPartitionName(targetCompanyId),
+								elementName));
+					}
+					else {
+						statement.executeUpdate(
+							_dbPartitionDB.getCreateTableSQL(
+								sourcePartitionName,
+								_getPartitionName(targetCompanyId),
+								elementName));
+
+						statement.executeUpdate(
+							_getCopyDataSQL(
+								sourcePartitionName,
+								_getPartitionName(targetCompanyId), elementName,
+								_getColumnNames(connection, elementName),
+								StringPool.BLANK));
+
+						if (dbInspector.hasColumn(elementName, "companyId")) {
+							statement.executeUpdate(
+								StringBundler.concat(
+									"update ",
+									_getPartitionName(targetCompanyId),
+									StringPool.PERIOD, elementName,
+									" set companyId = ", targetCompanyId,
+									" where companyId = ", sourceCompanyId));
+						}
+
+						if (dbInspector.isObjectTable(
+								_getCompanyIds(), elementName)) {
+
+							statement.executeUpdate(
+								_dbPartitionDB.getRenameTableSQL(
+									elementName,
+									_getPartitionName(targetCompanyId),
+									StringUtil.replace(
+										elementName,
+										String.valueOf(sourceCompanyId),
+										String.valueOf(targetCompanyId))));
+						}
+					}
+				}
+			}
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_dbPartitionDB.getCatalog(
+						connection, _defaultPartitionName),
+					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
+					null, new String[] {"TABLE"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (_isCopyableQuartzTable(tableName)) {
+						_copyQuartzTableEntry(
+							_defaultPartitionName, sourceCompanyId, tableName,
+							targetCompanyId, statement);
+
+						quartzTableNames.add(tableName);
+					}
+				}
+			}
+
+			try (Statement statement = connection.createStatement()) {
+				_handleSpecialCases(
+					sourceCompanyId, statement, targetCompanyId);
+			}
+
+			connection.commit();
+		}
+		catch (Exception exception1) {
+			if (!_dbPartitionDB.isDDLTransactional()) {
+				try (Statement statement = connection.createStatement()) {
+					statement.executeUpdate(
+						_dbPartitionDB.getDropPartitionSQL(
+							_getPartitionName(targetCompanyId)));
+
+					for (String tableName : quartzTableNames) {
+						_deleteControlTableData(
+							targetCompanyId, dbInspector, statement, tableName);
+					}
+				}
+				catch (Exception exception2) {
+					throw new PortalException(
+						"Unable to roll back schema creation", exception2);
+				}
+			}
+
+			throw new PortalException(exception1);
+		}
+
+		_companyIds.add(targetCompanyId);
+	}
+
+	private static void _copyQuartzTableEntry(
+			String partitionName, long sourceCompanyId, String tableName,
+			long targetCompanyId, Statement statement)
+		throws Exception {
+
+		List<String> columnNames = _getColumnNames(
+			statement.getConnection(), tableName);
+
+		if (StringUtil.endsWith(tableName, "JOB_DETAILS")) {
+			columnNames.removeIf(value -> value.equalsIgnoreCase("job_name"));
+
+			statement.executeUpdate(
+				StringBundler.concat(
+					"insert into ", partitionName, StringPool.PERIOD, tableName,
+					"(job_name, ", StringUtil.merge(columnNames),
+					") select REPLACE(job_name, '@", sourceCompanyId, "', '@",
+					targetCompanyId, "') as job_name, ",
+					StringUtil.merge(columnNames), " from ", partitionName,
+					StringPool.PERIOD, tableName,
+					_getQuartzWhereClauseSQL(sourceCompanyId, tableName)));
+
+			return;
+		}
+
+		columnNames.removeIf(value -> value.equalsIgnoreCase("trigger_name"));
+
+		statement.executeUpdate(
+			StringBundler.concat(
+				"insert into ", partitionName, StringPool.PERIOD, tableName,
+				"(trigger_name, ", StringUtil.merge(columnNames),
+				") select REPLACE (trigger_name, '@", sourceCompanyId, "', '@",
+				targetCompanyId, "') as trigger_name, ",
+				StringUtil.merge(columnNames), " from ", partitionName,
+				StringPool.PERIOD, tableName,
+				_getQuartzWhereClauseSQL(sourceCompanyId, tableName)));
+	}
+
 	private static void _deleteCompanyData(
 			long companyId, String tableName, String fromPartitionName,
 			Statement statement)
@@ -353,6 +537,26 @@ public class DBPartitionUtil {
 		_deleteData(
 			tableName, fromPartitionName, statement,
 			" where companyId = " + companyId);
+	}
+
+	private static void _deleteControlTableData(
+			long companyId, DBInspector dbInspector, Statement statement,
+			String tableName)
+		throws Exception {
+
+		if (!dbInspector.isControlTable(tableName)) {
+			return;
+		}
+
+		if (dbInspector.hasColumn(tableName, "companyId")) {
+			_deleteCompanyData(
+				companyId, tableName, _defaultPartitionName, statement);
+		}
+		else if (_isCopyableQuartzTable(tableName)) {
+			_deleteData(
+				tableName, _defaultPartitionName, statement,
+				_getQuartzWhereClauseSQL(companyId, tableName));
+		}
 	}
 
 	private static void _deleteData(
@@ -395,22 +599,9 @@ public class DBPartitionUtil {
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (!dbInspector.isControlTable(tableName)) {
-						continue;
-					}
-
-					if (dbInspector.hasColumn(tableName, "companyId")) {
-						_deleteCompanyData(
-							companyId, tableName, _defaultPartitionName,
-							statement);
-					}
-					else if (_isCopyableQuartzTable(tableName)) {
-						_deleteData(
-							tableName, _defaultPartitionName, statement,
-							_getQuartzWhereClauseSQL(companyId, tableName));
-					}
+					_deleteControlTableData(
+						companyId, dbInspector, statement,
+						resultSet.getString("TABLE_NAME"));
 				}
 
 				statement.executeUpdate(
@@ -771,6 +962,17 @@ public class DBPartitionUtil {
 		}
 
 		return " where trigger_name like '%@" + companyId + "'";
+	}
+
+	private static void _handleSpecialCases(
+			long sourceCompanyId, Statement statement, long targetCompanyId)
+		throws SQLException {
+
+		statement.executeUpdate(
+			StringBundler.concat(
+				"update ", _getPartitionName(targetCompanyId),
+				".Group_ set classPK = ", targetCompanyId, " where classPK = ",
+				sourceCompanyId));
 	}
 
 	private static void _insertDBPartition(long companyId)

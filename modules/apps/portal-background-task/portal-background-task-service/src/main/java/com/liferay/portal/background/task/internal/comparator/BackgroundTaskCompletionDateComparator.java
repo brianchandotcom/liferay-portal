@@ -23,10 +23,6 @@ public class BackgroundTaskCompletionDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"completionDate"};
 
-	public BackgroundTaskCompletionDateComparator() {
-		this(false);
-	}
-
 	public BackgroundTaskCompletionDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}

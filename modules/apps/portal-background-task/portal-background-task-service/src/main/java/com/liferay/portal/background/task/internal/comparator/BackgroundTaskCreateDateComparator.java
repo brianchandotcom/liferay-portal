@@ -21,10 +21,6 @@ public class BackgroundTaskCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public BackgroundTaskCreateDateComparator() {
-		this(false);
-	}
-
 	public BackgroundTaskCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}

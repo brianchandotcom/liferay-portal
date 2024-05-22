@@ -22,7 +22,7 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 }) => {
 	if (dataType === DataTypes.Boolean) {
 		return (
-			<Form.GroupItem className='conjunction' label shrink>
+			<Form.GroupItem className='conjunction ml-2 mr-2' label shrink>
 				{Liferay.Language.get('is')}
 			</Form.GroupItem>
 		);

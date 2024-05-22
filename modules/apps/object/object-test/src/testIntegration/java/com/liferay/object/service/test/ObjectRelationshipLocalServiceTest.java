@@ -99,7 +99,7 @@ public class ObjectRelationshipLocalServiceTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_systemObjectDefinition1);
+			_systemObjectDefinition1.getObjectDefinitionId());
 	}
 
 	@Before
@@ -1093,7 +1093,7 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertFalse(_hasTable(objectRelationship.getDBTableName()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			relatedObjectDefinition);
+			relatedObjectDefinition.getObjectDefinitionId());
 	}
 
 	private void _testSystemObjectRelationshipOneToMany() throws Exception {

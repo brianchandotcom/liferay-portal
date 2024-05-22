@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,42 +11,17 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public class TestrayRun {
-
-	public TestrayRun(
-		TestrayBuild testrayBuild, String batchName,
-		List<File> propertiesFiles) {
-
-		_testrayBuild = testrayBuild;
-		_batchName = batchName;
-
-		try {
-			_properties.putAll(JenkinsResultsParserUtil.getBuildProperties());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		for (int i = propertiesFiles.size() - 1; i >= 0; i--) {
-			_properties.putAll(
-				JenkinsResultsParserUtil.getProperties(propertiesFiles.get(i)));
-		}
-	}
 
 	public String getBatchName() {
 		return _batchName;
@@ -72,65 +47,6 @@ public class TestrayRun {
 	}
 
 	public String getRunID() {
-		JSONObject runsJSONObject = _testrayBuild.getRunsJSONObject();
-
-		if (runsJSONObject == null) {
-			return null;
-		}
-
-		JSONArray dataJSONArray = runsJSONObject.optJSONArray("data");
-
-		if ((dataJSONArray == JSONObject.NULL) || dataJSONArray.isEmpty()) {
-			return null;
-		}
-
-		Map<String, String> factorValues = new HashMap<>();
-
-		for (Factor factor : getFactors()) {
-			String factorValue = factor.getValue();
-
-			factorValues.put(factor.getName(), factorValue.toLowerCase());
-		}
-
-		for (int i = 0; i < dataJSONArray.length(); i++) {
-			JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
-
-			JSONArray testrayFactorsJSONArray = dataJSONObject.optJSONArray(
-				"testrayFactors");
-
-			if ((testrayFactorsJSONArray == JSONObject.NULL) ||
-				testrayFactorsJSONArray.isEmpty()) {
-
-				continue;
-			}
-
-			Map<String, String> factorOptionNames = new HashMap<>();
-
-			for (int j = 0; j < testrayFactorsJSONArray.length(); j++) {
-				JSONObject testrayFactorJSONObject =
-					testrayFactorsJSONArray.getJSONObject(j);
-
-				String factorCategoryName = testrayFactorJSONObject.optString(
-					"testrayFactorCategoryName");
-				String factorOptionName = testrayFactorJSONObject.optString(
-					"testrayFactorOptionName");
-
-				if (JenkinsResultsParserUtil.isNullOrEmpty(
-						factorCategoryName) ||
-					JenkinsResultsParserUtil.isNullOrEmpty(factorOptionName)) {
-
-					continue;
-				}
-
-				factorOptionNames.put(
-					factorCategoryName, factorOptionName.toLowerCase());
-			}
-
-			if (factorValues.equals(factorOptionNames)) {
-				return dataJSONObject.getString("testrayRunId");
-			}
-		}
-
 		return null;
 	}
 
@@ -171,6 +87,26 @@ public class TestrayRun {
 		private final String _name;
 		private final String _value;
 
+	}
+
+	protected TestrayRun(
+		TestrayBuild testrayBuild, String batchName,
+		List<File> propertiesFiles) {
+
+		_testrayBuild = testrayBuild;
+		_batchName = batchName;
+
+		try {
+			_properties.putAll(JenkinsResultsParserUtil.getBuildProperties());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		for (int i = propertiesFiles.size() - 1; i >= 0; i--) {
+			_properties.putAll(
+				JenkinsResultsParserUtil.getProperties(propertiesFiles.get(i)));
+		}
 	}
 
 	private String _getFactorName(String factorNameKey) {

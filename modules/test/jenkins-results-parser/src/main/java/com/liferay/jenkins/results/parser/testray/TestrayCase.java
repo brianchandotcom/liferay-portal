@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -12,36 +12,43 @@ import org.json.JSONObject;
  */
 public class TestrayCase {
 
-	public TestrayCase(TestrayProject testrayProject, JSONObject jsonObject) {
-		_testrayProject = testrayProject;
-		_jsonObject = jsonObject;
-	}
-
 	public String getComponent() {
-		JSONObject mainComponentJSONObject = _jsonObject.getJSONObject(
-			"mainComponent");
-
-		return mainComponentJSONObject.getString("name");
+		return null;
 	}
 
 	public String getID() {
-		return _jsonObject.optString("testrayCaseId");
+		return null;
+	}
+
+	public JSONObject getJSONObject() {
+		return _jsonObject;
 	}
 
 	public String getName() {
-		return _jsonObject.optString("name");
+		return null;
 	}
 
 	public int getPriority() {
-		return _jsonObject.getInt("priority");
+		return -1;
 	}
 
 	public String getTeamName() {
-		return _jsonObject.getString("testrayTeamName");
+		return null;
+	}
+
+	public TestrayProject getTestrayProject() {
+		return _testrayProject;
 	}
 
 	public String getType() {
-		return _jsonObject.getString("testrayCaseTypeName");
+		return null;
+	}
+
+	protected TestrayCase(
+		TestrayProject testrayProject, JSONObject jsonObject) {
+
+		_testrayProject = testrayProject;
+		_jsonObject = jsonObject;
 	}
 
 	private final JSONObject _jsonObject;

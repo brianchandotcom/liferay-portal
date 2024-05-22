@@ -5,22 +5,16 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
-
-import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -28,56 +22,36 @@ import org.json.JSONObject;
  */
 public class TestrayCaseResult {
 
-	public TestrayCaseResult(TestrayBuild testrayBuild, JSONObject jsonObject) {
-		_testrayBuild = testrayBuild;
-		this.jsonObject = jsonObject;
-	}
-
-	public TestrayCaseResult(
-		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild) {
-
-		_testrayBuild = testrayBuild;
-		_topLevelBuild = topLevelBuild;
-		jsonObject = new JSONObject();
-	}
-
 	public TestrayAttachment getBuildResultTestrayAttachment() {
-		_initTestrayAttachments();
-
-		return _testrayAttachments.get("Build Result (Top Level)");
+		return null;
 	}
 
 	public String getCaseID() {
-		return jsonObject.optString("testrayCaseId");
+		return null;
 	}
 
 	public String getComponentName() {
-		return jsonObject.getString("testrayComponentName");
+		return null;
 	}
 
 	public String getErrors() {
-		return jsonObject.optString("errors");
+		return null;
 	}
 
 	public URL getHistoryURL() {
-		try {
-			return new URL(getURL() + "/history");
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
+		return null;
 	}
 
 	public long getID() {
-		return jsonObject.optLong("testrayCaseResultId");
+		return _jsonObject.optLong("id");
 	}
 
 	public JSONObject getJSONObject() {
-		return jsonObject;
+		return _jsonObject;
 	}
 
 	public String getName() {
-		return jsonObject.optString("testrayCaseName");
+		return null;
 	}
 
 	public int getPriority() {
@@ -87,9 +61,7 @@ public class TestrayCaseResult {
 	}
 
 	public Status getStatus() {
-		int statusID = jsonObject.optInt("status");
-
-		return Status.get(statusID);
+		return null;
 	}
 
 	public String getSubcomponentNames() {
@@ -97,13 +69,11 @@ public class TestrayCaseResult {
 	}
 
 	public String getTeamName() {
-		return jsonObject.getString("testrayTeamName");
+		return null;
 	}
 
 	public List<TestrayAttachment> getTestrayAttachments() {
-		_initTestrayAttachments();
-
-		return new ArrayList<>(_testrayAttachments.values());
+		return null;
 	}
 
 	public TestrayBuild getTestrayBuild() {
@@ -111,27 +81,7 @@ public class TestrayCaseResult {
 	}
 
 	public TestrayCase getTestrayCase() {
-		if (_testrayCase != null) {
-			return _testrayCase;
-		}
-
-		TestrayServer testrayServer = getTestrayServer();
-
-		String testrayCaseURL = JenkinsResultsParserUtil.combine(
-			String.valueOf(testrayServer.getURL()), "/home/-/testray/cases/",
-			getCaseID(), ".json");
-
-		try {
-			_testrayCase = new TestrayCase(
-				getTestrayProject(),
-				JenkinsResultsParserUtil.toJSONObject(
-					testrayCaseURL, testrayServer.getHTTPAuthorization()));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return _testrayCase;
+		return null;
 	}
 
 	public TestrayProject getTestrayProject() {
@@ -166,19 +116,7 @@ public class TestrayCaseResult {
 	}
 
 	public String[] getWarnings() {
-		JSONArray jsonArray = jsonObject.optJSONArray("warnings");
-
-		if (jsonArray == null) {
-			return null;
-		}
-
-		String[] warnings = new String[jsonArray.length()];
-
-		for (int i = 0; i < warnings.length; i++) {
-			warnings[i] = jsonArray.optString(i);
-		}
-
-		return warnings;
+		return null;
 	}
 
 	public static enum Status {
@@ -222,27 +160,22 @@ public class TestrayCaseResult {
 
 	}
 
-	protected final JSONObject jsonObject;
+	protected TestrayCaseResult(
+		TestrayBuild testrayBuild, JSONObject jsonObject) {
 
-	private synchronized void _initTestrayAttachments() {
-		if (_testrayAttachments != null) {
-			return;
-		}
-
-		_testrayAttachments = new TreeMap<>();
-
-		JSONObject attachmentsJSONObject = jsonObject.optJSONObject(
-			"attachments");
-
-		for (String name : attachmentsJSONObject.keySet()) {
-			TestrayAttachment testrayAttachment =
-				TestrayFactory.newTestrayAttachment(
-					this, name, attachmentsJSONObject.getString(name));
-
-			_testrayAttachments.put(
-				testrayAttachment.getName(), testrayAttachment);
-		}
+		_testrayBuild = testrayBuild;
+		_jsonObject = jsonObject;
 	}
+
+	protected TestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild) {
+
+		_testrayBuild = testrayBuild;
+		_topLevelBuild = topLevelBuild;
+		_jsonObject = new JSONObject();
+	}
+
+	private final JSONObject _jsonObject;
 
 	private Map<String, TestrayAttachment> _testrayAttachments;
 	private final TestrayBuild _testrayBuild;

@@ -10,28 +10,26 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayCaseType {
+public class Testray1TestrayCaseType extends TestrayCaseType {
 
+	@Override
 	public Long getID() {
-		return _jsonObject.getLong("id");
+		return _jsonObject.getLong("testrayCaseTypeId");
 	}
 
+	@Override
 	public String getName() {
 		return _jsonObject.getString("name");
 	}
 
-	public TestrayServer getTestrayServer() {
-		return _testrayServer;
-	}
-
-	protected TestrayCaseType(
+	protected Testray1TestrayCaseType(
 		TestrayServer testrayServer, JSONObject jsonObject) {
 
-		_testrayServer = testrayServer;
+		super(testrayServer, jsonObject);
+
 		_jsonObject = jsonObject;
 	}
 
 	private final JSONObject _jsonObject;
-	private final TestrayServer _testrayServer;
 
 }

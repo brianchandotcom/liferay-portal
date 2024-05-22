@@ -436,8 +436,7 @@ public class ObjectValidationRuleLocalServiceImpl
 					null);
 			}
 			else {
-				results = objectValidationRuleEngine.execute(
-					(Map<String, Object>)variables.get("entryDTO"), null);
+				results = objectValidationRuleEngine.execute(variables, null);
 			}
 
 			Locale locale = LocaleUtil.getMostRelevantLocale();

@@ -325,23 +325,20 @@ const ListView: React.FC<ListViewProps> = ({
 				type: ListViewTypes.SET_CUSTOM_FILTER_FIELDS,
 			});
 		}
+	}, [customFilterFields, dispatch]);
 
+	const checkAllRows = itemsMemoized.every((item) =>
+		selectedRows.includes(onSelectRowNormalizer(item))
+	);
+
+	useEffect(() => {
 		if (tableProps.rowSelectable) {
 			dispatch({
-				payload: itemsMemoized.every((item) =>
-					selectedRows.includes(onSelectRowNormalizer(item))
-				),
+				payload: checkAllRows,
 				type: ListViewTypes.SET_CHECKED_ALL_ROWS,
 			});
 		}
-	}, [
-		customFilterFields,
-		dispatch,
-		itemsMemoized,
-		onSelectRowNormalizer,
-		selectedRows,
-		tableProps.rowSelectable,
-	]);
+	}, [checkAllRows, dispatch, tableProps.rowSelectable]);
 
 	useEffect(() => {
 		if (managementToolbarProps.applyFilters) {

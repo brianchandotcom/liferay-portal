@@ -836,14 +836,6 @@ public class ResourcePermissionLocalServiceUtil {
 		getService().mergePermissions(fromRoleId, toRoleId);
 	}
 
-	public static void populateDefaultModelResourcePermissions(
-			long companyId, java.util.Collection<String> modelResources)
-		throws PortalException {
-
-		getService().populateDefaultModelResourcePermissions(
-			companyId, modelResources);
-	}
-
 	/**
 	 * Grants the role default permissions to all the resources of the type and
 	 * at the scope stored in the resource permission, deletes the resource

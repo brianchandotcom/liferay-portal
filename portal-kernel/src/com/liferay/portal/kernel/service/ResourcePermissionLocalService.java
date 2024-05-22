@@ -733,10 +733,6 @@ public interface ResourcePermissionLocalService
 	public void mergePermissions(long fromRoleId, long toRoleId)
 		throws PortalException;
 
-	public void populateDefaultModelResourcePermissions(
-			long companyId, Collection<String> modelResources)
-		throws PortalException;
-
 	/**
 	 * Grants the role default permissions to all the resources of the type and
 	 * at the scope stored in the resource permission, deletes the resource

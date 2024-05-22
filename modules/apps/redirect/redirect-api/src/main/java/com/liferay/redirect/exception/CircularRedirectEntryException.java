@@ -39,12 +39,4 @@ public class CircularRedirectEntryException extends PortalException {
 		super(msg);
 	}
 
-	private CircularRedirectEntryException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	private CircularRedirectEntryException(Throwable throwable) {
-		super(throwable);
-	}
-
 }

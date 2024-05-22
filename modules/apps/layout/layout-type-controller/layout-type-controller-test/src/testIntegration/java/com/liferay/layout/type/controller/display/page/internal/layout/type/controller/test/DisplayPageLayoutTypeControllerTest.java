@@ -161,7 +161,39 @@ public class DisplayPageLayoutTypeControllerTest {
 
 		Assert.assertTrue(layout.isPublished());
 
-		_assertIncludeLayoutContent(true, layout.getPlid(), _guestUser);
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		try {
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, _guestUser);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), _guestUser.getUserId());
+
+			serviceContext.setRequest(mockHttpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			layoutTypeController.includeLayoutContent(
+				mockHttpServletRequest, mockHttpServletResponse, layout);
+
+			Assert.assertEquals(
+				HttpServletResponse.SC_FOUND,
+				mockHttpServletResponse.getStatus());
+
+			String redirectURL = mockHttpServletResponse.getRedirectedUrl();
+
+			Assert.assertTrue(redirectURL.contains("redirect"));
+		}
+		finally {
+			ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		}
 	}
 
 	@Test
@@ -316,6 +348,9 @@ public class DisplayPageLayoutTypeControllerTest {
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setSignedIn(!user.isGuestUser());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setURLCurrent("redirect");
+		themeDisplay.setURLSignIn(
+			"/c/portal/layout?p_l_id=" + layout.getPlid());
 		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(

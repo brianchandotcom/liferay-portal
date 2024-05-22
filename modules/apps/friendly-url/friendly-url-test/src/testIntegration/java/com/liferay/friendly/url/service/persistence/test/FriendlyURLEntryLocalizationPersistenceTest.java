@@ -209,6 +209,17 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_U_C() throws Exception {
+		_persistence.countByC_C_U_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C_U_C(0L, 0L, "null", 0L);
+
+		_persistence.countByC_C_U_C(0L, 0L, (String)null, 0L);
+	}
+
+	@Test
 	public void testCountByG_C_C_L() throws Exception {
 		_persistence.countByG_C_C_L(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

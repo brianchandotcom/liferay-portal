@@ -16,10 +16,10 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -66,8 +67,8 @@ public class CommerceChannelResourceImpl
 		return Page.of(
 			transform(
 				_groupService.search(
-					contextCompany.getCompanyId(), _classNameIds, keywords,
-					_getParams(), pagination.getStartPosition(),
+					contextCompany.getCompanyId(), _classNameIdsSupplier.get(),
+					keywords, _getParams(), pagination.getStartPosition(),
 					pagination.getEndPosition(),
 					SortUtil.getIgnoreCaseOrderByComparator(
 						contextAcceptLanguage.getPreferredLocale(), sorts)),
@@ -79,18 +80,18 @@ public class CommerceChannelResourceImpl
 					group)),
 			pagination,
 			_groupService.searchCount(
-				contextCompany.getCompanyId(), _classNameIds, keywords,
-				_getParams()));
+				contextCompany.getCompanyId(), _classNameIdsSupplier.get(),
+				keywords, _getParams()));
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_classNameIds = new long[] {
-			_portal.getClassNameId(
-				"com.liferay.commerce.product.model.CommerceChannel")
-		};
-
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
+
+		_classNameIdsSupplier = _classNameLocalService.getClassNameIdsSupplier(
+			new String[] {
+				"com.liferay.commerce.product.model.CommerceChannel"
+			});
 	}
 
 	private LinkedHashMap<String, Object> _getParams() {
@@ -100,7 +101,10 @@ public class CommerceChannelResourceImpl
 	}
 
 	private AnalyticsCloudClient _analyticsCloudClient;
-	private long[] _classNameIds;
+	private Supplier<long[]> _classNameIdsSupplier;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverter)"
@@ -115,8 +119,5 @@ public class CommerceChannelResourceImpl
 
 	@Reference
 	private Http _http;
-
-	@Reference
-	private Portal _portal;
 
 }

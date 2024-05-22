@@ -13,22 +13,22 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -75,9 +75,14 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_classNameIds = TransformUtil.transform(
-			_classNames, className -> _portal.getClassNameId(className));
+	protected void activate() {
+		_classNameIdsSupplier = _classNameLocalService.getClassNameIdsSupplier(
+			new String[] {
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				"com.liferay.blogs.model.BlogsEntry",
+				"com.liferay.journal.model.JournalArticle",
+				"com.liferay.knowledge.base.model.KBArticle"
+			});
 	}
 
 	private Predicate _buildPredicate(
@@ -89,7 +94,7 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 
 		return predicate.and(
 			AssetEntryTable.INSTANCE.classNameId.in(
-				_classNameIds.toArray(new Long[0])));
+				ArrayUtil.toLongArray(_classNameIdsSupplier.get())));
 	}
 
 	private DSLQuery _createCountDSLQuery(
@@ -120,12 +125,6 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 		);
 	}
 
-	private static final List<String> _classNames = Arrays.asList(
-		"com.liferay.document.library.kernel.model.DLFileEntry",
-		"com.liferay.blogs.model.BlogsEntry",
-		"com.liferay.journal.model.JournalArticle",
-		"com.liferay.knowledge.base.model.KBArticle");
-
 	@Reference(
 		target = "(component.name=com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.AssetEntityDTOConverter)"
 	)
@@ -134,9 +133,9 @@ public class AssetEntityAnalyticsBatchEngineTaskItemDelegate
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	private List<Long> _classNameIds;
+	private Supplier<long[]> _classNameIdsSupplier;
 
 	@Reference
-	private Portal _portal;
+	private ClassNameLocalService _classNameLocalService;
 
 }

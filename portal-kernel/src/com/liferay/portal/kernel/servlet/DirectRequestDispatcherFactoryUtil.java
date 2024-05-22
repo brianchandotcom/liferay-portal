@@ -32,11 +32,8 @@ public class DirectRequestDispatcherFactoryUtil {
 	public static RequestDispatcher getRequestDispatcher(
 		ServletContext servletContext, String path) {
 
-		RequestDispatcher requestDispatcher = _getRequestDispatcher(
-			servletContext, path);
-
-		return new ClassLoaderRequestDispatcherWrapper(
-			servletContext, requestDispatcher);
+		return new IndirectRequestDispatcher(
+			_getRequestDispatcher(servletContext, path));
 	}
 
 	public static RequestDispatcher getRequestDispatcher(
@@ -52,7 +49,7 @@ public class DirectRequestDispatcherFactoryUtil {
 		return getRequestDispatcher(servletContext, path);
 	}
 
-	private static RequestDispatcher _getetRequestDispatcher(
+	private static RequestDispatcher _getRequestDispatcher(
 		ServletContext servletContext, String path) {
 
 		if (!GetterUtil.getBoolean(
@@ -100,13 +97,6 @@ public class DirectRequestDispatcherFactoryUtil {
 		}
 
 		return new DirectRequestDispatcher(servlet, path, queryString);
-	}
-
-	private static RequestDispatcher _getRequestDispatcher(
-		ServletContext servletContext, String path) {
-
-		return new IndirectRequestDispatcher(
-			_getetRequestDispatcher(servletContext, path));
 	}
 
 	private static final String _EQUINOX_REQUEST_CLASS_NAME =

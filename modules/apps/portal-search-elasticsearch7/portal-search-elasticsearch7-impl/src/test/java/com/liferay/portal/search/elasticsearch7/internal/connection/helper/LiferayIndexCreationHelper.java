@@ -27,7 +27,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	@Override
 	public void contribute(CreateIndexRequest createIndexRequest) {
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-			_getLiferayDocumentTypeFactory();
+			_getLiferayDocumentTypeFactory(null);
 
 		liferayDocumentTypeFactory.createRequiredDefaultTypeMappings(
 			createIndexRequest);
@@ -36,7 +36,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	@Override
 	public void contributeIndexSettings(SettingsBuilder settingsBuilder) {
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-			_getLiferayDocumentTypeFactory();
+			_getLiferayDocumentTypeFactory(null);
 
 		liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(
 			settingsBuilder);
@@ -45,17 +45,19 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	@Override
 	public void whenIndexCreated(String indexName) {
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-			_getLiferayDocumentTypeFactory();
+			_getLiferayDocumentTypeFactory(indexName);
 
 		liferayDocumentTypeFactory.putDefaultTypeMappingTemplate();
 	}
 
-	private LiferayDocumentTypeFactory _getLiferayDocumentTypeFactory() {
+	private LiferayDocumentTypeFactory _getLiferayDocumentTypeFactory(
+		String indexName) {
+
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient();
 
 		return new LiferayDocumentTypeFactory(
-			null, restHighLevelClient.indices(), new JSONFactoryImpl());
+			indexName, restHighLevelClient.indices(), new JSONFactoryImpl());
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;

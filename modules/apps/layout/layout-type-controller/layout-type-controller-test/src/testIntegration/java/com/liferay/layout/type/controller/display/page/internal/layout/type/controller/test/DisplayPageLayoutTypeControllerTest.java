@@ -166,12 +166,12 @@ public class DisplayPageLayoutTypeControllerTest {
 				LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		try {
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(layout, _guestUser);
-
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), _guestUser.getUserId());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, _guestUser);
 
 			serviceContext.setRequest(mockHttpServletRequest);
 

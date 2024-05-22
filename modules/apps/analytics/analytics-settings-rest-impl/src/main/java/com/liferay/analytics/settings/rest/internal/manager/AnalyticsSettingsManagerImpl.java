@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -67,8 +68,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			_groupLocalService.getGroups(
 				companyId, GroupConstants.ANY_PARENT_GROUP_ID, true),
 			_groupLocalService.getGroups(
-				companyId, "com.liferay.commerce.product.model.CommerceChannel",
-				0));
+				companyId, _CLASS_NAME_COMMERCE_CHANNEL, 0));
 
 		for (Group group : groups) {
 			UnicodeProperties typeSettingsUnicodeProperties =
@@ -107,7 +107,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 				analyticsConfiguration.syncedCommerceChannelIds()) {
 
 			Group group = _groupLocalService.fetchGroup(
-				companyId, _commerceChannelClassNameId,
+				companyId, _commerceChannelClassNameIdSupplier.get(),
 				GetterUtil.getLong(commerceChannelId));
 
 			if (group == null) {
@@ -253,8 +253,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		throws Exception {
 
 		_updateTypeSetting(
-			analyticsChannelId, _commerceChannelClassNameId, companyId,
-			dataSourceCommerceChannelIds, false);
+			analyticsChannelId, _commerceChannelClassNameIdSupplier.get(),
+			companyId, dataSourceCommerceChannelIds, false);
 
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
@@ -272,8 +272,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 				dataSourceCommerceChannelIds, commerceChannelId));
 
 		_updateTypeSetting(
-			analyticsChannelId, _commerceChannelClassNameId, companyId,
-			removeCommerceChannelIds, true);
+			analyticsChannelId, _commerceChannelClassNameIdSupplier.get(),
+			companyId, removeCommerceChannelIds, true);
 
 		return ArrayUtil.filter(
 			commerceChannelIds.toArray(new String[0]),
@@ -333,8 +333,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		throws Exception {
 
 		_updateTypeSetting(
-			analyticsChannelId, _groupClassNameId, companyId, dataSourceSiteIds,
-			false);
+			analyticsChannelId, _groupClassNameIdSupplier.get(), companyId,
+			dataSourceSiteIds, false);
 
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
@@ -351,8 +351,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			siteId -> !ArrayUtil.contains(dataSourceSiteIds, siteId));
 
 		_updateTypeSetting(
-			analyticsChannelId, _groupClassNameId, companyId, removeSiteIds,
-			true);
+			analyticsChannelId, _groupClassNameIdSupplier.get(), companyId,
+			removeSiteIds, true);
 
 		return ArrayUtil.filter(
 			siteIds.toArray(new String[0]),
@@ -362,10 +362,12 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_commerceChannelClassNameId = _portal.getClassNameId(
-			"com.liferay.commerce.product.model.CommerceChannel");
-
-		_groupClassNameId = _portal.getClassNameId(Group.class);
+		_commerceChannelClassNameIdSupplier =
+			_classNameLocalService.getClassNameIdSupplier(
+				_CLASS_NAME_COMMERCE_CHANNEL);
+		_groupClassNameIdSupplier =
+			_classNameLocalService.getClassNameIdSupplier(
+				Group.class.getName());
 	}
 
 	private String _getConfigurationPid() {
@@ -464,6 +466,9 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		}
 	}
 
+	private static final String _CLASS_NAME_COMMERCE_CHANNEL =
+		"com.liferay.commerce.product.model.CommerceChannel";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsSettingsManagerImpl.class);
 
@@ -486,7 +491,10 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		"syncedUserFieldNames", FieldPeopleConstants.FIELD_USER_DEFAULTS
 	).build();
 
-	private long _commerceChannelClassNameId;
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	private Supplier<Long> _commerceChannelClassNameIdSupplier;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
@@ -494,13 +502,10 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private long _groupClassNameId;
+	private Supplier<Long> _groupClassNameIdSupplier;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

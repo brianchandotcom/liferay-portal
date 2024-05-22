@@ -2432,11 +2432,9 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<lstopwatch action="start" name="test.execution.duration" />
 
-							<run-modules-junit-test test.class.group="${test.class.group}" test.task="testIntegration">
-								<arg value="--continue" />
-								<arg value="-Dbuild.exclude.ant.plugin=true" />
-								<arg value="-Dtest.class.group.index=${axis.variable}" />
-							</run-modules-junit-test>
+							<property name="test.junit.args" value="--continue -Dbuild.exclude.ant.plugin=true -Dtest.class.group.index=${axis.variable}" />
+
+							<run-modules-junit-test test.class.group="${test.class.group}" test.junit.args="${test.junit.args}" test.task="testIntegration" />
 
 							<lstopwatch action="total" name="test.execution.duration" />
 

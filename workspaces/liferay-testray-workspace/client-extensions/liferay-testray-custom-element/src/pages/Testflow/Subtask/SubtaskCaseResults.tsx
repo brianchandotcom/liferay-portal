@@ -147,7 +147,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 				const {target} = event;
 
 				if (target?.id === 'testray-link') {
-					navigate(`../../subtasks/${newSubtask.id}`);
+					navigate(`../subtasks/${newSubtask.id}`);
 				}
 			},
 		});

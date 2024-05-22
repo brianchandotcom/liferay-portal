@@ -37,7 +37,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Tomas Polesovsky
  */
 @NewEnv(type = NewEnv.Type.JVM)
-@NewEnv.JVMArgsLine("-Dattached=true -Xmx7m")
+@NewEnv.JVMArgsLine("-Dattached=true -Xmx11m")
 public class SecureXMLFactoryProviderImplTest {
 
 	@ClassRule

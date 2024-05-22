@@ -836,6 +836,28 @@ public abstract class BaseBuild implements Build {
 		return _jenkinsSlave;
 	}
 
+	public String getJenkinsSlavePartner(JenkinsSlave jenkinsSlave) {
+		String slaveName = jenkinsSlave.getName();
+		
+		String[] slaveNameParts = slaveName.split("-");
+
+		try {
+			Int slaveNumber = Integer.parseInt(slaveNameParts[slaveNameParts.length - 1]);
+
+			if (slaveNumber % 2) {
+				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber - 1);
+			} else {
+				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber + 1);
+			}
+
+			return String.join("-", slaveNameParts);
+
+		} catch (NumberFormatException numberFormatException) {
+			throw new RuntimeException(
+						"Invalid slave name: " + slaveName , numberFormatException);
+		}
+	}
+
 	@Override
 	public Job getJob() {
 		if (_job != null) {

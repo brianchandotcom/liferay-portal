@@ -359,6 +359,7 @@ const filterSchema = {
 				label: i18n.translate('comments'),
 				name: 'comment',
 				operator: 'contains',
+				optionalOperator: 'ne',
 				type: 'textarea',
 			},
 		] as RendererFields[],
@@ -863,6 +864,82 @@ const filterSchema = {
 			}),
 		] as RendererFields[],
 		name: 'routines',
+	},
+	subtaskCaseResults: {
+		fields: [
+			overrides(baseFilters.caseType, {
+				name: 'caseToCaseResult/r_caseTypeToCases_c_caseTypeId',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.priority, {
+				name: 'caseToCaseResult/priority',
+				removeQuoteMark: true,
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.team, {
+				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.component, {
+				name: 'componentToCaseResult/id',
+				type: 'multiselect',
+			}),
+			{
+				label: i18n.translate('environment'),
+				name: 'runToCaseResult/name',
+				operator: 'contains',
+				type: 'text',
+			},
+			overrides(baseFilters.run, {
+				name: 'runToCaseResult/id',
+				type: 'select',
+			}),
+			{
+				label: i18n.translate('case-name'),
+				name: 'caseToCaseResult/name',
+				operator: 'contains',
+				type: 'text',
+			},
+			overrides(baseFilters.dueStatus, {
+				options: [
+					{
+						label: i18n.translate('blocked'),
+						value: CaseResultStatuses.BLOCKED,
+					},
+					{
+						label: i18n.translate('failed'),
+						value: CaseResultStatuses.FAILED,
+					},
+					{
+						label: i18n.translate('in-progress'),
+						value: CaseResultStatuses.IN_PROGRESS,
+					},
+					{
+						label: i18n.translate('passed'),
+						value: CaseResultStatuses.PASSED,
+					},
+					{
+						label: i18n.translate('test-fix'),
+						value: CaseResultStatuses.TEST_FIX,
+					},
+					{
+						label: i18n.translate('untested'),
+						value: CaseResultStatuses.UNTESTED,
+					},
+				],
+			}),
+			overrides(baseFilters.erros, {
+				operator: 'contains',
+			}),
+			{
+				label: i18n.translate('comments'),
+				name: 'comment',
+				operator: 'contains',
+				optionalOperator: 'ne',
+				type: 'textarea',
+			},
+		] as RendererFields[],
+		name: 'subtaskCaseResults',
 	},
 	subtasks: {
 		fields: [

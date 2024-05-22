@@ -74,7 +74,7 @@ const Profile = () => {
 		const file = files[0];
 
 		const newUploadedFile: UploadedFile = {
-			changed: false,
+			changed: true,
 			error: false,
 			file,
 			fileName: file.name,
@@ -88,6 +88,20 @@ const Profile = () => {
 		dispatch({
 			payload: {
 				file: newUploadedFile,
+			},
+			type: SolutionTypes.SET_PROFILE,
+		});
+	};
+
+	const handleDelete = async (id: string) => {
+		dispatch({
+			payload: id,
+			type: SolutionTypes.SET_DELETE_IMAGE,
+		});
+
+		dispatch({
+			payload: {
+				file: undefined,
 			},
 			type: SolutionTypes.SET_PROFILE,
 		});
@@ -111,14 +125,7 @@ const Profile = () => {
 
 			<div className="align-items-center d-flex mt-5">
 				<UploadLogo
-					onDeleteFile={() =>
-						dispatch({
-							payload: {
-								file: undefined,
-							},
-							type: SolutionTypes.SET_PROFILE,
-						})
-					}
+					onDeleteFile={handleDelete}
 					onUpload={handleLogoUpload}
 					uploadedFile={file}
 				/>

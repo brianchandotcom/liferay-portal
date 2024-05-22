@@ -32,7 +32,6 @@ const PublishSolutionOutlet = () => {
 	const {
 		activeIndex,
 		activeRoute,
-		id,
 		isLastStep,
 		onClickContinue,
 		onClickPrevious,
@@ -76,7 +75,7 @@ const PublishSolutionOutlet = () => {
 					onClick: () => alert('Preview...'),
 				}}
 				saveAsDraftProps={{
-					disabled: activeIndex < (id ? 1 : 2),
+					disabled: parsedSchema ? !parsedSchema.success : false,
 					onClick: onSaveAsDraft,
 				}}
 			/>

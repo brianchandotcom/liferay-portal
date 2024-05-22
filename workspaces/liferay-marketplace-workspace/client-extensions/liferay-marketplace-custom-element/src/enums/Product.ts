@@ -26,7 +26,7 @@ export enum PRODUCT_SPECIFICATION_KEY {
 }
 
 export enum PRODUCT_TAGS {
-	APP_ICON = 'app-icon',
+	SOLUTION_PROFILE_APP_ICON = 'solution-profile-app-icon',
 	SOLUTION_DETAILS = 'solution-details',
 	SOLUTION_HEADER = 'solution-header',
 }

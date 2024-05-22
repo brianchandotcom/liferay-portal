@@ -39,7 +39,6 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
 	display = {preview: false, saveAsDraft: false},
 	exitHref,
 	exitProps,
-	previewProps,
 	saveAsDraftProps,
 }) => (
 	<div className="new-app-tool-bar-container">
@@ -118,16 +117,6 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
 					>
 						Save as Draft
 					</ClayButton>
-				)}
-
-				{display.preview && (
-					<ClayButtonWithIcon
-						{...(previewProps as any)}
-						aria-label="Preview"
-						color="blue"
-						size="xs"
-						symbol="shortcut"
-					/>
 				)}
 			</div>
 		</ClayManagementToolbar.ItemList>

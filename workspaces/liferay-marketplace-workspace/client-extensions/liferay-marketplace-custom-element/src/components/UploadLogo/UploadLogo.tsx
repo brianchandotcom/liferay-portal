@@ -83,7 +83,7 @@ const UploadLogo: React.FC<UploadLogoProps> = ({
 					</label>
 				</div>
 
-				{uploadedFile?.uploaded && (
+				{uploadedFile?.preview && (
 					<button
 						className="btn btn-secondary btn-sm m-0 upload-logo-delete-button"
 						onClick={() => onDeleteFile(uploadedFile.id)}

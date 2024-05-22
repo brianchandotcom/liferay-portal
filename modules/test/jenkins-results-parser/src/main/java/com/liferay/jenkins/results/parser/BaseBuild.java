@@ -1650,6 +1650,18 @@ public abstract class BaseBuild implements Build {
 			"\n\n\nOffline Slave URL: https://", jenkinsMaster.getName(),
 			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 
+		if (jenkinsSlave.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
+			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
+
+			message.replaceFirst("will be taken offline", 
+			JenkinsResultsParserUtil.combine(
+				"will be taken offline alongside it's sibling: ", siblingSlave.getName()));
+
+			String siblingMessage = JenkinsResultsParserUtil.combine(pinnedMessage, "Offline sibling: ",jenkinsSlave.getName(), " Reason: ", slaveOfflineRule.getName());
+
+			siblingSlave.takeSlavesOffline(siblingMessage);
+		}
+		
 		System.out.println(message);
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
@@ -1661,14 +1673,6 @@ public abstract class BaseBuild implements Build {
 
 		jenkinsSlave.takeSlavesOffline(message);
 		
-		if (jenkinsSlave.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
-			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
-
-			String siblingMessage = JenkinsResultsParserUtil.combine(pinnedMessage, "Offline sibling: ",jenkinsSlave.getName(), " Reason: ", slaveOfflineRule.getName());
-
-			siblingSlave.takeSlavesOffline(siblingMessage);
-		}
-
 		String notificationRecipients =
 			slaveOfflineRule.getNotificationRecipients();
 

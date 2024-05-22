@@ -257,6 +257,8 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 			updateDocumentRequest.setType(DocumentTypes.LIFERAY);
 
+			updateDocumentRequest.setUpsert(true);
+
 			if (PortalRunMode.isTestMode() ||
 				searchContext.isCommitImmediately()) {
 

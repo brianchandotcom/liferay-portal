@@ -573,8 +573,8 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		else if (orderByComparator instanceof
 					BackgroundTaskCreateDateComparator) {
 
-			return new com.liferay.portal.background.task.internal.comparator.
-				BackgroundTaskCreateDateComparator(
+			return com.liferay.portal.background.task.internal.comparator.
+				BackgroundTaskCreateDateComparator.getInstance(
 					orderByComparator.isAscending());
 		}
 		else if (orderByComparator instanceof BackgroundTaskNameComparator) {

@@ -20,11 +20,11 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -166,6 +166,9 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 		if (oAuth2Application != null) {
 			clientId = oAuth2Application.getClientId();
 			clientSecret = oAuth2Application.getClientSecret();
+
+			serviceUser = userLocalService.getUserById(
+				companyId, oAuth2Application.getClientCredentialUserId());
 		}
 
 		String homePageURL = getHomePageURL(
@@ -240,7 +243,7 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				_COMPANY_DEFAULT_USER_TOKEN, userAccountScreenName)) {
 
 			return userLocalService.getUserByScreenName(
-				companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
+				companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT);
 		}
 
 		return userLocalService.getUserByScreenName(

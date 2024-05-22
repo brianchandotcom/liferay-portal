@@ -99,9 +99,30 @@ public abstract class BaseCTUpgradeProcessTestCase {
 				modelAttributeDiffs.get(entry.getKey()),
 				Objects.equals(entry.getValue(), publicationValue));
 		}
+
+		_ctCollectionService.deleteCTCollection(ctCollection);
+
+		deleteCTModel(productionCTModel.getPrimaryKey());
 	}
 
 	protected abstract CTModel<?> addCTModel() throws Exception;
+
+	protected void deleteCTModel(long primaryKey) throws Exception {
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					CTPersistence<?> ctPersistence = getCTPersistence();
+
+					ctPersistence.remove(primaryKey);
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
+		}
+	}
 
 	protected CTModel<?> fetchCTModel(long primaryKey) throws Exception {
 		try {

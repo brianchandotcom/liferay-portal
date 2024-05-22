@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 
 import java.io.File;
 
@@ -325,8 +324,7 @@ public class KnowledgeBaseAttachmentResourceTest
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.path(url);
 		httpInvoker.userNameAndPassword(
-			"test@liferay.com:" +
-				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD));
+			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 

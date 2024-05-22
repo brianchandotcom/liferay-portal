@@ -10,8 +10,7 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 
 import java.util.List;
 
@@ -36,8 +35,7 @@ public class WorkflowTaskTestUtil {
 
 		WorkflowTaskResource workflowTaskResource =
 			workflowTaskResourceBuilder.authentication(
-				"test@liferay.com",
-				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).locale(
 				LocaleUtil.getDefault()
 			).build();

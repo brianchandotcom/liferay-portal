@@ -35,8 +35,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -234,7 +233,7 @@ public class ExportTaskResourceTest {
 		ExportTaskResource.Builder builder = ExportTaskResource.builder();
 
 		ExportTaskResource exportTaskResource = builder.authentication(
-			"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
 		).build();
@@ -248,7 +247,7 @@ public class ExportTaskResourceTest {
 			exportTaskResource);
 
 		exportTaskResource = builder.authentication(
-			"test@able.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			"www.able.com:8080", "http"
 		).header(
@@ -318,7 +317,7 @@ public class ExportTaskResourceTest {
 		ExportTaskResource.Builder builder = ExportTaskResource.builder();
 
 		ExportTaskResource exportTaskResource = builder.authentication(
-			"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
 		).build();
@@ -337,7 +336,7 @@ public class ExportTaskResourceTest {
 		String json = null;
 
 		exportTaskResource = builder.authentication(
-			"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM
 		).build();
@@ -374,7 +373,7 @@ public class ExportTaskResourceTest {
 
 		ImportTaskResource importTaskResource = ImportTaskResource.builder(
 		).authentication(
-			"test@liferay.com", PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD)
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).header(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
 		).header(

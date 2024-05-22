@@ -79,6 +79,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
+import com.liferay.release.feature.flag.ReleaseFeatureFlag;
+import com.liferay.release.feature.flag.ReleaseFeatureFlagManagerUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.Sites;
@@ -884,15 +886,31 @@ public class LayoutImportController implements ImportController {
 			layoutSetPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
 
-			LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			LayoutSet publicLayoutSet = _layoutSetLocalService.fetchLayoutSet(
 				group.getGroupId(), false);
 
-			if (layoutSet != null) {
-				layoutSet.setThemeId(
+			if (publicLayoutSet != null) {
+				publicLayoutSet.setThemeId(
 					GetterUtil.getString(
 						headerElement.attributeValue("theme-id")));
 
-				_layoutSetLocalService.updateLayoutSet(layoutSet);
+				_layoutSetLocalService.updateLayoutSet(publicLayoutSet);
+			}
+
+			if (ReleaseFeatureFlagManagerUtil.isEnabled(
+					ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS)) {
+
+				LayoutSet privateLayoutSet =
+					_layoutSetLocalService.fetchLayoutSet(
+						group.getGroupId(), true);
+
+				if (privateLayoutSet != null) {
+					privateLayoutSet.setThemeId(
+						GetterUtil.getString(
+							headerElement.attributeValue("theme-id")));
+
+					_layoutSetLocalService.updateLayoutSet(privateLayoutSet);
+				}
 			}
 		}
 

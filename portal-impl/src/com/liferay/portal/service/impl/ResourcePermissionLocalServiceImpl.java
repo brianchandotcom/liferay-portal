@@ -1203,10 +1203,39 @@ public class ResourcePermissionLocalServiceImpl
 			ownerRole, siteMemberRole, guestPortletActions,
 			ownerPortletActionIds, groupPortletActionIds);
 
-		populateDefaultModelResourcePermissions(
-			portlet.getCompanyId(),
+		List<String> modelResources =
 			ResourceActionsUtil.getPortletModelResources(
-				portlet.getRootPortletId()));
+				portlet.getRootPortletId());
+
+		for (String modelResource : modelResources) {
+			if (Validator.isBlank(modelResource)) {
+				continue;
+			}
+
+			validate(modelResource, false);
+
+			List<String> groupModelActionIds = null;
+
+			if (ResourceActionsUtil.isRootModelResource(modelResource)) {
+				groupModelActionIds =
+					ResourceActionsUtil.getModelResourceGroupDefaultActions(
+						modelResource);
+			}
+
+			List<String> guestModelActionIds =
+				ResourceActionsUtil.getModelResourceGuestDefaultActions(
+					modelResource);
+
+			List<String> ownerModelActionIds =
+				ResourceActionsUtil.getModelResourceActions(modelResource);
+
+			filterOwnerActions(modelResource, ownerModelActionIds);
+
+			_initPortletDefaultPermissions(
+				portlet.getCompanyId(), modelResource, guestRole, ownerRole,
+				siteMemberRole, guestModelActionIds, ownerModelActionIds,
+				groupModelActionIds);
+		}
 	}
 
 	/**
@@ -1244,48 +1273,6 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		_roleLocalService.deleteRole(fromRoleId);
-	}
-
-	@Override
-	public void populateDefaultModelResourcePermissions(
-			long companyId, Collection<String> modelResources)
-		throws PortalException {
-
-		Role guestRole = _roleLocalService.getRole(
-			companyId, RoleConstants.GUEST);
-		Role ownerRole = _roleLocalService.getRole(
-			companyId, RoleConstants.OWNER);
-		Role siteMemberRole = _roleLocalService.getRole(
-			companyId, RoleConstants.SITE_MEMBER);
-
-		for (String modelResource : modelResources) {
-			if (Validator.isBlank(modelResource)) {
-				continue;
-			}
-
-			validate(modelResource, false);
-
-			List<String> groupModelActionIds = null;
-
-			if (ResourceActionsUtil.isRootModelResource(modelResource)) {
-				groupModelActionIds =
-					ResourceActionsUtil.getModelResourceGroupDefaultActions(
-						modelResource);
-			}
-
-			List<String> guestModelActionIds =
-				ResourceActionsUtil.getModelResourceGuestDefaultActions(
-					modelResource);
-
-			List<String> ownerModelActionIds =
-				ResourceActionsUtil.getModelResourceActions(modelResource);
-
-			filterOwnerActions(modelResource, ownerModelActionIds);
-
-			_initPortletDefaultPermissions(
-				companyId, modelResource, guestRole, ownerRole, siteMemberRole,
-				guestModelActionIds, ownerModelActionIds, groupModelActionIds);
-		}
 	}
 
 	/**

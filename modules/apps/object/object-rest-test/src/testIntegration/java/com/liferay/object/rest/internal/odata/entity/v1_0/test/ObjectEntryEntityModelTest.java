@@ -79,7 +79,7 @@ public class ObjectEntryEntityModelTest {
 
 		for (ObjectDefinition objectDefinition : _objectDefinitions) {
 			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
+				objectDefinition.getObjectDefinitionId());
 		}
 
 		_serviceTrackerMap.close();

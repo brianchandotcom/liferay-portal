@@ -15,11 +15,18 @@ import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestCla
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
 
+import java.io.File;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -93,23 +100,34 @@ public class TestrayFactory {
 		return testrayAttachmentUploader;
 	}
 
-	public static TestrayBuild newTestrayBuild(String testrayBuildURL) {
-		TestrayBuild testrayBuild = _testrayBuilds.get(testrayBuildURL);
+	public static TestrayBuild newTestrayBuild(
+		TestrayRoutine testrayRoutine, JSONObject jsonObject) {
 
-		if (testrayBuild != null) {
-			return testrayBuild;
+		if (testrayRoutine instanceof Testray1TestrayRoutine) {
+			return new Testray1TestrayBuild(testrayRoutine, jsonObject);
 		}
 
-		try {
-			testrayBuild = new TestrayBuild(new URL(testrayBuildURL));
+		return new TestrayBuild(testrayRoutine, jsonObject);
+	}
 
-			_testrayBuilds.put(testrayBuildURL, testrayBuild);
+	public static TestrayCase newTestrayCase(
+		TestrayProject testrayProject, JSONObject jsonObject) {
 
-			return testrayBuild;
+		if (testrayProject instanceof Testray1TestrayProject) {
+			return new Testray1TestrayCase(testrayProject, jsonObject);
 		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
+
+		return new TestrayCase(testrayProject, jsonObject);
+	}
+
+	public static TestrayCaseResult newTestrayCaseResult(
+		TestrayBuild testrayBuild, JSONObject jsonObject) {
+
+		if (testrayBuild instanceof Testray1TestrayBuild) {
+			return new Testray1TestrayCaseResult(testrayBuild, jsonObject);
 		}
+
+		return new TestrayCaseResult(testrayBuild, jsonObject);
 	}
 
 	public static TestrayCaseResult newTestrayCaseResult(
@@ -153,6 +171,37 @@ public class TestrayFactory {
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 
+	public static TestrayCaseType newTestrayCaseType(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		if (testrayServer instanceof Testray1TestrayServer) {
+			return new Testray1TestrayCaseType(testrayServer, jsonObject);
+		}
+
+		return new TestrayCaseType(testrayServer, jsonObject);
+	}
+
+	public static TestrayProductVersion newTestrayProductVersion(
+		TestrayProject testrayProject, JSONObject jsonObject) {
+
+		if (testrayProject instanceof Testray1TestrayProject) {
+			return new Testray1TestrayProductVersion(
+				testrayProject, jsonObject);
+		}
+
+		return new TestrayProductVersion(testrayProject, jsonObject);
+	}
+
+	public static TestrayProject newTestrayProject(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		if (testrayServer instanceof Testray1TestrayServer) {
+			return new Testray1TestrayProject(testrayServer, jsonObject);
+		}
+
+		return new TestrayProject(testrayServer, jsonObject);
+	}
+
 	public static TestrayRoutine newTestrayRoutine(String testrayRoutineURL) {
 		TestrayRoutine testrayRoutine = _testrayRoutines.get(testrayRoutineURL);
 
@@ -161,7 +210,18 @@ public class TestrayFactory {
 		}
 
 		try {
-			testrayRoutine = new TestrayRoutine(new URL(testrayRoutineURL));
+			Matcher testray1URLMatcher = _testray1URLPattern.matcher(
+				testrayRoutineURL);
+			Matcher testray2URLMatcher = _testray2URLPattern.matcher(
+				testrayRoutineURL);
+
+			if (testray1URLMatcher.find()) {
+				testrayRoutine = new Testray1TestrayRoutine(
+					new URL(testrayRoutineURL));
+			}
+			else if (testray2URLMatcher.find()) {
+				testrayRoutine = new TestrayRoutine(new URL(testrayRoutineURL));
+			}
 
 			_testrayRoutines.put(testrayRoutineURL, testrayRoutine);
 
@@ -172,6 +232,28 @@ public class TestrayFactory {
 		}
 	}
 
+	public static TestrayRoutine newTestrayRoutine(
+		TestrayProject testrayProject, JSONObject jsonObject) {
+
+		if (testrayProject instanceof Testray1TestrayProject) {
+			return new Testray1TestrayRoutine(testrayProject, jsonObject);
+		}
+
+		return new TestrayRoutine(testrayProject, jsonObject);
+	}
+
+	public static TestrayRun newTestrayRun(
+		TestrayBuild testrayBuild, String batchName,
+		List<File> propertiesFiles) {
+
+		if (testrayBuild instanceof Testray1TestrayBuild) {
+			return new Testray1TestrayRun(
+				testrayBuild, batchName, propertiesFiles);
+		}
+
+		return new TestrayRun(testrayBuild, batchName, propertiesFiles);
+	}
+
 	public static TestrayServer newTestrayServer(String testrayServerURL) {
 		TestrayServer testrayServer = _testrayServers.get(testrayServerURL);
 
@@ -179,7 +261,21 @@ public class TestrayFactory {
 			return testrayServer;
 		}
 
-		testrayServer = new DefaultTestrayServer(testrayServerURL);
+		Matcher testray1URLMatcher = _testray1URLPattern.matcher(
+			testrayServerURL);
+		Matcher testray2URLMatcher = _testray2URLPattern.matcher(
+			testrayServerURL);
+
+		if (testray1URLMatcher.find()) {
+			testrayServer = new Testray1TestrayServer(testrayServerURL);
+		}
+		else if (testray2URLMatcher.find()) {
+			testrayServer = new TestrayServer(testray2URLMatcher.group());
+		}
+		else {
+			throw new RuntimeException(
+				"Invalid Testray URL: " + testrayServerURL);
+		}
 
 		_testrayServers.put(testrayServerURL, testrayServer);
 
@@ -211,12 +307,14 @@ public class TestrayFactory {
 		return _topLevelBuildTestrayCaseResults.get(testrayBuildID);
 	}
 
+	private static final Pattern _testray1URLPattern = Pattern.compile(
+		"https://testray\\.liferay\\.com");
+	private static final Pattern _testray2URLPattern = Pattern.compile(
+		"https://webserver-testray2.*\\.lfr\\.cloud");
 	private static final Map<Build, TestrayAttachmentRecorder>
 		_testrayAttachmentRecorders = new HashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>
 		_testrayAttachmentUploaders = new HashMap<>();
-	private static final Map<String, TestrayBuild> _testrayBuilds =
-		new HashMap<>();
 	private static final Map<String, TestrayRoutine> _testrayRoutines =
 		new HashMap<>();
 	private static final Map<String, TestrayServer> _testrayServers =

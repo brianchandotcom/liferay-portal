@@ -137,7 +137,7 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	public void recordTestrayCaseResult(Job job) {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
-		TestrayRun testrayRun = new TestrayRun(
+		TestrayRun testrayRun = TestrayFactory.newTestrayRun(
 			testrayBuild, "top-level-build", job.getJobPropertiesFiles());
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();

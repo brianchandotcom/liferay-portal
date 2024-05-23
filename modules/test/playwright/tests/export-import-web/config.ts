@@ -5,7 +5,6 @@
 
 // @ts-ignore
 
-
 export const config = {
 	name: 'export-import-web',
 	testDir: 'tests/export-import-web',

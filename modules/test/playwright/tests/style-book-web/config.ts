@@ -5,7 +5,6 @@
 
 // @ts-ignore
 
-
 export const config = {
 	name: 'style-book-web',
 	testDir: 'tests/style-book-web',

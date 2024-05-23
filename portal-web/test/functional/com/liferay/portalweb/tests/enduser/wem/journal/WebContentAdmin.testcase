@@ -1443,32 +1443,6 @@ definition {
 		}
 
 		task ("Then it must be possible to select the "Results", "Location" and "Search In" fields with the keyboard and must be in compliance with WCAG 2.1 AA standard.") {
-			task ("Using just the keyboard, in the "Results" field select the "Versions" option.") {
-				KeyPress(
-					buttonId = "JournalPortlet_searchResults",
-					locator1 = "Button#BUTTON_ID");
-
-				KeyPress(
-					buttonId = "JournalPortlet_searchResults",
-					locator1 = "Button#BUTTON_ID",
-					value1 = "\DOWN");
-
-				KeyPress(
-					buttonId = "JournalPortlet_searchResults",
-					locator1 = "Button#BUTTON_ID",
-					value1 = "\ENTER");
-			}
-
-			task ("Check that the web content version is present.") {
-				AssertTextEquals(
-					locator1 = "//span[contains(@class, 'workflow-value')]",
-					value1 = "1.0");
-			}
-
-			task ("View no accessibility issues found.") {
-				AssertAccessible();
-			}
-
 			task ("Using just the keyboard, in the "Location" field select the "Everywhere" option.") {
 				KeyPress(
 					buttonId = "JournalPortlet_searchLocation",

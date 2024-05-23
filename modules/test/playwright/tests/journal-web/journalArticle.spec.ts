@@ -660,7 +660,7 @@ translationTest(
 
 		await clickAndExpectToBeVisible({
 			target: page.getByRole('option', {
-				name: 'Catalan Language: Translating 4/5',
+				name: 'Catalan Language: Translating 2/3',
 			}),
 			timeout: 1000,
 			trigger: translationButton,

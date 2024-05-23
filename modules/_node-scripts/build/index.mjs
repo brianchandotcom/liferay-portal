@@ -10,7 +10,6 @@ import getProjectExports from '../configuration/getProjectExports.mjs';
 import getProjectMain from '../configuration/getProjectMain.mjs';
 import getProjectNpmScriptsConfig from '../configuration/getProjectNpmScriptsConfig.mjs';
 import getProjectWebContextPath from '../configuration/getProjectWebContextPath.mjs';
-import writeTimings from '../util/writeTimings.mjs';
 import writeAMD2ESMBridges from './amd/writeAMD2ESMBridges.mjs';
 import writeManifestJson from './amd/writeManifestJson.mjs';
 import writePackageJson from './amd/writePackageJson.mjs';
@@ -19,6 +18,7 @@ import bundleCSSExports from './esbuild/bundleCSSExports.mjs';
 import bundleJavaScriptExports from './esbuild/bundleJavaScriptExports.mjs';
 import bundleJavaScriptMain from './esbuild/bundleJavaScriptMain.mjs';
 import runNpmScripts from './npmscripts/runNpmScripts.mjs';
+import writeTimings from './writeTimings.mjs';
 
 export default async function main() {
 	const start = Date.now();

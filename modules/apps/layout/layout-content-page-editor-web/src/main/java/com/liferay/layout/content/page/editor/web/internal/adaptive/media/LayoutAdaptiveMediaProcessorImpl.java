@@ -61,7 +61,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 		try {
 			for (Map.Entry<ViewportSize, String> entry :
-					_viewportSizeMap.entrySet()) {
+					_viewportSizeEnumMap.entrySet()) {
 
 				Elements elements = document.getElementsByAttribute(
 					entry.getValue());
@@ -193,7 +193,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 	}
 
 	private boolean _needParsing(String html) {
-		for (String viewportSizeConfiguration : _viewportSizeMap.values()) {
+		for (String viewportSizeConfiguration : _viewportSizeEnumMap.values()) {
 			if (html.contains(viewportSizeConfiguration)) {
 				return true;
 			}
@@ -249,7 +249,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 	private static final Pattern _cssPropertyPattern = Pattern.compile(
 		"--background-image-file-entry-id:\\s*(\\d+);");
-	private static final EnumMap<ViewportSize, String> _viewportSizeMap =
+	private static final EnumMap<ViewportSize, String> _viewportSizeEnumMap =
 		_getViewportSizeMap();
 
 	@Reference

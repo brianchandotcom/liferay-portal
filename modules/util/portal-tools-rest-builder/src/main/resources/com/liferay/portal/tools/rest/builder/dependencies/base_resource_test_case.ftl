@@ -359,7 +359,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								<@getDefaultParameter javaMethodParameter=javaMethodParameter />
+								<@getDefaultParameter javaMethodParameter = javaMethodParameter />
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
 									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
@@ -400,9 +400,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			<@getTestGetterMethods
-				getterJavaMethodParametersMap=getterJavaMethodParametersMap
-				javaMethodSignature=javaMethodSignature
-				testNamePrefix="test"
+				getterJavaMethodParametersMap = getterJavaMethodParametersMap
+				javaMethodSignature = javaMethodSignature
+				testNamePrefix = "test"
 			/>
 
 			<#if properties?keys?seq_contains("id")>
@@ -1253,9 +1253,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			<@getTestGetterMethods
-				getterJavaMethodParametersMap=getterJavaMethodParametersMap
-				javaMethodSignature=javaMethodSignature
-				testNamePrefix="test"
+				getterJavaMethodParametersMap = getterJavaMethodParametersMap
+				javaMethodSignature = javaMethodSignature
+				testNamePrefix = "test"
 			/>
 
 			<#if properties?keys?seq_contains("id")>
@@ -1430,12 +1430,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<@getPermissionParameter
-								javaMethodParameter=javaMethodParameter
-								javaMethodSignature=javaMethodSignature
-								properties=properties
-								roleName="role.getName()"
-								schemaVarName=schemaVarName
-								schemaVarNameId="${schemaVarName}.getId()"
+								javaMethodParameter = javaMethodParameter
+								javaMethodSignature = javaMethodSignature
+								properties = properties
+								roleName = "role.getName()"
+								schemaVarName = schemaVarName
+								schemaVarNameId = "${schemaVarName}.getId()"
 							>
 								<#if javaMethodSignature.methodName?contains("AssetLibrary") || javaMethodSignature.methodName?contains("Site")>
 									"PERMISSIONS"
@@ -1453,16 +1453,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#assign schemaVarNameId>
-								<@getDefaultParameter javaMethodParameter=javaMethodParameter />
+								<@getDefaultParameter javaMethodParameter = javaMethodParameter />
 							</#assign>
 
 							<@getPermissionParameter
-								javaMethodParameter=javaMethodParameter
-								javaMethodSignature=javaMethodSignature
-								properties=properties
-								roleName="\"-\""
-								schemaVarName=schemaVarName
-								schemaVarNameId=schemaVarNameId
+								javaMethodParameter = javaMethodParameter
+								javaMethodSignature = javaMethodSignature
+								properties = properties
+								roleName = "\"-\""
+								schemaVarName = schemaVarName
+								schemaVarNameId = schemaVarNameId
 							>
 								"-"
 							</@getPermissionParameter>
@@ -1525,12 +1525,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					${schemaName} put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 						<@getPutParameters
-							hasMultipartFiles=true
-							javaMethodSignature=javaMethodSignature
-							newSchemaVarNamePrefix="random"
-							schemaName=schemaName
-							schemaVarName=schemaVarName
-							schemaVarNamePrefix="post"
+							hasMultipartFiles = true
+							javaMethodSignature = javaMethodSignature
+							newSchemaVarNamePrefix = "random"
+							schemaName = schemaName
+							schemaVarName = schemaVarName
+							schemaVarNamePrefix = "post"
 						/>
 					);
 
@@ -1562,12 +1562,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 						<@getPutParameters
-							hasMultipartFiles=false
-							javaMethodSignature=javaMethodSignature
-							newSchemaVarNamePrefix="new"
-							schemaName=schemaName
-							schemaVarName=schemaVarName
-							schemaVarNamePrefix="new"
+							hasMultipartFiles = false
+							javaMethodSignature = javaMethodSignature
+							newSchemaVarNamePrefix = "new"
+							schemaName = schemaName
+							schemaVarName = schemaVarName
+							schemaVarNamePrefix = "new"
 						/>
 					);
 
@@ -1605,9 +1605,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			</#if>
 
 			<@getTestGetterMethods
-				getterJavaMethodParametersMap=getterJavaMethodParametersMap
-				javaMethodSignature=javaMethodSignature
-				testNamePrefix="test"
+				getterJavaMethodParametersMap = getterJavaMethodParametersMap
+				javaMethodSignature = javaMethodSignature
+				testNamePrefix = "test"
 			/>
 
 			<#if javaMethodSignature.methodName?cap_first?ends_with("ByExternalReferenceCode")>
@@ -1673,7 +1673,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								<@getDefaultParameter javaMethodParameter=javaMethodParameter />
+								<@getDefaultParameter javaMethodParameter = javaMethodParameter />
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
@@ -1756,7 +1756,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
 														"${javaMethodParameter.parameterName}",
 														<#if stringUtil.equals(properties.id, "String")>
-															<@getQuotedString unquotedString="${schemaVarName}1.getId()" />
+															<@getQuotedString unquotedString = "${schemaVarName}1.getId()" />
 														<#else>
 															${schemaVarName}1.getId()
 														</#if>
@@ -1780,7 +1780,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
 														"${javaMethodParameter.parameterName}",
 														<#if stringUtil.equals(properties.id, "String")>
-															<@getQuotedString unquotedString="${schemaVarName}1.getId()" />
+															<@getQuotedString unquotedString = "${schemaVarName}1.getId()" />
 														<#else>
 															${schemaVarName}1.getId()
 														</#if>
@@ -1815,7 +1815,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 															<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
 																"${javaMethodParameter.parameterName}",
 																<#if stringUtil.equals(properties.id, "String")>
-																	<@getQuotedString unquotedString="${schemaVarName}2.getId()" />
+																	<@getQuotedString unquotedString = "${schemaVarName}2.getId()" />
 																<#else>
 																	${schemaVarName}2.getId()
 																</#if>
@@ -1842,7 +1842,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 															<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
 																"${javaMethodParameter.parameterName}",
 																<#if stringUtil.equals(properties.id, "String")>
-																	<@getQuotedString unquotedString="${schemaVarName}2.getId()" />
+																	<@getQuotedString unquotedString = "${schemaVarName}2.getId()" />
 																<#else>
 																	${schemaVarName}2.getId()
 																</#if>
@@ -1886,7 +1886,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									<#else>
 										put("${javaMethodParameter.parameterName}",
 											<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-												<@getQuotedString unquotedString="${javaMethodParameter.parameterName}" />
+												<@getQuotedString unquotedString = "${javaMethodParameter.parameterName}" />
 											<#else>
 												${javaMethodParameter.parameterName}
 											</#if>
@@ -1969,7 +1969,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 														<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 															put("${javaMethodParameter.parameterName}",
 																<#if stringUtil.equals(properties.id, "String")>
-																	<@getQuotedString unquotedString="${schemaVarName}.getId()" />
+																	<@getQuotedString unquotedString = "${schemaVarName}.getId()" />
 																<#else>
 																	${schemaVarName}.getId()
 																</#if>
@@ -1981,7 +1981,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 																<#else>
 																	put("${javaMethodParameter.parameterName}",
 																		<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-																			<@getQuotedString unquotedString="${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />
+																			<@getQuotedString unquotedString = "${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />
 																		<#else>
 																			${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 																		</#if>
@@ -2014,7 +2014,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 															<#else>
 																put("${javaMethodParameter.parameterName}",
 																<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-																	<@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
+																	<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
 																<#else>
 																	testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
 																</#if>
@@ -2054,7 +2054,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 																<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 																	put("${javaMethodParameter.parameterName}",
 																		<#if stringUtil.equals(properties.id, "String")>
-																			<@getQuotedString unquotedString="${schemaVarName}.getId()" />
+																			<@getQuotedString unquotedString = "${schemaVarName}.getId()" />
 																		<#else>
 																			${schemaVarName}.getId()
 																		</#if>
@@ -2066,7 +2066,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 																		<#else>
 																			put("${javaMethodParameter.parameterName}",
 																				<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-																					<@getQuotedString unquotedString="${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />
+																					<@getQuotedString unquotedString = "${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />
 																				<#else>
 																					${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 																				</#if>
@@ -2099,7 +2099,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 																	<#else>
 																		put("${javaMethodParameter.parameterName}",
 																		<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-																			<@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
+																			<@getQuotedString unquotedString = "testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})" />
 																		<#else>
 																			testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${getterMethodArgument})
 																		</#if>
@@ -2126,9 +2126,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			<@getTestGetterMethods
-				getterJavaMethodParametersMap=getterJavaMethodParametersMap
-				javaMethodSignature=javaMethodSignature
-				testNamePrefix="testGraphQL"
+				getterJavaMethodParametersMap = getterJavaMethodParametersMap
+				javaMethodSignature = javaMethodSignature
+				testNamePrefix = "testGraphQL"
 			/>
 
 			@Test

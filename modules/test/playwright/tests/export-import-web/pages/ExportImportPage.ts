@@ -66,7 +66,7 @@ export class ExportImportPage {
 		await this.page.getByRole('button', {name: 'Import'}).click();
 	}
 
-	async goTo() {
+	async goToImport() {
 		await this.productMenuPage.goToPublishingImport();
 	}
 }

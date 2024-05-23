@@ -42,6 +42,7 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -635,6 +636,19 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			throw new ObjectValidationRuleOutputTypeException(
 				"Invalid output type " + outputType);
+		}
+
+		if (!_objectValidationRuleEngineRegistry.hasObjectValidationRuleEngine(
+				companyId, engine)) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"No object validation rule engine is registered with ",
+						"key ", engine));
+			}
+
+			return;
 		}
 
 		ObjectValidationRuleEngine objectValidationRuleEngine =

@@ -62,18 +62,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8476 | Test Summary: Cancel Creating a Dynamic Segment"
 	@priority = 3
 	test CanCancelCreatingDynamicSegment {
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -798,6 +786,10 @@ definition {
 				siteName = "Site Name");
 		}
 
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -986,16 +978,11 @@ definition {
 	test CanCreateStaticSegmentWithIndividuals {
 		property test.run.type = "single";
 
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the site page with new user") {
+			ACUtils.navigateToSitePageWithUser(
 				actionType = "View WC",
-				documentTitleList = "View Page 1,View Page 2,View Page 3",
+				documentTitleList = "1,2,3,4",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -1456,16 +1443,17 @@ definition {
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
 		property test.run.type = "single";
 
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the site page with new user") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		ACUtils.launchAC();
@@ -1614,14 +1602,11 @@ definition {
 	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14042 | Test Summary: Check that it is not possible to create a static segment with a name that is already in use"
 	@priority = 4
 	test CheckNotPossibleCreateStaticSegmentWithNameAlreadyInUse {
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the site page with new user") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -1722,14 +1707,11 @@ definition {
 	@description = "Feature ID: LRAC-13424 | Automation ID: LRAC-14043 | Test Summary: Check that it is not possible to edit the segment name to an existing one"
 	@priority = 3
 	test CheckNotPossibleEditSegmentNameToExistsOne {
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the site page with new user") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -1804,16 +1786,17 @@ definition {
 	test ViewSegmentFormValidation {
 		property test.run.type = "single";
 
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the site page with new user") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				emailList = "userea@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {

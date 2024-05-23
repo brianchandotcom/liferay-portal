@@ -17,6 +17,7 @@ import {
 	syncAllContacts,
 	syncSite,
 } from '../analytics-settings-web/utils/analyticsSettings';
+import {createChannel} from '../osb-faro-web/utils/channel';
 import {createDataSource} from '../osb-faro-web/utils/dataSource';
 
 export const test = mergeTests(
@@ -70,6 +71,10 @@ async function changeCookiePreference(page, options) {
 }
 
 async function connectACToDXP(page) {
+	const propertyName = 'My Property - ' + getRandomString();
+
+	await createChannel(page, propertyName);
+
 	await createDataSource(page);
 
 	await goToAnalyticsCloudInstanceSettings(page);
@@ -86,7 +91,7 @@ async function connectACToDXP(page) {
 
 	await connectToAnalyticsCloud(page);
 
-	await syncSite(page, 'My Property - ' + getRandomString());
+	await syncSite(page, propertyName);
 
 	await syncAllContacts(page);
 

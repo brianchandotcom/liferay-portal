@@ -24,6 +24,8 @@ import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -158,9 +160,84 @@ public class SkuResourceFunctionalTest {
 				price.getPrice(), commercePriceEntryPrice.doubleValue()));
 	}
 
+	@Test
+	public void testAllowMultiplePriceEntriesInTheSamePromotion()
+		throws Exception {
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			_commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CommercePriceList catalogBaseCommercePriceList =
+			CommercePriceListLocalServiceUtil.
+				getCatalogBaseCommercePriceListByType(
+					_commerceCatalog.getGroupId(),
+					CommercePriceListConstants.TYPE_PRICE_LIST);
+
+		Calendar calendar = new GregorianCalendar();
+
+		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			catalogBaseCommercePriceList.getCommercePriceListId(), true, null,
+			null, null, null, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR) + 1, calendar.get(Calendar.HOUR),
+			calendar.get(Calendar.MINUTE), false, new BigDecimal(100), false,
+			BigDecimal.ONE, StringPool.BLANK, _serviceContext);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false,
+				CommercePriceListConstants.TYPE_PROMOTION, 1.0);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+				RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), true, null, null,
+				null, null, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
+				calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR) + 1, calendar.get(Calendar.HOUR),
+				calendar.get(Calendar.MINUTE), false, BigDecimal.ONE, false,
+				BigDecimal.ONE, StringPool.BLANK, _serviceContext);
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), true, null, null, null,
+			null, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR) - 1, calendar.get(Calendar.HOUR),
+			calendar.get(Calendar.MINUTE), false, BigDecimal.TEN, false,
+			BigDecimal.TEN, StringPool.BLANK, _serviceContext);
+
+		Sku channelProductSku = skuResource.getChannelProductSku(
+			_commerceChannel.getCommerceChannelId(),
+			cpDefinition.getCProductId(), cpInstance.getCPInstanceId(), -1L);
+
+		Price price = channelProductSku.getPrice();
+
+		BigDecimal commercePriceEntryPrice = commercePriceEntry.getPrice();
+
+		Assert.assertTrue(
+			Objects.equals(
+				price.getPromoPrice(), commercePriceEntryPrice.doubleValue()));
+	}
+
 	protected SkuResource skuResource;
-	protected com.liferay.portal.kernel.model.Company testCompany;
-	protected com.liferay.portal.kernel.model.Group testGroup;
+	protected Company testCompany;
+	protected Group testGroup;
 
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;

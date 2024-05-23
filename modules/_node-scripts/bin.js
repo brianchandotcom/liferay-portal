@@ -9,15 +9,25 @@
 const fs = require('fs');
 const path = require('path');
 
-const COMMAND_DESCRIPTIONS = {
-	build: 'builds frontend stuff of current project',
-	'check:tsc': 'runs TypeScript checks in the current project (command arguments, if any, are passed to tsc directly)',
-	'generate:tsconfig': 'generates tsconfig.json files for all projects',
+const COMMANDS = {
+	'build': {
+		description: 'builds frontend stuff of current project',
+		parameters: '',
+	},
+	'check:tsc': {
+		description:
+			'runs TypeScript checks in the current project or globally (if run from modules)',
+		parameters: '[<tsc arguments>]',
+	},
+	'generate:tsconfig': {
+		description: 'generates tsconfig.json files for all projects',
+		parameters: '',
+	},
 };
 
 const command = process.argv[2];
 
-if (COMMAND_DESCRIPTIONS[command] === undefined) {
+if (COMMANDS[command] === undefined) {
 	showHelpAndExit();
 }
 
@@ -51,11 +61,45 @@ Usage: node-scripts <command>
 Available commands:
 `);
 
-	for (const [command, description] of Object.entries(COMMAND_DESCRIPTIONS)) {
-		console.error(`    ${command}    ${description}`);
+	const maxCommandLength = Object.entries(COMMANDS).reduce(
+		(max, [command, {parameters}]) =>
+			Math.max(max, getCommandDisplayLength(command, parameters)),
+		0
+	);
+
+	for (const [command, {description, parameters}] of Object.entries(
+		COMMANDS
+	)) {
+		let line = '    ';
+
+		line += command;
+
+		if (parameters) {
+			line += ` ${parameters}`;
+		}
+
+		for (
+			let i = getCommandDisplayLength(command, parameters);
+			i < maxCommandLength + 4;
+			i++
+		) {
+			line += ' ';
+		}
+
+		line += description;
+
+		console.error(line);
 	}
 
 	console.error('');
 
 	process.exit(2);
+}
+
+function getCommandDisplayLength(command, parameters) {
+	if (!parameters) {
+		return command.length;
+	}
+
+	return command.length + 1 + parameters.length;
 }

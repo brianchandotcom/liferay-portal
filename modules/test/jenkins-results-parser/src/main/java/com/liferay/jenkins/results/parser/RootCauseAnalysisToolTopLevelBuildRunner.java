@@ -179,7 +179,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			workspaceGitRepository.storeCommitHistory(commitSHAs);
 		}
 		catch (Exception exception) {
-			failBuildRunner("Failed to store the commit history", exception);
+			failBuildRunner("Unable to store the commit history", exception);
 		}
 	}
 

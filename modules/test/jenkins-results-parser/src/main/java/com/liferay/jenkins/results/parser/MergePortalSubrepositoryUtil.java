@@ -179,7 +179,7 @@ public class MergePortalSubrepositoryUtil {
 		}
 		catch (IOException ioException) {
 			_reportError(
-				"Failed to update " + gitRepoFilePath, jenkinsBuildURL,
+				"Unable to update " + gitRepoFilePath, jenkinsBuildURL,
 				portalPullRequest, ioException);
 		}
 	}
@@ -245,7 +245,7 @@ public class MergePortalSubrepositoryUtil {
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
-				"Failed to create & apply the patch \n" +
+				"Unable to create & apply the patch \n" +
 					executionResult.getStandardError());
 		}
 
@@ -512,7 +512,7 @@ public class MergePortalSubrepositoryUtil {
 
 		if (remoteGitBranch == null) {
 			_reportError(
-				"Failed to push updates to " + remoteURL, jenkinsBuildURL,
+				"Unable to push updates to " + remoteURL, jenkinsBuildURL,
 				portalPullRequest);
 		}
 	}

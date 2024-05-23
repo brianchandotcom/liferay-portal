@@ -54,13 +54,13 @@ public class JUnitBatchBuildTestrayCaseResult
 			Build build = getBuild();
 
 			if (build == null) {
-				return "Failed to run build on CI";
+				return "Unable to run build on CI";
 			}
 
 			String result = build.getResult();
 
 			if (result == null) {
-				return "Failed to finish build on CI";
+				return "Unable to finish build on CI";
 			}
 
 			if (result.equals("ABORTED")) {
@@ -68,7 +68,7 @@ public class JUnitBatchBuildTestrayCaseResult
 			}
 
 			if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
-				return "Failed to run test on CI";
+				return "Unable to run test on CI";
 			}
 
 			return "Failed prior to running test";

@@ -101,7 +101,7 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 			String message = jsonObject.optString("message", "");
 
 			if (!message.equals("The build name already exists.")) {
-				throw new RuntimeException("Failed to create a Testray build");
+				throw new RuntimeException("Unable to create a Testray build");
 			}
 		}
 		catch (IOException ioException) {

@@ -67,7 +67,7 @@ public class Testray1TestrayProject extends TestrayProject {
 				return newTestrayProductVersion;
 			}
 
-			throw new RuntimeException("Failed to create a product version");
+			throw new RuntimeException("Unable to create a product version");
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -113,7 +113,7 @@ public class Testray1TestrayProject extends TestrayProject {
 				return newTestrayRoutine;
 			}
 
-			throw new RuntimeException("Failed to create a routine");
+			throw new RuntimeException("Unable to create a routine");
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

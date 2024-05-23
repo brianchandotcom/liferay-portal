@@ -87,7 +87,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		Build build = getBuild();
 
 		if (build == null) {
-			return "Failed to run on CI";
+			return "Unable to run on CI";
 		}
 
 		if (!build.isFailing()) {
@@ -97,7 +97,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		String result = build.getResult();
 
 		if (result == null) {
-			return "Failed to finish build on CI";
+			return "Unable to finish build on CI";
 		}
 
 		if (result.equals("ABORTED")) {

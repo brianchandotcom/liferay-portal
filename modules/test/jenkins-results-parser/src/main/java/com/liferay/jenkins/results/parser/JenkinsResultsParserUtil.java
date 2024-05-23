@@ -4099,7 +4099,7 @@ public class JenkinsResultsParserUtil {
 
 				if (process.exitValue() != 0) {
 					System.out.println(
-						"Failed to pull Docker image " + dockerImageName);
+						"Unable to pull Docker image " + dockerImageName);
 
 					return;
 				}
@@ -4108,7 +4108,7 @@ public class JenkinsResultsParserUtil {
 			}
 			catch (IOException | TimeoutException exception) {
 				System.out.println(
-					"Failed to pull Docker image " + dockerImageName);
+					"Unable to pull Docker image " + dockerImageName);
 
 				exception.printStackTrace();
 			}

@@ -15,16 +15,6 @@ import com.liferay.sharing.model.SharingEntry;
 public class SharingEntryModifiedDateComparator
 	extends OrderByComparator<SharingEntry> {
 
-	public static final String ORDER_BY_ASC =
-		"SharingEntry.modifiedDate ASC, SharingEntry.sharingEntryId ASC";
-
-	public static final String[] ORDER_BY_CONDITION_FIELDS = {
-		"modifiedDate", "sharingEntryId"
-	};
-
-	public static final String ORDER_BY_DESC =
-		"SharingEntry.modifiedDate DESC, SharingEntry.sharingEntryId DESC";
-
 	public static final String[] ORDER_BY_FIELDS = {
 		"modifiedDate", "sharingEntryId"
 	};
@@ -67,15 +57,15 @@ public class SharingEntryModifiedDateComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByConditionFields() {
-		return ORDER_BY_CONDITION_FIELDS;
+		return _ORDER_BY_CONDITION_FIELDS;
 	}
 
 	@Override
@@ -97,6 +87,16 @@ public class SharingEntryModifiedDateComparator
 
 	private static final SharingEntryModifiedDateComparator _DESCENDING =
 		new SharingEntryModifiedDateComparator(false);
+
+	private static final String _ORDER_BY_ASC =
+		"SharingEntry.modifiedDate ASC, SharingEntry.sharingEntryId ASC";
+
+	private static final String[] _ORDER_BY_CONDITION_FIELDS = {
+		"modifiedDate", "sharingEntryId"
+	};
+
+	private static final String _ORDER_BY_DESC =
+		"SharingEntry.modifiedDate DESC, SharingEntry.sharingEntryId DESC";
 
 	private final boolean _ascending;
 

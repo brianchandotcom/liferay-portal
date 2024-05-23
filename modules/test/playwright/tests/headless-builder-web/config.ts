@@ -5,7 +5,6 @@
 
 // @ts-ignore
 
-
 export const config = {
 	name: 'headless-builder-web',
 	testDir: 'tests/headless-builder-web',

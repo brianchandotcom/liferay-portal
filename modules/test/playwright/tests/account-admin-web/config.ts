@@ -5,7 +5,6 @@
 
 // @ts-ignore
 
-
 export const config = {
 	name: 'account-admin-web',
 	testDir: 'tests/account-admin-web',

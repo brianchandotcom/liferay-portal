@@ -5,7 +5,6 @@
 
 // @ts-ignore
 
-
 export const config = {
 	name: 'portlet-configuration-web',
 	testDir: 'tests/portlet-configuration-web',

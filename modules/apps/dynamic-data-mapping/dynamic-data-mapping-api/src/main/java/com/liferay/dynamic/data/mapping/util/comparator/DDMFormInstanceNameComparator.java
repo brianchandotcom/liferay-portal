@@ -15,8 +15,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class DDMFormInstanceNameComparator
 	extends OrderByComparator<DDMFormInstance> {
 
-	public DDMFormInstanceNameComparator(boolean ascending) {
-		_ascending = ascending;
+	public static DDMFormInstanceNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -53,6 +57,16 @@ public class DDMFormInstanceNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DDMFormInstanceNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DDMFormInstanceNameComparator _ASCENDING =
+		new DDMFormInstanceNameComparator(true);
+
+	private static final DDMFormInstanceNameComparator _DESCENDING =
+		new DDMFormInstanceNameComparator(false);
 
 	private static final String _ORDER_BY_ASC = "DDMFormInstance.name ASC";
 

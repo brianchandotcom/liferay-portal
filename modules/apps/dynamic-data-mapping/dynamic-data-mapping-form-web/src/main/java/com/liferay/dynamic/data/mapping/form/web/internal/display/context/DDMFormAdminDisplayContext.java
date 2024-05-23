@@ -1586,7 +1586,8 @@ public class DDMFormAdminDisplayContext {
 				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new DDMFormInstanceNameComparator(orderByAsc);
+			orderByComparator = DDMFormInstanceNameComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;

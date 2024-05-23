@@ -65,6 +65,8 @@ const defaultAddItem = {
 	id: 'add',
 };
 
+const defaultAlwaysVisibleColumns = new Set(['select']);
+
 export function ClayTable({
 	fields,
 	inlineAddingSettings,
@@ -117,6 +119,7 @@ export function ClayTable({
 
 	return (
 		<Table
+			alwaysVisibleColumns={defaultAlwaysVisibleColumns}
 			nestedKey={nestedItemsReferenceKey}
 			onSortChange={setSort}
 			sort={sort}

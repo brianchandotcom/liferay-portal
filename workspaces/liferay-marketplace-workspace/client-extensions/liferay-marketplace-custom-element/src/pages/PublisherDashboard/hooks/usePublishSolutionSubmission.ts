@@ -133,7 +133,6 @@ const usePublishSolutionSubmission = (
 ) => {
 	const {productId} = useParams();
 	const location = useLocation();
-
 	const navigate = useNavigate();
 
 	const syncProfile = async (config: ProductConfig) => {
@@ -397,7 +396,7 @@ const usePublishSolutionSubmission = (
 		if (!productId) {
 			navigate(
 				location.pathname.replace(
-					/\/publisher\//,
+					'/publisher/',
 					`/${product.productId}/publisher/`
 				)
 			);

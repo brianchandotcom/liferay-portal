@@ -44,7 +44,11 @@ public class SearchResultsTag extends IncludeTag {
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		try {
-			AccountEntry accountEntry = commerceContext.getAccountEntry();
+			AccountEntry accountEntry = null;
+
+			if (commerceContext != null) {
+				accountEntry = commerceContext.getAccountEntry();
+			}
 
 			if (accountEntry != null) {
 				httpServletRequest.setAttribute(

@@ -101,9 +101,7 @@ public class ClassNameLocalServiceImplTest {
 			});
 	}
 
-	private static ClassName _mockClassName(
-		long classNameId, String value) {
-
+	private static ClassName _mockClassName(long classNameId, String value) {
 		ClassName className = Mockito.mock(ClassName.class);
 
 		Mockito.when(
@@ -140,8 +138,8 @@ public class ClassNameLocalServiceImplTest {
 	}
 
 	private static void _mockModelHintsUtil() {
-		MockedStatic<ModelHintsUtil> mockedStatic =
-			Mockito.mockStatic(ModelHintsUtil.class);
+		MockedStatic<ModelHintsUtil> mockedStatic = Mockito.mockStatic(
+			ModelHintsUtil.class);
 
 		mockedStatic.when(
 			ModelHintsUtil::getModels

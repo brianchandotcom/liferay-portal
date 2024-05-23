@@ -5,7 +5,7 @@
 
 import path from 'path';
 
-import getRootDir from '../util/getRootDir.mjs';
+import {getRootDir} from '../util/constants.mjs';
 import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**

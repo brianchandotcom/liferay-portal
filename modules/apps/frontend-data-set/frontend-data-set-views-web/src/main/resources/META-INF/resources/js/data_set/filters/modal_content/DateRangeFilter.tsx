@@ -5,6 +5,7 @@
 
 import ClayDatePicker from '@clayui/date-picker';
 import ClayForm from '@clayui/form';
+import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
 import React, {useState} from 'react';
@@ -121,100 +122,105 @@ function Body({
 
 	return (
 		<>
-			<FilterModalConfiguration
-				fieldNames={fieldNames}
-				fields={fields}
-				filter={filter}
-				namespace={namespace}
-				onChange={({i18nFilterLabels, selectedField}) => {
-					setI18nFilterLabels(i18nFilterLabels);
-					setSelectedField(selectedField);
+			<ClayModal.Body>
+				<FilterModalConfiguration
+					fieldNames={fieldNames}
+					fields={fields}
+					filter={filter}
+					namespace={namespace}
+					onChange={({i18nFilterLabels, selectedField}) => {
+						setI18nFilterLabels(i18nFilterLabels);
+						setSelectedField(selectedField);
 
-					setSaveButtonDisabled(
-						isFormInvalid({
-							from,
-							i18nFilterLabels,
-							selectedField,
-							to,
-						})
-					);
-				}}
-			/>
-			<ClayForm.Group className="form-group-autofit">
-				<div
-					className={classNames('form-group-item', {
-						'has-error': !isValidDateRange,
-					})}
-				>
-					<label htmlFor={fromFormElementId}>
-						{Liferay.Language.get('from')}
-					</label>
-
-					<ClayDatePicker
-						inputName={fromFormElementId}
-						onChange={(value: any) => {
-							setFrom(value);
-
-							const isInvalid = isFormInvalid({
-								from: value,
-								i18nFilterLabels,
-								selectedField,
-								to,
-							});
-
-							setIsValidDateRange(!isInvalid);
-							setSaveButtonDisabled(isInvalid);
-						}}
-						placeholder="YYYY-MM-DD"
-						value={from ? format(new Date(from), 'yyyy-MM-dd') : ''}
-						years={{
-							end: getYear(new Date()) + 25,
-							start: getYear(new Date()) - 50,
-						}}
-					/>
-
-					{!isValidDateRange && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{Liferay.Language.get(
-									'date-range-is-invalid.-from-must-be-before-to'
-								)}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					)}
-				</div>
-
-				<div className="form-group-item">
-					<label htmlFor={toFormElementId}>
-						{Liferay.Language.get('to')}
-					</label>
-
-					<ClayDatePicker
-						inputName={toFormElementId}
-						onChange={(value: any) => {
-							setTo(value);
-
-							const isInvalid = isFormInvalid({
+						setSaveButtonDisabled(
+							isFormInvalid({
 								from,
 								i18nFilterLabels,
 								selectedField,
-								to: value,
-							});
+								to,
+							})
+						);
+					}}
+				/>
 
-							setIsValidDateRange(!isInvalid);
-							setSaveButtonDisabled(isInvalid);
-						}}
-						placeholder="YYYY-MM-DD"
-						value={to ? format(new Date(to), 'yyyy-MM-dd') : ''}
-						years={{
-							end: getYear(new Date()) + 25,
-							start: getYear(new Date()) - 50,
-						}}
-					/>
-				</div>
-			</ClayForm.Group>
+				<ClayForm.Group className="form-group-autofit">
+					<div
+						className={classNames('form-group-item', {
+							'has-error': !isValidDateRange,
+						})}
+					>
+						<label htmlFor={fromFormElementId}>
+							{Liferay.Language.get('from')}
+						</label>
+
+						<ClayDatePicker
+							inputName={fromFormElementId}
+							onChange={(value: any) => {
+								setFrom(value);
+
+								const isInvalid = isFormInvalid({
+									from: value,
+									i18nFilterLabels,
+									selectedField,
+									to,
+								});
+
+								setIsValidDateRange(!isInvalid);
+								setSaveButtonDisabled(isInvalid);
+							}}
+							placeholder="YYYY-MM-DD"
+							value={
+								from ? format(new Date(from), 'yyyy-MM-dd') : ''
+							}
+							years={{
+								end: getYear(new Date()) + 25,
+								start: getYear(new Date()) - 50,
+							}}
+						/>
+
+						{!isValidDateRange && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+									{Liferay.Language.get(
+										'date-range-is-invalid.-from-must-be-before-to'
+									)}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
+					</div>
+
+					<div className="form-group-item">
+						<label htmlFor={toFormElementId}>
+							{Liferay.Language.get('to')}
+						</label>
+
+						<ClayDatePicker
+							inputName={toFormElementId}
+							onChange={(value: any) => {
+								setTo(value);
+
+								const isInvalid = isFormInvalid({
+									from,
+									i18nFilterLabels,
+									selectedField,
+									to: value,
+								});
+
+								setIsValidDateRange(!isInvalid);
+								setSaveButtonDisabled(isInvalid);
+							}}
+							placeholder="YYYY-MM-DD"
+							value={to ? format(new Date(to), 'yyyy-MM-dd') : ''}
+							years={{
+								end: getYear(new Date()) + 25,
+								start: getYear(new Date()) - 50,
+							}}
+						/>
+					</div>
+				</ClayForm.Group>
+			</ClayModal.Body>
 
 			<FilterModalFooter
 				closeModal={closeModal}

@@ -11,6 +11,7 @@ import ClayForm, {
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
@@ -229,253 +230,223 @@ function Body({
 
 	return (
 		<>
-			<FilterModalConfiguration
-				fieldNames={fieldNames}
-				fields={fields}
-				filter={filter}
-				namespace={namespace}
-				onChange={({i18nFilterLabels, selectedField}) => {
-					setI18nFilterLabels(i18nFilterLabels);
-					setSelectedField(selectedField);
+			<ClayModal.Body>
+				<FilterModalConfiguration
+					fieldNames={fieldNames}
+					fields={fields}
+					filter={filter}
+					namespace={namespace}
+					onChange={({i18nFilterLabels, selectedField}) => {
+						setI18nFilterLabels(i18nFilterLabels);
+						setSelectedField(selectedField);
 
-					setSaveButtonDisabled(
-						isFormInvalid({
-							i18nFilterLabels,
-							selectedField,
-							selectedPicklist,
-							sourceType,
-						})
-					);
-				}}
-			/>
+						setSaveButtonDisabled(
+							isFormInvalid({
+								i18nFilterLabels,
+								selectedField,
+								selectedPicklist,
+								sourceType,
+							})
+						);
+					}}
+				/>
 
-			{Liferay.FeatureFlags['LPD-10754'] && (
-				<>
-					<ClayLayout.SheetSection className="mb-4">
-						<h3 className="sheet-subtitle">
-							{Liferay.Language.get('filter-source')}
-						</h3>
+				{Liferay.FeatureFlags['LPD-10754'] && (
+					<>
+						<ClayLayout.SheetSection className="mb-4">
+							<h3 className="sheet-subtitle">
+								{Liferay.Language.get('filter-source')}
+							</h3>
 
-						<ClayForm.Text>
-							{Liferay.Language.get(
-								'the-filter-source-determines-the-values-to-be-offered-in-this-filter-to-the-user'
-							)}
-						</ClayForm.Text>
-					</ClayLayout.SheetSection>
-
-					<ClayForm.Group>
-						<label htmlFor={sourceOptionFormElementId}>
-							{Liferay.Language.get('source')}
-
-							<RequiredMark />
-						</label>
-
-						<ClaySelectWithOption
-							aria-label={Liferay.Language.get(
-								'choose-an-option'
-							)}
-							name={sourceOptionFormElementId}
-							onChange={(event) => {
-								const newSourceType = event.target
-									.value as ESelectionFilterSourceType;
-
-								setSourceType(newSourceType);
-
-								setSaveButtonDisabled(
-									isFormInvalid({
-										i18nFilterLabels,
-										selectedField,
-										selectedPicklist,
-										sourceType: newSourceType,
-									})
-								);
-							}}
-							options={[
-								{
-									disabled: true,
-									label: Liferay.Language.get(
-										'choose-an-option'
-									),
-									value: '',
-								},
-								{
-									disabled: false,
-									label: Liferay.Language.get(
-										'object-picklist'
-									),
-									value: ESelectionFilterSourceType.PICKLIST,
-								},
-							]}
-							required
-							title={Liferay.Language.get('source')}
-							value={sourceType || ''}
-						/>
-					</ClayForm.Group>
-				</>
-			)}
-
-			{Liferay.FeatureFlags['LPD-10754'] ? (
-				<>
-					{sourceType === ESelectionFilterSourceType.PICKLIST && (
-						<ObjectPicklist
-							filter={filter}
-							namespace={namespace}
-							onChange={(item: IPickList) => {
-								setSelectedPicklist(item);
-
-								setSaveButtonDisabled(
-									isFormInvalid({
-										i18nFilterLabels,
-										selectedField,
-										selectedPicklist: item,
-										sourceType,
-									})
-								);
-							}}
-						/>
-					)}
-
-					{selectedPicklist && (
-						<>
-							<ClayLayout.SheetSection className="mb-4">
-								<h3 className="sheet-subtitle">
-									{Liferay.Language.get(' filter-options')}
-								</h3>
-							</ClayLayout.SheetSection>
-							<ClayForm.Group
-								className={classNames({
-									'has-error': !isValidSingleMode,
-								})}
-							>
-								<label htmlFor={preselectedValuesFormElementId}>
-									{Liferay.Language.get('preselected-values')}
-
-									<span
-										className="label-icon lfr-portal-tooltip ml-2"
-										title={Liferay.Language.get(
-											'choose-values-to-preselect-for-your-filters-source-option'
-										)}
-									>
-										<ClayIcon symbol="question-circle-full" />
-									</span>
-								</label>
-
-								<CheckboxMultiSelect
-									allowsCustomLabel={false}
-									aria-label={Liferay.Language.get(
-										'preselected-values'
-									)}
-									inputName={preselectedValuesFormElementId}
-									items={preselectedValues.map((item) => ({
-										label: item.name,
-										value: String(
-											item.externalReferenceCode
-										),
-									}))}
-									loadingState={4}
-									onChange={setPreselectedValueInput}
-									onItemsChange={(selectedItems: any) => {
-										const preselectedValues = selectedItems.map(
-											({value}: any) => {
-												return selectedPicklist.listTypeEntries.find(
-													(item) =>
-														String(
-															item.externalReferenceCode
-														) === String(value)
-												);
-											}
-										);
-
-										setPreselectedValues(preselectedValues);
-
-										setIncludeMode(
-											preselectedValues.length
-												? filter &&
-												  (filter as ISelectionFilter)
-														.include
-													? 'include'
-													: 'exclude'
-												: 'include'
-										);
-									}}
-									placeholder={Liferay.Language.get(
-										'select-a-default-value-for-your-filter'
-									)}
-									sourceItems={filteredSourceItems}
-									value={preselectedValueInput}
-								/>
-
-								{!isValidSingleMode && (
-									<ClayForm.FeedbackGroup>
-										<ClayForm.FeedbackItem>
-											<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-											{Liferay.Language.get(
-												'only-one-value-is-allowed-in-single-selection-mode'
-											)}
-										</ClayForm.FeedbackItem>
-									</ClayForm.FeedbackGroup>
+							<ClayForm.Text>
+								{Liferay.Language.get(
+									'the-filter-source-determines-the-values-to-be-offered-in-this-filter-to-the-user'
 								)}
-							</ClayForm.Group>
+							</ClayForm.Text>
+						</ClayLayout.SheetSection>
 
-							<ClayLayout.Row justify="start">
-								<ClayLayout.Col size={6}>
-									<ClayForm.Group>
-										<label htmlFor={multipleFormElementId}>
-											{Liferay.Language.get('selection')}
+						<ClayForm.Group>
+							<label htmlFor={sourceOptionFormElementId}>
+								{Liferay.Language.get('source')}
 
-											<span
-												className="label-icon lfr-portal-tooltip ml-2"
-												title={Liferay.Language.get(
-													'determines-how-many-preselected-values-for-the-filter-can-be-added'
-												)}
-											>
-												<ClayIcon symbol="question-circle-full" />
-											</span>
-										</label>
+								<RequiredMark />
+							</label>
 
-										<ClayRadioGroup
-											name={multipleFormElementId}
-											onChange={(newVal: any) => {
-												const newMultiple =
-													newVal === 'true';
-												setMultiple(newMultiple);
-											}}
-											value={multiple ? 'true' : 'false'}
+							<ClaySelectWithOption
+								aria-label={Liferay.Language.get(
+									'choose-an-option'
+								)}
+								name={sourceOptionFormElementId}
+								onChange={(event) => {
+									const newSourceType = event.target
+										.value as ESelectionFilterSourceType;
+
+									setSourceType(newSourceType);
+
+									setSaveButtonDisabled(
+										isFormInvalid({
+											i18nFilterLabels,
+											selectedField,
+											selectedPicklist,
+											sourceType: newSourceType,
+										})
+									);
+								}}
+								options={[
+									{
+										disabled: true,
+										label: Liferay.Language.get(
+											'choose-an-option'
+										),
+										value: '',
+									},
+									{
+										disabled: false,
+										label: Liferay.Language.get(
+											'object-picklist'
+										),
+										value:
+											ESelectionFilterSourceType.PICKLIST,
+									},
+								]}
+								required
+								title={Liferay.Language.get('source')}
+								value={sourceType || ''}
+							/>
+						</ClayForm.Group>
+					</>
+				)}
+
+				{Liferay.FeatureFlags['LPD-10754'] ? (
+					<>
+						{sourceType === ESelectionFilterSourceType.PICKLIST && (
+							<ObjectPicklist
+								filter={filter}
+								namespace={namespace}
+								onChange={(item: IPickList) => {
+									setSelectedPicklist(item);
+
+									setSaveButtonDisabled(
+										isFormInvalid({
+											i18nFilterLabels,
+											selectedField,
+											selectedPicklist: item,
+											sourceType,
+										})
+									);
+								}}
+							/>
+						)}
+
+						{selectedPicklist && (
+							<>
+								<ClayLayout.SheetSection className="mb-4">
+									<h3 className="sheet-subtitle">
+										{Liferay.Language.get(
+											' filter-options'
+										)}
+									</h3>
+								</ClayLayout.SheetSection>
+								<ClayForm.Group
+									className={classNames({
+										'has-error': !isValidSingleMode,
+									})}
+								>
+									<label
+										htmlFor={preselectedValuesFormElementId}
+									>
+										{Liferay.Language.get(
+											'preselected-values'
+										)}
+
+										<span
+											className="label-icon lfr-portal-tooltip ml-2"
+											title={Liferay.Language.get(
+												'choose-values-to-preselect-for-your-filters-source-option'
+											)}
 										>
-											<ClayRadio
-												label={Liferay.Language.get(
-													'multiple'
-												)}
-												value="true"
-											/>
+											<ClayIcon symbol="question-circle-full" />
+										</span>
+									</label>
 
-											<ClayRadio
-												label={Liferay.Language.get(
-													'single'
-												)}
-												value="false"
-											/>
-										</ClayRadioGroup>
-									</ClayForm.Group>
-								</ClayLayout.Col>
+									<CheckboxMultiSelect
+										allowsCustomLabel={false}
+										aria-label={Liferay.Language.get(
+											'preselected-values'
+										)}
+										inputName={
+											preselectedValuesFormElementId
+										}
+										items={preselectedValues.map(
+											(item) => ({
+												label: item.name,
+												value: String(
+													item.externalReferenceCode
+												),
+											})
+										)}
+										loadingState={4}
+										onChange={setPreselectedValueInput}
+										onItemsChange={(selectedItems: any) => {
+											const preselectedValues = selectedItems.map(
+												({value}: any) => {
+													return selectedPicklist.listTypeEntries.find(
+														(item) =>
+															String(
+																item.externalReferenceCode
+															) === String(value)
+													);
+												}
+											);
 
-								{preselectedValues?.length > 0 && (
+											setPreselectedValues(
+												preselectedValues
+											);
+
+											setIncludeMode(
+												preselectedValues.length
+													? filter &&
+													  (filter as ISelectionFilter)
+															.include
+														? 'include'
+														: 'exclude'
+													: 'include'
+											);
+										}}
+										placeholder={Liferay.Language.get(
+											'select-a-default-value-for-your-filter'
+										)}
+										sourceItems={filteredSourceItems}
+										value={preselectedValueInput}
+									/>
+
+									{!isValidSingleMode && (
+										<ClayForm.FeedbackGroup>
+											<ClayForm.FeedbackItem>
+												<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+												{Liferay.Language.get(
+													'only-one-value-is-allowed-in-single-selection-mode'
+												)}
+											</ClayForm.FeedbackItem>
+										</ClayForm.FeedbackGroup>
+									)}
+								</ClayForm.Group>
+
+								<ClayLayout.Row justify="start">
 									<ClayLayout.Col size={6}>
 										<ClayForm.Group>
 											<label
-												htmlFor={
-													includeModeFormElementId
-												}
+												htmlFor={multipleFormElementId}
 											>
 												{Liferay.Language.get(
-													'filter-mode'
+													'selection'
 												)}
 
 												<span
 													className="label-icon lfr-portal-tooltip ml-2"
 													title={Liferay.Language.get(
-														'include-returns-only-the-selected-values.-exclude-returns-all-except-the-selected-ones'
+														'determines-how-many-preselected-values-for-the-filter-can-be-added'
 													)}
 												>
 													<ClayIcon symbol="question-circle-full" />
@@ -483,209 +454,156 @@ function Body({
 											</label>
 
 											<ClayRadioGroup
-												name={includeModeFormElementId}
-												onChange={(val: any) => {
-													setIncludeMode(val);
+												name={multipleFormElementId}
+												onChange={(newVal: any) => {
+													const newMultiple =
+														newVal === 'true';
+													setMultiple(newMultiple);
 												}}
-												value={includeMode}
+												value={
+													multiple ? 'true' : 'false'
+												}
 											>
 												<ClayRadio
 													label={Liferay.Language.get(
-														'include'
+														'multiple'
 													)}
-													value="include"
+													value="true"
 												/>
 
 												<ClayRadio
 													label={Liferay.Language.get(
-														'exclude'
+														'single'
 													)}
-													value="exclude"
+													value="false"
 												/>
 											</ClayRadioGroup>
 										</ClayForm.Group>
 									</ClayLayout.Col>
-								)}
-							</ClayLayout.Row>
-						</>
-					)}
-				</>
-			) : (
-				<>
-					<ClayForm.Group>
-						<label htmlFor={sourceOptionFormElementId}>
-							{Liferay.Language.get('source-options')}
 
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get(
-									'choose-a-picklist-to-associate-with-this-filter'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</label>
+									{preselectedValues?.length > 0 && (
+										<ClayLayout.Col size={6}>
+											<ClayForm.Group>
+												<label
+													htmlFor={
+														includeModeFormElementId
+													}
+												>
+													{Liferay.Language.get(
+														'filter-mode'
+													)}
 
-						<ClaySelectWithOption
-							aria-label={Liferay.Language.get('source-options')}
-							name={sourceOptionFormElementId}
-							onChange={(event) => {
-								const picklist = picklists.find(
-									(item) =>
-										String(item.externalReferenceCode) ===
-										event.target.value
-								);
+													<span
+														className="label-icon lfr-portal-tooltip ml-2"
+														title={Liferay.Language.get(
+															'include-returns-only-the-selected-values.-exclude-returns-all-except-the-selected-ones'
+														)}
+													>
+														<ClayIcon symbol="question-circle-full" />
+													</span>
+												</label>
 
-								setSelectedPicklist(picklist);
+												<ClayRadioGroup
+													name={
+														includeModeFormElementId
+													}
+													onChange={(val: any) => {
+														setIncludeMode(val);
+													}}
+													value={includeMode}
+												>
+													<ClayRadio
+														label={Liferay.Language.get(
+															'include'
+														)}
+														value="include"
+													/>
 
-								setSaveButtonDisabled(
-									isFormInvalid({
-										i18nFilterLabels,
-										selectedField,
-										selectedPicklist: picklist,
-										sourceType,
-									})
-								);
+													<ClayRadio
+														label={Liferay.Language.get(
+															'exclude'
+														)}
+														value="exclude"
+													/>
+												</ClayRadioGroup>
+											</ClayForm.Group>
+										</ClayLayout.Col>
+									)}
+								</ClayLayout.Row>
+							</>
+						)}
+					</>
+				) : (
+					<>
+						<ClayForm.Group>
+							<label htmlFor={sourceOptionFormElementId}>
+								{Liferay.Language.get('source-options')}
 
-								setPreselectedValues([]);
-							}}
-							options={[
-								{
-									disabled: true,
-									label: Liferay.Language.get('select'),
-									value: '',
-								},
-								...picklists.map((item) => ({
-									label: item.name,
-									value: item.externalReferenceCode,
-								})),
-							]}
-							title={Liferay.Language.get('source-options')}
-							value={
-								selectedPicklist?.externalReferenceCode || ''
-							}
-						/>
-					</ClayForm.Group>
-
-					{selectedPicklist && (
-						<>
-							<ClayForm.Group>
-								<label htmlFor={multipleFormElementId}>
-									{Liferay.Language.get('selection')}
-
-									<span
-										className="label-icon lfr-portal-tooltip ml-2"
-										title={Liferay.Language.get(
-											'determines-how-many-preselected-values-for-the-filter-can-be-added'
-										)}
-									>
-										<ClayIcon symbol="question-circle-full" />
-									</span>
-								</label>
-
-								<ClayRadioGroup
-									name={multipleFormElementId}
-									onChange={(newVal: any) => {
-										setMultiple(newVal === 'true');
-									}}
-									value={multiple ? 'true' : 'false'}
+								<span
+									className="label-icon lfr-portal-tooltip ml-2"
+									title={Liferay.Language.get(
+										'choose-a-picklist-to-associate-with-this-filter'
+									)}
 								>
-									<ClayRadio
-										label={Liferay.Language.get('multiple')}
-										value="true"
-									/>
+									<ClayIcon symbol="question-circle-full" />
+								</span>
+							</label>
 
-									<ClayRadio
-										label={Liferay.Language.get('single')}
-										value="false"
-									/>
-								</ClayRadioGroup>
-							</ClayForm.Group>
-							<ClayForm.Group
-								className={classNames({
-									'has-error': !isValidSingleMode,
-								})}
-							>
-								<label htmlFor={preselectedValuesFormElementId}>
-									{Liferay.Language.get('preselected-values')}
-
-									<span
-										className="label-icon lfr-portal-tooltip ml-2"
-										title={Liferay.Language.get(
-											'choose-values-to-preselect-for-your-filters-source-option'
-										)}
-									>
-										<ClayIcon symbol="question-circle-full" />
-									</span>
-								</label>
-
-								<CheckboxMultiSelect
-									allowsCustomLabel={false}
-									aria-label={Liferay.Language.get(
-										'preselected-values'
-									)}
-									inputName={preselectedValuesFormElementId}
-									items={preselectedValues.map((item) => ({
-										label: item.name,
-										value: String(
-											item.externalReferenceCode
-										),
-									}))}
-									loadingState={4}
-									onChange={setPreselectedValueInput}
-									onItemsChange={(selectedItems: any) => {
-										const preselectedValues = selectedItems.map(
-											({value}: any) => {
-												return selectedPicklist.listTypeEntries.find(
-													(item) =>
-														String(
-															item.externalReferenceCode
-														) === String(value)
-												);
-											}
-										);
-
-										setPreselectedValues(preselectedValues);
-
-										setIncludeMode(
-											preselectedValues.length
-												? filter &&
-												  (filter as ISelectionFilter)
-														.include
-													? 'include'
-													: 'exclude'
-												: 'include'
-										);
-									}}
-									placeholder={Liferay.Language.get(
-										'select-a-default-value-for-your-filter'
-									)}
-									sourceItems={filteredSourceItems}
-									value={preselectedValueInput}
-								/>
-
-								{!isValidSingleMode && (
-									<ClayForm.FeedbackGroup>
-										<ClayForm.FeedbackItem>
-											<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-											{Liferay.Language.get(
-												'only-one-value-is-allowed-in-single-selection-mode'
-											)}
-										</ClayForm.FeedbackItem>
-									</ClayForm.FeedbackGroup>
+							<ClaySelectWithOption
+								aria-label={Liferay.Language.get(
+									'source-options'
 								)}
-							</ClayForm.Group>
+								name={sourceOptionFormElementId}
+								onChange={(event) => {
+									const picklist = picklists.find(
+										(item) =>
+											String(
+												item.externalReferenceCode
+											) === event.target.value
+									);
 
-							{preselectedValues?.length > 0 && (
+									setSelectedPicklist(picklist);
+
+									setSaveButtonDisabled(
+										isFormInvalid({
+											i18nFilterLabels,
+											selectedField,
+											selectedPicklist: picklist,
+											sourceType,
+										})
+									);
+
+									setPreselectedValues([]);
+								}}
+								options={[
+									{
+										disabled: true,
+										label: Liferay.Language.get('select'),
+										value: '',
+									},
+									...picklists.map((item) => ({
+										label: item.name,
+										value: item.externalReferenceCode,
+									})),
+								]}
+								title={Liferay.Language.get('source-options')}
+								value={
+									selectedPicklist?.externalReferenceCode ||
+									''
+								}
+							/>
+						</ClayForm.Group>
+
+						{selectedPicklist && (
+							<>
 								<ClayForm.Group>
-									<label htmlFor={includeModeFormElementId}>
-										{Liferay.Language.get('filter-mode')}
+									<label htmlFor={multipleFormElementId}>
+										{Liferay.Language.get('selection')}
 
 										<span
 											className="label-icon lfr-portal-tooltip ml-2"
 											title={Liferay.Language.get(
-												'include-returns-only-the-selected-values.-exclude-returns-all-except-the-selected-ones'
+												'determines-how-many-preselected-values-for-the-filter-can-be-added'
 											)}
 										>
 											<ClayIcon symbol="question-circle-full" />
@@ -693,32 +611,160 @@ function Body({
 									</label>
 
 									<ClayRadioGroup
-										name={includeModeFormElementId}
-										onChange={(val: any) =>
-											setIncludeMode(val)
-										}
-										value={includeMode}
+										name={multipleFormElementId}
+										onChange={(newVal: any) => {
+											setMultiple(newVal === 'true');
+										}}
+										value={multiple ? 'true' : 'false'}
 									>
 										<ClayRadio
 											label={Liferay.Language.get(
-												'include'
+												'multiple'
 											)}
-											value="include"
+											value="true"
 										/>
 
 										<ClayRadio
 											label={Liferay.Language.get(
-												'exclude'
+												'single'
 											)}
-											value="exclude"
+											value="false"
 										/>
 									</ClayRadioGroup>
 								</ClayForm.Group>
-							)}
-						</>
-					)}
-				</>
-			)}
+								<ClayForm.Group
+									className={classNames({
+										'has-error': !isValidSingleMode,
+									})}
+								>
+									<label
+										htmlFor={preselectedValuesFormElementId}
+									>
+										{Liferay.Language.get(
+											'preselected-values'
+										)}
+
+										<span
+											className="label-icon lfr-portal-tooltip ml-2"
+											title={Liferay.Language.get(
+												'choose-values-to-preselect-for-your-filters-source-option'
+											)}
+										>
+											<ClayIcon symbol="question-circle-full" />
+										</span>
+									</label>
+
+									<CheckboxMultiSelect
+										allowsCustomLabel={false}
+										aria-label={Liferay.Language.get(
+											'preselected-values'
+										)}
+										inputName={
+											preselectedValuesFormElementId
+										}
+										items={preselectedValues.map(
+											(item) => ({
+												label: item.name,
+												value: String(
+													item.externalReferenceCode
+												),
+											})
+										)}
+										loadingState={4}
+										onChange={setPreselectedValueInput}
+										onItemsChange={(selectedItems: any) => {
+											const preselectedValues = selectedItems.map(
+												({value}: any) => {
+													return selectedPicklist.listTypeEntries.find(
+														(item) =>
+															String(
+																item.externalReferenceCode
+															) === String(value)
+													);
+												}
+											);
+
+											setPreselectedValues(
+												preselectedValues
+											);
+
+											setIncludeMode(
+												preselectedValues.length
+													? filter &&
+													  (filter as ISelectionFilter)
+															.include
+														? 'include'
+														: 'exclude'
+													: 'include'
+											);
+										}}
+										placeholder={Liferay.Language.get(
+											'select-a-default-value-for-your-filter'
+										)}
+										sourceItems={filteredSourceItems}
+										value={preselectedValueInput}
+									/>
+
+									{!isValidSingleMode && (
+										<ClayForm.FeedbackGroup>
+											<ClayForm.FeedbackItem>
+												<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+												{Liferay.Language.get(
+													'only-one-value-is-allowed-in-single-selection-mode'
+												)}
+											</ClayForm.FeedbackItem>
+										</ClayForm.FeedbackGroup>
+									)}
+								</ClayForm.Group>
+
+								{preselectedValues?.length > 0 && (
+									<ClayForm.Group>
+										<label
+											htmlFor={includeModeFormElementId}
+										>
+											{Liferay.Language.get(
+												'filter-mode'
+											)}
+
+											<span
+												className="label-icon lfr-portal-tooltip ml-2"
+												title={Liferay.Language.get(
+													'include-returns-only-the-selected-values.-exclude-returns-all-except-the-selected-ones'
+												)}
+											>
+												<ClayIcon symbol="question-circle-full" />
+											</span>
+										</label>
+
+										<ClayRadioGroup
+											name={includeModeFormElementId}
+											onChange={(val: any) =>
+												setIncludeMode(val)
+											}
+											value={includeMode}
+										>
+											<ClayRadio
+												label={Liferay.Language.get(
+													'include'
+												)}
+												value="include"
+											/>
+
+											<ClayRadio
+												label={Liferay.Language.get(
+													'exclude'
+												)}
+												value="exclude"
+											/>
+										</ClayRadioGroup>
+									</ClayForm.Group>
+								)}
+							</>
+						)}
+					</>
+				)}
+			</ClayModal.Body>
 
 			<FilterModalFooter
 				closeModal={closeModal}

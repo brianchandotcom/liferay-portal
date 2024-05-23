@@ -79,16 +79,6 @@ const useSidebarActions = () => {
 			],
 			title: '',
 		},
-		{
-			items: [
-				{
-					icon: 'pencil',
-					label: i18n.translate('manage-server'),
-					path: LIFERAY_URLS.manage_server,
-				},
-			],
-			title: '',
-		},
 	];
 
 	return MANAGE_DROPDOWN;

@@ -266,7 +266,7 @@ public class UserLocalServiceTest {
 				).getTime() - 5000L));
 		user.setFailedLoginAttempts(3);
 
-		_userLocalService.updateUser(user);
+		user = _userLocalService.updateUser(user);
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
@@ -290,8 +290,6 @@ public class UserLocalServiceTest {
 
 		List<User> companyUsers = _userLocalService.getCompanyUsers(
 			_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		_companyLocalService.deleteCompany(_company);
 
 		Assert.assertEquals(companyUsers.toString(), 1, companyUsers.size());
 
@@ -593,13 +591,13 @@ public class UserLocalServiceTest {
 				new Date(
 				).getTime() - 5000L));
 
-		_userLocalService.updateUser(user);
+		user = _userLocalService.updateUser(user);
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 		passwordPolicy.setLockout(true);
-		passwordPolicy.setLockoutDuration(3L);
 		passwordPolicy.setMaxFailure(0);
+		passwordPolicy.setLockoutDuration(3L);
 
 		_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
 

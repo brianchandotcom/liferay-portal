@@ -90,7 +90,7 @@ public class DDMFormInstanceStagedModelRepository
 			_ddmFormInstanceLocalService.search(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getScopeGroupId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new DDMFormInstanceNameComparator());
+				QueryUtil.ALL_POS, new DDMFormInstanceNameComparator(false));
 
 		for (DDMFormInstance formInstance : formInstances) {
 			formInstanceDDMStructureIds.add(formInstance.getStructureId());

@@ -242,7 +242,7 @@ definition {
 		}
 
 		task ("And go to the edit page of the Extension client created ") {
-			Click(locator1 = "Icon#SVG_ELLIPSIS");
+			Click(locator1 = "ClientExtension#REMOTE_TABLE_SVG_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Edit");
 		}

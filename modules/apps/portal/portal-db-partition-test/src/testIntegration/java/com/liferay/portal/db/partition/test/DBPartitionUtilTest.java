@@ -7,13 +7,19 @@ package com.liferay.portal.db.partition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -23,8 +29,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -114,6 +122,97 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testAddDefaultDBPartition() throws PortalException {
 		Assert.assertFalse(
 			DBPartitionUtil.addDBPartition(portal.getDefaultCompanyId()));
+	}
+
+	@Test
+	public void testCopyDBPartition() throws Exception {
+		addDBPartitions();
+		insertPartitionRequiredData();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
+
+			createAndPopulateTable(
+				RandomTestUtil.randomString() + "_x_" +
+					CompanyThreadLocal.getCompanyId());
+		}
+
+		long newCompanyId = RandomTestUtil.randomLong();
+
+		CurrentConnection defaultCurrentConnection =
+			CurrentConnectionUtil.getCurrentConnection();
+
+		try {
+			CurrentConnection currentConnection = dataSource -> connection;
+
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				currentConnection);
+
+			Assert.assertTrue(
+				DBPartitionUtil.copyDBPartition(COMPANY_IDS[0], newCompanyId));
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet1 = databaseMetaData.getTables(
+					dbPartitionDB.getCatalog(
+						connection, getPartitionName(COMPANY_IDS[0])),
+					dbPartitionDB.getSchema(
+						connection, getPartitionName(COMPANY_IDS[0])),
+					null, new String[] {"TABLE", "VIEW"});
+				SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(newCompanyId)) {
+
+				while (resultSet1.next()) {
+					String elementName = resultSet1.getString("TABLE_NAME");
+
+					if (dbInspector.isObjectTable(
+							Collections.singletonList(COMPANY_IDS[0]),
+							elementName)) {
+
+						elementName = StringUtil.replace(
+							elementName, String.valueOf(COMPANY_IDS[0]),
+							String.valueOf(newCompanyId));
+					}
+
+					if (Objects.equals(
+							resultSet1.getString("TABLE_TYPE"), "VIEW")) {
+
+						Assert.assertTrue(dbInspector.hasView(elementName));
+					}
+					else {
+						Assert.assertTrue(dbInspector.hasTable(elementName));
+
+						if (dbInspector.hasColumn(elementName, "companyId")) {
+							try (PreparedStatement preparedStatement =
+									connection.prepareStatement(
+										StringBundler.concat(
+											"select count(1) from ",
+											elementName, " where companyId != ",
+											newCompanyId));
+								ResultSet resultSet2 =
+									preparedStatement.executeQuery()) {
+
+								if (resultSet2.next()) {
+									Assert.assertEquals(
+										0, resultSet2.getInt(1));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				defaultCurrentConnection);
+
+			removeDBPartitions(new long[] {newCompanyId});
+
+			deletePartitionRequiredData();
+			removeDBPartitions();
+		}
 	}
 
 	@Test

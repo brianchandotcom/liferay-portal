@@ -5,10 +5,15 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
+import java.io.IOException;
+
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +24,11 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class TestrayBuild implements Comparable<TestrayBuild> {
+
+	public static final String[] FIELD_NAMES = {
+		"dateCreated", "dateModified", "description", "dueDate",
+		"githubCompareURLs", "gitHash", "id", "name"
+	};
 
 	public int compareTo(TestrayBuild testrayBuild) {
 		if (testrayBuild == null) {
@@ -75,13 +85,48 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults() {
-		return null;
+		return getTestrayCaseResults(null, null);
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults(
 		TestrayCaseType testrayCaseType, TestrayRun testrayRun) {
 
-		return null;
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		if (testrayCaseType != null) {
+			sb.append("r_caseTypeToCases_c_caseTypeId eq '");
+			sb.append(testrayCaseType.getID());
+			sb.append("' and ");
+		}
+
+		if (testrayRun != null) {
+			sb.append("r_runToCaseResult_c_runId eq '");
+			sb.append(testrayRun.getID());
+			sb.append("' and ");
+		}
+
+		sb.append("r_buildToCaseResult_c_buildId eq '");
+		sb.append(getID());
+		sb.append("'");
+
+		try {
+			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(), -1,
+				25);
+
+			for (JSONObject entityJSONObject : entityJSONObjects) {
+				testrayCaseResults.add(
+					TestrayFactory.newTestrayCaseResult(
+						this, entityJSONObject));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return testrayCaseResults;
 	}
 
 	public TestrayProductVersion getTestrayProductVersion() {
@@ -117,7 +162,15 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public URL getURL() {
-		return null;
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(_testrayRoutine.getURL()), "/build/",
+					String.valueOf(getID())));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	protected TestrayBuild(

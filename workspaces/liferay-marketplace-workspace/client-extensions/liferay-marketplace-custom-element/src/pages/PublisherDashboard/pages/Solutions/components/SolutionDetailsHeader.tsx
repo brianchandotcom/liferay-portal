@@ -12,13 +12,9 @@ import {useNavigate} from 'react-router-dom';
 import {
 	PRODUCT_WORKFLOW_STATUS_CODE,
 	PRODUCT_WORKFLOW_STATUS_LABEL,
-} from '../../../../../../enums/Product';
-import i18n from '../../../../../../i18n';
-import {
-	getProductVersionFromSpecifications,
-	getThumbnailByProductAttachment,
-	showAppImage,
-} from '../../../../../../utils/util';
+} from '../../../../../enums/Product';
+import i18n from '../../../../../i18n';
+import {getProductVersionFromSpecifications} from '../../../../../utils/util';
 
 const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 	const navigate = useNavigate();
@@ -57,9 +53,7 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 						<img
 							alt="App Logo"
 							className="solution-details-page-icon"
-							src={showAppImage(
-								getThumbnailByProductAttachment(product.images)
-							)}
+							src={product.thumbnail}
 						/>
 					</div>
 

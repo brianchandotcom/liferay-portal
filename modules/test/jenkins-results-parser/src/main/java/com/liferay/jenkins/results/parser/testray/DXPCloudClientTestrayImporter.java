@@ -11,6 +11,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 
 import java.time.LocalDate;
@@ -64,16 +66,8 @@ public class DXPCloudClientTestrayImporter {
 
 		TestrayBuild testrayBuild = _getTestrayBuild();
 
-		if (_testrayServerURL.contains("testray.liferay.com")) {
-			JenkinsResultsParserUtil.HTTPAuthorization httpAuthorization = null;
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
-				!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserPassword)) {
-
-				httpAuthorization =
-					new JenkinsResultsParserUtil.BasicHTTPAuthorization(
-						_testrayUserPassword, _testrayUserName);
-			}
+		if (testrayBuild instanceof Testray1TestrayBuild) {
+			TestrayServer testrayServer = testrayBuild.getTestrayServer();
 
 			JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
@@ -83,7 +77,7 @@ public class DXPCloudClientTestrayImporter {
 					"results=",
 					URLEncoder.encode(Dom4JUtil.format(rootElement), "UTF-8"),
 					"&type=poshi"),
-				httpAuthorization);
+				testrayServer.getHTTPAuthorization());
 		}
 		else {
 			File testrayResultsDir = new File("testray-results");
@@ -493,12 +487,32 @@ public class DXPCloudClientTestrayImporter {
 		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
 			_testrayServerURL);
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
+		if ((testrayServer instanceof Testray1TestrayServer) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
 			!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserPassword)) {
 
 			testrayServer.setHTTPAuthorization(
 				new JenkinsResultsParserUtil.BasicHTTPAuthorization(
 					_testrayUserPassword, _testrayUserName));
+		}
+		else if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					_testrayOAuth2ClientId) &&
+				 !JenkinsResultsParserUtil.isNullOrEmpty(
+					 _testrayOAuth2ClientSecret)) {
+
+			URL tokenURL;
+
+			try {
+				tokenURL = new URL(testrayServer.getURL() + "/o/oauth2/token");
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+
+			testrayServer.setHTTPAuthorization(
+				new JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization(
+					_testrayOAuth2ClientId, _testrayOAuth2ClientSecret,
+					tokenURL));
 		}
 
 		TestrayProject testrayProject = testrayServer.getTestrayProjectByName(
@@ -624,6 +638,21 @@ public class DXPCloudClientTestrayImporter {
 			_testrayComponentName = testrayComponentName;
 		}
 
+		String testrayOAuth2ClientId = _getEnvVarValue("testrayOAuth2ClientId");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayOAuth2ClientId)) {
+			_testrayOAuth2ClientId = testrayOAuth2ClientId;
+		}
+
+		String testrayOAuth2ClientSecret = _getEnvVarValue(
+			"testrayOAuth2ClientSecret");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				testrayOAuth2ClientSecret)) {
+
+			_testrayOAuth2ClientSecret = testrayOAuth2ClientSecret;
+		}
+
 		String testrayProductVersion = _getEnvVarValue("testrayProductVersion");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayProductVersion)) {
@@ -728,6 +757,8 @@ public class DXPCloudClientTestrayImporter {
 	private static String _testrayBuildSHA;
 	private static Integer _testrayCasePriority = 1;
 	private static String _testrayComponentName = "DXP Cloud Client Component";
+	private static String _testrayOAuth2ClientId;
+	private static String _testrayOAuth2ClientSecret;
 	private static String _testrayProductVersion = "1.x";
 	private static String _testrayProjectName = "DXP Cloud Client";
 	private static String _testrayReleaseName = "production";

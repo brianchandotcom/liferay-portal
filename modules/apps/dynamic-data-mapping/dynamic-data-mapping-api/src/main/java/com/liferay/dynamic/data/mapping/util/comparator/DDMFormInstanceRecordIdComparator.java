@@ -22,10 +22,6 @@ public class DDMFormInstanceRecordIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"formInstanceRecordId"};
 
-	public DDMFormInstanceRecordIdComparator() {
-		this(false);
-	}
-
 	public DDMFormInstanceRecordIdComparator(boolean ascending) {
 		_ascending = ascending;
 	}

@@ -21,10 +21,6 @@ public class DDMFormInstanceNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public DDMFormInstanceNameComparator() {
-		this(false);
-	}
-
 	public DDMFormInstanceNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}

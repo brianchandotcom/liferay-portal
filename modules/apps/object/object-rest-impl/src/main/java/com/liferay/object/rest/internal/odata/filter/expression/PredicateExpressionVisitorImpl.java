@@ -705,7 +705,6 @@ public class PredicateExpressionVisitorImpl
 			}
 
 			if (Objects.equals(entityType, EntityField.Type.ID) &&
-				Objects.equals(DBManagerUtil.getDBType(), DBType.POSTGRESQL) &&
 				Validator.isNumber(String.valueOf(right))) {
 
 				return GetterUtil.getLong(right);

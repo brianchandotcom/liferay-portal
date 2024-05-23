@@ -1,20 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EventInput should render 1`] = `
-<div>
+<div
+  aria-hidden="true"
+  data-aria-hidden="true"
+>
   <div
     class="criteria-statement"
   >
     <div
-      aria-hidden="true"
       class="form-group form-group-autofit"
-      data-aria-hidden="true"
     >
+      <div
+        aria-hidden="true"
+        class="form-group-item font-weight-semibold text-secondary form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
+      >
+        Individual
+      </div>
       <div
         aria-hidden="true"
         data-aria-hidden="true"
       >
-        test
+        has / has not
       </div>
       <div
         aria-hidden="true"
@@ -119,34 +127,30 @@ exports[`EventInput should render 1`] = `
       data-aria-hidden="true"
     >
       <div
-        aria-hidden="true"
         class="form-group-item conjunction form-group-item-label form-group-item-shrink"
-        data-aria-hidden="true"
       >
-        where
+        where attribute
       </div>
       <div
         class="form-group-item form-group-item-shrink"
       >
-        <button
-          aria-activedescendant="2"
-          aria-controls="clay-id-8"
-          aria-expanded="true"
-          aria-haspopup="listbox"
-          aria-owns="clay-id-8"
-          class="form-control form-control-select form-control-select-secondary attribute-input show"
-          role="combobox"
-          style=""
-          tabindex="0"
-          type="button"
+        <div
+          class="dropdown"
         >
-          displayName-2
-        </button>
+          <button
+            aria-controls="clay-dropdown-menu-1"
+            aria-expanded="true"
+            aria-haspopup="true"
+            class="dropdown-toggle form-control form-control-select form-control-select-secondary btn btn-secondary"
+            style=""
+            type="button"
+          >
+            displayName-2
+          </button>
+        </div>
       </div>
       <div
-        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
-        data-aria-hidden="true"
       >
         <button
           aria-activedescendant=""
@@ -156,12 +160,12 @@ exports[`EventInput should render 1`] = `
           role="combobox"
           tabindex="0"
           type="button"
-        />
+        >
+          contains
+        </button>
       </div>
       <div
-        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
-        data-aria-hidden="true"
       >
         <input
           class="input-root form-control"

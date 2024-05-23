@@ -35,8 +35,8 @@ public class UserLastLoginDateCallback implements Indexable.Callback {
 
 		Document document = _baseModelDocumentFactory.createDocument(user);
 
-		document.addDate("lastLoginDate", user.getLastLoginDate());
 		document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
+		document.addDate("lastLoginDate", user.getLastLoginDate());
 
 		_updateDocumentIndexWriter.updateDocumentPartially(
 			user.getCompanyId(), document, false);

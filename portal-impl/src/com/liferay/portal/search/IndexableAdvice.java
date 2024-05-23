@@ -57,7 +57,7 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 
 		return new IndexableContext(
-			returnType.getName(), indexable.type(), indexable.callbackKey(),
+			indexable.callbackKey(), returnType.getName(), indexable.type(),
 			_getServiceContextParameterIndex(method));
 	}
 
@@ -188,12 +188,12 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 	private static class IndexableContext {
 
 		private IndexableContext(
-			String name, IndexableType indexableType, String callbackKey,
+			String callbackKey, String name, IndexableType indexableType,
 			int serviceContextIndex) {
 
+			_callbackKey = callbackKey;
 			_name = name;
 			_indexableType = indexableType;
-			_callbackKey = callbackKey;
 			_serviceContextIndex = serviceContextIndex;
 		}
 

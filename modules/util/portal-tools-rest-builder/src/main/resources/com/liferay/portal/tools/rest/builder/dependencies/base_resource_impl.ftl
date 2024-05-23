@@ -288,9 +288,9 @@ public abstract class Base${schemaName}ResourceImpl
 					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
 
 					<@updateResourcePermissions
-						groupId="getPermissionCheckerGroupId(${schemaVarName}Id)"
-						resourceId="resourceId"
-						resourceName="resourceName"
+						groupId = "getPermissionCheckerGroupId(${schemaVarName}Id)"
+						resourceId = "resourceId"
+						resourceName = "resourceName"
 					>
 						<@getActions
 							resourceId="resourceId"
@@ -307,9 +307,9 @@ public abstract class Base${schemaName}ResourceImpl
 				String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
 				<@updateResourcePermissions
-					groupId="assetLibraryId"
-					resourceId="assetLibraryId"
-					resourceName="portletName"
+					groupId = "assetLibraryId"
+					resourceId = "assetLibraryId"
+					resourceName = "portletName"
 				>
 					<@getActions
 						resourceId="assetLibraryId"
@@ -323,9 +323,9 @@ public abstract class Base${schemaName}ResourceImpl
 				String portletName = getPermissionCheckerPortletName(siteId);
 
 				<@updateResourcePermissions
-					groupId="siteId"
-					resourceId="siteId"
-					resourceName="portletName"
+					groupId = "siteId"
+					resourceId = "siteId"
+					resourceName = "portletName"
 				>
 					<@getActions
 						resourceId="siteId"
@@ -457,8 +457,8 @@ public abstract class Base${schemaName}ResourceImpl
 						</#if>
 
 						<@getPOSTBatchJavaMethodParameters
-							javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
-							schemaVarName=schemaVarName
+							javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+							schemaVarName = schemaVarName
 						/>
 
 						);
@@ -482,8 +482,8 @@ public abstract class Base${schemaName}ResourceImpl
 								</#if>
 
 								<@getPOSTBatchJavaMethodParameters
-									javaMethodParameters=postParentBatchJavaMethodSignature.javaMethodParameters
-									schemaVarName=schemaVarName
+									javaMethodParameters = postParentBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName = schemaVarName
 								/>
 
 								);
@@ -517,8 +517,8 @@ public abstract class Base${schemaName}ResourceImpl
 								</#if>
 
 								<@getPOSTBatchJavaMethodParameters
-									javaMethodParameters=postParentByERCBatchJavaMethodSignature.javaMethodParameters
-									schemaVarName=schemaVarName
+									javaMethodParameters = postParentByERCBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName = schemaVarName
 								/>
 
 								);
@@ -550,8 +550,8 @@ public abstract class Base${schemaName}ResourceImpl
 							</#if>
 
 							<@getPOSTBatchJavaMethodParameters
-								javaMethodParameters=postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
-								schemaVarName=schemaVarName
+								javaMethodParameters = postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+								schemaVarName = schemaVarName
 							/>
 
 							);
@@ -578,8 +578,8 @@ public abstract class Base${schemaName}ResourceImpl
 							</#if>
 
 							<@getPOSTBatchJavaMethodParameters
-								javaMethodParameters=postSiteBatchJavaMethodSignature.javaMethodParameters
-								schemaVarName=schemaVarName
+								javaMethodParameters = postSiteBatchJavaMethodSignature.javaMethodParameters
+								schemaVarName = schemaVarName
 							/>
 
 							);
@@ -621,8 +621,8 @@ public abstract class Base${schemaName}ResourceImpl
 									</#if>
 
 									<@castParameters
-										type=javaMethodParameter.parameterType
-										value="${javaMethodParameter.parameterName}"
+										type = javaMethodParameter.parameterType
+										value = "${javaMethodParameter.parameterName}"
 									/>
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 									${schemaVarName}
@@ -659,8 +659,8 @@ public abstract class Base${schemaName}ResourceImpl
 											</#if>
 
 											<@castParameters
-												type=javaMethodParameter.parameterType
-												value="${javaMethodParameter.parameterName}"
+												type = javaMethodParameter.parameterType
+												value = "${javaMethodParameter.parameterName}"
 											/>
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 											${schemaVarName}
@@ -689,8 +689,8 @@ public abstract class Base${schemaName}ResourceImpl
 											</#if>
 
 											<@castParameters
-												type=javaMethodParameter.parameterType
-												value="${schemaVarName}Id"
+												type = javaMethodParameter.parameterType
+												value = "${schemaVarName}Id"
 											/>
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 											null
@@ -710,8 +710,8 @@ public abstract class Base${schemaName}ResourceImpl
 										persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
 
 										<@getPOSTBatchJavaMethodParameters
-											javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
-											schemaVarName=schemaVarName
+											javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+											schemaVarName = schemaVarName
 										/>
 
 										);
@@ -725,8 +725,8 @@ public abstract class Base${schemaName}ResourceImpl
 												persisted${schemaName} = ${postParentBatchJavaMethodSignature.methodName}(
 
 												<@getPOSTBatchJavaMethodParameters
-													javaMethodParameters=postParentBatchJavaMethodSignature.javaMethodParameters
-													schemaVarName=schemaVarName
+													javaMethodParameters = postParentBatchJavaMethodSignature.javaMethodParameters
+													schemaVarName = schemaVarName
 												/>
 
 												);
@@ -748,8 +748,8 @@ public abstract class Base${schemaName}ResourceImpl
 												persisted${schemaName} = ${postParentByERCBatchJavaMethodSignature.methodName}(
 
 												<@getPOSTBatchJavaMethodParameters
-													javaMethodParameters=postParentByERCBatchJavaMethodSignature.javaMethodParameters
-													schemaVarName=schemaVarName
+													javaMethodParameters = postParentByERCBatchJavaMethodSignature.javaMethodParameters
+													schemaVarName = schemaVarName
 												/>
 
 												);
@@ -764,8 +764,8 @@ public abstract class Base${schemaName}ResourceImpl
 												persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
 
 												<@getPOSTBatchJavaMethodParameters
-													javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
-													schemaVarName=schemaVarName
+													javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+													schemaVarName = schemaVarName
 												/>
 
 												);
@@ -784,8 +784,8 @@ public abstract class Base${schemaName}ResourceImpl
 											persisted${schemaName} = ${postAssetLibraryBatchJavaMethodSignature.methodName}(
 
 											<@getPOSTBatchJavaMethodParameters
-												javaMethodParameters=postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
-												schemaVarName=schemaVarName
+												javaMethodParameters = postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+												schemaVarName = schemaVarName
 											/>
 
 											);
@@ -801,8 +801,8 @@ public abstract class Base${schemaName}ResourceImpl
 											persisted${schemaName} = ${postSiteBatchJavaMethodSignature.methodName}(
 
 											<@getPOSTBatchJavaMethodParameters
-												javaMethodParameters=postSiteBatchJavaMethodSignature.javaMethodParameters
-												schemaVarName=schemaVarName
+												javaMethodParameters = postSiteBatchJavaMethodSignature.javaMethodParameters
+												schemaVarName = schemaVarName
 											/>
 
 											);
@@ -899,7 +899,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					if (parameters.containsKey("assetLibraryId")) {
 						return ${getAssetLibraryBatchJavaMethodSignature.methodName}(
-							<@getGETBatchJavaMethodParameters javaMethodParameters=getAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
+							<@getGETBatchJavaMethodParameters javaMethodParameters = getAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
 						);
 					}
 					else
@@ -909,7 +909,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					if (parameters.containsKey("siteId")) {
 						return ${getSiteBatchJavaMethodSignature.methodName}(
-							<@getGETBatchJavaMethodParameters javaMethodParameters=getSiteBatchJavaMethodSignature.javaMethodParameters />
+							<@getGETBatchJavaMethodParameters javaMethodParameters = getSiteBatchJavaMethodSignature.javaMethodParameters />
 						);
 					}
 					else
@@ -923,7 +923,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"}")) {
 							return ${parentBatchJavaMethodSignature.methodName}(
-								<@getGETBatchJavaMethodParameters javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters />
+								<@getGETBatchJavaMethodParameters javaMethodParameters = parentBatchJavaMethodSignature.javaMethodParameters />
 							);
 						}
 						else
@@ -936,7 +936,7 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					return ${getBatchJavaMethodSignature.methodName}(
-						<@getGETBatchJavaMethodParameters javaMethodParameters=getBatchJavaMethodSignature.javaMethodParameters />
+						<@getGETBatchJavaMethodParameters javaMethodParameters = getBatchJavaMethodSignature.javaMethodParameters />
 					);
 
 					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature?? || getParentBatchJavaMethodSignatures?has_content>
@@ -1001,8 +1001,8 @@ public abstract class Base${schemaName}ResourceImpl
 							</#if>
 
 							<@castParameters
-								type=javaMethodParameter.parameterType
-								value="${schemaVarName}Id"
+								type = javaMethodParameter.parameterType
+								value = "${schemaVarName}Id"
 							/>
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 							null
@@ -1043,13 +1043,13 @@ public abstract class Base${schemaName}ResourceImpl
 							</#if>
 
 							<@castParameters
-								type=javaMethodParameter.parameterType
-								value="${schemaVarName}Id"
+								type = javaMethodParameter.parameterType
+								value = "${schemaVarName}Id"
 							/>
 						<#elseif putBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putBatchJavaMethodSignature.parentSchemaName?uncap_first + "Id")>
 							<@castParameters
-								type=javaMethodParameter.parameterType
-								value="${javaMethodSignature.parentSchemaName?uncap_first}Id"
+								type = javaMethodParameter.parameterType
+								value = "${javaMethodSignature.parentSchemaName?uncap_first}Id"
 							/>
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 							null
@@ -1553,8 +1553,8 @@ public abstract class Base${schemaName}ResourceImpl
 			${javaMethodParameter.parameterName}
 		<#else>
 			<@castParameters
-				type=javaMethodParameter.parameterType
-				value=javaMethodParameter.parameterName
+				type = javaMethodParameter.parameterType
+				value = javaMethodParameter.parameterName
 			/>
 		</#if>
 
@@ -1571,8 +1571,8 @@ public abstract class Base${schemaName}ResourceImpl
 			${schemaVarName}
 		<#else>
 			<@castParameters
-				type=javaMethodParameter.parameterType
-				value=javaMethodParameter.parameterName
+				type = javaMethodParameter.parameterType
+				value = javaMethodParameter.parameterName
 			/>
 		</#if>
 

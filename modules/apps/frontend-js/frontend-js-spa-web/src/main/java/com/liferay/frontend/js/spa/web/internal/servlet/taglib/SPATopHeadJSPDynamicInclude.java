@@ -55,12 +55,12 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		JSONArray excludedPathsJSONArray =
 			spaHelper.getExcludedPathsJSONArray();
 
-		String urlPath = _portal.getCurrentURL(httpServletRequest);
+		String currentURL = _portal.getCurrentURL(httpServletRequest);
 
 		for (Object excludedPath : excludedPathsJSONArray) {
 			String excludedPathString = excludedPath.toString();
 
-			if (excludedPathString.equals(urlPath)) {
+			if (excludedPathString.equals(currentURL)) {
 				return;
 			}
 		}

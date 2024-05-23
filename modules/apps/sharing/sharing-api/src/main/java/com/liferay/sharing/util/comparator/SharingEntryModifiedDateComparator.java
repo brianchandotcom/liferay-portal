@@ -29,10 +29,6 @@ public class SharingEntryModifiedDateComparator
 		"modifiedDate", "sharingEntryId"
 	};
 
-	public SharingEntryModifiedDateComparator() {
-		this(false);
-	}
-
 	public SharingEntryModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}

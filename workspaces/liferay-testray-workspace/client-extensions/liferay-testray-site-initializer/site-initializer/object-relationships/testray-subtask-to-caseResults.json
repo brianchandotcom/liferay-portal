@@ -1,5 +1,5 @@
 {
-	"deletionType": "cascade",
+	"deletionType": "disassociate",
 	"label": {
 		"en-US": "Testray Case Result"
 	},

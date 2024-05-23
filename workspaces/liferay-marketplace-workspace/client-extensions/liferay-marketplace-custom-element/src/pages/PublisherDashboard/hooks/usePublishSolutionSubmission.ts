@@ -4,6 +4,7 @@
  */
 
 import {Dispatch} from 'react';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
 import {UploadedFile} from '../../../components/FileList/FileList';
 import {
@@ -130,6 +131,11 @@ const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
 	dispatch: Dispatch<AppActions>
 ) => {
+	const {productId} = useParams();
+	const location = useLocation();
+
+	const navigate = useNavigate();
+
 	const syncProfile = async (config: ProductConfig) => {
 		const {
 			_product,
@@ -354,8 +360,10 @@ const usePublishSolutionSubmission = (
 	const onSaveSolution = async (config: ProductConfig) => {
 		dispatch({payload: true, type: SolutionTypes.SET_LOADING});
 
+		let product;
+
 		try {
-			const product = await syncProfile(config);
+			product = await syncProfile(config);
 
 			for (const sync of [
 				deleteReferences,
@@ -369,13 +377,14 @@ const usePublishSolutionSubmission = (
 		catch (error) {
 			console.error(error);
 		}
-		finally {
-			dispatch({payload: false, type: SolutionTypes.SET_LOADING});
-		}
+
+		dispatch({payload: false, type: SolutionTypes.SET_LOADING});
+
+		return product;
 	};
 
 	const onSaveAsDraft = async () => {
-		await onSaveSolution({isDraft: true});
+		const product = await onSaveSolution({isDraft: true});
 
 		Liferay.Util.openToast({
 			message: i18n.sub('x-saved-as-a-draft-successfully', [
@@ -384,6 +393,15 @@ const usePublishSolutionSubmission = (
 			title: '',
 			type: 'info',
 		});
+
+		if (!productId) {
+			navigate(
+				location.pathname.replace(
+					/\/publisher\//,
+					`/${product.productId}/publisher/`
+				)
+			);
+		}
 	};
 
 	const onSave = async () => {

@@ -141,7 +141,8 @@ export default function TranslationFilter({
 						if (
 							(translationProgress?.translatedItems[
 								selectedLanguageId
-							] ?? 0) < (translationProgress?.totalItems ?? -1)
+							] ?? 0) <
+							(translationProgress?.totalItems ?? 0) - 1
 						) {
 							contentWrapper.hidden = false;
 						}

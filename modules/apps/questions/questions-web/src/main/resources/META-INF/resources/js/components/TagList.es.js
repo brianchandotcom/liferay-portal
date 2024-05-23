@@ -21,6 +21,7 @@ export default withRouter(({tags = [], sectionTitle = ''}) => {
 					<ClayLabel displayType="secondary">
 						<Link
 							key={tag}
+							slugTo={false}
 							to={`/questions/${sectionTitle}?selectedtags=${tag}&taggedwith=some-specific-tag`}
 						>
 							{tag}

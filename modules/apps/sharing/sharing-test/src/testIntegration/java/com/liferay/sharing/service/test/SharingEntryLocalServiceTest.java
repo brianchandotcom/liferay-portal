@@ -981,7 +981,7 @@ public class SharingEntryLocalServiceTest {
 		List<SharingEntry> sharingEntries =
 			_sharingEntryLocalService.getFromUserSharingEntries(
 				_fromUser.getUserId(), classNameId, 0, 2,
-				new SharingEntryModifiedDateComparator());
+				new SharingEntryModifiedDateComparator(false));
 
 		Assert.assertEquals(
 			sharingEntries.toString(), 1, sharingEntries.size());

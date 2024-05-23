@@ -394,7 +394,7 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 			<div
 				className={`${CLASSNAME}-tooltip bb-tooltip-container`}
 				ref={_tooltipRef}
-				style={{left, top}}
+				style={{left, position: 'absolute', top}}
 			>
 				<ChartTooltip header={[{columns: header}]} rows={rows} />
 			</div>,

@@ -247,15 +247,3 @@ $height: 40px;
 		}
 	}
 }
-
-#{$c}-tooltip {
-	pointer-events: none;
-
-	&.bb-tooltip-container {
-		border-width: 0;
-
-		&:after {
-			@include tooltip-arrow-bottom;
-		}
-	}
-}

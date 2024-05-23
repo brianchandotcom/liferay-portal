@@ -7,7 +7,7 @@ import {constants} from 'fs';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
-import getRootDir from './getRootDir.mjs';
+import {getRootDir} from './constants.mjs';
 
 export default async function writeTimings(start, endConfig) {
 	const {LIFERAY_NPM_SCRIPTS_TIMING} = process.env;

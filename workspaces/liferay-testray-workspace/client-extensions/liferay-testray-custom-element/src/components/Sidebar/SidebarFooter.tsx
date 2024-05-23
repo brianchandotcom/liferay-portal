@@ -30,7 +30,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 		? `${myUserAccount?.givenName} ${myUserAccount?.familyName}`
 		: Liferay.ThemeDisplay.getUserName();
 
-	const redirect = () => {
+	const logout = () => {
 		fetch(`${window.location.origin}/c/portal/logout`);
 		window.location.href = 'https://login.liferay.com/login/signout';
 	};
@@ -112,7 +112,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							{
 								icon: 'logout',
 								label: i18n.translate('sign-out'),
-								onClick: () => redirect(),
+								onClick: () => logout(),
 							},
 						],
 						title: '',

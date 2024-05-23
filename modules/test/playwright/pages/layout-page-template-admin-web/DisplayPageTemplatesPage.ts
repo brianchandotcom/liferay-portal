@@ -27,16 +27,28 @@ export class DisplayPageTemplatesPage {
 		);
 	}
 
-	async publishNewTemplate(name: string) {
+	async publishNewTemplate({
+		contentSubtype,
+		contentType,
+		name,
+	}: {
+		contentSubtype?: 'Basic Web Content';
+		contentType: 'Web Content Article' | 'Blogs Entry';
+		name: string;
+	}) {
 		await this.newButton.click();
 		await this.page.getByRole('button', {name: 'Blank'}).click();
 		await this.page.getByLabel('Name').fill(name);
 		await this.page
 			.getByLabel('Content Type')
-			.selectOption({label: 'Web Content Article'});
-		await this.page
-			.getByLabel('Subtype')
-			.selectOption({label: 'Basic Web Content'});
+			.selectOption({label: contentType});
+
+		if (contentSubtype) {
+			await this.page
+				.getByLabel('Subtype')
+				.selectOption({label: contentSubtype});
+		}
+
 		await this.page.getByRole('button', {name: 'Save'}).click();
 		await this.publishButton.waitFor();
 		await this.publishButton.click();
@@ -46,7 +58,7 @@ export class DisplayPageTemplatesPage {
 		);
 	}
 
-	async clickMoreActions(name: string) {
+	private async clickMoreActions(name: string) {
 		await this.page
 			.locator(
 				'#_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_displayPagesSearchContainer .card-page-item'

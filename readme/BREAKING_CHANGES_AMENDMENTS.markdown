@@ -1,3 +1,27 @@
+# 6de9f9ce7bd603ca6b0dbb5035c359c2c9c2ed4f
+
+The original author did not include the breaking change message. The correct message should be:
+
+```
+LPS-196539 SF rename variable name
+
+# breaking
+
+## What portal-kernel/src/com/liferay/portal/kernel/theme/PortletDisplay.java
+
+Methods getPortletSetup() and setPortletSetup() were renamed.
+
+## Why
+
+Enforce variable name for PortletPreferences.
+
+## Alternatives
+
+Use getPortletPreferences() and setPortletPreferences() instead.
+```
+
+----
+
 # 3aa30f7e03264d3798731f301853ec4f952c3637
 
 The commit message does not have the complete file path. The correct message is:

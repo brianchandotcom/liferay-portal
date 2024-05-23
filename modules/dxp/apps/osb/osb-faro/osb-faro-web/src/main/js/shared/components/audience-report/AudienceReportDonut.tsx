@@ -172,6 +172,12 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 						content={(props: ITooltipContentProps) => (
 							<TooltipContent {...props} />
 						)}
+						wrapperStyle={{
+							border: '1px solid #CDCED9',
+							borderRadius: '3px',
+							maxWidth: 'none',
+							padding: '0'
+						}}
 					/>
 
 					<Legend

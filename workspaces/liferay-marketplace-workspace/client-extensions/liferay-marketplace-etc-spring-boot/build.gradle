@@ -19,6 +19,14 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
+bootRun {
+	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_ID", "<external-liferay-client-id>"
+	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "<external-liferay-client-secret>"
+	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "https://external-liferay.com"
+	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_TOKEN_URI", "https://external-liferay.com/o/oauth2/token"
+	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_USER_AGENT_CLIENT_ID", "not-available"
+}
+
 dependencies {
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "4.0.50"

@@ -1,6 +1,11 @@
 {
 	"cpu": 1,
 	"env": {
+		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-liferay-trial-client-id",
+		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-liferay-trial-client-secret",
+		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "@external-liferay-trial-uri",
+		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_TOKEN_URI": "@external-liferay-trial-uri-token",
+		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_USER_AGENT_CLIENT_ID": "not-available",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
 	},

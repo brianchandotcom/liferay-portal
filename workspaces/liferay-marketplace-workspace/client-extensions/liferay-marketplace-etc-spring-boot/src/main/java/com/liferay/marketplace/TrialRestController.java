@@ -20,27 +20,15 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
 
-import java.nio.charset.Charset;
-
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHeaders;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -68,24 +56,7 @@ public class TrialRestController extends BaseRestController {
 
 	@DeleteMapping("{orderId}")
 	public void delete(@RequestParam String orderId) throws Exception {
-		PortalInstanceResource portalInstanceResource =
-			_getPortalInstanceResource();
-
-		com.liferay.headless.portal.instances.client.pagination.Page
-			<PortalInstance> page =
-				portalInstanceResource.getPortalInstancesPage(true);
-
-		for (PortalInstance portalInstance : page.getItems()) {
-			if (Objects.equals(
-					portalInstance.getVirtualHost(),
-					orderId + "." + _trialDXPDomain)) {
-
-				portalInstanceResource.deletePortalInstance(
-					portalInstance.getPortalInstanceId());
-
-				break;
-			}
-		}
+		_deletePortalInstance(orderId);
 
 		_consoleService.deleteProject(orderId);
 
@@ -159,6 +130,8 @@ public class TrialRestController extends BaseRestController {
 				"Unable to set up cloud project for order " + orderId + ":",
 				exception);
 
+			_deletePortalInstance(String.valueOf(orderId));
+
 			_updateOrder(
 				HashMapBuilder.put(
 					"trial-error", exception.toString()
@@ -219,53 +192,28 @@ public class TrialRestController extends BaseRestController {
 		).toString();
 	}
 
-	private String _getOAuthAuthorization() throws Exception {
-		if ((_oauthAccessToken != null) &&
-			(System.currentTimeMillis() < (_oauthExpirationMillis - 15000))) {
+	private void _deletePortalInstance(String orderId) throws Exception {
+		PortalInstanceResource portalInstanceResource =
+			_getPortalInstanceResource();
 
-			return _oauthAccessToken;
+		com.liferay.headless.portal.instances.client.pagination.Page
+			<PortalInstance> page =
+				portalInstanceResource.getPortalInstancesPage(true);
+
+		for (PortalInstance portalInstance : page.getItems()) {
+			if (Objects.equals(
+					portalInstance.getVirtualHost(),
+					orderId + "." + _trialDXPDomain)) {
+
+				portalInstanceResource.deletePortalInstance(
+					portalInstance.getPortalInstanceId());
+
+				break;
+			}
 		}
 
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		HttpPost httpPost = new HttpPost(
-			new URL(_trialAuthURL) + "/o/oauth2/token");
-
-		httpPost.setEntity(
-			new UrlEncodedFormEntity(
-				Arrays.asList(
-					new BasicNameValuePair("client_id", _trialAuthClientId),
-					new BasicNameValuePair(
-						"client_secret", _trialAuthClientSecret),
-					new BasicNameValuePair(
-						"grant_type", "client_credentials"))));
-		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build();
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpPost)) {
-
-			StatusLine statusLine = closeableHttpResponse.getStatusLine();
-
-			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-				throw new Exception("Unable to get OAuth authorization");
-			}
-
-			JSONObject jsonObject = new JSONObject(
-				EntityUtils.toString(
-					closeableHttpResponse.getEntity(),
-					Charset.defaultCharset()));
-
-			_oauthExpirationMillis =
-				(jsonObject.getLong("expires_in") * 1000) +
-					System.currentTimeMillis();
-
-			_oauthAccessToken =
-				jsonObject.getString("token_type") + " " +
-					jsonObject.getString("access_token");
-
-			return _oauthAccessToken;
+		if (_log.isInfoEnabled()) {
+			_log.info("Virtual instance deleted for order " + orderId);
 		}
 	}
 
@@ -274,9 +222,11 @@ public class TrialRestController extends BaseRestController {
 
 		return PortalInstanceResource.builder(
 		).endpoint(
-			new URL(_trialAuthURL)
+			_externalLiferayTrialURI
 		).header(
-			HttpHeaders.AUTHORIZATION, _getOAuthAuthorization()
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"external-liferay-trial")
 		).build();
 	}
 
@@ -464,21 +414,13 @@ public class TrialRestController extends BaseRestController {
 	@Autowired
 	private ConsoleService _consoleService;
 
+	@Value("${external.liferay.trial.oauth2.headless.server.home.page.uri}")
+	private URL _externalLiferayTrialURI;
+
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
-	private String _oauthAccessToken;
-	private long _oauthExpirationMillis;
 	private OrderResource _orderResource;
-
-	@Value("${liferay.marketplace.trial.auth.client.id}")
-	private String _trialAuthClientId;
-
-	@Value("${liferay.marketplace.trial.auth.client.secret}")
-	private String _trialAuthClientSecret;
-
-	@Value("${liferay.marketplace.trial.auth.url}")
-	private String _trialAuthURL;
 
 	@Value("${liferay.marketplace.trial.dxp.domain}")
 	private String _trialDXPDomain;

@@ -195,7 +195,7 @@ public class UnsyncStringWriterTest extends BaseWriterTestCase {
 		Assert.assertNull(_stringBuilderField.get(unsyncStringWriter));
 
 		Assert.assertNotNull(stringBundler);
-		Assert.assertEquals(16, stringBundler.capacity());
+		Assert.assertEquals(0, stringBundler.capacity());
 
 		unsyncStringWriter = new UnsyncStringWriter(32);
 

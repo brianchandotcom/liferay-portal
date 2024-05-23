@@ -9,5 +9,9 @@ import {Link as RouterLink} from 'react-router-dom';
 import {stringToSlug} from '../utils/utils.es';
 
 export default function Link(props) {
-	return <RouterLink {...props} to={stringToSlug(props.to)} />;
+	return props.slugTo ? (
+		<RouterLink {...props} to={stringToSlug(props.to)} />
+	) : (
+		<RouterLink {...props} to={props.to} />
+	);
 }

@@ -429,6 +429,76 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	public void testMasterPageTemplateThemeSettingsAfterLayoutPropagation()
+		throws Exception {
+
+		LayoutSet prototypePrivateLayoutSet =
+			_layoutSetPrototypeGroup.getPrivateLayoutSet();
+
+		prototypePrivateLayoutSet.setThemeId(_MINIUM_THEME_ID);
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(prototypePrivateLayoutSet);
+
+		LayoutSet prototypePublicLayoutSet =
+			_layoutSetPrototypeGroup.getPublicLayoutSet();
+
+		prototypePublicLayoutSet.setThemeId(_MINIUM_THEME_ID);
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(prototypePublicLayoutSet);
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+				_layoutSetPrototype.getLayoutSetPrototypeId());
+
+		_layoutSetPrototype.setModifiedDate(new Date());
+
+		_layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				_layoutSetPrototype);
+
+		Layout siteTemplateMasterLayout = LayoutTestUtil.addTypeContentLayout(
+			_layoutSetPrototypeGroup, true, false);
+
+		Layout siteTemplateLayoutFromMasterLayout =
+			LayoutTestUtil.addTypeContentLayout(
+				_layoutSetPrototypeGroup, true, false,
+				siteTemplateMasterLayout.getPlid());
+
+		propagateChanges(group);
+
+		Layout siteMasterLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false,
+			siteTemplateMasterLayout.getFriendlyURL());
+
+		Layout siteLayoutFromMasterLayout =
+			LayoutLocalServiceUtil.getFriendlyURLLayout(
+				group.getGroupId(), false,
+				siteTemplateLayoutFromMasterLayout.getFriendlyURL());
+
+		Assert.assertEquals(
+			siteMasterLayout.getTheme(
+			).getThemeId(),
+			siteTemplateMasterLayout.getTheme(
+			).getThemeId());
+
+		Assert.assertEquals(
+			siteLayoutFromMasterLayout.getTheme(
+			).getThemeId(),
+			siteTemplateLayoutFromMasterLayout.getTheme(
+			).getThemeId());
+
+		Assert.assertEquals(
+			siteMasterLayout.getTheme(
+			).getThemeId(),
+			_MINIUM_THEME_ID);
+
+		Assert.assertEquals(
+			siteLayoutFromMasterLayout.getTheme(
+			).getThemeId(),
+			_MINIUM_THEME_ID);
+	}
+
+	@Test
 	public void testPortletDataPropagationWithLinkDisabled() throws Exception {
 		doTestPortletDataPropagation(false);
 	}

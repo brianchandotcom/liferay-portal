@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-
 export const config = {
 	name: 'frontend-data-set-views-web',
 	testDir: 'tests/frontend-data-set-views-web',

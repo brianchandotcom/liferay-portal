@@ -9,8 +9,8 @@ import {useState} from 'react';
 
 import './index.scss';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
-import {Submit} from '../../../../PublisherDashboard/pages/Solutions/NewSolutionFlow/pages';
-import SolutionsDetailsHeader from './SolutionDetailsHeader/SolutionDetailsHeader';
+import {Submit} from '../NewSolutionFlow/pages';
+import SolutionsDetailsHeader from '../components/SolutionDetailsHeader';
 
 export type Solution = {
 	attachmentTitle: string;
@@ -27,11 +27,10 @@ const NAVIGATION_BAR_OPTIONS = {
 };
 
 const SolutionsDetails = () => {
+	const [active, setActive] = useState(NAVIGATION_BAR_OPTIONS.DETAILS);
 	const [context] = useSolutionContext();
 
 	const {_product} = context;
-
-	const [active, setActive] = useState(NAVIGATION_BAR_OPTIONS.DETAILS);
 
 	return (
 		<div className="solutions-details-page-container w-100">

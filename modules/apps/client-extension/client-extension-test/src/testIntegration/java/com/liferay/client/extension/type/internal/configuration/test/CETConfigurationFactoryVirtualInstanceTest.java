@@ -16,7 +16,6 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -67,6 +66,8 @@ public class CETConfigurationFactoryVirtualInstanceTest {
 
 		_autoCloseables.add(
 			() -> CompanyLocalServiceUtil.deleteCompany(company));
+
+		_virtualInstanceCompanyId = company.getCompanyId();
 	}
 
 	@AfterClass
@@ -88,14 +89,11 @@ public class CETConfigurationFactoryVirtualInstanceTest {
 
 	@Test
 	public void testCETFactoryWithVirtualInstanceAndFF() throws Exception {
-		Company company = _companyLocalService.fetchCompanyByVirtualHost(
-			_VIRTUAL_HOSTNAME);
-
 		FeatureFlagTestHelper featureFlagTestHelper =
 			new FeatureFlagTestHelper();
 
 		featureFlagTestHelper.setFeatureFlagValue(
-			company.getCompanyId(), "LPS-202104", true);
+			_virtualInstanceCompanyId, "LPS-202104", true);
 
 		String liferayMode = SystemProperties.get("liferay.mode");
 
@@ -153,7 +151,7 @@ public class CETConfigurationFactoryVirtualInstanceTest {
 			_autoCloseables.add(
 				() -> ConfigurationTestUtil.deleteConfiguration(configuration));
 
-			CET cet = _cetManager.getCET(company.getCompanyId(), "LXC:test");
+			CET cet = _cetManager.getCET(_virtualInstanceCompanyId, "LXC:test");
 
 			Assert.assertNotNull(cet);
 
@@ -162,7 +160,7 @@ public class CETConfigurationFactoryVirtualInstanceTest {
 			String filterString = StringBundler.concat(
 				"(&(javax.portlet.name=com_liferay_client_extension_web",
 				"_internal_portlet_ClientExtensionEntryPortlet_",
-				company.getCompanyId(), "_LXC_test)",
+				_virtualInstanceCompanyId, "_LXC_test)",
 				"(objectClass=javax.portlet.Portlet))");
 			int timeout = 10_000;
 
@@ -193,7 +191,7 @@ public class CETConfigurationFactoryVirtualInstanceTest {
 		}
 		finally {
 			featureFlagTestHelper.setFeatureFlagValue(
-				company.getCompanyId(), "LPS-202104", false);
+				_virtualInstanceCompanyId, "LPS-202104", false);
 			SystemProperties.set("liferay.mode", liferayMode);
 		}
 	}
@@ -205,11 +203,9 @@ public class CETConfigurationFactoryVirtualInstanceTest {
 
 	private static final List<AutoCloseable> _autoCloseables =
 		new ArrayList<>();
+	private static long _virtualInstanceCompanyId;
 
 	@Inject
 	private CETManager _cetManager;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 }

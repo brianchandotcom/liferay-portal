@@ -431,9 +431,9 @@ translationTest(
 
 		const noResultsWrapper = page.getByText('No Results Found');
 
-		await expect(fieldsWrapper).not.toBeVisible();
+		await expect(fieldsWrapper).toBeHidden();
 
-		await expect(metadataWapper).not.toBeVisible();
+		await expect(metadataWapper).toBeHidden();
 
 		await expect(noResultsWrapper).toBeVisible();
 
@@ -456,11 +456,11 @@ translationTest(
 			trigger: translationFilterButton,
 		});
 
-		await expect(fieldsWrapper).not.toBeVisible();
+		await expect(fieldsWrapper).toBeHidden();
 
 		await expect(metadataWapper).toBeVisible();
 
-		await expect(noResultsWrapper).not.toBeVisible();
+		await expect(noResultsWrapper).toBeHidden();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -472,9 +472,25 @@ translationTest(
 
 		await expect(fieldsWrapper).toBeVisible();
 
-		await expect(metadataWapper).not.toBeVisible();
+		await expect(metadataWapper).toBeHidden();
 
-		await expect(noResultsWrapper).not.toBeVisible();
+		await expect(noResultsWrapper).toBeHidden();
+
+		await journalEditArticlePage.fillContent(getRandomString());
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Untranslated',
+			}),
+			trigger: translationFilterButton,
+		});
+
+		await expect(fieldsWrapper).toBeHidden();
+
+		await expect(metadataWapper).toBeHidden();
+
+		await expect(noResultsWrapper).toBeVisible();
 	}
 );
 

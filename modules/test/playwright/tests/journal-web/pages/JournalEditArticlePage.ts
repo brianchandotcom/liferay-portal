@@ -83,6 +83,11 @@ export class JournalEditArticlePage {
 		await this.page.locator('body').click();
 	}
 
+	async fillContent(content: string) {
+		await this.journalPage.webContentBodyTextBox.fill(content);
+		await this.journalPage.webContentBodyTextBox.press('Backspace');
+	}
+
 	async fillTitle(title: string) {
 		await fillAndClickOutside(this.page, this.titlePlaceholder, title);
 	}

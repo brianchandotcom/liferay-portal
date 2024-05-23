@@ -1,0 +1,132 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.asset.publisher.upgrade.v1_0_5.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+
+import javax.portlet.PortletPreferences;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Balázs Sáfrány-Kovalik
+ */
+@RunWith(Arquillian.class)
+public class UpgradePortletPreferencesTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
+	}
+
+	@Test
+	public void testUpgrade() throws Exception {
+		String portletId = PortletIdCodec.encode(
+			AssetPublisherPortletKeys.ASSET_PUBLISHER, StringUtil.randomId());
+
+		LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), _layout, portletId, "column-1",
+			HashMapBuilder.put(
+				"anyClassType", new String[] {"select-more-than-one"}
+			).put(
+				"anyClassTypeDLFileEntryAssetRendererFactory",
+				new String[] {"select-more-than-one"}
+			).put(
+				"anyClassTypeJournalArticleAssetRendererFactory",
+				new String[] {"select-more-than-one"}
+			).build());
+
+		_runUpgrade();
+
+		PortletPreferences portletPreferences =
+			LayoutTestUtil.getPortletPreferences(_layout, portletId);
+
+		String anyClassType = portletPreferences.getValue("anyClassType", null);
+
+		Assert.assertEquals(Boolean.FALSE.toString(), anyClassType);
+
+		String anyClassTypeDLFileEntryAssetRendererFactory =
+			portletPreferences.getValue(
+				"anyClassTypeDLFileEntryAssetRendererFactory", null);
+
+		Assert.assertEquals(
+			Boolean.FALSE.toString(),
+			anyClassTypeDLFileEntryAssetRendererFactory);
+
+		String anyClassTypeJournalArticleAssetRendererFactory =
+			portletPreferences.getValue(
+				"anyClassTypeJournalArticleAssetRendererFactory", null);
+
+		Assert.assertEquals(
+			Boolean.FALSE.toString(),
+			anyClassTypeJournalArticleAssetRendererFactory);
+	}
+
+	private void _runUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+		}
+	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.asset.publisher.web.internal.upgrade.v1_0_5." +
+			"UpgradePortletPreferences";
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.asset.publisher.web.internal.upgrade.registry.AssetPublisherWebUpgradeStepRegistrator))"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private Layout _layout;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
+}

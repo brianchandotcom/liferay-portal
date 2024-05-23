@@ -5,14 +5,16 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import java.net.URL;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class TestrayProductVersion {
+
+	public static final String[] FIELD_NAMES = {
+		"dateCreated", "dateModified", "id", "name"
+	};
 
 	public long getID() {
 		return _jsonObject.getLong("id");
@@ -32,10 +34,6 @@ public class TestrayProductVersion {
 
 	public TestrayServer getTestrayServer() {
 		return _testrayServer;
-	}
-
-	public URL getURL() {
-		return null;
 	}
 
 	protected TestrayProductVersion(

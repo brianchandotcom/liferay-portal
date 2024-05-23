@@ -609,9 +609,8 @@ public class TestrayImporter {
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
-						"Testray Product Version ",
-						String.valueOf(testrayProductVersion.getURL()),
-						" created in ",
+						"Testray Product Version '",
+						testrayProductVersion.getName(), "' created in ",
 						JenkinsResultsParserUtil.toDurationString(
 							System.currentTimeMillis() - start)));
 
@@ -2146,9 +2145,6 @@ public class TestrayImporter {
 			string = string.replace(
 				"$(testray.product.version.name)",
 				_fixSlackString(testrayProductVersion.getName()));
-			string = string.replace(
-				"$(testray.product.version.url)",
-				String.valueOf(testrayProductVersion.getURL()));
 		}
 
 		TestrayRoutine testrayRoutine = getTestrayRoutine(testBaseDir);

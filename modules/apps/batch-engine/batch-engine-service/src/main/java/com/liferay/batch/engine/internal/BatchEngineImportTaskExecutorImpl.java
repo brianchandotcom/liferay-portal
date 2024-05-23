@@ -34,6 +34,7 @@ import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -83,6 +84,16 @@ public class BatchEngineImportTaskExecutorImpl
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
 		boolean checkPermissions) {
 
+		long startTime = 0;
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Started batch engine import task with id : " +
+					batchEngineImportTask.getBatchEngineImportTaskId());
+
+			startTime = System.currentTimeMillis();
+		}
+
 		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
 			batchEngineImportTask.getCompanyId(),
 			CTCollectionThreadLocal.getCTCollectionId());
@@ -131,6 +142,14 @@ public class BatchEngineImportTaskExecutorImpl
 			// catching a Throwable
 
 			safeCloseable.close();
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Finished batch engine import task with id : ",
+					batchEngineImportTask.getBatchEngineImportTaskId(), " in ",
+					System.currentTimeMillis() - startTime, "ms"));
 		}
 	}
 

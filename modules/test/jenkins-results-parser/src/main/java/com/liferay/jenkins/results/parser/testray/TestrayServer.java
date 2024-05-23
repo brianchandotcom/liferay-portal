@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -25,6 +26,9 @@ import java.util.regex.Pattern;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -36,19 +40,76 @@ public class TestrayServer {
 	}
 
 	public TestrayCaseType getTestrayCaseType(String testrayCaseTypeName) {
-		return null;
+		try {
+			List<JSONObject> entityJSONObjects = requestGraphQL(
+				"casetypes", TestrayCaseType.FIELD_NAMES,
+				"name eq '" + testrayCaseTypeName + "'", 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			return TestrayFactory.newTestrayCaseType(
+				this, entityJSONObjects.get(0));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public TestrayProject getTestrayProjectByID(long projectID) {
-		return null;
+		try {
+			List<JSONObject> entityJSONObjects = requestGraphQL(
+				"projects", TestrayProject.FIELD_NAMES,
+				"id eq '" + projectID + "'", 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			return TestrayFactory.newTestrayProject(
+				this, entityJSONObjects.get(0));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public TestrayProject getTestrayProjectByName(String projectName) {
-		return null;
+		try {
+			List<JSONObject> entityJSONObjects = requestGraphQL(
+				"projects", TestrayProject.FIELD_NAMES,
+				"name eq '" + projectName + "'", 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			return TestrayFactory.newTestrayProject(
+				this, entityJSONObjects.get(0));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public List<TestrayProject> getTestrayProjects() {
-		return null;
+		List<TestrayProject> testrayProjects = new ArrayList<>();
+
+		try {
+			for (JSONObject entityJSONObject :
+					requestGraphQL(
+						"projects", TestrayProject.FIELD_NAMES, null, -1, 50)) {
+
+				testrayProjects.add(
+					TestrayFactory.newTestrayProject(this, entityJSONObject));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return testrayProjects;
 	}
 
 	public URL getURL() {
@@ -139,6 +200,94 @@ public class TestrayServer {
 		}
 
 		return getURL() + "/" + urlPath;
+	}
+
+	protected List<JSONObject> requestGraphQL(
+			String entityName, String[] entityFields, String filter,
+			long maxCount, int pageSize)
+		throws IOException {
+
+		if (maxCount < 0) {
+			maxCount = Long.MAX_VALUE;
+		}
+
+		if (pageSize <= 0) {
+			pageSize = 25;
+		}
+
+		if (pageSize >= maxCount) {
+			pageSize = (int)maxCount;
+		}
+
+		List<JSONObject> entityJSONObjects = new ArrayList<>();
+
+		int page = 0;
+
+		while (true) {
+			page++;
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("{\n");
+			sb.append("c {\n");
+
+			sb.append(entityName);
+			sb.append(" (page: ");
+			sb.append(page);
+			sb.append(", pageSize: ");
+			sb.append(pageSize);
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(filter)) {
+				sb.append(", filter: \"");
+				sb.append(filter);
+				sb.append("\"");
+			}
+
+			sb.append(") {\n");
+
+			sb.append("items {\n");
+
+			for (String entityField : entityFields) {
+				sb.append(entityField);
+				sb.append("\n");
+			}
+
+			sb.append("}\n");
+			sb.append("page\n");
+			sb.append("pageSize\n");
+			sb.append("lastPage\n");
+			sb.append("}\n");
+			sb.append("}\n");
+			sb.append("}");
+
+			JSONObject requestJSONObject = new JSONObject();
+
+			requestJSONObject.put("query", sb.toString());
+
+			JSONObject responseJSONObject = new JSONObject(
+				requestPost("/o/graphql", requestJSONObject.toString()));
+
+			JSONObject dataJSONObject = responseJSONObject.getJSONObject(
+				"data");
+
+			JSONObject cJSONObject = dataJSONObject.getJSONObject("c");
+
+			JSONObject entityJSONObject = cJSONObject.getJSONObject(entityName);
+
+			int lastPage = entityJSONObject.getInt("lastPage");
+
+			JSONArray itemsJSONArray = entityJSONObject.getJSONArray("items");
+
+			for (int i = 0; i < itemsJSONArray.length(); i++) {
+				entityJSONObjects.add(itemsJSONArray.getJSONObject(i));
+			}
+
+			if ((page == lastPage) || (entityJSONObjects.size() >= maxCount)) {
+				break;
+			}
+		}
+
+		return entityJSONObjects;
 	}
 
 	private void _importCaseResultsFromCI(TopLevelBuild topLevelBuild) {

@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOTE_TABLE_SVG_ELLIPSIS</td>
+	<td>//div[@class='dnd-table fixed table-style-fluid']//button[1]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_CONFIGURED_FROM_SPECIFIC</td>
 	<td>xpath=(//div[contains(@class,'dnd-tr')][.//div[contains(@class,'table-list-title') and contains(.,'${key_tableEntryName}')]]//div[contains(@class,'dnd-td')])[4]</td>
 	<td></td>

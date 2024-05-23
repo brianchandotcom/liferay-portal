@@ -144,17 +144,15 @@ function AddFDSFilterModalContent({
 				{!filter && <Component.Header />}
 			</ClayModal.Header>
 
-			<ClayModal.Body>
-				<Component.Body
-					closeModal={closeModal}
-					fdsFilterClientExtensions={fdsFilterClientExtensions}
-					fieldNames={fieldNames}
-					fields={fields}
-					filter={filter}
-					handleSave={(body: any) => handleFilterSave(body)}
-					namespace={namespace}
-				/>
-			</ClayModal.Body>
+			<Component.Body
+				closeModal={closeModal}
+				fdsFilterClientExtensions={fdsFilterClientExtensions}
+				fieldNames={fieldNames}
+				fields={fields}
+				filter={filter}
+				handleSave={(body: any) => handleFilterSave(body)}
+				namespace={namespace}
+			/>
 		</>
 	);
 }

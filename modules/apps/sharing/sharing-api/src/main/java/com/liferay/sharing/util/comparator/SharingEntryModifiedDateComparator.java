@@ -29,8 +29,14 @@ public class SharingEntryModifiedDateComparator
 		"modifiedDate", "sharingEntryId"
 	};
 
-	public SharingEntryModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public static SharingEntryModifiedDateComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _ASCENDING;
+		}
+
+		return _DESCENDING;
 	}
 
 	@Override
@@ -81,6 +87,16 @@ public class SharingEntryModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SharingEntryModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SharingEntryModifiedDateComparator _ASCENDING =
+		new SharingEntryModifiedDateComparator(true);
+
+	private static final SharingEntryModifiedDateComparator _DESCENDING =
+		new SharingEntryModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

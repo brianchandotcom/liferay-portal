@@ -30,7 +30,6 @@ import java.io.InputStream;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -46,19 +45,6 @@ public class DocumentShortcutResourceTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Override
-	@Test
-	public void testGetDocumentShortcut() throws Exception {
-		DocumentShortcut postDocumentShortcut = _addDocumentShortcut();
-
-		DocumentShortcut getDocumentShortcut =
-			documentShortcutResource.getDocumentShortcut(
-				postDocumentShortcut.getId());
-
-		assertEquals(postDocumentShortcut, getDocumentShortcut);
-		assertValid(getDocumentShortcut);
-	}
 
 	@Override
 	protected DocumentShortcut testGetDocumentShortcut_addDocumentShortcut()

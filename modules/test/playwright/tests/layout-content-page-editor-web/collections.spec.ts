@@ -15,6 +15,7 @@ import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import getRandomString from '../../utils/getRandomString';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
+import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 export const test = mergeTests(
@@ -133,3 +134,98 @@ testWithIsolatedSite(
 		);
 	}
 );
+
+test('checks Content Flags, Content Ratings and Content Display are compatible with Collection Display', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+
+	// Create definition for a collection mapped to Animals collection with Content Flags, Content Ratings and Display Content fragments.
+
+	const collectionName = 'Animals';
+
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		collectionName,
+		wemSite.friendlyUrlPath
+	);
+
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition(
+			getRandomString(),
+			'com.liferay.fragment.internal.renderer.ContentFlagsFragmentRenderer'
+		),
+		getFragmentDefinition(
+			getRandomString(),
+			'com.liferay.fragment.internal.renderer.ContentRatingsFragmentRenderer'
+		),
+		getFragmentDefinition(
+			getRandomString(),
+			'com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer'
+		),
+	]);
+
+	const collectionDefinition = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		pageElements: [animalsCollection],
+	});
+
+	// Create a content page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([collectionDefinition]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	// Go to edit mode of the created
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	// Check that the Content Display shows the content in each item
+
+	await expect(
+		await page.locator('.page-editor').getByText('Content', {exact: true})
+	).toHaveCount(2);
+	await expect(page.getByText('Animal 01 content')).toBeVisible();
+	await expect(page.getByText('Animal 02 content')).toBeVisible();
+
+	// Check that the Content Ratings is shown in each item and the Field input has the corresponding name
+
+	const voteItem = await page.getByLabel('Vote', {exact: true});
+
+	await expect(voteItem).toHaveCount(2);
+
+	await voteItem.first().click();
+
+	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
+		'Animal 01 - Dogs and Cats categories'
+	);
+
+	await voteItem.nth(1).click();
+
+	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
+		'Animal 02 - Dogs category'
+	);
+
+	// Check that the Content Flags is shown in each item and the Field input has the corresponding name
+
+	const reportItem = await page.locator('.taglib-flags');
+
+	await expect(reportItem).toHaveCount(2);
+
+	await reportItem.first().click();
+
+	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
+		'Animal 01 - Dogs and Cats categories'
+	);
+
+	await reportItem.nth(1).click();
+
+	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
+		'Animal 02 - Dogs category'
+	);
+});

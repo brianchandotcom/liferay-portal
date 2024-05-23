@@ -229,3 +229,69 @@ test('checks Content Flags, Content Ratings and Content Display are compatible w
 		'Animal 02 - Dogs category'
 	);
 });
+
+test('modifies inline text on all collection items', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+
+	// Create definition for a collection mapped to Animals collection
+
+	const collectionName = 'Animals';
+
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		collectionName,
+		wemSite.friendlyUrlPath
+	);
+
+	const headingId = getRandomString();
+
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition(headingId, 'BASIC_COMPONENT-heading'),
+	]);
+
+	const collectionDefinition = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		pageElements: [animalsCollection],
+	});
+
+	// Create a content page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([collectionDefinition]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	// Go to Page Contents panel and edit inline text
+
+	await pageEditorPage.goToSidebarTab('Page Content');
+
+	await page.getByLabel('Edit Text Heading Example').click();
+
+	const editable = pageEditorPage.getEditable(headingId, 'element-text');
+
+	await editable.locator('.cke_editable_inline').waitFor();
+
+	// Clear current content and fill with new one
+
+	await page.keyboard.press('Control+KeyA');
+	await page.keyboard.press('Backspace');
+
+	await page.keyboard.type('New Content');
+	await page.locator('body').click();
+
+	await pageEditorPage.waitForChangesSaved();
+
+	// Check that the inline text changes in all items of the collection
+
+	await expect(
+		await page.locator('.page-editor').getByText('New Content')
+	).toHaveCount(2);
+});

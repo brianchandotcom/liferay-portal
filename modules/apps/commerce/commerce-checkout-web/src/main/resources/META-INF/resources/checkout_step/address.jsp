@@ -22,7 +22,6 @@ long commerceAddressId = baseAddressCheckoutStepDisplayContext.getCommerceAddres
 CommerceAddress currentCommerceAddress = baseAddressCheckoutStepDisplayContext.getCommerceAddress(commerceAddressId);
 
 boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, accountEntry, AccountActionKeys.MANAGE_ADDRESSES);
-
 String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 %>
 

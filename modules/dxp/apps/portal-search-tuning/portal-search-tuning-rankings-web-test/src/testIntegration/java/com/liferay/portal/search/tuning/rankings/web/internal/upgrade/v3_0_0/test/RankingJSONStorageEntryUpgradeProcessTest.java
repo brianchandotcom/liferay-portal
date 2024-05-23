@@ -6,7 +6,7 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v3_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.test.BaseCTUpgradeProcessTestCase;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.json.storage.model.JSONStorageEntry;
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;

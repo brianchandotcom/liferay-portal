@@ -12,6 +12,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -20,9 +21,13 @@ import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.LayoutWrapper;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -30,20 +35,26 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -272,6 +283,37 @@ public class EditServerMVCActionCommandTest {
 	}
 
 	@Test
+	public void testProcessAction() throws Exception {
+		PermissionChecker permissionChecker = new PermissionCheckerWrapper(
+			ProxyFactory.newDummyInstance(PermissionChecker.class)) {
+
+			@Override
+			public boolean isOmniadmin() {
+				return true;
+			}
+
+		};
+
+		for (String command : _COMMANDS) {
+			_testProcessAction(command, permissionChecker);
+		}
+
+		permissionChecker = new PermissionCheckerWrapper(
+			ProxyFactory.newDummyInstance(PermissionChecker.class)) {
+
+			@Override
+			public boolean isCompanyAdmin() {
+				return true;
+			}
+
+		};
+
+		for (String command : _COMMANDS) {
+			_testProcessAction(command, permissionChecker);
+		}
+	}
+
+	@Test
 	public void testUpdateMail() {
 		javax.portlet.PortletPreferences portletPreferences =
 			PrefsPropsUtil.getPreferences(CompanyConstants.SYSTEM);
@@ -322,6 +364,86 @@ public class EditServerMVCActionCommandTest {
 		return _layoutRevisionLocalService.getLayoutRevision(
 			layoutSetBranch.getLayoutSetBranchId(),
 			layoutBranch.getLayoutBranchId(), _layout.getPlid());
+	}
+
+	private void _testProcessAction(
+			String cmd, PermissionChecker permissionChecker)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		mockLiferayPortletActionRequest.setMethod(HttpMethods.POST);
+
+		mockLiferayPortletActionRequest.addParameter(Constants.CMD, cmd);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(
+			new LayoutWrapper(ProxyFactory.newDummyInstance(Layout.class)) {
+
+				@Override
+				public boolean isTypeControlPanel() {
+					return true;
+				}
+
+			});
+		themeDisplay.setPermissionChecker(permissionChecker);
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		if (permissionChecker.isOmniadmin()) {
+			if (!cmd.equals("addLogLevel") &&
+				!cmd.equals("dlGenerateAudioPreviews") &&
+				!cmd.equals("dlGenerateOpenOfficePreviews") &&
+				!cmd.equals("dlGenerateVideoPreviews") &&
+				!cmd.equals("updateLogLevels") &&
+				!cmd.equals("updatePortalProperties")) {
+
+				try {
+					_mvcActionCommand.processAction(
+						mockLiferayPortletActionRequest,
+						mockLiferayPortletActionResponse);
+
+					Assert.fail(cmd + " should fail by CaptchaTextException");
+				}
+				catch (Exception exception) {
+					Throwable throwable = exception.getCause();
+
+					Assert.assertTrue(
+						"Test ProcessAction failed for " + cmd,
+						throwable instanceof CaptchaTextException);
+				}
+			}
+			else {
+				Assert.assertTrue(
+					"Test ProcessAction failed for " + cmd,
+					_mvcActionCommand.processAction(
+						mockLiferayPortletActionRequest,
+						mockLiferayPortletActionResponse));
+			}
+		}
+		else {
+			if (cmd.equals("updateMail") &&
+				permissionChecker.isCompanyAdmin()) {
+
+				Assert.assertTrue(
+					"Test ProcessAction failed for " + cmd,
+					_mvcActionCommand.processAction(
+						mockLiferayPortletActionRequest,
+						mockLiferayPortletActionResponse));
+			}
+			else {
+				Assert.assertFalse(
+					"Test ProcessAction failed for " + cmd,
+					_mvcActionCommand.processAction(
+						mockLiferayPortletActionRequest,
+						mockLiferayPortletActionResponse));
+			}
+		}
 	}
 
 	private void _testUpdateMailPortletPreferences(
@@ -429,6 +551,18 @@ public class EditServerMVCActionCommandTest {
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_USER, null));
 	}
 
+	private static final String[] _COMMANDS = {
+		"addLogLevel", "cacheDb", "cacheMulti", "cacheServlet", "cacheSingle",
+		"cleanUpAddToPagePermissions",
+		"cleanUpLayoutRevisionPortletPreferences",
+		"cleanUpOrphanedPortletPreferences", "convertProcess.",
+		"dlDeletePreviews", "dlGenerateAudioPreviews",
+		"dlGenerateOpenOfficePreviews", "dlGeneratePDFPreviews",
+		"dlGenerateVideoPreviews", "gc", "runScript", "shutdown", "threadDump",
+		"updateExternalServices", "updateLogLevels", "updateMail",
+		"updatePortalProperties", "updatePortalProperties"
+	};
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -461,6 +595,9 @@ public class EditServerMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/server_admin/edit_server")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private Portal _portal;

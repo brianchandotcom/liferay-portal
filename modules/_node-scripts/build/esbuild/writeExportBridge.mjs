@@ -6,7 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import getExportedSymbols from '../util/getExportedSymbols.mjs';
+import getExportedSymbols from '../../util/getExportedSymbols.mjs';
 import getExportBridgePath from './getExportBridgePath.mjs';
 
 /**

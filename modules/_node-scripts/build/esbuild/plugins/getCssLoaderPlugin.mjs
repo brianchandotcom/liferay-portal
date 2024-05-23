@@ -5,7 +5,7 @@
 
 import path from 'path';
 
-import getFlatName from '../../util/getFlatName.mjs';
+import getFlatName from '../../../util/getFlatName.mjs';
 import getPathPrefix from '../getPathPrefix.mjs';
 
 /**

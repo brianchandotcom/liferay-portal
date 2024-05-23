@@ -5,7 +5,7 @@
 
 import path from 'path';
 
-import {SRC_PATH} from '../../util/constants.mjs';
+import {SRC_PATH} from '../../../util/constants.mjs';
 
 /**
  * This plugin transforms `import from` statements for .scss files into JavaScript code that inserts

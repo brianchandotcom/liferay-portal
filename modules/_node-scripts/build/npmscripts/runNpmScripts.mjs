@@ -9,8 +9,8 @@ import * as fs from 'fs/promises';
 import path from 'path';
 import resolve from 'resolve';
 
-import {WORK_PATH} from '../util/constants.mjs';
-import onExit from '../util/onExit.mjs';
+import {WORK_PATH} from '../../util/constants.mjs';
+import onExit from '../../util/onExit.mjs';
 
 const DISABLE_BUILD_CONFIGS = ['babel', 'bundler', 'exports', 'main'];
 

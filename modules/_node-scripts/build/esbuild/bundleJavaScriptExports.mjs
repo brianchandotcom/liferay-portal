@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {BUILD_MAIN_EXPORTS_PATH} from '../util/constants.mjs';
-import getFlatName from '../util/getFlatName.mjs';
+import {BUILD_MAIN_EXPORTS_PATH} from '../../util/constants.mjs';
+import getFlatName from '../../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
 import getExternals from './getExternals.mjs';
 import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';

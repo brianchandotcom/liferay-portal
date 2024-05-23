@@ -5,16 +5,10 @@
 
 import projectScopeRequire from './projectScopeRequire.mjs';
 
-const cachedExportedSymbols = {};
-
 export default function getExportedSymbols(
 	overridenPackageSymbols,
 	moduleName
 ) {
-	if (cachedExportedSymbols[moduleName]) {
-		return cachedExportedSymbols;
-	}
-
 	let symbols;
 
 	try {

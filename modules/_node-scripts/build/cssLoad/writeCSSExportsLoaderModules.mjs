@@ -6,8 +6,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_NPM_EXPORTS_PATH} from '../util/constants.mjs';
-import getFlatName from '../util/getFlatName.mjs';
+import {BUILD_NPM_EXPORTS_PATH} from '../../util/constants.mjs';
+import getFlatName from '../../util/getFlatName.mjs';
 
 export default async function writeCSSExportsLoaderModules(
 	projectExports,

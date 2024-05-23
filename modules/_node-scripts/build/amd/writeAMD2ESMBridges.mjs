@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_RESOURCES_PATH} from '../util/constants.mjs';
+import {BUILD_RESOURCES_PATH} from '../../util/constants.mjs';
 
 export default async function writeAMD2ESMBridges(
 	projectDescription,

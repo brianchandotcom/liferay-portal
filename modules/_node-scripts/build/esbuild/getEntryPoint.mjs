@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import getFlatName from '../util/getFlatName.mjs';
+import getFlatName from '../../util/getFlatName.mjs';
 import getExportBridgePath from './getExportBridgePath.mjs';
 
 export default function getEntryPoint(moduleName) {

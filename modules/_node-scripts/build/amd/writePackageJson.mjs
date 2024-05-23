@@ -6,7 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_RESOURCES_PATH} from '../util/constants.mjs';
+import {BUILD_RESOURCES_PATH} from '../../util/constants.mjs';
 
 export default async function writePackageJson(projectDescription) {
 	const filePath = path.join(BUILD_RESOURCES_PATH, 'package.json');

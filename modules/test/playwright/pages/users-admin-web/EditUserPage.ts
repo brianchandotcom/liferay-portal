@@ -16,8 +16,16 @@ export class EditUserPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly membershipsAccountsTable: Locator;
 	readonly membershipsLink: Locator;
+	readonly organizationsLink: Locator;
 	readonly page: Page;
 	readonly passwordLink: Locator;
+	readonly selectOrganizationButton: Locator;
+	readonly selectOrganizationsTable: Locator;
+	readonly selectOrganizationsTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
 	readonly webDAVPasswordLabel: Locator;
 
 	constructor(page: Page) {
@@ -43,6 +51,10 @@ export class EditUserPage {
 			exact: true,
 			name: 'Memberships',
 		});
+		this.organizationsLink = page.getByRole('link', {
+			exact: true,
+			name: 'Organizations',
+		});
 		this.passwordLink = page.getByRole('link', {
 			exact: true,
 			name: 'Password',
@@ -51,5 +63,27 @@ export class EditUserPage {
 		this.webDAVPasswordLabel = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
 		);
+		this.selectOrganizationButton = page.locator(
+			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganizationLink'
+		);
+		this.selectOrganizationsTable = page
+			.frameLocator(
+				'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganization_iframe_'
+			)
+			.locator(
+				'#_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_entriesSearchContainer'
+			);
+		this.selectOrganizationsTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.selectOrganizationsTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
 	}
 }

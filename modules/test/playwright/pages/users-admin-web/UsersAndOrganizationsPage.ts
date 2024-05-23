@@ -41,7 +41,18 @@ export class UsersAndOrganizationsPage {
 	readonly pageTitle: Locator;
 	readonly exportUsersOptionsMenuItem: Locator;
 	readonly exportPersonalDataItem: Locator;
+	readonly impersonateUserMenuItem: Locator;
 	readonly manageCustomFieldsOptionsMenuItem: Locator;
+	readonly myOrganizationsMenuItem: Locator;
+	readonly myOrganizationsTable: Locator;
+	readonly myOrganizationsTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly myOrganizationsTableRowLink: (
+		organizationName: string
+	) => Promise<Locator>;
 	readonly organizationActionsMenu: (
 		organizationName: string
 	) => Promise<Locator>;
@@ -52,6 +63,15 @@ export class UsersAndOrganizationsPage {
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly organizationUsersTable: Locator;
+	readonly organizationUsersTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly organizationUsersTableRowLink: (
+		screenName: string
+	) => Promise<Locator>;
 	readonly exportImportOptionsMenuItem: Locator;
 	readonly usersTableRow: (
 		colPosition: number,
@@ -61,6 +81,7 @@ export class UsersAndOrganizationsPage {
 	readonly usersTableRowLink: (screenName: string) => Promise<Locator>;
 	readonly usersTableRowActions: (screenName: string) => Promise<Locator>;
 	readonly usersLink: Locator;
+	readonly userPersonalMenuButton: Locator;
 	readonly usersTable: Locator;
 
 	constructor(page: Page) {
@@ -74,9 +95,48 @@ export class UsersAndOrganizationsPage {
 		this.exportPersonalDataItem = page.getByRole('menuitem', {
 			name: 'Export Personal Data',
 		});
+		this.impersonateUserMenuItem = page.getByRole('menuitem', {
+			name: 'Impersonate User',
+		});
 		this.manageCustomFieldsOptionsMenuItem = page.getByRole('menuitem', {
 			name: 'Manage Custom Fields',
 		});
+		this.myOrganizationsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'My Organizations',
+		});
+		this.myOrganizationsTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_organizationsSearchContainer'
+		);
+		this.myOrganizationsTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.myOrganizationsTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.myOrganizationsTableRowLink = async (organizationName: string) => {
+			const myOrganizationsTableRow = await this.myOrganizationsTableRow(
+				1,
+				organizationName,
+				true
+			);
+
+			if (myOrganizationsTableRow && myOrganizationsTableRow.column) {
+				return myOrganizationsTableRow.column.getByRole('link', {
+					name: organizationName,
+				});
+			}
+
+			throw new Error(
+				`Cannot locate organization row with name ${organizationName}`
+			);
+		};
 		this.optionsMenu = page
 			.getByTestId('headerOptions')
 			.getByLabel('Options');
@@ -109,6 +169,35 @@ export class UsersAndOrganizationsPage {
 		this.organizationsTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_organizationsSearchContainer'
 		);
+		this.organizationUsersTable = page.locator(
+			'[id$="_organizationUsersSearchContainer"]'
+		);
+		this.organizationUsersTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.organizationUsersTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.organizationUsersTableRowLink = async (screenName: string) => {
+			const organizationUsersTableRow =
+				await this.organizationUsersTableRow(1, screenName, true);
+
+			if (organizationUsersTableRow && organizationUsersTableRow.column) {
+				return organizationUsersTableRow.column.getByRole('link', {
+					name: screenName,
+				});
+			}
+
+			throw new Error(
+				`Cannot locate user row with screenName ${screenName}`
+			);
+		};
 		this.organizationsTableRow = async (
 			colPosition: number,
 			value: string,
@@ -160,6 +249,7 @@ export class UsersAndOrganizationsPage {
 			);
 		};
 		this.usersLink = page.getByRole('link', {name: 'Users'});
+		this.userPersonalMenuButton = page.getByTestId('userPersonalMenu');
 		this.usersTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersSearchContainer'
 		);
@@ -179,6 +269,22 @@ export class UsersAndOrganizationsPage {
 					resp
 						.url()
 						.includes('screenNavigationCategoryKey=organizations')
+			),
+		]);
+	}
+
+	async goToMyOrganizations() {
+		await Promise.all([
+			this.userPersonalMenuButton.click(),
+			this.myOrganizationsMenuItem.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp
+						.url()
+						.includes(
+							'id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet'
+						)
 			),
 		]);
 	}

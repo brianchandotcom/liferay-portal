@@ -4,7 +4,7 @@
  */
 
 import {getRandomInt} from '../utils/getRandomInt';
-import {ApiHelpers} from './ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TAccount = {
 	externalReferenceCode?: string;
@@ -50,8 +50,17 @@ type TServices = {
 	serviceType: string;
 };
 
+type TUserAccount = {
+	alternateName?: string;
+	emailAddress?: string;
+	familyName?: string;
+	givenName?: string;
+	id?: string;
+	name?: string;
+};
+
 export class HeadlessAdminUserApiHelper {
-	readonly apiHelpers: ApiHelpers;
+	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
 
 	constructor(apiHelpers: ApiHelpers) {
@@ -78,6 +87,25 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async assignUserToOrganizationByEmailAddress(
+		organizationId: string,
+		emailAddress: string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/organizations/${organizationId}/user-accounts/by-email-address/${emailAddress}`
+		);
+	}
+
+	async assignUserToOrganizationRole(
+		roleId: string,
+		userAccountId: string,
+		organizationId: string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}/association/user-account/${userAccountId}/organization/${organizationId}`
+		);
+	}
+
 	async deleteAccount(accountId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}`
@@ -93,6 +121,12 @@ export class HeadlessAdminUserApiHelper {
 	async deleteOrganization(organizationId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/organizations/${organizationId}`
+		);
+	}
+
+	async deleteUserAccount(userAccountId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/${userAccountId}`
 		);
 	}
 
@@ -114,6 +148,12 @@ export class HeadlessAdminUserApiHelper {
 	async getRoles(search: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/roles?search=${search}`
+		);
+	}
+
+	async getRoleByExternalReferenceCode(externalReferenceCode: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles/by-external-reference-code/${externalReferenceCode}`
 		);
 	}
 
@@ -160,7 +200,7 @@ export class HeadlessAdminUserApiHelper {
 	async postOrganization(
 		organization?: TOrganization
 	): Promise<TOrganization> {
-		return this.apiHelpers.post(
+		organization = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/organizations`,
 			{
 				data: {
@@ -170,6 +210,15 @@ export class HeadlessAdminUserApiHelper {
 				failOnStatusCode: true,
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: organization.id,
+				type: 'organization',
+			});
+		}
+
+		return organization;
 	}
 
 	async postRole(role: TRole) {
@@ -185,6 +234,33 @@ export class HeadlessAdminUserApiHelper {
 				failOnStatusCode: true,
 			}
 		);
+	}
+
+	async postUserAccount(userAccount?: TUserAccount): Promise<TUserAccount> {
+		const randomNumber = getRandomInt();
+
+		userAccount = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts`,
+			{
+				data: {
+					alternateName: 'User' + randomNumber,
+					emailAddress: 'User' + randomNumber + '@liferay.com',
+					familyName: 'User' + randomNumber,
+					givenName: 'User' + randomNumber,
+					...(userAccount || {}),
+				},
+				failOnStatusCode: true,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: userAccount.id,
+				type: 'userAccount',
+			});
+		}
+
+		return userAccount;
 	}
 
 	async getAccountRoles(accountId: number) {

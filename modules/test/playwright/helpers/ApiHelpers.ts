@@ -295,6 +295,10 @@ export class DataApiHelpers extends ApiHelpers {
 					await this.headlessCommerceAdminOrder.deleteOrder(item.id);
 
 					break;
+				case 'organization':
+					await this.headlessAdminUser.deleteOrganization(item.id);
+
+					break;
 				case 'payment':
 					await this.headlessCommerceAdminPaymentApiHelper.deletePayment(
 						item.id
@@ -325,6 +329,10 @@ export class DataApiHelpers extends ApiHelpers {
 					break;
 				case 'terms':
 					await this.headlessCommerceAdminOrder.deleteTerms(item.id);
+
+					break;
+				case 'userAccount':
+					await this.headlessAdminUser.deleteUserAccount(item.id);
 
 					break;
 				case 'warehouse':

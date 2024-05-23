@@ -54,8 +54,8 @@ definition {
 
 		task ("Assert Retetion Period Presence") {
 			AssertElementPresent(
-				key_nameTableChannels = "Retention Period",
-				locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+				key_messageValue = "Retention Period",
+				locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
 		}
 
 		task ("Change Retention Period to 7 Months") {

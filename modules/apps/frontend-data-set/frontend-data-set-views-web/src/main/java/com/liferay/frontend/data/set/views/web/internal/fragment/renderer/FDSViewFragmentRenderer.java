@@ -252,11 +252,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
+
 		Map<String, Object> fdsViewObjectEntryProperties =
 			fdsViewObjectEntry.getProperties();
-
-		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
-			fdsViewObjectDefinition, fdsViewObjectEntry);
 
 		String objectEntryERC = String.valueOf(
 			fdsViewObjectEntryProperties.get(
@@ -269,6 +267,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 			objectDefinitionName = "FDSView";
 		}
+
+		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
+			fdsViewObjectDefinition, fdsViewObjectEntry);
 
 		_reactRenderer.renderReact(
 			componentDescriptor,

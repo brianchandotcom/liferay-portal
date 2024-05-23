@@ -558,12 +558,12 @@ exports[`MetricBaseCard renders component 1`] = `
                         class="legend-text-color"
                       >
                         Known Visitors
+                        <b
+                          class="ml-1"
+                        >
+                          1
+                        </b>
                       </span>
-                      <b
-                        class="ml-1 legend-text-color"
-                      >
-                        1
-                      </b>
                     </span>
                   </li>
                   <li
@@ -596,12 +596,12 @@ exports[`MetricBaseCard renders component 1`] = `
                         class="legend-text-color"
                       >
                         Anonymous Visitors
+                        <b
+                          class="ml-1"
+                        >
+                          0
+                        </b>
                       </span>
-                      <b
-                        class="ml-1 legend-text-color"
-                      >
-                        0
-                      </b>
                     </span>
                   </li>
                 </ul>

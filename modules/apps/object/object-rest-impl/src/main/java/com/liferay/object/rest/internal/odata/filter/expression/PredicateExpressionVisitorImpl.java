@@ -641,7 +641,8 @@ public class PredicateExpressionVisitorImpl
 			 Objects.equals(entityType, EntityField.Type.DATE_TIME)) &&
 			(Objects.equals(DBManagerUtil.getDBType(), DBType.DB2) ||
 			 Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
-			 Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) &&
+			 Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE) ||
+			 Objects.equals(DBManagerUtil.getDBType(), DBType.POSTGRESQL)) &&
 			Validator.isNotNull(right)) {
 
 			String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
@@ -651,9 +652,6 @@ public class PredicateExpressionVisitorImpl
 			}
 
 			try {
-				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-					pattern);
-
 				String value = right.toString();
 
 				DateFormat dateFormat =
@@ -662,7 +660,17 @@ public class PredicateExpressionVisitorImpl
 
 				Date date = dateFormat.parse(value);
 
-				right = format.format(date);
+				if (Objects.equals(
+						DBManagerUtil.getDBType(), DBType.POSTGRESQL)) {
+
+					right = date;
+				}
+				else {
+					Format format =
+						FastDateFormatFactoryUtil.getSimpleDateFormat(pattern);
+
+					right = format.format(date);
+				}
 			}
 			catch (ParseException parseException) {
 				throw new RuntimeException(parseException);

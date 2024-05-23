@@ -1738,6 +1738,25 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(7);
 
+		// No such engine
+
+		String engine = RandomTestUtil.randomString();
+
+		_addObjectValidationRule(
+			engine,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringPool.BLANK);
+
+		Map<String, Serializable> finalValues = values;
+
+		AssertUtils.assertFailure(
+			ModelListenerException.class,
+			StringBundler.concat(
+				ObjectValidationRuleEngineException.NoSuchEngine.class.
+					getName(),
+				": Engine \"", engine, "\" does not exist"),
+			() -> _addObjectEntry(finalValues));
+
 		// Skip object validation rules
 
 		_objectDefinition.setEnableObjectEntryDraft(true);

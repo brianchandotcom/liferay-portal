@@ -6,7 +6,7 @@
 import {ApiHelpers} from './ApiHelpers';
 
 interface createVocabularyProps {
-	assetTypes: AssetType[];
+	assetTypes?: AssetType[];
 	name: string;
 	siteId: string;
 }
@@ -35,7 +35,7 @@ export class HeadlessAdminTaxonomyApiHelper {
 	 *
 	 * @param siteId the id of the site in which the vocabulary will be created
 	 * @param name the name of the vocabulary
-	 * @param assetTypes the asset types to which the vocabulary can be used
+	 * @param [assetTypes] the asset types to which the vocabulary can be used
 	 */
 
 	async createVocabulary({

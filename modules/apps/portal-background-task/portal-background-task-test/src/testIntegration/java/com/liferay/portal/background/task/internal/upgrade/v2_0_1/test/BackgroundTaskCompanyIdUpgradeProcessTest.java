@@ -24,6 +24,7 @@ import java.io.Serializable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,11 +65,8 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 		Map<String, Serializable> taskContextMap =
 			_backgroundTask.getTaskContextMap();
 
-		Assert.assertEquals(
-			_getTaskContextMap(
-				true
-			).toString(),
-			taskContextMap.toString());
+		Assert.assertTrue(
+			Objects.equals(_getTaskContextMap(true), taskContextMap));
 
 		_upgradeProcess.upgrade();
 
@@ -79,11 +77,8 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 
 		taskContextMap = _backgroundTask.getTaskContextMap();
 
-		Assert.assertEquals(
-			_getTaskContextMap(
-				false
-			).toString(),
-			taskContextMap.toString());
+		Assert.assertTrue(
+			Objects.equals(_getTaskContextMap(false), taskContextMap));
 	}
 
 	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId)

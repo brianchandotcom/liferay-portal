@@ -119,11 +119,6 @@ public class ObjectValidationRuleLocalServiceTest {
 			"Engine is null",
 			() -> _addObjectValidationRule(
 				StringPool.BLANK, _VALID_DDM_SCRIPT));
-		AssertUtils.assertFailure(
-			ObjectValidationRuleEngineException.NoSuchEngine.class,
-			"Engine \"abcdefghijklmnopqrstuvwxyz\" does not exist",
-			() -> _addObjectValidationRule(
-				"abcdefghijklmnopqrstuvwxyz", _VALID_DDM_SCRIPT));
 
 		try (Closeable closeable =
 				ScriptManagementConfigurationTestUtil.saveWithCloseable(
@@ -425,6 +420,18 @@ public class ObjectValidationRuleLocalServiceTest {
 			_addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY, errorLabelMap,
 				externalReferenceCode, nameLabelMap, script));
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		String engine = RandomTestUtil.randomString();
+
+		_assertObjectValidationRule(
+			true, engine, errorLabelMap, externalReferenceCode, nameLabelMap,
+			null, ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			StringPool.BLANK,
+			_addObjectValidationRule(
+				engine, errorLabelMap, externalReferenceCode, nameLabelMap,
+				StringPool.BLANK));
 
 		externalReferenceCode = RandomTestUtil.randomString();
 

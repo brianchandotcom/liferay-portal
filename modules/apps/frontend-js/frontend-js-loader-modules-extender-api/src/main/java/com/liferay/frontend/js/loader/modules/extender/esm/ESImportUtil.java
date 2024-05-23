@@ -39,7 +39,8 @@ public class ESImportUtil {
 		String symbol = module.substring(0, fromIndex);
 
 		if (symbol.contains(StringPool.OPEN_CURLY_BRACE)) {
-			symbol = symbol.replaceAll("[{}]", StringPool.BLANK);
+			symbol = StringUtil.removeChars(
+				symbol, CharPool.OPEN_CURLY_BRACE, CharPool.CLOSE_CURLY_BRACE);
 
 			int asIndex = symbol.indexOf(" as ");
 

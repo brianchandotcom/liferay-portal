@@ -6,7 +6,7 @@
 package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.change.tracking.test.BaseCTUpgradeProcessTestCase;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;

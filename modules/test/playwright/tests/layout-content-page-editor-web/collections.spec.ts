@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {collectionsPagesTest} from '../../fixtures/CollectionsPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
@@ -26,6 +27,8 @@ export const test = mergeTests(
 	loginTest(),
 	pageEditorPagesTest
 );
+
+export const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
 
 test('allows adding a Collection Display with a manual collection into another Collection Display with Recent Content', async ({
 	apiHelpers,
@@ -103,3 +106,30 @@ test('allows adding a Collection Display with a manual collection into another C
 
 	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });
+
+testWithIsolatedSite(
+	'checks the error message when trying to drag a fragment to an unmapped collection',
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const collectionDefinition = getCollectionDefinition({
+			id: getRandomString(),
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await page
+			.getByRole('menuitem', {
+				name: 'Add Button',
+			})
+			.dragTo(page.getByText('No Collection Selected Yet'));
+
+		await expect(page.locator('.alert-danger')).toHaveText(
+			'Error:Fragments cannot be placed inside an unmapped collection display fragment.'
+		);
+	}
+);

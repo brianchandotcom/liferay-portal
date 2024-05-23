@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const COMMAND_DESCRIPTIONS = {
-	'build': 'builds frontend stuff of current project',
+	build: 'builds frontend stuff of current project',
 };
 
 const command = process.argv[2];

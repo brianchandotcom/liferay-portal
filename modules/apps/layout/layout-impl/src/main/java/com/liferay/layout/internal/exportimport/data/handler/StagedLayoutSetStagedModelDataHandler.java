@@ -486,9 +486,11 @@ public class StagedLayoutSetStagedModelDataHandler
 
 			Layout layout = (Layout)stagedModel;
 
-			if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
-				Element layoutElement = portletDataContext.getExportDataElement(
-					layout);
+			Element layoutElement = portletDataContext.getExportDataElement(
+				layout);
+
+			if (!ArrayUtil.contains(layoutIds, layout.getLayoutId()) &&
+				(layoutElement.attributeValue(Constants.ACTION) == null)) {
 
 				layoutElement.addAttribute(Constants.ACTION, Constants.SKIP);
 				layoutElement.addAttribute(

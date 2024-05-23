@@ -49,7 +49,7 @@ test('can import a folder with document type restrictions and workflow', async (
 test('can import a lar file selecting some items to import', async ({
 	exportImportPage,
 }) => {
-	await exportImportPage.goTo();
+	await exportImportPage.goToImport();
 	await exportImportPage.createNewImportProcess(
 		path.join(__dirname, 'dependencies', 'content.portlet.lar')
 	);

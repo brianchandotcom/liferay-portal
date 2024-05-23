@@ -72,6 +72,11 @@ public class CommerceAddressImplTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), _serviceContext);
+
+		_regionLocalService.addRegion(
+			_country1.getCountryId(), true, RandomTestUtil.randomString(), 1,
+			RandomTestUtil.randomString(), _serviceContext);
+
 		_country2 = _countryLocalService.addCountry(
 			"ZZ", "ZZZ", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -79,9 +84,6 @@ public class CommerceAddressImplTest {
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), _serviceContext);
 
-		_regionLocalService.addRegion(
-			_country1.getCountryId(), true, RandomTestUtil.randomString(), 1,
-			RandomTestUtil.randomString(), _serviceContext);
 		_regionLocalService.addRegion(
 			_country2.getCountryId(), true, RandomTestUtil.randomString(), 1,
 			RandomTestUtil.randomString(), _serviceContext);
@@ -100,11 +102,27 @@ public class CommerceAddressImplTest {
 
 		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
 
+		commerceAddress2.setCountryId(commerceAddress1.getCountryId());
+
+		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
+
+		commerceAddress2.setLatitude(commerceAddress1.getLatitude());
+
+		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
+
+		commerceAddress2.setLongitude(commerceAddress1.getLongitude());
+
+		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
+
 		commerceAddress2.setName(commerceAddress1.getName());
 
 		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
 
 		commerceAddress2.setPhoneNumber(commerceAddress1.getPhoneNumber());
+
+		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
+
+		commerceAddress2.setRegionId(commerceAddress1.getRegionId());
 
 		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
 
@@ -120,29 +138,13 @@ public class CommerceAddressImplTest {
 
 		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
 
-		commerceAddress2.setZip(commerceAddress1.getZip());
-
-		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
-
-		commerceAddress2.setCountryId(commerceAddress1.getCountryId());
-
-		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
-
-		commerceAddress2.setLatitude(commerceAddress1.getLatitude());
-
-		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
-
-		commerceAddress2.setLongitude(commerceAddress1.getLongitude());
-
-		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
-
-		commerceAddress2.setRegionId(commerceAddress1.getRegionId());
-
-		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
-
 		commerceAddress2.setType(commerceAddress1.getType());
 
 		Assert.assertTrue(commerceAddress1.isSameAddress(commerceAddress2));
+
+		commerceAddress2.setZip(commerceAddress1.getZip());
+
+		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
 	}
 
 	private CommerceAddress _addCommerceAddress(Country country, int type)

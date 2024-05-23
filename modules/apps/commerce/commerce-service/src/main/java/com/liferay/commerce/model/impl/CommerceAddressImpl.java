@@ -220,18 +220,18 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 	@Override
 	public boolean isSameAddress(CommerceAddress commerceAddress) {
 		if (Objects.equals(getCity(), commerceAddress.getCity()) &&
-			Objects.equals(getName(), commerceAddress.getName()) &&
-			Objects.equals(
-				getPhoneNumber(), commerceAddress.getPhoneNumber()) &&
-			Objects.equals(getStreet1(), commerceAddress.getStreet1()) &&
-			Objects.equals(getStreet2(), commerceAddress.getStreet2()) &&
-			Objects.equals(getStreet3(), commerceAddress.getStreet3()) &&
-			Objects.equals(getZip(), commerceAddress.getZip()) &&
 			(getCountryId() == commerceAddress.getCountryId()) &&
 			(getLatitude() == commerceAddress.getLatitude()) &&
 			(getLongitude() == commerceAddress.getLongitude()) &&
+			Objects.equals(getName(), commerceAddress.getName()) &&
+			Objects.equals(
+				getPhoneNumber(), commerceAddress.getPhoneNumber()) &&
 			(getRegionId() == commerceAddress.getRegionId()) &&
-			(getType() == commerceAddress.getType())) {
+			Objects.equals(getStreet1(), commerceAddress.getStreet1()) &&
+			Objects.equals(getStreet2(), commerceAddress.getStreet2()) &&
+			Objects.equals(getStreet3(), commerceAddress.getStreet3()) &&
+			(getType() == commerceAddress.getType()) &&
+			Objects.equals(getZip(), commerceAddress.getZip())) {
 
 			return true;
 		}

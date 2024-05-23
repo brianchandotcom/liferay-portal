@@ -7,6 +7,11 @@ import {Locator, Page} from '@playwright/test';
 
 import {BlogsPage} from './BlogsPage';
 
+type editBlogEntryAddfriendlyUrlType = {
+	categories: string[];
+	vocabularyName: string;
+};
+
 export class BlogsEditBlogEntryPage {
 	readonly page: Page;
 
@@ -31,9 +36,8 @@ export class BlogsEditBlogEntryPage {
 
 	private async editBlogEntryAddfriendlyUrl({
 		categories,
-	}: {
-		categories: string[];
-	}) {
+		vocabularyName,
+	}: editBlogEntryAddfriendlyUrlType) {
 		const fieldset = await this.page.locator(
 			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_friendly-url'
 		);
@@ -49,7 +53,7 @@ export class BlogsEditBlogEntryPage {
 			'iframe[title="Filter by Categories"]'
 		);
 
-		await categoriesSelectorIframe.getByText('Test').click();
+		await categoriesSelectorIframe.getByText(vocabularyName).click();
 
 		for (const categoryName of categories) {
 			await categoriesSelectorIframe.getByText(categoryName).click();
@@ -68,7 +72,7 @@ export class BlogsEditBlogEntryPage {
 		title,
 	}: {
 		content: string;
-		friendlyUrl?: {categories: string[]};
+		friendlyUrl?: editBlogEntryAddfriendlyUrlType;
 		publish?: boolean;
 		title: string;
 	}) {
@@ -76,11 +80,12 @@ export class BlogsEditBlogEntryPage {
 
 		await this.contentEditor.fill(content);
 
-		const {categories} = friendlyUrl;
+		if (friendlyUrl) {
+			const {categories, vocabularyName} = friendlyUrl;
 
-		if (categories?.length) {
 			await this.editBlogEntryAddfriendlyUrl({
 				categories,
+				vocabularyName,
 			});
 		}
 

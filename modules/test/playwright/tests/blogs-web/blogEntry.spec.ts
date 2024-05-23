@@ -87,7 +87,7 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
-		friendlyUrl: {categories: friendlyUrlCategories},
+		friendlyUrl: {categories: friendlyUrlCategories, vocabularyName},
 		publish: false,
 		title,
 	});

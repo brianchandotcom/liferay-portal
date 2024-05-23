@@ -29,7 +29,7 @@ function clone_repository {
 
 		rm -f .git/index.lock
 
-		git reset --hard origin/master && git clean -e .latest_hash -f -x && git pull
+		git reset --hard origin/master && git clean -e .latest_hash -fx && git pull
 
 		popd
 	else

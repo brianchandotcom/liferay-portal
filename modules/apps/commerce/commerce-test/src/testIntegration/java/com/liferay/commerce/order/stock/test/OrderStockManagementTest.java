@@ -15,6 +15,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -364,6 +365,46 @@ public class OrderStockManagementTest {
 			BigDecimal.valueOf(8));
 	}
 
+	@Test(expected = CommerceOrderValidatorException.class)
+	public void testSubmitOrderWithoutInventory() throws Exception {
+		frutillaRule.scenario(
+			"An order with not available product cannot be checked out"
+		).given(
+			"An order with a product with no stock availability"
+		).when(
+			"I try to checkout the order"
+		).then(
+			"An exception should be thrown"
+		);
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_commerceOrders.add(commerceOrder);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse, BigDecimal.TEN,
+			cpInstance.getSku(), StringPool.BLANK);
+
+		CommerceTestUtil.addCommerceOrderItem(
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.valueOf(1));
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse, BigDecimal.ZERO,
+			cpInstance.getSku(), StringPool.BLANK);
+
+		_commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
+	}
+
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
@@ -382,6 +423,9 @@ public class OrderStockManagementTest {
 	@Inject
 	private CommerceInventoryWarehouseItemLocalService
 		_commerceInventoryWarehouseItemLocalService;
+
+	@Inject
+	private CommerceOrderEngine _commerceOrderEngine;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;

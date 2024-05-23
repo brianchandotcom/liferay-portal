@@ -151,7 +151,8 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 	private String[] _prepareURLs(long lastModified, String[] urls) {
 		for (int i = 0; i < urls.length; i++) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-202104") &&
+			if (!FeatureFlagManagerUtil.isEnabled(
+					cet.getCompanyId(), "LPS-202104") &&
 				!urls[i].contains("?t=") && !urls[i].contains("&t=")) {
 
 				urls[i] = HttpComponentsUtil.addParameter(

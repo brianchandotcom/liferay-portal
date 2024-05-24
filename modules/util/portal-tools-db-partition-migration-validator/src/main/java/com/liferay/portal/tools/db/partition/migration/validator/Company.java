@@ -7,8 +7,6 @@ package com.liferay.portal.tools.db.partition.migration.validator;
 
 import java.util.Objects;
 
-import org.json.JSONObject;
-
 /**
  * @author Luis Ortiz
  */
@@ -85,20 +83,6 @@ public class Company {
 
 	public void setWebId(String webId) {
 		_webId = webId;
-	}
-
-	@Override
-	public String toString() {
-		return new JSONObject(
-		).put(
-			"companyId", _companyId
-		).put(
-			"companyName", _companyName
-		).put(
-			"virtualHostname", _virtualHostname
-		).put(
-			"webId", _webId
-		).toString();
 	}
 
 	private long _companyId;

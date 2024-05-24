@@ -74,7 +74,8 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 
 					if (cache[cacheKey]) {
 						_resourceFieldOptions[field.name] = cache[cacheKey];
-					} else {
+					}
+					else {
 						const result = await fetcher(cacheKey);
 						const parsedValue = field.transformData
 							? field.transformData(result)
@@ -131,7 +132,8 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 					if (filteredOptions.length) {
 						updatedFilterOptions[key] = filteredOptions;
 					}
-				} else {
+				}
+				else {
 					const matchingValues = filterResponse[key]?.filter(
 						(options: Options) =>
 							options.value === serializedFilter[key]

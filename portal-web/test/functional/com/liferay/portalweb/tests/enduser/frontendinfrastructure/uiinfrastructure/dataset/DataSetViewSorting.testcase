@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true";
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true${line.separator}feature.flag.LPD-19465=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Data Set";
@@ -55,7 +55,7 @@ definition {
 	test AssertDeleteSortingMessage {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -85,7 +85,7 @@ definition {
 	test AssertEditOptionAppears {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -109,7 +109,7 @@ definition {
 	test AssertEditSortingOptions {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -179,7 +179,7 @@ definition {
 	test CanCancelDeleteSorting {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -208,7 +208,7 @@ definition {
 		task ("And the sorting is not deleted") {
 			AssertVisible(
 				key_rowPosition = 1,
-				key_text = "creator",
+				key_text = "label",
 				locator1 = "DataSet#SORT_ENTRY_TABLE");
 		}
 	}
@@ -218,7 +218,7 @@ definition {
 	test CanCancelEditSorting {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -261,7 +261,7 @@ definition {
 
 		task ("And adding a new default sort ") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -279,7 +279,7 @@ definition {
 
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -312,7 +312,7 @@ definition {
 		task ("And the sorting does not appear in the Sorting tab table") {
 			AssertElementNotPresent(
 				key_rowPosition = 1,
-				key_text = "creator",
+				key_text = "label",
 				locator1 = "DataSet#SORT_ENTRY_TABLE");
 		}
 	}
@@ -337,7 +337,7 @@ definition {
 	test CanOrderSorting {
 		task ("When the user creates 2 or more new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 
 			DataSetAdmin.createASort(
@@ -348,7 +348,7 @@ definition {
 		task ("And drag the last sorting to the first position") {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_rowPosition = 1,
-				key_text = "creator",
+				key_text = "label",
 				locator1 = "DataSet#SORT_ENTRY_TABLE",
 				locator2 = "//tr[@class='orderable-table-row'][2]//*[contains(text(), 'id')]");
 		}
@@ -385,7 +385,7 @@ definition {
 
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -430,18 +430,18 @@ definition {
 	test CanSearchSortingInSearchBar {
 		task ("And adding a new default sort/the fields are selected ") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
 		task ("And then the search bar responds when we search one of the options listed") {
 			Type(
 				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-				value1 = "creator");
+				value1 = "label");
 
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
-				keyName = "creator");
+				keyName = "label");
 		}
 
 		task ("Then the search bar responds when we search for a non-existent option") {
@@ -460,7 +460,7 @@ definition {
 	test CantEditField {
 		task ("When the user creates a new sorting") {
 			DataSetAdmin.createASort(
-				key_field = "creator",
+				key_field = "label",
 				key_sorting = "Descending");
 		}
 
@@ -491,7 +491,7 @@ definition {
 		}
 
 		task ("When the user adds 3 sortings") {
-			for (var key_fieldList : list "creator,id,status") {
+			for (var key_fieldList : list "label,id,status") {
 				DataSetAdmin.createASort(
 					key_field = ${key_fieldList},
 					key_sorting = "Descending");

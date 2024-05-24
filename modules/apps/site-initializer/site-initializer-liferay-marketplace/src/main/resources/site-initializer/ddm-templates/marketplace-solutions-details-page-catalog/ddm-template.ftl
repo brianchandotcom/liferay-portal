@@ -12,14 +12,13 @@
 	<#assign channelId = channel.items[0].id />
 </#if>
 
+<#assign productId = CPDefinition_cProductId.getData() />
+
 <#assign
-	productId = CPDefinition_cProductId.getData()
-	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")
 	catalogName = product.catalogName
 />
 
 <div>
-	<span>
-		${catalogName}
-	</span>
+	${catalogName}
 </div>

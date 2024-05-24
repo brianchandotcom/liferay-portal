@@ -9,9 +9,9 @@
 					},
 					"indexed": true,
 					"layout": {
-						"contentDisplay": "FlexColumn",
-						"justify": "SpaceBetween"
-					}
+						"contentDisplay": "FlexColumn"
+					},
+					"name": "solution-page-container"
 				},
 				"id": "a75cb294-9350-6b75-7c6d-cac72a885efc",
 				"pageElements": [
@@ -31,7 +31,8 @@
 									"indexed": true,
 									"layout": {
 										"contentDisplay": "FlexColumn"
-									}
+									},
+									"name": "solution-page-header"
 								},
 								"id": "a82e8e1e-85f9-3f0a-9a7c-904a6cee43ba",
 								"pageElements": [
@@ -48,6 +49,7 @@
 											{
 												"definition": {
 													"fragmentStyle": {
+														"paddingBottom": "4",
 														"paddingTop": "4"
 													},
 													"widgetInstance": {
@@ -302,7 +304,7 @@
 																								"en_US": "#solutions-details-form"
 																							}
 																						},
-																						"target": "Blank"
+																						"target": "Self"
 																					}
 																				},
 																				"text": {
@@ -361,9 +363,84 @@
 									"fragmentStyle": {
 										"textColor": "whiteColor"
 									},
-									"indexed": true
+									"indexed": true,
+									"name": "solution-section-header"
 								},
 								"id": "8458ee05-1ac0-fe90-6d07-d6b66c4b3eec",
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "text",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"fontSize": "font-size-paragraph-base",
+										"smallCaps": false,
+										"tabletScreenCenter": false
+									},
+									"fragmentFields": [
+										{
+											"id": "text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"mapping": {
+														"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_solutions_blocks$]",
+														"itemReference": {
+															"contextSource": "DisplayPageItem"
+														}
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"textColor": "whiteColor"
+									},
+									"indexed": true,
+									"name": "solution-section-blocks"
+								},
+								"id": "eb41c93b-8d2c-48ec-b2f5-f2acc1871f7d",
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "text",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"fontSize": "font-size-paragraph-base",
+										"smallCaps": false,
+										"tabletScreenCenter": false
+									},
+									"fragmentFields": [
+										{
+											"id": "text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"mapping": {
+														"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_solutions_company$]",
+														"itemReference": {
+															"contextSource": "DisplayPageItem"
+														}
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"textColor": "whiteColor"
+									},
+									"indexed": true,
+									"name": "solution-section-company"
+								},
+								"id": "b269390c-55cc-344d-e332-6d5bbcf396cf",
 								"type": "Fragment"
 							}
 						],
@@ -372,28 +449,29 @@
 					{
 						"definition": {
 							"cssClasses": [
-								"#solutions-details-form"
+								"#solutions-details-form",
+								"block-container"
 							],
 							"fragmentStyle": {
-								"backgroundColor": "#EBEEF2"
+								"backgroundColor": ""
 							},
 							"indexed": true,
 							"layout": {
-							}
+							},
+							"name": "contact-us-section"
 						},
 						"id": "a58238d8-74c2-a21c-9bdb-4133a5d46e1f",
 						"pageElements": [
 							{
 								"definition": {
 									"fragmentStyle": {
-										"backgroundColor": "",
-										"paddingBottom": "4rem",
-										"paddingTop": "4rem"
+										"backgroundColor": ""
 									},
 									"indexed": true,
 									"layout": {
 										"widthType": "Fixed"
-									}
+									},
+									"name": "contact-us-container"
 								},
 								"id": "dd9b522b-9578-5b76-e0a3-e8c5d08d3aa8",
 								"pageElements": [
@@ -405,7 +483,8 @@
 											"indexed": true,
 											"layout": {
 												"marginBottom": 2
-											}
+											},
+											"name": "contact-us-header-container"
 										},
 										"id": "3ccc3899-44f2-4831-18c1-4555f62a47b4",
 										"pageElements": [
@@ -434,7 +513,8 @@
 															}
 														}
 													],
-													"indexed": true
+													"indexed": true,
+													"name": "contact-us-header-title"
 												},
 												"id": "4a13b7da-43ef-2705-b1a0-6f0e2ac8de87",
 												"type": "Fragment"
@@ -464,7 +544,8 @@
 															}
 														}
 													],
-													"indexed": true
+													"indexed": true,
+													"name": "contact-us-header-subtitle"
 												},
 												"id": "ffd71e39-c4b8-24ff-09e8-2e94050f03a1",
 												"type": "Fragment"
@@ -476,7 +557,8 @@
 										"definition": {
 											"indexed": true,
 											"layout": {
-											}
+											},
+											"name": "marketo-container"
 										},
 										"id": "9f4984a4-f58d-5e81-dd18-c6f6f2f913ed",
 										"pageElements": [
@@ -505,6 +587,42 @@
 									}
 								],
 								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							},
+							"name": "custom-script-and-styles"
+						},
+						"id": "161548d8-d88d-bbd2-4f72-e0877a13044f",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-html"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "element-html",
+											"value": {
+												"html": {
+													"value_i18n": {
+														"en_US": "<style>\n  .block-container{\n  padding:6rem 0;\n  background:#fff;\n  color:#000;\n  }\n  \n  .header-content{\n      padding:6rem 0;\n  background:#0B5FFF;\n  color:#fff;\n  }\n</style>\n\n<script type=\"\">\n  document.querySelectorAll(\".block-container\").forEach((item,index)=>{\n    if(index%2 === 0){\n        item.style.background = \"#F7F7F8\"\n    }\n})\n</script>"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"id": "c0f232e5-8a62-cc34-ce8a-b56562ff4a69",
+								"type": "Fragment"
 							}
 						],
 						"type": "Section"

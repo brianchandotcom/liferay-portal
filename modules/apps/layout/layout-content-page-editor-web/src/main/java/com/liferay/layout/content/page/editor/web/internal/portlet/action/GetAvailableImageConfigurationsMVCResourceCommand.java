@@ -171,7 +171,7 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 			_ddmStructureLocalService.getClassStructures(
 				fileVersion.getCompanyId(),
 				_portal.getClassNameId(RawMetadataProcessor.class),
-				StructureStructureKeyComparator.INSTANCE_DESCENDING);
+				StructureStructureKeyComparator.getInstance(false));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			DLFileEntryMetadata fileEntryMetadata =

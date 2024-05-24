@@ -147,10 +147,11 @@ function updateLabelProductCapabilities(taxonomyCategoryBriefs) {
 	});
 }
 
-function createLabelSpan(text, classList) {
+function createLabelSpan(classList, text) {
 	const spanElement = document.createElement('span');
 
 	spanElement.textContent = text;
+
 	classList.forEach((className) => spanElement.classList.add(className));
 
 	return spanElement;
@@ -168,7 +169,6 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 
 			if (taxonomyVocabularyName === 'Release Status Previous') {
 				const releaseStatusSpan = createLabelSpan(
-					brief.taxonomyCategoryName,
 					[
 						'font-weight-normal',
 						'label',
@@ -177,7 +177,8 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 						'label-tonal-secondary',
 						'px-2',
 						'text-paragraph-sm',
-					]
+					],
+					brief.taxonomyCategoryName
 				);
 				const iconArrowRightSpan = document.createElement('span');
 
@@ -198,7 +199,6 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 
 			if (taxonomyVocabularyName === 'Feature Availability') {
 				const featureAvailabilitySpan = createLabelSpan(
-					brief.taxonomyCategoryName,
 					[
 						'font-weight-normal',
 						'label',
@@ -207,7 +207,8 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 						'mb-3',
 						'px-2',
 						'text-paragraph-sm',
-					]
+					],
+					brief.taxonomyCategoryName
 				);
 
 				labelStatus.appendChild(featureAvailabilitySpan);

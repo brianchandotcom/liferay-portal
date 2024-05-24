@@ -92,7 +92,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testValidateErrors() throws Exception {
+	public void testValidateFailure() throws Exception {
 		_testValidate(
 			runtimeException -> {
 				Assert.assertEquals("1", runtimeException.getMessage());
@@ -140,7 +140,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 					_outByteArrayOutputStream.toString(
 					).isEmpty());
 			},
-			"source-success.json", "target-non-default.json",
+			"source-success.json", "target-nondefault.json",
 			() -> {
 			});
 	}

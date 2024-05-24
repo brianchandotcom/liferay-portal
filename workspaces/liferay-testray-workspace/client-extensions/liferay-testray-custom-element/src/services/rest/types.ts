@@ -448,6 +448,7 @@ export type TestrayRoutine = {
 	routineToBuilds: TestrayBuild[];
 	routineToProjects?: TestrayProject;
 	testrayBuildDueDate: string;
+	testrayRoutineId?: number;
 };
 
 export type TestrayFactor = {

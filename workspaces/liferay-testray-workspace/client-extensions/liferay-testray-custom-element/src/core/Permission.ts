@@ -21,12 +21,12 @@ export default class Permission {
 		actions: Action[],
 		permissions: ObjectPermission = {}
 	) {
-		return actions.filter((action) =>
-			typeof action.permission === 'boolean'
+		return actions.filter((action) => {
+			return typeof action.permission === 'boolean'
 				? action.permission
 				: action.permission
 				? !!(permissions as any)[action?.permission?.toLowerCase()]
-				: true
-		);
+				: true;
+		});
 	}
 }

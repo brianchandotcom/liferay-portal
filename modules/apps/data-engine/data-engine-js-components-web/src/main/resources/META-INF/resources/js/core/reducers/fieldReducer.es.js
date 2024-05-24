@@ -13,19 +13,16 @@ import {
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
-export function createRepeatedField(
-	defaultLanguageId,
-	sourceField,
-	repeatedIndex
-) {
+export function createRepeatedField(sourceField, repeatedIndex) {
 	const instanceId = generateInstanceId();
-	const {name, nestedFields, predefinedValue} = sourceField;
+	const {locale, name, nestedFields, predefinedValue} = sourceField;
 	const localizedValue = {};
 	const localizedValueEdited = {};
 
 	if (sourceField.localizedValue) {
-		localizedValue[defaultLanguageId] = predefinedValue || '';
-		localizedValueEdited[defaultLanguageId] = true;
+		localizedValue[locale] =
+			predefinedValue || localizedValue[locale] || '';
+		localizedValueEdited[locale] = true;
 	}
 
 	return {
@@ -217,7 +214,6 @@ export default function fieldReducer(state, action) {
 						if (sourceFieldIndex > -1) {
 							const newFieldIndex = sourceFieldIndex + 1;
 							const newField = createRepeatedField(
-								state.defaultLanguageId,
 								fields[sourceFieldIndex],
 								newFieldIndex
 							);

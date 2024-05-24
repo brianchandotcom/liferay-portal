@@ -14,26 +14,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class AssetCategoryTreePathComparator
 	extends OrderByComparator<AssetCategory> {
 
-	public static final AssetCategoryTreePathComparator INSTANCE_ASCENDING =
-		new AssetCategoryTreePathComparator(true);
-
-	public static final AssetCategoryTreePathComparator INSTANCE_DESCENDING =
-		new AssetCategoryTreePathComparator(false);
-
-	public static final String ORDER_BY_ASC = "treePath ASC";
-
-	public static final String ORDER_BY_DESC = "treePath DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"treePath"};
-
 	public static AssetCategoryTreePathComparator getInstance(
 		boolean ascending) {
 
 		if (ascending) {
-			return INSTANCE_ASCENDING;
+			return _INSTANCE_ASCENDING;
 		}
 
-		return INSTANCE_DESCENDING;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -55,15 +43,15 @@ public class AssetCategoryTreePathComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
@@ -74,6 +62,18 @@ public class AssetCategoryTreePathComparator
 	private AssetCategoryTreePathComparator(boolean ascending) {
 		_ascending = ascending;
 	}
+
+	private static final AssetCategoryTreePathComparator _INSTANCE_ASCENDING =
+		new AssetCategoryTreePathComparator(true);
+
+	private static final AssetCategoryTreePathComparator _INSTANCE_DESCENDING =
+		new AssetCategoryTreePathComparator(false);
+
+	private static final String _ORDER_BY_ASC = "treePath ASC";
+
+	private static final String _ORDER_BY_DESC = "treePath DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"treePath"};
 
 	private final boolean _ascending;
 

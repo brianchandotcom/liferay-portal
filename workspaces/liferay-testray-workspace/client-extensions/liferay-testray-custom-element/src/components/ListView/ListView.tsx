@@ -13,6 +13,7 @@ import {
 	useEffect,
 	useMemo,
 	useRef,
+	useState,
 } from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -113,6 +114,7 @@ const ListView: React.FC<ListViewProps> = ({
 	const updateUrlParams = useUpdateUrlParams();
 
 	const [searchParams] = useSearchParams();
+	const [isRowSelectable, setIsRowSelectable] = useState(false);
 
 	const currentPage = searchParams.get('page');
 
@@ -328,18 +330,20 @@ const ListView: React.FC<ListViewProps> = ({
 		}
 	}, [customFilterFields, dispatch]);
 
-	const checkAllRows = itemsMemoized.every((item) =>
-		selectedRows.includes(onSelectRowNormalizer(item))
-	);
+	if (tableProps.rowSelectable) {
+		setIsRowSelectable(
+			itemsMemoized.every((item) =>
+				selectedRows.includes(onSelectRowNormalizer(item))
+			)
+		);
+	}
 
 	useEffect(() => {
-		if (tableProps.rowSelectable) {
-			dispatch({
-				payload: checkAllRows,
-				type: ListViewTypes.SET_CHECKED_ALL_ROWS,
-			});
-		}
-	}, [checkAllRows, dispatch, tableProps.rowSelectable]);
+		dispatch({
+			payload: isRowSelectable,
+			type: ListViewTypes.SET_CHECKED_ALL_ROWS,
+		});
+	}, [dispatch, isRowSelectable]);
 
 	useEffect(() => {
 		if (managementToolbarProps.applyFilters) {

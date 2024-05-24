@@ -50,7 +50,12 @@ test('can import a lar file selecting some items to import', async ({
 	exportImportPage,
 }) => {
 	await exportImportPage.goToImport();
+
 	await exportImportPage.createNewImportProcess(
 		path.join(__dirname, 'dependencies', 'content.portlet.lar')
 	);
+
+	expect(
+		await exportImportPage.page.getByText('Successful').textContent()
+	).toBe('Successful');
 });

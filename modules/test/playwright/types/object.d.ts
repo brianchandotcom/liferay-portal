@@ -39,6 +39,35 @@ type IncludesFilterOperator = {
 	in: string[] | number[];
 };
 
+interface LabelNameObject {
+	label: string;
+	name: string;
+}
+
+interface ListTypeDefinition {
+	actions: Actions;
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	listTypeEntries: ListTypeEntry[];
+	name: string;
+	name_i18n: LocalizedValue<string>;
+	system: boolean;
+}
+
+interface ListTypeDefinitions {
+	actions: Actions;
+	items: ListTypeDefinition[];
+}
+
+interface ListTypeEntry {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
+
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 interface NameValueObject {
@@ -182,12 +211,14 @@ interface ObjectField {
 	required: boolean;
 	state: boolean;
 	system?: boolean;
+	type?: string;
 }
 
 type ObjectFieldBusinessTypeName =
 	| 'Aggregation'
 	| 'Attachment'
 	| 'AutoIncrement'
+	| 'Boolean'
 	| 'Date'
 	| 'DateTime'
 	| 'Decimal'
@@ -230,7 +261,7 @@ interface ObjectFieldNodeRow extends Partial<ObjectField> {
 	selected: boolean;
 }
 
-type ObjectFieldPicklistSetting = {
+type ObjectFieldListTypeDefinitionSetting = {
 	id: number;
 	objectStates: ObjectState[];
 };
@@ -270,7 +301,7 @@ type ObjectFieldSettingValue =
 	| LocalizedValue<string>
 	| NameValueObject[]
 	| ObjectFieldFilterSetting[]
-	| ObjectFieldPicklistSetting
+	| ObjectFieldListTypeDefinitionSetting
 	| boolean
 	| number
 	| string;
@@ -345,24 +376,6 @@ interface ObjectValidationRuleSetting {
 		| 'compositeKeyObjectFieldExternalReferenceCode'
 		| 'outputObjectFieldExternalReferenceCode';
 	value: string;
-}
-
-interface PickListItem {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-
-interface PickList {
-	actions: Actions;
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	listTypeEntries: PickListItem[];
-	name: string;
-	name_i18n: LocalizedValue<string>;
 }
 
 type ReadOnlyFieldValue = '' | 'conditional' | 'false' | 'true';

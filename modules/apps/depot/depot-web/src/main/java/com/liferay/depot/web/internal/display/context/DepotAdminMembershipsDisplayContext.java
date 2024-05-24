@@ -156,7 +156,7 @@ public class DepotAdminMembershipsDisplayContext {
 			}
 			else if (!permissionChecker.isCompanyAdmin() &&
 					 !GroupPermissionUtil.contains(
-						 permissionChecker, group, ActionKeys.ASSIGN_MEMBERS)) {
+						 permissionChecker, group, ActionKeys.VIEW)) {
 
 				iterator.remove();
 			}

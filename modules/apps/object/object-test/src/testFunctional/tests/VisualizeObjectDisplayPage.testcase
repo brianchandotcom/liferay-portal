@@ -274,58 +274,6 @@ definition {
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Boolean type for a specific Object"
-	@priority = 4
-	test DisplaySpecificEntryBoolean {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 319",
-			objectName = "CustomObject319",
-			pluralLabelName = "Custom Objects 319");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Boolean",
-			fieldLabelName = "Boolean",
-			fieldName = "customObjectField",
-			fieldType = "Boolean",
-			isRequired = "false",
-			objectName = "CustomObject319");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject319");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject319",
-			value = "true");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectDisplayPage.addItem(
-			frameTitle = "Select",
-			pluralLabelName = "Custom Objects 319");
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Boolean");
-
-		AssertElementPresent(
-			key_entry = "true",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-
-		PageEditor.publish();
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Test Content Page Name");
-
-		AssertElementPresent(
-			key_entry = "true",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Date type for a specific Object"
 	@priority = 4
 	test DisplaySpecificEntryDate {

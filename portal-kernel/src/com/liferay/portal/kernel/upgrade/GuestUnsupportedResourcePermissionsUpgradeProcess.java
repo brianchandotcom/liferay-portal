@@ -76,7 +76,7 @@ public class GuestUnsupportedResourcePermissionsUpgradeProcess
 
 	private long _getGuestRoleId(long companyId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select roleId, ctCollectionId from Role_ where companyId = " +
+				"select ctCollectionId, roleId from Role_ where companyId = " +
 					"? and name = ?")) {
 
 			preparedStatement.setLong(1, companyId);

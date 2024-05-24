@@ -7,6 +7,8 @@ package com.liferay.depot.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -92,6 +94,15 @@ public class UpdateMembershipsMVCActionCommand extends BaseMVCActionCommand {
 				_getGroupIds(actionRequest, user), user.getOrganizationIds(),
 				null, null, user.getUserGroupIds(), serviceContext);
 		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+
+			SessionErrors.add(actionRequest, principalException.getClass());
+
+			sendRedirect(actionRequest, actionResponse);
+		}
 		catch (NoSuchUserException | PrincipalException exception) {
 			SessionErrors.add(actionRequest, exception.getClass());
 
@@ -165,6 +176,9 @@ public class UpdateMembershipsMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpdateMembershipsMVCActionCommand.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

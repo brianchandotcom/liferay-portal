@@ -76,7 +76,6 @@ public class CommerceCheckoutStepTest {
 	public void setUp() throws Exception {
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
@@ -206,7 +205,6 @@ public class CommerceCheckoutStepTest {
 				commerceOrder.getCommerceAccountId()));
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
 		mockLiferayPortletActionRequest.setParameter(
 			"city", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.setParameter(

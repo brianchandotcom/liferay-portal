@@ -13,6 +13,8 @@ import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -57,14 +59,15 @@ public class CPDisplayLayoutTableReferenceDefinitionTest
 		_cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
 			false);
+
+		_layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _cpDisplayLayoutLocalService.addCPDisplayLayout(
 			TestPropsValues.getUserId(), group.getGroupId(), CPDefinition.class,
-			_cpDefinition.getCPDefinitionId(), null,
-			RandomTestUtil.randomString());
+			_cpDefinition.getCPDefinitionId(), null, _layout.getUuid());
 	}
 
 	@Inject
@@ -74,5 +77,7 @@ public class CPDisplayLayoutTableReferenceDefinitionTest
 
 	@Inject
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
+
+	private Layout _layout;
 
 }

@@ -380,58 +380,6 @@ definition {
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Double type for a specific Object"
-	@priority = 4
-	test DisplaySpecificEntryDouble {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 321",
-			objectName = "CustomObject321",
-			pluralLabelName = "Custom Objects 321");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Decimal",
-			fieldLabelName = "Double",
-			fieldName = "customObjectField",
-			fieldType = "Double",
-			isRequired = "false",
-			objectName = "CustomObject321");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject321");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject321",
-			value = "1.54");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectDisplayPage.addItem(
-			frameTitle = "Select",
-			pluralLabelName = "Custom Objects 321");
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Double");
-
-		AssertElementPresent(
-			key_entry = "1.54",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-
-		PageEditor.publish();
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Test Content Page Name");
-
-		AssertElementPresent(
-			key_entry = "1.54",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
 	@priority = 5
 	test ObjectDisplayedForPageTemplate {

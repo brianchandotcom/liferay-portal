@@ -31,6 +31,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -235,8 +236,8 @@ public class ObjectEntryInfoItemFormProviderUtil {
 
 					unsafeConsumer.accept(
 						_getInfoFieldSet(
-							false, fieldSetLabelMap,
-							objectRelationship.getName(),
+							FeatureFlagManagerUtil.isEnabled("LPD-20213"),
+							fieldSetLabelMap, objectRelationship.getName(),
 							StringBundler.concat(
 								ObjectRelationship.class.getSimpleName(),
 								StringPool.POUND,

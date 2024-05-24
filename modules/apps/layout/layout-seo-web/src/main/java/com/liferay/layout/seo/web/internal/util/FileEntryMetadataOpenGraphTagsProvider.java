@@ -60,7 +60,7 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 			_ddmStructureLocalService.getClassStructures(
 				fileEntry.getCompanyId(),
 				_portal.getClassNameId(RawMetadataProcessor.class),
-				StructureStructureKeyComparator.INSTANCE_DESCENDING);
+				StructureStructureKeyComparator.getInstance(false));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			DLFileEntryMetadata fileEntryMetadata =

@@ -40,7 +40,7 @@ public interface ContentDashboardItemFilter {
 
 	public enum Type {
 
-		ITEM_SELECTOR
+		ITEM_SELECTOR, SUBMENU
 
 	}
 

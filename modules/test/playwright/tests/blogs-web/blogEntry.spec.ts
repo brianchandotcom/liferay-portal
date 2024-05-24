@@ -62,6 +62,7 @@ test('LPD-22497: Permission sets are differing depending on autosaving of a blog
 test('LPD-26752 Select categories for the custom friendly URL', async ({
 	apiHelpers,
 	blogsEditBlogEntryPage,
+	displayPageTemplatesPage,
 	page,
 	site,
 }) => {
@@ -80,6 +81,17 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 			vocabularyId,
 		});
 	}
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = getRandomString();
+
+	await displayPageTemplatesPage.publishNewTemplate({
+		contentType: 'Blogs Entry',
+		name: displayPageTemplateName,
+	});
+
+	await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
 
 	await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
 

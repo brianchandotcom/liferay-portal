@@ -194,8 +194,6 @@ public class SlaveOfflineRule {
 		notificationRecipients = configurationsMap.get(
 			"notificationRecipients");
 
-		validateRequiredConfigurationParameter(configurationsMap, "offlineSibling");
-
 		offlineSibling = configurationsMap.get("offlineSibling");
 
 		if (configurationsMap.containsKey("shutdown")) {

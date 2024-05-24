@@ -460,7 +460,7 @@ public class TestrayStatusMetricResourceImpl
 		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			sql, params);
 
-		Role testrayAdministratorRole = _roleLocalService.getRole(
+		Role role = _roleLocalService.getRole(
 			contextUser.getCompanyId(), "Testray Administrator");
 
 		return Page.of(
@@ -473,7 +473,7 @@ public class TestrayStatusMetricResourceImpl
 					if (ListUtil.fromArray(
 							contextUser.getRoleIds()
 						).contains(
-							testrayAdministratorRole.getRoleId()
+							role.getRoleId()
 						)) {
 
 						URI baseURI = contextUriInfo.getBaseUri();

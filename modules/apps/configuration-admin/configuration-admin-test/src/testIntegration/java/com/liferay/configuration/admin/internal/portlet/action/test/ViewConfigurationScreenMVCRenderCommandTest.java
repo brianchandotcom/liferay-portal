@@ -100,7 +100,6 @@ public class ViewConfigurationScreenMVCRenderCommandTest {
 				_portletLocalService.getPortletById(
 					ConfigurationAdminPortletKeys.SYSTEM_SETTINGS),
 				null));
-
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 

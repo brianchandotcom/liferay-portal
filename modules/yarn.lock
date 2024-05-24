@@ -977,10 +977,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.115.1":
-  version "3.115.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.115.1.tgz#973f49f7ea40e4c34a189ec3be8234003ec3d45f"
-  integrity sha512-0ITuhkxyMcDejTvC5ZjDXpggBnZWx99To8n0aA+k9Y4xyw3ut2/z/1snxROAE+jJHRoAju7nenCvYsta0Hlg2A==
+"@clayui/css@3.115.2":
+  version "3.115.2"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.115.2.tgz#3d085916829153c15d373db06c7ae547e1c0b495"
+  integrity sha512-x/fiy+moeXjtWtoXVfPMzjSVraANUr4jwNPUF/U2rF7gFYn2OLpCUwrNF3zLw8fQ6RWTKCcnksvLQkm2kTgkWQ==
 
 "@clayui/data-provider@3.115.0":
   version "3.115.0"
@@ -1022,10 +1022,10 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/empty-state@3.115.1":
-  version "3.115.1"
-  resolved "https://registry.yarnpkg.com/@clayui/empty-state/-/empty-state-3.115.1.tgz#ab1bd2b33e4e48929f65541bb1d0347509ef71b8"
-  integrity sha512-w4Uc0JkprXzmX7hIzrpSQfAlGWEULSHtEXZkDF246N6hElzqChrDC7/Rc8+SzZs7G+RpkFj18pwQv2m8Cdp2rg==
+"@clayui/empty-state@3.115.2":
+  version "3.115.2"
+  resolved "https://registry.yarnpkg.com/@clayui/empty-state/-/empty-state-3.115.2.tgz#6a92517cb555155583073ae122131efdc123094d"
+  integrity sha512-rOlnhVf8qoSf36E0hLdMHoihtI3mkJnzAXg+RIIBaMFnXpgMjvBxY20rsjJmVpEKyiPccb2CD1vEu4pagGolTg==
   dependencies:
     classnames "^2.2.6"
 

@@ -1656,6 +1656,17 @@
 				(ResourcePermission.roleId IN ([$ROLE_ID$]))
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.impl.UserLocalServiceImpl.updateLastLogin">
+		<![CDATA[
+			UPDATE
+				User_
+			SET
+				failedLoginAttempts = ?, lastLoginDate = ?, lastLoginIP = ?, loginDate = ?, loginIP = ?, mvccVersion = ?
+			WHERE
+				(mvccVersion = ?) AND
+				(userId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.util.dao.orm.CustomSQL.countBySelectSQL">
 		<![CDATA[
 			SELECT

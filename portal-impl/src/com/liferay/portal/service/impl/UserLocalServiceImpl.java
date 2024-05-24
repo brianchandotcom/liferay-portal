@@ -24,7 +24,10 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
@@ -191,6 +194,7 @@ import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.social.kernel.service.SocialRequestLocalService;
 import com.liferay.social.kernel.service.persistence.SocialRelationPersistence;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -4995,12 +4999,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			lastLoginIP = loginIP;
 		}
 
-		user.setLoginDate(new Date());
-		user.setLoginIP(loginIP);
-		user.setLastLoginDate(lastLoginDate);
-		user.setLastLoginIP(lastLoginIP);
+		user = _updateLastLogin(
+			user, 0, lastLoginDate, lastLoginIP, new Date(), loginIP);
 
-		return resetFailedLoginAttempts(user, true);
+		if (user == null) {
+			return userPersistence.findByPrimaryKey(userId);
+		}
+
+		userPersistence.cacheResult(user);
+
+		return user;
 	}
 
 	/**
@@ -7476,6 +7484,59 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new SystemException(ioException);
 		}
 	}
+
+	private User _updateLastLogin(
+		User user, int failedLoginAttempts, Date lastLoginDate,
+		String lastLoginIP, Date loginDate, String loginIP) {
+
+		Session session = null;
+
+		try {
+			session = userPersistence.openSession();
+
+			String sql = CustomSQLUtil.get(_UPDATE_LAST_LOGIN);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(failedLoginAttempts);
+			queryPos.add(lastLoginDate);
+			queryPos.add(lastLoginIP);
+			queryPos.add(loginDate);
+			queryPos.add(loginIP);
+
+			long mvccVersion = user.getMvccVersion();
+
+			queryPos.add(mvccVersion + 1);
+			queryPos.add(mvccVersion);
+
+			queryPos.add(user.getUserId());
+
+			int count = sqlQuery.executeUpdate();
+
+			if (count != 1) {
+				return null;
+			}
+
+			user.setMvccVersion(mvccVersion + 1);
+			user.setLoginDate(loginDate);
+			user.setLoginIP(loginIP);
+			user.setLastLoginDate(lastLoginDate);
+			user.setLastLoginIP(lastLoginIP);
+			user.setFailedLoginAttempts(failedLoginAttempts);
+
+			session.evict(UserImpl.class, user.getUserId());
+
+			return user;
+		}
+		finally {
+			userPersistence.closeSession(session);
+		}
+	}
+
+	private static final String _UPDATE_LAST_LOGIN =
+		UserLocalServiceImpl.class.getName() + ".updateLastLogin";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserLocalServiceImpl.class);

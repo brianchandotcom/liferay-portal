@@ -93,16 +93,49 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 
 	@Test
 	public void testValidateFailure() throws Exception {
+		String[] messages = {
+			"[ERROR] Company ID 3007447931789165977 already exists in the " +
+				"target database",
+			"[ERROR] Module com.liferay.address.impl needs to be verified in " +
+				"the source database before the migration",
+			"[ERROR] Module com.liferay.comment.page.comments.web has a " +
+				"failed release state in the source database",
+			"[ERROR] Module com.liferay.exportimport.service needs to be " +
+				"installed in the source database before the migration",
+			"[ERROR] Module com.liferay.knowledge.base.web needs to be " +
+				"upgraded in the target database before the migration",
+			"[ERROR] Module com.liferay.organizations.service has a failed " +
+				"release state in the target database",
+			"[ERROR] Module com.liferay.organizations.service needs to be " +
+				"verified in the target database before the migration",
+			"[ERROR] Module com.liferay.wiki.web needs to be upgraded in the " +
+				"source database before the migration",
+			"[WARN] Company name Liferay DXP already exists in the target " +
+				"database. You must set a different value in " +
+					"DBPartitionInsertVirtualInstanceConfiguration.config.",
+			"[WARN] Module com.liferay.asset.publisher.web is not present in " +
+				"the source database",
+			"[WARN] Module com.liferay.license.manager.web is not present in " +
+				"the target database",
+			"[WARN] Table CommercePriceList is not present in the source " +
+				"database",
+			"[WARN] Table DDMTemplate is not present in the target database",
+			"[WARN] Virtual host localhost already exists in the target " +
+				"database. You must set a different value in " +
+					"DBPartitionInsertVirtualInstanceConfiguration.config.",
+			"[WARN] Web ID liferay.com already exists in the target " +
+				"database. You must set a different value in " +
+					"DBPartitionInsertVirtualInstanceConfiguration.config."
+		};
+
 		_testValidate(
 			runtimeException -> {
 				Assert.assertEquals("1", runtimeException.getMessage());
 
 				String string = _outByteArrayOutputStream.toString();
 
-				for (String validationErrorMessage :
-						_VALIDATION_ERROR_MESSAGES) {
-
-					Assert.assertTrue(string.contains(validationErrorMessage));
+				for (String message : messages) {
+					Assert.assertTrue(string.contains(message));
 				}
 			},
 			"source-failure.json", "target-failure.json",
@@ -312,40 +345,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 
 		validationsUnsafeRunnable.run();
 	}
-
-	private static final String[] _VALIDATION_ERROR_MESSAGES = {
-		"[ERROR] Company ID 3007447931789165977 already exists in the target " +
-			"database",
-		"[ERROR] Module com.liferay.address.impl needs to be verified in the " +
-			"source database before the migration",
-		"[ERROR] Module com.liferay.comment.page.comments.web has a failed " +
-			"release state in the source database",
-		"[ERROR] Module com.liferay.exportimport.service needs to be " +
-			"installed in the source database before the migration",
-		"[ERROR] Module com.liferay.knowledge.base.web needs to be upgraded " +
-			"in the target database before the migration",
-		"[ERROR] Module com.liferay.organizations.service has a failed " +
-			"release state in the target database",
-		"[ERROR] Module com.liferay.organizations.service needs to be " +
-			"verified in the target database before the migration",
-		"[ERROR] Module com.liferay.wiki.web needs to be upgraded in the " +
-			"source database before the migration",
-		"[WARN] Company name Liferay DXP already exists in the target " +
-			"database. You must set a different value in " +
-				"DBPartitionInsertVirtualInstanceConfiguration.config.",
-		"[WARN] Module com.liferay.asset.publisher.web is not present in the " +
-			"source database",
-		"[WARN] Module com.liferay.license.manager.web is not present in the " +
-			"target database",
-		"[WARN] Table CommercePriceList is not present in the source database",
-		"[WARN] Table DDMTemplate is not present in the target database",
-		"[WARN] Virtual host localhost already exists in the target " +
-			"database. You must set a different value in " +
-				"DBPartitionInsertVirtualInstanceConfiguration.config.",
-		"[WARN] Web ID liferay.com already exists in the target database. " +
-			"You must set a different value in " +
-				"DBPartitionInsertVirtualInstanceConfiguration.config."
-	};
 
 	private final ByteArrayOutputStream _errByteArrayOutputStream =
 		new ByteArrayOutputStream();

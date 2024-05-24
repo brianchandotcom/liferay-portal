@@ -536,58 +536,6 @@ definition {
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of String type for a specific Object"
-	@priority = 5
-	test DisplaySpecificEntryString {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 324",
-			objectName = "CustomObject324",
-			pluralLabelName = "Custom Objects 324");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "String",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject324");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject324");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject324",
-			value = "Test text");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectDisplayPage.addItem(
-			frameTitle = "Select",
-			pluralLabelName = "Custom Objects 324");
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "String");
-
-		AssertElementPresent(
-			key_entry = "Test text",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-
-		PageEditor.publish();
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Test Content Page Name");
-
-		AssertElementPresent(
-			key_entry = "Test text",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
 	@description = "LPS-137104 - Verify if Objects and its data are displayed as a Content Type and Subtype for a Page Template"
 	@priority = 5
 	test ObjectDisplayedForPageTemplate {

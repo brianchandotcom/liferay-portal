@@ -9,6 +9,7 @@ import com.liferay.content.dashboard.document.library.internal.item.filter.FileS
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -45,7 +46,11 @@ public class FileSizeContentDashboardItemFilterProvider
 
 	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest) {
-		return true;
+		if (FeatureFlagManagerUtil.isEnabled("LPD-25680")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

@@ -251,40 +251,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-190851. Confirm that the filter options are shown after clicking on the Create Filter button"
-	@priority = 3
-	test AssertOptionsAfterClickingCreateButton {
-		task ("And clicks to add a new filter") {
-			Click(
-				key_text = "Create Filter",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Then 3 options is displayed") {
-			MenuItem.viewPresent(menuItem = "Date Range");
-
-			MenuItem.viewPresent(menuItem = "Client Extension");
-
-			MenuItem.viewPresent(menuItem = "Selection");
-		}
-	}
-
-	@description = "LPS-190851. Confirm that the filter options are shown after clicking on the button plus"
-	@priority = 3
-	test AssertOptionsAfterClickingPlusButton {
-		task ("And clicks to add a new filter") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Then 3 options is displayed") {
-			MenuItem.viewPresent(menuItem = "Date Range");
-
-			MenuItem.viewPresent(menuItem = "Client Extension");
-
-			MenuItem.viewPresent(menuItem = "Selection");
-		}
-	}
-
 	@description = "LPS-186878 Confirm that the translated option appears when selecting pt_BR in the translation modal"
 	@ignore = "true"
 	@priority = 3

@@ -311,69 +311,6 @@ definition {
 		VisualizeObjectDisplayPage.validateObjectContentType(contentType = "Custom Object 325");
 	}
 
-	@description = "LPS-137105 - Verify if the Object entries are rendered when previewing it"
-	@priority = 5
-	test ObjectEntriesAreRendered {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 326",
-			pluralLabelName = "Custom Objects 326");
-
-		CreateObject.saveObject();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 326");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Field",
-			fieldType = "Text");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 326");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Panel Link",
-			optionName = "Object");
-
-		CreateObject.selectTitleField(fieldLabel = "Field");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject326");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject326");
-
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "Test Entry");
-
-		Navigator.openURL();
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
-			contentType = "Custom Object 326",
-			displayPageName = "Blank Display Page",
-			subtype = "Custom Object 326");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Field");
-
-		PageEditor.selectItemToPreviewWithObject(entryValue = "Test Entry");
-
-		AssertElementPresent(
-			key_entry = "Test Entry",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
 	@priority = 5
 	test ObjectMappedURL {

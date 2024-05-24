@@ -11,6 +11,7 @@ import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -30,7 +31,7 @@ test('LPD-13652 Product specification fragment only shows correct specifications
 	page,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
-		name: 'Specification Fragment Site',
+		name: getRandomString(),
 	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
@@ -77,10 +78,14 @@ test('LPD-13652 Product specification fragment only shows correct specifications
 		],
 	});
 
-	await applicationsMenuPage.goToSite('Specification Fragment Site');
+	await applicationsMenuPage.goToSite(site.name);
 
 	await commerceLayoutsPage.goToDisplayPageTemplates();
-	await commerceLayoutsPage.createDisplayPageTemplate('Product Details');
+	await commerceLayoutsPage.createDisplayPageTemplate(
+		'Product Details',
+		'Product',
+		site.name
+	);
 	await commerceLayoutsPage.addProductFragment('Price');
 
 	await commerceLayoutsPage.addProductFragment('Product Specification');

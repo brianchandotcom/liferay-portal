@@ -12,6 +12,10 @@ export class ExportImportPage {
 	readonly productMenuPage: ProductMenuPage;
 	readonly newImportProcess: Locator;
 	readonly page: Page;
+	readonly newImportButton: Locator;
+	readonly fileSelector: Locator;
+	readonly continueButton: Locator;
+	readonly importButton: Locator;
 
 	constructor(page: Page) {
 		this.newImportProcess = page.getByRole('button', {
@@ -20,20 +24,24 @@ export class ExportImportPage {
 
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
+		this.newImportButton = page.getByRole('link', {name: 'Import'});
+		this.fileSelector = page.getByRole('button', {name: 'Select File'});
+		this.continueButton = page.getByRole('button', {name: 'Continue'});
+		this.importButton = page.getByRole('button', {name: 'Import'});
 	}
 
 	async createNewImportProcess(folderPath: string) {
-		await this.page.getByRole('link', {name: 'Import'}).click();
+		await this.newImportButton.click();
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
 
-		await this.page.getByRole('button', {name: 'Select File'}).click();
+		await this.fileSelector.click();
 
 		const fileChooser = await fileChooserPromise;
 
 		await fileChooser.setFiles(await zipFolder(folderPath));
 
-		await this.page.getByRole('button', {name: 'Continue'}).click();
+		await this.continueButton.click();
 
 		await this.page.waitForTimeout(3000);
 
@@ -63,7 +71,7 @@ export class ExportImportPage {
 			.getByText('Ratings')
 			.click();
 
-		await this.page.getByRole('button', {name: 'Import'}).click();
+		await this.importButton.click();
 	}
 
 	async goToImport() {

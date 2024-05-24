@@ -203,6 +203,17 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async assingUserToAccountRole(
+		accountId: number | string,
+		accountRoleId: number | string,
+		userId: number | string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}accounts/${accountId}/account-roles/${accountRoleId}/user-accounts/${userId}`,
+			{data: {}, failOnStatusCode: true}
+		);
+	}
+
 	async assignAccountRoles(
 		accountERC: string,
 		roleId: number,

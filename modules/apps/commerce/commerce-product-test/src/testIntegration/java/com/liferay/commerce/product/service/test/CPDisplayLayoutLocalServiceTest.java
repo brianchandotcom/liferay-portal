@@ -21,8 +21,10 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -119,23 +121,29 @@ public class CPDisplayLayoutLocalServiceTest {
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			_serviceContext);
 
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
+			_commerceChannel1.getSiteGroupId());
+
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
+			_commerceChannel2.getSiteGroupId());
+
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
 			AssetCategory.class, assetCategory.getCategoryId(), null,
-			RandomTestUtil.randomString());
+			layout1.getUuid());
 
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
 			CPDefinition.class, _cpDefinition.getCPDefinitionId(), null,
-			RandomTestUtil.randomString());
+			layout1.getUuid());
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel2.getSiteGroupId(),
 			AssetCategory.class, assetCategory.getCategoryId(), null,
-			RandomTestUtil.randomString());
+			layout2.getUuid());
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel2.getSiteGroupId(),
 			CPDefinition.class, _cpDefinition.getCPDefinitionId(), null,
-			RandomTestUtil.randomString());
+			layout2.getUuid());
 
 		Assert.assertEquals(
 			4, _cpDisplayLayoutLocalService.getCPDisplayLayoutsCount());

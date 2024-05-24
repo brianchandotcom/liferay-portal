@@ -98,7 +98,9 @@ public class LayoutPageTemplateEntryServiceTest {
 	@Test(
 		expected = LayoutPageTemplateEntryNameException.MustNotBeDuplicate.class
 	)
-	public void testAddDuplicateLayoutPageTemplateEntries() throws Exception {
+	public void testAddDuplicateBasicLayoutPageTemplateEntries()
+		throws Exception {
+
 		String name = RandomTestUtil.randomString();
 
 		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -108,6 +110,40 @@ public class LayoutPageTemplateEntryServiceTest {
 		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			name);
+	}
+
+	@Test(
+		expected = LayoutPageTemplateEntryNameException.MustNotBeDuplicate.class
+	)
+	public void testAddDuplicateDisplayPageLayoutPageTemplateEntries()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			name, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+			WorkflowConstants.STATUS_DRAFT);
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateCollection(
+				_group.getGroupId());
+
+		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			name, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+			WorkflowConstants.STATUS_DRAFT);
+
+		Assert.assertEquals(
+			2,
+			_layoutPageTemplateEntryService.getLayoutPageTemplateEntriesCount(
+				_group.getGroupId(), name,
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+
+		LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			name, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+			WorkflowConstants.STATUS_DRAFT);
 	}
 
 	@Test(expected = LayoutPageTemplateEntryNameException.class)

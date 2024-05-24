@@ -74,8 +74,10 @@ public class LayoutPageTemplateCollectionServiceTest {
 	}
 
 	@Test(expected = DuplicateLayoutPageTemplateCollectionException.class)
-	public void testAddDuplicateLayoutPageTemplateCollections()
+	public void testAddDuplicateBasicLayoutPageTemplateCollections()
 		throws Exception {
+
+		String name = StringUtil.randomString();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -85,15 +87,40 @@ public class LayoutPageTemplateCollectionServiceTest {
 			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			"Layout Page Template Collection", null,
-			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
+			name, null, LayoutPageTemplateCollectionTypeConstants.BASIC,
+			serviceContext);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			null, _group.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			"Layout Page Template Collection", null,
-			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
+			name, null, LayoutPageTemplateCollectionTypeConstants.BASIC,
+			serviceContext);
+	}
+
+	@Test(expected = DuplicateLayoutPageTemplateCollectionException.class)
+	public void testAddDuplicateDisplayPageLayoutPageTemplateCollections()
+		throws Exception {
+
+		String name = StringUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
+			null, _group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			name, null, LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+			serviceContext);
+
+		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
+			null, _group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			name, null, LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
+			serviceContext);
 	}
 
 	@Test

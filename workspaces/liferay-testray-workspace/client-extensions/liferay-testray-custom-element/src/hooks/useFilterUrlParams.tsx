@@ -55,7 +55,7 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 		[filterKeys, filterSchema?.fields]
 	);
 
-	const getfilterResponse = useCallback(async () => {
+	const getFilterResponse = useCallback(async () => {
 		const parameters = safeJSONParse(JSON.stringify(params));
 		const resourceFields =
 			filterFields?.filter(({resource}) => resource) || {};
@@ -94,8 +94,8 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 	}, [customFilterFields, filterFields, params, cache]);
 
 	useEffect(() => {
-		getfilterResponse();
-	}, [getfilterResponse]);
+		getFilterResponse();
+	}, [getFilterResponse]);
 
 	const filterWithOptions = useMemo(() => {
 		if (serializedFilter || customFilterFields) {

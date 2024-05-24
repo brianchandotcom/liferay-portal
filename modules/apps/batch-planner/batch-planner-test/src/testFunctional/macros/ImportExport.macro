@@ -498,6 +498,10 @@ definition {
 		Select(
 			locator1 = "ImportExport#ENTITY_TYPE",
 			value1 = ${entityType});
+
+		WaitForElementPresent(
+			key_contentName = "Fields",
+			locator1 = "ImportExport#PREVIEW_ENTRY_CONTENT_FIELDS");
 	}
 
 	@summary = "Default summary"

@@ -9,6 +9,7 @@ import getMainEntryPoints from '../../configuration/getMainEntryPoints.mjs';
 import getProjectDependencies from '../../configuration/getProjectDependencies.mjs';
 import getProjectDescription from '../../configuration/getProjectDescription.mjs';
 import {getProjectDirs, getRootDir, SRC_PATH} from '../../util/constants.mjs';
+import fileExists from '../../util/fileExists.mjs';
 import writeGlobalTsconfig from './writeGlobalTsconfig.mjs';
 import writeProjectTsconfig from './writeProjectTsconfig.mjs';
 
@@ -41,14 +42,7 @@ though you have invoked it from a project directory.
 }
 
 async function processProject(projectDir, mainEntryPoints) {
-	try {
-		await fs.stat(path.join(projectDir, SRC_PATH));
-	}
-	catch(error) {
-		if (error.code !== 'ENOENT') {
-			throw error;
-		}
-
+	if (!await fileExists(path.join(projectDir, SRC_PATH))) {
 		return;
 	}
 

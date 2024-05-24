@@ -6,6 +6,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+import fileExists from './fileExists.mjs';
+
 export const SRC_PATH = path.join(
 	'src',
 	'main',
@@ -78,19 +80,13 @@ export async function getRootDir() {
 	let found = false;
 
 	while (path.dirname(rootDir) !== rootDir) {
-		try {
-			await fs.stat(path.join(rootDir, 'yarn.lock'));
-
+		if (await fileExists(path.join(rootDir, 'yarn.lock'))) {
 			found = true;
 
 			break;
-		} catch (error) {
-			if (error.code !== 'ENOENT') {
-				throw error;
-			}
-
-			rootDir = path.resolve(rootDir, '..');
 		}
+
+		rootDir = path.resolve(rootDir, '..');
 	}
 
 	if (!found) {

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import * as childProcess from 'child_process';
 import {constants, mkdirSync, renameSync} from 'fs';
 import * as fs from 'fs/promises';
 import path from 'path';
 import resolve from 'resolve';
 
 import {WORK_PATH} from '../../util/constants.mjs';
+import forkModule from '../../util/forkModule.mjs';
 import onExit from '../../util/onExit.mjs';
 
 const DISABLE_BUILD_CONFIGS = ['babel', 'bundler', 'exports', 'main'];
@@ -26,41 +26,13 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 		{basedir: '.'}
 	);
 
-	const child = childProcess.fork(npmScriptsPath, ['build'], {
-		stdio: 'inherit',
-	});
-
-	let killChild = true;
-
-	onExit(() => {
-		if (killChild) {
-			child.kill();
+	await forkModule(
+		npmScriptsPath,
+		['build'],
+		{
+			stdio: 'inherit',
 		}
-	});
-
-	return new Promise((resolve, reject) => {
-		child.on('exit', (code, signal) => {
-			killChild = false;
-
-			if (code === 0) {
-				resolve();
-			} else if (code !== null) {
-				reject(
-					new Error(
-						`Error: liferay-npm-scripts finished with status ${code}`
-					)
-				);
-			} else {
-				reject(
-					new Error(
-						`Error: liferay-npm-scripts finished due to signal ${signal}`
-					)
-				);
-			}
-		});
-
-		child.on('error', reject);
-	});
+	);
 }
 
 async function writeNpmScriptsConfig(projectNpmScriptsConfig) {

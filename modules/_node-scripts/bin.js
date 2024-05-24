@@ -11,6 +11,7 @@ const path = require('path');
 
 const COMMAND_DESCRIPTIONS = {
 	build: 'builds frontend stuff of current project',
+	'check:tsc': 'runs TypeScript checks in the current project (command arguments, if any, are passed to tsc directly)',
 	'generate:tsconfig': 'generates tsconfig.json files for all projects',
 };
 

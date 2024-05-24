@@ -15,26 +15,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class StructureStructureKeyComparator
 	extends OrderByComparator<DDMStructure> {
 
-	public static final StructureStructureKeyComparator INSTANCE_ASCENDING =
-		new StructureStructureKeyComparator(Boolean.TRUE);
-
-	public static final StructureStructureKeyComparator INSTANCE_DESCENDING =
-		new StructureStructureKeyComparator(Boolean.FALSE);
-
-	public static final String ORDER_BY_ASC = "DDMStructure.structureKey ASC";
-
-	public static final String ORDER_BY_DESC = "DDMStructure.structureKey DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"structureKey"};
-
 	public static StructureStructureKeyComparator getInstance(
 		boolean ascending) {
 
 		if (ascending) {
-			return INSTANCE_ASCENDING;
+			return _INSTANCE_ASCENDING;
 		}
 
-		return INSTANCE_DESCENDING;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,15 +47,15 @@ public class StructureStructureKeyComparator
 	@Override
 	public String getOrderBy() {
 		if (_ascending) {
-			return ORDER_BY_ASC;
+			return _ORDER_BY_ASC;
 		}
 
-		return ORDER_BY_DESC;
+		return _ORDER_BY_DESC;
 	}
 
 	@Override
 	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
+		return _ORDER_BY_FIELDS;
 	}
 
 	@Override
@@ -78,6 +66,19 @@ public class StructureStructureKeyComparator
 	private StructureStructureKeyComparator(Boolean ascending) {
 		_ascending = ascending;
 	}
+
+	private static final StructureStructureKeyComparator _INSTANCE_ASCENDING =
+		new StructureStructureKeyComparator(Boolean.TRUE);
+
+	private static final StructureStructureKeyComparator _INSTANCE_DESCENDING =
+		new StructureStructureKeyComparator(Boolean.FALSE);
+
+	private static final String _ORDER_BY_ASC = "DDMStructure.structureKey ASC";
+
+	private static final String _ORDER_BY_DESC =
+		"DDMStructure.structureKey DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"structureKey"};
 
 	private final boolean _ascending;
 

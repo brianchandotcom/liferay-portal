@@ -372,12 +372,6 @@ public class EditServerMVCActionCommandTest {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
-		mockLiferayPortletActionRequest.setMethod(HttpMethods.POST);
-
-		mockLiferayPortletActionRequest.addParameter(Constants.CMD, cmd);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -394,6 +388,12 @@ public class EditServerMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayPortletActionRequest.addParameter(Constants.CMD, cmd);
+		mockLiferayPortletActionRequest.setMethod(HttpMethods.POST);
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
 
 		if (permissionChecker.isOmniadmin()) {
 			if (!cmd.equals("addLogLevel") &&
@@ -414,13 +414,11 @@ public class EditServerMVCActionCommandTest {
 					Throwable throwable = exception.getCause();
 
 					Assert.assertTrue(
-						"Test ProcessAction failed for " + cmd,
 						throwable instanceof CaptchaTextException);
 				}
 			}
 			else {
 				Assert.assertTrue(
-					"Test ProcessAction failed for " + cmd,
 					_mvcActionCommand.processAction(
 						mockLiferayPortletActionRequest,
 						mockLiferayPortletActionResponse));
@@ -431,14 +429,12 @@ public class EditServerMVCActionCommandTest {
 				permissionChecker.isCompanyAdmin()) {
 
 				Assert.assertTrue(
-					"Test ProcessAction failed for " + cmd,
 					_mvcActionCommand.processAction(
 						mockLiferayPortletActionRequest,
 						mockLiferayPortletActionResponse));
 			}
 			else {
 				Assert.assertFalse(
-					"Test ProcessAction failed for " + cmd,
 					_mvcActionCommand.processAction(
 						mockLiferayPortletActionRequest,
 						mockLiferayPortletActionResponse));

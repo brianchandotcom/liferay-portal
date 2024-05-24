@@ -162,13 +162,13 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
 		PortletPreferences portletPreferences = _prefsProps.getPreferences(
 			ParamUtil.getLong(actionRequest, "preferencesCompanyId"));
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (permissionChecker.isCompanyAdmin() && cmd.equals("updateMail")) {
 			_updateMail(actionRequest, portletPreferences);

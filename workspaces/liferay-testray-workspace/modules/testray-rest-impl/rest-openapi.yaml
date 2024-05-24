@@ -60,6 +60,13 @@ components:
             type: object
         TestrayRoutineMetric:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 testrayBuildDueDate:
                     type: string
                 testrayRoutineId:

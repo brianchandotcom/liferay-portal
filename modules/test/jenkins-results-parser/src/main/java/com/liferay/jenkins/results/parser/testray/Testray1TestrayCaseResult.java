@@ -25,12 +25,6 @@ import org.json.JSONObject;
  */
 public class Testray1TestrayCaseResult extends TestrayCaseResult {
 
-	public TestrayAttachment getBuildResultTestrayAttachment() {
-		_initTestrayAttachments();
-
-		return _testrayAttachments.get("Build Result (Top Level)");
-	}
-
 	@Override
 	public String getCaseID() {
 		JSONObject jsonObject = getJSONObject();
@@ -50,16 +44,6 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 		JSONObject jsonObject = getJSONObject();
 
 		return jsonObject.optString("errors");
-	}
-
-	@Override
-	public URL getHistoryURL() {
-		try {
-			return new URL(getURL() + "/history");
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
 	}
 
 	@Override
@@ -105,13 +89,6 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
-	public List<TestrayAttachment> getTestrayAttachments() {
-		_initTestrayAttachments();
-
-		return new ArrayList<>(_testrayAttachments.values());
-	}
-
-	@Override
 	public TestrayCase getTestrayCase() {
 		if (_testrayCase != null) {
 			return _testrayCase;
@@ -141,7 +118,16 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 	}
 
 	public URL getURL() {
-		return null;
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			return new URL(
+				testrayServer.getURL(),
+				"home/-/testray/case_results/" + getID());
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	public String[] getWarnings() {
@@ -168,12 +154,13 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 		super(testrayBuild, jsonObject);
 	}
 
-	private synchronized void _initTestrayAttachments() {
-		if (_testrayAttachments != null) {
+	@Override
+	protected synchronized void initTestrayAttachments() {
+		if (testrayAttachments != null) {
 			return;
 		}
 
-		_testrayAttachments = new TreeMap<>();
+		testrayAttachments = new TreeMap<>();
 
 		JSONObject jsonObject = getJSONObject();
 
@@ -185,12 +172,11 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 				TestrayFactory.newTestrayAttachment(
 					this, name, attachmentsJSONObject.getString(name));
 
-			_testrayAttachments.put(
+			testrayAttachments.put(
 				testrayAttachment.getName(), testrayAttachment);
 		}
 	}
 
-	private Map<String, TestrayAttachment> _testrayAttachments;
 	private TestrayCase _testrayCase;
 
 }

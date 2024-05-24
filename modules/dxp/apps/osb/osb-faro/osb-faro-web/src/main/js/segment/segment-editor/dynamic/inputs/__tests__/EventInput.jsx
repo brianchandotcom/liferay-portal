@@ -1,7 +1,6 @@
 import * as data from 'test/data';
 import EventInput from '../EventInput';
 import React from 'react';
-import {AttributeTypes} from 'event-analysis/utils/types';
 import {createNewGroup} from '../../utils/utils';
 import {CustomValue, Property} from 'shared/util/records';
 import {fireEvent, render} from '@testing-library/react';

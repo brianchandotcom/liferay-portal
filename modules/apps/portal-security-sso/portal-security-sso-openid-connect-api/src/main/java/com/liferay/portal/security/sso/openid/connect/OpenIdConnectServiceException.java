@@ -12,14 +12,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class OpenIdConnectServiceException extends PortalException {
 
-	public OpenIdConnectServiceException(String msg) {
-		super(msg);
-	}
-
-	public OpenIdConnectServiceException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
 	public static class AuthenticationException
 		extends OpenIdConnectServiceException {
 
@@ -97,6 +89,14 @@ public class OpenIdConnectServiceException extends PortalException {
 			super(msg, throwable);
 		}
 
+	}
+
+	private OpenIdConnectServiceException(String msg) {
+		super(msg);
+	}
+
+	private OpenIdConnectServiceException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
 }

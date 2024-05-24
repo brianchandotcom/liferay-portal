@@ -10,11 +10,15 @@ import com.liferay.jenkins.results.parser.TopLevelBuild;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -22,24 +26,49 @@ import org.json.JSONObject;
  */
 public class TestrayCaseResult {
 
+	public static final String[] FIELD_NAMES = {
+		"attachments", "caseToCaseResult", "componentToCaseResult",
+		"dateCreated", "dateModified", "dueStatus{key name}", "errors", "id",
+		"startDate"
+	};
+
 	public TestrayAttachment getBuildResultTestrayAttachment() {
-		return null;
+		initTestrayAttachments();
+
+		return testrayAttachments.get("Build Result (Top Level)");
 	}
 
 	public String getCaseID() {
-		return null;
+		TestrayComponent testrayComponent = getTestrayComponent();
+
+		if (testrayComponent == null) {
+			return null;
+		}
+
+		return String.valueOf(testrayComponent.getID());
 	}
 
 	public String getComponentName() {
-		return null;
+		TestrayComponent testrayComponent = getTestrayComponent();
+
+		if (testrayComponent == null) {
+			return null;
+		}
+
+		return testrayComponent.getName();
 	}
 
 	public String getErrors() {
-		return null;
+		return _jsonObject.optString("errors");
 	}
 
 	public URL getHistoryURL() {
-		return null;
+		try {
+			return new URL(getURL() + "/history");
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	public long getID() {
@@ -51,17 +80,29 @@ public class TestrayCaseResult {
 	}
 
 	public String getName() {
-		return null;
+		TestrayCase testrayCase = getTestrayCase();
+
+		if (testrayCase == null) {
+			return null;
+		}
+
+		return testrayCase.getName();
 	}
 
 	public int getPriority() {
 		TestrayCase testrayCase = getTestrayCase();
 
+		if (testrayCase == null) {
+			return 0;
+		}
+
 		return testrayCase.getPriority();
 	}
 
 	public Status getStatus() {
-		return null;
+		JSONObject dueStatusJSONObject = _jsonObject.getJSONObject("dueStatus");
+
+		return Status.valueOf(dueStatusJSONObject.getString("key"));
 	}
 
 	public String getSubcomponentNames() {
@@ -69,19 +110,74 @@ public class TestrayCaseResult {
 	}
 
 	public String getTeamName() {
-		return null;
+		if (_testrayComponent == null) {
+			return null;
+		}
+
+		TestrayTeam testrayTeam = _testrayComponent.getTestrayTeam();
+
+		return testrayTeam.getName();
 	}
 
 	public List<TestrayAttachment> getTestrayAttachments() {
-		return null;
+		initTestrayAttachments();
+
+		return new ArrayList<>(testrayAttachments.values());
 	}
+
+	protected synchronized void initTestrayAttachments() {
+		if (testrayAttachments != null) {
+			return;
+		}
+
+		testrayAttachments = new TreeMap<>();
+
+		String attachments = _jsonObject.getString("attachments");
+
+		JSONArray attachmentsJSONArray;
+
+		try {
+			attachmentsJSONArray = new JSONArray(attachments);
+		}
+		catch (JSONException jsonException) {
+			return;
+		}
+
+		for (int i = 0 ; i < attachmentsJSONArray.length(); i++) {
+			JSONObject attachmentJSONObject =
+					attachmentsJSONArray.getJSONObject(i);
+
+			URL url;
+
+			try {
+				url = new URL(attachmentJSONObject.getString("url"));
+			}
+			catch (MalformedURLException malformedURLException) {
+				url = null;
+			}
+
+			TestrayAttachment testrayAttachment =
+				TestrayFactory.newTestrayAttachment(
+					this, attachmentJSONObject.getString("name"),
+					attachmentJSONObject.getString("value"), url);
+
+			testrayAttachments.put(
+				testrayAttachment.getName(), testrayAttachment);
+		}
+	}
+
+	protected Map<String, TestrayAttachment> testrayAttachments;
 
 	public TestrayBuild getTestrayBuild() {
 		return _testrayBuild;
 	}
 
 	public TestrayCase getTestrayCase() {
-		return null;
+		return _testrayCase;
+	}
+
+	public TestrayComponent getTestrayComponent() {
+		return _testrayComponent;
 	}
 
 	public TestrayProject getTestrayProject() {
@@ -99,16 +195,18 @@ public class TestrayCaseResult {
 	public String getType() {
 		TestrayCase testrayCase = getTestrayCase();
 
+		if (testrayCase == null) {
+			return null;
+		}
+
 		return testrayCase.getType();
 	}
 
 	public URL getURL() {
-		TestrayServer testrayServer = getTestrayServer();
+		TestrayBuild testrayBuild = getTestrayBuild();
 
 		try {
-			return new URL(
-				testrayServer.getURL(),
-				"home/-/testray/case_results/" + getID());
+			return new URL(testrayBuild.getURL() + "/case-result/" + getID());
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -121,9 +219,9 @@ public class TestrayCaseResult {
 
 	public static enum Status {
 
-		BLOCKED(4, "blocked"), DID_NOT_RUN(6, "dnr"), FAILED(3, "failed"),
-		IN_PROGRESS(1, "in-progress"), PASSED(2, "passed"),
-		TEST_FIX(7, "test-fix"), UNTESTED(1, "untested");
+		BLOCKED(4, "blocked"), DIDNOTRUN(6, "dnr"), FAILED(3, "failed"),
+		INPROGRESS(1, "in-progress"), PASSED(2, "passed"),
+		TESTFIX(7, "test-fix"), UNTESTED(1, "untested");
 
 		public static Status get(Integer id) {
 			return _statuses.get(id);
@@ -131,7 +229,7 @@ public class TestrayCaseResult {
 
 		public static List<Status> getFailedStatuses() {
 			return Arrays.asList(
-				BLOCKED, DID_NOT_RUN, FAILED, IN_PROGRESS, TEST_FIX, UNTESTED);
+				BLOCKED, DIDNOTRUN, FAILED, INPROGRESS, TESTFIX, UNTESTED);
 		}
 
 		public Integer getID() {
@@ -164,7 +262,26 @@ public class TestrayCaseResult {
 		TestrayBuild testrayBuild, JSONObject jsonObject) {
 
 		_testrayBuild = testrayBuild;
+
 		_jsonObject = jsonObject;
+
+		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
+
+		JSONObject componentJSONObject = _jsonObject.optJSONObject(
+			"componentToCaseResult");
+
+		if (componentJSONObject != null) {
+			_testrayComponent = testrayProject.getTestrayComponentByID(
+				componentJSONObject.getLong("id"));
+		}
+
+		JSONObject caseJSONObject = _jsonObject.optJSONObject(
+			"caseToCaseResult");
+
+		if (caseJSONObject != null) {
+			_testrayCase = TestrayFactory.newTestrayCase(
+				testrayBuild.getTestrayProject(), caseJSONObject);
+		}
 	}
 
 	protected TestrayCaseResult(
@@ -178,6 +295,8 @@ public class TestrayCaseResult {
 
 	private final JSONObject _jsonObject;
 	private final TestrayBuild _testrayBuild;
+	private TestrayCase _testrayCase;
+	private TestrayComponent _testrayComponent;
 	private TopLevelBuild _topLevelBuild;
 
 }

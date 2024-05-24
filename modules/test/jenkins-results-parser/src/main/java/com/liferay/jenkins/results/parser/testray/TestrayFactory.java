@@ -45,7 +45,13 @@ public class TestrayFactory {
 	public static TestrayAttachment newTestrayAttachment(
 		TestrayCaseResult testrayCaseResult, String name, String key) {
 
-		return new DefaultTestrayAttachment(testrayCaseResult, name, key);
+		return newTestrayAttachment(testrayCaseResult, name, key, null);
+	}
+
+	public static TestrayAttachment newTestrayAttachment(
+		TestrayCaseResult testrayCaseResult, String name, String key, URL url) {
+
+		return new DefaultTestrayAttachment(testrayCaseResult, name, key, url);
 	}
 
 	public static TestrayAttachmentRecorder newTestrayAttachmentRecorder(

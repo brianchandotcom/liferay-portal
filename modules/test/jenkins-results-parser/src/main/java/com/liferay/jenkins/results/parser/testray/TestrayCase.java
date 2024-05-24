@@ -17,7 +17,7 @@ public class TestrayCase {
 	}
 
 	public String getID() {
-		return null;
+		return _jsonObject.getString("id");
 	}
 
 	public JSONObject getJSONObject() {
@@ -25,11 +25,11 @@ public class TestrayCase {
 	}
 
 	public String getName() {
-		return null;
+		return _jsonObject.getString("name");
 	}
 
 	public int getPriority() {
-		return -1;
+		return _jsonObject.getInt("priority");
 	}
 
 	public String getTeamName() {

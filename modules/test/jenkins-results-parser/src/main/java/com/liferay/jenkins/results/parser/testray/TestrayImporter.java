@@ -370,7 +370,7 @@ public class TestrayImporter {
 		if (portalRelease != null) {
 			sb.append("Portal Release: ");
 			sb.append(portalRelease.getPortalVersion());
-			sb.append(";\n");
+			sb.append("; ");
 		}
 
 		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
@@ -378,7 +378,7 @@ public class TestrayImporter {
 		if (portalFixpackRelease != null) {
 			sb.append("Portal Fixpack: ");
 			sb.append(portalFixpackRelease.getPortalFixpackVersion());
-			sb.append(";\n");
+			sb.append("; ");
 		}
 
 		PortalHotfixRelease portalHotfixRelease = getPortalHotfixRelease();
@@ -386,7 +386,7 @@ public class TestrayImporter {
 		if (portalHotfixRelease != null) {
 			sb.append("Portal Hotfix: ");
 			sb.append(portalHotfixRelease.getPortalHotfixReleaseVersion());
-			sb.append(";\n");
+			sb.append("; ");
 		}
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
@@ -394,7 +394,7 @@ public class TestrayImporter {
 		sb.append("<a href=\"");
 		sb.append(topLevelBuild.getJenkinsReportURL());
 		sb.append("\">Jenkins Report</a>");
-		sb.append(";\n");
+		sb.append("; ");
 
 		if (topLevelBuild instanceof PortalBranchInformationBuild) {
 			PortalBranchInformationBuild portalBranchInformationBuild =
@@ -406,11 +406,11 @@ public class TestrayImporter {
 			if (portalBranchInformation != null) {
 				sb.append("Portal Branch: ");
 				sb.append(portalBranchInformation.getUpstreamBranchName());
-				sb.append(";\n");
+				sb.append("; ");
 
 				sb.append("Portal SHA: ");
-				sb.append(portalBranchInformation.getSenderBranchSHA());
-				sb.append(";\n");
+				sb.append(portalBranchInformation.getSenderBranchSHAShort());
+				sb.append("; ");
 			}
 		}
 
@@ -424,11 +424,11 @@ public class TestrayImporter {
 			if (pluginsBranchInformation != null) {
 				sb.append("Plugins Branch: ");
 				sb.append(pluginsBranchInformation.getUpstreamBranchName());
-				sb.append(";\n");
+				sb.append("; ");
 
 				sb.append("Plugins SHA: ");
-				sb.append(pluginsBranchInformation.getSenderBranchSHA());
-				sb.append(";\n");
+				sb.append(pluginsBranchInformation.getSenderBranchSHAShort());
+				sb.append("; ");
 			}
 		}
 
@@ -443,11 +443,12 @@ public class TestrayImporter {
 			if (qaWebsitesBranchInformation != null) {
 				sb.append("QA Websites Branch: ");
 				sb.append(qaWebsitesBranchInformation.getUpstreamBranchName());
-				sb.append(";\n");
+				sb.append("; ");
 
 				sb.append("QA Websites SHA: ");
-				sb.append(qaWebsitesBranchInformation.getSenderBranchSHA());
-				sb.append(";\n");
+				sb.append(
+					qaWebsitesBranchInformation.getSenderBranchSHAShort());
+				sb.append("; ");
 			}
 		}
 

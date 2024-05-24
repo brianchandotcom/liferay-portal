@@ -60,9 +60,11 @@ public class TestrayRoutine {
 				"dateCreated", buildDateString
 			).put(
 				"dateModified", buildDateString
-			).put(
-				"dueDate", buildDateString
 			);
+		}
+
+		if ((buildDescription != null) && (buildDescription.length() >= 280)) {
+			buildDescription = buildDescription.substring(0, 280);
 		}
 
 		requestJSONObject.put(
@@ -74,6 +76,10 @@ public class TestrayRoutine {
 		).put(
 			"r_productVersionToBuilds_c_productVersionId",
 			testrayProductVersion.getID()
+		).put(
+			"r_projectToBuilds_c_projectId", _testrayProject.getID()
+		).put(
+			"r_routineToBuilds_c_routineId", getID()
 		);
 
 		try {

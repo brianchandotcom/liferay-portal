@@ -10,7 +10,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -258,10 +257,6 @@ public class RoleNotificationRecipientBuilder
 	}
 
 	private boolean _isPreventNotifyingAncestorSites() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-23210")) {
-			return false;
-		}
-
 		return _workflowDefinitionConfiguration.preventNotifyingAncestorSites();
 	}
 

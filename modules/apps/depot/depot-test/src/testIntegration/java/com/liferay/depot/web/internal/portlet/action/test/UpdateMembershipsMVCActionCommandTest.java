@@ -168,31 +168,12 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 	@Test
 	public void testProcessActionWithDeleteGroupDepotIds() throws Exception {
-		Contact contact = _user.getContact();
-
 		Set<Long> groupIds = new HashSet<>(
 			Collections.singleton(_user.getGroupId()));
 
 		groupIds.add(_depotEntry.getGroupId());
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
-
-		birthdayCal.setTime(_user.getBirthday());
-
-		_userLocalService.updateUser(
-			_user.getUserId(), _user.getPassword(), null, null,
-			_user.isPasswordReset(), null, null, _user.getScreenName(),
-			_user.getEmailAddress(), true, null, _user.getLanguageId(),
-			_user.getTimeZoneId(), _user.getGreeting(), _user.getComments(),
-			_user.getFirstName(), _user.getMiddleName(), _user.getLastName(),
-			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
-			_user.isMale(), birthdayCal.get(Calendar.MONTH),
-			birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
-			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
-			contact.getSkypeSn(), contact.getTwitterSn(), _user.getJobTitle(),
-			ArrayUtil.toLongArray(groupIds), _user.getOrganizationIds(), null,
-			null, _user.getUserGroupIds(),
-			ServiceContextTestUtil.getServiceContext());
+		_updateUser(groupIds, _user);
 
 		Role role = _roleLocalService.getRole(
 			_depotEntry.getCompanyId(),
@@ -257,26 +238,7 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 			groupIds.add(_depotEntry.getGroupId());
 
-			Contact contact = organizationOwnerUser.getContact();
-
-			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
-
-			birthdayCal.setTime(organizationOwnerUser.getBirthday());
-
-			_userLocalService.updateUser(
-				organizationOwnerUser.getUserId(), organizationOwnerUser.getPassword(), null, null,
-				organizationOwnerUser.isPasswordReset(), null, null, organizationOwnerUser.getScreenName(),
-				organizationOwnerUser.getEmailAddress(), true, null, organizationOwnerUser.getLanguageId(),
-				organizationOwnerUser.getTimeZoneId(), organizationOwnerUser.getGreeting(), organizationOwnerUser.getComments(),
-				organizationOwnerUser.getFirstName(), organizationOwnerUser.getMiddleName(), organizationOwnerUser.getLastName(),
-				contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
-				organizationOwnerUser.isMale(), birthdayCal.get(Calendar.MONTH),
-				birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
-				contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
-				contact.getSkypeSn(), contact.getTwitterSn(), organizationOwnerUser.getJobTitle(),
-				ArrayUtil.toLongArray(groupIds), organizationOwnerUser.getOrganizationIds(), null,
-				null, organizationOwnerUser.getUserGroupIds(),
-				ServiceContextTestUtil.getServiceContext());
+			_updateUser(groupIds, organizationOwnerUser);
 
 			Role role = _roleLocalService.getRole(
 				_depotEntry.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
@@ -327,6 +289,29 @@ public class UpdateMembershipsMVCActionCommandTest {
 		Assert.assertEquals(
 			Arrays.toString(actualGroupIds), initialGroupIds.length,
 			actualGroupIds.length);
+	}
+
+	private void _updateUser(Set<Long> groupIds, User user) throws Exception {
+		Contact contact = user.getContact();
+
+		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+
+		birthdayCal.setTime(user.getBirthday());
+
+		_userLocalService.updateUser(
+			user.getUserId(), user.getPassword(), null, null,
+			user.isPasswordReset(), null, null, user.getScreenName(),
+			user.getEmailAddress(), true, null, user.getLanguageId(),
+			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
+			user.getFirstName(), user.getMiddleName(), user.getLastName(),
+			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
+			user.isFemale(), birthdayCal.get(Calendar.MONTH),
+			birthdayCal.get(Calendar.DATE), birthdayCal.get(Calendar.YEAR),
+			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(), user.getJobTitle(),
+			ArrayUtil.toLongArray(groupIds), user.getOrganizationIds(), null,
+			null, user.getUserGroupIds(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Inject

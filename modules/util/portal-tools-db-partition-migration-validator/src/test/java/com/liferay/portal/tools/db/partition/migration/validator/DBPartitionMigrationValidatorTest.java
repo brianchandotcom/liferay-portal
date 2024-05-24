@@ -99,8 +99,10 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 
 				String string = _outByteArrayOutputStream.toString();
 
-				for (String errorMessage : _VALIDATION_ERRORS) {
-					Assert.assertTrue(string.contains(errorMessage));
+				for (String validationErrorMessage :
+						_VALIDATION_ERROR_MESSAGES) {
+
+					Assert.assertTrue(string.contains(validationErrorMessage));
 				}
 			},
 			"source-failure.json", "target-failure.json",
@@ -311,7 +313,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		validationsUnsafeRunnable.run();
 	}
 
-	private static final String[] _VALIDATION_ERRORS = {
+	private static final String[] _VALIDATION_ERROR_MESSAGES = {
 		"[ERROR] Company ID 3007447931789165977 already exists in the target " +
 			"database",
 		"[ERROR] Module com.liferay.address.impl needs to be verified in the " +

@@ -7,11 +7,17 @@ dependencies {
 }
 
 test {
-	systemProperties(System.getProperties().subMap([
-				"benchmark.test.excluded.companies", "benchmark.test.jdbc.driverClassName",
-				"benchmark.test.jdbc.url", "benchmark.test.jdbc.username",
-				"benchmark.test.jdbc.password", "benchmark.test.run.count",
-				"benchmark.test.skip.warm.up", "benchmark.test.thread.count",
-				"benchmark.test.user.password"
-			]))
+	systemProperties(
+		System.properties.subMap([
+			"benchmark.test.excluded.companies",
+			"benchmark.test.jdbc.driverClassName",
+			"benchmark.test.jdbc.password",
+			"benchmark.test.jdbc.url",
+			"benchmark.test.jdbc.username",
+			"benchmark.test.run.count",
+			"benchmark.test.skip.warm.up",
+			"benchmark.test.thread.count",
+			"benchmark.test.user.password"
+		])
+	)
 }

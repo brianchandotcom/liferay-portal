@@ -84,4 +84,9 @@ public interface UserFinder {
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.portal.kernel.model.User> orderByComparator);
 
+	public com.liferay.portal.kernel.model.User updateLastLogin(
+		com.liferay.portal.kernel.model.User user, int failedLoginAttempts,
+		java.util.Date lastLoginDate, String lastLoginIP,
+		java.util.Date loginDate, String loginIP);
+
 }

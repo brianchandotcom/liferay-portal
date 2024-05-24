@@ -144,6 +144,16 @@ public class UserFinderUtil {
 			orderByComparator);
 	}
 
+	public static com.liferay.portal.kernel.model.User updateLastLogin(
+		com.liferay.portal.kernel.model.User user, int failedLoginAttempts,
+		java.util.Date lastLoginDate, String lastLoginIP,
+		java.util.Date loginDate, String loginIP) {
+
+		return getFinder().updateLastLogin(
+			user, failedLoginAttempts, lastLoginDate, lastLoginIP, loginDate,
+			loginIP);
+	}
+
 	public static UserFinder getFinder() {
 		if (_finder == null) {
 			_finder = (UserFinder)PortalBeanLocatorUtil.locate(

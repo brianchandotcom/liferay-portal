@@ -1,14 +1,14 @@
 <style>
-	.solution-category-container {
+	.solution-tag-container {
 		font-size: 1rem;
-		gap:8px;
+		gap: 8px;
 		line-height: 1.5;
 	}
 
-	.solution-category-container .solution-category {
+	.solution-tag-container .solution-tag {
 		background-color: #E6EBF5;
 		border-radius: 4px;
-		color:#1C3667;
+		color: #1C3667;
 	}
 </style>
 
@@ -28,19 +28,17 @@
 	<#assign productId = CPDefinition_cProductId.getData() />
 </#if>
 
-<#assign categories = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"/categories") />
+<#assign product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=categories") />
 
 <#if categories?has_content>
-	<#assign categoriesItems = categories.items />
-<#else>
-	<#assign categoriesItems = [] />
+	<#assign categoriesItems = product.categories />
 </#if>
 
-<div class="color-neutral-3 d-flex flex-wrap font-size-paragraph-small solution-category-container">
-	<#list categoriesItems as category>
-		<#if category.vocabulary == VOCABULARY_NAME>
-			<div class="border-radius-small px-2 py-1 solution-category">
-				${category.name}
+<div class="color-neutral-3 d-flex flex-wrap font-size-paragraph-small solution-tag-container">
+	<#list categoriesItems as tag>
+		<#if tag.vocabulary == VOCABULARY_NAME>
+			<div class="border-radius-small px-2 py-1 solution-tag">
+				${tag.name}
 			</div>
 		</#if>
 	</#list>

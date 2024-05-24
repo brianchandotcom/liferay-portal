@@ -17,11 +17,6 @@
 		width: 10px;
 	}
 
-	.header-container {
-		background-color: #0B5FFF;
-		padding: 5rem 0;
-	}
-
 	.video-preview {
 		border-radius: 10px;
 		overflow: hidden;
@@ -69,18 +64,20 @@
 	<#assign channelId = channel.items[0].id />
 </#if>
 
-<#assign
-	productId = CPDefinition_cProductId.getData()
-	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
+<#assign productId = CPDefinition_cProductId.getData() />
+
+<#assign product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")/>
+
+<#assign	
 	catalogName = product.catalogName
 	productImage = product.images![]
-
 	solutionHeaderImages = productImage?filter(image -> image.tags?seq_contains("solution-header"))
 />
 
 <#if product.productSpecifications?has_content>
+	<#assignproductSpecifications = product.productSpecifications />
+
 	<#assign
-		productSpecifications = product.productSpecifications
 		headerDescription = productSpecifications?filter(specification -> specification.specificationKey == "solution-header-description")[0].value
 		headerTitle = productSpecifications?filter(specification -> specification.specificationKey == "solution-header-title")[0].value
 		hasVideo = productSpecifications?filter(specification -> specification.specificationKey == "solution-header-video-url")
@@ -92,37 +89,40 @@
 </#if>
 
 <#if headerTitle?has_content>
-	<div class="header-container">
+	<div class="header-content">
 		<div class="container d-flex">
-			<div class="col-6 pl-0 pr-3">
+			<div class="mr-5">
 				<#if headerTitle?has_content>
 					<h1 class="mb-8">
 						${headerTitle}
 					</h1>
 				</#if>
+
 				<#if headerDescription?has_content>
 					${headerDescription}
 				</#if>
 			</div>
 
-			<div class="col-6 p-0">
+			<div>
 				<#if headerVideoUrl?has_content>
 					<#assign videoThumbnail = headerVideoUrl?split("=") />
-
 					<a href=" ${headerVideoUrl}" target="_blank">
+
 						<div class="align-items-center d-flex justify-content-center position-relative video-preview">
 							<img
 								class="video-thumbnail"
 								aria-label="video-thumbnail"
 								src="https://img.youtube.com/vi/${videoThumbnail[1]}/0.jpg" />
-							<svg class="lexicon-icon lexicon-icon-video position-absolute video-thumbnail-play-symbol" role="presentation" viewBox="0 0 512 512">
-								<use xlink:href="/o/admin-theme/images/clay/icons.svg#video"></use>
-							</svg>
+
+							<div class="position-absolute video-thumbnail-play-symbol" >
+								<@clay["icon"] symbol="video" />
+							</div>
 						</div>
 					</a>
 				</#if>
+
 				<#if solutionHeaderImages?has_content>
-					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+					<div id="headerCarousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
 							<#list solutionHeaderImages as image>
 								<li data-target="#carouselExampleIndicators" data-slide-to="${image?index}" class="<#if image?index == 0>active</#if>"></li>
@@ -132,6 +132,7 @@
 						<div class="align-items-center carousel-inner d-flex">
 							<#list solutionHeaderImages as image>
 								<#assign imageSourceUrlSplited = image.src?split("/o") />
+								
 								<#if imageSourceUrlSplited?has_content>
 									<#assign productThumbnail = "/o/${imageSourceUrlSplited[1]}" />
 
@@ -142,12 +143,12 @@
 							</#list>
 						</div>
 
-						<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+						<a class="carousel-control-prev" href="#headerCarousel" role="button" data-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							<span class="sr-only">Previous</span>
 						</a>
 
-						<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+						<a class="carousel-control-next" href="#headerCarousel" role="button" data-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="sr-only">Next</span>
 						</a>

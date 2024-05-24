@@ -51,12 +51,12 @@ public class AssetTagsNavigationDisplayContext {
 		if (showAssetCount && (_classNameId > 0)) {
 			_assetTags = AssetTagServiceUtil.getTags(
 				PortalUtil.getSiteGroupId(_scopeGroupId), _classNameId, null, 0,
-				maxAssetTags, new AssetTagCountComparator());
+				maxAssetTags, AssetTagCountComparator.getInstance(false));
 		}
 		else {
 			_assetTags = AssetTagServiceUtil.getGroupTags(
 				PortalUtil.getSiteGroupId(_scopeGroupId), 0, maxAssetTags,
-				new AssetTagCountComparator());
+				AssetTagCountComparator.getInstance(false));
 		}
 
 		_assetTags = ListUtil.sort(_assetTags);

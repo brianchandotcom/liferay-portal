@@ -12,9 +12,11 @@ interface IFilterModalConfigurationProps {
 	filter?: IFilter;
 	namespace: string;
 	onChange: ({
+		fieldInUseValidationError,
 		i18nFilterLabels,
 		selectedField,
 	}: {
+		fieldInUseValidationError: boolean;
 		i18nFilterLabels: any;
 		selectedField: IField | undefined;
 	}) => void;

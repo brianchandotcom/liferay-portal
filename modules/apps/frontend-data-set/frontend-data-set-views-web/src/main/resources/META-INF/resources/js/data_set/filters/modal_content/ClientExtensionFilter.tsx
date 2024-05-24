@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
@@ -39,6 +38,9 @@ function Body({
 	handleSave,
 	namespace,
 }: IBodyProps) {
+	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
+		boolean
+	>(false);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
 		filter ? false : true
 	);
@@ -131,6 +133,7 @@ function Body({
 					onChange={({i18nFilterLabels, selectedField}) => {
 						setI18nFilterLabels(i18nFilterLabels);
 						setSelectedField(selectedField);
+						setFieldInUseValidationError(fieldInUseValidationError);
 
 						setSaveButtonDisabled(
 							isFormInvalid({
@@ -142,64 +145,71 @@ function Body({
 					}}
 				/>
 
-				<ClayForm.Group className="form-group-autofit">
-					<div className={classNames('form-group-item')}>
-						<label htmlFor={fdsFilterClientExtensionFormElementId}>
-							{Liferay.Language.get('client-extension')}
-						</label>
-
-						<ClayDropDown
-							closeOnClick
-							menuElementAttrs={{
-								className: 'fds-cell-renderers-dropdown-menu',
-							}}
-							trigger={
-								<ClayButton
-									aria-labelledby={`${namespace}cellRenderersLabel`}
-									className="form-control form-control-select form-control-select-secondary"
-									displayType="secondary"
-									name={fdsFilterClientExtensionFormElementId}
-								>
-									{selectedClientExtension
-										? selectedClientExtension.name
-										: Liferay.Language.get('select')}
-								</ClayButton>
-							}
-						>
-							<ClayDropDown.ItemList
-								items={fdsFilterClientExtensions}
-								role="listbox"
+				{!fieldInUseValidationError && (
+					<ClayForm.Group className="form-group-autofit">
+						<div className={classNames('form-group-item')}>
+							<label
+								htmlFor={fdsFilterClientExtensionFormElementId}
 							>
-								{fdsFilterClientExtensions.map(
-									(
-										filterClientExtension: IClientExtensionRenderer
-									) => (
-										<ClayDropDown.Item
-											className="align-items-center d-flex justify-content-between"
-											key={filterClientExtension.name}
-											onClick={() => {
-												setSelectedClientExtension(
-													filterClientExtension
-												);
+								{Liferay.Language.get('client-extension')}
+							</label>
 
-												setSaveButtonDisabled(
-													isFormInvalid({
-														i18nFilterLabels,
-														selectedClientExtension: filterClientExtension,
-														selectedField,
-													})
-												);
-											}}
-											roleItem="option"
-										>
-											{filterClientExtension.name}
-										</ClayDropDown.Item>
-									)
-								)}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					</div>
-				</ClayForm.Group>
+							<ClayDropDown
+								closeOnClick
+								menuElementAttrs={{
+									className:
+										'fds-cell-renderers-dropdown-menu',
+								}}
+								trigger={
+									<ClayButton
+										aria-labelledby={`${namespace}cellRenderersLabel`}
+										className="form-control form-control-select form-control-select-secondary"
+										displayType="secondary"
+										name={
+											fdsFilterClientExtensionFormElementId
+										}
+									>
+										{selectedClientExtension
+											? selectedClientExtension.name
+											: Liferay.Language.get('select')}
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList
+									items={fdsFilterClientExtensions}
+									role="listbox"
+								>
+									{fdsFilterClientExtensions.map(
+										(
+											filterClientExtension: IClientExtensionRenderer
+										) => (
+											<ClayDropDown.Item
+												className="align-items-center d-flex justify-content-between"
+												key={filterClientExtension.name}
+												onClick={() => {
+													setSelectedClientExtension(
+														filterClientExtension
+													);
+
+													setSaveButtonDisabled(
+														isFormInvalid({
+															i18nFilterLabels,
+															selectedClientExtension: filterClientExtension,
+															selectedField,
+														})
+													);
+												}}
+												roleItem="option"
+											>
+												{filterClientExtension.name}
+											</ClayDropDown.Item>
+										)
+									)}
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						</div>
+					</ClayForm.Group>
+				)}
 			</ClayModal.Body>
 
 			<FilterModalFooter

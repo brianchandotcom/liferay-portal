@@ -22,9 +22,11 @@ interface IFilterModalConfigurationProps {
 	filter?: IFilter;
 	namespace: string;
 	onChange: ({
+		fieldInUseValidationError,
 		i18nFilterLabels,
 		selectedField,
 	}: {
+		fieldInUseValidationError: boolean;
 		i18nFilterLabels: any;
 		selectedField: IField | undefined;
 	}) => void;
@@ -39,7 +41,7 @@ function FilterModalConfiguration({
 }: IFilterModalConfigurationProps) {
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
-	>();
+	>(false);
 
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
@@ -128,6 +130,7 @@ function FilterModalConfiguration({
 					name="label"
 					onChange={(values) => {
 						onChange({
+							fieldInUseValidationError,
 							i18nFilterLabels: values,
 							selectedField,
 						});
@@ -159,10 +162,14 @@ function FilterModalConfiguration({
 
 						if (newVal) {
 							setSelectedField(newVal);
-							setFieldInUseValidationError(
-								inUseFields.includes(newVal.name)
+
+							const isInUseField = inUseFields.includes(
+								newVal.name
 							);
+							setFieldInUseValidationError(isInUseField);
+
 							onChange({
+								fieldInUseValidationError: isInUseField,
 								i18nFilterLabels,
 								selectedField: newVal,
 							});

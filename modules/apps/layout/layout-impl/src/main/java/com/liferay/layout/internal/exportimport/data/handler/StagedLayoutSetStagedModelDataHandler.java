@@ -310,7 +310,12 @@ public class StagedLayoutSetStagedModelDataHandler
 			if ((sourcePrototypeLayout == null) &&
 				_layoutLocalService.hasLayout(
 					layout.getUuid(), layout.getGroupId(),
-					layout.isPrivateLayout())) {
+					layout.isPrivateLayout()) &&
+				!layout.getLayoutSet(
+				).getSettings(
+				).contains(
+					Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS
+				)) {
 
 				_layoutLocalService.deleteLayout(
 					layout, ServiceContextThreadLocal.getServiceContext());

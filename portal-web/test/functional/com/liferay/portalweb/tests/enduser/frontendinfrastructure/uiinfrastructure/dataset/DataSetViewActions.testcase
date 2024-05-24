@@ -2426,9 +2426,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-191485. Verify if is not possible to leave title field empty in the Headless Item Action"
+	@description = "LPS-191485. Verify if is not possible to leave Headless Action Key field empty in the Headless Item Action"
 	@priority = 4
-	test CannotLeaveTitleFieldEmptyInHeadlessItemAction {
+	test CannotLeaveHeadlessActionKeyFieldEmptyInHeadlessItemAction {
 		task ("When clicks on New Action button") {
 			Click(
 				key_text = "New Item Action",
@@ -2452,9 +2452,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-192956 Confirm that the Title field cannot be empty on the Modal Item Action"
+	@description = "LPS-192956 Confirm that the Label field can be empty on the Modal Item Action"
 	@priority = 3
-	test CannotLeaveTitleFieldEmptyInModalActionOnItemAction {
+	test CannotLeaveLabelFieldEmptyInModalActionOnItemAction {
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -2514,9 +2514,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-192956 Confirm that the Title field cannot be empty on the Side Panel Item Action"
+	@description = "LPS-192956 Confirm that the Title field can be empty on the Side Panel Item Action"
 	@priority = 3
-	test CannotLeaveTitleFieldEmptyInSidePanelItemAction {
+	test CanLeaveTitleFieldEmptyInSidePanelItemAction {
 		task ("Given a new data set entry") {
 			DataSetAdmin.goToDataSetAdminPage();
 
@@ -2553,26 +2553,15 @@ definition {
 				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
 		}
 
-		task ("Then an error message is displayed") {
-			Type(
-				key_fieldName = "Add the title of the side panel",
-				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
-				value1 = "test");
-
-			Type(
-				key_fieldName = "Add the title of the side panel",
-				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
-				value1 = "");
-
-			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-				value1 = "This field is required.");
+		task ("And a successful toast message is displayed") {
+			Alert.viewSuccessMessage();
 		}
 
-		task ("And the changes cannot be saved") {
-			AssertVisible(
-				key_title = "New Item Action",
-				locator1 = "Header#H2_TITLE");
+		task ("Then it appears on the Action tab table with the new title.") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
 

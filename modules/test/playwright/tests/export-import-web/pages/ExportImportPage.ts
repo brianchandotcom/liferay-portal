@@ -9,25 +9,24 @@ import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-we
 import {zipFolder} from '../../../utils/zip';
 
 export class ExportImportPage {
-	readonly productMenuPage: ProductMenuPage;
+	readonly continueButton: Locator;
+	readonly fileSelector: Locator;
+	readonly importButton: Locator;
+	readonly newImportButton: Locator;
 	readonly newImportProcess: Locator;
 	readonly page: Page;
-	readonly newImportButton: Locator;
-	readonly fileSelector: Locator;
-	readonly continueButton: Locator;
-	readonly importButton: Locator;
+	readonly productMenuPage: ProductMenuPage;
 
 	constructor(page: Page) {
+		this.continueButton = page.getByRole('button', {name: 'Continue'});
+		this.fileSelector = page.getByRole('button', {name: 'Select File'});
+		this.importButton = page.getByRole('button', {name: 'Import'});
+		this.newImportButton = page.getByRole('link', {name: 'Import'});
 		this.newImportProcess = page.getByRole('button', {
 			name: 'New',
 		});
-
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
-		this.newImportButton = page.getByRole('link', {name: 'Import'});
-		this.fileSelector = page.getByRole('button', {name: 'Select File'});
-		this.continueButton = page.getByRole('button', {name: 'Continue'});
-		this.importButton = page.getByRole('button', {name: 'Import'});
 	}
 
 	async createNewImportProcess(folderPath: string) {

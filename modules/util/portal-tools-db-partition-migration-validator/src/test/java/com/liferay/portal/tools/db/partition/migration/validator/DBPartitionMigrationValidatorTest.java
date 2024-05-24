@@ -18,9 +18,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintStream;
 
-import java.net.URISyntaxException;
 import java.net.URL;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.security.Permission;
@@ -181,13 +181,13 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private String _getResourceFilePath(String fileName)
-		throws URISyntaxException {
-
-		URL resource = DBPartitionMigrationValidatorTest.class.getResource(
+	private String _getPathString(String fileName) throws Exception {
+		URL url = DBPartitionMigrationValidatorTest.class.getResource(
 			"dependencies/" + fileName);
 
-		return String.valueOf(Paths.get(resource.toURI()));
+		Path path = Paths.get(url.toURI());
+
+		return path.toString();
 	}
 
 	private void _mockDatabase(
@@ -334,8 +334,8 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		try {
 			DBPartitionMigrationValidator.main(
 				new String[] {
-					"--source-file", _getResourceFilePath(sourceFileName),
-					"--target-file", _getResourceFilePath(targetFileName),
+					"--source-file", _getPathString(sourceFileName),
+					"--target-file", _getPathString(targetFileName),
 					"--validate"
 				});
 		}

@@ -5,9 +5,9 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.select;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -36,53 +36,81 @@ public class SelectDDMFormFieldValueRequestParameterRetrieverTest {
 			selectDDMFormFieldValueRequestParameterRetriever =
 				new SelectDDMFormFieldValueRequestParameterRetriever();
 
-		selectDDMFormFieldValueRequestParameterRetriever.jsonFactory =
-			new JSONFactoryImpl();
+		ReflectionTestUtil.setFieldValue(
+			selectDDMFormFieldValueRequestParameterRetriever, "_jsonFactory",
+			new JSONFactoryImpl());
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		String ddmFormFieldParameterName = RandomTestUtil.randomString();
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		Assert.assertEquals(
+			"[]",
+			selectDDMFormFieldValueRequestParameterRetriever.get(
+				_createMockHttpServletRequest(
+					ddmFormFieldParameterName, null, false),
+				ddmFormFieldParameterName, null));
+		Assert.assertEquals(
+			"[]",
+			selectDDMFormFieldValueRequestParameterRetriever.get(
+				_createMockHttpServletRequest(
+					ddmFormFieldParameterName, null, false),
+				ddmFormFieldParameterName, "[]"));
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		String defaultDDMFormFieldParameterValue = JSONUtil.putAll(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		).toString();
 
-		String expectedParameterValue = JSONUtil.putAll(
+		Assert.assertEquals(
+			"[]",
+			selectDDMFormFieldValueRequestParameterRetriever.get(
+				_createMockHttpServletRequest(
+					ddmFormFieldParameterName, RandomTestUtil.randomString(),
+					RandomTestUtil.randomBoolean()),
+				ddmFormFieldParameterName, defaultDDMFormFieldParameterValue));
+		Assert.assertEquals(
+			"[]",
+			selectDDMFormFieldValueRequestParameterRetriever.get(
+				_createMockHttpServletRequest(
+					ddmFormFieldParameterName, null, true),
+				ddmFormFieldParameterName, defaultDDMFormFieldParameterValue));
+		Assert.assertEquals(
+			defaultDDMFormFieldParameterValue,
+			selectDDMFormFieldValueRequestParameterRetriever.get(
+				_createMockHttpServletRequest(
+					ddmFormFieldParameterName, null, false),
+				ddmFormFieldParameterName, defaultDDMFormFieldParameterValue));
+
+		String ddmFormFieldParameterValue = JSONUtil.putAll(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString()
 		).toString();
 
-		String parameterName = RandomTestUtil.randomString();
+		Assert.assertEquals(
+			ddmFormFieldParameterValue,
+			selectDDMFormFieldValueRequestParameterRetriever.get(
+				_createMockHttpServletRequest(
+					ddmFormFieldParameterName, ddmFormFieldParameterValue,
+					RandomTestUtil.randomBoolean()),
+				ddmFormFieldParameterName, defaultDDMFormFieldParameterValue));
+	}
+
+	private MockHttpServletRequest _createMockHttpServletRequest(
+		String ddmFormFieldParameterName, String ddmFormFieldParameterValue,
+		boolean lifecycleAction) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		mockHttpServletRequest.addParameter(
-			parameterName, expectedParameterValue);
+			ddmFormFieldParameterName, ddmFormFieldParameterValue);
 
-		String parameterValue =
-			selectDDMFormFieldValueRequestParameterRetriever.get(
-				mockHttpServletRequest, parameterName, StringPool.BLANK);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Assert.assertEquals(expectedParameterValue, parameterValue);
-
-		String defaultDDMFormFieldParameterValue = JSONUtil.putAll(
-			RandomTestUtil.randomString()
-		).toString();
-
-		parameterValue = selectDDMFormFieldValueRequestParameterRetriever.get(
-			mockHttpServletRequest, StringPool.BLANK,
-			defaultDDMFormFieldParameterValue);
-
-		Assert.assertEquals(defaultDDMFormFieldParameterValue, parameterValue);
-
-		themeDisplay.setLifecycleAction(true);
+		themeDisplay.setLifecycleAction(lifecycleAction);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		parameterValue = selectDDMFormFieldValueRequestParameterRetriever.get(
-			mockHttpServletRequest, StringPool.BLANK,
-			defaultDDMFormFieldParameterValue);
-
-		Assert.assertEquals("[]", parameterValue);
+		return mockHttpServletRequest;
 	}
 
 }

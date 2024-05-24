@@ -17,6 +17,9 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +31,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -45,7 +49,24 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DocumentShortcutResource {
 
+	public Page<DocumentShortcut> getAssetLibraryDocumentShortcutsPage(
+			Long assetLibraryId)
+		throws Exception;
+
+	public Response postAssetLibraryDocumentShortcutsPageExportBatch(
+			Long assetLibraryId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
+		throws Exception;
+
+	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(Long siteId)
+		throws Exception;
+
+	public Response postSiteDocumentShortcutsPageExportBatch(
+			Long siteId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -86,6 +107,14 @@ public interface DocumentShortcutResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
+
+	public void setVulcanBatchEngineExportTaskResource(
+		VulcanBatchEngineExportTaskResource
+			vulcanBatchEngineExportTaskResource);
+
+	public void setVulcanBatchEngineImportTaskResource(
+		VulcanBatchEngineImportTaskResource
+			vulcanBatchEngineImportTaskResource);
 
 	public default Filter toFilter(String filterString) {
 		return toFilter(

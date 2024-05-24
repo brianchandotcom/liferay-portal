@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.resource.v1_0.DocumentShortcutResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
@@ -145,6 +146,14 @@ public class Mutation {
 
 		_documentFolderResourceComponentServiceObjects =
 			documentFolderResourceComponentServiceObjects;
+	}
+
+	public static void setDocumentShortcutResourceComponentServiceObjects(
+		ComponentServiceObjects<DocumentShortcutResource>
+			documentShortcutResourceComponentServiceObjects) {
+
+		_documentShortcutResourceComponentServiceObjects =
+			documentShortcutResourceComponentServiceObjects;
 	}
 
 	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -2070,6 +2079,42 @@ public class Mutation {
 					putSiteDocumentsFolderByExternalReferenceCode(
 						Long.valueOf(siteKey), externalReferenceCode,
 						documentFolder));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentShortcutsPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.
+					postAssetLibraryDocumentShortcutsPageExportBatch(
+						Long.valueOf(assetLibraryId), callbackURL, contentType,
+						fieldNames));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentShortcutsPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.
+					postSiteDocumentShortcutsPageExportBatch(
+						Long.valueOf(siteKey), callbackURL, contentType,
+						fieldNames));
 	}
 
 	@GraphQLField(
@@ -5785,6 +5830,28 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			DocumentShortcutResource documentShortcutResource)
+		throws Exception {
+
+		documentShortcutResource.setContextAcceptLanguage(_acceptLanguage);
+		documentShortcutResource.setContextCompany(_company);
+		documentShortcutResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		documentShortcutResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		documentShortcutResource.setContextUriInfo(_uriInfo);
+		documentShortcutResource.setContextUser(_user);
+		documentShortcutResource.setGroupLocalService(_groupLocalService);
+		documentShortcutResource.setRoleLocalService(_roleLocalService);
+
+		documentShortcutResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		documentShortcutResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
 
@@ -6123,6 +6190,8 @@ public class Mutation {
 		_documentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentFolderResource>
 		_documentFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DocumentShortcutResource>
+		_documentShortcutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>

@@ -491,7 +491,7 @@ definition {
 		}
 
 		task ("When the user adds 3 sortings") {
-			for (var key_fieldList : list "label,id,status") {
+			for (var key_fieldList : list "fieldName,id,status") {
 				DataSetAdmin.createASort(
 					key_field = ${key_fieldList},
 					key_sorting = "Descending");

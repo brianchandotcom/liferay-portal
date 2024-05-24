@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useParams, useSearchParams} from 'react-router-dom';
-import useSWR from 'swr';
 import i18n from '~/i18n';
 import fetcher from '~/services/fetcher';
 import {safeJSONParse} from '~/util';
+import {filterStatuses} from '~/util/statuses';
 
 import {
 	FilterSchema as FilterSchemaType,
@@ -19,6 +19,10 @@ type CustomFilterFieldsProps = {
 	[key: string]: string;
 };
 
+type FieldOptions = {
+	[fieldName: string]: Array<Options>;
+};
+
 type Options = {
 	label: string;
 	value: string;
@@ -26,6 +30,8 @@ type Options = {
 
 const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 	const [searchParams] = useSearchParams();
+	const [filterResponse, setFilterResponse] = useState<FieldOptions>({});
+	const [cache, setCache] = useState<Record<string, any>>({});
 
 	const params = useParams();
 
@@ -49,47 +55,49 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 		[filterKeys, filterSchema?.fields]
 	);
 
-	const {data: filterResponse = {}} = useSWR(
-		filterSchema?.fields?.length
-			? `/filterResponse-${filterSchema?.name}`
-			: null,
-		async () => {
-			const parameters = safeJSONParse(JSON.stringify(params));
-			const resourceFields =
-				filterFields?.filter(({resource}) => resource) || {};
-			const _resourceFieldOptions: any = {};
+	const getfilterResponse = useCallback(async () => {
+		const parameters = safeJSONParse(JSON.stringify(params));
+		const resourceFields =
+			filterFields?.filter(({resource}) => resource) || {};
+		const _resourceFieldOptions: any = {};
 
-			if (resourceFields) {
-				await Promise.all(
-					resourceFields.map((field) =>
-						fetcher(
-							(typeof field.resource === 'function'
-								? field.resource({
-										...parameters,
-										...customFilterFields,
-								  })
-								: field.resource) as string
-						)
-					)
-				).then((results) =>
-					results.forEach((result, index) => {
-						const field = resourceFields[index];
+		if (resourceFields.length) {
+			await Promise.all(
+				resourceFields.map(async (field) => {
+					const cacheKey =
+						typeof field.resource === 'function'
+							? (field.resource({
+									...parameters,
+									...customFilterFields,
+							  }) as string)
+							: (field.resource as string);
 
-						if (field.transformData) {
-							const parsedValue = field.transformData(result);
-
-							_resourceFieldOptions[field.name] = parsedValue;
-						}
-					})
-				);
-			}
-
-			return _resourceFieldOptions;
+					if (cache[cacheKey]) {
+						_resourceFieldOptions[field.name] = cache[cacheKey];
+					} else {
+						const result = await fetcher(cacheKey);
+						const parsedValue = field.transformData
+							? field.transformData(result)
+							: result;
+						_resourceFieldOptions[field.name] = parsedValue;
+						setCache((prevCache) => ({
+							...prevCache,
+							[cacheKey]: parsedValue,
+						}));
+					}
+				})
+			);
 		}
-	);
+
+		setFilterResponse(_resourceFieldOptions);
+	}, [customFilterFields, filterFields, params, cache]);
+
+	useEffect(() => {
+		getfilterResponse();
+	}, [getfilterResponse]);
 
 	const filterWithOptions = useMemo(() => {
-		if (serializedFilter || customFilterFields?.key) {
+		if (serializedFilter || customFilterFields) {
 			const updatedFilterOptions: any = {...serializedFilter};
 
 			Object.keys(updatedFilterOptions).forEach((key) => {
@@ -101,7 +109,11 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 				) {
 					updatedFilterOptions[key] = updatedFilterOptions[key].map(
 						(value: string) => ({
-							label: value,
+							label:
+								key === 'dueStatus'
+									? filterStatuses[value]
+									: value,
+
 							value,
 						})
 					);
@@ -119,8 +131,7 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 					if (filteredOptions.length) {
 						updatedFilterOptions[key] = filteredOptions;
 					}
-				}
-				else {
+				} else {
 					const matchingValues = filterResponse[key]?.filter(
 						(options: Options) =>
 							options.value === serializedFilter[key]
@@ -133,7 +144,7 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 
 			return updatedFilterOptions;
 		}
-	}, [customFilterFields?.key, filterResponse, serializedFilter]);
+	}, [customFilterFields, filterResponse, serializedFilter]);
 
 	const filterEntries = useMemo(
 		() =>

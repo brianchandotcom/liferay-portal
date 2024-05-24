@@ -43,7 +43,8 @@ export class ExportImportPage {
 
 		await this.continueButton.click();
 
-		await this.page.waitForTimeout(3000);
+		await this.page.waitForLoadState('domcontentloaded');
+		await this.page.waitForTimeout(1000);
 
 		await this.page
 			.locator(

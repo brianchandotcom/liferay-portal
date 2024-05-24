@@ -1754,14 +1754,14 @@ definition {
 	test CanDragAndDropActionEntry {
 		task ("And creates two or more item actions") {
 			DataSetAdmin.addActions(
-				actionName = "delete",
-				icon = "trash",
+				actionName = "view",
+				icon = "view",
 				type = "Link",
 				url = "http://localhost:8080/o/data-set-manager/");
 
 			DataSetAdmin.addActions(
-				actionName = "view",
-				icon = "view",
+				actionName = "delete",
+				icon = "trash",
 				type = "Link",
 				url = "http://localhost:8080/o/data-set-manager/");
 		}

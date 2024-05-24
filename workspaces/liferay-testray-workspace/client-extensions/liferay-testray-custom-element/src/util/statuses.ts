@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import i18n from '~/i18n';
+
 export enum BuildStatuses {
 	ACTIVATED = 'ACTIVATED',
 	ARCHIVED = 'ARCHIVED',
@@ -41,3 +43,16 @@ export enum SubtaskStatuses {
 	MERGED = 'MERGED',
 	OPEN = 'OPEN',
 }
+
+export const filterStatuses: {[key: string]: string} = {
+	ABANDONED: i18n.translate('abandoned'),
+	BLOCKED: i18n.translate('blocked'),
+	COMPLETE: i18n.translate('complete'),
+	FAILED: i18n.translate('failed'),
+	INANALYSIS: i18n.translate('in-analysis'),
+	INPROGRESS: i18n.translate('in-progress'),
+	OPEN: i18n.translate('open'),
+	PASSED: i18n.translate('passed'),
+	TESTFIX: i18n.translate('test-fix'),
+	UNTESTED: i18n.translate('untested'),
+};

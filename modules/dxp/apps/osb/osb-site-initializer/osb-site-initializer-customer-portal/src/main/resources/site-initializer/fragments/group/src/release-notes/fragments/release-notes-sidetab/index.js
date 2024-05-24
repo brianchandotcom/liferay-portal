@@ -39,6 +39,16 @@ function createContentDiv(htmlContent) {
 	return divElement;
 }
 
+function createLabelSpan(classList, text) {
+	const spanElement = document.createElement('span');
+
+	spanElement.textContent = text;
+
+	classList.forEach((className) => spanElement.classList.add(className));
+
+	return spanElement;
+}
+
 function updateArticleContent(contentFields) {
 	const articleContent = document.getElementById('articleContent');
 
@@ -145,16 +155,6 @@ function updateLabelProductCapabilities(taxonomyCategoryBriefs) {
 			labelProductCapabilities.appendChild(spanElement);
 		}
 	});
-}
-
-function createLabelSpan(classList, text) {
-	const spanElement = document.createElement('span');
-
-	spanElement.textContent = text;
-
-	classList.forEach((className) => spanElement.classList.add(className));
-
-	return spanElement;
 }
 
 function updateLabelStatus(taxonomyCategoryBriefs) {

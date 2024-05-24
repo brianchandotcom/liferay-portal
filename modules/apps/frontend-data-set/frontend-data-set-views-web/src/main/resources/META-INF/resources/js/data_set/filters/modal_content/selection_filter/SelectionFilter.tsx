@@ -9,18 +9,22 @@ import ClayForm, {
 	ClayRadioGroup,
 	ClaySelectWithOption,
 } from '@clayui/form';
+import {TItem} from '@clayui/form/lib/SelectBox';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
+import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
+import {FDSViewType} from '../../../../FDSViews';
 import CheckboxMultiSelect from '../../../../components/CheckboxMultiSelect';
 import FilterModalConfiguration from '../../../../components/FilterModalConfiguration';
 import FilterModalFooter from '../../../../components/FilterModalFooter';
 import RequiredMark from '../../../../components/RequiredMark';
 import getAllPicklists from '../../../../utils/getAllPicklists';
+import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
 import {
 	EFilterType,
 	ESelectionFilterSourceType,
@@ -29,6 +33,7 @@ import {
 	IPickList,
 	ISelectionFilter,
 } from '../../../../utils/types';
+import ApiRestApplication from './source_type/ApiRestApplication';
 import ObjectPicklist from './source_type/ObjectPicklist';
 
 function Header() {
@@ -37,11 +42,13 @@ function Header() {
 
 interface IBodyProps {
 	closeModal: Function;
+	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
-	handleSave: Function;
 	namespace: string;
+	onSave: Function;
+	restApplications: string[];
 }
 
 function Body({
@@ -49,15 +56,19 @@ function Body({
 	fieldNames,
 	fields,
 	filter,
-	handleSave,
 	namespace,
+	onSave,
+	restApplications,
 }: IBodyProps) {
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>(false);
+	const [labelValidationError, setLabelValidationError] = useState(false);
+
+	const [filteredSourceItems, setFilteredSourceItems] = useState<TItem[]>([]);
 	const [preselectedValueInput, setPreselectedValueInput] = useState('');
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		filter ? false : true
+		false
 	);
 	const [includeMode, setIncludeMode] = useState<string>('include');
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
@@ -71,7 +82,7 @@ function Body({
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
 	);
-	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
+	const [source, setSource] = useState<IPickList | string | undefined>();
 	const [sourceType, setSourceType] = useState<
 		ESelectionFilterSourceType | undefined
 	>();
@@ -79,6 +90,15 @@ function Body({
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
 	);
+	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
+		string
+	>('');
+	const [selectedRESTSchema, setSelectedRESTSchema] = useState<string>('');
+	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<string>(
+		''
+	);
+	const [selectedItemKey, setSelectedItemKey] = useState<string>('');
+	const [selectedItemLabel, setSelectedItemLabel] = useState<string>('');
 
 	const includeModeFormElementId = `${namespace}IncludeMode`;
 	const multipleFormElementId = `${namespace}Multiple`;
@@ -88,126 +108,167 @@ function Body({
 	const isValidSingleMode =
 		multiple || (!multiple && !(preselectedValues.length > 1));
 
-	const filteredSourceItems = !selectedPicklist
-		? []
-		: selectedPicklist.listTypeEntries
-				.filter((item) => fuzzy.match(preselectedValueInput, item.name))
-				.map((item) => ({
-					label: item.name,
-					value: String(item.externalReferenceCode),
-				}));
+	async function getAPIValues(source: string) {
+		const response = await fetch(`/o${source}`);
 
-	const handleFilterSave = () => {
-		let body: any = {
-			fieldName: selectedField?.name,
-			label_i18n: i18nFilterLabels,
-		};
+		if (!response.ok) {
+			openDefaultFailureToast();
 
+			return [];
+		}
+
+		const responseJSON = await response.json();
+
+		return responseJSON;
+	}
+
+	const validate = ({i18nFilterLabels}: any) => {
 		if (Liferay.FeatureFlags['LPD-10754']) {
-			body = {
-				...body,
-				source: selectedPicklist?.externalReferenceCode,
-				sourceType,
-			};
+			if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
+				setLabelValidationError(true);
+
+				return false;
+			}
+			else {
+				let isI18nFilterLabelValid = true;
+
+				Object.values(i18nFilterLabels).forEach((value) => {
+					if (!value) {
+						isI18nFilterLabelValid = false;
+					}
+				});
+
+				if (!isI18nFilterLabelValid) {
+					setLabelValidationError(true);
+
+					return false;
+				}
+			}
+
+			setLabelValidationError(false);
 		}
-		else {
-			body = {
-				...body,
-				listTypeDefinitionERC: selectedPicklist?.externalReferenceCode,
-			};
-		}
 
-		body = {
-			...body,
-			include: includeMode === 'include',
-			multiple,
-			preselectedValues: JSON.stringify(
-				preselectedValues.map((item: any) => item.externalReferenceCode)
-			),
-		};
-
-		handleSave(body);
-	};
-
-	const isFormInvalid = ({
-		i18nFilterLabels,
-		selectedField,
-		selectedPicklist,
-		sourceType,
-	}: {
-		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
-		selectedField: IField | undefined;
-		selectedPicklist?: IPickList;
-		sourceType?: string;
-	}) => {
 		if (!selectedField) {
-			return true;
+			return false;
 		}
 
 		if (selectedField && !filter) {
 			if (inUseFields.includes(selectedField.name)) {
+				setFieldInUseValidationError(true);
+
 				return true;
+			}
+			else {
+				setFieldInUseValidationError(false);
 			}
 		}
 
-		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
-			return true;
+		if (Liferay.FeatureFlags['LPD-10754'] && (!source || !sourceType)) {
+			return false;
+		}
+
+		return true;
+	};
+
+	const saveSelectionFilter = () => {
+		setSaveButtonDisabled(true);
+
+		const success = validate({i18nFilterLabels});
+
+		if (success) {
+			let formData: any = {
+				fieldName: selectedField?.name,
+				label_i18n: i18nFilterLabels,
+			};
+
+			if (Liferay.FeatureFlags['LPD-10754']) {
+				if (sourceType === ESelectionFilterSourceType.API_HEADLESS) {
+					formData = {
+						...formData,
+						restApplication: selectedRESTApplication,
+						restEndpoint: selectedRESTEndpoint,
+						restSchema: selectedRESTSchema,
+						source: source as string,
+						sourceType,
+					};
+				}
+
+				if (sourceType === ESelectionFilterSourceType.PICKLIST) {
+					formData = {
+						...formData,
+						source: (source as IPickList)?.externalReferenceCode,
+						sourceType,
+					};
+				}
+			}
+			else {
+				formData = {
+					...formData,
+					listTypeDefinitionERC: (source as IPickList)
+						?.externalReferenceCode,
+				};
+			}
+
+			formData = {
+				...formData,
+				include: includeMode === 'include',
+				multiple,
+				preselectedValues: JSON.stringify(
+					preselectedValues.map(
+						(item: any) => item.externalReferenceCode
+					)
+				),
+			};
+
+			onSave(formData);
 		}
 		else {
-			let isI18nFilterLabelInvalid = false;
-
-			Object.values(i18nFilterLabels).forEach((value) => {
-				if (!value) {
-					isI18nFilterLabelInvalid = true;
-				}
-			});
-
-			if (isI18nFilterLabelInvalid) {
-				return true;
-			}
+			setSaveButtonDisabled(false);
 		}
-
-		if (
-			Liferay.FeatureFlags['LPD-10754'] &&
-			(!selectedPicklist || !sourceType)
-		) {
-			return true;
-		}
-
-		return false;
 	};
 
 	useEffect(() => {
-		getAllPicklists().then((items) => {
-			setPicklists(items);
+		if ((filter as ISelectionFilter)?.sourceType === ESelectionFilterSourceType.PICKLIST) {
+			getAllPicklists().then((items) => {
+				setPicklists(items);
 
-			const picklist = items.find((item) =>
-				Liferay.FeatureFlags['LPD-10754']
-					? String(item.externalReferenceCode) ===
-					  (filter as any)?.source
-					: String(item.externalReferenceCode) ===
-					  (filter as any)?.listTypeDefinitionERC
-			);
+				const picklist = items.find((item) =>
+					Liferay.FeatureFlags['LPD-10754']
+						? String(item.externalReferenceCode) ===
+						(filter as any)?.source
+						: String(item.externalReferenceCode) ===
+						(filter as any)?.listTypeDefinitionERC
+				);
 
-			if (picklist) {
-				setSelectedPicklist(picklist);
-			}
-		});
+				if (picklist) {
+					setSource(picklist);
+				}
+			});
+		}
 
-		if (filter?.filterType === EFilterType.SELECTION) {
+		if (filter) {
 			const selectionFilter = filter as ISelectionFilter;
 			setSourceType(selectionFilter.sourceType);
 		}
 	}, [filter]);
 
 	useEffect(() => {
-		if (selectedPicklist && filter) {
-			const validSavedPreselectedValues = selectedPicklist.listTypeEntries.filter(
-				(item) =>
-					JSON.parse(
-						(filter as ISelectionFilter).preselectedValues || '[]'
-					).includes(item.externalReferenceCode)
-			);
+		if (source && filter) {
+			let validSavedPreselectedValues: any[] = [];
+		
+			if (sourceType === ESelectionFilterSourceType.API_HEADLESS) {
+				console.log((filter as ISelectionFilter).preselectedValues)
+				//validSavedPreselectedValues = (filter as ISelectionFilter).preselectedValues;
+			}
+
+			if (sourceType === ESelectionFilterSourceType.PICKLIST) {
+				validSavedPreselectedValues = (source as IPickList).listTypeEntries.filter(
+					(item) =>
+						JSON.parse(
+							(filter as ISelectionFilter).preselectedValues || '[]'
+						).includes(item.externalReferenceCode)
+				);
+			}
 
 			setPreselectedValues(validSavedPreselectedValues);
 
@@ -219,9 +280,56 @@ function Body({
 					: 'include'
 			);
 		}
-	}, [filter, selectedPicklist]);
+	}, [filter, source]);
 
-	if (!Liferay.FeatureFlags['LPD-10754'] && !picklists.length) {
+	useEffect(() => {
+		if (sourceType === ESelectionFilterSourceType.PICKLIST) {
+			setFilteredSourceItems(
+				!source
+					? []
+					: (source as IPickList).listTypeEntries
+							.filter((item) =>
+								fuzzy.match(preselectedValueInput, item.name)
+							)
+							.map((item) => ({
+								label: item.name,
+								value: String(item.externalReferenceCode),
+							}))
+			);
+		}
+	}, [preselectedValueInput, source, sourceType]);
+
+	useEffect(() => {
+		if (source && sourceType === ESelectionFilterSourceType.API_HEADLESS) {
+			getAPIValues(source as string).then((apiValues) => {
+				setFilteredSourceItems(
+					!apiValues.items.length
+						? []
+						: apiValues.items
+								.filter((item: any) =>
+									fuzzy.match(
+										preselectedValueInput,
+										item[selectedItemLabel]
+									)
+								)
+								.map((item: any) => {
+									return {
+										label: item[selectedItemLabel],
+										value: item[selectedItemKey],
+									};
+								})
+				);
+			});
+		}
+	}, [
+		preselectedValueInput,
+		selectedItemKey,
+		selectedItemLabel,
+		source,
+		sourceType,
+	]);
+
+	if (!Liferay.FeatureFlags['LPD-10754'] && sourceType === ESelectionFilterSourceType.API_HEADLESS && !picklists.length) {
 		return (
 			<ClayAlert displayType="info" title="Info">
 				{Liferay.Language.get(
@@ -235,23 +343,17 @@ function Body({
 		<>
 			<ClayModal.Body>
 				<FilterModalConfiguration
+					fieldInUseValidationError={fieldInUseValidationError}
 					fieldNames={fieldNames}
 					fields={fields}
 					filter={filter}
+					labelValidationError={labelValidationError}
 					namespace={namespace}
 					onChange={({i18nFilterLabels, selectedField}) => {
 						setI18nFilterLabels(i18nFilterLabels);
 						setSelectedField(selectedField);
-						setFieldInUseValidationError(fieldInUseValidationError);
 
-						setSaveButtonDisabled(
-							isFormInvalid({
-								i18nFilterLabels,
-								selectedField,
-								selectedPicklist,
-								sourceType,
-							})
-						);
+						validate({i18nFilterLabels, selectedField});
 					}}
 				/>
 
@@ -286,17 +388,12 @@ function Body({
 										onChange={(event) => {
 											const newSourceType = event.target
 												.value as ESelectionFilterSourceType;
-
+												
 											setSourceType(newSourceType);
 
-											setSaveButtonDisabled(
-												isFormInvalid({
-													i18nFilterLabels,
-													selectedField,
-													selectedPicklist,
-													sourceType: newSourceType,
-												})
-											);
+											setSource(undefined);
+											setPreselectedValueInput('');
+											setPreselectedValues([]);
 										}}
 										options={[
 											{
@@ -305,6 +402,14 @@ function Body({
 													'choose-an-option'
 												),
 												value: '',
+											},
+											{
+												disabled: false,
+												label: Liferay.Language.get(
+													'api-rest-application'
+												),
+												value:
+													ESelectionFilterSourceType.API_HEADLESS,
 											},
 											{
 												disabled: false,
@@ -325,32 +430,64 @@ function Body({
 
 						{Liferay.FeatureFlags['LPD-10754'] ? (
 							<>
-								{sourceType ===
-									ESelectionFilterSourceType.PICKLIST && (
-									<ObjectPicklist
-										filter={filter}
-										namespace={namespace}
-										onChange={(item: IPickList) => {
-											setSelectedPicklist(item);
+								{sourceType &&
+									sourceType ===
+										ESelectionFilterSourceType.PICKLIST && (
+										<ObjectPicklist
+											filter={filter}
+											namespace={namespace}
+											onChange={(item: IPickList) => {
+												setSource(item);
+											}}
+										/>
+									)}
 
-											setSaveButtonDisabled(
-												isFormInvalid({
-													i18nFilterLabels,
-													selectedField,
-													selectedPicklist: item,
-													sourceType,
-												})
-											);
-										}}
-									/>
-								)}
+								{sourceType &&
+									sourceType ===
+										ESelectionFilterSourceType.API_HEADLESS && (
+										<ApiRestApplication
+											onChange={({
+												selectedItemKey,
+												selectedItemLabel,
+												selectedRESTApplication,
+												selectedRESTEndpoint,
+												selectedRESTSchema,
+											}) => {
+												if (
+													selectedRESTApplication &&
+													selectedRESTEndpoint
+												) {
+													setSource(
+														`${selectedRESTApplication}${selectedRESTEndpoint}`
+													);
+												}
 
-								{selectedPicklist && (
+												setSelectedRESTApplication(
+													selectedRESTApplication
+												);
+												setSelectedRESTEndpoint(
+													selectedRESTEndpoint
+												);
+												setSelectedRESTSchema(
+													selectedRESTSchema
+												);
+												setSelectedItemKey(
+													selectedItemKey
+												);
+												setSelectedItemLabel(
+													selectedItemLabel
+												);
+											}}
+											restApplications={restApplications}
+										/>
+									)}
+
+								{source && (
 									<>
 										<ClayLayout.SheetSection className="mb-4">
 											<h3 className="sheet-subtitle">
 												{Liferay.Language.get(
-													' filter-options'
+													'filter-options'
 												)}
 											</h3>
 										</ClayLayout.SheetSection>
@@ -387,12 +524,40 @@ function Body({
 													preselectedValuesFormElementId
 												}
 												items={preselectedValues.map(
-													(item) => ({
-														label: item.name,
-														value: String(
-															item.externalReferenceCode
-														),
-													})
+													(item) => {
+														let valueItem;
+
+														if (
+															sourceType ===
+															ESelectionFilterSourceType.PICKLIST
+														) {
+															valueItem = {
+																label:
+																	item.name,
+																value: String(
+																	item.externalReferenceCode
+																),
+															};
+														}
+
+														if (
+															sourceType ===
+															ESelectionFilterSourceType.API_HEADLESS
+														) {
+															valueItem = {
+																label:
+																	item[
+																		selectedItemLabel
+																	],
+																value:
+																	item[
+																		selectedItemKey
+																	],
+															};
+														}
+
+														return valueItem as TItem;
+													}
 												)}
 												loadingState={4}
 												onChange={
@@ -401,19 +566,45 @@ function Body({
 												onItemsChange={(
 													selectedItems: any
 												) => {
-													const preselectedValues = selectedItems.map(
-														({value}: any) => {
-															return selectedPicklist.listTypeEntries.find(
-																(item) =>
-																	String(
-																		item.externalReferenceCode
-																	) ===
-																	String(
-																		value
-																	)
-															);
-														}
-													);
+													let preselectedValues;
+
+													if (
+														sourceType ===
+														ESelectionFilterSourceType.API_HEADLESS
+													) {
+														preselectedValues = selectedItems.map(
+															({value}: any) => {
+																return filteredSourceItems.find(
+																	(item) =>
+																		String(
+																			item.value
+																		) ===
+																		String(
+																			value
+																		)
+																);
+															}
+														);
+													}
+
+													if (
+														sourceType ===
+														ESelectionFilterSourceType.PICKLIST
+													) {
+														preselectedValues = selectedItems.map(
+															({value}: any) => {
+																return (source as IPickList).listTypeEntries.find(
+																	(item) =>
+																		String(
+																			item.externalReferenceCode
+																		) ===
+																		String(
+																			value
+																		)
+																);
+															}
+														);
+													}
 
 													setPreselectedValues(
 														preselectedValues
@@ -595,16 +786,7 @@ function Body({
 													) === event.target.value
 											);
 
-											setSelectedPicklist(picklist);
-
-											setSaveButtonDisabled(
-												isFormInvalid({
-													i18nFilterLabels,
-													selectedField,
-													selectedPicklist: picklist,
-													sourceType,
-												})
-											);
+											setSource(picklist);
 
 											setPreselectedValues([]);
 										}}
@@ -626,13 +808,13 @@ function Body({
 											'source-options'
 										)}
 										value={
-											selectedPicklist?.externalReferenceCode ||
-											''
+											(source as IPickList)
+												?.externalReferenceCode || ''
 										}
 									/>
 								</ClayForm.Group>
 
-								{selectedPicklist && (
+								{source && (
 									<>
 										<ClayForm.Group>
 											<label
@@ -727,7 +909,7 @@ function Body({
 												) => {
 													const preselectedValues = selectedItems.map(
 														({value}: any) => {
-															return selectedPicklist.listTypeEntries.find(
+															return (source as IPickList).listTypeEntries.find(
 																(item) =>
 																	String(
 																		item.externalReferenceCode
@@ -831,7 +1013,7 @@ function Body({
 
 			<FilterModalFooter
 				closeModal={closeModal}
-				handleSave={handleFilterSave}
+				onSave={saveSelectionFilter}
 				saveButtonDisabled={saveButtonDisabled}
 			/>
 		</>

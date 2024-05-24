@@ -17,32 +17,30 @@ import RequiredMark from './RequiredMark';
 import ValidationFeedback from './ValidationFeedback';
 
 interface IFilterModalConfigurationProps {
+	fieldInUseValidationError: boolean;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
+	labelValidationError?: boolean;
 	namespace: string;
 	onChange: ({
-		fieldInUseValidationError,
 		i18nFilterLabels,
 		selectedField,
 	}: {
-		fieldInUseValidationError: boolean;
 		i18nFilterLabels: any;
 		selectedField: IField | undefined;
 	}) => void;
 }
 
 function FilterModalConfiguration({
+	fieldInUseValidationError,
 	fieldNames,
 	fields,
 	filter,
+	labelValidationError,
 	namespace,
 	onChange,
 }: IFilterModalConfigurationProps) {
-	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
-		boolean
-	>(false);
-
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
 	);
@@ -123,14 +121,17 @@ function FilterModalConfiguration({
 				</ClayLayout.SheetSection>
 			)}
 
-			<ClayForm.Group>
+			<ClayForm.Group
+				className={classNames({
+					'has-error': labelValidationError,
+				})}
+			>
 				<InputLocalized
 					id={nameFormElementId}
 					label={Liferay.Language.get('name')}
 					name="label"
 					onChange={(values) => {
 						onChange({
-							fieldInUseValidationError,
 							i18nFilterLabels: values,
 							selectedField,
 						});
@@ -140,6 +141,16 @@ function FilterModalConfiguration({
 					required={Liferay.FeatureFlags['LPD-10754']}
 					translations={i18nFilterLabels}
 				/>
+
+				{Liferay.FeatureFlags['LPD-10754'] && labelValidationError && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+							{Liferay.Language.get('this-field-is-required')}
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
+				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group
@@ -163,13 +174,7 @@ function FilterModalConfiguration({
 						if (newVal) {
 							setSelectedField(newVal);
 
-							const isInUseField = inUseFields.includes(
-								newVal.name
-							);
-							setFieldInUseValidationError(isInUseField);
-
 							onChange({
-								fieldInUseValidationError: isInUseField,
 								i18nFilterLabels,
 								selectedField: newVal,
 							});

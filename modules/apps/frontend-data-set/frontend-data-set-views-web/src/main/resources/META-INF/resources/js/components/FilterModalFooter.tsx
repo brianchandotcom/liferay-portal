@@ -9,13 +9,13 @@ import React from 'react';
 
 export interface IFilterModalFooterProps {
 	closeModal: Function;
-	handleSave: Function;
+	onSave: Function;
 	saveButtonDisabled: boolean;
 }
 
 function FilterModalFooter({
 	closeModal,
-	handleSave,
+	onSave,
 	saveButtonDisabled,
 }: IFilterModalFooterProps) {
 	return (
@@ -24,7 +24,7 @@ function FilterModalFooter({
 				<ClayButton.Group spaced>
 					<ClayButton
 						disabled={saveButtonDisabled}
-						onClick={() => handleSave()}
+						onClick={() => onSave()}
 						type="submit"
 					>
 						{Liferay.Language.get('save')}

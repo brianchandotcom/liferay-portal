@@ -12,16 +12,16 @@ interface IBodyProps {
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
-	handleSave: Function;
 	namespace: string;
+	onSave: Function;
 }
 declare function Body({
 	closeModal,
 	fieldNames,
 	fields,
 	filter,
-	handleSave,
 	namespace,
+	onSave,
 }: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;

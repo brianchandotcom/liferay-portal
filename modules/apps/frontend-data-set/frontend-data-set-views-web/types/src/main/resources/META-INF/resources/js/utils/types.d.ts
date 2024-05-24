@@ -22,6 +22,7 @@ export declare enum EFieldType {
 }
 export declare enum ESelectionFilterSourceType {
 	PICKLIST = 'PICKLIST',
+	API_HEADLESS = 'API_HEADLESS',
 }
 export interface IBaseVisualizationMode<Mode extends string> {
 	label: string;

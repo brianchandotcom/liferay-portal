@@ -7,12 +7,12 @@
 
 export interface IFilterModalFooterProps {
 	closeModal: Function;
-	handleSave: Function;
+	onSave: Function;
 	saveButtonDisabled: boolean;
 }
 declare function FilterModalFooter({
 	closeModal,
-	handleSave,
+	onSave,
 	saveButtonDisabled,
 }: IFilterModalFooterProps): JSX.Element;
 export default FilterModalFooter;

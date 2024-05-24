@@ -5,23 +5,27 @@
 
 /// <reference types="react" />
 
+import {FDSViewType} from '../../../../FDSViews';
 import {IField, IFilter} from '../../../../utils/types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
 	closeModal: Function;
+	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
-	handleSave: Function;
 	namespace: string;
+	onSave: Function;
+	restApplications: string[];
 }
 declare function Body({
 	closeModal,
 	fieldNames,
 	fields,
 	filter,
-	handleSave,
 	namespace,
+	onSave,
+	restApplications,
 }: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;

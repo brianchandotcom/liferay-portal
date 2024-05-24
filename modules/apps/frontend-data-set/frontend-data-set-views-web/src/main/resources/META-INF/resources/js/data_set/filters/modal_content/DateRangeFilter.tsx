@@ -23,8 +23,8 @@ interface IBodyProps {
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
-	handleSave: Function;
 	namespace: string;
+	onSave: Function;
 }
 
 function Body({
@@ -32,12 +32,14 @@ function Body({
 	fieldNames,
 	fields,
 	filter,
-	handleSave,
 	namespace,
+	onSave,
 }: IBodyProps) {
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>(false);
+	const [labelValidationError, setLabelValidationError] = useState(false);
+
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
 		filter ? false : true
 	);
@@ -62,19 +64,7 @@ function Body({
 	const fromFormElementId = `${namespace}From`;
 	const toFormElementId = `${namespace}To`;
 
-	const handleFilterSave = () => {
-		const body = {
-			fieldName: selectedField?.name,
-			from,
-			label_i18n: i18nFilterLabels,
-			to,
-			type: selectedField?.format,
-		};
-
-		handleSave(body);
-	};
-
-	const isFormInvalid = ({
+	const validate = ({
 		from,
 		i18nFilterLabels,
 		selectedField,
@@ -86,68 +76,101 @@ function Body({
 		to: string;
 	}) => {
 		if (!selectedField) {
-			return true;
+			return false;
 		}
 
 		if (selectedField && !filter) {
 			if (inUseFields.includes(selectedField.name)) {
-				return true;
+				setFieldInUseValidationError(true);
+
+				return false;
+			}
+			else {
+				setFieldInUseValidationError(false);
 			}
 		}
 
 		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
-			return true;
+			return false;
 		}
 		else {
-			let isI18nFilterLabelInvalid = false;
+			let isI18nFilterLabelValid = true;
 
 			Object.values(i18nFilterLabels).forEach((value) => {
 				if (!value) {
-					isI18nFilterLabelInvalid = true;
+					isI18nFilterLabelValid = false;
 				}
 			});
 
-			if (isI18nFilterLabelInvalid) {
-				return true;
+			if (!isI18nFilterLabelValid) {
+				setLabelValidationError(true);
+
+				return false;
 			}
 		}
 
 		const dateTo = new Date(to);
-
 		const dateFrom = new Date(from);
 
 		if (to && from) {
-			return !(isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo));
+			const isInvalidRange = !(
+				isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo)
+			);
+
+			setIsValidDateRange(!isInvalidRange);
+
+			return false;
 		}
 
 		return true;
+	};
+
+	const saveDateRangeFilter = () => {
+		setSaveButtonDisabled(true);
+
+		const success = validate({
+			from,
+			i18nFilterLabels,
+			selectedField,
+			to,
+		});
+
+		if (success) {
+			const formData = {
+				fieldName: selectedField?.name,
+				from,
+				label_i18n: i18nFilterLabels,
+				to,
+				type: selectedField?.format,
+			};
+
+			onSave(formData);
+		}
+		else {
+			setSaveButtonDisabled(false);
+		}
 	};
 
 	return (
 		<>
 			<ClayModal.Body>
 				<FilterModalConfiguration
+					fieldInUseValidationError={fieldInUseValidationError}
 					fieldNames={fieldNames}
 					fields={fields}
 					filter={filter}
+					labelValidationError={labelValidationError}
 					namespace={namespace}
-					onChange={({
-						fieldInUseValidationError,
-						i18nFilterLabels,
-						selectedField,
-					}) => {
+					onChange={({i18nFilterLabels, selectedField}) => {
 						setI18nFilterLabels(i18nFilterLabels);
 						setSelectedField(selectedField);
-						setFieldInUseValidationError(fieldInUseValidationError);
 
-						setSaveButtonDisabled(
-							isFormInvalid({
-								from,
-								i18nFilterLabels,
-								selectedField,
-								to,
-							})
-						);
+						validate({
+							from,
+							i18nFilterLabels,
+							selectedField,
+							to,
+						});
 					}}
 				/>
 
@@ -166,16 +189,6 @@ function Body({
 								inputName={fromFormElementId}
 								onChange={(value: any) => {
 									setFrom(value);
-
-									const isInvalid = isFormInvalid({
-										from: value,
-										i18nFilterLabels,
-										selectedField,
-										to,
-									});
-
-									setIsValidDateRange(!isInvalid);
-									setSaveButtonDisabled(isInvalid);
 								}}
 								placeholder="YYYY-MM-DD"
 								value={
@@ -211,16 +224,6 @@ function Body({
 								inputName={toFormElementId}
 								onChange={(value: any) => {
 									setTo(value);
-
-									const isInvalid = isFormInvalid({
-										from,
-										i18nFilterLabels,
-										selectedField,
-										to: value,
-									});
-
-									setIsValidDateRange(!isInvalid);
-									setSaveButtonDisabled(isInvalid);
 								}}
 								placeholder="YYYY-MM-DD"
 								value={
@@ -238,7 +241,7 @@ function Body({
 
 			<FilterModalFooter
 				closeModal={closeModal}
-				handleSave={handleFilterSave}
+				onSave={saveDateRangeFilter}
 				saveButtonDisabled={saveButtonDisabled}
 			/>
 		</>

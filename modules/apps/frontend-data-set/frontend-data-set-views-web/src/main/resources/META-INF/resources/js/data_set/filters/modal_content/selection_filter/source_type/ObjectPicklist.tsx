@@ -18,7 +18,7 @@ interface IObjectPicklistProps {
 }
 
 function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
-	const [picklists, setPicklists] = useState<IPickList[]>([]);
+	const [picklists, setPicklists] = useState<IPickList[]>();
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
 
 	const objectPicklistFormElementId = `${namespace}ObjectPicklist`;
@@ -26,24 +26,25 @@ function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
 	useEffect(() => {
 		getAllPicklists().then((items) => {
 			setPicklists(items);
-
-			const picklist = items.find((item) =>
-				Liferay.FeatureFlags['LPD-10754']
-					? String(item.externalReferenceCode) ===
-					  (filter as any)?.source
-					: String(item.externalReferenceCode) ===
-					  (filter as any)?.listTypeDefinitionERC
-			);
-
-			if (picklist) {
-				setSelectedPicklist(picklist);
-			}
 		});
-	}, [filter]);
+	});
+
+	useEffect(() => {
+		const picklist = picklists?.find((item) =>
+			Liferay.FeatureFlags['LPD-10754']
+				? String(item.externalReferenceCode) === (filter as any)?.source
+				: String(item.externalReferenceCode) ===
+				  (filter as any)?.listTypeDefinitionERC
+		);
+
+		if (picklist) {
+			setSelectedPicklist(picklist);
+		}
+	}, [filter, picklists]);
 
 	return (
 		<>
-			{!picklists.length ? (
+			{picklists && !picklists.length ? (
 				<ClayAlert displayType="info" title="Info">
 					{Liferay.Language.get(
 						'no-filter-sources-are-available.-create-a-picklist-or-a-vocabulary-for-this-type-of-filter'
@@ -57,33 +58,39 @@ function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
 						<RequiredMark />
 					</label>
 
-					<ClaySelectWithOption
-						aria-label={Liferay.Language.get('picklist')}
-						name={objectPicklistFormElementId}
-						onChange={(event) => {
-							const picklist = picklists.find(
-								(item) =>
-									String(item.externalReferenceCode) ===
-									event.target.value
-							);
-							setSelectedPicklist(picklist);
-							onChange(picklist);
-						}}
-						options={[
-							{
-								disabled: true,
-								label: Liferay.Language.get('choose-an-option'),
-								value: '',
-							},
-							...picklists.map((item) => ({
-								label: item.name,
-								value: item.externalReferenceCode,
-							})),
-						]}
-						required
-						title={Liferay.Language.get('source-options')}
-						value={selectedPicklist?.externalReferenceCode || ''}
-					/>
+					{picklists && (
+						<ClaySelectWithOption
+							aria-label={Liferay.Language.get('picklist')}
+							name={objectPicklistFormElementId}
+							onChange={(event) => {
+								const picklist = picklists?.find(
+									(item) =>
+										String(item.externalReferenceCode) ===
+										event.target.value
+								);
+								setSelectedPicklist(picklist);
+								onChange(picklist);
+							}}
+							options={[
+								{
+									disabled: true,
+									label: Liferay.Language.get(
+										'choose-an-option'
+									),
+									value: '',
+								},
+								...picklists.map((item) => ({
+									label: item.name,
+									value: item.externalReferenceCode,
+								})),
+							]}
+							required
+							title={Liferay.Language.get('source-options')}
+							value={
+								selectedPicklist?.externalReferenceCode || ''
+							}
+						/>
+					)}
 				</ClayForm.Group>
 			)}
 		</>

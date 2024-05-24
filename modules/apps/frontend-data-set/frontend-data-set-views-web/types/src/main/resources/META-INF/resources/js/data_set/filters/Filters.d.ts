@@ -12,5 +12,6 @@ declare function Filters({
 	fdsFilterClientExtensions,
 	fieldTreeItems: fields,
 	namespace,
+	restApplications,
 }: IDataSetSectionProps): JSX.Element;
 export default Filters;

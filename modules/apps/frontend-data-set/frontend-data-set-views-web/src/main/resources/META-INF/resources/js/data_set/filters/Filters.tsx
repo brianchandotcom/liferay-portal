@@ -80,6 +80,7 @@ interface IPropsAddFDSFilterModalContent {
 	filterType?: EFilterType;
 	namespace: string;
 	onSave: (newFilter: IFilter) => void;
+	restApplications: string[];
 }
 
 function AddFDSFilterModalContent({
@@ -92,12 +93,13 @@ function AddFDSFilterModalContent({
 	filterType,
 	namespace,
 	onSave,
+	restApplications,
 }: IPropsAddFDSFilterModalContent) {
 	const {Component, displayType, fdsViewRelationshipId} = FILTER_TYPES[
 		filterType as EFilterType
 	];
 
-	const handleFilterSave = async (body: any) => {
+	const saveFDSFilter = async (body: any) => {
 		body = {
 			...body,
 			[fdsViewRelationshipId]: dataSet.id,
@@ -147,11 +149,13 @@ function AddFDSFilterModalContent({
 			<Component.Body
 				closeModal={closeModal}
 				fdsFilterClientExtensions={fdsFilterClientExtensions}
+				fdsView={fdsView}
 				fieldNames={fieldNames}
 				fields={fields}
 				filter={filter}
-				handleSave={(body: any) => handleFilterSave(body)}
 				namespace={namespace}
+				onSave={(formData: any) => saveFDSFilter(formData)}
+				restApplications={restApplications}
 			/>
 		</>
 	);
@@ -162,9 +166,10 @@ function Filters({
 	fdsFilterClientExtensions,
 	fieldTreeItems: fields,
 	namespace,
+	restApplications
 }: IDataSetSectionProps) {
 	const [filters, setFilters] = useState<IFilter[]>([]);
-
+console.log(restApplications)
 	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
@@ -305,6 +310,7 @@ function Filters({
 							}
 							setFilters([...filters, newfilter]);
 						}}
+						restApplications={restApplications}
 					/>
 				),
 				disableAutoClose: true,
@@ -346,6 +352,7 @@ function Filters({
 
 						setFilters(newFilters);
 					}}
+					restApplications={restApplications}
 				/>
 			),
 			disableAutoClose: true,

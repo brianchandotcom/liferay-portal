@@ -7,24 +7,26 @@
 
 import {IField, IFilter} from '../utils/types';
 interface IFilterModalConfigurationProps {
+	fieldInUseValidationError: boolean;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
+	labelValidationError?: boolean;
 	namespace: string;
 	onChange: ({
-		fieldInUseValidationError,
 		i18nFilterLabels,
 		selectedField,
 	}: {
-		fieldInUseValidationError: boolean;
 		i18nFilterLabels: any;
 		selectedField: IField | undefined;
 	}) => void;
 }
 declare function FilterModalConfiguration({
+	fieldInUseValidationError,
 	fieldNames,
 	fields,
 	filter,
+	labelValidationError,
 	namespace,
 	onChange,
 }: IFilterModalConfigurationProps): JSX.Element;

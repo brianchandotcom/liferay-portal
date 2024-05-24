@@ -7,7 +7,6 @@ package com.liferay.portal.workflow.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -30,7 +29,6 @@ public interface WorkflowDefinitionConfiguration {
 	)
 	public boolean companyAdministratorCanPublish();
 
-	@ExtendedAttributeDefinition(featureFlagKey = "LPD-23210")
 	@Meta.AD(
 		deflt = "false",
 		description = "notifications-must-honor-site-membership-rule-description",

@@ -124,7 +124,6 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -1022,7 +1021,6 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			WorkflowConstants.STATUS_DRAFT, fileVersion.getStatus());
 	}
 
-	@FeatureFlags("LPD-23210")
 	@Test
 	public void testPreventNotifyingAncestorSites() throws Exception {
 

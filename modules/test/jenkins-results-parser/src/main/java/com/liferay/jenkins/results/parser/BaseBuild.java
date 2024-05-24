@@ -1650,7 +1650,7 @@ public abstract class BaseBuild implements Build {
 			"\n\n\nOffline Slave URL: https://", jenkinsMaster.getName(),
 			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 
-		if (slave.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
+		if (slaveOfflineRule.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
 			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
 
 			message.replaceFirst("will be taken offline", 

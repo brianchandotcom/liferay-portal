@@ -129,6 +129,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		};
 
 		_testValidate(
+			"source-failure.json", "target-failure.json",
 			runtimeException -> {
 				Assert.assertEquals("1", runtimeException.getMessage());
 
@@ -138,7 +139,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 					Assert.assertTrue(string.contains(message));
 				}
 			},
-			"source-failure.json", "target-failure.json",
 			() -> {
 			});
 	}
@@ -146,9 +146,9 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	@Test
 	public void testValidateSuccess() throws Exception {
 		_testValidate(
+			"source-success.json", "target-success.json",
 			runtimeException -> Assert.assertEquals(
 				"0", runtimeException.getMessage()),
-			"source-success.json", "target-success.json",
 			() -> {
 				Assert.assertTrue(
 					_errByteArrayOutputStream.toString(
@@ -162,6 +162,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	@Test
 	public void testValidateTargetNondefaultPartition() throws Exception {
 		_testValidate(
+			"source-success.json", "target-nondefault.json",
 			runtimeException -> {
 				Assert.assertEquals("1", runtimeException.getMessage());
 				Assert.assertTrue(
@@ -173,7 +174,6 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 					_outByteArrayOutputStream.toString(
 					).isEmpty());
 			},
-			"source-success.json", "target-nondefault.json",
 			() -> {
 			});
 	}
@@ -325,10 +325,9 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	private void _testValidate(
-			UnsafeConsumer<RuntimeException, Exception>
-				catchValidationsUnsafeConsumer,
 			String sourceFileName, String targetFileName,
-			UnsafeRunnable<Exception> validationsUnsafeRunnable)
+			UnsafeConsumer<RuntimeException, Exception> unsafeConsumer,
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try {
@@ -340,10 +339,10 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 				});
 		}
 		catch (RuntimeException runtimeException) {
-			catchValidationsUnsafeConsumer.accept(runtimeException);
+			unsafeConsumer.accept(runtimeException);
 		}
 
-		validationsUnsafeRunnable.run();
+		unsafeRunnable.run();
 	}
 
 	private final ByteArrayOutputStream _errByteArrayOutputStream =

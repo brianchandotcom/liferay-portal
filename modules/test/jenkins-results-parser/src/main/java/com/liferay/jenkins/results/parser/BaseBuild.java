@@ -836,32 +836,6 @@ public abstract class BaseBuild implements Build {
 		return _jenkinsSlave;
 	}
 
-	public JenkinsSlave getJenkinsSlaveSibling(JenkinsSlave jenkinsSlave) {
-		String slaveName = jenkinsSlave.getName();
-		
-		String[] slaveNameParts = slaveName.split("-");
-
-		try {
-			int slaveNumber = Integer.parseInt(slaveNameParts[slaveNameParts.length - 1]);
-
-			if (slaveNumber % 2 == 0) {
-				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber - 1);
-			} else {
-				slaveNameParts[slaveNameParts.length - 1] = Integer.toString(slaveNumber + 1);
-			}
-
-			String siblingSlaveName = String.join("-", slaveNameParts);
-
-			JenkinsMaster jenkinsMaster = getJenkinsMaster();
-
-			return jenkinsMaster.getJenkinsSlave(siblingSlaveName);
-
-		} catch (NumberFormatException numberFormatException) {
-			throw new RuntimeException(
-						"Invalid slave name: " + slaveName , numberFormatException);
-		}
-	}
-
 	@Override
 	public Job getJob() {
 		if (_job != null) {
@@ -1650,18 +1624,24 @@ public abstract class BaseBuild implements Build {
 			"\n\n\nOffline Slave URL: https://", jenkinsMaster.getName(),
 			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 
-		if (slaveOfflineRule.getOfflineSibling() && jenkinsMaster.getSlavesPerHost() == 2) {
+		if (slaveOfflineRule.getOfflineSibling() &&
+			(jenkinsMaster.getSlavesPerHost() == 2)) {
+
 			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
 
-			message.replaceFirst("will be taken offline", 
-			JenkinsResultsParserUtil.combine(
-				"will be taken offline alongside it's sibling: ", siblingSlave.getName()));
+			message.replaceFirst(
+				"will be taken offline",
+				JenkinsResultsParserUtil.combine(
+					"will be taken offline alongside its sibling: ",
+					siblingSlave.getName()));
 
-			String siblingMessage = JenkinsResultsParserUtil.combine(pinnedMessage, "Offline sibling: ",jenkinsSlave.getName(), " Reason: ", slaveOfflineRule.getName());
+			String siblingMessage = JenkinsResultsParserUtil.combine(
+				pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
+				" Reason: ", slaveOfflineRule.getName());
 
 			siblingSlave.takeSlavesOffline(siblingMessage);
 		}
-		
+
 		System.out.println(message);
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
@@ -1672,7 +1652,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		jenkinsSlave.takeSlavesOffline(message);
-		
+
 		String notificationRecipients =
 			slaveOfflineRule.getNotificationRecipients();
 
@@ -2891,27 +2871,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return testResults;
-	}
-
-	protected boolean isSlaveOfflineSiblingSupportedMaster(JenkinsMaster jenkinsMaster) {
-		Properties buildProperties;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-					"Unable to get build.properties", ioException);
-		}
-
-		String supportedMasters = JenkinsResultsParserUtil.getProperty(buildProperties, "slave.offline.sibling.supported.masters");
-		String masterName = jenkinsMaster.getName();
-
-		if (supportedMasters.contains(masterName)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected boolean isParentBuildRoot() {

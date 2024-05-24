@@ -7,6 +7,12 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -115,6 +121,54 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		return _name;
 	}
 
+	public String getNamePrefix() {
+		Matcher matcher = _namePattern.matcher(getName());
+
+		if (!matcher.matches()) {
+			return null;
+		}
+
+		return matcher.group("prefix");
+	}
+
+	public Integer getNumber() {
+		Matcher matcher = _namePattern.matcher(getName());
+
+		if (!matcher.matches()) {
+			return null;
+		}
+
+		return Integer.parseInt(matcher.group("number"));
+	}
+
+	public Set<JenkinsSlave> getSiblings() {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		if (jenkinsMaster.getSlavesPerHost() < 2) {
+			return Collections.emptySet();
+		}
+
+		Integer slaveNumber = getNumber();
+
+		if (slaveNumber == null) {
+			return Collections.emptySet();
+		}
+
+		Set<JenkinsSlave> siblings = new HashSet<>();
+
+		int siblingSlaveNumber = slaveNumber + 1;
+
+		if ((slaveNumber % 2) == 0) {
+			siblingSlaveNumber = slaveNumber - 1;
+		}
+
+		siblings.add(
+			jenkinsMaster.getJenkinsSlave(
+				getNamePrefix() + siblingSlaveNumber));
+
+		return siblings;
+	}
+
 	@Override
 	public int hashCode() {
 		String hashCodeString = _jenkinsMaster.getName() + "_" + _name;
@@ -191,6 +245,9 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 			ioException.printStackTrace();
 		}
 	}
+
+	private static final Pattern _namePattern = Pattern.compile(
+		"(?<prefix>.*[^\\d]+)(?<number>\\d+)");
 
 	private boolean _idle;
 	private final JenkinsMaster _jenkinsMaster;

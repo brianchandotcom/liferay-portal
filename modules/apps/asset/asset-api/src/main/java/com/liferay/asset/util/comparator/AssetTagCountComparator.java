@@ -19,12 +19,12 @@ public class AssetTagCountComparator extends OrderByComparator<AssetTag> {
 
 	public static final String[] ORDER_BY_FIELDS = {"assetCount"};
 
-	public AssetTagCountComparator() {
-		this(false);
-	}
+	public static AssetTagCountComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public AssetTagCountComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class AssetTagCountComparator extends OrderByComparator<AssetTag> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private AssetTagCountComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final AssetTagCountComparator _INSTANCE_ASCENDING =
+		new AssetTagCountComparator(true);
+
+	private static final AssetTagCountComparator _INSTANCE_DESCENDING =
+		new AssetTagCountComparator(false);
 
 	private final boolean _ascending;
 

@@ -9,8 +9,10 @@ import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {FDSTableCellHTMLElementBuilderArgs} from '@liferay/js-api/data-set';
+import classNames from 'classnames';
 import {ClientExtension} from 'frontend-js-components-web';
-import React, {useContext, useMemo, useState} from 'react';
+import {throttle} from 'frontend-js-web';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import {IItemsActions} from '../..';
 import FrontendDataSetContext, {
@@ -24,8 +26,16 @@ import {
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import {getInputRendererById} from '../../utils/renderer';
-import ViewsContext from '../ViewsContext';
+import ViewsContext, {
+	IViewsContext,
+	TViewsContextDispatch,
+} from '../ViewsContext';
+
+// @ts-ignore
+
+import {VIEWS_ACTION_TYPES} from '../viewsReducer';
 import {InlineEditInputRenderer} from './TableCell';
+import TableContext from './dnd_table/TableContext';
 
 type Field = {
 	contentRenderer: string;
@@ -172,12 +182,13 @@ export function ClayTable({
 					}
 
 					return (
-						<Cell
+						<HeadCellResizer
+							columnName={field.fieldName}
 							key={field.fieldName}
 							sortable={(field as any).sortable}
 						>
 							{(field as any).label}
-						</Cell>
+						</HeadCellResizer>
 					);
 				}}
 			</Head>
@@ -374,6 +385,111 @@ export function ClayTable({
 		</Table>
 	);
 }
+
+/**
+ * Wrapper on top of ClayCell to add column resizer capabilities. This
+ * should be removed when Clay implements this feature with accessibility.
+ */
+function HeadCellResizer({
+	children,
+	columnName,
+	resizable = true,
+	...otherProps
+}: React.ComponentProps<typeof Cell> & {
+	columnName: string;
+	resizable?: boolean;
+}) {
+	const {
+		draggingAllowed,
+		draggingColumnName,
+		isFixed,
+		resizeColumn,
+		updateDraggingAllowed,
+		updateDraggingColumnName,
+	} = useContext(TableContext);
+
+	const [{modifiedFields}, viewsDispatch]: [
+		IViewsContext,
+		TViewsContextDispatch
+	] = useContext(ViewsContext);
+
+	const cellRef = useRef<HTMLTableCellElement>(null);
+	const clientXRef = useRef({current: null});
+
+	useEffect(() => {
+		if (columnName && !isFixed && cellRef.current) {
+			const boundingClientRect = cellRef.current.getBoundingClientRect();
+
+			viewsDispatch({
+				type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+				value: {
+					name: columnName,
+					resizable,
+					width: boundingClientRect.width,
+				},
+			});
+		}
+	}, [columnName, isFixed, resizable, viewsDispatch]);
+
+	const handleDrag = useMemo(() => {
+		return throttle((event) => {
+			if (event.clientX === clientXRef.current || !cellRef.current) {
+				return;
+			}
+
+			updateDraggingColumnName(columnName);
+
+			clientXRef.current = event.clientX;
+
+			const {x: headerCellX} = cellRef.current.getClientRects()[0];
+			const newWidth = event.clientX - headerCellX;
+
+			resizeColumn(columnName, newWidth);
+		}, 20);
+	}, [columnName, resizeColumn, updateDraggingColumnName]);
+
+	function initializeDrag() {
+		window.addEventListener('mousemove', handleDrag);
+		window.addEventListener(
+			'mouseup',
+			() => {
+				updateDraggingAllowed(true);
+				updateDraggingColumnName(null);
+				window.removeEventListener('mousemove', handleDrag);
+			},
+			{once: true}
+		);
+	}
+
+	const width = useMemo(() => {
+		const columnDetails = modifiedFields[columnName];
+
+		return columnDetails && isFixed && columnDetails.width;
+	}, [isFixed, modifiedFields, columnName]);
+
+	return (
+		<Cell
+			{...otherProps}
+			ref={cellRef}
+			style={{width: width || 'auto'}}
+			width={width || 'auto'}
+		>
+			{children}
+
+			{resizable && (
+				<span
+					className={classNames('dnd-th-resizer', {
+						'is-active': columnName === draggingColumnName,
+						'is-allowed': draggingAllowed,
+					})}
+					onMouseDown={initializeDrag}
+				/>
+			)}
+		</Cell>
+	);
+}
+
+HeadCellResizer.displayName = 'Item';
 
 function AddActions() {
 	const {createInlineItem, itemsChanges, toggleItemInlineEdit} = useContext(

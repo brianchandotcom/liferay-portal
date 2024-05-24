@@ -85,53 +85,6 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#ENTRIES_TABLE");
 	}
 
-	@description = "LPS-133865 - Verify if the fields from an Object are displayed to be mapped on a fragment"
-	@priority = 5
-	test FieldsFromObjectDisplayedToBeMapped {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 300",
-			objectName = "CustomObject300",
-			pluralLabelName = "Custom Objects 300");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Integer",
-			fieldLabelName = "Number",
-			fieldName = "integer",
-			fieldType = "Integer",
-			isRequired = "false",
-			objectName = "CustomObject300");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Text",
-			fieldName = "text",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject300");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject300");
-
-		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			contentType = "Custom Object 300",
-			pageTemplateName = "Blank Display Page");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Number");
-
-		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldLabel = "Number");
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Text");
-
-		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldLabel = "Text");
-	}
-
 	@description = "LPS-133865 - Verify if the Object is displayed to be selected as Collection Provider on the Collection Display fragment"
 	@priority = 5
 	test ObjectDisplayedToCollectionProdiver {

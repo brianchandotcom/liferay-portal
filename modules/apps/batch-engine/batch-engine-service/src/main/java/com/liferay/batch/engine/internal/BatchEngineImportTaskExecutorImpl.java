@@ -88,7 +88,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Started batch engine import task with id : " +
+				"Started batch engine import task " +
 					batchEngineImportTask.getBatchEngineImportTaskId());
 
 			startTime = System.currentTimeMillis();
@@ -147,7 +147,7 @@ public class BatchEngineImportTaskExecutorImpl
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Finished batch engine import task with id : ",
+					"Finished batch engine import task ",
 					batchEngineImportTask.getBatchEngineImportTaskId(), " in ",
 					System.currentTimeMillis() - startTime, "ms"));
 		}

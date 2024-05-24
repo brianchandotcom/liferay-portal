@@ -2426,7 +2426,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-191485. Verify if is not possible to leave Headless Action Key field empty in the Headless Item Action"
+	@description = "LPS-191485. Confirm that the Headless Action Key cannot field empty in the Headless Item Action"
 	@priority = 4
 	test CannotLeaveHeadlessActionKeyFieldEmptyInHeadlessItemAction {
 		task ("When clicks on New Action button") {
@@ -2452,7 +2452,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-192956 Confirm that the Label field can be empty on the Modal Item Action"
+	@description = "LPS-192956 Confirm that the Label field cannot be empty on the Modal Item Action"
 	@priority = 3
 	test CannotLeaveLabelFieldEmptyInModalActionOnItemAction {
 		task ("Given a new data set entry") {

@@ -4995,12 +4995,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			lastLoginIP = loginIP;
 		}
 
-		user.setLoginDate(new Date());
-		user.setLoginIP(loginIP);
-		user.setLastLoginDate(lastLoginDate);
-		user.setLastLoginIP(lastLoginIP);
+		user = userFinder.updateLastLogin(
+			user, 0, lastLoginDate, lastLoginIP, new Date(), loginIP);
 
-		return resetFailedLoginAttempts(user, true);
+		if (user == null) {
+			return userPersistence.findByPrimaryKey(userId);
+		}
+
+		userPersistence.cacheResult(user);
+
+		return user;
 	}
 
 	/**

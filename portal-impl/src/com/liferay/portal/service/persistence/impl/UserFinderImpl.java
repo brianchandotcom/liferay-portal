@@ -40,6 +40,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -151,6 +152,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 	public static final String JOIN_BY_SOCIAL_RELATION_TYPE =
 		UserFinder.class.getName() + ".joinBySocialRelationType";
+
+	public static final String UPDATE_LAST_LOGIN =
+		UserFinder.class.getName() + ".updateLastLogin";
 
 	@Override
 	public int countByKeywords(
@@ -729,6 +733,57 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	@Override
+	public User updateLastLogin(
+		User user, int failedLoginAttempts, Date lastLoginDate,
+		String lastLoginIP, Date loginDate, String loginIP) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(UPDATE_LAST_LOGIN);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(failedLoginAttempts);
+			queryPos.add(lastLoginDate);
+			queryPos.add(lastLoginIP);
+			queryPos.add(loginDate);
+			queryPos.add(loginIP);
+
+			long mvccVersion = user.getMvccVersion();
+
+			queryPos.add(mvccVersion + 1);
+			queryPos.add(mvccVersion);
+
+			queryPos.add(user.getUserId());
+
+			int count = sqlQuery.executeUpdate();
+
+			if (count != 1) {
+				return null;
+			}
+
+			user.setMvccVersion(mvccVersion + 1);
+			user.setLoginDate(loginDate);
+			user.setLoginIP(loginIP);
+			user.setLastLoginDate(lastLoginDate);
+			user.setLastLoginIP(lastLoginIP);
+			user.setFailedLoginAttempts(failedLoginAttempts);
+
+			session.evict(UserImpl.class, user.getUserId());
+
+			return user;
+		}
+		finally {
+			closeSession(session);
 		}
 	}
 

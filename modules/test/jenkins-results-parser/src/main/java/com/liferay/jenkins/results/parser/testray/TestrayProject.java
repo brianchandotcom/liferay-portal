@@ -183,7 +183,7 @@ public class TestrayProject {
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"productversions", TestrayProductVersion.FIELD_NAMES, filter, 1,
+				"productVersions", TestrayProductVersion.FIELD_NAMES, filter, 1,
 				1);
 
 			if (entityJSONObjects.isEmpty()) {

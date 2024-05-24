@@ -125,49 +125,6 @@ public class TestrayCaseResult {
 		return new ArrayList<>(testrayAttachments.values());
 	}
 
-	protected synchronized void initTestrayAttachments() {
-		if (testrayAttachments != null) {
-			return;
-		}
-
-		testrayAttachments = new TreeMap<>();
-
-		String attachments = _jsonObject.getString("attachments");
-
-		JSONArray attachmentsJSONArray;
-
-		try {
-			attachmentsJSONArray = new JSONArray(attachments);
-		}
-		catch (JSONException jsonException) {
-			return;
-		}
-
-		for (int i = 0 ; i < attachmentsJSONArray.length(); i++) {
-			JSONObject attachmentJSONObject =
-					attachmentsJSONArray.getJSONObject(i);
-
-			URL url;
-
-			try {
-				url = new URL(attachmentJSONObject.getString("url"));
-			}
-			catch (MalformedURLException malformedURLException) {
-				url = null;
-			}
-
-			TestrayAttachment testrayAttachment =
-				TestrayFactory.newTestrayAttachment(
-					this, attachmentJSONObject.getString("name"),
-					attachmentJSONObject.getString("value"), url);
-
-			testrayAttachments.put(
-				testrayAttachment.getName(), testrayAttachment);
-		}
-	}
-
-	protected Map<String, TestrayAttachment> testrayAttachments;
-
 	public TestrayBuild getTestrayBuild() {
 		return _testrayBuild;
 	}
@@ -265,12 +222,12 @@ public class TestrayCaseResult {
 
 		_jsonObject = jsonObject;
 
-		TestrayProject testrayProject = _testrayBuild.getTestrayProject();
-
 		JSONObject componentJSONObject = _jsonObject.optJSONObject(
 			"componentToCaseResult");
 
 		if (componentJSONObject != null) {
+			TestrayProject testrayProject = testrayBuild.getTestrayProject();
+
 			_testrayComponent = testrayProject.getTestrayComponentByID(
 				componentJSONObject.getLong("id"));
 		}
@@ -292,6 +249,49 @@ public class TestrayCaseResult {
 
 		_jsonObject = new JSONObject();
 	}
+
+	protected synchronized void initTestrayAttachments() {
+		if (testrayAttachments != null) {
+			return;
+		}
+
+		testrayAttachments = new TreeMap<>();
+
+		String attachments = _jsonObject.getString("attachments");
+
+		JSONArray attachmentsJSONArray;
+
+		try {
+			attachmentsJSONArray = new JSONArray(attachments);
+		}
+		catch (JSONException jsonException) {
+			return;
+		}
+
+		for (int i = 0; i < attachmentsJSONArray.length(); i++) {
+			JSONObject attachmentJSONObject =
+				attachmentsJSONArray.getJSONObject(i);
+
+			URL url;
+
+			try {
+				url = new URL(attachmentJSONObject.getString("url"));
+			}
+			catch (MalformedURLException malformedURLException) {
+				url = null;
+			}
+
+			TestrayAttachment testrayAttachment =
+				TestrayFactory.newTestrayAttachment(
+					this, attachmentJSONObject.getString("name"),
+					attachmentJSONObject.getString("value"), url);
+
+			testrayAttachments.put(
+				testrayAttachment.getName(), testrayAttachment);
+		}
+	}
+
+	protected Map<String, TestrayAttachment> testrayAttachments;
 
 	private final JSONObject _jsonObject;
 	private final TestrayBuild _testrayBuild;

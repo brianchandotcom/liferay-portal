@@ -229,6 +229,8 @@ public interface Build {
 
 		public String getSenderBranchSHA();
 
+		public String getSenderBranchSHAShort();
+
 		public RemoteGitRef getSenderRemoteGitRef();
 
 		public String getSenderUsername();

@@ -757,6 +757,21 @@ public abstract class BaseTopLevelBuild
 		}
 
 		@Override
+		public String getSenderBranchSHAShort() {
+			String senderBranchSHA = getSenderBranchSHA();
+
+			if (senderBranchSHA == null) {
+				return null;
+			}
+
+			if (senderBranchSHA.length() >= 7) {
+				senderBranchSHA = senderBranchSHA.substring(0, 7);
+			}
+
+			return senderBranchSHA;
+		}
+
+		@Override
 		public RemoteGitRef getSenderRemoteGitRef() {
 			String remoteURL = null;
 

@@ -201,7 +201,7 @@ public class TestrayRoutine {
 		try {
 			_url = new URL(
 				JenkinsResultsParserUtil.combine(
-					String.valueOf(_testrayProject.getURL()), "/routines/",
+					String.valueOf(_testrayProject.getURL()), "/",
 					String.valueOf(getID())));
 		}
 		catch (MalformedURLException malformedURLException) {

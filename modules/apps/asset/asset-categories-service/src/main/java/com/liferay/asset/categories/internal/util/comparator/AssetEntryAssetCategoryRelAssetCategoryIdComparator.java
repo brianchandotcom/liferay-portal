@@ -20,14 +20,14 @@ public class AssetEntryAssetCategoryRelAssetCategoryIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"assetCategoryId"};
 
-	public AssetEntryAssetCategoryRelAssetCategoryIdComparator() {
-		this(true);
-	}
+	public static AssetEntryAssetCategoryRelAssetCategoryIdComparator
+		getInstance(boolean ascending) {
 
-	public AssetEntryAssetCategoryRelAssetCategoryIdComparator(
-		boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -71,6 +71,20 @@ public class AssetEntryAssetCategoryRelAssetCategoryIdComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private AssetEntryAssetCategoryRelAssetCategoryIdComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final AssetEntryAssetCategoryRelAssetCategoryIdComparator
+		_INSTANCE_ASCENDING =
+			new AssetEntryAssetCategoryRelAssetCategoryIdComparator(true);
+
+	private static final AssetEntryAssetCategoryRelAssetCategoryIdComparator
+		_INSTANCE_DESCENDING =
+			new AssetEntryAssetCategoryRelAssetCategoryIdComparator(false);
 
 	private final boolean _ascending;
 

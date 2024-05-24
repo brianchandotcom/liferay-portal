@@ -121,7 +121,8 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsByAssetEntryId(
 					assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new AssetEntryAssetCategoryRelAssetCategoryIdComparator());
+					AssetEntryAssetCategoryRelAssetCategoryIdComparator.
+						getInstance(false));
 
 		List<AssetCategory> categories = new ArrayList<>();
 

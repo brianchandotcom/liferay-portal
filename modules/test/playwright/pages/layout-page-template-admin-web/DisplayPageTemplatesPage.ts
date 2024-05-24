@@ -38,7 +38,7 @@ export class DisplayPageTemplatesPage {
 	}) {
 		await this.newButton.click();
 		await this.page.getByRole('button', {name: 'Blank'}).click();
-		await this.page.getByLabel('Name').fill(name);
+		await this.page.getByLabel('Name', {exact: true}).fill(name);
 		await this.page
 			.getByLabel('Content Type')
 			.selectOption({label: contentType});

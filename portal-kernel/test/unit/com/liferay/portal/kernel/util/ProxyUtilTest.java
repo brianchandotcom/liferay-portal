@@ -16,6 +16,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -86,6 +87,43 @@ public class ProxyUtilTest {
 			Assert.assertSame(
 				noSuchMethodException, exceptionInInitializerError.getCause());
 		}
+	}
+
+	@Test
+	public void testLazyDelegateProxyInstance() {
+		AtomicInteger counter = new AtomicInteger();
+
+		Supplier<TestInterface> supplier = () -> {
+			counter.incrementAndGet();
+
+			return new TestInterface() {
+
+				@Override
+				public String method1() {
+					return "method1";
+				}
+
+				@Override
+				public String method2() {
+					return "method2";
+				}
+
+				@Override
+				public void method3() {
+				}
+
+			};
+		};
+
+		TestInterface testInterface = ProxyUtil.newLazyDelegateProxyInstance(
+			TestInterface.class.getClassLoader(), TestInterface.class,
+			supplier);
+
+		Assert.assertEquals(0, counter.get());
+		Assert.assertEquals("method1", testInterface.method1());
+		Assert.assertEquals(1, counter.get());
+		Assert.assertEquals("method2", testInterface.method2());
+		Assert.assertEquals(1, counter.get());
 	}
 
 	@Test

@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author Shuyang Zhou
@@ -158,6 +159,15 @@ public class ProxyUtil {
 			classLoader, new Class<?>[] {interfaceClass},
 			new DelegateInvocationHandler(
 				interfaceClass, delegateObject, defaultObject));
+	}
+
+	public static <T> T newLazyDelegateProxyInstance(
+		ClassLoader classLoader, Class<T> interfaceClass,
+		Supplier<T> delegateObjectSupplier) {
+
+		return (T)newProxyInstance(
+			classLoader, new Class<?>[] {interfaceClass},
+			new LazyDelegateInvocationHandler(delegateObjectSupplier));
 	}
 
 	public static Object newProxyInstance(
@@ -330,6 +340,31 @@ public class ProxyUtil {
 		private final Object _defaultObject;
 		private final Map<Method, Method> _delegateMethods;
 		private final Object _delegateObject;
+
+	}
+
+	private static class LazyDelegateInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			if (_delegateObject == null) {
+				_delegateObject = _delegateObjectSupplier.get();
+			}
+
+			return method.invoke(_delegateObject, args);
+		}
+
+		private LazyDelegateInvocationHandler(
+			Supplier<?> delegateObjectSupplier) {
+
+			_delegateObjectSupplier = delegateObjectSupplier;
+		}
+
+		private Object _delegateObject;
+		private final Supplier<?> _delegateObjectSupplier;
 
 	}
 

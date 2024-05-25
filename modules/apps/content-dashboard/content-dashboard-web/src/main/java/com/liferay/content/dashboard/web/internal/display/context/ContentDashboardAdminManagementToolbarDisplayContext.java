@@ -126,15 +126,23 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_contentDashboardItemFilterProviderRegistry.
 					getContentDashboardItemFilterProviders();
 
+		HttpServletRequest httpServletRequest =
+			_liferayPortletRequest.getHttpServletRequest();
+
 		try {
 			for (ContentDashboardItemFilterProvider
 					contentDashboardItemFilterProvider :
 						contentDashboardItemFilterProviders) {
 
+				if (!contentDashboardItemFilterProvider.isShow(
+						httpServletRequest)) {
+
+					continue;
+				}
+
 				ContentDashboardItemFilter contentDashboardItemFilter =
 					contentDashboardItemFilterProvider.
-						getContentDashboardItemFilter(
-							_liferayPortletRequest.getHttpServletRequest());
+						getContentDashboardItemFilter(httpServletRequest);
 
 				afterParameterStep.setParameter(
 					contentDashboardItemFilter.getParameterName(),
@@ -458,15 +466,23 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_contentDashboardItemFilterProviderRegistry.
 					getContentDashboardItemFilterProviders();
 
+		HttpServletRequest httpServletRequest =
+			_liferayPortletRequest.getHttpServletRequest();
+
 		for (ContentDashboardItemFilterProvider
 				contentDashboardItemFilterProvider :
 					contentDashboardItemFilterProviders) {
 
+			if (!contentDashboardItemFilterProvider.isShow(
+					httpServletRequest)) {
+
+				continue;
+			}
+
 			try {
 				ContentDashboardItemFilter contentDashboardItemFilter =
 					contentDashboardItemFilterProvider.
-						getContentDashboardItemFilter(
-							_liferayPortletRequest.getHttpServletRequest());
+						getContentDashboardItemFilter(httpServletRequest);
 
 				List<String> parameterValues =
 					contentDashboardItemFilter.getParameterValues();
@@ -564,15 +580,23 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private List<DropdownItem>
 		_getContentDashboardItemFilterProviderDropdownItems() {
 
+		HttpServletRequest httpServletRequest =
+			_liferayPortletRequest.getHttpServletRequest();
+
 		return TransformUtil.transform(
 			_contentDashboardItemFilterProviderRegistry.
 				getContentDashboardItemFilterProviders(),
 			contentDashboardItemFilterProvider -> {
 				try {
+					if (!contentDashboardItemFilterProvider.isShow(
+							httpServletRequest)) {
+
+						return null;
+					}
+
 					ContentDashboardItemFilter contentDashboardItemFilter =
 						contentDashboardItemFilterProvider.
-							getContentDashboardItemFilter(
-								_liferayPortletRequest.getHttpServletRequest());
+							getContentDashboardItemFilter(httpServletRequest);
 
 					if (contentDashboardItemFilter == null) {
 						return null;

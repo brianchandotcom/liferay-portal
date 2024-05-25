@@ -504,7 +504,10 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 	}
 
-	public void method(String className, long classPK, Locale locale, ThemeDisplay themeDisplay) {
+	public void method(
+		String className, long classPK, Locale locale,
+		ThemeDisplay themeDisplay) {
+
 		_assetDisplayPageFriendlyURLProvider.getFriendlyURL(className, classPK, locale, themeDisplay);
 		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, locale, themeDisplay);
 	}
@@ -529,7 +532,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 	}
 
-	public void method(String className, long classPK, ThemeDisplay themeDisplay) {
+	public void method(
+		String className, long classPK, ThemeDisplay themeDisplay) {
+
 		_assetDisplayPageFriendlyURLProvider.getFriendlyURL(className, classPK, themeDisplay);
 		_assetDisplayPageFriendlyURLProvider.getFriendlyURL("test123", 123, themeDisplay);
 	}

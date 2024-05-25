@@ -48,5 +48,21 @@
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-engine-creole/src/main/java/com/liferay/wiki/engine/creole/internal/util/WikiEngineCreoleComponentProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/display/context/DLMimeTypeDisplayContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/util/WikiWebComponentProvider\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="data-engine/data-engine-rest-api/src/main/java/com/liferay/data/engine/rest/resource/exception/DataDefinitionValidationException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="data-engine/data-engine-rest-api/src/main/java/com/liferay/data/engine/rest/resource/exception/DataLayoutValidationException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/exception/StorageFieldValueException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/expression/DDMExpressionException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/validator/DDMFormLayoutValidationException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/validator/DDMFormValidationException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/validator/DDMFormValuesValidationException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="info/info-api/src/main/java/com/liferay/info/exception/InfoFormValidationException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="journal/journal-api/src/main/java/com/liferay/journal/exception/ArticleTitleException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="knowledge-base/knowledge-base-api/src/main/java/com/liferay/knowledge/base/exception/KBArticleImportException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="knowledge-base/knowledge-base-api/src/main/java/com/liferay/knowledge/base/exception/KBArticleUrlTitleException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="layout/layout-page-template-api/src/main/java/com/liferay/layout/page/template/exception/LayoutPageTemplateEntryNameException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="object/object-api/src/main/java/com/liferay/object/exception/ObjectRelationshipDeletionTypeException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="object/object-api/src/main/java/com/liferay/object/exception/ObjectValidationRuleEngineException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="portal-workflow/portal-workflow-kaleo-definition-api/src/main/java/com/liferay/portal/workflow/kaleo/definition/exception/KaleoDefinitionValidationException\.java" />
+		<suppress checks="InnerExceptionClassCheck" files="portal/portal-json-web-service-client/src/main/java/com/liferay/portal/json/web/service/client/JSONWebServiceTransportException\.java" />
 	</checkstyle>
 </suppressions>

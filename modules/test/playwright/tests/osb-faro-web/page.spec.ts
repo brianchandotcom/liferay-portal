@@ -58,6 +58,20 @@ const goToWithReferrer = async function (page, referrer, url) {
 	}, url);
 };
 
+const navigateToSitePage = async function (page, siteName, pageName) {
+	let pageNameURL = pageName.replace(/ /g, "-").toLowerCase();
+
+	if (siteName) {
+		let siteNameURL = siteName.replace(/ /g, "-").toLowerCase();
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web/${siteNameURL}/` +
+				`${pageNameURL}`);
+	} else {
+		await page.goto(`${liferayConfig.environment.baseUrl}/${pageNameURL}`);
+	}
+};
+
 test('shows outside pages in path analysis', async ({apiHelpers, page}) => {
 	const pageTitle = 'My Page';
 
@@ -142,11 +156,15 @@ test('shows tracked pages in path analysis', async ({apiHelpers, page}) => {
 
 	await syncAnalyticsCloud(page, channelName);
 
+	await navigateToSitePage(page, "", pageTitle1);
+
+	await page.waitForTimeout(10000);
+
+	await page.getByText(pageTitle2).first().click();
+
 	await page.waitForTimeout(10000);
 
 	await page.getByText(pageTitle1).first().click();
-
-	await page.getByText(pageTitle2).first().click();
 
 	await page.waitForTimeout(10000);
 
@@ -175,23 +193,23 @@ test('shows tracked pages in path analysis', async ({apiHelpers, page}) => {
 
 	await page.getByRole('link', {name: 'Path'}).click();
 
-	await expect(page.getByText('Home - Liferay ...')).toBeVisible({
+	await expect(
+		page.getByText('My Page 2 - Lif...', {exact: true}).first()
+	).toBeVisible({
 		timeout: 100 * 1000,
 	});
 
-	await expect(page.getByText('My Page 2 - Lif...')).toBeVisible({
+	await expect(page.getByText('Direct Traffic')).toBeVisible({
 		timeout: 100 * 1000,
 	});
 
-	await expect(page.getByText('1', {exact: true}).first()).toBeVisible({
+	await expect(
+		page.getByText('My Page 2 - Lif...', {exact: true}).nth(1)
+	).toBeVisible({
 		timeout: 100 * 1000,
 	});
 
-	await expect(page.getByText('1', {exact: true}).nth(1)).toBeVisible({
-		timeout: 100 * 1000,
-	});
-
-	await expect(page.getByText('1', {exact: true}).nth(2)).toBeVisible({
+	await expect(page.getByText('Drop Offs')).toBeVisible({
 		timeout: 100 * 1000,
 	});
 

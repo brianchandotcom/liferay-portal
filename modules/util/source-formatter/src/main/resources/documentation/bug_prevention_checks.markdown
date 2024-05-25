@@ -58,6 +58,7 @@ IllegalImportsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases
 IllegalTaglibsCheck | .ftl, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain deprecated taglibs in modules. |
 [IncorrectFileLocationCheck](check/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | | Checks that `/src/*/java/` only contains `.java` files. |
 IncorrectFilePathCheck | | Checks that file path contains illegal characters. |
+InnerExceptionClassCheck | .java | Checks that classes that should have either public constructors or inner classes. |
 JSCompatibilityCheck | | Checks for JavaScript compatibility. |
 [JSLodashDependencyCheck](check/js_lodash_dependency_check.markdown#jslodashdependencycheck) | .js or .jsx | Finds incorrect use of `AUI._`. |
 [JSONDeprecatedPackagesCheck](check/json_deprecated_packages_check.markdown#jsondeprecatedpackagescheck) | .ipynb, .json or .npmbridgerc | Finds incorrect use of deprecated packages in `package.json` files. |

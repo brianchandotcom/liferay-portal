@@ -7,6 +7,7 @@ package com.liferay.gradle.plugins.workspace;
 
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.ReleaseUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -50,6 +51,13 @@ public class WorkspacePlugin implements Plugin<Settings> {
 	@Override
 	@SuppressWarnings("serial")
 	public void apply(Settings settings) {
+		String refreshLiferayReleases = System.getProperty(
+			"liferay.workspace.refresh.liferay.releases");
+
+		if (refreshLiferayReleases != null) {
+			ReleaseUtil.initialize(0);
+		}
+
 		Gradle gradle = settings.getGradle();
 		File rootDir = settings.getRootDir();
 

@@ -116,8 +116,10 @@ public class ResourceUtil {
 
 				Path downloadPath = downloadCommand.getDownloadPath();
 
-				Files.setLastModifiedTime(
-					downloadPath, FileTime.from(Instant.now()));
+				if (!Objects.equals(uri.getScheme(), "file")) {
+					Files.setLastModifiedTime(
+						downloadPath, FileTime.from(Instant.now()));
+				}
 
 				return Files.newInputStream(downloadPath);
 			}

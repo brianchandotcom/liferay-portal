@@ -9,11 +9,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
+import java.net.URI;
+
+import java.nio.file.Files;
+import java.nio.file.attribute.FileTime;
+
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
@@ -25,7 +34,7 @@ import org.gradle.api.GradleException;
  */
 public class ReleaseUtil {
 
-	public static final ReleaseUtil INSTANCE = new ReleaseUtil();
+	public static ReleaseUtil instance = null;
 
 	public static <T> T getFromReleaseProperties(
 		String releaseKey, Function<ReleaseProperties, T> function) {
@@ -38,8 +47,27 @@ public class ReleaseUtil {
 			return _EMPTY_RELEASE_PROPERTIES;
 		}
 
-		return INSTANCE._releasePropertiesMap.computeIfAbsent(
-			releaseKey, INSTANCE::_createReleaseProperties);
+		if (instance == null) {
+			initialize(_DEFAULT_MAX_AGE);
+		}
+
+		return instance._releasePropertiesMap.computeIfAbsent(
+			releaseKey, instance::_createReleaseProperties);
+	}
+
+	public static void initialize(long maxAge) {
+		ArrayList<String> releasesMirrors = new ArrayList<>(
+			StringUtil.split(System.getenv("LIFERAY_RELEASES_MIRRORS")));
+
+		releasesMirrors.add("https://releases-cdn.liferay.com");
+
+		initialize(maxAge, releasesMirrors, _DEFAULT_WORKSPACE_CACHE_DIR);
+	}
+
+	public static void initialize(
+		long maxAge, List<String> releaseMirrors, File workspaceCacheDir) {
+
+		instance = new ReleaseUtil(maxAge, releaseMirrors, workspaceCacheDir);
 	}
 
 	public static class ReleaseProperties {
@@ -142,30 +170,64 @@ public class ReleaseUtil {
 
 	}
 
-	private ReleaseUtil() {
-		int maxAge = 7;
+	private ReleaseUtil(
+		long maxAge, List<String> releaseMirrors, File workspaceCacheDir) {
 
-		String refreshLiferayReleases = System.getProperty(
-			"liferay.workspace.refresh.liferay.releases");
+		_releaseMirrors = releaseMirrors;
 
-		if (refreshLiferayReleases != null) {
-			maxAge = 0;
-		}
+		_workspaceCacheDir = workspaceCacheDir;
 
 		File releasesJsonFile = new File(_workspaceCacheDir, "releases.json");
 
 		ReleaseEntryList releaseEntries = ResourceUtil.readJson(
 			ReleaseEntryList.class,
 			ResourceUtil.getLocalFileResolver(
-				releasesJsonFile, maxAge, ChronoUnit.DAYS),
-			ResourceUtil.getURLResolver(
-				_workspaceCacheDir,
-				"https://releases.liferay.com/releases.json"),
-			ResourceUtil.getURLResolver(
-				_workspaceCacheDir,
-				"https://releases-cdn.liferay.com/releases.json"),
-			ResourceUtil.getLocalFileResolver(releasesJsonFile),
-			ResourceUtil.getClassLoaderResolver("/releases.json"));
+				releasesJsonFile, maxAge, ChronoUnit.DAYS));
+
+		if (releaseEntries == null) {
+			for (String releaseMirror : _releaseMirrors) {
+				releaseEntries = ResourceUtil.readJson(
+					ReleaseEntryList.class,
+					ResourceUtil.getURLResolver(
+						workspaceCacheDir, releaseMirror + "/releases.json"));
+
+				if (releaseEntries != null) {
+					break;
+				}
+			}
+		}
+
+		if (releaseEntries == null) {
+			releaseEntries = ResourceUtil.readJson(
+				ReleaseEntryList.class,
+				ResourceUtil.getLocalFileResolver(releasesJsonFile));
+
+			if (releaseEntries != null) {
+				try {
+					Files.setLastModifiedTime(
+						releasesJsonFile.toPath(),
+						FileTime.from(Instant.now()));
+				}
+				catch (IOException ioException) {
+					throw new GradleException(ioException.getMessage());
+				}
+			}
+		}
+
+		if (releaseEntries == null) {
+			ResourceUtil.Resolver classLoaderResolver =
+				ResourceUtil.getClassLoaderResolver("/releases.json");
+
+			releaseEntries = ResourceUtil.readJson(
+				ReleaseEntryList.class, classLoaderResolver);
+
+			try (InputStream inputStream = classLoaderResolver.resolve()) {
+				Files.copy(inputStream, releasesJsonFile.toPath());
+			}
+			catch (Exception exception) {
+				throw new GradleException(exception.getMessage());
+			}
+		}
 
 		if (releaseEntries == null) {
 			throw new GradleException("Unable to read releases.json");
@@ -189,19 +251,31 @@ public class ReleaseUtil {
 			new File(_workspaceCacheDir, "releaseProperties"),
 			String.format("%s/%s", product, releaseKey));
 
-		String releasesCDNUrl = releaseEntry.getUrl() + "/release.properties";
-
-		String releasesUrl = releasesCDNUrl.replaceFirst(
-			"releases-cdn", "releases");
-
 		Properties properties = ResourceUtil.readProperties(
 			ResourceUtil.getLocalFileResolver(
 				new File(
-					productReleasePropertiesCacheDir, "release.properties")),
-			ResourceUtil.getURLResolver(
-				productReleasePropertiesCacheDir, releasesCDNUrl),
-			ResourceUtil.getURLResolver(
-				productReleasePropertiesCacheDir, releasesUrl));
+					productReleasePropertiesCacheDir, "release.properties")));
+
+		if (properties == null) {
+			String releasesCDNUrl =
+				releaseEntry.getUrl() + "/release.properties";
+
+			URI cdnURI = URI.create(releasesCDNUrl);
+
+			String cdnURIPath = cdnURI.getPath();
+
+			for (String releaseMirror : _releaseMirrors) {
+				String fullMirrorPath = releaseMirror + cdnURIPath;
+
+				properties = ResourceUtil.readProperties(
+					ResourceUtil.getURLResolver(
+						productReleasePropertiesCacheDir, fullMirrorPath));
+
+				if (properties != null) {
+					break;
+				}
+			}
+		}
 
 		if (properties == null) {
 			throw new GradleException(
@@ -211,14 +285,19 @@ public class ReleaseUtil {
 		return new ReleaseProperties(properties);
 	}
 
+	private static final long _DEFAULT_MAX_AGE = 7;
+
+	private static final File _DEFAULT_WORKSPACE_CACHE_DIR = new File(
+		System.getProperty("user.home"), ".liferay/workspace");
+
 	private static final ReleaseProperties _EMPTY_RELEASE_PROPERTIES =
 		new ReleaseProperties();
 
 	private final Map<String, ReleaseEntry> _releaseEntryMap = new HashMap<>();
+	private final List<String> _releaseMirrors;
 	private final Map<String, ReleaseProperties> _releasePropertiesMap =
 		new HashMap<>();
-	private final File _workspaceCacheDir = new File(
-		System.getProperty("user.home"), ".liferay/workspace");
+	private final File _workspaceCacheDir;
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	private static class ReleaseEntry {

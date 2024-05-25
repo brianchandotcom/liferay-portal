@@ -204,13 +204,11 @@ public class ResourceUtil {
 		}
 
 		if (inputStream1 == null) {
-			_logInfo("Resource not found");
-
 			return null;
 		}
 
 		try (InputStream inputStream2 = inputStream1) {
-			_logInfo("Found resource");
+			_logInfo("Found resource\n");
 
 			return transformer.transform(inputStream2);
 		}

@@ -1,0 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {test} from '@playwright/test';
+
+import {PublisherAppPage} from '../pages/publisherAppPage';
+import {PublisherDashboardPage} from '../pages/publisherDashboardPage';
+import {PublisherSolutionPage} from '../pages/publisherSolutionPage';
+
+const marketplacePagesTest = test.extend<{
+	publisherAppPage: PublisherAppPage;
+	publisherDashboardPage: PublisherDashboardPage;
+	publisherSolutionPage: PublisherSolutionPage;
+}>({
+	publisherAppPage: async ({page}, use) => {
+		await use(new PublisherAppPage(page));
+	},
+	publisherDashboardPage: async ({page}, use) => {
+		await use(new PublisherDashboardPage(page));
+	},
+	publisherSolutionPage: async ({page}, use) => {
+		await use(new PublisherSolutionPage(page));
+	},
+});
+
+export {marketplacePagesTest};

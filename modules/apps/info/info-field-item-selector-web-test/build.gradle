@@ -1,0 +1,7 @@
+dependencies {
+	testIntegrationImplementation project(":apps:info:info-field-item-selector-api")
+	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
+	testIntegrationImplementation project(":apps:object:object-api")
+	testIntegrationImplementation project(":apps:object:object-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

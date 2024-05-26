@@ -1,4 +1,3 @@
-<%--
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -8,6 +7,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
 AccountEntry accountEntry = commerceContext.getAccountEntry();
@@ -399,7 +400,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 			%>
 
 			<c:if test="<%= shippingAddress != null %>">
-				<address class="shipping-address">
+				<address class="shipping-address" data-qa-id="commerceShippingAddress">
 					<h5>
 						<liferay-ui:message key="shipping-address-and-date" />
 					</h5>
@@ -421,6 +422,18 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 					<%= HtmlUtil.escape(shippingAddress.getCity()) %> <br />
 
+					<c:if test="<%= Validator.isNotNull(shippingAddress.getZip()) && checkoutDisplayContext.isOrderSummaryShowFullAddressEnabled() %>">
+						<%= HtmlUtil.escape(shippingAddress.getZip()) %> <br />
+					</c:if>
+
+					<%
+					Region region = shippingAddress.getRegion();
+					%>
+
+					<c:if test="<%= (region != null) && checkoutDisplayContext.isOrderSummaryShowFullAddressEnabled() %>">
+						<%= HtmlUtil.escape(region.getTitle()) %> <br />
+					</c:if>
+
 					<%
 					Country country = shippingAddress.getCountry();
 					%>
@@ -429,7 +442,9 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 						<%= HtmlUtil.escape(country.getTitle(locale)) %><br />
 					</c:if>
 
-					<br />
+					<c:if test="<%= Validator.isNotNull(shippingAddress.getPhoneNumber()) && checkoutDisplayContext.isOrderSummaryShowPhoneNumberEnabled() %>">
+						<%= HtmlUtil.escape(shippingAddress.getPhoneNumber()) %> <br />
+					</c:if>
 
 					<c:if test="<%= orderSummaryCheckoutStepDisplayContext.isCheckoutRequestedDeliveryDateEnabled() %>">
 
@@ -475,7 +490,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 			%>
 
 			<c:if test="<%= (commerceBillingAddress != null) && orderSummaryCheckoutStepDisplayContext.hasViewBillingAddressPermission(permissionChecker, accountEntry) %>">
-				<address class="billing-address">
+				<address class="billing-address" data-qa-id="commerceBillingAddress">
 					<h5>
 						<liferay-ui:message key="billing-address" />
 					</h5>
@@ -497,12 +512,28 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 					<%= HtmlUtil.escape(commerceBillingAddress.getCity()) %> <br />
 
+					<c:if test="<%= Validator.isNotNull(commerceBillingAddress.getZip()) && checkoutDisplayContext.isOrderSummaryShowFullAddressEnabled() %>">
+						<%= HtmlUtil.escape(commerceBillingAddress.getZip()) %> <br />
+					</c:if>
+
+					<%
+					Region region = commerceBillingAddress.getRegion();
+					%>
+
+					<c:if test="<%= (region != null) && checkoutDisplayContext.isOrderSummaryShowFullAddressEnabled() %>">
+						<%= HtmlUtil.escape(region.getTitle()) %> <br />
+					</c:if>
+
 					<%
 					Country country = commerceBillingAddress.getCountry();
 					%>
 
 					<c:if test="<%= country != null %>">
 						<%= HtmlUtil.escape(country.getTitle(locale)) %><br />
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(commerceBillingAddress.getPhoneNumber()) && checkoutDisplayContext.isOrderSummaryShowPhoneNumberEnabled() %>">
+						<%= HtmlUtil.escape(commerceBillingAddress.getPhoneNumber()) %> <br />
 					</c:if>
 				</address>
 			</c:if>

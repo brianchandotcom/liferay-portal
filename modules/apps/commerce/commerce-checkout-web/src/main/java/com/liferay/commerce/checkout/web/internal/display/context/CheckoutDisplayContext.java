@@ -5,16 +5,20 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.checkout.web.internal.portlet.configuration.CommerceCheckoutPortletInstanceConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
@@ -33,11 +37,13 @@ public class CheckoutDisplayContext {
 
 	public CheckoutDisplayContext(
 			CommerceCheckoutStepRegistry commerceCheckoutStepRegistry,
+			ConfigurationProvider configurationProvider,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, Portal portal)
 		throws Exception {
 
 		_commerceCheckoutStepRegistry = commerceCheckoutStepRegistry;
+		_configurationProvider = configurationProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -45,6 +51,11 @@ public class CheckoutDisplayContext {
 			liferayPortletRequest);
 		_httpServletResponse = portal.getHttpServletResponse(
 			liferayPortletResponse);
+
+		CPRequestHelper cpRequestHelper = new CPRequestHelper(
+			_httpServletRequest);
+
+		_themeDisplay = cpRequestHelper.getThemeDisplay();
 
 		_commerceOrder = (CommerceOrder)_httpServletRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
@@ -127,6 +138,32 @@ public class CheckoutDisplayContext {
 		return false;
 	}
 
+	public boolean isOrderSummaryShowFullAddressEnabled()
+		throws PortalException {
+
+		CommerceCheckoutPortletInstanceConfiguration
+			commerceCheckoutPortletInstanceConfiguration =
+				_configurationProvider.getPortletInstanceConfiguration(
+					CommerceCheckoutPortletInstanceConfiguration.class,
+					_themeDisplay);
+
+		return commerceCheckoutPortletInstanceConfiguration.
+			orderSummaryShowFullAddress();
+	}
+
+	public boolean isOrderSummaryShowPhoneNumberEnabled()
+		throws PortalException {
+
+		CommerceCheckoutPortletInstanceConfiguration
+			commerceCheckoutPortletInstanceConfiguration =
+				_configurationProvider.getPortletInstanceConfiguration(
+					CommerceCheckoutPortletInstanceConfiguration.class,
+					_themeDisplay);
+
+		return commerceCheckoutPortletInstanceConfiguration.
+			orderSummaryShowPhoneNumber();
+	}
+
 	public boolean isSennaDisabled() {
 		return _commerceCheckoutStep.isSennaDisabled();
 	}
@@ -148,9 +185,11 @@ public class CheckoutDisplayContext {
 	private final CommerceCheckoutStep _commerceCheckoutStep;
 	private final CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
 	private final CommerceOrder _commerceOrder;
+	private final ConfigurationProvider _configurationProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ThemeDisplay _themeDisplay;
 
 }

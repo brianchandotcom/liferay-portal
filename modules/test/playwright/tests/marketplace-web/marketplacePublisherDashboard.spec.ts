@@ -28,18 +28,18 @@ describe('LPD-26707 Can Publish and Manage Solutions', () => {
 			type: 'supplier',
 		});
 
-		const user = await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'test@liferay.com'
-		);
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
 
 		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 			account.id,
 			['test@liferay.com']
 		);
 
-		const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-			account.id
-		);
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
 		const accountSupplierRole = rolesResponse?.items?.filter((role) => {
 			return role.name === 'Account Supplier';

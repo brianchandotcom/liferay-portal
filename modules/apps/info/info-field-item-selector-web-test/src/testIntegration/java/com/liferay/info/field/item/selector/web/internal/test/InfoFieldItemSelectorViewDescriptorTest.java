@@ -12,7 +12,9 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -30,11 +32,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,7 +67,7 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE,
@@ -100,6 +104,26 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		Assert.assertEquals(1, searchContainer.getTotal());
 	}
 
+	@FeatureFlags("LPD-20213")
+	@Test
+	public void testGetSearchContainerWithRelationship() throws Exception {
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, "myText", "myText",
+					false)));
+
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, _objectDefinition2,
+			_objectDefinition1);
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			new MockHttpServletRequest());
+
+		Assert.assertEquals(5, searchContainer.getTotal());
+	}
+
 	private SearchContainer<Object> _getSearchContainer(
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
@@ -121,7 +145,7 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		mockHttpServletRequest.setParameter(
-			"itemType", _objectDefinition.getClassName());
+			"itemType", _objectDefinition1.getClassName());
 
 		_infoFieldProviderItemSelectorView.renderHTML(
 			mockHttpServletRequest, new MockHttpServletResponse(),
@@ -170,6 +194,12 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		_infoFieldProviderItemSelectorView;
 
 	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
+	private ObjectDefinition _objectDefinition1;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition2;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

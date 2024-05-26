@@ -9,12 +9,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.field.item.selector.criterion.InfoFieldItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -32,13 +36,14 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.taglib.search.ResultRow;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -84,9 +89,47 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 	}
 
 	@Test
+	public void testGetResultRowSplitter() throws Exception {
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, "myText", "myText",
+					false)));
+
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, _objectDefinition2,
+			_objectDefinition1);
+
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(new MockHttpServletRequest());
+
+		ResultRowSplitter resultRowSplitter =
+			itemSelectorViewDescriptor.getResultRowSplitter();
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
+
+		List<ResultRowSplitterEntry> resultRowSplitterEntries =
+			resultRowSplitter.split(
+				TransformUtil.transform(
+					searchContainer.getResults(),
+					object -> new ResultRow(
+						object, RandomTestUtil.randomLong(),
+						RandomTestUtil.nextInt())));
+
+		Assert.assertEquals(
+			resultRowSplitterEntries.toString(), 2,
+			resultRowSplitterEntries.size());
+	}
+
+	@Test
 	public void testGetSearchContainer() throws Exception {
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			new MockHttpServletRequest());
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(new MockHttpServletRequest());
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
 
 		Assert.assertEquals(3, searchContainer.getTotal());
 	}
@@ -98,13 +141,15 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 
 		mockHttpServletRequest.setParameter("keywords", "myRichText");
 
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			mockHttpServletRequest);
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(mockHttpServletRequest);
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
 
 		Assert.assertEquals(1, searchContainer.getTotal());
 	}
 
-	@FeatureFlags("LPD-20213")
 	@Test
 	public void testGetSearchContainerWithRelationship() throws Exception {
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -118,13 +163,16 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 			_objectRelationshipLocalService, _objectDefinition2,
 			_objectDefinition1);
 
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			new MockHttpServletRequest());
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(new MockHttpServletRequest());
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
 
 		Assert.assertEquals(5, searchContainer.getTotal());
 	}
 
-	private SearchContainer<Object> _getSearchContainer(
+	private ItemSelectorViewDescriptor<Object> _getItemSelectorViewDescriptor(
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
 
@@ -159,7 +207,7 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 
 		return ReflectionTestUtil.invoke(
 			itemSelectorViewDescriptorRendererDisplayContext,
-			"getSearchContainer", new Class<?>[0], null);
+			"getItemSelectorViewDescriptor", new Class<?>[0], null);
 	}
 
 	private ThemeDisplay _getThemeDisplay(

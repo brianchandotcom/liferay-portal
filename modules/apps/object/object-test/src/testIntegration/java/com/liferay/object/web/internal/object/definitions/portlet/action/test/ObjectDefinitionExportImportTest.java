@@ -7,11 +7,14 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.web.internal.BaseExportImportTestCase;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -19,7 +22,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,6 +31,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Gabriel Albuquerque
  */
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
@@ -36,20 +40,123 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		user = TestPropsValues.getUser();
-
-		ObjectDefinitionResource.Builder builder =
-			_objectDefinitionResourceFactory.create();
-
-		_objectDefinitionResource = builder.user(
-			user
-		).build();
-	}
-
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
+
+		// Custom object definition
+
+		testExportImport(
+			"test-object-definition.json", "test-object-definition.json", null,
+			"TestObjectDefinition");
+
+		// Localized object definition
+
+		testExportImport(
+			"test-object-definition.portuguese-default-locale.json",
+			"test-object-definition.site-default-locale.json",
+			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionPortuguese");
+
+		// Published object definition
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+		String name = ObjectDefinitionTestUtil.getRandomName();
+
+		String publishedObjectDefinitionJSON = jsonFactory.createJSONObject(
+			defaultObjectDefinitionJSON
+		).put(
+			"active", true
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		).put(
+			"name", name
+		).put(
+			"status",
+			jsonFactory.createJSONObject(
+			).put(
+				"code", 0
+			).put(
+				"label", "approved"
+			).put(
+				"label_i18n", "Approved"
+			)
+		).toString();
+
+		testExportImportJSON(
+			publishedObjectDefinitionJSON, publishedObjectDefinitionJSON,
+			externalReferenceCode, name);
+
+		// Once published, cannot update a published object definition to
+		// draft status
+
+		testFailedImportJSON(
+			jsonFactory.createJSONObject(
+				publishedObjectDefinitionJSON
+			).put(
+				"status",
+				JSONUtil.put(
+					"code", 2
+				).put(
+					"label", "draft"
+				).put(
+					"label_i18n", "Draft"
+				)
+			).toString(),
+			read("test-object-definition.status-error-message.json"),
+			externalReferenceCode, name);
+
+		// Root node object definition
+
+		String objectDefinition1JSON = jsonFactory.createJSONObject(
+			defaultObjectDefinitionJSON
+		).put(
+			"externalReferenceCode", "TESTOBJECTDEFINITION1"
+		).put(
+			"name", "TestObjectDefinition1"
+		).put(
+			"objectRelationships",
+			JSONUtil.put(
+				createOneToManyObjectRelationship(
+					"TESTOBJECTDEFINITION1", "TESTOBJECTDEFINITION2",
+					"TESTOBJECTDEFINITION2", "objectRelationship1"))
+		).put(
+			"rootObjectDefinitionExternalReferenceCode", "TESTOBJECTDEFINITION1"
+		).toString();
+
+		testExportImportJSON(
+			objectDefinition1JSON, objectDefinition1JSON,
+			"TESTOBJECTDEFINITION1", "TestObjectDefinition1");
+
+		Assert.assertNotNull(
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				"TESTOBJECTDEFINITION2"));
+
+		// Root descendant node object definition
+
+		JSONObject objectDefinition2JSONObject = jsonFactory.createJSONObject(
+			defaultObjectDefinitionJSON
+		).put(
+			"externalReferenceCode", "TESTOBJECTDEFINITION2"
+		).put(
+			"name", "TestObjectDefinition2"
+		).put(
+			"rootObjectDefinitionExternalReferenceCode", "TESTOBJECTDEFINITION1"
+		);
+
+		testExportImportJSON(
+			objectDefinition2JSONObject.toString(),
+			objectDefinition2JSONObject.put(
+				"objectFields",
+				JSONUtil.concat(
+					objectDefinition2JSONObject.getJSONArray("objectFields"),
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"name",
+							"r_objectRelationship1_c_testObjectDefinition1Id")))
+			).toString(),
+			"TESTOBJECTDEFINITION2", "TestObjectDefinition2");
+
+		// System object definition
+
 		ObjectDefinition objectDefinition = _getObjectDefinition(
 			"AccountEntry");
 
@@ -57,15 +164,6 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			"test-account-entry-system-object-definition.json",
 			"test-account-entry-system-object-definition.json",
 			objectDefinition.getExternalReferenceCode(), "AccountEntry");
-
-		testExportImport(
-			"test-object-definition.json", "test-object-definition.json", null,
-			"TestObjectDefinition");
-
-		testExportImport(
-			"test-object-definition.portuguese-default-locale.json",
-			"test-object-definition.site-default-locale.json",
-			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionPortuguese");
 	}
 
 	@Override
@@ -109,7 +207,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		throws Exception {
 
 		Page<ObjectDefinition> page =
-			_objectDefinitionResource.getObjectDefinitionsPage(
+			objectDefinitionResource.getObjectDefinitionsPage(
 				name, null, null, Pagination.of(1, 1), null);
 
 		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
@@ -126,10 +224,5 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		filter = "mvc.command.name=/object_definitions/export_object_definition"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	private ObjectDefinitionResource _objectDefinitionResource;
-
-	@Inject
-	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 }

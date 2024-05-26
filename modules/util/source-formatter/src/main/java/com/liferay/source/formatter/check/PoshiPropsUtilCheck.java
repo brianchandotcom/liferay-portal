@@ -1,0 +1,94 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.check;
+
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * @author Alan Huang
+ */
+public class PoshiPropsUtilCheck extends BaseFileCheck {
+
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws IOException {
+
+		if (!fileName.endsWith(".testcase") || SourceUtil.isXML(content)) {
+			return content;
+		}
+
+		File file = new File(getPortalDir(), "test.properties");
+
+		if (!file.exists()) {
+			return content;
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(file));
+
+		String password = properties.getProperty(
+			"test.portal.default.admin.password");
+
+		if (Validator.isNull(password)) {
+			return content;
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		Pattern pattern = Pattern.compile(
+			"(\\w*[Pp]assword = )\"" + password + "\"");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			if (_isInsideTripleQuotes(content, matcher.start())) {
+				continue;
+			}
+
+			matcher.appendReplacement(
+				sb,
+				matcher.group(1) + "PropsUtil.get(\"default.admin.password\")");
+		}
+
+		if (sb.length() > 0) {
+			matcher.appendTail(sb);
+
+			return sb.toString();
+		}
+
+		return content;
+	}
+
+	private boolean _isInsideTripleQuotes(String content, int pos) {
+		String s = content.substring(pos);
+
+		int x = s.indexOf("''';");
+
+		if (x == -1) {
+			return false;
+		}
+
+		s = s.substring(0, x);
+
+		if (!s.contains("= '''")) {
+			return true;
+		}
+
+		return false;
+	}
+
+}

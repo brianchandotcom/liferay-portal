@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -49,8 +48,9 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
-		user = TestPropsValues.getUser();
+		super.setUp();
 
 		ObjectFolderResource.Builder builder =
 			_objectFolderResourceFactory.create();

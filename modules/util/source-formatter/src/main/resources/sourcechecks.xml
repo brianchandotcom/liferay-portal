@@ -1429,6 +1429,10 @@
 			<category name="Styling" />
 			<description name="Sorts the values of properties in `.testcase` file." />
 		</check>
+		<check name="PoshiPropsUtilCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases where `PropsUtil.get` should be used (instead of hardcoded value)." />
+		</check>
 		<check name="PoshiSmokeTestCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for missing and unnecessary `property ci.retries.disabled = true` in smoke test." />

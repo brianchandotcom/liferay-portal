@@ -67,28 +67,42 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE,
-					ObjectFieldConstants.DB_TYPE_DATE,
-					RandomTestUtil.randomString(), "myDate", false),
+					ObjectFieldConstants.DB_TYPE_DATE, "myDate", "myDate",
+					false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
-					ObjectFieldConstants.DB_TYPE_BOOLEAN,
-					RandomTestUtil.randomString(), "myBoolean", false),
+					ObjectFieldConstants.DB_TYPE_BOOLEAN, "myBoolean",
+					"myBoolean", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(), "myRichText", false)));
+					ObjectFieldConstants.DB_TYPE_STRING, "myRichText",
+					"myRichText", false)));
 	}
 
 	@Test
 	public void testGetSearchContainer() throws Exception {
-		SearchContainer<Object> searchContainer = _getSearchContainer();
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			new MockHttpServletRequest());
 
 		Assert.assertEquals(3, searchContainer.getTotal());
 	}
 
-	private SearchContainer<Object> _getSearchContainer() throws Exception {
+	@Test
+	public void testGetSearchContainerWithKeywords() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter("keywords", "myRichText");
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockHttpServletRequest);
+
+		Assert.assertEquals(1, searchContainer.getTotal());
+	}
+
+	private SearchContainer<Object> _getSearchContainer(
+			MockHttpServletRequest mockHttpServletRequest)
+		throws Exception {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest();

@@ -40,6 +40,8 @@ export const PORTLET_URLS = {
 	styleBooks: '/~/control_panel/manage/-/style_books/style_books',
 	utilityPages:
 		'/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages',
+	wikiAdmin:
+		'/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet',
 	workflow:
 		'/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_internal_portlet_SiteAdministrationWorkflowPortlet',
 };

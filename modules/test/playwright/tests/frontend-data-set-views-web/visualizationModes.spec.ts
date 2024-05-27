@@ -459,6 +459,147 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			).toHaveText('object');
 		});
 	});
+
+	test('Check cancel in table visualization mode', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const SAMPLE_SCALAR_FIELD = 'id';
+		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const LABEL_COLUMN_INDEX = 2;
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
+
+		await test.step('Add one field, but cancel the operation @LPS-185230', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			await visualizationModesPage.cancelAddFieldsModal();
+
+			await visualizationModesPage.assertTableFieldRowCount(0);
+		});
+
+		await test.step('Add one field, save', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Unselect selected field. Select another. Cancel @LPS-185230', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.unSelectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.*`,
+				fieldName: SAMPLE_OBJECT_FIELD,
+			});
+
+			await visualizationModesPage.cancelAddFieldsModal();
+		});
+
+		await test.step('Check there is one field and is the one just added', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
+
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
+
+		await test.step('Edit a field, change its label, cancel @LPS-176051 @LPS-178736 @LPS-179151', async () => {
+			await visualizationModesPage
+				.getRowByText(SAMPLE_SCALAR_FIELD)
+				.locator('.actions-cell button')
+				.click();
+
+			const editButton = visualizationModesPage.page.getByRole(
+				'menuitem',
+				{
+					name: 'Edit',
+				}
+			);
+
+			await expect(editButton).toBeInViewport();
+
+			await editButton.click();
+
+			const labelInput = visualizationModesPage.page.getByLabel('Label');
+
+			await expect(labelInput).toBeInViewport();
+
+			await expect(labelInput).toBeEnabled();
+
+			await labelInput.fill('New label for field');
+
+			await visualizationModesPage.cancelAddFieldsModal();
+		});
+
+		await test.step('Check there is one field and is the one just added', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
+
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
+
+		await test.step('Delete a field, cancel @LPS-185500', async () => {
+			await visualizationModesPage
+				.getRowByText(SAMPLE_SCALAR_FIELD)
+				.locator('.actions-cell button')
+				.click();
+
+			const deleteButton = visualizationModesPage.page.getByRole(
+				'menuitem',
+				{
+					name: 'Delete',
+				}
+			);
+
+			await expect(deleteButton).toBeInViewport();
+
+			await deleteButton.click();
+
+			await visualizationModesPage.cancelAddFieldsModal();
+		});
+
+		await test.step('Check there is one field and is the one just added', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
+
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
+	});
 });
 
 export const fragmentTest = mergeTests(

@@ -22,7 +22,7 @@
 	<#if show_account_selector || show_mini_cart>
 		<div class="minium-topbar__end">
 			<#if show_account_selector>
-				<div class="minium-topbar__account-selector-wrapper d-flex align-items-center">
+				<div class="align-items-center d-flex minium-topbar__account-selector-wrapper">
 					<@liferay_commerce_ui["account-selector"] />
 				</div>
 			</#if>

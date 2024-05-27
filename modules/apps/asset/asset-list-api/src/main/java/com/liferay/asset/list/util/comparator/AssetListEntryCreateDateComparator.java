@@ -21,12 +21,14 @@ public class AssetListEntryCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public AssetListEntryCreateDateComparator() {
-		this(false);
-	}
+	public static AssetListEntryCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public AssetListEntryCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -61,6 +63,16 @@ public class AssetListEntryCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private AssetListEntryCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final AssetListEntryCreateDateComparator
+		_INSTANCE_ASCENDING = new AssetListEntryCreateDateComparator(true);
+
+	private static final AssetListEntryCreateDateComparator
+		_INSTANCE_DESCENDING = new AssetListEntryCreateDateComparator(false);
 
 	private final boolean _ascending;
 

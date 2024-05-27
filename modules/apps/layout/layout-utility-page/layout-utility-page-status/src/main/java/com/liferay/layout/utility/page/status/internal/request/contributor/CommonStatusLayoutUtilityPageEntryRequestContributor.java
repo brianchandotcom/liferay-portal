@@ -64,11 +64,27 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
 			host);
 
+		long companyId = 0;
+
+		if (virtualHost != null) {
+			companyId = virtualHost.getCompanyId();
+		}
+		else {
+			companyId = PortalInstancePool.getDefaultCompanyId();
+		}
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			companyId, dynamicServletRequest);
+
+		if (permissionChecker == null) {
+			return;
+		}
+
 		String currentURL = _portal.getCurrentURL(dynamicServletRequest);
 
 		if (Validator.isNull(currentURL)) {
 			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, null, virtualHost);
+				dynamicServletRequest, null, permissionChecker, virtualHost);
 
 			return;
 		}
@@ -91,7 +107,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 
 		if (Validator.isNull(currentURL)) {
 			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, null, virtualHost);
+				dynamicServletRequest, null, permissionChecker, virtualHost);
 
 			return;
 		}
@@ -116,7 +132,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			currentURL.equals(StringPool.SLASH)) {
 
 			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, languageId, virtualHost);
+				dynamicServletRequest, languageId, permissionChecker,
+				virtualHost);
 
 			return;
 		}
@@ -127,7 +144,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			(urlParts.length != 4)) {
 
 			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, languageId, virtualHost);
+				dynamicServletRequest, languageId, permissionChecker,
+				virtualHost);
 
 			return;
 		}
@@ -139,18 +157,10 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			  _PRIVATE_USER_SERVLET_MAPPING.equals(urlPrefix))) {
 
 			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, languageId, virtualHost);
+				dynamicServletRequest, languageId, permissionChecker,
+				virtualHost);
 
 			return;
-		}
-
-		long companyId = 0;
-
-		if (virtualHost != null) {
-			companyId = virtualHost.getCompanyId();
-		}
-		else {
-			companyId = PortalInstancePool.getDefaultCompanyId();
 		}
 
 		Group group = _groupLocalService.fetchFriendlyURLGroup(
@@ -158,25 +168,18 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 
 		if (group == null) {
 			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, languageId, virtualHost);
+				dynamicServletRequest, languageId, permissionChecker,
+				virtualHost);
 
 			return;
 		}
 
-		User user = _getUser(group.getCompanyId(), dynamicServletRequest);
-
-		if (user == null) {
-			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, languageId, virtualHost);
-
-			return;
-		}
-
-		Layout layout = _getFirstLayout(group.getGroupId(), user);
+		Layout layout = _getFirstLayout(group.getGroupId(), permissionChecker);
 
 		if (layout == null) {
 			_addVirtualHostAttributesAndParameters(
-				dynamicServletRequest, languageId, virtualHost);
+				dynamicServletRequest, languageId, permissionChecker,
+				virtualHost);
 
 			return;
 		}
@@ -202,7 +205,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 
 	private void _addVirtualHostAttributesAndParameters(
 		DynamicServletRequest dynamicServletRequest, String languageId,
-		VirtualHost virtualHost) {
+		PermissionChecker permissionChecker, VirtualHost virtualHost) {
 
 		if ((virtualHost == null) || (virtualHost.getLayoutSetId() == 0)) {
 			return;
@@ -212,14 +215,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				virtualHost.getLayoutSetId());
 
-			User user = _getUser(
-				layoutSet.getCompanyId(), dynamicServletRequest);
-
-			if (user == null) {
-				return;
-			}
-
-			Layout layout = _getFirstLayout(layoutSet.getGroupId(), user);
+			Layout layout = _getFirstLayout(
+				layoutSet.getGroupId(), permissionChecker);
 
 			if (layout != null) {
 				_addLayoutAttributesAndParameters(
@@ -233,13 +230,14 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		}
 	}
 
-	private Layout _getFirstLayout(long groupId, User user) {
-		PermissionChecker permissionChecker =
+	private Layout _getFirstLayout(
+		long groupId, PermissionChecker permissionChecker) {
+
+		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 			Layout layout = _layoutService.fetchFirstLayout(
 				groupId, false, false);
@@ -251,18 +249,23 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return _layoutService.fetchFirstLayout(groupId, true, false);
 		}
 		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
 		}
 	}
 
-	private User _getUser(
+	private PermissionChecker _getPermissionChecker(
 		long companyId, DynamicServletRequest dynamicServletRequest) {
 
 		try {
 			User user = _portal.getUser(dynamicServletRequest);
 
+			if (user == null) {
+				user = _userLocalService.fetchGuestUser(companyId);
+			}
+
 			if (user != null) {
-				return user;
+				return _permissionCheckerFactory.create(user);
 			}
 		}
 		catch (PortalException portalException) {
@@ -271,7 +274,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			}
 		}
 
-		return _userLocalService.fetchGuestUser(companyId);
+		return null;
 	}
 
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =

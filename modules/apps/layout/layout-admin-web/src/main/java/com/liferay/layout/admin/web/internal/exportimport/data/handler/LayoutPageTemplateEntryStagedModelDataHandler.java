@@ -126,6 +126,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		Element entryElement = portletDataContext.getExportDataElement(
 			layoutPageTemplateEntry);
 
+		entryElement.addAttribute(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
+
 		long guestUserId = _userLocalService.getGuestUserId(
 			layoutPageTemplateEntry.getCompanyId());
 
@@ -160,6 +165,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 
 		groupId = MapUtil.getLong(groupIds, groupId);
 
+		long layoutPageTemplateCollectionId = GetterUtil.getLong(
+			referenceElement.attributeValue("layoutPageTemplateCollectionId"));
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			referenceElement.attributeValue("class-pk"));
 		String name = GetterUtil.getString(
@@ -177,7 +184,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		}
 		else {
 			existingLayoutPageTemplateEntry = _fetchExistingTemplate(
-				uuid, groupId, name, type, 0L, preloaded);
+				uuid, groupId, layoutPageTemplateCollectionId, name, type, 0L,
+				preloaded);
 		}
 
 		if (existingLayoutPageTemplateEntry == null) {
@@ -309,6 +317,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				_fetchExistingTemplate(
 					layoutPageTemplateEntry.getUuid(),
 					portletDataContext.getScopeGroupId(),
+					layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
 					layoutPageTemplateEntry.getName(),
 					layoutPageTemplateEntry.getType(), plid, preloaded);
 
@@ -420,8 +429,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 	}
 
 	private LayoutPageTemplateEntry _fetchExistingTemplate(
-		String uuid, long groupId, String name, int type, long plid,
-		boolean preloaded) {
+		String uuid, long groupId, long layoutPageTemplateCollectionId,
+		String name, int type, long plid, boolean preloaded) {
 
 		LayoutPageTemplateEntry existingTemplate = null;
 
@@ -439,7 +448,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		if ((existingTemplate == null) && preloaded) {
 			existingTemplate =
 				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(groupId, name, type);
+					fetchLayoutPageTemplateEntry(
+						groupId, layoutPageTemplateCollectionId, name, type);
 		}
 
 		return existingTemplate;

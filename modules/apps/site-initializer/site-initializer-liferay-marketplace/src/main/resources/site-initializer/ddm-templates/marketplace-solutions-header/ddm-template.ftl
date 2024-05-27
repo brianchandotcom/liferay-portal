@@ -64,20 +64,20 @@
 	<#assign channelId = channel.items[0].id />
 </#if>
 
-<#assign productId = CPDefinition_cProductId.getData() />
+<#assign
+	productId = CPDefinition_cProductId.getData()
 
-<#assign product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")/>
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")
 
-<#assign	
 	catalogName = product.catalogName
 	productImage = product.images![]
 	solutionHeaderImages = productImage?filter(image -> image.tags?seq_contains("solution-header"))
 />
 
 <#if product.productSpecifications?has_content>
-	<#assignproductSpecifications = product.productSpecifications />
-
 	<#assign
+		productSpecifications = product.productSpecifications
+
 		headerDescription = productSpecifications?filter(specification -> specification.specificationKey == "solution-header-description")[0].value
 		headerTitle = productSpecifications?filter(specification -> specification.specificationKey == "solution-header-title")[0].value
 		hasVideo = productSpecifications?filter(specification -> specification.specificationKey == "solution-header-video-url")
@@ -106,15 +106,15 @@
 			<div>
 				<#if headerVideoUrl?has_content>
 					<#assign videoThumbnail = headerVideoUrl?split("=") />
-					<a href=" ${headerVideoUrl}" target="_blank">
 
+					<a href=" ${headerVideoUrl}" target="_blank">
 						<div class="align-items-center d-flex justify-content-center position-relative video-preview">
 							<img
 								class="video-thumbnail"
 								aria-label="video-thumbnail"
 								src="https://img.youtube.com/vi/${videoThumbnail[1]}/0.jpg" />
 
-							<div class="position-absolute video-thumbnail-play-symbol" >
+							<div class="position-absolute video-thumbnail-play-symbol">
 								<@clay["icon"] symbol="video" />
 							</div>
 						</div>
@@ -132,7 +132,7 @@
 						<div class="align-items-center carousel-inner d-flex">
 							<#list solutionHeaderImages as image>
 								<#assign imageSourceUrlSplited = image.src?split("/o") />
-								
+
 								<#if imageSourceUrlSplited?has_content>
 									<#assign productThumbnail = "/o/${imageSourceUrlSplited[1]}" />
 

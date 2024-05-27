@@ -26,7 +26,7 @@
 		transition: all .3s ease-in-out;
 	}
 
-	.carousel-control-next:hover, .carousel-control-prev:hover {	
+	.carousel-control-next:hover, .carousel-control-prev:hover {
 		background: rgb(0, 0, 0);
 	}
 
@@ -41,7 +41,7 @@
 		border-radius: 10px;
 		transition: all .3s ease-in-out;
 	}
-	
+
 	.carousel-indicators li {
 		border-radius: 50%;
 		border: solid 1px rgba(0, 0, 0, 0.5) !important;
@@ -64,26 +64,31 @@
 	<#assign channelId = channel.items[0].id />
 </#if>
 
-<#assign productId = CPDefinition_cProductId.getData() />
+<#assign
+	productId = CPDefinition_cProductId.getData()
 
-<#assign product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications") />
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")
 
-<#assign	
 	catalogName = product.catalogName
 	productImage = product.images![]
 />
 
 <#if product.productSpecifications?has_content>
-	<#assign productSpecifications = product.productSpecifications />
+	<#assign
+		productSpecifications = product.productSpecifications
 
-	<#assign blocksSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-details-blocks") />
+		blocksSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-details-blocks")
+	/>
 
 	<#if blocksSpecification?has_content>
 		<#assign blocks = blocksSpecification[0].value?eval />
 	</#if>
 </#if>
 
-<#macro blockHeader description title>
+<#macro blockHeader
+	description
+	title
+>
 	<div>
 		<h2>
 			${title}
@@ -95,7 +100,9 @@
 	</div>
 </#macro>
 
-<#macro videoPreview videoUrl>
+<#macro videoPreview
+	videoUrl
+>
 	<#if videoUrl?has_content>
 		<#assign youtubeVideoId = videoUrl?split("=") />
 		<#if youtubeVideoId[1]?has_content>
@@ -105,8 +112,8 @@
 						class="video-thumbnail"
 						aria-label="video-thumbnail"
 						src="https://img.youtube.com/vi/${youtubeVideoId[1]}/0.jpg" />
-					
-					<div class="position-absolute video-thumbnail-play-symbol" >
+
+					<div class="position-absolute video-thumbnail-play-symbol">
 						<@clay["icon"] symbol="video" />
 					</div>
 				</div>
@@ -115,7 +122,10 @@
 	</#if>
 </#macro>
 
-<#macro productCarrousel carouselId files>
+<#macro productCarrousel
+	carouselId
+	files
+>
 	<#if files?has_content>
 		<div id="${carouselId}" class="carousel slide" data-ride="carousel">
 			<ol class="carousel-indicators">
@@ -142,7 +152,7 @@
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				<span class="sr-only">Previous</span>
 			</a>
-			
+
 			<a class="carousel-control-next" href="#${carouselId}" role="button" data-slide="next">
 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				<span class="sr-only">Next</span>
@@ -157,7 +167,10 @@
 			<div class="block-container">
 				<div class="block-content">
 					<div class="align-items-center container d-flex flex-column">
-						<@blockHeader description=block.content.description title=block.content.title />
+						<@blockHeader
+							description=block.content.description
+							title=block.content.title
+						/>
 					</div>
 				</div>
 			</div>
@@ -169,7 +182,10 @@
 					<div class="align-items-center container d-flex flex-column">
 						<div class="d-flex">
 							<div class="mr-5">
-								<@blockHeader description=block.content.description title=block.content.title />
+								<@blockHeader
+									description=block.content.description
+									title=block.content.title
+								/>
 							</div>
 
 							<#if productImage?has_content && block.content.files?has_content>
@@ -178,7 +194,10 @@
 									allFiles = productImage?filter(file ->blockFilesImageId?seq_contains(file.externalReferenceCode))
 								/>
 
-								<@productCarrousel carouselId = "${block.type}${block?index}" files = allFiles />
+								<@productCarrousel
+									carouselId="${block.type}${block?index}"
+									files=allFiles
+								/>
 							</#if>
 						</div>
 					</div>
@@ -192,10 +211,13 @@
 					<div class="align-items-center container d-flex flex-column">
 						<div class="d-flex">
 							<div class="mr-5">
-								<@blockHeader description = block.content.description title = block.content.title />
+								<@blockHeader
+									description=block.content.description
+									title=block.content.title
+								/>
 							</div>
-							
-							<@videoPreview videoUrl = block.content.videoUrl />
+
+							<@videoPreview videoUrl=block.content.videoUrl />
 						</div>
 					</div>
 				</div>

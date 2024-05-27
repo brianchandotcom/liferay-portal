@@ -9,16 +9,23 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {blogsPagesTest} from './fixtures/blogsPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	blogsPagesTest,
+	pageEditorPagesTest,
 	loginTest(),
 	featureFlagsTest({
 		'LPD-11147': true,
+		'LPS-178052': true,
 	})
 );
 
@@ -64,6 +71,7 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 	blogsEditBlogEntryPage,
 	displayPageTemplatesPage,
 	page,
+	pageEditorPage,
 	site,
 }) => {
 	const vocabularyName = getRandomString();
@@ -92,6 +100,71 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 	});
 
 	await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
+
+	const widgetId = getRandomString();
+
+	const widgetDefinition = getWidgetDefinition({
+		id: widgetId,
+		widgetName:
+			'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([widgetDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	const topper = await pageEditorPage.getTopper(widgetId);
+
+	await topper.hover();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {
+			exact: true,
+			name: 'Configuration',
+		}),
+		trigger: topper.locator('.portlet-options'),
+	});
+
+	const assetPublisherConfigurationIframe = await page.frameLocator(
+		'iframe[title="Asset Publisher\\a      - Configuration"]'
+	);
+
+	const assetPublisherConfigurationDynamicRadio =
+		assetPublisherConfigurationIframe.getByText('Dynamic', {exact: true});
+	await assetPublisherConfigurationDynamicRadio.waitFor();
+	if (await assetPublisherConfigurationDynamicRadio.isHidden()) {
+		await assetPublisherConfigurationIframe
+			.getByRole('link', {name: 'Asset Selection'})
+			.click();
+	}
+	await assetPublisherConfigurationDynamicRadio.click();
+
+	const assetPublisherConfigurationSourceAssetTypeSelect =
+		await assetPublisherConfigurationIframe.getByLabel('Asset Type');
+	if (await assetPublisherConfigurationSourceAssetTypeSelect.isHidden()) {
+		await assetPublisherConfigurationIframe
+			.getByRole('link', {name: 'Source'})
+			.click();
+	}
+	await assetPublisherConfigurationSourceAssetTypeSelect.selectOption({
+		label: 'Blogs Entry',
+	});
+
+	await assetPublisherConfigurationIframe
+		.getByRole('button', {name: 'Save'})
+		.click();
+
+	await page.getByLabel('close', {exact: true}).click();
+	await page.getByLabel('Publish', {exact: true}).click();
+
+	await waitForSuccessAlert(
+		page,
+		'Success:The page was published successfully.'
+	);
 
 	await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
 

@@ -146,12 +146,12 @@ export default class SearchBuilder {
 		const requestOperator = schema?.requestOperator as string;
 		const optionalOperator = schema?.optionalOperator as Operators;
 
-		const isFilterChanged =
+		const isNoFilterApplied =
 			filter.includes('false') || filter.includes('No');
 
 		if (customOperator && SearchBuilder[customOperator]) {
 			if (optionalOperator === 'ne') {
-				if (isFilterChanged) {
+				if (isNoFilterApplied) {
 					return `not (${SearchBuilder[optionalOperator](
 						requestOperator,
 						null

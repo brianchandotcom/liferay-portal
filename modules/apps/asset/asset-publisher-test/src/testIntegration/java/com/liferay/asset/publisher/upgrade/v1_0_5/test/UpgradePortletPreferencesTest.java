@@ -69,10 +69,25 @@ public class UpgradePortletPreferencesTest {
 				new String[] {"select-more-than-one"}
 			).build());
 
-		_runUpgrade();
-
 		PortletPreferences portletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, portletId);
+
+		Assert.assertEquals(
+			"select-more-than-one",
+			portletPreferences.getValue("anyClassType", null));
+		Assert.assertEquals(
+			"select-more-than-one",
+			portletPreferences.getValue(
+				"anyClassTypeDLFileEntryAssetRendererFactory", null));
+		Assert.assertEquals(
+			"select-more-than-one",
+			portletPreferences.getValue(
+				"anyClassTypeJournalArticleAssetRendererFactory", null));
+
+		_runUpgrade();
+
+		portletPreferences = LayoutTestUtil.getPortletPreferences(
+			_layout, portletId);
 
 		String anyClassType = portletPreferences.getValue("anyClassType", null);
 

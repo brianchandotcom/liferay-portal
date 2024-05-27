@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {CommerceCartSummaryPage} from '../pages/commerce/commerce-cart-content-web/commerceCartSummaryPage';
 import {CheckoutPage} from '../pages/commerce/commerce-checkout-web/checkoutPage';
 import {PendingOrdersPage} from '../pages/commerce/commerce-order-content-web/pendingOrdersPage';
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
@@ -38,6 +39,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
 	commerceAdminProductDetailsProductRelationsPage: CommerceAdminProductDetailsProductRelationsPage;
 	commerceAdminProductPage: CommerceAdminProductPage;
+	commerceCartSummaryPage: CommerceCartSummaryPage;
 	commerceCatalogSystemSettingsPage: CommerceCatalogSystemSettingsPage;
 	commerceChannelDefaultsPage: CommerceChannelDefaultsPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
@@ -81,6 +83,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminProductPage: async ({page}, use) => {
 		await use(new CommerceAdminProductPage(page));
+	},
+	commerceCartSummaryPage: async ({page}, use) => {
+		await use(new CommerceCartSummaryPage(page));
 	},
 	commerceCatalogSystemSettingsPage: async ({page}, use) => {
 		await use(new CommerceCatalogSystemSettingsPage(page));

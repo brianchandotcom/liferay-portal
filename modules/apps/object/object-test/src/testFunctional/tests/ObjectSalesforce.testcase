@@ -182,6 +182,7 @@ definition {
 			CreateObject.saveObject();
 
 			ObjectAdmin.addObjectFieldViaAPI(
+				externalReferenceCode = "Email",
 				fieldBusinessType = "Text",
 				fieldLabelName = "Email",
 				fieldName = "email",
@@ -190,6 +191,7 @@ definition {
 				objectName = "Contact");
 
 			ObjectAdmin.addObjectFieldViaAPI(
+				externalReferenceCode = "FirstName",
 				fieldBusinessType = "Text",
 				fieldLabelName = "First Name",
 				fieldName = "firstName",
@@ -198,6 +200,7 @@ definition {
 				objectName = "Contact");
 
 			ObjectAdmin.addObjectFieldViaAPI(
+				externalReferenceCode = "LastName",
 				fieldBusinessType = "Text",
 				fieldLabelName = "Last Name",
 				fieldName = "lastName",
@@ -206,6 +209,7 @@ definition {
 				objectName = "Contact");
 
 			ObjectAdmin.addObjectFieldViaAPI(
+				externalReferenceCode = "Phone",
 				fieldBusinessType = "Text",
 				fieldLabelName = "Phone",
 				fieldName = "phone",
@@ -218,42 +222,6 @@ definition {
 
 		task ("And given the object's external reference code matches a Salesforce standard object") {
 			ObjectAdmin.editExternalReferenceCode(externalReferenceCode = "Contact");
-		}
-
-		task ("And given several text fields whose external reference codes match fields from the Salesforce standard object") {
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.goToFieldsDetails(label = "Email");
-
-			PortletEntry.inputText(
-				fieldLabel = "External Reference Code",
-				text = "Email");
-
-			CreateObject.saveObject();
-
-			ObjectAdmin.goToFieldsDetails(label = "First Name");
-
-			PortletEntry.inputText(
-				fieldLabel = "External Reference Code",
-				text = "FirstName");
-
-			CreateObject.saveObject();
-
-			ObjectAdmin.goToFieldsDetails(label = "Last Name");
-
-			PortletEntry.inputText(
-				fieldLabel = "External Reference Code",
-				text = "LastName");
-
-			CreateObject.saveObject();
-
-			ObjectAdmin.goToFieldsDetails(label = "Phone");
-
-			PortletEntry.inputText(
-				fieldLabel = "External Reference Code",
-				text = "Phone");
-
-			CreateObject.saveObject();
 		}
 
 		task ("When the user navigates to the object") {

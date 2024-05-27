@@ -7,6 +7,7 @@ package com.liferay.commerce.util.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -108,6 +111,76 @@ public class CommerceCheckoutStepTest {
 			_country.getCountryId(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.nextDouble(),
 			RandomTestUtil.randomString(), _serviceContext);
+	}
+
+	@Test
+	public void testGuestCheckoutWithExistingAccountEmailAddress()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"A guest user using the same email address of an existing " +
+				"account at order checkout must create a new account"
+		).given(
+			"A guest user checking out the order"
+		).when(
+			"He uses the same email address of an existing account"
+		).then(
+			"A different account is created"
+		);
+
+		String email = "buyer@liferay.com";
+
+		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
+			_serviceContext.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null, email, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		Assert.assertEquals(email, accountEntry1.getEmailAddress());
+
+		CommerceOrder commerceOrder1 =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				accountEntry1.getAccountEntryId(),
+				_commerceCurrency.getCommerceCurrencyId(), 0);
+
+		Assert.assertFalse(commerceOrder1.isGuestOrder());
+
+		CommerceOrder commerceOrder2 =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(), -1,
+				_commerceCurrency.getCommerceCurrencyId(), 0);
+
+		Assert.assertTrue(commerceOrder2.isGuestOrder());
+
+		ActionRequest actionRequest = _processAction(commerceOrder2, email);
+
+		commerceOrder2 = (CommerceOrder)actionRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		Assert.assertTrue(commerceOrder2.getCommerceAccountId() != -1);
+		Assert.assertTrue(
+			commerceOrder1.getCommerceAccountId() !=
+				commerceOrder2.getCommerceAccountId());
+		Assert.assertTrue(
+			commerceOrder1.getCommerceOrderId() !=
+				commerceOrder2.getCommerceOrderId());
+
+		AccountEntry accountEntry2 = commerceOrder2.getAccountEntry();
+
+		Assert.assertEquals(email, accountEntry2.getEmailAddress());
+
+		Assert.assertEquals(
+			1,
+			_commerceOrderLocalService.
+				getCommerceOrdersCountByCommerceAccountId(
+					accountEntry1.getAccountEntryId()));
+		Assert.assertEquals(
+			1,
+			_commerceOrderLocalService.
+				getCommerceOrdersCountByCommerceAccountId(
+					accountEntry2.getAccountEntryId()));
 	}
 
 	@Test
@@ -234,6 +307,9 @@ public class CommerceCheckoutStepTest {
 		return mockLiferayPortletActionRequest;
 	}
 
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	private CommerceChannel _commerceChannel;
 
 	@Inject
@@ -260,6 +336,7 @@ public class CommerceCheckoutStepTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@DeleteAfterTestRun
 	private Country _country;
 
 	@Inject

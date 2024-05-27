@@ -22,4 +22,8 @@ test('This is for LPS-102202. Validate if the Blank page template can not be edi
 	await expect(templateCard).toBeVisible();
 
 	await expect(templateCard.getByLabel('More actions')).not.toBeVisible();
+
+	await expect(
+		templateCard.locator('.custom-control.custom-checkbox')
+	).not.toBeVisible();
 });

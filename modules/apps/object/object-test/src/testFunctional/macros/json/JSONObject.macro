@@ -252,7 +252,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectField(fieldName = null, picklistName = null, fieldLabelName = null, timeStorageOption = null, isRequired = null, outputOption = null, fileSource = null, fieldBusinessType = null, formulaScript = null, objectName = null, fieldType = null) {
+	macro addObjectField(fieldName = null, picklistName = null, fieldLabelName = null, timeStorageOption = null, isRequired = null, outputOption = null, fileSource = null, fieldBusinessType = null, formulaScript = null, objectName = null, fieldType = null, externalReferenceCode = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
@@ -307,6 +307,10 @@ definition {
 		}
 		else {
 			var readOnlyExpression = "";
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
 		}
 
 		if (${fileSource} == "userComputer") {
@@ -559,6 +563,7 @@ definition {
 							"en_US": "${fieldLabelName}"
 						},
 						"listTypeDefinitionId": ${picklistId},
+						"externalReferenceCode": "${externalReferenceCode}",
 						"name": "${fieldName}",
 						"readOnly": "${isReadOnly}",
 						"readOnlyConditionExpression": "${readOnlyExpression}",

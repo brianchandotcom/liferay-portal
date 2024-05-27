@@ -191,12 +191,13 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectFieldViaAPI(isRequired = null, userPassword = null, fieldName = null, indexed = null, outputOption = null, fileSource = null, showFilesInDocumentsAndMedia = null, userEmailAddress = null, fieldBusinessType = null, readOnlyExpression = null, picklistName = null, indexedAsKeyword = null, isReadOnly = null, formulaScript = null, fieldLabelName = null, indexedLanguageId = null, objectName = null, fieldType = null, timeStorageOption = null) {
+	macro addObjectFieldViaAPI(isRequired = null, userPassword = null, fieldName = null, indexed = null, outputOption = null, fileSource = null, showFilesInDocumentsAndMedia = null, userEmailAddress = null, fieldBusinessType = null, readOnlyExpression = null, picklistName = null, indexedAsKeyword = null, isReadOnly = null, formulaScript = null, fieldLabelName = null, indexedLanguageId = null, objectName = null, fieldType = null, timeStorageOption = null, externalReferenceCode = null) {
 		if ((${fieldBusinessType} == "Formula") || (${fieldBusinessType} == "Aggregation")) {
 			var indexed = "false";
 		}
 
 		JSONObject.addObjectField(
+			externalReferenceCode = ${externalReferenceCode},
 			fieldBusinessType = ${fieldBusinessType},
 			fieldLabelName = ${fieldLabelName},
 			fieldName = ${fieldName},

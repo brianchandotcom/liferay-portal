@@ -8,5 +8,5 @@
 <%@ include file="/init.jsp" %>
 
 <clay:sheet>
-	Some side panel content with no title
+	This is a side panel without a title.
 </clay:sheet>

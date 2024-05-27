@@ -12,5 +12,5 @@
 	title="Side panel title provided by page"
 >
 
-	Hello, this is a side panel with a title
+	This is a side panel with a title.
 </liferay-frontend:side-panel-content>

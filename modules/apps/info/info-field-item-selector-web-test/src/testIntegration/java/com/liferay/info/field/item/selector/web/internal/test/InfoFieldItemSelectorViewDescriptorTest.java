@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -88,6 +89,7 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 					"myRichText", false)));
 	}
 
+	@FeatureFlags("LPD-20213")
 	@Test
 	public void testGetResultRowSplitter() throws Exception {
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -150,6 +152,7 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		Assert.assertEquals(1, searchContainer.getTotal());
 	}
 
+	@FeatureFlags("LPD-20213")
 	@Test
 	public void testGetSearchContainerWithRelationship() throws Exception {
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(

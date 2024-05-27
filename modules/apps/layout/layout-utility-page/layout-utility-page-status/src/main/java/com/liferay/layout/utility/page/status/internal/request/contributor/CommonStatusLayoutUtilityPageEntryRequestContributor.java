@@ -208,10 +208,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return;
 		}
 
-		LayoutSet layoutSet = null;
-
 		try {
-			layoutSet = _layoutSetLocalService.getLayoutSet(
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				virtualHost.getLayoutSetId());
 
 			User user = _getUser(

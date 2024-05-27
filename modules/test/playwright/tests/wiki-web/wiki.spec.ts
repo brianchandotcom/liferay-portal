@@ -6,32 +6,15 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../fixtures/loginTest';
-import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
+import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 
-export const test = mergeTests(loginTest(), systemSettingsPageTest);
+export const test = mergeTests(loginTest(), wikiPagesTest);
 
 test('@LPD-26435 Icon menu should close when another icon menu is open', async ({
 	page,
+	wikiPage,
 }) => {
-	await test.step('Go to wiki', async () => {
-		const openProductMenu = page.getByLabel('Open Product Menu');
-
-		const contentAndData = page.getByRole('menuitem', {
-			name: 'Content & Data',
-		});
-
-		if (await openProductMenu.isVisible()) {
-			openProductMenu.click();
-		}
-
-		await contentAndData.waitFor({state: 'visible'});
-		await contentAndData.click();
-
-		const wiki = page.getByRole('menuitem', {name: 'Wiki'});
-
-		await wiki.waitFor({state: 'visible'});
-		wiki.click();
-	});
+	await wikiPage.goto();
 
 	await test.step('Create new wiki', async () => {
 		const newWikiButton = page.getByRole('link', {name: 'Add Wiki'});

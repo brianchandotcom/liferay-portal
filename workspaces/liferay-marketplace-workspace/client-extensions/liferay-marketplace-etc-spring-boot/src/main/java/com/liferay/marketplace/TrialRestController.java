@@ -299,14 +299,6 @@ public class TrialRestController extends BaseRestController {
 				"%URL%", hostname
 			));
 
-		notificationQueueEntry.setSubject(
-			notificationTemplate.getSubject(
-			).get(
-				"en_US"
-			));
-
-		notificationQueueEntry.setType(notificationTemplate.getType());
-
 		JSONArray jsonArray = new JSONObject(
 			String.valueOf(notificationTemplate)
 		).getJSONArray(
@@ -331,11 +323,18 @@ public class TrialRestController extends BaseRestController {
 				).build()
 			});
 
+		notificationQueueEntry.setSubject(
+			notificationTemplate.getSubject(
+			).get(
+				"en_US"
+			));
+		notificationQueueEntry.setType(notificationTemplate.getType());
+
 		notificationQueueEntryResource.postNotificationQueueEntry(
 			notificationQueueEntry);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Trial Notification Sent to: " + emailAddress);
+			_log.info("Sent notification to " + emailAddress);
 		}
 	}
 

@@ -7,12 +7,16 @@ package com.liferay.headless.commerce.admin.inventory.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
+import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
+import com.liferay.headless.commerce.admin.inventory.client.pagination.Pagination;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
+import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +26,26 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetWarehousesPage() throws Exception {
+		super.testGetWarehousesPage();
+
+		Warehouse warehouse1 = _addWarehouse();
+		Warehouse warehouse2 = _addWarehouse();
+
+		Page<Warehouse> page = warehouseResource.getWarehousesPage(
+			warehouse1.getName(
+			).get(
+				"en_US"
+			),
+			null, Pagination.of(1, 10), null);
+
+		assertContains(warehouse1, (List<Warehouse>)page.getItems());
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertNotEquals(page.fetchFirstItem(), warehouse2);
+	}
 
 	@Ignore
 	@Override

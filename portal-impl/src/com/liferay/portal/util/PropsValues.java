@@ -1076,7 +1076,7 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LAYOUT_GUEST_SHOW_MIN_ICON));
 
-	public static final int LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN =
+	public static int LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN));
 

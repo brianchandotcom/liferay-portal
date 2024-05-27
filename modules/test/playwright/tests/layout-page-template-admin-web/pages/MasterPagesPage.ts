@@ -19,4 +19,8 @@ export class MasterPagesPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.masterPages}`
 		);
 	}
+
+	getTemplateCard(name: string) {
+		return this.page.locator('.card-page-item').filter({hasText: name});
+	}
 }

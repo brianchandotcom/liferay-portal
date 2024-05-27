@@ -256,7 +256,6 @@ public class TrialRestController extends BaseRestController {
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-marketplace-etc-spring-boot-oauth-application-" +
 					"headless-server");
-
 		URL liferayDXPURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 

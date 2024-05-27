@@ -10,6 +10,8 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.sites.kernel.util.Sites;
@@ -193,9 +196,16 @@ public class LayoutSetPrototypeHelperTest {
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "test", true);
 
-		List<Layout> conflictLayouts =
-			_layoutSetPrototypeHelper.getDuplicatedFriendlyURLLayouts(
-				layoutSetPrototypeLayout);
+		_entityCache.clearCache();
+		_multiVMPool.clear();
+
+		List<Layout> conflictLayouts = null;
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			conflictLayouts =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLLayouts(
+					layoutSetPrototypeLayout);
+		}
 
 		Assert.assertEquals(
 			conflictLayouts.toString(), expectedConflictLayouts.size(),
@@ -296,6 +306,9 @@ public class LayoutSetPrototypeHelperTest {
 
 	private static final int _NUMBER_ENABLED_LINKS = 5;
 
+	@Inject
+	private EntityCache _entityCache;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -310,6 +323,9 @@ public class LayoutSetPrototypeHelperTest {
 
 	@Inject
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	private Layout _prototypeLayout;
 	private Layout _siteLayout;

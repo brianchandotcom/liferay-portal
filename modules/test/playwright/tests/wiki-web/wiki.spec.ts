@@ -18,12 +18,12 @@ test('LPD-26435 Icon menu should close when another icon menu is open', async ({
 
 	await wikiPage.createNewWikiNode('Wiki Node Title');
 
+	const wikiNodeMenu = await page.locator(
+		'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
+	);
+
 	await test.step('Check menu gets closed', async () => {
-		await page
-			.locator(
-				'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
-			)
-			.click();
+		await wikiNodeMenu.click();
 
 		const menuOne = await page.locator(
 			'[aria-labelledby="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
@@ -44,5 +44,11 @@ test('LPD-26435 Icon menu should close when another icon menu is open', async ({
 		await expect(menuTwo).toBeVisible();
 
 		await expect(menuOne).toBeHidden();
+	});
+
+	await test.step('Wiki node is deleted', async () => {
+		await wikiNodeMenu.click();
+
+		await page.getByRole('link', {name: 'Delete'}).click();
 	});
 });

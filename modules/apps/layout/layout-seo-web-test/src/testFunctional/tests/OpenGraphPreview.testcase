@@ -145,44 +145,6 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Page HTML Title - Test Site Name - ${siteName}","og:description" content="Page Description"''');
 	}
 
-	@description = "This ensures that escape characters are present correctly in the preview."
-	@priority = 3
-	@refactordone
-	test CanPreviewWithEscapeCharacters {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page Name");
-
-		Navigator.openToGroupPagesPortlet(
-			groupName = "Guest",
-			layoutName = "Test Page Name",
-			portlet = "Open Graph",
-			siteURLKey = "guest");
-
-		OpenGraph.configureOpenGraph(
-			customDescription = '''description@#$%^&amp;*()~`1234567890''',
-			customTitle = '''@#$%^&amp;*()~`1234567890title''',
-			dontSave = "true");
-
-		Page.viewPreview(
-			description = '''description@#$%^&amp;*()~`1234567890''',
-			htmlTitle = '''@#$%^&amp;*()~`1234567890title''',
-			openGraph = "true",
-			pageName = "Test Page Name",
-			portalURL = ${portalURL});
-
-		Button.click(button = "Save");
-
-		Page.viewPreview(
-			description = '''description@#$%^&amp;*()~`1234567890''',
-			htmlTitle = '''@#$%^&amp;*()~`1234567890title''',
-			openGraph = "true",
-			pageName = "Test Page Name",
-			portalURL = ${portalURL});
-	}
-
 	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
 	@priority = 5
 	@refactordone

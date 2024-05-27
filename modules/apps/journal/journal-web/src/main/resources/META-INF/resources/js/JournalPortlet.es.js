@@ -375,18 +375,39 @@ export default function _JournalPortlet({
 				}
 				else {
 					if (!articleId && response.url) {
-						const key = `${namespace}articleId`;
+						const articleIdKey = `${namespace}articleId`;
+						const friendlyURLKey = `${namespace}friendlyURL`;
 						const url = new URL(response.url);
 
-						if (url.searchParams.has(key)) {
-							articleId = url.searchParams.get(key);
+						if (url.searchParams.has(articleIdKey)) {
+							articleId = url.searchParams.get(articleIdKey);
 							document.getElementById(
 								`${namespace}articleId`
 							).value = articleId;
 
 							Liferay.fire('asyncFormSubmission', {articleId});
 						}
+
+						if (url.searchParams.has(friendlyURLKey)) {
+							const friendlyUrlInputComponent = Liferay.component(
+								`${namespace}friendlyURL`
+							);
+
+							if (!friendlyUrlInputComponent.getValue()) {
+								const friendlyURL = url.searchParams.get(
+									friendlyURLKey
+								);
+								friendlyUrlInputComponent.updateInputLanguage(
+									friendlyURL,
+									defaultLanguageId
+								);
+								friendlyUrlInputComponent.updateInput(
+									friendlyURL
+								);
+							}
+						}
 					}
+					lockHolder.lock?.unlock();
 				}
 			})
 			.catch((error) => {

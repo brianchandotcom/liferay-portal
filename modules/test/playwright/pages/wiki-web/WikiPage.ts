@@ -19,4 +19,12 @@ export class WikiPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.wikiAdmin}`
 		);
 	}
+
+	async createNewWikiNode(wikiNodeTitle: string) {
+		await this.page.getByRole('link', {name: 'Add Wiki'}).click();
+
+		await this.page.getByLabel('Name').fill(wikiNodeTitle);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+	}
 }

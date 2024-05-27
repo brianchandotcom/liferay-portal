@@ -643,7 +643,7 @@ function Table(props: IFDSViewSectionProps & {title?: string}) {
 	};
 
 	return fdsFields ? (
-		<ClayLayout.ContentCol className="c-gap-4">
+		<ClayLayout.ContentCol className="c-gap-4 table-visualization-mode">
 			<ClayAlert
 				displayType="info"
 				title={`${Liferay.Language.get('info')}:`}

@@ -21,6 +21,7 @@ export class VisualizationModesPage {
 	readonly fieldSelectModalContainer: Locator;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
+	readonly tableVisualizationModeContainer: Locator;
 
 	constructor(page: Page) {
 		this.addFieldsButton = page.getByLabel('Add Fields');
@@ -40,6 +41,15 @@ export class VisualizationModesPage {
 		);
 		this.fieldSelectModalContainer = page.locator('.field-select-modal');
 		this.page = page;
+		this.tableVisualizationModeContainer = page.locator(
+			'.table-visualization-mode'
+		);
+	}
+
+	async assertTableFieldRowCount(rowCount: number) {
+		await expect(
+			this.tableVisualizationModeContainer.locator('tbody').locator('tr')
+		).toHaveCount(rowCount);
 	}
 
 	async cancelAddFieldsModal() {

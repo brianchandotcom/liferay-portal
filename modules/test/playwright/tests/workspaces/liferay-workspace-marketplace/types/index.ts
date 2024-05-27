@@ -32,3 +32,14 @@ export type PublishProductPayload = {
 	};
 	zipFiles: string[];
 };
+
+export const PUBLISH_SOLUTION = {
+	header: {
+		description: 'Solution Header Description',
+		title: 'Solution Header Title',
+	},
+	profile: {
+		description: 'Solution Test Description',
+		name: 'Solution Test Name',
+	},
+};

@@ -80,6 +80,10 @@ const MOCK_CACHE = {
 			label: 'Fieldset',
 		},
 	],
+	'relationships-classNameId-classTypeId': [
+		{classNameId: 'relationship-1', label: 'Relationship 1'},
+		{classNameId: 'relationship-2', label: 'Relationship 2'},
+	],
 };
 
 jest.mock(
@@ -236,5 +240,15 @@ describe('FormInputGeneralPanel', () => {
 		renderComponent({mappedFieldId: 'notRequiredField'});
 
 		expect(screen.getByLabelText('mark-as-required')).not.toBeDisabled();
+	});
+
+	it('shows source selector when there is any relationship', () => {
+		Liferay.FeatureFlags['LPD-20213'] = true;
+
+		renderComponent();
+
+		expect(screen.getByLabelText('source')).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPD-20213'] = false;
 	});
 });

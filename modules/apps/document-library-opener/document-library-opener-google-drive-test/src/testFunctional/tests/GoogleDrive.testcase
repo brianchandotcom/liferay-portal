@@ -835,7 +835,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

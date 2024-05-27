@@ -13,14 +13,11 @@ export const test = mergeTests(isolatedSiteTest, loginTest(), masterPagesTest);
 
 test('This is for LPS-102202. Validate if the Blank page template can not be edited and deleted.', async ({
 	masterPagesPage,
-	page,
 	site,
 }) => {
 	await masterPagesPage.goto(site.friendlyUrlPath);
 
-	const templateCard = page
-		.locator('.card-page-item')
-		.filter({hasText: 'Blank'});
+	const templateCard = masterPagesPage.getTemplateCard('Blank');
 
 	await expect(templateCard).toBeVisible();
 

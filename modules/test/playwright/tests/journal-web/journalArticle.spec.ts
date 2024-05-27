@@ -66,6 +66,15 @@ const expect = baseExpect.extend({
 	}),
 });
 
+const autoSaveAsDraftTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-11228': true,
+		'LPD-15596': true,
+		'LPS-141392': true,
+	})
+);
+
 const keepTitlesUntranslated = mergeTests(baseTest);
 
 const prefixUrlTest = mergeTests(
@@ -98,6 +107,39 @@ const aiCreateImageTest = mergeTests(
 );
 
 const privateContentIconTest = mergeTests(baseTest);
+
+autoSaveAsDraftTest(
+	'LPD-26854: LockIndicator should have an errorState',
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const localizableFieldName = 'Text56789';
+		const structureName = 'Structure 2';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: localizableFieldName, repeatable: false}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const localizableField = page.getByRole('textbox', {
+			name: localizableFieldName,
+		});
+
+		await fillAndClickOutside(page, localizableField);
+
+		const errorIndicator = await page.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_lockErrorIndicator'
+		);
+
+		await expect(errorIndicator).toBeVisible();
+	}
+);
 
 keepTitlesUntranslated(
 	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',

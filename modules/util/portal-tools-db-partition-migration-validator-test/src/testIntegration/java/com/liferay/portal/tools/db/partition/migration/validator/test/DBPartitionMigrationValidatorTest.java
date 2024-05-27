@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -89,41 +88,34 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
+		String[] messages = {
+			"[ERROR] Company ID " + _company.getCompanyId() +
+				" already exists in the target database",
+			"[WARN] Company name ",
+			_company.getName() +
+				" already exists in the target database. You must set a " +
+					"different value in " +
+						"DBPartitionInsertVirtualInstanceConfiguration.config.",
+			"[WARN] Virtual host " + _company.getVirtualHostname() +
+				" already exists in the target database. You must set a " +
+					"different value in " +
+						"DBPartitionInsertVirtualInstanceConfiguration.config.",
+			"[WARN] Web ID ",
+			_company.getWebId() +
+				" already exists in the target database. You must set a " +
+					"different value in " +
+						"DBPartitionInsertVirtualInstanceConfiguration.config."
+		};
+
 		_testValidate(
 			() -> {
 			},
 			runtimeException -> {
 				String string = _outByteArrayOutputStream.toString();
 
-				Assert.assertTrue(
-					string.contains(
-						"[ERROR] Company ID " + _company.getCompanyId() +
-							" already exists in the target database"));
-				Assert.assertTrue(
-					string.contains(
-						StringBundler.concat(
-							"[WARN] Company name ", _company.getName(),
-							" already exists in the target database. You must ",
-							"set a different value in ",
-							"DBPartitionInsertVirtualInstanceConfiguration.",
-							"config.")));
-				Assert.assertTrue(
-					string.contains(
-						StringBundler.concat(
-							"[WARN] Virtual host ",
-							_company.getVirtualHostname(),
-							" already exists in the target database. You must ",
-							"set a different value in ",
-							"DBPartitionInsertVirtualInstanceConfiguration.",
-							"config.")));
-				Assert.assertTrue(
-					string.contains(
-						StringBundler.concat(
-							"[WARN] Web ID ", _company.getWebId(),
-							" already exists in the target database. You must ",
-							"set a different value in ",
-							"DBPartitionInsertVirtualInstanceConfiguration.",
-							"config.")));
+				for (String message : messages) {
+					Assert.assertTrue(string.contains(message));
+				}
 			},
 			sourceFileName, targetFilePath);
 	}

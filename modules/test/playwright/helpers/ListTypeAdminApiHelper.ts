@@ -21,7 +21,7 @@ export class ListTypeAdminApiHelper {
 		);
 	}
 
-	async getListTypeDefinitions() {
+	async getListTypeDefinitions(): Promise<ListTypeDefinitions> {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/list-type-definitions`
 		);
@@ -30,7 +30,7 @@ export class ListTypeAdminApiHelper {
 	async postListTypeEntry(
 		listTypeDefinitionExternalReferenceCode: string,
 		listTypeEntryName: string
-	): Promise<PickList> {
+	): Promise<ListTypeDefinition> {
 		const requestBody = {
 			key: listTypeEntryName.toLocaleLowerCase(),
 			name_i18n: {
@@ -44,7 +44,7 @@ export class ListTypeAdminApiHelper {
 		);
 	}
 
-	async postRandomListTypeDefinition(): Promise<PickList> {
+	async postRandomListTypeDefinition(): Promise<ListTypeDefinition> {
 		const listTypeDefinitionExternalReferenceCode =
 			'ListTypeDefinition' + getRandomInt();
 

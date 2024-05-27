@@ -34,6 +34,27 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
+const customListTypeDefinitions: ListTypeDefinition[] = [];
+const customObjectDefinitions: ObjectDefinition[] = [];
+
+test.afterEach(async ({apiHelpers}) => {
+	if (customObjectDefinitions.length) {
+		for (const customObjectDefinition of customObjectDefinitions) {
+			await apiHelpers.objectAdmin.deleteObjectDefinition(
+				customObjectDefinition.id
+			);
+		}
+	}
+
+	if (customListTypeDefinitions.length) {
+		for (const customListTypeDefinition of customListTypeDefinitions) {
+			await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+				customListTypeDefinition.id
+			);
+		}
+	}
+});
+
 test.describe('Manage object entries through page templates', () => {
 	test('can view all entries related to an object in the relationship field', async ({
 		apiHelpers,
@@ -46,11 +67,15 @@ test.describe('Manage object entries through page templates', () => {
 				status: {code: 0},
 			});
 
+		customObjectDefinitions.push(objectDefinition1);
+
 		const objectDefinition2 =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
+
+		customObjectDefinitions.push(objectDefinition2);
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -154,6 +179,8 @@ test.describe('Manage object entries through page templates', () => {
 					code: 0,
 				},
 			});
+
+		customObjectDefinitions.push(objectDefinition);
 
 		const trueObjectEntry = {
 			customBoolean: true,
@@ -296,6 +323,9 @@ test.describe('Manage object entries through page templates', () => {
 				titleObjectFieldName,
 			});
 
+		customListTypeDefinitions.push(listTypeDefinition);
+		customObjectDefinitions.push(objectDefinition);
+
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
@@ -380,14 +410,6 @@ test.describe('Manage object entries through page templates', () => {
 
 		// Clean up
 
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
-
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-			listTypeDefinition.id
-		);
-
 		await displayPageTemplatesPage.deleteAllDisplayPageTemplates();
 	});
 });
@@ -398,40 +420,24 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const picklist = await apiHelpers.post(
-			'/o/headless-admin-list-type/v1.0/list-type-definitions',
-			{
-				data: {
-					externalReferenceCode: 'picklistERC',
-					name: 'picklist',
-					name_i18n: {
-						en_US: 'picklist',
-					},
-				},
-			}
-		);
+		const listTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		await apiHelpers.post(
-			`/o/headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}/list-type-entries`,
-			{
-				data: {
-					key: 'item1',
-					name: 'item1',
-					name_i18n: {
-						en_US: 'item1',
-					},
-				},
-			}
+		customListTypeDefinitions.push(listTypeDefinition);
+
+		await apiHelpers.listTypeAdmin.postListTypeEntry(
+			listTypeDefinition.externalReferenceCode,
+			'item1'
 		);
 
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postObjectDefinition({
 				active: true,
-				externalReferenceCode: 'NewObjectERC',
+				externalReferenceCode: getRandomString(),
 				label: {
-					en_US: 'NewObject',
+					en_US: getRandomString(),
 				},
-				name: 'NewObject',
+				name: 'ObjectDefinitionName' + getRandomInt(),
 				objectFields: [
 					{
 						DBType: 'String',
@@ -458,7 +464,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						label: {
 							en_US: 'longInteger',
 						},
-						listTypeDefinitionId: 0,
 						localized: false,
 						name: 'longInteger',
 						required: false,
@@ -475,7 +480,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						label: {
 							en_US: 'date',
 						},
-						listTypeDefinitionId: 0,
 						localized: false,
 						name: 'date',
 						required: false,
@@ -492,7 +496,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						label: {
 							en_US: 'integer',
 						},
-						listTypeDefinitionId: 0,
 						localized: false,
 						name: 'integer',
 						required: false,
@@ -509,7 +512,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						label: {
 							en_US: 'decimal',
 						},
-						listTypeDefinitionId: 0,
 						localized: false,
 						name: 'decimal',
 						required: false,
@@ -526,7 +528,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						label: {
 							en_US: 'richText',
 						},
-						listTypeDefinitionId: 0,
 						localized: false,
 						name: 'richText',
 						required: false,
@@ -541,7 +542,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						indexedAsKeyword: false,
 						indexedLanguageId: '',
 						label: {en_US: 'boolean'},
-						listTypeDefinitionId: 0,
 						name: 'boolean',
 						required: false,
 						system: false,
@@ -555,7 +555,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						indexedAsKeyword: false,
 						indexedLanguageId: '',
 						label: {en_US: 'longText'},
-						listTypeDefinitionId: 0,
 						name: 'longText',
 						required: false,
 						system: false,
@@ -569,7 +568,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 						indexedAsKeyword: false,
 						indexedLanguageId: '',
 						label: {en_US: 'precisionDecimal'},
-						listTypeDefinitionId: 0,
 						name: 'precisionDecimal',
 						required: false,
 						system: false,
@@ -585,7 +583,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 						label: {
 							en_US: 'picklist',
 						},
-						listTypeDefinitionExternalReferenceCode: 'picklistERC',
+						listTypeDefinitionExternalReferenceCode:
+							listTypeDefinition.externalReferenceCode,
 						name: 'picklist',
 						required: false,
 						state: false,
@@ -627,6 +626,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 					code: 0,
 				},
 			});
+
+		customObjectDefinitions.push(objectDefinition);
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
@@ -702,14 +703,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 			await expect(page.getByText(entry)).toBeVisible();
 		}
-
-		// Clean up
-
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
-
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(picklist.id);
 	});
 
 	test('can view all entries related to an object in the relationship field using autocomplete', async ({

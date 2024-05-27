@@ -140,11 +140,11 @@ public class CommerceAddressImplTest {
 
 		commerceAddress2.setType(commerceAddress1.getType());
 
-		Assert.assertTrue(commerceAddress1.isSameAddress(commerceAddress2));
+		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
 
 		commerceAddress2.setZip(commerceAddress1.getZip());
 
-		Assert.assertFalse(commerceAddress1.isSameAddress(commerceAddress2));
+		Assert.assertTrue(commerceAddress1.isSameAddress(commerceAddress2));
 	}
 
 	private CommerceAddress _addCommerceAddress(Country country, int type)

@@ -58,6 +58,13 @@ const fetcher = async <T = any>(
 	resource: RequestInfo,
 	options?: RequestInit
 ): Promise<T | undefined> => {
+	const currentTimestamp = Date.now();
+	const lastTimestampStorage = sessionStorage.getItem('lastTimestamp');
+	const lastTimestamp = lastTimestampStorage
+		? parseInt(lastTimestampStorage, 10)
+		: 0;
+	const tenMinutesInMillis = 10 * 60 * 1000;
+
 	const response = await fetch(changeResource(resource), {
 		...options,
 		headers: {
@@ -66,6 +73,12 @@ const fetcher = async <T = any>(
 			'x-csrf-token': Liferay.authToken,
 		},
 	});
+
+	if (currentTimestamp - lastTimestamp > tenMinutesInMillis) {
+		Liferay.Session.reset();
+	}
+
+	sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
 
 	if (!response.ok) {
 		const error = new FetcherError(

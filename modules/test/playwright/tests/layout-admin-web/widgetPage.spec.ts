@@ -17,7 +17,7 @@ import addInTrashStructuredContent from '../../utils/structured-content/addInTra
 import addScheduledStructuredContent from '../../utils/structured-content/addScheduledStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),

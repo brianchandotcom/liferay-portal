@@ -14,7 +14,7 @@ import getRandomString from '../../utils/getRandomString';
 import getPageDefinition from './utils/getPageDefinition';
 import getWidgetDefinition from './utils/getWidgetDefinition';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,

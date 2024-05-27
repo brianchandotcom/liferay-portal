@@ -13,7 +13,7 @@ import {pageSelectorPagesTest} from '../../fixtures/pageSelectorPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {navigationMenusPagesTest} from './fixtures/navigationMenusPagesTest';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,

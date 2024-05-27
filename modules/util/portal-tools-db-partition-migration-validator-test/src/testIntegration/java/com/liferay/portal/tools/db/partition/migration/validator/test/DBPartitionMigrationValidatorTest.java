@@ -36,6 +36,7 @@ import java.util.Arrays;
 import org.apache.commons.io.FileUtils;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -53,12 +54,20 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		BaseDBPartitionTestCase.setUpClass();
 	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_deleteCompany();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		System.setErr(new PrintStream(_errByteArrayOutputStream));
 		System.setOut(new PrintStream(_outByteArrayOutputStream));
 		System.setSecurityManager(new DisallowExitSecurityManager());
-		_company = CompanyTestUtil.addCompany();
+
+		if (_company == null) {
+			_company = CompanyTestUtil.addCompany();
+		}
 
 		_outputDirectoryFile = new File(PropsValues.LIFERAY_HOME, "exports");
 
@@ -67,7 +76,6 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 
 	@After
 	public void tearDown() throws IOException, PortalException {
-		_deleteCompany();
 		FileUtils.deleteDirectory(_outputDirectoryFile);
 		System.setErr(_originalErrPrintStream);
 		System.setOut(_originalOutPrintStream);
@@ -148,7 +156,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 			sourceFileName, targetFileName);
 	}
 
-	private void _deleteCompany() throws PortalException {
+	private static void _deleteCompany() throws Exception {
 		if (_company != null) {
 			_companyLocalService.deleteCompany(_company);
 		}
@@ -188,12 +196,13 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		afterExecutionUnsafeRunnable.run();
 	}
 
+	private static Company _company;
+
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
 	private static File _outputDirectoryFile;
 
-	private Company _company;
 	private final ByteArrayOutputStream _errByteArrayOutputStream =
 		new ByteArrayOutputStream();
 	private final PrintStream _originalErrPrintStream = System.err;

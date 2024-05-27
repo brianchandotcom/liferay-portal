@@ -13,7 +13,6 @@ export class SystemSettingsPage {
 	readonly page: Page;
 	readonly disabledFeaturesSection: Locator;
 	readonly disablePrivatePagesOption: Locator;
-	readonly updateButton: Locator;
 	readonly releaseFeatureFlagsLink: Locator;
 	private uiElementsPage;
 
@@ -31,7 +30,6 @@ export class SystemSettingsPage {
 		this.releaseFeatureFlagsLink = page.getByRole('link', {
 			name: 'Release Feature Flags',
 		});
-		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
 	async disablePrivatePages() {
@@ -39,7 +37,10 @@ export class SystemSettingsPage {
 		await this.releaseFeatureFlagsLink.click();
 		await this.disabledFeaturesSection.click();
 		await this.disablePrivatePagesOption.click();
-		await this.updateButton.click();
+		const submitButton = await this.page.$(
+			'button[data-qa-id="submitConfiguration"]'
+		);
+		await submitButton.click();
 		await this.uiElementsPage.anySuccessAlert.waitFor({state: 'visible'});
 	}
 

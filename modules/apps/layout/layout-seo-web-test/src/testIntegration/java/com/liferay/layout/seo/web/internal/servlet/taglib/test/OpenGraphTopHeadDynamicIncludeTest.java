@@ -262,6 +262,36 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeCustomTitleAndDescription() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
+			Collections.singletonMap(
+				LocaleUtil.US, "description@#$%^&*()~`1234567890"),
+			Collections.emptyMap(), 0, true,
+			Collections.singletonMap(
+				LocaleUtil.US, "@#$%^&*()~`1234567890title"),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			false, true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(
+			document, "og:description", "description@#$%^&*()~`1234567890");
+		_assertMetaTag(document, "og:title", "@#$%^&*()~`1234567890title");
+	}
+
+	@Test
 	public void testIncludeDefaultMappedTitleAndDescription() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

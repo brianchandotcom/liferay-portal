@@ -46,6 +46,35 @@ export class VisualizationModesPage {
 		await this.addFieldsDialog.cancelButton.click();
 	}
 
+	private async checkField({
+		dataId,
+		expected,
+		fieldName,
+	}: {
+		dataId?: string;
+		expected: boolean;
+		fieldName: string;
+	}) {
+		const treeItem = this.fieldSelectModalContainer.locator(
+			`.treeview-link[data-id$="${dataId ?? fieldName}"]`
+		);
+
+		await treeItem
+			.getByText(fieldName, {
+				exact: true,
+			})
+			.click();
+
+		const checkbox = treeItem.locator('input[type="checkbox"]');
+
+		if (expected) {
+			await expect(checkbox).toBeChecked();
+		}
+		else {
+			await expect(checkbox).not.toBeChecked();
+		}
+	}
+
 	async getAssignedFieldLocator({
 		container,
 		sectionLabel,
@@ -164,17 +193,7 @@ export class VisualizationModesPage {
 		dataId?: string;
 		fieldName: string;
 	}) {
-		const treeItem = this.fieldSelectModalContainer.locator(
-			`.treeview-link[data-id$="${dataId ?? fieldName}"]`
-		);
-
-		await treeItem
-			.getByText(fieldName, {
-				exact: true,
-			})
-			.click();
-
-		await expect(treeItem.locator('input[type="checkbox"]')).toBeChecked();
+		await this.checkField({dataId, expected: true, fieldName});
 	}
 
 	async selectTab(tabLabel: string) {
@@ -184,5 +203,15 @@ export class VisualizationModesPage {
 		});
 
 		await tab.click();
+	}
+
+	async unSelectField({
+		dataId,
+		fieldName,
+	}: {
+		dataId?: string;
+		fieldName: string;
+	}) {
+		await this.checkField({dataId, expected: false, fieldName});
 	}
 }

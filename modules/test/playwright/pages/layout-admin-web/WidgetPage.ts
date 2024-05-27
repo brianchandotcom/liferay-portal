@@ -29,6 +29,15 @@ export class WidgetPage {
 		});
 	}
 
+	async addPortlet(portletName: string) {
+		await this.clickControlMenuAddButton();
+		await this.page
+			.getByRole('textbox', {name: 'Search Form'})
+			.fill(portletName);
+		await this.page.getByText(portletName).click();
+		await this.page.getByRole('button', {name: 'Add Content'}).click();
+	}
+
 	async clickToAddApplication() {
 		await this.addApplicationButton.click();
 	}

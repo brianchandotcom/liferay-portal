@@ -9,11 +9,15 @@ import com.liferay.layout.utility.page.status.internal.request.contributor.Commo
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -62,16 +66,28 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				StringPool.SLASH +
 					LocaleUtil.toLanguageId(LocaleUtil.getDefault()))
 		);
+
+		_originalPermissionChecker = Mockito.mock(PermissionChecker.class);
+
+		_permissionThreadLocalMockedStatic.when(
+			PermissionThreadLocal::getPermissionChecker
+		).thenReturn(
+			_originalPermissionChecker
+		);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_i18nServletMockedStatic.close();
+		_permissionThreadLocalMockedStatic.close();
+		_portalInstancePoolMockedStatic.close();
 	}
 
 	@Before
 	public void setUp() {
 		_setUpCommonStatusLayoutUtilityPageEntryRequestContributor();
+
+		_permissionThreadLocalMockedStatic.clearInvocations();
 	}
 
 	@Test
@@ -87,6 +103,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(RandomTestUtil.randomString()), null,
 			null, null);
+		_assertSetPermissionChecker(0);
 	}
 
 	@Test
@@ -99,6 +116,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(RandomTestUtil.randomString()), null,
 			null, null);
+		_assertSetPermissionChecker(0);
 	}
 
 	@Test
@@ -118,6 +136,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(RandomTestUtil.randomString()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	@Test
@@ -149,6 +168,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	@Test
@@ -184,6 +204,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT),
 			String.valueOf(group.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	@Test
@@ -222,6 +243,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT),
 			String.valueOf(virtualHostGroupLayout.getGroupId()), languageId,
 			String.valueOf(virtualHostGroupLayout.getLayoutId()));
+		_assertSetPermissionChecker(2);
 	}
 
 	@Test
@@ -257,6 +279,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(2);
 	}
 
 	@Test
@@ -281,6 +304,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	@Test
@@ -305,6 +329,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT),
 			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	@Test
@@ -336,6 +361,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(_PATH_CONTEXT), null, null, null);
+		_assertSetPermissionChecker(2);
 	}
 
 	@Test
@@ -349,6 +375,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(RandomTestUtil.randomString()), null,
 			null, null);
+		_assertSetPermissionChecker(0);
 	}
 
 	@Test
@@ -368,6 +395,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(null),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	@Test
@@ -386,6 +414,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(RandomTestUtil.randomString()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	@Test
@@ -404,6 +433,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(RandomTestUtil.randomString()),
 			String.valueOf(layout.getGroupId()), null,
 			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
 	}
 
 	private void _assertAttributesAndParameters(
@@ -420,6 +450,18 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		Assert.assertEquals(
 			languageId,
 			dynamicServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+	}
+
+	private void _assertSetPermissionChecker(int wantedNumberOfInvocations) {
+		_permissionThreadLocalMockedStatic.verify(
+			() -> PermissionThreadLocal.setPermissionChecker(
+				_permissionChecker),
+			Mockito.times(wantedNumberOfInvocations));
+
+		_permissionThreadLocalMockedStatic.verify(
+			() -> PermissionThreadLocal.setPermissionChecker(
+				_originalPermissionChecker),
+			Mockito.times(wantedNumberOfInvocations));
 	}
 
 	private DynamicServletRequest _getDynamicServletRequest(
@@ -669,6 +711,12 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_commonStatusLayoutUtilityPageEntryRequestContributor,
 			"_layoutSetLocalService", _layoutSetLocalService);
 
+		_setUpPermissionCheckerFactory();
+
+		ReflectionTestUtil.setFieldValue(
+			_commonStatusLayoutUtilityPageEntryRequestContributor,
+			"_permissionCheckerFactory", _permissionCheckerFactory);
+
 		_portal = Mockito.mock(Portal.class);
 
 		ReflectionTestUtil.setFieldValue(
@@ -688,18 +736,40 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			"_userLocalService", _userLocalService);
 	}
 
+	private void _setUpPermissionCheckerFactory() {
+		_permissionCheckerFactory = Mockito.mock(
+			PermissionCheckerFactory.class);
+
+		_permissionChecker = Mockito.mock(PermissionChecker.class);
+
+		Mockito.when(
+			_permissionCheckerFactory.create(Mockito.any(User.class))
+		).thenReturn(
+			_permissionChecker
+		);
+	}
+
 	private static final String _PATH_CONTEXT = "/context";
 
 	private static final String _PATH_PROXY = "/proxy";
 
 	private static final MockedStatic<I18nServlet> _i18nServletMockedStatic =
 		Mockito.mockStatic(I18nServlet.class);
+	private static PermissionChecker _originalPermissionChecker;
+	private static final MockedStatic<PermissionThreadLocal>
+		_permissionThreadLocalMockedStatic = Mockito.mockStatic(
+			PermissionThreadLocal.class);
+	private static final MockedStatic<PortalInstancePool>
+		_portalInstancePoolMockedStatic = Mockito.mockStatic(
+			PortalInstancePool.class);
 
 	private CommonStatusLayoutUtilityPageEntryRequestContributor
 		_commonStatusLayoutUtilityPageEntryRequestContributor;
 	private GroupLocalService _groupLocalService;
 	private LayoutService _layoutService;
 	private LayoutSetLocalService _layoutSetLocalService;
+	private PermissionChecker _permissionChecker;
+	private PermissionCheckerFactory _permissionCheckerFactory;
 	private Portal _portal;
 	private UserLocalService _userLocalService;
 	private VirtualHostLocalService _virtualHostLocalService;

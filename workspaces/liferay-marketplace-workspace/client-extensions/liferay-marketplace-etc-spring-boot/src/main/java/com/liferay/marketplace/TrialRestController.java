@@ -14,6 +14,10 @@ import com.liferay.headless.portal.instances.client.dto.v1_0.Admin;
 import com.liferay.headless.portal.instances.client.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.client.resource.v1_0.PortalInstanceResource;
 import com.liferay.marketplace.service.ConsoleService;
+import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
+import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
+import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
@@ -28,6 +32,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpHeaders;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +59,21 @@ public class TrialRestController extends BaseRestController {
 		_consoleService.deleteProject(orderId);
 
 		_deletePortalInstance(orderId);
+	}
+
+	@GetMapping("availability")
+	public String getAvailability() throws Exception {
+		com.liferay.headless.portal.instances.client.pagination.Page
+			<PortalInstance> page = _getPortalInstancesPage();
+
+		return new JSONObject(
+		).put(
+			"active", _TRIAL_MAX_INSTANCES_IN_PROGRESS > page.getTotalCount()
+		).put(
+			"available", _TRIAL_MAX_INSTANCES_IN_PROGRESS - page.getTotalCount()
+		).put(
+			"max", _TRIAL_MAX_INSTANCES_IN_PROGRESS
+		).toString();
 	}
 
 	@PostMapping("provisioning")
@@ -166,21 +186,6 @@ public class TrialRestController extends BaseRestController {
 			).toString());
 	}
 
-	@GetMapping("availability")
-	protected String getAvailability() throws Exception {
-		com.liferay.headless.portal.instances.client.pagination.Page
-			<PortalInstance> page = _getPortalInstancesPage();
-
-		return new JSONObject(
-		).put(
-			"active", _TRIAL_MAX_INSTANCES_IN_PROGRESS > page.getTotalCount()
-		).put(
-			"available", _TRIAL_MAX_INSTANCES_IN_PROGRESS - page.getTotalCount()
-		).put(
-			"max", _TRIAL_MAX_INSTANCES_IN_PROGRESS
-		).toString();
-	}
-
 	private void _deletePortalInstance(String orderId) throws Exception {
 		PortalInstanceResource portalInstanceResource =
 			_getPortalInstanceResource();
@@ -247,12 +252,91 @@ public class TrialRestController extends BaseRestController {
 			String emailAddress, String hostname, String name)
 		throws Exception {
 
-		// TODO
+		String authorization =
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server");
+
+		URL liferayDXPURL = new URL(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+		NotificationTemplateResource notificationTemplateResource =
+			NotificationTemplateResource.builder(
+			).endpoint(
+				liferayDXPURL
+			).header(
+				HttpHeaders.AUTHORIZATION, authorization
+			).build();
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateResource.
+				getNotificationTemplateByExternalReferenceCode(
+					"TRY-IT-NOW-COMPLETED-ORDER");
+
+		if (notificationTemplate == null) {
+			return;
+		}
+
+		NotificationQueueEntryResource notificationQueueEntryResource =
+			NotificationQueueEntryResource.builder(
+			).endpoint(
+				liferayDXPURL
+			).header(
+				HttpHeaders.AUTHORIZATION, authorization
+			).build();
+
+		NotificationQueueEntry notificationQueueEntry =
+			new NotificationQueueEntry();
+
+		notificationQueueEntry.setBody(
+			notificationTemplate.getBody(
+			).get(
+				"en_US"
+			).replaceAll(
+				"%EMAIL%", emailAddress
+			).replaceAll(
+				"%NAME%", name
+			).replaceAll(
+				"%URL%", hostname
+			));
+
+		notificationQueueEntry.setSubject(
+			notificationTemplate.getSubject(
+			).get(
+				"en_US"
+			));
+
+		notificationQueueEntry.setType(notificationTemplate.getType());
+
+		JSONArray jsonArray = new JSONObject(
+			String.valueOf(notificationTemplate)
+		).getJSONArray(
+			"recipients"
+		);
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		notificationQueueEntry.setRecipients(
+			new Object[] {
+				new HashMapBuilder<String, Object>().put(
+					"from", jsonObject.getString("from")
+				).put(
+					"fromName",
+					jsonObject.getJSONObject(
+						"fromName"
+					).getString(
+						"en_US"
+					)
+				).put(
+					"to", emailAddress
+				).build()
+			});
+
+		notificationQueueEntryResource.postNotificationQueueEntry(
+			notificationQueueEntry);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Email address " + emailAddress);
-			_log.info("Hostname " + hostname);
-			_log.info("Name " + name);
+			_log.info("Trial Notification Sent to: " + emailAddress);
 		}
 	}
 
@@ -302,14 +386,12 @@ public class TrialRestController extends BaseRestController {
 
 		OrderResource orderResource = _getOrderResource();
 
-		orderResource.patchOrder(
-			orderId,
-			new Order() {
-				{
-					setCustomFields(() -> customFields);
-					setOrderStatus(() -> orderStatus);
-				}
-			});
+		Order order = new Order();
+
+		order.setCustomFields(() -> customFields);
+		order.setOrderStatus(() -> orderStatus);
+
+		orderResource.patchOrder(orderId, order);
 	}
 
 	private static final int _ORDER_STATUS_CANCELLED = 8;

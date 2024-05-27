@@ -27,6 +27,7 @@ import {CommerceChannelDefaultsPage} from '../pages/commerce/commerceChannelDefa
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
 import {CommercePaymentsPage} from '../pages/commerce/commercePaymentsPage';
+import {ProductDetailsPage} from '../pages/commerce/productDetailsPage';
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -49,7 +50,6 @@ const commercePagesTest = test.extend<{
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
 	pendingOrdersPage: PendingOrdersPage;
-	placedOrdersPage: PlacedOrdersPage;
 	specificationFacetsPage: SpecificationFacetsPage;
 }>({
 	attachmentsPage: async ({page}, use) => {
@@ -114,6 +114,9 @@ const commercePagesTest = test.extend<{
 	},
 	placedOrdersPage: async ({page}, use) => {
 		await use(new PlacedOrdersPage(page));
+	},
+	productDetailsPage: async ({page}, use) => {
+		await use(new ProductDetailsPage(page));
 	},
 	specificationFacetsPage: async ({page}, use) => {
 		await use(new SpecificationFacetsPage(page));

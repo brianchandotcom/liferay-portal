@@ -38,6 +38,10 @@ public class ConsoleService {
 		).uri(
 			"/projects/" + projectName
 		);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleted project " + projectId);
+		}
 	}
 
 	public String getAuthorization() throws Exception {
@@ -92,7 +96,8 @@ public class ConsoleService {
 		_inviteProject(
 			_trialAdminEmailAddress, jsonObject.getString("projectId"));
 
-		_linkDXPWithProject(dxpVirtualInstanceId, jsonObject.getString("id"));
+		_linkDXPWithProject(
+			dxpVirtualInstanceId, jsonObject.getString("id"));
 
 		_deployApp(
 			_consoleAuthEmailAddress, String.valueOf(orderId),

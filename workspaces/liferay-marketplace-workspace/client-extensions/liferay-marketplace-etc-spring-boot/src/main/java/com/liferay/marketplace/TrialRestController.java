@@ -59,12 +59,6 @@ public class TrialRestController extends BaseRestController {
 		_deletePortalInstance(orderId);
 
 		_consoleService.deleteProject(orderId);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Virtual instance and cloud project deleted for order " +
-					orderId);
-		}
 	}
 
 	@PostMapping("provisioning")

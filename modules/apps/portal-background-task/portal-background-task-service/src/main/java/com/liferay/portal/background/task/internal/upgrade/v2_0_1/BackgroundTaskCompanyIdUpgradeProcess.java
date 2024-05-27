@@ -5,35 +5,18 @@
 
 package com.liferay.portal.background.task.internal.upgrade.v2_0_1;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.io.Serializable;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * @author Jorge Avalos
  */
 public class BackgroundTaskCompanyIdUpgradeProcess extends UpgradeProcess {
-
-	public static void removeCompanyId(Map<String, Serializable> map) {
-		Map<String, Serializable> taskContextMap =
-			(Map<String, Serializable>)map.get("map");
-
-		taskContextMap.remove("companyId");
-
-		Map<String, Serializable> threadLocalValues =
-			(Map<String, Serializable>)taskContextMap.get("threadLocalValues");
-
-		threadLocalValues = (Map<String, Serializable>)threadLocalValues.get(
-			"map");
-
-		threadLocalValues.remove("companyId");
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -50,18 +33,23 @@ public class BackgroundTaskCompanyIdUpgradeProcess extends UpgradeProcess {
 					String taskContextMapValue = (String)values[1];
 
 					if (taskContextMapValue != null) {
-						ObjectMapper mapper = new ObjectMapper();
-
 						Map<String, Serializable> taskContextMap =
-							mapper.readValue(
-								taskContextMapValue, LinkedHashMap.class);
+							(Map<String, Serializable>)
+								JSONFactoryUtil.deserialize(
+									taskContextMapValue);
 
-						removeCompanyId(taskContextMap);
+						taskContextMap.remove("companyId");
 
-						taskContextMapValue = mapper.writeValueAsString(
-							taskContextMap);
+						Map<String, Serializable> threadLocalValues =
+							(Map<String, Serializable>)taskContextMap.get(
+								"threadLocalValues");
 
-						preparedStatement.setString(1, taskContextMapValue);
+						if (threadLocalValues != null) {
+							threadLocalValues.remove("companyId");
+						}
+
+						preparedStatement.setString(
+							1, JSONFactoryUtil.serialize(taskContextMap));
 
 						preparedStatement.setLong(2, (Long)values[0]);
 

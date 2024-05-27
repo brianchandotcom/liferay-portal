@@ -11,14 +11,12 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -58,11 +56,9 @@ public class UpgradePortletPreferencesTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		String portletId = PortletIdCodec.encode(
-			AssetPublisherPortletKeys.ASSET_PUBLISHER, StringUtil.randomId());
-
-		LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), _layout, portletId, "column-1",
+		String portletId = LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), _layout,
+			AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-1",
 			HashMapBuilder.put(
 				"anyClassType", new String[] {"select-more-than-one"}
 			).put(

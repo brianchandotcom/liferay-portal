@@ -2249,6 +2249,57 @@ definition {
 		}
 	}
 
+	@description = "LPS-192956 Confirm that the Title field can be empty on the Side Panel Item Action"
+	@priority = 3
+	test CanLeaveTitleFieldEmptyInSidePanelItemAction {
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a modal item action and clicks on save button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				icon = "pencil",
+				title = "",
+				type = "Side Panel",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
+		}
+
+		task ("And a successful toast message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then it appears on the Action tab table with the new title.") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "Edit",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-191488. Confirm that is not possible to edit the Type field."
 	@priority = 4
 	test CannotEditTypeField {
@@ -2276,6 +2327,94 @@ definition {
 			AssertElementPresent(
 				key_fieldName = "Type",
 				locator1 = "DataSet#VIEW_SELECT_DISABLED");
+		}
+	}
+
+	@description = "LPS-191485. Confirm that the Headless Action Key field cannot be empty in the Headless Item Action"
+	@priority = 4
+	test CannotLeaveHeadlessActionKeyFieldEmptyInHeadlessItemAction {
+		task ("When clicks on New Action button") {
+			Click(
+				key_text = "New Item Action",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("Then Headless Action Key, Confirmation Message, Message Type are displayed") {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Headless");
+
+			Type(
+				key_placeholder = "Add a value here.",
+				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = "Headless Action Test");
+		}
+
+		task ("And confirm that it is not possible to save the action") {
+			AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");
+		}
+	}
+
+	@description = "LPS-192956 Confirm that the Label field cannot be empty on the Modal Item Action"
+	@priority = 3
+	test CannotLeaveLabelFieldEmptyInModalActionOnItemAction {
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Country",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Country",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the view created") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Country",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a modal item action and clicks on save button") {
+			DataSetAdmin.addActions(
+				actionName = "Edit",
+				icon = "pencil",
+				title = "Edit item Action",
+				type = "Modal",
+				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
+				variant = "Small");
+		}
+
+		task ("When the user leaves mandatory fields empty") {
+			DataSetAdmin.editActions(
+				newActionName = "",
+				newIcon = "pencil",
+				newTitle = "",
+				newVariant = "Small",
+				oldActionName = "Edit");
+		}
+
+		task ("Then an error message is displayed") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "This field is required.");
+		}
+
+		task ("And the changes cannot be saved") {
+			AssertVisible(
+				key_title = "Edit",
+				locator1 = "Header#H2_TITLE");
 		}
 	}
 
@@ -2423,145 +2562,6 @@ definition {
 				key_option = "Error",
 				locator1 = "DataSet#MESSAGE_FIELD",
 				value1 = "Failed Edited.");
-		}
-	}
-
-	@description = "LPS-191485. Confirm that the Headless Action Key cannot field empty in the Headless Item Action"
-	@priority = 4
-	test CannotLeaveHeadlessActionKeyFieldEmptyInHeadlessItemAction {
-		task ("When clicks on New Action button") {
-			Click(
-				key_text = "New Item Action",
-				locator1 = "Button#ANY_SECONDARY");
-		}
-
-		task ("Then Headless Action Key, Confirmation Message, Message Type are displayed") {
-			Select(
-				key_fieldLabel = "Type",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Headless");
-
-			Type(
-				key_placeholder = "Add a value here.",
-				locator1 = "FrontendDataSet#PLACEHOLDER",
-				value1 = "Headless Action Test");
-		}
-
-		task ("And confirm that it is not possible to save the action") {
-			AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");
-		}
-	}
-
-	@description = "LPS-192956 Confirm that the Label field cannot be empty on the Modal Item Action"
-	@priority = 3
-	test CannotLeaveLabelFieldEmptyInModalActionOnItemAction {
-		task ("Given a new data set entry") {
-			DataSetAdmin.goToDataSetAdminPage();
-
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Country",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country");
-		}
-
-		task ("And a new view") {
-			DataSetAdmin.createFDSViewViaAPI(
-				dataSetName = "Country",
-				dataSetViewDescription = "FDSViewDescription",
-				key_dataSetViewNameList = "View Test");
-		}
-
-		task ("When the user goes to the view created") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Country",
-				key_viewName = "View Test");
-		}
-
-		task ("When the user goes to the Action tab.") {
-			DataSetAdmin.goToTab(tabName = "Actions");
-		}
-
-		task ("And creates a modal item action and clicks on save button") {
-			DataSetAdmin.addActions(
-				actionName = "Edit",
-				icon = "pencil",
-				title = "Edit item Action",
-				type = "Modal",
-				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example",
-				variant = "Small");
-		}
-
-		task ("When the user leaves mandatory fields empty") {
-			DataSetAdmin.editActions(
-				newActionName = "",
-				newIcon = "pencil",
-				newTitle = "",
-				newVariant = "Small",
-				oldActionName = "Edit");
-		}
-
-		task ("Then an error message is displayed") {
-			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-				value1 = "This field is required.");
-		}
-
-		task ("And the changes cannot be saved") {
-			AssertVisible(
-				key_title = "Edit",
-				locator1 = "Header#H2_TITLE");
-		}
-	}
-
-	@description = "LPS-192956 Confirm that the Title field can be empty on the Side Panel Item Action"
-	@priority = 3
-	test CanLeaveTitleFieldEmptyInSidePanelItemAction {
-		task ("Given a new data set entry") {
-			DataSetAdmin.goToDataSetAdminPage();
-
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Country",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country");
-		}
-
-		task ("And a new view") {
-			DataSetAdmin.createFDSViewViaAPI(
-				dataSetName = "Country",
-				dataSetViewDescription = "FDSViewDescription",
-				key_dataSetViewNameList = "View Test");
-		}
-
-		task ("When the user goes to the view created") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Country",
-				key_viewName = "View Test");
-		}
-
-		task ("When the user goes to the Action tab.") {
-			DataSetAdmin.goToTab(tabName = "Actions");
-		}
-
-		task ("And creates a modal item action and clicks on save button") {
-			DataSetAdmin.addActions(
-				actionName = "Edit",
-				icon = "pencil",
-				title = "",
-				type = "Side Panel",
-				url = "https://gist.github.com/deborasoliveira/40716d0b03d33ff7e636ca5d366c79c5#file-link-action-url-example");
-		}
-
-		task ("And a successful toast message is displayed") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Then it appears on the Action tab table with the new title.") {
-			AssertElementPresent(
-				key_position = 1,
-				keyName = "Edit",
-				locator1 = "DataSet#FIELDS_TABLE");
 		}
 	}
 

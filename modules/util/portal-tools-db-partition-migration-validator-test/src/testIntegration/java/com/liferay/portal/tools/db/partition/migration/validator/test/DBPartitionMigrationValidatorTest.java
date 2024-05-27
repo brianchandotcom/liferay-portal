@@ -74,16 +74,16 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testFailure() throws Exception {
-		String sourceFileName = _runExport(_company.getCompanyId());
+	public void testValidateFailure() throws Exception {
+		String sourceFileName = _testExport(_company.getCompanyId());
 
-		String targetFilePath = _runExport(TestPropsValues.getCompanyId());
+		String targetFilePath = _testExport(TestPropsValues.getCompanyId());
 
 		File[] files = _outputDirectoryFile.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
-		_runValidation(
+		_testValidate(
 			() -> {
 			},
 			runtimeException -> {
@@ -123,18 +123,18 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testSuccess() throws Exception {
-		String sourceFileName = _runExport(_company.getCompanyId());
+	public void testValidateSuccess() throws Exception {
+		String sourceFileName = _testExport(_company.getCompanyId());
 
 		_deleteCompany();
 
-		String targetFileName = _runExport(TestPropsValues.getCompanyId());
+		String targetFileName = _testExport(TestPropsValues.getCompanyId());
 
 		File[] files = _outputDirectoryFile.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
-		_runValidation(
+		_testValidate(
 			() -> {
 				Assert.assertTrue(
 					_outByteArrayOutputStream.toString(
@@ -156,7 +156,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		_company = null;
 	}
 
-	private String _runExport(long companyId) throws Exception {
+	private String _testExport(long companyId) throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
@@ -168,7 +168,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		}
 	}
 
-	private void _runValidation(
+	private void _testValidate(
 			UnsafeRunnable<Exception> afterExecutionUnsafeRunnable,
 			UnsafeConsumer<RuntimeException, Exception> catchUnsafeRunnable,
 			String sourceFileName, String targetFileName)

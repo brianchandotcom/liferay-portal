@@ -33,10 +33,10 @@ public class NotificationQueueEntryResourceTest
 	public void testClientSerDesToDTO() throws Exception {
 		super.testClientSerDesToDTO();
 
-		NotificationQueueEntry notificationQueueEntry1 =
+		NotificationQueueEntry notificationQueueEntry =
 			new NotificationQueueEntry();
 
-		notificationQueueEntry1.setActions(
+		notificationQueueEntry.setActions(
 			new TreeMap<>(
 				HashMapBuilder.put(
 					"action1",
@@ -55,9 +55,9 @@ public class NotificationQueueEntryResourceTest
 							"method", "method2"
 						).build())
 				).build()));
-		notificationQueueEntry1.setBody("This is a body.");
-		notificationQueueEntry1.setSubject("This Is a Subject");
-		notificationQueueEntry1.setRecipients(
+		notificationQueueEntry.setBody("This is a body.");
+		notificationQueueEntry.setSubject("This Is a Subject");
+		notificationQueueEntry.setRecipients(
 			new Object[] {
 				new TreeMap<>(
 					HashMapBuilder.put(
@@ -86,7 +86,7 @@ public class NotificationQueueEntryResourceTest
 						).build())
 				}
 			});
-		notificationQueueEntry1.setType("email");
+		notificationQueueEntry.setType("email");
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -138,18 +138,17 @@ public class NotificationQueueEntryResourceTest
 			).put(
 				"type", "email"
 			).toString(),
-			notificationQueueEntry1.toString(), JSONCompareMode.LENIENT);
+			notificationQueueEntry.toString(), JSONCompareMode.LENIENT);
 
 		NotificationQueueEntrySerDes.NotificationQueueEntryJSONParser
 			notificationQueueEntryJSONParser =
 				new NotificationQueueEntrySerDes.
 					NotificationQueueEntryJSONParser();
 
-		NotificationQueueEntry notificationQueueEntry2 =
+		Assert.assertEquals(
+			notificationQueueEntry,
 			notificationQueueEntryJSONParser.parseToDTO(
-				String.valueOf(notificationQueueEntry1));
-
-		Assert.assertEquals(notificationQueueEntry1, notificationQueueEntry2);
+				notificationQueueEntry.toString()));
 	}
 
 	@Ignore

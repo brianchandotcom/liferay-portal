@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render, screen, waitFor} from '@testing-library/react';
+import {act, render, screen} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -91,6 +91,10 @@ function renderCollection(itemConfig = {}) {
 }
 
 describe('Collection', () => {
+	beforeAll(() => {
+		jest.useFakeTimers();
+	});
+
 	it('renders not collection message when no collection is selected', async () => {
 		CollectionService.getCollectionField.mockImplementation(() =>
 			Promise.resolve()
@@ -121,14 +125,15 @@ describe('Collection', () => {
 					itemType: 'CollectionItemType',
 				},
 				listStyle: '',
+				numberOfPages: 1,
 			});
+
+			jest.runAllTimers();
 		});
 
-		waitFor(() =>
-			expect(
-				document.body.querySelector('.page-editor__collection-item')
-			).toBeInTheDocument()
-		);
+		expect(
+			document.body.querySelector('.page-editor__collection-item')
+		).toBeInTheDocument();
 	});
 
 	it('renders empty collection items', async () => {
@@ -155,12 +160,12 @@ describe('Collection', () => {
 				numberOfPages: 1,
 				paginationType: 'none',
 			});
+
+			jest.runAllTimers();
 		});
 
-		waitFor(() =>
-			items.forEach((item) =>
-				expect(screen.getByText(item.title)).toBeInTheDocument()
-			)
+		items.forEach((item) =>
+			expect(screen.getByText(item.title)).toBeInTheDocument()
 		);
 	});
 
@@ -227,14 +232,14 @@ describe('Collection', () => {
 				numberOfPages: 1,
 				paginationType: 'none',
 			});
+
+			jest.runAllTimers();
 		});
 
-		waitFor(() =>
-			expect(
-				screen.getByText(
-					'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
-				)
-			).toBeInTheDocument()
-		);
+		expect(
+			screen.getByText(
+				'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
+			)
+		).toBeInTheDocument();
 	});
 });

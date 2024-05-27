@@ -15,8 +15,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -179,8 +182,25 @@ public class GetLayoutsStrutsActionTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
+			if (_randomBooleanWithProbability(_DRAFT_LAYOUT_PROBABILITY)) {
+				continue;
+			}
+
 			ContentLayoutTestUtil.publishLayout(
 				layout.fetchDraftLayout(), layout);
+
+			if (_randomBooleanWithProbability(_RESTRICTED_LAYOUT_PROBABILITY)) {
+				RoleTestUtil.removeResourcePermission(
+					RoleConstants.GUEST, Layout.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(layout.getPlid()), ActionKeys.VIEW);
+				RoleTestUtil.removeResourcePermission(
+					RoleConstants.SITE_MEMBER, Layout.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(layout.getPlid()), ActionKeys.VIEW);
+
+				continue;
+			}
 
 			List<Long> childrenLayoutIds = new ArrayList<>();
 
@@ -243,11 +263,23 @@ public class GetLayoutsStrutsActionTest {
 		return mockHttpServletRequest;
 	}
 
+	private boolean _randomBooleanWithProbability(int probability) {
+		if (RandomTestUtil.randomInt(1, 101) <= probability) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final int _COUNT_CHILDREN_LAYOUTS = 5;
 
 	private static final int _COUNT_ROOT_LAYOUTS = 5;
 
+	private static final int _DRAFT_LAYOUT_PROBABILITY = 10;
+
 	private static final int _PAGE_SIZE = 2;
+
+	private static final int _RESTRICTED_LAYOUT_PROBABILITY = 10;
 
 	private static int _originalLayoutManagePagesInitialChildren;
 

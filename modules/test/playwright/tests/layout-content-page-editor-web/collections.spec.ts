@@ -163,7 +163,15 @@ test('checks Content Flags, Content Ratings and Content Display are compatible w
 		),
 		getFragmentDefinition(
 			getRandomString(),
-			'com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer'
+			'com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer',
+			{
+				itemSelector: {
+					template: {
+						infoItemRendererKey:
+							'com.liferay.journal.web.internal.info.item.renderer.JournalArticleFullContentInfoItemRenderer',
+					},
+				},
+			}
 		),
 	]);
 
@@ -192,6 +200,14 @@ test('checks Content Flags, Content Ratings and Content Display are compatible w
 	).toHaveCount(2);
 	await expect(page.getByText('Animal 01 content')).toBeVisible();
 	await expect(page.getByText('Animal 02 content')).toBeVisible();
+
+	// Check that the Content Display shows Default Template by default
+
+	await page.getByText('Animal 02 content').click();
+
+	await expect(page.getByLabel('Template', {exact: true})).toHaveValue(
+		'Default Template'
+	);
 
 	// Check that the Content Ratings is shown in each item and the Field input has the corresponding name
 

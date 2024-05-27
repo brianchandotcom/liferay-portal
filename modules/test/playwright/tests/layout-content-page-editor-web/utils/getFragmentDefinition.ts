@@ -6,7 +6,7 @@
 export default function getFragmentDefinition(
 	id: string,
 	key: string,
-	fragmentConfig?: Record<string, string>,
+	fragmentConfig?: Record<string, any>,
 	fragmentFields?: FragmentField[]
 ): PageElement {
 	return {

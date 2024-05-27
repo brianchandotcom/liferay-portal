@@ -295,3 +295,130 @@ test('modifies inline text on all collection items', async ({
 		await page.locator('.page-editor').getByText('New Content')
 	).toHaveCount(2);
 });
+
+test('checks the different styles for the Display Collection', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+	const checkStyleDisplay = async () => {
+		const listItem = await page.locator(
+			'.lfr-layout-structure-item-collection ul'
+		);
+
+		// Check the Bordered List style
+
+		await expect(listItem.first()).toHaveClass('list-group');
+		await expect(listItem.first().locator('li').first()).toHaveClass(
+			'list-group-item'
+		);
+
+		// Check the Bulleted List style
+
+		await expect(listItem.nth(1)).toHaveAttribute('class', '');
+		await expect(listItem.nth(1).locator('li').first()).toHaveAttribute(
+			'class',
+			''
+		);
+
+		// Check the Inline List style
+
+		await expect(listItem.nth(2)).toHaveClass('d-flex list-inline');
+		await expect(listItem.nth(2).locator('li').first()).toHaveClass(
+			'flex-grow-1'
+		);
+
+		// Check the Numbered List style
+
+		const orderedListItem = await page.locator(
+			'.lfr-layout-structure-item-collection ol'
+		);
+
+		await expect(orderedListItem).not.toHaveAttribute('class');
+		await expect(orderedListItem.locator('li').first()).not.toHaveAttribute(
+			'class'
+		);
+
+		// Check the Unstyled List style
+
+		await expect(listItem.nth(3)).toHaveClass('list-unstyled');
+		await expect(listItem.nth(3).locator('li').first()).toHaveAttribute(
+			'class',
+			''
+		);
+	};
+
+	// Create several definitions with different Style Display
+
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		'Animals',
+		wemSite.friendlyUrlPath
+	);
+
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition(getRandomString(), 'BASIC_COMPONENT-heading'),
+	]);
+
+	const borderedListCollection = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		listStyle: 'Bordered List (Collection Provider)',
+		pageElements: [animalsCollection],
+	});
+
+	const bulletedListCollection = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		listStyle: 'Bulleted List (Collection Provider)',
+		pageElements: [animalsCollection],
+	});
+
+	const inlineListCollection = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		listStyle: 'Inline List',
+		pageElements: [animalsCollection],
+	});
+
+	const numberedListCollection = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		listStyle: 'Numbered List',
+		pageElements: [animalsCollection],
+	});
+
+	const unstyledListCollection = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		listStyle: 'Unstyled List',
+		pageElements: [animalsCollection],
+	});
+
+	// Create a content page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			borderedListCollection,
+			bulletedListCollection,
+			inlineListCollection,
+			numberedListCollection,
+			unstyledListCollection,
+		]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	// Check the Style Display in edit mode
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	await checkStyleDisplay();
+
+	// Check the Style Display in view mode
+
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	await checkStyleDisplay();
+});

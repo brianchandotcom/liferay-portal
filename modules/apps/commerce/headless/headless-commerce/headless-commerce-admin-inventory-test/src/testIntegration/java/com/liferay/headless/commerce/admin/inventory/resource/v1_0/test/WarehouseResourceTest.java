@@ -42,9 +42,11 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 			),
 			null, Pagination.of(1, 10), null);
 
+		Assert.assertNotEquals(warehouse2, page.fetchFirstItem());
+
 		assertContains(warehouse1, (List<Warehouse>)page.getItems());
+
 		Assert.assertEquals(1, page.getTotalCount());
-		Assert.assertNotEquals(page.fetchFirstItem(), warehouse2);
 	}
 
 	@Ignore

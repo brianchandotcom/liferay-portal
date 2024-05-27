@@ -35,4 +35,16 @@ public interface CommerceOrderContentPortletInstanceConfiguration {
 	)
 	public boolean showCommerceOrderCreateTime();
 
+	@Meta.AD(
+		deflt = "false", name = "show-commerce-order-full-address",
+		required = false
+	)
+	public boolean showCommerceOrderFullAddress();
+
+	@Meta.AD(
+		deflt = "false", name = "show-commerce-order-phone-number",
+		required = false
+	)
+	public boolean showCommerceOrderPhoneNumber();
+
 }

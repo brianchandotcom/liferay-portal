@@ -115,6 +115,12 @@ public class CommerceOrderContentConfigurationAction
 			portletPreferences.setValue(
 				"showCommerceOrderCreateTime",
 				getParameter(actionRequest, "showCommerceOrderCreateTime"));
+			portletPreferences.setValue(
+				"showCommerceOrderFullAddress",
+				getParameter(actionRequest, "showCommerceOrderFullAddress"));
+			portletPreferences.setValue(
+				"showCommerceOrderPhoneNumber",
+				getParameter(actionRequest, "showCommerceOrderPhoneNumber"));
 
 			portletPreferences.store();
 		}

@@ -1267,6 +1267,28 @@ public class CommerceOrderContentDisplayContext {
 			showCommerceOrderCreateTime();
 	}
 
+	public boolean isShowCommerceOrderFullAddress() throws PortalException {
+		CommerceOrderContentPortletInstanceConfiguration
+			commerceOrderContentPortletInstanceConfiguration =
+				_configurationProvider.getPortletInstanceConfiguration(
+					CommerceOrderContentPortletInstanceConfiguration.class,
+					_themeDisplay);
+
+		return commerceOrderContentPortletInstanceConfiguration.
+			showCommerceOrderFullAddress();
+	}
+
+	public boolean isShowCommerceOrderPhoneNumber() throws PortalException {
+		CommerceOrderContentPortletInstanceConfiguration
+			commerceOrderContentPortletInstanceConfiguration =
+				_configurationProvider.getPortletInstanceConfiguration(
+					CommerceOrderContentPortletInstanceConfiguration.class,
+					_themeDisplay);
+
+		return commerceOrderContentPortletInstanceConfiguration.
+			showCommerceOrderPhoneNumber();
+	}
+
 	public boolean isShowProcessQuote() throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 

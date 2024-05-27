@@ -1,0 +1,215 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayButtonWithIcon} from '@clayui/button';
+import React, {useCallback, useEffect, useState} from 'react';
+
+const META_FIELD_NAMES = {
+	description: 'descriptionMapAsXML',
+	friendlyURL: 'friendlyURL',
+	title: 'titleMapAsXML',
+};
+
+export default function UndoRedo({
+	initialDefaultLanguageId,
+	languageId,
+	portletNamespace,
+}) {
+	const [
+
+		// eslint-disable-next-line no-unused-vars
+		{defaultLanguageId, history, selectedLanguageId, step},
+		setState,
+	] = useState({
+		defaultLanguageId: initialDefaultLanguageId,
+		history: [],
+		selectedLanguageId: languageId,
+		step: -1,
+	});
+
+	const handleUndoRedo = (newStep) => {
+		const nextStep = history[newStep];
+
+		const titleInputComponent = Liferay.component(
+			`${portletNamespace}${META_FIELD_NAMES.title}`
+		);
+
+		const descriptionInputComponent = Liferay.component(
+			`${portletNamespace}${META_FIELD_NAMES.description}`
+		);
+
+		const friendlyURLInputComponent = Liferay.component(
+			`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
+		);
+
+		if (nextStep.selectedLanguageId !== selectedLanguageId) {
+			const selectedLanguageIdInput = document.getElementById(
+				`${portletNamespace}languageId`
+			);
+
+			selectedLanguageIdInput.value = nextStep.selectedLanguageId;
+
+			titleInputComponent.selectFlag(nextStep.selectedLanguageId);
+			descriptionInputComponent.selectFlag(nextStep.selectedLanguageId);
+			friendlyURLInputComponent.selectFlag(nextStep.selectedLanguageId);
+		}
+		else {
+			titleInputComponent.updateInputLanguage(
+				nextStep.titleInputComponent,
+				nextStep.selectedLanguageId
+			);
+			descriptionInputComponent.updateInputLanguage(
+				nextStep.descriptionInputComponent,
+				nextStep.selectedLanguageId
+			);
+			friendlyURLInputComponent.updateInputLanguage(
+				nextStep.friendlyURLInputComponent,
+				nextStep.selectedLanguageId
+			);
+			titleInputComponent.updateInput(nextStep.titleInputComponent);
+			descriptionInputComponent.updateInput(
+				nextStep.descriptionInputComponent
+			);
+			friendlyURLInputComponent.updateInput(
+				nextStep.friendlyURLInputComponent
+			);
+		}
+		setState({
+			defaultLanguageId: nextStep.defaultLanguageId,
+			history,
+			selectedLanguageId: nextStep.selectedLanguageId,
+			step: newStep,
+		});
+	};
+
+	const handleStoreState = useCallback(
+		({fieldName}) => {
+			const defaultLanguageIdInput = document.getElementById(
+				`${portletNamespace}defaultLanguageId`
+			);
+
+			const descriptionInputComponent = Liferay.componentReady(
+				`${portletNamespace}${META_FIELD_NAMES.description}`
+			);
+
+			const titleInputComponent = Liferay.componentReady(
+				`${portletNamespace}${META_FIELD_NAMES.title}`
+			);
+
+			const friendlyURLInputComponent = Liferay.componentReady(
+				`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
+			);
+
+			const selectedLanguageIdInput = document.getElementById(
+				`${portletNamespace}languageId`
+			);
+
+			Promise.all([
+				descriptionInputComponent,
+				titleInputComponent,
+				friendlyURLInputComponent,
+			]).then(
+				([
+					descriptionInputComponent,
+					titleInputComponent,
+					friendlyURLInputComponent,
+				]) => {
+					const newHistory = {
+						defaultLanguageId: defaultLanguageIdInput.value,
+						descriptionInputComponent:
+							descriptionInputComponent.getValue(
+								selectedLanguageId
+							),
+						friendlyURLInputComponent:
+							friendlyURLInputComponent.getValue(
+								selectedLanguageId
+							),
+						name: fieldName,
+						selectedLanguageId: selectedLanguageIdInput.value,
+						titleInputComponent:
+							titleInputComponent.getValue(selectedLanguageId),
+					};
+
+					setState({
+						defaultLanguageId: defaultLanguageIdInput.value,
+						history: [...history.slice(0, step + 1), newHistory],
+						selectedLanguageId: selectedLanguageIdInput.value,
+						step: step + 1,
+					});
+				}
+			);
+		},
+		[history, portletNamespace, selectedLanguageId, step]
+	);
+
+	const localeChangeHandler = useCallback(
+		(event) => {
+			const selectedLanguageId = event.item.getAttribute('data-value');
+
+			const selectedLanguageIdInput = document.getElementById(
+				`${portletNamespace}languageId`
+			);
+
+			selectedLanguageIdInput.value = selectedLanguageId;
+
+			Liferay.fire('journal:storeState', {fieldName: 'Locale Change'});
+		},
+		[portletNamespace]
+	);
+
+	useEffect(() => {
+		Liferay.after('inputLocalized:localeChanged', localeChangeHandler);
+
+		return () => {
+			Liferay.detach('inputLocalized:localeChanged', localeChangeHandler);
+		};
+	}, [localeChangeHandler]);
+
+	useEffect(() => {
+		Liferay.on('journal:storeState', handleStoreState);
+
+		return () => {
+			Liferay.detach('journal:storeState', handleStoreState);
+		};
+	}, [handleStoreState]);
+
+	useEffect(() => {
+		setTimeout(() => {
+			Liferay.fire('journal:storeState', {fieldName: 'Reset'});
+		}, 1000);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<>
+			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('undo')}
+				className="btn-monospaced"
+				disabled={step <= 0}
+				displayType="secondary"
+				onClick={() => {
+					handleUndoRedo(step - 1);
+				}}
+				size="sm"
+				symbol="undo"
+				title={Liferay.Language.get('undo')}
+			/>
+
+			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('redo')}
+				className="btn-monospaced"
+				disabled={!history.length || step === history.length - 1}
+				displayType="secondary"
+				onClick={() => {
+					handleUndoRedo(step + 1);
+				}}
+				size="sm"
+				symbol="redo"
+				title={Liferay.Language.get('redo')}
+			/>
+		</>
+	);
+}

@@ -39,14 +39,9 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 		ClassNameLocalService classNameLocalService, Portal portal,
 		ResourceActions resourceActions) {
 
+		_classNameLocalService = classNameLocalService;
 		_portal = portal;
-
-		_privateLayoutClassNameId = classNameLocalService.getClassNameId(
-			resourceActions.getCompositeModelName(
-				Layout.class.getName(), Boolean.TRUE.toString()));
-		_publicLayoutClassNameId = classNameLocalService.getClassNameId(
-			resourceActions.getCompositeModelName(
-				Layout.class.getName(), Boolean.FALSE.toString()));
+		_resourceActions = resourceActions;
 	}
 
 	@Override
@@ -59,7 +54,13 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 				"LayoutFriendlyURL.groupId, LayoutFriendlyURL.companyId, ",
 				"LayoutFriendlyURL.plid, LayoutFriendlyURL.privateLayout, ",
 				"CASE WHEN LayoutFriendlyURL.privateLayout = [$TRUE$] THEN ",
-				_privateLayoutClassNameId, " ELSE ", _publicLayoutClassNameId,
+				_classNameLocalService.getClassNameId(
+					_resourceActions.getCompositeModelName(
+						Layout.class.getName(), Boolean.TRUE.toString())),
+				" ELSE ",
+				_classNameLocalService.getClassNameId(
+					_resourceActions.getCompositeModelName(
+						Layout.class.getName(), Boolean.FALSE.toString())),
 				" END as classNameId from LayoutFriendlyURL left join ",
 				"FriendlyURLEntryLocalization on ",
 				"(FriendlyURLEntryLocalization.ctCollectionId = ",
@@ -354,8 +355,8 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutFriendlyURLEntryUpgradeProcess.class);
 
+	private final ClassNameLocalService _classNameLocalService;
 	private final Portal _portal;
-	private final long _privateLayoutClassNameId;
-	private final long _publicLayoutClassNameId;
+	private final ResourceActions _resourceActions;
 
 }

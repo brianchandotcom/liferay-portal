@@ -253,7 +253,8 @@ const Table: React.FC<TableProps> = ({
 
 							{columns?.map((column, columnIndex) => {
 								const Wrapper =
-									column.selectable && navigateTo
+									column.selectable ||
+									(column.clickable && navigateTo)
 										? Link
 										: (props: any) => <div {...props} />;
 

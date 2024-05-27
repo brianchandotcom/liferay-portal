@@ -293,6 +293,16 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+		long groupId, String name, long parentLayoutPageTemplateCollectionId,
+		int type) {
+
+		return _layoutPageTemplateCollectionLocalService.
+			fetchLayoutPageTemplateCollection(
+				groupId, name, parentLayoutPageTemplateCollectionId, type);
+	}
+
+	@Override
 	public LayoutPageTemplateCollection
 		fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId) {
@@ -300,14 +310,6 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 		return _layoutPageTemplateCollectionLocalService.
 			fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 				externalReferenceCode, groupId);
-	}
-
-	@Override
-	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
-		long groupId, String name, int type) {
-
-		return _layoutPageTemplateCollectionLocalService.
-			fetchLayoutPageTemplateCollectionByName(groupId, name, type);
 	}
 
 	/**
@@ -565,11 +567,12 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 
 	@Override
 	public String getUniqueLayoutPageTemplateCollectionName(
-		long groupId, String sourceName, int type) {
+		long groupId, long layoutPageTemplateCollectionId, String sourceName,
+		int type) {
 
 		return _layoutPageTemplateCollectionLocalService.
 			getUniqueLayoutPageTemplateCollectionName(
-				groupId, sourceName, type);
+				groupId, layoutPageTemplateCollectionId, sourceName, type);
 	}
 
 	@Override

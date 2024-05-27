@@ -264,20 +264,21 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	}
 
 	public static LayoutPageTemplateCollection
+		fetchLayoutPageTemplateCollection(
+			long groupId, String name,
+			long parentLayoutPageTemplateCollectionId, int type) {
+
+		return getService().fetchLayoutPageTemplateCollection(
+			groupId, name, parentLayoutPageTemplateCollectionId, type);
+	}
+
+	public static LayoutPageTemplateCollection
 		fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId) {
 
 		return getService().
 			fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 				externalReferenceCode, groupId);
-	}
-
-	public static LayoutPageTemplateCollection
-		fetchLayoutPageTemplateCollectionByName(
-			long groupId, String name, int type) {
-
-		return getService().fetchLayoutPageTemplateCollectionByName(
-			groupId, name, type);
 	}
 
 	/**
@@ -499,10 +500,11 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	}
 
 	public static String getUniqueLayoutPageTemplateCollectionName(
-		long groupId, String sourceName, int type) {
+		long groupId, long layoutPageTemplateCollectionId, String sourceName,
+		int type) {
 
 		return getService().getUniqueLayoutPageTemplateCollectionName(
-			groupId, sourceName, type);
+			groupId, layoutPageTemplateCollectionId, sourceName, type);
 	}
 
 	public static LayoutPageTemplateCollection moveLayoutPageTemplateCollection(

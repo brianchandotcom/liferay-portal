@@ -93,6 +93,16 @@ public class LayoutPageTemplateCollectionServiceUtil {
 
 	public static LayoutPageTemplateCollection
 			fetchLayoutPageTemplateCollection(
+				long groupId, String name,
+				long parentLayoutPageTemplateCollectionId, int type)
+		throws PortalException {
+
+		return getService().fetchLayoutPageTemplateCollection(
+			groupId, name, parentLayoutPageTemplateCollectionId, type);
+	}
+
+	public static LayoutPageTemplateCollection
+			fetchLayoutPageTemplateCollection(
 				String externalReferenceCode, long groupId)
 		throws PortalException {
 

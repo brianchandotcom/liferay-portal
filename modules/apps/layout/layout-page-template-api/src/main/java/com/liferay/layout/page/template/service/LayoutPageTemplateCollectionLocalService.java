@@ -232,13 +232,14 @@ public interface LayoutPageTemplateCollectionLocalService
 		long groupId, String layoutPageTemplateCollectionKey, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+		long groupId, String name, long parentLayoutPageTemplateCollectionId,
+		int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection
 		fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 			String externalReferenceCode, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
-		long groupId, String name, int type);
 
 	/**
 	 * Returns the layout page template collection matching the UUID and group.
@@ -395,7 +396,8 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUniqueLayoutPageTemplateCollectionName(
-		long groupId, String sourceName, int type);
+		long groupId, long layoutPageTemplateCollectionId, String sourceName,
+		int type);
 
 	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId,

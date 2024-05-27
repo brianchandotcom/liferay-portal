@@ -126,6 +126,15 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateEntryId);
 	}
 
+	public static LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateCollectionId, String name,
+			int type)
+		throws PortalException {
+
+		return getService().fetchLayoutPageTemplateEntry(
+			groupId, layoutPageTemplateCollectionId, name, type);
+	}
+
 	public static LayoutPageTemplateEntry
 		fetchLayoutPageTemplateEntryByUuidAndGroupId(
 			String uuid, long groupId) {

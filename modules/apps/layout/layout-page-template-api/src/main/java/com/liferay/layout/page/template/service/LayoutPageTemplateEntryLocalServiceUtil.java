@@ -306,16 +306,18 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type) {
+
+		return getService().fetchLayoutPageTemplateEntry(
+			groupId, layoutPageTemplateCollectionId, name, type);
+	}
+
+	public static LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long groupId, String layoutPageTemplateEntryKey) {
 
 		return getService().fetchLayoutPageTemplateEntry(
 			groupId, layoutPageTemplateEntryKey);
-	}
-
-	public static LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long groupId, String name, int type) {
-
-		return getService().fetchLayoutPageTemplateEntry(groupId, name, type);
 	}
 
 	public static LayoutPageTemplateEntry
@@ -585,10 +587,11 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static String getUniqueLayoutPageTemplateEntryName(
-		long groupId, String name, int type) {
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type) {
 
 		return getService().getUniqueLayoutPageTemplateEntryName(
-			groupId, name, type);
+			groupId, layoutPageTemplateCollectionId, name, type);
 	}
 
 	/**

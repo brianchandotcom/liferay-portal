@@ -346,18 +346,20 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 
 	@Override
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long groupId, String layoutPageTemplateEntryKey) {
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type) {
 
 		return _layoutPageTemplateEntryLocalService.
-			fetchLayoutPageTemplateEntry(groupId, layoutPageTemplateEntryKey);
+			fetchLayoutPageTemplateEntry(
+				groupId, layoutPageTemplateCollectionId, name, type);
 	}
 
 	@Override
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long groupId, String name, int type) {
+		long groupId, String layoutPageTemplateEntryKey) {
 
 		return _layoutPageTemplateEntryLocalService.
-			fetchLayoutPageTemplateEntry(groupId, name, type);
+			fetchLayoutPageTemplateEntry(groupId, layoutPageTemplateEntryKey);
 	}
 
 	@Override
@@ -677,10 +679,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 
 	@Override
 	public String getUniqueLayoutPageTemplateEntryName(
-		long groupId, String name, int type) {
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type) {
 
 		return _layoutPageTemplateEntryLocalService.
-			getUniqueLayoutPageTemplateEntryName(groupId, name, type);
+			getUniqueLayoutPageTemplateEntryName(
+				groupId, layoutPageTemplateCollectionId, name, type);
 	}
 
 	/**

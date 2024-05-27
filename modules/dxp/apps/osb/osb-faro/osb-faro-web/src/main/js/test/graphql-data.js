@@ -53,6 +53,7 @@ import {
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {isArray, mapValues, range} from 'lodash';
+import {PageAudienceReportQuery} from 'shared/components/audience-report/queries';
 import {SegmentPageViewsQuery} from 'shared/queries/SegmentPageViewsQuery';
 import {
 	SitesMetricQuery,
@@ -153,6 +154,53 @@ export function mockAssetAppearsOnReq(variables) {
 						}
 					],
 					total: 1000
+				}
+			}
+		}
+	};
+}
+
+export function mockAudienceReportReq({queryProps}) {
+	return {
+		request: {
+			query: PageAudienceReportQuery(queryProps),
+			variables: {
+				channelId: '456',
+				devices: 'Any',
+				location: 'Any',
+				rangeEnd: null,
+				rangeKey: 30,
+				rangeStart: null,
+				title: 'Home Page',
+				touchpoint: 'https://www.liferay.com'
+			}
+		},
+		result: {
+			data: {
+				page: {
+					__typename: 'PageMetric',
+					viewsMetric: {
+						__typename: 'Metric',
+						audienceReport: {
+							__typename: 'AudienceReport',
+							anonymousUsersCount: 12804,
+							knownUsersCount: 98,
+							nonsegmentedKnownUsersCount: 96,
+							segmentedAnonymousUsersCount: null,
+							segmentedKnownUsersCount: 2
+						},
+						segment: {
+							__typename: 'MetricBag',
+							metrics: [
+								{
+									__typename: 'Metric',
+									value: 2,
+									valueKey: 'UK Visitors'
+								}
+							],
+							total: 1
+						}
+					}
 				}
 			}
 		}

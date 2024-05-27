@@ -39,8 +39,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
-
-		_classNameId = PortalUtil.getClassNameId(Layout.class);
 	}
 
 	@Override
@@ -136,7 +134,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setTimestamp(7, timestamp);
 				preparedStatement2.setTimestamp(8, timestamp);
 
-				preparedStatement2.setLong(9, _classNameId);
+				preparedStatement2.setLong(
+					9, PortalUtil.getClassNameId(Layout.class));
 
 				long plid = resultSet.getLong("plid");
 
@@ -183,7 +182,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateStructureUpgradeProcess.class);
 
-	private final long _classNameId;
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final SegmentsExperienceLocalService
 		_segmentsExperienceLocalService;

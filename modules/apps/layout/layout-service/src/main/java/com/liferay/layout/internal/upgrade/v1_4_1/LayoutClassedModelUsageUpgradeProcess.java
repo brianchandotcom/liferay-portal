@@ -36,10 +36,8 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 	public LayoutClassedModelUsageUpgradeProcess(
 		ClassNameLocalService classNameLocalService, JSONFactory jsonFactory) {
 
+		_classNameLocalService = classNameLocalService;
 		_jsonFactory = jsonFactory;
-
-		_fragmentEntryLinkClassNameId = classNameLocalService.getClassNameId(
-			FragmentEntryLink.class.getName());
 	}
 
 	@Override
@@ -142,8 +140,10 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 							groupId, companyId, classNameId, classPK,
 							externalReferenceCode,
 							String.valueOf(fragmentEntryLinkId),
-							_fragmentEntryLinkClassNameId, plid,
-							layoutClassedModelUsageTypes, preparedStatement);
+							_classNameLocalService.getClassNameId(
+								FragmentEntryLink.class.getName()),
+							plid, layoutClassedModelUsageTypes,
+							preparedStatement);
 					}
 				},
 				"Unable to create layout classed model usages for fragment " +
@@ -242,7 +242,10 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(1, classNameId);
 			preparedStatement.setLong(2, classPK);
 			preparedStatement.setString(3, String.valueOf(fragmentEntryLinkId));
-			preparedStatement.setLong(4, _fragmentEntryLinkClassNameId);
+			preparedStatement.setLong(
+				4,
+				_classNameLocalService.getClassNameId(
+					FragmentEntryLink.class.getName()));
 			preparedStatement.setLong(5, plid);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -276,7 +279,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private final long _fragmentEntryLinkClassNameId;
+	private final ClassNameLocalService _classNameLocalService;
 	private final JSONFactory _jsonFactory;
 
 }

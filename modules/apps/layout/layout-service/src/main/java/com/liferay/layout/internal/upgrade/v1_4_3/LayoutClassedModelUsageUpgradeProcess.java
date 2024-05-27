@@ -22,10 +22,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 	public LayoutClassedModelUsageUpgradeProcess(
 		ClassNameLocalService classNameLocalService) {
 
-		_dlFileEntryClassNameId = classNameLocalService.getClassNameId(
-			DLFileEntry.class.getName());
-		_fileEntryClassNameId = classNameLocalService.getClassNameId(
-			FileEntry.class.getName());
+		_classNameLocalService = classNameLocalService;
 	}
 
 	@Override
@@ -37,14 +34,19 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 					"update LayoutClassedModelUsage set classNameId = ? " +
 						"where classNameId = ?")) {
 
-			preparedStatement.setLong(1, _fileEntryClassNameId);
-			preparedStatement.setLong(2, _dlFileEntryClassNameId);
+			preparedStatement.setLong(
+				1,
+				_classNameLocalService.getClassNameId(
+					FileEntry.class.getName()));
+			preparedStatement.setLong(
+				2,
+				_classNameLocalService.getClassNameId(
+					DLFileEntry.class.getName()));
 
 			preparedStatement.executeUpdate();
 		}
 	}
 
-	private final long _dlFileEntryClassNameId;
-	private final long _fileEntryClassNameId;
+	private final ClassNameLocalService _classNameLocalService;
 
 }

@@ -18,7 +18,7 @@ import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	wemSiteTest,
 	collectionsPagesTest,
@@ -29,7 +29,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-export const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
+const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
 
 test('allows adding a Collection Display with a manual collection into another Collection Display with Recent Content', async ({
 	apiHelpers,

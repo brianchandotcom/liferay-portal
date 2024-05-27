@@ -43,7 +43,8 @@ function normalizeInputValue(fieldType, locale, value) {
 		fieldType === 'document_library' ||
 		fieldType === 'geolocation' ||
 		fieldType === 'grid' ||
-		fieldType === 'image'
+		fieldType === 'image' ||
+		fieldType === 'select'
 	) {
 		return !Object.keys(value).length ? '' : JSON.stringify(value);
 	}

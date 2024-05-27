@@ -422,29 +422,72 @@ public class IndexHelperImpl implements IndexHelper {
 	private void _processContributions(
 		IndexConfigurationContributor indexConfigurationContributor) {
 
-		if (Validator.isNotNull(
-				_openSearchConfigurationWrapper.overrideTypeMappings())) {
-
-			return;
-		}
+		OpenSearchClient openSearchClient = null;
 
 		try {
-			OpenSearchClient openSearchClient =
+			openSearchClient =
 				_openSearchConnectionManager.getOpenSearchClient();
-
-			_companyLocalService.forEachCompanyId(
-				companyId -> indexConfigurationContributor.contributeMappings(
-					new MappingsFactory(
-						getIndexName(companyId), _jsonFactory,
-						openSearchClient.indices(),
-						_openSearchConfigurationWrapper)),
-				IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 		}
 		catch (OpenSearchConnectionNotInitializedException
 					openSearchConnectionNotInitializedException) {
 
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skipping contributor " + indexConfigurationContributor);
+			}
+
 			_log.error(openSearchConnectionNotInitializedException);
+
+			return;
 		}
+
+		JSONObject settingsJSONObject = _jsonFactory.createJSONObject();
+
+		indexConfigurationContributor.contributeSettings(
+			settingsJSONObject::put);
+
+		OpenSearchIndicesClient openSearchIndicesClient =
+			openSearchClient.indices();
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				String indexName = getIndexName(companyId);
+
+				if (!settingsJSONObject.keySet(
+					).isEmpty()) {
+
+					UpdateIndexSettingsIndexRequest
+						updateIndexSettingsIndexRequest =
+							new UpdateIndexSettingsIndexRequest(indexName);
+
+					updateIndexSettingsIndexRequest.setSettings(
+						settingsJSONObject.toString());
+
+					try {
+						_searchEngineAdapter.execute(
+							updateIndexSettingsIndexRequest);
+					}
+					catch (Exception exception) {
+						_log.error(
+							StringBundler.concat(
+								"Unable to put settings for index ", indexName,
+								" with contributor ",
+								indexConfigurationContributor),
+							exception);
+					}
+				}
+
+				if (Validator.isNull(
+						_openSearchConfigurationWrapper.
+							overrideTypeMappings())) {
+
+					indexConfigurationContributor.contributeMappings(
+						new MappingsFactory(
+							indexName, _jsonFactory, openSearchIndicesClient,
+							_openSearchConfigurationWrapper));
+				}
+			},
+			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 	}
 
 	private void _setTestModeIndexSettings(

@@ -204,7 +204,9 @@ public class GetLayoutsStrutsActionTest {
 
 			List<Long> childrenLayoutIds = new ArrayList<>();
 
-			if (parentLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+			if ((parentLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) &&
+				_randomBooleanWithProbability(_CHILDREN_PROBABILITY)) {
+
 				Map<Long, List<Long>> childrenLayoutIdsMap = _getLayouts(
 					_COUNT_CHILDREN_LAYOUTS, layout.getLayoutId());
 
@@ -270,6 +272,8 @@ public class GetLayoutsStrutsActionTest {
 
 		return false;
 	}
+
+	private static final int _CHILDREN_PROBABILITY = 50;
 
 	private static final int _COUNT_CHILDREN_LAYOUTS = 5;
 

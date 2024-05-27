@@ -9,8 +9,8 @@ import {Locator, Page} from '@playwright/test';
 
 export class ProductMenuPage {
 	readonly contentAndDataButton: Locator;
-	readonly importButton: Locator;
 	readonly formsButton: Locator;
+	readonly importButton: Locator;
 	readonly page: Page;
 	readonly pagesButton: Locator;
 	readonly productMenuButton: Locator;
@@ -20,17 +20,17 @@ export class ProductMenuPage {
 	readonly webContentButton: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
 		this.contentAndDataButton = page.getByRole('menuitem', {
 			name: 'Content & Data',
-		});
-		this.importButton = page.getByRole('menuitem', {
-			name: 'Import',
 		});
 		this.formsButton = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Forms',
 		});
+		this.importButton = page.getByRole('menuitem', {
+			name: 'Import',
+		});
+		this.page = page;
 		this.pagesButton = page.getByRole('menuitem', {name: 'Pages'});
 		this.productMenuButton = page.getByLabel('Open Product Menu');
 		this.productMenuHeader = page.locator(
@@ -47,24 +47,11 @@ export class ProductMenuPage {
 		});
 	}
 
-	async goToPublishingImport() {
-		await this.publishingButton.click();
-		await this.importButton.click();
-	}
-
-	async goToForms() {
-		await this.contentAndDataButton.click();
-		await this.formsButton.click();
-	}
-
-	async goToWebContent() {
-		await this.contentAndDataButton.click();
-		await this.webContentButton.click();
-	}
-
-	async goToPages() {
-		await this.siteBuilderButton.click();
-		await this.pagesButton.click();
+	async checkIfAdecuateProductMenu(templateName: string) {
+		await this.productMenuHeader
+			.filter({hasText: templateName})
+			.nth(2)
+			.isVisible();
 	}
 
 	async clickSpecificPage(pageName: string) {
@@ -76,11 +63,24 @@ export class ProductMenuPage {
 		return await this.page.getByText(templateName).getAttribute('href');
 	}
 
-	async checkIfAdecuateProductMenu(templateName: string) {
-		await this.productMenuHeader
-			.filter({hasText: templateName})
-			.nth(2)
-			.isVisible();
+	async goToForms() {
+		await this.contentAndDataButton.click();
+		await this.formsButton.click();
+	}
+
+	async goToPages() {
+		await this.siteBuilderButton.click();
+		await this.pagesButton.click();
+	}
+
+	async goToPublishingImport() {
+		await this.publishingButton.click();
+		await this.importButton.click();
+	}
+
+	async goToWebContent() {
+		await this.contentAndDataButton.click();
+		await this.webContentButton.click();
 	}
 
 	async openProductMenuIfClosed() {

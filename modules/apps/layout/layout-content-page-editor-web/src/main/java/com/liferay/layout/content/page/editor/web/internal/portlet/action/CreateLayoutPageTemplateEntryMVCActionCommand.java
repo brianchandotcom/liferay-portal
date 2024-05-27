@@ -114,7 +114,9 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			_layoutPageTemplateEntryService.
 				createLayoutPageTemplateEntryFromLayout(
 					segmentsExperienceId, sourceLayout,
-					_getUniqueName(sourceLayout, themeDisplay.getLocale()),
+					_getUniqueName(
+						layoutPageTemplateCollectionId, sourceLayout,
+						themeDisplay.getLocale()),
 					layoutPageTemplateCollectionId, serviceContext);
 
 		return JSONUtil.put(
@@ -196,7 +198,9 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 		return JSONUtil.put("error", errorMessage);
 	}
 
-	private String _getUniqueName(Layout layout, Locale locale) {
+	private String _getUniqueName(
+		long layoutPageTemplateCollectionId, Layout layout, Locale locale) {
+
 		String name = StringBundler.concat(
 			layout.getName(locale), " - ",
 			_language.get(locale, "page-template"));
@@ -205,8 +209,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(
-						layout.getGroupId(), name,
-						LayoutPageTemplateEntryTypeConstants.BASIC);
+						layout.getGroupId(), layoutPageTemplateCollectionId,
+						name, LayoutPageTemplateEntryTypeConstants.BASIC);
 
 			if (targetLayoutPageTemplateEntry == null) {
 				break;

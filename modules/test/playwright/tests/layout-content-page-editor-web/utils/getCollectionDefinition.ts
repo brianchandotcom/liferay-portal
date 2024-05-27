@@ -6,7 +6,10 @@
 type ListStyle =
 	| 'Bordered List (Collection Provider)'
 	| 'Bulleted List (Collection Provider)'
-	| 'Bulleted List (Journal)';
+	| 'Bulleted List (Journal)'
+	| 'Inline List'
+	| 'Numbered List'
+	| 'Unstyled List';
 
 type Props = {
 	classPK?: number;
@@ -34,6 +37,12 @@ const LIST_STYLES = {
 		'com.liferay.asset.info.internal.list.renderer.BulletedAssetEntryBasicInfoListRenderer',
 	'Bulleted List (Journal)':
 		'com.liferay.journal.web.internal.info.list.renderer.BulletedJournalArticleBasicInfoListRenderer',
+	'Inline List':
+		'com.liferay.journal.web.internal.info.list.renderer.InlineJournalArticleBasicInfoListRenderer',
+	'Numbered List':
+		'com.liferay.journal.web.internal.info.list.renderer.NumberedJournalArticleBasicInfoListRenderer',
+	'Unstyled List':
+		'com.liferay.journal.web.internal.info.list.renderer.UnstyledJournalArticleBasicInfoListRenderer',
 };
 
 export default function getCollectionDefinition({

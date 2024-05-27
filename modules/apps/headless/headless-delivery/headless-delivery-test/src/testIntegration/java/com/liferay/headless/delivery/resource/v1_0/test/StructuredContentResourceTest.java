@@ -1877,7 +1877,8 @@ public class StructuredContentResourceTest
 		user = _userLocalService.updateUser(user);
 
 		user = _userLocalService.updatePassword(
-			user.getUserId(), "test", "test", false, true);
+			user.getUserId(), PropsValues.DEFAULT_ADMIN_PASSWORD,
+			PropsValues.DEFAULT_ADMIN_PASSWORD, false, true);
 
 		try {
 			StructuredContent postStructuredContent =
@@ -1889,7 +1890,7 @@ public class StructuredContentResourceTest
 
 			StructuredContentResource structuredContentResource =
 				builder.authentication(
-					user.getEmailAddress(), "test"
+					user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 				).locale(
 					LocaleUtil.getDefault()
 				).build();

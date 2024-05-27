@@ -14,6 +14,7 @@ import {
 	Text,
 	Tooltip
 } from 'recharts';
+import {Text as ClayText} from '@clayui/core';
 import {Dataset} from './types';
 import {get} from 'lodash';
 import {toFixedPoint, toRounded} from 'shared/util/numbers';
@@ -172,19 +173,10 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 						content={(props: ITooltipContentProps) => (
 							<TooltipContent {...props} />
 						)}
-						wrapperStyle={{
-							border: '1px solid #CDCED9',
-							borderRadius: '3px',
-							maxWidth: 'none',
-							padding: '0'
-						}}
 					/>
 
 					<Legend
-						formatter={(
-							_: any,
-							{payload: {label}}: {payload: {label: string}}
-						) => {
+						formatter={(_, {payload: {label}}) => {
 							if (isEmpty) {
 								return (
 									<div className='text-center pl-4 pr-4'>
@@ -193,9 +185,17 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 								);
 							}
 
-							return <span className='legend-item'>{label}</span>;
+							return (
+								<ClayText
+									className='legend-item'
+									color='secondary'
+									size={3}
+								>
+									{label}
+								</ClayText>
+							);
 						}}
-						iconSize={isEmpty ? 0 : 14}
+						iconSize={isEmpty ? 0 : 12}
 						layout='vertical'
 						onBlur={() => {}}
 						onMouseMove={handleSetHoverIndex}

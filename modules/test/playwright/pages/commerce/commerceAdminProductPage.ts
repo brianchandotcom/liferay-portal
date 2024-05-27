@@ -66,6 +66,7 @@ export class CommerceAdminProductPage {
 
 		await this.creationMenuNewButton.click();
 		await this.generateSkusMenuItem.click();
+		await this.page.reload();
 	}
 
 	async goto() {

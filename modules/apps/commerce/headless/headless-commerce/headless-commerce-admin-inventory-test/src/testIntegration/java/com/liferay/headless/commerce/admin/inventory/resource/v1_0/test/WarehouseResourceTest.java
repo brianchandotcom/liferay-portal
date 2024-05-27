@@ -7,12 +7,15 @@ package com.liferay.headless.commerce.admin.inventory.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
+import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
+import com.liferay.headless.commerce.admin.inventory.client.pagination.Pagination;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -108,6 +111,23 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 				postWarehouse.getExternalReferenceCode());
 
 		assertEquals(postWarehouse, patchWarehouse);
+	}
+
+	@Test
+	public void testSearchWarehouseByName() throws Exception {
+		Warehouse postWarehouse1 = _addWarehouse();
+		Warehouse postWarehouse2 = _addWarehouse();
+
+		Page<Warehouse> page = warehouseResource.getWarehousesPage(
+			postWarehouse1.getName(
+			).get(
+				"en_US"
+			),
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+		assertEquals(page.fetchFirstItem(), postWarehouse1);
+		Assert.assertNotEquals(page.fetchFirstItem(), postWarehouse2);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import {config} from '../../../../../../../../../src/main/resources/META-INF/res
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateFormItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateFormItemConfig';
 import {pageContentsAtom} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
+import {openInfoFieldSelector} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/openInfoFieldSelector';
 import {FormGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/FormGeneralPanel';
 
 jest.mock(
@@ -26,6 +27,13 @@ jest.mock(
 jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateFormItemConfig',
 	() => jest.fn(() => () => Promise.resolve())
+);
+
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/openInfoFieldSelector',
+	() => ({
+		openInfoFieldSelector: jest.fn(() => {}),
+	})
 );
 
 jest.mock(
@@ -50,6 +58,7 @@ jest.mock(
 					value: '0',
 				},
 				{
+					className: '11111-className',
 					isRestricted: false,
 					label: 'Form Type 1',
 					subtypes: [],
@@ -364,5 +373,25 @@ describe('FormGeneralPanel', () => {
 				'this-content-is-currently-unavailable-or-has-been-deleted.-users-cannot-see-this-fragment'
 			)
 		).toBeInTheDocument();
+	});
+
+	it('opens field selection modal with correct type when clicking sidebar button', async () => {
+		Liferay.FeatureFlags['LPD-20213'] = true;
+
+		await act(async () => {
+			renderComponent();
+		});
+
+		const button = screen.getByText('manage-form-fields');
+
+		await fireEvent.click(button);
+
+		expect(openInfoFieldSelector).toBeCalledWith(
+			expect.objectContaining({
+				itemType: '11111-className',
+			})
+		);
+
+		Liferay.FeatureFlags['LPD-20213'] = false;
 	});
 });

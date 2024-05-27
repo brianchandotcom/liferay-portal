@@ -69,7 +69,7 @@ public class FDSSampleDisplayContext {
 		String portalURL = company.getPortalURL(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		FDSActionDropdownItem actionTitleFDSActionDropdownItem =
+		FDSActionDropdownItem sidePanel1FDSActionDropdownItem =
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
@@ -81,11 +81,11 @@ public class FDSSampleDisplayContext {
 				"rectangle-split", "open-side-panel-no-title",
 				"Side Panel With Action Title", null, null, "sidePanel");
 
-		actionTitleFDSActionDropdownItem.putData("disableHeader", false);
-		actionTitleFDSActionDropdownItem.putData(
+		sidePanel1FDSActionDropdownItem.putData("disableHeader", false);
+		sidePanel1FDSActionDropdownItem.putData(
 			"title", "Side Panel Title Provided by Action");
 
-		FDSActionDropdownItem duplicateTitleFDSActionDropdownItem =
+		FDSActionDropdownItem sidePanel2FDSActionDropdownItem =
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
@@ -98,11 +98,11 @@ public class FDSSampleDisplayContext {
 				"Side Panel With Action and Content Title", null, null,
 				"sidePanel");
 
-		duplicateTitleFDSActionDropdownItem.putData("disableHeader", false);
-		duplicateTitleFDSActionDropdownItem.putData(
+		sidePanel2FDSActionDropdownItem.putData("disableHeader", false);
+		sidePanel2FDSActionDropdownItem.putData(
 			"title", "Side Panel Title Provided by Action");
 
-		FDSActionDropdownItem sidePanelTitleFDSActionDropdownItem =
+		FDSActionDropdownItem sidePanel3FDSActionDropdownItem =
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
@@ -114,7 +114,7 @@ public class FDSSampleDisplayContext {
 				"rectangle-split", "open-side-panel-title",
 				"Side Panel With Content Title", null, null, "sidePanel");
 
-		sidePanelTitleFDSActionDropdownItem.putData("disableHeader", true);
+		sidePanel3FDSActionDropdownItem.putData("disableHeader", true);
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
@@ -135,9 +135,8 @@ public class FDSSampleDisplayContext {
 				"http://localhost", "times-circle",
 				"asyncErrorConnectionRefused", "Async Connection Refused",
 				"get", null, "async"),
-			actionTitleFDSActionDropdownItem,
-			duplicateTitleFDSActionDropdownItem,
-			sidePanelTitleFDSActionDropdownItem,
+			sidePanel1FDSActionDropdownItem, sidePanel2FDSActionDropdownItem,
+			sidePanel3FDSActionDropdownItem,
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse

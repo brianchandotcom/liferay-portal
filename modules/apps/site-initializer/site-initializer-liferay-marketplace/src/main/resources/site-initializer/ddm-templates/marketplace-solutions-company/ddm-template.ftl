@@ -21,11 +21,11 @@
 </style>
 
 <#if (CPDefinition_cProductId.getData())??>
-    <#assign productId = CPDefinition_cProductId.getData() />
+	<#assign productId = CPDefinition_cProductId.getData() />
 </#if>
 
 <#if themeDisplay?has_content>
-    <#assign scopeGroupId = themeDisplay.getScopeGroupId() />
+	<#assign scopeGroupId = themeDisplay.getScopeGroupId() />
 </#if>
 
 <#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'") />
@@ -34,124 +34,123 @@
 	<#assign channelId = channel.items[0].id />
 </#if>
 
-<#assign productId = CPDefinition_cProductId.getData() />
-
-<#assign product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")/>
-
 <#assign
-    catalogName = product.catalogName
-    productImage = product.images![]
-    solutionHeaderImages = productImage?filter(image -> image.tags?seq_contains("solution-profile-app-icon"))
+	productId = CPDefinition_cProductId.getData()
+
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")
+
+	catalogName = product.catalogName
+	productImage = product.images![]
+	solutionHeaderImages = productImage?filter(image -> image.tags?seq_contains("solution-profile-app-icon"))
 />
-   
+
 <#if product.productSpecifications?has_content>
-    <#assign productSpecifications = product.productSpecifications  />
+	<#assign
+		productSpecifications = product.productSpecifications
 
-    <#assign
-        companyDescriptionSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-description")
-        companyEmailSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-email")
-        companyPhoneSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-phone")
-        companyWebsiteSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-website")
-    />
-            
-    <#if companyDescriptionSpecification?has_content>
-        <#assign
-            companyDescription = companyDescriptionSpecification[0].value
-            companyEmail = companyEmailSpecification[0].value
-            companyPhone = companyPhoneSpecification[0].value
-            companyWebsite = companyWebsiteSpecification[0].value
-        />
-    </#if>
+		companyDescriptionSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-description")
+		companyEmailSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-email")
+		companyPhoneSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-phone")
+		companyWebsiteSpecification = productSpecifications?filter(specification -> specification.specificationKey == "solution-company-website")
+	/>
 
-    <#if hasVideo?has_content>
-        <#assign headerVideoUrl = hasVideo[0].value />
-    </#if>
+	<#if companyDescriptionSpecification?has_content>
+		<#assign
+			companyDescription = companyDescriptionSpecification[0].value
+			companyEmail = companyEmailSpecification[0].value
+			companyPhone = companyPhoneSpecification[0].value
+			companyWebsite = companyWebsiteSpecification[0].value
+		/>
+	</#if>
+
+	<#if hasVideo?has_content>
+		<#assign headerVideoUrl = hasVideo[0].value />
+	</#if>
 </#if>
 
 <#if catalogName?has_content && companyDescription?has_content>
-    <div class="block-container">
-        <div class="align-items-center container d-flex flex-column ">
-            <#if solutionHeaderImages?has_content>
-                <#list solutionHeaderImages as image>
-                    <#assign imageSourceSplitedUrl = image.src?split("/o") />
-                    
-                    <#if imageSourceSplitedUrl?has_content>
-                        <#assign productThumbnail = "/o/${imageSourceSplitedUrl[1]}" />
-                        
-                        <img alt="Slide ${image?index}" class="catalog-icon mb-8" src="${productThumbnail}">
-                    </#if>
-                </#list>
-            </#if>
+	<div class="block-container">
+		<div class="align-items-center container d-flex flex-column">
+			<#if solutionHeaderImages?has_content>
+				<#list solutionHeaderImages as image>
+					<#assign imageSourceSplitedUrl = image.src?split("/o") />
 
-            <h1 class="mb-6">
-                ${catalogName}
-            </h1>
+					<#if imageSourceSplitedUrl?has_content>
+						<#assign productThumbnail = "/o/${imageSourceSplitedUrl[1]}" />
 
-            <div class="company-description-container mb-6">
-                ${companyDescription}
-            </div>
+						<img alt="Slide ${image?index}" class="catalog-icon mb-8" src="${productThumbnail}">
+					</#if>
+				</#list>
+			</#if>
 
-            <div class="bg-white company-description-icons-container d-flex justify-content-between px-8 py-7">
-                <#if companyWebsite?has_content>
-                    <div class="d-flex flex-row">
-                        <div class="align-items-center d-flex mr-2">
-                            <img
-                                class="company-icon"
-                                aria-label="video-thumbnail"
-                                src="/documents/d/marketplace/lr-icon-063-png" />
-                        </div>
+			<h1 class="mb-6">
+				${catalogName}
+			</h1>
 
-                        <div class="d-flex flex-column">
-                            <h2 class="m-0">
-                                Website
-                            </h2>
-                            <a href="https://${companyWebsite}" class="font-weight-bold" target="_blank">
-                                ${companyWebsite}
-                            </a>
-                        </div>
-                    </div>
-                </#if>
+			<div class="company-description-container mb-6">
+				${companyDescription}
+			</div>
 
-                <#if companyEmail?has_content>
-                    <div class="d-flex flex-row">
-                        <div class="align-items-center d-flex mr-2">
-                            <img
-                                class="company-icon"
-                                aria-label="video-thumbnail"
-                                src="/documents/d/marketplace/lr-icon-184-png" />
-                        </div>
+			<div class="bg-white company-description-icons-container d-flex justify-content-between px-8 py-7">
+				<#if companyWebsite?has_content>
+					<div class="d-flex flex-row">
+						<div class="align-items-center d-flex mr-2">
+							<img
+								class="company-icon"
+								aria-label="video-thumbnail"
+								src="/documents/d/marketplace/lr-icon-063-png">
+							</img>
+						</div>
 
-                        <div class="d-flex flex-column">
-                            <h2 class="m-0">
-                                Email
-                            </h2>
-                            <a href="mailto:${companyEmail}" class="font-weight-bold" target="_blank">
-                                ${companyEmail}
-                            </a>
-                        </div>
-                    </div>
-                </#if>
+					<div class="d-flex flex-column">
+						<h2 class="m-0">Website</h2>
+							<a class="font-weight-bold" href="https://${companyWebsite}" target="_blank">
+								${companyWebsite}
+							</a>
+						</div>
+					</div>
+				</#if>
 
-                <#if companyEmail?has_content>
-                    <div class="d-flex flex-row">
-                        <div class="align-items-center d-flex mr-2">
-                            <img
-                                class="company-icon"
-                                aria-label="video-thumbnail"
-                                src="/documents/d/marketplace/lr-icon-185-png" />
-                        </div>
+				<#if companyEmail?has_content>
+					<div class="d-flex flex-row">
+						<div class="align-items-center d-flex mr-2">
+							<img
+								class="company-icon"
+								aria-label="video-thumbnail"
+								src="/documents/d/marketplace/lr-icon-184-png">
+							</img>
+						</div>
 
-                        <div class="d-flex flex-column">
-                            <h2 class="m-0">
-                                Phone
-                            </h2>
-                            <a href="tel:${companyPhone}" class="font-weight-bold" target="_blank">
-                                ${companyPhone}
-                            </a>
-                        </div>
-                    </div>
-                </#if>
-            </div>
-        </div>
-    </div>
+						<div class="d-flex flex-column">
+							<h2 class="m-0">Email</h2>
+
+							<a class="font-weight-bold" href="mailto:${companyEmail}" target="_blank">
+								${companyEmail}
+							</a>
+						</div>
+					</div>
+				</#if>
+
+				<#if companyEmail?has_content>
+					<div class="d-flex flex-row">
+						<div class="align-items-center d-flex mr-2">
+							<img
+								class="company-icon"
+								aria-label="video-thumbnail"
+								src="/documents/d/marketplace/lr-icon-185-png">
+							</img>
+						</div>
+
+						<div class="d-flex flex-column">
+							<h2 class="m-0">Phone</h2>
+
+							<a class="font-weight-bold" href="tel:${companyPhone}" target="_blank">
+								${companyPhone}
+							</a>
+						</div>
+					</div>
+				</#if>
+			</div>
+		</div>
+	</div>
 </#if>

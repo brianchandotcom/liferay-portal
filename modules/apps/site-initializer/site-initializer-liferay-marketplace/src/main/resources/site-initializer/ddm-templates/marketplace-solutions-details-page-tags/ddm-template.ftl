@@ -25,21 +25,20 @@
 </#if>
 
 <#if (CPDefinition_cProductId.getData())??>
-	<#assign productId = CPDefinition_cProductId.getData() />
+	<#assign
+		productId = CPDefinition_cProductId.getData()
+		product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=categories")
+
+		categories = product.categories
+	/>
+
+	<div class="color-neutral-3 d-flex flex-wrap font-size-paragraph-small solution-tag-container">
+		<#list categories as category>
+			<#if category.vocabulary == VOCABULARY_NAME>
+				<div class="border-radius-small px-2 py-1 solution-tag">
+					${category.name}
+				</div>
+			</#if>
+		</#list>
+	</div>
 </#if>
-
-<#assign product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=categories") />
-
-<#if categories?has_content>
-	<#assign categoriesItems = product.categories />
-</#if>
-
-<div class="color-neutral-3 d-flex flex-wrap font-size-paragraph-small solution-tag-container">
-	<#list categoriesItems as tag>
-		<#if tag.vocabulary == VOCABULARY_NAME>
-			<div class="border-radius-small px-2 py-1 solution-tag">
-				${tag.name}
-			</div>
-		</#if>
-	</#list>
-</div>

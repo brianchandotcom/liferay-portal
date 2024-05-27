@@ -37,7 +37,7 @@ test.afterEach(async ({apiHelpers, page, siteSettingsLocalizationPage}) => {
 			await apiHelpers.listTypeAdmin.getListTypeDefinitions();
 
 		const [createdListTypeDefinition] = listTypeDefinitions.items.filter(
-			(listTypeDefinition: PickList) =>
+			(listTypeDefinition: ListTypeDefinition) =>
 				listTypeDefinition.name === createdListTypeDefinitionName
 		);
 

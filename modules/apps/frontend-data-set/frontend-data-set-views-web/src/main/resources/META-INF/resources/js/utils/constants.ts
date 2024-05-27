@@ -6,17 +6,16 @@
 import {IBaseVisualizationMode} from './types';
 
 const API_URL = {
-	FDS_ACTIONS: '/o/data-set-manager/actions',
-	FDS_CARDS_SECTIONS: '/o/data-set-manager/cards-sections',
-	FDS_CLIENT_EXTENSION_FILTERS:
-		'/o/data-set-manager/client-extension-filters',
-	FDS_DATE_FILTERS: '/o/data-set-manager/date-filters',
-	FDS_DYNAMIC_FILTERS: '/o/data-set-manager/dynamic-filters',
+	ACTIONS: '/o/data-set-manager/actions',
+	CARDS_SECTIONS: '/o/data-set-manager/cards-sections',
+	CLIENT_EXTENSION_FILTERS: '/o/data-set-manager/client-extension-filters',
+	DATA_SETS: '/o/data-set-manager/data-sets',
+	DATE_FILTERS: '/o/data-set-manager/date-filters',
 	FDS_ENTRIES: '/o/data-set-manager/entries',
-	FDS_FIELDS: '/o/data-set-manager/fields',
-	FDS_LIST_SECTIONS: '/o/data-set-manager/list-sections',
-	FDS_SORTS: '/o/data-set-manager/sorts',
-	FDS_VIEWS: '/o/data-set-manager/views',
+	LIST_SECTIONS: '/o/data-set-manager/list-sections',
+	SELECTION_FILTERS: '/o/data-set-manager/selection-filters',
+	SORTS: '/o/data-set-manager/sorts',
+	TABLE_SECTIONS: '/o/data-set-manager/table-sections',
 };
 
 const FUZZY_OPTIONS = {
@@ -25,33 +24,31 @@ const FUZZY_OPTIONS = {
 };
 
 const OBJECT_RELATIONSHIP = {
+	DATA_SET_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
+	DATA_SET_CARDS_SECTION_ERC:
+		'r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC',
+	DATA_SET_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
+	DATA_SET_CLIENT_EXTENSION_FILTER_ID:
+		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',
+	DATA_SET_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship',
+	DATA_SET_CREATION_ACTION_ID:
+		'r_fdsViewFDSCreationActionRelationship_c_fdsViewId',
+	DATA_SET_DATE_FILTER: 'fdsViewFDSDateFilterRelationship',
+	DATA_SET_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_c_fdsViewId',
+	DATA_SET_ITEM_ACTION: 'fdsViewFDSItemActionRelationship',
+	DATA_SET_ITEM_ACTION_ID: 'r_fdsViewFDSItemActionRelationship_c_fdsViewId',
+	DATA_SET_LIST_SECTION: 'fdsViewFDSListSectionRelationship',
+	DATA_SET_LIST_SECTION_ERC:
+		'r_fdsViewFDSListSectionRelationship_c_fdsViewERC',
+	DATA_SET_SELECTION_FILTER: 'fdsViewFDSDynamicFilterRelationship',
+	DATA_SET_SELECTION_FILTER_ID:
+		'r_fdsViewFDSDynamicFilterRelationship_c_fdsViewId',
+	DATA_SET_SORT: 'fdsViewFDSSortRelationship',
+	DATA_SET_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId',
+	DATA_SET_TABLE_SECTION: 'fdsViewFDSFieldRelationship',
+	DATA_SET_TABLE_SECTION_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId',
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
-	FDS_VIEW_FDS_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
-	FDS_VIEW_FDS_CARDS_SECTION_ERC:
-		'r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC',
-	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
-	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID:
-		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',
-	FDS_VIEW_FDS_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship',
-	FDS_VIEW_FDS_CREATION_ACTION_ID:
-		'r_fdsViewFDSCreationActionRelationship_c_fdsViewId',
-	FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship',
-	FDS_VIEW_FDS_DATE_FILTER_ID:
-		'r_fdsViewFDSDateFilterRelationship_c_fdsViewId',
-	FDS_VIEW_FDS_DYNAMIC_FILTER: 'fdsViewFDSDynamicFilterRelationship',
-	FDS_VIEW_FDS_DYNAMIC_FILTER_ID:
-		'r_fdsViewFDSDynamicFilterRelationship_c_fdsViewId',
-	FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship',
-	FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId',
-	FDS_VIEW_FDS_ITEM_ACTION: 'fdsViewFDSItemActionRelationship',
-	FDS_VIEW_FDS_ITEM_ACTION_ID:
-		'r_fdsViewFDSItemActionRelationship_c_fdsViewId',
-	FDS_VIEW_FDS_LIST_SECTION: 'fdsViewFDSListSectionRelationship',
-	FDS_VIEW_FDS_LIST_SECTION_ERC:
-		'r_fdsViewFDSListSectionRelationship_c_fdsViewERC',
-	FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship',
-	FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId',
 } as const;
 
 const FDS_DEFAULT_PROPS = {

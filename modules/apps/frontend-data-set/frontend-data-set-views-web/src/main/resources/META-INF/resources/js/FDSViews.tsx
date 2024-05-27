@@ -70,7 +70,7 @@ const AddFDSViewModalContent = ({
 			symbol: 'catalog',
 		};
 
-		const response = await fetch(API_URL.FDS_VIEWS, {
+		const response = await fetch(API_URL.DATA_SETS, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
@@ -247,7 +247,7 @@ const FDSViews = ({
 					onClick: ({processClose}: {processClose: Function}) => {
 						processClose();
 
-						fetch(`${API_URL.FDS_VIEWS}/${itemData.id}`, {
+						fetch(`${API_URL.DATA_SETS}/${itemData.id}`, {
 							method: 'DELETE',
 						})
 							.then(() => {
@@ -320,7 +320,7 @@ const FDSViews = ({
 		<div className="fds-views">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
-				apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
+				apiURL={`${API_URL.DATA_SETS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 				creationMenu={creationMenu}
 				emptyState={{
 					description: Liferay.Language.get(

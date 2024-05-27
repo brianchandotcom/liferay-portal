@@ -17,9 +17,13 @@ export interface IDataSet {
 			method: string;
 		};
 	};
+	defaultItemsPerPage: number;
+	defaultVisualizationMode: string;
+	description: string;
 	externalReferenceCode: string;
 	id: string;
 	label: string;
+	listOfItemsPerPage: string;
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;

@@ -45,7 +45,7 @@ const FDSViewItemSelector = ({
 			<ClayModal.Body>
 				<FrontendDataSet
 					{...FDS_DEFAULT_PROPS}
-					apiURL={API_URL.FDS_VIEWS}
+					apiURL={API_URL.DATA_SETS}
 					id={`${namespace}FDSViewsItemSelector`}
 					onSelect={({
 						selectedItems,

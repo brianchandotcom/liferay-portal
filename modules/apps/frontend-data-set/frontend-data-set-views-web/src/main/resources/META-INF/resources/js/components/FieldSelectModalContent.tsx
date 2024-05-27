@@ -14,7 +14,6 @@ import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React, {ComponentProps, useEffect, useState} from 'react';
 
-import {FDSViewType} from '../FDSViews';
 import {IField, IFieldTreeItem} from '../utils/types';
 import AutoSearch from './AutoSearch';
 
@@ -168,7 +167,6 @@ const FieldSelectModalContent = ({
 	selectionMode = 'single',
 }: {
 	closeModal: Function;
-	fdsView: FDSViewType;
 	fieldTreeItems: Array<IFieldTreeItem>;
 	onSaveButtonClick: ({
 		selectedFields,

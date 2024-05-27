@@ -122,17 +122,17 @@ public class ObjectDefinitionUtil {
 		).put(
 			"FDSDateFilter", "/data-set-manager/date-filters"
 		).put(
-			"FDSDynamicFilter", "/data-set-manager/dynamic-filters"
+			"FDSDynamicFilter", "/data-set-manager/selection-filters"
 		).put(
 			"FDSEntry", "/data-set-manager/entries"
 		).put(
-			"FDSField", "/data-set-manager/fields"
+			"FDSField", "/data-set-manager/table-sections"
 		).put(
 			"FDSListSection", "/data-set-manager/list-sections"
 		).put(
 			"FDSSort", "/data-set-manager/sorts"
 		).put(
-			"FDSView", "/data-set-manager/views"
+			"FDSView", "/data-set-manager/data-sets"
 		).put(
 			"FunctionalCookieEntry", "/functional-cookies-entries"
 		).put(

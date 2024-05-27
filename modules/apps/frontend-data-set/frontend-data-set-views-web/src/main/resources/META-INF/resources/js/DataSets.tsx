@@ -40,9 +40,13 @@ export interface IDataSet {
 			method: string;
 		};
 	};
+	defaultItemsPerPage: number;
+	defaultVisualizationMode: string;
+	description: string;
 	externalReferenceCode: string;
 	id: string;
 	label: string;
+	listOfItemsPerPage: string;
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;
@@ -142,7 +146,7 @@ const NewDataSetModalContent = ({
 			restSchema: selectedRESTSchema,
 		};
 
-		const response = await fetch(API_URL.FDS_VIEWS, {
+		const response = await fetch(API_URL.DATA_SETS, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
@@ -659,7 +663,7 @@ const DataSets = ({
 		<div className="data-sets">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
-				apiURL={API_URL.FDS_VIEWS}
+				apiURL={API_URL.DATA_SETS}
 				creationMenu={creationMenu}
 				emptyState={{
 					description: Liferay.Language.get(

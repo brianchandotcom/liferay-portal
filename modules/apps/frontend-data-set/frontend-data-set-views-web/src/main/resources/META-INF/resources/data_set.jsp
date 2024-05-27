@@ -17,7 +17,7 @@ renderResponse.setTitle(ParamUtil.getString(request, "dataSetLabel"));
 %>
 
 <react:component
-	module="{FDSView} from frontend-data-set-views-web"
+	module="{DataSet} from frontend-data-set-views-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"backURL", backURL

@@ -57,7 +57,7 @@ public class SaveFDSFieldsMVCResourceCommand
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				themeDisplay.getCompanyId(), "FDSField");
 
-		String fdsViewId = ParamUtil.getString(resourceRequest, "fdsViewId");
+		String dataSetId = ParamUtil.getString(resourceRequest, "dataSetId");
 
 		String creationData = ParamUtil.getString(
 			resourceRequest, "creationData");
@@ -80,7 +80,7 @@ public class SaveFDSFieldsMVCResourceCommand
 				).put(
 					"name", String.valueOf(creationDataJSONObject.get("name"))
 				).put(
-					"r_fdsViewFDSFieldRelationship_c_fdsViewId", fdsViewId
+					"r_fdsViewFDSFieldRelationship_c_fdsViewId", dataSetId
 				).put(
 					"renderer", "default"
 				).put(

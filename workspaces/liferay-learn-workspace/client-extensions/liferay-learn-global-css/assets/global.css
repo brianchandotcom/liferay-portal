@@ -831,6 +831,24 @@ pre[class*='language-'] {
 	}
 }
 
+@media (max-width: 767.98px) {
+	.learn-recipe-container .recipe-main {
+		display: flex;
+		flex-direction: column !important;
+	}
+
+	.recipe-content {
+		order: 2;
+		width: 100%;
+	}
+
+	.recipe-sidemenu {
+		margin-bottom: 2rem;
+		order: 1;
+		width: 100%;
+	}
+}
+
 .learn-search {
 	.input-group-item {
 		.input-group {

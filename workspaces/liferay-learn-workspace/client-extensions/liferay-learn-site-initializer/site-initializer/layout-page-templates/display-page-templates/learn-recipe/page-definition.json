@@ -110,6 +110,9 @@
 					},
 					{
 						"definition": {
+							"cssClasses": [
+								"recipe-main"
+							],
 							"fragmentStyle": {
 								"width": "100%"
 							},
@@ -124,6 +127,9 @@
 						"pageElements": [
 							{
 								"definition": {
+									"cssClasses": [
+										"recipe-content"
+									],
 									"fragmentStyle": {
 										"marginRight": "4"
 									},
@@ -242,7 +248,11 @@
 																			"id": "element-html",
 																			"value": {
 																				"html": {
-																					"value_i18n": {
+																					"mapping": {
+																						"fieldKey": "JournalArticle_publishDate",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
 																					}
 																				}
 																			}
@@ -274,7 +284,11 @@
 															"id": "element-html",
 															"value": {
 																"html": {
-																	"value_i18n": {
+																	"mapping": {
+																		"fieldKey": "JournalArticle_title",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
 																	}
 																}
 															}
@@ -283,6 +297,8 @@
 													"fragmentStyle": {
 														"backgroundColor": "",
 														"borderRadius": "",
+														"fontSize": "2rem",
+														"fontWeight": "fontWeightBold",
 														"marginBottom": "3"
 													},
 													"indexed": true
@@ -328,6 +344,7 @@
 									},
 									{
 										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n  h3 {\n  margin-bottom: 1rem;\n  }\n}",
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
@@ -338,7 +355,11 @@
 													"id": "element-html",
 													"value": {
 														"html": {
-															"value_i18n": {
+															"mapping": {
+																"fieldKey": "_ddmTemplate_LEARN_RECIPE",
+																"itemReference": {
+																	"contextSource": "DisplayPageItem"
+																}
 															}
 														}
 													}
@@ -357,128 +378,11 @@
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-html"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-html",
-													"value": {
-														"html": {
-															"value_i18n": {
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
-											},
-											"indexed": true
-										},
-										"id": "03e30715-78d6-3697-da96-62406e7815e6",
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-html"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-html",
-													"value": {
-														"html": {
-															"value_i18n": {
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
-											},
-											"indexed": true
-										},
-										"id": "c2ea0d80-389f-5de4-6c23-315d2a493b00",
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-html"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-html",
-													"value": {
-														"html": {
-															"value_i18n": {
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
-											},
-											"indexed": true
-										},
-										"id": "d2b66fb8-d267-7731-a9f6-fe909fd84faa",
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-html"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-html",
-													"value": {
-														"html": {
-															"value_i18n": {
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
-											},
-											"indexed": true
-										},
-										"id": "c210dfe5-1a02-41aa-7ce6-dbb17284e8df",
-										"type": "Fragment"
-									},
-									{
-										"definition": {
 											"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(123.06deg, #1514A4 0%, #00C2FB 173.41%);\n\n}",
 											"fragmentStyle": {
 												"borderRadius": "borderRadiusLg",
 												"fontWeight": "fontWeightBold",
 												"height": "5rem",
-												"marginBottom": "5",
 												"marginLeft": "3",
 												"marginTop": "3",
 												"paddingBottom": "3",
@@ -492,7 +396,6 @@
 												"align": "Center",
 												"contentDisplay": "FlexRow",
 												"justify": "SpaceBetween",
-												"marginBottom": 4,
 												"marginLeft": 1,
 												"marginTop": 1,
 												"paddingBottom": 1,
@@ -588,10 +491,62 @@
 											},
 											"fragmentFields": [
 											],
+											"fragmentStyle": {
+												"marginBottom": "2rem",
+												"marginTop": "5",
+												"paddingLeft": "3",
+												"paddingRight": "3"
+											},
 											"indexed": true
 										},
 										"id": "4e7c2875-8c1a-b897-e208-b9320fa0994f",
 										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"paddingLeft": "3",
+												"paddingRight": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"paddingLeft": 1,
+												"paddingRight": 1
+											},
+											"name": "Tags Container"
+										},
+										"id": "1405c17e-4f65-ef53-155f-f702159264c3",
+										"pageElements": [
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n.tag-container {\n    background: var(--color-neutral-0, #fff);\n    border: 1px solid var(--color-brand-primary, #0b5fff);\n    border-radius: var(--border-radius-lg);\n    gap: 0.25rem;\n    padding: 0.25rem 0.75rem;\n}\n  \n \n  .learn-recipe-category-title {\n    color: var(--color-neutral-10, #282934);\n    font-size: 0.875rem;\n    font-style: normal;\n    font-weight: 600;\n    line-height: 1rem;\n  }\n  \n  .deploymentapproach-tag {\n    display: none !important;\n  }\n}",
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"mapping": {
+																		"fieldKey": "_ddmTemplate_LEARN_RECIPE_TAGS",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"id": "14a93274-4393-0e36-6851-dc3b4b8739a6",
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
 									}
 								],
 								"type": "Section"
@@ -697,6 +652,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"cssClasses": [
+																"sidemenu-time"
+															],
 															"indexed": true,
 															"layout": {
 																"align": "Center",
@@ -707,10 +665,7 @@
 														"pageElements": [
 															{
 																"definition": {
-																	"cssClasses": [
-																		"sidemenu-time"
-																	],
-																	"customCSS": ".[$FRAGMENT_CLASS$] {\n.component-html {\n  padding-top: 6px;\n}\n}",
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n  .sidemenu-time {\n        display: flex;\n  align-items: center;\n  justify-content: center;\n  }\n}",
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-html"
 																	},
@@ -721,19 +676,54 @@
 																			"id": "element-html",
 																			"value": {
 																				"html": {
-																					"value_i18n": {
+																					"mapping": {
+																						"fieldKey": "DDMStructure_timeToFinish",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
 																					}
 																				}
 																			}
 																		}
 																	],
 																	"fragmentStyle": {
-																		"fontSize": "0.875rem",
-																		"maxWidth": "7rem"
+																		"fontSize": "fontSizeBase",
+																		"maxHeight": "2rem",
+																		"maxWidth": "7rem",
+																		"paddingRight": "1"
 																	},
 																	"indexed": true
 																},
 																"id": "99809529-d183-39ce-89ce-52c3495c7284",
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Liferay Learn"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "minutes"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"id": "63cc75a7-1060-55dc-cbee-743c9766ccde",
 																"type": "Fragment"
 															}
 														],
@@ -1024,7 +1014,7 @@
 													],
 													"fragmentStyle": {
 														"fontWeight": "fontWeightBold",
-														"marginBottom": "3"
+														"marginBottom": "2"
 													},
 													"indexed": true
 												},
@@ -1033,34 +1023,30 @@
 											},
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .feature-tag {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n  }\n}",
 													"fragment": {
-														"key": "dialect-text",
-														"siteKey": "Liferay Learn"
+														"key": "BASIC_COMPONENT-html"
 													},
 													"fragmentConfig": {
-														"textType": "text-paragraph",
-														"truncateText": false
 													},
 													"fragmentFields": [
 														{
-															"id": "element-text",
+															"id": "element-html",
 															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Applicable Versions"
+																"html": {
+																	"mapping": {
+																		"fieldKey": "_ddmTemplate_LEARN_RECIPE_TAGS",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
 																	}
 																}
 															}
 														}
 													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightBold"
-													},
 													"indexed": true
 												},
-												"id": "78c0dc7e-f5e4-fcc8-ba3d-8f0373f047d5",
+												"id": "ce32f89f-b653-2603-45c0-74811bb94788",
 												"type": "Fragment"
 											},
 											{

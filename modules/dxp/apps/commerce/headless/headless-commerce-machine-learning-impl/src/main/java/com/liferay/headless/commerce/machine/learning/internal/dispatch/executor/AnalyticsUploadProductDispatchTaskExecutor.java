@@ -19,13 +19,14 @@ import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0
 import com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0.ProductChannelBatchEngineTaskItemDelegate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -60,7 +61,8 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 			dispatchTrigger.getCompanyId(),
 			commerceChannelId -> {
 				Group group = _groupLocalService.fetchGroup(
-					dispatchTrigger.getCompanyId(), _commerceChannelClassNameId,
+					dispatchTrigger.getCompanyId(),
+					_commerceChannelClassNameIdSupplier.get(),
 					commerceChannelId);
 
 				return "commerceChannelGroupIds/any(c:contains(c,'" +
@@ -127,16 +129,17 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_commerceChannelClassNameId = _portal.getClassNameId(
-			"com.liferay.commerce.product.model.CommerceChannel");
+		_commerceChannelClassNameIdSupplier =
+			_classNameLocalService.getClassNameIdSupplier(
+				"com.liferay.commerce.product.model.CommerceChannel");
 	}
 
-	private long _commerceChannelClassNameId;
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	private Supplier<Long> _commerceChannelClassNameIdSupplier;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

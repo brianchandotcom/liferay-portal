@@ -351,7 +351,9 @@ const filterSchema = {
 					},
 				],
 			}),
-			baseFilters.issues,
+			overrides(baseFilters.issues, {
+				operator: 'contains',
+			}),
 			overrides(baseFilters.erros, {
 				operator: 'contains',
 			}),

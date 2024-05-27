@@ -2706,53 +2706,92 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testGetObjectEntriesWithAggregationFacets() throws Exception {
+		String textObjectFieldValue = RandomTestUtil.randomString();
 
-		// Text object field
-
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
-			Collections.singletonMap("textObjectFieldName", "Able"));
-
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition1,
-			Collections.singletonMap("textObjectFieldName", "Able"));
+		ObjectEntry parentObjectEntry1 = _addObjectEntry(
+			_objectDefinition1,
+			Collections.singletonMap(
+				"textObjectFieldName", textObjectFieldValue));
+		ObjectEntry parentObjectEntry2 = _addObjectEntry(
+			_objectDefinition1,
+			Collections.singletonMap(
+				"textObjectFieldName", textObjectFieldValue));
 
 		_user = _addUser();
 
 		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinition1, _user);
 
-		_assertAggregationFacetValue(
-			Collections.singletonMap("textObjectFieldName", "Able"), "Able", 2,
+		Page<ObjectEntry> page = _getPage(
+			Collections.singletonMap("textObjectFieldName", StringPool.BLANK),
 			_objectDefinition1);
+
+		_assertAggregationFacetValue(2, textObjectFieldValue, page);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(adminUser));
 
 		PrincipalThreadLocal.setName(adminUser.getUserId());
 
-		// Relationship object field
+		_addObjectEntry(
+			_objectDefinition2,
+			Collections.singletonMap(
+				_objectRelationshipFieldName, parentObjectEntry1.getId()));
+		_addObjectEntry(
+			_objectDefinition2,
+			Collections.singletonMap(
+				_objectRelationshipFieldName, parentObjectEntry2.getId()));
 
-		_addObjectEntry(
-			dtoConverterContext, _objectDefinition2,
+		ObjectEntry childObjectEntry = _addObjectEntry(
+			_objectDefinition2,
 			Collections.singletonMap(
-				_objectRelationshipFieldName, objectEntry1.getId()));
-		_addObjectEntry(
-			dtoConverterContext, _objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, objectEntry2.getId()));
-		_addObjectEntry(
-			dtoConverterContext, _objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, objectEntry2.getId()));
+				_objectRelationshipFieldName, parentObjectEntry2.getId()));
 
-		_assertAggregationFacetValue(
+		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinition2, _user);
+
+		page = _getPage(
 			Collections.singletonMap(
 				_objectRelationshipFieldName, StringPool.BLANK),
-			String.valueOf(objectEntry1.getId()), 1, _objectDefinition2);
+			_objectDefinition2);
+
 		_assertAggregationFacetValue(
+			1, String.valueOf(parentObjectEntry1.getId()), page);
+		_assertAggregationFacetValue(
+			2, String.valueOf(parentObjectEntry2.getId()), page);
+
+		_defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition2,
+			childObjectEntry.getId(),
+			new ObjectEntry() {
+				{
+					setProperties(
+						() -> Collections.singletonMap(
+							_objectRelationshipFieldName,
+							parentObjectEntry1.getId()));
+				}
+			});
+
+		page = _getPage(
 			Collections.singletonMap(
 				_objectRelationshipFieldName, StringPool.BLANK),
-			String.valueOf(objectEntry2.getId()), 2, _objectDefinition2);
+			_objectDefinition2);
+
+		_assertAggregationFacetValue(
+			2, String.valueOf(parentObjectEntry1.getId()), page);
+		_assertAggregationFacetValue(
+			1, String.valueOf(parentObjectEntry2.getId()), page);
+
+		_defaultObjectEntryManager.deleteObjectEntry(
+			_objectDefinition2, childObjectEntry.getId());
+
+		page = _getPage(
+			Collections.singletonMap(
+				_objectRelationshipFieldName, StringPool.BLANK),
+			_objectDefinition2);
+
+		_assertAggregationFacetValue(
+			1, String.valueOf(parentObjectEntry1.getId()), page);
+		_assertAggregationFacetValue(
+			1, String.valueOf(parentObjectEntry2.getId()), page);
 	}
 
 	@Test
@@ -3915,12 +3954,11 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _addObjectEntry(
-			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, Map<String, Object> values)
 		throws Exception {
 
 		return _defaultObjectEntryManager.addObjectEntry(
-			dtoConverterContext, objectDefinition,
+			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
 					properties = values;
@@ -4026,22 +4064,8 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _assertAggregationFacetValue(
-			Map<String, String> aggregationTerm, String facetValueTerm,
-			Integer expectedNumberOfOccurrences,
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, objectDefinition, null,
-			new Aggregation() {
-				{
-					setAggregationTerms(aggregationTerm);
-				}
-			},
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			StringPool.BLANK, null, null, null);
+		Integer expectedNumberOfOccurrences, String facetValueTerm,
+		Page<ObjectEntry> page) {
 
 		List<Facet> facets = page.getFacets();
 
@@ -4396,6 +4420,24 @@ public class DefaultObjectEntryManagerImplTest
 			"picklistObjectFieldName");
 
 		return listEntry.getKey();
+	}
+
+	private Page<ObjectEntry> _getPage(
+			Map<String, String> aggregationTerms,
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _defaultObjectEntryManager.getObjectEntries(
+			companyId, objectDefinition, null,
+			new Aggregation() {
+				{
+					setAggregationTerms(aggregationTerms);
+				}
+			},
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, _user),
+			StringPool.BLANK, null, null, null);
 	}
 
 	private void _removeResourcePermission(

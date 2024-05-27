@@ -99,6 +99,17 @@ public class LayoutPageTemplateCollectionServiceWrapper
 
 	@Override
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+			long groupId, String name,
+			long parentLayoutPageTemplateCollectionId, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateCollectionService.
+			fetchLayoutPageTemplateCollection(
+				groupId, name, parentLayoutPageTemplateCollectionId, type);
+	}
+
+	@Override
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
 			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

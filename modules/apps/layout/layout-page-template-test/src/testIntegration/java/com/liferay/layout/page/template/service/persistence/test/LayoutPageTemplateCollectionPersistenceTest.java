@@ -352,6 +352,17 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P_N_T() throws Exception {
+		_persistence.countByG_P_N_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_P_N_T(0L, 0L, "null", 0);
+
+		_persistence.countByG_P_N_T(0L, 0L, (String)null, 0);
+	}
+
+	@Test
 	public void testCountByERC_G() throws Exception {
 		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
@@ -743,6 +754,13 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				layoutPageTemplateCollection, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(
+				layoutPageTemplateCollection.
+					getParentLayoutPageTemplateCollectionId()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "parentLPTCollectionId"));
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getName(),
 			ReflectionTestUtil.invoke(

@@ -77,6 +77,12 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
+			long groupId, String name,
+			long parentLayoutPageTemplateCollectionId, int type)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
 			String externalReferenceCode, long groupId)
 		throws PortalException;
 

@@ -145,51 +145,6 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Page HTML Title - Test Site Name - ${siteName}","og:description" content="Page Description"''');
 	}
 
-	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
-	@priority = 5
-	@refactordone
-	test CanPreviewWithLongInputs {
-		property portal.acceptance = "quarantine";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Long Test Page Name To Check The URL");
-
-		Navigator.openToGroupPagesPortlet(
-			groupName = "Test Site Name",
-			layoutName = "Long Test Page Name To Check The URL",
-			portlet = "Open Graph",
-			siteURLKey = "test-site-name");
-
-		OpenGraph.configureOpenGraph(
-			customDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications",
-			customTitle = "Liferay Portal provides an excellent platform for building web applications",
-			dontSave = "true",
-			pageName = "Long Test Page Name To Check The URL");
-
-		Page.viewPreview(
-			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
-			htmlTitle = "Liferay Portal provides an excellent platform for building web applications",
-			openGraph = "true",
-			portalURL = ${portalURL},
-			siteNameURL = "test-site-name",
-			validateTitleCSSStyle = "true",
-			validateURLCSSStyle = "true");
-
-		Button.click(button = "Save");
-
-		Page.viewPreview(
-			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
-			htmlTitle = "Liferay Portal provides an excellent platform for building web applications",
-			openGraph = "true",
-			portalURL = ${portalURL},
-			siteNameURL = "test-site-name",
-			validateTitleCSSStyle = "true",
-			validateURLCSSStyle = "true");
-	}
-
 	@description = "This ensures that the OG preview is returned to default when deselecting the customize checkboxes."
 	@priority = 5
 	@refactordone

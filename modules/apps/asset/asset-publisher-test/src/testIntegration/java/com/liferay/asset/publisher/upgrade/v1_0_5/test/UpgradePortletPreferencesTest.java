@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -56,31 +57,43 @@ public class UpgradePortletPreferencesTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
+		_assertUpgrade(Boolean.FALSE.toString(), "select-more-than-one");
+	}
+
+	@Test
+	public void testUpgradeWithoutUpdating() throws Exception {
+		String string = RandomTestUtil.randomString();
+
+		_assertUpgrade(string, string);
+	}
+
+	private void _assertUpgrade(String expected, String value)
+		throws Exception {
+
 		String portletId = LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _layout,
 			AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-1",
 			HashMapBuilder.put(
-				"anyClassType", new String[] {"select-more-than-one"}
+				"anyClassType", new String[] {value}
 			).put(
 				"anyClassTypeDLFileEntryAssetRendererFactory",
-				new String[] {"select-more-than-one"}
+				new String[] {value}
 			).put(
 				"anyClassTypeJournalArticleAssetRendererFactory",
-				new String[] {"select-more-than-one"}
+				new String[] {value}
 			).build());
 
 		PortletPreferences portletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, portletId);
 
 		Assert.assertEquals(
-			"select-more-than-one",
-			portletPreferences.getValue("anyClassType", null));
+			value, portletPreferences.getValue("anyClassType", null));
 		Assert.assertEquals(
-			"select-more-than-one",
+			value,
 			portletPreferences.getValue(
 				"anyClassTypeDLFileEntryAssetRendererFactory", null));
 		Assert.assertEquals(
-			"select-more-than-one",
+			value,
 			portletPreferences.getValue(
 				"anyClassTypeJournalArticleAssetRendererFactory", null));
 
@@ -91,23 +104,21 @@ public class UpgradePortletPreferencesTest {
 
 		String anyClassType = portletPreferences.getValue("anyClassType", null);
 
-		Assert.assertEquals(Boolean.FALSE.toString(), anyClassType);
+		Assert.assertEquals(expected, anyClassType);
 
 		String anyClassTypeDLFileEntryAssetRendererFactory =
 			portletPreferences.getValue(
 				"anyClassTypeDLFileEntryAssetRendererFactory", null);
 
 		Assert.assertEquals(
-			Boolean.FALSE.toString(),
-			anyClassTypeDLFileEntryAssetRendererFactory);
+			expected, anyClassTypeDLFileEntryAssetRendererFactory);
 
 		String anyClassTypeJournalArticleAssetRendererFactory =
 			portletPreferences.getValue(
 				"anyClassTypeJournalArticleAssetRendererFactory", null);
 
 		Assert.assertEquals(
-			Boolean.FALSE.toString(),
-			anyClassTypeJournalArticleAssetRendererFactory);
+			expected, anyClassTypeJournalArticleAssetRendererFactory);
 	}
 
 	private void _runUpgrade() throws Exception {

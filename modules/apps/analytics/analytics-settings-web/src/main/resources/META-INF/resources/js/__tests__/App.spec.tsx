@@ -13,6 +13,7 @@ const INITIAL_PROPS = {
 	connected: false,
 	liferayAnalyticsURL: '',
 	token: '',
+	wizardMode: false,
 };
 
 describe('App', () => {

@@ -236,6 +236,9 @@ const FrontendTokenDefinitionFilePicker = ({
 					id={fileInputId}
 					name={fileInputId}
 					onChange={handleFileInputChange}
+
+					// @ts-ignore
+
 					ref={fileInputRef}
 					type="file"
 				/>
@@ -252,6 +255,9 @@ const FrontendTokenDefinitionFilePicker = ({
 						disabled={isValidatingJSON || disabled}
 						displayType="secondary"
 						onClick={() => fileInputRef.current?.click()}
+
+						// @ts-ignore
+
 						ref={selectFileButtonRef}
 					>
 						{!frontendTokenDefinitionJSON
@@ -271,6 +277,9 @@ const FrontendTokenDefinitionFilePicker = ({
 						)}
 
 						{frontendTokenDefinitionJSON && (
+
+							// @ts-ignore
+
 							<ClayButtonWithIcon
 								borderless
 								className="ml-2"

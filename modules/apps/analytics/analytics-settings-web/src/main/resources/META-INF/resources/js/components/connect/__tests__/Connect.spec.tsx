@@ -95,6 +95,7 @@ describe('Connect', () => {
 					liferayAnalyticsURL: '',
 					pageView: EPageView.Default,
 					token: '',
+					wizardMode: false,
 				}}
 			>
 				<Connect title="testConnect" />
@@ -134,6 +135,7 @@ describe('Connect', () => {
 					liferayAnalyticsURL: '',
 					pageView: EPageView.Default,
 					token: '',
+					wizardMode: false,
 				}}
 			>
 				<Connect title="testConnect" />

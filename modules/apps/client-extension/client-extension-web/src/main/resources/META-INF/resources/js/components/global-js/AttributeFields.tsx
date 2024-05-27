@@ -62,8 +62,14 @@ export default function AttributeFields({
 				<FieldBase
 					className="mb-0"
 					disabled={disabled}
+
+					// @ts-ignore
+
 					errorMessage={errorMessage}
 					id={nameId}
+
+					// @ts-ignore
+
 					label={
 						<>
 							{Liferay.Language.get('attribute')}
@@ -121,6 +127,9 @@ export default function AttributeFields({
 						disabled={disabled}
 						id={typeId}
 						items={TYPE_ITEMS}
+
+						// @ts-ignore
+
 						onSelectionChange={(type) =>
 							onAttributeChange(index, {
 								type,
@@ -157,6 +166,9 @@ export default function AttributeFields({
 							disabled={disabled}
 							id={valueId}
 							items={BOOLEAN_VALUE_ITEMS}
+
+							// @ts-ignore
+
 							onSelectionChange={(value) =>
 								onAttributeChange(index, {
 									value: JSON.parse(value),

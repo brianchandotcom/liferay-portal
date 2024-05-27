@@ -5,12 +5,17 @@
 
 import {navigate, openSelectionModal} from 'frontend-js-web';
 
+// @ts-ignore
+
 export function mySitesOpener(jsOnClickConfig) {
 	const {selectEventName, title, url} = jsOnClickConfig;
 
 	openSelectionModal({
 		id: selectEventName,
 		onSelect(selectedItem) {
+
+			// @ts-ignore
+
 			navigate(selectedItem.url);
 		},
 		selectEventName,

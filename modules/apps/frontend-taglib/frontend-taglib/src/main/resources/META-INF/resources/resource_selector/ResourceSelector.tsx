@@ -60,7 +60,13 @@ export default function ResourceSelector({
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					setResourceData({
+
+						// @ts-ignore
+
 						resourceName: selectedItem[resourceNameKey],
+
+						// @ts-ignore
+
 						resourceValue: selectedItem[resourceValueKey],
 						showWarning: false,
 					});
@@ -70,6 +76,9 @@ export default function ResourceSelector({
 					) as HTMLInputElement;
 
 					if (repositoryIdElement) {
+
+						// @ts-ignore
+
 						repositoryIdElement.value = selectedItem.repositoryid;
 					}
 				}

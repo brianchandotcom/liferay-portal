@@ -212,6 +212,12 @@ export function minimizePortlet(
  */
 export function navigate(url: string | URL, listeners?: Object): void;
 
+export function objectToFormData(
+	objectOrNamespace: object | string,
+	formData?: FormData,
+	namespace?: string
+): FormData;
+
 export function openAlertModal({message}: {message: string}): void;
 
 export function openConfirmModal({

@@ -246,7 +246,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
 			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
-			Collections.singletonMap(LocaleUtil.US, "customTitle"),
+			Collections.singletonMap(LocaleUtil.US, "Heló"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -258,7 +258,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:title", "customTitle");
+		_assertMetaTag(document, "og:title", "Heló");
 	}
 
 	@Test

@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -169,7 +172,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return;
 		}
 
-		Layout layout = _getFirstLayout(group.getGroupId());
+		Layout layout = _getFirstLayout(group.getGroupId(), user);
 
 		if (layout == null) {
 			_addVirtualHostAttributesAndParameters(
@@ -218,7 +221,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 				return;
 			}
 
-			Layout layout = _getFirstLayout(layoutSet.getGroupId());
+			Layout layout = _getFirstLayout(layoutSet.getGroupId(), user);
 
 			if (layout != null) {
 				_addLayoutAttributesAndParameters(
@@ -232,14 +235,26 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		}
 	}
 
-	private Layout _getFirstLayout(long groupId) {
-		Layout layout = _layoutService.fetchFirstLayout(groupId, false, false);
+	private Layout _getFirstLayout(long groupId, User user) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		if (layout != null) {
-			return layout;
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
+			Layout layout = _layoutService.fetchFirstLayout(
+				groupId, false, false);
+
+			if (layout != null) {
+				return layout;
+			}
+
+			return _layoutService.fetchFirstLayout(groupId, true, false);
 		}
-
-		return _layoutService.fetchFirstLayout(groupId, true, false);
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	private User _getUser(
@@ -281,6 +296,9 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private Portal _portal;

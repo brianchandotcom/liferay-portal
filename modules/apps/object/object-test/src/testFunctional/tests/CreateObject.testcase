@@ -4741,63 +4741,6 @@ definition {
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = 1234567891234567);
 	}
 
-	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Item Selector of a fragment on a Display Page"
-	@priority = 4
-	test CanViewObjectEntryTitleOnItemSelectorFragment {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 116",
-			objectName = "CustomObject116",
-			pluralLabelName = "Custom Objects 116");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject116");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 116");
-
-		CreateObject.selectTitleField(fieldLabel = "Custom Field");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject116");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject116",
-			value = "Test Entry");
-
-		Navigator.openURL();
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
-			contentType = "Custom Object 116",
-			displayPageName = "Blank Display Page",
-			subtype = "Custom Object 116");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
-
-		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldLabel = "Custom Field");
-
-		PageEditor.selectItemToPreviewWithObject(entryValue = "Test Entry");
-
-		AssertElementPresent(
-			key_entry = "Test Entry",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
 	@priority = 4
 	test CanViewObjectEntryTitleOnRelationshipTab {

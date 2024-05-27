@@ -1,0 +1,32 @@
+#commerce-header-main .cart-root {
+	top: var(--commerce-header-user-height);
+}
+
+#commerce-header-main .cart-root .mini-cart.is-open,
+#commerce-header-main .cart-root .mini-cart.is-open .mini-cart-overlay,
+#commerce-header-main .cart-root .mini-cart .mini-cart-wrapper {
+	height: calc(100vh - var(--control-menu-height) - var(--commerce-header-user-height));
+}
+
+#commerce-header-main .cart-root .mini-cart .mini-cart-overlay {
+	height: 100%;
+	width: 100%;
+}
+
+#commerce-header-main .cart-root .mini-cart.is-open .mini-cart-overlay {
+	width: 100vw;
+}
+
+#commerce-header-main .cart-root .mini-cart.is-open .mini-cart-wrapper {
+	background-color: #ffffff;
+	transform: translate3d(calc(100vw / 2 - 624px), 0, 0);
+	z-index: 1000;
+}
+
+#commerce-header-main .cart-root .mini-cart .mini-cart-opener {
+	height: 4rem;
+}
+
+#commerce-header-main .account-selector-root .btn-account-selector .sticker-user-icon {
+	border-radius: var(--border-radius);
+}

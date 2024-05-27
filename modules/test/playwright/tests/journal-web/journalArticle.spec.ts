@@ -141,6 +141,68 @@ autoSaveAsDraftTest(
 	}
 );
 
+autoSaveAsDraftTest(
+	'LPD-26856: Web content should be saved as darft after changing the title and the content',
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const localizableFieldName = 'Text56789';
+		const structureName = 'Structure 2';
+		const title = getRandomString();
+		const content = getRandomString();
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: localizableFieldName, repeatable: false}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await fillAndClickOutside(
+			page,
+			page.getByPlaceholder('Untitled ' + structureName),
+			title
+		);
+
+		const localizableField = page.getByRole('textbox', {
+			name: localizableFieldName,
+		});
+
+		await fillAndClickOutside(page, localizableField, content);
+
+		const changesSavedIndicator = await page.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
+		);
+
+		await expect(changesSavedIndicator).toBeVisible();
+
+		await page.getByTitle('Go to Web Content').click();
+
+		await expect(
+			page.getByRole('heading', {name: 'Web Content'})
+		).toBeVisible({timeout: 1000});
+
+		const article = page.getByRole('link', {name: title});
+
+		article.waitFor();
+
+		article.click();
+
+		await expect(page.getByRole('heading', {name: title})).toBeVisible({
+			timeout: 1000,
+		});
+
+		await expect(page.getByLabel(localizableFieldName)).toHaveValue(
+			content,
+			{timeout: 1000}
+		);
+	}
+);
+
 keepTitlesUntranslated(
 	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',
 	async ({apiHelpers, journalPage, page, site}) => {

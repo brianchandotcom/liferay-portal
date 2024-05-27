@@ -78,6 +78,10 @@ export default class SearchBuilder {
 	 * @example addressLocality ne 'London'
 	 */
 	static ne(key: Key, value: Value) {
+		if (value === null) {
+			return `${key} ne ${value}`;
+		}
+
 		return `${key} ne '${value}'`;
 	}
 
@@ -142,7 +146,19 @@ export default class SearchBuilder {
 		const requestOperator = schema?.requestOperator as string;
 		const optionalOperator = schema?.optionalOperator as Operators;
 
+		const isFilterChanged =
+			filter.includes('false') || filter.includes('No');
+
 		if (customOperator && SearchBuilder[customOperator]) {
+			if (optionalOperator === 'ne') {
+				if (isFilterChanged) {
+					return `not (${SearchBuilder[optionalOperator](
+						requestOperator,
+						null
+					)})`;
+				}
+			}
+
 			if (Array.isArray(filter)) {
 				const filters = filter
 					.map((item) =>

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -63,7 +64,7 @@ public class LayoutSetPrototypeHelperTest {
 		_prototypeLayout = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup, true);
 
-		setLinkEnabled();
+		setLinkEnabled(_group);
 
 		_siteLayout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 			_group.getGroupId(), false, _prototypeLayout.getFriendlyURL());
@@ -171,8 +172,23 @@ public class LayoutSetPrototypeHelperTest {
 	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionBeforePropagate()
 		throws Exception {
 
-		Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId(), "test", false);
+		List<Layout> expectedConflictLayouts = new ArrayList<>();
+
+		expectedConflictLayouts.add(
+			LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId(), "test", false));
+
+		for (int i = 1; i < _NUMBER_ENABLED_LINKS; i++) {
+			Group group = GroupTestUtil.addGroup();
+
+			setLinkEnabled(group);
+
+			_groups.add(group);
+
+			expectedConflictLayouts.add(
+				LayoutTestUtil.addTypePortletLayout(
+					group.getGroupId(), "test", false));
+		}
 
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "test", true);
@@ -182,11 +198,13 @@ public class LayoutSetPrototypeHelperTest {
 				layoutSetPrototypeLayout);
 
 		Assert.assertEquals(
-			conflictLayouts.toString(), 1, conflictLayouts.size());
-
-		Layout conflictLayout = conflictLayouts.get(0);
-
-		Assert.assertEquals(conflictLayout.getPlid(), siteLayout.getPlid());
+			conflictLayouts.toString(), expectedConflictLayouts.size(),
+			conflictLayouts.size());
+		Assert.assertArrayEquals(
+			TransformUtil.transformToLongArray(
+				expectedConflictLayouts, layout -> layout.getPlid()),
+			TransformUtil.transformToLongArray(
+				conflictLayouts, layout -> layout.getPlid()));
 	}
 
 	@Test
@@ -268,16 +286,21 @@ public class LayoutSetPrototypeHelperTest {
 		Assert.assertFalse(hasConflicts);
 	}
 
-	protected void setLinkEnabled() throws Exception {
+	protected void setLinkEnabled(Group group) throws Exception {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		_sites.updateLayoutSetPrototypesLinks(
-			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			false);
 	}
 
+	private static final int _NUMBER_ENABLED_LINKS = 5;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private List<Group> _groups = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private LayoutSetPrototype _layoutSetPrototype;

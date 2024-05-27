@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -70,6 +72,11 @@ public class CPDefinitionIndexerTest {
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
+		_cpDefinitionLocalService.updateCPDefinitionLocalization(
+			cpDefinition, "en_US", null, null, "<p>test</p>", null, null, null);
+
+		_indexer.reindex(cpDefinition);
+
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(_group.getCompanyId());
@@ -84,6 +91,10 @@ public class CPDefinitionIndexerTest {
 		Assert.assertEquals(
 			String.valueOf(cpDefinition.getCPDefinitionId()),
 			document.get(Field.ENTRY_CLASS_PK));
+
+		Summary summary = _indexer.getSummary(document, LocaleUtil.US, null);
+
+		Assert.assertEquals("test", summary.getContent());
 	}
 
 	private static Indexer<CPDefinition> _indexer;
@@ -93,6 +104,9 @@ public class CPDefinitionIndexerTest {
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

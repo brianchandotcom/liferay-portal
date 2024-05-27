@@ -13,7 +13,7 @@ import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,

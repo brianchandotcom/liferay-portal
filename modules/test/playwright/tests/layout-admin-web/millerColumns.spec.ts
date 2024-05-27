@@ -12,7 +12,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,

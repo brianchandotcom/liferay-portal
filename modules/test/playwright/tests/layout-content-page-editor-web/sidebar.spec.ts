@@ -13,7 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	featureFlagsTest({

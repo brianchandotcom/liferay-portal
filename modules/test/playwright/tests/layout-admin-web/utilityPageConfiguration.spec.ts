@@ -12,7 +12,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),

@@ -19,7 +19,7 @@ import getPageDefinition from './utils/getPageDefinition';
 
 const OBJECT_DEFINITION_PATH = 'object-admin/v1.0/object-definitions';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	featureFlagsTest({
@@ -36,11 +36,12 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	// Get the id of the tags object from the site initializer
 
-	const {id: objectId} =
-		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
-			OBJECT_DEFINITION_PATH,
-			TAGS_OBJECT_ERC
-		);
+	const {
+		id: objectId,
+	} = await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+		OBJECT_DEFINITION_PATH,
+		TAGS_OBJECT_ERC
+	);
 
 	// Create a Form Container with a Tags fragment and Submit fragment
 

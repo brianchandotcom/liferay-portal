@@ -1,0 +1,12 @@
+:root {
+	--commerce-header-user-height: 34px;
+}
+
+.commerce-main {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: calc(100vh - var(--control-menu-height));
+	overflow-x: hidden;
+	position: relative;
+}

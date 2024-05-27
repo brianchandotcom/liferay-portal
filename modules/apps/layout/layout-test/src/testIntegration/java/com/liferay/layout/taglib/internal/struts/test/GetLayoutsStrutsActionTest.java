@@ -8,6 +8,8 @@ package com.liferay.layout.taglib.internal.struts.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -232,6 +234,9 @@ public class GetLayoutsStrutsActionTest {
 		try {
 			UserTestUtil.setUser(_user);
 
+			_entityCache.clearCache();
+			_multiVMPool.clear();
+
 			try (LoggingTimer loggingTimer = new LoggingTimer()) {
 				_getLayoutsStrutsAction.execute(
 					mockHttpServletRequest, mockHttpServletResponse);
@@ -290,6 +295,9 @@ public class GetLayoutsStrutsActionTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private EntityCache _entityCache;
+
 	@Inject(filter = "path=/portal/get_layouts")
 	private StrutsAction _getLayoutsStrutsAction;
 
@@ -301,6 +309,9 @@ public class GetLayoutsStrutsActionTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private Portal _portal;

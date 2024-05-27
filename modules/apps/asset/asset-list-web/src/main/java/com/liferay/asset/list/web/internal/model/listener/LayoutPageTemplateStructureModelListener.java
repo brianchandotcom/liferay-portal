@@ -29,26 +29,13 @@ public class LayoutPageTemplateStructureModelListener
 		throws ModelListenerException {
 
 		_assetListEntryUsageLocalService.deleteAssetListEntryUsages(
-			_getCollectionStyledLayoutStructureItemClassNameId(),
-			layoutPageTemplateStructure.getPlid());
-	}
-
-	private long _getCollectionStyledLayoutStructureItemClassNameId() {
-		if (_collectionStyledLayoutStructureItemClassNameId != null) {
-			return _collectionStyledLayoutStructureItemClassNameId;
-		}
-
-		_collectionStyledLayoutStructureItemClassNameId =
 			_portal.getClassNameId(
-				CollectionStyledLayoutStructureItem.class.getName());
-
-		return _collectionStyledLayoutStructureItemClassNameId;
+				CollectionStyledLayoutStructureItem.class.getName()),
+			layoutPageTemplateStructure.getPlid());
 	}
 
 	@Reference
 	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;
-
-	private Long _collectionStyledLayoutStructureItemClassNameId;
 
 	@Reference
 	private Portal _portal;

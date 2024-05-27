@@ -120,7 +120,8 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 
 						if (collectionJSONObject.has("classPK")) {
 							_addBatch(
-								_getAssetListEntryClassNameId(), itemId,
+								_portal.getClassNameId(AssetListEntry.class),
+								itemId,
 								collectionJSONObject.getString("classPK"),
 								layoutPageTemplateStructure,
 								insertPreparedStatement, type);
@@ -128,8 +129,9 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 
 						if (collectionJSONObject.has("key")) {
 							_addBatch(
-								_getInfoCollectionProviderClassNameId(), itemId,
-								collectionJSONObject.getString("key"),
+								_portal.getClassNameId(
+									InfoCollectionProvider.class),
+								itemId, collectionJSONObject.getString("key"),
 								layoutPageTemplateStructure,
 								insertPreparedStatement, type);
 						}
@@ -166,45 +168,13 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 		preparedStatement.setLong(9, classNameId);
 		preparedStatement.setString(10, containerKey);
 		preparedStatement.setLong(
-			11, _getCollectionStyleLayoutStructureItemClassNameId());
+			11,
+			_portal.getClassNameId(CollectionStyledLayoutStructureItem.class));
 		preparedStatement.setString(12, key);
 		preparedStatement.setLong(13, layoutPageTemplateStructure.getPlid());
 		preparedStatement.setLong(14, type);
 
 		preparedStatement.addBatch();
-	}
-
-	private long _getAssetListEntryClassNameId() {
-		if (_assetListEntryClassNameId != null) {
-			return _assetListEntryClassNameId;
-		}
-
-		_assetListEntryClassNameId = _portal.getClassNameId(
-			AssetListEntry.class);
-
-		return _assetListEntryClassNameId;
-	}
-
-	private long _getCollectionStyleLayoutStructureItemClassNameId() {
-		if (_collectionStyleLayoutStructureItemClassNameId != null) {
-			return _collectionStyleLayoutStructureItemClassNameId;
-		}
-
-		_collectionStyleLayoutStructureItemClassNameId = _portal.getClassNameId(
-			CollectionStyledLayoutStructureItem.class);
-
-		return _collectionStyleLayoutStructureItemClassNameId;
-	}
-
-	private long _getInfoCollectionProviderClassNameId() {
-		if (_infoCollectionProviderClassNameId != null) {
-			return _infoCollectionProviderClassNameId;
-		}
-
-		_infoCollectionProviderClassNameId = _portal.getClassNameId(
-			InfoCollectionProvider.class);
-
-		return _infoCollectionProviderClassNameId;
 	}
 
 	private int _getType(long plid) {
@@ -257,9 +227,6 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 		return true;
 	}
 
-	private Long _assetListEntryClassNameId;
-	private Long _collectionStyleLayoutStructureItemClassNameId;
-	private Long _infoCollectionProviderClassNameId;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;

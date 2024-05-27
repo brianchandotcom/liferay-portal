@@ -58,7 +58,11 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 
 		groupSearch.setResultsAndTotal(
 			GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
+				themeDisplay.getCompanyId(),
+				new long[] {
+					PortalUtil.getClassNameId(Group.class),
+					PortalUtil.getClassNameId(Organization.class)
+				},
 				ParamUtil.getString(httpServletRequest, "keywords"),
 				_getGroupParams(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				groupSearch.getOrderByComparator()));
@@ -135,11 +139,6 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 
 		return _groupParams;
 	}
-
-	private static final long[] _CLASS_NAME_IDS = {
-		PortalUtil.getClassNameId(Group.class),
-		PortalUtil.getClassNameId(Organization.class)
-	};
 
 	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 	private LinkedHashMap<String, Object> _groupParams;

@@ -10,52 +10,38 @@ import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 
 export const test = mergeTests(loginTest(), wikiPagesTest);
 
-test('@LPD-26435 Icon menu should close when another icon menu is open', async ({
+test('LPD-26435 Icon menu should close when another icon menu is open', async ({
 	page,
 	wikiPage,
 }) => {
 	await wikiPage.goto();
 
-	await test.step('Create new wiki', async () => {
-		const newWikiButton = page.getByRole('link', {name: 'Add Wiki'});
-
-		await newWikiButton.waitFor({state: 'visible'});
-		await newWikiButton.click();
-
-		const nameInput = page.getByLabel('Name');
-
-		await nameInput.waitFor({state: 'visible'});
-		await nameInput.click();
-		await nameInput.fill('test');
-
-		await page.getByRole('button', {name: 'Save'}).click();
-	});
+	await wikiPage.createNewWikiNode('Wiki Node Title');
 
 	await test.step('Check menu gets closed', async () => {
-		const menuOneButton = page.locator(
-			'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
-		);
+		await page
+			.locator(
+				'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
+			)
+			.click();
 
-		await menuOneButton.waitFor({state: 'visible'});
-		await menuOneButton.click();
-
-		const menuOne = page.locator(
+		const menuOne = await page.locator(
 			'[aria-labelledby="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
 		);
 
-		await menuOne.waitFor({state: 'visible'});
+		await expect(menuOne).toBeVisible();
 
-		const menuTwoButton = page.locator(
-			'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_2_menu"]'
-		);
+		await page
+			.locator(
+				'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_2_menu"]'
+			)
+			.click();
 
-		await menuTwoButton.click();
-
-		const menuTwo = page.locator(
+		const menuTwo = await page.locator(
 			'[aria-labelledby="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_2_menu"]'
 		);
 
-		await menuTwo.waitFor({state: 'visible'});
+		await expect(menuTwo).toBeVisible();
 
 		await expect(menuOne).toBeHidden();
 	});

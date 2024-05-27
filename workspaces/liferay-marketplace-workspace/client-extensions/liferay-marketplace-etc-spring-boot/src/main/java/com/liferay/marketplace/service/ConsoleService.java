@@ -5,6 +5,8 @@
 
 package com.liferay.marketplace.service;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -88,10 +90,9 @@ public class ConsoleService {
 			true, _consoleProjectPrefix + "-ext" + orderId);
 
 		_inviteProject(
-			_marketplaceTrialAdminEmailAddress,
-			projectJSONObject.getString("projectId"));
+			_trialAdminEmailAddress, projectJSONObject.getString("projectId"));
 
-		_setUpLinkBetweenPortalInstanceAndExtensionEnvironment(
+		_linkDXPWithProject(
 			dxpVirtualInstanceId, projectJSONObject.getString("id"));
 
 		_deployApp(
@@ -112,7 +113,7 @@ public class ConsoleService {
 			"/admin/projects/" + projectId + "/apps");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Marketplace App deployed to " + projectId);
+			_log.info("Deployed app for project " + projectId);
 		}
 	}
 
@@ -138,7 +139,32 @@ public class ConsoleService {
 			"/projects/" + projectId + "/invite");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Invited " + emailAddress);
+			_log.info(
+				StringBundler.concat(
+					"Invited ", emailAddress, " to project ", projectId));
+		}
+	}
+
+	private void _linkDXPWithProject(
+			String dxpVirtualInstanceId, String extensionProjectUid)
+		throws Exception {
+
+		_post(
+			new JSONObject(
+			).put(
+				"dxpProjectUid", _consoleProjectUid
+			).put(
+				"dxpVirtualInstanceId", dxpVirtualInstanceId
+			).put(
+				"extensionProjectUid", extensionProjectUid
+			),
+			"/lxc-extension-links");
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Linked Liferay virtual instance ", dxpVirtualInstanceId,
+					" with project ", extensionProjectUid));
 		}
 	}
 
@@ -196,32 +222,10 @@ public class ConsoleService {
 			"/projects");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Project created " + jsonObject);
+			_log.info("Created project " + jsonObject);
 		}
 
 		return jsonObject;
-	}
-
-	private void _setUpLinkBetweenPortalInstanceAndExtensionEnvironment(
-			String dxpVirtualInstanceId, String extensionProjectUid)
-		throws Exception {
-
-		_post(
-			new JSONObject(
-			).put(
-				"dxpProjectUid", _consoleProjectUid
-			).put(
-				"dxpVirtualInstanceId", dxpVirtualInstanceId
-			).put(
-				"extensionProjectUid", extensionProjectUid
-			),
-			"/lxc-extension-links");
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				dxpVirtualInstanceId + " Linked to environment: " +
-					extensionProjectUid);
-		}
 	}
 
 	private static final Log _log = LogFactory.getLog(ConsoleService.class);
@@ -246,9 +250,9 @@ public class ConsoleService {
 	@Value("${liferay.marketplace.console.project.uid}")
 	private String _consoleProjectUid;
 
-	@Value("${liferay.marketplace.trial.admin.email.address}")
-	private String _marketplaceTrialAdminEmailAddress;
-
 	private long _tokenExpirationMillis;
+
+	@Value("${liferay.marketplace.trial.admin.email.address}")
+	private String _trialAdminEmailAddress;
 
 }

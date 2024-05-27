@@ -419,8 +419,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_classLoader = bundleWiring.getClassLoader();
 
-		_classNameIdStringUtilReplaceValues =
-			_getClassNameIdStringUtilReplaceValues();
 		_releaseInfoStringUtilReplaceValues =
 			_getReleaseInfoStringUtilReplaceValues();
 	}
@@ -5009,7 +5007,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		HashMap<String, String> aggregatedStringUtilReplaceValues =
 			HashMapBuilder.putAll(
-				_classNameIdStringUtilReplaceValues
+				_getClassNameIdStringUtilReplaceValues()
 			).putAll(
 				_releaseInfoStringUtilReplaceValues
 			).putAll(
@@ -5317,7 +5315,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final Bundle _bundle;
 	private final CETManager _cetManager;
 	private final ClassLoader _classLoader;
-	private final Map<String, String> _classNameIdStringUtilReplaceValues;
 	private final ClientExtensionEntryLocalService
 		_clientExtensionEntryLocalService;
 	private final ConfigurationProvider _configurationProvider;

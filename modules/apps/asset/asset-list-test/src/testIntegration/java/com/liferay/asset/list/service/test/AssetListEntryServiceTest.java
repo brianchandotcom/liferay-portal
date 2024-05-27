@@ -298,7 +298,7 @@ public class AssetListEntryServiceTest {
 			0, serviceContext);
 
 		OrderByComparator<AssetListEntry> orderByComparator =
-			new AssetListEntryCreateDateComparator(true);
+			AssetListEntryCreateDateComparator.getInstance(true);
 
 		List<AssetListEntry> assetListEntries =
 			_assetListEntryService.getAssetListEntries(
@@ -309,7 +309,8 @@ public class AssetListEntryServiceTest {
 
 		Assert.assertEquals(assetListEntry, firstAssetListEntry);
 
-		orderByComparator = new AssetListEntryCreateDateComparator(false);
+		orderByComparator = AssetListEntryCreateDateComparator.getInstance(
+			false);
 
 		assetListEntries = _assetListEntryService.getAssetListEntries(
 			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,

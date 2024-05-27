@@ -5,6 +5,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Account";
 
+	var password = PropsUtil.get("default.admin.password");
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -197,7 +199,7 @@ definition {
 
 		AccountUsers.setUserPassword(
 			accountUser = "userea@liferay.com",
-			accountUserPassword = "test");
+			accountUserPassword = ${password});
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -205,7 +207,7 @@ definition {
 			accountUser = "userfn userln",
 			editEmailAddress = "edituserfn@liferay.com",
 			editFirstName = "edituserfn",
-			password = "test");
+			password = ${password});
 
 		AccountUsers.openAccountUsersAdmin();
 

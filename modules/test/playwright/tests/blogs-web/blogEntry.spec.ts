@@ -180,4 +180,15 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 	await expect(
 		page.getByText(`/-/blogs/${friendlyUrlCategories.join('/')}/`)
 	).toBeVisible();
+
+	await page.getByRole('button', {name: 'Publish'}).click();
+	await waitForSuccessAlert(page);
+
+	const response = await page.goto(`/web${site.friendlyUrlPath}/b/${title}`);
+
+	await expect(response.url()).toContain(
+		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories.join(
+			'/'
+		)}/${title}`
+	);
 });

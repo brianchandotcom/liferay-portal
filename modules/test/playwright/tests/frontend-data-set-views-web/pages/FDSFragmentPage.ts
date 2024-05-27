@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {DEFAULT_LABEL} from '../utils/constants';
@@ -68,18 +68,22 @@ export class FDSFragmentPage {
 
 		await this.searchFragmentOrWidget('Data Set');
 
-		await this.dragAndDropFragment(
-			'Data Set Add Data Set Mark Data Set as Favorite'
+		const dataSetMenuItem = this.page.getByRole('menuitem', {
+			exact: true,
+			name: 'Data Set Add Data Set Mark Data Set as Favorite',
+		});
+
+		await dataSetMenuItem.dragTo(
+			this.page.getByText('Place fragments or widgets here')
 		);
 
-		await this.page
-			.getByText('Select a data set view. Beta')
-			.waitFor({state: 'visible'});
+		const fragmentSelectionArea = this.page.getByText(
+			'Select a data set view'
+		);
 
-		await this.page
-			.getByText('Select a data set view. Beta')
-			.first()
-			.click();
+		await expect(fragmentSelectionArea).toBeVisible();
+
+		await fragmentSelectionArea.click();
 
 		await this.page
 			.getByRole('button', {name: 'Select Data Set View'})
@@ -113,22 +117,6 @@ export class FDSFragmentPage {
 		await this.page
 			.locator('.data-set-wrapper')
 			.waitFor({state: 'visible'});
-	}
-
-	async dragAndDropFragment(itemName: string) {
-		const source = await this.page.getByRole('menuitem', {
-			exact: true,
-			name: itemName,
-		});
-
-		await source.focus();
-		await source.press('Enter');
-		await source.press('Enter');
-
-		await this.page
-			.getByText('Select a data set view. Beta')
-			.first()
-			.waitFor();
 	}
 
 	async editPage({layout}: {layout: Layout}) {

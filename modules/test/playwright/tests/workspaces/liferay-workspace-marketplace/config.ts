@@ -5,7 +5,7 @@
 
 export const config = {
 	name: 'marketplace',
-	testDir: 'tests/marketplace-web',
+	testDir: 'tests/workspaces/liferay-workspace-marketplace',
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

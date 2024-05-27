@@ -1,0 +1,32 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Account Menu",
+					"label": "Show Account Menu",
+					"name": "showAccountMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Language Menu",
+					"label": "Show Language Menu",
+					"name": "showLanguageMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Show Currency Menu",
+					"label": "Show Currency Menu",
+					"name": "showCurrencyMenu",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

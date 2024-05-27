@@ -51,8 +51,6 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseDBPartitionTestCase.setUpClass();
-
-		_defaultCompanyId = TestPropsValues.getCompanyId();
 	}
 
 	@Before
@@ -79,7 +77,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	public void testFailure() throws Exception {
 		String sourceFileName = _runExport(_company.getCompanyId());
 
-		String targetFilePath = _runExport(_defaultCompanyId);
+		String targetFilePath = _runExport(TestPropsValues.getCompanyId());
 
 		File[] files = _outputDirectoryFile.listFiles();
 
@@ -130,7 +128,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 
 		_deleteCompany();
 
-		String targetFileName = _runExport(_defaultCompanyId);
+		String targetFileName = _runExport(TestPropsValues.getCompanyId());
 
 		File[] files = _outputDirectoryFile.listFiles();
 
@@ -193,7 +191,6 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	private static long _defaultCompanyId;
 	private static File _outputDirectoryFile;
 
 	private Company _company;

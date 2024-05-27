@@ -11,7 +11,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -26,7 +25,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import java.security.Permission;
@@ -75,7 +73,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	}
 
 	@After
-	public void tearDown() throws IOException, PortalException {
+	public void tearDown() throws Exception {
 		FileUtils.deleteDirectory(_outputDirectoryFile);
 		System.setErr(_originalErrPrintStream);
 		System.setOut(_originalOutPrintStream);

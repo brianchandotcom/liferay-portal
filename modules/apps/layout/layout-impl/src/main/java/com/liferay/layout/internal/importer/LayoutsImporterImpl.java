@@ -199,7 +199,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				preserveItemIds, userId, zipFile);
 
 			_processDisplayPageTemplatePageTemplateEntries(
-				groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+				groupId, layoutPageTemplateCollectionId,
+				layoutsImporterResultEntries, layoutsImportStrategy,
 				preserveItemIds, userId, zipFile);
 
 			_processBasicLayoutPageTemplateEntries(
@@ -1272,7 +1273,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processDisplayPageTemplatePageTemplateEntries(
-			long groupId,
+			long groupId, long layoutPageTemplateCollectionId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
 			boolean preserveItemIds, long userId, ZipFile zipFile)
@@ -1286,7 +1287,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				displayPageTemplateEntries) {
 
 			Callable<Void> callable = new DisplayPagesImporterCallable(
-				groupId, displayPageTemplateEntry, layoutsImporterResultEntries,
+				groupId, displayPageTemplateEntry,
+				layoutPageTemplateCollectionId, layoutsImporterResultEntries,
 				layoutsImportStrategy, preserveItemIds, userId, zipFile);
 
 			try {
@@ -2487,9 +2489,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					_portal.getClassNameId(contentType.getClassName()),
 					_getClassTypeId(
 						contentType.getClassName(), displayPageTemplate),
-					_groupId,
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					_groupId, _layoutPageTemplateCollectionId,
 					_layoutsImporterResultEntries, _layoutsImportStrategy,
 					displayPageTemplate.getName(),
 					_displayPageTemplateEntry.getPageDefinition(),
@@ -2513,12 +2513,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		private DisplayPagesImporterCallable(
 			long groupId, DisplayPageTemplateEntry displayPageTemplateEntry,
+			long layoutPageTemplateCollectionId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 			LayoutsImportStrategy layoutsImportStrategy,
 			boolean preserveItemIds, long userId, ZipFile zipFile) {
 
 			_groupId = groupId;
 			_displayPageTemplateEntry = displayPageTemplateEntry;
+			_layoutPageTemplateCollectionId = layoutPageTemplateCollectionId;
 			_layoutsImporterResultEntries = layoutsImporterResultEntries;
 			_layoutsImportStrategy = layoutsImportStrategy;
 			_preserveItemIds = preserveItemIds;
@@ -2570,6 +2572,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		private final DisplayPageTemplateEntry _displayPageTemplateEntry;
 		private final long _groupId;
+		private final long _layoutPageTemplateCollectionId;
 		private final List<LayoutsImporterResultEntry>
 			_layoutsImporterResultEntries;
 		private final LayoutsImportStrategy _layoutsImportStrategy;

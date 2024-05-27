@@ -10,7 +10,6 @@ import getProjectDependencies from '../../configuration/getProjectDependencies.m
 import getProjectDescription from '../../configuration/getProjectDescription.mjs';
 import {getProjectDirs, getRootDir, SRC_PATH} from '../../util/constants.mjs';
 import fileExists from '../../util/fileExists.mjs';
-import writeGlobalTsconfig from './writeGlobalTsconfig.mjs';
 import writeProjectTsconfig from './writeProjectTsconfig.mjs';
 
 export default async function main() {
@@ -34,7 +33,6 @@ though you have invoked it from a project directory.
 	]);
 
 	await Promise.all([
-		writeGlobalTsconfig(mainEntryPoints),
 		...projectDirs.map(
 			projectDir => processProject(projectDir, mainEntryPoints)
 		)

@@ -83,9 +83,9 @@ public class FDSSampleDisplayContext {
 
 		actionTitleFDSActionDropdownItem.putData("disableHeader", false);
 		actionTitleFDSActionDropdownItem.putData(
-			"title", "Side panel title provided by action");
+			"title", "Side Panel Title Provided by Action");
 
-		FDSActionDropdownItem duplicatedTitleFDSActionDropdownItem =
+		FDSActionDropdownItem duplicateTitleFDSActionDropdownItem =
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(
 					_renderResponse
@@ -95,12 +95,12 @@ public class FDSSampleDisplayContext {
 					LiferayWindowState.POP_UP
 				).buildString(),
 				"rectangle-split", "open-side-panel-title",
-				"Side Panel With Action & Content Title", null, null,
+				"Side Panel With Action and Content Title", null, null,
 				"sidePanel");
 
-		duplicatedTitleFDSActionDropdownItem.putData("disableHeader", false);
-		duplicatedTitleFDSActionDropdownItem.putData(
-			"title", "Side panel title provided by action");
+		duplicateTitleFDSActionDropdownItem.putData("disableHeader", false);
+		duplicateTitleFDSActionDropdownItem.putData(
+			"title", "Side Panel Title Provided by Action");
 
 		FDSActionDropdownItem sidePanelTitleFDSActionDropdownItem =
 			new FDSActionDropdownItem(
@@ -136,7 +136,7 @@ public class FDSSampleDisplayContext {
 				"asyncErrorConnectionRefused", "Async Connection Refused",
 				"get", null, "async"),
 			actionTitleFDSActionDropdownItem,
-			duplicatedTitleFDSActionDropdownItem,
+			duplicateTitleFDSActionDropdownItem,
 			sidePanelTitleFDSActionDropdownItem,
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(

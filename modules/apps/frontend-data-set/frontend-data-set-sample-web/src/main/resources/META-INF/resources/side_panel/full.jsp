@@ -9,7 +9,7 @@
 
 <liferay-frontend:side-panel-content
 	showCloseButton="<%= true %>"
-	title="Side panel title provided by page"
+	title="Side Panel Title Provided by Page"
 >
 
 	This is a side panel with a title.

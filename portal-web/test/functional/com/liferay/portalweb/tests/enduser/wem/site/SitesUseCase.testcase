@@ -1022,6 +1022,8 @@ definition {
 		}
 
 		task ("View private pages") {
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080/accomodations");
+
 			Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
 		}
 

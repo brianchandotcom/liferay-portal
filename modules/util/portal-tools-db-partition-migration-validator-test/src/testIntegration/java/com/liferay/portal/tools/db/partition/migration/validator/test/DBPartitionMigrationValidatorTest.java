@@ -175,8 +175,8 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _testValidate(
-			UnsafeRunnable<Exception> afterExecutionUnsafeRunnable,
-			UnsafeConsumer<RuntimeException, Exception> catchUnsafeRunnable,
+			UnsafeRunnable<Exception> unsafeRunnable,
+			UnsafeConsumer<RuntimeException, Exception> unsafeConsumer,
 			String sourceFileName, String targetFileName)
 		throws Exception {
 
@@ -188,10 +188,10 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 				});
 		}
 		catch (RuntimeException runtimeException) {
-			catchUnsafeRunnable.accept(runtimeException);
+			unsafeConsumer.accept(runtimeException);
 		}
 
-		afterExecutionUnsafeRunnable.run();
+		unsafeRunnable.run();
 	}
 
 	private static Company _company;

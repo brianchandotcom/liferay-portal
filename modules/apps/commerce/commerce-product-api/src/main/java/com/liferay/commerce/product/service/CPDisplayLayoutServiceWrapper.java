@@ -52,6 +52,13 @@ public class CPDisplayLayoutServiceWrapper
 		return _cpDisplayLayoutService.fetchCPDisplayLayout(cpDisplayLayoutId);
 	}
 
+	@Override
+	public CPDisplayLayout getCPDisplayLayout(long cpDisplayLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDisplayLayoutService.getCPDisplayLayout(cpDisplayLayoutId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -4,3 +4,8 @@
  */
 
 export const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+export const HEADERS = new Headers({
+	'Accept': 'application/json',
+	'Content-Type': 'application/json',
+});

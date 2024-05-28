@@ -6,6 +6,10 @@
 type Locale = Liferay.Language.Locale;
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
+interface LabelNameObject {
+	label: string;
+	name: string;
+}
 interface LabelValueObject<T = string> {
 	label: string;
 	value: T;

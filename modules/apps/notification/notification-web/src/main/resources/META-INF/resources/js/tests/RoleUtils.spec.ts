@@ -5,7 +5,10 @@
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {getCheckedChildren} from '../components/SettingsContainer/rolesUtils';
+import {
+	getCheckedChildren,
+	getUserNotificationRoles,
+} from '../components/SettingsContainer/rolesUtils';
 
 it('Assert role names checked items', () => {
 	const children = [
@@ -74,6 +77,63 @@ it('Assert role names checked items', () => {
 			checked: true,
 			label: 'Order Manager',
 			value: 'Order Manager',
+		},
+	]);
+});
+
+it('Assert roles in User Notification', () => {
+	const items = [
+		{
+			description: 'First User',
+			externalReferenceCode: 'Label1',
+			id: 1,
+			name: 'Name1',
+			roleType: 'regular',
+		},
+		{
+			description: 'Second User',
+			externalReferenceCode: 'Label2',
+			id: 2,
+			name: 'Name2',
+			roleType: 'regular',
+		},
+		{
+			description: 'Third User',
+			externalReferenceCode: 'CustomStrictRole',
+			id: 3,
+			name: 'CustomStrictRole',
+			roleType: 'regular',
+		},
+	];
+
+	const itemsNamesList = {
+		recipients: [
+			{
+				roleName: 'Label1',
+			},
+		],
+	};
+
+	const userNotificationRoles = getUserNotificationRoles(
+		items,
+		itemsNamesList.recipients
+	);
+
+	expect(userNotificationRoles.children).toStrictEqual([
+		{
+			checked: true,
+			label: 'Name1',
+			value: 'Label1',
+		},
+		{
+			checked: false,
+			label: 'Name2',
+			value: 'Label2',
+		},
+		{
+			checked: false,
+			label: 'CustomStrictRole',
+			value: 'CustomStrictRole',
 		},
 	]);
 });

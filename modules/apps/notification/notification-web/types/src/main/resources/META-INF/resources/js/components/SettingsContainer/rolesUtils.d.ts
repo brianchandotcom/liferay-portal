@@ -7,9 +7,27 @@ import {
 	MultiSelectItem,
 	MultiSelectItemChild,
 } from '@liferay/object-js-components-web';
+export interface Role {
+	description: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	roleType: string;
+}
+export interface Roles {
+	items: Role[];
+	totalCount: number;
+}
 export declare function getEmailNotificationRoles(
 	baseResourceURL: string
 ): Promise<MultiSelectItem[]>;
+export declare function getRoles(): Promise<Role[]>;
+export declare function getUserNotificationRoles(
+	rolesItems: Role[],
+	recipients: {
+		roleName: string;
+	}[]
+): MultiSelectItem;
 export declare function getCheckedChildren(
 	rolesNamesList: EmailNotificationRecipients[],
 	children: MultiSelectItemChild[]

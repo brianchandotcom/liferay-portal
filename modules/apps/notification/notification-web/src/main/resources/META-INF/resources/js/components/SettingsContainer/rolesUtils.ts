@@ -9,14 +9,23 @@ import {
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 
-interface Role {
-	label: string;
+import {HEADERS} from '../../util/constants';
+
+export interface Role {
+	description: string;
+	externalReferenceCode: string;
+	id: number;
 	name: string;
+	roleType: string;
+}
+export interface Roles {
+	items: Role[];
+	totalCount: number;
 }
 interface RolesGroup {
-	accountRoles: Role[];
-	organizationRoles: Role[];
-	regularRoles: Role[];
+	accountRoles: LabelValueObject[];
+	organizationRoles: LabelValueObject[];
+	regularRoles: LabelValueObject[];
 }
 
 const roleGroupLabels = {
@@ -36,21 +45,59 @@ export async function getEmailNotificationRoles(baseResourceURL: string) {
 	const rolesResponse = (await response.json()) as RolesGroup;
 	const roles = [] as MultiSelectItem[];
 
-	(Object.entries(rolesResponse) as [keyof RolesGroup, Role[]][]).forEach(
-		([roleGroupKey, roleValues]) => {
-			roles.push({
-				children: roleValues.map(({label, name}) => {
-					return {
-						checked: false,
-						label,
-						value: name,
-					};
-				}),
-				label: roleGroupLabels[roleGroupKey],
-				value: roleGroupKey,
-			});
-		}
-	);
+	(Object.entries(rolesResponse) as [
+		keyof RolesGroup,
+		LabelValueObject[]
+	][]).forEach(([roleGroupKey, roleValues]) => {
+		roles.push({
+			children: roleValues.map(({label, value}) => {
+				return {
+					checked: false,
+					label,
+					value,
+				};
+			}),
+			label: roleGroupLabels[roleGroupKey],
+			value: roleGroupKey,
+		});
+	});
+
+	return roles;
+}
+
+export async function getRoles() {
+	const apiURL = `/o/headless-admin-user/v1.0/roles`;
+	const query = `${apiURL}?page=-1&restrictFields=rolePermissions`;
+
+	const response = await fetch(query, {
+		headers: HEADERS,
+		method: 'GET',
+	});
+
+	return ((await response.json()) as Roles).items;
+}
+
+export function getUserNotificationRoles(
+	rolesItems: Role[],
+	recipients: {roleName: string}[]
+) {
+	const roles = {
+		children: rolesItems
+			.filter(({name}) => name !== 'Guest')
+			.map(({externalReferenceCode, name}) => {
+				const selectedRole = !!recipients.find(
+					({roleName}) => roleName === externalReferenceCode
+				);
+
+				return {
+					checked: selectedRole,
+					label: name,
+					value: externalReferenceCode,
+				};
+			}),
+		label: '',
+		value: 'rolesList',
+	} as MultiSelectItem;
 
 	return roles;
 }

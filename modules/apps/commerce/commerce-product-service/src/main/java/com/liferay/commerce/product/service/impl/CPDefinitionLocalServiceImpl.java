@@ -2507,24 +2507,26 @@ public class CPDefinitionLocalServiceImpl
 			status = WorkflowConstants.STATUS_SCHEDULED;
 		}
 
-		Date modifiedDate = serviceContext.getModifiedDate(date);
+		Date expirationDate = cpDefinition.getExpirationDate();
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			Date expirationDate = cpDefinition.getExpirationDate();
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(expirationDate != null) && expirationDate.before(date)) {
 
-			if ((expirationDate != null) && expirationDate.before(date)) {
-				cpDefinition.setExpirationDate(null);
-			}
+			cpDefinition.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+			status = WorkflowConstants.STATUS_EXPIRED;
 		}
 
-		if (status == WorkflowConstants.STATUS_EXPIRED) {
+		if ((status == WorkflowConstants.STATUS_EXPIRED) &&
+			((expirationDate == null) || expirationDate.after(date))) {
+
 			cpDefinition.setExpirationDate(date);
 		}
 
 		cpDefinition.setStatus(status);
 		cpDefinition.setStatusByUserId(user.getUserId());
 		cpDefinition.setStatusByUserName(user.getFullName());
-		cpDefinition.setStatusDate(modifiedDate);
+		cpDefinition.setStatusDate(serviceContext.getModifiedDate(date));
 
 		cpDefinition = cpDefinitionPersistence.update(cpDefinition);
 
@@ -3194,12 +3196,12 @@ public class CPDefinitionLocalServiceImpl
 			}
 		}
 
-		if ((expirationDate != null) &&
-			(expirationDate.before(new Date()) ||
-			 ((displayDate != null) && expirationDate.before(displayDate)))) {
+		if ((expirationDate != null) && (displayDate != null) &&
+			expirationDate.before(displayDate)) {
 
 			throw new CPDefinitionExpirationDateException(
-				"Expiration date " + expirationDate + " is in the past");
+				"Expiration date " + expirationDate +
+					" cannot be before display date");
 		}
 
 		CPType cpType = _cpTypeRegistry.getCPType(productTypeName);

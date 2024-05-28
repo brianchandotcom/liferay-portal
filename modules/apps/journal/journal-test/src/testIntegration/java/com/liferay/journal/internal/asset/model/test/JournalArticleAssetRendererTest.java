@@ -9,9 +9,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
@@ -19,11 +22,15 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,12 +45,15 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
+
+import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -130,6 +140,89 @@ public class JournalArticleAssetRendererTest {
 			HttpComponentsUtil.getParameter(viewInContextURL, "version"));
 	}
 
+	@Test
+	public void testGetURLViewInContextWithLayoutUuid() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticleWithWorkflow(
+			_group.getGroupId(), true);
+
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_company, _group,
+			_getDynamicSelectionAssetPublisherPortletLayout());
+
+		Assert.assertNull(
+			_getURLViewInContext(
+				journalArticle.getResourcePrimKey(), themeDisplay));
+
+		Layout layout = _addDefaultAssetPublisherLayout();
+
+		journalArticle = _journalArticleLocalService.updateArticle(
+			TestPropsValues.getUserId(), journalArticle.getGroupId(),
+			journalArticle.getFolderId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), journalArticle.getTitleMap(),
+			journalArticle.getDescriptionMap(), journalArticle.getContent(),
+			layout.getUuid(), _serviceContext);
+
+		String viewInContextURL = _getURLViewInContext(
+			journalArticle.getResourcePrimKey(), themeDisplay);
+
+		_assertURL(
+			viewInContextURL, JournalArticleConstants.CANONICAL_URL_SEPARATOR,
+			journalArticle.getUrlTitle());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Assert.assertEquals(
+			viewInContextURL,
+			_getURLViewInContext(
+				journalArticle.getResourcePrimKey(), themeDisplay));
+	}
+
+	private String _addAssetPublisherPortletToLayout(Layout layout)
+		throws Exception {
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				layout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
+	private Layout _addDefaultAssetPublisherLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(
+			_addDefaultAssetPublisherPortletToLayout(draftLayout), layout);
+
+		return _layoutLocalService.getLayout(layout.getPlid());
+	}
+
+	private Layout _addDefaultAssetPublisherPortletToLayout(Layout layout)
+		throws Exception {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
+			_addAssetPublisherPortletToLayout(layout));
+
+		return _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			typeSettingsUnicodeProperties.toString());
+	}
+
 	private void _assertURL(String url, String urlSeparator, String urlTitle) {
 		Assert.assertNotNull(url);
 
@@ -141,6 +234,28 @@ public class JournalArticleAssetRendererTest {
 			urlTitle,
 			HttpComponentsUtil.getPath(
 				url.substring(index + urlSeparator.length())));
+	}
+
+	private Layout _getDynamicSelectionAssetPublisherPortletLayout()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		PortletPreferences portletPreferences =
+			LayoutTestUtil.getPortletPreferences(
+				draftLayout, _addAssetPublisherPortletToLayout(draftLayout));
+
+		portletPreferences.setValue("selectionStyle", "dynamic");
+
+		portletPreferences.store();
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		return _layoutLocalService.getLayout(layout.getPlid());
 	}
 
 	private LiferayPortletRequest _getLiferayPortletRequest(
@@ -178,6 +293,9 @@ public class JournalArticleAssetRendererTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private LayoutDisplayPageProviderRegistry

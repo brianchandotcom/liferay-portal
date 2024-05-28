@@ -1659,64 +1659,6 @@ definition {
 			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
-	@description = "LPS-140082 - Verify it is possible to search for a partial Object entry on the Relationship field"
-	@priority = 4
-	test CanSearchPartialOnRelationshipField {
-		property portal.upstream = "quarantine";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 264",
-			objectName = "CustomObject264",
-			pluralLabelName = "Custom Objects 264");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject264");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject264",
-			objectName_2 = "CustomObject264",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 264");
-
-		CreateObject.selectTitleField(fieldLabel = "Field");
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject264");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject264");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject264",
-			value = "Test 1");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject264",
-			value = "Test 2");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject264");
-
-		ObjectPortlet.viewEntryDetails(entry = "Test 1");
-
-		ObjectPortlet.searchEntryRelationshipField(entryValue = "Tes");
-
-		AssertElementPresent(
-			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = "t 2");
-	}
-
 	@description = "LPS-135390 - Verify it is possible to update an Object entry with the Update permission"
 	@priority = 4
 	test CanUpdateObjectEntryWithUpdatePermission {

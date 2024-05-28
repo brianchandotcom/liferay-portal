@@ -1050,23 +1050,6 @@ information.
 
 											<echo>${task.output}</echo>
 										</then>
-										<elseif>
-											<and>
-												<equals arg1="${gradle.build.scan.enabled}" arg2="true" />
-											</and>
-											<then>
-												<local name="task.output" />
-
-												<propertycopy from="${redirector.output.property}" name="task.output" />
-
-												<if>
-													<contains string="${task.output}" substring="Publishing build scan" />
-													<then>
-														<echo>${task.output}</echo>
-													</then>
-												</if>
-											</then>
-										</elseif>
 									</if>
 								</then>
 							</if>

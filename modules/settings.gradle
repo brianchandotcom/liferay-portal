@@ -8,30 +8,32 @@ buildscript {
 			classpath group: "org.apache.maven", name: "maven-model", version: "3.0.4"
 		}
 	}
+
+	if (Boolean.getBoolean("gradle.develocity.enabled")) {
+		dependencies {
+			classpath group: "com.gradle", name: "develocity-gradle-plugin", version: "3.17.4"
+		}
+	}
 }
 
 apply plugin: "com.liferay.settings.plugin"
 
-if (Boolean.getBoolean("gradle.build.scan.enabled")) {
-	apply plugin: "com.gradle.enterprise"
+if (Boolean.getBoolean("gradle.develocity.enabled")) {
+	apply plugin: "com.gradle.develocity"
 
-	gradleEnterprise {
+	develocity {
 		buildScan {
 			allowUntrustedServer = true
-			captureTaskInputFiles = true
-			server = System.getProperty("gradle.build.scan.server.url") ?: null
-
-			publishAlwaysIf true
+			server = System.getProperty("gradle.develocity.server.url") ?: null
 			tag System.getenv("JENKINS_HOME") ? "CI" : "LOCAL"
 
-			if (System.getProperty("gradle.build.scan.tag")) {
-				tag System.getProperty("gradle.build.scan.tag")
+			if (System.getProperty("gradle.develocity.tag")) {
+				tag System.getProperty("gradle.develocity.tag")
 			}
 
-			if (!System.getProperty("gradle.build.scan.server.url")) {
-				termsOfServiceAgree = "yes"
-				termsOfServiceUrl = "https://gradle.com/terms-of-service"
-			}
+			termsOfUseAgree = "yes"
+			termsOfUseUrl = "https://gradle.com/terms-of-service"
+			uploadInBackground = true
 		}
 	}
 }

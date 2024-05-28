@@ -38,6 +38,7 @@ module.exports = {
 		'@clayui/panel',
 		'@clayui/popover',
 		'@clayui/progress-bar',
+		'@clayui/provider',
 		'@clayui/shared',
 		'@clayui/slider',
 		'@clayui/sticker',

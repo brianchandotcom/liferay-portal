@@ -504,6 +504,7 @@ module.exports = {
 				'@clayui/pagination',
 				'@clayui/pagination-bar',
 				'@clayui/panel',
+				'@clayui/provider',
 				'@clayui/popover',
 				'@clayui/progress-bar',
 				'@clayui/shared',

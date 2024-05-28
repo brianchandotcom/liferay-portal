@@ -9,9 +9,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,69 +21,26 @@ import org.json.JSONObject;
 public class Testray1TestrayRun extends TestrayRun {
 
 	@Override
-	public String getRunID() {
-		TestrayBuild testrayBuild = getTestrayBuild();
+	public long getID() {
+		return _id;
+	}
 
-		JSONObject runsJSONObject = testrayBuild.getRunsJSONObject();
-
-		if (runsJSONObject == null) {
-			return null;
-		}
-
-		JSONArray dataJSONArray = runsJSONObject.optJSONArray("data");
-
-		if ((dataJSONArray == JSONObject.NULL) || dataJSONArray.isEmpty()) {
-			return null;
-		}
-
-		Map<String, String> factorValues = new HashMap<>();
+	public String getRunIDString() {
+		List<String> factorValues = new ArrayList<>();
 
 		for (Factor factor : getFactors()) {
-			String factorValue = factor.getValue();
-
-			factorValues.put(factor.getName(), factorValue.toLowerCase());
+			factorValues.add(factor.getValue());
 		}
 
-		for (int i = 0; i < dataJSONArray.length(); i++) {
-			JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
+		return JenkinsResultsParserUtil.join("|", factorValues);
+	}
 
-			JSONArray testrayFactorsJSONArray = dataJSONObject.optJSONArray(
-				"testrayFactors");
+	protected Testray1TestrayRun(
+		TestrayBuild testrayBuild, JSONObject jsonObject) {
 
-			if ((testrayFactorsJSONArray == JSONObject.NULL) ||
-				testrayFactorsJSONArray.isEmpty()) {
+		super(testrayBuild, jsonObject);
 
-				continue;
-			}
-
-			Map<String, String> factorOptionNames = new HashMap<>();
-
-			for (int j = 0; j < testrayFactorsJSONArray.length(); j++) {
-				JSONObject testrayFactorJSONObject =
-					testrayFactorsJSONArray.getJSONObject(j);
-
-				String factorCategoryName = testrayFactorJSONObject.optString(
-					"testrayFactorCategoryName");
-				String factorOptionName = testrayFactorJSONObject.optString(
-					"testrayFactorOptionName");
-
-				if (JenkinsResultsParserUtil.isNullOrEmpty(
-						factorCategoryName) ||
-					JenkinsResultsParserUtil.isNullOrEmpty(factorOptionName)) {
-
-					continue;
-				}
-
-				factorOptionNames.put(
-					factorCategoryName, factorOptionName.toLowerCase());
-			}
-
-			if (factorValues.equals(factorOptionNames)) {
-				return dataJSONObject.getString("testrayRunId");
-			}
-		}
-
-		return null;
+		_id = jsonObject.getLong("testrayRunId");
 	}
 
 	protected Testray1TestrayRun(
@@ -92,6 +48,42 @@ public class Testray1TestrayRun extends TestrayRun {
 		List<File> propertiesFiles) {
 
 		super(testrayBuild, batchName, propertiesFiles);
+
+		JSONObject jsonObject = getJSONObject();
+
+		_id = jsonObject.getLong("testrayRunId");
 	}
+
+	@Override
+	protected void initializeFactorsByJSONObject(JSONObject jsonObject) {
+		factors = new ArrayList<>();
+
+		if (jsonObject == null) {
+			return;
+		}
+
+		JSONArray testrayFactorsJSONArray = jsonObject.optJSONArray(
+			"testrayFactors");
+
+		if (testrayFactorsJSONArray == null) {
+			return;
+		}
+
+		factors = new ArrayList<>();
+
+		for (int i = 0; i < testrayFactorsJSONArray.length(); i++) {
+			JSONObject testrayFactorJSONObject =
+				testrayFactorsJSONArray.getJSONObject(i);
+
+			factors.add(
+				new Factor(
+					testrayFactorJSONObject.getString(
+						"testrayFactorCategoryName"),
+					testrayFactorJSONObject.getString(
+						"testrayFactorOptionName")));
+		}
+	}
+
+	private final long _id;
 
 }

@@ -12,45 +12,41 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class TestrayRun {
 
-	public String getBatchName() {
-		return _batchName;
-	}
-
 	public List<Factor> getFactors() {
-		List<Factor> factors = new ArrayList<>();
-
-		for (String factorNameKey : _getFactorNameKeys()) {
-			String factoryName = _getFactorName(factorNameKey);
-			String factoryValue = _getFactorValue(factorNameKey);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(factoryName) ||
-				JenkinsResultsParserUtil.isNullOrEmpty(factoryValue)) {
-
-				continue;
-			}
-
-			factors.add(new Factor(factoryName, factoryValue));
-		}
-
 		return factors;
 	}
 
-	public String getRunID() {
-		return null;
+	public long getID() {
+		if (_jsonObject == null) {
+			for (TestrayRun testrayRun : _testrayBuild.getTestrayRuns()) {
+				System.out.println(testrayRun);
+			}
+
+			return 0;
+		}
+
+		return _jsonObject.getLong("id");
 	}
 
 	public String getRunIDString() {
+		if ((_jsonObject != null) && _jsonObject.has("name")) {
+			return _jsonObject.getString("name");
+		}
+
 		List<String> factorValues = new ArrayList<>();
 
 		for (Factor factor : getFactors()) {
@@ -89,12 +85,25 @@ public class TestrayRun {
 
 	}
 
+	protected TestrayRun(TestrayBuild testrayBuild, JSONObject jsonObject) {
+		_testrayBuild = testrayBuild;
+		_jsonObject = jsonObject;
+
+		try {
+			_properties.putAll(JenkinsResultsParserUtil.getBuildProperties());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		initializeFactorsByJSONObject(jsonObject);
+	}
+
 	protected TestrayRun(
 		TestrayBuild testrayBuild, String batchName,
 		List<File> propertiesFiles) {
 
 		_testrayBuild = testrayBuild;
-		_batchName = batchName;
 
 		try {
 			_properties.putAll(JenkinsResultsParserUtil.getBuildProperties());
@@ -107,7 +116,88 @@ public class TestrayRun {
 			_properties.putAll(
 				JenkinsResultsParserUtil.getProperties(propertiesFiles.get(i)));
 		}
+
+		initializeFactorsByBatchName(batchName);
+
+		JSONObject jsonObject = null;
+
+		String runIDString = getRunIDString();
+
+		for (TestrayRun testrayRun : testrayBuild.getTestrayRuns()) {
+			if (Objects.equals(runIDString, testrayRun.getRunIDString())) {
+				jsonObject = testrayRun.getJSONObject();
+
+				break;
+			}
+		}
+
+		_jsonObject = jsonObject;
 	}
+
+	protected JSONObject getJSONObject() {
+		return _jsonObject;
+	}
+
+	protected Properties getProperties() {
+		return _properties;
+	}
+
+	protected void initializeFactorsByBatchName(String batchName) {
+		factors = new ArrayList<>();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
+			return;
+		}
+
+		for (String factorNameKey : _getFactorNameKeys()) {
+			String factoryName = _getFactorName(factorNameKey);
+			String factoryValue = _getFactorValue(batchName, factorNameKey);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(factoryName) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(factoryValue)) {
+
+				continue;
+			}
+
+			factors.add(new Factor(factoryName, factoryValue));
+		}
+	}
+
+	protected void initializeFactorsByJSONObject(JSONObject jsonObject) {
+		factors = new ArrayList<>();
+
+		if (jsonObject == null) {
+			return;
+		}
+
+		String runIDString = jsonObject.optString("name");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(runIDString)) {
+			return;
+		}
+
+		for (String factorValue : runIDString.split("\\|")) {
+			for (String propertyName : _properties.stringPropertyNames()) {
+				Matcher factorValueMatcher = _factorValuePattern.matcher(
+					propertyName);
+
+				if (!factorValueMatcher.find()) {
+					continue;
+				}
+
+				if (factorValue.equals(_properties.getProperty(propertyName))) {
+					String factorName = _getFactorName(
+						factorValueMatcher.group("nameKey"));
+
+					factors.add(new Factor(factorName, factorValue));
+
+					break;
+				}
+			}
+		}
+	}
+
+	protected List<Factor> factors;
 
 	private String _getFactorName(String factorNameKey) {
 		String factorName = JenkinsResultsParserUtil.getProperty(
@@ -138,7 +228,7 @@ public class TestrayRun {
 		return factorNameKeys;
 	}
 
-	private String _getFactorValue(String factorNameKey) {
+	private String _getFactorValue(String batchName, String factorNameKey) {
 		String matchingValueKey = null;
 		String matchingPropertyName = null;
 
@@ -157,7 +247,7 @@ public class TestrayRun {
 
 			String valueKey = matcher.group("valueKey");
 
-			if ((valueKey == null) || !_batchName.contains(valueKey)) {
+			if ((valueKey == null) || !batchName.contains(valueKey)) {
 				continue;
 			}
 
@@ -198,7 +288,7 @@ public class TestrayRun {
 		_PROPERTY_KEY_FACTOR_VALUE +
 			"\\[(?<nameKey>[^\\]]+)\\](\\[(?<valueKey>[^\\]]+)\\])?");
 
-	private final String _batchName;
+	private final JSONObject _jsonObject;
 	private final Properties _properties = new Properties();
 	private final TestrayBuild _testrayBuild;
 

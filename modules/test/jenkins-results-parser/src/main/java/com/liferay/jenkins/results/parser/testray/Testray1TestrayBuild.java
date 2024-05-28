@@ -111,7 +111,7 @@ public class Testray1TestrayBuild extends TestrayBuild {
 
 		if (testrayRun != null) {
 			sb.append("&testrayRunId=");
-			sb.append(testrayRun.getRunID());
+			sb.append(testrayRun.getID());
 		}
 
 		long previousTestrayCaseResultID = -1;
@@ -169,6 +169,43 @@ public class Testray1TestrayBuild extends TestrayBuild {
 	@Override
 	public TestrayProductVersion getTestrayProductVersion() {
 		return _testrayProductVersion;
+	}
+
+	@Override
+	public synchronized List<TestrayRun> getTestrayRuns() {
+		if (_testrayRuns != null) {
+			return _testrayRuns;
+		}
+
+		_testrayRuns = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("/home/-/testray/runs.json?testrayBuildId=");
+		sb.append(getID());
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			JSONObject responseJSONObject = new JSONObject(
+				testrayServer.requestGet(sb.toString()));
+
+			JSONArray testrayRunJSONArray = responseJSONObject.getJSONArray(
+				"data");
+
+			for (int i = 0; i < testrayRunJSONArray.length(); i++) {
+				JSONObject testrayRunJSONObject =
+					testrayRunJSONArray.getJSONObject(i);
+
+				_testrayRuns.add(
+					TestrayFactory.newTestrayRun(this, testrayRunJSONObject));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _testrayRuns;
 	}
 
 	@Override
@@ -355,6 +392,7 @@ public class Testray1TestrayBuild extends TestrayBuild {
 	private JSONObject _runsJSONObject;
 	private Matcher _testrayAttachmentURLMatcher;
 	private final TestrayProductVersion _testrayProductVersion;
+	private List<TestrayRun> _testrayRuns;
 	private TopLevelBuildReport _topLevelBuildReport;
 
 }

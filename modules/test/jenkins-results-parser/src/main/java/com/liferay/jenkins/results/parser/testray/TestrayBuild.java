@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -101,9 +102,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			sb.append("' and ");
 		}
 
-		if (testrayRun != null) {
+		if ((testrayRun != null) && (testrayRun.getID() > 0)) {
 			sb.append("r_runToCaseResult_c_runId eq '");
-			sb.append(testrayRun.getRunID());
+			sb.append(testrayRun.getID());
 			sb.append("' and ");
 		}
 
@@ -139,6 +140,41 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	public TestrayRoutine getTestrayRoutine() {
 		return _testrayRoutine;
+	}
+
+	public synchronized List<TestrayRun> getTestrayRuns() {
+		if (_testrayRuns != null) {
+			return _testrayRuns;
+		}
+
+		_testrayRuns = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("/o/c/builds/");
+		sb.append(getID());
+		sb.append("/buildToRuns?pageSize=100");
+
+		try {
+			JSONObject responseJSONObject = new JSONObject(
+				_testrayServer.requestGet(sb.toString()));
+
+			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
+
+			for (int i = 0; i < itemsJSONArray.length(); i++) {
+				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+				System.out.println(itemJSONObject.getString("name"));
+
+				_testrayRuns.add(
+					TestrayFactory.newTestrayRun(this, itemJSONObject));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _testrayRuns;
 	}
 
 	public TestrayServer getTestrayServer() {
@@ -192,6 +228,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	private final JSONObject _jsonObject;
 	private final TestrayProject _testrayProject;
 	private final TestrayRoutine _testrayRoutine;
+	private List<TestrayRun> _testrayRuns;
 	private final TestrayServer _testrayServer;
 
 }

@@ -255,6 +255,16 @@ public class TestrayFactory {
 	}
 
 	public static TestrayRun newTestrayRun(
+		TestrayBuild testrayBuild, JSONObject jsonObject) {
+
+		if (testrayBuild instanceof Testray1TestrayBuild) {
+			return new Testray1TestrayRun(testrayBuild, jsonObject);
+		}
+
+		return new TestrayRun(testrayBuild, jsonObject);
+	}
+
+	public static TestrayRun newTestrayRun(
 		TestrayBuild testrayBuild, String batchName,
 		List<File> propertiesFiles) {
 

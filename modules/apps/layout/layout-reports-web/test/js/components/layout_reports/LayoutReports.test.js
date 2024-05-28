@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -135,5 +135,19 @@ describe('LayoutReports renders proper component', () => {
 		const button = getByText('en-US').parentElement;
 
 		expect(button.disabled).toBe(true);
+	});
+
+	it('shows an alert with last load date and a button to reload when there is cached data', () => {
+		Liferay.FeatureFlags['LPS-187284'] = true;
+
+		render(getLayoutReportsComponent({layoutReportsIssues}));
+
+		expect(
+			screen.getByText('showing-data-from-July 5, 2021 12:09 PM')
+		).toBeInTheDocument();
+
+		expect(screen.getByText('relaunch-to-update-data')).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPS-187284'] = false;
 	});
 });

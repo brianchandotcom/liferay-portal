@@ -36,6 +36,15 @@ type TOrderItem = {
 	skuId: string;
 };
 
+type TOrderRule = {
+	active?: boolean;
+	id?: number;
+	name?: string;
+	priority?: number;
+	type: string;
+	typeSettings?: string;
+};
+
 export class HeadlessCommerceAdminOrderApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -105,5 +114,30 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		}
 
 		return terms;
+	}
+
+	async postOrderRule(orderRule: TOrderRule) {
+		orderRule = {
+			active: true,
+			name: getRandomString(),
+			priority: getRandomInt(),
+			type: '',
+			typeSettings: '',
+			...(orderRule || {}),
+		};
+
+		orderRule = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/order-rules`,
+			{
+				data: orderRule,
+				failOnStatusCode: true,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: orderRule.id, type: 'orderRule'});
+		}
+
+		return orderRule;
 	}
 }

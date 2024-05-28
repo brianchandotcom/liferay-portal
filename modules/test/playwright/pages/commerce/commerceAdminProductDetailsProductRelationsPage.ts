@@ -18,6 +18,8 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 	readonly page: Page;
 	readonly productRelationsLink: Locator;
 	readonly selectItemsInput: Locator;
+	readonly addIncompatibleInBundleProduct: Locator;
+	readonly addRequiresInBundleProduct: Locator;
 	readonly addSpareProductMenuButton: Locator;
 
 	constructor(page: Page) {
@@ -46,10 +48,30 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 			name: 'Product Relations',
 		});
 		this.selectItemsInput = page.locator('input[title="Select Items"]');
+		this.addIncompatibleInBundleProduct = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Add Incompatible in Bundle Product',
+		});
+		this.addRequiresInBundleProduct = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Add Requires in Bundle Product',
+		});
 		this.addSpareProductMenuButton = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Add Spare Product',
 		});
+	}
+
+	async addIncompatibleInBundleProductRelation() {
+		await this.goto();
+		await this.creationMenuNewButton.click();
+		await this.addIncompatibleInBundleProduct.click();
+	}
+
+	async addRequiresInBundleProductRelation() {
+		await this.goto();
+		await this.creationMenuNewButton.click();
+		await this.addRequiresInBundleProduct.click();
 	}
 
 	async addSpareProductRelation() {

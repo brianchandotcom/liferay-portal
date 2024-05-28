@@ -17,10 +17,10 @@ import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidg
 const sidePanelActionLabelWithActionTitle = 'Side Panel With Action Title';
 const sidePanelActionLabelWithContentTitle = 'Side Panel With Content Title';
 const sidePanelActionLabelWithActionTitleContentTitle =
-	'Side Panel With Action & Content Title';
+	'Side Panel With Action and Content Title';
 const sidePanelActionLabelWithoutTitle = 'Side Panel With No Title';
-const sidePanelActionTitle = 'Side panel title provided by action';
-const sidePanelContentTitle = 'Side panel title provided by page';
+const sidePanelActionTitle = 'Side Panel Title Provided by Action';
+const sidePanelContentTitle = 'Side Panel Title Provided by Page';
 
 export const test = mergeTests(
 	apiHelpersTest,

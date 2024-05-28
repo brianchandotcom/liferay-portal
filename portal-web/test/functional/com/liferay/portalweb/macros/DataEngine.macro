@@ -242,6 +242,10 @@ definition {
 				value1 = ${fieldFieldLabel});
 		}
 
+		if (${index} != 1) {
+			FormFields.clickAddOptionButton();
+		}
+
 		if (isSet(optionFieldLabel)) {
 			Type(
 				index = ${index},

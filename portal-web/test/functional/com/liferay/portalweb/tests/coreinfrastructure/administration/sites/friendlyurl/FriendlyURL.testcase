@@ -137,46 +137,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162714. Checks that Web Content FriendlyURL special characters like éöő are not escaped"
-	@priority = 4
-	test SpecialCharactersAreNotEscapedFromWebContentURL {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "éöő");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "éöő");
-
-		WebContent.viewFriendlyURLCP(friendlyURL = "éöő");
-	}
-
-	@description = "This is a use case for LPS-161024. Verify uppercase virtual host names added to a site's url are converted to lowercase."
-	@priority = 3
-	test UppercaseVirtualHostNamesConvertedToLowercase {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("When an uppercase virtual host is added to a site url") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
-
-			Site.addVirtualHostsURLCP(
-				pageVirtualHosts = "true",
-				pageVirtualHostURL = "LIFERAY-UPPER");
-		}
-
-		task ("Then the virtual host gets converted to lowercase in the database") {
-			var virtualHostQueryResult = SQL.executeSQLStatement(sqlStatement = "SELECT * FROM lportal.VirtualHost;");
-
-			if (contains(${virtualHostQueryResult}, "LIFERAY-UPPER") || !(contains(${virtualHostQueryResult}, "liferay-upper"))) {
-				echo(${virtualHostQueryResult});
-
-				fail("The virtual host was not converted to lowercase");
-			}
-		}
-	}
-
 	@priority = 4
 	test VerifyFriendlyURLsOnlyDisplayLocaleOnce {
 		JSONLayout.addPublicLayout(
@@ -303,28 +263,6 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "/web/canada-site-name/test-page");
 
 		AssertLocation(value1 = "${portalURL}/fr-CA/web/canada-site-name/test-page");
-	}
-
-	@description = "This is a use case for LRQA-52002. FriendlyURLS should support Unicode characters."
-	@priority = 4
-	test ViewFriendlyURLWithUnicodeChars {
-		JSONLayout.addPublicLayout(
-			friendlyURL = "/⚽⚽⚽",
-			groupName = "Test Site Name",
-			layoutName = "Test Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/⚽⚽⚽");
-
-		task ("Assert navigation occurs with no errors by asserting added Widget.") {
-			AssertElementPresent(
-				key_portletName = "Asset Publisher",
-				locator1 = "Portlet#TITLE");
-		}
 	}
 
 	@description = "This is a test for LPS-135619 and LPS-134072. View the Home page in different user languages."

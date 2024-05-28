@@ -66,14 +66,14 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 			_company = CompanyTestUtil.addCompany();
 		}
 
-		_outputDirectoryFile = new File(PropsValues.LIFERAY_HOME, "exports");
+		_outputDirectory = new File(PropsValues.LIFERAY_HOME, "exports");
 
-		_outputDirectoryFile.mkdirs();
+		_outputDirectory.mkdirs();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		FileUtils.deleteDirectory(_outputDirectoryFile);
+		FileUtils.deleteDirectory(_outputDirectory);
 		System.setErr(_originalErrPrintStream);
 		System.setOut(_originalOutPrintStream);
 	}
@@ -83,7 +83,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		String sourceFileName = _testExport(_company.getCompanyId());
 		String targetFileName = _testExport(TestPropsValues.getCompanyId());
 
-		File[] files = _outputDirectoryFile.listFiles();
+		File[] files = _outputDirectory.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
@@ -127,7 +127,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 
 		String targetFileName = _testExport(TestPropsValues.getCompanyId());
 
-		File[] files = _outputDirectoryFile.listFiles();
+		File[] files = _outputDirectory.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
@@ -161,7 +161,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 				DBPartitionMigrationValidator.class, "_write",
 				new Class<?>[] {LiferayDatabase.class, String.class},
 				DatabaseUtil.exportLiferayDatabase(connection),
-				_outputDirectoryFile.getAbsolutePath());
+				_outputDirectory.getAbsolutePath());
 		}
 	}
 
@@ -190,7 +190,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	private static File _outputDirectoryFile;
+	private static File _outputDirectory;
 
 	private final ByteArrayOutputStream _errByteArrayOutputStream =
 		new ByteArrayOutputStream();

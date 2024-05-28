@@ -26,7 +26,7 @@ if (Validator.isNull(name)) {
 <div class="commerce-quantity-container">
 	<c:choose>
 		<c:when test="<%= ArrayUtil.isEmpty(allowedOrderQuantities) && !useSelect %>">
-			<aui:input cssClass="commerce-input mb-0 u-wauto" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= HtmlUtil.escape(name) %>" type="number" value="<%= value %>" wrapperCssClass="mb-0">
+			<aui:input cssClass="commerce-input mb-0 u-wauto" ignoreRequestValue="<%= true %>" label='<%= showLabel ? "quantity" : StringPool.BLANK %>' name="<%= HtmlUtil.escape(name) %>" step="<%= multipleOrderQuantity %>" type="number" value="<%= value %>" wrapperCssClass="mb-0">
 				<aui:validator name="number" />
 				<aui:validator name="min"><%= minOrderQuantity %></aui:validator>
 				<aui:validator name="max"><%= maxOrderQuantity %></aui:validator>

@@ -155,9 +155,6 @@ components:
                     type: integer
                 pageUuid:
                     type: string
-            required:
-                - categoryId
-                - pageUuid
             type: object
         Channel:
             properties:
@@ -234,8 +231,6 @@ components:
                     type: object
                 pageUuid:
                     type: string
-            required:
-                - pageUuid
             type: object
         DefaultProductDisplayPage:
             properties:
@@ -248,8 +243,6 @@ components:
                     type: object
                 pageUuid:
                     type: string
-            required:
-                - pageUuid
             type: object
         Error:
             properties:
@@ -397,8 +390,6 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
-            required:
-                - productId
             type: object
         ShippingFixedOptionOrderType:
             properties:
@@ -2044,6 +2035,11 @@ paths:
                       type: string
                   style: simple
                 - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   required: false
                   schema:
@@ -2550,6 +2546,11 @@ paths:
                       type: string
                   style: simple
                 - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   required: false
                   schema:
@@ -3015,6 +3016,11 @@ paths:
                       format: int64
                       type: integer
                   style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   required: false
@@ -3513,6 +3519,11 @@ paths:
                       format: int64
                       type: integer
                   style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
                 - in: query
                   name: page
                   required: false

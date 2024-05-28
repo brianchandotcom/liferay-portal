@@ -17,8 +17,6 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.ProductDisplayPage;
-import com.liferay.headless.commerce.admin.channel.client.pagination.Page;
-import com.liferay.headless.commerce.admin.channel.client.pagination.Pagination;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,15 +24,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -60,233 +55,6 @@ public class ProductDisplayPageResourceTest
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
 			testCompany.getCompanyId(), testCompany.getGroupId(),
 			_user.getUserId(), _commerceCurrency.getCode());
-	}
-
-	@Override
-	@Test
-	public void testGetChannelByExternalReferenceCodeProductDisplayPagesPageWithPagination()
-		throws Exception {
-
-		String externalReferenceCode =
-			testGetChannelByExternalReferenceCodeProductDisplayPagesPage_getExternalReferenceCode();
-
-		Page<ProductDisplayPage> productDisplayPagePage =
-			productDisplayPageResource.
-				getChannelByExternalReferenceCodeProductDisplayPagesPage(
-					externalReferenceCode, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(
-			productDisplayPagePage.getTotalCount());
-
-		ProductDisplayPage productDisplayPage1 =
-			testGetChannelByExternalReferenceCodeProductDisplayPagesPage_addProductDisplayPage(
-				externalReferenceCode, randomProductDisplayPage());
-
-		ProductDisplayPage productDisplayPage2 =
-			testGetChannelByExternalReferenceCodeProductDisplayPagesPage_addProductDisplayPage(
-				externalReferenceCode, randomProductDisplayPage());
-
-		ProductDisplayPage productDisplayPage3 =
-			testGetChannelByExternalReferenceCodeProductDisplayPagesPage_addProductDisplayPage(
-				externalReferenceCode, randomProductDisplayPage());
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<ProductDisplayPage> page1 =
-				productDisplayPageResource.
-					getChannelByExternalReferenceCodeProductDisplayPagesPage(
-						externalReferenceCode, null,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit),
-						null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				productDisplayPage1,
-				(List<ProductDisplayPage>)page1.getItems());
-
-			Page<ProductDisplayPage> page2 =
-				productDisplayPageResource.
-					getChannelByExternalReferenceCodeProductDisplayPagesPage(
-						externalReferenceCode, null,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit),
-						null);
-
-			assertContains(
-				productDisplayPage2,
-				(List<ProductDisplayPage>)page2.getItems());
-
-			Page<ProductDisplayPage> page3 =
-				productDisplayPageResource.
-					getChannelByExternalReferenceCodeProductDisplayPagesPage(
-						externalReferenceCode, null,
-						Pagination.of(
-							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit),
-						null);
-
-			assertContains(
-				productDisplayPage3,
-				(List<ProductDisplayPage>)page3.getItems());
-		}
-		else {
-			Page<ProductDisplayPage> page1 =
-				productDisplayPageResource.
-					getChannelByExternalReferenceCodeProductDisplayPagesPage(
-						externalReferenceCode, null,
-						Pagination.of(1, totalCount + 2), null);
-
-			List<ProductDisplayPage> productDisplayPages1 =
-				(List<ProductDisplayPage>)page1.getItems();
-
-			Assert.assertEquals(
-				productDisplayPages1.toString(), totalCount + 2,
-				productDisplayPages1.size());
-
-			Page<ProductDisplayPage> page2 =
-				productDisplayPageResource.
-					getChannelByExternalReferenceCodeProductDisplayPagesPage(
-						externalReferenceCode, null,
-						Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 1, page2.getTotalCount());
-
-			List<ProductDisplayPage> productDisplayPages2 =
-				(List<ProductDisplayPage>)page2.getItems();
-
-			Assert.assertEquals(
-				productDisplayPages2.toString(), 1,
-				productDisplayPages2.size());
-
-			Page<ProductDisplayPage> page3 =
-				productDisplayPageResource.
-					getChannelByExternalReferenceCodeProductDisplayPagesPage(
-						externalReferenceCode, null,
-						Pagination.of(1, (int)totalCount + 3), null);
-
-			assertContains(
-				productDisplayPage1,
-				(List<ProductDisplayPage>)page3.getItems());
-			assertContains(
-				productDisplayPage2,
-				(List<ProductDisplayPage>)page3.getItems());
-			assertContains(
-				productDisplayPage3,
-				(List<ProductDisplayPage>)page3.getItems());
-		}
-	}
-
-	@Override
-	@Test
-	public void testGetChannelIdProductDisplayPagesPageWithPagination()
-		throws Exception {
-
-		Long id = testGetChannelIdProductDisplayPagesPage_getId();
-
-		Page<ProductDisplayPage> productDisplayPagePage =
-			productDisplayPageResource.getChannelIdProductDisplayPagesPage(
-				id, null, null, null);
-
-		int totalCount = GetterUtil.getInteger(
-			productDisplayPagePage.getTotalCount());
-
-		ProductDisplayPage productDisplayPage1 =
-			testGetChannelIdProductDisplayPagesPage_addProductDisplayPage(
-				id, randomProductDisplayPage());
-
-		ProductDisplayPage productDisplayPage2 =
-			testGetChannelIdProductDisplayPagesPage_addProductDisplayPage(
-				id, randomProductDisplayPage());
-
-		ProductDisplayPage productDisplayPage3 =
-			testGetChannelIdProductDisplayPagesPage_addProductDisplayPage(
-				id, randomProductDisplayPage());
-
-		int pageSizeLimit = 500;
-
-		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<ProductDisplayPage> page1 =
-				productDisplayPageResource.getChannelIdProductDisplayPagesPage(
-					id, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
-
-			assertContains(
-				productDisplayPage1,
-				(List<ProductDisplayPage>)page1.getItems());
-
-			Page<ProductDisplayPage> page2 =
-				productDisplayPageResource.getChannelIdProductDisplayPagesPage(
-					id, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(
-				productDisplayPage2,
-				(List<ProductDisplayPage>)page2.getItems());
-
-			Page<ProductDisplayPage> page3 =
-				productDisplayPageResource.getChannelIdProductDisplayPagesPage(
-					id, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
-
-			assertContains(
-				productDisplayPage3,
-				(List<ProductDisplayPage>)page3.getItems());
-		}
-		else {
-			Page<ProductDisplayPage> page1 =
-				productDisplayPageResource.getChannelIdProductDisplayPagesPage(
-					id, null, Pagination.of(1, totalCount + 2), null);
-
-			List<ProductDisplayPage> productDisplayPages1 =
-				(List<ProductDisplayPage>)page1.getItems();
-
-			Assert.assertEquals(
-				productDisplayPages1.toString(), totalCount + 2,
-				productDisplayPages1.size());
-
-			Page<ProductDisplayPage> page2 =
-				productDisplayPageResource.getChannelIdProductDisplayPagesPage(
-					id, null, Pagination.of(2, totalCount + 2), null);
-
-			Assert.assertEquals(totalCount + 1, page2.getTotalCount());
-
-			List<ProductDisplayPage> productDisplayPages2 =
-				(List<ProductDisplayPage>)page2.getItems();
-
-			Assert.assertEquals(
-				productDisplayPages2.toString(), 1,
-				productDisplayPages2.size());
-
-			Page<ProductDisplayPage> page3 =
-				productDisplayPageResource.getChannelIdProductDisplayPagesPage(
-					id, null, Pagination.of(1, (int)totalCount + 3), null);
-
-			assertContains(
-				productDisplayPage1,
-				(List<ProductDisplayPage>)page3.getItems());
-			assertContains(
-				productDisplayPage2,
-				(List<ProductDisplayPage>)page3.getItems());
-			assertContains(
-				productDisplayPage3,
-				(List<ProductDisplayPage>)page3.getItems());
-		}
 	}
 
 	@Override

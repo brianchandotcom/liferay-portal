@@ -5,6 +5,7 @@
 
 package com.liferay.marketplace;
 
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
@@ -16,27 +17,17 @@ import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
 
-import java.nio.charset.Charset;
-
 import java.time.ZonedDateTime;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.StatusLine;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -209,59 +200,6 @@ public class ProvisioningRestController extends BaseRestController {
 		return appLicenseKey;
 	}
 
-	private String _getOAuthAuthorization() throws Exception {
-		if ((_oauthAccessToken != null) &&
-			(System.currentTimeMillis() < (_oauthExpirationMillis - 15000))) {
-
-			return _oauthAccessToken;
-		}
-
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		HttpPost httpPost = new HttpPost(
-			new URL(_provisioningAuthURL) + "/o/oauth2/token");
-
-		httpPost.setEntity(
-			new UrlEncodedFormEntity(
-				Arrays.asList(
-					new BasicNameValuePair(
-						"client_id", _provisioningAuthClientId),
-					new BasicNameValuePair(
-						"client_secret", _provisioningAuthClientSecret),
-					new BasicNameValuePair(
-						"grant_type", "client_credentials"))));
-		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build();
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpPost)) {
-
-			StatusLine statusLine = closeableHttpResponse.getStatusLine();
-
-			if (statusLine.getStatusCode() !=
-					org.apache.http.HttpStatus.SC_OK) {
-
-				throw new Exception("Unable to get OAuth authorization");
-			}
-
-			JSONObject jsonObject = new JSONObject(
-				EntityUtils.toString(
-					closeableHttpResponse.getEntity(),
-					Charset.defaultCharset()));
-
-			_oauthExpirationMillis =
-				(jsonObject.getLong("expires_in") * 1000) +
-					System.currentTimeMillis();
-
-			_oauthAccessToken =
-				jsonObject.getString("token_type") + " " +
-					jsonObject.getString("access_token");
-
-			return _oauthAccessToken;
-		}
-	}
-
 	private void _initResourceBuilders() throws Exception {
 		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
 
@@ -270,7 +208,9 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_appLicenseKeyResource = AppLicenseKeyResource.builder(
 		).header(
-			"Authorization", _getOAuthAuthorization()
+			"Authorization",
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"external-provisioning")
 		).endpoint(
 			liferayMarketplaceProvisioningAuthURL
 		).build();
@@ -294,17 +234,12 @@ public class ProvisioningRestController extends BaseRestController {
 	@Value("${liferay.marketplace.koroneiki.auth.url}")
 	private String _koroneikiAuthURL;
 
-	private String _oauthAccessToken;
-	private long _oauthExpirationMillis;
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
 	private ProductPurchaseResource _productPurchaseResource;
 
-	@Value("${liferay.marketplace.provisioning.auth.client.id}")
-	private String _provisioningAuthClientId;
-
-	@Value("${liferay.marketplace.provisioning.auth.client.secret}")
-	private String _provisioningAuthClientSecret;
-
-	@Value("${liferay.marketplace.provisioning.auth.url}")
+	@Value("${external.provisioning.oauth2.headless.server.home.page.uri}")
 	private String _provisioningAuthURL;
 
 }

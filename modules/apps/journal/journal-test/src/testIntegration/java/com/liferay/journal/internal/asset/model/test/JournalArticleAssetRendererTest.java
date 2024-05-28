@@ -94,13 +94,6 @@ public class JournalArticleAssetRendererTest {
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		AssetRendererFactory<JournalArticle> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetRenderer<JournalArticle> assetRenderer =
-			assetRendererFactory.getAssetRenderer(article, 0);
-
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
@@ -112,20 +105,10 @@ public class JournalArticleAssetRendererTest {
 			_company, _group,
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
 
-		String viewInContextURL = assetRenderer.getURLViewInContext(
-			_getLiferayPortletRequest(themeDisplay), null, null);
+		String viewInContextURL = _getURLViewInContext(
+			article.getResourcePrimKey(), themeDisplay);
 
-		Assert.assertNotNull(viewInContextURL);
-
-		int index = viewInContextURL.indexOf(urlSeparator);
-
-		Assert.assertTrue(index >= 0);
-
-		String friendlyURL = viewInContextURL.substring(
-			index + urlSeparator.length());
-
-		Assert.assertEquals(
-			article.getUrlTitle(), HttpComponentsUtil.getPath(friendlyURL));
+		_assertURL(viewInContextURL, urlSeparator, article.getUrlTitle());
 
 		String version = HttpComponentsUtil.getParameter(
 			viewInContextURL, "version");
@@ -137,25 +120,27 @@ public class JournalArticleAssetRendererTest {
 
 		article = JournalTestUtil.updateArticleWithWorkflow(article, true);
 
-		assetRenderer = assetRendererFactory.getAssetRenderer(article, 0);
+		viewInContextURL = _getURLViewInContext(
+			article.getResourcePrimKey(), themeDisplay);
 
-		viewInContextURL = assetRenderer.getURLViewInContext(
-			_getLiferayPortletRequest(themeDisplay), null, null);
-
-		Assert.assertNotNull(viewInContextURL);
-
-		index = viewInContextURL.indexOf(urlSeparator);
-
-		Assert.assertTrue(index >= 0);
-
-		friendlyURL = viewInContextURL.substring(index + urlSeparator.length());
-
-		Assert.assertEquals(
-			article.getUrlTitle(), HttpComponentsUtil.getPath(friendlyURL));
+		_assertURL(viewInContextURL, urlSeparator, article.getUrlTitle());
 
 		Assert.assertEquals(
 			StringPool.BLANK,
 			HttpComponentsUtil.getParameter(viewInContextURL, "version"));
+	}
+
+	private void _assertURL(String url, String urlSeparator, String urlTitle) {
+		Assert.assertNotNull(url);
+
+		int index = url.indexOf(urlSeparator);
+
+		Assert.assertTrue(index >= 0);
+
+		Assert.assertEquals(
+			urlTitle,
+			HttpComponentsUtil.getPath(
+				url.substring(index + urlSeparator.length())));
 	}
 
 	private LiferayPortletRequest _getLiferayPortletRequest(
@@ -166,6 +151,21 @@ public class JournalArticleAssetRendererTest {
 		renderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return _portal.getLiferayPortletRequest(renderRequest);
+	}
+
+	private String _getURLViewInContext(
+			long resourcePrimKey, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(resourcePrimKey);
+
+		return assetRenderer.getURLViewInContext(
+			_getLiferayPortletRequest(themeDisplay), null, null);
 	}
 
 	private Company _company;

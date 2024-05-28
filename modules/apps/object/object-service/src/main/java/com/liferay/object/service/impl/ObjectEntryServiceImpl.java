@@ -37,7 +37,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -700,72 +699,48 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			return;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-192957")) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectDefinitionId);
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-			try {
+		try {
+			_objectConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					ObjectConfiguration.class, objectDefinition.getCompanyId());
+
+			if (_objectConfiguration == null) {
 				_objectConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						ObjectConfiguration.class,
-						objectDefinition.getCompanyId());
-
-				if (_objectConfiguration == null) {
-					_objectConfiguration =
-						_configurationProvider.getSystemConfiguration(
-							ObjectConfiguration.class);
-				}
-			}
-			catch (ConfigurationException configurationException) {
-				throw new RuntimeException(configurationException);
-			}
-
-			long count = objectEntryLocalService.getObjectEntriesCount(
-				user.getUserId(), _getStartDate(),
-				objectDefinition.getObjectDefinitionId());
-
-			long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
-				_objectConfiguration.
-					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
-
-			if (count >=
-					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
-
-				_sendUserNotificationEvents(objectDefinition);
-
-				throw new ObjectEntryCountException(
-					Collections.singletonList(
-						objectDefinition.getLabel(
-							objectDefinition.getDefaultLanguageId())),
-					StringBundler.concat(
-						"The limit of guest entries for ",
-						objectDefinition.getLabel(
-							objectDefinition.getDefaultLanguageId()),
-						" has been reached and will no longer be accepted"),
-					"the-limit-of-guest-entries-for-object-definition-has-" +
-						"been-reached-and-will-no-longer-be-accepted",
-					objectDefinition.getLabel(
-						objectDefinition.getDefaultLanguageId()));
+					_configurationProvider.getSystemConfiguration(
+						ObjectConfiguration.class);
 			}
 		}
-		else {
-			int count = objectEntryPersistence.countByU_ODI(
-				user.getUserId(), objectDefinitionId);
-			long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
-				_objectConfiguration.
-					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 
-			if (count >=
-					maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+		long count = objectEntryLocalService.getObjectEntriesCount(
+			user.getUserId(), _getStartDate(),
+			objectDefinition.getObjectDefinitionId());
 
-				throw new ObjectEntryCountException(
-					StringBundler.concat(
-						"Unable to exceed ",
-						maximumNumberOfGuestUserObjectEntriesPerObjectDefinition,
-						" guest object entries for object definition ",
-						objectDefinitionId));
-			}
+		long maximumNumberOfGuestUserObjectEntriesPerObjectDefinition =
+			_objectConfiguration.
+				maximumNumberOfGuestUserObjectEntriesPerObjectDefinition();
+
+		if (count >= maximumNumberOfGuestUserObjectEntriesPerObjectDefinition) {
+			_sendUserNotificationEvents(objectDefinition);
+
+			throw new ObjectEntryCountException(
+				Collections.singletonList(
+					objectDefinition.getLabel(
+						objectDefinition.getDefaultLanguageId())),
+				StringBundler.concat(
+					"The limit of guest entries for ",
+					objectDefinition.getLabel(
+						objectDefinition.getDefaultLanguageId()),
+					" has been reached and will no longer be accepted"),
+				"the-limit-of-guest-entries-for-object-definition-has-been-" +
+					"reached-and-will-no-longer-be-accepted",
+				objectDefinition.getLabel(
+					objectDefinition.getDefaultLanguageId()));
 		}
 	}
 

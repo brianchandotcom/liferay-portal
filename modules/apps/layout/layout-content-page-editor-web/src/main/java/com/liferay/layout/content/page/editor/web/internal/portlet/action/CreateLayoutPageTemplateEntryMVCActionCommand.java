@@ -199,7 +199,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 	}
 
 	private String _getUniqueName(
-		long layoutPageTemplateCollectionId, Layout layout, Locale locale) {
+		Layout layout, long layoutPageTemplateCollectionId, Locale locale) {
 
 		String name = StringBundler.concat(
 			layout.getName(locale), " - ",

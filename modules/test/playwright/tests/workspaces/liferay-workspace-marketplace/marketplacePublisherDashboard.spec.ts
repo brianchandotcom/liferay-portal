@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {marketplacePagesTest} from './fixtures/marketplacePages';
 import {marketplaceSiteFixture} from './fixtures/marketplaceSite';
 import {PUBLISH_SOLUTION} from './types';
@@ -65,6 +66,7 @@ test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
 
 	test('LPD-26707 Add new solution template', async ({
 		marketplace,
+		page,
 		publisherSolutionPage,
 	}) => {
 		await publisherSolutionPage.goto(
@@ -93,5 +95,40 @@ test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
 		await publisherSolutionPage.fillCustomizeSolutionDetails(
 			PUBLISH_SOLUTION.details
 		);
+
+		await expect(publisherSolutionPage.continueButton).toBeEnabled();
+
+		await publisherSolutionPage.goToCompanyProfile();
+
+		await publisherSolutionPage.fillCompanyProfile(
+			PUBLISH_SOLUTION.companyProfile
+		);
+
+		await expect(publisherSolutionPage.continueButton).toBeEnabled();
+
+		await publisherSolutionPage.goToContactUs();
+
+		await publisherSolutionPage.emailInput.fill('test@example.com');
+
+		await expect(publisherSolutionPage.continueButton).toBeEnabled();
+
+		await clickAndExpectToBeVisible({
+			target: publisherSolutionPage.reviewAndSubmitTitle,
+			trigger: publisherSolutionPage.continueButton,
+		});
+
+		await publisherSolutionPage.reviewAndSubmit();
+
+		await page
+			.getByText(`Solution ${PUBLISH_SOLUTION.profile.name} submitted`)
+			.waitFor({state: 'visible'});
+
+		await expect(
+			page.getByText(PUBLISH_SOLUTION.profile.name).last()
+		).toBeVisible();
+
+		await expect(
+			publisherSolutionPage.underReviewStatus.last()
+		).toBeVisible();
 	});
 });

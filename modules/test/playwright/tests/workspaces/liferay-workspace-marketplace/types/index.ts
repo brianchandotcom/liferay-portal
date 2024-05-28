@@ -34,6 +34,15 @@ export type PublishProductPayload = {
 };
 
 export const PUBLISH_SOLUTION = {
+	companyProfile: {
+		description: 'Company Description',
+		email: 'test@liferay.com',
+		phone: '1111111111',
+		website: 'liferay.com',
+	},
+	contactUs: {
+		email: 'test@liferay.com',
+	},
 	details: {
 		'text-block': {
 			description: 'Text Block Description',

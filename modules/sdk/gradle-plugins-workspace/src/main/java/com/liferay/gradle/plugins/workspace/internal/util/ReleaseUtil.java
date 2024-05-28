@@ -65,9 +65,9 @@ public class ReleaseUtil {
 	}
 
 	public static void initialize(
-		long maxAge, List<String> releaseMirrors, File workspaceCacheDir) {
+		long maxAge, List<String> releasesMirrors, File workspaceCacheDir) {
 
-		instance = new ReleaseUtil(maxAge, releaseMirrors, workspaceCacheDir);
+		instance = new ReleaseUtil(maxAge, releasesMirrors, workspaceCacheDir);
 	}
 
 	public static class ReleaseProperties {
@@ -171,10 +171,10 @@ public class ReleaseUtil {
 	}
 
 	private ReleaseUtil(
-		long maxAge, List<String> releaseMirrors, File workspaceCacheDir) {
+		long maxAge, List<String> releasesMirrors, File workspaceCacheDir) {
 
-		for (String releaseMirror : releaseMirrors) {
-			_releaseMirrors.add(_normalizeReleaseMirror(releaseMirror));
+		for (String releasesMirror : releasesMirrors) {
+			_releasesMirrors.add(_normalizeReleasesMirror(releasesMirror));
 		}
 
 		_workspaceCacheDir = workspaceCacheDir;
@@ -187,11 +187,11 @@ public class ReleaseUtil {
 				releasesJsonFile, maxAge, ChronoUnit.DAYS));
 
 		if (releaseEntries == null) {
-			for (String releaseMirror : _releaseMirrors) {
+			for (String releasesMirror : _releasesMirrors) {
 				releaseEntries = ResourceUtil.readJson(
 					ReleaseEntryList.class,
 					ResourceUtil.getURLResolver(
-						workspaceCacheDir, releaseMirror + "/releases.json"));
+						workspaceCacheDir, releasesMirror + "/releases.json"));
 
 				if (releaseEntries != null) {
 					break;
@@ -266,8 +266,8 @@ public class ReleaseUtil {
 
 			String cdnURIPath = cdnURI.getPath();
 
-			for (String releaseMirror : _releaseMirrors) {
-				String fullMirrorPath = releaseMirror + cdnURIPath;
+			for (String releasesMirror : _releasesMirrors) {
+				String fullMirrorPath = releasesMirror + cdnURIPath;
 
 				properties = ResourceUtil.readProperties(
 					ResourceUtil.getURLResolver(
@@ -287,12 +287,12 @@ public class ReleaseUtil {
 		return new ReleaseProperties(properties);
 	}
 
-	private String _normalizeReleaseMirror(String releaseMirror) {
-		if (releaseMirror.endsWith(StringUtil.FORWARD_SLASH)) {
-			return releaseMirror.substring(0, releaseMirror.length() - 1);
+	private String _normalizeReleasesMirror(String releasesMirror) {
+		if (releasesMirror.endsWith(StringUtil.FORWARD_SLASH)) {
+			return releasesMirror.substring(0, releasesMirror.length() - 1);
 		}
 
-		return releaseMirror;
+		return releasesMirror;
 	}
 
 	private static final long _DEFAULT_MAX_AGE = 7;
@@ -304,9 +304,9 @@ public class ReleaseUtil {
 		new ReleaseProperties();
 
 	private final Map<String, ReleaseEntry> _releaseEntryMap = new HashMap<>();
-	private final List<String> _releaseMirrors = new ArrayList<>();
 	private final Map<String, ReleaseProperties> _releasePropertiesMap =
 		new HashMap<>();
+	private final List<String> _releasesMirrors = new ArrayList<>();
 	private final File _workspaceCacheDir;
 
 	@JsonIgnoreProperties(ignoreUnknown = true)

@@ -71,9 +71,6 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -113,13 +110,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setRequest(_getHttpServletRequest(_group));
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_listTypeEntryKey = RandomTestUtil.randomString();
 
@@ -185,11 +175,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
-	@After
-	public void tearDown() {
-		ServiceContextThreadLocal.popServiceContext();
-	}
-
 	@Test
 	public void testObjectEntryInfoItemFieldValuesProvider() throws Exception {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
@@ -197,11 +182,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "test.txt",
 			ContentTypes.TEXT, RandomTestUtil.randomBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		InfoItemFieldValuesProvider<ObjectEntry> infoItemFieldValuesProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				_childObjectDefinition.getClassName());
 
 		String parentTextObjectFieldNameValue = RandomTestUtil.randomString();
 
@@ -241,64 +221,23 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			).build(),
 			false);
 
-		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(objectEntry);
+		_testObjectEntryInfoItemFieldValuesProvider(
+			fileEntry, objectAction, objectEntry,
+			parentTextObjectFieldNameValue, null);
 
-		Assert.assertNotNull(infoItemFieldValues);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		InfoFieldValue<Object> infoLocalizedValue =
-			infoItemFieldValues.getInfoFieldValue(objectAction.getName());
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
-		Map<Locale, String> labelMap = objectAction.getLabelMap();
-
-		for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
-			Assert.assertEquals(
-				entry.getValue(), infoLocalizedValue.getValue(entry.getKey()));
-		}
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_childObjectDefinition.getObjectDefinitionId(),
-			"attachmentObjectFieldName");
-
-		InfoFieldValue<Object> downloadURLInfoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(
-				objectField.getObjectFieldId() + "#downloadURL");
-
-		Assert.assertEquals(
-			HttpComponentsUtil.removeParameter(
-				_dlURLHelper.getDownloadURL(
-					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK),
-				"t"),
-			HttpComponentsUtil.removeParameter(
-				String.valueOf(downloadURLInfoFieldValue.getValue()), "t"));
-
-		_assertInfoFieldValue(
-			"#fileName", infoItemFieldValues, objectField,
-			fileEntry.getFileName());
-		_assertInfoFieldValue(
-			"#mimeType", infoItemFieldValues, objectField,
-			fileEntry.getMimeType());
-		_assertInfoFieldValue(
-			"#size", infoItemFieldValues, objectField, fileEntry.getSize());
-
-		InfoFieldValue<Object> parentTextObjectFieldNameInfoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("parentTextObjectFieldName");
-
-		Assert.assertEquals(
-			parentTextObjectFieldNameValue,
-			parentTextObjectFieldNameInfoFieldValue.getValue());
-
-		InfoFieldValue<Object> picklistObjectFieldNameInfoFieldValue =
-			infoItemFieldValues.getInfoFieldValue("picklistObjectFieldName");
-
-		for (KeyLocalizedLabelPair keyLocalizedLabelPair :
-				(ArrayList<KeyLocalizedLabelPair>)
-					picklistObjectFieldNameInfoFieldValue.getValue()) {
-
-			Assert.assertEquals(
-				_listTypeEntryKey, keyLocalizedLabelPair.getKey());
-		}
+		_testObjectEntryInfoItemFieldValuesProvider(
+			fileEntry, objectAction, objectEntry,
+			parentTextObjectFieldNameValue, themeDisplay);
 	}
 
 	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
@@ -337,30 +276,97 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		return objectFieldSetting;
 	}
 
-	private HttpServletRequest _getHttpServletRequest(Group group)
+	private void _testObjectEntryInfoItemFieldValuesProvider(
+			FileEntry fileEntry, ObjectAction objectAction,
+			ObjectEntry objectEntry, String parentTextObjectFieldNameValue,
+			ThemeDisplay themeDisplay)
 		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(group));
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return mockHttpServletRequest;
-	}
+		serviceContext.setRequest(mockHttpServletRequest);
 
-	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(group.getCompanyId()));
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
-		themeDisplay.setUser(TestPropsValues.getUser());
+		try {
+			InfoItemFieldValuesProvider<ObjectEntry>
+				infoItemFieldValuesProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						_childObjectDefinition.getClassName());
 
-		return themeDisplay;
+			InfoItemFieldValues infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(objectEntry);
+
+			Assert.assertNotNull(infoItemFieldValues);
+
+			InfoFieldValue<Object> infoLocalizedValue =
+				infoItemFieldValues.getInfoFieldValue(objectAction.getName());
+
+			Map<Locale, String> labelMap = objectAction.getLabelMap();
+
+			for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
+				Assert.assertEquals(
+					entry.getValue(),
+					infoLocalizedValue.getValue(entry.getKey()));
+			}
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				_childObjectDefinition.getObjectDefinitionId(),
+				"attachmentObjectFieldName");
+
+			InfoFieldValue<Object> downloadURLInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					objectField.getObjectFieldId() + "#downloadURL");
+
+			Assert.assertEquals(
+				HttpComponentsUtil.removeParameter(
+					_dlURLHelper.getDownloadURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK),
+					"t"),
+				HttpComponentsUtil.removeParameter(
+					String.valueOf(downloadURLInfoFieldValue.getValue()), "t"));
+
+			_assertInfoFieldValue(
+				"#fileName", infoItemFieldValues, objectField,
+				fileEntry.getFileName());
+			_assertInfoFieldValue(
+				"#mimeType", infoItemFieldValues, objectField,
+				fileEntry.getMimeType());
+			_assertInfoFieldValue(
+				"#size", infoItemFieldValues, objectField, fileEntry.getSize());
+
+			InfoFieldValue<Object> parentTextObjectFieldNameInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					"parentTextObjectFieldName");
+
+			Assert.assertEquals(
+				parentTextObjectFieldNameValue,
+				parentTextObjectFieldNameInfoFieldValue.getValue());
+
+			InfoFieldValue<Object> picklistObjectFieldNameInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					"picklistObjectFieldName");
+
+			for (KeyLocalizedLabelPair keyLocalizedLabelPair :
+					(ArrayList<KeyLocalizedLabelPair>)
+						picklistObjectFieldNameInfoFieldValue.getValue()) {
+
+				Assert.assertEquals(
+					_listTypeEntryKey, keyLocalizedLabelPair.getKey());
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private static PermissionChecker _originalPermissionChecker;

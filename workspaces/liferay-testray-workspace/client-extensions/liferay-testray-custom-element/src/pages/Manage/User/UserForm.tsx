@@ -29,6 +29,11 @@ import {
 import {liferayUserRolesRest} from '../../../services/rest/TestrayRolesUser';
 import {RoleTypes} from '../../../util/constants';
 
+type Role = {
+	id: number;
+	name: string;
+};
+
 type UserFormDefault = {
 	actions: UserActions;
 	alternateName: string;
@@ -38,7 +43,7 @@ type UserFormDefault = {
 	id: string;
 	password?: string;
 	repassword?: string;
-	roleBriefs?: any;
+	roleBriefs?: Role[];
 	roles: number[];
 	testrayUser: boolean;
 };
@@ -160,6 +165,11 @@ const UserForm = () => {
 		myUserAccount?.id !== Number(userAccount?.id) &&
 		userAccount?.actions['delete-user-account'];
 
+	const haschangePasswordPermission =
+		userAccount?.roleBriefs?.some(
+			(role: Role) => role.name === 'Administrator'
+		) && !isCreateForm;
+
 	return (
 		<Container className="container">
 			<ClayForm className="container pt-2">
@@ -234,28 +244,30 @@ const UserForm = () => {
 					</ClayLayout.Row>
 				)}
 
-				{!isCreateForm && (
-					<ClayLayout.Row justify="start">
-						<ClayLayout.Col size={3} sm={12} xl={3}>
-							<h5 className="font-weight-normal">
-								{i18n.translate('change-password')}
-							</h5>
-						</ClayLayout.Col>
-
-						<ClayLayout.Col size={3} sm={12} xl={3}>
-							<ClayForm.Group className="form-group-sm">
-								<ClayButton
-									className="bg-neutral-2 borderless btn-light neutral text-neutral-7"
-									onClick={() => navigate('password')}
-								>
+				{haschangePasswordPermission && (
+					<>
+						<ClayLayout.Row justify="start">
+							<ClayLayout.Col size={3} sm={12} xl={3}>
+								<h5 className="font-weight-normal">
 									{i18n.translate('change-password')}
-								</ClayButton>
-							</ClayForm.Group>
-						</ClayLayout.Col>
-					</ClayLayout.Row>
-				)}
+								</h5>
+							</ClayLayout.Col>
 
-				<Form.Divider />
+							<ClayLayout.Col size={3} sm={12} xl={3}>
+								<ClayForm.Group className="form-group-sm">
+									<ClayButton
+										className="bg-neutral-2 borderless btn-light neutral text-neutral-7"
+										onClick={() => navigate('password')}
+									>
+										{i18n.translate('change-password')}
+									</ClayButton>
+								</ClayForm.Group>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
+
+						<Form.Divider />
+					</>
+				)}
 
 				<ClayLayout.Row className="mb-2" justify="start">
 					<ClayLayout.Col size={12} sm={12} xl={3}>

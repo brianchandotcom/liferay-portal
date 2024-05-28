@@ -9,11 +9,11 @@ import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.math.BigDecimal;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -27,44 +27,31 @@ public class QuantityInputTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		_allowedOrderQuantities = new int[0];
+		_allowedOrderQuantities = new BigDecimal[0];
 		_maxOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY.
-				intValue();
+			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
 		_minOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY.
-				intValue();
+			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
 		_multipleOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY.
-				intValue();
+			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
 		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.
 				fetchCPDefinitionInventoryByCPDefinitionId(_cpDefinitionId);
 
 		if (cpDefinitionInventory != null) {
-			_allowedOrderQuantities = TransformUtil.transformToIntArray(
-				ListUtil.fromArray(
-					cpDefinitionInventory.getAllowedOrderQuantitiesArray()),
-				BigDecimal::intValue);
+			_allowedOrderQuantities =
+				cpDefinitionInventory.getAllowedOrderQuantitiesArray();
 
-			BigDecimal maxOrderQuantity =
-				cpDefinitionInventory.getMaxOrderQuantity();
+			_maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
 
-			_maxOrderQuantity = maxOrderQuantity.intValue();
+			_minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
 
-			BigDecimal minOrderQuantity =
-				cpDefinitionInventory.getMinOrderQuantity();
-
-			_minOrderQuantity = minOrderQuantity.intValue();
-
-			BigDecimal multipleOrderQuantity =
+			_multipleOrderQuantity =
 				cpDefinitionInventory.getMultipleOrderQuantity();
-
-			_multipleOrderQuantity = multipleOrderQuantity.intValue();
 		}
 
-		if (_value == 0) {
+		if (Objects.equals(_value, BigDecimal.ZERO)) {
 			_value = _minOrderQuantity;
 		}
 
@@ -79,7 +66,7 @@ public class QuantityInputTag extends IncludeTag {
 		return _name;
 	}
 
-	public int getValue() {
+	public BigDecimal getValue() {
 		return _value;
 	}
 
@@ -114,7 +101,7 @@ public class QuantityInputTag extends IncludeTag {
 		_useSelect = useSelect;
 	}
 
-	public void setValue(int value) {
+	public void setValue(BigDecimal value) {
 		_value = value;
 	}
 
@@ -124,13 +111,13 @@ public class QuantityInputTag extends IncludeTag {
 
 		_allowedOrderQuantities = null;
 		_cpDefinitionId = 0;
-		_maxOrderQuantity = 0;
-		_minOrderQuantity = 0;
-		_multipleOrderQuantity = 0;
+		_maxOrderQuantity = BigDecimal.ZERO;
+		_minOrderQuantity = BigDecimal.ZERO;
+		_multipleOrderQuantity = BigDecimal.ZERO;
 		_name = null;
 		_showLabel = true;
 		_useSelect = true;
-		_value = 0;
+		_value = BigDecimal.ZERO;
 	}
 
 	@Override
@@ -168,14 +155,14 @@ public class QuantityInputTag extends IncludeTag {
 
 	private static final String _PAGE = "/quantity_input/page.jsp";
 
-	private int[] _allowedOrderQuantities;
+	private BigDecimal[] _allowedOrderQuantities;
 	private long _cpDefinitionId;
-	private int _maxOrderQuantity;
-	private int _minOrderQuantity;
-	private int _multipleOrderQuantity;
+	private BigDecimal _maxOrderQuantity = BigDecimal.ZERO;
+	private BigDecimal _minOrderQuantity = BigDecimal.ZERO;
+	private BigDecimal _multipleOrderQuantity = BigDecimal.ZERO;
 	private String _name;
 	private boolean _showLabel = true;
 	private boolean _useSelect = true;
-	private int _value;
+	private BigDecimal _value = BigDecimal.ZERO;
 
 }

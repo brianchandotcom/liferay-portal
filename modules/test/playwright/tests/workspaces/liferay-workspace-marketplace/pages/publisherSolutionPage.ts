@@ -11,6 +11,7 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 export class PublisherSolutionPage {
 	readonly addContentBlockButton: Locator;
 	readonly categories: Locator;
+	readonly chooseBlockSelect: Locator;
 	readonly continueButton: Locator;
 	readonly createTemplate: Locator;
 	readonly customizeSolutionDetails: Locator;
@@ -23,6 +24,8 @@ export class PublisherSolutionPage {
 	readonly newSolutionButton: Locator;
 	readonly page: Page;
 	readonly radioUploadImages: Locator;
+	readonly saveButton: Locator;
+	readonly selectContentBlock: Locator;
 	readonly selectFileButton: Locator;
 	readonly solutionDescription: Locator;
 	readonly tags: Locator;
@@ -32,6 +35,9 @@ export class PublisherSolutionPage {
 			name: 'Add Content Block',
 		});
 		this.categories = page.getByPlaceholder('Select categories');
+		this.chooseBlockSelect = page.getByRole('option', {
+			name: 'Continue',
+		});
 		this.continueButton = page.getByRole('button', {
 			name: 'Continue',
 		});
@@ -60,6 +66,8 @@ export class PublisherSolutionPage {
 		this.radioUploadImages = page.getByRole('radio', {
 			name: 'Upload images',
 		});
+		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.selectContentBlock = page.getByText('Select Content Block');
 		this.selectFileButton = page.getByRole('button', {
 			name: 'Select a file',
 		});
@@ -71,6 +79,14 @@ export class PublisherSolutionPage {
 
 	async fillCustomizeSolutionDetails() {
 		await expect(this.addContentBlockButton).toBeVisible();
+		await this.addContentBlockButton.click();
+		await expect(this.saveButton).toBeDisabled();
+		await this.selectContentBlock.waitFor({state: 'visible'});
+		await this.page.selectOption(
+			'select[aria-label="Select Label"]',
+			'text-block'
+		);
+		await expect(this.saveButton).toBeEnabled();
 	}
 
 	async fillCustomizeSolutionHeader(header) {
@@ -90,12 +106,12 @@ export class PublisherSolutionPage {
 		await this.nameInput.fill(profile.name);
 		await this.descriptionInput.fill(profile.description);
 		await expect(this.continueButton).toBeDisabled();
-		await this.categories.fill('Analytics and Optimization');
+		await this.categories.fill('Analytics');
 		await this.page
-			.getByRole('option', {name: 'AnalyticsandOptimization'})
+			.getByRole('option', {name: 'Analytics and Optimization'})
 			.click();
-		await this.tags.fill('Agent Portal');
-		await this.page.getByRole('option', {name: 'AgentPortal'}).click();
+		await this.tags.fill('Agent');
+		await this.page.getByRole('option', {name: 'Agent Portal'}).click();
 	}
 
 	async goToCustomizeSolutionDetails() {

@@ -8,11 +8,12 @@ import {openToast} from 'frontend-js-web';
 import updateFormItemConfigAction from '../actions/updateFormItemConfig';
 import FormService from '../services/FormService';
 
-export default function updateFormItemConfig({itemConfig, itemId}) {
+export default function updateFormItemConfig({fields, itemConfig, itemId}) {
 	const isMapping = Boolean(itemConfig.classNameId);
 
 	return (dispatch, getState) => {
 		return FormService.updateFormItemConfig({
+			fields,
 			itemConfig,
 			itemId,
 			onNetworkStatus: dispatch,

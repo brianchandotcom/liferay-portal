@@ -18,6 +18,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -63,6 +64,9 @@ public class JournalArticleAssetRendererTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_company = _companyLocalService.fetchCompany(
+			TestPropsValues.getCompanyId());
+
 		_group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -101,8 +105,9 @@ public class JournalArticleAssetRendererTest {
 
 		String urlSeparator = layoutDisplayPageProvider.getURLSeparator();
 
-		ThemeDisplay themeDisplay = _getThemeDisplay(
-			layoutPageTemplateEntry.getPlid());
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_company, _group,
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
 
 		String viewInContextURL = assetRenderer.getURLViewInContext(
 			_getLiferayPortletRequest(themeDisplay), null, null);
@@ -160,24 +165,7 @@ public class JournalArticleAssetRendererTest {
 		return _portal.getLiferayPortletRequest(renderRequest);
 	}
 
-	private ThemeDisplay _getThemeDisplay(long plid) throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-
-		Layout layout = _layoutLocalService.getLayout(plid);
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setLayoutSet(layout.getLayoutSet());
-
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-
-		return themeDisplay;
-	}
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

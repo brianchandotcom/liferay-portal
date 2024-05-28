@@ -17,45 +17,45 @@ export const test = mergeTests(
 );
 
 test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
-	test.beforeEach(
-		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
-			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: 'Supplier account',
-				type: 'supplier',
-			});
+	// test.beforeEach(
+	// 	async ({apiHelpers, marketplace, publisherSolutionPage}) => {
+	// 		const account = await apiHelpers.headlessAdminUser.postAccount({
+	// 			name: 'Supplier account',
+	// 			type: 'supplier',
+	// 		});
 
-			const user =
-				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-					'test@liferay.com'
-				);
+	// 		const user =
+	// 			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+	// 				'test@liferay.com'
+	// 			);
 
-			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				account.id,
-				['test@liferay.com']
-			);
+	// 		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+	// 			account.id,
+	// 			['test@liferay.com']
+	// 		);
 
-			const rolesResponse =
-				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+	// 		const rolesResponse =
+	// 			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
-			const accountSupplierRole = rolesResponse?.items?.filter((role) => {
-				return role.name === 'Account Supplier';
-			});
+	// 		const accountSupplierRole = rolesResponse?.items?.filter((role) => {
+	// 			return role.name === 'Account Supplier';
+	// 		});
 
-			await apiHelpers.headlessAdminUser.assingUserToAccountRole(
-				account.id,
-				accountSupplierRole[0].id,
-				user.id
-			);
+	// 		await apiHelpers.headlessAdminUser.assingUserToAccountRole(
+	// 			account.id,
+	// 			accountSupplierRole[0].id,
+	// 			user.id
+	// 		);
 
-			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-				accountId: account.id,
-			});
+	// 		await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+	// 			accountId: account.id,
+	// 		});
 
-			await publisherSolutionPage.goto(
-				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
-			);
-		}
-	);
+	// 		await publisherSolutionPage.goto(
+	// 			`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
+	// 		);
+	// 	}
+	// );
 
 	test('LPD-26707 New Solution Template button should be visible for Suppliers', async ({
 		publisherSolutionPage,
@@ -90,6 +90,8 @@ test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
 
 		await publisherSolutionPage.goToCustomizeSolutionDetails();
 
-		await publisherSolutionPage.fillCustomizeSolutionDetails();
+		await publisherSolutionPage.fillCustomizeSolutionDetails(
+			PUBLISH_SOLUTION.details
+		);
 	});
 });

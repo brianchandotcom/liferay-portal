@@ -98,7 +98,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
-import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerDisplayContextUtil;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 import com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil;
 
@@ -2532,8 +2532,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			try {
 				workflowDefinition =
-					WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
-						getCompanyId(), displayName);
+					WorkflowDefinitionManagerDisplayContextUtil.
+						getLatestWorkflowDefinition(
+							getCompanyId(), displayName);
 			}
 			catch (WorkflowException workflowException) {
 				if (_log.isDebugEnabled()) {

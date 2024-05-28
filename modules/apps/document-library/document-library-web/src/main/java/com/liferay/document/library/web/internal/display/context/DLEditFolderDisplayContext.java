@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.util.RepositoryUtil;
-import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerDisplayContextUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -209,9 +209,10 @@ public class DLEditFolderDisplayContext {
 		}
 
 		_workflowDefinitions =
-			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-				_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			WorkflowDefinitionManagerDisplayContextUtil.
+				getActiveWorkflowDefinitions(
+					_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
 		return _workflowDefinitions;
 	}

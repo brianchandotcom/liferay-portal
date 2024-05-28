@@ -55,6 +55,7 @@ import com.liferay.portal.workflow.kaleo.forms.web.internal.util.filter.KaleoDef
 import com.liferay.portal.workflow.kaleo.forms.web.internal.util.filter.KaleoDefinitionVersionScopePredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerDisplayContextUtil;
 import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
 
 import java.util.List;
@@ -389,10 +390,11 @@ public class KaleoFormsAdminDisplayContext {
 
 			searchContainer.setResultsAndTotal(
 				() ->
-					WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-						_themeDisplay.getCompanyId(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						null),
+					WorkflowDefinitionManagerDisplayContextUtil.
+						getActiveWorkflowDefinitions(
+							_themeDisplay.getCompanyId(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(), null),
 				WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionsCount(
 					_themeDisplay.getCompanyId()));
 

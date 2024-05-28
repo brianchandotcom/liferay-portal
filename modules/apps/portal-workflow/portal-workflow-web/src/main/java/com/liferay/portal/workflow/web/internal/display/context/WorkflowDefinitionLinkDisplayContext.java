@@ -39,7 +39,7 @@ import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.util.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.util.WorkflowDefinitionManagerDisplayContextUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionLinkResourcesConstants;
 import com.liferay.portal.workflow.web.internal.display.context.helper.WorkflowDefinitionLinkRequestHelper;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearch;
@@ -106,9 +106,10 @@ public class WorkflowDefinitionLinkDisplayContext {
 			return null;
 		}
 
-		return WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
-			_workflowDefinitionLinkRequestHelper.getCompanyId(),
-			defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
+		return WorkflowDefinitionManagerDisplayContextUtil.
+			getLatestWorkflowDefinition(
+				_workflowDefinitionLinkRequestHelper.getCompanyId(),
+				defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
 	}
 
 	public String getDefaultWorkflowDefinitionLabel(String className)
@@ -315,10 +316,12 @@ public class WorkflowDefinitionLinkDisplayContext {
 		}
 
 		_workflowDefinitions = ListUtil.filter(
-			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-				_workflowDefinitionLinkRequestHelper.getCompanyId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				_workflowComparatorFactory.getDefinitionNameComparator(true)),
+			WorkflowDefinitionManagerDisplayContextUtil.
+				getActiveWorkflowDefinitions(
+					_workflowDefinitionLinkRequestHelper.getCompanyId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					_workflowComparatorFactory.getDefinitionNameComparator(
+						true)),
 			new WorkflowDefinitionScopePredicate(
 				WorkflowDefinitionConstants.SCOPE_ALL));
 

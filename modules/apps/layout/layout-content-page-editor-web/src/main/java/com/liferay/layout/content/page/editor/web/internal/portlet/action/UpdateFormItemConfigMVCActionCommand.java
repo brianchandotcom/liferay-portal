@@ -16,14 +16,17 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -116,12 +119,21 @@ public class UpdateFormItemConfigMVCActionCommand
 					formStyledLayoutStructureItem, layoutStructure);
 
 			if (formStyledLayoutStructureItem.getClassNameId() > 0) {
-				addedFragmentEntryLinks =
-					_formItemManager.addFragmentEntryLinks(
-						jsonObject, formStyledLayoutStructureItem,
-						themeDisplay.getLayout(), layoutStructure,
-						themeDisplay.getLocale(), segmentsExperienceId,
-						ServiceContextFactory.getInstance(httpServletRequest));
+				String[] infoFieldUniqueIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "fields"));
+
+				if (!FeatureFlagManagerUtil.isEnabled("LPD-20213") ||
+					ArrayUtil.isNotEmpty(infoFieldUniqueIds)) {
+
+					addedFragmentEntryLinks =
+						_formItemManager.addFragmentEntryLinks(
+							jsonObject, infoFieldUniqueIds,
+							formStyledLayoutStructureItem,
+							themeDisplay.getLayout(), layoutStructure,
+							themeDisplay.getLocale(), segmentsExperienceId,
+							ServiceContextFactory.getInstance(
+								httpServletRequest));
+				}
 			}
 		}
 

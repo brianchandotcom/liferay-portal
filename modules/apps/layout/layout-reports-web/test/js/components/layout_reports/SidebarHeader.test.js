@@ -58,6 +58,22 @@ describe('SidebarHeader', () => {
 		expect(queryByTitle('relaunch')).not.toBeInTheDocument();
 	});
 
+	it('does not render relaunch button if it is private page', () => {
+		const {queryByTitle} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						privateLayout: true,
+					},
+				}}
+			>
+				<SidebarHeader />
+			</StoreContextProvider>
+		);
+
+		expect(queryByTitle('relaunch')).not.toBeInTheDocument();
+	});
+
 	it('calls loadIssues when clicking relaunch button', () => {
 		const {getByTitle} = render(
 			<StoreContextProvider

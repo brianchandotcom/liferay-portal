@@ -106,7 +106,7 @@ const CaseResult = () => {
 											{attachments.map(
 												(attachment, index) => (
 													<a
-														className="mt-2"
+														className="case-results-attachments-box mt-2"
 														href={attachment.url}
 														key={index}
 														rel="noopener noreferrer"

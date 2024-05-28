@@ -103,7 +103,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		if (testrayRun != null) {
 			sb.append("r_runToCaseResult_c_runId eq '");
-			sb.append(testrayRun.getID());
+			sb.append(testrayRun.getRunID());
 			sb.append("' and ");
 		}
 

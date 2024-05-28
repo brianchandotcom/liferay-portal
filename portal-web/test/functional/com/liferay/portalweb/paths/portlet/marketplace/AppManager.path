@@ -15,7 +15,7 @@
 
 <tr>
 	<td>APP_NAME</td>
-	<td>//div[contains(@class,'content')]//*[contains(@class,'list-group-item')]//a[contains(.,'${key_appName}')]</td>
+	<td>//div[contains(@class,'content')]//*[contains(@class,'list-group-item')]//*[self::a or self::h2][contains(.,'${key_appName}')]</td>
 	<td></td>
 </tr>
 <tr>

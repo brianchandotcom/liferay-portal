@@ -59,9 +59,8 @@ const fetcher = async <T = any>(
 	options?: RequestInit
 ): Promise<T | undefined> => {
 	const currentTimestamp = Date.now();
-	const lastTimestampStorage = sessionStorage.getItem('lastTimestamp');
-	const lastTimestamp = lastTimestampStorage
-		? parseInt(lastTimestampStorage, 10)
+	const lastTimestamp = sessionStorage.getItem('lastTimestamp')
+		? parseInt(sessionStorage.getItem('lastTimestamp') as string, 10)
 		: 0;
 	const tenMinutesInMillis = 10 * 60 * 1000;
 

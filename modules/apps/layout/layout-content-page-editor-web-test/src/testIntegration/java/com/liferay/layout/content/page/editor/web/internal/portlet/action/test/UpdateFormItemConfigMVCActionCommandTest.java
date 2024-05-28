@@ -37,6 +37,7 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -77,6 +79,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
@@ -351,6 +354,84 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			_assertFormStyledLayoutStructureItem(
 				classNameId, 0, formItemId, new InfoField<?>[0], true, false);
+		}
+	}
+
+	@FeatureFlags("LPD-20213")
+	@Test
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithNewFields()
+		throws Exception {
+
+		InfoField<?>[] allInfoFields = ArrayUtil.append(
+			_INFO_FIELDS,
+			new InfoField<?>[] {
+				_getInfoField(
+					BooleanInfoFieldType.INSTANCE,
+					RandomTestUtil.randomString()),
+				_getInfoField(
+					TextInfoFieldType.INSTANCE, RandomTestUtil.randomString())
+			});
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(allInfoFields)
+						).build(),
+						_portal, _editPageInfoItemCapability)) {
+
+			JSONObject addItemJSONObject =
+				ContentLayoutTestUtil.addItemToLayout(
+					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
+					_layoutStructureProvider, _segmentsExperienceId);
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			String formItemId = addItemJSONObject.getString("addedItemId");
+
+			List<String> fields = TransformUtil.transform(
+				ListUtil.fromArray(_INFO_FIELDS), InfoField::getUniqueId);
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					StringUtil.merge(fields),
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			fields = TransformUtil.transform(
+				ListUtil.fromArray(allInfoFields), InfoField::getUniqueId);
+
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					StringUtil.merge(fields),
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
+				updateFormJSONObject, 2, StringPool.BLANK, StringPool.BLANK, 0);
+
+			_assertFormStyledLayoutStructureItem(
+				classNameId, allInfoFields.length + 1, formItemId,
+				allInfoFields, true, false);
 		}
 	}
 
@@ -712,19 +793,33 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			childrenItemIds.toString(), expectedChildrenSize,
 			childrenItemIds.size());
 
-		for (int i = 0; i < infoFields.length; i++) {
-			InfoField<?> infoField = infoFields[i];
+		int i = 0;
 
+		for (String itemId : childrenItemIds) {
 			FragmentStyledLayoutStructureItem
 				fragmentStyledLayoutStructureItem =
 					(FragmentStyledLayoutStructureItem)
-						layoutStructure.getLayoutStructureItem(
-							childrenItemIds.get(i));
+						layoutStructure.getLayoutStructureItem(itemId);
 
-			_assertFragmentEntry(
-				infoField.getUniqueId(), _getExpectedRendererKey(infoField),
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
-				assertRendererKey);
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (Objects.equals(
+					fragmentEntryLink.getRendererKey(),
+					"INPUTS-submit-button")) {
+
+				_assertFragmentEntry(
+					StringPool.BLANK, "INPUTS-submit-button", fragmentEntryLink,
+					assertRendererKey);
+			}
+			else {
+				InfoField<?> infoField = infoFields[i++];
+
+				_assertFragmentEntry(
+					infoField.getUniqueId(), _getExpectedRendererKey(infoField),
+					fragmentEntryLink, assertRendererKey);
+			}
 		}
 
 		if (!submitButton) {
@@ -738,18 +833,14 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		_assertFragmentEntry(
 			StringPool.BLANK, "INPUTS-submit-button",
-			fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId()),
 			assertRendererKey);
 	}
 
 	private void _assertFragmentEntry(
-			String expectedInputFieldId, String expectedRendererKey,
-			long fragmentEntryLinkId, boolean assertRendererKey)
-		throws PortalException {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				fragmentEntryLinkId);
+		String expectedInputFieldId, String expectedRendererKey,
+		FragmentEntryLink fragmentEntryLink, boolean assertRendererKey) {
 
 		String inputFieldId = GetterUtil.getString(
 			_fragmentEntryConfigurationParser.getFieldValue(

@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
+ * @author Keven Leone
  * @author Wellington Barbosa
  */
 @Component
@@ -40,44 +41,27 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 	}
 
 	private void _deleteTrial(long orderId) throws Exception {
-		WebClient.create(
-			_marketplaceSpringBootUrl
+		_getWebClient(
 		).delete(
 		).uri(
 			"/trial/" + orderId
-		).header(
-			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				_liferayOAuthApplicationExternalReferenceCodes)
-		).accept(
-			MediaType.APPLICATION_JSON
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+		);
 	}
 
 	private JSONObject _getAvailabilityJSONObject() throws Exception {
 		return new JSONObject(
-			WebClient.create(
-				_marketplaceSpringBootUrl
+			_getWebClient(
 			).get(
 			).uri(
 				"/trial/availability"
-			).header(
-				HttpHeaders.AUTHORIZATION,
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					_liferayOAuthApplicationExternalReferenceCodes)
-			).accept(
-				MediaType.APPLICATION_JSON
 			).retrieve(
 			).bodyToMono(
 				String.class
 			).block());
 	}
 
-	private OrderResource _getOrderResource() throws Exception {
-		return OrderResource.builder(
+	private Page<Order> _getOrdersPage(int orderStatus) throws Exception {
+		OrderResource orderResource = OrderResource.builder(
 		).endpoint(
 			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
 		).header(
@@ -85,18 +69,30 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes)
 		).build();
+
+		return orderResource.getOrdersPage(
+			"",
+			"orderStatus/any(x:(x eq " + orderStatus +
+				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
+			Pagination.of(-1, -1), "");
 	}
 
-	private void _postTrial(Order order) throws Exception {
-		WebClient.create(
+	private WebClient _getWebClient() throws Exception {
+		return WebClient.builder(
+		).baseUrl(
 			_marketplaceSpringBootUrl
-		).post(
-		).uri(
-			"/trial/provisioning"
-		).header(
+		).defaultHeader(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes)
+		).build();
+	}
+
+	private void _postTrial(Order order) throws Exception {
+		_getWebClient(
+		).post(
+		).uri(
+			"/trial/provisioning"
 		).accept(
 			MediaType.APPLICATION_JSON
 		).contentType(
@@ -119,11 +115,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 	}
 
 	private void _processExpiredTrials() throws Exception {
-		Page<Order> ordersPage = _getOrderResource().getOrdersPage(
-			"",
-			"orderStatus/any(x:(x eq " + _ORDER_STATUS_COMPLETED +
-				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
-			Pagination.of(-1, -1), "");
+		Page<Order> ordersPage = _getOrdersPage(_ORDER_STATUS_COMPLETED);
 
 		for (Order order : ordersPage.getItems()) {
 			if (ZonedDateTime.parse(
@@ -156,11 +148,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 			return;
 		}
 
-		Page<Order> ordersPage = _getOrderResource().getOrdersPage(
-			"",
-			"orderStatus/any(x:(x eq " + _ORDER_STATUS_ON_HOLD +
-				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
-			Pagination.of(-1, -1), "");
+		Page<Order> ordersPage = _getOrdersPage(_ORDER_STATUS_ON_HOLD);
 
 		for (Order order : ordersPage.getItems()) {
 			try {

@@ -7,6 +7,7 @@ package com.liferay.portal.template.freemarker.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.LazyValue;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -207,6 +208,12 @@ public class FreeMarkerTemplate extends BaseTemplate {
 			}
 
 			Object value = _map.get(key);
+
+			if (value instanceof LazyValue) {
+				LazyValue lazyValue = (LazyValue)value;
+
+				value = lazyValue.getValue();
+			}
 
 			if (value == null) {
 				_wrappedValueMap.put(key, _NULL_TEMPLATE_MODEL);

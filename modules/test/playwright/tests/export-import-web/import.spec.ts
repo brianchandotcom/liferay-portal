@@ -10,8 +10,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -55,10 +55,16 @@ test('can import a lar file selecting some items to import', async ({
 	await exportImportPage.createNewExportProcess(exportName);
 
 	expect(
-		await exportImportPage.page.getByText(exportName).locator('../..').getByText('Successful').textContent()
+		await exportImportPage.page
+			.getByText(exportName)
+			.locator('../..')
+			.getByText('Successful')
+			.textContent()
 	).toBe('Successful');
 
-	const exportFilePath = await exportImportPage.downloadExportProcess(exportName);
+	const exportFilePath = await exportImportPage.downloadExportProcess(
+		exportName
+	);
 
 	await exportImportPage.goToImport();
 

@@ -14,7 +14,7 @@ import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {TableProps} from '../../../components/Table';
 import i18n from '../../../i18n';
-import {PickList} from '../../../services/rest';
+import {PickList, TestrayCaseResult} from '../../../services/rest';
 import dayjs from '../../../util/date';
 
 type CaseResultHistoryProps = {
@@ -94,6 +94,13 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 							</StatusBadge>
 						),
 						value: i18n.translate('status'),
+					},
+					{
+						clickable: true,
+						key: 'team',
+						render: (_, {case: testrayCase}: TestrayCaseResult) =>
+							testrayCase?.component?.team?.name,
+						value: i18n.translate('team'),
 					},
 					{
 						key: 'warnings',

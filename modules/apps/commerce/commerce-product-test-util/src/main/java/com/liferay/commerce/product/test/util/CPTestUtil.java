@@ -280,6 +280,25 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
+	public static CPDefinition addCPDefinitionFromCatalog(
+			long groupId, String productTypeName, Date displayDate,
+			Date expirationDate, boolean ignoreSKUCombinations,
+			boolean hasDefaultInstance, int status)
+		throws PortalException {
+
+		String defaultSku = null;
+
+		if (hasDefaultInstance) {
+			defaultSku = CPInstanceConstants.DEFAULT_SKU;
+		}
+
+		return _addCPDefinitionWithSku(
+			groupId, productTypeName, displayDate, expirationDate,
+			ignoreSKUCombinations,
+			ServiceContextTestUtil.getServiceContext(groupId), defaultSku,
+			status);
+	}
+
 	public static CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long groupId, long cpDefinitionId, boolean skuContributor,
 			int cpDefinitionOptionValueRelsCount)
@@ -942,6 +961,17 @@ public class CPTestUtil {
 			ServiceContext serviceContext, String sku)
 		throws PortalException {
 
+		return _addCPDefinitionWithSku(
+			groupId, productTypeName, null, null, ignoreSKUCombinations,
+			serviceContext, sku, WorkflowConstants.STATUS_DRAFT);
+	}
+
+	private static CPDefinition _addCPDefinitionWithSku(
+			long groupId, String productTypeName, Date displayDate,
+			Date expirationDate, boolean ignoreSKUCombinations,
+			ServiceContext serviceContext, String sku, int status)
+		throws PortalException {
+
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
 		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
@@ -973,8 +1003,13 @@ public class CPTestUtil {
 
 		long time = System.currentTimeMillis();
 
-		Date displayDate = new Date(time - Time.HOUR);
-		Date expirationDate = new Date(time + Time.DAY);
+		if (displayDate == null) {
+			displayDate = new Date(time - Time.HOUR);
+		}
+
+		if (expirationDate == null) {
+			expirationDate = new Date(time + Time.DAY);
+		}
 
 		Calendar displayCal = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
@@ -1018,7 +1053,7 @@ public class CPTestUtil {
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, false, sku, false, 1, null, null, 0L,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+				status, serviceContext);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.

@@ -42,7 +42,7 @@ BigDecimal quantity = commerceOrderItem.getQuantity();
 						name='<%= randomNamespace + "Quantity" %>'
 						showLabel="<%= showInputLabel %>"
 						useSelect="<%= useSelect %>"
-						value="<%= quantity.intValue() %>"
+						value="<%= quantity %>"
 					/>
 
 	<c:if test="<%= !updateOnChange %>">

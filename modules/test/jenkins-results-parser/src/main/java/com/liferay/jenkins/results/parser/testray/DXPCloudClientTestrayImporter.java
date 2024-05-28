@@ -38,8 +38,6 @@ public class DXPCloudClientTestrayImporter {
 	public static void main(String[] args) throws Exception {
 		_initEnvironmentVariables();
 
-		_setTestType();
-
 		Element rootElement = Dom4JUtil.getNewElement("testsuite");
 
 		rootElement.add(_getTestSuiteEnvironmentsElement());
@@ -699,6 +697,15 @@ public class DXPCloudClientTestrayImporter {
 				environmentOperatingSystemName)) {
 
 			_environmentOperatingSystemName = environmentOperatingSystemName;
+		}
+
+		String testType = _getEnvVarValue("testType");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testType)) {
+			_testType = testType;
+		}
+		else {
+			_setTestType();
 		}
 
 		String testrayBuildName = _getEnvVarValue("testrayBuildName");

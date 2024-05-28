@@ -12,6 +12,7 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {UIElementsPage} from '../uielements/UIElementsPage';
+import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
 export class PagesAdminPage {
 	readonly addButton: Locator;
@@ -26,6 +27,8 @@ export class PagesAdminPage {
 	readonly pageTitleBox: Locator;
 	readonly uiElementsPage: UIElementsPage;
 	readonly widgetPageButton: Locator;
+	readonly newButton: Locator;
+	readonly pageEditorPage: PageEditorPage;
 
 	constructor(page: Page) {
 		this.configurationSaveButton = page.getByRole('button', {
@@ -50,6 +53,8 @@ export class PagesAdminPage {
 			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
 		);
 		this.widgetPageButton = page.getByRole('button', {name: 'Widget Page'});
+		this.newButton = page.getByText('New', {exact: true}).first();
+		this.pageEditorPage = new PageEditorPage(this.page);
 	}
 
 	async addContentPage(pageName: string) {
@@ -139,6 +144,43 @@ export class PagesAdminPage {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
 		);
+	}
+
+	async createNewPage(name: string, template?: string) {
+		await this.newButton.click();
+
+		await this.page.getByRole('menuitem').getByText('Page').first().click();
+
+		await this.getTemplateCard(template).click();
+
+		const loadingAnimation = this.page.locator(
+			'.modal-body-iframe .loading-animation'
+		);
+		await loadingAnimation.waitFor();
+		await loadingAnimation.waitFor({state: 'hidden'});
+
+		const frameLocator = await this.page.frameLocator(
+			'iframe[id="addLayoutDialog_iframe_"]'
+		);
+		const inputName = await frameLocator.getByPlaceholder('Add Page Name');
+		await inputName.fill(name);
+
+		await frameLocator.getByRole('button', {name: 'Add'}).click();
+
+		await this.pageEditorPage.publishPage();
+	}
+
+	async editPage(name: string) {
+		await this.page
+			.locator('.text-truncate')
+			.filter({hasText: name})
+			.click();
+
+		await this.page.getByText('Place fragments or widgets here.').waitFor();
+	}
+
+	getTemplateCard(name: string) {
+		return this.page.locator('.card-page-item').filter({hasText: name});
 	}
 
 	async gotoPagesConfiguration() {

@@ -3,15 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class MasterPagesPage {
 	readonly page: Page;
 
+	readonly newButton: Locator;
+	readonly publishButton: Locator;
+
 	constructor(page: Page) {
 		this.page = page;
+		this.newButton = page.getByText('New', {exact: true});
+		this.publishButton = page.getByLabel('Publish Master', {exact: true});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -20,7 +25,25 @@ export class MasterPagesPage {
 		);
 	}
 
-	getTemplateCard(name: string) {
+	async createNewMaster(name: string) {
+		await this.newButton.click();
+		await this.page.getByLabel('Name').fill(name);
+		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.publishButton.waitFor();
+		await this.publishButton.click();
+	}
+
+	async editMaster(name: string) {
+		await this.getMasterCard(name).getByLabel(name).click();
+
+		await this.page.getByText('Configure Allowed Fragments').waitFor();
+	}
+
+	async openMasterActionsMenu(name: string) {
+		await this.getMasterCard(name).getByLabel('More actions').click();
+	}
+
+	getMasterCard(name: string) {
 		return this.page.locator('.card-page-item').filter({hasText: name});
 	}
 }

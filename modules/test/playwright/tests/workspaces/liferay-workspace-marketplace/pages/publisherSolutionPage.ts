@@ -45,7 +45,7 @@ export class PublisherSolutionPage {
 		this.addContentBlockButton = page.getByRole('button', {
 			name: 'Add Content Block',
 		});
-		this.blocksTitle = page.getByPlaceholder('Enter title header');
+		this.blocksTitle = page.getByPlaceholder('Enter title');
 		this.categories = page.getByPlaceholder('Select categories');
 		this.chooseBlockSelect = page.getByRole('option', {
 			name: 'Continue',

@@ -87,6 +87,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -1714,7 +1715,10 @@ public class BundleSiteInitializerTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), "Test Display Page Template",
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Test Display Page Template",
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		Assert.assertNotNull(layoutPageTemplateEntry);
@@ -1763,7 +1767,10 @@ public class BundleSiteInitializerTest {
 
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), "Test Master Page",
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Test Master Page",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNotNull(layoutPageTemplateEntry);
@@ -3035,7 +3042,10 @@ public class BundleSiteInitializerTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), "Test Display Page Template",
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Test Display Page Template",
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		role = _roleLocalService.fetchRole(
@@ -3108,7 +3118,10 @@ public class BundleSiteInitializerTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), "Test Display Page Template",
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Test Display Page Template",
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		String className =
@@ -3128,7 +3141,10 @@ public class BundleSiteInitializerTest {
 
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), "Test Master Page",
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Test Master Page",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		resourcePermission =

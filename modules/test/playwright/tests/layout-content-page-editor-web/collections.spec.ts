@@ -438,3 +438,114 @@ test('checks the different styles for the Display Collection', async ({
 
 	await checkStyleDisplay();
 });
+
+test('checks that fragment ids used within a display collection are not repeated even if they are nested elements', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+	const checkNonRepeatedFragmentIds = async () => {
+
+		// Get all fragments with Heading Example text
+
+		const fragments = await page
+			.getByText('Heading Example', {exact: true})
+			.locator('..')
+			.all();
+
+		// Check that the fragment ids are not repeated
+
+		const fragmentIds = [];
+
+		for (const fragment of fragments) {
+			await fragmentIds.push(fragment.getAttribute('id'));
+		}
+
+		await expect(Array.from(new Set(fragmentIds))).toHaveLength(4);
+	};
+
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		'Animals',
+		wemSite.friendlyUrlPath
+	);
+
+	// Create a first collection definition with headings
+
+	const headingDefinition = getFragmentDefinition(
+		getRandomString(),
+		'BASIC_COMPONENT-heading',
+		{}
+	);
+
+	const headingCollectionDefintion = getCollectionItemDefinition(
+		getRandomString(),
+		[headingDefinition]
+	);
+
+	const collectionWithHeadings = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		pageElements: [headingCollectionDefintion],
+	});
+
+	// Create a second collection definition with tabs and headings inside
+
+	const tabsCollectionDefinition = getCollectionItemDefinition(
+		getRandomString(),
+		[
+			getFragmentDefinition(
+				getRandomString(),
+				'BASIC_COMPONENT-tabs',
+				{
+					numberOfTabs: 1,
+				},
+				[
+					{
+						id: 'title1',
+						value: {
+							fragmentLink: {},
+						},
+					},
+				],
+				[
+					{
+						id: getRandomString(),
+						pageElements: [headingDefinition],
+						type: 'FragmentDropZone',
+					},
+				]
+			),
+		]
+	);
+
+	const collectionWithTabs = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+		pageElements: [tabsCollectionDefinition],
+	});
+
+	// Create a content page with the two collections and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			collectionWithHeadings,
+			collectionWithTabs,
+		]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	// Check that the fragment ids are not repeated in edit mode
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	await checkNonRepeatedFragmentIds();
+
+	// Check that the fragment ids are not repeated in view mode
+
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	await checkNonRepeatedFragmentIds();
+});

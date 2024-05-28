@@ -65,6 +65,7 @@ type PageElement = {
 			key: string;
 		};
 		fragmentConfig?: Record<string, any>;
+		fragmentDropZoneId?: string;
 		fragmentFields?: FragmentField[];
 		gutters?: boolean;
 		layout?: {};

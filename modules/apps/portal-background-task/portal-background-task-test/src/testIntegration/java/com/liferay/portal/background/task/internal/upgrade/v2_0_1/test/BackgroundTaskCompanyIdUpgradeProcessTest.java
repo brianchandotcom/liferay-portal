@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -81,9 +81,18 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 	}
 
 	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId) {
-		return LinkedHashMapBuilder.<String, Serializable>put(
+		return HashMapBuilder.<String, Serializable>put(
+			"companyId",
+			() -> {
+				if (addCompanyId) {
+					return TestPropsValues.getCompanyId();
+				}
+
+				return null;
+			}
+		).put(
 			"threadLocalValues",
-			LinkedHashMapBuilder.<String, Serializable>put(
+			HashMapBuilder.<String, Serializable>put(
 				"clusterInvoke", true
 			).put(
 				"companyId",
@@ -105,15 +114,6 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 			).put(
 				"themeDisplayLocale", LocaleUtil.FRANCE
 			).build()
-		).put(
-			"companyId",
-			() -> {
-				if (addCompanyId) {
-					return TestPropsValues.getCompanyId();
-				}
-
-				return null;
-			}
 		).build();
 	}
 

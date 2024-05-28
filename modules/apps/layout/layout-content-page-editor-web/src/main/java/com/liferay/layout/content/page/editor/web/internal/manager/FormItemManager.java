@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FormItemManager {
 
 	public List<FragmentEntryLink> addFragmentEntryLinks(
-			JSONObject errorJSONObject,
+			JSONObject errorJSONObject, String[] infoFieldUniqueIds,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			Layout layout, LayoutStructure layoutStructure, Locale locale,
 			long segmentsExperienceId, ServiceContext serviceContext)
@@ -92,7 +93,11 @@ public class FormItemManager {
 				_getInfoFields(
 					formStyledLayoutStructureItem, layout.getGroupId())) {
 
-			if (!infoField.isEditable()) {
+			if (!infoField.isEditable() ||
+				(ArrayUtil.isNotEmpty(infoFieldUniqueIds) &&
+				 !ArrayUtil.contains(
+					 infoFieldUniqueIds, infoField.getUniqueId()))) {
+
 				continue;
 			}
 

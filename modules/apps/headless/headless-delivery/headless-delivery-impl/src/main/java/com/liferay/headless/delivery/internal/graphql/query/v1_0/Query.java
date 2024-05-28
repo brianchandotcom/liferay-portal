@@ -1695,11 +1695,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryDocumentShortcuts(assetLibraryId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryDocumentShortcuts(assetLibraryId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DocumentShortcutPage assetLibraryDocumentShortcuts(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId)
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1707,7 +1709,8 @@ public class Query {
 			this::_populateResourceContext,
 			documentShortcutResource -> new DocumentShortcutPage(
 				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
-					Long.valueOf(assetLibraryId))));
+					Long.valueOf(assetLibraryId),
+					Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -1731,11 +1734,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentShortcuts(siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentShortcuts(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DocumentShortcutPage documentShortcuts(
-			@GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1743,7 +1748,7 @@ public class Query {
 			this::_populateResourceContext,
 			documentShortcutResource -> new DocumentShortcutPage(
 				documentShortcutResource.getSiteDocumentShortcutsPage(
-					Long.valueOf(siteKey))));
+					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
 	}
 
 	/**

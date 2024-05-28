@@ -8,6 +8,7 @@ package com.liferay.headless.delivery.client.resource.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentShortcut;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentShortcutSerDes;
 
@@ -34,12 +35,12 @@ public interface DocumentShortcutResource {
 	}
 
 	public Page<DocumentShortcut> getAssetLibraryDocumentShortcutsPage(
-			Long assetLibraryId)
+			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAssetLibraryDocumentShortcutsPageHttpResponse(
-				Long assetLibraryId)
+				Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
 	public void postAssetLibraryDocumentShortcutsPageExportBatch(
@@ -60,11 +61,12 @@ public interface DocumentShortcutResource {
 			Long documentShortcutId)
 		throws Exception;
 
-	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(Long siteId)
+	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteDocumentShortcutsPageHttpResponse(
-			Long siteId)
+			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public void postSiteDocumentShortcutsPageExportBatch(
@@ -188,12 +190,12 @@ public interface DocumentShortcutResource {
 		implements DocumentShortcutResource {
 
 		public Page<DocumentShortcut> getAssetLibraryDocumentShortcutsPage(
-				Long assetLibraryId)
+				Long assetLibraryId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAssetLibraryDocumentShortcutsPageHttpResponse(
-					assetLibraryId);
+					assetLibraryId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -256,7 +258,7 @@ public interface DocumentShortcutResource {
 
 		public HttpInvoker.HttpResponse
 				getAssetLibraryDocumentShortcutsPageHttpResponse(
-					Long assetLibraryId)
+					Long assetLibraryId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -279,6 +281,13 @@ public interface DocumentShortcutResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -509,11 +518,12 @@ public interface DocumentShortcutResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<DocumentShortcut> getSiteDocumentShortcutsPage(Long siteId)
+		public Page<DocumentShortcut> getSiteDocumentShortcutsPage(
+				Long siteId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteDocumentShortcutsPageHttpResponse(siteId);
+				getSiteDocumentShortcutsPageHttpResponse(siteId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -575,7 +585,8 @@ public interface DocumentShortcutResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSiteDocumentShortcutsPageHttpResponse(Long siteId)
+				getSiteDocumentShortcutsPageHttpResponse(
+					Long siteId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -598,6 +609,13 @@ public interface DocumentShortcutResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getRandomDouble} from '../utils/getRandomDouble';
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
@@ -14,6 +15,21 @@ type TCatalog = {
 	name?: string;
 };
 
+export type TPin = {
+	id?: number;
+	mappedProduct: {
+		productId: number;
+		quantity: number;
+		sequence: string;
+		sku: string;
+		skuId: number;
+		type?: number;
+	};
+	positionX?: number;
+	positionY?: number;
+	sequence: string;
+};
+
 type TProduct = {
 	active?: boolean;
 	catalogId: number;
@@ -23,6 +39,11 @@ type TProduct = {
 	name?: {
 		[key: string]: string;
 	};
+	productAccountGroupFilter?: boolean;
+	productAccountGroups?: {
+		accountGroupId: number;
+		id: number;
+	}[];
 	productConfiguration?: {
 		allowBackOrder?: boolean;
 	};
@@ -113,6 +134,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async deleteOptionCategory(optionCategoryId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/optionCategories/${optionCategoryId}`
+		);
+	}
+
+	async deletePin(pinId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/pins/${pinId}`
 		);
 	}
 
@@ -324,6 +351,33 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		}
 
 		return postOptionCategory;
+	}
+
+	async postPin(productId: number, pin: TPin): Promise<TPin> {
+		pin = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/pins`,
+			{
+				data: {
+					mappedProduct: {
+						productId: 0,
+						quantity: 1,
+						sequence: '1',
+						skuId: 0,
+						type: 'sku',
+					},
+					positionX: getRandomDouble(),
+					positionY: getRandomDouble(),
+					sequence: '1',
+					...pin,
+				},
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: pin, type: 'pin'});
+		}
+
+		return pin;
 	}
 
 	async postProduct(product: TProduct): Promise<TProduct> {

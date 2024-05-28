@@ -71,7 +71,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -204,7 +204,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -276,7 +276,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -836,7 +836,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium-3",
 				userEmailAddress = "buyer2@liferay.com");
 
@@ -923,7 +923,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -1001,7 +1001,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -1097,7 +1097,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -1197,7 +1197,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -1280,7 +1280,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -1314,7 +1314,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -1382,7 +1382,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -1756,7 +1756,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium-2",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -1840,7 +1840,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium-3",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -2008,7 +2008,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -2181,7 +2181,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -2198,7 +2198,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium-2",
 				userEmailAddress = "buyer2@liferay.com");
 		}
@@ -2333,7 +2333,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -2539,7 +2539,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -2560,7 +2560,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer2@liferay.com");
 		}
@@ -2655,7 +2655,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -3118,7 +3118,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -3264,7 +3264,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -3329,7 +3329,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium-2",
 				userEmailAddress = "buyer2@liferay.com");
 
@@ -3416,7 +3416,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -3528,7 +3528,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 

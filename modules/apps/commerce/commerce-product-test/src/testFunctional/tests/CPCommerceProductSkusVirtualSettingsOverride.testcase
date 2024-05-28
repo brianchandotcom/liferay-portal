@@ -83,7 +83,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -103,7 +103,7 @@ definition {
 				orderId = ${orderId},
 				parameter = "nestedFields",
 				parameterValue = "orderItems",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("And the virtualItemURLs field is empty") {
@@ -132,7 +132,7 @@ definition {
 				orderId = ${orderId},
 				parameter = "nestedFields",
 				parameterValue = "orderItems",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("And the GET order item API is called") {
@@ -140,7 +140,7 @@ definition {
 				email = "buyer@liferay.com",
 				jsonPath = "$..virtualItemURLs[:1]",
 				orderId = ${orderId},
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Then the URL into the response is the same for both the API calls") {
@@ -262,7 +262,7 @@ definition {
 				orderId = ${orderId},
 				parameter = "nestedFields",
 				parameterValue = "orderItems",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Then the buyer can't receive the URL") {
@@ -275,7 +275,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -352,7 +352,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -407,7 +407,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -470,7 +470,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -572,7 +572,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -615,7 +615,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -678,7 +678,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -733,7 +733,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}
@@ -860,7 +860,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 

@@ -105,7 +105,7 @@ definition {
 
 		task ("and the buyer places an order ") {
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				password = "ttest",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");

@@ -254,7 +254,7 @@ definition {
 
 		task ("Then the guest is able to create a new user by itself") {
 			CommerceEntry.createAccountFromGuest(
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				newuserEmailAddress = "guest@liferay.com",
 				userFirstName = "Guest",
 				userLastName = "User",
@@ -263,7 +263,7 @@ definition {
 
 		task ("And can login as the new user") {
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "guest@liferay.com");
 		}
@@ -321,7 +321,7 @@ definition {
 
 		task ("Then can login as the existing user") {
 			CommerceLogin.miniumLogin(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 		}

@@ -27,6 +27,13 @@ type TDiscount = {
 	usePercentage?: boolean;
 };
 
+class TPriceEntry {
+	id?: number;
+	skuId: number;
+	price: number;
+	priceListId: number;
+}
+
 export class HeadlessCommerceAdminPricingApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -40,6 +47,46 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/discounts/${discountId}`
 		);
+	}
+
+	async deletePriceEntry(priceEntryId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-entries/${priceEntryId}`
+		);
+	}
+
+	async getBasePriceLists(catalogId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true`
+		);
+	}
+
+	async getBasePriceListId(catalogId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true and type eq 'price-list'&fields=id`
+		);
+	}
+
+	async getBasePromoPriceListId(catalogId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true and type eq 'promotion'&fields=id`
+		);
+	}
+
+	async postPriceEntry(priceEntry?: TPriceEntry) {
+		priceEntry = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceEntry.priceListId}/price-entries`,
+			{
+				data: priceEntry,
+				failOnStatusCode: true,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: priceEntry.id, type: 'price-entry'});
+		}
+
+		return priceEntry;
 	}
 
 	async postDiscount(discount?: TDiscount) {

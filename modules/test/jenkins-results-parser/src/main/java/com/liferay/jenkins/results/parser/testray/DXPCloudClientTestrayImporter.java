@@ -164,7 +164,9 @@ public class DXPCloudClientTestrayImporter {
 		return varValue;
 	}
 
-	private static Element _getPoshiLogAttachmentElement(String testName) {
+	private static Element _getPoshiLogAttachmentElement(
+		Element testCaseResultElement) {
+
 		if (_testrayS3Bucket == null) {
 			return null;
 		}
@@ -185,6 +187,15 @@ public class DXPCloudClientTestrayImporter {
 		}
 
 		File testResultDir = new File(_projectDir, "test-results");
+
+		Matcher matcher = _pattern.matcher(
+			testCaseResultElement.attributeValue("name"));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String testName = matcher.group("testName");
 
 		File testDir = new File(testResultDir, testName.replace("#", "_"));
 
@@ -311,8 +322,6 @@ public class DXPCloudClientTestrayImporter {
 
 		File testDir = new File(_projectDir, "playwright-report");
 
-		String testName = null;
-
 		if (_testType.equals("poshi")) {
 			Matcher matcher = _pattern.matcher(
 				testCaseResultElement.attributeValue("name"));
@@ -321,7 +330,7 @@ public class DXPCloudClientTestrayImporter {
 				return attachmentsElement;
 			}
 
-			testName = matcher.group("testName");
+			String testName = matcher.group("testName");
 
 			testDir = new File(
 				_projectDir, "test-results/" + testName.replace("#", "_"));
@@ -413,9 +422,9 @@ public class DXPCloudClientTestrayImporter {
 			attachmentElement.addAttribute("value", key + "?authuser=0");
 		}
 
-		if (testName != null) {
+		if (_testType.equals("poshi")) {
 			Element poshiLogAttachmentElement = _getPoshiLogAttachmentElement(
-				testName);
+				testCaseResultElement);
 
 			if (poshiLogAttachmentElement != null) {
 				attachmentsElement.add(poshiLogAttachmentElement);

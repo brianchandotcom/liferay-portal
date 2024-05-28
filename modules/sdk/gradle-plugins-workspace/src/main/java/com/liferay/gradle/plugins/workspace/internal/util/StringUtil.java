@@ -29,6 +29,8 @@ public class StringUtil {
 
 	public static final String COMMA_AND_SPACE = ", ";
 
+	public static final String FORWARD_SLASH = "/";
+
 	public static final String NEW_LINE = "\n";
 
 	public static final String STAR = "*";

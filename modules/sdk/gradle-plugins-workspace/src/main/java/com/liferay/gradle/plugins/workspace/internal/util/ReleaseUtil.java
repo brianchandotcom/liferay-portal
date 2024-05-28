@@ -173,7 +173,9 @@ public class ReleaseUtil {
 	private ReleaseUtil(
 		long maxAge, List<String> releaseMirrors, File workspaceCacheDir) {
 
-		_releaseMirrors = releaseMirrors;
+		for (String releaseMirror : releaseMirrors) {
+			_releaseMirrors.add(_normalizeReleaseMirror(releaseMirror));
+		}
 
 		_workspaceCacheDir = workspaceCacheDir;
 
@@ -285,6 +287,14 @@ public class ReleaseUtil {
 		return new ReleaseProperties(properties);
 	}
 
+	private String _normalizeReleaseMirror(String releaseMirror) {
+		if (releaseMirror.endsWith(StringUtil.FORWARD_SLASH)) {
+			return releaseMirror.substring(0, releaseMirror.length() - 1);
+		}
+
+		return releaseMirror;
+	}
+
 	private static final long _DEFAULT_MAX_AGE = 7;
 
 	private static final File _DEFAULT_WORKSPACE_CACHE_DIR = new File(
@@ -294,7 +304,7 @@ public class ReleaseUtil {
 		new ReleaseProperties();
 
 	private final Map<String, ReleaseEntry> _releaseEntryMap = new HashMap<>();
-	private final List<String> _releaseMirrors;
+	private final List<String> _releaseMirrors = new ArrayList<>();
 	private final Map<String, ReleaseProperties> _releasePropertiesMap =
 		new HashMap<>();
 	private final File _workspaceCacheDir;

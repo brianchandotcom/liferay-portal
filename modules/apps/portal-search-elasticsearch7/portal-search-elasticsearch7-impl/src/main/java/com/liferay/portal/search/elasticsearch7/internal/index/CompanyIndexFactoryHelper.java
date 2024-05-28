@@ -303,6 +303,8 @@ public class CompanyIndexFactoryHelper {
 					"Skipping contributor " + indexConfigurationContributor);
 			}
 
+			_log.error(elasticsearchConnectionNotInitializedException);
+
 			return;
 		}
 
@@ -311,15 +313,14 @@ public class CompanyIndexFactoryHelper {
 
 		indexConfigurationContributor.contributeSettings(settingsBuilder::put);
 
-		Settings settings = settingsBuilder.build();
+		IndicesClient indicesClient = restHighLevelClient.indices();
 
-		if (!settings.isEmpty()) {
-			IndicesClient indicesClient = restHighLevelClient.indices();
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				String indexName = getIndexName(companyId);
+				Settings settings = settingsBuilder.build();
 
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					String indexName = getIndexName(companyId);
-
+				if (!settings.isEmpty()) {
 					UpdateSettingsRequest updateSettingsRequest =
 						new UpdateSettingsRequest(indexName);
 
@@ -337,26 +338,16 @@ public class CompanyIndexFactoryHelper {
 								indexConfigurationContributor),
 							exception);
 					}
-				},
-				IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
-		}
+				}
 
-		if (Validator.isNotNull(
-				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
+				if (Validator.isNull(
+						_elasticsearchConfigurationWrapper.
+							overrideTypeMappings())) {
 
-			return;
-		}
-
-		IndicesClient indices = restHighLevelClient.indices();
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-					new LiferayDocumentTypeFactory(
-						getIndexName(companyId), indices, _jsonFactory);
-
-				indexConfigurationContributor.contributeMappings(
-					liferayDocumentTypeFactory);
+					indexConfigurationContributor.contributeMappings(
+						new LiferayDocumentTypeFactory(
+							indexName, indicesClient, _jsonFactory));
+				}
 			},
 			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 	}

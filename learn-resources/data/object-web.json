@@ -2,13 +2,13 @@
 	"accessing-accounts-data-from-custom-objects": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/web/guest/w/dxp/building-applications/objects/creating-and-managing-objects/using-system-objects-with-custom-objects/accessing-accounts-data-from-custom-objects"
+			"url": "https://learn.liferay.com/web/guest/w/dxp/liferay-development/objects/creating-and-managing-objects/using-system-objects-with-custom-objects/accessing-accounts-data-from-custom-objects"
 		}
 	},
 	"expression-builder-validations-reference": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/en/w/dxp/building-applications/objects/creating-and-managing-objects/validations/expression-builder-validations-reference"
+			"url": "https://learn.liferay.com/en/w/dxp/liferay-development/objects/creating-and-managing-objects/validations/expression-builder-validations-reference"
 		}
 	}
 }

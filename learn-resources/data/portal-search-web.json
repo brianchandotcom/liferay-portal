@@ -2,19 +2,19 @@
 	"custom-facet": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-facets/custom-facet.html"
+			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets/search-facets/custom-facet"
 		}
 	},
 	"search-bar-suggestions": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-bar-suggestions.html"
+			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets/search-bar-suggestions"
 		}
 	},
 	"search-bar-suggestions-blueprints": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-bar-suggestions/search-bar-suggestions-blueprints.html"
+			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets/search-bar-suggestions/search-bar-suggestions-blueprints"
 		}
 	},
 	"search-bar-suggestions-site-activities": {
@@ -25,13 +25,13 @@
 	"sorting-search-results": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-results/sorting-search-results.html"
+			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets/search-results/sorting-search-results"
 		}
 	},
 	"tag-and-category-facet": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-facets/category-facet.html"
+			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets/search-facets/category-facet"
 		}
 	}
 }

@@ -81,8 +81,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testValidateFailure() throws Exception {
 		String sourceFileName = _testExport(_company.getCompanyId());
-
-		String targetFilePath = _testExport(TestPropsValues.getCompanyId());
+		String targetFileName = _testExport(TestPropsValues.getCompanyId());
 
 		File[] files = _outputDirectoryFile.listFiles();
 
@@ -108,7 +107,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		};
 
 		_testValidate(
-			sourceFileName, targetFilePath,
+			sourceFileName, targetFileName,
 			runtimeException -> {
 				String string = _outByteArrayOutputStream.toString();
 

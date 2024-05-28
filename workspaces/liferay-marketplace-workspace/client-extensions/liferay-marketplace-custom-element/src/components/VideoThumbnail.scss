@@ -1,0 +1,21 @@
+.video-player,
+.video-preview {
+	background-color: #f1f2f5;
+	border-radius: 8px;
+	height: 110px;
+	object-fit: cover;
+	width: 195px;
+
+	&:hover .video-thumbnail-play-symbol {
+		opacity: 1;
+		transform: scale(110%);
+	}
+}
+
+.video-thumbnail-play-symbol {
+	color: #fff;
+	font-size: 30px;
+	opacity: 0.7;
+	position: absolute;
+	transition: all 0.3s ease-in-out;
+}

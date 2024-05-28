@@ -250,12 +250,11 @@ testWithIsolatedSite(
 
 		await collectionsPage.goto(site.friendlyUrlPath);
 
-		const {
-			classPK,
-		} = await collectionsPage.createWebContentDynamicCollection(
-			collectionName,
-			site.friendlyUrlPath
-		);
+		const {classPK} =
+			await collectionsPage.createWebContentDynamicCollection(
+				collectionName,
+				site.friendlyUrlPath
+			);
 
 		// Create a page with Collection Display and Collection Filter fragments
 

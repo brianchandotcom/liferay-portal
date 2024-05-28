@@ -41,6 +41,67 @@ describe('CriteriaView', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('should render with multiple values', () => {
+		const WrappedCriteriaView = withReferencedObjectsProvider(CriteriaView);
+		const {container} = render(
+			<WrappedCriteriaView
+				criteria={data.mockNewCriteria(2, {
+					propertyName: 'demographics/firstName/value',
+					value: '["A", "B"]'
+				})}
+				segment={data.getImmutableMock(Segment, data.mockSegment, 0, {
+					referencedObjects: {
+						fieldMappings: {
+							individual: {
+								demographics: {
+									firstName: {
+										context: 'demographics',
+										id: null,
+										name: 'firstName',
+										ownerType: 'individual',
+										rawType: 'Text',
+										type: 'Text'
+									}
+								}
+							}
+						}
+					}
+				})}
+			/>
+		);
+
+		expect(container).toMatchSnapshot();
+	});
+
+	it('should render with nested criterias', () => {
+		const WrappedCriteriaView = withReferencedObjectsProvider(CriteriaView);
+		const {container} = render(
+			<WrappedCriteriaView
+				criteria={data.mockNewCriteriaNested()}
+				segment={data.getImmutableMock(Segment, data.mockSegment, 0, {
+					referencedObjects: {
+						fieldMappings: {
+							individual: {
+								demographics: {
+									firstName: {
+										context: 'demographics',
+										id: null,
+										name: 'firstName',
+										ownerType: 'individual',
+										rawType: 'Text',
+										type: 'Text'
+									}
+								}
+							}
+						}
+					}
+				})}
+			/>
+		);
+
+		expect(container).toMatchSnapshot();
+	});
+
 	it('should render w/ Non-Existent Property message', () => {
 		const {queryByText} = render(
 			<CriteriaView criteria={data.mockNewCriteria()} />

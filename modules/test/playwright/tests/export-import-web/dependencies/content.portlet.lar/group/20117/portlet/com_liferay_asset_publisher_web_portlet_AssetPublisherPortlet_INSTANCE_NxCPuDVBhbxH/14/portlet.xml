@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_NxCPuDVBhbxH" root-portlet-id="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" scope-group-id="20117" private-layout="false" self-path="/group/20117/portlet/com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_NxCPuDVBhbxH/14/portlet.xml">
-	<portlet-preferences path="/group/20117/portlet/com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_NxCPuDVBhbxH/preferences/layout/0/14/portlet-preferences.xml">
-		<preference-data/>
-	</portlet-preferences>
-</portlet>

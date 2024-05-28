@@ -100,7 +100,7 @@ const baseFilters: Filter = {
 				projectId as string
 			)}`;
 
-			return `/components?fields=id,name&filter=${filter}&pageSize=200&sort=name:asc`;
+			return `/components?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
 		},
 
 		transformData(item) {
@@ -770,7 +770,7 @@ const filterSchema = {
 						runB as string
 					)}`;
 
-					return `/teams?filter=${filter}&pageSize=100&sort=name:asc`;
+					return `/teams?filter=${filter}&pageSize=-1&sort=name:asc`;
 				},
 
 				type: 'select',

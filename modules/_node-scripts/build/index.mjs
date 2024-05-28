@@ -10,7 +10,8 @@ import getProjectExports from '../configuration/getProjectExports.mjs';
 import getProjectMain from '../configuration/getProjectMain.mjs';
 import getProjectNpmScriptsConfig from '../configuration/getProjectNpmScriptsConfig.mjs';
 import getProjectWebContextPath from '../configuration/getProjectWebContextPath.mjs';
-import writeAMD2ESMBridges from './amd/writeAMD2ESMBridges.mjs';
+import writeExportBridges from './amd/writeExportBridges.mjs';
+import writeMainBridge from './amd/writeMainBridge.mjs';
 import writeManifestJson from './amd/writeManifestJson.mjs';
 import writePackageJson from './amd/writePackageJson.mjs';
 import writeCSSExportsLoaderModules from './cssLoad/writeCSSExportsLoaderModules.mjs';
@@ -44,6 +45,9 @@ export default async function main() {
 	const endConfig = Date.now();
 
 	await Promise.all([
+
+		// JavaScript bundling
+
 		bundleJavaScriptMain(
 			globalImports,
 			overridenPackageSymbols,
@@ -55,11 +59,21 @@ export default async function main() {
 			overridenPackageSymbols,
 			projectExports
 		),
+
+		// CSS Bundling
+
 		bundleCSSExports(projectExports),
 		writeCSSExportsLoaderModules(projectExports, projectWebContextPath),
+
+		// AMD bridging
+
+		writeMainBridge(projectDescription, projectWebContextPath),
+		writeExportBridges(projectDescription, projectExports, projectWebContextPath),
+		writeManifestJson(projectDescription, projectExports),
 		writePackageJson(projectDescription),
-		writeManifestJson(projectDescription),
-		writeAMD2ESMBridges(projectDescription, projectWebContextPath),
+
+		// Rest of legacy build
+
 		runNpmScripts(projectNpmScriptsConfig),
 	]);
 

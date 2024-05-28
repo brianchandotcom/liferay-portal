@@ -7,20 +7,21 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import {BUILD_RESOURCES_PATH} from '../../util/constants.mjs';
+import projectScopeRequire from '../../util/projectScopeRequire.mjs';
+import getNamespacedPackageName from './util/getNamespacedPackageName.mjs';
+import splitProjectExport from './util/splitProjectExport.mjs';
 
-export default async function writeManifestJson(projectDescription) {
+export default async function writeManifestJson(projectDescription, projectExports) {
 	const filePath = path.join(BUILD_RESOURCES_PATH, 'manifest.json');
 
-	const {name, version} = projectDescription;
-
-	const json = {
+	const manifest = {
 		packages: {
 			'/': {
 				dest: {
 					dir: '.',
 					id: '/',
-					name,
-					version,
+					name: projectDescription.name,
+					version: projectDescription.version,
 				},
 				modules: {
 					'index.js': {
@@ -32,13 +33,63 @@ export default async function writeManifestJson(projectDescription) {
 				},
 				src: {
 					id: '/',
-					name,
-					version,
+					name: projectDescription.name,
+					version: projectDescription.version,
 				},
 			},
 		},
 	};
 
+	const groupedProjectExports =
+		projectExports
+			.reduce(
+				(groupedProjectExports, projectExport) => {
+					const {scope, name} = splitProjectExport(projectExport);
+					const packageName = `${scope ? `${scope}/` : ''}${name}`;
+
+					if (!groupedProjectExports[packageName]) {
+						groupedProjectExports[packageName] = [];
+					}
+
+					groupedProjectExports[packageName].push(projectExport);
+
+					return groupedProjectExports;
+				},
+				{}
+			);
+
+	for (const [packageName, projectExports] of Object.entries(groupedProjectExports)) {
+		const {version} = projectScopeRequire(`${packageName}/package.json`);
+		const namespacedPackageName = getNamespacedPackageName(packageName, projectDescription.name);
+		const namespacedPackageId =`${namespacedPackageName}@${version}`;
+
+		manifest.packages[namespacedPackageId] = {
+			dest: {
+				dir: '.',
+				id: namespacedPackageId,
+				name: namespacedPackageName,
+				version: version,
+			},
+			modules: {},
+			'src': {
+				id: `${packageName}@${version}`,
+				name: packageName,
+				version: version,
+			}
+		};
+
+		for (const projectExport of projectExports) {
+			const {name, scope, modulePath} = splitProjectExport(projectExport);
+
+			manifest.packages[namespacedPackageId].modules[`${modulePath.substring(1)}.js`] = {
+				flags: {
+					esModule: true,
+					useESM: true
+				}
+			};
+		}
+	}
+
 	await fs.mkdir(path.dirname(filePath), {recursive: true});
-	await fs.writeFile(filePath, JSON.stringify(json, null, '\t'), 'utf-8');
+	await fs.writeFile(filePath, JSON.stringify(manifest, null, '\t'), 'utf-8');
 }

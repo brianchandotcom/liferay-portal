@@ -13,6 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
+import {navigateToSitePage} from '../analytics-settings-web/utils/analyticsSettings';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {faroConfig} from './faro.config';
@@ -56,20 +57,6 @@ const goToWithReferrer = async function (page, referrer, url) {
 
 		aTag.click();
 	}, url);
-};
-
-const navigateToSitePage = async function (page, siteName, pageName) {
-	let pageNameURL = pageName.replace(/ /g, "-").toLowerCase();
-
-	if (siteName) {
-		let siteNameURL = siteName.replace(/ /g, "-").toLowerCase();
-
-		await page.goto(
-			`${liferayConfig.environment.baseUrl}/web/${siteNameURL}/` +
-				`${pageNameURL}`);
-	} else {
-		await page.goto(`${liferayConfig.environment.baseUrl}/${pageNameURL}`);
-	}
 };
 
 test('shows outside pages in path analysis', async ({apiHelpers, page}) => {

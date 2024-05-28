@@ -60,6 +60,20 @@ export async function goToAnalyticsCloudInstanceSettings(page) {
 	});
 }
 
+export async function navigateToSitePage(page, siteName, pageName) {
+	let pageNameURL = pageName.replace(/ /g, "-").toLowerCase();
+
+	if (siteName) {
+		let siteNameURL = siteName.replace(/ /g, "-").toLowerCase();
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web/${siteNameURL}/` +
+				`${pageNameURL}`);
+	} else {
+		await page.goto(`${liferayConfig.environment.baseUrl}/${pageNameURL}`);
+	}
+};
+
 export async function syncAllContacts(page) {
 	const wizard = page.getByTestId('VIEW_WIZARD_MODE');
 

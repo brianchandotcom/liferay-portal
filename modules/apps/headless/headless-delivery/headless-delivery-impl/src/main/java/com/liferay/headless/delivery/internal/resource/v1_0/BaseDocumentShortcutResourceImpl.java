@@ -86,6 +86,14 @@ public abstract class BaseDocumentShortcutResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			)
 		}
@@ -103,7 +111,8 @@ public abstract class BaseDocumentShortcutResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId)
+			Long assetLibraryId,
+			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -246,6 +255,14 @@ public abstract class BaseDocumentShortcutResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			)
 		}
@@ -263,7 +280,8 @@ public abstract class BaseDocumentShortcutResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
-			Long siteId)
+			Long siteId,
+			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -396,10 +414,11 @@ public abstract class BaseDocumentShortcutResourceImpl
 
 		if (parameters.containsKey("assetLibraryId")) {
 			return getAssetLibraryDocumentShortcutsPage(
-				(Long)parameters.get("assetLibraryId"));
+				(Long)parameters.get("assetLibraryId"), pagination);
 		}
 		else if (parameters.containsKey("siteId")) {
-			return getSiteDocumentShortcutsPage((Long)parameters.get("siteId"));
+			return getSiteDocumentShortcutsPage(
+				(Long)parameters.get("siteId"), pagination);
 		}
 		else {
 			throw new NotSupportedException(

@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.DocumentShortcut;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentShortcutResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentShortcutSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -208,7 +210,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 		Page<DocumentShortcut> page =
 			documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
-				assetLibraryId);
+				assetLibraryId, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -220,7 +222,8 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 			page =
 				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
-					irrelevantAssetLibraryId);
+					irrelevantAssetLibraryId,
+					Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -242,7 +245,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 				assetLibraryId, randomDocumentShortcut());
 
 		page = documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
-			assetLibraryId);
+			assetLibraryId, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -264,6 +267,106 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentShortcutsPageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryDocumentShortcutsPage_getAssetLibraryId();
+
+		Page<DocumentShortcut> documentShortcutPage =
+			documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
+				assetLibraryId, null);
+
+		int totalCount = GetterUtil.getInteger(
+			documentShortcutPage.getTotalCount());
+
+		DocumentShortcut documentShortcut1 =
+			testGetAssetLibraryDocumentShortcutsPage_addDocumentShortcut(
+				assetLibraryId, randomDocumentShortcut());
+
+		DocumentShortcut documentShortcut2 =
+			testGetAssetLibraryDocumentShortcutsPage_addDocumentShortcut(
+				assetLibraryId, randomDocumentShortcut());
+
+		DocumentShortcut documentShortcut3 =
+			testGetAssetLibraryDocumentShortcutsPage_addDocumentShortcut(
+				assetLibraryId, randomDocumentShortcut());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<DocumentShortcut> page1 =
+				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
+					assetLibraryId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				documentShortcut1, (List<DocumentShortcut>)page1.getItems());
+
+			Page<DocumentShortcut> page2 =
+				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
+					assetLibraryId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				documentShortcut2, (List<DocumentShortcut>)page2.getItems());
+
+			Page<DocumentShortcut> page3 =
+				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
+					assetLibraryId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				documentShortcut3, (List<DocumentShortcut>)page3.getItems());
+		}
+		else {
+			Page<DocumentShortcut> page1 =
+				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
+					assetLibraryId, Pagination.of(1, totalCount + 2));
+
+			List<DocumentShortcut> documentShortcuts1 =
+				(List<DocumentShortcut>)page1.getItems();
+
+			Assert.assertEquals(
+				documentShortcuts1.toString(), totalCount + 2,
+				documentShortcuts1.size());
+
+			Page<DocumentShortcut> page2 =
+				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
+					assetLibraryId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DocumentShortcut> documentShortcuts2 =
+				(List<DocumentShortcut>)page2.getItems();
+
+			Assert.assertEquals(
+				documentShortcuts2.toString(), 1, documentShortcuts2.size());
+
+			Page<DocumentShortcut> page3 =
+				documentShortcutResource.getAssetLibraryDocumentShortcutsPage(
+					assetLibraryId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				documentShortcut1, (List<DocumentShortcut>)page3.getItems());
+			assertContains(
+				documentShortcut2, (List<DocumentShortcut>)page3.getItems());
+			assertContains(
+				documentShortcut3, (List<DocumentShortcut>)page3.getItems());
+		}
 	}
 
 	protected DocumentShortcut
@@ -416,7 +519,8 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			testGetSiteDocumentShortcutsPage_getIrrelevantSiteId();
 
 		Page<DocumentShortcut> page =
-			documentShortcutResource.getSiteDocumentShortcutsPage(siteId);
+			documentShortcutResource.getSiteDocumentShortcutsPage(
+				siteId, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -426,7 +530,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 					irrelevantSiteId, randomIrrelevantDocumentShortcut());
 
 			page = documentShortcutResource.getSiteDocumentShortcutsPage(
-				irrelevantSiteId);
+				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -447,7 +551,8 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			testGetSiteDocumentShortcutsPage_addDocumentShortcut(
 				siteId, randomDocumentShortcut());
 
-		page = documentShortcutResource.getSiteDocumentShortcutsPage(siteId);
+		page = documentShortcutResource.getSiteDocumentShortcutsPage(
+			siteId, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -466,6 +571,104 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
+	}
+
+	@Test
+	public void testGetSiteDocumentShortcutsPageWithPagination()
+		throws Exception {
+
+		Long siteId = testGetSiteDocumentShortcutsPage_getSiteId();
+
+		Page<DocumentShortcut> documentShortcutPage =
+			documentShortcutResource.getSiteDocumentShortcutsPage(siteId, null);
+
+		int totalCount = GetterUtil.getInteger(
+			documentShortcutPage.getTotalCount());
+
+		DocumentShortcut documentShortcut1 =
+			testGetSiteDocumentShortcutsPage_addDocumentShortcut(
+				siteId, randomDocumentShortcut());
+
+		DocumentShortcut documentShortcut2 =
+			testGetSiteDocumentShortcutsPage_addDocumentShortcut(
+				siteId, randomDocumentShortcut());
+
+		DocumentShortcut documentShortcut3 =
+			testGetSiteDocumentShortcutsPage_addDocumentShortcut(
+				siteId, randomDocumentShortcut());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<DocumentShortcut> page1 =
+				documentShortcutResource.getSiteDocumentShortcutsPage(
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(
+				documentShortcut1, (List<DocumentShortcut>)page1.getItems());
+
+			Page<DocumentShortcut> page2 =
+				documentShortcutResource.getSiteDocumentShortcutsPage(
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				documentShortcut2, (List<DocumentShortcut>)page2.getItems());
+
+			Page<DocumentShortcut> page3 =
+				documentShortcutResource.getSiteDocumentShortcutsPage(
+					siteId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
+
+			assertContains(
+				documentShortcut3, (List<DocumentShortcut>)page3.getItems());
+		}
+		else {
+			Page<DocumentShortcut> page1 =
+				documentShortcutResource.getSiteDocumentShortcutsPage(
+					siteId, Pagination.of(1, totalCount + 2));
+
+			List<DocumentShortcut> documentShortcuts1 =
+				(List<DocumentShortcut>)page1.getItems();
+
+			Assert.assertEquals(
+				documentShortcuts1.toString(), totalCount + 2,
+				documentShortcuts1.size());
+
+			Page<DocumentShortcut> page2 =
+				documentShortcutResource.getSiteDocumentShortcutsPage(
+					siteId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<DocumentShortcut> documentShortcuts2 =
+				(List<DocumentShortcut>)page2.getItems();
+
+			Assert.assertEquals(
+				documentShortcuts2.toString(), 1, documentShortcuts2.size());
+
+			Page<DocumentShortcut> page3 =
+				documentShortcutResource.getSiteDocumentShortcutsPage(
+					siteId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				documentShortcut1, (List<DocumentShortcut>)page3.getItems());
+			assertContains(
+				documentShortcut2, (List<DocumentShortcut>)page3.getItems());
+			assertContains(
+				documentShortcut3, (List<DocumentShortcut>)page3.getItems());
+		}
 	}
 
 	protected DocumentShortcut
@@ -497,6 +700,9 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			"documentShortcuts",
 			new HashMap<String, Object>() {
 				{
+					put("page", 1);
+					put("pageSize", 10);
+
 					put("siteKey", "\"" + siteId + "\"");
 				}
 			},

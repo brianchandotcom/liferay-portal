@@ -20,6 +20,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +51,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DocumentShortcutResource {
 
 	public Page<DocumentShortcut> getAssetLibraryDocumentShortcutsPage(
-			Long assetLibraryId)
+			Long assetLibraryId, Pagination pagination)
 		throws Exception;
 
 	public Response postAssetLibraryDocumentShortcutsPageExportBatch(
@@ -61,7 +62,8 @@ public interface DocumentShortcutResource {
 	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
 		throws Exception;
 
-	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(Long siteId)
+	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
 	public Response postSiteDocumentShortcutsPageExportBatch(

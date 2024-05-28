@@ -165,21 +165,21 @@ public class DefaultCategoryDisplayPageResourceImpl
 			addAction(
 				ActionKeys.DELETE, commerceChannel.getCommerceChannelId(),
 				"deleteChannelIdDefaultCategoryDisplayPage",
-				commerceChannel.getUserId(), CommerceChannel.class.getName(),
+				contextUser.getUserId(), CommerceChannel.class.getName(),
 				commerceChannel.getGroupId())
 		).put(
 			"get",
 			addAction(
 				ActionKeys.VIEW, commerceChannel.getCommerceChannelId(),
 				"getChannelIdDefaultCategoryDisplayPage",
-				commerceChannel.getUserId(), CommerceChannel.class.getName(),
+				contextUser.getUserId(), CommerceChannel.class.getName(),
 				commerceChannel.getGroupId())
 		).put(
 			"post",
 			addAction(
 				ActionKeys.UPDATE, commerceChannel.getCommerceChannelId(),
 				"postChannelIdDefaultCategoryDisplayPage",
-				commerceChannel.getUserId(), CommerceChannel.class.getName(),
+				contextUser.getUserId(), CommerceChannel.class.getName(),
 				commerceChannel.getGroupId())
 		).build();
 	}

@@ -85,6 +85,13 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 				BooleanClauseOccur.MUST);
 		}
 
+		String groupId = GetterUtil.getString(attributes.get(Field.GROUP_ID));
+
+		if (Validator.isNotNull(groupId)) {
+			contextBooleanFilter.addTerm(
+				Field.GROUP_ID, groupId, BooleanClauseOccur.MUST);
+		}
+
 		Integer type = (Integer)attributes.get(Field.TYPE);
 
 		if (type != null) {

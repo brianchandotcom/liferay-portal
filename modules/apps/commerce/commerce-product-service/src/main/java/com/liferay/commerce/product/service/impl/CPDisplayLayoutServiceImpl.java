@@ -98,6 +98,26 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 	}
 
 	@Override
+	public CPDisplayLayout getCPDisplayLayout(long cpDisplayLayoutId)
+		throws PortalException {
+
+		CPDisplayLayout cpDisplayLayout =
+			cpDisplayLayoutLocalService.getCPDisplayLayout(cpDisplayLayoutId);
+
+		if (Validator.isNotNull(cpDisplayLayout.getLayoutUuid())) {
+			LayoutPermissionUtil.check(
+				getPermissionChecker(), _getLayout(cpDisplayLayout),
+				ActionKeys.VIEW);
+		}
+
+		_checkCPDisplayLayout(
+			cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
+			ActionKeys.VIEW);
+
+		return cpDisplayLayout;
+	}
+
+	@Override
 	public BaseModelSearchResult<CPDisplayLayout> searchCPDisplayLayout(
 			long companyId, long groupId, String className, Integer type,
 			String keywords, int start, int end, Sort sort)

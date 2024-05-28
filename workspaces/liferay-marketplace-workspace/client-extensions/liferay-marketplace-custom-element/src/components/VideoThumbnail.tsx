@@ -6,6 +6,8 @@
 import ClayIcon from '@clayui/icon';
 import {ReactNode} from 'react';
 
+import './VideoThumbnail.scss';
+
 type VideoThumbnailProps = {
 	videoURL: string;
 };
@@ -30,7 +32,7 @@ const getThumbnail = (videoURL: string) => {
 };
 
 const Wrapper: React.FC<{children: ReactNode}> = ({children}) => (
-	<div className="align-items-center d-flex justify-content-center video-player">
+	<div className="align-items-center d-flex justify-content-center position-relative video-player">
 		{children}
 	</div>
 );

@@ -136,10 +136,10 @@ const zodSchema = {
 	}),
 	solutionPublishing: {
 		company: z.object({
-			description: z.string().min(1),
+			description: z.string().optional(),
 			email: z.string().email().min(1),
 			phone: z.string().min(1),
-			website: z.string().min(1),
+			website: z.string().optional(),
 		}),
 		contactUs: z.string().email().min(1),
 		details: z

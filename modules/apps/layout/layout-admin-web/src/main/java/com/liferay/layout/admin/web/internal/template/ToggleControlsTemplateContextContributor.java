@@ -7,6 +7,7 @@ package com.liferay.layout.admin.web.internal.template;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.template.LazyValue;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,21 +37,28 @@ public class ToggleControlsTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		String liferayToggleControls = SessionClicks.get(
-			httpServletRequest, "com.liferay.frontend.js.web_toggleControls",
-			"visible");
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeAssetDisplay() || layout.isTypeContent() ||
-			layout.isTypeControlPanel()) {
+		String liferayToggleControls = "visible";
 
-			liferayToggleControls = "visible";
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
+			!layout.isTypeControlPanel()) {
+
+			liferayToggleControls = SessionClicks.get(
+				httpServletRequest,
+				"com.liferay.frontend.js.web_toggleControls", "visible");
 		}
+
+		_prepare(contextObjects, themeDisplay, liferayToggleControls);
+	}
+
+	private void _prepare(
+		Map<String, Object> contextObjects, ThemeDisplay themeDisplay,
+		String liferayToggleControls) {
 
 		String cssClass = GetterUtil.getString(
 			contextObjects.get("bodyCssClass"));
@@ -70,7 +78,9 @@ public class ToggleControlsTemplateContextContributor
 		if (themeDisplay.isSignedIn()) {
 			contextObjects.put(
 				"toggle_controls_text",
-				_language.get(themeDisplay.getLocale(), "toggle-controls"));
+				new LazyValue(
+					() -> _language.get(
+						themeDisplay.getLocale(), "toggle-controls")));
 
 			contextObjects.put("toggle_controls_url", "javascript:void(0);");
 		}

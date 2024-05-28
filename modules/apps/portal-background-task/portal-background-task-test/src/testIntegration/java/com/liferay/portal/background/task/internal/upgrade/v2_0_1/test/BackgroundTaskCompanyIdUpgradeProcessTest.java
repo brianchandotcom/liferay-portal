@@ -22,7 +22,6 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.io.Serializable;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -81,12 +80,20 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 			Objects.equals(_getTaskContextMap(false), taskContextMap));
 	}
 
-	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId)
-		throws Exception {
-
-		LinkedHashMap<String, Serializable> threadLocalValues =
+	private Map<String, Serializable> _getTaskContextMap(boolean addCompanyId) {
+		return LinkedHashMapBuilder.<String, Serializable>put(
+			"threadLocalValues",
 			LinkedHashMapBuilder.<String, Serializable>put(
 				"clusterInvoke", true
+			).put(
+				"companyId",
+				() -> {
+					if (addCompanyId) {
+						return TestPropsValues.getCompanyId();
+					}
+
+					return null;
+				}
 			).put(
 				"defaultLocale", LocaleUtil.US
 			).put(
@@ -97,18 +104,17 @@ public class BackgroundTaskCompanyIdUpgradeProcessTest {
 				"siteDefaultLocale", LocaleUtil.CANADA
 			).put(
 				"themeDisplayLocale", LocaleUtil.FRANCE
-			).build();
+			).build()
+		).put(
+			"companyId",
+			() -> {
+				if (addCompanyId) {
+					return TestPropsValues.getCompanyId();
+				}
 
-		Map<String, Serializable> taskContextMap = new LinkedHashMap<>();
-
-		if (addCompanyId) {
-			taskContextMap.put("companyId", TestPropsValues.getCompanyId());
-			threadLocalValues.put("companyId", TestPropsValues.getCompanyId());
-		}
-
-		taskContextMap.put("threadLocalValues", threadLocalValues);
-
-		return taskContextMap;
+				return null;
+			}
+		).build();
 	}
 
 	private static UpgradeProcess _upgradeProcess;

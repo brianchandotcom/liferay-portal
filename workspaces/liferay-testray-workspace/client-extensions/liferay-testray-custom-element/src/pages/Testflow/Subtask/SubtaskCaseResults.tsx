@@ -185,14 +185,14 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 						clickable: true,
 						key: 'team',
 						render: (_, testrayCaseResult: TestrayCaseResult) =>
-							testrayCaseResult.case?.component?.team?.name,
+							testrayCaseResult?.component?.team?.name,
 						value: i18n.translate('team'),
 					},
 					{
 						clickable: true,
 						key: 'component',
-						render: (_, {case: testrayCase}: TestrayCaseResult) =>
-							testrayCase?.component?.name,
+						render: (_, testrayCaseResult: TestrayCaseResult) =>
+							testrayCaseResult?.component?.name,
 						value: i18n.translate('component'),
 					},
 					{

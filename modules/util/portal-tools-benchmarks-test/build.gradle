@@ -1,0 +1,4 @@
+dependencies {
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":util:portal-tools-benchmarks")
+}

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Tools Benchmarks
+Bundle-SymbolicName: com.liferay.portal.tools.benchmarks
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.benchmarks,\
+	com.liferay.portal.tools.benchmarks.task
+Import-Package: *;resolution:=optional
+Main-Class: com.liferay.portal.tools.benchmarks.BenchmarksTestLauncher

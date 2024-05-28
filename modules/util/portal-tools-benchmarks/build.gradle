@@ -1,0 +1,23 @@
+dependencies {
+	compileInclude group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileInclude group: "com.mysql", name: "mysql-connector-j", version: "8.0.33"
+	compileInclude project(":core:petra:petra-function")
+	compileInclude project(":core:petra:petra-lang")
+	compileInclude project(":core:petra:petra-string")
+}
+
+test {
+	systemProperties(
+		System.properties.subMap([
+				"benchmarks.test.excluded.companies",
+				"benchmarks.test.jdbc.driverClassName",
+				"benchmarks.test.jdbc.password",
+				"benchmarks.test.jdbc.url",
+				"benchmarks.test.jdbc.username",
+				"benchmarks.test.run.count",
+				"benchmarks.test.skip.warm.up",
+				"benchmarks.test.thread.count",
+				"benchmarks.test.user.password"
+			])
+	)
+}

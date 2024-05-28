@@ -8,6 +8,9 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
@@ -15,7 +18,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -24,9 +29,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -62,6 +70,45 @@ public class UpdateFormItemConfigMVCActionCommand
 
 		return _updateFormStyledLayoutStructureItemConfig(
 			actionRequest, actionResponse);
+	}
+
+	private String[] _getCurrentUniqueFieldIds(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
+
+		List<String> fieldNames = new ArrayList<>();
+
+		for (String itemId :
+				formStyledLayoutStructureItem.getChildrenItemIds()) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(itemId);
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			String fieldName = GetterUtil.getString(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValues(),
+					new FragmentConfigurationField(
+						"inputFieldId", "string", "", false, "text"),
+					themeDisplay.getLocale()));
+
+			if (Validator.isNotNull(fieldName)) {
+				fieldNames.add(fieldName);
+			}
+		}
+
+		return fieldNames.toArray(new String[0]);
 	}
 
 	private JSONObject _updateFormStyledLayoutStructureItemConfig(
@@ -136,6 +183,40 @@ public class UpdateFormItemConfigMVCActionCommand
 				}
 			}
 		}
+		else {
+			if (FeatureFlagManagerUtil.isEnabled("LPD-20213") &&
+				(formStyledLayoutStructureItem.getClassNameId() > 0)) {
+
+				List<String> newInfoUniqueFieldIds = new ArrayList<>();
+
+				String[] currentInfoUniqueFieldIds = _getCurrentUniqueFieldIds(
+					formStyledLayoutStructureItem, layoutStructure,
+					themeDisplay);
+
+				String[] infoFieldUniqueIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "fields"));
+
+				for (String infoFieldUniqueId : infoFieldUniqueIds) {
+					if (!ArrayUtil.contains(
+							currentInfoUniqueFieldIds, infoFieldUniqueId)) {
+
+						newInfoUniqueFieldIds.add(infoFieldUniqueId);
+					}
+				}
+
+				if (ListUtil.isNotEmpty(newInfoUniqueFieldIds)) {
+					addedFragmentEntryLinks =
+						_formItemManager.addFragmentEntryLinks(
+							jsonObject,
+							newInfoUniqueFieldIds.toArray(new String[0]),
+							formStyledLayoutStructureItem,
+							themeDisplay.getLayout(), layoutStructure,
+							themeDisplay.getLocale(), segmentsExperienceId,
+							ServiceContextFactory.getInstance(
+								httpServletRequest));
+				}
+			}
+		}
 
 		layoutPageTemplateStructure =
 			_layoutPageTemplateStructureService.
@@ -187,8 +268,14 @@ public class UpdateFormItemConfigMVCActionCommand
 	private FormItemManager _formItemManager;
 
 	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

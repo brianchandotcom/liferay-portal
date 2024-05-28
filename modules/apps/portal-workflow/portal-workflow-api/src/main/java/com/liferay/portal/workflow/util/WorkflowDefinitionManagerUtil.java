@@ -6,12 +6,9 @@
 package com.liferay.portal.workflow.util;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
-
-import java.util.List;
 
 /**
  * @author Micha Kiener
@@ -35,18 +32,6 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, title, name, bytes);
 	}
 
-	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		WorkflowDefinitionManager workflowDefinitionManager =
-			_workflowDefinitionManagerSnapshot.get();
-
-		return workflowDefinitionManager.getActiveWorkflowDefinitions(
-			companyId, start, end, orderByComparator);
-	}
-
 	public static int getActiveWorkflowDefinitionsCount(long companyId)
 		throws WorkflowException {
 
@@ -55,52 +40,6 @@ public class WorkflowDefinitionManagerUtil {
 
 		return workflowDefinitionManager.getActiveWorkflowDefinitionsCount(
 			companyId);
-	}
-
-	public static WorkflowDefinition getLatestWorkflowDefinition(
-			long companyId, String name)
-		throws WorkflowException {
-
-		WorkflowDefinitionManager workflowDefinitionManager =
-			_workflowDefinitionManagerSnapshot.get();
-
-		return workflowDefinitionManager.getLatestWorkflowDefinition(
-			companyId, name);
-	}
-
-	public static List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			long companyId, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		WorkflowDefinitionManager workflowDefinitionManager =
-			_workflowDefinitionManagerSnapshot.get();
-
-		return workflowDefinitionManager.getLatestWorkflowDefinitions(
-			companyId, start, end, orderByComparator);
-	}
-
-	public static WorkflowDefinition getWorkflowDefinition(
-			long companyId, String name, int version)
-		throws WorkflowException {
-
-		WorkflowDefinitionManager workflowDefinitionManager =
-			_workflowDefinitionManagerSnapshot.get();
-
-		return workflowDefinitionManager.getWorkflowDefinition(
-			companyId, name, version);
-	}
-
-	public static List<WorkflowDefinition> getWorkflowDefinitions(
-			long companyId, String name, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		WorkflowDefinitionManager workflowDefinitionManager =
-			_workflowDefinitionManagerSnapshot.get();
-
-		return workflowDefinitionManager.getWorkflowDefinitions(
-			companyId, name, start, end, orderByComparator);
 	}
 
 	public static int getWorkflowDefinitionsCount(long companyId, String name)

@@ -54,6 +54,7 @@ export default async function getGlobalImports() {
 }
 
 function getWebContextPath(packageName) {
+
 	//
 	// We cannot guarantee that the web context is the same as the package name without @liferay
 	// because we don't have any SF requiring that.

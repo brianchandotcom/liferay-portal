@@ -24,10 +24,16 @@ const COMMANDS = {
 			'runs TypeScript checks in the current project or globally (if run from modules)',
 		parameters: '[<tsc arguments>]',
 	},
+	'format': {
+		description:
+			'formats source files or optionally only checks with "--check" flag.',
+		parameters: '[--check]',
+	},
 	'generate:tsconfig': {
 		description: 'generates tsconfig.json files for all projects',
 		parameters: '',
 	},
+	'preflight': {description: 'runs several other infra-type checks'},
 };
 
 const command = process.argv[2];

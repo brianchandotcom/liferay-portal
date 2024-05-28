@@ -26,10 +26,12 @@ export default function getExportedSymbols(
 					symbols[symbol] = true;
 				});
 			}
-		} else {
+		}
+		else {
 			symbols = loadSymbols(moduleName);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		throw new Error(
 			`Cannot infer exported symbols for ${moduleName}: ${error}`
 		);

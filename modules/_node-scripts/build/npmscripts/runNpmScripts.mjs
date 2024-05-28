@@ -66,7 +66,8 @@ async function writeNpmScriptsConfig(projectNpmScriptsConfig) {
 		);
 
 		onExit(restoreNpmScriptsConfig);
-	} catch (error) {
+	}
+	catch (error) {
 		if (error.code !== 'ENOENT') {
 			throw error;
 		}
@@ -92,8 +93,11 @@ function moveNpmScriptsConfig() {
 			'npmscripts.config.js',
 			path.join(WORK_PATH, 'npmscripts.config.js')
 		);
-	} catch (error) {
+	}
+	catch (error) {
+
 		// ignore
+
 	}
 }
 
@@ -102,7 +106,10 @@ function restoreNpmScriptsConfig() {
 
 	try {
 		renameSync('./npmscripts.config.js.$$$', './npmscripts.config.js');
-	} catch (error) {
+	}
+	catch (error) {
+
 		// ignore
+
 	}
 }

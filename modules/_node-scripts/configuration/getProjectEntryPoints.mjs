@@ -9,13 +9,16 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  * @returns
  * An object containing the project relative path of the possible entry points, like this:
  *
- * { 
+ * {
  *   main: 'src/main/resources/META-INF/resources/index.js',
  *   typescript: 'src/main/resources/META-INF/resources/index.d.ts'
  * }
  */
 export default function getProjectEntryPoints(projectDir = '.') {
-	const {main, typescript} = projectScopeRequire('./node-scripts.config.js', projectDir);
+	const {main, typescript} = projectScopeRequire(
+		'./node-scripts.config.js',
+		projectDir
+	);
 
 	const entryPoints = {};
 

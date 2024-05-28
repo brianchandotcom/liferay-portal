@@ -14,7 +14,8 @@ export default function getEntryPoint(moduleName) {
 			in: moduleName,
 			out: `css/${getFlatName(moduleName).replace(/\.css$/, '')}`,
 		};
-	} else {
+	}
+	else {
 		entryPoint = {
 			in: getExportBridgePath(moduleName),
 			out: `exports/${getFlatName(moduleName)}`,

@@ -6,33 +6,52 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {SRC_PATH, SRC_TSCONFIG_PATH, getRootDir} from '../../util/constants.mjs';
+import {
+	SRC_PATH,
+	SRC_TSCONFIG_PATH,
+	getRootDir,
+} from '../../util/constants.mjs';
 import sortObjectKeys from '../../util/sortObjectKeys.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 
 export default async function writeProjectTsconfig(
-	projectsEntryPoints, projectDependencies, projectDescription, projectDir = '.'
+	projectsEntryPoints,
+	projectDependencies,
+	projectDescription,
+	projectDir = '.'
 ) {
-
 	const rootDir = await getRootDir();
 	const srcPath = path.join(projectDir, SRC_PATH);
 
-	const globalDTsFileProjectRelativePath =
-		path.posix.relative(srcPath, path.join(rootDir, 'global.d.ts'));
+	const globalDTsFileProjectRelativePath = path.posix.relative(
+		srcPath,
+		path.join(rootDir, 'global.d.ts')
+	);
 
-	const rootDirProjectRelativePath = path.posix.relative(srcPath, path.join(rootDir));
-	
-	const tsBuildInfoFile = 
-		path.posix.relative(
-			srcPath,
-			path.join(rootDir, '.tsc', 'buildinfo', `${projectDescription.name}.tsbuildinfo`)
-		);
+	const rootDirProjectRelativePath = path.posix.relative(
+		srcPath,
+		path.join(rootDir)
+	);
 
-	const tscTypesDirProjectRelativePath =
-		path.posix.relative(srcPath, path.join(rootDir, '.tsc', 'types'));
+	const tsBuildInfoFile = path.posix.relative(
+		srcPath,
+		path.join(
+			rootDir,
+			'.tsc',
+			'buildinfo',
+			`${projectDescription.name}.tsbuildinfo`
+		)
+	);
 
-	const typesDirProjectRelativePath =
-		path.posix.relative(srcPath, path.join(rootDir, 'node_modules', '@types'));
+	const tscTypesDirProjectRelativePath = path.posix.relative(
+		srcPath,
+		path.join(rootDir, '.tsc', 'types')
+	);
+
+	const typesDirProjectRelativePath = path.posix.relative(
+		srcPath,
+		path.join(rootDir, 'node_modules', '@types')
+	);
 
 	const paths = {};
 	const references = [];
@@ -49,13 +68,14 @@ export default async function writeProjectTsconfig(
 			...`${projectEntryPoint.dir}/${projectEntryPoint.path}`.split('/')
 		);
 
-		paths[dependency] = [path.posix.relative(srcPath, projectEntryPointPath)];
+		paths[dependency] = [
+			path.posix.relative(srcPath, projectEntryPointPath),
+		];
 
-		const projectPath = 
-			path.posix.relative(
-				srcPath,
-				path.join(rootDir, projectEntryPoint.dir)
-			);
+		const projectPath = path.posix.relative(
+			srcPath,
+			path.join(rootDir, projectEntryPoint.dir)
+		);
 
 		references.push({path: `${projectPath}/${SRC_TSCONFIG_PATH}`});
 	}
@@ -65,25 +85,19 @@ export default async function writeProjectTsconfig(
 		compilerOptions: {
 			...baseTsconfig.compilerOptions,
 			declarationDir: tscTypesDirProjectRelativePath,
-			paths, 			
+			paths,
 			rootDir: rootDirProjectRelativePath,
 			tsBuildInfoFile,
-			typeRoots: [
-				typesDirProjectRelativePath
-			]
+			typeRoots: [typesDirProjectRelativePath],
 		},
-		include: [
-			'**/*.ts',
-			'**/*.tsx',
-			globalDTsFileProjectRelativePath
-		],
-		references
+		include: ['**/*.ts', '**/*.tsx', globalDTsFileProjectRelativePath],
+		references,
 	};
 
 	sortObjectKeys(json);
 
 	await fs.writeFile(
-		path.join(srcPath, 'tsconfig.json'), 
+		path.join(srcPath, 'tsconfig.json'),
 		JSON.stringify(json, null, '\t'),
 		'utf-8'
 	);

@@ -9,6 +9,7 @@ export default function getExternals(globalImports, type) {
 	const prefix = getPathPrefix(type);
 
 	const externals = [
+
 		//
 		// Use a Set to deduplicate items
 		//

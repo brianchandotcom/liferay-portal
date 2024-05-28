@@ -8,7 +8,7 @@ import path from 'path';
 import getProjectDependencies from '../../configuration/getProjectDependencies.mjs';
 import getProjectDescription from '../../configuration/getProjectDescription.mjs';
 import getProjectEntryPoints from '../../configuration/getProjectEntryPoints.mjs';
-import {getProjectDirs, getRootDir, SRC_PATH} from '../../util/constants.mjs';
+import {SRC_PATH, getProjectDirs, getRootDir} from '../../util/constants.mjs';
 import fileExists from '../../util/fileExists.mjs';
 import writeProjectTsconfig from './writeProjectTsconfig.mjs';
 
@@ -24,18 +24,17 @@ though you have invoked it from a project directory.
 `);
 	}
 
-	const [
-		projectDirs,
-	] = await Promise.all([
-		getProjectDirs()
-	]);
+	const [projectDirs] = await Promise.all([getProjectDirs()]);
 
-	const projectsEntryPoints = await getProjectsEntryPoints(projectDirs, rootDir);
+	const projectsEntryPoints = await getProjectsEntryPoints(
+		projectDirs,
+		rootDir
+	);
 
 	await Promise.all([
-		...projectDirs.map(
-			projectDir => processProject(projectDir, projectsEntryPoints)
-		)
+		...projectDirs.map((projectDir) =>
+			processProject(projectDir, projectsEntryPoints)
+		),
 	]);
 }
 
@@ -50,36 +49,33 @@ though you have invoked it from a project directory.
  * }
  */
 async function getProjectsEntryPoints(projectDirs, rootDir) {
-	return projectDirs.reduce(
-		(projectsEntryPoints, projectDir) => {
-			const {name} = getProjectDescription(projectDir);
-			const {typescript} = getProjectEntryPoints(projectDir);
+	return projectDirs.reduce((projectsEntryPoints, projectDir) => {
+		const {name} = getProjectDescription(projectDir);
+		const {typescript} = getProjectEntryPoints(projectDir);
 
-			projectsEntryPoints[name] = {
-				dir: path.relative(rootDir, projectDir),
-				path: typescript
-			};
+		projectsEntryPoints[name] = {
+			dir: path.relative(rootDir, projectDir),
+			path: typescript,
+		};
 
-			return projectsEntryPoints;
-		},
-		{}
-	);
+		return projectsEntryPoints;
+	}, {});
 }
 
 async function processProject(projectDir, projectsEntryPoints) {
-	if (!await fileExists(path.join(projectDir, SRC_PATH))) {
+	if (!(await fileExists(path.join(projectDir, SRC_PATH)))) {
 		return;
 	}
 
-	const [
-		projectDependencies,
-		projectDescription,
-	] = await Promise.all([
+	const [projectDependencies, projectDescription] = await Promise.all([
 		getProjectDependencies(projectDir),
 		getProjectDescription(projectDir),
 	]);
 
 	await writeProjectTsconfig(
-		projectsEntryPoints, projectDependencies, projectDescription, projectDir
+		projectsEntryPoints,
+		projectDependencies,
+		projectDescription,
+		projectDir
 	);
 }

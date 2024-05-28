@@ -13,7 +13,10 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  * }
  */
 export default function getProjectDescription(projectDir = '.') {
-	const {main, name, version} = projectScopeRequire('./package.json', projectDir);
+	const {main, name, version} = projectScopeRequire(
+		'./package.json',
+		projectDir
+	);
 
 	return {main, name, version};
 }

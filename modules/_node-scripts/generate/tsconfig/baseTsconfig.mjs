@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 export default {
 	compilerOptions: {
 		allowSyntheticDefaultImports: true,
@@ -10,6 +15,6 @@ export default {
 		moduleResolution: 'node',
 		sourceMap: false,
 		strict: true,
-		target: 'es2020'
-	}
+		target: 'es2020',
+	},
 };

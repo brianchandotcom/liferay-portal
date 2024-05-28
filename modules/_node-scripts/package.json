@@ -3,13 +3,26 @@
 		"node-scripts": "./bin.js"
 	},
 	"dependencies": {
+		"@typescript-eslint/parser": "^7.8.0",
+		"babel-eslint": "^10.1.0",
+		"cross-env": "^7.0.3",
 		"esbuild": "^0.20.2",
-		"resolve": "^1.19.0"
+		"eslint": "7.32.0",
+		"execa": "^9.1.0",
+		"fast-glob": "^3.3.2",
+		"glob": "^10.3.12",
+		"globby": "^14.0.1",
+		"minimist": "^1.2.8",
+		"prettier": "^3.2.5",
+		"resolve": "^1.19.0",
+		"stylelint": "13.2.0",
+		"typescript": "^5.4.5"
 	},
+	"exports": "./index.js",
 	"name": "@liferay/node-scripts",
 	"scripts": {
-		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts format"
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
 	},
 	"version": "1.0.0"
 }

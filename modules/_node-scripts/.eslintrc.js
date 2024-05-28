@@ -12,7 +12,7 @@ config.rules = {
 	'@liferay/no-dynamic-require': 'off',
 	'@liferay/no-extraneous-dependencies': [
 		'error',
-		['child_process', 'crypto', 'fs', 'module', 'path'],
+		['child_process', 'crypto', 'fs', 'module', 'path', 'os', 'url'],
 	],
 	'no-console': 'off',
 };

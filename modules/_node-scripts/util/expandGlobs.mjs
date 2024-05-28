@@ -16,7 +16,11 @@ const DEFAULT_OPTIONS = {
  * Given a list of glob patterns and a list of ignore patterns, returns a list
  * of matching files, searching in the current directory.
  */
-export default async function expandGlobs(matchGlobs, ignoreGlobs = [], options = {}) {
+export default async function expandGlobs(
+	matchGlobs,
+	ignoreGlobs = [],
+	options = {}
+) {
 	const {baseDir, maxDepth, type} = {
 		...DEFAULT_OPTIONS,
 		...options,

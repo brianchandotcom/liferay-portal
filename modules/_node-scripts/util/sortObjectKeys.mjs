@@ -8,15 +8,15 @@ export default function sortObjectKeys(object) {
 
 	const sortedKeys = Object.keys(object).sort();
 
-	sortedKeys.forEach(key => {
+	sortedKeys.forEach((key) => {
 		delete object[key];
 	});
 
-	sortedKeys.forEach(key => {
+	sortedKeys.forEach((key) => {
 		object[key] = objectCopy[key];
 	});
 
-	sortedKeys.forEach(key => {
+	sortedKeys.forEach((key) => {
 		if (typeof object[key] === 'object') {
 			sortObjectKeys(object[key]);
 		}

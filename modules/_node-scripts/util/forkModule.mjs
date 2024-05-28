@@ -24,13 +24,15 @@ export default async function forkModule(modulePath, params, options) {
 
 			if (code === 0) {
 				resolve();
-			} else if (code !== null) {
+			}
+			else if (code !== null) {
 				reject(
 					new Error(
 						`Error: ${modulePath} finished with status ${code}`
 					)
 				);
-			} else {
+			}
+			else {
 				reject(
 					new Error(
 						`Error: ${modulePath} finished due to signal ${signal}`
@@ -41,5 +43,4 @@ export default async function forkModule(modulePath, params, options) {
 
 		child.on('error', reject);
 	});
-
 }

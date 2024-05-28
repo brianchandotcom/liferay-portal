@@ -26,7 +26,8 @@ export default async function writeTimings(start, endConfig) {
 
 		try {
 			await fs.access(csvFilePath, constants.F_OK);
-		} catch (error) {
+		}
+		catch (error) {
 			if (error.code !== 'ENOENT') {
 				throw error;
 			}

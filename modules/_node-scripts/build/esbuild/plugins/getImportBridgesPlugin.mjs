@@ -42,9 +42,8 @@ export default function getImportBridgesPlugin(
 
 					const {moduleName, type} = decodeBridgePath(loadPath);
 
-					const {external, webContextPath} = globalImports[
-						moduleName
-					];
+					const {external, webContextPath} =
+						globalImports[moduleName];
 
 					const contents = getImportBridgeCode(
 						globalImports,
@@ -79,7 +78,8 @@ function getImportBridgeCode(
 
 	if (globalImports[moduleName]?.external === false) {
 		hasDefault = false;
-	} else {
+	}
+	else {
 		const symbols = getExportedSymbols(overridenPackageSymbols, moduleName);
 
 		hasDefault = !!symbols['default'];

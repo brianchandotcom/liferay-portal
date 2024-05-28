@@ -17,7 +17,8 @@ function invokeHandlers() {
 	for (const handler of handlers) {
 		try {
 			handler();
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(
 				'Exception thrown while running onExit handler:',
 				error

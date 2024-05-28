@@ -19,7 +19,8 @@ async function doRunEsbuild(esbuildesbuildConfig, configName) {
 
 	try {
 		await esbuild.build(esbuildesbuildConfig);
-	} catch (error) {
+	}
+	catch (error) {
 		throw new Error(`Esbuild command failed: ${error}`);
 	}
 

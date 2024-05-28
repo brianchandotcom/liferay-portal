@@ -50,6 +50,8 @@ public interface DLFileShortcutService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public long countByGroupId(long groupId);
+
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -58,6 +60,10 @@ public interface DLFileShortcutService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileShortcut> getGroupFileShortcuts(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileShortcut> getGroupFileShortcuts(
+		long groupId, int start, int end);
 
 	/**
 	 * Returns the OSGi service identifier.

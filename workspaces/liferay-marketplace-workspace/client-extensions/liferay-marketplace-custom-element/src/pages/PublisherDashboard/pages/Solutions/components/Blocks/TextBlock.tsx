@@ -24,7 +24,7 @@ const TextBlock: React.FC<BlockTypeProps<TextBlockType>> = ({
 				maxLength={170}
 				name="title"
 				onChange={(event) => onChange({title: event.target.value})}
-				placeholder="Enter title header"
+				placeholder="Enter title"
 				type="text"
 				value={title}
 			/>

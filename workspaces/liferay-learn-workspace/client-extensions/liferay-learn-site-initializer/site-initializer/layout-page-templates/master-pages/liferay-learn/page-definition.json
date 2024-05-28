@@ -791,8 +791,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/cloud"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/cloud"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -939,8 +955,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/commerce"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/commerce"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -1087,8 +1119,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/content-management-system"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/content-management-system"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -1235,8 +1283,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/development-and-tooling"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/development-and-tooling"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -1382,8 +1446,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/digital-asset-management"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/digital-asset-management"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -1529,8 +1609,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -1676,8 +1772,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/integration"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/integration"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -1823,8 +1935,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/personalization"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/personalization"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -1970,8 +2098,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/platform"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/platform"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -2117,8 +2261,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/search"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/search"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -2264,8 +2424,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/security"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/security"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -2411,8 +2587,24 @@
 																	"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																	"fragmentLink": {
 																		"href": {
-																			"value_i18n": {
-																				"en_US": "/capabilities/sites"
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/capabilities/sites"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "Liferay Learn"
+																						}
+																					]
+																				}
 																			}
 																		}
 																	},
@@ -2619,8 +2811,15 @@
 																			"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																			"fragmentLink": {
 																				"href": {
-																					"value_i18n": {
-																						"en_US": "/w/analytics-cloud/index"
+																					"defaultFragmentInlineValue": {
+																						"value": "http://localhost:8080/web/liferay-learn/w/analytics-cloud/index"
+																					},
+																					"mapping": {
+																						"fieldKey": "JournalArticle_displayPageURL",
+																						"itemReference": {
+																							"className": "com.liferay.journal.model.JournalArticle",
+																							"classPK": 36104
+																						}
 																					}
 																				}
 																			},
@@ -2766,8 +2965,15 @@
 																			"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																			"fragmentLink": {
 																				"href": {
-																					"value_i18n": {
-																						"en_US": "/w/commerce/index"
+																					"defaultFragmentInlineValue": {
+																						"value": "http://localhost:8080/web/liferay-learn/w/commerce/index"
+																					},
+																					"mapping": {
+																						"fieldKey": "JournalArticle_displayPageURL",
+																						"itemReference": {
+																							"className": "com.liferay.journal.model.JournalArticle",
+																							"classPK": 38387
+																						}
 																					}
 																				}
 																			},
@@ -2913,8 +3119,15 @@
 																			"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																			"fragmentLink": {
 																				"href": {
-																					"value_i18n": {
-																						"en_US": "/w/dxp/index"
+																					"defaultFragmentInlineValue": {
+																						"value": "http://localhost:8080/web/liferay-learn/w/dxp/index"
+																					},
+																					"mapping": {
+																						"fieldKey": "JournalArticle_displayPageURL",
+																						"itemReference": {
+																							"className": "com.liferay.journal.model.JournalArticle",
+																							"classPK": 49939
+																						}
 																					}
 																				}
 																			},
@@ -3076,8 +3289,15 @@
 																			"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																			"fragmentLink": {
 																				"href": {
-																					"value_i18n": {
-																						"en_US": "/w/liferay-cloud/index"
+																					"defaultFragmentInlineValue": {
+																						"value": "http://localhost:8080/web/liferay-learn/w/liferay-cloud/index"
+																					},
+																					"mapping": {
+																						"fieldKey": "JournalArticle_displayPageURL",
+																						"itemReference": {
+																							"className": "com.liferay.journal.model.JournalArticle",
+																							"classPK": 68908
+																						}
 																					}
 																				}
 																			},
@@ -3223,8 +3443,15 @@
 																			"customCSS": ".[$FRAGMENT_CLASS$]:hover{\nbackground-color: var(--color-action-primary-hover-10, #EDF3FE) !important;\n}",
 																			"fragmentLink": {
 																				"href": {
-																					"value_i18n": {
-																						"en_US": "/w/reference/index"
+																					"defaultFragmentInlineValue": {
+																						"value": "http://localhost:8080/web/liferay-learn/w/reference/index"
+																					},
+																					"mapping": {
+																						"fieldKey": "JournalArticle_displayPageURL",
+																						"itemReference": {
+																							"className": "com.liferay.journal.model.JournalArticle",
+																							"classPK": 70271
+																						}
 																					}
 																				}
 																			},

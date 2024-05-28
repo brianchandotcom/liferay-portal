@@ -89,15 +89,23 @@ public class OpenAPIResourceImpl {
 
 			add(AccountAddressChannelResourceImpl.class);
 
+			add(CategoryDisplayPageResourceImpl.class);
+
 			add(ChannelResourceImpl.class);
 
 			add(ChannelAccountResourceImpl.class);
+
+			add(DefaultCategoryDisplayPageResourceImpl.class);
+
+			add(DefaultProductDisplayPageResourceImpl.class);
 
 			add(OrderTypeResourceImpl.class);
 
 			add(PaymentMethodGroupRelOrderTypeResourceImpl.class);
 
 			add(PaymentMethodGroupRelTermResourceImpl.class);
+
+			add(ProductDisplayPageResourceImpl.class);
 
 			add(ShippingFixedOptionOrderTypeResourceImpl.class);
 

@@ -47,7 +47,6 @@ export default function AttributeFields({
 	type,
 	value,
 }: IProps) {
-	const dataTestId = `testId_${index}`;
 	const nameId = `${portletNamespace}name_${index}`;
 	const typeId = `${portletNamespace}type_${index}`;
 	const valueId = `${portletNamespace}value_${index}`;
@@ -79,7 +78,7 @@ export default function AttributeFields({
 					<ClayInput
 						aria-describedby={`${nameId}fieldFeedback`}
 						aria-required={true}
-						data-testid={dataTestId}
+						data-testid={`testId_${index}`}
 						defaultValue={name}
 						disabled={disabled}
 						id={nameId}

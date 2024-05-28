@@ -22,15 +22,13 @@ public class LCPProjectConstants {
 	private static final Map<String, String> _locations = HashMapBuilder.put(
 		"AS1", LCPProject.Cluster.AS1.toString()
 	).put(
-		"DEV", LCPProject.Cluster.DEV.toString()
-	).put(
 		"EU2", LCPProject.Cluster.EU2.toString()
 	).put(
 		"EU3", LCPProject.Cluster.EU3.toString()
 	).put(
-		"SA", LCPProject.Cluster.SA.toString()
+		"INTERNAL", LCPProject.Cluster.INTERNAL.toString()
 	).put(
-		"UAT", LCPProject.Cluster.UAT.toString()
+		"SA", LCPProject.Cluster.SA.toString()
 	).put(
 		"US", LCPProject.Cluster.US.toString()
 	).build();

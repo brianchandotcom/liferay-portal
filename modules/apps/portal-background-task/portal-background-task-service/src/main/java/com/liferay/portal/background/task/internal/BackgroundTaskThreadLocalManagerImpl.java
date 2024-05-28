@@ -41,13 +41,13 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 	@Override
 	public void deserializeThreadLocals(
-		Map<String, Serializable> taskContextMap, long companyId) {
+		long companyId, Map<String, Serializable> taskContextMap) {
 
 		Map<String, Serializable> threadLocalValues =
 			(Map<String, Serializable>)taskContextMap.get(
 				KEY_THREAD_LOCAL_VALUES);
 
-		setThreadLocalValues(threadLocalValues, companyId);
+		setThreadLocalValues(companyId, threadLocalValues);
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 	@Override
 	public void setThreadLocalValues(
-		Map<String, Serializable> threadLocalValues, long companyId) {
+		long companyId, Map<String, Serializable> threadLocalValues) {
 
 		if (MapUtil.isEmpty(threadLocalValues)) {
 			return;

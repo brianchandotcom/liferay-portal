@@ -134,7 +134,8 @@ public class TestrayProject {
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"components", TestrayComponent.FIELD_NAMES, filterString, -1, 25);
+				"components", TestrayComponent.FIELD_NAMES, filterString, -1,
+				25);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				_testrayComponents.add(
@@ -158,8 +159,8 @@ public class TestrayProject {
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"productversions", TestrayProductVersion.FIELD_NAMES, filterString, 1,
-				1);
+				"productversions", TestrayProductVersion.FIELD_NAMES,
+				filterString, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
@@ -183,8 +184,8 @@ public class TestrayProject {
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"productVersions", TestrayProductVersion.FIELD_NAMES, filterString, 1,
-				1);
+				"productVersions", TestrayProductVersion.FIELD_NAMES,
+				filterString, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;

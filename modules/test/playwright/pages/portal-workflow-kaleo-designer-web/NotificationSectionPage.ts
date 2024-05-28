@@ -21,7 +21,7 @@ export class NotificationSectionPage {
 	readonly inputScriptLanguage: Locator;
 	readonly page: Page;
 
-	constructor(page: Page, index: number) {
+	constructor(page: Page, index: number = 0) {
 		this.inputActionType = page.locator('#action-type').nth(index);
 		this.inputNotificationDescription = page
 			.locator('#notificationDescription')
@@ -141,6 +141,8 @@ export class NotificationSectionPage {
 			await this.inputNotificationTypeUser.check();
 		}
 
+		await this.inputRecipientType.click();
+
 		await this.inputRecipientType.selectOption(recipientType);
 
 		if (recipientType === 'role') {
@@ -177,5 +179,11 @@ export class NotificationSectionPage {
 				(recipientTypeData as ScriptedRecipient)?.script
 			);
 		}
+	}
+
+	async getRecipientTypeTypeOption(optionValue: string) {
+		return await this.page.$(
+			`#recipient-type option[value="${optionValue}"]`
+		);
 	}
 }

@@ -6,19 +6,17 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ActionReassignmentPage} from './ActionReassignmentPage';
-import {NotificationPage} from './NotificationPage';
 import {NotificationSectionPage} from './NotificationSectionPage';
 
 export class TimerPage {
-	notificationSectionPage: NotificationSectionPage;
 	actionReassignmentPage: ActionReassignmentPage;
 	addActionButton: Locator;
+	notificationSectionPage: NotificationSectionPage;
 	readonly inputTimerDescription: Locator;
 	readonly inputTimerDuration: Locator;
 	readonly inputTimerName: Locator;
 	readonly inputTimerRecurrence: Locator;
 	readonly inputTimerScale: Locator;
-	readonly notificationPage: NotificationPage;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -30,7 +28,6 @@ export class TimerPage {
 		this.inputTimerName = page.locator('#timerName');
 		this.inputTimerRecurrence = page.getByLabel('Recurrence');
 		this.inputTimerScale = page.locator('#scale');
-		this.notificationPage = new NotificationPage(page);
 		this.page = page;
 	}
 

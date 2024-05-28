@@ -79,7 +79,7 @@ test.afterEach(async ({apiHelpers, scriptManagementPage}) => {
 
 test('cannot see scripted recipient option when script management configuration is disabled', async ({
 	nodePropertiesSidebarPage,
-	notificationPage,
+	notificationSectionPage,
 	processBuilderPage,
 	scriptManagementPage,
 }) => {
@@ -96,14 +96,16 @@ test('cannot see scripted recipient option when script management configuration 
 	await nodePropertiesSidebarPage.addNotificationButton.click();
 
 	expect(
-		await notificationPage.getRecipientTypeTypeOption('scriptedRecipient')
+		await notificationSectionPage.getRecipientTypeTypeOption(
+			'scriptedRecipient'
+		)
 	).toBeNull();
 });
 
 test('cannot save a workflow definition with a scripted recipient notification when script management configuration is disabled', async ({
 	diagramViewPage,
 	nodePropertiesSidebarPage,
-	notificationPage,
+	notificationSectionPage,
 	page,
 	processBuilderPage,
 	scriptManagementPage,
@@ -120,7 +122,8 @@ test('cannot save a workflow definition with a scripted recipient notification w
 
 	await nodePropertiesSidebarPage.addNotificationButton.click();
 
-	await notificationPage.fillNotificationFields(
+	await notificationSectionPage.fillNotificationSectionFields(
+		false,
 		scriptedRecipientNotification
 	);
 

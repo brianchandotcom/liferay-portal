@@ -50,7 +50,7 @@ export class NodePropertiesSidebarPage {
 			'a.c-link:has-text("Asset Creator")'
 		);
 		this.nodeLabelInput = page.locator('#nodeLabel');
-		this.notificationPage = new NotificationSectionPage(page, 0);
+		this.notificationPage = new NotificationSectionPage(page);
 		this.page = page;
 		this.sidebarBackButton = page
 			.locator('div.sidebar-header')

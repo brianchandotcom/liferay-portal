@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -79,7 +80,9 @@ public class
 
 		_layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
@@ -101,8 +104,10 @@ public class
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -110,8 +115,10 @@ public class
 
 		targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNotNull(targetLayoutPageTemplateEntry);
 	}
@@ -132,8 +139,10 @@ public class
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -152,8 +161,10 @@ public class
 
 		LayoutPageTemplateEntry targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Assert.assertNull(targetLayoutPageTemplateEntry);
 
@@ -163,12 +174,16 @@ public class
 
 		targetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), _getName(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getName(), LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		LayoutPageTemplateEntry secondTargetLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				_group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				StringUtil.appendParentheticalSuffix(
 					_layoutPageTemplateEntry.getName(),
 					LanguageUtil.get(LocaleUtil.getSiteDefault(), "copy") +

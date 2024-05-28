@@ -19,6 +19,13 @@ cleanCopyLibs {
 	enabled = false
 }
 
+configurations {
+	portalTestSnapshot {
+		exclude group: "com.liferay.portal", module: "com.liferay.portal.impl"
+		exclude group: "com.liferay.portal", module: "com.liferay.portal.kernel"
+	}
+}
+
 dependencies {
 	api group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "6.4.0"
 	api group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"

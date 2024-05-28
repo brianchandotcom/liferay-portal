@@ -70,7 +70,8 @@ export async function navigateToSitePage(page, siteName, pageName) {
 			`${liferayConfig.environment.baseUrl}/web/${siteNameURL}/` +
 				`${pageNameURL}`);
 	} else {
-		await page.goto(`${liferayConfig.environment.baseUrl}/${pageNameURL}`);
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web/guest/${pageNameURL}`);
 	}
 };
 

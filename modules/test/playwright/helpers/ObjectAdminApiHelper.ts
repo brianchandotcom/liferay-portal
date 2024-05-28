@@ -89,10 +89,12 @@ export class ObjectAdminApiHelper {
 		objectFields,
 		objectFolderExternalReferenceCode,
 		status,
+		titleObjectFieldName,
 	}: {
 		objectFields?: ObjectField[];
 		objectFolderExternalReferenceCode?: string;
 		status: {code: number};
+		titleObjectFieldName?: string;
 	}) {
 		const objectDefinitionExternalReferenceCode =
 			'ObjectDefinition' + getRandomInt();
@@ -126,6 +128,7 @@ export class ObjectAdminApiHelper {
 			},
 			scope: 'company',
 			status,
+			titleObjectFieldName: titleObjectFieldName ?? 'id',
 		};
 
 		if (objectFolderExternalReferenceCode) {

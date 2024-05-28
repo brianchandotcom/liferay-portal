@@ -91,7 +91,7 @@ test.describe('Manage object entries through page templates', () => {
 		}
 
 		await viewObjectEntriesPage.goto(objectDefinition2.id);
-		await viewObjectEntriesPage.addObjectEntryButton.click();
+		await viewObjectEntriesPage.clickAddObjectEntry();
 		await page.getByPlaceholder('Search', {exact: true}).click();
 
 		objectEntries.forEach((objectEntryId) => {
@@ -475,7 +475,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
-		await viewObjectEntriesPage.addObjectEntryButton.click();
+		await viewObjectEntriesPage.clickAddObjectEntry();
 
 		await viewObjectEntriesPage.selectFileFromDocumentsAndMedia();
 

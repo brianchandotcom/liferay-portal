@@ -11,6 +11,7 @@ export class ViewObjectEntriesPage {
 	readonly addObjectEntryButton: Locator;
 	readonly backButton: Locator;
 	readonly duplicateEntryErrorMessage: Locator;
+	readonly editObjectEntryForm: Locator;
 	readonly page: Page;
 	readonly richTextIFrame: FrameLocator;
 	readonly richTextInput: Locator;
@@ -27,6 +28,7 @@ export class ViewObjectEntriesPage {
 		this.duplicateEntryErrorMessage = page.getByText(
 			'Error:The field values are already in use. Please choose unique values.'
 		);
+		this.editObjectEntryForm = page.locator('[id="editObjectEntry"]');
 		this.page = page;
 		this.richTextIFrame = page
 			.getByRole('application', {
@@ -47,6 +49,11 @@ export class ViewObjectEntriesPage {
 	async assertErrorWithDuplicateEntryValue() {
 		await this.duplicateEntryErrorMessage.waitFor();
 		await expect(this.duplicateEntryErrorMessage).toBeVisible();
+	}
+
+	async clickAddObjectEntry() {
+		await this.addObjectEntryButton.click();
+		await this.editObjectEntryForm.waitFor({state: 'visible'});
 	}
 
 	async fillObjectEntry({

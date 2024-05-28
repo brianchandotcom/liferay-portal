@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal;
 
-import org.junit.AssumptionViolatedException;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -26,9 +25,6 @@ public class OpenSearchTestRule implements TestRule {
 				if (isUnitTestEnabled()) {
 					base.evaluate();
 				}
-
-				throw new AssumptionViolatedException(
-					"Module unit tests are not enabled");
 			}
 
 		};

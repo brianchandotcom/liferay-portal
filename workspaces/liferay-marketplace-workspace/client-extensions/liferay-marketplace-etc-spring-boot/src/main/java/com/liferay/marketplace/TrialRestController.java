@@ -288,7 +288,7 @@ public class TrialRestController extends BaseRestController {
 			new NotificationQueueEntry();
 
 		notificationQueueEntry.setBody(
-			notificationTemplate.getBody(
+			() -> notificationTemplate.getBody(
 			).get(
 				"en_US"
 			).replaceAll(
@@ -308,7 +308,7 @@ public class TrialRestController extends BaseRestController {
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
 		notificationQueueEntry.setRecipients(
-			new Object[] {
+			() -> new Object[] {
 				new HashMapBuilder<String, Object>().put(
 					"from", jsonObject.getString("from")
 				).put(
@@ -324,11 +324,11 @@ public class TrialRestController extends BaseRestController {
 			});
 
 		notificationQueueEntry.setSubject(
-			notificationTemplate.getSubject(
+			() -> notificationTemplate.getSubject(
 			).get(
 				"en_US"
 			));
-		notificationQueueEntry.setType(notificationTemplate.getType());
+		notificationQueueEntry.setType(notificationTemplate::getType);
 
 		notificationQueueEntryResource.postNotificationQueueEntry(
 			notificationQueueEntry);

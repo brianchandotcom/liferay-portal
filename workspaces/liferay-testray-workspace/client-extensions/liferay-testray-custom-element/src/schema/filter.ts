@@ -385,6 +385,11 @@ const filterSchema = {
 				name: 'buildToCaseResult/routineId',
 				type: 'multiselect',
 			}),
+			overrides(baseFilters.team, {
+				name:
+					'caseToCaseResult/componentToCases/r_teamToComponents_c_teamId',
+				type: 'multiselect',
+			}),
 			overrides(baseFilters.assignee, {
 				name: 'userId',
 			}),

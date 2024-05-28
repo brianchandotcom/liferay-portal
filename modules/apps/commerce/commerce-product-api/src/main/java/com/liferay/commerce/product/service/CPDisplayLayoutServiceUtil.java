@@ -49,6 +49,12 @@ public class CPDisplayLayoutServiceUtil {
 		return getService().fetchCPDisplayLayout(cpDisplayLayoutId);
 	}
 
+	public static CPDisplayLayout getCPDisplayLayout(long cpDisplayLayoutId)
+		throws PortalException {
+
+		return getService().getCPDisplayLayout(cpDisplayLayoutId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -28,14 +28,21 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
@@ -47,7 +54,10 @@ import com.liferay.taglib.util.BodyBottomTag;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -169,6 +179,17 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (_hasResourcePermission(
+				ActionKeys.UPDATE, themeDisplay.getScopeGroupId(),
+				httpServletRequest.getParameter("p_l_id"), _resourceNames)) {
+
+			return true;
+		}
+
 		InfoItemReference infoItemReference = _getInfoItemReference(
 			httpServletRequest);
 
@@ -201,10 +222,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			return false;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		try {
 			if (!AnalyticsReportsUtil.isShowAnalyticsReportsPanel(
@@ -306,6 +323,42 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		}
 
 		return infoItemReference;
+	}
+
+	private boolean _hasResourcePermission(
+		String actionId, long groupId, String plid,
+		Map<String, List<String>> resourceNames) {
+
+		if (Validator.isNotNull(plid)) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			List<PortletPreferences> portletPreferencesList =
+				_portletPreferencesLocalService.getPortletPreferencesByPlid(
+					GetterUtil.getLong(plid));
+
+			for (PortletPreferences portletPreferences :
+					portletPreferencesList) {
+
+				String portletId = portletPreferences.getPortletId();
+
+				for (Map.Entry<String, List<String>> entry :
+						resourceNames.entrySet()) {
+
+					if (portletId.contains(entry.getKey())) {
+						for (String resourceName : entry.getValue()) {
+							if (permissionChecker.hasPermission(
+									groupId, resourceName, "0", actionId)) {
+
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private void _processBodyBottomTagBody(PageContext pageContext) {
@@ -423,9 +476,28 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	private String _portletNamespace;
 
 	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
 	private PortletURLFactory _portletURLFactory;
 
 	@Reference
 	private ReactRenderer _reactRenderer;
+
+	private final Map<String, List<String>> _resourceNames =
+		HashMapBuilder.<String, List<String>>put(
+			"com_liferay_blogs_web_portlet_BlogsPortlet",
+			Arrays.asList("com.liferay.blogs.model.BlogsEntry")
+		).put(
+			"com_liferay_document_library_web_portlet_DLPortlet",
+			Arrays.asList(
+				"com.liferay.document.library",
+				"com.liferay.document.library.kernel.model.DLFileEntry")
+		).put(
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet",
+			Arrays.asList(
+				"com.liferay.journal",
+				"com.liferay.journal.model.JournalArticle")
+		).build();
 
 }

@@ -62,7 +62,6 @@ const fetcher = async <T = any>(
 	const lastTimestamp = sessionStorage.getItem('lastTimestamp')
 		? parseInt(sessionStorage.getItem('lastTimestamp') as string, 10)
 		: 0;
-	const tenMinutesInMillis = 10 * 60 * 1000;
 
 	const response = await fetch(changeResource(resource), {
 		...options,
@@ -73,7 +72,7 @@ const fetcher = async <T = any>(
 		},
 	});
 
-	if (currentTimestamp - lastTimestamp > tenMinutesInMillis) {
+	if (currentTimestamp - lastTimestamp > 10 * 60 * 1000) {
 		Liferay.Session.reset();
 	}
 

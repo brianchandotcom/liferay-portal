@@ -17,6 +17,9 @@ type TCatalog = {
 type TProduct = {
 	active?: boolean;
 	catalogId: number;
+	description?: {
+		[key: string]: string;
+	};
 	name?: {
 		[key: string]: string;
 	};
@@ -28,8 +31,24 @@ type TProduct = {
 	productSpecifications?: any[];
 	productStatus?: number;
 	productType?: string;
+	productVirtualSettings?: TProductVirtualSettings;
+	shortDescription?: {
+		[key: string]: string;
+	};
 	skus?: TSku[];
 	version?: number;
+};
+
+type TProductVirtualSettings = {
+	activationStatus?: number;
+	duration?: number;
+	maxUsages?: number;
+	sampleURL?: string;
+	termsOfUseContent?: {
+		[key: string]: string;
+	};
+	url?: string;
+	useSample?: boolean;
 };
 
 type TRelatedProduct = {
@@ -42,7 +61,9 @@ type TRelatedProduct = {
 
 type TSku = {
 	cost: number;
+	gtin?: string;
 	id?: number;
+	manufacturerPartNumber?: string;
 	price: number;
 	published: boolean;
 	purchasable: boolean;

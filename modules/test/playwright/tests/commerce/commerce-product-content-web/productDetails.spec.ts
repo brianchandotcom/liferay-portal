@@ -9,7 +9,6 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -17,6 +16,110 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	loginTest()
 );
+
+test('CanViewSingleSkuVirtualProductDetailPage', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	productDetailsPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'View product details',
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'View product details',
+		siteGroupId: site.id,
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'View product details',
+	});
+
+	const virtualProduct =
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			description: {en_US: 'Full description'},
+			name: {en_US: 'Virtual'},
+			productType: 'virtual',
+			productVirtualSettings: {
+				activationStatus: 1,
+				duration: 4,
+				maxUsages: 4,
+				sampleURL: 'http://www.google.com',
+				useSample: true,
+			},
+			shortDescription: {en_US: 'Short description'},
+			skus: [
+				{
+					cost: 0,
+					gtin: 'GTIN1',
+					manufacturerPartNumber: 'mpn',
+					price: 0,
+					published: true,
+					purchasable: true,
+					sku: 'SkuVirtual',
+				},
+			],
+		});
+
+	const basePriceListId =
+		await apiHelpers.headlessCommerceAdminPricing.getBasePriceListId(
+			catalog.id
+		);
+
+	await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+		price: 100,
+		priceListId: basePriceListId.items[0].id,
+		skuId: virtualProduct.skus[0].id,
+	});
+
+	const basePromoPriceListId =
+		await apiHelpers.headlessCommerceAdminPricing.getBasePromoPriceListId(
+			catalog.id
+		);
+
+	await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+		price: 50,
+		priceListId: basePromoPriceListId.items[0].id,
+		skuId: virtualProduct.skus[0].id,
+	});
+
+	await apiHelpers.headlessCommerceAdminPricing.postDiscount();
+
+	await applicationsMenuPage.goToSite('View product details');
+
+	await commerceLayoutsPage.goToPages(false);
+
+	await commerceLayoutsPage.createWidgetPage('View product details');
+
+	await page.goto(`/web/${site.name}`);
+
+	await productDetailsPage.addProductDetailsWidget();
+
+	await page.goto(`/web/${site.name}/p/virtual`);
+
+	await expect(page.getByText('SkuVirtual')).toBeVisible();
+	await expect(page.getByText('mpn', {exact: true})).toBeVisible();
+	await expect(page.getByText('GTIN1')).toBeVisible();
+	await expect(page.getByText('Short description')).toBeVisible();
+
+	await expect(page.getByText('$ 100.00')).toBeVisible();
+	await expect(page.getByText('$ 100.00')).toHaveClass(
+		/price-value-inactive/
+	);
+	await expect(page.getByText('$ 50.00')).toBeVisible();
+	await expect(page.getByText('$ 50.00')).toHaveClass(/price-value-promo/);
+	await expect(
+		page.getByText('Full description', {exact: true})
+	).toBeVisible();
+	await expect(
+		page.getByRole('link', {name: 'Download Sample File'})
+	).toBeVisible();
+});
 
 test('View product details page', async ({
 	apiHelpers,

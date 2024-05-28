@@ -301,6 +301,12 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'price-entry':
+					await this.headlessCommerceAdminPricing.deletePriceEntry(
+						item.id
+					);
+
+					break;
 				case 'product':
 					await this.headlessCommerceAdminCatalog.deleteProduct(
 						item.id

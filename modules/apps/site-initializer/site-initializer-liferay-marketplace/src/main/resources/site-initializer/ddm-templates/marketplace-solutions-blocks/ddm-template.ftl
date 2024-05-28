@@ -163,23 +163,17 @@
 
 <#if blocks?has_content>
 	<#list blocks as block>
-		<#if block.type == "text-block">
-			<div class="block-container">
-				<div class="block-content">
-					<div class="align-items-center container d-flex flex-column">
+		<div class="block-container">
+			<div class="block-content">
+				<div class="align-items-center container d-flex flex-column">
+					<#if block.type == "text-block">
 						<@blockHeader
 							description=block.content.description
 							title=block.content.title
 						/>
-					</div>
-				</div>
-			</div>
-		</#if>
+					</#if>
 
-		<#if block.type == "text-images-block">
-			<div class="block-container">
-				<div class="block-content">
-					<div class="align-items-center container d-flex flex-column">
+					<#if block.type == "text-images-block">
 						<div class="d-flex">
 							<div class="mr-5">
 								<@blockHeader
@@ -200,15 +194,9 @@
 								/>
 							</#if>
 						</div>
-					</div>
-				</div>
-			</div>
-		</#if>
+					</#if>
 
-		<#if block.type == "text-video-block">
-			<div class="block-container">
-				<div class="block-content">
-					<div class="align-items-center container d-flex flex-column">
+					<#if block.type == "text-video-block">
 						<div class="d-flex">
 							<div class="mr-5">
 								<@blockHeader
@@ -219,9 +207,9 @@
 
 							<@videoPreview videoUrl=block.content.videoUrl />
 						</div>
-					</div>
+					</#if>
 				</div>
 			</div>
-		</#if>
+		</div>
 	</#list>
 </#if>

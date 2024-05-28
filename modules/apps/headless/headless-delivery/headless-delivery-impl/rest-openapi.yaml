@@ -6370,6 +6370,14 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
                   name: restrictFields
                   schema:
                       type: string
@@ -12560,6 +12568,14 @@ paths:
                   name: fields
                   schema:
                       type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
                 - in: query
                   name: restrictFields
                   schema:

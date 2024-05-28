@@ -143,7 +143,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 								</span>
 							</c:when>
 							<c:otherwise>
-								<p class="mb-0" data-qa-id="commerce-order-account-entry-name"><%= HtmlUtil.escape(accountEntry.getName()) %></p>
+								<p class="mb-0" data-qa-id="commerceOrderAccountEntryName"><%= HtmlUtil.escape(accountEntry.getName()) %></p>
 								<p class="mb-0">#<%= accountEntry.getAccountEntryId() %></p>
 							</c:otherwise>
 						</c:choose>

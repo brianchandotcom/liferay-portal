@@ -39,7 +39,7 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 								</span>
 							</c:when>
 							<c:otherwise>
-								<p class="mb-0" data-qa-id="commerce-return-account-entry-name"><%= HtmlUtil.escape(accountEntry.getName()) %></p>
+								<p class="mb-0" data-qa-id="commerceReturnAccountEntryName"><%= HtmlUtil.escape(accountEntry.getName()) %></p>
 								<p class="mb-0">#<%= accountEntry.getAccountEntryId() %></p>
 							</c:otherwise>
 						</c:choose>
@@ -81,14 +81,14 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "order-id") %>'
 					>
-						<p class="mb-0" data-qa-id="commerce-return-order-id">#<%= commerceOrder.getCommerceOrderId() %></p>
+						<p class="mb-0" data-qa-id="commerceReturnOrderId">#<%= commerceOrder.getCommerceOrderId() %></p>
 					</commerce-ui:info-box>
 
 					<commerce-ui:info-box
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "order-date") %>'
 					>
-						<p class="mb-0" data-qa-id="commerce-return-order-date">
+						<p class="mb-0" data-qa-id="commerceReturnOrderDate">
 							<%= commerceReturnEditDisplayContext.getDateTimeFormatted(commerceOrder.getOrderDate()) %>
 						</p>
 					</commerce-ui:info-box>
@@ -97,7 +97,7 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "channel") %>'
 					>
-						<p class="mb-0" data-qa-id="commerce-return-channel-name"><%= HtmlUtil.escape(commerceReturn.getChannelName()) %></p>
+						<p class="mb-0" data-qa-id="commerceReturnChannelName"><%= HtmlUtil.escape(commerceReturn.getChannelName()) %></p>
 					</commerce-ui:info-box>
 				</div>
 
@@ -106,14 +106,14 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "payment-method") %>'
 					>
-						<p class="mb-0" data-qa-id="commerce-return-payment-method"><%= HtmlUtil.escape(commerceOrder.getCommercePaymentMethodKey()) %></p>
+						<p class="mb-0" data-qa-id="commerceReturnPaymentMethod"><%= HtmlUtil.escape(commerceOrder.getCommercePaymentMethodKey()) %></p>
 					</commerce-ui:info-box>
 
 					<commerce-ui:info-box
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "return-date") %>'
 					>
-						<p class="mb-0" data-qa-id="commerce-return-date">
+						<p class="mb-0" data-qa-id="commerceReturnDate">
 							<%= commerceReturnEditDisplayContext.getDateTimeFormatted(commerceReturn.getCreateDate()) %>
 						</p>
 					</commerce-ui:info-box>

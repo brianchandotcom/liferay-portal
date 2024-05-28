@@ -35,8 +35,8 @@ export class CommerceMiniCartPage {
 			exact: true,
 			name: 'Edit',
 		});
-		this.cartItemActionsButton = page.getByTestId('cart-item-actions');
-		this.miniCartButton = page.getByTestId('mini-cart-button');
+		this.cartItemActionsButton = page.getByTestId('cartItemActions');
+		this.miniCartButton = page.getByTestId('miniCartButton');
 		this.miniCartButtonClose = page.locator('.mini-cart-close');
 		this.miniCartSaveButton = page.getByRole('button', {
 			exact: true,
@@ -45,9 +45,7 @@ export class CommerceMiniCartPage {
 		this.miniCartUnitOfMeasureSelector = page.locator(
 			'select[name="minicart-uom-selector"]'
 		);
-		this.quickAddToCartButton = page.getByTestId(
-			'quick-add-to-cart-button'
-		);
+		this.quickAddToCartButton = page.getByTestId('quickAddToCartButton');
 		this.quickAddToCartSku = (sku) =>
 			page.getByRole('menuitem', {name: sku});
 		this.searchProductsInput = page.getByPlaceholder('Search Products');

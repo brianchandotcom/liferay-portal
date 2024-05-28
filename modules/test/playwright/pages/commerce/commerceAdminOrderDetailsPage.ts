@@ -12,9 +12,9 @@ export class CommerceAdminOrderDetailsPage {
 
 	constructor(page: Page) {
 		this.commerceOrderAccountEntryName = page.getByTestId(
-			'commerce-order-account-entry-name'
+			'commerceOrderAccountEntryName'
 		);
-		this.headerDetailsTitle = page.getByTestId('header-details-title');
+		this.headerDetailsTitle = page.getByTestId('headerDetailsTitle');
 		this.page = page;
 	}
 }

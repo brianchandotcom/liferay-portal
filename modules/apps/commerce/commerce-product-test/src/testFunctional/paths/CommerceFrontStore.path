@@ -282,7 +282,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_IN_STOCK_QUANTITY</td>
-	<td>//span[(@data-qa-id='in-stock-quantity') and (contains(text(),'${key_inStockQuantity}'))]</td>
+	<td>//span[(@data-qa-id='inStockQuantity') and (contains(text(),'${key_inStockQuantity}'))]</td>
 	<td></td>
 </tr>
 <tr>

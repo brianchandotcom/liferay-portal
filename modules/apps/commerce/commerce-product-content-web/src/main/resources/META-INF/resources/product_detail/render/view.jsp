@@ -55,7 +55,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 							String stockQuantity = cpContentHelper.getStockQuantity(request);
 							%>
 
-							<span data-qa-id="in-stock-quantity"><%= Validator.isNull(stockQuantity) ? StringPool.BLANK : LanguageUtil.format(request, "x-in-stock", stockQuantity) %></span>
+							<span data-qa-id="inStockQuantity"><%= Validator.isNull(stockQuantity) ? StringPool.BLANK : LanguageUtil.format(request, "x-in-stock", stockQuantity) %></span>
 						</span>
 					</div>
 				</div>

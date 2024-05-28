@@ -369,7 +369,7 @@ export default function CartQuickAdd() {
 
 				<ClayInput.GroupItem shrink>
 					<ClayButtonWithIcon
-						data-qa-id="quick-add-to-cart-button"
+						data-qa-id="quickAddToCartButton"
 						disabled={!selectedSKUs.length || quickAddToCartError}
 						onClick={handleAddToCartClick}
 						symbol="shopping-cart"

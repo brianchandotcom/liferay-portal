@@ -75,7 +75,7 @@ function Opener() {
 				'mini-cart-opener': true,
 			})}
 			data-badge-count={numberOfItems}
-			data-qa-id="mini-cart-button"
+			data-qa-id="miniCartButton"
 			onClick={openCart}
 		>
 			<ClayIcon symbol="shopping-cart" />

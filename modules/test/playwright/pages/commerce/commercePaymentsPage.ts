@@ -40,7 +40,7 @@ export class CommercePaymentsPage {
 		this.ercSubmitButton = page
 			.frameLocator('iframe[title="Edit External Reference Code"]')
 			.getByRole('button', {exact: true, name: 'Submit'});
-		this.headerDetailsTitle = page.getByTestId('header-details-title');
+		this.headerDetailsTitle = page.getByTestId('headerDetailsTitle');
 		this.makeRefundButton = page.getByLabel('Make a Refund', {exact: true});
 		this.reasonInput = page.getByLabel('Reason');
 		this.saveButton = page.getByRole('link', {exact: true, name: 'Save'});

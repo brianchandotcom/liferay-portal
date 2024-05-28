@@ -292,7 +292,7 @@ function CartItem({
 									name
 								)}
 								className="d-inline-flex"
-								data-qa-id="cart-item-actions"
+								data-qa-id="cartItemActions"
 								displayType="unstyled"
 								symbol="ellipsis-v"
 								title={sub(

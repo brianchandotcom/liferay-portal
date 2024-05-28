@@ -56,6 +56,11 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 	}
 
 	@Override
+	public long countByGroupId(long groupId) {
+		return dlFileShortcutPersistence.countByGroupId(groupId);
+	}
+
+	@Override
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
 		ModelResourcePermission<FileShortcut>
 			fileShortcutModelResourcePermission =
@@ -86,6 +91,13 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 	@Override
 	public List<DLFileShortcut> getGroupFileShortcuts(long groupId) {
 		return dlFileShortcutPersistence.findByGroupId(groupId);
+	}
+
+	@Override
+	public List<DLFileShortcut> getGroupFileShortcuts(
+		long groupId, int start, int end) {
+
+		return dlFileShortcutPersistence.findByGroupId(groupId, start, end);
 	}
 
 	@Override

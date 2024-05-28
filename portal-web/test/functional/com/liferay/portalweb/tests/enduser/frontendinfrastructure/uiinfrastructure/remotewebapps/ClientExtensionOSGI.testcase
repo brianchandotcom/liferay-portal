@@ -80,7 +80,7 @@ definition {
 		task ("And Then Edit action is not an available option field information is displayed correctly") {
 			AssertElementNotPresent(
 				key_option = "Edit",
-				locator1 = "ClientExtension#DROPDOWN_OPTIONS");
+				locator1 = "ClientExtension#DROPDOWN_OPTION_START_WITH");
 		}
 	}
 

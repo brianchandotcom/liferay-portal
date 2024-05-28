@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_OPTION_START_WITH</td>
+	<td>//*[contains(@class,'dropdown-item') and starts-with(text(), '${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_TABLE_ELLIPSIS</td>
 	<td>//button[contains(@class,'component-action')]//span[contains(.,'Actions')]</td>
 	<td></td>

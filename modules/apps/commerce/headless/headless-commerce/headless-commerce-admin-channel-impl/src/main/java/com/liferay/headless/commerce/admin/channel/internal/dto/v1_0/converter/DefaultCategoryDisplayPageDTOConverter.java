@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  */
 @Component(
-	property = "dto.class.name=com.liferay.portal.kernel.settings.ModifiableSettings-DefaultCategory",
+	property = "dto.class.name=com.liferay.headless.commerce.admin.channel.dto.v1_0.DefaultCategoryDisplayPage",
 	service = DTOConverter.class
 )
 public class DefaultCategoryDisplayPageDTOConverter

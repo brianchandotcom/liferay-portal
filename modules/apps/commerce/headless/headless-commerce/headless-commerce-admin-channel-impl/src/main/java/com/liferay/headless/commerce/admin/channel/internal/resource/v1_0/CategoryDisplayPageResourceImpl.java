@@ -6,7 +6,6 @@
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.product.constants.CPDisplayLayoutConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -14,17 +13,21 @@ import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.CategoryDisplayPage;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.CategoryDisplayPageResource;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Map;
 
@@ -49,19 +52,12 @@ public class CategoryDisplayPageResourceImpl
 	public CategoryDisplayPage getCategoryDisplayPage(Long id)
 		throws Exception {
 
-		CPDisplayLayout cpDisplayLayout =
-			_cpDisplayLayoutService.fetchCPDisplayLayout(id);
-
-		if (cpDisplayLayout == null) {
-			throw new NoSuchCPDisplayLayoutException();
-		}
-
-		return _toCategoryDisplayPage(cpDisplayLayout.getCPDisplayLayoutId());
+		return _toCategoryDisplayPage(id);
 	}
 
 	public Page<CategoryDisplayPage>
 			getChannelByExternalReferenceCodeCategoryDisplayPagesPage(
-				String externalReferenceCode, String search,
+				String externalReferenceCode, String search, Filter filter,
 				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -71,45 +67,52 @@ public class CategoryDisplayPageResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		return getChannelIdCategoryDisplayPagesPage(
-			commerceChannel.getCommerceChannelId(), search, pagination, sorts);
+			commerceChannel.getCommerceChannelId(), search, filter, pagination,
+			sorts);
 	}
 
 	public Page<CategoryDisplayPage> getChannelIdCategoryDisplayPagesPage(
-			Long id, String search, Pagination pagination, Sort[] sorts)
+			Long id, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(id);
 
-		Sort sort = null;
-
-		if (sorts != null) {
-			sort = sorts[0];
-		}
-
-		BaseModelSearchResult<CPDisplayLayout>
-			cpDisplayLayoutBaseModelSearchResult =
-				_cpDisplayLayoutService.searchCPDisplayLayout(
-					commerceChannel.getCompanyId(),
-					commerceChannel.getSiteGroupId(),
-					AssetCategory.class.getName(),
-					CPDisplayLayoutConstants.TYPE_LAYOUT, search,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					sort);
-
-		return Page.of(
+		return SearchUtil.search(
 			HashMapBuilder.put(
 				"post",
 				addAction(
 					ActionKeys.UPDATE, id, "postChannelIdCategoryDisplayPage",
-					commerceChannel.getUserId(),
-					CommerceChannel.class.getName(),
+					contextUser.getUserId(), CommerceChannel.class.getName(),
 					commerceChannel.getGroupId())
 			).build(),
-			transform(
-				cpDisplayLayoutBaseModelSearchResult.getBaseModels(),
-				cpDisplayLayout -> _toCategoryDisplayPage(
-					cpDisplayLayout.getCPDisplayLayoutId())));
+			booleanQuery -> {
+			},
+			filter, CPDisplayLayout.class.getName(), search, pagination,
+			queryConfig -> {
+			},
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+
+				searchContext.setAttribute(
+					"entryModelClassName", AssetCategory.class.getName());
+
+				searchContext.setAttribute(
+					Field.GROUP_ID,
+					String.valueOf(commerceChannel.getSiteGroupId()));
+			},
+			sorts,
+			document -> {
+				long cpDisplayLayoutId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				return _toCategoryDisplayPage(cpDisplayLayoutId);
+			});
 	}
 
 	public CategoryDisplayPage patchCategoryDisplayPage(
@@ -172,22 +175,24 @@ public class CategoryDisplayPageResourceImpl
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				ActionKeys.DELETE, cpDisplayLayout.getCPDisplayLayoutId(),
+			ActionUtil.addAction(
+				ActionKeys.DELETE, getClass(), cpDisplayLayout.getClassPK(),
 				"deleteCategoryDisplayPage",
-				_cpDisplayLayoutModelResourcePermission)
+				_assetCategoryModelResourcePermission,
+				cpDisplayLayout.getCPDisplayLayoutId(), contextUriInfo)
 		).put(
 			"get",
-			addAction(
-				ActionKeys.VIEW, cpDisplayLayout.getCPDisplayLayoutId(),
-				"getCategoryDisplayPage",
-				_cpDisplayLayoutModelResourcePermission)
+			ActionUtil.addAction(
+				ActionKeys.VIEW, getClass(), cpDisplayLayout.getClassPK(),
+				"getCategoryDisplayPage", _assetCategoryModelResourcePermission,
+				cpDisplayLayout.getCPDisplayLayoutId(), contextUriInfo)
 		).put(
 			"patch",
-			addAction(
-				ActionKeys.UPDATE, cpDisplayLayout.getCPDisplayLayoutId(),
+			ActionUtil.addAction(
+				ActionKeys.UPDATE, getClass(), cpDisplayLayout.getClassPK(),
 				"patchCategoryDisplayPage",
-				_cpDisplayLayoutModelResourcePermission)
+				_assetCategoryModelResourcePermission,
+				cpDisplayLayout.getCPDisplayLayoutId(), contextUriInfo)
 		).build();
 	}
 
@@ -195,7 +200,7 @@ public class CategoryDisplayPageResourceImpl
 		throws Exception {
 
 		CPDisplayLayout cpDisplayLayout =
-			_cpDisplayLayoutService.fetchCPDisplayLayout(cpDisplayLayoutId);
+			_cpDisplayLayoutService.getCPDisplayLayout(cpDisplayLayoutId);
 
 		return _categoryDisplayPageDTOConvertor.toDTO(
 			new DefaultDTOConverterContext(
@@ -206,6 +211,12 @@ public class CategoryDisplayPageResourceImpl
 	}
 
 	@Reference(
+		target = "(model.class.name=com.liferay.asset.kernel.model.AssetCategory)"
+	)
+	private ModelResourcePermission<AssetCategory>
+		_assetCategoryModelResourcePermission;
+
+	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.CategoryDisplayPageDTOConverter)"
 	)
 	private DTOConverter<CPDisplayLayout, CategoryDisplayPage>
@@ -213,12 +224,6 @@ public class CategoryDisplayPageResourceImpl
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPDisplayLayout)"
-	)
-	private ModelResourcePermission<CPDisplayLayout>
-		_cpDisplayLayoutModelResourcePermission;
 
 	@Reference
 	private CPDisplayLayoutService _cpDisplayLayoutService;

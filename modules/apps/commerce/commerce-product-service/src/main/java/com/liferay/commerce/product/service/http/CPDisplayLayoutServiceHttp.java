@@ -164,6 +164,48 @@ public class CPDisplayLayoutServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDisplayLayout
+			getCPDisplayLayout(
+				HttpPrincipal httpPrincipal, long cpDisplayLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDisplayLayoutServiceUtil.class, "getCPDisplayLayout",
+				_getCPDisplayLayoutParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDisplayLayoutId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPDisplayLayout)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.product.model.CPDisplayLayout>
 				searchCPDisplayLayout(
@@ -175,7 +217,7 @@ public class CPDisplayLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPDisplayLayoutServiceUtil.class, "searchCPDisplayLayout",
-				_searchCPDisplayLayoutParameterTypes3);
+				_searchCPDisplayLayoutParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, className, type, keywords, start,
@@ -220,7 +262,7 @@ public class CPDisplayLayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPDisplayLayoutServiceUtil.class, "updateCPDisplayLayout",
-				_updateCPDisplayLayoutParameterTypes4);
+				_updateCPDisplayLayoutParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDisplayLayoutId, classPK,
@@ -266,12 +308,14 @@ public class CPDisplayLayoutServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _fetchCPDisplayLayoutParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _searchCPDisplayLayoutParameterTypes3 =
+	private static final Class<?>[] _getCPDisplayLayoutParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _searchCPDisplayLayoutParameterTypes4 =
 		new Class[] {
 			long.class, long.class, String.class, Integer.class, String.class,
 			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes4 =
+	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes5 =
 		new Class[] {long.class, long.class, String.class, String.class};
 
 }

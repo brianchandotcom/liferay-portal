@@ -10,6 +10,7 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 
 export class PublisherSolutionPage {
 	readonly addContentBlockButton: Locator;
+	readonly blocksTitle: Locator;
 	readonly categories: Locator;
 	readonly chooseBlockSelect: Locator;
 	readonly continueButton: Locator;
@@ -18,7 +19,7 @@ export class PublisherSolutionPage {
 	readonly customizeSolutionHeader: Locator;
 	readonly defineSolution: Locator;
 	readonly descriptionInput: Locator;
-	readonly headerDescription: Locator;
+	readonly richTextEditor: Locator;
 	readonly headerTitle: Locator;
 	readonly nameInput: Locator;
 	readonly newSolutionButton: Locator;
@@ -34,6 +35,7 @@ export class PublisherSolutionPage {
 		this.addContentBlockButton = page.getByRole('button', {
 			name: 'Add Content Block',
 		});
+		this.blocksTitle = page.getByPlaceholder('Enter title header');
 		this.categories = page.getByPlaceholder('Select categories');
 		this.chooseBlockSelect = page.getByRole('option', {
 			name: 'Continue',
@@ -56,7 +58,7 @@ export class PublisherSolutionPage {
 		this.descriptionInput = page.getByPlaceholder(
 			'Enter solution description'
 		);
-		this.headerDescription = page.locator('.ql-editor');
+		this.richTextEditor = page.locator('.ql-editor');
 		this.headerTitle = page.getByPlaceholder('Enter title header');
 		this.nameInput = page.getByPlaceholder('Enter solution name');
 		this.newSolutionButton = page.getByRole('button', {
@@ -77,7 +79,7 @@ export class PublisherSolutionPage {
 		this.tags = page.getByPlaceholder('Select tags');
 	}
 
-	async fillCustomizeSolutionDetails() {
+	async fillCustomizeSolutionDetails(details) {
 		await expect(this.addContentBlockButton).toBeVisible();
 		await this.addContentBlockButton.click();
 		await expect(this.saveButton).toBeDisabled();
@@ -87,11 +89,22 @@ export class PublisherSolutionPage {
 			'text-block'
 		);
 		await expect(this.saveButton).toBeEnabled();
+		await this.saveButton.click();
+		await this.blocksTitle.fill(details['text-block'].title);
+		await this.richTextEditor.fill(details['text-block'].description);
+		await this.addContentBlockButton.click();
+		await this.selectContentBlock.waitFor({state: 'visible'});
+		await this.page.selectOption(
+			'select[aria-label="Select Label"]',
+			'text-images-block'
+		);
+		await this.saveButton.click();
+		await expect(this.selectFileButton).toBeEnabled();
 	}
 
 	async fillCustomizeSolutionHeader(header) {
 		await this.headerTitle.fill(header.title);
-		await this.headerDescription.fill(header.description);
+		await this.richTextEditor.fill(header.description);
 		await expect(this.continueButton).toBeDisabled();
 		await this.radioUploadImages.isChecked();
 		await expect(this.selectFileButton).toBeEnabled();

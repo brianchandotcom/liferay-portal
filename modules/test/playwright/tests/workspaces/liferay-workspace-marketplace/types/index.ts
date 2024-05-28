@@ -34,6 +34,16 @@ export type PublishProductPayload = {
 };
 
 export const PUBLISH_SOLUTION = {
+	details: {
+		'text-block': {
+			description: 'Text Block Description',
+			title: 'Text Block Title',
+		},
+		'text-images': {
+			description: 'Text Image Block Description',
+			title: 'Text Image Block Title',
+		},
+	},
 	header: {
 		description: 'Solution Header Description',
 		title: 'Solution Header Title',

@@ -234,8 +234,7 @@ public class TrialRestController extends BaseRestController {
 			_externalLiferayTrialURI
 		).header(
 			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"external-liferay-trial")
+			_liferayOAuth2AccessTokenManager.getAuthorization("external-trial")
 		).build();
 	}
 
@@ -408,7 +407,7 @@ public class TrialRestController extends BaseRestController {
 	@Autowired
 	private ConsoleService _consoleService;
 
-	@Value("${external.liferay.trial.oauth2.headless.server.home.page.uri}")
+	@Value("${external.trial.oauth2.headless.server.home.page.uri}")
 	private URL _externalLiferayTrialURI;
 
 	@Autowired

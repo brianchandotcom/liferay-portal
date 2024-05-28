@@ -45,12 +45,11 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 		Map<String, Serializable> threadLocalValues =
 			_backgroundTaskThreadLocalManager.getThreadLocalValues();
 
-		long companyId = backgroundTask.getCompanyId();
-
 		try {
 			try {
 				_backgroundTaskThreadLocalManager.deserializeThreadLocals(
-					companyId, backgroundTask.getTaskContextMap());
+					backgroundTask.getCompanyId(),
+					backgroundTask.getTaskContextMap());
 			}
 			catch (StaleBackgroundTaskException staleBackgroundTaskException) {
 				if (_log.isInfoEnabled()) {
@@ -66,7 +65,7 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 		}
 		finally {
 			_backgroundTaskThreadLocalManager.setThreadLocalValues(
-				companyId, threadLocalValues);
+				backgroundTask.getCompanyId(), threadLocalValues);
 		}
 	}
 

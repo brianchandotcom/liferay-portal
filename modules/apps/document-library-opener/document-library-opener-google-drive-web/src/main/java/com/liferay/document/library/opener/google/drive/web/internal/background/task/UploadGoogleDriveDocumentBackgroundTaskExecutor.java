@@ -77,14 +77,13 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long companyId = backgroundTask.getCompanyId();
 		long fileEntryId = GetterUtil.getLong(
 			taskContextMap.get(
 				GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID));
 
 		_sendStatusMessage(
-			GoogleDriveBackgroundTaskConstants.PORTAL_START, companyId,
-			fileEntryId);
+			GoogleDriveBackgroundTaskConstants.PORTAL_START,
+			backgroundTask.getCompanyId(), fileEntryId);
 
 		String cmd = (String)taskContextMap.get(
 			GoogleDriveBackgroundTaskConstants.CMD);
@@ -102,8 +101,8 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 		}
 
 		_sendStatusMessage(
-			GoogleDriveBackgroundTaskConstants.PORTAL_END, companyId,
-			fileEntryId);
+			GoogleDriveBackgroundTaskConstants.PORTAL_END,
+			backgroundTask.getCompanyId(), fileEntryId);
 
 		return BackgroundTaskResult.SUCCESS;
 	}

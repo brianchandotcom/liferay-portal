@@ -20,11 +20,16 @@ apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
 bootRun {
-	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_ID", "myclientid"
-	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "myclientsecret"
-	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "myhomepageuri"
-	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_TOKEN_URI", "mytokenuri"
-	environment "EXTERNAL_LIFERAY_TRIAL_OAUTH2_USER_AGENT_CLIENT_ID", "not-available"
+	environment "EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_CLIENT_ID", "myclientid"
+	environment "EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "myclientsecret"
+	environment "EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "myhomepageuri"
+	environment "EXTERNAL_PROVISIONING_OAUTH2_TOKEN_URI", "mytokenuri"
+	environment "EXTERNAL_PROVISIONING_OAUTH2_USER_AGENT_CLIENT_ID", "not-available"
+	environment "EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_ID", "myclientid"
+	environment "EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "myclientsecret"
+	environment "EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "myhomepageuri"
+	environment "EXTERNAL_TRIAL_OAUTH2_TOKEN_URI", "mytokenuri"
+	environment "EXTERNAL_TRIAL_OAUTH2_USER_AGENT_CLIENT_ID", "not-available"
 }
 
 dependencies {

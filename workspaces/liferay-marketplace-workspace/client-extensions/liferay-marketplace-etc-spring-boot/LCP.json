@@ -1,11 +1,16 @@
 {
 	"cpu": 1,
 	"env": {
-		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-liferay-oauth2-headless-server-client-id",
-		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-liferay-oauth2-headless-server-client-secret",
-		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "@external-liferay-oauth2-headless-server-home-page-uri",
-		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_TOKEN_URI": "@external-liferay-oauth2-token-uri",
-		"EXTERNAL_LIFERAY_TRIAL_OAUTH2_USER_AGENT_CLIENT_ID": "not-available",
+		"EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-provisioning-oauth2-headless-server-client-id",
+		"EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-provisioning-oauth2-headless-server-client-secret",
+		"EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "@external-provisioning-oauth2-headless-server-home-page-uri",
+		"EXTERNAL_PROVISIONING_OAUTH2_TOKEN_URI": "@external-provisioning-oauth2-token-uri",
+		"EXTERNAL_PROVISIONING_OAUTH2_USER_AGENT_CLIENT_ID": "not-available",
+		"EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-trial-oauth2-headless-server-client-id",
+		"EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-trial-oauth2-headless-server-client-secret",
+		"EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "@external-trial-oauth2-headless-server-home-page-uri",
+		"EXTERNAL_TRIAL_OAUTH2_TOKEN_URI": "@external-trial-oauth2-token-uri",
+		"EXTERNAL_TRIAL_OAUTH2_USER_AGENT_CLIENT_ID": "not-available",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
 	},

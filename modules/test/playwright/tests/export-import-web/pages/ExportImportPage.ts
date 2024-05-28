@@ -6,27 +6,43 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
-import {zipFolder} from '../../../utils/zip';
+import {getTempDir} from '../../../utils/temp';
 
 export class ExportImportPage {
 	readonly continueButton: Locator;
+	readonly downloadButton: Locator;
+	readonly exportButton: Locator;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
+	readonly newExportButton: Locator;
 	readonly newImportButton: Locator;
 	readonly newImportProcess: Locator;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
+	readonly title: Locator;
 
 	constructor(page: Page) {
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
+		this.downloadButton = page.getByRole('button', {name: 'Download'});
+		this.exportButton = page.getByRole('button', {name: 'Export'});
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
+		this.newExportButton = page.getByRole('link', {name: 'Custom Export'});
 		this.newImportButton = page.getByRole('link', {name: 'Import'});
 		this.newImportProcess = page.getByRole('button', {
 			name: 'New',
 		});
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
+		this.title = page.getByPlaceholder('Enter the name of the process');
+	}
+
+	async createNewExportProcess(title: string) {
+		await this.newExportButton.click();
+
+		await this.title.fill(title);
+
+		await this.exportButton.click();
 	}
 
 	async createNewImportProcess(folderPath: string) {
@@ -38,7 +54,7 @@ export class ExportImportPage {
 
 		const fileChooser = await fileChooserPromise;
 
-		await fileChooser.setFiles(await zipFolder(folderPath));
+		await fileChooser.setFiles(folderPath);
 
 		await this.continueButton.click();
 
@@ -53,7 +69,7 @@ export class ExportImportPage {
 
 		await this.page
 			.locator('#PagesContent')
-			.getByText('Utility Pages (2)')
+			.getByText('Utility Pages')
 			.click();
 
 		await this.page
@@ -72,6 +88,23 @@ export class ExportImportPage {
 			.click();
 
 		await this.importButton.click();
+	}
+
+	async downloadExportProcess(name: string) {
+		const downloadPromise = this.page.waitForEvent('download');
+
+		await this.page.locator('//*[contains(@href, "' + name + '")]').click();
+
+		const download = await downloadPromise;
+		const filePath = getTempDir() + download.suggestedFilename();
+
+		await download.saveAs(filePath);
+
+		return filePath;
+	}
+
+	async goToExport() {
+		await this.productMenuPage.goToPublishingExport();
 	}
 
 	async goToImport() {

@@ -11,6 +11,7 @@ import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixt
 import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
+import getRandomString from '../../utils/getRandomString';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -47,11 +48,21 @@ test('can import a folder with document type restrictions and workflow', async (
 test('can import a lar file selecting some items to import', async ({
 	exportImportPage,
 }) => {
+	await exportImportPage.goToExport();
+
+	const exportName = 'MyExport-' + getRandomString();
+
+	await exportImportPage.createNewExportProcess(exportName);
+
+	expect(
+		await exportImportPage.page.getByText(exportName).locator('../..').getByText('Successful').textContent()
+	).toBe('Successful');
+
+	const exportFilePath = await exportImportPage.downloadExportProcess(exportName);
+
 	await exportImportPage.goToImport();
 
-	await exportImportPage.createNewImportProcess(
-		path.join(__dirname, 'dependencies', 'content.portlet.lar')
-	);
+	await exportImportPage.createNewImportProcess(exportFilePath);
 
 	expect(
 		await exportImportPage.page.getByText('Successful').textContent()

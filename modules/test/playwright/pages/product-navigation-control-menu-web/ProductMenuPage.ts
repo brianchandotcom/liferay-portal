@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 export class ProductMenuPage {
 	readonly configurationButton: Locator;
 	readonly contentAndDataButton: Locator;
+	readonly exportButton: Locator;
 	readonly formsButton: Locator;
 	readonly importButton: Locator;
 	readonly page: Page;
@@ -26,6 +27,9 @@ export class ProductMenuPage {
 		});
 		this.contentAndDataButton = page.getByRole('menuitem', {
 			name: 'Content & Data',
+		});
+		this.exportButton = page.getByRole('menuitem', {
+			name: 'Export',
 		});
 		this.formsButton = page.getByRole('menuitem', {
 			exact: true,
@@ -79,6 +83,11 @@ export class ProductMenuPage {
 	async goToPages() {
 		await this.siteBuilderButton.click();
 		await this.pagesButton.click();
+	}
+
+	async goToPublishingExport() {
+		await this.publishingButton.click();
+		await this.exportButton.click();
 	}
 
 	async goToPublishingImport() {

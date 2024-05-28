@@ -42,12 +42,14 @@ export default function FormMappingOptions({
 			};
 
 			const saveMapping = (fields = []) =>
-				onValueSelect({
-					classNameId,
-					classTypeId,
-					fields: fields.map(({uniqueId}) => uniqueId),
-					formConfig: FORM_MAPPING_SOURCES.otherContentType,
-				});
+				onValueSelect(
+					{
+						classNameId,
+						classTypeId,
+						formConfig: FORM_MAPPING_SOURCES.otherContentType,
+					},
+					fields.map(({uniqueId}) => uniqueId)
+				);
 
 			if (Liferay.FeatureFlags['LPD-20213'] && classNameId !== '0') {
 				openInfoFieldSelector({

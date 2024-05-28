@@ -13,23 +13,33 @@ export class PublisherSolutionPage {
 	readonly blocksTitle: Locator;
 	readonly categories: Locator;
 	readonly chooseBlockSelect: Locator;
+	readonly companyProfile: Locator;
+	readonly contactUs: Locator;
 	readonly continueButton: Locator;
 	readonly createTemplate: Locator;
 	readonly customizeSolutionDetails: Locator;
 	readonly customizeSolutionHeader: Locator;
 	readonly defineSolution: Locator;
 	readonly descriptionInput: Locator;
-	readonly richTextEditor: Locator;
+	readonly emailInput: Locator;
 	readonly headerTitle: Locator;
-	readonly nameInput: Locator;
 	readonly newSolutionButton: Locator;
 	readonly page: Page;
+	readonly phoneInput: Locator;
 	readonly radioUploadImages: Locator;
+	readonly reviewAndSubmitTitle: Locator;
+	readonly reviewCheckbox: Locator;
+	readonly richTextEditor: Locator;
 	readonly saveButton: Locator;
 	readonly selectContentBlock: Locator;
 	readonly selectFileButton: Locator;
 	readonly solutionDescription: Locator;
+	readonly solutionName: Locator;
+	readonly solutionNameInput: Locator;
+	readonly submitSolutionButton: Locator;
 	readonly tags: Locator;
+	readonly underReviewStatus: Locator;
+	readonly website: Locator;
 
 	constructor(page: Page) {
 		this.addContentBlockButton = page.getByRole('button', {
@@ -40,6 +50,8 @@ export class PublisherSolutionPage {
 		this.chooseBlockSelect = page.getByRole('option', {
 			name: 'Continue',
 		});
+		this.companyProfile = page.getByText('Provide company profile details');
+		this.contactUs = page.getByText('Provide contact us details');
 		this.continueButton = page.getByRole('button', {
 			name: 'Continue',
 		});
@@ -58,17 +70,23 @@ export class PublisherSolutionPage {
 		this.descriptionInput = page.getByPlaceholder(
 			'Enter solution description'
 		);
-		this.richTextEditor = page.locator('.ql-editor');
+		this.emailInput = page.getByPlaceholder('name@yourdomain.com');
 		this.headerTitle = page.getByPlaceholder('Enter title header');
-		this.nameInput = page.getByPlaceholder('Enter solution name');
 		this.newSolutionButton = page.getByRole('button', {
 			name: 'New Solution Template',
 		});
 		this.page = page;
+		this.phoneInput = page.getByPlaceholder('+1 (123) 456-7890');
+		this.richTextEditor = page.locator('.ql-editor');
+		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.solutionNameInput = page.getByPlaceholder('Enter solution name');
 		this.radioUploadImages = page.getByRole('radio', {
 			name: 'Upload images',
 		});
-		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.reviewAndSubmitTitle = page.getByText(
+			'Review and submit solution'
+		);
+		this.reviewCheckbox = page.getByRole('checkbox');
 		this.selectContentBlock = page.getByText('Select Content Block');
 		this.selectFileButton = page.getByRole('button', {
 			name: 'Select a file',
@@ -76,7 +94,23 @@ export class PublisherSolutionPage {
 		this.solutionDescription = page.getByText(
 			'Manage and publish solutions on the Marketplace'
 		);
+		this.submitSolutionButton = page.getByRole('button', {
+			name: 'Submit Solution',
+		});
 		this.tags = page.getByPlaceholder('Select tags');
+		this.underReviewStatus = page
+			.getByRole('cell', {name: 'Under Review'})
+			.last();
+
+		this.website = page.getByPlaceholder('http://www.yourdomain.com');
+	}
+
+	async fillCompanyProfile(companyProfile) {
+		await this.richTextEditor.fill(companyProfile.description);
+		await expect(this.continueButton).toBeDisabled();
+		await this.website.fill(companyProfile.website);
+		await this.emailInput.fill(companyProfile.email);
+		await this.phoneInput.fill(companyProfile.phone);
 	}
 
 	async fillCustomizeSolutionDetails(details) {
@@ -90,8 +124,10 @@ export class PublisherSolutionPage {
 		);
 		await expect(this.saveButton).toBeEnabled();
 		await this.saveButton.click();
-		await this.blocksTitle.fill(details['text-block'].title);
-		await this.richTextEditor.fill(details['text-block'].description);
+		await this.blocksTitle.first().fill(details['text-block'].title);
+		await this.richTextEditor
+			.first()
+			.fill(details['text-block'].description);
 		await this.addContentBlockButton.click();
 		await this.selectContentBlock.waitFor({state: 'visible'});
 		await this.page.selectOption(
@@ -100,6 +136,14 @@ export class PublisherSolutionPage {
 		);
 		await this.saveButton.click();
 		await expect(this.selectFileButton).toBeEnabled();
+		await this.blocksTitle.last().fill(details['text-images'].title);
+		await this.richTextEditor
+			.last()
+			.fill(details['text-images'].description);
+		await this.importFile(
+			this.selectFileButton,
+			path.join(__dirname, '../dependencies/marketplace-test-icon.png')
+		);
 	}
 
 	async fillCustomizeSolutionHeader(header) {
@@ -116,7 +160,7 @@ export class PublisherSolutionPage {
 	}
 
 	async fillDefineSolutionProfile(profile) {
-		await this.nameInput.fill(profile.name);
+		await this.solutionNameInput.fill(profile.name);
 		await this.descriptionInput.fill(profile.description);
 		await expect(this.continueButton).toBeDisabled();
 		await this.categories.fill('Analytics');
@@ -125,6 +169,20 @@ export class PublisherSolutionPage {
 			.click();
 		await this.tags.fill('Agent');
 		await this.page.getByRole('option', {name: 'Agent Portal'}).click();
+	}
+
+	async goToContactUs() {
+		await clickAndExpectToBeVisible({
+			target: this.contactUs,
+			trigger: this.continueButton,
+		});
+	}
+
+	async goToCompanyProfile() {
+		await clickAndExpectToBeVisible({
+			target: this.companyProfile,
+			trigger: this.continueButton,
+		});
 	}
 
 	async goToCustomizeSolutionDetails() {
@@ -155,8 +213,19 @@ export class PublisherSolutionPage {
 		});
 	}
 
+	async reviewAndSubmit() {
+		await this.reviewCheckbox.check();
+
+		await expect(this.submitSolutionButton).toBeEnabled();
+
+		await this.submitSolutionButton.click();
+		await this.page.waitForLoadState('networkidle');
+	}
+
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(siteUrl);
+		await this.page.goto(siteUrl, {
+			waitUntil: 'networkidle',
+		});
 		await expect(this.solutionDescription).toBeVisible();
 	}
 

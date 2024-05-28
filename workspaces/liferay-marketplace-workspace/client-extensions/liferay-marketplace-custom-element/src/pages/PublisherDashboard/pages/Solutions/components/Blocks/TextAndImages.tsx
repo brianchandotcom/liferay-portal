@@ -42,7 +42,7 @@ const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 					maxLength={170}
 					name="title"
 					onChange={(event) => onChange({title: event.target.value})}
-					placeholder="Enter title header"
+					placeholder="Enter title"
 					type="text"
 					value={content.title || ''}
 				/>

@@ -34,7 +34,7 @@ const TextAndVideos: React.FC<BlockTypeProps<TextVideoBlock>> = ({
 						onChange={(event) =>
 							onChange({title: event.target.value})
 						}
-						placeholder="Enter title header"
+						placeholder="Enter title"
 						type="text"
 						value={title}
 					/>

@@ -335,6 +335,10 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'pin':
+					await this.headlessCommerceAdminCatalog.deletePin(item.id);
+
+					break;
 				case 'price-entry':
 					await this.headlessCommerceAdminPricing.deletePriceEntry(
 						item.id

@@ -22,4 +22,14 @@ export class HeadlessCommerceDeliveryCatalogApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/products/${productId}/attachments`
 		);
 	}
+
+	async getChannelProductPinsPage(
+		accountId: number,
+		channelId: number,
+		productId: number
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/products/${productId}/pins?accountId=${accountId}`
+		);
+	}
 }

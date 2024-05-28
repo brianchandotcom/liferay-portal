@@ -48,7 +48,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
 		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
 
-		MappingsFactory mappingsFactory = _getMappingsFactory();
+		MappingsFactory mappingsFactory = _getMappingsFactory(null);
 
 		String mappings = String.valueOf(
 			mappingsFactory.getMappingsJSONObject());
@@ -95,17 +95,17 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
 	@Override
 	public void whenIndexCreated(String indexName) {
-		MappingsFactory mappingsFactory = _getMappingsFactory();
+		MappingsFactory mappingsFactory = _getMappingsFactory(indexName);
 
 		mappingsFactory.addOptionalDefaultMappings();
 	}
 
-	private MappingsFactory _getMappingsFactory() {
+	private MappingsFactory _getMappingsFactory(String indexName) {
 		OpenSearchClient openSearchClient =
 			_openSearchConnectionManager.getOpenSearchClient();
 
 		return new MappingsFactory(
-			null, new JSONFactoryImpl(), openSearchClient.indices(),
+			indexName, new JSONFactoryImpl(), openSearchClient.indices(),
 			_openSearchConfigurationWrapper);
 	}
 

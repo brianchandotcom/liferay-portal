@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.template.LazyValue;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -48,20 +49,59 @@ public class UsersTemplateContextContributor
 
 		contextObjects.put("is_default_user", user1.isDefaultUser());
 
-		try {
-			Contact contact = user1.getContact();
+		contextObjects.put(
+			"is_female",
+			new LazyValue(
+				() -> {
+					try {
+						Contact contact = user1.getContact();
 
-			contextObjects.put("is_female", !contact.isMale());
-			contextObjects.put("is_male", contact.isMale());
-			contextObjects.put("user_birthday", contact.getBirthday());
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
+						return !contact.isMale();
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
+					}
+
+					return null;
+				}));
+
+		contextObjects.put(
+			"is_male",
+			new LazyValue(
+				() -> {
+					try {
+						Contact contact = user1.getContact();
+
+						return contact.isMale();
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
+					}
+
+					return null;
+				}));
+
+		contextObjects.put(
+			"user_birthday",
+			new LazyValue(
+				() -> {
+					try {
+						Contact contact = user1.getContact();
+
+						return contact.getBirthday();
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
+					}
+
+					return null;
+				}));
 
 		contextObjects.put("is_guest_user", user1.isGuestUser());
 		contextObjects.put("is_setup_complete", user1.isSetupComplete());
+
 		contextObjects.put("language", themeDisplay.getLanguageId());
+
 		contextObjects.put("language_id", user1.getLanguageId());
 		contextObjects.put("user_comments", user1.getComments());
 		contextObjects.put("user_email_address", user1.getEmailAddress());
@@ -76,18 +116,24 @@ public class UsersTemplateContextContributor
 		contextObjects.put("user_middle_name", user1.getMiddleName());
 		contextObjects.put("user_name", user1.getFullName());
 
-		Group group = themeDisplay.getSiteGroup();
+		contextObjects.put(
+			"user2",
+			new LazyValue(
+				() -> {
+					Group group = themeDisplay.getSiteGroup();
 
-		if (group.isUser()) {
-			try {
-				User user2 = _userLocalService.getUserById(group.getClassPK());
+					if (group.isUser()) {
+						try {
+							return _userLocalService.getUserById(
+								group.getClassPK());
+						}
+						catch (PortalException portalException) {
+							_log.error(portalException);
+						}
+					}
 
-				contextObjects.put("user2", user2);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
+					return null;
+				}));
 
 		contextObjects.put(
 			"w3c_language_id",

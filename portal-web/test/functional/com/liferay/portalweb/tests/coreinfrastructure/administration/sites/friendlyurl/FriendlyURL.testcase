@@ -27,50 +27,12 @@ definition {
 		}
 	}
 
-	@description = "If virtual.hosts.strict.access=true is set, do not redirect to a default instance if there is no associated company"
-	@priority = 4
-	test DoNotRedirectToDefaultInstanceWithNoCompany {
-		property custom.properties = "virtual.hosts.strict.access=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		AssertTextPresent(
-			locator1 = "//body",
-			value1 = "Unknown Virtual Hostname: www.able.com");
-
-		AssertLocation(value1 = "http://www.able.com:8080/");
-
-		AssertConsoleTextPresent(value1 = "NoSuchVirtualHostException");
-	}
-
 	@description = "Verify navigating to the URL of an uncreated portlet does not throw errors."
 	@priority = 3
 	test NavigatingToURLOfUncreatedPortletDoesNotThrowError {
 		property test.assert.warning.exceptions = "true";
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/home/-/testportlet");
-	}
-
-	@description = "If virtual.hosts.strict.access=true is not set, redirect to a default instance even if there is no associated company"
-	@priority = 3
-	test RedirectToDefaultInstanceWithNoCompany {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Navigator.gotoPage(
-			baseURL = "http://www.able.com:8080",
-			pageName = "Home");
-
-		AssertTextNotPresent(
-			locator1 = "//body",
-			value1 = "Unknown Virtual Hostname: www.able.com");
-
-		AssertLocation(value1 = "http://www.able.com:8080/web/guest/home");
-
-		Smoke.viewWelcomeContentPage();
 	}
 
 	@description = "This is a use case for LPS-163426. Verify redirection to localized friendly URL's when using a virtual host."

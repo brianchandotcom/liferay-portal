@@ -22,11 +22,17 @@ catch (error) {
 
 config = {
 	...config,
+	env: {
+		browser: true,
+		es2021: true,
+		node: true,
+	},
 	globals: {
 		...config.globals,
 		MODULE_PATH: true,
 	},
 	overrides: [
+		...config.overrides,
 		{
 			env: {
 				node: true,
@@ -34,6 +40,10 @@ config = {
 			files: ['**/node-scripts.config.js'],
 		},
 	],
+	parserOptions: {
+		ecmaVersion: '2022',
+		type: 'module',
+	},
 	rules: {
 		'@liferay/import-extensions': 'off',
 		'@liferay/no-extraneous-dependencies': [

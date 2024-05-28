@@ -3,16 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export type Steps =
-	| 'build'
-	| 'create'
-	| 'licensing'
-	| 'pricing'
-	| 'profile'
-	| 'storefront'
-	| 'submit'
-	| 'support'
-	| 'version';
+type Header = {
+	description: string;
+	title: string;
+};
+
+type CompanyProfile = {
+	description: string;
+	email: string;
+	phone: string;
+	website: string;
+};
+
+type ContactUs = {
+	email: string;
+};
 
 export type PublishProductPayload = {
 	categories: string[];
@@ -33,7 +38,42 @@ export type PublishProductPayload = {
 	zipFiles: string[];
 };
 
-export const PUBLISH_SOLUTION = {
+type PublishSolution = {
+	companyProfile: CompanyProfile;
+	contactUs: ContactUs;
+	details: SolutionDetails;
+	header: Header;
+	profile: SolutionProfile;
+};
+
+type SolutionDetails = {
+	'text-block': {
+		description: string;
+		title: string;
+	};
+	'text-images': {
+		description: string;
+		title: string;
+	};
+};
+
+type SolutionProfile = {
+	description: string;
+	name: string;
+};
+
+export type Steps =
+	| 'build'
+	| 'create'
+	| 'licensing'
+	| 'pricing'
+	| 'profile'
+	| 'storefront'
+	| 'submit'
+	| 'support'
+	| 'version';
+
+export const PUBLISH_SOLUTION: PublishSolution = {
 	companyProfile: {
 		description: 'Company Description',
 		email: 'test@liferay.com',

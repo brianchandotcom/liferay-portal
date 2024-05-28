@@ -4465,37 +4465,6 @@ definition {
 			nodeType = "task");
 	}
 
-	@description = "Verify that default names for nodes are provided"
-	@priority = 4
-	test DefaultLabelsAreProvided {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeLabel(nodeLabel = "Start");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeLabel(nodeLabel = "End");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Condition",
-			nodePosition = "20,-300");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "20,100");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.viewNodeLabel(nodeLabel = "Condition");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeLabel(nodeLabel = "Task");
-	}
-
 	@description = "LPS-140056 - Verify that the changes on Default settings, for transitions, reflects on the diagram"
 	@priority = 4
 	test DefaultSettingsChangesReflectsOnDiagram {

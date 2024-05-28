@@ -42,11 +42,13 @@ declare const _default: {
 		groupId?: string | undefined;
 	}): Promise<string[]>;
 	updateFormItemConfig({
+		fields,
 		itemConfig,
 		itemId,
 		onNetworkStatus,
 		segmentsExperienceId,
 	}: {
+		fields: string[];
 		itemConfig: FormLayoutDataItem['config'];
 		itemId: string;
 		onNetworkStatus: OnNetworkStatus;

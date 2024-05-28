@@ -108,12 +108,21 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 		[entity, responseItems]
 	);
 
+	const testrayRunNumber = useMemo(() => {
+		if (entity === 'runs') {
+			return responseItems.map((item) => item['testrayRunNumber']);
+		}
+
+		return [];
+	}, [responseItems, entity]);
+
 	return {
 		chart: {
 			colors: chartColors,
 			columnNames,
 			columns: chartData,
 			statuses: Object.keys(statususes),
+			testrayRunNumber,
 		},
 		entity,
 		loading,

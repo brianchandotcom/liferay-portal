@@ -178,6 +178,31 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 							{columnChartLoad && !loading && (
 								<ClayChart
 									axis={{
+										x: {
+											categories:
+												!!chart.testrayRunNumber
+													.length &&
+												chart.testrayRunNumber,
+											label: {
+												position: 'outer-center',
+												text: i18n
+													.translate(`${entity}`)
+													.toUpperCase(),
+											},
+											tick: {
+												show: chart.testrayRunNumber
+													.length
+													? true
+													: false,
+												text: {
+													show: chart.testrayRunNumber
+														.length
+														? true
+														: false,
+												},
+											},
+											type: 'category',
+										},
 										y: {
 											label: {
 												position: 'outer-middle',

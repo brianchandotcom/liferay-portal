@@ -184,7 +184,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					_getFilterByReviewDateDropdownItems());
+					_getFilterByDateDropdownItems());
 
 				if (FeatureFlagManagerUtil.isEnabled("LPD-25680")) {
 					dropdownGroupItem.setLabel(
@@ -689,7 +689,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			).build());
 	}
 
-	private List<DropdownItem> _getFilterByReviewDateDropdownItems() {
+	private List<DropdownItem> _getFilterByDateDropdownItems() {
 		String reviewDate =
 			_contentDashboardAdminDisplayContext.getReviewDateString();
 

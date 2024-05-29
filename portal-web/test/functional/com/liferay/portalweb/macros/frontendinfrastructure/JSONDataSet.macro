@@ -58,7 +58,7 @@ definition {
 
 		if (${dataSetEntryId} != "") {
 			var curl = '''
-				${portalURL}/o/data-set-manager/views \
+				${portalURL}/o/data-set-manager/data-sets \
 					-u ${userEmailAddress}:${userPassword} \
 					-H accept: application/json \
 					-H Content-Type: application/json \
@@ -122,14 +122,14 @@ definition {
 			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
-		if (!(isSet(dataSetViewsIdList))) {
-			var dataSetViewsIdList = JSONDataSet._getDataSetViewsIds();
+		if (!(isSet(dataSetIdList))) {
+			var dataSetIdList = JSONDataSet._getDataSetIds();
 		}
 
-		if (${dataSetViewsIdList} != "") {
-			for (var dataSetViewsIds : list ${dataSetViewsIdList}) {
+		if (${dataSetIdList} != "") {
+			for (var dataSetIds : list ${dataSetIdList}) {
 				var curl = '''
-					${portalURL}/o/data-set-manager/views/${dataSetViewsIds} \
+					${portalURL}/o/data-set-manager/data-sets/${dataSetIds} \
 						-u ${userEmailAddress}:${userPassword}
 				''';
 
@@ -200,6 +200,30 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro _getDataSetIds() {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = PropsUtil.get("default.admin.password");
+		}
+
+		var curl = '''
+			${portalURL}/o/data-set-manager/data-sets \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var siteId = JSONCurlUtil.get(${curl}, "$..items[0].creator.id");
+
+		var dataSetIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
+
+		return ${dataSetIds};
+	}
+
+	@summary = "Default summary"
 	macro _getDataSetViewIdByName(dataSetViewsNameList = null) {
 		Variables.assertDefined(parameterList = ${dataSetViewsNameList});
 
@@ -214,7 +238,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/data-set-manager/views \
+			${portalURL}/o/data-set-manager/data-sets \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 		var dataSetViewsIds = "";
@@ -231,30 +255,6 @@ definition {
 		else {
 			return ${dataSetViewsIds};
 		}
-	}
-
-	@summary = "Default summary"
-	macro _getDataSetViewsIds() {
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = PropsUtil.get("default.admin.password");
-		}
-
-		var curl = '''
-			${portalURL}/o/data-set-manager/views \
-				-u ${userEmailAddress}:${userPassword}
-		''';
-
-		var siteId = JSONCurlUtil.get(${curl}, "$..items[0].creator.id");
-
-		var dataSetViewsIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
-
-		return ${dataSetViewsIds};
 	}
 
 }

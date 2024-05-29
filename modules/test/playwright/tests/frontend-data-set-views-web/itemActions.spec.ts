@@ -97,16 +97,19 @@ test.describe('Item Actions in Data Set Manager', () => {
 			});
 		});
 
-		await test.step('Check that the item action is in the list', async () => {
-			await expect(actionsPage.itemActionsTab).toBeInViewport();
+		await test.step(
+			'Check that the item action is in the list',
+			async () => {
+				await expect(actionsPage.itemActionsTab).toBeInViewport();
 
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: LINK_ITEM_ACTION_NAME,
-				})
-			).toBeVisible();
-		});
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: LINK_ITEM_ACTION_NAME,
+					})
+				).toBeVisible();
+			}
+		);
 	});
 });
 
@@ -431,7 +434,8 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
 			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
-			const ASYNC_ITEM_ACTION_URL = '/o/data-set-manager/fields/{id}';
+			const ASYNC_ITEM_ACTION_URL =
+				'/o/data-set-manager/table-sections/{id}';
 			const HEADLESS_ITEM_ACTION_NAME = 'Headless item action';
 			const HEADLESS_ITEM_ACTION_PERMISSION_KEY = 'delete';
 			const NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME =
@@ -619,7 +623,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
 			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
 			const ASYNC_ITEM_ACTION_WRONG_URL =
-				'/o/data-set-manager/fields/{foo}';
+				'/o/data-set-manager/table-sections/{foo}';
 
 			await fragmentTest.step('Populate Data Set', async () => {
 				await dataSetManagerApiHelpers.createDataSetField({

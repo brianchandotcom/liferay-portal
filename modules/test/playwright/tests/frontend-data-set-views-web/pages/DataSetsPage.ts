@@ -58,7 +58,7 @@ export class DataSetsPage {
 
 	async createDataSet({
 		name = DEFAULT_LABEL.DATA_SET,
-		restApplication = '/data-set-manager/fields',
+		restApplication = '/data-set-manager/table-sections',
 		restEndpoint = '/',
 		restSchema = 'FDSField',
 	}: {

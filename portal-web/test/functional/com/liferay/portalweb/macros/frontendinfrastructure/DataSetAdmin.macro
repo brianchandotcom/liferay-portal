@@ -600,7 +600,7 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteAllDataSetViews() {
-		var dataSetViewsIdList = JSONDataSet._getDataSetViewsIds();
+		var dataSetViewsIdList = JSONDataSet._getDataSetIds();
 
 		if (${dataSetViewsIdList} != "") {
 			JSONDataSet._deleteFDSViews();

@@ -317,7 +317,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 
@@ -415,7 +415,7 @@ definition {
 		task ("Given the creation of a new dataset") {
 			DataSetAdmin.createDataSet(
 				key_name = "DataSet Test",
-				key_type = "/data-set-manager/fields");
+				key_type = "/data-set-manager/table-sections");
 		}
 
 		task ("When the user goes to the Views admin page of the new dataset") {
@@ -439,7 +439,7 @@ definition {
 		task ("Given the creation of a new dataset") {
 			DataSetAdmin.createDataSet(
 				key_name = "DataSet Test",
-				key_type = "/data-set-manager/fields");
+				key_type = "/data-set-manager/table-sections");
 		}
 
 		task ("When the user goes to the Views admin page of the new dataset") {
@@ -537,7 +537,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 
@@ -625,7 +625,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 
@@ -713,7 +713,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 
@@ -817,7 +817,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 
@@ -1051,7 +1051,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 
@@ -1140,7 +1140,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 
@@ -1235,7 +1235,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "FDSField",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 		}
@@ -1694,7 +1694,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 

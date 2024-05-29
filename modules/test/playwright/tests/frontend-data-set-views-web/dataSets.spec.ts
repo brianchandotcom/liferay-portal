@@ -26,7 +26,7 @@ const DATASET_LABEL = getRandomString();
 
 const dataSetConfig = {
 	name: DATASET_LABEL,
-	restApplication: '/data-set-manager/fields',
+	restApplication: '/data-set-manager/table-sections',
 	restEndpoint: '/',
 	restSchema: 'FDSField',
 };

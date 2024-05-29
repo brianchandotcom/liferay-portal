@@ -17,7 +17,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/fields",
+				restApplication = "/data-set-manager/table-sections",
 				restEndpoint = "/",
 				restSchema = "FDSField");
 		}

@@ -22,7 +22,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		erc = 'sampleDataSetERC',
 		label = DEFAULT_LABEL.DATA_SET,
 		listOfItemsPerPage = '4, 8, 20, 40, 60',
-		restApplication = '/data-set-manager/fields',
+		restApplication = '/data-set-manager/table-sections',
 		restEndpoint = '/',
 		restSchema = 'FDSField',
 	}: {
@@ -36,7 +36,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		restEndpoint?: string;
 		restSchema?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/views`;
+		const url = `${this.baseUrl}data-set-manager/data-sets`;
 
 		const data = {
 			defaultItemsPerPage,
@@ -125,7 +125,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		rendererType?: string;
 		type?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/fields`;
+		const url = `${this.baseUrl}data-set-manager/table-sections`;
 
 		const data = {
 			label_i18n,
@@ -188,7 +188,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		source: string;
 		sourceType: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/dynamic-filters`;
+		const url = `${this.baseUrl}data-set-manager/selection-filters`;
 
 		const data = {
 			fieldName,
@@ -275,7 +275,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async deleteDataSet({erc = DEFAULT_DATA_SET_ERC}: {erc?: string}) {
-		const url = `${this.baseUrl}data-set-manager/views/by-external-reference-code/${erc}`;
+		const url = `${this.baseUrl}data-set-manager/data-sets/by-external-reference-code/${erc}`;
 
 		return this.delete(url);
 	}
@@ -289,7 +289,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		erc?: string;
 		label?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/views/by-external-reference-code/${erc}`;
+		const url = `${this.baseUrl}data-set-manager/data-sets/by-external-reference-code/${erc}`;
 
 		const data = {
 			defaultVisualizationMode,

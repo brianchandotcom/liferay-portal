@@ -7,13 +7,16 @@ package com.liferay.object.internal.field.filter.parser;
 
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
+import com.liferay.object.field.filter.parser.StatusSystemObjectFieldFilterStrategy;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -29,7 +32,6 @@ public class ListObjectFieldFilterContributorTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Ignore
 	@Test
 	public void testValidate() throws PortalException {
 		ObjectViewFilterColumn objectViewFilterColumn = Mockito.mock(
@@ -46,6 +48,19 @@ public class ListObjectFieldFilterContributorTest {
 		).thenReturn(
 			"{\"includes\": [0, 1]}"
 		);
+
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.get(LocaleUtil.getDefault(), "approved")
+		).thenReturn(
+			"approved"
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_listObjectFieldFilterContributor, "_objectFieldFilterStrategy",
+			new StatusSystemObjectFieldFilterStrategy(
+				language, LocaleUtil.getDefault(), objectViewFilterColumn));
 
 		try {
 			_listObjectFieldFilterContributor.validate();

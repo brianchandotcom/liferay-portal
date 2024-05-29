@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.opensearch2.internal.configuration.OpenSearchConfigurationWrapper;
@@ -227,6 +226,34 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
+	private PutIndicesSettingsRequest _buildPutIndicesSettingsRequest(
+		String indexName, String settings) {
+
+		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest =
+			new UpdateIndexSettingsIndexRequest(indexName);
+
+		PutIndicesSettingsRequest.Builder builder =
+			new PutIndicesSettingsRequest.Builder();
+
+		JsonpMapper jsonpMapper = _openSearchConnectionManager.getJsonpMapper(
+			updateIndexSettingsIndexRequest.getConnectionId());
+
+		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+		try (InputStream inputStream = new ByteArrayInputStream(
+				settings.getBytes(StandardCharsets.UTF_8))) {
+
+			builder.settings(
+				IndexSettings._DESERIALIZER.deserialize(
+					jsonProvider.createParser(inputStream), jsonpMapper));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return builder.build();
+	}
+
 	private CreateIndexRequest.Builder _createCreateIndexRequestBuilder(
 		JSONObject configurationJSONObject) {
 
@@ -422,6 +449,27 @@ public class IndexHelperImpl implements IndexHelper {
 	private void _processContributions(
 		IndexConfigurationContributor indexConfigurationContributor) {
 
+		JSONObject settingsJSONObject = _jsonFactory.createJSONObject();
+
+		indexConfigurationContributor.contributeSettings(
+			settingsJSONObject::put);
+
+		boolean contributeMappings = Validator.isNull(
+			_openSearchConfigurationWrapper.overrideTypeMappings());
+
+		if (!contributeMappings &&
+			settingsJSONObject.keySet(
+			).isEmpty()) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No mappings or settings to contribute from " +
+						indexConfigurationContributor);
+			}
+
+			return;
+		}
+
 		OpenSearchClient openSearchClient = null;
 
 		try {
@@ -441,11 +489,6 @@ public class IndexHelperImpl implements IndexHelper {
 			return;
 		}
 
-		JSONObject settingsJSONObject = _jsonFactory.createJSONObject();
-
-		indexConfigurationContributor.contributeSettings(
-			settingsJSONObject::put);
-
 		OpenSearchIndicesClient openSearchIndicesClient =
 			openSearchClient.indices();
 
@@ -456,16 +499,10 @@ public class IndexHelperImpl implements IndexHelper {
 				if (!settingsJSONObject.keySet(
 					).isEmpty()) {
 
-					UpdateIndexSettingsIndexRequest
-						updateIndexSettingsIndexRequest =
-							new UpdateIndexSettingsIndexRequest(indexName);
-
-					updateIndexSettingsIndexRequest.setSettings(
-						settingsJSONObject.toString());
-
 					try {
-						_searchEngineAdapter.execute(
-							updateIndexSettingsIndexRequest);
+						openSearchIndicesClient.putSettings(
+							_buildPutIndicesSettingsRequest(
+								indexName, settingsJSONObject.toString()));
 					}
 					catch (Exception exception) {
 						_log.error(
@@ -477,10 +514,7 @@ public class IndexHelperImpl implements IndexHelper {
 					}
 				}
 
-				if (Validator.isNull(
-						_openSearchConfigurationWrapper.
-							overrideTypeMappings())) {
-
+				if (contributeMappings) {
 					indexConfigurationContributor.contributeMappings(
 						new MappingsFactory(
 							indexName, _jsonFactory, openSearchIndicesClient,
@@ -508,15 +542,28 @@ public class IndexHelperImpl implements IndexHelper {
 	private void _updateMaxResultWindow(long companyId, int maxResultWindow) {
 		String indexName = _indexNameBuilder.getIndexName(companyId);
 
-		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest =
-			new UpdateIndexSettingsIndexRequest(indexName);
+		try {
+			OpenSearchClient openSearchClient =
+				_openSearchConnectionManager.getOpenSearchClient();
 
-		updateIndexSettingsIndexRequest.setSettings(
-			JSONUtil.put(
-				"index", JSONUtil.put("max_result_window", maxResultWindow)
-			).toString());
+			OpenSearchIndicesClient openSearchIndicesClient =
+				openSearchClient.indices();
 
-		_searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
+			openSearchIndicesClient.putSettings(
+				_buildPutIndicesSettingsRequest(
+					indexName,
+					JSONUtil.put(
+						"index",
+						JSONUtil.put("max_result_window", maxResultWindow)
+					).toString()));
+		}
+		catch (Exception exception) {
+			_log.error(
+				StringBundler.concat(
+					"Failed to update index.max_result_window to ",
+					maxResultWindow, " for index ", indexName),
+				exception);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -549,8 +596,5 @@ public class IndexHelperImpl implements IndexHelper {
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private SearchEngineAdapter _searchEngineAdapter;
 
 }

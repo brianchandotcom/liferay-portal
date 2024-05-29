@@ -204,7 +204,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/fragment/adaptivemedia/FragmentsWithImageResolutionInDisplayPageTemplate\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/fragment/FragmentsExportImport\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/fragment/FragmentsWithLocalizableConfiguration\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/fragment/outoftheboxfragments/collectiondisplay/CollectionDisplay\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/fragment/outoftheboxfragments/collectiondisplay/CollectionDisplayWithCollectionProviders\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/fragment/outoftheboxfragments/container/Container\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/fragment/outoftheboxfragments/dropdown/Dropdown\.testcase" />

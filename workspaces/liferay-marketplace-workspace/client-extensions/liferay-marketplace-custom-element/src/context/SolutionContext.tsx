@@ -546,7 +546,7 @@ export default function SolutionContextProvider({
 }: SolutionContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, solutionInitialState);
 	const {productId} = useParams();
-	const {data = {}} = useGetVocabulariesAndCategories([
+	const {data = {}, isLoading} = useGetVocabulariesAndCategories([
 		ProductVocabulary.PRODUCT_TYPE,
 		ProductVocabulary.SOLUTION_CATEGORY,
 		ProductVocabulary.SOLUTION_TAGS,
@@ -568,6 +568,10 @@ export default function SolutionContextProvider({
 			)
 			.catch(console.error);
 	}, [productId]);
+
+	if (isLoading) {
+		return <Loading />;
+	}
 
 	return (
 		<SolutionContext.Provider

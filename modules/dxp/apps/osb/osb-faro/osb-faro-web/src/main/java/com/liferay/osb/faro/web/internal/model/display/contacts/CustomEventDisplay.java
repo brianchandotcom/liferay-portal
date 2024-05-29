@@ -19,6 +19,7 @@ public class CustomEventDisplay extends EntityDisplay {
 
 	public CustomEventDisplay(CustomEvent customEvent) {
 		_blocked = customEvent.isBlocked();
+		_displayName = customEvent.getDisplayName();
 		_hidden = customEvent.isHidden();
 		_name = customEvent.getName();
 
@@ -26,6 +27,7 @@ public class CustomEventDisplay extends EntityDisplay {
 	}
 
 	private boolean _blocked;
+	private String _displayName;
 	private boolean _hidden;
 	private String _name;
 

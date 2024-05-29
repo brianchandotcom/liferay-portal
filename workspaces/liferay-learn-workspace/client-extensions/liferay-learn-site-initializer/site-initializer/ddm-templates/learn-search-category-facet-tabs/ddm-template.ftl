@@ -50,17 +50,17 @@
 			id="dropdownAlignment1"
 		>
 			<div class="d-flex facet-value-mobile justify-content-center opacity-75">
-					<#list entries as entry>
-						<#if entry.isSelected()>
-							<span class="term-text">${entry.getBucketText()}</span>
-							<#if entry.isFrequencyVisible()>
-								<span class="term-count">${entry.getFrequency()}</span>
-							</#if>
-							<#else>
-								<span class="term-text">All results</span>
-								<span class="term-count">${totalCount}</span>
-							</#if>
-					</#list>
+                <#list entries as entry>
+                    <#if entry.isSelected()>
+						<span class="term-text">${entry.getBucketText()}</span>
+                        <#if entry.isFrequencyVisible()>
+							<span class="term-count">${entry.getFrequency()}</span>
+                        </#if>
+                    <#else>
+						<span class="term-text">All results</span>
+						<span class="term-count">${totalCount}</span>
+                    </#if>
+                </#list>
 			</div>
 		</button>
 

@@ -10,14 +10,25 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.security.audit.AuditEventManager;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,23 +57,91 @@ public class PersistentAuditMessageProcessor implements AuditMessageProcessor {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
-		PersistentAuditMessageProcessorConfiguration
-			persistentAuditMessageProcessorConfiguration =
-				ConfigurableUtil.createConfigurable(
-					PersistentAuditMessageProcessorConfiguration.class,
-					properties);
+		_scheduledExecutorService = new ScheduledThreadPoolExecutor(
+			1,
+			new NamedThreadFactory(
+				PersistentAuditMessageProcessor.class.getName(),
+				Thread.NORM_PRIORITY, null));
 
-		_enabled = persistentAuditMessageProcessorConfiguration.enabled();
+		modified(properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_scheduledExecutorService.shutdown();
+
+		_flush();
 	}
 
 	protected void doProcess(AuditMessage auditMessage) throws Exception {
-		if (!_enabled) {
+		PersistentAuditMessageProcessorConfiguration
+			persistentAuditMessageProcessorConfiguration =
+				_persistentAuditMessageProcessorConfiguration;
+
+		if (!persistentAuditMessageProcessorConfiguration.enabled()) {
 			return;
 		}
 
-		_auditEventManager.addAuditEvent(auditMessage);
+		_queue.add(auditMessage);
+
+		int size = _queueSize.incrementAndGet();
+
+		if (size >= persistentAuditMessageProcessorConfiguration.bufferSize()) {
+			_flush();
+		}
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_persistentAuditMessageProcessorConfiguration =
+			ConfigurableUtil.createConfigurable(
+				PersistentAuditMessageProcessorConfiguration.class, properties);
+
+		synchronized (this) {
+			if (_scheduledFuture != null) {
+				_scheduledFuture.cancel(false);
+			}
+
+			long flushInterval =
+				_persistentAuditMessageProcessorConfiguration.flushInterval();
+
+			if (flushInterval > 0) {
+				_scheduledFuture =
+					_scheduledExecutorService.scheduleWithFixedDelay(
+						this::_flush, flushInterval, flushInterval,
+						TimeUnit.MILLISECONDS);
+			}
+			else {
+				_scheduledFuture = null;
+			}
+		}
+	}
+
+	private void _flush() {
+		List<AuditMessage> auditMessages = new ArrayList<>();
+
+		AuditMessage auditMessage = null;
+
+		while ((auditMessage = _queue.poll()) != null) {
+			auditMessages.add(auditMessage);
+		}
+
+		int flushedSize = auditMessages.size();
+
+		if (flushedSize > 0) {
+			int size = _queueSize.get();
+
+			while (!_queueSize.compareAndSet(size, size - flushedSize)) {
+				size = _queueSize.get();
+			}
+
+			_auditEventManager.addAuditEvents(auditMessages);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Bulk flushed AuditMessage count " + flushedSize);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -71,6 +150,11 @@ public class PersistentAuditMessageProcessor implements AuditMessageProcessor {
 	@Reference
 	private AuditEventManager _auditEventManager;
 
-	private volatile boolean _enabled;
+	private volatile PersistentAuditMessageProcessorConfiguration
+		_persistentAuditMessageProcessorConfiguration;
+	private final Queue<AuditMessage> _queue = new ConcurrentLinkedQueue<>();
+	private final AtomicInteger _queueSize = new AtomicInteger();
+	private ScheduledExecutorService _scheduledExecutorService;
+	private volatile ScheduledFuture<?> _scheduledFuture;
 
 }

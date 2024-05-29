@@ -12,8 +12,10 @@ import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
-import {navigateToSitePage} from '../analytics-settings-web/utils/analyticsSettings';
+import {
+	navigateToSitePage,
+	syncAnalyticsCloud,
+} from '../analytics-settings-web/utils/analyticsSettings';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {faroConfig} from './faro.config';
@@ -143,7 +145,7 @@ test('shows tracked pages in path analysis', async ({apiHelpers, page}) => {
 
 	await syncAnalyticsCloud(page, channelName);
 
-	await navigateToSitePage(page, "", pageTitle1);
+	await navigateToSitePage(page, '', pageTitle1);
 
 	await page.waitForTimeout(10000);
 

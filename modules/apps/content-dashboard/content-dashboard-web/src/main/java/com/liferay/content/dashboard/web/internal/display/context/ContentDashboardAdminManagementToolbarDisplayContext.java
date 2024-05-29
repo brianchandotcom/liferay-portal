@@ -251,8 +251,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			() -> scopeId > 0,
 			labelItem -> {
 				labelItem.putData(
-					"removeLabelURL",
-					_getRemoveLabelURL("scopeId", (String)null));
+					"removeLabelURL", _getRemoveLabelURL("scopeId"));
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
 					_getLabel(
@@ -325,8 +324,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			() -> status != WorkflowConstants.STATUS_ANY,
 			labelItem -> {
 				labelItem.putData(
-					"removeLabelURL",
-					_getRemoveLabelURL("status", (String)null));
+					"removeLabelURL", _getRemoveLabelURL("status"));
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
 					_getLabel("status", _getStatusLabel(status)));
@@ -337,8 +335,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_contentDashboardAdminDisplayContext.getReviewDateString()),
 			labelItem -> {
 				labelItem.putData(
-					"removeLabelURL",
-					_getRemoveLabelURL("reviewDate", (String)null));
+					"removeLabelURL", _getRemoveLabelURL("reviewDate"));
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
 					_getLabel(
@@ -869,6 +866,16 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).buildString();
 	}
 
+	private String _getRemoveLabelURL(String... names) {
+		PortletURL portletURL = getPortletURL();
+
+		for (String name : names) {
+			portletURL.setParameter(name, (String)null);
+		}
+
+		return portletURL.toString();
+	}
+
 	private String _getRemoveLabelURL(
 			String name,
 			PortletURLBuilder.UnsafeSupplier<Object, Exception>
@@ -879,16 +886,6 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
 		).setParameter(
 			name, valueUnsafeSupplier
-		).buildString();
-	}
-
-	private String _getRemoveLabelURL(String name, String value)
-		throws PortletException {
-
-		return PortletURLBuilder.create(
-			PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
-		).setParameter(
-			name, value
 		).buildString();
 	}
 

@@ -11,7 +11,7 @@ import sortObjectKeys from '../../util/sortObjectKeys.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 
 export default async function writeProjectTsconfig(
-	mainEntryPoints, projectDependencies, projectDescription, projectDir = '.'
+	projectsEntryPoints, projectDependencies, projectDescription, projectDir = '.'
 ) {
 
 	const rootDir = await getRootDir();
@@ -38,23 +38,23 @@ export default async function writeProjectTsconfig(
 	const references = [];
 
 	for (const dependency of Object.keys(projectDependencies)) {
-		const mainEntryPoint = mainEntryPoints[dependency];
+		const projectEntryPoint = projectsEntryPoints[dependency];
 
-		if (!mainEntryPoint) {
+		if (!projectEntryPoint) {
 			continue;
 		}
 
-		const mainEntryPointPath = path.join(
+		const projectEntryPointPath = path.join(
 			rootDir,
-			...`${mainEntryPoint.base}/${mainEntryPoint.main}`.split('/')
+			...`${projectEntryPoint.dir}/${projectEntryPoint.path}`.split('/')
 		);
 
-		paths[dependency] = [path.posix.relative(srcPath, mainEntryPointPath)];
+		paths[dependency] = [path.posix.relative(srcPath, projectEntryPointPath)];
 
 		const projectPath = 
 			path.posix.relative(
 				srcPath,
-				path.join(rootDir, mainEntryPoint.base)
+				path.join(rootDir, projectEntryPoint.dir)
 			);
 
 		references.push({path: `${projectPath}/${SRC_TSCONFIG_PATH}`});

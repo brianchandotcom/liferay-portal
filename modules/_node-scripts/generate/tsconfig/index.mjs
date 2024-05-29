@@ -5,9 +5,9 @@
 
 import path from 'path';
 
-import getMainEntryPoints from '../../configuration/getMainEntryPoints.mjs';
 import getProjectDependencies from '../../configuration/getProjectDependencies.mjs';
 import getProjectDescription from '../../configuration/getProjectDescription.mjs';
+import getProjectEntryPoints from '../../configuration/getProjectEntryPoints.mjs';
 import {getProjectDirs, getRootDir, SRC_PATH} from '../../util/constants.mjs';
 import fileExists from '../../util/fileExists.mjs';
 import writeProjectTsconfig from './writeProjectTsconfig.mjs';
@@ -25,21 +25,48 @@ though you have invoked it from a project directory.
 	}
 
 	const [
-		mainEntryPoints,
 		projectDirs,
 	] = await Promise.all([
-		getMainEntryPoints(),
 		getProjectDirs()
 	]);
 
+	const projectsEntryPoints = await getProjectsEntryPoints(projectDirs, rootDir);
+
 	await Promise.all([
 		...projectDirs.map(
-			projectDir => processProject(projectDir, mainEntryPoints)
+			projectDir => processProject(projectDir, projectsEntryPoints)
 		)
 	]);
 }
 
-async function processProject(projectDir, mainEntryPoints) {
+/**
+ * @returns
+ * {
+ *	 '@liferay/frontend-js-react-web': {
+ *		dir: 'modules/apps/frontend-js/frontend-js-react-web',
+ *		path: 'src/main/resources/META-INF/resources/js/index.ts'
+ *	 },
+ *	 ...
+ * }
+ */
+async function getProjectsEntryPoints(projectDirs, rootDir) {
+	return projectDirs.reduce(
+		(projectsEntryPoints, projectDir) => {
+			const {name} = getProjectDescription(projectDir);
+			const {typescript} = getProjectEntryPoints(projectDir);
+
+			projectsEntryPoints[name] = {
+				dir: path.relative(rootDir, projectDir),
+				path: typescript
+			};
+
+			return projectsEntryPoints;
+		},
+		{}
+	);
+}
+
+async function processProject(projectDir, projectsEntryPoints) {
 	if (!await fileExists(path.join(projectDir, SRC_PATH))) {
 		return;
 	}
@@ -52,5 +79,7 @@ async function processProject(projectDir, mainEntryPoints) {
 		getProjectDescription(projectDir),
 	]);
 
-	await writeProjectTsconfig(mainEntryPoints, projectDependencies, projectDescription, projectDir);
+	await writeProjectTsconfig(
+		projectsEntryPoints, projectDependencies, projectDescription, projectDir
+	);
 }

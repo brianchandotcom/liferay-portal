@@ -14,8 +14,8 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  *   typescript: 'src/main/resources/META-INF/resources/index.d.ts'
  * }
  */
-export default function getProjectEntryPoints() {
-	const {main, typescript} = projectScopeRequire('./node-scripts.config.js');
+export default function getProjectEntryPoints(projectDir = '.') {
+	const {main, typescript} = projectScopeRequire('./node-scripts.config.js', projectDir);
 
 	const entryPoints = {};
 

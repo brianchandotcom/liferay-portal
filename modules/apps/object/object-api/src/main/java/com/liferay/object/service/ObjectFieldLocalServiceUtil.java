@@ -550,6 +550,13 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().updateRequired(objectFieldId, required);
 	}
 
+	public static void updateUserId(
+			long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		getService().updateUserId(companyId, oldUserId, newUserId);
+	}
+
 	public static void validateExternalReferenceCode(
 			String externalReferenceCode, long objectFieldId, long companyId,
 			long objectDefinitionId)

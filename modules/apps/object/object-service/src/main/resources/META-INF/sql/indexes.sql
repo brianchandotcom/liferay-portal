@@ -26,9 +26,10 @@ create index IX_A388E5A0 on ObjectEntry (objectDefinitionId, status);
 create index IX_68B7FB2 on ObjectEntry (objectDefinitionId, userId, createDate);
 create index IX_BD205C3B on ObjectEntry (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_EAECE0E1 on ObjectField (companyId, userId);
 create index IX_6DCE835D on ObjectField (listTypeDefinitionId, state_);
+create unique index IX_B0716ED7 on ObjectField (objectDefinitionId, companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_5DDCF209 on ObjectField (objectDefinitionId, dbTableName[$COLUMN_LENGTH:75$]);
-create unique index IX_9882118D on ObjectField (objectDefinitionId, externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
 create index IX_52AAA62B on ObjectField (objectDefinitionId, indexed, dbType[$COLUMN_LENGTH:75$]);
 create index IX_2D0537E9 on ObjectField (objectDefinitionId, localized);
 create index IX_A59C5981 on ObjectField (objectDefinitionId, name[$COLUMN_LENGTH:75$]);

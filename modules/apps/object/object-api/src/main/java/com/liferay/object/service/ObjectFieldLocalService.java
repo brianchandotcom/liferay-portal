@@ -431,6 +431,9 @@ public interface ObjectFieldLocalService
 	public ObjectField updateRequired(long objectFieldId, boolean required)
 		throws PortalException;
 
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException;
+
 	public void validateExternalReferenceCode(
 			String externalReferenceCode, long objectFieldId, long companyId,
 			long objectDefinitionId)

@@ -634,6 +634,13 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectFieldLocalService.updateUserId(companyId, oldUserId, newUserId);
+	}
+
+	@Override
 	public void validateExternalReferenceCode(
 			String externalReferenceCode, long objectFieldId, long companyId,
 			long objectDefinitionId)

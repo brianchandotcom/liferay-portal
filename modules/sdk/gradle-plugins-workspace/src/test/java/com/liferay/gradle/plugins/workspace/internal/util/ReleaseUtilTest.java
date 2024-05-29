@@ -76,7 +76,7 @@ public class ReleaseUtilTest {
 		File parentDirFile = parentDirPath.toFile();
 
 		if (!parentDirFile.exists() && !parentDirFile.mkdirs()) {
-			throw new Exception("Failed to create directory: " + parentDirPath);
+			throw new Exception("Unable to create directory: " + parentDirPath);
 		}
 
 		try (InputStream inputStream =
@@ -84,7 +84,7 @@ public class ReleaseUtilTest {
 
 			if (inputStream == null) {
 				throw new Exception(
-					"Could not read resource from classpath: " +
+					"Unable to read resource from class path: " +
 						resourceFileName);
 			}
 

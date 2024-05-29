@@ -173,11 +173,11 @@ public class ReleaseUtil {
 	private ReleaseUtil(
 		long maxAge, List<String> releasesMirrors, File workspaceCacheDir) {
 
+		_workspaceCacheDir = workspaceCacheDir;
+
 		for (String releasesMirror : releasesMirrors) {
 			_releasesMirrors.add(_normalizeReleasesMirror(releasesMirror));
 		}
-
-		_workspaceCacheDir = workspaceCacheDir;
 
 		File releasesJsonFile = new File(_workspaceCacheDir, "releases.json");
 

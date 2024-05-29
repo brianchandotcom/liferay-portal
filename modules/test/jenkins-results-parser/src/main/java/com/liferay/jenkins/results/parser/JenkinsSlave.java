@@ -50,7 +50,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		}
 
 		JSONObject jenkinsSlaveJSONObject = JenkinsAPIUtil.getAPIJSONObject(
-			getComputerURL(), "displayName,idle,offline");
+			getComputerURL(), "displayName,idle,offline,offlineCauseReason");
 
 		update(jenkinsSlaveJSONObject);
 	}

@@ -75,8 +75,10 @@ public class RoleUsersProvider
 
 				userIds.addAll(
 					ListUtil.toList(
-						_userGroupRoleLocalService.getUserGroupRolesByGroup(
-							notificationContext.getGroupId()),
+						_userGroupRoleLocalService.
+							getUserGroupRolesByGroupAndRole(
+								notificationContext.getGroupId(),
+								role.getRoleId()),
 						UserGroupRoleModel::getUserId));
 
 				continue;

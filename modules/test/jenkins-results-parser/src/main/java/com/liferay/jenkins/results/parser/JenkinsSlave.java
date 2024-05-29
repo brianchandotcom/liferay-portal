@@ -141,6 +141,10 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		return Integer.parseInt(matcher.group("number"));
 	}
 
+	public String getOfflineCauseReason() {
+		return _offlineCauseReason;
+	}
+
 	public Set<JenkinsSlave> getSiblings() {
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
@@ -218,6 +222,8 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 	protected void update(JSONObject jenkinsSlaveJSONObject) {
 		_idle = jenkinsSlaveJSONObject.getBoolean("idle");
 		_offline = jenkinsSlaveJSONObject.getBoolean("offline");
+		_offlineCauseReason = jenkinsSlaveJSONObject.getString(
+			"offlineCauseReson");
 	}
 
 	private void _setSlaveStatus(String offlineReason, boolean offlineStatus) {
@@ -253,5 +259,6 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 	private final JenkinsMaster _jenkinsMaster;
 	private final String _name;
 	private boolean _offline;
+	private String _offlineCauseReason;
 
 }

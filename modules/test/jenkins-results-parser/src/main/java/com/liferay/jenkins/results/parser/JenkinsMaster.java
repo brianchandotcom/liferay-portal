@@ -755,7 +755,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					JenkinsResultsParserUtil.combine(
 						_masterURL,
 						"/computer/api/json?tree=computer[displayName,",
-						"executors[currentExecutable[url]],idle,offline]")),
+						"executors[currentExecutable[url]],idle,offline,offlineCauseReason]")),
 				false, 5000);
 
 			String queueAPIQuery = "tree=items[task[name,url],url,why]";

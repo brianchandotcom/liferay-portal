@@ -207,10 +207,8 @@ export class PublisherSolutionPage {
 	}
 
 	async goToNewSolution() {
-		await clickAndExpectToBeVisible({
-			target: this.createTemplate,
-			trigger: this.newSolutionButton,
-		});
+		await this.newSolutionButton.click();
+		await this.createTemplate.waitFor({state: 'visible'});
 	}
 
 	async reviewAndSubmit() {

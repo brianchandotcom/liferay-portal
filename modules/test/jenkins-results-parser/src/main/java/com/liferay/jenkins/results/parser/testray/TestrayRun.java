@@ -32,10 +32,6 @@ public class TestrayRun {
 
 	public long getID() {
 		if (_jsonObject == null) {
-			for (TestrayRun testrayRun : _testrayBuild.getTestrayRuns()) {
-				System.out.println(testrayRun);
-			}
-
 			return 0;
 		}
 
@@ -124,7 +120,12 @@ public class TestrayRun {
 		String runIDString = getRunIDString();
 
 		for (TestrayRun testrayRun : testrayBuild.getTestrayRuns()) {
-			if (Objects.equals(runIDString, testrayRun.getRunIDString())) {
+			String testrayRunIDString = testrayRun.getRunIDString();
+
+			if (Objects.equals(
+					runIDString.toLowerCase(),
+					testrayRunIDString.toLowerCase())) {
+
 				jsonObject = testrayRun.getJSONObject();
 
 				break;

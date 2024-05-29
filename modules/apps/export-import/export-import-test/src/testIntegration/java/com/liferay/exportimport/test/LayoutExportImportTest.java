@@ -12,11 +12,14 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -604,6 +607,74 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		exportImportLayouts(layoutIds, getImportParameterMap());
 	}
 
+	@FeatureFlags("LPS-199086")
+	@Test
+	public void testLayoutExportImportWithChildLayoutReferencedWithButtonAndChildHasParentLayout()
+		throws Exception {
+
+		_configurationProvider.saveCompanyConfiguration(
+			StagingConfiguration.class, CompanyThreadLocal.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"publishParentLayoutsByDefault", true
+			).build());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		Layout parentLayout = LayoutTestUtil.addTypeContentLayout(group);
+
+		Layout childLayout = LayoutTestUtil.addTypeContentLayout(
+			group, parentLayout.getPlid());
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			StringUtil.replace(
+				_getContent(
+					"fragment_entry_link_editable_values_with_configuration." +
+						"json"),
+				new String[] {
+					"$GROUP_ID", "$LAYOUT_ID", "$LAYOUT_UUID", "$TITLE"
+				},
+				new String[] {
+					String.valueOf(childLayout.getGroupId()),
+					String.valueOf(childLayout.getLayoutId()),
+					childLayout.getUuid(), childLayout.getName("en_US")
+				}),
+			layout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		Map<Long, Boolean> selectedLayouts = HashMapBuilder.put(
+			layout.getPlid(), true
+		).build();
+
+		Map<String, String[]> exportParameterMap = getExportParameterMap();
+
+		exportParameterMap.put(Constants.CMD, new String[] {Constants.EXPORT});
+
+		exportLayouts(
+			ExportImportHelperUtil.getLayoutIds(selectedLayouts),
+			exportParameterMap);
+
+		importLayouts(exportParameterMap, false);
+
+		Layout importedChildLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				childLayout.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNotNull(importedChildLayout);
+
+		Layout importedParentLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				parentLayout.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNotNull(importedParentLayout);
+
+		Layout importedLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNotNull(importedLayout);
+	}
+
 	/**
 	 * LPD-6808: AC9-AC10
 	 */
@@ -1022,7 +1093,14 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

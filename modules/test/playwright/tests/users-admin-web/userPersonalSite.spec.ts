@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {liferayConfig} from '../../liferay.config';
 
 export const test = mergeTests(loginTest(), usersAndOrganizationsPagesTest);
 
@@ -24,8 +25,8 @@ test('LPD-26175 check that language selector works on private pages', async ({
 
 	await expect(page).toHaveURL(new RegExp(`.+/user/.+`));
 
-	await userPersonalSitePage.switchLanguages(
-		'english-United States',
-		'Sie eine Sprache aus'
+	await page.goto(
+		liferayConfig.environment.baseUrl +
+			'/c/portal/update_language?languageId=en_US'
 	);
 });

@@ -195,6 +195,9 @@ public class SearchPermissionCheckerTest {
 		_assertFieldValue(
 			new long[] {_group.getGroupId()}, Field.GROUP_ROLE_ID,
 			_group.getGroupId() + StringPool.DASH + role.getRoleId(), false);
+		_assertFieldValue(
+			null, Field.GROUP_ROLE_ID,
+			_group.getGroupId() + StringPool.DASH + role.getRoleId(), false);
 	}
 
 	@Test
@@ -254,6 +257,8 @@ public class SearchPermissionCheckerTest {
 		_assertFieldValue(
 			new long[] {_group.getGroupId()}, Field.GROUP_ID,
 			String.valueOf(_group.getGroupId()));
+		_assertFieldValue(
+			null, Field.GROUP_ID, String.valueOf(_group.getGroupId()));
 		_assertFieldValue(
 			new long[] {_group.getGroupId()}, Field.ROLE_ID,
 			String.valueOf(role.getRoleId()));

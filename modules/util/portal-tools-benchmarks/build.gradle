@@ -1,2 +1,6 @@
 dependencies {
+	compileInclude group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileInclude project(":core:petra:petra-function")
+	compileInclude project(":core:petra:petra-lang")
+	compileInclude project(":core:petra:petra-string")
 }

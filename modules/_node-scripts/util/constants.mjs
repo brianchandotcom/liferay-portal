@@ -5,6 +5,7 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import url from 'url';
 
 import fileExists from './fileExists.mjs';
 
@@ -72,30 +73,18 @@ export async function getProjectDirs(dir = undefined) {
 let cachedRootDir;
 
 export async function getRootDir() {
-	if (cachedRootDir) {
-		return cachedRootDir;
-	}
+	if (!cachedRootDir) {
+		const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
-	let rootDir = path.resolve('.');
-	let found = false;
+		cachedRootDir = path.resolve(__dirname, '..', '..');
 
-	while (path.dirname(rootDir) !== rootDir) {
-		if (await fileExists(path.join(rootDir, 'yarn.lock'))) {
-			found = true;
-
-			break;
+		if (!await fileExists(path.join(cachedRootDir, 'yarn.lock'))) {
+			throw new Error(
+				`Root project folder is no longer at ${cachedRootDir}. Please check if yarn.lock` +
+					' has been deleted or modules/_node-scripts/util/constants.js has been moved.'
+			);
 		}
-
-		rootDir = path.resolve(rootDir, '..');
 	}
 
-	if (!found) {
-		throw new Error(
-			'Unable to find root project folder (is yarn.lock missing?)'
-		);
-	}
-
-	cachedRootDir = rootDir;
-
-	return rootDir;
+	return cachedRootDir;
 }

@@ -168,8 +168,8 @@
 				<div class="align-items-center container d-flex flex-column">
 					<#if block.type == "text-block">
 						<@blockHeader
-							description=block.content.description
-							title=block.content.title
+							description = block.content.description
+							title = block.content.title
 						/>
 					</#if>
 
@@ -177,8 +177,8 @@
 						<div class="d-flex">
 							<div class="mr-5">
 								<@blockHeader
-									description=block.content.description
-									title=block.content.title
+									description = block.content.description
+									title = block.content.title
 								/>
 							</div>
 
@@ -189,8 +189,8 @@
 								/>
 
 								<@productCarrousel
-									carouselId="${block.type}${block?index}"
-									files=allFiles
+									carouselId = "${block.type}${block?index}"
+									files = allFiles
 								/>
 							</#if>
 						</div>
@@ -200,12 +200,12 @@
 						<div class="d-flex">
 							<div class="mr-5">
 								<@blockHeader
-									description=block.content.description
-									title=block.content.title
+									description = block.content.description
+									title = block.content.title
 								/>
 							</div>
 
-							<@videoPreview videoUrl=block.content.videoUrl />
+							<@videoPreview videoUrl = block.content.videoUrl />
 						</div>
 					</#if>
 				</div>

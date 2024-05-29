@@ -15,16 +15,12 @@ import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
 import java.net.URL;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -36,12 +32,8 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.ClientCredentialsOAuth2AuthorizedClientProvider;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2ClientCredentialsGrantRequest;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -59,8 +51,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource("LiferayOAuth2ClientConfigurationDefaultTest.properties")
-public class LiferayOAuth2ClientConfigurationDefaultTest {
+@TestPropertySource(
+	"LiferayOAuth2ResourceServerEnableWebSecurityTest.properties"
+)
+public class LiferayOAuth2ResourceServerEnableWebSecurityTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -110,61 +104,55 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 		_clientAndServer.stop();
 	}
 
-	@Before
-	public void setUp() {
-		ClientCredentialsOAuth2AuthorizedClientProvider
-			clientCredentialsOAuth2AuthorizedClientProvider =
-				new ClientCredentialsOAuth2AuthorizedClientProvider();
+	@Test
+	public void testClientIdExistsFromApplicationRoute() throws Exception {
+		try (CloseableMockServerClient closeableMockServerClient =
+				new CloseableMockServerClient("localhost", 8181)) {
 
-		_oAuth2AccessTokenResponseClient = Mockito.mock(
-			OAuth2AccessTokenResponseClient.class);
+			closeableMockServerClient.when(
+				HttpRequest.request(
+				).withMethod(
+					"GET"
+				).withPath(
+					"/o/oauth2/application"
+				).withQueryStringParameter(
+					"externalReferenceCode", "foo-baker"
+				),
+				Times.unlimited()
+			).respond(
+				HttpResponse.response(
+				).withBody(
+					"{ \"client_id\": \"987654321\" }"
+				).withHeader(
+					new Header("Content-Type", "application/json")
+				).withStatusCode(
+					200
+				)
+			);
 
-		clientCredentialsOAuth2AuthorizedClientProvider.
-			setAccessTokenResponseClient(_oAuth2AccessTokenResponseClient);
+			String jwt = JWTAssertionUtil.getJWTWithClientId("987654321");
 
-		_authorizedClientServiceOAuth2AuthorizedClientManager.
-			setAuthorizedClientProvider(
-				clientCredentialsOAuth2AuthorizedClientProvider);
+			_jwtDecoder.decode(jwt);
+		}
 	}
 
 	@Test
-	public void testGetAuthorizationFailure() {
-		expectedException.expect(IllegalArgumentException.class);
+	public void testSingleClientIdExistsFromProperties() throws Exception {
+		String jwt = JWTAssertionUtil.getJWTWithClientId("123456789");
+
+		_jwtDecoder.decode(jwt);
+	}
+
+	@Test
+	public void testSingleClientIdNotExistsFromProperties() throws Exception {
+		expectedException.expect(JwtValidationException.class);
 		expectedException.expectMessage(
-			"Could not find ClientRegistration with id 'none'");
+			"An error occurred while attempting to decode the Jwt: The " +
+				"client_id does not match");
 
-		_liferayOAuth2AccessTokenManager.getAuthorization("none");
-	}
+		String jwt = JWTAssertionUtil.getJWTWithClientId("987654321");
 
-	@Test
-	public void testGetAuthorizationSuccess() {
-		OAuth2AccessTokenResponse oAuth2AccessTokenResponse =
-			OAuth2AccessTokenResponse.withToken(
-				"token"
-			).tokenType(
-				OAuth2AccessToken.TokenType.BEARER
-			).build();
-
-		BDDMockito.given(
-			_oAuth2AccessTokenResponseClient.getTokenResponse(
-				ArgumentMatchers.any())
-		).willReturn(
-			oAuth2AccessTokenResponse
-		);
-
-		OAuth2AccessToken oAuth2AccessToken =
-			oAuth2AccessTokenResponse.getAccessToken();
-
-		String expected = "Bearer " + oAuth2AccessToken.getTokenValue();
-
-		Assert.assertEquals(
-			expected,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"foo-able-headless-server"));
-		Assert.assertEquals(
-			expected,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"foo-baker-headless-server"));
+		_jwtDecoder.decode(jwt);
 	}
 
 	@Rule
@@ -173,13 +161,20 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 	private static ClientAndServer _clientAndServer;
 
 	@Autowired
-	private AuthorizedClientServiceOAuth2AuthorizedClientManager
-		_authorizedClientServiceOAuth2AuthorizedClientManager;
+	private JwtDecoder _jwtDecoder;
 
-	@Autowired
-	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+	private static class CloseableMockServerClient
+		extends MockServerClient implements AutoCloseable {
 
-	private OAuth2AccessTokenResponseClient<OAuth2ClientCredentialsGrantRequest>
-		_oAuth2AccessTokenResponseClient;
+		public CloseableMockServerClient(String remoteHost, int remotePort) {
+			super(remoteHost, remotePort);
+		}
+
+		@Override
+		public void close() {
+			stop();
+		}
+
+	}
 
 }

@@ -15,10 +15,9 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -107,7 +106,7 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 		NimbusJwtDecoder nimbusJwtDecoder = new NimbusJwtDecoder(
 			defaultJWTProcessor);
 
-		Set<String> clientIds = new HashSet<>();
+		Map<String, String> externalReferenceCodeToClientId = new HashMap<>();
 
 		for (String externalReferenceCode :
 				liferayOauthApplicationExternalReferenceCodes.split(",")) {
@@ -115,32 +114,18 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 			String clientId = _environment.getProperty(
 				externalReferenceCode + ".oauth2.user.agent.client.id");
 
-			long timeout = TimeUnit.MINUTES.toMillis(5);
-
-			while ((clientId == null) && (timeout > 0)) {
-				clientId = LiferayOAuth2Util.getClientId(
-					externalReferenceCode, _lxcDXPMainDomain,
-					_lxcDXPServerProtocol);
-
-				if (clientId == null) {
-					long sleep = TimeUnit.SECONDS.toMillis(1);
-
-					Thread.sleep(sleep);
-
-					timeout -= sleep;
-				}
-			}
-
-			clientIds.add(clientId);
-
-			if (_log.isInfoEnabled()) {
+			if ((clientId != null) && _log.isInfoEnabled()) {
 				_log.info("Using client ID " + clientId);
 			}
+
+			externalReferenceCodeToClientId.put(
+				externalReferenceCode, clientId);
 		}
 
 		nimbusJwtDecoder.setJwtValidator(
 			new DelegatingOAuth2TokenValidator<>(
-				new ClientIdOAuth2TokenValidator(clientIds)));
+				new LiferayOAuth2TokenValidator(
+					externalReferenceCodeToClientId)));
 
 		return nimbusJwtDecoder;
 	}
@@ -197,27 +182,44 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
 
-	private class ClientIdOAuth2TokenValidator
+	private class LiferayOAuth2TokenValidator
 		implements OAuth2TokenValidator<Jwt> {
 
 		@Override
 		public OAuth2TokenValidatorResult validate(Jwt jwt) {
-			String clientId = jwt.getClaimAsString("client_id");
+			String jwtCLaimClientId = jwt.getClaimAsString("client_id");
 
-			if (_validClientIds.contains(clientId)) {
+			if (_externalReferenceCodeToClientId.containsValue(
+					jwtCLaimClientId)) {
+
+				return OAuth2TokenValidatorResult.success();
+			}
+
+			_externalReferenceCodeToClientId.forEach(
+				(externalReferenceCode, clientId) ->
+					_externalReferenceCodeToClientId.computeIfAbsent(
+						externalReferenceCode,
+						key -> LiferayOAuth2Util.getClientId(
+							key, _lxcDXPMainDomain, _lxcDXPServerProtocol)));
+
+			if (_externalReferenceCodeToClientId.containsValue(
+					jwtCLaimClientId)) {
+
 				return OAuth2TokenValidatorResult.success();
 			}
 
 			return OAuth2TokenValidatorResult.failure(_oAuth2Error);
 		}
 
-		private ClientIdOAuth2TokenValidator(Set<String> validClientIds) {
-			_validClientIds = validClientIds;
+		private LiferayOAuth2TokenValidator(
+			Map<String, String> externalReferenceCodeToClientId) {
+
+			_externalReferenceCodeToClientId = externalReferenceCodeToClientId;
 		}
 
+		private final Map<String, String> _externalReferenceCodeToClientId;
 		private final OAuth2Error _oAuth2Error = new OAuth2Error(
 			"invalid_token", "The client_id does not match", null);
-		private final Set<String> _validClientIds;
 
 	}
 

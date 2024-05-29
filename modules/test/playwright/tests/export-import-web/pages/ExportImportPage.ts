@@ -104,10 +104,12 @@ export class ExportImportPage {
 	}
 
 	async goToExport() {
+		await this.productMenuPage.openProductMenuIfClosed();
 		await this.productMenuPage.goToPublishingExport();
 	}
 
 	async goToImport() {
+		await this.productMenuPage.openProductMenuIfClosed();
 		await this.productMenuPage.goToPublishingImport();
 	}
 }

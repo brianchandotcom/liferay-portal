@@ -25,7 +25,7 @@
 
 	<c:if test="<%= thread.isLocked() %>">
 		<clay:icon
-			aria-label="<%= LanguageUtil.get(request, "thread-locked") %>"
+			aria-label='<%= LanguageUtil.get(request, "thread-locked") %>'
 			symbol="lock"
 		/>
 

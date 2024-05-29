@@ -85,7 +85,7 @@
 				<c:if test="<%= thread.isQuestion() %>">
 					<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "question") %>">
 						<clay:icon
-							aria-label="<%= LanguageUtil.get(request, "question") %>"
+							aria-label='<%= LanguageUtil.get(request, "question") %>'
 							symbol="question-circle"
 						/>
 					</span>
@@ -182,7 +182,7 @@
 			<c:if test="<%= thread.isLocked() %>">
 				<div>
 					<clay:icon
-						aria-label="<%= LanguageUtil.get(request, "locked") %>"
+						aria-label='<%= LanguageUtil.get(request, "locked") %>'
 						symbol="lock"
 					/>
 

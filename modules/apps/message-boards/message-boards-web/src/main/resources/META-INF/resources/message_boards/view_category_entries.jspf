@@ -42,7 +42,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 				<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
 					<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "question") %>">
 						<clay:icon
-							aria-label="<%= LanguageUtil.get(request, "question") %>"
+							aria-label='<%= LanguageUtil.get(request, "question") %>'
 							symbol="question-circle"
 						/>
 					</span>

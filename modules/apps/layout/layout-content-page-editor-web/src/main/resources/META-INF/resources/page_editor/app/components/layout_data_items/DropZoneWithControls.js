@@ -7,6 +7,7 @@ import React from 'react';
 
 import useSetRef from '../../../common/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
 import Topper from '../topper/Topper';
 
@@ -37,7 +38,12 @@ const DropZoneWithControls = React.forwardRef(({item}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
 
 	return (
-		<Topper active item={item} itemElement={itemElement}>
+		<Topper
+			active
+			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
+			item={item}
+			itemElement={itemElement}
+		>
 			<DropZone item={item} ref={setRef} />
 		</Topper>
 	);

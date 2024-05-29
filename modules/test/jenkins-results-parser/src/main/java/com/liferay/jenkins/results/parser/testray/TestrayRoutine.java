@@ -151,7 +151,7 @@ public class TestrayRoutine {
 	}
 
 	public List<TestrayBuild> getTestrayBuilds() {
-		return null;
+		return getTestrayBuilds(200);
 	}
 
 	public List<TestrayBuild> getTestrayBuilds(
@@ -159,18 +159,24 @@ public class TestrayRoutine {
 
 		StringBuilder sb = new StringBuilder();
 
-		if (nameFilters != null) {
-			int nameFilterCount = nameFilters.length;
+		sb.append("r_routineToBuilds_c_routineId eq '");
+		sb.append(getID());
+		sb.append("'");
 
-			for (int i = 0; i < nameFilterCount; i++) {
+		if ((nameFilters != null) && (nameFilters.length > 0)) {
+			sb.append(" and (");
+
+			for (int i = 0; i < nameFilters.length; i++) {
 				sb.append("contains(name, '");
 				sb.append(nameFilters[i]);
 				sb.append("')");
 
-				if (i < (nameFilterCount - 1)) {
+				if (i < (nameFilters.length - 1)) {
 					sb.append(" or ");
 				}
 			}
+
+			sb.append(")");
 		}
 
 		List<TestrayBuild> testrayBuilds = new ArrayList<>();

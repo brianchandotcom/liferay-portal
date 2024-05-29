@@ -254,7 +254,6 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		while ((current * _DELTA) <= maxSize) {
 			try {
 				String buildAPIURLPath = JenkinsResultsParserUtil.combine(
-					String.valueOf(testrayServer.getURL()),
 					"/home/-/testray/builds.json?cur=", String.valueOf(current),
 					"&delta=", String.valueOf(_DELTA), sb.toString(),
 					"&orderByCol=testrayBuildId&testrayRoutineId=",

@@ -14,14 +14,15 @@ import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,35 +47,43 @@ public class FunctionObjectValidationRuleEngineImpl
 	public Map<String, Object> execute(
 		Map<String, Object> inputObjects, String script) {
 
-		Map<String, Object> entryDTO = (Map<String, Object>)inputObjects.get(
-			"entryDTO");
+		Map<String, Object> results = new HashMap<>();
 
-		if (entryDTO == null) {
-			Map<String, Object> baseModel =
-				(Map<String, Object>)inputObjects.get("baseModel");
+		try {
+			JSONObject payloadJSONObject = _getPayloadJSONObject(inputObjects);
 
-			return getResults(
-				baseModel, GetterUtil.getLong(baseModel.get("creator")));
+			long creatorId = payloadJSONObject.getLong("creator", 0);
+
+			if (creatorId == 0) {
+				JSONObject creatorJSONObject = payloadJSONObject.getJSONObject(
+					"creator");
+
+				creatorId = creatorJSONObject.getLong("id");
+			}
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String(
+					_portalCatapult.launch(
+						_companyId, Http.Method.POST,
+						_functionObjectValidationRuleEngineImplConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						payloadJSONObject,
+						_functionObjectValidationRuleEngineImplConfiguration.
+							resourcePath(),
+						creatorId
+					).get()));
+
+			results.put(
+				"validationCriteriaMet",
+				jsonObject.get("validationCriteriaMet"));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			results.put("validationCriteriaMet", false);
 		}
 
-		Map<String, Object> creatorMap = (Map<String, Object>)entryDTO.get(
-			"creator");
-
-		return getResults(
-			HashMapBuilder.<String, Object>put(
-				"creator", creatorMap
-			).put(
-				"dateCreated", entryDTO.get("dateCreated")
-			).put(
-				"dateModified", entryDTO.get("dateModified")
-			).put(
-				"externalReferenceCode", entryDTO.get("externalReferenceCode")
-			).put(
-				"status", entryDTO.get("status")
-			).putAll(
-				(Map<String, Object>)entryDTO.get("properties")
-			).build(),
-			GetterUtil.getLong(creatorMap.get("id")));
+		return results;
 	}
 
 	@Override
@@ -111,33 +120,38 @@ public class FunctionObjectValidationRuleEngineImpl
 		_name = GetterUtil.getString(properties.get("name"));
 	}
 
-	protected Map<String, Object> getResults(
-		Map<String, Object> inputObjects, long userId) {
+	private JSONObject _getPayloadJSONObject(Map<String, Object> inputObjects) {
+		JSONObject originalJSONObject = _jsonFactory.createJSONObject(
+			inputObjects);
 
-		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				new String(
-					_portalCatapult.launch(
-						_companyId, Http.Method.POST,
-						_functionObjectValidationRuleEngineImplConfiguration.
-							oAuth2ApplicationExternalReferenceCode(),
-						_jsonFactory.createJSONObject(inputObjects),
-						_functionObjectValidationRuleEngineImplConfiguration.
-							resourcePath(),
-						userId
-					).get()));
+		JSONObject entryDTOJSONObject = originalJSONObject.getJSONObject(
+			"entryDTO");
 
-			return HashMapBuilder.<String, Object>put(
-				"validationCriteriaMet", jsonObject.get("validationCriteriaMet")
-			).build();
+		if (entryDTOJSONObject == null) {
+			return originalJSONObject.getJSONObject("baseModel");
 		}
-		catch (Exception exception) {
-			_log.error(exception);
 
-			return HashMapBuilder.<String, Object>put(
-				"validationCriteriaMet", false
-			).build();
+		JSONObject payloadJSONObject = JSONUtil.put(
+			"creator", entryDTOJSONObject.getJSONObject("creator")
+		).put(
+			"dateCreated", entryDTOJSONObject.get("dateCreated")
+		).put(
+			"dateModified", entryDTOJSONObject.get("dateModified")
+		).put(
+			"externalReferenceCode",
+			entryDTOJSONObject.get("externalReferenceCode")
+		).put(
+			"status", entryDTOJSONObject.get("status")
+		);
+
+		JSONObject propertiesJSONObject = entryDTOJSONObject.getJSONObject(
+			"properties");
+
+		for (String key : propertiesJSONObject.keySet()) {
+			payloadJSONObject.put(key, propertiesJSONObject.get(key));
 		}
+
+		return payloadJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

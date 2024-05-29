@@ -1671,6 +1671,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="UpgradeSourceProcessor">
+		<check name="UpgradeBNDDeclarativeServicesCheck">
+			<category name="Upgrade" />
+			<description name="Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist" />
+		</check>
 		<check name="UpgradeBNDIncludeResourceCheck">
 			<category name="Upgrade" />
 			<description name="Checks if the property value `-includeresource` or `Include-Resource` exists and removes it." />
@@ -1984,6 +1988,10 @@
 		<check name="XMLUpgradeCompatibilityVersionCheck">
 			<category name="Upgrade" />
 			<description name="Checks and upgrades the compatibility version in `*.xml` file." />
+		</check>
+		<check name="XMLUpgradeDeclarativeServicesCheck">
+			<category name="Upgrade" />
+			<description name="Sets dependency-injector to ds in `service.xml` file" />
 		</check>
 		<check name="XMLUpgradeDTDVersionCheck">
 			<category name="Upgrade" />

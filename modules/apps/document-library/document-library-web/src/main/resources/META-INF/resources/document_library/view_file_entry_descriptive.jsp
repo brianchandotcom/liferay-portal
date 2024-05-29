@@ -89,9 +89,9 @@ else {
 
 		<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
 			<clay:icon
-				aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+				aria-label='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 				cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
-				data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+				data-title='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 				symbol="password-policies"
 			/>
 		</c:if>
@@ -158,7 +158,7 @@ else {
 		<c:when test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 			<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "locked-document") %>">
 				<clay:icon
-					aria-label="<%= LanguageUtil.get(request, "locked-document") %>"
+					aria-label='<%= LanguageUtil.get(request, "locked-document") %>'
 					cssClass="inline-item inline-item-after state-icon"
 					symbol="lock"
 				/>

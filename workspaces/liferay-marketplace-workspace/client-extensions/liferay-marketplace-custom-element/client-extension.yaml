@@ -14,6 +14,7 @@ liferay-marketplace-custom-element:
         eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
         featureFlags: LPD-20229
         marketoFormId: 3738
+        trialEulaURL: https://marketplace.liferay.com/documents/d/marketplace/evaluation-agreement-cloud-services
     type: customElement
     urls:
         - "main.js"

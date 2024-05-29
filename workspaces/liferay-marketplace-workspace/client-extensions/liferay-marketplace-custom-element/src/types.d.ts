@@ -283,6 +283,7 @@ type DefaultProperties = {
 	eulaBaseURL: string;
 	featureFlags?: string[];
 	marketoFormId: string;
+	trialEulaURL: string;
 	trialProductId: string;
 };
 

@@ -28,6 +28,7 @@ class WebComponent extends HTMLElement {
 							.split(',')
 							.map((featureflag) => featureflag.trim()),
 						marketoFormId: this.getAttribute('marketoFormId') || '',
+						trialEulaURL: this.getAttribute('trialEulaURL') || '',
 						trialProductId:
 							this.getAttribute('trialProductId') || '',
 					}}

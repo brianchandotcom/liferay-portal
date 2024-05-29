@@ -18,6 +18,7 @@ import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateResource;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
@@ -399,7 +400,9 @@ public class TrialRestController extends BaseRestController {
 
 	private static final int _ORDER_STATUS_PROCESSING = 10;
 
-	private static final int _TRIAL_MAX_INSTANCES_IN_PROGRESS = 50;
+	private static final int _TRIAL_MAX_INSTANCES_IN_PROGRESS =
+		GetterUtil.getInteger(
+			System.getenv("TRIAL_MAX_INSTANCES_IN_PROGRESS"), 50);
 
 	private static final Log _log = LogFactory.getLog(
 		TrialRestController.class);

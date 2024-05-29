@@ -102,7 +102,8 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	}
 
 	private HttpResponse _homePage() throws Exception {
-		HttpResponse httpResponse = HttpUtil.doGet(_newURL("/"), null);
+		HttpResponse httpResponse = HttpUtil.doGet(
+			_newURL(StringPool.FORWARD_SLASH), null);
 
 		_assertResult(httpResponse, _KEY_HOME_PAGE);
 
@@ -119,9 +120,9 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 					_P_P_ID_PREFIX + "_formDate",
 					String.valueOf(System.currentTimeMillis())
 				},
-				{_P_P_ID_PREFIX + "_saveLastPath", "false"},
-				{_P_P_ID_PREFIX + "_redirect", ""},
-				{_P_P_ID_PREFIX + "_doActionAfterLogin", "false"},
+				{_P_P_ID_PREFIX + "_saveLastPath", StringPool.FALSE},
+				{_P_P_ID_PREFIX + "_redirect", StringPool.BLANK},
+				{_P_P_ID_PREFIX + "_doActionAfterLogin", StringPool.FALSE},
 				{_P_P_ID_PREFIX + "_login", userEmail},
 				{_P_P_ID_PREFIX + "_password", password},
 				{_P_P_ID_PREFIX + "_checkboxNames", "rememberMe"}
@@ -177,7 +178,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	private static final String _P_P_ID =
 		"com_liferay_login_web_portlet_LoginPortlet";
 
-	private static final String _P_P_ID_PREFIX = "_" + _P_P_ID;
+	private static final String _P_P_ID_PREFIX = StringPool.UNDERLINE + _P_P_ID;
 
 	private static final String _URL_LOGIN_POPUP =
 		"/c/portal/login?windowState=exclusive";

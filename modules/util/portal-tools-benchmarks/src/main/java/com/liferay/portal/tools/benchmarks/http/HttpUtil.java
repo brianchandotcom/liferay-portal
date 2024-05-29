@@ -8,6 +8,7 @@ package com.liferay.portal.tools.benchmarks.http;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,7 +59,8 @@ public class HttpUtil {
 							printWriter.print(parameter[0]);
 							printWriter.print(CharPool.EQUAL);
 							printWriter.print(
-								URLEncoder.encode(parameter[1], "UTF-8"));
+								URLEncoder.encode(
+									parameter[1], StringPool.UTF8));
 						}
 					}
 

@@ -50,7 +50,7 @@ public class HttpResponse {
 	public String getRedirect() throws Exception {
 		String location = _getHeader("Location");
 
-		if (location.contains("%")) {
+		if (location.contains(StringPool.PERCENT)) {
 			location = URLDecoder.decode(location, StringPool.UTF8);
 		}
 

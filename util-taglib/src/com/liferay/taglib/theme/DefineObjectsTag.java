@@ -5,8 +5,10 @@
 
 package com.liferay.taglib.theme;
 
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +42,11 @@ public class DefineObjectsTag extends TagSupport {
 
 		pageContext.setAttribute("colorScheme", themeDisplay.getColorScheme());
 		pageContext.setAttribute("company", themeDisplay.getCompany());
-		pageContext.setAttribute("contact", themeDisplay.getContact());
+		pageContext.setAttribute(
+			"contact",
+			ProxyUtil.newLazyDelegateProxyInstance(
+				Contact.class.getClassLoader(), Contact.class,
+				themeDisplay::getContact));
 
 		if (themeDisplay.getLayout() != null) {
 			pageContext.setAttribute("layout", themeDisplay.getLayout());

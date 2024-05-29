@@ -7,13 +7,13 @@ package com.liferay.portal.tools.benchmarks.task;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.tools.benchmarks.http.HttpResponse;
 import com.liferay.portal.tools.benchmarks.http.HttpUtil;
 
 import java.net.URL;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -35,21 +35,15 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	public List<Map.Entry<String, Long>> execute() throws Exception {
 		HttpResponse httpResponse = _homePage();
 
-		List<Map.Entry<String, Long>> results = new ArrayList<>();
-
-		results.add(
+		return ListUtil.fromArray(
 			new AbstractMap.SimpleEntry<>(
-				"homePage", httpResponse.getDuration()));
-		results.add(
+				"homePage", httpResponse.getDuration()),
 			new AbstractMap.SimpleEntry<>(
-				"viewLoginPage", _viewLoginPage(httpResponse.getCSRFToken())));
-		results.add(
+				"viewLoginPage", _viewLoginPage(httpResponse.getCSRFToken())),
 			new AbstractMap.SimpleEntry<>(
 				"login",
-				_login(_email, _password, httpResponse.getCSRFToken())));
-		results.add(new AbstractMap.SimpleEntry<>("logout", _logout()));
-
-		return results;
+				_login(_email, _password, httpResponse.getCSRFToken())),
+			new AbstractMap.SimpleEntry<>("logout", _logout()));
 	}
 
 	private void _assertRedirect(

@@ -59,9 +59,16 @@ const fetcher = async <T = any>(
 	options?: RequestInit
 ): Promise<T | undefined> => {
 	const currentTimestamp = Date.now();
-	const lastTimestamp = sessionStorage.getItem('lastTimestamp')
-		? parseInt(sessionStorage.getItem('lastTimestamp') as string, 10)
-		: 0;
+	const lastTimestamp =
+		parseInt(sessionStorage.getItem('lastTimestamp') as string, 10) || 0;
+
+	if (!lastTimestamp) {
+		sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
+	}
+
+	if (currentTimestamp - lastTimestamp > 5 * 60 * 1000) {
+		sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
+	}
 
 	const response = await fetch(changeResource(resource), {
 		...options,
@@ -71,12 +78,6 @@ const fetcher = async <T = any>(
 			'x-csrf-token': Liferay.authToken,
 		},
 	});
-
-	if (currentTimestamp - lastTimestamp > 10 * 60 * 1000) {
-		Liferay.Session.reset();
-	}
-
-	sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
 
 	if (!response.ok) {
 		const error = new FetcherError(

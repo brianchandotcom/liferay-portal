@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
+import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -34,17 +35,22 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -270,8 +276,8 @@ public class ContentDashboardSearchContextBuilder {
 		for (Filter filter :
 				Arrays.asList(
 					_getAssetCategoryIdsFilter(), _getAssetTagNamesFilter(),
-					_getAuthorIdsFilter(), _getGoogleDriveShortcutFilter(),
-					_getReviewDateFilter())) {
+					_getAuthorIdsFilter(), _getDateTypeRangeFilter(),
+					_getGoogleDriveShortcutFilter(), _getReviewDateFilter())) {
 
 			if (filter != null) {
 				booleanFilter.add(filter, BooleanClauseOccur.MUST);
@@ -315,6 +321,53 @@ public class ContentDashboardSearchContextBuilder {
 			BooleanClauseFactoryUtil.create(
 				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
 		};
+	}
+
+	private Filter _getDateTypeRangeFilter() {
+		String dateType = ParamUtil.getString(_httpServletRequest, "dateType");
+		String endDateString = ParamUtil.getString(
+			_httpServletRequest, "endDate");
+		String startDateString = ParamUtil.getString(
+			_httpServletRequest, "startDate");
+
+		if (Validator.isNull(dateType) && Validator.isNull(endDateString) &&
+			Validator.isNull(startDateString)) {
+
+			return null;
+		}
+
+		ContentDashboardConstants.DateType filterDateType =
+			ContentDashboardConstants.DateType.parse(dateType);
+
+		if (filterDateType == null) {
+			return null;
+		}
+
+		DateFormat simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		Calendar endDateCalendar = Calendar.getInstance();
+		Calendar startDateCalendar = Calendar.getInstance();
+
+		try {
+			endDateCalendar.setTime(simpleDateFormat.parse(endDateString));
+
+			endDateCalendar.add(Calendar.DATE, 1);
+
+			startDateCalendar.setTime(simpleDateFormat.parse(startDateString));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
+
+		return new RangeTermFilter(
+			Field.getSortableFieldName(filterDateType.getField()), true, false,
+			String.valueOf(startDateCalendar.getTimeInMillis()),
+			String.valueOf(endDateCalendar.getTimeInMillis()));
 	}
 
 	private Filter _getGoogleDriveShortcutFilter() {

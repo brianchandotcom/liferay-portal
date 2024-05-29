@@ -175,6 +175,7 @@ type AccountRole = {
 type Availability = {
 	active: boolean;
 	available: number;
+	fallback: boolean;
 	max: number;
 };
 
@@ -281,7 +282,8 @@ type DefaultProperties = {
 	cloudBaseURL: string;
 	contactSupportUrl: string;
 	eulaBaseURL: string;
-	featureFlags?: string[];
+	featureFlags: string[];
+	featurePreviews: ['use-product-id-for-specification'];
 	marketoFormId: string;
 	trialEulaURL: string;
 	trialProductId: string;

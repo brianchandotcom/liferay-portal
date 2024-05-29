@@ -316,29 +316,29 @@ public class CompanyIndexFactoryHelper {
 		if (!settings.isEmpty()) {
 			IndicesClient indicesClient = restHighLevelClient.indices();
 
-			for (Long companyId :
-					IndexFactoryCompanyIdRegistryUtil.getCompanyIds()) {
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					String indexName = getIndexName(companyId);
 
-				String indexName = getIndexName(companyId);
+					UpdateSettingsRequest updateSettingsRequest =
+						new UpdateSettingsRequest(indexName);
 
-				UpdateSettingsRequest updateSettingsRequest =
-					new UpdateSettingsRequest(indexName);
+					updateSettingsRequest.settings(settings);
 
-				updateSettingsRequest.settings(settings);
-
-				try {
-					indicesClient.putSettings(
-						updateSettingsRequest, RequestOptions.DEFAULT);
-				}
-				catch (Exception exception) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to put settings for index ", indexName,
-							" with contributor ",
-							indexConfigurationContributor),
-						exception);
-				}
-			}
+					try {
+						indicesClient.putSettings(
+							updateSettingsRequest, RequestOptions.DEFAULT);
+					}
+					catch (Exception exception) {
+						_log.error(
+							StringBundler.concat(
+								"Unable to put settings for index ", indexName,
+								" with contributor ",
+								indexConfigurationContributor),
+							exception);
+					}
+				},
+				IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 		}
 
 		if (Validator.isNotNull(
@@ -347,17 +347,18 @@ public class CompanyIndexFactoryHelper {
 			return;
 		}
 
-		for (Long companyId :
-				IndexFactoryCompanyIdRegistryUtil.getCompanyIds()) {
+		IndicesClient indices = restHighLevelClient.indices();
 
-			LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-				new LiferayDocumentTypeFactory(
-					getIndexName(companyId), restHighLevelClient.indices(),
-					_jsonFactory);
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				LiferayDocumentTypeFactory liferayDocumentTypeFactory =
+					new LiferayDocumentTypeFactory(
+						getIndexName(companyId), indices, _jsonFactory);
 
-			indexConfigurationContributor.contributeMappings(
-				liferayDocumentTypeFactory);
-		}
+				indexConfigurationContributor.contributeMappings(
+					liferayDocumentTypeFactory);
+			},
+			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 	}
 
 	private void _putAdditionalTypeMappings(

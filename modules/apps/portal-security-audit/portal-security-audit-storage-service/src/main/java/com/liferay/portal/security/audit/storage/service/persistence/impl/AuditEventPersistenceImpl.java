@@ -179,7 +179,7 @@ public class AuditEventPersistenceImpl
 		List<AuditEvent> list = null;
 
 		if (useFinderCache) {
-			list = (List<AuditEvent>)finderCache.getResult(
+			list = (List<AuditEvent>)dummyFinderCache.getResult(
 				finderPath, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -235,7 +235,7 @@ public class AuditEventPersistenceImpl
 				cacheResult(list);
 
 				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					dummyFinderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -538,7 +538,8 @@ public class AuditEventPersistenceImpl
 
 		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = (Long)dummyFinderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -562,7 +563,7 @@ public class AuditEventPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				dummyFinderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -594,7 +595,7 @@ public class AuditEventPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(AuditEvent auditEvent) {
-		entityCache.putResult(
+		dummyEntityCache.putResult(
 			AuditEventImpl.class, auditEvent.getPrimaryKey(), auditEvent);
 	}
 
@@ -615,7 +616,7 @@ public class AuditEventPersistenceImpl
 		}
 
 		for (AuditEvent auditEvent : auditEvents) {
-			if (entityCache.getResult(
+			if (dummyEntityCache.getResult(
 					AuditEventImpl.class, auditEvent.getPrimaryKey()) == null) {
 
 				cacheResult(auditEvent);
@@ -632,9 +633,9 @@ public class AuditEventPersistenceImpl
 	 */
 	@Override
 	public void clearCache() {
-		entityCache.clearCache(AuditEventImpl.class);
+		dummyEntityCache.clearCache(AuditEventImpl.class);
 
-		finderCache.clearCache(AuditEventImpl.class);
+		dummyFinderCache.clearCache(AuditEventImpl.class);
 	}
 
 	/**
@@ -646,22 +647,22 @@ public class AuditEventPersistenceImpl
 	 */
 	@Override
 	public void clearCache(AuditEvent auditEvent) {
-		entityCache.removeResult(AuditEventImpl.class, auditEvent);
+		dummyEntityCache.removeResult(AuditEventImpl.class, auditEvent);
 	}
 
 	@Override
 	public void clearCache(List<AuditEvent> auditEvents) {
 		for (AuditEvent auditEvent : auditEvents) {
-			entityCache.removeResult(AuditEventImpl.class, auditEvent);
+			dummyEntityCache.removeResult(AuditEventImpl.class, auditEvent);
 		}
 	}
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AuditEventImpl.class);
+		dummyFinderCache.clearCache(AuditEventImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AuditEventImpl.class, primaryKey);
+			dummyEntityCache.removeResult(AuditEventImpl.class, primaryKey);
 		}
 	}
 
@@ -822,7 +823,7 @@ public class AuditEventPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
+		dummyEntityCache.putResult(
 			AuditEventImpl.class, auditEventModelImpl, false, true);
 
 		if (isNew) {
@@ -966,7 +967,7 @@ public class AuditEventPersistenceImpl
 		List<AuditEvent> list = null;
 
 		if (useFinderCache) {
-			list = (List<AuditEvent>)finderCache.getResult(
+			list = (List<AuditEvent>)dummyFinderCache.getResult(
 				finderPath, finderArgs, this);
 		}
 
@@ -1004,7 +1005,7 @@ public class AuditEventPersistenceImpl
 				cacheResult(list);
 
 				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					dummyFinderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -1036,7 +1037,7 @@ public class AuditEventPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
+		Long count = (Long)dummyFinderCache.getResult(
 			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1049,7 +1050,7 @@ public class AuditEventPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				finderCache.putResult(
+				dummyFinderCache.putResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
@@ -1065,7 +1066,7 @@ public class AuditEventPersistenceImpl
 
 	@Override
 	protected EntityCache getEntityCache() {
-		return entityCache;
+		return dummyEntityCache;
 	}
 
 	@Override
@@ -1128,7 +1129,7 @@ public class AuditEventPersistenceImpl
 	public void deactivate() {
 		AuditEventUtil.setPersistence(null);
 
-		entityCache.removeCache(AuditEventImpl.class.getName());
+		dummyEntityCache.removeCache(AuditEventImpl.class.getName());
 	}
 
 	@Override
@@ -1157,12 +1158,6 @@ public class AuditEventPersistenceImpl
 		super.setSessionFactory(sessionFactory);
 	}
 
-	@Reference
-	protected EntityCache entityCache;
-
-	@Reference
-	protected FinderCache finderCache;
-
 	private static final String _SQL_SELECT_AUDITEVENT =
 		"SELECT auditEvent FROM AuditEvent auditEvent";
 
@@ -1188,7 +1183,7 @@ public class AuditEventPersistenceImpl
 
 	@Override
 	protected FinderCache getFinderCache() {
-		return finderCache;
+		return dummyFinderCache;
 	}
 
 }

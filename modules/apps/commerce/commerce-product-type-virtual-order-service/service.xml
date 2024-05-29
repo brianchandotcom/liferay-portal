@@ -48,7 +48,7 @@
 
 		<!-- PK fields -->
 
-		<column name="commerceVirtualOrderItemFileEntryId" db-name="cVirtualOrderItemFileEntryId" primary="true" type="long" />
+		<column db-name="cVirtualOrderItemFileEntryId" name="commerceVirtualOrderItemFileEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -78,10 +78,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceVirtualOrderItemId" return-type="Collection" >
+		<finder name="CommerceVirtualOrderItemId" return-type="Collection">
 			<finder-column name="commerceVirtualOrderItemId" />
 		</finder>
-		<finder name="C_F" return-type="Collection" >
+		<finder name="C_F" return-type="Collection">
 			<finder-column name="commerceVirtualOrderItemId" />
 			<finder-column name="fileEntryId" />
 		</finder>

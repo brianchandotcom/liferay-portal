@@ -213,7 +213,7 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="Name" return-type="Collection">
-			<finder-column case-sensitive="false" arrayable-operator="OR" name="name" />
+			<finder-column arrayable-operator="OR" case-sensitive="false" name="name" />
 		</finder>
 		<finder name="G_LikeN" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />

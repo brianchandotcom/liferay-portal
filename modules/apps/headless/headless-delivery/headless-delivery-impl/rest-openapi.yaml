@@ -8560,6 +8560,23 @@ paths:
                                 $ref: "#/components/schemas/DocumentFolder"
             tags: ["DocumentFolder"]
     "/document-shortcuts/{documentShortcutId}":
+        delete:
+            description:
+                Deletes the document shortcut and returns a 204 if the operation succeeds.
+            operationId: deleteDocumentShortcut
+            parameters:
+                - in: path
+                  name: documentShortcutId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["DocumentShortcut"]
         get:
             description:
                 Retrieves the document shortcut.

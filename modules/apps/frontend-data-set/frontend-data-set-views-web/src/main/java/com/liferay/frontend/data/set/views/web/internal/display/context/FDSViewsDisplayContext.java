@@ -98,7 +98,7 @@ public class FDSViewsDisplayContext {
 				_renderRequest, FDSViewsPortletKeys.FDS_VIEWS,
 				RenderRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/fds_entries.jsp"
+			"/data_sets.jsp"
 		).buildString();
 	}
 

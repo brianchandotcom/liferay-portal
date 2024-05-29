@@ -24,6 +24,7 @@ import {config} from '../../../../../../src/main/resources/META-INF/resources/pa
 import {useCollectionConfig} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import CollectionService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
+import getSelectedField from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getSelectedField';
 import {pageContentsAtom} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
@@ -137,6 +138,11 @@ jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
 	sub: jest.fn((key, arg) => key.replace('x', arg)),
 }));
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getSelectedField',
+	() => jest.fn(() => null)
+);
 
 function renderMappingSelector({
 	mappedItem = {},
@@ -438,5 +444,21 @@ describe('MappingSelector', () => {
 		expect(screen.getByLabelText('relationship')).toBeInTheDocument();
 
 		Liferay.FeatureFlags['LPD-20213'] = false;
+	});
+
+	it('shows field type when an item is mapped and a field is selected', async () => {
+		config.layoutType = LAYOUT_TYPES.content;
+
+		getSelectedField.mockImplementation(() => ({
+			typeLabel: 'text',
+		}));
+
+		renderMappingSelector({});
+
+		await act(async () => {
+			expect(
+				screen.getByText('field-type:').parentElement
+			).toHaveTextContent('text');
+		});
 	});
 });

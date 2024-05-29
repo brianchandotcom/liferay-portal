@@ -5,6 +5,7 @@
 
 import path from 'path';
 import resolve from 'resolve';
+import os from 'os';
 
 import {getProjectDirs, getRootDir, SRC_TSCONFIG_PATH} from '../../util/constants.mjs';
 import fileExists from '../../util/fileExists.mjs';
@@ -15,14 +16,36 @@ export default async function main() {
 	const rootDir = await getRootDir();
 
 	if (cwd === rootDir) {
+		const projectGroups = [[]];
+
+		const cpuCount = os.cpus().length;
+
 		for (const projectDir of await getProjectDirs()) {
 			if (!await fileExists(path.join(projectDir, SRC_TSCONFIG_PATH ))) {
 				continue;
 			}
 
-			console.log(`🕵️ Checking ${path.relative(rootDir, projectDir)}`);
+			let group = projectGroups[projectGroups.length-1];
 
-			await runTsc(projectDir);
+			if (group.length === cpuCount) {
+				group = [];
+
+				projectGroups.push(group);
+			}
+
+			group.push(projectDir);
+		}
+
+		console.log(`ℹ️ ${cpuCount} CPUs detected: launching tsc in groups of ${cpuCount} projects`);
+
+		for (const projectGroup of projectGroups) {
+			await Promise.all(
+				projectGroup.map(projectDir => {
+					console.log(`🕵️ Checking ${path.relative(rootDir, projectDir)}`);
+
+					return runTsc(projectDir);
+				})
+			);
 		}
 	}
 	else {

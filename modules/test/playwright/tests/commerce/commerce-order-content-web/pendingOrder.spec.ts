@@ -5,19 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {miniumSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
@@ -193,6 +192,7 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 	apiHelpers,
 	applicationsMenuPage,
 	checkoutPage,
+	commerceLayoutsPage,
 	commerceMiniCartPage,
 	page,
 	queuePage,
@@ -301,6 +301,11 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		).toHaveCount(1);
 	}
 	finally {
+		await commerceLayoutsPage.cleanupSiteInitializerData(
+			apiHelpers,
+			'Sales agent can receive email notifications'
+		);
+
 		const orders =
 			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
@@ -316,78 +321,10 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		);
 
 		await apiHelpers.objectAdmin.deleteObjectAction(objectAction.id);
+
 		await apiHelpers.notification.deleteNotificationTemplate(
 			notificationTemplate.id
 		);
-
-		const channels =
-			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
-				'Sales agent can receive email notifications'
-			);
-
-		apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
-
-		const catalogs =
-			await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(
-				'Sales agent can receive email notifications'
-			);
-
-		apiHelpers.data.push({id: catalogs.items[0].id, type: 'catalog'});
-
-		const products =
-			await apiHelpers.headlessCommerceAdminCatalog.getProductsPage(
-				50,
-				''
-			);
-
-		for (let i = 0; i < products.totalCount; i++) {
-			if (products.items[i].catalogId === catalogs.items[0].id) {
-				apiHelpers.data.push({
-					id: products.items[i].productId,
-					type: 'product',
-				});
-			}
-		}
-
-		const options =
-			await apiHelpers.headlessCommerceAdminCatalog.getOptions();
-
-		for (let i = 0; i < options.totalCount; i++) {
-			apiHelpers.data.push({
-				id: options.items[i].id,
-				type: 'option',
-			});
-		}
-
-		const optionCategories =
-			await apiHelpers.headlessCommerceAdminCatalog.getOptionCategories();
-
-		for (let i = 0; i < optionCategories.totalCount; i++) {
-			apiHelpers.data.push({
-				id: optionCategories.items[i].id,
-				type: 'optionCategory',
-			});
-		}
-
-		const specifications =
-			await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
-
-		for (let i = 0; i < specifications.totalCount; i++) {
-			apiHelpers.data.push({
-				id: specifications.items[i].id,
-				type: 'specification',
-			});
-		}
-
-		const warehouses =
-			await apiHelpers.headlessCommerceAdminInventoryApiHelper.getWarehousesPage();
-
-		for (let i = 0; i < warehouses.totalCount; i++) {
-			apiHelpers.data.push({
-				id: warehouses.items[i].id,
-				type: 'warehouse',
-			});
-		}
 
 		await apiHelpers.headlessAdminUser.deleteRoleUserAccountAssociation(
 			roles.items[0].id,
@@ -568,4 +505,243 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 	await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
 
 	await expect(commerceThemeMiniumPage.goToMiniumLink).toBeVisible();
+});
+
+test('LPD-26906 As a buyer, I can edit product options from the pending orders page', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductPage,
+	commerceMiniCartPage,
+	page,
+	pendingOrdersPage,
+}) => {
+	const siteName = getRandomString();
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: siteName,
+		templateKey: 'minium-initializer',
+		templateType: 'site-initializer',
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await pendingOrdersPage.layoutsPage.cleanupSiteInitializerData(
+		apiHelpers,
+		siteName
+	);
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'Buyer ' + getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['MANAGE_ADDRESSES', 'VIEW_ADDRESSES'],
+				primaryKey: '0',
+				resourceName: 'com.liferay.account.model.AccountEntry',
+				scope: 3,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrderType',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'ADD_COMMERCE_ORDER',
+					'CHECKOUT_OPEN_COMMERCE_ORDERS',
+					'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_METHODS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
+					'MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS',
+					'VIEW_BILLING_ADDRESS',
+					'VIEW_COMMERCE_ORDERS',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+				],
+				primaryKey: '0',
+				resourceName: 'com.liferay.commerce.order',
+				scope: 3,
+			},
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+		role.id,
+		user.id
+	);
+
+	await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
+
+	const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
+		'select',
+		getRandomString(),
+		'Color',
+		1
+	);
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: getRandomString()},
+	});
+
+	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: getRandomString()},
+	});
+
+	const productBundleName = getRandomString();
+
+	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: productBundleName},
+		productOptions: [
+			{
+				fieldType: 'select',
+				key: option.key,
+				name: option.name,
+				optionId: option.id,
+				priceType: 'static',
+				priority: 1,
+				productOptionValues: [
+					{
+						deltaPrice: 10.0,
+						key: 'black',
+						name: {
+							en_US: 'Black',
+						},
+						priority: 1,
+						quantity: 1,
+						skuId: product1.skus[0].id,
+					},
+					{
+						deltaPrice: 20.0,
+						key: 'white',
+						name: {
+							en_US: 'White',
+						},
+						priority: 2,
+						quantity: 1,
+						skuId: product2.skus[0].id,
+					},
+				],
+				skuContributor: true,
+			},
+		],
+	});
+
+	await applicationsMenuPage.goToProducts();
+
+	await commerceAdminProductPage.managementToolbarSearchInput.fill(
+		productBundleName
+	);
+	await commerceAdminProductPage.managementToolbarSearchInput.press('Enter');
+	await commerceAdminProductPage
+		.managementToolbarItemLink(productBundleName)
+		.click();
+	await commerceAdminProductPage.generateSkus();
+
+	await expect(page.getByText('Showing 1 to 3 of 3 entries.')).toBeVisible();
+
+	try {
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/catalog`
+		);
+
+		await commerceMiniCartPage.miniCartButton.click();
+		await commerceMiniCartPage.searchProductsInput.fill('BLACK');
+		await commerceMiniCartPage.quickAddToCartSku('BLACK').click();
+		await commerceMiniCartPage.quickAddToCartButton.click();
+		await commerceMiniCartPage.searchProductsInput.fill('MIN55858');
+		await commerceMiniCartPage.quickAddToCartSku('MIN55858').click();
+		await commerceMiniCartPage.quickAddToCartButton.click();
+		await commerceMiniCartPage.searchProductsInput.fill('MIN93016A');
+		await commerceMiniCartPage.quickAddToCartSku('MIN93016A').click();
+		await commerceMiniCartPage.quickAddToCartButton.click();
+
+		await pendingOrdersPage.layoutsPage.pendingOrdersLink.click();
+		await page.getByLabel('View').click();
+
+		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
+
+		await (
+			await pendingOrdersPage.orderItemsTableRowLink('Brake Fluid')
+		).click();
+
+		await pendingOrdersPage.editMenuItem.click();
+
+		await commerceMiniCartPage.selectOption('48', 'Package Quantity');
+		await commerceMiniCartPage.miniCartSaveButton.click();
+
+		await page.reload();
+
+		await (
+			await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
+		).click();
+
+		await pendingOrdersPage.editMenuItem.click();
+
+		await commerceMiniCartPage.selectOption('White', 'Color');
+		await commerceMiniCartPage.miniCartSaveButton.click();
+
+		await page.reload();
+
+		await (
+			await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
+		).click();
+
+		await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
+
+		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
+
+		await commerceMiniCartPage.miniCartButton.click();
+
+		await expect(
+			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 4\.00$/)
+		).toBeVisible();
+		await expect(
+			commerceMiniCartPage.miniCartItemPrice(
+				/^List Price\$ 80\.00Promotion Price\$ 72\.00$/
+			)
+		).toBeVisible();
+		await expect(
+			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 20\.00$/)
+		).toBeVisible();
+	}
+	finally {
+		await apiHelpers.headlessAdminUser.deleteRoleUserAccountAssociation(
+			role.id,
+			user.id
+		);
+	}
 });

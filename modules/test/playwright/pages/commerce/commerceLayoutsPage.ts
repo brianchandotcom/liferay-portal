@@ -32,6 +32,7 @@ export class CommerceLayoutsPage {
 	readonly page: Page;
 	readonly pagesMenuItem: Locator;
 	readonly pageTemplatesMenuItem: Locator;
+	readonly pendingOrdersLink: Locator;
 	readonly previewItemSelectorButton: Locator;
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
@@ -63,6 +64,7 @@ export class CommerceLayoutsPage {
 		this.availableThemesFrame = page.frameLocator(
 			'iframe[title="Available Themes"]'
 		);
+
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
 		this.changeCurrentThemeButton = page.getByRole('button', {
 			exact: true,
@@ -114,6 +116,10 @@ export class CommerceLayoutsPage {
 		this.pageTemplatesMenuItem = page
 			.getByTestId('app')
 			.filter({hasText: 'Page Templates'});
+		this.pendingOrdersLink = page.getByRole('link', {
+			exact: true,
+			name: 'Pending Orders',
+		});
 		this.previewItemSelectorButton = page.getByTestId(
 			'previewItemSelectorButton'
 		);

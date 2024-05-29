@@ -11,11 +11,11 @@ export class CommerceAdminProductPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly creationMenuNewButton: Locator;
 	readonly generateSkusMenuItem: Locator;
+	readonly managementToolbarItemLink: (productName: string) => Locator;
 	readonly managementToolbarSearchInput: Locator;
 	readonly modalAddButton: Locator;
 	readonly modalCancelButton: Locator;
 	readonly page: Page;
-	readonly productRelationsLink: Locator;
 	readonly productSkusLink: Locator;
 	readonly productsTableRowLink: (productName: string) => Locator;
 	readonly spareProductMenuButton: Locator;
@@ -29,6 +29,8 @@ export class CommerceAdminProductPage {
 			exact: true,
 			name: 'Generate All SKU Combinations',
 		});
+		this.managementToolbarItemLink = (productName: string) =>
+			page.getByRole('link', {exact: true, name: productName});
 		this.managementToolbarSearchInput = page
 			.getByTestId('management-toolbar')
 			.getByPlaceholder('Search', {exact: true});

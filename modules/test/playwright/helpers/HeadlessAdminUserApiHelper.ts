@@ -9,7 +9,7 @@ import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 type TAccount = {
 	externalReferenceCode?: string;
 	id?: number;
-	name: string;
+	name?: string;
 	type?: string;
 };
 

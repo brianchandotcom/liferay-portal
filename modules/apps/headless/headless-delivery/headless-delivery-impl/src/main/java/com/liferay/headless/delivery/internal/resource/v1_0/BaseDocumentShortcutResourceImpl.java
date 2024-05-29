@@ -402,6 +402,10 @@ public abstract class BaseDocumentShortcutResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DocumentShortcut";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

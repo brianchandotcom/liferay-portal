@@ -1,6 +1,6 @@
 <svg fill="none" height="36" viewBox="0 0 37 36" width="37" xmlns="http://www.w3.org/2000/svg">
 	<path d="M18.3331 31.5C25.7889 31.5 31.8331 25.4558 31.8331 18C31.8331 10.5442 25.7889 4.5 18.3331 4.5C10.8772 4.5 4.83308 10.5442 4.83308 18C4.83308 25.4558 10.8772 31.5 18.3331 31.5Z" fill="white" opacity="0.2" />
-	<path d="M18.3331 31.5C25.7889 31.5 31.8331 25.4558 31.8331 18C31.8331 10.5442 25.7889 4.5 18.3331 4.5C10.8772 4.5 4.83308 10.5442 4.83308 18C4.83308 25.4558 10.8772 31.5 18.3331 31.5Z" stroke="white" stroke-width="2" stroke-miterlimit="10"/>
-	<path d="M12.7081 18H23.9581" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-	<path d="M18.3331 12.375V23.625" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+	<path d="M18.3331 31.5C25.7889 31.5 31.8331 25.4558 31.8331 18C31.8331 10.5442 25.7889 4.5 18.3331 4.5C10.8772 4.5 4.83308 10.5442 4.83308 18C4.83308 25.4558 10.8772 31.5 18.3331 31.5Z" stroke="white" stroke-miterlimit="10" stroke-width="2" />
+	<path d="M12.7081 18H23.9581" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+	<path d="M18.3331 12.375V23.625" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
 </svg>

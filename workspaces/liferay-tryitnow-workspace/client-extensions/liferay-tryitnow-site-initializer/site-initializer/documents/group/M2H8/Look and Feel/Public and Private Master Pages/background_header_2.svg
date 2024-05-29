@@ -2,26 +2,26 @@
 	<g clip-path="url(#clip0_4027_204862)">
 		<rect fill="white" height="400" width="1440" />
 		<rect fill="url(#paint0_linear_4027_204862)" height="400" width="1440" />
-		<rect width="1440" height="400" fill="url(#pattern0)" fill-opacity="0.6" style="mix-blend-mode:soft-light"/>
+		<rect fill="url(#pattern0)" fill-opacity="0.6" height="400" style="mix-blend-mode:soft-light" width="1440" />
 		<g filter="url(#filter0_d_4027_204862)">
 			<path d="M-28 213V431H280L227.389 390.203L-28 213Z" fill="url(#paint1_linear_4027_204862)" />
-			<path d="M-28 213V431H280L227.389 390.203L-28 213Z" fill="url(#pattern1)" fill-opacity="0.7" style="mix-blend-mode:soft-light"/>
+			<path d="M-28 213V431H280L227.389 390.203L-28 213Z" fill="url(#pattern1)" fill-opacity="0.7" style="mix-blend-mode:soft-light" />
 		</g>
 		<g filter="url(#filter1_d_4027_204862)">
 			<path d="M1505 171.5L1109 410L1452.37 418L1505 171.5Z" fill="url(#paint2_linear_4027_204862)" />
-			<path d="M1505 171.5L1109 410L1452.37 418L1505 171.5Z" fill="url(#pattern2)" fill-opacity="0.7" style="mix-blend-mode:soft-light"/>
+			<path d="M1505 171.5L1109 410L1452.37 418L1505 171.5Z" fill="url(#pattern2)" fill-opacity="0.7" style="mix-blend-mode:soft-light" />
 		</g>
 		<g filter="url(#filter2_d_4027_204862)">
 			<circle cx="109.829" cy="308.657" fill="url(#paint3_linear_4027_204862)" r="64.1143" />
-			<circle cx="109.829" cy="308.657" r="64.1143" fill="url(#pattern3)" fill-opacity="0.7" style="mix-blend-mode:soft-light"/>
+			<circle cx="109.829" cy="308.657" fill="url(#pattern3)" fill-opacity="0.7" r="64.1143" style="mix-blend-mode:soft-light" />
 		</g>
 	</g>
 	<defs>
 		<pattern height="0.245" id="pattern0" patternContentUnits="objectBoundingBox" width="0.0680556">
 			<use transform="scale(0.000170139 0.0006125)" xlink:href="#image0_4027_204862" />
 		</pattern>
-		<filter id="filter0_d_4027_204862" x="-44.9714" y="197.914" width="341.943" height="251.943" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+		<filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="251.943" id="filter0_d_4027_204862" width="341.943" x="-44.9714" y="197.914">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
 			<feColorMatrix in="SourceAlpha" result="hardAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
 			<feOffset dy="1.88571" />
 			<feGaussianBlur stdDeviation="8.48571" />
@@ -33,8 +33,8 @@
 		<pattern height="0.449541" id="pattern1" patternContentUnits="objectBoundingBox" width="0.318182">
 			<use transform="scale(0.000795455 0.00112385)" xlink:href="#image0_4027_204862" />
 		</pattern>
-		<filter id="filter1_d_4027_204862" x="1092.03" y="156.414" width="429.943" height="280.443" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+		<filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="280.443" id="filter1_d_4027_204862" width="429.943" x="1092.03" y="156.414">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
 			<feColorMatrix in="SourceAlpha" result="hardAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
 			<feOffset dy="1.88571" />
 			<feGaussianBlur stdDeviation="8.48571" />
@@ -46,8 +46,8 @@
 		<pattern height="0.397566" id="pattern2" patternContentUnits="objectBoundingBox" width="0.247475">
 			<use transform="scale(0.000618687 0.000993915)" xlink:href="#image0_4027_204862" />
 		</pattern>
-		<filter id="filter2_d_4027_204862" x="28.7429" y="229.457" width="162.171" height="162.171" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+		<filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="162.171" id="filter2_d_4027_204862" width="162.171" x="28.7429" y="229.457">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
 			<feColorMatrix in="SourceAlpha" result="hardAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
 			<feOffset dy="1.88571" />
 			<feGaussianBlur stdDeviation="8.48571" />
@@ -60,20 +60,20 @@
 			<use transform="scale(0.00191065)" xlink:href="#image0_4027_204862" />
 		</pattern>
 		<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_4027_204862" x1="720" x2="720" y1="0" y2="400">
-			<stop offset="0.00876311" stop-color="#0CA69E"/>
-			<stop offset="1" stop-color="#065652"/>
+			<stop offset="0.00876311" stop-color="#0CA69E" />
+			<stop offset="1" stop-color="#065652" />
 		</linearGradient>
 		<linearGradient gradientUnits="userSpaceOnUse" id="paint1_linear_4027_204862" x1="126" x2="126" y1="213" y2="431">
-			<stop offset="0.00876311" stop-color="#0CA69E"/>
-			<stop offset="1" stop-color="#065652"/>
+			<stop offset="0.00876311" stop-color="#0CA69E" />
+			<stop offset="1" stop-color="#065652" />
 		</linearGradient>
 		<linearGradient gradientUnits="userSpaceOnUse" id="paint2_linear_4027_204862" x1="1307" x2="1307" y1="171.5" y2="418">
-			<stop offset="0.00876311" stop-color="#0CA69E"/>
-			<stop offset="1" stop-color="#065652"/>
+			<stop offset="0.00876311" stop-color="#0CA69E" />
+			<stop offset="1" stop-color="#065652" />
 		</linearGradient>
 		<linearGradient gradientUnits="userSpaceOnUse" id="paint3_linear_4027_204862" x1="109.829" x2="109.829" y1="244.543" y2="372.772">
-			<stop offset="0.00876311" stop-color="#0CA69E"/>
-			<stop offset="1" stop-color="#065652"/>
+			<stop offset="0.00876311" stop-color="#0CA69E" />
+			<stop offset="1" stop-color="#065652" />
 		</linearGradient>
 		<clipPath id="clip0_4027_204862">
 			<rect fill="white" height="400" width="1440" />

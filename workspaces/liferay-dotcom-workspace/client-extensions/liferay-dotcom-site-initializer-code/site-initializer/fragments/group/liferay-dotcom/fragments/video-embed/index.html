@@ -41,7 +41,7 @@
 		[/#if]
 
 		[#if configuration.showPlayButton]
-			<div class=" f-video-embed-overlay ${hideOverlay?then('hide-overlay-color','')} " data-wistia-id="${wistiaId}">
+			<div class="f-video-embed-overlay ${hideOverlay?then('hide-overlay-color','')}" data-wistia-id="${wistiaId}">
 				<div class="f-video-embed-overlay-placeholder" style="${overlayStyle}background-size:cover;"></div>
 
 				<div class="f-embedded-play-button d-flex p-3 play-${configuration.playButtonPosition}">

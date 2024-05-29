@@ -13,6 +13,14 @@ import InfoCard from '../../components/InfoCard';
 import useTrialMetrics from '../../hooks/useTrialMetrics';
 import TrialTable from './TrialTable';
 
+const getAvailabilityResourceLabel = (availability: Availability) => {
+	if (availability.fallback) {
+		return i18n.translate('deactivated');
+	}
+
+	return i18n.translate(availability.active ? 'active' : 'limit-reached');
+};
+
 const Trial = () => {
 	const {
 		availability,
@@ -33,16 +41,13 @@ const Trial = () => {
 					>
 						<div className="align-items-start d-flex justify-content-between">
 							<h1>{i18n.translate('trial-resources')}</h1>
+
 							<ClayLabel
 								displayType={
 									availability.active ? 'success' : 'danger'
 								}
 							>
-								{i18n.translate(
-									availability.active
-										? 'active'
-										: 'deactivated'
-								)}
+								{getAvailabilityResourceLabel(availability)}
 							</ClayLabel>
 						</div>
 
@@ -54,7 +59,7 @@ const Trial = () => {
 									</span>
 
 									<h2 className="align-items-center d-flex justify-content-center my-0">
-										{availability?.resourcesAvailable}
+										{availability?.resourcesAvailable ?? 0}
 									</h2>
 								</div>
 								<span className="align-items-end d-flex">
@@ -72,7 +77,7 @@ const Trial = () => {
 									</span>
 
 									<h2 className="align-items-center d-flex justify-content-center my-0">
-										{availability?.available}
+										{availability?.available ?? 0}
 									</h2>
 								</div>
 								<span className="align-items-end d-flex">
@@ -90,7 +95,7 @@ const Trial = () => {
 									</span>
 
 									<h2 className="align-items-center d-flex justify-content-center my-0">
-										{availability?.onHold}
+										{availability?.onHold ?? 0}
 									</h2>
 								</div>
 								<span className="align-items-end d-flex">
@@ -103,22 +108,23 @@ const Trial = () => {
 							</div>
 						</div>
 					</div>
+
 					<InfoCard
 						className="col-2"
-						growth={orders.growth}
-						growthContext={`+${orders?.lastPeriod} this week`}
+						growth={orders.growth ?? 0}
+						growthContext={`+${orders?.lastPeriod ?? 0} this week`}
 						symbol="shopping-cart"
 						title={i18n.translate('all-orders')}
-						value={orders.totalCount}
+						value={orders.totalCount ?? 0}
 					/>
 
 					<InfoCard
 						className="col-2"
-						growth={expired.growth}
-						growthContext={`+${expired?.lastPeriod} this week`}
+						growth={expired.growth ?? 0}
+						growthContext={`+${expired?.lastPeriod ?? 0} this week`}
 						symbol="date-time"
 						title={i18n.translate('expired')}
-						value={expired.totalCount}
+						value={expired.totalCount ?? 0}
 					/>
 				</div>
 

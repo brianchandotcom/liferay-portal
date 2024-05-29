@@ -177,6 +177,7 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 			return {
 				active: false,
 				available: 0,
+				fallback: true,
 				max: 0,
 			};
 		}

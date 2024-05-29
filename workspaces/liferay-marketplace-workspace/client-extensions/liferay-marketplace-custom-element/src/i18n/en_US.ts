@@ -197,6 +197,7 @@ export default {
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-s': 'Liferay’s',
+	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
 		'Lorem ipsum dolor sit amet consectetur.',

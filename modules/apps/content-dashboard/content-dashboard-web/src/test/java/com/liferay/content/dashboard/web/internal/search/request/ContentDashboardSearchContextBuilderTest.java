@@ -16,23 +16,33 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.context.SearchContextFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.text.DateFormat;
+
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,8 +77,9 @@ public class ContentDashboardSearchContextBuilderTest {
 		String parameterName = RandomTestUtil.randomString();
 		String[] parameterValues = {RandomTestUtil.randomString()};
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			parameterName, parameterValues);
+		HttpServletRequest httpServletRequest =
+			_getHttpServletRequestWithParameterValues(
+				parameterName, parameterValues);
 
 		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
 			AssetCategoryLocalService.class);
@@ -78,10 +89,11 @@ public class ContentDashboardSearchContextBuilderTest {
 		ContentDashboardItemFilterProviderRegistry
 			contentDashboardItemFilterProviderRegistry =
 				_getContentDashboardItemFilterProviderRegistry(
-					_getContentDashboardItemFilterProvider(
-						_getContentDashboardItemFilter(
-							parameterName, parameterValues),
-						httpServletRequest, true));
+					Arrays.asList(
+						_getContentDashboardItemFilterProvider(
+							_getContentDashboardItemFilter(
+								parameterName, parameterValues),
+							httpServletRequest, true)));
 
 		ContentDashboardSearchContextBuilder
 			contentDashboardSearchContextBuilder =
@@ -110,14 +122,34 @@ public class ContentDashboardSearchContextBuilderTest {
 	}
 
 	@Test
-	public void testBuildWithUnavailableContentDashboardItemFilterProvider()
-		throws ContentDashboardItemActionException {
+	public void testBuildWithCustomDateFilter() {
+		DateFormat simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
 
-		String parameterName = RandomTestUtil.randomString();
-		String[] parameterValues = {RandomTestUtil.randomString()};
+		Calendar calendar = Calendar.getInstance();
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			parameterName, parameterValues);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		Calendar startCalendar = (Calendar)calendar.clone();
+
+		calendar.add(Calendar.DATE, 1);
+
+		Calendar endCalendar = (Calendar)calendar.clone();
+
+		HttpServletRequest httpServletRequest =
+			_getHttpServletRequestWithParameters(
+				HashMapBuilder.put(
+					"dateType", "create-date"
+				).put(
+					"endDate",
+					simpleDateFormat.format(endCalendar.getTimeInMillis())
+				).put(
+					"startDate",
+					simpleDateFormat.format(startCalendar.getTimeInMillis())
+				).build());
 
 		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
 			AssetCategoryLocalService.class);
@@ -127,10 +159,157 @@ public class ContentDashboardSearchContextBuilderTest {
 		ContentDashboardItemFilterProviderRegistry
 			contentDashboardItemFilterProviderRegistry =
 				_getContentDashboardItemFilterProviderRegistry(
-					_getContentDashboardItemFilterProvider(
-						_getContentDashboardItemFilter(
-							parameterName, parameterValues),
-						httpServletRequest, false));
+					Collections.emptyList());
+
+		ContentDashboardSearchContextBuilder
+			contentDashboardSearchContextBuilder =
+				new ContentDashboardSearchContextBuilder(
+					httpServletRequest, assetCategoryLocalService,
+					assetVocabularyLocalService,
+					contentDashboardItemFilterProviderRegistry);
+
+		Assert.assertNotNull(contentDashboardSearchContextBuilder);
+
+		SearchContext searchContext =
+			contentDashboardSearchContextBuilder.build();
+
+		List<BooleanClause<Filter>> mustBooleanClauses = _getBooleanClauses(
+			searchContext);
+
+		Assert.assertEquals(
+			mustBooleanClauses.toString(), 1, mustBooleanClauses.size());
+
+		BooleanClause<Filter> filterBooleanClause = mustBooleanClauses.get(0);
+
+		RangeTermFilter rangeTermFilter =
+			(RangeTermFilter)filterBooleanClause.getClause();
+
+		Assert.assertEquals(
+			Field.getSortableFieldName(Field.CREATE_DATE),
+			rangeTermFilter.getField());
+		Assert.assertEquals(
+			String.valueOf(startCalendar.getTimeInMillis()),
+			rangeTermFilter.getLowerBound());
+
+		endCalendar.add(Calendar.DATE, 1);
+
+		Assert.assertEquals(
+			String.valueOf(endCalendar.getTimeInMillis()),
+			rangeTermFilter.getUpperBound());
+
+		Assert.assertTrue(rangeTermFilter.isIncludesLower());
+		Assert.assertFalse(rangeTermFilter.isIncludesUpper());
+	}
+
+	@Test
+	public void testBuildWithCustomDateFilterWithInvalidDates() {
+		HttpServletRequest httpServletRequest =
+			_getHttpServletRequestWithParameters(
+				HashMapBuilder.put(
+					"dateType", RandomTestUtil.randomString()
+				).put(
+					"endDate", RandomTestUtil.randomString()
+				).put(
+					"startDate", RandomTestUtil.randomString()
+				).build());
+
+		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
+			AssetCategoryLocalService.class);
+		AssetVocabularyLocalService assetVocabularyLocalService = Mockito.mock(
+			AssetVocabularyLocalService.class);
+
+		ContentDashboardItemFilterProviderRegistry
+			contentDashboardItemFilterProviderRegistry =
+				_getContentDashboardItemFilterProviderRegistry(
+					Collections.emptyList());
+
+		ContentDashboardSearchContextBuilder
+			contentDashboardSearchContextBuilder =
+				new ContentDashboardSearchContextBuilder(
+					httpServletRequest, assetCategoryLocalService,
+					assetVocabularyLocalService,
+					contentDashboardItemFilterProviderRegistry);
+
+		Assert.assertNotNull(contentDashboardSearchContextBuilder);
+
+		SearchContext searchContext =
+			contentDashboardSearchContextBuilder.build();
+
+		List<BooleanClause<Filter>> mustBooleanClauses = _getBooleanClauses(
+			searchContext);
+
+		Assert.assertEquals(
+			mustBooleanClauses.toString(), 0, mustBooleanClauses.size());
+	}
+
+	@Test
+	public void testBuildWithCustomDateFilterWithInvalidDateType() {
+		DateFormat simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		HttpServletRequest httpServletRequest =
+			_getHttpServletRequestWithParameters(
+				HashMapBuilder.put(
+					"dateType", RandomTestUtil.randomString()
+				).put(
+					"endDate", simpleDateFormat.format(new Date())
+				).put(
+					"startDate", simpleDateFormat.format(new Date())
+				).build());
+
+		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
+			AssetCategoryLocalService.class);
+		AssetVocabularyLocalService assetVocabularyLocalService = Mockito.mock(
+			AssetVocabularyLocalService.class);
+
+		ContentDashboardItemFilterProviderRegistry
+			contentDashboardItemFilterProviderRegistry =
+				_getContentDashboardItemFilterProviderRegistry(
+					Collections.emptyList());
+
+		ContentDashboardSearchContextBuilder
+			contentDashboardSearchContextBuilder =
+				new ContentDashboardSearchContextBuilder(
+					httpServletRequest, assetCategoryLocalService,
+					assetVocabularyLocalService,
+					contentDashboardItemFilterProviderRegistry);
+
+		Assert.assertNotNull(contentDashboardSearchContextBuilder);
+
+		SearchContext searchContext =
+			contentDashboardSearchContextBuilder.build();
+
+		List<BooleanClause<Filter>> mustBooleanClauses = _getBooleanClauses(
+			searchContext);
+
+		Assert.assertEquals(
+			mustBooleanClauses.toString(), 0, mustBooleanClauses.size());
+	}
+
+	@Test
+	public void testBuildWithUnavailableContentDashboardItemFilterProvider()
+		throws ContentDashboardItemActionException {
+
+		String parameterName = RandomTestUtil.randomString();
+		String[] parameterValues = {RandomTestUtil.randomString()};
+
+		HttpServletRequest httpServletRequest =
+			_getHttpServletRequestWithParameterValues(
+				parameterName, parameterValues);
+
+		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
+			AssetCategoryLocalService.class);
+		AssetVocabularyLocalService assetVocabularyLocalService = Mockito.mock(
+			AssetVocabularyLocalService.class);
+
+		ContentDashboardItemFilterProviderRegistry
+			contentDashboardItemFilterProviderRegistry =
+				_getContentDashboardItemFilterProviderRegistry(
+					Arrays.asList(
+						_getContentDashboardItemFilterProvider(
+							_getContentDashboardItemFilter(
+								parameterName, parameterValues),
+							httpServletRequest, false)));
 
 		ContentDashboardSearchContextBuilder
 			contentDashboardSearchContextBuilder =
@@ -219,8 +398,8 @@ public class ContentDashboardSearchContextBuilderTest {
 
 	private ContentDashboardItemFilterProviderRegistry
 		_getContentDashboardItemFilterProviderRegistry(
-			ContentDashboardItemFilterProvider
-				contentDashboardItemFilterProvider) {
+			List<ContentDashboardItemFilterProvider>
+				contentDashboardItemFilterProviders) {
 
 		ContentDashboardItemFilterProviderRegistry
 			contentDashboardItemFilterProviderRegistry = Mockito.mock(
@@ -230,13 +409,38 @@ public class ContentDashboardSearchContextBuilderTest {
 			contentDashboardItemFilterProviderRegistry.
 				getContentDashboardItemFilterProviders()
 		).thenReturn(
-			Arrays.asList(contentDashboardItemFilterProvider)
+			contentDashboardItemFilterProviders
 		);
 
 		return contentDashboardItemFilterProviderRegistry;
 	}
 
-	private HttpServletRequest _getHttpServletRequest(
+	private HttpServletRequest _getHttpServletRequestWithParameters(
+		Map<String, String> parameters) {
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			Mockito.when(
+				httpServletRequest.getParameter(entry.getKey())
+			).thenReturn(
+				entry.getValue()
+			);
+		}
+
+		return httpServletRequest;
+	}
+
+	private HttpServletRequest _getHttpServletRequestWithParameterValues(
 		String parameterName, String... parameterValues) {
 
 		HttpServletRequest httpServletRequest = Mockito.mock(

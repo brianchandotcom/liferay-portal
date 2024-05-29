@@ -18,11 +18,11 @@ import {
 	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../../../enums/Product';
 import {ProductVocabulary} from '../../../enums/ProductVocabulary';
+import useFeaturePreview from '../../../hooks/useFeaturePreview';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../utils/file';
-import {getTemporaryProductIdForSpefication} from '../../../utils/util';
 
 type ProductConfig = {
 	isDraft: boolean;
@@ -78,7 +78,11 @@ const addOrUpdateImages = async (
 	}
 };
 
-const updateSpecification = async (
+const _updateSpecification = (
+	getTemporaryProductIdForSpefication: ReturnType<
+		typeof useFeaturePreview
+	>['getTemporaryProductIdForSpefication']
+) => async (
 	product: Product,
 	specificationKey: PRODUCT_SPECIFICATION_KEY,
 	value: string
@@ -94,7 +98,6 @@ const updateSpecification = async (
 		!value?.trim() ||
 		(specification && specification.value.en_US === value)
 	) {
-
 		// No need to update the specification if the value is equal
 		// the previous value or empty.
 
@@ -103,7 +106,7 @@ const updateSpecification = async (
 
 	const _productId = getTemporaryProductIdForSpefication({
 		appId: id,
-		appProductId: productId,
+		productId,
 	});
 
 	const fn = specification
@@ -132,8 +135,13 @@ const usePublishSolutionSubmission = (
 	dispatch: Dispatch<AppActions>
 ) => {
 	const {productId} = useParams();
+	const featurePreview = useFeaturePreview();
 	const location = useLocation();
 	const navigate = useNavigate();
+
+	const updateSpecification = _updateSpecification(
+		featurePreview.getTemporaryProductIdForSpefication
+	);
 
 	const syncProfile = async (config: ProductConfig) => {
 		const {
@@ -372,8 +380,7 @@ const usePublishSolutionSubmission = (
 			]) {
 				await sync(product);
 			}
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 		}
 

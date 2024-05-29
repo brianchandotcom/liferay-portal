@@ -200,11 +200,9 @@ export function getSkuPrice(appLicensePrice: LicenceTiersPrices, sku: SKU) {
 
 	if (dxpLicenseUsageTypeValue === 'standard') {
 		return appLicensePrice['standard'][0]?.value;
-	}
-	else if (dxpLicenseUsageTypeValue === 'developer') {
+	} else if (dxpLicenseUsageTypeValue === 'developer') {
 		return appLicensePrice['developer'][0]?.value;
-	}
-	else {
+	} else {
 		return 0;
 	}
 }
@@ -248,8 +246,7 @@ export async function submitSpecification(
 		});
 
 		return -1;
-	}
-	else {
+	} else {
 		const {id} = await createProductSpecification({
 			body: {
 				specificationId: specification.id,
@@ -307,17 +304,14 @@ export async function submitBase64EncodedFile({
 
 				if (result?.includes('application/zip')) {
 					result = result?.substring(28);
-				}
-				else if (
+				} else if (
 					result?.includes('image/gif') ||
 					result?.includes('image/png')
 				) {
 					result = result?.substring(22);
-				}
-				else if (result?.includes('image/jpeg')) {
+				} else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
-				}
-				else if (
+				} else if (
 					result?.includes('application/octet-stream') ||
 					result?.includes('application/java-archive')
 				) {
@@ -356,32 +350,11 @@ export function safeJSONParse<T = any>(
 
 	try {
 		return JSON.parse(value as string);
-	}
-	catch (error) {
+	} catch (error) {
 		return defaultValue as T;
 	}
 }
 
 export function isCloudEnvironment() {
 	return window.location.protocol === 'https:';
-}
-
-/**
- *
- * @description due a breaking change on commerce product specification API
- * starting on > U112 the API expects to receive productId instead of appId
- * remove this helper after Marketplace UAT/PRD get upgraded to > U112
- */
-export function getTemporaryProductIdForSpefication({
-	appId,
-	appProductId,
-}: {
-	appId: number | string;
-	appProductId: number | string;
-}) {
-	if (isCloudEnvironment()) {
-		return appId;
-	}
-
-	return appProductId;
 }

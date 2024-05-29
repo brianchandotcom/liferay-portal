@@ -14,7 +14,7 @@ import {
 
 import './ChoosePricingModelPage.scss';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
-import {getTemporaryProductIdForSpefication} from '../../../../../../utils/util';
+import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
@@ -32,9 +32,11 @@ export function ChoosePricingModelPage({
 		dispatch,
 	] = useAppContext();
 
+	const {getTemporaryProductIdForSpefication} = useFeaturePreview();
+
 	const _tempProductId = getTemporaryProductIdForSpefication({
 		appId,
-		appProductId,
+		productId: appProductId,
 	});
 
 	return (
@@ -115,8 +117,7 @@ export function ChoosePricingModelPage({
 									type: TYPES.UPDATE_APP_LICENSE_PRICES,
 								});
 							}
-						}
-						else {
+						} else {
 							const dataSpecification = await getSpecification(
 								'price-model'
 							);

@@ -9,14 +9,12 @@ import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
-import {
-	getTemporaryProductIdForSpefication,
-	submitSpecification,
-} from '../../../../../../utils/util';
+import {submitSpecification} from '../../../../../../utils/util';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './ProvideAppSupportAndHelpPage.scss';
+import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 
 interface ProvideAppSupportAndHelpPageProps {
 	onClickBack: () => void;
@@ -41,9 +39,11 @@ export function ProvideAppSupportAndHelpPage({
 		dispatch,
 	] = useAppContext();
 
+	const {getTemporaryProductIdForSpefication} = useFeaturePreview();
+
 	const _tempProductId = getTemporaryProductIdForSpefication({
 		appId,
-		appProductId,
+		productId: appProductId,
 	});
 
 	return (
@@ -159,8 +159,7 @@ export function ProvideAppSupportAndHelpPage({
 							},
 							type: TYPES.UPDATE_APP_SUPPORT_URL,
 						});
-					}
-					else {
+					} else {
 						dispatch({
 							payload: {
 								id: supportURL?.id,
@@ -187,8 +186,7 @@ export function ProvideAppSupportAndHelpPage({
 								},
 								type: TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL,
 							});
-						}
-						else {
+						} else {
 							dispatch({
 								payload: {
 									id: publisherWebsiteURL?.id,
@@ -215,8 +213,7 @@ export function ProvideAppSupportAndHelpPage({
 								},
 								type: TYPES.UPDATE_APP_USAGE_TERMS_URL,
 							});
-						}
-						else {
+						} else {
 							dispatch({
 								payload: {
 									id: appUsageTermsURL?.id,
@@ -243,8 +240,7 @@ export function ProvideAppSupportAndHelpPage({
 								},
 								type: TYPES.UPDATE_APP_DOCUMENTATION_URL,
 							});
-						}
-						else {
+						} else {
 							dispatch({
 								payload: {
 									id: appDocumentationURL?.id,
@@ -272,8 +268,7 @@ export function ProvideAppSupportAndHelpPage({
 								type:
 									TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
 							});
-						}
-						else {
+						} else {
 							dispatch({
 								payload: {
 									id: appInstallationGuideURL?.id,

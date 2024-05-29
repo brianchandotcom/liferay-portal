@@ -31,16 +31,13 @@ export async function disconnectFromAnalyticsCloud(page) {
 	if (await disconnectButton.isVisible()) {
 		await disconnectButton.click();
 
-		const diconnectConfirmationModal = page.getByLabel(
-			'Disconnecting Data Source'
-		);
+		const confirmationModal = page.getByLabel('Disconnecting Data Source');
 
-		const diconnectConfirmationButton =
-			diconnectConfirmationModal.getByRole('button', {
-				name: 'Disconnect',
-			});
+		const confirmationButton = confirmationModal.getByRole('button', {
+			name: 'Disconnect',
+		});
 
-		await diconnectConfirmationButton.click();
+		await confirmationButton.click();
 	}
 }
 
@@ -61,19 +58,22 @@ export async function goToAnalyticsCloudInstanceSettings(page) {
 }
 
 export async function navigateToSitePage(page, siteName, pageName) {
-	let pageNameURL = pageName.replace(/ /g, "-").toLowerCase();
+	const pageNameURL = pageName.replace(/ /g, '-').toLowerCase();
 
 	if (siteName) {
-		let siteNameURL = siteName.replace(/ /g, "-").toLowerCase();
+		const siteNameURL = siteName.replace(/ /g, '-').toLowerCase();
 
 		await page.goto(
 			`${liferayConfig.environment.baseUrl}/web/${siteNameURL}/` +
-				`${pageNameURL}`);
-	} else {
-		await page.goto(
-			`${liferayConfig.environment.baseUrl}/web/guest/${pageNameURL}`);
+				`${pageNameURL}`
+		);
 	}
-};
+	else {
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web/guest/${pageNameURL}`
+		);
+	}
+}
 
 export async function syncAllContacts(page) {
 	const wizard = page.getByTestId('VIEW_WIZARD_MODE');

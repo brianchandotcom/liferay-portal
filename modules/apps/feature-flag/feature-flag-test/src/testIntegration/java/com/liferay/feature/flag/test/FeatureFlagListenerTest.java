@@ -6,7 +6,7 @@
 package com.liferay.feature.flag.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.feature.flag.test.helper.FeatureFlagTestHelper;
+import com.liferay.feature.flag.test.util.FeatureFlagTestHelper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.model.CompanyConstants;

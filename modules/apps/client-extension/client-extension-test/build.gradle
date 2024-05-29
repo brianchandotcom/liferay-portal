@@ -2,6 +2,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:client-extension:client-extension-api")
 	testIntegrationImplementation project(":apps:client-extension:client-extension-type-api")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
+	testIntegrationImplementation project(":apps:feature-flag:feature-flag-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-api")
 	testIntegrationImplementation project(":apps:layout:layout-content-page-editor-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")

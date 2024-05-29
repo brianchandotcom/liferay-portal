@@ -8,6 +8,7 @@ package com.liferay.client.extension.type.internal.configuration.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.feature.flag.test.util.FeatureFlagTestHelper;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringBundler;

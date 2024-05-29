@@ -34,7 +34,7 @@ export class MasterPagesPage {
 	}
 
 	async editMaster(name: string) {
-		await this.getMasterCard(name).getByLabel(name).click();
+		await this.getMasterCard(name).getByRole('link', {name}).click();
 
 		await this.page.getByText('Configure Allowed Fragments').waitFor();
 	}

@@ -23,9 +23,7 @@ export default async function writeMainBridge(projectDescription, projectWebCont
 	// level appears under `/o/js/resolved-module/...`.
 	//
 
-	const importPath =
-		name.startsWith('@') ? '../../../..' : '../../..' + projectWebContextPath +
-			'/__liferay__/index.js';
+	const importPath = getPathToRoot(name) + projectWebContextPath + '/__liferay__/index.js';
 
 	const hashedImportPath = hashPathForVariable(importPath);
 
@@ -47,4 +45,8 @@ Liferay.Loader.define(
 
 	await fs.mkdir(path.dirname(filePath), {recursive: true});
 	await fs.writeFile(filePath, code, 'utf-8');
+}
+
+function getPathToRoot(projectName) {
+	return projectName.startsWith('@') ? '../../../..' : '../../..';
 }

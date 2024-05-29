@@ -25,7 +25,8 @@ function QuerySettings({
 	frameworkConfig,
 	onApplyIndexerClausesChange,
 	onChangeClauseContributorsVisibility,
-	onChangeIndexerClausesVisibility,
+	onChangeIndexerClausesHelpVisibility,
+	onChangeQueryContributorsHelpVisibility,
 	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes,
@@ -160,7 +161,7 @@ function QuerySettings({
 									displayType="secondary"
 									onClick={(event) => {
 										event.stopPropagation();
-										onChangeIndexerClausesVisibility();
+										onChangeIndexerClausesHelpVisibility();
 									}}
 								>
 									<ClayIcon symbol="question-circle" />
@@ -209,6 +210,16 @@ function QuerySettings({
 										'search-framework-query-contributors'
 									)}
 								</span>
+
+								<ClaySticker
+									displayType="secondary"
+									onClick={(event) => {
+										event.stopPropagation();
+										onChangeQueryContributorsHelpVisibility();
+									}}
+								>
+									<ClayIcon symbol="question-circle" />
+								</ClaySticker>
 							</ClayPanel.Title>
 						}
 						displayType="unstyled"

@@ -6,6 +6,24 @@
 export const SIDEBAR_TYPES = {
 	ADD_SXP_ELEMENT: 'addSXPElement',
 	CLAUSE_CONTRIBUTORS: 'clauseContributors',
-	INDEXER_CLAUSES: 'indexerClauses',
+	INDEXER_CLAUSES_HELP: 'indexerClausesHelp',
 	PREVIEW: 'preview',
+	QUERY_CONTRIBUTORS_HELP: 'queryContributorsHelp',
+};
+
+export const SIDEBAR_INFO = {
+	[SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP]: {
+		description: Liferay.Language.get(
+			'search-framework-query-contributors-description'
+		),
+		learnMessageKey: 'query-clause-contributors-configuration',
+		title: Liferay.Language.get('search-framework-query-contributors'),
+	},
+	[SIDEBAR_TYPES.INDEXER_CLAUSES_HELP]: {
+		description: Liferay.Language.get(
+			'search-framework-indexer-clauses-description'
+		),
+		learnMessageKey: 'query-clause-contributors-configuration',
+		title: Liferay.Language.get('search-framework-indexer-clauses'),
+	},
 };

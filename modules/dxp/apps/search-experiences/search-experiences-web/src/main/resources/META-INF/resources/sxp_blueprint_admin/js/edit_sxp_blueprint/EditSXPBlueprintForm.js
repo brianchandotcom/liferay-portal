@@ -53,7 +53,7 @@ import {
 	setInitialSuccessToast,
 } from '../utils/toasts';
 import {INPUT_TYPES} from '../utils/types/inputTypes';
-import {SIDEBAR_TYPES} from '../utils/types/sidebarTypes';
+import {SIDEBAR_INFO, SIDEBAR_TYPES} from '../utils/types/sidebarTypes';
 import validateBoost from '../utils/validation/validate_boost';
 import validateJSON from '../utils/validation/validate_json';
 import validateNumberRange from '../utils/validation/validate_number_range';
@@ -847,7 +847,8 @@ function EditSXPBlueprintForm({
 		if (
 			tab !== 'query-builder' &&
 			(openSidebar === SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS ||
-				openSidebar === SIDEBAR_TYPES.INDEXER_CLAUSES)
+				openSidebar === SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP ||
+				openSidebar === SIDEBAR_TYPES.INDEXER_CLAUSES_HELP)
 		) {
 			setOpenSidebar('');
 		}
@@ -944,21 +945,23 @@ function EditSXPBlueprintForm({
 						<Sidebar
 							className="info-sidebar"
 							onClose={_handleSidebarClose}
-							title={Liferay.Language.get(
-								'search-framework-indexer-clauses'
-							)}
-							visible={
-								openSidebar === SIDEBAR_TYPES.INDEXER_CLAUSES
-							}
+							title={SIDEBAR_INFO[openSidebar]?.title}
+							visible={[
+								SIDEBAR_TYPES.INDEXER_CLAUSES_HELP,
+								SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP,
+							].includes(openSidebar)}
 						>
 							<div className="container-fluid text-secondary">
 								<span className="help-text">
-									{Liferay.Language.get(
-										'search-framework-indexer-clauses-description'
-									)}
+									{SIDEBAR_INFO[openSidebar]?.description}
 								</span>
 
-								<LearnMessage resourceKey="query-clause-contributors-configuration" />
+								<LearnMessage
+									resourceKey={
+										SIDEBAR_INFO[openSidebar]
+											?.learnMessageKey
+									}
+								/>
 							</div>
 						</Sidebar>
 
@@ -972,7 +975,9 @@ function EditSXPBlueprintForm({
 									SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS,
 								'open-info':
 									openSidebar ===
-									SIDEBAR_TYPES.INDEXER_CLAUSES,
+										SIDEBAR_TYPES.INDEXER_CLAUSES_HELP ||
+									openSidebar ===
+										SIDEBAR_TYPES.QUERY_CONTRIBUTORS_HELP,
 							})}
 						>
 							<QueryBuilderTab

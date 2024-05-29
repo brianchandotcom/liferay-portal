@@ -642,6 +642,18 @@ public class ObjectFieldLocalServiceImpl
 		return objectFieldPersistence.update(objectField);
 	}
 
+	public void updateUserId(long companyId, long oldUserId, long newUserId)
+		throws PortalException {
+
+		for (ObjectField objectField :
+				objectFieldPersistence.findByC_U(companyId, oldUserId)) {
+
+			objectField.setUserId(newUserId);
+
+			objectFieldPersistence.update(objectField);
+		}
+	}
+
 	@Override
 	public void validateExternalReferenceCode(
 			String externalReferenceCode, long objectFieldId, long companyId,

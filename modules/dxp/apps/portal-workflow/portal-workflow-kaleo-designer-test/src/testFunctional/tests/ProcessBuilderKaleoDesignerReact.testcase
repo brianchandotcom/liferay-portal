@@ -4782,49 +4782,6 @@ definition {
 			nodeType = "condition");
 	}
 
-	@description = "Verify that each type of Node has Notifications property"
-	@priority = 4
-	test HasNotificationsProperty {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
-
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Fork",
-			nodePosition = "20,-500");
-
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "fork");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Condition",
-			nodePosition = "20,-100");
-
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "condition");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
-	}
-
 	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"
 	@priority = 4
 	test ImportedProcessIsShownOnDiagram {

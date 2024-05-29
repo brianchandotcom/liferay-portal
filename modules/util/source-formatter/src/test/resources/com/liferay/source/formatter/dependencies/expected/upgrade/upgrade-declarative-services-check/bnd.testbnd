@@ -1,0 +1,6 @@
+Bundle-Name: Test Declarative Services
+Bundle-SymbolicName: com.test.declarative.services
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+-dsannotations-options: inherit

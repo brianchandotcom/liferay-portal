@@ -42,6 +42,12 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeBNDDeclarativeServicesCheck() throws Exception {
+		test("upgrade/upgrade-declarative-services-check/bnd.testbnd");
+		test("upgrade/upgrade-declarative-services-replace-check/bnd.testbnd");
+	}
+
+	@Test
 	public void testUpgradeBNDIncludeResourceCheck() throws Exception {
 		test("upgrade/upgrade-include-resource-check/bnd.testbnd");
 	}
@@ -252,6 +258,16 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testXMLUpgradeDTDVersionCheck() throws Exception {
 		test("upgrade/XMLUpgradeDTDVersionCheck.testxml");
+	}
+
+	@Test
+	public void testXMLUpgradeServiceDeclarativeServicesCheck()
+		throws Exception {
+
+		test("upgrade/upgrade-declarative-services-check/service.testxml");
+		test(
+			"upgrade/upgrade-declarative-services-replace-check" +
+				"/service.testxml");
 	}
 
 	@Override

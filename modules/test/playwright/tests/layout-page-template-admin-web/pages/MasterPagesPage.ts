@@ -5,18 +5,22 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class MasterPagesPage {
 	readonly page: Page;
 
+	readonly pageEditorPage: PageEditorPage;
+
 	readonly newButton: Locator;
-	readonly publishButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+
+		this.pageEditorPage = new PageEditorPage(this.page);
+
 		this.newButton = page.getByText('New', {exact: true});
-		this.publishButton = page.getByLabel('Publish Master', {exact: true});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -29,8 +33,8 @@ export class MasterPagesPage {
 		await this.newButton.click();
 		await this.page.getByLabel('Name').fill(name);
 		await this.page.getByRole('button', {name: 'Save'}).click();
-		await this.publishButton.waitFor();
-		await this.publishButton.click();
+
+		await this.pageEditorPage.publishPage();
 	}
 
 	async editMaster(name: string) {

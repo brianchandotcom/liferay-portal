@@ -153,26 +153,26 @@ test('checks Content Flags, Content Ratings and Content Display are compatible w
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition(
-			getRandomString(),
-			'com.liferay.fragment.internal.renderer.ContentFlagsFragmentRenderer'
-		),
-		getFragmentDefinition(
-			getRandomString(),
-			'com.liferay.fragment.internal.renderer.ContentRatingsFragmentRenderer'
-		),
-		getFragmentDefinition(
-			getRandomString(),
-			'com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer',
-			{
+		getFragmentDefinition({
+			id: getRandomString(),
+			key: 'com.liferay.fragment.internal.renderer.ContentFlagsFragmentRenderer',
+		}),
+		getFragmentDefinition({
+			id: getRandomString(),
+			key: 'com.liferay.fragment.internal.renderer.ContentRatingsFragmentRenderer',
+		}),
+		getFragmentDefinition({
+			fragmentConfig: {
 				itemSelector: {
 					template: {
 						infoItemRendererKey:
 							'com.liferay.journal.web.internal.info.item.renderer.JournalArticleFullContentInfoItemRenderer',
 					},
 				},
-			}
-		),
+			},
+			id: getRandomString(),
+			key: 'com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer',
+		}),
 	]);
 
 	const collectionDefinition = getCollectionDefinition({
@@ -266,7 +266,7 @@ test('modifies inline text on all collection items', async ({
 	const headingId = getRandomString();
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition(headingId, 'BASIC_COMPONENT-heading'),
+		getFragmentDefinition({id: headingId, key: 'BASIC_COMPONENT-heading'}),
 	]);
 
 	const collectionDefinition = getCollectionDefinition({
@@ -374,7 +374,10 @@ test('checks the different styles for the Display Collection', async ({
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition(getRandomString(), 'BASIC_COMPONENT-heading'),
+		getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		}),
 	]);
 
 	const borderedListCollection = getCollectionDefinition({
@@ -473,11 +476,10 @@ test('checks that fragment ids used within a display collection are not repeated
 
 	// Create a first collection definition with headings
 
-	const headingDefinition = getFragmentDefinition(
-		getRandomString(),
-		'BASIC_COMPONENT-heading',
-		{}
-	);
+	const headingDefinition = getFragmentDefinition({
+		id: getRandomString(),
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const headingCollectionDefintion = getCollectionItemDefinition(
 		getRandomString(),
@@ -495,13 +497,11 @@ test('checks that fragment ids used within a display collection are not repeated
 	const tabsCollectionDefinition = getCollectionItemDefinition(
 		getRandomString(),
 		[
-			getFragmentDefinition(
-				getRandomString(),
-				'BASIC_COMPONENT-tabs',
-				{
+			getFragmentDefinition({
+				fragmentConfig: {
 					numberOfTabs: 1,
 				},
-				[
+				fragmentFields: [
 					{
 						id: 'title1',
 						value: {
@@ -509,14 +509,16 @@ test('checks that fragment ids used within a display collection are not repeated
 						},
 					},
 				],
-				[
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-tabs',
+				pageElements: [
 					{
 						id: getRandomString(),
 						pageElements: [headingDefinition],
 						type: 'FragmentDropZone',
 					},
-				]
-			),
+				],
+			}),
 		]
 	);
 

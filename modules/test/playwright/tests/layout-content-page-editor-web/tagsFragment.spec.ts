@@ -44,33 +44,33 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	// Create a Form Container with a Tags fragment and Submit fragment
 
-	const firstTagsFragmentDefinition = getFragmentDefinition(
-		getRandomString(),
-		'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer'
-	);
+	const firstTagsFragmentDefinition = getFragmentDefinition({
+		id: getRandomString(),
+		key: 'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer',
+	});
 
-	const secondTagsFragmentDefinition = getFragmentDefinition(
-		getRandomString(),
-		'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer'
-	);
+	const secondTagsFragmentDefinition = getFragmentDefinition({
+		id: getRandomString(),
+		key: 'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer',
+	});
 
-	const submitFragmentDefinition = getFragmentDefinition(
-		getRandomString(),
-		'INPUTS-submit-button',
-		{
+	const submitFragmentDefinition = getFragmentDefinition({
+		fragmentConfig: {
 			buttonSize: 'nm',
 			buttonType: 'primary',
 			submittedEntryStatus: 'approved',
 		},
-		[
+		fragmentFields: [
 			{
 				id: 'submit-button-text',
 				value: {
 					fragmentLink: {},
 				},
 			},
-		]
-	);
+		],
+		id: getRandomString(),
+		key: 'INPUTS-submit-button',
+	});
 
 	const formDefinition = getFormContainerDefinition({
 		id: getRandomString(),

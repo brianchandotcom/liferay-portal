@@ -40,10 +40,10 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
-			getFragmentDefinition(
-				getRandomString(),
-				'COMMERCE_CART_FRAGMENTS-mini-cart'
-			),
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'COMMERCE_CART_FRAGMENTS-mini-cart',
+			}),
 		]),
 		siteId: site.id,
 		title: getRandomString(),
@@ -330,10 +330,10 @@ test('LPD-3496 Mini cart bundle without enough quantity', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
-			getFragmentDefinition(
-				getRandomString(),
-				'COMMERCE_CART_FRAGMENTS-mini-cart'
-			),
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'COMMERCE_CART_FRAGMENTS-mini-cart',
+			}),
 		]),
 		siteId: site.id,
 		title: getRandomString(),

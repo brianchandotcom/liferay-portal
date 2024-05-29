@@ -3,13 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export default function getFragmentDefinition(
-	id: string,
-	key: string,
-	fragmentConfig?: Record<string, any>,
-	fragmentFields?: FragmentField[],
-	pageElements?: PageElement[]
-): PageElement {
+type Props = {
+	fragmentConfig?: Record<string, any>;
+	fragmentFields?: FragmentField[];
+	id: string;
+	key: string;
+	pageElements?: PageElement[];
+};
+
+export default function getFragmentDefinition({
+	fragmentConfig = {},
+	fragmentFields,
+	id,
+	key,
+	pageElements,
+}: Props): PageElement {
 	return {
 		definition: {
 			fragment: {

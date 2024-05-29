@@ -42,7 +42,10 @@ const createSitePage = async function (apiHelpers, pageTitle) {
 
 	return await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
-			getFragmentDefinition(getRandomString(), 'BASIC_COMPONENT-heading'),
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
 		]),
 		siteId: group.groupId,
 		title: pageTitle,

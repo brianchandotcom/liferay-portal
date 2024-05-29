@@ -36,10 +36,10 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingFragment]),
@@ -89,10 +89,10 @@ test('Undo and Redo buttons work as expected', async ({
 
 	const tabsId = getRandomString();
 
-	const fragmentDefinition = getFragmentDefinition(
-		tabsId,
-		'BASIC_COMPONENT-tabs'
-	);
+	const fragmentDefinition = getFragmentDefinition({
+		id: tabsId,
+		key: 'BASIC_COMPONENT-tabs',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([fragmentDefinition]),
@@ -164,10 +164,10 @@ test('Undo history works as expected', async ({
 
 	const headingId = getRandomString();
 
-	const fragmentDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const fragmentDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([fragmentDefinition]),

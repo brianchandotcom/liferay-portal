@@ -173,10 +173,10 @@ test.describe('Manage object entries through page templates', () => {
 			id: getRandomString(),
 		});
 
-		const headingDefinition = getFragmentDefinition(
-			getRandomString(),
-			'BASIC_COMPONENT-heading'
-		);
+		const headingDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([

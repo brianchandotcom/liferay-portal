@@ -35,10 +35,10 @@ test('grid content is also duplicated', async ({
 
 	// Create a grid with a Heading in the first column
 
-	const heading = getFragmentDefinition(
-		getRandomString(),
-		'BASIC_COMPONENT-heading'
-	);
+	const heading = getFragmentDefinition({
+		id: getRandomString(),
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const gridId = getRandomString();
 

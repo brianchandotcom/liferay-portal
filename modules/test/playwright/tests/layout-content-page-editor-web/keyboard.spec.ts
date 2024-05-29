@@ -34,16 +34,16 @@ test('allows moving through layout content with keyboard', async ({
 	// Create a page with a Heading and a Card fragment
 
 	const headingId = getRandomString();
-	const headingDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const cardId = getRandomString();
-	const cardDefinition = getFragmentDefinition(
-		cardId,
-		'BASIC_COMPONENT-card'
-	);
+	const cardDefinition = getFragmentDefinition({
+		id: cardId,
+		key: 'BASIC_COMPONENT-card',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([cardDefinition, headingDefinition]),
@@ -111,10 +111,10 @@ test('focus order is correct', async ({
 	// Create a page with a Heading fragment
 
 	const headingId = getRandomString();
-	const headingDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingDefinition]),

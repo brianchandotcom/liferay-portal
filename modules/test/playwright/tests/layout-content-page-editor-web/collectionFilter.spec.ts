@@ -88,10 +88,10 @@ test('filters a web content collection by single and multiple categories', async
 
 	const collectionFilterId = getRandomString();
 
-	const collectionFilterDefinition = getFragmentDefinition(
-		collectionFilterId,
-		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
-	);
+	const collectionFilterDefinition = getFragmentDefinition({
+		id: collectionFilterId,
+		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+	});
 
 	// Create definition for a collection mapped to Animals collection
 
@@ -103,12 +103,11 @@ test('filters a web content collection by single and multiple categories', async
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition(
-			getRandomString(),
-			'BASIC_COMPONENT-heading',
-			{},
-			FRAGMENT_FIELDS
-		),
+		getFragmentDefinition({
+			fragmentFields: FRAGMENT_FIELDS,
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		}),
 	]);
 
 	const collectionDefinition = getCollectionDefinition({
@@ -325,10 +324,10 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	const collectionFilterId = getRandomString();
 
-	const collectionFilterDefinition = getFragmentDefinition(
-		collectionFilterId,
-		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
-	);
+	const collectionFilterDefinition = getFragmentDefinition({
+		id: collectionFilterId,
+		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+	});
 
 	// Create definition for a collection mapped to Animals collection
 
@@ -340,12 +339,11 @@ test('enables search field in dropdown list of Collection Filter', async ({
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition(
-			getRandomString(),
-			'BASIC_COMPONENT-heading',
-			{},
-			FRAGMENT_FIELDS
-		),
+		getFragmentDefinition({
+			fragmentFields: FRAGMENT_FIELDS,
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		}),
 	]);
 
 	const collectionDefinition = getCollectionDefinition({
@@ -425,15 +423,15 @@ test('filters the collection content by keywords using two filters', async ({
 	const firstCollectionFilterId = getRandomString();
 	const secondCollectionFilterId = getRandomString();
 
-	const firstCollectionFilterDefinition = getFragmentDefinition(
-		firstCollectionFilterId,
-		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
-	);
+	const firstCollectionFilterDefinition = getFragmentDefinition({
+		id: firstCollectionFilterId,
+		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+	});
 
-	const secondFilterDefinition = getFragmentDefinition(
-		secondCollectionFilterId,
-		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
-	);
+	const secondFilterDefinition = getFragmentDefinition({
+		id: secondCollectionFilterId,
+		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+	});
 
 	// Create definition for a collection mapped to Animals collection
 
@@ -445,12 +443,11 @@ test('filters the collection content by keywords using two filters', async ({
 	);
 
 	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
-		getFragmentDefinition(
-			getRandomString(),
-			'BASIC_COMPONENT-heading',
-			{},
-			FRAGMENT_FIELDS
-		),
+		getFragmentDefinition({
+			fragmentFields: FRAGMENT_FIELDS,
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		}),
 	]);
 
 	const collectionDefinition = getCollectionDefinition({

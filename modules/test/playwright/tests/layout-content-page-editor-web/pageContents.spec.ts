@@ -34,10 +34,10 @@ test('allows editing inline text from Page Content Panel', async ({
 	// Create a page with a Heading fragment
 
 	const headingId = getRandomString();
-	const headingDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingDefinition]),

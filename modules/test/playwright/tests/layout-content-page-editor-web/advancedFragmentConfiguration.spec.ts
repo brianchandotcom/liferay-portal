@@ -55,10 +55,10 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 
 	const headingId = getRandomString();
 
-	const headingFragmentDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragmentDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	layouts.fragment = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingFragmentDefinition]),
@@ -183,13 +183,13 @@ test('checks that the advanced configuration of a fragment appears in its corres
 
 	// Create a content page with the fragment previously created
 
-	const fragmentDefinition = getFragmentDefinition(
-		getRandomString(),
-		'my-fragment',
-		{
+	const fragmentDefinition = getFragmentDefinition({
+		fragmentConfig: {
 			advancedConfigField: '1',
-		}
-	);
+		},
+		id: getRandomString(),
+		key: 'my-fragment',
+	});
 
 	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,

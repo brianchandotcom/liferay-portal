@@ -92,10 +92,10 @@ test('creates new experiences as expected', async ({
 	// Create a page with a Heading fragment and go to edit mode
 
 	const headingId = getRandomString();
-	const headingDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingDefinition]),
@@ -181,10 +181,10 @@ test('styles changes affect to current experience only', async ({
 	// Create a page with a Heading fragment and go to edit mode
 
 	const headingId = getRandomString();
-	const headingDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingDefinition]),
@@ -267,10 +267,10 @@ test('allows creating experiences with different fragments', async ({
 	// Create a page with a Heading fragment and go to edit mode
 
 	const headingId = getRandomString();
-	const headingDefinition = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingDefinition = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingDefinition]),

@@ -74,10 +74,10 @@ test('shows correct sections on each configuration panel when viewport is not De
 
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
@@ -116,10 +116,10 @@ test('shows only Image Source field when the viewport is Desktop', async ({
 }) => {
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
@@ -153,10 +153,10 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 }) => {
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
@@ -192,10 +192,10 @@ test('checks that the layout can be resized', async ({
 }) => {
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
@@ -252,10 +252,10 @@ test('checks that the value of a field is propagated to smaller viewports', asyn
 }) => {
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,

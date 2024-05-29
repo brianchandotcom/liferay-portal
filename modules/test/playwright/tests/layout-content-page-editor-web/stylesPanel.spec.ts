@@ -69,10 +69,10 @@ test('allows changing and resetting spacing', async ({
 
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingFragment]),
@@ -126,10 +126,10 @@ test('renders all selectors with correct default values', async ({
 
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingFragment]),
@@ -188,10 +188,10 @@ test('renders correct sections in color picker', async ({
 
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingFragment]),
@@ -234,10 +234,10 @@ test('changes the value in the Color Picker when the reset button is clicked', a
 
 	const headingId = getRandomString();
 
-	const headingFragment = getFragmentDefinition(
-		headingId,
-		'BASIC_COMPONENT-heading'
-	);
+	const headingFragment = getFragmentDefinition({
+		id: headingId,
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([headingFragment]),

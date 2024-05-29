@@ -41,7 +41,10 @@ test('This is a test for LPD-21554. Some page names result in 404 friendly URLs.
 
 	const sitePage = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
-			getFragmentDefinition(getRandomString(), 'BASIC_COMPONENT-heading'),
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
 		]),
 		siteId: group.groupId,
 		title: pageName,

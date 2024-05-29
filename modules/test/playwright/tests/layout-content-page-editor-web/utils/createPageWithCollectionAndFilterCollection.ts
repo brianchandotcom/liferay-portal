@@ -37,17 +37,16 @@ export default async function createPageWithCollectionAndFilterCollection({
 	collectionFilterId: string;
 	siteId: string;
 }) {
-	const collectionFilterDefinition = getFragmentDefinition(
-		collectionFilterId,
-		'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer'
-	);
+	const collectionFilterDefinition = getFragmentDefinition({
+		id: collectionFilterId,
+		key: 'com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer',
+	});
 
-	const collectionFragmentDefinition = getFragmentDefinition(
-		getRandomString(),
-		'BASIC_COMPONENT-heading',
-		{},
-		FRAGMENT_FIELDS
-	);
+	const collectionFragmentDefinition = getFragmentDefinition({
+		fragmentFields: FRAGMENT_FIELDS,
+		id: getRandomString(),
+		key: 'BASIC_COMPONENT-heading',
+	});
 
 	const collectionItemDefinition = getCollectionItemDefinition(
 		getRandomString(),

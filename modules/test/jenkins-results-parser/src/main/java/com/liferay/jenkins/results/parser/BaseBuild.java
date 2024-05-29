@@ -1656,7 +1656,7 @@ public abstract class BaseBuild implements Build {
 
 				sb.append(".liferay.com/computer/");
 
-				sb.append(jenkinsSlave.getName());
+				sb.append(sibling.getName());
 
 				sb.append("\n");
 			}

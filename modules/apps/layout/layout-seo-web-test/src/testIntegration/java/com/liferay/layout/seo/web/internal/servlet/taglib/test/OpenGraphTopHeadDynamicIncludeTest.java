@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -88,6 +89,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -239,59 +241,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeCustomTitle() throws Exception {
-		String title = "Heló";
-
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _layout.getGroupId(), false,
-			_layout.getLayoutId(), true,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
-			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
-			Collections.singletonMap(LocaleUtil.US, title),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_testWithLayoutSEOCompanyConfiguration(
-			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
-				RandomTestUtil.randomString()),
-			false, true);
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(document, "og:title", title);
+		_assertIncludeTitleAndDescription(null, "Heló");
 	}
 
 	@Test
 	public void testIncludeCustomTitleAndDescription() throws Exception {
-		String description = "description@#$%^&*()~`1234567890";
-		String title = "@#$%^&*()~`1234567890title";
-
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _layout.getGroupId(), false,
-			_layout.getLayoutId(), true,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, description),
-			Collections.emptyMap(), 0, true,
-			Collections.singletonMap(LocaleUtil.US, title),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_testWithLayoutSEOCompanyConfiguration(
-			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
-				RandomTestUtil.randomString()),
-			false, true);
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(document, "og:description", description);
-		_assertMetaTag(document, "og:title", title);
+		_assertIncludeTitleAndDescription(
+			"description@#$%^&*()~`1234567890", "@#$%^&*()~`1234567890title");
 	}
 
 	@Test
@@ -302,82 +258,40 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		String description = "الوصف العربي";
 		String title = "العنوان بالعربية";
 
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _layout.getGroupId(), false,
-			_layout.getLayoutId(), true,
-			Collections.singletonMap(locale, "http://example.com"), true,
+		_assertIncludeTitleAndDescription(
+			description, title, locale,
 			HashMapBuilder.put(
 				locale, description
 			).put(
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
-			Collections.emptyMap(), 0, true,
 			HashMapBuilder.put(
 				locale, title
 			).put(
 				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-
-		_testWithLayoutSEOCompanyConfiguration(
-			() -> _dynamicInclude.include(
-				_getHttpServletRequest(locale), mockHttpServletResponse,
-				RandomTestUtil.randomString()),
-			true, true);
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(document, "og:description", description);
-		_assertMetaTag(document, "og:title", title);
+			).build());
 	}
 
 	@Test
 	public void testIncludeCustomTitleAndDescriptionForUntranslatedLanguage()
 		throws Exception {
 
-		Locale locale = LocaleUtil.fromLanguageId("ar_SA");
 		String description = RandomTestUtil.randomString();
 		String title = RandomTestUtil.randomString();
+		Locale locale = LocaleUtil.fromLanguageId("ar_SA");
 
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _layout.getGroupId(), false,
-			_layout.getLayoutId(), true,
-			Collections.singletonMap(locale, "http://example.com"), true,
+		_assertIncludeTitleAndDescription(
+			description, title, locale,
 			HashMapBuilder.put(
 				locale, StringPool.BLANK
 			).put(
 				LocaleUtil.US, description
 			).build(),
-			Collections.emptyMap(), 0, true,
 			HashMapBuilder.put(
 				locale, StringPool.BLANK
 			).put(
 				LocaleUtil.US, title
-			).build(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-
-		_testWithLayoutSEOCompanyConfiguration(
-			() -> _dynamicInclude.include(
-				_getHttpServletRequest(locale), mockHttpServletResponse,
-				RandomTestUtil.randomString()),
-			true, true);
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(document, "og:description", description);
-		_assertMetaTag(document, "og:title", title);
+			).build());
 	}
 
 	@Test
@@ -1641,6 +1555,51 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Element element = elements.get(0);
 
 		Assert.assertEquals(href, element.attr("href"));
+	}
+
+	private void _assertIncludeTitleAndDescription(
+			String description, String title)
+		throws Exception {
+
+		_assertIncludeTitleAndDescription(
+			description, title,
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()),
+			Collections.singletonMap(LocaleUtil.US, description),
+			Collections.singletonMap(LocaleUtil.US, title));
+	}
+
+	private void _assertIncludeTitleAndDescription(
+			String expectedDescription, String expectedTitle, Locale locale,
+			Map<Locale, String> descriptionMap, Map<Locale, String> titleMap)
+		throws Exception {
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			Validator.isNotNull(expectedDescription), descriptionMap,
+			Collections.emptyMap(), 0, true, titleMap,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		mockHttpServletResponse.setCharacterEncoding("UTF-8");
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(locale), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			false, true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		if (Validator.isNotNull(expectedDescription)) {
+			_assertMetaTag(document, "og:description", expectedDescription);
+		}
+
+		_assertMetaTag(document, "og:title", expectedTitle);
 	}
 
 	private void _assertLinkElements(Document document) {

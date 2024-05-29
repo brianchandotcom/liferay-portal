@@ -41,7 +41,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			for (String type : selectLayoutPageTemplateEntryDisplayContext.getTypes()) {
 			%>
 
-				<li data-qa-id="cardPageItemDirectory" class="card-page-item card-page-item-directory">
+				<li class="card-page-item card-page-item-directory" data-qa-id="cardPageItemDirectory">
 					<clay:navigation-card
 						navigationCard="<%= new SelectBasicTemplatesNavigationCard(type, renderRequest, renderResponse) %>"
 					/>

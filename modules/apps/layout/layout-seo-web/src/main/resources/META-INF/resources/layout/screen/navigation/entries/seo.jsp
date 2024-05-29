@@ -44,7 +44,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 			cssClass="ml-0"
 		>
 			<clay:sheet-section>
-				<div aria-labelledby="<%= liferayPortletResponse.getNamespace() %>settingsTitle" role="group">
+				<div aria-labelledby="<portlet:namespace />settingsTitle" role="group">
 					<liferay-ui:error-marker
 						key="<%= WebKeys.ERROR_SECTION %>"
 						value="seo"
@@ -175,7 +175,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 				cssClass="ml-0"
 			>
 				<clay:sheet-section>
-					<div aria-labelledby="<%= liferayPortletResponse.getNamespace() %>sitemapTitle" role="group">
+					<div aria-labelledby="<portlet:namespace />sitemapTitle" role="group">
 						<h3 class="mb-4" id="<portlet:namespace />sitemapTitle">
 							<liferay-ui:message key="sitemap" />
 						</h3>

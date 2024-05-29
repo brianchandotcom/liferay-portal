@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.testray.rest.dto.v1_0.TestrayBuildMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayCaseTypeMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayComponentMetric;
 import com.liferay.testray.rest.dto.v1_0.TestrayRoutineMetric;
@@ -519,6 +520,162 @@ public class TestrayStatusMetricResourceImpl
 						_getTestrayStatusMetric(value));
 
 					return testrayRoutineMetric;
+				}),
+			pagination, totalCount);
+	}
+
+	@Override
+	public Page<TestrayBuildMetric>
+			getTestrayStatusMetricByTestrayRoutineIdTestrayRoutineTestrayBuildsMetricsPage(
+				Long testrayRoutineId, Long testrayBuildId,
+				String testrayBuildName, String testrayProductVersion,
+				String testrayTaskStatus, Pagination pagination)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(28);
+
+		sb.append("select count(cr.dueStatus_) as total, sum(case when ");
+		sb.append("cr.dueStatus_ = 'blocked' then 1 else 0 end) as blocked, ");
+		sb.append("sum(case when cr.dueStatus_ = 'failed' then 1 else 0 end ");
+		sb.append(") as failed, sum(case when cr.dueStatus_ = 'inprogress' ");
+		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
+		sb.append("cr.dueStatus_ = 'passed' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'testfix' then 1 else 0 end ");
+		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'untested' ");
+		sb.append("then 1 else 0 end) as untested, b.c_buildId_, b.dueDate_, ");
+		sb.append("b.gitHash_, b.name_, b.promoted_, b.archived_, pv.name_ ");
+		sb.append("as productVersionName, (select dueStatus_ from ");
+		sb.append("O_[%COMPANY_ID%]_Task t where t.r_buildToTasks_c_buildId ");
+		sb.append("= b.c_buildId_) as taskStatus from O_[%COMPANY_ID%]_Build ");
+		sb.append("b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_ProductVersion pv ");
+
+		if (Validator.isNotNull(testrayTaskStatus)) {
+			sb.append(", O_[%COMPANY_ID%]_Task t ");
+		}
+
+		sb.append("where b.r_routineToBuilds_c_routineId = ? and ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
+		sb.append("pv.c_productVersionId_ = ");
+		sb.append("b.r_productVersionToBuilds_c_productVersionId and ");
+		sb.append("b.template_ = 0 and b.archived_ = 0 ");
+
+		List<Object> params = new ArrayList<>();
+
+		params.add(testrayRoutineId);
+
+		if (Validator.isNotNull(testrayProductVersion)) {
+			sb.append("and pv.name_ = ? ");
+			params.add(testrayProductVersion);
+		}
+
+		if (Validator.isNotNull(testrayBuildName)) {
+			sb.append("and b.name_ like '%?%' ");
+			params.add(testrayBuildName);
+		}
+
+		if (Validator.isNotNull(testrayTaskStatus)) {
+			sb.append("and t.r_buildToTasks_c_buildId = b.c_buildId_ and ");
+			sb.append("t.dueStatus_ in (");
+			sb.append(_interpolateParams(params, testrayTaskStatus));
+			sb.append(") ");
+		}
+
+		sb.append("group by b.c_buildId_ order by b.dueDate_ desc");
+
+		String sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
+
+		long totalCount = TestrayUtil.getTotalCount(sql, params);
+
+		sql += " limit ? offset ?";
+
+		params.add(pagination.getPageSize());
+		params.add(pagination.getStartPosition());
+
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			sql, params);
+
+		return Page.of(
+			transform(
+				values,
+				value -> {
+					TestrayBuildMetric testrayBuildMetric =
+						new TestrayBuildMetric();
+
+					if (ListUtil.fromArray(
+							contextUser.getRoleIds()
+						).contains(
+							_roleLocalService.getRole(
+								contextUser.getCompanyId(),
+								"Testray Administrator"
+							).getRoleId()
+						) ||
+						ListUtil.fromArray(
+							contextUser.getRoleIds()
+						).contains(
+							_roleLocalService.getRole(
+								contextUser.getCompanyId(), "Testray Lead"
+							).getRoleId()
+						)) {
+
+						URI baseURI = contextUriInfo.getBaseUri();
+
+						testrayBuildMetric.setActions(
+							new HashMap<>(
+								HashMapBuilder.put(
+									"delete",
+									HashMapBuilder.put(
+										"href",
+										baseURI.getScheme() + "://" +
+											baseURI.getAuthority() +
+												"/o/c/builds/" +
+													value.get("c_buildId_")
+									).put(
+										"method", "DELETE"
+									).build()
+								).put(
+									"update",
+									HashMapBuilder.put(
+										"href",
+										baseURI.getScheme() + "://" +
+											baseURI.getAuthority() +
+												"/o/c/builds/" +
+													value.get("c_buildId_")
+									).put(
+										"method", "PUT"
+									).build()
+								).build()));
+					}
+
+					if (value.get("dueDate_") != null) {
+						testrayBuildMetric.setTestrayBuildDueDate(
+							value.get(
+								"dueDate_"
+							).toString());
+					}
+
+					testrayBuildMetric.setTestrayBuildId(
+						GetterUtil.getLong(value.get("c_buildId_")));
+					testrayBuildMetric.setTestrayBuildGitHash(
+						GetterUtil.getString(value.get("gitHash_")));
+					testrayBuildMetric.setTestrayBuildName(
+						GetterUtil.getString(value.get("name_")));
+					testrayBuildMetric.setTestrayBuildPromoted(
+						GetterUtil.getBoolean(
+							String.valueOf(value.get("promoted_"))));
+					testrayBuildMetric.setTestrayBuildArchived(
+						GetterUtil.getBoolean(
+							String.valueOf(value.get("archived_"))));
+					testrayBuildMetric.setTestrayBuildProductVersion(
+						GetterUtil.getString(value.get("productVersionName")));
+					testrayBuildMetric.setTestrayBuildTaskStatus(
+						GetterUtil.getString(value.get("taskStatus")));
+					testrayBuildMetric.setTestrayStatusMetric(
+						_getTestrayStatusMetric(value));
+
+					return testrayBuildMetric;
 				}),
 			pagination, totalCount);
 	}

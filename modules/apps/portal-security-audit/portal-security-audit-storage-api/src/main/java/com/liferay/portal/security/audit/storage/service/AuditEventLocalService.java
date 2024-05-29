@@ -70,6 +70,8 @@ public interface AuditEventLocalService
 
 	public AuditEvent addAuditEvent(AuditMessage auditMessage);
 
+	public void addAuditEvents(List<AuditMessage> auditMessages);
+
 	/**
 	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
 	 *

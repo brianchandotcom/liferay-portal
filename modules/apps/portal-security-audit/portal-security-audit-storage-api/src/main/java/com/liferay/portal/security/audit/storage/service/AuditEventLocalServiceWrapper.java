@@ -55,6 +55,14 @@ public class AuditEventLocalServiceWrapper
 		return _auditEventLocalService.addAuditEvent(auditMessage);
 	}
 
+	@Override
+	public void addAuditEvents(
+		java.util.List<com.liferay.portal.kernel.audit.AuditMessage>
+			auditMessages) {
+
+		_auditEventLocalService.addAuditEvents(auditMessages);
+	}
+
 	/**
 	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
 	 *

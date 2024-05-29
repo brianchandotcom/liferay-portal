@@ -57,6 +57,12 @@ public class AuditEventLocalServiceUtil {
 		return getService().addAuditEvent(auditMessage);
 	}
 
+	public static void addAuditEvents(
+		List<com.liferay.portal.kernel.audit.AuditMessage> auditMessages) {
+
+		getService().addAuditEvents(auditMessages);
+	}
+
 	/**
 	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
 	 *

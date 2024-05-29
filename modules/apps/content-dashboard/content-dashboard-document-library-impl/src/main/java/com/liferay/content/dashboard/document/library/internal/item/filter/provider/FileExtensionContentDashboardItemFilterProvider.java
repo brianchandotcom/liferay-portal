@@ -21,7 +21,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemFilterProvider.class)
+@Component(
+	property = "service.ranking:Integer=200",
+	service = ContentDashboardItemFilterProvider.class
+)
 public class FileExtensionContentDashboardItemFilterProvider
 	implements ContentDashboardItemFilterProvider {
 

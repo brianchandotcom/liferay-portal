@@ -14,7 +14,7 @@ ProductNavigationControlMenuTagDisplayContext productNavigationControlMenuTagDis
 %>
 
 <c:if test="<%= productNavigationControlMenuTagDisplayContext.hasControlMenuEntries() %>">
-	<nav aria-label='<%= LanguageUtil.get(request, "control-menu") %>' class="cadmin control-menu-container">
+	<nav aria-label="<%= LanguageUtil.get(request, "control-menu") %>" class="cadmin control-menu-container">
 		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#pre" />
 
 		<div class="control-menu control-menu-level-1 control-menu-level-1-<%= applicationsMenuApp ? "light" : "dark" %> d-print-none" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">

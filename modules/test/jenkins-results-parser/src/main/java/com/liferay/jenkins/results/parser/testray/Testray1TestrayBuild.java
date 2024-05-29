@@ -5,10 +5,6 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.BuildReportFactory;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.TopLevelBuildReport;
-
 import java.io.IOException;
 
 import java.net.MalformedURLException;
@@ -17,8 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,38 +41,6 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		JSONObject jsonObject = getJSONObject();
 
 		return jsonObject.getString("name");
-	}
-
-	@Override
-	public JSONObject getRunsJSONObject() {
-		if (_runsJSONObject != null) {
-			return _runsJSONObject;
-		}
-
-		TestrayServer testrayServer = getTestrayServer();
-
-		try {
-			_runsJSONObject = new JSONObject(
-				testrayServer.requestGet(
-					JenkinsResultsParserUtil.combine(
-						"/home/-/testray/runs.json?delta=200&testrayBuildId=",
-						String.valueOf(getID()))));
-		}
-		catch (IOException ioException) {
-		}
-
-		return _runsJSONObject;
-	}
-
-	@Override
-	public String getStartYearMonth() {
-		Matcher matcher = _getTestrayAttachmentURLMatcher();
-
-		if (matcher == null) {
-			return null;
-		}
-
-		return matcher.group("startYearMonth");
 	}
 
 	@Override
@@ -168,6 +130,16 @@ public class Testray1TestrayBuild extends TestrayBuild {
 
 	@Override
 	public TestrayProductVersion getTestrayProductVersion() {
+		if (_testrayProductVersion != null) {
+			return _testrayProductVersion;
+		}
+
+		JSONObject jsonObject = getJSONObject();
+		TestrayProject testrayProject = getTestrayProject();
+
+		_testrayProductVersion = testrayProject.getTestrayProductVersionByID(
+			jsonObject.getLong("testrayProductVersionId"));
+
 		return _testrayProductVersion;
 	}
 
@@ -209,96 +181,6 @@ public class Testray1TestrayBuild extends TestrayBuild {
 	}
 
 	@Override
-	public TopLevelBuildReport getTopLevelBuildReport() {
-		if (_topLevelBuildReport != null) {
-			return _topLevelBuildReport;
-		}
-
-		URL topLevelBuildReportURL = getTopLevelBuildReportURL();
-
-		if (topLevelBuildReportURL == null) {
-			return null;
-		}
-
-		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
-
-		return _topLevelBuildReport;
-	}
-
-	@Override
-	public URL getTopLevelBuildReportURL() {
-		Matcher matcher = _getTestrayAttachmentURLMatcher();
-
-		if (matcher == null) {
-			return null;
-		}
-
-		try {
-			URL url = new URL(
-				JenkinsResultsParserUtil.combine(
-					"http://", matcher.group("topLevelMasterHostname"),
-					"/userContent/jobs/", matcher.group("topLevelJobName"),
-					"/builds/", matcher.group("topLevelBuildNumber"),
-					"/build-report.json.gz"));
-
-			if (JenkinsResultsParserUtil.exists(url)) {
-				return url;
-			}
-
-			url = new URL(matcher.group());
-
-			if (JenkinsResultsParserUtil.exists(url)) {
-				return url;
-			}
-
-			return null;
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-	}
-
-	@Override
-	public URL getTopLevelBuildURL() {
-		Matcher matcher = _getTestrayAttachmentURLMatcher();
-
-		if (matcher == null) {
-			return null;
-		}
-
-		try {
-			return new URL(
-				JenkinsResultsParserUtil.combine(
-					"https://", matcher.group("topLevelMasterHostname"),
-					".liferay.com/job/", matcher.group("topLevelJobName"), "/",
-					matcher.group("topLevelBuildNumber"), "/"));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-	}
-
-	@Override
-	public TestrayCaseResult getTopLevelTestrayCaseResult() {
-		TestrayServer testrayServer = getTestrayServer();
-
-		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults(
-			testrayServer.getTestrayCaseTypeByName("Batch"), null);
-
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			if (!Objects.equals(
-					testrayCaseResult.getName(), "Top Level Build")) {
-
-				continue;
-			}
-
-			return testrayCaseResult;
-		}
-
-		return null;
-	}
-
-	@Override
 	public URL getURL() {
 		JSONObject jsonObject = getJSONObject();
 
@@ -314,85 +196,13 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		TestrayRoutine testrayRoutine, JSONObject jsonObject) {
 
 		super(testrayRoutine, jsonObject);
-
-		TestrayProject testrayProject = getTestrayProject();
-
-		_testrayProductVersion = testrayProject.getTestrayProductVersionByID(
-			jsonObject.getLong("testrayProductVersionId"));
-	}
-
-	private Matcher _getTestrayAttachmentURLMatcher() {
-		if (_testrayAttachmentURLMatcher != null) {
-			return _testrayAttachmentURLMatcher;
-		}
-
-		TestrayCaseResult topLevelTestrayCaseResult =
-			getTopLevelTestrayCaseResult();
-
-		if (topLevelTestrayCaseResult != null) {
-			for (TestrayAttachment testrayAttachment :
-					topLevelTestrayCaseResult.getTestrayAttachments()) {
-
-				Matcher testrayAttachmentURLMatcher =
-					_testrayAttachmentURLPattern.matcher(
-						String.valueOf(testrayAttachment.getURL()));
-
-				if (testrayAttachmentURLMatcher.find()) {
-					_testrayAttachmentURLMatcher = testrayAttachmentURLMatcher;
-
-					return _testrayAttachmentURLMatcher;
-				}
-			}
-		}
-
-		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults();
-
-		if (testrayCaseResults.isEmpty()) {
-			return null;
-		}
-
-		int count = 0;
-
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			count++;
-
-			if (count >= 5) {
-				break;
-			}
-
-			for (TestrayAttachment testrayAttachment :
-					testrayCaseResult.getTestrayAttachments()) {
-
-				Matcher testrayAttachmentURLMatcher =
-					_testrayAttachmentURLPattern.matcher(
-						String.valueOf(testrayAttachment.getURL()));
-
-				if (testrayAttachmentURLMatcher.find()) {
-					_testrayAttachmentURLMatcher = testrayAttachmentURLMatcher;
-
-					return _testrayAttachmentURLMatcher;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private static final int _PAGE_COUNT = 100;
 
 	private static final int _PAGE_DELTA = 200;
 
-	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"https://testray.liferay.com/reports/production/logs/",
-			"(?<startYearMonth>\\d{4}-\\d{2})/",
-			"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
-			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/.*"));
-
-	private JSONObject _runsJSONObject;
-	private Matcher _testrayAttachmentURLMatcher;
-	private final TestrayProductVersion _testrayProductVersion;
+	private TestrayProductVersion _testrayProductVersion;
 	private List<TestrayRun> _testrayRuns;
-	private TopLevelBuildReport _topLevelBuildReport;
 
 }

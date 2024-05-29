@@ -17,6 +17,7 @@ export class PageEditorPage {
 
 	readonly experienceSelector: Locator;
 	readonly publishButton: Locator;
+	readonly publishMasterButton: Locator;
 	readonly redoButton: Locator;
 	readonly undoButton: Locator;
 	readonly undoHistory: Locator;
@@ -31,6 +32,9 @@ export class PageEditorPage {
 			'.page-editor__experience-selector'
 		);
 		this.publishButton = page.getByLabel('Publish', {exact: true});
+		this.publishMasterButton = page.getByLabel('Publish Master', {
+			exact: true,
+		});
 		this.redoButton = page.getByTitle('Redo');
 		this.undoButton = page.getByTitle('Undo');
 		this.undoHistory = page.locator('.page-editor__undo-history');
@@ -512,6 +516,14 @@ export class PageEditorPage {
 		);
 	}
 
+	async isMaster() {
+		const toolbar = this.page.locator('.page-editor__toolbar');
+
+		return await toolbar.evaluate((element) =>
+			element.classList.contains('page-editor__toolbar--master-layout')
+		);
+	}
+
 	async mapFormFragment(fragmentId: string, type: string, fields: string[]) {
 		const fragment = this.getFragment(fragmentId);
 
@@ -556,12 +568,17 @@ export class PageEditorPage {
 	}
 
 	async publishPage() {
-		await this.publishButton.click();
+		const isMaster = await this.isMaster();
 
-		await waitForSuccessAlert(
-			this.page,
-			'Success:The page was published successfully.'
-		);
+		const button = isMaster ? this.publishMasterButton : this.publishButton;
+		const successMessage = isMaster
+			? 'Success:The master page was published successfully.'
+			: 'Success:The page was published successfully.';
+
+		await button.waitFor();
+		await button.click();
+
+		await waitForSuccessAlert(this.page, successMessage);
 	}
 
 	async removeFragment(fragmentId: string) {

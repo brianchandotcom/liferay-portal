@@ -52,14 +52,8 @@ public class FunctionObjectValidationRuleEngineImpl
 		try {
 			JSONObject payloadJSONObject = _getPayloadJSONObject(inputObjects);
 
-			long creatorId = payloadJSONObject.getLong("creator", 0);
-
-			if (creatorId == 0) {
-				JSONObject creatorJSONObject = payloadJSONObject.getJSONObject(
-					"creator");
-
-				creatorId = creatorJSONObject.getLong("id");
-			}
+			JSONObject creatorJSONObject = payloadJSONObject.getJSONObject(
+				"creator");
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				new String(
@@ -70,7 +64,7 @@ public class FunctionObjectValidationRuleEngineImpl
 						payloadJSONObject,
 						_functionObjectValidationRuleEngineImplConfiguration.
 							resourcePath(),
-						creatorId
+						creatorJSONObject.getLong("id")
 					).get()));
 
 			results.put(
@@ -120,31 +114,24 @@ public class FunctionObjectValidationRuleEngineImpl
 		_name = GetterUtil.getString(properties.get("name"));
 	}
 
-	private JSONObject _getPayloadJSONObject(Map<String, Object> inputObjects) {
+	private JSONObject _getPayloadJSONObject(Map<String, Object> objectEntry) {
 		JSONObject originalJSONObject = _jsonFactory.createJSONObject(
-			inputObjects);
-
-		JSONObject entryDTOJSONObject = originalJSONObject.getJSONObject(
-			"entryDTO");
-
-		if (entryDTOJSONObject == null) {
-			return originalJSONObject.getJSONObject("baseModel");
-		}
+			objectEntry);
 
 		JSONObject payloadJSONObject = JSONUtil.put(
-			"creator", entryDTOJSONObject.getJSONObject("creator")
+			"creator", originalJSONObject.getJSONObject("creator")
 		).put(
-			"dateCreated", entryDTOJSONObject.get("dateCreated")
+			"dateCreated", originalJSONObject.get("dateCreated")
 		).put(
-			"dateModified", entryDTOJSONObject.get("dateModified")
+			"dateModified", originalJSONObject.get("dateModified")
 		).put(
 			"externalReferenceCode",
-			entryDTOJSONObject.get("externalReferenceCode")
+			originalJSONObject.get("externalReferenceCode")
 		).put(
-			"status", entryDTOJSONObject.get("status")
+			"status", originalJSONObject.get("status")
 		);
 
-		JSONObject propertiesJSONObject = entryDTOJSONObject.getJSONObject(
+		JSONObject propertiesJSONObject = originalJSONObject.getJSONObject(
 			"properties");
 
 		for (String key : propertiesJSONObject.keySet()) {

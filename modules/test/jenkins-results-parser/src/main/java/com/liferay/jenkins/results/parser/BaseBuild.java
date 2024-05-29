@@ -1642,7 +1642,8 @@ public abstract class BaseBuild implements Build {
 		sb.append("\n");
 
 		if (slaveOfflineRule.getOfflineSibling() &&
-		(jenkinsMaster.getSlavesPerHost() == 2)) {
+			(jenkinsMaster.getSlavesPerHost() == 2)) {
+
 			Set<JenkinsSlave> slaveSiblings = jenkinsSlave.getSiblings();
 
 			for (JenkinsSlave sibling : slaveSiblings) {
@@ -1657,13 +1658,13 @@ public abstract class BaseBuild implements Build {
 				sb.append("\n");
 
 				String siblingMessage = JenkinsResultsParserUtil.combine(
-				pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
-				" Reason: ", slaveOfflineRule.getName());
+					pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
+					" Reason: ", slaveOfflineRule.getName());
 
 				sibling.takeSlavesOffline(siblingMessage);
 			}
 		}
-		
+
 		String message = sb.toString();
 
 		System.out.println(message);

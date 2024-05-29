@@ -105,7 +105,6 @@ definition {
 	@priority = 4
 	test ConfigureAssetPublisherAsSiteAdministrater {
 		property asset.publisher.selection.style = "asset-list";
-		property custom.properties = "feature.flag.LPD-13311=true";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var userEmailAddress = StringUtil.randomString(8);

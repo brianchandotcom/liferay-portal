@@ -1513,7 +1513,7 @@ definition {
 
 		Click(locator1 = "APConfiguration#ASSET_SELECTION_DYNAMIC");
 
-		for (var panel : list "Source,Filter,Custom User Attributes,Ordering") {
+		for (var panel : list "Source,Filter,Ordering") {
 			AssertElementPresent(
 				key_panel = ${panel},
 				locator1 = "Panel#PANEL_COLLAPSED");

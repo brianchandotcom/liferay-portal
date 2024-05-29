@@ -32,6 +32,11 @@ public class AuditEventManagerImpl implements AuditEventManager {
 	}
 
 	@Override
+	public void addAuditEvents(List<AuditMessage> auditMessages) {
+		_auditEventLocalService.addAuditEvents(auditMessages);
+	}
+
+	@Override
 	public AuditEvent fetchAuditEvent(long auditEventId) {
 		return _createAuditEvent(
 			_auditEventLocalService.fetchAuditEvent(auditEventId));

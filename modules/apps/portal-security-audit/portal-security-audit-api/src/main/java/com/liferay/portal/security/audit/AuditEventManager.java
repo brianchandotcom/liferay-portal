@@ -22,6 +22,8 @@ public interface AuditEventManager {
 
 	public AuditEvent addAuditEvent(AuditMessage auditMessage);
 
+	public void addAuditEvents(List<AuditMessage> auditMessages);
+
 	public AuditEvent fetchAuditEvent(long auditEventId);
 
 	public List<AuditEvent> getAuditEvents(

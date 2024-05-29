@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.audit.storage.service.impl;
 
+import com.liferay.counter.kernel.model.Counter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.audit.AuditMessage;
@@ -38,28 +39,25 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 
 	@Override
 	public AuditEvent addAuditEvent(AuditMessage auditMessage) {
-		long auditEventId = counterLocalService.increment();
+		return auditEventPersistence.update(
+			_toAuditEvent(auditMessage, counterLocalService.increment()));
+	}
 
-		AuditEvent auditEvent = auditEventPersistence.create(auditEventId);
+	@Override
+	public void addAuditEvents(List<AuditMessage> auditMessages) {
+		if (auditMessages.isEmpty()) {
+			return;
+		}
 
-		auditEvent.setGroupId(auditMessage.getGroupId());
-		auditEvent.setCompanyId(auditMessage.getCompanyId());
-		auditEvent.setUserId(auditMessage.getUserId());
-		auditEvent.setUserName(auditMessage.getUserName());
-		auditEvent.setCreateDate(auditMessage.getTimestamp());
-		auditEvent.setEventType(auditMessage.getEventType());
-		auditEvent.setClassName(auditMessage.getClassName());
-		auditEvent.setClassPK(auditMessage.getClassPK());
-		auditEvent.setMessage(auditMessage.getMessage());
-		auditEvent.setClientHost(auditMessage.getClientHost());
-		auditEvent.setClientIP(auditMessage.getClientIP());
-		auditEvent.setServerName(auditMessage.getServerName());
-		auditEvent.setServerPort(auditMessage.getServerPort());
-		auditEvent.setSessionID(auditMessage.getSessionID());
-		auditEvent.setAdditionalInfo(
-			String.valueOf(auditMessage.getAdditionalInfo()));
+		long startAuditEventId =
+			counterLocalService.increment(
+				Counter.class.getName(), auditMessages.size()) -
+					auditMessages.size();
 
-		return auditEventPersistence.update(auditEvent);
+		for (AuditMessage auditMessage : auditMessages) {
+			auditEventPersistence.update(
+				_toAuditEvent(auditMessage, ++startAuditEventId));
+		}
 	}
 
 	@Override
@@ -247,6 +245,31 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 		}
 
 		return dynamicQuery.add(junction);
+	}
+
+	private AuditEvent _toAuditEvent(
+		AuditMessage auditMessage, long auditEventId) {
+
+		AuditEvent auditEvent = auditEventPersistence.create(auditEventId);
+
+		auditEvent.setGroupId(auditMessage.getGroupId());
+		auditEvent.setCompanyId(auditMessage.getCompanyId());
+		auditEvent.setUserId(auditMessage.getUserId());
+		auditEvent.setUserName(auditMessage.getUserName());
+		auditEvent.setCreateDate(auditMessage.getTimestamp());
+		auditEvent.setEventType(auditMessage.getEventType());
+		auditEvent.setClassName(auditMessage.getClassName());
+		auditEvent.setClassPK(auditMessage.getClassPK());
+		auditEvent.setMessage(auditMessage.getMessage());
+		auditEvent.setClientHost(auditMessage.getClientHost());
+		auditEvent.setClientIP(auditMessage.getClientIP());
+		auditEvent.setServerName(auditMessage.getServerName());
+		auditEvent.setServerPort(auditMessage.getServerPort());
+		auditEvent.setSessionID(auditMessage.getSessionID());
+		auditEvent.setAdditionalInfo(
+			String.valueOf(auditMessage.getAdditionalInfo()));
+
+		return auditEvent;
 	}
 
 }

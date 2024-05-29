@@ -54,13 +54,12 @@ test('can import a lar file selecting some items to import', async ({
 
 	await exportImportPage.createNewExportProcess(exportName);
 
-	expect(
-		await exportImportPage.page
+	await expect(
+		exportImportPage.page
 			.getByText(exportName)
 			.locator('../..')
 			.getByText('Successful')
-			.textContent()
-	).toBe('Successful');
+	).toBeVisible();
 
 	const exportFilePath = await exportImportPage.downloadExportProcess(
 		exportName
@@ -70,7 +69,10 @@ test('can import a lar file selecting some items to import', async ({
 
 	await exportImportPage.createNewImportProcess(exportFilePath);
 
-	expect(
-		await exportImportPage.page.getByText('Successful').textContent()
-	).toBe('Successful');
+	await expect(
+		exportImportPage.page
+			.getByText(exportName)
+			.locator('../../..')
+			.getByText('Successful')
+	).toBeVisible();
 });

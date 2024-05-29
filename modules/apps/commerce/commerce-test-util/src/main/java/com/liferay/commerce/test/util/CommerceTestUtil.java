@@ -473,6 +473,17 @@ public class CommerceTestUtil {
 			RandomTestUtil.randomString());
 	}
 
+	public static CommerceShippingMethod addCommerceShippingMethod(
+			long userId, long groupId, Map<Locale, String> shippingMethodName,
+			Map<Locale, String> shippingMethodDescription, boolean active,
+			String engineKey)
+		throws Exception {
+
+		return CommerceShippingMethodLocalServiceUtil.addCommerceShippingMethod(
+			userId, groupId, shippingMethodName, shippingMethodDescription,
+			active, engineKey, null, 1, RandomTestUtil.randomString());
+	}
+
 	public static CommerceShippingMethod addFixedRateCommerceShippingMethod(
 			long userId, long groupId, BigDecimal value)
 		throws Exception {

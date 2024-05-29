@@ -261,9 +261,7 @@ public class UserLocalServiceTest {
 		User user = UserTestUtil.addUser();
 
 		user.setLastFailedLoginDate(
-			DateUtil.newDate(
-				new Date(
-				).getTime() - 5000L));
+			DateUtil.newDate(System.currentTimeMillis() - 5000L));
 		user.setFailedLoginAttempts(3);
 
 		user = _userLocalService.updateUser(user);
@@ -513,7 +511,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testLockout() throws Exception {
+	public void testLockoutUser() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		String password = "password";
@@ -582,14 +580,14 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testLockoutResetWhenLockoutResetTimeIsOver() throws Exception {
+	public void testLockoutUserResetWhenLockoutResetTimeIsOver()
+		throws Exception {
+
 		User user = UserTestUtil.addUser();
 
 		user.setLockout(true);
 		user.setLockoutDate(
-			DateUtil.newDate(
-				new Date(
-				).getTime() - 5000L));
+			DateUtil.newDate(System.currentTimeMillis() - 5000L));
 
 		user = _userLocalService.updateUser(user);
 

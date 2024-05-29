@@ -13,7 +13,6 @@ export class UserPersonalSitePage {
 	readonly languageSelectorMenuItem: Locator;
 	readonly languageSelectorOptionsMenu: Locator;
 	readonly myDashboardMenuItem: Locator;
-	readonly myProfileMenuItem: Locator;
 	readonly page: Page;
 	readonly removeMenuItem: Locator;
 	readonly searchBar: Locator;
@@ -29,9 +28,6 @@ export class UserPersonalSitePage {
 		this.myDashboardMenuItem = page.getByRole('menuitem', {
 			name: 'My Dashboard',
 		});
-		this.myProfileMenuItem = page.getByRole('menuitem', {
-			name: 'My Profile',
-		});
 		this.page = page;
 		this.searchBar = page
 			.getByRole('tabpanel')
@@ -40,11 +36,8 @@ export class UserPersonalSitePage {
 	}
 
 	async addLanguageSelectorToPage() {
-		if (!this.languageSelectorButton.isVisible()) {
+		if (!(await this.languageSelectorButton.isVisible())) {
 			await this.addWidgetButton.click();
-			if (!this.searchBar.isVisible()) {
-				this.addWidgetButton.click();
-			}
 			await this.searchBar.click();
 			await this.searchBar.fill('language');
 			await this.page.keyboard.press('Enter');
@@ -62,19 +55,11 @@ export class UserPersonalSitePage {
 		await this.myDashboardMenuItem.click();
 	}
 
-	async goToMyProfile() {
-		await this.userPersonalMenuButton.click();
-		await this.myProfileMenuItem.click();
-	}
-
 	async switchLanguages(
 		targetLanguage: string,
 		localizedButtonName: string = 'Select a Language'
 	) {
 		await this.page.getByTitle(localizedButtonName).click();
-		await this.page
-			.getByRole('menuitem', {name: targetLanguage})
-			.waitFor({state: 'visible'});
 		await this.page.getByRole('menuitem', {name: targetLanguage}).click();
 	}
 }

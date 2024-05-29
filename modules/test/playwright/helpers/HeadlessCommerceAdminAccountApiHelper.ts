@@ -16,6 +16,7 @@ type TAddress = {
 	latitude?: number;
 	longitude?: number;
 	name?: string;
+	phoneNumber?: string;
 	regionISOCode?: string;
 	street1?: string;
 	street2?: string;

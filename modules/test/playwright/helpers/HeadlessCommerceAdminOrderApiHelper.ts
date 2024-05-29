@@ -18,6 +18,24 @@ type TTerms = {
 	type: string;
 };
 
+type TOrder = {
+	accountId: number;
+	billingAddressId?: string;
+	channelId?: number;
+	currencyCode?: string;
+	orderItems: TOrderItem[];
+	orderStatus?: string;
+	paymentMethod?: string;
+	paymentStatus?: string;
+	shippingAddressId?: string;
+};
+
+type TOrderItem = {
+	decimalQuantity: number;
+	quantity: number;
+	skuId: string;
+};
+
 export class HeadlessCommerceAdminOrderApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -43,6 +61,23 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/orders`
 		);
+	}
+
+	async postOrder(order: TOrder): Promise<TOrder> {
+		const postOrder = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/orders?nestedFields=orderItems`,
+			{
+				data: {currencyCode: 'USD', ...order},
+			}
+		);
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: postOrder.id,
+				type: 'order',
+			});
+		}
+
+		return postOrder;
 	}
 
 	async postTerms(terms: TTerms) {

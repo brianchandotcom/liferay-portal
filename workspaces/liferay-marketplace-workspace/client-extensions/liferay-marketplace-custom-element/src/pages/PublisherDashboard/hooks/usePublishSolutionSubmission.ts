@@ -98,6 +98,7 @@ const _updateSpecification = (
 		!value?.trim() ||
 		(specification && specification.value.en_US === value)
 	) {
+
 		// No need to update the specification if the value is equal
 		// the previous value or empty.
 
@@ -380,7 +381,8 @@ const usePublishSolutionSubmission = (
 			]) {
 				await sync(product);
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 

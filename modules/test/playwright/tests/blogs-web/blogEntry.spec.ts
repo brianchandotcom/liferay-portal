@@ -11,7 +11,6 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {blogsPagesTest} from './fixtures/blogsPagesTest';
 import {friendlyURLCategoriesSetup} from './utils/friendlyURLCategoriesSetup';
 
@@ -100,8 +99,7 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 		page.getByText(`/-/blogs/${friendlyUrlCategories.join('/')}/`)
 	).toBeVisible();
 
-	await page.getByRole('button', {name: 'Publish'}).click();
-	await waitForSuccessAlert(page);
+	await blogsEditBlogEntryPage.publishBlogEntry();
 
 	const response = await page.goto(`/web${site.friendlyUrlPath}/b/${title}`);
 

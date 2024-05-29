@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {BlogsPage} from './BlogsPage';
 
 type editBlogEntryAddfriendlyUrlType = {
@@ -90,7 +91,12 @@ export class BlogsEditBlogEntryPage {
 		}
 
 		if (publish) {
-			await this.publishButton.click();
+			await this.publishBlogEntry();
 		}
+	}
+
+	async publishBlogEntry() {
+		await this.publishButton.click();
+		await waitForSuccessAlert(this.page);
 	}
 }

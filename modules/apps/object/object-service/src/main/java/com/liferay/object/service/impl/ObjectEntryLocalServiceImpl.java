@@ -346,7 +346,7 @@ public class ObjectEntryLocalServiceImpl
 			_executeObjectActions(
 				objectEntry.getCompanyId(),
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, objectDefinition,
-				objectEntry, user);
+				objectEntry, null, user);
 		}
 		finally {
 			ObjectActionThreadLocal.setClearObjectEntryIdsMap(
@@ -1555,6 +1555,8 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry.setTransientValues(transientValues);
 
+		ObjectEntry originalObjectEntry = objectEntry.cloneWithOriginalValues();
+
 		try {
 			if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 				ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
@@ -1584,7 +1586,7 @@ public class ObjectEntryLocalServiceImpl
 		_executeObjectActions(
 			objectEntry.getCompanyId(),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, objectDefinition,
-			objectEntry, user);
+			objectEntry, originalObjectEntry, user);
 
 		return objectEntry;
 	}
@@ -2017,7 +2019,7 @@ public class ObjectEntryLocalServiceImpl
 	private void _executeObjectActions(
 			long companyId, String objectActionTrigger,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			User user)
+			ObjectEntry originalObjectEntry, User user)
 		throws NoSuchObjectDefinitionException {
 
 		ObjectActionEngine objectActionEngine =
@@ -2027,7 +2029,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), companyId, objectActionTrigger,
 			() -> ObjectEntryUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory, objectActionTrigger,
-				objectDefinition, objectEntry, null, user),
+				objectDefinition, objectEntry, originalObjectEntry, user),
 			user.getUserId());
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||

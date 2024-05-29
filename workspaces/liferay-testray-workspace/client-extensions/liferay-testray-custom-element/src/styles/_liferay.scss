@@ -9,55 +9,6 @@
 	padding: 0;
 }
 
-.subnav-tbar {
-	background-color: #fff !important;
-}
-
-.subnav-tbar-primary {
-	background-color: #fff;
-
-	.result-filter {
-		background-color: #0e1387;
-		border-color: #0e1387;
-		color: #fff;
-	}
-}
-
-.popover {
-	max-width: 900px !important;
-	width: 480px !important;
-	z-index: 9;
-}
-
-.testray-multi-select__clear-indicator {
-	display: none !important;
-}
-
-.popover .inline-scroller {
-	max-height: unset !important;
-}
-
-.clay-reorder-footer {
-	display: none;
-}
-
-.compare-runs-popover {
-	top: 210px !important;
-	z-index: 98;
-}
-
-.cursor-pointer {
-	cursor: pointer;
-}
-
-.dropdown-menu {
-	z-index: 9999;
-}
-
-.portlet {
-	margin-bottom: 0;
-}
-
 body {
 	font-size: 100%;
 	list-style-type: none;
@@ -70,65 +21,39 @@ html {
 	overflow: hidden;
 }
 
-.dropdown-section .custom-control-label {
-	color: unset;
-}
-
-.management-bar {
-	div:nth-child(1) {
-		max-width: none;
-	}
-
-	.navbar-nav {
-		flex-wrap: initial;
+.autofill-builds-popover {
+	.build-buttons {
+		background-color: #373ecc !important;
+		cursor: default;
 	}
 }
 
-.subnav-tbar {
-	background-color: #b3cdff;
+.case-results-attachments-box {
+	max-width: fit-content;
+}
 
-	div:nth-child(1) {
-		max-width: none;
+.clay-reorder-footer {
+	display: none;
+}
+
+.compare-runs-popover {
+	top: 210px !important;
+	z-index: 98;
+
+	.runs-buttons {
+		background-color: #373ecc !important;
+		cursor: default;
 	}
 }
 
-.management-toolbar-filter-dropdown {
-	max-height: 800px;
-	overflow-y: hidden;
-	width: 300px;
-
-	label {
-		font-size: 14px;
-		font-weight: normal !important;
-	}
-
-	.form-control {
-		margin-bottom: 15px;
-	}
+.cursor-pointer {
+	cursor: pointer;
 }
 
 .dropdown-header {
 	.form-control {
 		margin: 0;
 	}
-}
-
-.dropdown-scrollbar {
-	max-height: 100px;
-	overflow-y: scroll;
-}
-
-.popover-body {
-	max-height: 580px;
-	min-height: 100px;
-	overflow-y: auto;
-}
-
-.popover-footer {
-	background-color: #fff;
-	bottom: 0;
-	padding: 3px 16px 16px;
-	position: relative;
 }
 
 .dropdown-management-toolbar {
@@ -185,6 +110,72 @@ html {
 			margin-bottom: 1.5rem !important;
 		}
 	}
+}
+
+.dropdown-menu {
+	z-index: 9999;
+}
+
+.dropdown-scrollbar {
+	max-height: 100px;
+	overflow-y: scroll;
+}
+
+.dropdown-section .custom-control-label {
+	color: unset;
+}
+
+.management-bar {
+	div:nth-child(1) {
+		max-width: none;
+	}
+
+	.navbar-nav {
+		flex-wrap: initial;
+	}
+}
+
+.management-toolbar-buttons {
+	height: fit-content !important;
+	width: fit-content !important;
+}
+
+.management-toolbar-filter-dropdown {
+	max-height: 800px;
+	overflow-y: hidden;
+	width: 300px;
+
+	label {
+		font-size: 14px;
+		font-weight: normal !important;
+	}
+
+	.form-control {
+		margin-bottom: 15px;
+	}
+}
+
+.popover {
+	max-width: 900px !important;
+	width: 480px !important;
+	z-index: 9;
+}
+
+.popover-body {
+	max-height: 580px;
+	min-height: 100px;
+	overflow-y: auto;
+}
+
+.popover-footer {
+	background-color: #fff;
+	bottom: 0;
+	padding: 3px 16px 16px;
+	position: relative;
+}
+
+.popover .inline-scroller {
+	max-height: unset !important;
 }
 
 .popover-management-toolbar {
@@ -259,20 +250,32 @@ html {
 	}
 }
 
-.management-toolbar-buttons {
-	height: fit-content !important;
-	width: fit-content !important;
+.portlet {
+	margin-bottom: 0;
 }
 
-.autofill-builds-popover {
-	.build-buttons {
-		background-color: #373ecc !important;
-		cursor: default;
+.subnav-tbar {
+	background-color: #fff !important;
+}
+
+.subnav-tbar {
+	background-color: #b3cdff;
+
+	div:nth-child(1) {
+		max-width: none;
 	}
 }
-.compare-runs-popover {
-	.runs-buttons {
-		background-color: #373ecc !important;
-		cursor: default;
+
+.subnav-tbar-primary {
+	background-color: #fff;
+
+	.result-filter {
+		background-color: #0e1387;
+		border-color: #0e1387;
+		color: #fff;
 	}
+}
+
+.testray-multi-select__clear-indicator {
+	display: none !important;
 }

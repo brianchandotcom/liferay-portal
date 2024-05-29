@@ -36,6 +36,14 @@ public class TestrayCase {
 		return null;
 	}
 
+	public TestrayCaseType getTestrayCaseType() {
+		return _testrayCaseType;
+	}
+
+	public long getTestrayCaseTypeID() {
+		return _testrayCaseType.getID();
+	}
+
 	public TestrayProject getTestrayProject() {
 		return _testrayProject;
 	}
@@ -49,9 +57,15 @@ public class TestrayCase {
 
 		_testrayProject = testrayProject;
 		_jsonObject = jsonObject;
+
+		TestrayServer testrayServer = testrayProject.getTestrayServer();
+
+		_testrayCaseType = testrayServer.getTestrayCaseTypeByID(
+			jsonObject.getLong("r_caseTypeToCases_c_caseTypeId"));
 	}
 
 	private final JSONObject _jsonObject;
+	private final TestrayCaseType _testrayCaseType;
 	private final TestrayProject _testrayProject;
 
 }

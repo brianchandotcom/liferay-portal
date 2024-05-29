@@ -181,7 +181,7 @@ public class Testray1TestrayBuild extends TestrayBuild {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("/home/-/testray/runs.json?testrayBuildId=");
+		sb.append("/home/-/testray/runs.json?delta=50&testrayBuildId=");
 		sb.append(getID());
 
 		TestrayServer testrayServer = getTestrayServer();
@@ -283,7 +283,7 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		TestrayServer testrayServer = getTestrayServer();
 
 		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults(
-			testrayServer.getTestrayCaseType("Batch"), null);
+			testrayServer.getTestrayCaseTypeByName("Batch"), null);
 
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			if (!Objects.equals(

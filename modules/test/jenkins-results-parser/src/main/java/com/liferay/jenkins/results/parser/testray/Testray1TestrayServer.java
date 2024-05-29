@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,8 +23,50 @@ import org.json.JSONObject;
  */
 public class Testray1TestrayServer extends TestrayServer {
 
+	public TestrayCaseType getTestrayCaseTypeByID(long testrayCaseTypeID) {
+		if (_testrayCaseTypes != null) {
+			for (TestrayCaseType testrayCaseType : _testrayCaseTypes.values()) {
+				if (Objects.equals(
+						testrayCaseTypeID, testrayCaseType.getID())) {
+
+					return testrayCaseType;
+				}
+			}
+		}
+
+		_testrayCaseTypes = new HashMap<>();
+
+		TestrayCaseType testrayCaseType = null;
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+				requestGet("/home/-/testray/case_types.json"));
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			for (int i = 0; i < dataJSONArray.length(); i++) {
+				JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
+
+				testrayCaseType = TestrayFactory.newTestrayCaseType(
+					this, dataJSONObject);
+
+				_testrayCaseTypes.put(
+					testrayCaseType.getName(), testrayCaseType);
+
+				break;
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return testrayCaseType;
+	}
+
 	@Override
-	public TestrayCaseType getTestrayCaseType(String testrayCaseTypeName) {
+	public TestrayCaseType getTestrayCaseTypeByName(
+		String testrayCaseTypeName) {
+
 		if (_testrayCaseTypes != null) {
 			return _testrayCaseTypes.get(testrayCaseTypeName);
 		}

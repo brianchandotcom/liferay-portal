@@ -18,7 +18,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,22 +41,68 @@ public class TestrayServer {
 		return _httpAuthorization;
 	}
 
-	public TestrayCaseType getTestrayCaseType(String testrayCaseTypeName) {
+	public TestrayCaseType getTestrayCaseTypeByID(long testrayCaseTypeID) {
+		TestrayCaseType testrayCaseType = _testrayCaseTypesID.get(
+			testrayCaseTypeID);
+
+		if (testrayCaseType != null) {
+			return testrayCaseType;
+		}
+
 		try {
 			List<JSONObject> entityJSONObjects = requestGraphQL(
-				"casetypes", TestrayCaseType.FIELD_NAMES,
+				"caseTypes", TestrayCaseType.FIELD_NAMES,
+				"id eq '" + testrayCaseTypeID + "'", 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			testrayCaseType = TestrayFactory.newTestrayCaseType(
+				this, entityJSONObjects.get(0));
+
+			_testrayCaseTypesID.put(testrayCaseType.getID(), testrayCaseType);
+			_testrayCaseTypesName.put(
+				testrayCaseType.getName(), testrayCaseType);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _testrayCaseTypesID.get(testrayCaseTypeID);
+	}
+
+	public TestrayCaseType getTestrayCaseTypeByName(
+		String testrayCaseTypeName) {
+
+		TestrayCaseType testrayCaseType = _testrayCaseTypesName.get(
+			testrayCaseTypeName);
+
+		if (testrayCaseType != null) {
+			return testrayCaseType;
+		}
+
+		try {
+			List<JSONObject> entityJSONObjects = requestGraphQL(
+				"caseTypes", TestrayCaseType.FIELD_NAMES,
 				"name eq '" + testrayCaseTypeName + "'", 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;
 			}
 
-			return TestrayFactory.newTestrayCaseType(
+			testrayCaseType = TestrayFactory.newTestrayCaseType(
 				this, entityJSONObjects.get(0));
+
+			_testrayCaseTypesID.put(testrayCaseType.getID(), testrayCaseType);
+			_testrayCaseTypesName.put(
+				testrayCaseType.getName(), testrayCaseType);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		return _testrayCaseTypesName.get(testrayCaseTypeName);
 	}
 
 	public TestrayProject getTestrayProjectByID(long projectID) {
@@ -99,7 +147,7 @@ public class TestrayServer {
 		try {
 			for (JSONObject entityJSONObject :
 					requestGraphQL(
-						"projects", TestrayProject.FIELD_NAMES, null, -1, 50)) {
+						"projects", TestrayProject.FIELD_NAMES, null)) {
 
 				testrayProjects.add(
 					TestrayFactory.newTestrayProject(this, entityJSONObject));
@@ -203,16 +251,23 @@ public class TestrayServer {
 	}
 
 	protected List<JSONObject> requestGraphQL(
+			String entityName, String[] entityFields, String filterString)
+		throws IOException {
+
+		return requestGraphQL(entityName, entityFields, filterString, 0, 0);
+	}
+
+	protected List<JSONObject> requestGraphQL(
 			String entityName, String[] entityFields, String filterString,
 			long maxCount, int pageSize)
 		throws IOException {
 
-		if (maxCount < 0) {
+		if (maxCount <= 0) {
 			maxCount = Long.MAX_VALUE;
 		}
 
 		if (pageSize <= 0) {
-			pageSize = 25;
+			pageSize = 200;
 		}
 
 		if (pageSize >= maxCount) {
@@ -228,8 +283,8 @@ public class TestrayServer {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("{\n");
-			sb.append("c {\n");
+			sb.append("{ ");
+			sb.append("c { ");
 
 			sb.append(entityName);
 			sb.append(" (page: ");
@@ -243,26 +298,28 @@ public class TestrayServer {
 				sb.append("\"");
 			}
 
-			sb.append(") {\n");
+			sb.append(") { ");
 
-			sb.append("items {\n");
+			sb.append("items { ");
 
 			for (String entityField : entityFields) {
 				sb.append(entityField);
-				sb.append("\n");
+				sb.append(" ");
 			}
 
-			sb.append("}\n");
-			sb.append("page\n");
-			sb.append("pageSize\n");
-			sb.append("lastPage\n");
-			sb.append("}\n");
-			sb.append("}\n");
+			sb.append("} ");
+			sb.append("page ");
+			sb.append("pageSize ");
+			sb.append("lastPage ");
+			sb.append("} ");
+			sb.append("} ");
 			sb.append("}");
 
 			JSONObject requestJSONObject = new JSONObject();
 
 			requestJSONObject.put("query", sb.toString());
+
+			System.out.println(getURL() + "/o/graphql query: " + sb);
 
 			JSONObject responseJSONObject = new JSONObject(
 				requestPost("/o/graphql", requestJSONObject.toString()));
@@ -422,6 +479,10 @@ public class TestrayServer {
 		"(?<url>https?://.*)/+");
 
 	private JenkinsResultsParserUtil.HTTPAuthorization _httpAuthorization;
+	private final Map<Long, TestrayCaseType> _testrayCaseTypesID =
+		new HashMap<>();
+	private final Map<String, TestrayCaseType> _testrayCaseTypesName =
+		new HashMap<>();
 	private final URL _url;
 
 }

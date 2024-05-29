@@ -36,7 +36,8 @@ public class TestHistoryMap {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		List<TestrayBuild> testrayBuilds = testrayRoutine.getTestrayBuilds();
+		List<TestrayBuild> testrayBuilds = testrayRoutine.getTestrayBuilds(
+			maxBuildCount);
 
 		if (testrayBuilds.size() > maxBuildCount) {
 			testrayBuilds = testrayBuilds.subList(0, maxBuildCount);
@@ -479,7 +480,7 @@ public class TestHistoryMap {
 				TestrayServer testrayServer =
 					_latestTestrayBuild.getTestrayServer();
 
-				_testrayCaseType = testrayServer.getTestrayCaseType(
+				_testrayCaseType = testrayServer.getTestrayCaseTypeByName(
 					testrayCaseTypeName);
 
 				return _testrayCaseType;

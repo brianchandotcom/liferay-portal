@@ -2,6 +2,6 @@
 	"contentType": {
 		"className": "com.liferay.commerce.product.model.CPDefinition"
 	},
-	"defaultTemplate": true,
+	"defaultTemplate": false,
 	"name": "Solutions Detail"
 }

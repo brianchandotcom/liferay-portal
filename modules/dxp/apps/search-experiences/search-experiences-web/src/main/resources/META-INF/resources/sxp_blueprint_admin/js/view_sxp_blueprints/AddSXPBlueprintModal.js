@@ -18,14 +18,12 @@ import {
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
-import fetchData, {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
-import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
+import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import {setInitialSuccessToast} from '../utils/toasts';
 
 const ADD_EVENT = 'addSXPBlueprint';
 
 const AddModal = ({
-	clauseContributorsList = [],
 	defaultLocale,
 	editSXPBlueprintURL,
 	observer,
@@ -56,7 +54,7 @@ const AddModal = ({
 					aggregationConfiguration: {},
 					generalConfiguration: {
 						clauseContributorsExcludes: [],
-						clauseContributorsIncludes: clauseContributorsList,
+						clauseContributorsIncludes: ['*'],
 						searchableAssetTypes: [],
 					},
 					highlightConfiguration: DEFAULT_HIGHLIGHT_CONFIGURATION,
@@ -258,12 +256,6 @@ export function AddSXPBlueprintModal({
 		onClose: () => setVisibleModal(false),
 	});
 
-	const [keywordQueryContributors, setKeywordQueryContributors] =
-		useState(null);
-	const [modelPrefilterContributors, setModelPrefilterContributors] =
-		useState(null);
-	const [queryPrefilterContributors, setQueryPrefilterContributors] =
-		useState(null);
 	const [visibleModal, setVisibleModal] = useState(false);
 
 	useEffect(() => {
@@ -274,46 +266,10 @@ export function AddSXPBlueprintModal({
 		};
 	}, []);
 
-	useEffect(() => {
-		[
-			{
-				setProperty: setKeywordQueryContributors,
-				url: '/o/search-experiences-rest/v1.0/keyword-query-contributors',
-			},
-			{
-				setProperty: setModelPrefilterContributors,
-				url: '/o/search-experiences-rest/v1.0/model-prefilter-contributors',
-			},
-			{
-				setProperty: setQueryPrefilterContributors,
-				url: '/o/search-experiences-rest/v1.0/query-prefilter-contributors',
-			},
-		].forEach(({setProperty, url}) =>
-			fetchData(url)
-				.then((responseContent) =>
-					setProperty(filterAndSortClassNames(responseContent.items))
-				)
-				.catch(() => setProperty([]))
-		);
-	}, []); //eslint-disable-line
-
-	if (
-		!keywordQueryContributors ||
-		!modelPrefilterContributors ||
-		!queryPrefilterContributors
-	) {
-		return null;
-	}
-
 	return (
 		<ClayModalProvider>
 			{visibleModal && (
 				<AddModal
-					clauseContributorsList={[
-						...keywordQueryContributors,
-						...modelPrefilterContributors,
-						...queryPrefilterContributors,
-					]}
 					defaultLocale={defaultLocale}
 					editSXPBlueprintURL={editSXPBlueprintURL}
 					observer={observer}

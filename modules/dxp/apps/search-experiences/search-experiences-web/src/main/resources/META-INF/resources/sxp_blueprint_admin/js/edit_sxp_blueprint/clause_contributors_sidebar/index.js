@@ -159,10 +159,6 @@ export default function ({
 
 	const _handleEnableClauseContributors = (classNames) => {
 		onFrameworkConfigChange({
-			clauseContributorsExcludes:
-				frameworkConfig.clauseContributorsExcludes.filter(
-					(clause) => !classNames.includes(clause)
-				),
 			clauseContributorsIncludes: removeDuplicates([
 				...frameworkConfig.clauseContributorsIncludes,
 				...classNames,
@@ -172,10 +168,6 @@ export default function ({
 
 	const _handleDisableClauseContributors = (classNames) => {
 		onFrameworkConfigChange({
-			clauseContributorsExcludes: removeDuplicates([
-				...frameworkConfig.clauseContributorsExcludes,
-				...classNames,
-			]),
 			clauseContributorsIncludes:
 				frameworkConfig.clauseContributorsIncludes.filter(
 					(clause) => !classNames.includes(clause)

@@ -200,10 +200,13 @@ describe('MappingSelector', () => {
 	it('renders correct selects in content pages', async () => {
 		renderMappingSelector({});
 
-		expect(getByText(document.body, 'item')).toBeInTheDocument();
-		expect(getByText(document.body, 'field')).toBeInTheDocument();
-
-		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();
+		await act(async () => {
+			expect(getByText(document.body, 'item')).toBeInTheDocument();
+			expect(getByText(document.body, 'field')).toBeInTheDocument();
+			expect(
+				queryByText(document.body, 'source')
+			).not.toBeInTheDocument();
+		});
 	});
 
 	it('renders correct selects in display pages', async () => {
@@ -211,8 +214,10 @@ describe('MappingSelector', () => {
 
 		renderMappingSelector({});
 
-		expect(getByText(document.body, 'field')).toBeInTheDocument();
-		expect(getByText(document.body, 'source')).toBeInTheDocument();
+		await act(async () => {
+			expect(getByText(document.body, 'field')).toBeInTheDocument();
+			expect(getByText(document.body, 'source')).toBeInTheDocument();
+		});
 	});
 
 	it('does not render content select when selecting structure as source', async () => {
@@ -224,13 +229,14 @@ describe('MappingSelector', () => {
 
 		const sourceTypeSelect = getByLabelText('source');
 
-		fireEvent.change(sourceTypeSelect, {
-			target: {value: 'structure'},
+		await act(async () => {
+			fireEvent.change(sourceTypeSelect, {
+				target: {value: 'structure'},
+			});
 		});
 
 		expect(getByText('field')).toBeInTheDocument();
 		expect(getByText('source')).toBeInTheDocument();
-
 		expect(queryByText('item')).not.toBeInTheDocument();
 	});
 
@@ -246,8 +252,10 @@ describe('MappingSelector', () => {
 
 		const fieldSelect = getByLabelText(document.body, 'field');
 
-		fireEvent.change(fieldSelect, {
-			target: {value: 'text-field-1'},
+		await act(async () => {
+			fireEvent.change(fieldSelect, {
+				target: {value: 'text-field-1'},
+			});
 		});
 
 		expect(onMappingSelect).toBeCalledWith({
@@ -271,14 +279,16 @@ describe('MappingSelector', () => {
 
 		const sourceTypeSelect = getByLabelText(document.body, 'source');
 
-		fireEvent.change(sourceTypeSelect, {
-			target: {value: 'structure'},
-		});
+		await act(async () => {
+			fireEvent.change(sourceTypeSelect, {
+				target: {value: 'structure'},
+			});
 
-		const fieldSelect = getByLabelText(document.body, 'field');
+			const fieldSelect = getByLabelText(document.body, 'field');
 
-		fireEvent.change(fieldSelect, {
-			target: {value: 'structure-field-1'},
+			fireEvent.change(fieldSelect, {
+				target: {value: 'structure-field-1'},
+			});
 		});
 
 		expect(onMappingSelect).toBeCalledWith({
@@ -296,8 +306,10 @@ describe('MappingSelector', () => {
 
 		const fieldSelect = getByLabelText(document.body, 'field');
 
-		fireEvent.change(fieldSelect, {
-			target: {value: 'unmapped'},
+		await act(async () => {
+			fireEvent.change(fieldSelect, {
+				target: {value: 'unmapped'},
+			});
 		});
 
 		expect(onMappingSelect).toBeCalledWith({});
@@ -359,13 +371,15 @@ describe('MappingSelector', () => {
 
 		const fieldSelect = getByLabelText(document.body, 'field');
 
-		expect(fieldSelect).toBeInTheDocument();
-		expect(
-			getByText(
-				document.body,
-				'no-fields-are-available-for-text-editable'
-			)
-		).toBeInTheDocument();
+		await act(async () => {
+			expect(fieldSelect).toBeInTheDocument();
+			expect(
+				getByText(
+					document.body,
+					'no-fields-are-available-for-text-editable'
+				)
+			).toBeInTheDocument();
+		});
 	});
 
 	it('shows type and subtype label when some item is mapped', async () => {
@@ -379,13 +393,15 @@ describe('MappingSelector', () => {
 			},
 		});
 
-		expect(
-			getByText(document.body, 'Mapped Item Type')
-		).toBeInTheDocument();
+		await act(async () => {
+			expect(
+				getByText(document.body, 'Mapped Item Type')
+			).toBeInTheDocument();
 
-		expect(
-			getByText(document.body, 'Mapped Item Subtype')
-		).toBeInTheDocument();
+			expect(
+				getByText(document.body, 'Mapped Item Subtype')
+			).toBeInTheDocument();
+		});
 	});
 
 	it('allows selecting relationship in display pages', async () => {

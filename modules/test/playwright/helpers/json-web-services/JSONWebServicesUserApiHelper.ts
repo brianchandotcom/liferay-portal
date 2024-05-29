@@ -15,6 +15,22 @@ export class JSONWebServicesUserApiHelper {
 		this.basePath = '/api/jsonws/user';
 	}
 
+	async addGroupUsers(groupId: string, userIds: string[]) {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('groupId', groupId);
+		urlSearchParams.append('userIds', JSON.stringify(userIds));
+
+		this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/add-group-users`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
 	async assignUsersToSite(groupId: string, userId: string): Promise<void> {
 		const urlSearchParams = new URLSearchParams();
 

@@ -436,6 +436,7 @@ export class DataApiHelpers extends ApiHelpers {
 			}
 		}
 	}
+
 	setData(data: TDataApiHelpersData[]) {
 		this.data.length = 0;
 

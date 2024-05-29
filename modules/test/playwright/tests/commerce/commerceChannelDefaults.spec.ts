@@ -220,7 +220,6 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 
 	await performLogin(page, user.alternateName);
 
-	try {
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
 		await expect(
@@ -334,15 +333,6 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 		await expect(
 			commerceChannelDefaultsPage.defaultUsers.getByText('Test')
 		).toBeVisible();
-	}
-	catch (error: any) {
-		throw new Error(error);
-	}
-	finally {
-		await performLogout(page);
-
-		await performLogin(page, 'test');
-	}
 });
 
 test('LPD-28220 Can user with account manager role view and manage channel defaults', async ({

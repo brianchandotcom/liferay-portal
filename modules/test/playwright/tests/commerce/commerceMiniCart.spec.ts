@@ -12,6 +12,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout} from '../../utils/performLogin';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 
@@ -160,9 +161,9 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 		'ProductBundle'
 	);
 	await commerceAdminProductPage.managementToolbarSearchInput.press('Enter');
-
-	await page.getByRole('link', {exact: true, name: 'ProductBundle'}).click();
-
+	await commerceAdminProductPage
+		.managementToolbarItemLink('ProductBundle')
+		.click();
 	await commerceAdminProductPage.generateSkus();
 
 	await expect(page.getByText('Showing 1 to 5 of 5 entries.')).toBeVisible();
@@ -229,11 +230,9 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 
 	await commerceMiniCartPage.miniCartButton.click();
 	await commerceMiniCartPage.searchProductsInput.fill(sku1.sku);
-
-	await page
-		.getByRole('menuitem', {exact: true, name: `${sku1.sku} ProductBundle`})
+	await commerceMiniCartPage
+		.quickAddToCartSku(`${sku1.sku} ProductBundle`)
 		.click();
-
 	await commerceMiniCartPage.quickAddToCartButton.click();
 	await commerceMiniCartPage.showOptionsButton.click();
 
@@ -264,13 +263,13 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 		page.getByRole('cell', {exact: true, name: 'Pallet'})
 	).toBeVisible();
 
-	await page.getByLabel('Size').selectOption({label: 'XS'});
+	await commerceMiniCartPage.selectOption('XS', 'Size');
 
 	await expect(page.getByText('List Price$ 50.00')).toBeVisible();
 
 	await expect(page.getByText('Price as Configured$ 150.00')).toBeVisible();
 
-	await page.getByLabel('Color').selectOption({label: 'Black - $ 10.00'});
+	await commerceMiniCartPage.selectOption('Black - $ 10.00', 'Color');
 
 	await expect(page.getByText('List Price$ 40.00')).toBeVisible();
 
@@ -280,7 +279,7 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 	await expect(commerceMiniCartPage.unitOfMeasureTableLabel).toBeHidden();
 	await expect(commerceMiniCartPage.miniCartSaveButton).toBeEnabled();
 
-	await page.getByLabel('Size').selectOption({label: 'XL + $ 10.00'});
+	await commerceMiniCartPage.selectOption('XL + $ 10.00', 'Size');
 
 	await expect(page.getByText('List Price$ 50.00')).toBeVisible();
 
@@ -428,25 +427,182 @@ test('LPD-3496 Mini cart bundle without enough quantity', async ({
 
 	await commerceMiniCartPage.miniCartButton.click();
 	await commerceMiniCartPage.searchProductsInput.fill(sku.sku);
-
-	await page
-		.getByRole('menuitem', {
-			exact: true,
-			name: `${sku.sku} ${productBundleName}`,
-		})
+	await commerceMiniCartPage
+		.quickAddToCartSku(`${sku.sku} ${productBundleName}`)
 		.click();
-
 	await commerceMiniCartPage.quickAddToCartButton.click();
 	await commerceMiniCartPage.cartItemActionsButton.click();
 	await commerceMiniCartPage.editMenuItem.click();
 
 	await expect(commerceMiniCartPage.editOptionsLabel).toBeVisible();
 
-	await page.getByLabel('Color').selectOption({label: 'Black'});
+	await commerceMiniCartPage.selectOption('Black', 'Color');
 
 	await expect(page.getByLabel('Color')).toBeEnabled();
 
 	await commerceMiniCartPage.miniCartSaveButton.click();
 
 	await expect(page.getByText(/Error.*quantity.*unavailable/)).toBeVisible();
+});
+
+test('LPD-26906 Mini cart bundle quantity edit', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminProductPage,
+	commerceMiniCartPage,
+	page,
+}) => {
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'Buyer ' + getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['MANAGE_ADDRESSES', 'VIEW_ADDRESSES'],
+				primaryKey: '0',
+				resourceName: 'com.liferay.account.model.AccountEntry',
+				scope: 3,
+			},
+			{
+				actionIds: ['VIEW'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.commerce.model.CommerceOrderType',
+				scope: 1,
+			},
+			{
+				actionIds: [
+					'ADD_COMMERCE_ORDER',
+					'CHECKOUT_OPEN_COMMERCE_ORDERS',
+					'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_METHODS',
+					'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
+					'MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS',
+					'VIEW_BILLING_ADDRESS',
+					'VIEW_COMMERCE_ORDERS',
+					'VIEW_OPEN_COMMERCE_ORDERS',
+				],
+				primaryKey: '0',
+				resourceName: 'com.liferay.commerce.order',
+				scope: 3,
+			},
+		],
+	});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(role.name, user.id);
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'COMMERCE_CART_FRAGMENTS-mini-cart',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		siteGroupId: site.id,
+	});
+
+	const optionKey = getRandomString();
+
+	const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
+		'select',
+		optionKey,
+		'Color',
+		1
+	);
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+
+	const productBundle =
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: getRandomString()},
+			productOptions: [
+				{
+					fieldType: 'select',
+					key: optionKey,
+					name: {
+						en_US: 'Color',
+					},
+					optionId: option.id,
+					priceType: 'static',
+					priority: 1,
+					productOptionValues: [
+						{
+							deltaPrice: 10.0,
+							key: 'black',
+							name: {
+								en_US: 'Black',
+							},
+							priority: 1,
+							quantity: 1,
+							skuId: product.skus[0].id,
+						},
+					],
+					skuContributor: true,
+				},
+			],
+		});
+
+	await applicationsMenuPage.goToProducts();
+
+	const productBundleName = productBundle.name['en_US'];
+
+	await commerceAdminProductPage.managementToolbarSearchInput.fill(
+		productBundleName
+	);
+	await commerceAdminProductPage.managementToolbarSearchInput.press('Enter');
+	await commerceAdminProductPage
+		.managementToolbarItemLink(productBundleName)
+		.click();
+	await commerceAdminProductPage.generateSkus();
+
+	await expect(page.getByText('Showing 1 to 2 of 2 entries.')).toBeVisible();
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
+	await page.goto(
+		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
+
+	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.searchProductsInput.fill('BLACK');
+	await commerceMiniCartPage
+		.quickAddToCartSku(`BLACK ${productBundleName}`)
+		.click();
+	await commerceMiniCartPage.quickAddToCartButton.click();
+	await commerceMiniCartPage.showOptionsButton.click();
+
+	await expect(page.getByText('Black', {exact: true})).toBeVisible();
+	await expect(
+		page.getByText('$ 10.00', {exact: true}).first()
+	).toBeVisible();
+
+	await commerceMiniCartPage.editQuantitySelector.fill('2');
+
+	await expect(
+		page.getByText('$ 20.00', {exact: true}).first()
+	).toBeVisible();
 });

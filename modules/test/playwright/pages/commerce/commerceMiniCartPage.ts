@@ -14,6 +14,7 @@ export class CommerceMiniCartPage {
 	readonly miniCartButton: Locator;
 	readonly miniCartButtonClose: Locator;
 	readonly miniCartItemsContainer: Locator;
+	readonly miniCartItemPrice: (text: RegExp) => Locator;
 	readonly miniCartSaveButton: Locator;
 	readonly miniCartUnitOfMeasureSelector: Locator;
 	readonly page: Page;
@@ -25,6 +26,10 @@ export class CommerceMiniCartPage {
 	readonly quickAddToCartButton: Locator;
 	readonly quickAddToCartSku: (sku: string) => Locator;
 	readonly searchProductsInput: Locator;
+	readonly selectOption: (
+		optionLabel: string,
+		optionName: string
+	) => Promise<string[]>;
 	readonly showOptionsButton: Locator;
 	readonly submitButton: Locator;
 	readonly unitOfMeasureTableLabel: Locator;
@@ -45,10 +50,14 @@ export class CommerceMiniCartPage {
 		this.miniCartButton = page.getByTestId('miniCartButton');
 		this.miniCartButtonClose = page.locator('.mini-cart-close');
 		this.miniCartItemsContainer = page.locator('div.mini-cart-cart-items');
-		this.miniCartSaveButton = page.getByRole('button', {
-			exact: true,
-			name: 'Save',
-		});
+		this.miniCartItemPrice = (text: RegExp) =>
+			page.locator('div').filter({hasText: text}).first();
+		this.miniCartSaveButton = page
+			.locator('.mini-cart-footer')
+			.getByRole('button', {
+				exact: true,
+				name: 'Save',
+			});
 		this.miniCartUnitOfMeasureSelector = page.locator(
 			'select[name="minicart-uom-selector"]'
 		);
@@ -58,6 +67,8 @@ export class CommerceMiniCartPage {
 		this.quickAddToCartButton = page.getByTestId('quickAddToCartButton');
 		this.quickAddToCartSku = (sku) =>
 			page.getByRole('menuitem', {name: sku});
+		this.selectOption = (optionLabel: string, optionName: string) =>
+			page.getByLabel(optionName).selectOption({label: optionLabel});
 		this.searchProductsInput = page.getByPlaceholder('Search Products');
 		this.showOptionsButton = page.getByRole('button', {
 			exact: true,

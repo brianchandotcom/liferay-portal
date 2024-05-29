@@ -5,13 +5,21 @@
 
 package com.liferay.object.internal.validation.rule;
 
+import com.liferay.object.internal.configuration.FunctionObjectValidationRuleEngineImplConfiguration;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.catapult.PortalCatapult;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.Future;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,74 +37,88 @@ public class FunctionObjectValidationRuleEngineImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testExecute() {
+	public void testExecute() throws Exception {
 		FunctionObjectValidationRuleEngineImpl
-			functionObjectValidationRuleEngineImpl = Mockito.spy(
-				new FunctionObjectValidationRuleEngineImpl());
+			functionObjectValidationRuleEngineImpl =
+				new FunctionObjectValidationRuleEngineImpl();
 
-		Mockito.doReturn(
-			Collections.emptyMap()
-		).when(
-			functionObjectValidationRuleEngineImpl
-		).getResults(
-			Mockito.any(Map.class), Mockito.anyLong()
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			functionObjectValidationRuleEngineImpl, "_jsonFactory",
+			jsonFactory);
+
+		FunctionObjectValidationRuleEngineImplConfiguration
+			functionObjectValidationRuleEngineImplConfiguration = Mockito.mock(
+				FunctionObjectValidationRuleEngineImplConfiguration.class);
+
+		Mockito.when(
+			functionObjectValidationRuleEngineImplConfiguration.
+				oAuth2ApplicationExternalReferenceCode()
+		).thenReturn(
+			StringPool.BLANK
+		);
+		Mockito.when(
+			functionObjectValidationRuleEngineImplConfiguration.resourcePath()
+		).thenReturn(
+			StringPool.BLANK
 		);
 
-		long creatorId = RandomTestUtil.randomLong();
+		ReflectionTestUtil.setFieldValue(
+			functionObjectValidationRuleEngineImpl,
+			"_functionObjectValidationRuleEngineImplConfiguration",
+			functionObjectValidationRuleEngineImplConfiguration);
 
-		Map<String, Object> baseModel = HashMapBuilder.<String, Object>put(
-			"creator", creatorId
-		).build();
+		Future<byte[]> future = Mockito.mock(Future.class);
 
-		functionObjectValidationRuleEngineImpl.execute(
+		String json = String.valueOf(
+			jsonFactory.createJSONObject(
+				Collections.singletonMap("validationCriteriaMet", true)));
+
+		Mockito.when(
+			future.get()
+		).thenReturn(
+			json.getBytes()
+		);
+
+		PortalCatapult portalCatapult = Mockito.mock(PortalCatapult.class);
+
+		Mockito.when(
+			portalCatapult.launch(
+				Mockito.anyLong(), Mockito.any(), Mockito.any(), Mockito.any(),
+				Mockito.any(), Mockito.anyLong())
+		).thenReturn(
+			future
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			functionObjectValidationRuleEngineImpl, "_portalCatapult",
+			portalCatapult);
+
+		Map<String, Object> results =
+			functionObjectValidationRuleEngineImpl.execute(
+				HashMapBuilder.<String, Object>put(
+					"entryDTO",
+					HashMapBuilder.<String, Object>put(
+						"creator",
+						Collections.singletonMap(
+							"id", RandomTestUtil.randomInt())
+					).put(
+						"properties", Collections.emptyMap()
+					).build()
+				).build(),
+				null);
+
+		Assert.assertTrue((Boolean)results.get("validationCriteriaMet"));
+
+		results = functionObjectValidationRuleEngineImpl.execute(
 			HashMapBuilder.<String, Object>put(
-				"baseModel", baseModel
+				"baseModel",
+				Collections.singletonMap("creator", RandomTestUtil.randomInt())
 			).build(),
 			null);
 
-		Mockito.verify(
-			functionObjectValidationRuleEngineImpl, Mockito.times(1)
-		).getResults(
-			baseModel, creatorId
-		);
-
-		creatorId = RandomTestUtil.randomLong();
-
-		Map<String, Object> entryDTO = HashMapBuilder.<String, Object>put(
-			"creator", Collections.singletonMap("id", creatorId)
-		).put(
-			"dateCreated", RandomTestUtil.nextDate()
-		).put(
-			"dateModified", RandomTestUtil.nextDate()
-		).put(
-			"externalReferenceCode", RandomTestUtil.randomString()
-		).put(
-			"status", RandomTestUtil.randomBoolean()
-		).build();
-
-		functionObjectValidationRuleEngineImpl.execute(
-			HashMapBuilder.<String, Object>put(
-				"baseModel", baseModel
-			).put(
-				"entryDTO",
-				HashMapBuilder.putAll(
-					entryDTO
-				).put(
-					"properties", Collections.singletonMap("key", "value")
-				).build()
-			).build(),
-			null);
-
-		Mockito.verify(
-			functionObjectValidationRuleEngineImpl, Mockito.times(1)
-		).getResults(
-			HashMapBuilder.putAll(
-				entryDTO
-			).put(
-				"key", "value"
-			).build(),
-			creatorId
-		);
+		Assert.assertTrue((Boolean)results.get("validationCriteriaMet"));
 	}
 
 }

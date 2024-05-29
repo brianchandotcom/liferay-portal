@@ -25,7 +25,7 @@ if (Boolean.getBoolean("gradle.develocity.enabled")) {
 		buildScan {
 			allowUntrustedServer = true
 
-			if (System.getenv("JENKINS_HOME") && (System.properties["gradle.develocity.tag"] == "portal")) {
+			if (System.getenv("JENKINS_HOME")) {
 				link "CI Build URL", System.getenv("BUILD_URL")
 			}
 

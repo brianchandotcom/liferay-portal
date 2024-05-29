@@ -42,7 +42,6 @@ export async function createAssetPublisherAndConfigure({
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	const topper = pageEditorPage.getTopper(widgetId);
-
 	await topper.hover();
 	await clickAndExpectToBeVisible({
 		autoClick: true,
@@ -53,40 +52,38 @@ export async function createAssetPublisherAndConfigure({
 		trigger: topper.locator('.portlet-options'),
 	});
 
-	const assetPublisherConfigurationIframe = await page.frameLocator(
-		'iframe[title="Asset Publisher\\a      - Configuration"]'
-	);
+	const configurationModal = await page.frameLocator('#modalIframe');
+	await configurationModal.locator('.portlet-body').waitFor();
 
-	const assetPublisherConfigurationDynamicRadio =
-		assetPublisherConfigurationIframe.getByText('Dynamic', {exact: true});
-	await assetPublisherConfigurationDynamicRadio.waitFor();
-	if (await assetPublisherConfigurationDynamicRadio.isHidden()) {
-		await assetPublisherConfigurationIframe
+	const configurationDynamicLabel = await configurationModal.getByText(
+		'Dynamic'
+	);
+	if (await configurationDynamicLabel.isHidden()) {
+		await configurationModal
 			.getByRole('link', {name: 'Asset Selection'})
 			.click();
 	}
-	await assetPublisherConfigurationDynamicRadio.click();
+	await configurationDynamicLabel.click();
+	await waitForSuccessAlert(
+		configurationModal,
+		'Success:You have successfully updated the setup.'
+	);
 
-	const assetPublisherConfigurationSourceAssetTypeSelect =
-		await assetPublisherConfigurationIframe.getByLabel('Asset Type');
-	if (await assetPublisherConfigurationSourceAssetTypeSelect.isHidden()) {
-		await assetPublisherConfigurationIframe
-			.getByRole('link', {name: 'Source'})
-			.click();
+	const configurationSourceAssetTypeSelect =
+		await configurationModal.getByLabel('Asset Type');
+	if (await configurationSourceAssetTypeSelect.isHidden()) {
+		await configurationModal.getByRole('link', {name: 'Source'}).click();
 	}
-	await assetPublisherConfigurationSourceAssetTypeSelect.selectOption({
+	await configurationSourceAssetTypeSelect.selectOption({
 		label: 'Blogs Entry',
 	});
 
-	await assetPublisherConfigurationIframe
-		.getByRole('button', {name: 'Save'})
-		.click();
-
-	await page.getByLabel('close', {exact: true}).click();
-	await page.getByLabel('Publish', {exact: true}).click();
-
+	await configurationModal.getByRole('button', {name: 'Save'}).click();
 	await waitForSuccessAlert(
-		page,
-		'Success:The page was published successfully.'
+		configurationModal,
+		'Success:You have successfully updated the setup.'
 	);
+	await page.getByLabel('close', {exact: true}).click();
+
+	await pageEditorPage.publishPage();
 }

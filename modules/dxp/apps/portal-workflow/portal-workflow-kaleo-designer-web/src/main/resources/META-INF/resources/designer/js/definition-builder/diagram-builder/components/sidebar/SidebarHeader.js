@@ -81,6 +81,7 @@ export default function SidebarHeader({
 		<div className="sidebar-header">
 			{showBackButton && (
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('back')}
 					className="text-secondary"
 					displayType="unstyled"
 					onClick={backButtonFunction}
@@ -93,6 +94,7 @@ export default function SidebarHeader({
 
 				{showDeleteButton && (
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('delete')}
 						className="text-secondary trash-button"
 						disabled={contentName === 'assignments'}
 						displayType="unstyled"
@@ -116,6 +118,7 @@ export default function SidebarHeader({
 						last={
 							<>
 								<ClayButton
+									aria-label={Liferay.Language.get('cancel')}
 									className="mr-3"
 									displayType="secondary"
 									onClick={() =>
@@ -126,6 +129,7 @@ export default function SidebarHeader({
 								</ClayButton>
 
 								<ClayButton
+									aria-label={Liferay.Language.get('delete')}
 									displayType="danger"
 									onClick={
 										deleteButtonFunction

@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {useCollectionConfig} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {pageContentsAtom} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
 import {MappingPanel} from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/MappingPanel';
@@ -79,6 +80,13 @@ jest.mock(
 		}))
 );
 
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/CollectionItemContext',
+	() => ({
+		useCollectionConfig: jest.fn(),
+	})
+);
+
 function renderMappingPanel(item) {
 	render(
 		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
@@ -139,5 +147,20 @@ describe('MappingPanel', () => {
 		});
 
 		expect(screen.queryByText('custom-format')).not.toBeInTheDocument();
+	});
+
+	it('renders correct text when using collection config', async () => {
+		useCollectionConfig.mockImplementation(() => ({
+			collection: {
+				classNameId: 'collectionClassNameId',
+				classPK: 'collectionClassPK',
+				itemSubtype: 'collectionItemSubtype',
+				itemType: 'collectionItemType',
+			},
+		}));
+
+		renderMappingPanel(dateEditableItem);
+
+		expect(screen.getByText('collection-mapping-help')).toBeInTheDocument();
 	});
 });

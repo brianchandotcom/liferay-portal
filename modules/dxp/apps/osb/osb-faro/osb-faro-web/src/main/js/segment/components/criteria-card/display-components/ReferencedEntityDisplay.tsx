@@ -3,6 +3,7 @@ import {
 	EntityType,
 	ReferencedObjectsContext
 } from 'segment/segment-editor/dynamic/context/referencedObjects';
+import {parseReferencedEntityId} from 'segment/segment-editor/dynamic/utils/utils';
 import {sub} from 'shared/util/lang';
 
 const ReferencedEntity: React.FC<{
@@ -12,7 +13,10 @@ const ReferencedEntity: React.FC<{
 }> = ({id, label, type}) => {
 	const {referencedEntities} = useContext(ReferencedObjectsContext);
 
-	const entity = referencedEntities.getIn([type, id]);
+	const entity = referencedEntities.getIn([
+		type,
+		parseReferencedEntityId(id, referencedEntities)
+	]);
 
 	return entity ? (
 		<b>{`'${entity.get('name')}'`}</b>

@@ -29,7 +29,7 @@ import {
 } from '../utils/custom-inputs';
 import {isBoolean, isNil, isNull} from 'lodash';
 import {Modal} from 'shared/types/Modal';
-import {parseActivityKey} from '../utils/utils';
+import {parseActivityKey, parseReferencedEntityId} from '../utils/utils';
 
 export const AssetItem: React.FC<{
 	dataSourceAssetPK?: string;
@@ -144,9 +144,10 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			context: {referencedEntities}
 		} = this;
 
-		const id = this.getAssetId();
-
-		const reference = referencedEntities.getIn([EntityType.Assets, id]);
+		const reference = referencedEntities.getIn([
+			EntityType.Assets,
+			parseReferencedEntityId(this.getAssetId(), referencedEntities)
+		]);
 
 		return reference && reference.toJS();
 	}

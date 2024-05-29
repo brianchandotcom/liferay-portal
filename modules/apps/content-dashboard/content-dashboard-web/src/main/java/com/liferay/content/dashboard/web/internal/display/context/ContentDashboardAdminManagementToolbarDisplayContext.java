@@ -15,6 +15,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -33,6 +34,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +51,10 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,6 +67,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,6 +107,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		_liferayPortletResponse = liferayPortletResponse;
 		_locale = locale;
 		_userLocalService = userLocalService;
+
+		_portletResponse = (PortletResponse)httpServletRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 	}
 
 	@Override
@@ -341,6 +352,28 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					_getLabel(
 						"review-date",
 						_language.get(httpServletRequest, "to-be-reviewed")));
+			});
+
+		labelItemListWrapper.add(
+			() ->
+				FeatureFlagManagerUtil.isEnabled("LPD-25680") &&
+				_isCustomDateActive(),
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					_getRemoveLabelURL("dateType", "startDate", "endDate"));
+				labelItem.setCloseable(true);
+				labelItem.setLabel(
+					StringBundler.concat(
+						_language.get(
+							httpServletRequest,
+							_contentDashboardAdminDisplayContext.getDateType()),
+						StringPool.COLON, StringPool.SPACE,
+						_contentDashboardAdminDisplayContext.
+							getStartDateString(),
+						StringPool.SPACE, StringPool.DASH, StringPool.SPACE,
+						_contentDashboardAdminDisplayContext.
+							getEndDateString()));
 			});
 
 		Set<String> assetTagIds =
@@ -620,6 +653,17 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			});
 	}
 
+	private String _getDateTypesFilterURL(String... parameters) {
+		String url = PortalUtil.getCurrentCompleteURL(httpServletRequest);
+
+		for (String parameter : parameters) {
+			url = HttpComponentsUtil.removeParameter(
+				url, _portletResponse.getNamespace() + parameter);
+		}
+
+		return url;
+	}
+
 	private List<DropdownItem> _getFilterAuthorDropdownItems() {
 		List<Long> authorIds =
 			_contentDashboardAdminDisplayContext.getAuthorIds();
@@ -708,6 +752,52 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			() -> FeatureFlagManagerUtil.isEnabled("LPD-25680"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "customDate");
+				dropdownItem.putData(
+					"props",
+					JSONUtil.toString(
+						JSONUtil.put(
+							"dateTypes",
+							() -> {
+								JSONArray jsonArray =
+									JSONFactoryUtil.createJSONArray();
+
+								for (ContentDashboardConstants.DateType
+										dateType :
+											ContentDashboardConstants.DateType.
+												values()) {
+
+									jsonArray.put(
+										JSONUtil.put(
+											"label",
+											_language.get(
+												httpServletRequest,
+												dateType.getType())
+										).put(
+											"value", dateType.getType()
+										));
+								}
+
+								return jsonArray;
+							}
+						).put(
+							"filterUrl",
+							_getDateTypesFilterURL(
+								"dateType", "endDate", "startDate")
+						).put(
+							"namespace", _portletResponse.getNamespace()
+						).put(
+							"selectedDateType",
+							_contentDashboardAdminDisplayContext.getDateType()
+						).put(
+							"selectedEndDate",
+							_contentDashboardAdminDisplayContext.
+								getEndDateString()
+						).put(
+							"selectedStartDate",
+							_contentDashboardAdminDisplayContext.
+								getStartDateString()
+						)));
+				dropdownItem.setActive(_isCustomDateActive());
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "custom-date"));
 			}
@@ -920,6 +1010,20 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		return _language.get(httpServletRequest, label);
 	}
 
+	private boolean _isCustomDateActive() {
+		if (Validator.isNotNull(
+				_contentDashboardAdminDisplayContext.getDateType()) &&
+			Validator.isNotNull(
+				_contentDashboardAdminDisplayContext.getEndDateString()) &&
+			Validator.isNotNull(
+				_contentDashboardAdminDisplayContext.getStartDateString())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentDashboardAdminManagementToolbarDisplayContext.class);
 
@@ -935,6 +1039,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Locale _locale;
+	private final PortletResponse _portletResponse;
 	private final UserLocalService _userLocalService;
 
 }

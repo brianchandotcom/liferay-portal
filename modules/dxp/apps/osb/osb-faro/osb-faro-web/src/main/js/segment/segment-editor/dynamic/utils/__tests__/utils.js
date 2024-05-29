@@ -515,4 +515,16 @@ describe('utils', () => {
 			).toMatchSnapshot();
 		});
 	});
+
+	describe('parseReferencedEntityId', () => {
+		it('should parse referenced entity id', () => {
+			const referencedEntities = new Map({
+				assets: new Map({'123_title': 'test'})
+			});
+
+			expect(
+				utils.parseReferencedEntityId('123', referencedEntities)
+			).toBe('123_title');
+		});
+	});
 });

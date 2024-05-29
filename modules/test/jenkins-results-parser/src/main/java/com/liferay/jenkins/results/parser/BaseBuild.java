@@ -1627,11 +1627,7 @@ public abstract class BaseBuild implements Build {
 
 		sb.append(getBuildURL());
 
-		sb.append(". ");
-
-		sb.append(jenkinsSlave.getName());
-
-		sb.append(" will be taken offline.\n\n");
+		sb.append(". \n\n");
 
 		sb.append(slaveOfflineRuleString);
 
@@ -1659,26 +1655,13 @@ public abstract class BaseBuild implements Build {
 				sb.append(sibling.getName());
 
 				sb.append("\n");
-			}
-		}
 
-
-		if (slaveOfflineRule.getOfflineSibling() &&
-			(jenkinsMaster.getSlavesPerHost() == 2)) {
-
-			JenkinsSlave siblingSlave = getJenkinsSlaveSibling(jenkinsSlave);
-
-			message.replaceFirst(
-				"will be taken offline",
-				JenkinsResultsParserUtil.combine(
-					"will be taken offline alongside its sibling: ",
-					siblingSlave.getName()));
-
-			String siblingMessage = JenkinsResultsParserUtil.combine(
+				String siblingMessage = JenkinsResultsParserUtil.combine(
 				pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
 				" Reason: ", slaveOfflineRule.getName());
 
-			siblingSlave.takeSlavesOffline(siblingMessage);
+				sibling.takeSlavesOffline(siblingMessage);
+			}
 		}
 		
 		String message = sb.toString();

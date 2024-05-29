@@ -79,6 +79,7 @@ if (portletTitleBasedNavigation) {
 						editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp") %>'
 						name="contentEditor"
 						placeholder="content"
+						required="<%= true %>"
 					/>
 
 					<aui:input name="content" type="hidden" />

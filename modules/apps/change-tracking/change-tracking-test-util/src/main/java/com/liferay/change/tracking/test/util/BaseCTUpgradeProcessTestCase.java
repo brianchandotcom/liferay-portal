@@ -9,14 +9,11 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
@@ -70,7 +67,9 @@ public abstract class BaseCTUpgradeProcessTestCase {
 
 		runUpgrade();
 
-		CTPersistence<?> ctPersistence = getCTPersistence();
+		CTService<?> ctService = getCTService();
+
+		CTPersistence<?> ctPersistence = ctService.getCTPersistence();
 
 		ctPersistence.clearCache(
 			Collections.singleton(productionCTModel.getPrimaryKey()));
@@ -108,38 +107,20 @@ public abstract class BaseCTUpgradeProcessTestCase {
 	protected abstract CTModel<?> addCTModel() throws Exception;
 
 	protected void deleteCTModel(long primaryKey) throws Exception {
-		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					CTPersistence<?> ctPersistence = getCTPersistence();
+		CTService<?> ctService = getCTService();
 
-					ctPersistence.remove(primaryKey);
-
-					return null;
-				});
-		}
-		catch (Throwable throwable) {
-			throw new PortalException(throwable);
-		}
+		ctService.updateWithUnsafeFunction(
+			ctPersistence -> ctPersistence.remove(primaryKey));
 	}
 
 	protected CTModel<?> fetchCTModel(long primaryKey) throws Exception {
-		try {
-			return TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					CTPersistence<?> ctPersistence = getCTPersistence();
+		CTService<?> ctService = getCTService();
 
-					return ctPersistence.fetchByPrimaryKey(primaryKey);
-				});
-		}
-		catch (Throwable throwable) {
-			throw new PortalException(throwable);
-		}
+		return ctService.updateWithUnsafeFunction(
+			ctPersistence -> ctPersistence.fetchByPrimaryKey(primaryKey));
 	}
 
-	protected abstract CTPersistence<?> getCTPersistence();
+	protected abstract CTService<?> getCTService();
 
 	protected abstract void runUpgrade() throws Exception;
 
@@ -148,9 +129,5 @@ public abstract class BaseCTUpgradeProcessTestCase {
 
 	@Inject
 	private static CTCollectionService _ctCollectionService;
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 }

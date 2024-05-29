@@ -12,7 +12,7 @@ import com.liferay.json.storage.model.JSONStorageEntry;
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Portal;
@@ -58,8 +58,8 @@ public class RankingJSONStorageEntryUpgradeProcessTest
 	}
 
 	@Override
-	protected CTPersistence<?> getCTPersistence() {
-		return _jsonStorageEntryLocalService.getCTPersistence();
+	protected CTService<?> getCTService() {
+		return _jsonStorageEntryLocalService;
 	}
 
 	@Override

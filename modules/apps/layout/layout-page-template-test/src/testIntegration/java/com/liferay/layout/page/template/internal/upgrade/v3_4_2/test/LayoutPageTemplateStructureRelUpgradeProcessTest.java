@@ -17,7 +17,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -79,8 +79,8 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 	}
 
 	@Override
-	protected CTPersistence<?> getCTPersistence() {
-		return _layoutPageTemplateStructureRelLocalService.getCTPersistence();
+	protected CTService<?> getCTService() {
+		return _layoutPageTemplateStructureRelLocalService;
 	}
 
 	@Override

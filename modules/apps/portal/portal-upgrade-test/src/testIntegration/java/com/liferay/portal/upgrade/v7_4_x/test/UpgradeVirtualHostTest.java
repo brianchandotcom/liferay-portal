@@ -11,7 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -54,8 +54,8 @@ public class UpgradeVirtualHostTest extends BaseCTUpgradeProcessTestCase {
 	}
 
 	@Override
-	protected CTPersistence<?> getCTPersistence() {
-		return _virtualHostLocalService.getCTPersistence();
+	protected CTService<?> getCTService() {
+		return _virtualHostLocalService;
 	}
 
 	@Override

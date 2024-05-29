@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
@@ -56,8 +56,8 @@ public class GuestUnsupportedResourcePermissionsUpgradeProcessTest
 	}
 
 	@Override
-	protected CTPersistence<?> getCTPersistence() {
-		return _resourcePermissionLocalService.getCTPersistence();
+	protected CTService<?> getCTService() {
+		return _resourcePermissionLocalService;
 	}
 
 	@Override

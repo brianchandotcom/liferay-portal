@@ -13,6 +13,12 @@ import React, {useState} from 'react';
 
 import SelectTypes from './SelectTypes';
 
+const QUERY_CONTRIBUTORS_OPTIONS = {
+	CUSTOMIZE: 'customize',
+	DISABLE_ALL: 'disable-all',
+	ENABLE_ALL: 'enable-all',
+};
+
 function QuerySettings({
 	applyIndexerClauses,
 	clauseContributorsList,
@@ -27,25 +33,44 @@ function QuerySettings({
 	const [selectAllTypes, setSelectAllTypes] = useState(
 		frameworkConfig.searchableAssetTypes?.length === 0
 	);
-	const [enableAllContributors, setEnableAllContributors] = useState(
-		frameworkConfig.clauseContributorsIncludes?.length ===
-			clauseContributorsList.length
+	const [queryContributorsSetting, setQueryContributorsSetting] = useState(
+		frameworkConfig.clauseContributorsIncludes?.[0] === '*' &&
+			!frameworkConfig.clauseContributorsExcludes?.length
+			? QUERY_CONTRIBUTORS_OPTIONS.ENABLE_ALL
+			: frameworkConfig.clauseContributorsExcludes?.[0] === '*' &&
+				  !frameworkConfig.clauseContributorsIncludes?.length
+				? QUERY_CONTRIBUTORS_OPTIONS.DISABLE_ALL
+				: QUERY_CONTRIBUTORS_OPTIONS.CUSTOMIZE
 	);
 
 	const _handleApplyIndexerClausesChange = () => {
 		onApplyIndexerClausesChange(!applyIndexerClauses);
 	};
 
-	const _handleEnableAllContributorsChange = (enable) => {
-		setEnableAllContributors(enable);
+	const _handleQueryContributorsSettingChange = (value) => {
+		setQueryContributorsSetting(value);
 
-		if (enable) {
+		if (value === QUERY_CONTRIBUTORS_OPTIONS.ENABLE_ALL) {
+			onFrameworkConfigChange({
+				clauseContributorsExcludes: [],
+				clauseContributorsIncludes: ['*'],
+			});
+
+			onChangeClauseContributorsVisibility(false);
+		}
+		else if (value === QUERY_CONTRIBUTORS_OPTIONS.DISABLE_ALL) {
+			onFrameworkConfigChange({
+				clauseContributorsExcludes: ['*'],
+				clauseContributorsIncludes: [],
+			});
+
+			onChangeClauseContributorsVisibility(false);
+		}
+		else {
 			onFrameworkConfigChange({
 				clauseContributorsExcludes: [],
 				clauseContributorsIncludes: clauseContributorsList,
 			});
-
-			onChangeClauseContributorsVisibility(false);
 		}
 	};
 
@@ -191,23 +216,33 @@ function QuerySettings({
 					>
 						<ClayPanel.Body>
 							<ClayRadioGroup
-								onChange={_handleEnableAllContributorsChange}
-								value={enableAllContributors}
+								onChange={_handleQueryContributorsSettingChange}
+								value={queryContributorsSetting}
 							>
 								<ClayRadio
 									label={Liferay.Language.get('enable-all')}
-									value={true}
+									value={
+										QUERY_CONTRIBUTORS_OPTIONS.ENABLE_ALL
+									}
+								/>
+
+								<ClayRadio
+									label={Liferay.Language.get('disable-all')}
+									value={
+										QUERY_CONTRIBUTORS_OPTIONS.DISABLE_ALL
+									}
 								/>
 
 								<ClayRadio
 									label={Liferay.Language.get(
 										'action.CUSTOMIZE'
 									)}
-									value={false}
+									value={QUERY_CONTRIBUTORS_OPTIONS.CUSTOMIZE}
 								/>
 							</ClayRadioGroup>
 
-							{!enableAllContributors && (
+							{queryContributorsSetting ===
+								QUERY_CONTRIBUTORS_OPTIONS.CUSTOMIZE && (
 								<>
 									<div className="has-warning">
 										<ClayForm.FeedbackItem>

@@ -99,7 +99,7 @@ if (portletTitleBasedNavigation) {
 								<liferay-util:include page="/document_library/upload_multiple_file_entries_resources.jsp" servletContext="<%= application %>" />
 							</div>
 
-							<span aria-hidden="true" class="loading-animation loading-animation-secondary loading-animation-sm hide" id="<portlet:namespace />loading"></span>
+							<span aria-hidden="true" class="hide loading-animation loading-animation-secondary loading-animation-sm" id="<portlet:namespace />loading"></span>
 						</div>
 
 						<%

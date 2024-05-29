@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import useSWR from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 
 import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
 
@@ -13,6 +13,8 @@ type Props = {
 	orderTypeExternalReferenceCodes: string[];
 	page: number;
 	pageSize: number;
+	refreshInterval?: number
+	swrConfig?: SWRConfiguration
 };
 
 const usePurchasedOrders = ({
@@ -21,9 +23,10 @@ const usePurchasedOrders = ({
 	orderTypeExternalReferenceCodes,
 	page,
 	pageSize,
+	swrConfig
 }: Props) => {
 	const key = `/placed-orders/${accountId}/${channelId}/${page}/${pageSize}`;
-
+	
 	const swr = useSWR(
 		accountId && channelId
 			? `/placed-orders/${accountId}/${channelId}/${page}/${pageSize}`
@@ -53,7 +56,7 @@ const usePurchasedOrders = ({
 				items: placedOrdersFiltered,
 			};
 		}
-	);
+	, swrConfig);
 
 	return {key, ...swr};
 };

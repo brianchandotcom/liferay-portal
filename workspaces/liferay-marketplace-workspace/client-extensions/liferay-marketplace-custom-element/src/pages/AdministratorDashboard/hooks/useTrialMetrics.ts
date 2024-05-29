@@ -4,6 +4,7 @@
  */
 
 import {addDays} from 'date-fns';
+import {useEffect, useMemo, useState} from 'react';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
@@ -20,9 +21,43 @@ export const METRIC_PARAMETER = {
 	week: 7,
 };
 
+const getPeriodMetrics = (
+	lastPeriodValue: number,
+	beforeLastPeriodvalue: number
+) => {
+	const newOrders = lastPeriodValue - beforeLastPeriodvalue;
+
+	let growth = Number(((newOrders / lastPeriodValue) * 100).toFixed(3));
+
+	if (Number.isNaN(growth)) {
+		growth = 0;
+	}
+
+	return {
+		beforeLastPeriod: beforeLastPeriodvalue,
+		growth,
+		lastPeriod: lastPeriodValue,
+		totalCount: lastPeriodValue,
+	};
+};
+
+const getExiredQuantity = (orderLastPeriod: Order[]) =>
+	orderLastPeriod?.filter(
+		(order: Order) =>
+			new Date() >
+			new Date(order?.customFields?.['trial-end-date'] as string)
+	).length;
+
 type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
+const DISABLED_REFRESH_INTERVAL = 0;
+const REFRESH_INTERVAL_IN_SECONDS = 60;
+
 const useTrialMetrics = (param: FilterType) => {
+	const [refreshInterval, setRefreshInterval] = useState(
+		DISABLED_REFRESH_INTERVAL
+	);
+
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const beforeLastPeriod = addDays(
@@ -89,7 +124,8 @@ const useTrialMetrics = (param: FilterType) => {
 				...requestsParams.map((searchParam) =>
 					HeadlessCommerceAdminOrderImpl.getOrders(searchParam)
 				),
-			])
+			]),
+		{refreshInterval}
 	);
 
 	const [
@@ -100,12 +136,23 @@ const useTrialMetrics = (param: FilterType) => {
 		ordersTrial,
 	] = trialDataResponse;
 
-	const getExiredQuantity = (orderLastPeriod: Order[]) =>
-		orderLastPeriod?.filter(
-			(order: Order) =>
-				new Date() >
-				new Date(order?.customFields?.['trial-end-date'] as string)
-		).length;
+	const orderItems = useMemo(() => orderTableData?.items ?? [], [
+		orderTableData?.items,
+	]);
+
+	useEffect(() => {
+		const isProcessing = orderItems.some(({orderStatusInfo}: any) =>
+			[ORDER_STATUS.PROCESSING, ORDER_STATUS.ON_HOLD].includes(
+				orderStatusInfo.code
+			)
+		);
+
+		setRefreshInterval(
+			isProcessing
+				? REFRESH_INTERVAL_IN_SECONDS
+				: DISABLED_REFRESH_INTERVAL
+		);
+	}, [orderItems]);
 
 	const resourcesAvailable = `${
 		availabilityResponse?.max - availabilityResponse?.available
@@ -120,26 +167,6 @@ const useTrialMetrics = (param: FilterType) => {
 	const expiredTrialsBeforeLastPeriod = getExiredQuantity(
 		orderBeforeLastPeriod?.items
 	);
-
-	const getPeriodMetrics = (
-		lastPeriodValue: number,
-		beforeLastPeriodvalue: number
-	) => {
-		const newOrders = lastPeriodValue - beforeLastPeriodvalue;
-
-		let growth = Number(((newOrders / lastPeriodValue) * 100).toFixed(3));
-
-		if (Number.isNaN(growth)) {
-			growth = 0;
-		}
-
-		return {
-			beforeLastPeriod: beforeLastPeriodvalue,
-			growth,
-			lastPeriod: lastPeriodValue,
-			totalCount: lastPeriodValue,
-		};
-	};
 
 	return {
 		availability: {

@@ -10,6 +10,10 @@ package com.liferay.osb.faro.engine.client.model;
  */
 public class CustomEvent {
 
+	public String getDisplayName() {
+		return _displayName;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -26,6 +30,10 @@ public class CustomEvent {
 		_blocked = blocked;
 	}
 
+	public void setDisplayName(String displayName) {
+		_displayName = displayName;
+	}
+
 	public void setHidden(boolean hidden) {
 		_hidden = hidden;
 	}
@@ -35,6 +43,7 @@ public class CustomEvent {
 	}
 
 	private boolean _blocked;
+	private String _displayName;
 	private boolean _hidden;
 	private String _name;
 

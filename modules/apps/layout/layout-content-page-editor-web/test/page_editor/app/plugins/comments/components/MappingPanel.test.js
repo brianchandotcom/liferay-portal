@@ -5,7 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {State} from '@liferay/frontend-js-state-web';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -95,19 +95,23 @@ describe('MappingPanel', () => {
 		});
 	});
 
-	it('displays date format dropdown when type is date-time', () => {
+	it('displays date format dropdown when type is date-time', async () => {
 		renderMappingPanel(dateEditableItem);
 
-		expect(screen.getByLabelText('date-format')).toBeInTheDocument();
+		await act(async () => {
+			expect(screen.getByLabelText('date-format')).toBeInTheDocument();
+		});
 	});
 
-	it('displays custom date format input when custom is selected in dropdown', () => {
+	it('displays custom date format input when custom is selected in dropdown', async () => {
 		renderMappingPanel(dateEditableItem);
 
 		const dateFormatSelect = screen.getByLabelText('date-format');
 
-		userEvent.selectOptions(dateFormatSelect, 'custom');
-		fireEvent.change(dateFormatSelect);
+		await act(async () => {
+			userEvent.selectOptions(dateFormatSelect, 'custom');
+			fireEvent.change(dateFormatSelect);
+		});
 
 		expect(screen.getByLabelText('custom-format')).toBeInTheDocument();
 	});
@@ -124,13 +128,15 @@ describe('MappingPanel', () => {
 		expect(screen.queryByText('date-format')).not.toBeInTheDocument();
 	});
 
-	it('Does not show custom date format input when custom is not selected in dropdown', () => {
+	it('Does not show custom date format input when custom is not selected in dropdown', async () => {
 		renderMappingPanel(dateEditableItem);
 
 		const dateFormatSelect = screen.getByLabelText('date-format');
 
-		userEvent.selectOptions(dateFormatSelect, 'dd/MM/yyyy');
-		fireEvent.change(dateFormatSelect);
+		await act(async () => {
+			userEvent.selectOptions(dateFormatSelect, 'dd/MM/yyyy');
+			fireEvent.change(dateFormatSelect);
+		});
 
 		expect(screen.queryByText('custom-format')).not.toBeInTheDocument();
 	});

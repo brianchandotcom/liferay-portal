@@ -32,7 +32,7 @@ export default function BaseRole({
 			},
 		},
 		fetchPolicy: 'cache-first',
-		link: `${window.location.origin}${contextUrl}${userBaseURL}/roles`,
+		link: `${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions`,
 		onNetworkStatusChange: setNetworkStatus,
 		variables: {
 			pageSize: -1,

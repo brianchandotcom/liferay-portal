@@ -57,7 +57,7 @@ function retrieveRoleById(roleId) {
 
 function retrieveRoles() {
 	return fetch(
-		`${window.location.origin}${contextUrl}${userBaseURL}/roles?pageSize=-1`,
+		`${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions&pageSize=-1`,
 		{
 			headers,
 			method: 'GET',

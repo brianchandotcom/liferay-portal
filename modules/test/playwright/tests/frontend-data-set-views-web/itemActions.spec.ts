@@ -97,19 +97,16 @@ test.describe('Item Actions in Data Set Manager', () => {
 			});
 		});
 
-		await test.step(
-			'Check that the item action is in the list',
-			async () => {
-				await expect(actionsPage.itemActionsTab).toBeInViewport();
+		await test.step('Check that the item action is in the list', async () => {
+			await expect(actionsPage.itemActionsTab).toBeInViewport();
 
-				await expect(
-					page.getByRole('cell', {
-						exact: true,
-						name: LINK_ITEM_ACTION_NAME,
-					})
-				).toBeVisible();
-			}
-		);
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: LINK_ITEM_ACTION_NAME,
+				})
+			).toBeVisible();
+		});
 	});
 });
 

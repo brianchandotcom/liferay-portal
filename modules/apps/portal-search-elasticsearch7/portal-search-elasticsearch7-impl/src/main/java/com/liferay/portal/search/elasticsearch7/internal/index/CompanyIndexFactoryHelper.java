@@ -302,6 +302,26 @@ public class CompanyIndexFactoryHelper {
 	private void _processContributions(
 		IndexConfigurationContributor indexConfigurationContributor) {
 
+		boolean contributeMappings = Validator.isNull(
+			_elasticsearchConfigurationWrapper.overrideTypeMappings());
+
+		SettingsBuilder settingsBuilder = new SettingsBuilder(
+			Settings.builder());
+
+		indexConfigurationContributor.contributeSettings(settingsBuilder::put);
+
+		Settings settings = settingsBuilder.build();
+
+		if (!contributeMappings && settings.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No mappings or settings to contribute from " +
+						indexConfigurationContributor);
+			}
+
+			return;
+		}
+
 		RestHighLevelClient restHighLevelClient = null;
 
 		try {
@@ -311,66 +331,44 @@ public class CompanyIndexFactoryHelper {
 		catch (ElasticsearchConnectionNotInitializedException
 					elasticsearchConnectionNotInitializedException) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Skipping contributor " + indexConfigurationContributor);
-			}
+			_log.error(elasticsearchConnectionNotInitializedException);
 
 			return;
 		}
 
-		SettingsBuilder settingsBuilder = new SettingsBuilder(
-			Settings.builder());
+		IndicesClient indicesClient = restHighLevelClient.indices();
 
-		indexConfigurationContributor.contributeSettings(settingsBuilder::put);
-
-		Settings settings = settingsBuilder.build();
-
-		if (!settings.isEmpty()) {
-			IndicesClient indicesClient = restHighLevelClient.indices();
-
-			for (Long companyId :
-					IndexFactoryCompanyIdRegistryUtil.getCompanyIds()) {
-
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				String indexName = getIndexName(companyId);
 
-				UpdateSettingsRequest updateSettingsRequest =
-					new UpdateSettingsRequest(indexName);
+				if (!settings.isEmpty()) {
+					UpdateSettingsRequest updateSettingsRequest =
+						new UpdateSettingsRequest(indexName);
 
-				updateSettingsRequest.settings(settings);
+					updateSettingsRequest.settings(settings);
 
-				try {
-					indicesClient.putSettings(
-						updateSettingsRequest, RequestOptions.DEFAULT);
+					try {
+						indicesClient.putSettings(
+							updateSettingsRequest, RequestOptions.DEFAULT);
+					}
+					catch (Exception exception) {
+						_log.error(
+							StringBundler.concat(
+								"Unable to put settings for index ", indexName,
+								" with contributor ",
+								indexConfigurationContributor),
+							exception);
+					}
 				}
-				catch (Exception exception) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to put settings for index ", indexName,
-							" with contributor ",
-							indexConfigurationContributor),
-						exception);
+
+				if (contributeMappings) {
+					indexConfigurationContributor.contributeMappings(
+						new LiferayDocumentTypeFactory(
+							indexName, indicesClient, _jsonFactory));
 				}
-			}
-		}
-
-		if (Validator.isNotNull(
-				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
-
-			return;
-		}
-
-		for (Long companyId :
-				IndexFactoryCompanyIdRegistryUtil.getCompanyIds()) {
-
-			LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-				new LiferayDocumentTypeFactory(
-					getIndexName(companyId), restHighLevelClient.indices(),
-					_jsonFactory);
-
-			indexConfigurationContributor.contributeMappings(
-				liferayDocumentTypeFactory);
-		}
+			},
+			IndexFactoryCompanyIdRegistryUtil.getCompanyIds());
 	}
 
 	private void _putAdditionalTypeMappings(

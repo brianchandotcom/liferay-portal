@@ -18,7 +18,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "[Liferay Partner Portal] MDF Request Submitted"
+		"en_US": "[Liferay Partner Portal] [%ACCTOMDFREQS_ACCOUNTENTRY_NAME%] MDF Request Submitted"
 	},
 	"type": "email"
 }

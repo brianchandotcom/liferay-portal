@@ -132,6 +132,25 @@ public class CommerceOrderGenerator {
 			throw new PortalException(message);
 		}
 
+		// Commerce addresses
+
+		List<CommerceAddress> commerceAddresses =
+			_commerceAddressLocalService.getCommerceAddressesByCompanyId(
+				accountEntry.getCompanyId(), AccountEntry.class.getName(),
+				accountEntry.getAccountEntryId(), 0, 1, null);
+
+		if (commerceAddresses.isEmpty()) {
+			String message =
+				"There are no addresses related to the account " +
+					accountEntry.getAccountEntryId();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
+
+			throw new PortalException(message);
+		}
+
 		AccountEntryUserRel accountEntryUserRel = accountEntryUserRels.get(0);
 
 		// Add commerce order
@@ -165,25 +184,6 @@ public class CommerceOrderGenerator {
 
 		commerceOrder = _commerceOrderLocalService.recalculatePrice(
 			commerceOrder.getCommerceOrderId(), commerceContext);
-
-		// Commerce addresses
-
-		List<CommerceAddress> commerceAddresses =
-			_commerceAddressLocalService.getCommerceAddressesByCompanyId(
-				accountEntry.getCompanyId(), AccountEntry.class.getName(),
-				accountEntry.getAccountEntryId(), 0, 1, null);
-
-		if (commerceAddresses.isEmpty()) {
-			String message =
-				"There are no addresses related to the account " +
-					accountEntry.getAccountEntryId();
-
-			if (_log.isInfoEnabled()) {
-				_log.info(message);
-			}
-
-			throw new PortalException(message);
-		}
 
 		CommerceAddress commerceAddress = commerceAddresses.get(0);
 

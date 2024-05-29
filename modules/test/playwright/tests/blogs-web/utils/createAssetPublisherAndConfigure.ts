@@ -52,7 +52,9 @@ export async function createAssetPublisherAndConfigure({
 		trigger: topper.locator('.portlet-options'),
 	});
 
-	const configurationModal = await page.frameLocator('#modalIframe');
+	const configurationModal = await page.frameLocator(
+		'iframe[title*="Asset Publisher"][title*="Configuration"]'
+	);
 	await configurationModal.locator('.portlet-body').waitFor();
 
 	const configurationDynamicLabel = await configurationModal.getByText(

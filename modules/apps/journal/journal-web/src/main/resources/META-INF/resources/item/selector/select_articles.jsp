@@ -94,9 +94,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 									<%= HtmlUtil.escape(curArticle.getTitle(locale, true)) %>
 									<c:if test="<%= !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>">
 										<clay:icon
-											aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+											aria-label='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 											cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
-											data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+											data-title='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 											symbol="password-policies"
 										/>
 									</c:if>
@@ -165,9 +165,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								<%= HtmlUtil.escape(curArticle.getTitle(locale, true)) %>
 								<c:if test="<%= !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>">
 									<clay:icon
-										aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										aria-label='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 										cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
-										data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										data-title='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 										symbol="password-policies"
 									/>
 								</c:if>

@@ -299,11 +299,11 @@ const AccountForm = () => {
 						label={
 							((
 								<span>
-									I agree to the
+									I agree to the Marketplace Trial
 									<ClayLink
 										className="ml-1"
 										displayType="primary"
-										href="https://www.liferay.com/en/legal/marketplace-terms-of-service"
+										href={properties.trialEulaURL}
 										target="_blank"
 									>
 										Terms & Conditions

@@ -33,7 +33,7 @@ String errorMessage = errorsJSONObject.getString("errorMessage");
 	message="friendly-url-separator-info-message"
 />
 
-<div role="group" aria-labelledby="<portlet:namespace />header">
+<div aria-labelledby="<portlet:namespace />header" role="group">
 
 	<%
 	JSONArray friendlyURLSeparatorsJSONArray = friendlyURLSeparatorCompanyConfigurationDisplayContext.getConfigurableFriendlyURLSeparatorsJSONArray();

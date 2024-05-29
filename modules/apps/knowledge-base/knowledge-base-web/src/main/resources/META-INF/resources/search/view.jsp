@@ -22,8 +22,8 @@
 				<div class="input-group-inset-item input-group-inset-item-after">
 					<clay:button
 						data-qa-id="searchButton"
-						icon="search"
 						displayType="unstyled"
+						icon="search"
 						monospaced="<%= false %>"
 						type="submit"
 					/>

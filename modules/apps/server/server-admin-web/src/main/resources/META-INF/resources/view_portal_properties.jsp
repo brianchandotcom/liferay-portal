@@ -61,10 +61,10 @@ ViewPortalPropertiesDisplayContext viewPortalPropertiesDisplayContext = new View
 				name="source"
 			>
 				<clay:icon
-					aria-label='<%= message %>'
+					aria-label="<%= message %>"
 					cssClass="lfr-portal-tooltip"
-					data-title='<%= message %>'
-					symbol="<%= overriddenPropertyValue ? "hdd" : "document" %>"
+					data-title="<%= message %>"
+					symbol='<%= overriddenPropertyValue ? "hdd" : "document" %>'
 					tabindex="0"
 				/>
 			</liferay-ui:search-container-column-text>

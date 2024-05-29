@@ -41,7 +41,7 @@
 
 					<c:choose>
 						<c:when test="<%= dropdownItems.size() > 1 %>">
-							<div data-qa-id='<%= "actions-" + portalDefaultPermissionsSearchEntry.getLabel() %>'>
+							<div data-qa-id="actions-<%= portalDefaultPermissionsSearchEntry.getLabel() %>">
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= dropdownItems %>"

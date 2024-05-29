@@ -9,6 +9,8 @@ import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {z} from 'zod';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {ORDER_TYPES} from '../../enums/Order';
+import useMarketplaceSpringBootOAuth2 from '../../hooks/useMarketplaceSpringBootOAuth2';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import fetcher from '../../services/fetcher';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
@@ -67,7 +69,12 @@ const getIcon = (image = '') => {
 };
 
 const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
+	const [account, setSelectedAccount] = useState<any>(null);
+	const [accounts, setAccounts] = useState<any[]>([]);
+	const location = useLocation();
 	const marketplaceContext = useMarketplaceContext();
+	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
+	const navigate = useNavigate();
 
 	const {channel, myUserAccount} = marketplaceContext;
 
@@ -75,12 +82,7 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 		myUserAccount?.accountBriefs,
 	]);
 
-	const [accounts, setAccounts] = useState<any[]>([]);
-	const [account, setSelectedAccount] = useState<any>(null);
-
 	const sku = product?.skus?.[0]?.id;
-	const navigate = useNavigate();
-	const location = useLocation();
 
 	const accountForm = useForm<UserForm>({
 		defaultValues: {
@@ -160,14 +162,22 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 				},
 			],
 			orderStatus: 1,
-			orderTypeExternalReferenceCode: 'SOLUTIONS7',
+			orderTypeExternalReferenceCode: ORDER_TYPES.SOLUTIONS7,
 			shippingAmount: 0,
 			shippingWithTaxAmount: 0,
 		});
 
 		await CommerceSelectAccountImpl.selectAccount(accountId);
 
-		navigate('/finish', {replace: true});
+		const trialAvailability = await marketplaceSpringBootOAuth2.getTrialAvailability();
+
+		const maxTrialsReached = trialAvailability.fallback
+			? false
+			: trialAvailability.available === 0;
+
+		navigate(`/finish${maxTrialsReached ? '?state=hold' : ''}`, {
+			replace: true,
+		});
 	};
 
 	const stepIndex = steps.findIndex(

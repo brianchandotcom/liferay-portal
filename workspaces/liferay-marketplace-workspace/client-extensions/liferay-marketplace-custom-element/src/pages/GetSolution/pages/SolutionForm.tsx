@@ -108,7 +108,9 @@ const AccountForm = () => {
 				<ClayButton
 					displayType="secondary"
 					onClick={() => {
-						Liferay.Util.navigate(getSiteURL() + '/p/try-it-now');
+						Liferay.Util.navigate(
+							getSiteURL() + '/pre-built-trial'
+						);
 					}}
 				>
 					Return to trial page

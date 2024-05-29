@@ -7,9 +7,22 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import Sidebar from '../../../../../../../src/main/resources/META-INF/resources/designer/js/definition-builder/diagram-builder/components/sidebar/Sidebar';
+import Sidebar, {
+	contents,
+} from '../../../../../../../src/main/resources/META-INF/resources/designer/js/definition-builder/diagram-builder/components/sidebar/Sidebar';
 import MockDefinitionBuilderContext from '../../../../../../mock/MockDefinitionBuilderContext';
 import MockDiagramBuilderContext from '../../../../../../mock/MockDiagramBuilderContext';
+
+const nodeTypes = [
+	'condition',
+	'end',
+	'fork',
+	'join',
+	'join-xor',
+	'start',
+	'state',
+	'task',
+];
 
 describe('The Sidebar component should', () => {
 	let container;
@@ -81,5 +94,25 @@ describe('The Sidebar component should', () => {
 		expect(inputLabel).toHaveValue('start node');
 		expect(inputName).toHaveValue('node_0');
 		expect(textareaDescription).toHaveValue('');
+	});
+
+	it('Have the correct sections according to each node type', () => {
+		nodeTypes.forEach((type) => {
+			const {sections} = contents[type];
+
+			if (type === 'task') {
+				expect(sections[0]).toContain('nodeInformation');
+				expect(sections[1]).toContain('assignmentsSummary');
+				expect(sections[2]).toContain('notificationsSummary');
+				expect(sections[3]).toContain('actionsSummary');
+				expect(sections[4]).toContain('timersSummary');
+
+				return;
+			}
+
+			expect(sections[0]).toContain('nodeInformation');
+			expect(sections[1]).toContain('notificationsSummary');
+			expect(sections[2]).toContain('actionsSummary');
+		});
 	});
 });

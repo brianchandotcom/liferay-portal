@@ -13,7 +13,7 @@ import SidebarBody from './SidebarBody';
 import SidebarHeader from './SidebarHeader';
 import sectionComponents from './sections/sectionComponents';
 
-const contents = {
+export const contents = {
 	'actions': {
 		backButton: (setContentName, selectedItemType) => () =>
 			setContentName(selectedItemType),

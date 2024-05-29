@@ -197,7 +197,7 @@
 		};
 	</script>
 
-	<button aria-expanded="false" aria-haspopup="true" class="d-none btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFClaimStatus" type="button">
+	<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary d-none dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFClaimStatus" type="button">
 		${mdfClaim.mdfClaimStatus.name} [@clay.icon symbol="caret-bottom" /]
 	</button>
 
@@ -205,7 +205,7 @@
 		<p class="mb-0 mt-2 text-neutral-8 text-paragraph-sm">Select <strong>In Finance Review</strong> to approve the claim </p>
 	[/#if]
 
-	<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start">
+	<ul aria-labelledby="dropdownMenuButton" class="dropdown-menu" x-placement="bottom-start">
 
 		[#if mdfClaimStatusKey == 'pendingMarketingReview']
 			[#if hasRequestMoreInfoAction]

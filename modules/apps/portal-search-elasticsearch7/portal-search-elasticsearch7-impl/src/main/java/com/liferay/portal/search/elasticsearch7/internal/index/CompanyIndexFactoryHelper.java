@@ -289,6 +289,26 @@ public class CompanyIndexFactoryHelper {
 	private void _processContributions(
 		IndexConfigurationContributor indexConfigurationContributor) {
 
+		boolean contributeMappings = Validator.isNull(
+			_elasticsearchConfigurationWrapper.overrideTypeMappings());
+
+		SettingsBuilder settingsBuilder = new SettingsBuilder(
+			Settings.builder());
+
+		indexConfigurationContributor.contributeSettings(settingsBuilder::put);
+
+		Settings settings = settingsBuilder.build();
+
+		if (!contributeMappings && settings.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No mappings or settings to contribute from " +
+						indexConfigurationContributor);
+			}
+
+			return;
+		}
+
 		RestHighLevelClient restHighLevelClient = null;
 
 		try {
@@ -298,27 +318,16 @@ public class CompanyIndexFactoryHelper {
 		catch (ElasticsearchConnectionNotInitializedException
 					elasticsearchConnectionNotInitializedException) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Skipping contributor " + indexConfigurationContributor);
-			}
-
 			_log.error(elasticsearchConnectionNotInitializedException);
 
 			return;
 		}
-
-		SettingsBuilder settingsBuilder = new SettingsBuilder(
-			Settings.builder());
-
-		indexConfigurationContributor.contributeSettings(settingsBuilder::put);
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				String indexName = getIndexName(companyId);
-				Settings settings = settingsBuilder.build();
 
 				if (!settings.isEmpty()) {
 					UpdateSettingsRequest updateSettingsRequest =
@@ -340,10 +349,7 @@ public class CompanyIndexFactoryHelper {
 					}
 				}
 
-				if (Validator.isNull(
-						_elasticsearchConfigurationWrapper.
-							overrideTypeMappings())) {
-
+				if (contributeMappings) {
 					indexConfigurationContributor.contributeMappings(
 						new LiferayDocumentTypeFactory(
 							indexName, indicesClient, _jsonFactory));

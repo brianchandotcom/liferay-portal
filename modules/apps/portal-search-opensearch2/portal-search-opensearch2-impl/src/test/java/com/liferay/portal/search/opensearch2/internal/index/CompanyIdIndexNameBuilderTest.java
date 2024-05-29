@@ -173,8 +173,6 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_indexHelper, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			_indexHelper, "_searchEngineAdapter", searchEngineAdapter);
 
 		ReflectionTestUtil.invoke(
 			_indexHelper, "activate", new Class<?>[] {BundleContext.class},

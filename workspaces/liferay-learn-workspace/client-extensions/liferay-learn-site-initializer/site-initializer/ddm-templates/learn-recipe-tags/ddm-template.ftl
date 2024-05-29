@@ -39,9 +39,9 @@
 	<#list taxonomyVocabularies as vocabulary>
 		<#if vocabulary = "Capability" || vocabulary = "Feature">
 
-		  			<#assign
-			formattedVocabulary = (vocabulary?lower_case?replace(" ", ""))
-			searchTerm = request.getParameter("q")!
+			<#assign
+				formattedVocabulary = (vocabulary?lower_case?replace(" ", ""))
+				searchTerm = request.getParameter("q")!
 			/>
 
 			<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
@@ -62,9 +62,10 @@
 		</#if>
 
 		<#if vocabulary = "Deployment Approach">
-		  <#assign formattedVocabulary = (vocabulary?lower_case?replace(" ", "")) />
-				<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
-				 <#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
+			<#assign formattedVocabulary = (vocabulary?lower_case?replace(" ", "")) />
+
+			<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
+				<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
 					<div class="learn-recipe-category-tag mr-2">
 						<a
 							class="label tag-container"
@@ -77,5 +78,4 @@
 			</div>
 		</#if>
 	</#list>
-	</div>
 </div>

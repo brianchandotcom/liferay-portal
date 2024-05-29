@@ -18,6 +18,7 @@ import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateResource;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
@@ -68,11 +69,11 @@ public class TrialRestController extends BaseRestController {
 
 		return new JSONObject(
 		).put(
-			"active", _TRIAL_MAX_INSTANCES_IN_PROGRESS > page.getTotalCount()
+			"active", _TRIAL_MAX_INSTANCES > page.getTotalCount()
 		).put(
-			"available", _TRIAL_MAX_INSTANCES_IN_PROGRESS - page.getTotalCount()
+			"available", _TRIAL_MAX_INSTANCES - page.getTotalCount()
 		).put(
-			"max", _TRIAL_MAX_INSTANCES_IN_PROGRESS
+			"max", _TRIAL_MAX_INSTANCES
 		).toString();
 	}
 
@@ -114,9 +115,7 @@ public class TrialRestController extends BaseRestController {
 		com.liferay.headless.portal.instances.client.pagination.Page
 			<PortalInstance> portalInstancesPage = _getPortalInstancesPage();
 
-		if (portalInstancesPage.getTotalCount() ==
-				_TRIAL_MAX_INSTANCES_IN_PROGRESS) {
-
+		if (portalInstancesPage.getTotalCount() == _TRIAL_MAX_INSTANCES) {
 			_log.error("Order is on hold");
 
 			_updateOrder(null, orderId, _ORDER_STATUS_ON_HOLD);
@@ -399,7 +398,10 @@ public class TrialRestController extends BaseRestController {
 
 	private static final int _ORDER_STATUS_PROCESSING = 10;
 
-	private static final int _TRIAL_MAX_INSTANCES_IN_PROGRESS = 50;
+	private static final int _TRIAL_MAX_INSTANCES = GetterUtil.getInteger(
+		System.getenv(
+			"LIFERAY_MARKETPLACE_ETC_SPRING_BOOT_TRIAL_MAX_INSTANCES"),
+		50);
 
 	private static final Log _log = LogFactory.getLog(
 		TrialRestController.class);

@@ -23,6 +23,12 @@ import org.json.JSONObject;
  */
 public class Testray1TestrayServer extends TestrayServer {
 
+	@Override
+	public TestrayBuild getTestrayBuildByID(long buildID) {
+		return null;
+	}
+
+	@Override
 	public TestrayCaseType getTestrayCaseTypeByID(long testrayCaseTypeID) {
 		if (_testrayCaseTypes != null) {
 			for (TestrayCaseType testrayCaseType : _testrayCaseTypes.values()) {

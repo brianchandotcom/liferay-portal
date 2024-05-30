@@ -5,13 +5,10 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {filesize} from 'filesize';
 import {useCallback, useMemo, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import githubIcon from '../../../../../../assets/icons/github_icon.svg';
-import {DropzoneUpload} from '../../../../../../components/DropzoneUpload/DropzoneUpload';
-import {FileList} from '../../../../../../components/FileList/FileList';
 import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {PackageVersionModal} from '../../../../../../components/PackageVersionModal/PackageVersionModal';
@@ -25,7 +22,6 @@ import {ProductVersionOption} from '../../../../../../enums/ProductVersionOption
 import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
 import i18n from '../../../../../../i18n';
 import {
-	addExpandoValue,
 	createAttachmentAxios,
 	createProductSpecification,
 	getCategories,
@@ -43,9 +39,12 @@ import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
 import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
+import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
 import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
-import {Liferay} from '../../../../../../liferay/liferay';
+import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import {base64ToText, fileToBase64} from '../../../../../../utils/file';
 import ResourceRequirements from './ResourceRequirements';
+import UploadAppPackagesComponent from './components/UploadAppPackages';
 
 type ProvideAppBuildPageProps = {
 	onClickBack: () => void;
@@ -58,121 +57,12 @@ type BodyProductSpecificationProps = {
 	value: number | string;
 };
 
-type UploadAppPackagesComponentProps = {
-	isProcessing: boolean;
-	versionName: string;
-};
-
-const acceptFileTypes = {
-	[ProductType.CLOUD]: {
-		'application/java-archive': ['.zip'],
-	},
-	[ProductType.DXP]: {
-		'application/java-archive': ['.jar'],
-		'application/octet-stream': ['.war'],
-	},
-};
-
-const UPLOAD_MAX_SIZE = 500_000_000;
-
-const UploadAppPackagesComponent = ({
-	isProcessing,
-	versionName,
-}: UploadAppPackagesComponentProps) => {
-	const [{appType, buildAppPackages}, dispatch] = useAppContext();
-
-	const enableUploadFiles =
-		!isProcessing &&
-		(!buildAppPackages[versionName]?.length ||
-			buildAppPackages[versionName]?.length < 10);
-
-	const handleUploadAppPackages = (files: File[], versionName?: string) => {
-		const newUploadedPackage = files.map((file) => ({
-			error: false,
-			file,
-			fileName: file.name,
-			id: crypto.randomUUID(),
-			preview: URL.createObjectURL(file),
-			progress: 0,
-			readableSize: filesize(file.size),
-			uploaded: false,
-			versionName,
-		}));
-
-		const currentVersionFiles =
-			buildAppPackages[versionName as string] ?? [];
-
-		dispatch({
-			payload: {
-				files: currentVersionFiles.length
-					? [
-							...buildAppPackages[versionName as string],
-							...newUploadedPackage,
-					  ]
-					: newUploadedPackage,
-				versionName,
-			},
-			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
-		});
-	};
-
-	const handleRemoveAppPackages = (fileId: string, versionName?: string) =>
-		dispatch({
-			payload: {
-				files: buildAppPackages[versionName as string]?.filter(
-					(value) => value.id !== fileId
-				),
-				versionName,
-			},
-			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
-		});
-
-	return (
-		<>
-			<FileList
-				isProcessing={isProcessing}
-				onDelete={handleRemoveAppPackages}
-				type="document"
-				uploadedFiles={
-					buildAppPackages ? buildAppPackages[versionName] : []
-				}
-				versionName={versionName}
-			/>
-
-			{enableUploadFiles && (
-				<DropzoneUpload
-					acceptFileTypes={
-						acceptFileTypes[
-							appType.value as keyof typeof acceptFileTypes
-						]
-					}
-					buttonText={i18n.translate('select-a-file')}
-					description={
-						appType.value === ProductType.CLOUD
-							? i18n.translate(
-									'only-zip-files-are-allowed-max-file-size-is-500-mb'
-							  )
-							: i18n.translate(
-									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
-							  )
-					}
-					maxFiles={10}
-					maxSize={UPLOAD_MAX_SIZE}
-					multiple={true}
-					onHandleUpload={handleUploadAppPackages}
-					title={i18n.translate('drag-and-drop-to-upload-or')}
-					versionName={versionName}
-				/>
-			)}
-		</>
-	);
-};
-
 export function ProvideAppBuildPage({
 	onClickBack,
 	onClickContinue,
 }: ProvideAppBuildPageProps) {
 	const [isProcessing, setProcessing] = useState(false);
+	const {properties} = useMarketplaceContext();
 
 	const [
 		{
@@ -329,8 +219,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -365,65 +254,73 @@ export function ProvideAppBuildPage({
 						continue;
 					}
 
-					const buildAppPackageId = await submitBase64EncodedFile({
-						appERC,
-						callback: (progress) => {
+					if (properties.featureFlags?.includes('LPD-21582')) {
+						await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+							appERC,
+							{
+								productVirtualSettings: {
+									productVirtualSettingsFileEntries: [
+										{
+											attachment: base64ToText(
+												(await fileToBase64(
+													appPackage.file
+												)) as string
+											),
+											version: versionKey,
+										},
+									],
+								},
+							}
+						);
+					} else {
+						await submitBase64EncodedFile({
+							appERC,
+							callback: (progress) => {
+								buildAppPackages[versionKey] = buildAppPackages[
+									versionKey
+								].map((file) => {
+									if (file.id === appPackage.id) {
+										return {
+											...file,
+											progress,
+											uploaded: progress === 100,
+										};
+									}
+
+									return file;
+								});
+
+								dispatch({
+									payload: buildAppPackages,
+									type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+								});
+							},
+							file: appPackage.file,
+							isAppIcon: false,
+							requestFunction: createAttachmentAxios,
+							title: appPackage.fileName,
+						}).catch((error) => {
 							buildAppPackages[versionKey] = buildAppPackages[
 								versionKey
 							].map((file) => {
 								if (file.id === appPackage.id) {
 									return {
 										...file,
-										progress,
-										uploaded: progress === 100,
+										error,
 									};
 								}
 
 								return file;
 							});
-
-							dispatch({
-								payload: buildAppPackages,
-								type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-							});
-						},
-						file: appPackage.file,
-						isAppIcon: false,
-						requestFunction: createAttachmentAxios,
-						title: appPackage.fileName,
-					}).catch((error) => {
-						buildAppPackages[versionKey] = buildAppPackages[
-							versionKey
-						].map((file) => {
-							if (file.id === appPackage.id) {
-								return {
-									...file,
-									error,
-								};
-							}
-
-							return file;
 						});
+					}
 
-						dispatch({
-							payload: buildAppPackages,
-							type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-						});
-					});
-
-					addExpandoValue({
-						attributeValues: {
-							'Liferay Version': versionKey,
-						},
-						className:
-							'com.liferay.commerce.product.model.CPAttachmentFileEntry',
-						classPK: buildAppPackageId as number,
-						companyId: Liferay.ThemeDisplay.getCompanyId(),
-						tableName: 'CUSTOM_FIELDS',
+					dispatch({
+						payload: buildAppPackages,
+						type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -809,8 +706,7 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

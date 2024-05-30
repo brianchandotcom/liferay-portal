@@ -1,0 +1,129 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {filesize} from 'filesize';
+
+import {DropzoneUpload} from '../../../../../../../components/DropzoneUpload/DropzoneUpload';
+import {FileList} from '../../../../../../../components/FileList/FileList';
+import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
+import {ProductType} from '../../../../../../../enums/ProductType';
+import i18n from '../../../../../../../i18n';
+import {useAppContext} from '../../AppContext/AppManageState';
+import {TYPES} from '../../AppContext/actionTypes';
+
+type UploadAppPackagesComponentProps = {
+	isProcessing: boolean;
+	versionName: string;
+};
+
+export const acceptFileTypes = {
+	[ProductType.CLOUD]: {
+		'application/java-archive': ['.zip'],
+	},
+	[ProductType.DXP]: {
+		'application/java-archive': ['.jar'],
+		'application/octet-stream': ['.war'],
+	},
+};
+
+export const UPLOAD_MAX_SIZE = 500_000_000;
+
+export function UploadAppPackagesComponent({
+	isProcessing,
+	versionName,
+}: UploadAppPackagesComponentProps) {
+	const [{appType, buildAppPackages}, dispatch] = useAppContext();
+	const {properties} = useMarketplaceContext();
+
+	const enableUploadFiles =
+		!isProcessing &&
+		(!buildAppPackages[versionName]?.length ||
+			buildAppPackages[versionName]?.length < 10);
+
+	const handleUploadAppPackages = (files: File[], versionName?: string) => {
+		const newUploadedPackage = files.map((file) => ({
+			error: false,
+			file,
+			fileName: file.name,
+			id: crypto.randomUUID(),
+			preview: URL.createObjectURL(file),
+			progress: 0,
+			readableSize: filesize(file.size),
+			uploaded: false,
+			versionName,
+		}));
+
+		const currentVersionFiles =
+			buildAppPackages[versionName as string] ?? [];
+
+		dispatch({
+			payload: {
+				files: currentVersionFiles.length
+					? [
+							...buildAppPackages[versionName as string],
+							...newUploadedPackage,
+					  ]
+					: newUploadedPackage,
+				versionName,
+			},
+			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
+		});
+	};
+
+	const handleRemoveAppPackages = (fileId: string, versionName?: string) =>
+		dispatch({
+			payload: {
+				files: buildAppPackages[versionName as string]?.filter(
+					(value) => value.id !== fileId
+				),
+				versionName,
+			},
+			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
+		});
+
+	return (
+		<>
+			<FileList
+				isProcessing={isProcessing}
+				onDelete={handleRemoveAppPackages}
+				type="document"
+				uploadedFiles={
+					buildAppPackages ? buildAppPackages[versionName] : []
+				}
+				versionName={versionName}
+			/>
+
+			{enableUploadFiles && (
+				<DropzoneUpload
+					acceptFileTypes={
+						acceptFileTypes[
+							appType.value as keyof typeof acceptFileTypes
+						]
+					}
+					buttonText={i18n.translate('select-a-file')}
+					description={
+						appType.value === ProductType.CLOUD
+							? i18n.translate(
+									'only-zip-files-are-allowed-max-file-size-is-500-mb'
+							  )
+							: i18n.translate(
+									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
+							  )
+					}
+					maxFiles={
+						properties.featureFlags?.includes('LPD-21582') ? 1 : 10
+					}
+					maxSize={UPLOAD_MAX_SIZE}
+					multiple={true}
+					onHandleUpload={handleUploadAppPackages}
+					title={i18n.translate('drag-and-drop-to-upload-or')}
+					versionName={versionName}
+				/>
+			)}
+		</>
+	);
+}
+
+export default UploadAppPackagesComponent;

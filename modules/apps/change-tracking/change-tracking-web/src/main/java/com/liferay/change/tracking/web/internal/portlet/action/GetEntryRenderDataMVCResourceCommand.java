@@ -75,6 +75,8 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTransition;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.manager.WorkflowLogManager;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -1062,16 +1064,16 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		WorkflowTask workflowTask = _getWorkflowTask(ctEntry, model);
 
-		if ((workflowTask == null) || workflowTask.isCompleted()) {
+		if (workflowTask == null) {
 			return null;
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		if ((workflowTask.getAssigneeUserId() == -1) ||
-			!Objects.equals(
-				workflowTask.getAssigneeUserId(), themeDisplay.getUserId())) {
+		boolean assignedToUserId = Objects.equals(
+			workflowTask.getAssigneeUserId(), themeDisplay.getUserId());
 
+		if ((workflowTask.getAssigneeUserId() == -1) || !assignedToUserId) {
 			jsonArray = jsonArray.put(
 				JSONUtil.put(
 					"href",
@@ -1085,6 +1087,8 @@ public class GetEntryRenderDataMVCResourceCommand
 					).setParameter(
 						"assignMode", "assignToMe"
 					).setParameter(
+						"hideDefaultSuccessMessage", "true"
+					).setParameter(
 						"workflowTaskId", workflowTask.getWorkflowTaskId()
 					).setWindowState(
 						LiferayWindowState.POP_UP
@@ -1097,29 +1101,67 @@ public class GetEntryRenderDataMVCResourceCommand
 				));
 		}
 
-		return jsonArray.put(
-			JSONUtil.put(
-				"href",
-				PortletURLBuilder.createRenderURL(
-					_portal.getLiferayPortletResponse(resourceResponse),
-					PortletKeys.MY_WORKFLOW_TASK
-				).setMVCPath(
-					"/workflow_task_assign.jsp"
-				).setParameter(
-					"assigneeUserId", -1
-				).setParameter(
-					"assignMode", "assignTo"
-				).setParameter(
-					"workflowTaskId", workflowTask.getWorkflowTaskId()
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString()
-			).put(
-				"label",
-				_language.get(themeDisplay.getLocale(), "assign-to-...")
-			).put(
-				"modalHeight", "356px"
-			));
+		if (!workflowTask.isCompleted()) {
+			if (assignedToUserId) {
+				for (WorkflowTransition workflowTransition :
+						WorkflowTaskManagerUtil.
+							getWorkflowTaskWorkflowTransitions(
+								workflowTask.getWorkflowTaskId())) {
+
+					jsonArray = jsonArray.put(
+						JSONUtil.put(
+							"href",
+							PortletURLBuilder.createActionURL(
+								_portal.getLiferayPortletResponse(
+									resourceResponse),
+								PortletKeys.MY_WORKFLOW_TASK
+							).setActionName(
+								"/portal_workflow_task/complete_task"
+							).setRedirect(
+								themeDisplay.getURLCurrent()
+							).setParameter(
+								"assigneeUserId",
+								workflowTask.getAssigneeUserId()
+							).setParameter(
+								"workflowTaskId",
+								workflowTask.getWorkflowTaskId()
+							).buildString()
+						).put(
+							"label",
+							workflowTransition.getLabel(
+								themeDisplay.getLocale())
+						));
+				}
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"href",
+					PortletURLBuilder.createRenderURL(
+						_portal.getLiferayPortletResponse(resourceResponse),
+						PortletKeys.MY_WORKFLOW_TASK
+					).setMVCPath(
+						"/workflow_task_assign.jsp"
+					).setParameter(
+						"assigneeUserId", -1
+					).setParameter(
+						"assignMode", "assignTo"
+					).setParameter(
+						"hideDefaultSuccessMessage", "true"
+					).setParameter(
+						"workflowTaskId", workflowTask.getWorkflowTaskId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString()
+				).put(
+					"label",
+					_language.get(themeDisplay.getLocale(), "assign-to-...")
+				).put(
+					"modalHeight", "356px"
+				));
+		}
+
+		return jsonArray;
 	}
 
 	private <T extends BaseModel<T>> JSONObject _getWorkflowDataJSONObject(

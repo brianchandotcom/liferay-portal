@@ -40,14 +40,14 @@ public class XMLUpgradeDeclarativeServicesCheck extends BaseFileCheck {
 		Attribute attribute = rootElement.attribute("dependency-injector");
 
 		if (attribute == null) {
-			return content.replaceAll(
+			return content.replaceFirst(
 				"(<service-builder)", "$1 dependency-injector=\"ds\"");
 		}
 
 		String dependencyInjector = attribute.getValue();
 
 		if (!Objects.equals(dependencyInjector, "ds")) {
-			content = content.replaceAll(
+			content = content.replaceFirst(
 				"dependency-injector\\s*=\\s*\".*?\"",
 				"dependency-injector=\"ds\"");
 		}

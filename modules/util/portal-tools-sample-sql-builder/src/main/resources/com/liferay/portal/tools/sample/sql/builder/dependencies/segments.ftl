@@ -1,9 +1,9 @@
 <#assign
-	segmentsEntries = dataFactory.newSegmentsEntries(guestGroupModel.groupId)
+	segmentsEntryModels = dataFactory.newSegmentsEntryModels(guestGroupModel.groupId)
 />
 
-<#list segmentsEntries as segmentsEntry>
-	${dataFactory.toInsertSQL(segmentsEntry)}
+<#list segmentsEntryModels as segmentsEntryModel>
+	${dataFactory.toInsertSQL(segmentsEntryModel)}
 </#list>
 
 <#list dataFactory.getSequence(dataFactory.maxSegmentsEntrySegmentsExperienceCount) as i>
@@ -13,7 +13,7 @@
 
 	${dataFactory.toInsertSQL(layoutModel)}
 
-	<#list segmentsEntries as segmentsEntry>
-		${dataFactory.toInsertSQL(dataFactory.newSegmentsExperience(guestGroupModel.groupId, layoutModel.plid, segmentsEntry.segmentsEntryId))}
+	<#list segmentsEntryModels as segmentsEntryModel>
+		${dataFactory.toInsertSQL(dataFactory.newSegmentsExperienceModel(guestGroupModel.groupId, layoutModel.plid, segmentsEntryModel.segmentsEntryId))}
 	</#list>
 </#list>

@@ -6,6 +6,7 @@
 import {test} from '@playwright/test';
 
 import {ExportUserDataPage} from '../pages/user-associated-data-web/ExportUserDataPage';
+import {PersonalDataErasurePage} from '../pages/user-associated-data-web/PersonalDataErasurePage';
 import {EditOrganizationPage} from '../pages/users-admin-web/EditOrganizationPage';
 import {EditUserPage} from '../pages/users-admin-web/EditUserPage';
 import {ServiceAccountsPage} from '../pages/users-admin-web/ServiceAccountsPage';
@@ -16,6 +17,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	editOrganizationPage: EditOrganizationPage;
 	editUserPage: EditUserPage;
 	exportUserDataPage: ExportUserDataPage;
+	personalDataErasurePage: PersonalDataErasurePage;
 	serviceAccountsPage: ServiceAccountsPage;
 	userPersonalSitePage: UserPersonalSitePage;
 	usersAndOrganizationsPage: UsersAndOrganizationsPage;
@@ -28,6 +30,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	exportUserDataPage: async ({page}, use) => {
 		await use(new ExportUserDataPage(page));
+	},
+	personalDataErasurePage: async ({page}, use) => {
+		await use(new PersonalDataErasurePage(page));
 	},
 	serviceAccountsPage: async ({page}, use) => {
 		await use(new ServiceAccountsPage(page));

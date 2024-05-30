@@ -215,6 +215,7 @@ const Sidebar = () => {
 						) : (
 							<AutofillBuildsPopover
 								expanded={expanded}
+								setType={setType}
 								setVisible={setVisible}
 								triggedRef={AutofillRef}
 								visible={visible}

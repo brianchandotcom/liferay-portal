@@ -10,6 +10,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useState} from 'react';
 import {useObjectPermission} from '~/hooks/data/useObjectPermission';
 import useAutofillBuild from '~/hooks/useAutofillBuild';
+import useRuns from '~/hooks/useRuns';
 
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay';
@@ -17,12 +18,17 @@ import {testrayBuildImpl} from '../../services/rest';
 import Form from '../Form';
 
 type AutofillBuildsProps = {
+	setType: (state: 'autofill' | 'compareRuns') => void;
 	setVisible: (state: boolean) => void;
 };
 
-const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
+const AutofillBuilds: React.FC<AutofillBuildsProps> = ({
+	setType,
+	setVisible,
+}) => {
 	const {autofillBuild, setBuildA, setBuildB} = useAutofillBuild();
 	const [loading, setLoading] = useState<boolean>(false);
+	const {setRunA, setRunB} = useRuns();
 
 	const buildsPermission = useObjectPermission('/builds');
 	const disbleButtonAutofillBuilds = buildsPermission.canCreate;
@@ -40,19 +46,31 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({setVisible}) => {
 
 		testrayBuildImpl
 			.autofill(autofillBuild.buildA, autofillBuild.buildB)
-			.then((reponse) =>
+			.then(({caseAmount, runId1, runId2}) => {
 				Liferay.Util.openToast({
-					message: i18n.sub(
-						'x-case-results-were-autofilled',
-						reponse.caseAmount
-					),
-				})
-			)
+					message: i18n.sub('x-case-results-were-autofilled', [
+						caseAmount,
+						runId1,
+						runId2,
+					]),
+				});
+
+				setRunA(runId1);
+				setRunB(runId2);
+
+				setType('compareRuns');
+
+				Liferay.Util.openToast({
+					message: i18n.sub('runs-x-and-x-ready-to-be-compared', [
+						runId1,
+						runId2,
+					]),
+				});
+			})
 			.then(() => {
 				setBuildA(null);
 				setBuildB(null);
 				setLoading(false);
-				setVisible(false);
 			})
 			.catch(() =>
 				Liferay.Util.openToast({

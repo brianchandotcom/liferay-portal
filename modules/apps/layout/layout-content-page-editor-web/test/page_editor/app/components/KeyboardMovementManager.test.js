@@ -128,7 +128,7 @@ describe('KeyboardMovementManager', () => {
 
 		document.body.dispatchEvent(
 			new KeyboardEvent('keydown', {
-				code: 'ArrrwDown',
+				code: 'ArrowDown',
 			})
 		);
 

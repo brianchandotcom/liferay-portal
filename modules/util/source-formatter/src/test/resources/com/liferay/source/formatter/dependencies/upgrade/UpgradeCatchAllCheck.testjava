@@ -47,10 +47,16 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CookieKeys.ID;
 		CookieKeys.SCREEN_NAME;
 
+		new AssetListEntryCreateDateComparator();
+		new AssetTagCountComparator();
+
 		PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateManager.ENTRIES;
 
 		ServiceTrackerList<Class<T>, Class<E>> serviceTrackerList = ServiceTrackerListFactory.open(null, null);
+
+		StructureStructureKeyComparator.INSTANCE_ASCENDING;
+		StructureStructureKeyComparator.INSTANCE_DESCENDING;
 	}
 
 	public void method(
@@ -72,6 +78,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 	public void method(AssetCategory<?> assetCategory) {
 		AssetCategory::getLeftCategoryId;
 		assetCategory.getLeftCategoryId;
+	}
+
+	public void method(boolean ascending) {
+		new AssetListEntryCreateDateComparator(ascending);
+		new AssetTagCountComparator(ascending);
 	}
 
 	public void method(CommerceAddress commerceAddress) {

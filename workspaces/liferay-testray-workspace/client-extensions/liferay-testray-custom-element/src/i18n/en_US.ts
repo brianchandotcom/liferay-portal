@@ -323,6 +323,8 @@ export default {
 	'run-b': 'Run B',
 	'run-b-successfully-added': 'Run B, successfully added',
 	'runs': 'Runs',
+	'runs-x-and-x-ready-to-be-compared':
+		'Runs {0} and {1} ready to be compared.',
 	'save': 'Save',
 	'score': 'Score',
 	'screen-name': 'Screen Name',

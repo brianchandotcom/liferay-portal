@@ -30,6 +30,8 @@ public class LCPProjectConstants {
 	).put(
 		"SA", LCPProject.Cluster.SA.toString()
 	).put(
+		"STG", LCPProject.Cluster.STG.toString()
+	).put(
 		"US", LCPProject.Cluster.US.toString()
 	).build();
 

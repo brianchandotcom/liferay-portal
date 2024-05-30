@@ -109,6 +109,7 @@ public class LCPProject {
 		EU3("ac-europewest3", "europe-west3-ac3-c1"),
 		INTERNAL("ac-internal", "us-west1-ac-uat-c1"),
 		SA("ac-southamericaeast1", "southamerica-east1-ac1-c1"),
+		STG("ac-stg", true, "us-west1-s2-c1"),
 		US("ac-uswest1", "us-west1-ac4-c1");
 
 		public static Cluster fromString(String value) {
@@ -132,6 +133,10 @@ public class LCPProject {
 				return Cluster.SA;
 			}
 
+			if (StringUtil.equals(value, Cluster.STG._value)) {
+				return Cluster.STG;
+			}
+
 			if (StringUtil.equals(value, Cluster.US._value)) {
 				return Cluster.US;
 			}
@@ -152,12 +157,22 @@ public class LCPProject {
 			return _value;
 		}
 
-		private Cluster(String projectId, String value) {
+		private Cluster(String projectId, boolean staging, String value) {
 			_projectId = projectId;
 			_value = value;
 
-			_baseURL = String.format(
-				"https://{service}-%s.lfr.cloud/", projectId);
+			if (staging) {
+				_baseURL = String.format(
+					"https://{service}-%s.lfr.st/", projectId);
+			}
+			else {
+				_baseURL = String.format(
+					"https://{service}-%s.lfr.cloud/", projectId);
+			}
+		}
+
+		private Cluster(String projectId, String value) {
+			this(projectId, false, value);
 		}
 
 		private final String _baseURL;

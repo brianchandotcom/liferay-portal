@@ -252,11 +252,12 @@ public class ObjectEntryVariablesUtil {
 					getSystemObjectDefinitionManager(
 						objectDefinition.getName());
 
+			String contentType = _getContentType(
+				dtoConverterRegistry, objectDefinition,
+				systemObjectDefinitionManagerRegistry);
+
 			variables = systemObjectDefinitionManager.getVariables(
-				_getContentType(
-					dtoConverterRegistry, objectDefinition,
-					systemObjectDefinitionManagerRegistry),
-				objectDefinition, oldValues, payloadJSONObject);
+				contentType, objectDefinition, oldValues, payloadJSONObject);
 
 			if (variables == null) {
 				return payloadJSONObject.toMap();
@@ -264,6 +265,9 @@ public class ObjectEntryVariablesUtil {
 
 			allowedVariables.put(
 				"creator", MapUtil.getString(variables, "userId"));
+
+			allowedVariables.put(
+				"entryDTO", payloadJSONObject.get("modelDTO" + contentType));
 		}
 		else {
 			if (oldValues) {

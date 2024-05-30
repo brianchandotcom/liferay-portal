@@ -54,7 +54,7 @@ public class MonitoringMessagingConfigurator {
 			monitoringConfiguration.monitoringMessageMaxQueueSize());
 
 		RejectedExecutionHandler rejectedExecutionHandler =
-			new ThreadPoolExecutor.DiscardOldestPolicy() {
+			new ThreadPoolExecutor.CallerRunsPolicy() {
 
 				@Override
 				public void rejectedExecution(
@@ -63,8 +63,8 @@ public class MonitoringMessagingConfigurator {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"The current thread will handle the request " +
-								"because the audit router's task queue is at " +
-									"its maximum capacity");
+								"because the monitoring destination's task " +
+									"queue is at its maximum capacity");
 					}
 
 					super.rejectedExecution(runnable, threadPoolExecutor);

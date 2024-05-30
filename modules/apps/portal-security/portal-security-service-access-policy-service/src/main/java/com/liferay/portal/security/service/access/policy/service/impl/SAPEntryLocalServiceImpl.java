@@ -110,9 +110,12 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			companyId, _sapConfiguration.systemDefaultSAPEntryName());
 		SAPEntry systemUserPasswordSAPEntry = sapEntryPersistence.fetchByC_N(
 			companyId, _sapConfiguration.systemUserPasswordSAPEntryName());
+		SAPEntry systemTemplateDefaultSAPEntry = sapEntryPersistence.fetchByC_N(
+			companyId, _sapConfiguration.systemTemplateDefaultSAPEntryName());
 
 		if ((systemDefaultSAPEntry != null) &&
-			(systemUserPasswordSAPEntry != null)) {
+			(systemUserPasswordSAPEntry != null) &&
+			(systemTemplateDefaultSAPEntry != null)) {
 
 			return;
 		}
@@ -156,6 +159,27 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 				systemUserPasswordSAPEntry.getCompanyId(),
 				SAPEntry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(systemUserPasswordSAPEntry.getSapEntryId()),
+				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
+		}
+
+		if (systemTemplateDefaultSAPEntry == null) {
+			Map<Locale, String> titleMap = HashMapBuilder.put(
+				LocaleUtil.getDefault(),
+				_sapConfiguration.systemTemplateDefaultSAPEntryDescription()
+			).build();
+
+			systemTemplateDefaultSAPEntry = addSAPEntry(
+				guestUserId,
+				_sapConfiguration.
+					systemTemplateDefaultSAPEntryServiceSignatures(),
+				false, true,
+				_sapConfiguration.systemTemplateDefaultSAPEntryName(), titleMap,
+				new ServiceContext());
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				systemTemplateDefaultSAPEntry.getCompanyId(),
+				SAPEntry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(systemTemplateDefaultSAPEntry.getSapEntryId()),
 				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
 		}
 	}

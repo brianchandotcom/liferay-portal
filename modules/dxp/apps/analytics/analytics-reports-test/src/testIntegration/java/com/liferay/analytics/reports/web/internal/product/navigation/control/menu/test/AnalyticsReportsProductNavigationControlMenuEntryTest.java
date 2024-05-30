@@ -242,8 +242,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 			new InfoItemReference(MockObject.class.getName(), 0));
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		mockHttpServletRequest.setParameter("p_l_id", "123");
+		mockHttpServletRequest.setParameter(
+			"p_l_id", RandomTestUtil.randomString());
 
 		return mockHttpServletRequest;
 	}

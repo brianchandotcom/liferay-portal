@@ -109,6 +109,12 @@ public class NoticeableThreadPoolExecutor
 			}) {
 
 			@Override
+			public void execute(Runnable runnable) {
+				super.execute(
+					new DispatchRunnable(_workerThreadPoolExecutor, runnable));
+			}
+
+			@Override
 			protected void terminated() {
 				if (terminationCounter.decrementAndGet() == 0) {
 					_terminationDefaultNoticeableFuture.run();
@@ -144,8 +150,7 @@ public class NoticeableThreadPoolExecutor
 			throw new NullPointerException("Runnable is null");
 		}
 
-		_dispatcherThreadPoolExecutor.execute(
-			new DispatchRunnable(_workerThreadPoolExecutor, runnable));
+		_dispatcherThreadPoolExecutor.execute(runnable);
 	}
 
 	public int getActiveCount() {

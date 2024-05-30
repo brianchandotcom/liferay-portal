@@ -47,7 +47,7 @@ public class XMLUpgradeDeclarativeServicesCheck extends BaseFileCheck {
 		String dependencyInjector = attribute.getValue();
 
 		if (!Objects.equals(dependencyInjector, "ds")) {
-			content = content.replaceFirst(
+			return content.replaceFirst(
 				"dependency-injector\\s*=\\s*\".*?\"",
 				"dependency-injector=\"ds\"");
 		}

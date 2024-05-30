@@ -883,6 +883,47 @@ public class CommerceOrderTest {
 	}
 
 	@Test
+	public void testGetPendingCommerceOrdersExceedingMaxAllowedBooleanClauses()
+		throws Exception {
+
+		List<AccountEntry> accountEntries = new ArrayList<>();
+
+		long accountEntryIdsCount = _MAX_CLAUSES_COUNT + 1;
+
+		for (int i = 0; i < accountEntryIdsCount; i++) {
+			AccountEntry accountEntry =
+				CommerceAccountTestUtil.addBusinessAccountEntry(
+					_user.getUserId(), "Test Business Account" + i, null, null,
+					new long[] {_user.getUserId()}, null, _serviceContext);
+
+			accountEntries.add(accountEntry);
+		}
+
+		long commerceChannelGroupId = _commerceChannel.getGroupId();
+
+		AccountEntry userAccountEntry = accountEntries.get(0);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), commerceChannelGroupId,
+				userAccountEntry.getAccountEntryId(),
+				_commerceCurrency.getCommerceCurrencyId(), 0);
+
+		List<CommerceOrder> commerceOrders = _getUserOrders(
+			commerceChannelGroupId, false);
+
+		CommerceOrder actualCommerceOrder = commerceOrders.get(0);
+
+		Assert.assertEquals(commerceOrder, actualCommerceOrder);
+
+		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
+
+		for (AccountEntry accountEntry : accountEntries) {
+			_accountEntryLocalService.deleteAccountEntry(accountEntry);
+		}
+	}
+
+	@Test
 	public void testGetPlacedCommerceOrder() throws Exception {
 		frutillaRule.scenario(
 			"Try to get a placed order based on the userId, and directly " +
@@ -1115,6 +1156,8 @@ public class CommerceOrderTest {
 			StringPool.BLANK,
 			new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, negate);
 	}
+
+	private static final Integer _MAX_CLAUSES_COUNT = 1024;
 
 	@Inject
 	private static ServiceComponentRuntime _serviceComponentRuntime;

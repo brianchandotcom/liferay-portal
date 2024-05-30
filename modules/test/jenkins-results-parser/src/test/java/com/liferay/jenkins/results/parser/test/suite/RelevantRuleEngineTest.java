@@ -5,6 +5,10 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
+import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
+import com.liferay.jenkins.results.parser.test.batch.TestBatch;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -19,6 +23,51 @@ import org.junit.Test;
  * @author Kenji Heigel
  */
 public class RelevantRuleEngineTest {
+
+	@Test
+	public void testModifiedFileForPlaywrightBatch() {
+		RelevantRuleEngine relevantRuleEngine = new RelevantRuleEngine(
+			_baseDir);
+
+		List<RelevantRule> relevantRules =
+			relevantRuleEngine.getMatchingRelevantRules(
+				Collections.singletonList(
+					new File(_baseDir, "modules/module-1/text_file_1.txt")));
+
+		List<String> expectedRelevantRuleNames = Arrays.asList(
+			"modules-integration-0-rule", "playwright-1-rule");
+
+		List<String> actualRelevantRuleNames = new ArrayList<>();
+
+		for (RelevantRule relevantRule : relevantRules) {
+			actualRelevantRuleNames.add(relevantRule.getName());
+		}
+
+		Collections.sort(actualRelevantRuleNames);
+		Collections.sort(expectedRelevantRuleNames);
+
+		Assert.assertEquals(expectedRelevantRuleNames, actualRelevantRuleNames);
+
+		PlaywrightTestBatch playwrightTestBatch = null;
+
+		relevantRuleLoop:
+		for (RelevantRule relevantRule : relevantRules) {
+			for (TestBatch testBatch : relevantRule.getTestBatches()) {
+				if (testBatch instanceof PlaywrightTestBatch) {
+					playwrightTestBatch = (PlaywrightTestBatch)testBatch;
+				}
+
+				break relevantRuleLoop;
+			}
+		}
+
+		PlaywrightTestSelector playwrightTestSelector =
+			playwrightTestBatch.getTestSelector();
+
+		Assert.assertEquals(
+			Collections.singleton("module-1-playwright-project"),
+			playwrightTestSelector.getPlaywrightProjectNames());
+	}
 
 	@Test
 	public void testModifiedFileInBaseDir() {
@@ -54,7 +103,8 @@ public class RelevantRuleEngineTest {
 					new File(_baseDir, "text_file_0.txt")));
 
 		List<String> expectedRelevantRuleNames = Arrays.asList(
-			"functional-smoke-0-rule", "modules-integration-0-rule");
+			"functional-smoke-0-rule", "modules-integration-0-rule",
+			"playwright-1-rule");
 
 		List<String> actualRelevantRuleNames = new ArrayList<>();
 

@@ -75,9 +75,48 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			}
 		}
 
-		long start = System.currentTimeMillis();
-
 		addDefaultProjectJobProperty(batchName);
+
+		setTestClasses();
+	}
+
+	protected List<JobProperty> getRelevantPlaywrightJobProperties() {
+		Set<JobProperty> playwrightJobProperties = new HashSet<>();
+
+		for (File modifiedFile :
+				portalGitWorkingDirectory.getModifiedFilesList(false)) {
+
+			List<JobProperty> playwrightTestProjectJobProperties =
+				getJobProperties(
+					modifiedFile, PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME,
+					JobProperty.Type.MODULE_TEST_DIR, null);
+
+			for (JobProperty playwrightTestProjectJobProperty :
+					playwrightTestProjectJobProperties) {
+
+				if (playwrightTestProjectJobProperty.getValue() != null) {
+					String projectNames =
+						playwrightTestProjectJobProperty.getValue();
+
+					_addProjectNames(projectNames);
+
+					playwrightJobProperties.add(
+						playwrightTestProjectJobProperty);
+				}
+			}
+		}
+
+		playwrightJobProperties.removeAll(Collections.singleton(null));
+
+		return new ArrayList<>(playwrightJobProperties);
+	}
+
+	protected List<JSONObject> getSpecJSONObjects() {
+		return _specJSONObjects;
+	}
+
+	protected void setTestClasses() {
+		long start = System.currentTimeMillis();
 
 		_loadPlaywrightJSONObjects();
 
@@ -128,41 +167,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				String.valueOf(testClasses.size()),
 				" Playwright test classes in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
-	}
-
-	protected List<JobProperty> getRelevantPlaywrightJobProperties() {
-		Set<JobProperty> playwrightJobProperties = new HashSet<>();
-
-		for (File modifiedFile :
-				portalGitWorkingDirectory.getModifiedFilesList(false)) {
-
-			List<JobProperty> playwrightTestProjectJobProperties =
-				getJobProperties(
-					modifiedFile, PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME,
-					JobProperty.Type.MODULE_TEST_DIR, null);
-
-			for (JobProperty playwrightTestProjectJobProperty :
-					playwrightTestProjectJobProperties) {
-
-				if (playwrightTestProjectJobProperty.getValue() != null) {
-					String projectNames =
-						playwrightTestProjectJobProperty.getValue();
-
-					_addProjectNames(projectNames);
-
-					playwrightJobProperties.add(
-						playwrightTestProjectJobProperty);
-				}
-			}
-		}
-
-		playwrightJobProperties.removeAll(Collections.singleton(null));
-
-		return new ArrayList<>(playwrightJobProperties);
-	}
-
-	protected List<JSONObject> getSpecJSONObjects() {
-		return _specJSONObjects;
 	}
 
 	protected static final String PLAYWRIGHT_TEST_PROJECT_PROPERTY_NAME =

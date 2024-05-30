@@ -5,8 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 
 import java.io.IOException;
@@ -31,16 +29,12 @@ public class UpgradeBNDDeclarativeServicesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String definitionValue = BNDSourceUtil.getDefinitionValue(
-			content, "-dsannotations-options");
+		if (!Objects.equals(
+				BNDSourceUtil.getDefinitionValue(
+					content, "-dsannotations-options"),
+				"inherit")) {
 
-		if (definitionValue == null) {
-			content = StringBundler.concat(
-				content, StringPool.NEW_LINE,
-				"-dsannotations-options: inherit");
-		}
-		else if (!Objects.equals(definitionValue, "inherit")) {
-			content = BNDSourceUtil.updateInstruction(
+			return BNDSourceUtil.updateInstruction(
 				content, "-dsannotations-options", "inherit");
 		}
 

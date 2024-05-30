@@ -85,6 +85,88 @@ public class TestrayBuildAutofill implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseAmountSupplier;
 
+	@Schema
+	public Long getRunId1() {
+		if (_runId1Supplier != null) {
+			runId1 = _runId1Supplier.get();
+
+			_runId1Supplier = null;
+		}
+
+		return runId1;
+	}
+
+	public void setRunId1(Long runId1) {
+		this.runId1 = runId1;
+
+		_runId1Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setRunId1(
+		UnsafeSupplier<Long, Exception> runId1UnsafeSupplier) {
+
+		_runId1Supplier = () -> {
+			try {
+				return runId1UnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long runId1;
+
+	@JsonIgnore
+	private Supplier<Long> _runId1Supplier;
+
+	@Schema
+	public Long getRunId2() {
+		if (_runId2Supplier != null) {
+			runId2 = _runId2Supplier.get();
+
+			_runId2Supplier = null;
+		}
+
+		return runId2;
+	}
+
+	public void setRunId2(Long runId2) {
+		this.runId2 = runId2;
+
+		_runId2Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setRunId2(
+		UnsafeSupplier<Long, Exception> runId2UnsafeSupplier) {
+
+		_runId2Supplier = () -> {
+			try {
+				return runId2UnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long runId2;
+
+	@JsonIgnore
+	private Supplier<Long> _runId2Supplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -123,6 +205,30 @@ public class TestrayBuildAutofill implements Serializable {
 			sb.append("\"caseAmount\": ");
 
 			sb.append(caseAmount);
+		}
+
+		Long runId1 = getRunId1();
+
+		if (runId1 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"runId1\": ");
+
+			sb.append(runId1);
+		}
+
+		Long runId2 = getRunId2();
+
+		if (runId2 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"runId2\": ");
+
+			sb.append(runId2);
 		}
 
 		sb.append("}");

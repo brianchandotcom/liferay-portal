@@ -45,6 +45,7 @@ import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 import './ProvideAppBuildPage.scss';
 import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 import {Liferay} from '../../../../../../liferay/liferay';
+import {getRandomID} from '../../../../../../utils/string';
 import ResourceRequirements from './ResourceRequirements';
 
 type ProvideAppBuildPageProps = {
@@ -91,7 +92,7 @@ const UploadAppPackagesComponent = ({
 			error: false,
 			file,
 			fileName: file.name,
-			id: crypto.randomUUID(),
+			id: getRandomID(),
 			preview: URL.createObjectURL(file),
 			progress: 0,
 			readableSize: filesize(file.size),
@@ -329,8 +330,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -422,8 +422,7 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -809,8 +808,7 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

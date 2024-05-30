@@ -8,6 +8,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -28,6 +29,7 @@ export default function AddFragmentModal({
 	const [type, setType] = useState(fragmentTypes[0]);
 	const [nameError, setNameError] = useState(null);
 	const [selectedFieldTypes, setSelectedFieldTypes] = useState([]);
+	const selectFragmentText = useId();
 
 	const [visible, setVisible] = useState(true);
 	const {observer, onClose} = useModal({
@@ -46,11 +48,18 @@ export default function AddFragmentModal({
 				title={Liferay.Language.get('add-fragment')}
 			>
 				<MultiStepFormModalStep>
-					<p className="font-weight-semi-bold mb-4 text-secondary">
+					<p
+						className="font-weight-semi-bold mb-4 text-secondary"
+						id={selectFragmentText}
+					>
 						{Liferay.Language.get('select-fragment-type')}
 					</p>
 
-					<div className="d-flex">
+					<div
+						aria-labelledby={selectFragmentText}
+						className="d-flex fragment-type-cards"
+						role="group"
+					>
 						{fragmentTypes.map((fragmentType) => (
 							<FragmentTypeCard
 								active={type.key === fragmentType.key}

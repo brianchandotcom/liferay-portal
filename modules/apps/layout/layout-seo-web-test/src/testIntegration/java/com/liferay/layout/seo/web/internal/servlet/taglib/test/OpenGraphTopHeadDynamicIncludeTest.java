@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -289,6 +290,56 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertMetaTag(
 			document, "og:description", "description@#$%^&*()~`1234567890");
 		_assertMetaTag(document, "og:title", "@#$%^&*()~`1234567890title");
+	}
+
+	@Test
+	public void testIncludeCustomTitleAndDescriptionForArabicTranslation()
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(
+				LocaleUtil.fromLanguageId("ar_SA"), "http://example.com"),
+			true,
+			HashMapBuilder.put(
+				LocaleUtil.US, "Arabic description"
+			).put(
+				LocaleUtil.fromLanguageId("ar_SA"), "الوصف العربي"
+			).build(),
+			Collections.emptyMap(), 0, true,
+			HashMapBuilder.put(
+				LocaleUtil.US, "Arabic title"
+			).put(
+				LocaleUtil.fromLanguageId("ar_SA"), "العنوان بالعربية"
+			).build(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLanguageId("ar_SA");
+		themeDisplay.setLocale(LocaleUtil.fromLanguageId("ar_SA"));
+
+		mockHttpServletResponse.setCharacterEncoding("UTF-8");
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				httpServletRequest, mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true, true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:description", "الوصف العربي");
+		_assertMetaTag(document, "og:title", "العنوان بالعربية");
 	}
 
 	@Test

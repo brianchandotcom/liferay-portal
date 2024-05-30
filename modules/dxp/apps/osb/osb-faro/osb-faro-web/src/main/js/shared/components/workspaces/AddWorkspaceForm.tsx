@@ -1,6 +1,6 @@
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import Constants from 'shared/util/constants';
+import Constants, {FaroEnv} from 'shared/util/constants';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
@@ -31,17 +31,20 @@ import {
 
 const {
 	faroURL,
-	projectLocations: {AS1, DEV, EU2, EU3, SA, UAT, US}
+	projectLocations: {AS1, EU2, EU3, SA, STG, US}
 } = Constants;
 
 const DEFAULT_TIME_ZONE = 'UTC';
 
 const getProjectLocations = (): {label: string; value: string}[] => {
 	switch (FARO_ENV) {
-		case 'dev':
-			return [{label: Liferay.Language.get('location-dev'), value: DEV}];
-		case 'uat':
-			return [{label: Liferay.Language.get('location-uat'), value: UAT}];
+		case FaroEnv.Staging:
+			return [
+				{
+					label: Liferay.Language.get('location-staging'),
+					value: STG
+				}
+			];
 		default:
 			return [
 				{label: Liferay.Language.get('location-as1'), value: AS1},
@@ -50,17 +53,6 @@ const getProjectLocations = (): {label: string; value: string}[] => {
 				{label: Liferay.Language.get('location-sa'), value: SA},
 				{label: Liferay.Language.get('location-us'), value: US}
 			];
-	}
-};
-
-const getDefaultServerLocation = (): string => {
-	switch (FARO_ENV) {
-		case 'dev':
-			return DEV;
-		case 'uat':
-			return UAT;
-		default:
-			return US;
 	}
 };
 
@@ -175,9 +167,7 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 						ownerEmailAddress:
 							project?.ownerEmailAddress ||
 							currentUser.emailAddress,
-						serverLocation:
-							project?.serverLocation ||
-							getDefaultServerLocation(),
+						serverLocation: project?.serverLocation || US,
 						timeZoneId:
 							project?.getIn(['timeZone', 'timeZoneId']) ||
 							DEFAULT_TIME_ZONE

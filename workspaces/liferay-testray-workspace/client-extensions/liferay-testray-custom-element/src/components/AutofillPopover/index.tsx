@@ -10,6 +10,7 @@ import AutofillBuilds from './AutofillBuilds';
 
 type AutofillBuildsPopoverProps = {
 	expanded?: boolean;
+	setType: (state: 'autofill' | 'compareRuns') => void;
 	setVisible: (state: boolean) => void;
 	triggedRef: React.RefObject<HTMLDivElement>;
 	visible: boolean;
@@ -17,6 +18,7 @@ type AutofillBuildsPopoverProps = {
 
 const AutofillBuildsPopover: React.FC<AutofillBuildsPopoverProps> = ({
 	expanded = false,
+	setType,
 	setVisible,
 	triggedRef,
 	visible,
@@ -51,7 +53,7 @@ const AutofillBuildsPopover: React.FC<AutofillBuildsPopoverProps> = ({
 			onBlur={() => setVisible(false)}
 			ref={ref}
 		>
-			<AutofillBuilds setVisible={setVisible} />
+			<AutofillBuilds setType={setType} setVisible={setVisible} />
 		</div>
 	);
 };

@@ -205,4 +205,25 @@ describe('Translation', () => {
 
 		expect(indicator).toBe('translated');
 	});
+
+	it('allows navigating through languages and selecting them with keyboard', async () => {
+		const {getByRole, getByText} = renderTranslation({state: defaultState});
+
+		const button = getByRole('combobox');
+		userEvent.click(button);
+
+		const option = getByText('language-3').parentElement;
+
+		option.focus();
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'Enter',
+			})
+		);
+
+		expect(updateLanguageId).toHaveBeenLastCalledWith({
+			languageId: 'language_3',
+		});
+	});
 });

@@ -20,7 +20,7 @@ definition {
 	}
 
 	tearDown {
-		DBPartitionMigrationValidatorTool.clean(hardClean = "true");
+		DBPartitionMigrationValidator.clean(hardClean = "true");
 	}
 
 	@priority = 4
@@ -48,42 +48,42 @@ definition {
 		task ("When run the migration tool to export the partition, the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidatorTool.executeExtraction(
+			DBPartitionMigrationValidator.executeExtraction(
 				databaseSchemaName = ${sourceSchemaName},
 				databaseSchemaPassword = "");
 
-			var sourceFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+			var sourceFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
-			DBPartitionMigrationValidatorTool.clean();
+			DBPartitionMigrationValidator.clean();
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidatorTool.executeExtraction(
+			DBPartitionMigrationValidator.executeExtraction(
 				databaseSchemaName = "lportal",
 				databaseSchemaPassword = "");
 
-			var targetFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+			var targetFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
-			DBPartitionMigrationValidatorTool.clean();
+			DBPartitionMigrationValidator.clean();
 		}
 
 		task ("When run the migration tool to validate previous exports, then the tool should run with errors") {
-			DBPartitionMigrationValidatorTool.executeValidation(
+			DBPartitionMigrationValidator.executeValidation(
 				ignoreErrors = "true",
 				sourceFilePath = ${sourceFilePath},
 				targetFilePath = ${targetFilePath});
 		}
 
 		task ("Then the tool stops immediately with some ERROR and WARN console messages") {
-			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[ERROR] Company ID ${newCompanyId} already exists in the target database");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "[ERROR] Company ID ${newCompanyId} already exists in the target database");
 
-			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[WARN] Company name www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Company name www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
 
-			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[WARN] Virtual host www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Virtual host www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
 
-			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "[WARN] Web ID www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Web ID www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
 
-			DBPartitionMigrationValidatorTool.clean();
+			DBPartitionMigrationValidator.clean();
 		}
 	}
 
@@ -110,33 +110,33 @@ definition {
 
 			Portlet.shutdownServer();
 
-			DBPartitionMigrationValidatorTool.generateTargetDatabase();
+			DBPartitionMigrationValidator.generateTargetDatabase();
 		}
 
 		task ("When run the migration tool to export the source database, then the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidatorTool.executeExtraction(
+			DBPartitionMigrationValidator.executeExtraction(
 				databaseSchemaName = ${sourceSchemaName},
 				databaseSchemaPassword = "");
 
-			var sourceFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+			var sourceFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
-			DBPartitionMigrationValidatorTool.clean();
+			DBPartitionMigrationValidator.clean();
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidatorTool.executeExtraction(
+			DBPartitionMigrationValidator.executeExtraction(
 				databaseSchemaName = "lportal_target",
 				databaseSchemaPassword = "");
 
-			var targetFilePath = DBPartitionMigrationValidatorTool.getGeneratedFile();
+			var targetFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
-			DBPartitionMigrationValidatorTool.clean();
+			DBPartitionMigrationValidator.clean();
 		}
 
 		task ("When run the migration tool to validate previous exports, then the tool should run successfully") {
-			DBPartitionMigrationValidatorTool.executeValidation(
+			DBPartitionMigrationValidator.executeValidation(
 				ignoreErrors = "false",
 				sourceFilePath = ${sourceFilePath},
 				targetFilePath = ${targetFilePath});
@@ -163,14 +163,14 @@ definition {
 		}
 
 		task ("When the database is set from non partitioned environment with multiple companies defined") {
-			DBPartitionMigrationValidatorTool.executeExtraction(
+			DBPartitionMigrationValidator.executeExtraction(
 				databaseSchemaName = "lportal",
 				databaseSchemaPassword = "",
 				ignoreErrors = "true");
 		}
 
 		task ("Then the tool stops immediately with a console message as: Database schema has to have a single company or database partitioning must be enabled") {
-			DBPartitionMigrationValidatorTool.validateOutput(outputMessage = "UnsupportedOperationException: Database schema has to have a single company or database partitioning must be enabled");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "UnsupportedOperationException: Database schema has to have a single company or database partitioning must be enabled");
 		}
 	}
 

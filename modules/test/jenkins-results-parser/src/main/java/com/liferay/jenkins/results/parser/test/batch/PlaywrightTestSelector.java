@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.batch;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -24,6 +25,12 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 		super(properties, batchName, relevantRuleName, testSuiteName);
 
 		validate();
+
+		String playwrightProjectNamesValue = getProperty(
+			PLAYWRIGHT_TEST_PROJECT);
+
+		Collections.addAll(
+			_playwrightProjectNames, playwrightProjectNamesValue.split(","));
 	}
 
 	public Set<String> getPlaywrightProjectNames() {

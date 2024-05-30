@@ -21,7 +21,7 @@ export const test = mergeTests(
 	}),
 	loginTest(),
 	dataSetManagerSetupTest,
-	paginationPageTest,
+	paginationPageTest
 );
 
 let dataSetERC: string;
@@ -185,6 +185,18 @@ test.describe('Data Set Manager Pagination', () => {
 			await paginationPage.listOfItemsPerPageTextarea.blur();
 
 			await expect(paginationPage.fieldItemsLimitError).toBeVisible();
+
+			await expect(paginationPage.saveButton).toBeDisabled();
+		});
+
+		await test.step('Check list items per page cannot have more than 25 elemtns', async () => {
+			await paginationPage.listOfItemsPerPageTextarea.clear();
+			await paginationPage.listOfItemsPerPageTextarea.fill(
+				'1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26'
+			);
+			await paginationPage.listOfItemsPerPageTextarea.blur();
+
+			await expect(paginationPage.fieldItemsNumberError).toBeVisible();
 
 			await expect(paginationPage.saveButton).toBeDisabled();
 		});

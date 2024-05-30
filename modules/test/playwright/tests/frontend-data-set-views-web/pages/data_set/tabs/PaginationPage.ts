@@ -15,6 +15,7 @@ export class PaginationPage {
 	readonly defaultItemsPerPageInput: Locator;
 	readonly defaultValueError: Locator;
 	readonly fieldItemsLimitError: Locator;
+	readonly fieldItemsNumberError: Locator;
 	readonly fieldRequiredError: Locator;
 	readonly header: Locator;
 	readonly page: Page;
@@ -29,6 +30,9 @@ export class PaginationPage {
 		);
 		this.defaultValueError = page.getByText(
 			'The default value must exist in the list of items per page.'
+		);
+		this.fieldItemsNumberError = page.getByText(
+			'This field contains more than 25 elements.'
 		);
 		this.fieldItemsLimitError = page.getByText(
 			'This field contains an invalid number. Only positive numbers between 1 and 1000 are allowed.'

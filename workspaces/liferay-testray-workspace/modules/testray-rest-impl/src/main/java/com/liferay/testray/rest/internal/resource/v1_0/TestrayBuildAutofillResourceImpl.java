@@ -9,7 +9,10 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
@@ -88,6 +91,12 @@ public class TestrayBuildAutofillResourceImpl
 
 		testrayBuildAutofill.setCaseAmount(values.size());
 
+		JSONObject runsJSONObject = _getRunsIdsJSONObject(
+			testrayBuildId1, testrayBuildId2);
+
+		testrayBuildAutofill.setRunId1(runsJSONObject.getLong("runId1"));
+		testrayBuildAutofill.setRunId2(runsJSONObject.getLong("runId2"));
+
 		return testrayBuildAutofill;
 	}
 
@@ -130,6 +139,59 @@ public class TestrayBuildAutofillResourceImpl
 				map.get("c_caseResultId_" + targetCaseResultIndex)),
 			values, _serviceContextHelper.getServiceContext());
 	}
+
+	private JSONObject _getRunsIdsJSONObject(
+			Long testrayBuildId1, Long testrayBuildId2)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("select (select cr.r_runToCaseResult_c_runId from ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr where ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ group by ");
+		sb.append("cr.r_runToCaseResult_c_runId order by ");
+		sb.append("count(cr.c_caseResultId_) desc limit 1) as runId from ");
+		sb.append("O_[%COMPANY_ID%]_Build b where b.c_buildId_ in (?, ?)");
+
+		List<Object> params = new ArrayList<>();
+
+		params.add(testrayBuildId1);
+		params.add(testrayBuildId2);
+
+		String sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
+
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			sql, params);
+
+		if (ListUtil.isEmpty(values) || (values.size() < 2)) {
+			throw new Exception("Unable to find more than one run");
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put(
+			"runId1",
+			values.get(
+				0
+			).get(
+				"runId"
+			)
+		).put(
+			"runId2",
+			values.get(
+				1
+			).get(
+				"runId"
+			)
+		);
+
+		return jsonObject;
+	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

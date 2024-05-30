@@ -6,7 +6,7 @@ import React from 'react';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
 import {DisplayType} from 'shared/types';
-import {PROD_MODE} from 'shared/util/constants';
+import {ENABLE_ADD_TRIAL_WORKSPACE, FaroEnv} from 'shared/util/constants';
 import {Routes, toRoute} from 'shared/util/router';
 
 interface IEmptyStateProps extends React.HTMLAttributes<HTMLElement> {
@@ -21,7 +21,11 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 	...otherProps
 }) => (
 	<div className={getCN('empty-container row', className)} {...otherProps}>
-		<div className={PROD_MODE ? 'col-xl-12' : 'col-xl-6'}>
+		<div
+			className={
+				FARO_ENV === FaroEnv.Production ? 'col-xl-12' : 'col-xl-6'
+			}
+		>
 			<CardEmpty
 				buttonProps={{
 					displayType: 'primary',
@@ -38,7 +42,7 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 			/>
 		</div>
 
-		{!PROD_MODE && (
+		{ENABLE_ADD_TRIAL_WORKSPACE && (
 			<div className='col-xl-6'>
 				<CardEmpty
 					buttonProps={{

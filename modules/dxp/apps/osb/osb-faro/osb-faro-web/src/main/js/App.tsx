@@ -16,6 +16,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayLinkContext} from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {close, modalTypes, open} from 'shared/actions/modals';
+import {ENABLE_ADD_TRIAL_WORKSPACE} from 'shared/util/constants';
 import {
 	Link,
 	matchPath,
@@ -25,7 +26,6 @@ import {
 	useLocation
 } from 'react-router-dom';
 import {OnboardingContext} from 'shared/context/onboarding';
-import {PROD_MODE, spritemap} from 'shared/util/constants';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {saveState} from 'shared/store/local-storage';
@@ -216,7 +216,7 @@ const App = () => {
 																	}
 																/>
 
-																{!PROD_MODE && (
+																{ENABLE_ADD_TRIAL_WORKSPACE && (
 																	<BundleRouter
 																		data={
 																			AddWorkspace

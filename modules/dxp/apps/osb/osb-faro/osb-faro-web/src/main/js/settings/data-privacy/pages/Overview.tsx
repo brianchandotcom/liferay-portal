@@ -14,6 +14,7 @@ import {
 } from 'shared/util/date';
 import {
 	DATA_RETENTION_PERIOD_KEY,
+	FaroEnv,
 	ONE_DAY,
 	ONE_MONTH,
 	SEVEN_MONTHS,
@@ -29,7 +30,7 @@ import {useMutation, useQuery} from '@apollo/react-hooks';
 
 let RETENTION_OPTIONS = [SEVEN_MONTHS, THIRTEEN_MONTHS];
 
-if (FARO_ENV === 'uat') {
+if (FARO_ENV === FaroEnv.Local || FARO_ENV === FaroEnv.Staging) {
 	RETENTION_OPTIONS = [ONE_DAY, TWO_DAYS, SEVEN_MONTHS, THIRTEEN_MONTHS];
 }
 

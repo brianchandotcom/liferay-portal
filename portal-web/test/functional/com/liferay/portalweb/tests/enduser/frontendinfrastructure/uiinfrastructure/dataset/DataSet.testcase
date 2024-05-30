@@ -59,80 +59,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-188818 Test to check and cover bug in pagination administration page"
-	@priority = 3
-	test AssertNewPaginationValues {
-		task ("Given the creation of a new data set") {
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/entries");
-
-			Refresh();
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
-		}
-
-		task ("And adding a dataset view") {
-			DataSetAdmin.createDataSetView(
-				description = "Description",
-				key_name = "View Visualization Modes Test");
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Data Set Test",
-				key_viewName = "View Visualization Modes Test");
-		}
-
-		task ("And the user accesses the Details tab, edit the description to "description 2" and save.") {
-			DataSetAdmin.goToTab(tabName = "Details");
-
-			Type(
-				labelTitle = "Description",
-				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "Description 2");
-
-			Button.clickSave();
-		}
-
-		task ("And go to the Pagination tab, edit the value of the “items per page list” to (4, 8, 20, 40, 50), and the “default items per page”, and save.") {
-			DataSetAdmin.goToTab(tabName = "Pagination");
-
-			Type(
-				key_label = "List of Items per Page",
-				locator1 = "DataSet#EDIT_DATA_SET_ITEMS",
-				value1 = "4, 8, 20, 40, 50");
-
-			Type(
-				key_type = "Default Items per Page",
-				locator1 = "DataSet#EDIT_DATA_SET_VIEW",
-				value1 = 4);
-
-			Button.clickSave();
-		}
-
-		task ("And the user accesses the Details tab, edit the description to "description 23" and save.") {
-			DataSetAdmin.goToTab(tabName = "Details");
-
-			Type(
-				labelTitle = "Description",
-				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "Description 23");
-
-			Button.clickSave();
-		}
-
-		task ("Then go to the Pagination and Details tab are in accordance with your change") {
-			DataSetAdmin.goToTab(tabName = "Pagination");
-
-			AssertElementPresent(
-				key_label = "4, 8, 20, 40, 50",
-				locator1 = "TextArea#ANY_LABELED");
-		}
-	}
-
 	@description = "LPS-181546 Confirm that the data set information is created and displayed correctly"
 	@priority = 5
 	test AssertTheInformationsInDataSet {
@@ -888,37 +814,6 @@ definition {
 			AssertElementPresent(
 				key_fieldName = "Select a default value for your filter",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
-		}
-	}
-
-	@description = "Blocked by LPS-187299. Confirm that the user can change the pagination on the data set admin page"
-	@ignore = "true"
-	@priority = 4
-	test CanChangePaginationInAdminPage {
-		task ("Given create 6 data sets") {
-			DataSetAdmin.createDataSet(
-				key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4,Test Data Set 5,Test Data Set 6",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("When changing the page to 4 entries") {
-			DataSetAdmin.changePagination(itemsPerPage = "4 Items");
-		}
-
-		task ("Then confirm that only 4 entries are displayed") {
-			DataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4");
-
-			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
-		}
-
-		task ("When to switch to page 2") {
-			Click(locator1 = "Pagination#NEXT_LINK");
-		}
-
-		task ("Then 2 entries are displayed") {
-			DataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Data Set 5,Test Data Set 6");
-
-			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
 	}
 

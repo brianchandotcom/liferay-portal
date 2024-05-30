@@ -289,7 +289,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			return customNameJSONObject.getString(defaultLanguageId);
 		}
 
-		if (StringUtil.equals(type, "url")) {
+		if (StringUtil.equals(type, "navigationMenu") ||
+			StringUtil.equals(type, "url")) {
+
 			String preferredLanguageId =
 				contextAcceptLanguage.getPreferredLanguageId();
 

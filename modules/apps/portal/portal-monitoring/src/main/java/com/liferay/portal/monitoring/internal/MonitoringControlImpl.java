@@ -38,7 +38,12 @@ public class MonitoringControlImpl implements MonitoringControl {
 
 	@Override
 	public void setLevel(String namespace, Level level) {
-		_levels.put(namespace, level);
+		if (level == Level.OFF) {
+			_levels.remove(namespace);
+		}
+		else {
+			_levels.put(namespace, level);
+		}
 	}
 
 	private final Map<String, Level> _levels = new ConcurrentHashMap<>();

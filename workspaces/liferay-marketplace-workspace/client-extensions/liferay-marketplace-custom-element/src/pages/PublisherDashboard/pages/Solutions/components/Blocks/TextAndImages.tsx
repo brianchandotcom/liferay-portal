@@ -14,6 +14,7 @@ import {
 import Form from '../../../../../../components/MarketplaceForm';
 import {TextImageBlock} from '../../../../../../context/SolutionContext';
 import i18n from '../../../../../../i18n';
+import {getRandomID} from '../../../../../../utils/string';
 import {swapImageElements} from '../../../../constants';
 import {ACCEPT_FILE_TYPES} from '../../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../../constants';
@@ -134,7 +135,7 @@ const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 								error: false,
 								file,
 								fileName: file.name,
-								id: crypto.randomUUID(),
+								id: getRandomID(),
 								index,
 								preview: URL.createObjectURL(file),
 								progress: 0,

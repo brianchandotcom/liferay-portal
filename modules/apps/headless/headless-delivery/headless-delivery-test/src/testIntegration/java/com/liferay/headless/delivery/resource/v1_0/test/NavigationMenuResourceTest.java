@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -34,11 +35,14 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -138,6 +142,8 @@ public class NavigationMenuResourceTest
 			"structured-contents/" + journalArticle.getResourcePrimKey(),
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			"structuredContent", false);
+
+		_testGetNavigationMenuWithSubmenu();
 	}
 
 	@Override
@@ -213,6 +219,19 @@ public class NavigationMenuResourceTest
 		return new String[] {"name"};
 	}
 
+	private NavigationMenuResource _buildNavigationMenuResource() {
+		NavigationMenuResource.Builder builder =
+			NavigationMenuResource.builder();
+
+		return builder.authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).header(
+			"X-Accept-All-Languages", "true"
+		).build();
+	}
+
 	private void _testGetNavigationMenu(
 			long classPK, long classTypeId, Class<?> clazz, String contentURL,
 			String displayPageType, String title, String type,
@@ -282,6 +301,56 @@ public class NavigationMenuResourceTest
 			Assert.assertEquals(title, navigationMenuItem.getName());
 			Assert.assertFalse(navigationMenuItem.getUseCustomName());
 		}
+	}
+
+	private void _testGetNavigationMenuWithSubmenu() throws Exception {
+		NavigationMenu postNavigationMenu =
+			testGetNavigationMenu_addNavigationMenu();
+
+		String nameEnUS = RandomTestUtil.randomString();
+		String nameEsES = RandomTestUtil.randomString();
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+				postNavigationMenu.getId(), 0,
+				SiteNavigationMenuItemTypeConstants.NODE,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"defaultLanguageId", "en_US"
+				).put(
+					"name_en_US", nameEnUS
+				).put(
+					"name_es_ES", nameEsES
+				).buildString(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		NavigationMenuResource navigationMenuResource =
+			_buildNavigationMenuResource();
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu.getId());
+
+		assertValid(getNavigationMenu);
+
+		NavigationMenuItem navigationMenuItem =
+			getNavigationMenu.getNavigationMenuItems()[0];
+
+		Assert.assertEquals(
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals(nameEnUS, navigationMenuItem.getName());
+
+		Map<String, String> nameI18nMap = navigationMenuItem.getName_i18n();
+
+		Assert.assertEquals(nameEnUS, nameI18nMap.get("en-US"));
+		Assert.assertEquals(nameEsES, nameI18nMap.get("es-ES"));
+
+		Assert.assertEquals("navigationMenu", navigationMenuItem.getType());
+		Assert.assertFalse(navigationMenuItem.getUseCustomName());
 	}
 
 	private void _testGetSiteNavigationMenusPage(

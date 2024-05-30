@@ -12,7 +12,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -331,6 +333,58 @@ public class NoticeableThreadPoolExecutorTest {
 		noticeableThreadPoolExecutor.execute(runnable);
 
 		Assert.assertSame(runnable, rejectedTasks.take());
+	}
+
+	@Test
+	public void testRejectedWithDiscardOldestStylePolicy()
+		throws InterruptedException {
+
+		List<Runnable> rejectedRunnables = new ArrayList<>();
+
+		NoticeableThreadPoolExecutor noticeableThreadPoolExecutor =
+			new NoticeableThreadPoolExecutor(
+				1, 1, 1, TimeUnit.NANOSECONDS, new SynchronousQueue<>(),
+				new MethodNameThreadFactory(),
+				(runnable, threadPoolExecutor) -> {
+					rejectedRunnables.add(runnable);
+
+					if (rejectedRunnables.size() > 1) {
+						return;
+					}
+
+					Queue<Runnable> queue = threadPoolExecutor.getQueue();
+
+					queue.poll();
+
+					threadPoolExecutor.execute(runnable);
+				},
+				new ThreadPoolHandlerAdapter());
+
+		Runnable slowRunnable = () -> {
+			try {
+				Thread.sleep(Long.MAX_VALUE);
+			}
+			catch (InterruptedException interruptedException) {
+			}
+		};
+
+		noticeableThreadPoolExecutor.execute(slowRunnable);
+
+		noticeableThreadPoolExecutor.execute(slowRunnable);
+
+		Assert.assertEquals(
+			rejectedRunnables.toString(), 2, rejectedRunnables.size());
+
+		Runnable runnable = rejectedRunnables.get(0);
+
+		Assert.assertSame(slowRunnable, rejectedRunnables.get(0));
+		Assert.assertSame(slowRunnable, rejectedRunnables.get(1));
+
+		noticeableThreadPoolExecutor.shutdownNow();
+
+		Assert.assertTrue(
+			noticeableThreadPoolExecutor.awaitTermination(
+				10, TimeUnit.MINUTES));
 	}
 
 	@Test

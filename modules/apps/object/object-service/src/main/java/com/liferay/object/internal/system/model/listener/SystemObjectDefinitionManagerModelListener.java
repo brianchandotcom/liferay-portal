@@ -295,6 +295,24 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 		return (Long)function.apply(baseModel);
 	}
 
+	private Object _toDTO(
+			T baseModel, DefaultDTOConverterContext defaultDTOConverterContext)
+		throws Exception {
+
+		DTOConverter<T, ?> dtoConverter = _getDTOConverter();
+
+		try {
+			return dtoConverter.toDTO(defaultDTOConverterContext);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
+	}
+
 	private Map<String, Object> _toDTO(T baseModel, long userId) {
 		DTOConverter<T, ?> dtoConverter = _getDTOConverter();
 
@@ -325,7 +343,7 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
 
 		try {
-			Object object = dtoConverter.toDTO(defaultDTOConverterContext);
+			Object object = _toDTO(baseModel, defaultDTOConverterContext);
 
 			if (object == null) {
 				return modelAttributes;

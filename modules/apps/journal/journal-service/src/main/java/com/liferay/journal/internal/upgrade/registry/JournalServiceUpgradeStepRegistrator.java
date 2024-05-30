@@ -517,7 +517,7 @@ public class JournalServiceUpgradeStepRegistrator
 		_prefsPropsToConfigurationUpgradeHelper;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.layout.service)(&(release.schema.version>=1.0.1)))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.layout.service)(&(release.schema.version>=1.0.0)))"
 	)
 	private Release _release;
 

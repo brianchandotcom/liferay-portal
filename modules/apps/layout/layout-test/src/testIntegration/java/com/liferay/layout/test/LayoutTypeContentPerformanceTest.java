@@ -133,7 +133,7 @@ public class LayoutTypeContentPerformanceTest {
 
 		String templateContent = _getLayoutContent(layout, siteDefaultLocale);
 
-		for (int i = 0; i < _NUMBER_LAYOUTS; i++) {
+		for (int i = 0; i < 5; i++) {
 			layout = _layoutLocalService.addLayout(
 				TestPropsValues.getUserId(), _group.getGroupId(), false, 0,
 				_portal.getClassNameId(LayoutPageTemplateEntry.class),
@@ -240,8 +240,6 @@ public class LayoutTypeContentPerformanceTest {
 		_assertPortletPreferences(
 			assetEntry, journalArticle, layout, portletId);
 	}
-
-	private static final int _NUMBER_LAYOUTS = 5;
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

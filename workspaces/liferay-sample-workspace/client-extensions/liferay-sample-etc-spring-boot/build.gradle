@@ -19,8 +19,18 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
+bootRun {
+	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_ID", "<client-id>"
+	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "<client-secret>"
+	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "https://external-liferay.com/"
+	environment "EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI", "https://external-liferay.com/o/oauth2/token"
+	environment "EXTERNAL_LIFERAY_OAUTH2_USER_AGENT_CLIENT_ID", "does-not-exist"
+}
+
 dependencies {
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.headless.delivery.client", version: "latest.release"
 	implementation group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	implementation group: "net.datafaker", name: "datafaker", version: "1.9.0"
 	implementation group: "org.json", name: "json", version: "20231013"

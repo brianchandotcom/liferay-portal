@@ -9,7 +9,6 @@ import {Align} from '@clayui/drop-down';
 import {DropdownRangeKey} from '../dropdown-range-key/DropdownRangeKey';
 import {pickBy} from 'lodash';
 import {setUriQueryValues} from 'shared/util/router';
-import {spritemap} from 'shared/util/constants';
 import {Text} from '@clayui/core';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
@@ -119,7 +118,6 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 					{openAlert && (
 						<ClayAlert
 							onClose={() => setOpenAlert(false)}
-							spritemap={spritemap}
 							title={Liferay.Language.get('info')}
 							variant='stripe'
 						>

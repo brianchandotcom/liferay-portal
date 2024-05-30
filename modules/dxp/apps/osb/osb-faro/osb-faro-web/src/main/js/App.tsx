@@ -136,7 +136,7 @@ const App = () => {
 		<ApolloProvider client={client}>
 			<ApolloProviderHooks client={client}>
 				<Provider store={store}>
-					<ClayIconSpriteContext.Provider value={spritemap}>
+					<ClayIconSpriteContext.Provider value='/o/osb-faro-web/dist/sprite.svg'>
 						<ClayLinkContext.Provider
 							value={({
 								children,

@@ -40,6 +40,7 @@ import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
+import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../../enums/Product';
 import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {base64ToText, fileToBase64} from '../../../../../../utils/file';
@@ -219,7 +220,8 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		} else {
+		}
+		else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -242,6 +244,35 @@ export function ProvideAppBuildPage({
 	};
 
 	const submitAppBuildPackages = async () => {
+		if (properties.featureFlags?.includes('LPD-21582')) {
+			const items = [];
+
+			for (const versionKey in buildAppPackages) {
+				const appPackagesByVersion = buildAppPackages[versionKey];
+
+				for (const appPackage of appPackagesByVersion) {
+					items.push({
+						attachment: base64ToText(
+							(await fileToBase64(appPackage.file)) as string
+						),
+						version: versionKey,
+					});
+				}
+			}
+
+			await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+				appERC,
+				{
+					productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
+					productVirtualSettings: {
+						productVirtualSettingsFileEntries: items,
+					},
+				}
+			);
+
+			return;
+		}
+
 		for (const versionKey in buildAppPackages) {
 			const appPackagesByVersion = buildAppPackages[versionKey];
 
@@ -253,74 +284,54 @@ export function ProvideAppBuildPage({
 
 						continue;
 					}
-
-					if (properties.featureFlags?.includes('LPD-21582')) {
-						await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
-							appERC,
-							{
-								productVirtualSettings: {
-									productVirtualSettingsFileEntries: [
-										{
-											attachment: base64ToText(
-												(await fileToBase64(
-													appPackage.file
-												)) as string
-											),
-											version: versionKey,
-										},
-									],
-								},
-							}
-						);
-					} else {
-						await submitBase64EncodedFile({
-							appERC,
-							callback: (progress) => {
-								buildAppPackages[versionKey] = buildAppPackages[
-									versionKey
-								].map((file) => {
-									if (file.id === appPackage.id) {
-										return {
-											...file,
-											progress,
-											uploaded: progress === 100,
-										};
-									}
-
-									return file;
-								});
-
-								dispatch({
-									payload: buildAppPackages,
-									type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-								});
-							},
-							file: appPackage.file,
-							isAppIcon: false,
-							requestFunction: createAttachmentAxios,
-							title: appPackage.fileName,
-						}).catch((error) => {
+					await submitBase64EncodedFile({
+						appERC,
+						callback: (progress) => {
 							buildAppPackages[versionKey] = buildAppPackages[
 								versionKey
 							].map((file) => {
 								if (file.id === appPackage.id) {
 									return {
 										...file,
-										error,
+										progress,
+										uploaded: progress === 100,
 									};
 								}
 
 								return file;
 							});
-						});
-					}
 
-					dispatch({
-						payload: buildAppPackages,
-						type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+							dispatch({
+								payload: buildAppPackages,
+								type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+							});
+						},
+						file: appPackage.file,
+						isAppIcon: false,
+						requestFunction: createAttachmentAxios,
+						title: appPackage.fileName,
+					}).catch((error) => {
+						buildAppPackages[versionKey] = buildAppPackages[
+							versionKey
+						].map((file) => {
+							if (file.id === appPackage.id) {
+								return {
+									...file,
+									error,
+								};
+							}
+
+							return file;
+						});
 					});
 				}
-			} catch (error) {
+
+				dispatch({
+					payload: buildAppPackages,
+					type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+				});
+			}
+			catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -706,7 +717,8 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					} catch (error) {
+					}
+					catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

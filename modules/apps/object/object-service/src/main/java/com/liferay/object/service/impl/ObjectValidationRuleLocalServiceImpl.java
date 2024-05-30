@@ -23,6 +23,7 @@ import com.liferay.object.exception.RequiredObjectValidationRuleSettingException
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
+import com.liferay.object.internal.validation.rule.util.ObjectValidationRuleThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
@@ -391,6 +392,19 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
+
+			long primaryKey = GetterUtil.getLong(baseModel.getPrimaryKeyObj());
+
+			if (ObjectValidationRuleThreadLocal.
+					isSkipObjectValidationRuleExecution(
+						primaryKey,
+						objectValidationRule.getObjectValidationRuleId())) {
+
+				continue;
+			}
+
+			ObjectValidationRuleThreadLocal.addObjectEntryId(
+				primaryKey, objectValidationRule.getObjectValidationRuleId());
 
 			Map<String, Object> results = new HashMap<>();
 

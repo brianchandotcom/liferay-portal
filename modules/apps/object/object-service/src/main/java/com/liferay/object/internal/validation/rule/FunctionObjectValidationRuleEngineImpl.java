@@ -17,7 +17,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,10 +52,8 @@ public class FunctionObjectValidationRuleEngineImpl
 		Map<String, Object> results = new HashMap<>();
 
 		try {
-			JSONObject payloadJSONObject = _getPayloadJSONObject(inputObjects);
-
-			JSONObject creatorJSONObject = payloadJSONObject.getJSONObject(
-				"creator");
+			User user = _userLocalService.getUserByScreenName(
+				_companyId, "default-service-account");
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				new String(
@@ -61,10 +61,10 @@ public class FunctionObjectValidationRuleEngineImpl
 						_companyId, Http.Method.POST,
 						_functionObjectValidationRuleEngineImplConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						payloadJSONObject,
+						_getPayloadJSONObject(inputObjects),
 						_functionObjectValidationRuleEngineImplConfiguration.
 							resourcePath(),
-						creatorJSONObject.getLong("id")
+						user.getUserId()
 					).get()));
 
 			results.put(
@@ -165,5 +165,8 @@ public class FunctionObjectValidationRuleEngineImpl
 
 	@Reference
 	private PortalCatapult _portalCatapult;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

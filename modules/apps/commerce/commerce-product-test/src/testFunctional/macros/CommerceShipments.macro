@@ -155,9 +155,9 @@ definition {
 
 			Button.click(button = "Save");
 
-			SelectFrameTop();
-
-			Click(locator1 = "Icon#CLOSE");
+			Click(
+				key_frameTitle = "Edit ${productSku}",
+				locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
 
 			Refresh();
 		}

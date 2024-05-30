@@ -134,7 +134,7 @@ definition {
 
 			// Update Price as Configured value after the fix of the bug COMMERCE-12578
 
-			for (var priceFieldAndValueList : list "List Price:$ 14.92,Price as Configured:$ 14.92") {
+			for (var priceFieldAndValueList : list "List Price:$ 14.92,Price as Configured:$ 149.17") {
 				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
 				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
 
@@ -185,7 +185,7 @@ definition {
 
 			// Update Price as Configured value after the fix of the bug COMMERCE-12578
 
-			for (var priceFieldAndValueList : list "List Price:$ 80.00,Promo Price:$ 72.00,Price as Configured:$ 72.00") {
+			for (var priceFieldAndValueList : list "List Price:$ 80.00,Promo Price:$ 72.00,Price as Configured:$ 144.00") {
 				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
 				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
 
@@ -302,7 +302,7 @@ definition {
 
 			// Update Price as Configured value after the fix of the bug COMMERCE-12578
 
-			for (var priceFieldAndValueList : list "List Price:$ 3.00,Price as Configured:$ 3.00") {
+			for (var priceFieldAndValueList : list "List Price:$ 3.00,Price as Configured:$ 6.00") {
 				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
 				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
 

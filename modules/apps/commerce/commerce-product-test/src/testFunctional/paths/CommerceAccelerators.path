@@ -731,12 +731,12 @@
 </tr>
 <tr>
 	<td>MINI_CART_ITEM_INFO_EXTRA</td>
-	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../div[@class='item-info-extra mt-3']/*</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../..//div[@class='item-info-extra pt-2']/p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MINI_CART_ITEM_INFO_EXTRA_N</td>
-	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../div[@class='item-info-extra mt-3']/*)[${key_index}]</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../..//div[@class='item-info-extra pt-2']/p)[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

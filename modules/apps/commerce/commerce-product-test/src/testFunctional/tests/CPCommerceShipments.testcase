@@ -949,6 +949,8 @@ definition {
 		}
 
 		task ("And then the value inside the custom field of the shipment can be edited during the shipment steps") {
+			SelectFrameTop();
+
 			Click(
 				key_index = "Finish Processing",
 				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
@@ -1073,6 +1075,8 @@ definition {
 		}
 
 		task ("Then the ERC of the shipment remains the same during the shipment steps") {
+			SelectFrameTop();
+
 			Click(
 				key_index = "Finish Processing",
 				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");

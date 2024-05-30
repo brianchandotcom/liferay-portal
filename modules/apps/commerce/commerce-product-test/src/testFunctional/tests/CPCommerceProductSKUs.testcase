@@ -1093,13 +1093,11 @@ definition {
 
 		Button.clickSave();
 
-		AssertVisible(locator1 = "Message#SUCCESS");
+		Alert.viewSuccessMessage();
 
-		Click(locator1 = "Icon#CLOSE");
-
-		SelectFrame.selectFrameTop();
-
-		Click(locator1 = "Icon#CLOSE");
+		Click(
+			key_frameTitle = "Edit Minium Base Price List",
+			locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
 	}
 
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"

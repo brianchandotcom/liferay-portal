@@ -70,12 +70,14 @@ definition {
 				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 			}
 
-			SelectFrameTop();
-
-			Click(locator1 = "Icon#CLOSE");
+			Click(
+				key_frameTitle = "Edit New Option",
+				locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
 		}
 
 		task ("And from the SKUs tab, plus button is clicked, Generate all SKUs combination button is selected") {
+			SelectFrameTop();
+
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			Click(locator1 = "Button#PLUS");
@@ -743,9 +745,9 @@ definition {
 				key_toggleSwitchLabel = "Default",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			SelectFrameTop();
-
-			Click(locator1 = "Icon#CLOSE");
+			Click(
+				key_frameTitle = "Edit Value2",
+				locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
 		}
 
 		task ("And the buyer logs in And navigates to Minium -> Catalog -> ABS Sensor ") {
@@ -777,6 +779,11 @@ definition {
 				productSku = "MIN93015");
 
 			CommerceNavigator.gotoMiniCart();
+
+			Click(
+				key_cartItemSku = "MIN93015",
+				key_index = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
 
 			AssertTextNotEquals(
 				key_cartItemSku = "MIN93015",
@@ -828,9 +835,9 @@ definition {
 				key_toggleSwitchLabel = "Default",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			SelectFrameTop();
-
-			Click(locator1 = "Icon#CLOSE");
+			Click(
+				key_frameTitle = "Edit Value2",
+				locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
 		}
 
 		task ("And the buyer logs in And navigates to Minium -> Catalog -> ABS Sensor") {
@@ -860,6 +867,11 @@ definition {
 			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
 
 			CommerceNavigator.gotoMiniCart();
+
+			Click(
+				key_cartItemSku = "MIN93015",
+				key_index = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
 
 			AssertTextEquals(
 				key_cartItemSku = "MIN93015",
@@ -926,9 +938,9 @@ definition {
 				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 			}
 
-			SelectFrameTop();
-
-			Click(locator1 = "Icon#CLOSE");
+			Click(
+				key_frameTitle = "Edit City",
+				locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
 
 			SelectFrameTop();
 		}
@@ -1627,12 +1639,14 @@ definition {
 				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 			}
 
-			SelectFrameTop();
-
-			Click(locator1 = "Icon#CLOSE");
+			Click(
+				key_frameTitle = "Edit Option1",
+				locator1 = "CommerceEntry#SPECIFIC_SIDE_PANEL_CLOSE_BUTTON");
 		}
 
 		task ("And from the SKUs tab, plus button is clicked, Generate all SKUs combination button is selected") {
+			SelectFrameTop();
+
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			Click(locator1 = "Button#PLUS");

@@ -11,8 +11,6 @@ definition {
 	}
 
 	tearDown {
-		CommerceConfiguration.commerceTearDown();
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Commerce Order");
@@ -26,6 +24,8 @@ definition {
 
 			MenuItem.click(menuItem = "Delete");
 		}
+
+		CommerceConfiguration.commerceTearDown();
 	}
 
 	@description = "This is a test for COMMERCE-12574. Admin can view an order with a single line item that can be split."
@@ -2638,11 +2638,9 @@ definition {
 
 			Click(
 				key_optionName = "Update an Object Entry",
-				locator1 = "CommerceEntry#COMBOBOX_DROPDOWN_OPTION_NAME");
+				locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 
-			PortletEntry.save();
-
-			Refresh();
+			Button.clickSave();
 		}
 
 		task ("Then the health check is clickable again") {

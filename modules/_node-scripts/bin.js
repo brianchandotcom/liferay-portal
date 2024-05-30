@@ -21,11 +21,16 @@ if (COMMAND_DESCRIPTIONS[command] === undefined) {
 
 const commandPath = command.split(':');
 
-const modulePath = path.join(__dirname, ...commandPath, 'index.mjs');
+let modulePath = path.join(__dirname, ...commandPath, 'index.mjs');
 
 if (!fs.existsSync(modulePath)) {
 	showHelpAndExit();
 }
+
+// Node.js wants "file://" in front of absolute paths because otherwise it thinks "C:" is a URL
+// protocol and refuses to load the module.
+
+modulePath = `file://${modulePath}`;
 
 const mainPromise = import(modulePath);
 

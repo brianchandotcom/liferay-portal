@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -282,6 +284,14 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			if (authVerifierResult != null) {
 				passwordBasedAuthentication =
 					authVerifierResult.isPasswordBasedAuthentication();
+			}
+
+			HttpServletRequest httpServletRequest =
+				accessControlContext.getRequest();
+
+			if (httpServletRequest.getHeader("X-CSRF-Token") != null) {
+				systemServiceAccessPolicyNames.add(
+					sapConfiguration.systemTemplateDefaultSAPEntryName());
 			}
 		}
 

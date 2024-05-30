@@ -30,6 +30,7 @@ import './DefineAppProfilePage.scss';
 import UploadLogo from '../../../../../../components/UploadLogo/UploadLogo';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import {getRandomID} from '../../../../../../utils/string';
 
 type DefineAppProfilePageProps = {
 	onClickBack: () => void;
@@ -70,7 +71,7 @@ export function DefineAppProfilePage({
 			error: false,
 			file,
 			fileName: file.name,
-			id: crypto.randomUUID(),
+			id: getRandomID(),
 			preview: URL.createObjectURL(file),
 			progress: 0,
 			readableSize: filesize(file.size),
@@ -110,8 +111,7 @@ export function DefineAppProfilePage({
 				appERC,
 				appName,
 			});
-		}
-		else {
+		} else {
 			response = await createApp({
 				appCategories: [
 					...appCategories,

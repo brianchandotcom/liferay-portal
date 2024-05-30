@@ -220,8 +220,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -330,8 +329,7 @@ export function ProvideAppBuildPage({
 					payload: buildAppPackages,
 					type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
 				});
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -718,8 +716,7 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

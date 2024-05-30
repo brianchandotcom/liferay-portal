@@ -10,6 +10,7 @@ import {FileList} from '../../../../../../../components/FileList/FileList';
 import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import {ProductType} from '../../../../../../../enums/ProductType';
 import i18n from '../../../../../../../i18n';
+import {getRandomID} from '../../../../../../../utils/string';
 import {useAppContext} from '../../AppContext/AppManageState';
 import {TYPES} from '../../AppContext/actionTypes';
 
@@ -47,7 +48,7 @@ export function UploadAppPackagesComponent({
 			error: false,
 			file,
 			fileName: file.name,
-			id: crypto.randomUUID(),
+			id: getRandomID(),
 			preview: URL.createObjectURL(file),
 			progress: 0,
 			readableSize: filesize(file.size),

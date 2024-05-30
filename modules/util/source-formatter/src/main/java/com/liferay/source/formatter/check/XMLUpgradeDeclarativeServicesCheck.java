@@ -7,8 +7,6 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.io.IOException;
-
 import java.util.Objects;
 
 import org.dom4j.Attribute;
@@ -22,8 +20,7 @@ public class XMLUpgradeDeclarativeServicesCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("/service.xml")) {
 			return content;

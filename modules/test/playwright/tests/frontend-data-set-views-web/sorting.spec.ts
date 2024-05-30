@@ -22,9 +22,7 @@ export const test = mergeTests(
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),
-	fdsFragmentPageTest,
 	sortingPageTest,
-	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
 
@@ -160,55 +158,79 @@ test.describe('Configure sorting in Data Set Manager', () => {
 	});
 });
 
-test.describe('Sorting Dropdown in Data Set Application Page', () => {
-	test('When sorting configuration has no labels defined, the order dropdown is not displayed @LPD-19503', async ({
-		dataSetsPage,
-		page,
-	}) => {
-		await dataSetsPage.goto();
+export const applicationPageTest = mergeTests(
+	dataSetManagerApiHelpersTest,
+	dataSetsPageTest,
+	featureFlagsTest({
+		'LPS-164563': true,
+		'LPS-178052': true,
+	}),
+	loginTest()
+);
 
-		await expect(
-			page.getByRole('button', {name: 'Order'})
-		).not.toBeVisible();
-	});
-});
+applicationPageTest.describe(
+	'Sorting Dropdown in Data Set Application Page',
+	() => {
+		applicationPageTest(
+			'When sorting configuration has no labels defined, the order dropdown is not displayed @LPD-19503',
+			async ({dataSetsPage, page}) => {
+				await dataSetsPage.goto();
 
-test.describe('Sorting Dropdown in Data Set Fragment', () => {
-	test('When sorting is configured with at least 1 sort, the dropdown is displayed in the fragment @LPD-19503', async ({
-		dataSetManagerApiHelpers,
-		fdsFragmentPage,
-		layout,
-		page,
-	}) => {
-		await test.step('Create a new sorting', async () => {
-			await dataSetManagerApiHelpers.createDataSetSort({
-				defaultValue: true,
-				fieldName: 'dateCreated',
-				label_i18n: {en_US: 'Date Created'},
-				r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
+				await expect(
+					page.getByRole('button', {name: 'Order'})
+				).not.toBeVisible();
+			}
+		);
+	}
+);
+
+export const fragmentTest = mergeTests(
+	dataSetManagerApiHelpersTest,
+	fdsFragmentPageTest,
+	isolatedLayoutTest({publish: false}),
+	loginTest()
+);
+
+fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
+	fragmentTest(
+		'When sorting is configured with at least 1 sort, the dropdown is displayed in the fragment @LPD-19503',
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+			await fragmentTest.step('Create a new sorting', async () => {
+				await dataSetManagerApiHelpers.createDataSetSort({
+					defaultValue: true,
+					fieldName: 'dateCreated',
+					label_i18n: {en_US: 'Date Created'},
+					r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
+				});
 			});
-		});
 
-		await test.step('Add a field, so FDS has something to show', async () => {
-			await dataSetManagerApiHelpers.createDataSetField({
-				label_i18n: {en_US: 'Date Modified'},
-				name: 'rendererType',
-				r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-				type: 'string',
+			await fragmentTest.step(
+				'Add a field, so FDS has something to show',
+				async () => {
+					await dataSetManagerApiHelpers.createDataSetField({
+						label_i18n: {en_US: 'Date Modified'},
+						name: 'rendererType',
+						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						type: 'string',
+					});
+				}
+			);
+
+			await fragmentTest.step('Configure Data Set fragment', async () => {
+				await fdsFragmentPage.configureDataSetFragment({
+					dataSetLabel,
+					layout,
+				});
 			});
-		});
 
-		await test.step('Configure Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
-				dataSetLabel,
-				layout,
-			});
-		});
-
-		await test.step('Check that the order dropdown is displayed', async () => {
-			await expect(
-				page.getByRole('button', {name: 'Order'})
-			).toBeVisible();
-		});
-	});
+			await fragmentTest.step(
+				'Check that the order dropdown is displayed',
+				async () => {
+					await expect(
+						page.getByRole('button', {name: 'Order'})
+					).toBeVisible();
+				}
+			);
+		}
+	);
 });

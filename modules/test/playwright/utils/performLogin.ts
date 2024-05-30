@@ -13,7 +13,7 @@ export type LoginScreenName =
 	| 'demo.unprivileged'
 	| 'test';
 
-const userData = {
+export const userData = {
 	'demo.company.admin': {
 		name: 'Demo',
 		password: 'demo',
@@ -38,7 +38,7 @@ const userData = {
 
 async function performLogin(
 	page: Page,
-	screenName: LoginScreenName
+	screenName: LoginScreenName | string
 ): Promise<Cookie[]> {
 	const {name, password, surname} = userData[screenName];
 

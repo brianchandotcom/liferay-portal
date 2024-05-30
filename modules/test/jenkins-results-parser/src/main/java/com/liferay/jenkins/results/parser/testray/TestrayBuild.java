@@ -30,7 +30,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	public static final String[] FIELD_NAMES = {
 		"dateCreated", "dateModified", "description", "dueDate",
-		"githubCompareURLs", "gitHash", "id", "name", "productVersionToBuilds"
+		"githubCompareURLs", "gitHash", "id", "name", "productVersionToBuilds",
+		"projectToBuilds", "routineToBuilds"
 	};
 
 	public int compareTo(TestrayBuild testrayBuild) {
@@ -112,7 +113,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString());
+				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
+				null);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				TestrayCaseResult testrayCaseResult =
@@ -141,7 +143,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public TestrayProductVersion getTestrayProductVersion() {
-		if (_testrayProductVersion != null) {
+		if ((_testrayProductVersion != null) ||
+			!_jsonObject.has("productVersionToBuilds")) {
+
 			return _testrayProductVersion;
 		}
 

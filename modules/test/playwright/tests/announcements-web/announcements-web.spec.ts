@@ -28,3 +28,12 @@ test('LPD-18804: Do not have a blank option for distribution scope', async ({
 			)
 	).toBe('General');
 });
+
+test('LPD-27067 Content field is required', async ({
+	announcementsPage,
+	page,
+}) => {
+	await announcementsPage.goToCreateNewAnnouncement();
+
+	expect(await page.getByText('Content *')).toBeVisible();
+});

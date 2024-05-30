@@ -2389,13 +2389,13 @@ public class DataFactory {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
 		LayoutModel publicLayoutModel = _newContentPageLayoutModel(
-			groupId, name, 0, 0);
+			0, 0, groupId, name);
 
 		layoutModels.add(publicLayoutModel);
 		layoutModels.add(
 			_newContentPageLayoutModel(
-				groupId, name + "1", getClassNameId(Layout.class),
-				publicLayoutModel.getPlid()));
+				getClassNameId(Layout.class), publicLayoutModel.getPlid(),
+				groupId, name + "1"));
 
 		return layoutModels;
 	}
@@ -3997,46 +3997,50 @@ public class DataFactory {
 		for (LayoutModel layoutModel : layoutModels) {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_HEADING,
-					_readFile(
-						_getFragmentComponentInputStream("heading", "css")),
-					_readFile(
-						_getFragmentComponentInputStream("heading", "html")),
+					layoutModel,
 					_readFile(
 						"fragment_component" +
 							"/fragment_component_heading_configuration.json"),
 					_readFile(
+						_getFragmentComponentInputStream("heading", "css")),
+					_readFile(
 						"fragment_component" +
 							"/fragment_component_heading_editValue.json"),
-					0, headingRenderNamespace));
+					_readFile(
+						_getFragmentComponentInputStream("heading", "html")),
+					headingRenderNamespace, 0,
+					_FRAGMENT_COMPONENT_RENDER_KEY_HEADING));
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH,
-					_readFile(
-						_getFragmentComponentInputStream("paragraph", "css")),
-					_readFile(
-						_getFragmentComponentInputStream("paragraph", "html")),
+					layoutModel,
 					_readFile(
 						"fragment_component" +
 							"/fragment_component_paragraph_configuration.json"),
+					_readFile(
+						_getFragmentComponentInputStream("paragraph", "css")),
 					_replaceReleaseInfo(
 						_readFile(
 							"fragment_component" +
 								"/fragment_component_paragraph_editValue." +
 									"json")),
-					0, paragraphRenderNamespace));
+					_readFile(
+						_getFragmentComponentInputStream("paragraph", "html")),
+					paragraphRenderNamespace, 0,
+					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_IMAGE, "",
-					_readFile(
-						_getFragmentComponentInputStream("image", "html")),
+					layoutModel,
 					_readFile(
 						"fragment_component" +
 							"/fragment_component_image_configuration.json"),
+					"",
 					_readFile(
 						"fragment_component" +
 							"/fragment_component_image_editValue.json"),
-					0, imageRenderNamespace));
+					_readFile(
+						_getFragmentComponentInputStream("image", "html")),
+					imageRenderNamespace, 0,
+					_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE));
 		}
 
 		return fragmentEntryLinkModels;
@@ -6579,9 +6583,9 @@ public class DataFactory {
 	}
 
 	protected FragmentEntryLinkModel newFragmentEntryLinkModel(
-		LayoutModel layoutModel, String renderKey, String css, String html,
-		String configuration, String editValue, int position,
-		String nameSpace) {
+		LayoutModel layoutModel, String configuration, String css,
+		String editValue, String html, String nameSpace, int position,
+		String renderKey) {
 
 		FragmentEntryLinkModel fragmentEntryLinkModel =
 			new FragmentEntryLinkModelImpl();
@@ -7576,7 +7580,7 @@ public class DataFactory {
 	}
 
 	private LayoutModel _newContentPageLayoutModel(
-		long groupId, String name, long classNameId, long classPK) {
+		long classNameId, long classPK, long groupId, String name) {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, false),

@@ -330,7 +330,8 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		} else {
+		}
+		else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -422,7 +423,8 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -808,7 +810,8 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					} catch (error) {
+					}
+					catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

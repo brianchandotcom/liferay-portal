@@ -107,7 +107,9 @@ export class PublisherSolutionPage {
 
 	async fillCompanyProfile(companyProfile) {
 		await this.richTextEditor.fill(companyProfile.description);
+
 		await expect(this.continueButton).toBeDisabled();
+
 		await this.website.fill(companyProfile.website);
 		await this.emailInput.fill(companyProfile.email);
 		await this.phoneInput.fill(companyProfile.phone);
@@ -115,14 +117,18 @@ export class PublisherSolutionPage {
 
 	async fillCustomizeSolutionDetails(details) {
 		await expect(this.addContentBlockButton).toBeVisible();
+
 		await this.addContentBlockButton.click();
+
 		await expect(this.saveButton).toBeDisabled();
+
 		await this.selectContentBlock.waitFor({state: 'visible'});
 		await this.page.selectOption(
 			'select[aria-label="Select Label"]',
 			'text-block'
 		);
 		await expect(this.saveButton).toBeEnabled();
+
 		await this.saveButton.click();
 		await this.blocksTitle.first().fill(details['text-block'].title);
 		await this.richTextEditor
@@ -135,7 +141,9 @@ export class PublisherSolutionPage {
 			'text-images-block'
 		);
 		await this.saveButton.click();
+
 		await expect(this.selectFileButton).toBeEnabled();
+
 		await this.blocksTitle.last().fill(details['text-images'].title);
 		await this.richTextEditor
 			.last()
@@ -149,8 +157,11 @@ export class PublisherSolutionPage {
 	async fillCustomizeSolutionHeader(header) {
 		await this.headerTitle.fill(header.title);
 		await this.richTextEditor.fill(header.description);
+
 		await expect(this.continueButton).toBeDisabled();
+
 		await this.radioUploadImages.isChecked();
+
 		await expect(this.selectFileButton).toBeEnabled();
 
 		await this.importFile(
@@ -162,7 +173,9 @@ export class PublisherSolutionPage {
 	async fillDefineSolutionProfile(profile) {
 		await this.solutionNameInput.fill(profile.name);
 		await this.descriptionInput.fill(profile.description);
+
 		await expect(this.continueButton).toBeDisabled();
+
 		await this.categories.fill('Analytics');
 		await this.page
 			.getByRole('option', {name: 'Analytics and Optimization'})
@@ -220,10 +233,11 @@ export class PublisherSolutionPage {
 		await this.page.waitForLoadState('networkidle');
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(siteUrl, {
+	async goto(url: string) {
+		await this.page.goto(url, {
 			waitUntil: 'networkidle',
 		});
+
 		await expect(this.solutionDescription).toBeVisible();
 	}
 

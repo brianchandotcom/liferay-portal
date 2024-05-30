@@ -202,6 +202,11 @@ public class InfoRequestFieldValuesProviderHelper {
 	private InfoFieldValue<Object> _getDateTimeInfoFieldValue(
 		InfoField<?> infoField, Locale locale, String value) {
 
+		if (Validator.isBlank(value)) {
+			return _getInfoFieldValue(
+				infoField, locale, (Object)StringPool.BLANK);
+		}
+
 		LocalDateTime localDateTime = LocalDateTime.parse(
 			value, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
 

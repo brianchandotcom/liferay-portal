@@ -497,10 +497,10 @@ public class JournalServiceUpgradeStepRegistrator
 	@Reference
 	private Portal _portal;
 
+	// See LPS-82746
+
 	@Reference
 	private PortalCapabilityLocator _portalCapabilityLocator;
-
-	// See LPS-82746
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

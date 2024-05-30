@@ -11,7 +11,7 @@ import {liferayConfig} from '../../liferay.config';
 
 export const test = mergeTests(loginTest(), usersAndOrganizationsPagesTest);
 
-test('LPD-26175 check that language selector works on private pages', async ({
+test('LPD-26175 Check that language selector works on private pages', async ({
 	page,
 	userPersonalSitePage,
 }) => {

@@ -25,7 +25,7 @@ String currentURL = PortalUtil.getCurrentURL(request);
 		</div>
 
 		<c:if test="<%= LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), user.getLocale()) %>">
-			<aui:a cssClass="d-block" href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(currentURL) + "&groupId=" + themeDisplay.getScopeGroupId() + "&languageId=" + user.getLanguageId() + "&layoutId=" + layout.getLayoutId() + "&persistState=false&showUserLocaleOptionsMessage=false" + "&privateLayout=" + layout.isPrivateLayout() %>'>
+			<aui:a cssClass="d-block" href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(currentURL) + "&groupId=" + themeDisplay.getScopeGroupId() + "&languageId=" + user.getLanguageId() + "&layoutId=" + layout.getLayoutId() + "&persistState=false" + "&privateLayout=" + layout.isPrivateLayout() + "&showUserLocaleOptionsMessage=false" %>'>
 				<%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %>
 			</aui:a>
 		</c:if>

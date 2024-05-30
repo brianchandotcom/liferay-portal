@@ -343,6 +343,56 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeCustomTitleAndDescriptionForUntranslatedLanguage()
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(
+				LocaleUtil.fromLanguageId("ar_SA"), "http://example.com"),
+			true,
+			HashMapBuilder.put(
+				LocaleUtil.US, "Arabic description"
+			).put(
+				LocaleUtil.fromLanguageId("ar_SA"), StringPool.BLANK
+			).build(),
+			Collections.emptyMap(), 0, true,
+			HashMapBuilder.put(
+				LocaleUtil.US, "Arabic title"
+			).put(
+				LocaleUtil.fromLanguageId("ar_SA"), StringPool.BLANK
+			).build(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLanguageId("ar_SA");
+		themeDisplay.setLocale(LocaleUtil.fromLanguageId("ar_SA"));
+
+		mockHttpServletResponse.setCharacterEncoding("UTF-8");
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				httpServletRequest, mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true, true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:description", "Arabic description");
+		_assertMetaTag(document, "og:title", "Arabic title");
+	}
+
+	@Test
 	public void testIncludeDefaultMappedTitleAndDescription() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

@@ -996,7 +996,8 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction3);
 
 		ObjectAction objectAction4 = _addObjectAction(
-			"oldValue('firstName') == 'Paulo'", RandomTestUtil.randomString(),
+			"oldValue(\"firstName\") == \"Paulo\"",
+			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			UnicodePropertiesBuilder.put(

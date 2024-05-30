@@ -69,7 +69,10 @@ const MDFRequestChart = () => {
 				)
 			));
 
-		const currency = account ? account.currency : 'USD';
+		const currency =
+			account && !myUserAccount.organizationBriefs.length
+				? account.currency
+				: 'USD';
 
 		if (mdfRequests && currency) {
 			setCurrencyData(currency);

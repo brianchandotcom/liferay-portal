@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 
 import java.io.Closeable;
@@ -645,9 +646,8 @@ public class DataGuardTestRuleUtil {
 	}
 
 	private static final Set<String> _blacklistedModelClassNames =
-		new HashSet<>(
-			Arrays.asList(
-				"com.liferay.portal.security.audit.storage.model.AuditEvent"));
+		SetUtil.fromArray(
+			"com.liferay.portal.security.audit.storage.model.AuditEvent");
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
 		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =

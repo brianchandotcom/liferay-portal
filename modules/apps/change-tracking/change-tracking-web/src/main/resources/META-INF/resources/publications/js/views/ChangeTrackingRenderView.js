@@ -20,6 +20,7 @@ import {
 	fetch,
 	navigate as navigateUtil,
 	openConfirmModal,
+	openSimpleInputModal,
 	openToast,
 } from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -837,17 +838,64 @@ export default function ChangeTrackingRenderView({
 
 		const workflowActionsDropdownItems = [];
 
-		state.renderData.workflowActions?.forEach((workflowAction) => {
-			workflowActionsDropdownItems.push({
-				label: workflowAction.label,
-				onClick: () =>
-					openWorkflowAssignModal(
-						workflowAction.href,
-						workflowAction.label,
-						workflowAction.modalHeight
-					),
-				symbolLeft: 'workflow',
-			});
+		state.renderData.workflowActions?.forEach((workflowAction, i) => {
+			if (workflowAction.modalHeight) {
+				workflowActionsDropdownItems.push({
+					label: workflowAction.label,
+					onClick: () =>
+						Liferay.Util.openModal({
+							center: true,
+							customEvents: [
+								{
+									name: `${namespace}workflowTaskUpdated`,
+									onEvent() {
+										const iframe = document.querySelector(
+											'.liferay-modal iframe'
+										);
+
+										iframe.contentWindow.location.reload();
+
+										setShowWorkflowSuccessMessage(true);
+									},
+								},
+							],
+							height: workflowAction.modalHeight,
+							onOpen: () => setShowWorkflowSuccessMessage(false),
+							size: 'lg',
+							title: workflowAction.label,
+							url: workflowAction.href,
+						}),
+					symbolLeft: 'workflow',
+				});
+			}
+			else {
+				workflowActionsDropdownItems.push({
+					id: `${namespace}${i}taskChangeStatusLink`,
+					label: workflowAction.label,
+					onClick: () => {
+						openSimpleInputModal({
+							buttonSubmitLabel: Liferay.Language.get('done'),
+							center: true,
+							dialogTitle: workflowAction.label,
+							formSubmitURL: workflowAction.href,
+							mainFieldComponent: 'textarea',
+							mainFieldLabel: Liferay.Language.get('comment'),
+							mainFieldName: 'comment',
+							mainFieldPlaceholder:
+								Liferay.Language.get('comment'),
+							namespace,
+							onFormSuccess: () => {
+								setShowWorkflowSuccessMessage(true);
+
+								setTimeout(() => window.location.reload(), 500);
+							},
+							required: false,
+							size: 'lg',
+						});
+					},
+					symbolLeft: 'workflow',
+				});
+			}
 		});
 
 		if (workflowActionsDropdownItems.length) {

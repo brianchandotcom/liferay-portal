@@ -422,6 +422,27 @@ public class IndexHelperImpl implements IndexHelper {
 	private void _processContributions(
 		IndexConfigurationContributor indexConfigurationContributor) {
 
+		JSONObject settingsJSONObject = _jsonFactory.createJSONObject();
+
+		indexConfigurationContributor.contributeSettings(
+			settingsJSONObject::put);
+
+		boolean contributeMappings = Validator.isNull(
+			_openSearchConfigurationWrapper.overrideTypeMappings());
+
+		if (!contributeMappings &&
+			settingsJSONObject.keySet(
+			).isEmpty()) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No mappings or settings to contribute from " +
+						indexConfigurationContributor);
+			}
+
+			return;
+		}
+
 		OpenSearchClient openSearchClient = null;
 
 		try {
@@ -431,20 +452,10 @@ public class IndexHelperImpl implements IndexHelper {
 		catch (OpenSearchConnectionNotInitializedException
 					openSearchConnectionNotInitializedException) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Skipping contributor " + indexConfigurationContributor);
-			}
-
 			_log.error(openSearchConnectionNotInitializedException);
 
 			return;
 		}
-
-		JSONObject settingsJSONObject = _jsonFactory.createJSONObject();
-
-		indexConfigurationContributor.contributeSettings(
-			settingsJSONObject::put);
 
 		OpenSearchIndicesClient openSearchIndicesClient =
 			openSearchClient.indices();
@@ -477,10 +488,7 @@ public class IndexHelperImpl implements IndexHelper {
 					}
 				}
 
-				if (Validator.isNull(
-						_openSearchConfigurationWrapper.
-							overrideTypeMappings())) {
-
+				if (contributeMappings) {
 					indexConfigurationContributor.contributeMappings(
 						new MappingsFactory(
 							indexName, _jsonFactory, openSearchIndicesClient,

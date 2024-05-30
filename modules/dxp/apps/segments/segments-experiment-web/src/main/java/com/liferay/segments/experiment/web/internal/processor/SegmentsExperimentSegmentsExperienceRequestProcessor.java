@@ -87,7 +87,9 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					themeDisplay.getScopeGroupId(), segmentsExperimentKey);
 
-			if (segmentsExperiment != null) {
+			if ((segmentsExperiment != null) &&
+				(segmentsExperiment.getPlid() == themeDisplay.getPlid())) {
+
 				return new long[] {
 					segmentsExperiment.getSegmentsExperienceId()
 				};
@@ -259,7 +261,9 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					selectedSegmentsExperienceId);
 
-			if (segmentsExperience != null) {
+			if ((segmentsExperience != null) &&
+				(segmentsExperience.getPlid() == themeDisplay.getPlid())) {
+
 				return selectedSegmentsExperienceId;
 			}
 		}

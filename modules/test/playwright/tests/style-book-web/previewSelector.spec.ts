@@ -51,17 +51,6 @@ test('checks the correct label for restricted pages in the preview selector', as
 
 	await styleBooksPage.createStyleBook(styleBookName, site.friendlyUrlPath);
 
-	await page
-		.getByText('Success:Your request completed successfully.')
-		.waitFor();
-
-	const loadingAnimation = await page.locator(
-		'.style-book-editor__page-preview .loading-animation'
-	);
-
-	await loadingAnimation.waitFor();
-	await loadingAnimation.waitFor({state: 'hidden'});
-
 	// Check the restricted page label in the preview selector
 
 	await page.getByRole('button', {name: pageName}).click();

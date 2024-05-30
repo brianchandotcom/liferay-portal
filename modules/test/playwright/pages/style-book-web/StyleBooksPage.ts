@@ -25,6 +25,17 @@ export class StyleBooksPage {
 		await this.page.getByPlaceholder('Name').fill(styleBookName);
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await this.page
+			.getByText('Success:Your request completed successfully.')
+			.waitFor();
+
+		const loadingAnimation = await this.page.locator(
+			'.style-book-editor__page-preview .loading-animation'
+		);
+
+		await loadingAnimation.waitFor();
+		await loadingAnimation.waitFor({state: 'hidden'});
 	}
 
 	async deleteStyleBook(styleBookName: string) {

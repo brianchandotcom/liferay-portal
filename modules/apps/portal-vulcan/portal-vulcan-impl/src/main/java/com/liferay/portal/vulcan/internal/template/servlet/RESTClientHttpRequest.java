@@ -5,6 +5,7 @@
 
 package com.liferay.portal.vulcan.internal.template.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -76,14 +77,14 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 					PortalSessionThreadLocal.getHttpSession();
 
 				if (httpSession == null) {
-					return null;
+					return StringPool.BLANK;
 				}
 
 				String csrfToken = (String)httpSession.getAttribute(
 					WebKeys.AUTHENTICATION_TOKEN + "#CSRF");
 
 				if (csrfToken == null) {
-					return null;
+					return StringPool.BLANK;
 				}
 
 				httpSession = httpServletRequest.getSession(false);

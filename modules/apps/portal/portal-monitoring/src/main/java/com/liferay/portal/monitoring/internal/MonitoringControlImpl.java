@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Dante Wang
  */
-@Component(enabled = false, service = MonitoringControl.class)
+@Component(service = MonitoringControl.class)
 public class MonitoringControlImpl implements MonitoringControl {
 
 	@Override

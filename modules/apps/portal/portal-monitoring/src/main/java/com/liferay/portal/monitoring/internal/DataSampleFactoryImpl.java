@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(enabled = false, service = DataSampleFactory.class)
+@Component(service = DataSampleFactory.class)
 public class DataSampleFactoryImpl implements DataSampleFactory {
 
 	@Override

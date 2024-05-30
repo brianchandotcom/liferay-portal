@@ -12,7 +12,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Joao Victor Alves
  */
-@Component(enabled = false, service = PortalMonitoringControl.class)
+@Component(service = PortalMonitoringControl.class)
 public class PortalMonitoringControlImpl implements PortalMonitoringControl {
 
 	@Override

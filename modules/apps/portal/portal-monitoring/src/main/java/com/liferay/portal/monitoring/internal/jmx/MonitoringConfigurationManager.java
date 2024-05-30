@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
-	enabled = false,
 	property = {
 		"jmx.objectname=com.liferay.portal.monitoring:classification=monitoring_service,name=MonitoringConfigurationManager",
 		"jmx.objectname.cache.key=MonitoringProcessorManager"

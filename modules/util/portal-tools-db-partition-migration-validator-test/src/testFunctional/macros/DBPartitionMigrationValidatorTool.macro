@@ -19,14 +19,14 @@ definition {
 		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "clean-db-partition-migration-validator-tool");
 	}
 
-	@summary = "Runs the db partition migration validator tool script for extraction"
-	macro execute(databaseSchemaPassword = null, databaseSchemaName = null, ignoreErrors = null) {
-		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-extraction-mode -Ddatabase.schema.name=${databaseSchemaName} -Ddatabase.schema.password=${databaseSchemaPassword} -Dignore.migration.errors=${ignoreErrors}");
+	@summary = "Runs the db partition migration validator tool for extraction"
+	macro executeExtraction(databaseSchemaPassword = null, databaseSchemaName = null, ignoreErrors = null) {
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-extraction -Ddatabase.schema.name=${databaseSchemaName} -Ddatabase.schema.password=${databaseSchemaPassword} -Dignore.migration.errors=${ignoreErrors}");
 	}
 
-	@summary = "Runs the db partition migration validator tool script for validation"
+	@summary = "Runs the db partition migration validator tool for validation"
 	macro executeValidation(ignoreErrors = null, sourceFilePath = null, targetFilePath = null) {
-		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-validation-mode -Dignore.migration.errors=${ignoreErrors} -Dsource.file.path=${sourceFilePath} -Dtarget.file.path=${targetFilePath}");
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-validation -Dignore.migration.errors=${ignoreErrors} -Dsource.file.path=${sourceFilePath} -Dtarget.file.path=${targetFilePath}");
 	}
 
 	@summary = "Sets a schema and updates its webId to use as target"

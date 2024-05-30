@@ -48,7 +48,7 @@ definition {
 		task ("When run the migration tool to export the partition, the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidatorTool.execute(
+			DBPartitionMigrationValidatorTool.executeExtraction(
 				databaseSchemaName = ${sourceSchemaName},
 				databaseSchemaPassword = "");
 
@@ -58,7 +58,7 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidatorTool.execute(
+			DBPartitionMigrationValidatorTool.executeExtraction(
 				databaseSchemaName = "lportal",
 				databaseSchemaPassword = "");
 
@@ -116,7 +116,7 @@ definition {
 		task ("When run the migration tool to export the source database, then the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidatorTool.execute(
+			DBPartitionMigrationValidatorTool.executeExtraction(
 				databaseSchemaName = ${sourceSchemaName},
 				databaseSchemaPassword = "");
 
@@ -126,7 +126,7 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidatorTool.execute(
+			DBPartitionMigrationValidatorTool.executeExtraction(
 				databaseSchemaName = "lportal_target",
 				databaseSchemaPassword = "");
 
@@ -163,7 +163,7 @@ definition {
 		}
 
 		task ("When the database is set from non partitioned environment with multiple companies defined") {
-			DBPartitionMigrationValidatorTool.execute(
+			DBPartitionMigrationValidatorTool.executeExtraction(
 				databaseSchemaName = "lportal",
 				databaseSchemaPassword = "",
 				ignoreErrors = "true");

@@ -81,7 +81,7 @@ exit 0
 		<clean-script />
 	</target>
 
-	<target name="execute-db-partition-migration-validator-tool-extraction-mode">
+	<target name="execute-db-partition-migration-validator-tool-extraction">
 		<if>
 			<not>
 				<isset property="ignore.migration.errors" />
@@ -109,7 +109,7 @@ exit 0
 		<print-file file.name="modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/db-partition-migration-validator.log" />
 	</target>
 
-	<target name="execute-db-partition-migration-validator-tool-validation-mode">
+	<target name="execute-db-partition-migration-validator-tool-validation">
 		<if>
 			<not>
 				<isset property="ignore.migration.errors" />

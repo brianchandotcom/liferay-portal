@@ -71,7 +71,8 @@ public interface SAPConfiguration {
 	public String systemTemplateDefaultSAPEntryDescription();
 
 	@Meta.AD(
-		deflt = "*", name = "system-template-default-sap-entry-service-signatures",
+		deflt = "*",
+		name = "system-template-default-sap-entry-service-signatures",
 		required = false
 	)
 	public String systemTemplateDefaultSAPEntryServiceSignatures();

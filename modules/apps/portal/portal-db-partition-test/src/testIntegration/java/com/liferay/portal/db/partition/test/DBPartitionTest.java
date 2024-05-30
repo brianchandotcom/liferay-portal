@@ -100,6 +100,16 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testAddIndexWithoutSettingCompanyThreadLocal()
+		throws Exception {
+
+		createIndex(TEST_CONTROL_TABLE_NAME);
+
+		Assert.assertTrue(
+			dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME));
+	}
+
+	@Test
 	public void testAddUniqueIndexControlTable() throws Exception {
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> createUniqueIndex(TEST_CONTROL_TABLE_NAME));

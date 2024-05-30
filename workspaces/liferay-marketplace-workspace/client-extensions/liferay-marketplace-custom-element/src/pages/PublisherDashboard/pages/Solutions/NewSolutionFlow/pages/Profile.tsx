@@ -17,6 +17,7 @@ import {
 import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
+import {getRandomID} from '../../../../../../utils/string';
 
 const tooltipInfo = {
 	categories: i18n.translate(
@@ -78,7 +79,7 @@ const Profile = () => {
 			error: false,
 			file,
 			fileName: file.name,
-			id: crypto.randomUUID(),
+			id: getRandomID(),
 			preview: URL.createObjectURL(file),
 			progress: 0,
 			readableSize: filesize(file.size),

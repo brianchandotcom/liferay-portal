@@ -17,7 +17,7 @@ export const test = mergeTests(
 	marketplacePagesTest
 );
 
-test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
+test.describe('Can Publish and Manage Solutions', () => {
 	test.beforeEach(
 		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
 			const account = await apiHelpers.headlessAdminUser.postAccount({
@@ -73,9 +73,7 @@ test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
 			`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
 		);
 		await publisherSolutionPage.goToNewSolution();
-
 		await publisherSolutionPage.goToDefineSolutionProfile();
-
 		await publisherSolutionPage.fillDefineSolutionProfile(
 			PUBLISH_SOLUTION.profile
 		);
@@ -83,7 +81,6 @@ test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
 		await expect(publisherSolutionPage.continueButton).toBeEnabled();
 
 		await publisherSolutionPage.goToCustomizeSolutionHeader();
-
 		await publisherSolutionPage.fillCustomizeSolutionHeader(
 			PUBLISH_SOLUTION.header
 		);
@@ -91,23 +88,18 @@ test.describe('LPD-26707 Can Publish and Manage Solutions', () => {
 		await expect(publisherSolutionPage.continueButton).toBeEnabled();
 
 		await publisherSolutionPage.goToCustomizeSolutionDetails();
-
 		await publisherSolutionPage.fillCustomizeSolutionDetails(
 			PUBLISH_SOLUTION.details
 		);
 
 		await expect(publisherSolutionPage.continueButton).toBeEnabled();
-
 		await publisherSolutionPage.goToCompanyProfile();
-
 		await publisherSolutionPage.fillCompanyProfile(
 			PUBLISH_SOLUTION.companyProfile
 		);
 
 		await expect(publisherSolutionPage.continueButton).toBeEnabled();
-
 		await publisherSolutionPage.goToContactUs();
-
 		await publisherSolutionPage.emailInput.fill('test@example.com');
 
 		await expect(publisherSolutionPage.continueButton).toBeEnabled();

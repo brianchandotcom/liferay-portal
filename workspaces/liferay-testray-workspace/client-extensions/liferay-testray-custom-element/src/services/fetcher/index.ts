@@ -67,6 +67,7 @@ const fetcher = async <T = any>(
 	}
 
 	if (currentTimestamp - lastTimestamp > 5 * 60 * 1000) {
+		Liferay.Session.reset();
 		sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
 	}
 

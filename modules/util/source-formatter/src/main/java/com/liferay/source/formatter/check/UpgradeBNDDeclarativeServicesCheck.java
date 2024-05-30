@@ -7,8 +7,6 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 
-import java.io.IOException;
-
 import java.util.Objects;
 
 /**
@@ -18,8 +16,7 @@ public class UpgradeBNDDeclarativeServicesCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+		String fileName, String absolutePath, String content) {
 
 		if (!absolutePath.endsWith("/bnd.bnd") ||
 			!Objects.equals(

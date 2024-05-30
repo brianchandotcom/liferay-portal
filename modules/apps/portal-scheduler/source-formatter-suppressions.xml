@@ -5,6 +5,7 @@
 		<suppress checks="MethodNameCheck" files="portal-scheduler-multiple/src/main/java/com/liferay/portal/scheduler/multiple/internal/ClusterSchedulerEngineConfigurator\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="JavaUpgradeIndexCheck" files="portal-scheduler-quartz/src/main/java/com/liferay/portal/scheduler/quartz/internal/upgrade/v1_0_3/QuartzUpgradeProcess\.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-scheduler-quartz/src/main/java/com/liferay/portal/scheduler/quartz/internal/upgrade/schema/SchemaCreationUpgradeStep\.java" />
 	</source-check>
 </suppressions>

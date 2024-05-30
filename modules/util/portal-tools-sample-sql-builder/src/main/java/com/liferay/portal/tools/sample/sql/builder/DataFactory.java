@@ -4015,11 +4015,10 @@ public class DataFactory {
 							_getFragmentComponentInputStream(
 								"paragraph", "html")),
 						"",
-						_replaceReleaseInfo(
-							_readFile(
-								"fragment_component" +
-									"/fragment_component_paragraph_editValue." +
-										"json")),
+						_readFile(
+							"fragment_component" +
+								"/fragment_component_paragraph_editValue." +
+									"json"),
 						paragraphRenderNamespace, 0,
 						_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 				originalFragmentEntryLinkModels.add(
@@ -7734,16 +7733,6 @@ public class DataFactory {
 
 	private List<String> _readLines(String resourceName) throws Exception {
 		return _readLines(getResourceInputStream(resourceName));
-	}
-
-	private String _replaceReleaseInfo(String resource) throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("Welcome to");
-		sb.append(ReleaseInfo.getReleaseInfo());
-		sb.append(StringPool.PERIOD);
-
-		return StringUtil.replace(resource, "${paragraphValue}", sb.toString());
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();

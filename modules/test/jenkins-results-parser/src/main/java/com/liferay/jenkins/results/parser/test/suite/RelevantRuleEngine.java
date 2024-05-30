@@ -68,15 +68,16 @@ public class RelevantRuleEngine {
 			Properties properties = JenkinsResultsParserUtil.getProperties(
 				testPropertiesFile);
 
-			String relevantRuleNamesProperty =
+			String relevantRuleNamesPropertyValue =
 				JenkinsResultsParserUtil.getProperty(
 					properties, "relevant.rule.names");
 
-			if (relevantRuleNamesProperty == null) {
+			if (relevantRuleNamesPropertyValue == null) {
 				continue;
 			}
 
-			String[] relevantRuleNames = relevantRuleNamesProperty.split(",");
+			String[] relevantRuleNames = relevantRuleNamesPropertyValue.split(
+				",");
 
 			for (String relevantRuleName : relevantRuleNames) {
 				_relevantRuleMap.put(

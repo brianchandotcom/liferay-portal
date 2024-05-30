@@ -576,7 +576,7 @@ definition {
 
 		task ("Log out and log in as the first created user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea1@liferay.com");
 		}
 
@@ -595,7 +595,7 @@ definition {
 
 		task ("Log out and log in as the second created user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea2@liferay.com");
 		}
 
@@ -607,7 +607,7 @@ definition {
 
 		task ("Log out and log in as default user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 	}

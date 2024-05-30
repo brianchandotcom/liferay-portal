@@ -67,7 +67,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		var sandboxedPublicationName = Publications.getPublicationName();
@@ -143,7 +143,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		var sandboxedPublicationName1 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
@@ -202,7 +202,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
@@ -245,7 +245,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");

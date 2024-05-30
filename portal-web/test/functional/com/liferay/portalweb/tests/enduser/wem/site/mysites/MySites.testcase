@@ -86,7 +86,7 @@ definition {
 			User.logoutPG();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
@@ -134,7 +134,7 @@ definition {
 			User.logoutPG();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
@@ -183,7 +183,7 @@ definition {
 			User.logoutPG();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
@@ -224,7 +224,7 @@ definition {
 			User.logoutPG();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
@@ -270,7 +270,7 @@ definition {
 			User.logoutPG();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
@@ -388,7 +388,7 @@ definition {
 
 		task ("Sign in as new user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -488,7 +488,7 @@ definition {
 
 		task ("Assert user cannot join a site with disabled membership maanagement") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			Navigator.gotoSitePage(

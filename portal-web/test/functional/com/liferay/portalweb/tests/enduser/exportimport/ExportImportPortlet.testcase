@@ -138,7 +138,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://localhost:9080",
 				userEmailAddress = "test@liferay.com");
 
@@ -176,7 +176,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://localhost:9080",
 				userEmailAddress = "test@liferay.com");
 
@@ -932,7 +932,7 @@ definition {
 
 		task ("Login at able.com and add a new web content entry") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 

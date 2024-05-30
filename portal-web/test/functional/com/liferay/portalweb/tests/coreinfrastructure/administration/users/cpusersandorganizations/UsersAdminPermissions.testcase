@@ -77,7 +77,7 @@ definition {
 
 		JSONUser.addUser(
 			creatorEmailAddress = "userea@liferay.com",
-			creatorPassword = "test",
+			creatorPassword = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",

@@ -55,7 +55,7 @@ definition {
 			outputParameterPath2 = "a2",
 			outputParameterType = "List",
 			outputParameterType2 = "List",
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			url = "${portalURL}/api/jsonws/country/get-countries",
 			username = "test@liferay.com");
 

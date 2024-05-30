@@ -140,7 +140,7 @@ definition {
 			locator1 = "Portlet#TITLE");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "usereaoa@liferay.com");
 
 		Navigator.openStagingSiteURL(siteName = "Staging Organization Name");
@@ -158,7 +158,7 @@ definition {
 			locator1 = "Portlet#TITLE");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openStagingSiteURL(siteName = "Staging Organization Name");
@@ -176,7 +176,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "usereacr@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -200,7 +200,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "usereaoa@liferay.com");
 
 		Navigator.openStagingSiteURL(siteName = "Staging Organization Name");
@@ -218,7 +218,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Role.openRolesAdmin();

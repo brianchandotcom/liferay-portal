@@ -114,7 +114,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -124,7 +124,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		JSONBlog.addEntry(
@@ -281,7 +281,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		Notifications.viewBadgeCount(notificationCount = 0);
 

@@ -298,7 +298,7 @@ definition {
 				announcementTitle = "Announcements Entry Title ${entryCount}",
 				announcementURL = "http://www.liferay.com",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		Navigator.gotoPage(pageName = "Announcements Page");

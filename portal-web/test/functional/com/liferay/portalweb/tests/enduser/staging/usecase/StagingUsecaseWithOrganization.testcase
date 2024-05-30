@@ -75,7 +75,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			JSONStaging.enableLocalStaging(

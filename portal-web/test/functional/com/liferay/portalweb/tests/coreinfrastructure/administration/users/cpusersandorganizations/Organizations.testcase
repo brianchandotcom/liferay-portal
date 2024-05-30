@@ -1150,7 +1150,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -1589,7 +1589,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/united-states/mb-page");
@@ -1599,7 +1599,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/canada/mb-page");

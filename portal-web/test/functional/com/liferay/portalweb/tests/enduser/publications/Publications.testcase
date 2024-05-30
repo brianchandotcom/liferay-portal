@@ -105,7 +105,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Publications.publishPublication(
@@ -126,7 +126,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Permissions.removePermissionViaAPI(
@@ -137,7 +137,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		PublicationsPermissions.assertNoPermissionToCreatePublication();
@@ -145,7 +145,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Permissions.removePermissionViaAPI(
@@ -165,7 +165,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		PublicationsPermissions.assertNoPermissionToPublishPublication(publicationName = "Publication Name 3");

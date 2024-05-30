@@ -454,7 +454,7 @@ definition {
 			Navigator.openURL();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			Audit.openAuditAdmin();
@@ -518,7 +518,7 @@ definition {
 				userEmailAddress = "test@www.able.com");
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -694,7 +694,7 @@ definition {
 				virtualHost = "www.able.com");
 
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
@@ -748,7 +748,7 @@ definition {
 				portalURL = "http://www.able.com:8080",
 				siteName = "Site Name",
 				userEmailAddress = "test@www.able.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			PagesAdmin.openPagesAdmin(
 				baseURL = "http://www.able.com:8080",
@@ -841,13 +841,13 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			JSONUser.addUser(
 				creatorEmailAddress = "test@www.able.com",
-				creatorPassword = "test",
+				creatorPassword = PropsUtil.get("default.admin.password"),
 				portalInstanceName = "www.able.com",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "userea@liferay.com",
@@ -918,13 +918,13 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			JSONUser.addUser(
 				creatorEmailAddress = "test@www.able.com",
-				creatorPassword = "test",
+				creatorPassword = PropsUtil.get("default.admin.password"),
 				portalInstanceName = "www.able.com",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "userea@liferay.com",
@@ -987,14 +987,14 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			for (var userNum : list "1,2") {
 				JSONUser.addUser(
 					creatorEmailAddress = "test@www.able.com",
-					creatorPassword = "test",
+					creatorPassword = PropsUtil.get("default.admin.password"),
 					portalInstanceName = "www.able.com",
 					specificURL = "http://www.able.com:8080",
 					userEmailAddress = "userea${userNum}@liferay.com",
@@ -1007,7 +1007,7 @@ definition {
 
 			UserNavigator.gotoUser(userScreenName = "usersn1");
 
-			User.editPassword(newPassword = "test");
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("When: Update all available information fields of user1") {
@@ -1052,7 +1052,7 @@ definition {
 				key_text = "Save",
 				locator1 = "Button#ANY");
 
-			User.confirmPassword(password = "test");
+			User.confirmPassword(password = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Then: Verify that the email address of impersonated user is present in the server log") {
@@ -1124,13 +1124,13 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			JSONUser.addUser(
 				creatorEmailAddress = "test@www.able.com",
-				creatorPassword = "test",
+				creatorPassword = PropsUtil.get("default.admin.password"),
 				portalInstanceName = "www.able.com",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "userea@liferay.com",
@@ -1142,7 +1142,7 @@ definition {
 
 			UserNavigator.gotoUser(userScreenName = "usersn");
 
-			User.editPassword(newPassword = "test");
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("When: Modify the Password reminder question and change the Password") {
@@ -1252,7 +1252,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "invalidAddress@liferay.com");
 
 			AssertTextEquals.assertPartialText(
@@ -1264,7 +1264,7 @@ definition {
 			Navigator.openURL();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			Audit.openAuditAdmin();
@@ -1315,7 +1315,7 @@ definition {
 
 			User.firstLoginUI(
 				authenticationMethod = "By Screen Name",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userScreenName = "inavlidScreenName");
 
 			AssertTextEquals.assertPartialText(
@@ -1328,7 +1328,7 @@ definition {
 
 			User.firstLoginUI(
 				authenticationMethod = "By Screen Name",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userScreenName = "test");
 
 			Audit.openAuditAdmin();
@@ -1381,7 +1381,7 @@ definition {
 
 			User.firstLoginUI(
 				authenticationMethod = "By User ID",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userId = "inavlidUserId");
 
 			AssertTextEquals.assertPartialText(
@@ -1394,7 +1394,7 @@ definition {
 
 			User.firstLoginUI(
 				authenticationMethod = "By User ID",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userId = ${userId});
 
 			Audit.openAuditAdmin();
@@ -1447,7 +1447,7 @@ definition {
 			Navigator.openURL();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			Audit.openAuditAdmin();
@@ -1512,7 +1512,7 @@ definition {
 
 			User.firstLoginUI(
 				authenticationMethod = "By Screen Name",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userScreenName = "test");
 
 			Audit.openAuditAdmin();
@@ -1579,7 +1579,7 @@ definition {
 
 			User.firstLoginUI(
 				authenticationMethod = "By User ID",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userId = ${userId});
 
 			Audit.openAuditAdmin();
@@ -1649,7 +1649,7 @@ definition {
 			Navigator.openURL();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			Audit.openAuditAdmin();

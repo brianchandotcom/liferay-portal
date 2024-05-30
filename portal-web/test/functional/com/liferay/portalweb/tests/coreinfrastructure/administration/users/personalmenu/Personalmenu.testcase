@@ -298,7 +298,7 @@ definition {
 
 		JSONUser.updateUser(
 			creatorEmailAddress = "testadmin@liferay.com",
-			creatorPassword = "test",
+			creatorPassword = PropsUtil.get("default.admin.password"),
 			screenNameUpdate = "test",
 			userEmailAddress = "testadmin@liferay.com",
 			userEmailAddressUpdate = "test@liferay.com",
@@ -502,7 +502,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "user1@liferay.com");
 
 		UserBar.gotoDropdown();

@@ -32,7 +32,7 @@ definition {
 			virtualHost = "www.able.com");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -103,7 +103,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -153,7 +153,7 @@ definition {
 			virtualHost = "www.able.com");
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 

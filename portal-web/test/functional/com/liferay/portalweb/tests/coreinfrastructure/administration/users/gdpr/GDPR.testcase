@@ -63,21 +63,21 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONWebcontent.addWebContent(
 				content = "This is a WC Content for GDPR Export testing.",
 				groupName = "Guest",
 				title = "GDPR Export Article",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONMBMessage.addMessage(
 				groupName = "Guest",
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("When sign in as Super User and add a data export progress to export all added entries") {
@@ -137,13 +137,13 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		JSONWebcontent.addFolder(
 			folderName = "WC GDPR Folder",
 			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		JSONWebcontent.addWebContent(
 			content = "This is a WC Content for GDPR Anonymize testing.",
@@ -151,14 +151,14 @@ definition {
 			groupName = "Guest",
 			title = "GDPR Anonymize Article in Folder",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		JSONWebcontent.addWebContent(
 			content = "This is a WC Content for GDPR Anonymize testing.",
 			groupName = "Guest",
 			title = "GDPR Anonymize Article",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -172,7 +172,7 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -370,7 +370,7 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -492,7 +492,7 @@ definition {
 					site = "false",
 					title = "GDPR Anonymize Article ${count}",
 					userEmailAddress = "userea@liferay.com",
-					userPassword = "test");
+					userPassword = PropsUtil.get("default.admin.password"));
 			}
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
@@ -707,7 +707,7 @@ definition {
 
 			UserNavigator.gotoUser(userScreenName = "usersn");
 
-			User.editPassword(newPassword = "test");
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 
 			PasswordPolicies.openPasswordPoliciesAdmin();
 
@@ -765,7 +765,7 @@ definition {
 
 			UserNavigator.gotoUser(userScreenName = "usersn");
 
-			User.editPassword(newPassword = "test");
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 
 			PasswordPolicies.openPasswordPoliciesAdmin();
 
@@ -819,7 +819,7 @@ definition {
 			announcementTitle = "Announcement Entry Title",
 			announcementURL = "http://www.liferay.com",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -928,7 +928,7 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -975,7 +975,7 @@ definition {
 			groupName = "Site Name (Staging)",
 			site = "false",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -983,7 +983,7 @@ definition {
 			groupName = "Site Name (Staging)",
 			site = "false",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
 
@@ -1060,7 +1060,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -1086,13 +1086,13 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONWebcontent.addFolder(
 				folderName = "WC GDPR Export Folder",
 				groupName = "Guest",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONWebcontent.addWebContent(
 				content = "This is a WC Content for GDPR Export testing.",
@@ -1100,14 +1100,14 @@ definition {
 				groupName = "Guest",
 				title = "GDPR Export Article in Folder",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONWebcontent.addWebContent(
 				content = "This is a WC Content for GDPR Export testing.",
 				groupName = "Guest",
 				title = "GDPR Export Article",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			Navigator.openURL();
 
@@ -1123,7 +1123,7 @@ definition {
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -1171,7 +1171,7 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1273,7 +1273,7 @@ definition {
 					groupName = "Site Name (Staging)",
 					site = "false",
 					userEmailAddress = "userea@liferay.com",
-					userPassword = "test");
+					userPassword = PropsUtil.get("default.admin.password"));
 			}
 
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
@@ -1344,7 +1344,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -1467,7 +1467,7 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			Navigator.openURL();
 
@@ -1483,7 +1483,7 @@ definition {
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Sign in as Super User and begin data export process") {
@@ -1623,7 +1623,7 @@ definition {
 			groupName = "Guest",
 			title = "GDPR Article",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -1752,7 +1752,7 @@ definition {
 				groupName = "Site Name (Staging)",
 				site = "false",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
 
@@ -1957,13 +1957,13 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONWebcontent.addFolder(
 				folderName = "WC GDPR Export Folder",
 				groupName = "Guest",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONWebcontent.addWebContent(
 				content = "This is a WC Content for GDPR Export testing.",
@@ -1971,14 +1971,14 @@ definition {
 				groupName = "Guest",
 				title = "GDPR Export Article in Folder",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONWebcontent.addWebContent(
 				content = "This is a WC Content for GDPR Export testing.",
 				groupName = "Guest",
 				title = "GDPR Export Article",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			Navigator.openURL();
 
@@ -1994,7 +1994,7 @@ definition {
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -2224,13 +2224,13 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 2",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

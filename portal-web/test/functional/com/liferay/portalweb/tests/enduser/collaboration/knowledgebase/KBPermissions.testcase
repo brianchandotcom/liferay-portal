@@ -190,7 +190,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "user1@liferay.com");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
@@ -212,7 +212,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "user2@liferay.com");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
@@ -230,7 +230,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "poweruser@liferay.com");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");

@@ -135,7 +135,7 @@ definition {
 
 		JSONUser.addUser(
 			creatorEmailAddress = "user1@liferay.com",
-			creatorPassword = "test",
+			creatorPassword = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "user%27ea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -574,7 +574,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
@@ -2115,7 +2115,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -2147,7 +2147,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		AssertConsoleTextNotPresent(value1 = "DuplicateFriendlyURLEntryException");
@@ -2173,7 +2173,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
@@ -2525,7 +2525,7 @@ definition {
 
 		JSONUser.updateUser(
 			creatorEmailAddress = "testadmin@liferay.com",
-			creatorPassword = "test",
+			creatorPassword = PropsUtil.get("default.admin.password"),
 			screenNameUpdate = "test",
 			userEmailAddress = "testadmin@liferay.com",
 			userEmailAddressUpdate = "test@liferay.com",
@@ -2731,7 +2731,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 
@@ -2740,7 +2740,7 @@ definition {
 
 		task ("When: Log in as new user and send the verification code") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			Button.click(button = "Send New Verification Code");
@@ -2866,7 +2866,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserInvalidPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		User.loginUserPG();
@@ -2905,7 +2905,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdown();
@@ -2941,11 +2941,11 @@ definition {
 		User.logoutPG();
 
 		User.loginUserInvalidPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 	}
 

@@ -72,7 +72,7 @@ definition {
 			Navigator.openURL();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			ContentPagesNavigator.openViewContentPage(
@@ -146,7 +146,7 @@ definition {
 
 		task ("Go to Virtual Instance Created") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 		}
@@ -225,7 +225,7 @@ definition {
 			if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
 				AnalyticsCloud.loginAnalyticsCloud(
 					emailAddress = "test@liferay.com",
-					password = "test");
+					password = PropsUtil.get("default.admin.password"));
 			}
 
 			ACUtils.assertPageTitle(pageTitle = "Dynamic Segment Test");
@@ -288,7 +288,7 @@ definition {
 			Navigator.openURL();
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			Segmentation.updateSegmentsInterval();
@@ -314,7 +314,7 @@ definition {
 			if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
 				AnalyticsCloud.loginAnalyticsCloud(
 					emailAddress = "test@liferay.com",
-					password = "test");
+					password = PropsUtil.get("default.admin.password"));
 			}
 
 			AssertTextPresent(

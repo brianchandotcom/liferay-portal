@@ -55,7 +55,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -161,7 +161,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		var sandboxedPublicationName = Publications.generateSandboxedPublicationName(userScreenName = "usersn");

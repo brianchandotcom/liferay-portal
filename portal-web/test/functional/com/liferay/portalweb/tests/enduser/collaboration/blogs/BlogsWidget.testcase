@@ -437,7 +437,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");

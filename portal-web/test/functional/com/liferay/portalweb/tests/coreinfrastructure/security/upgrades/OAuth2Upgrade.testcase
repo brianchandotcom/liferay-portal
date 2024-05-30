@@ -25,7 +25,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 		}
@@ -58,7 +58,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 		}
@@ -90,7 +90,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 		}
@@ -122,7 +122,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 		}

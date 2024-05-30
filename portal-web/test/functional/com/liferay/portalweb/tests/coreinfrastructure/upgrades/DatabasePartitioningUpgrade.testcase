@@ -119,7 +119,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		SearchAdministration.executeReindex();
@@ -136,7 +136,7 @@ definition {
 		task ("Validate www.able.com and www.baker.com partitions") {
 			User.loginPG(
 				nodePort = 8080,
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			SearchAdministration.executeReindex();
@@ -179,7 +179,7 @@ definition {
 		task ("Ensure that both www.able.com and www.baker.com are accessible") {
 			User.loginPG(
 				nodePort = 8080,
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			SearchAdministration.executeReindex();

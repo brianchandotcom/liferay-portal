@@ -33,7 +33,7 @@ definition {
 		Navigator.gotoAccountSettings();
 
 		User.editPassword(
-			currentPassword = "test",
+			currentPassword = PropsUtil.get("default.admin.password"),
 			newPassword = "password");
 
 		User.logoutPG();
@@ -85,13 +85,13 @@ definition {
 
 			User.editPassword(
 				currentPassword = "password",
-				newPassword = "test");
+				newPassword = PropsUtil.get("default.admin.password"));
 
 			User.logoutPG();
 
 			User.firstLoginUI(
 				authenticationMethod = "By Screen Name",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userScreenName = "test");
 		}
 	}

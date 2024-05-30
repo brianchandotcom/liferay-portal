@@ -324,7 +324,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -354,7 +354,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -383,7 +383,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -573,7 +573,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
@@ -597,7 +597,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -706,7 +706,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Bookmark.viewNoPG(
@@ -716,7 +716,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		User.openUsersAdmin();
@@ -728,7 +728,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
@@ -742,7 +742,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -833,7 +833,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -850,7 +850,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea2@liferay.com");
 
 		AssertElementNotPresent(
@@ -860,7 +860,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -970,7 +970,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -990,7 +990,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -1031,7 +1031,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -1123,7 +1123,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea1@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -1139,7 +1139,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea2@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -1285,7 +1285,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openPrivateURL(pageName = "Private Page");
@@ -1378,7 +1378,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");

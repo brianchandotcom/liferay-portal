@@ -607,7 +607,7 @@ definition {
 		FormPortlet.submitSuccessfully();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
@@ -715,7 +715,7 @@ definition {
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid file size no larger than 1 MB.");
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(

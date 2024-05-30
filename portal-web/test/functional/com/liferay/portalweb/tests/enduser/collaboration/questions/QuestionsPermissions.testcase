@@ -82,7 +82,7 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			anonymousUser = "true",
 			contentField = "Body Anonymous User Ask questions",
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			titleField = "Title Anonymous User Ask questions",
 			userEmailAddress = "test@liferay.com");
 

@@ -572,7 +572,7 @@ definition {
 
 		task ("Remove permissions for guest and ensure comments cannot be added anymore.") {
 			User.loginUserPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			Navigator.gotoPage(pageName = "Blogs Page");
@@ -1611,7 +1611,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");

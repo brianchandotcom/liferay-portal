@@ -1319,7 +1319,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${url},
 				userEmailAddress = "userea@liferay.com");
 		}

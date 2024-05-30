@@ -408,7 +408,7 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "user1@liferay.com");
 
 		ContentPagesNavigator.openEditContentPage(

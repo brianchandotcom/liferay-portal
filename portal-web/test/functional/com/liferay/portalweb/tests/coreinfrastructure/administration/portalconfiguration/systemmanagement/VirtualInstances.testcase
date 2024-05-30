@@ -124,7 +124,7 @@ definition {
 
 			JSONUser.addUser(
 				creatorEmailAddress = "test@www.able.com",
-				creatorPassword = "test",
+				creatorPassword = PropsUtil.get("default.admin.password"),
 				portalInstanceName = "www.able.com",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "userea@www.able.com",
@@ -138,7 +138,7 @@ definition {
 				roleTitle = "Test Role",
 				userScreenName = "usersn");
 
-			User.editPassword(newPassword = "test");
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Then that user can create another user in the instance without error") {

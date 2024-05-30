@@ -69,7 +69,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -115,7 +115,7 @@ definition {
 
 		task ("Login and send OTP email") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			MultiFactorAuthentication.sendOTPEmailPG();
@@ -146,7 +146,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -187,7 +187,7 @@ definition {
 			UserBar.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -206,7 +206,7 @@ definition {
 			UserBar.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080/",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -221,7 +221,7 @@ definition {
 				recipient = "test test",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 	}
 
@@ -240,7 +240,7 @@ definition {
 
 		task ("Login at able.com and enable OTP") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -279,7 +279,7 @@ definition {
 			SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080/",
 				userEmailAddress = "test@www.able.com");
 
@@ -317,7 +317,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -354,7 +354,7 @@ definition {
 
 		task ("Login at able.com and enable OTP") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -407,7 +407,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -436,7 +436,7 @@ definition {
 
 		task ("Login at able.com and send OTP email") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080/",
 				userEmailAddress = "test@www.able.com");
 
@@ -449,7 +449,7 @@ definition {
 				recipient = "test test",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Sign out of able.com") {
@@ -466,7 +466,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -487,7 +487,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -555,7 +555,7 @@ definition {
 
 		task ("Login into able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -584,7 +584,7 @@ definition {
 
 		task ("Login into able.com and send OTP email") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080/",
 				userEmailAddress = "test@www.able.com");
 
@@ -597,7 +597,7 @@ definition {
 				recipient = "test test",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Disable OTP at able.com") {
@@ -610,7 +610,7 @@ definition {
 			User.logoutPG(specificURL = "http://www.able.com:8080/");
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -720,7 +720,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -731,7 +731,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "userfn userln",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 	}
 
@@ -760,7 +760,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -785,7 +785,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "Test Test",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 	}
 
@@ -824,7 +824,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -858,7 +858,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -869,7 +869,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "Test Test",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Search for Test Test on MFA IP OTP verification failure") {
@@ -930,7 +930,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -941,7 +941,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "userfn userln",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 	}
 
@@ -989,7 +989,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1000,7 +1000,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "userfn userln",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 	}
 
@@ -1050,7 +1050,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1061,7 +1061,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "userfn userln",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 	}
 
@@ -1104,7 +1104,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1115,7 +1115,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "userfn userln",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Get TOTP") {
@@ -1134,7 +1134,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1163,7 +1163,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1222,7 +1222,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1233,7 +1233,7 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "userfn userln",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Get TOTP") {
@@ -1255,7 +1255,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -1338,7 +1338,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -1437,7 +1437,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -1473,7 +1473,7 @@ definition {
 			SignOut.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -1484,14 +1484,14 @@ definition {
 				portalURL = ${portalURL},
 				recipient = "test test",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test",
+				userPassword = PropsUtil.get("default.admin.password"),
 				validOtp = "false");
 
 			MultiFactorAuthentication.verifyOTP(
 				portalURL = ${portalURL},
 				recipient = "Test Test",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Search Test Test in OTP browser MFA Checker") {
@@ -1527,7 +1527,7 @@ definition {
 
 		task ("Login at able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -1558,7 +1558,7 @@ definition {
 			SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080/",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -1571,7 +1571,7 @@ definition {
 				recipient = "test test",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Get TOTP") {
@@ -1590,7 +1590,7 @@ definition {
 			SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080/",
 				userEmailAddress = "test@www.able.com");
 		}

@@ -23,7 +23,7 @@ definition {
 			Navigator.openURL();
 
 			User.logoutAndLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
@@ -232,7 +232,7 @@ definition {
 				virtualHost = "www.able.com");
 
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 		}
@@ -495,7 +495,7 @@ definition {
 
 		task ("When: When the new user adds a new User group and add the Site template to it") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			UserGroup.openUserGroupsAdmin();
@@ -574,14 +574,14 @@ definition {
 
 			UserNavigator.gotoUser(userScreenName = "usersn");
 
-			User.editPassword(newPassword = "test");
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 
 			User.logoutPG();
 		}
 
 		task ("Then: The content and settings is inherited on the new personal site from the Site Template") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");

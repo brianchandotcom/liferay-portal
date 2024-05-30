@@ -37,24 +37,24 @@ definition {
 		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
 
 		User.logoutPG(
 			nodePort = 9080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		PortalInstances.openVirtualInstancesAdmin();
@@ -65,7 +65,7 @@ definition {
 			webId = "www.able.com");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -91,7 +91,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@www.able.com");
 
@@ -128,12 +128,12 @@ definition {
 		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
@@ -146,7 +146,7 @@ definition {
 			webId = "www.able.com");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@www.able.com");
 
@@ -172,7 +172,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -209,7 +209,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.baker.com:8080",
 			userEmailAddress = "test@www.baker.com");
 
@@ -251,7 +251,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -291,7 +291,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -354,7 +354,7 @@ definition {
 			value1 = "SCHEDULED");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -412,7 +412,7 @@ definition {
 			virtualHost = "www.able.com");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -463,7 +463,7 @@ definition {
 			virtualHost = "www.baker.com");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -484,7 +484,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.baker.com:8080",
 			userEmailAddress = "test@www.baker.com");
 
@@ -526,7 +526,7 @@ definition {
 				virtualHost = "www.able.com");
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -584,7 +584,7 @@ definition {
 
 		task ("Ensure that www.able.com is accessible and its assets visible") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -612,7 +612,7 @@ definition {
 			virtualHost = "www.able.com");
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -680,7 +680,7 @@ definition {
 
 		task ("Access the Virtual Instance and verify that the host name is available") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -716,7 +716,7 @@ definition {
 				virtualHost = "www.able.com");
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}

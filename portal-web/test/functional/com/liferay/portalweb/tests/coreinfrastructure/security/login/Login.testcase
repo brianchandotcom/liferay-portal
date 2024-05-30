@@ -82,7 +82,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -174,7 +174,7 @@ definition {
 
 			User.firstLoginUI(
 				localization = "ES",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "${portalURL}/es",
 				userEmailAddress = "test@liferay.com");
 		}
@@ -353,7 +353,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -415,7 +415,7 @@ definition {
 
 		task ("Login at able.com and enable token based SSO") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -506,7 +506,7 @@ definition {
 
 			WaitForElementPresent(locator1 = "SignIn#SET_PASSWORD_TITLE");
 
-			User.resetPassword(newPassword = "test");
+			User.resetPassword(newPassword = PropsUtil.get("default.admin.password"));
 
 			User.answerPasswordReminder();
 		}

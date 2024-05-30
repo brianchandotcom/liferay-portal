@@ -200,7 +200,7 @@ definition {
 
 		task ("Activate local staging in the created portal instance global site") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 

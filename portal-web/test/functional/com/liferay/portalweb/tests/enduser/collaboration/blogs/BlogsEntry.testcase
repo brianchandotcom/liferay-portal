@@ -1835,7 +1835,7 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Check entry creator has a notification") {

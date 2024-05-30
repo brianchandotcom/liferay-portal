@@ -322,7 +322,7 @@ definition {
 		task ("Log in the second portal and verify Analytics and portal services are present in scopes") {
 			User.loginPG(
 				nodePort = 9080,
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			OAuth2.openOAuth2Admin(baseURL = "http://localhost:9080");
@@ -340,7 +340,7 @@ definition {
 
 		task ("Log in on the first portal then fill the clientId and client secret values") {
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			OAuth2.openOAuth2Admin();
@@ -776,7 +776,7 @@ definition {
 
 		task ("Login at able.com and unassign power user role from the test user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
@@ -1740,7 +1740,7 @@ definition {
 
 		task ("Then: Log in node2 and oAuthApplication* are present in scopes on node2") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://localhost:9080",
 				userEmailAddress = "test@liferay.com");
 
@@ -2248,7 +2248,7 @@ definition {
 
 		task ("Login at able.com and unassign power user role from the test user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 

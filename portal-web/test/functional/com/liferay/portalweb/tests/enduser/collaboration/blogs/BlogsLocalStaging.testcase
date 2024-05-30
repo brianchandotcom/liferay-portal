@@ -166,7 +166,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = 1);
@@ -594,7 +594,7 @@ definition {
 		BlogsEntry.viewNoEntryAsGuestPG(entryTitle = "Blogs Entry Title");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoStagedSitePage(

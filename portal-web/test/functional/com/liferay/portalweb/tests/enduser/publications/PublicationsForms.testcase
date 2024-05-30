@@ -49,7 +49,7 @@ definition {
 			outputParameterName = "Country Names",
 			outputParameterPath = "nameCurrentValue",
 			outputParameterType = "List",
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			timeout = 10000,
 			url = "${portalURL}/api/jsonws/country/get-countries",
 			username = "test@liferay.com");

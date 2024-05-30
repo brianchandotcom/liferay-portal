@@ -1799,7 +1799,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1888,7 +1888,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -2018,7 +2018,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -2134,7 +2134,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -2254,7 +2254,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -3906,7 +3906,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title 2",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Login with Admin user") {
@@ -4033,7 +4033,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title 2",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Login with Admin user") {
@@ -4125,7 +4125,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "Web Content Title 2",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Login with Admin user") {
@@ -5927,7 +5927,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -6725,7 +6725,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}

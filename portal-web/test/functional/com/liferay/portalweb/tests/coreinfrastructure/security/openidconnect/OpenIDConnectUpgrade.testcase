@@ -44,7 +44,7 @@ definition {
 
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = "tester1@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			MyAccount.openMyAccountAdmin();
 

@@ -471,7 +471,7 @@ definition {
 			User.firstLoginUI(
 				specificURL = "http://www.able.com:8080/test-private-page",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("View private page in virtual host") {
@@ -692,7 +692,7 @@ definition {
 
 		task ("Log in as created user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -802,7 +802,7 @@ definition {
 
 		task ("Log out and log in as the created user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -829,7 +829,7 @@ definition {
 
 		task ("Log out and log in as the created user") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1016,7 +1016,7 @@ definition {
 
 		task ("Log in as created user via private page virtual host") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.baker.com:8080/group/russia2018",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1029,7 +1029,7 @@ definition {
 
 		task ("Log in as created user via site URL") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "${portalURL}/web/russia2018",
 				userEmailAddress = "userea@liferay.com");
 		}

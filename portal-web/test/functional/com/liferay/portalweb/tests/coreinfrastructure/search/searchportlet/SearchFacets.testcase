@@ -1728,7 +1728,7 @@ definition {
 				groupName = "Guest",
 				title = "WC WebContent Title ${count}",
 				userEmailAddress = "john.adams@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		for (var count : list "1,2") {
@@ -1736,7 +1736,7 @@ definition {
 				entryContent = "Test",
 				entryTitle = "Blogs Entry Title ${count}",
 				userEmailAddress = "carter.braxton@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		JSONWebcontent.addWebContent(
@@ -1744,7 +1744,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title",
 			userEmailAddress = "jonathan.franklin@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		SearchPage.openSearchPage(searchTerm = "test");
 

@@ -100,7 +100,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -114,7 +114,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -132,7 +132,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -179,7 +179,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -200,7 +200,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
@@ -231,7 +231,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -304,7 +304,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -328,7 +328,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -351,7 +351,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -436,7 +436,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -451,7 +451,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -473,7 +473,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -548,7 +548,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -568,7 +568,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
@@ -592,7 +592,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -647,7 +647,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -665,7 +665,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -688,7 +688,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -749,7 +749,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -769,7 +769,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		JSONUser.addUser(
@@ -880,7 +880,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -942,7 +942,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1015,7 +1015,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1103,7 +1103,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1172,7 +1172,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1235,7 +1235,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1310,7 +1310,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1403,7 +1403,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1460,7 +1460,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1517,7 +1517,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1591,7 +1591,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1636,7 +1636,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1677,7 +1677,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -1700,7 +1700,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1808,7 +1808,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1823,7 +1823,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -1847,7 +1847,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1895,7 +1895,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
@@ -1909,7 +1909,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 8080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
@@ -1919,7 +1919,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 

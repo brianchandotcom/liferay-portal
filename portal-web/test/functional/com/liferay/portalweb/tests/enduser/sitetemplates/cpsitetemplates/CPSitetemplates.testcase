@@ -978,7 +978,7 @@ definition {
 
 		task ("And: Import the site template lar file on the virtual instance") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 

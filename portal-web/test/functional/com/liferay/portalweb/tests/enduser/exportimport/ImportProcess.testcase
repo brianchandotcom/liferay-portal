@@ -327,7 +327,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
@@ -336,7 +336,7 @@ definition {
 				groupName = "Guest",
 				title = "WC WebContent Title",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1",
@@ -344,7 +344,7 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			Site.openSitesAdmin(baseURL = "http://www.able.com:8080");
 

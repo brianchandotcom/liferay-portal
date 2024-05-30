@@ -548,7 +548,7 @@ definition {
 		CrossClusterReplication.setupCrossClusterReplication();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
@@ -623,12 +623,12 @@ definition {
 			searchAssetType = "Document");
 
 		User.logoutPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		SearchPage.searchEmbedded(searchTerm = "DM");

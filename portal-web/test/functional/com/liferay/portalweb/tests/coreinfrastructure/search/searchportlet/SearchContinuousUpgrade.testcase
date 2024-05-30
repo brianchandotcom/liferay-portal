@@ -24,7 +24,7 @@ definition {
 		property portal.suite.search.engine = "elasticsearch7";
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
@@ -144,7 +144,7 @@ definition {
 		property portal.suite.search.engine = "elasticsearch7,solr";
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
@@ -225,7 +225,7 @@ definition {
 		property portal.suite.search.engine = "elasticsearch7";
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 

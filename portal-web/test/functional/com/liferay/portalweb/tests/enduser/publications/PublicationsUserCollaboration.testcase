@@ -101,7 +101,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Notifications.gotoNotifications();
@@ -502,7 +502,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea1@liferay.com");
 
 		Notifications.gotoNotifications();
@@ -568,7 +568,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Notifications.gotoNotifications();
@@ -639,7 +639,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Notifications.gotoNotifications();
@@ -701,7 +701,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Notifications.gotoNotifications();

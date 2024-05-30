@@ -241,7 +241,7 @@ definition {
 			User.logoutPG();
 
 			SAML.executeSPInitiatedSSO(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "userea2@liferay.com");
 
@@ -263,7 +263,7 @@ definition {
 			User.logoutPG();
 
 			SAML.executeSPInitiatedSSO(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "userea2@liferay.com");
 
@@ -285,7 +285,7 @@ definition {
 			User.logoutPG();
 
 			SAML.executeSPInitiatedSSO(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "userea2@liferay.com");
 
@@ -307,7 +307,7 @@ definition {
 			User.logoutPG();
 
 			SAML.executeSPInitiatedSSO(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "userea2@liferay.com");
 

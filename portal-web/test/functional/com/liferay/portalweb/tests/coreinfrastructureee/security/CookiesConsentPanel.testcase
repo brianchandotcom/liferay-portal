@@ -181,7 +181,7 @@ definition {
 
 		task ("When: Log in use virtual host and enable cookie at site level") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.baker.com:8080",
 				userEmailAddress = "test@liferay.com");
 
@@ -220,7 +220,7 @@ definition {
 			UserBar.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 
 			CookieHelper.checkAllCookieAreDeclinedAndSaved();

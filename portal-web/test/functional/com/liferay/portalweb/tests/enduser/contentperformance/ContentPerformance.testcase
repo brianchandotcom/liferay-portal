@@ -851,7 +851,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 
@@ -940,7 +940,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1012,7 +1012,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1082,7 +1082,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1154,7 +1154,7 @@ definition {
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
+				newPassword = PropsUtil.get("default.admin.password"),
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}

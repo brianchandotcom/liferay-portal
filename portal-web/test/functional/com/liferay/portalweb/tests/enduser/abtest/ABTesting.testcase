@@ -121,7 +121,7 @@ definition {
 
 		task ("Login with new user") {
 			User.logoutAndLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
@@ -164,7 +164,7 @@ definition {
 
 		task ("Login with new user") {
 			User.logoutAndLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
@@ -828,7 +828,7 @@ definition {
 			if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
 				AnalyticsCloud.loginAnalyticsCloud(
 					emailAddress = "test@liferay.com",
-					password = "test");
+					password = PropsUtil.get("default.admin.password"));
 			}
 
 			AssertElementPresent(

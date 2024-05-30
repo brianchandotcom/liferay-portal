@@ -413,7 +413,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -580,7 +580,7 @@ definition {
 			dmFolderName = "Parent Folder Name",
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com",
-			userPassword = "test");
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "SubFolder Name",
@@ -1065,7 +1065,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -1211,7 +1211,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoSitePage(

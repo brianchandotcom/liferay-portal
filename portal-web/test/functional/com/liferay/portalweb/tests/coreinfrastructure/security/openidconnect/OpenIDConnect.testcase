@@ -218,7 +218,7 @@ definition {
 		task ("Login with User and wait till token's max idle time is over") {
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = "user1",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			// This pause is required to allow the test to wait for the access token to expire.
 
@@ -381,7 +381,7 @@ definition {
 
 		task ("Add OAuth Clients") {
 			User.firstLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@www.able.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
@@ -438,7 +438,7 @@ definition {
 
 			User.firstLoginUI(
 				domain = "www.able.com",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -494,7 +494,7 @@ definition {
 
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = "tester1@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			MyAccount.openMyAccountAdmin();
 
@@ -658,7 +658,7 @@ definition {
 		task ("Login at able.com and enable OpenId connect CP") {
 			User.firstLoginUI(
 				domain = "www.able.com",
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "https://www.able.com:8443",
 				userEmailAddress = "test@www.able.com");
 
@@ -694,7 +694,7 @@ definition {
 			UserBar.signOut();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "https://www.able.com:8443",
 				userEmailAddress = "test@www.able.com");
 		}
@@ -1067,7 +1067,7 @@ definition {
 
 		task ("When: User adds OIDC connection on able.com") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -1097,7 +1097,7 @@ definition {
 			User.loginUserWithOpenIDConnectEnabledPG(
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "tester1@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
 
@@ -1155,7 +1155,7 @@ definition {
 		task ("Then: User information is synced from user database on OIDC login") {
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = "tester1@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			MyAccount.openMyAccountAdmin();
 
@@ -1217,7 +1217,7 @@ definition {
 
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = "tester2@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Then: User has power user role") {
@@ -1429,7 +1429,7 @@ definition {
 		task ("Verify that the User stay logged in after a new access token is generated") {
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = "tester1@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			User.viewLoggedInPG();
 		}
@@ -1485,7 +1485,7 @@ definition {
 		task ("Verify that the User stay logged in after a new access token is generated") {
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = "user1",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			// This pause is required to allow the test to wait for the new access token to be generated.
 

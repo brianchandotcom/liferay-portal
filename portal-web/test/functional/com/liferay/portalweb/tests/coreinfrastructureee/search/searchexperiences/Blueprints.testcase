@@ -668,7 +668,7 @@ definition {
 				groupName = "Guest",
 				title = "WC WebContent Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Create Blueprint with the element Limit Search to My Contents") {

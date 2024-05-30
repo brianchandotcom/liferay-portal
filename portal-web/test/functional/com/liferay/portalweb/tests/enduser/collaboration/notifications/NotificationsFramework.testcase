@@ -79,7 +79,7 @@ definition {
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		User.logoutAndLoginPG(
@@ -125,7 +125,7 @@ definition {
 				threadBody = "MB Thread Message Body${threadCount}",
 				threadSubject = "MB Thread Message Subject${threadCount}",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		User.logoutAndLoginPG(
@@ -186,7 +186,7 @@ definition {
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
@@ -515,7 +515,7 @@ definition {
 				entryContent = "Blogs Entry${entryCount} Content",
 				entryTitle = "Blogs Entry${entryCount} Title",
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");

@@ -345,7 +345,7 @@ definition {
 		}
 
 		task ("Go to admin page") {
-			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
+			ACAdmin.goToACAdmin(userScreenNameToResetPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Go to Server Administration > Change SMTP Server Port") {

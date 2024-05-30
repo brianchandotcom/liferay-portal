@@ -349,7 +349,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Audit.openAuditAdmin();
@@ -370,7 +370,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Audit.openAuditAdmin();

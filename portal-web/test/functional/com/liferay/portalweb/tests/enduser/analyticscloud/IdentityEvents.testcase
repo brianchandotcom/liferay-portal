@@ -385,7 +385,7 @@ definition {
 			User.firstLoginUI(
 				specificURL = "${portalURL}/web/site-name/ac-page",
 				userEmailAddress = "test@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("Wait for sending requests") {

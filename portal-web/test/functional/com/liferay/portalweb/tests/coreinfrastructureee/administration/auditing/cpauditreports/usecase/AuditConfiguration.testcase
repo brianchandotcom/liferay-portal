@@ -103,7 +103,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Audit.openAuditAdmin();
@@ -146,7 +146,7 @@ definition {
 		}
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -166,7 +166,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		var auditTablePersistenceEnabled = SQL.executeSQLStatement(sqlStatement = "SELECT COUNT(*) FROM Audit_AuditEvent;");

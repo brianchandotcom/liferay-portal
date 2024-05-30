@@ -83,7 +83,7 @@ definition {
 
 		task ("Then: the user can access the staged page") {
 			User.logoutAndLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
@@ -94,7 +94,7 @@ definition {
 			Staging.viewStagingLocalLivePG();
 
 			User.logoutAndLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "test test");
 		}
@@ -192,7 +192,7 @@ definition {
 				workflowResourceValue = "Blogs Entry");
 
 			User.logoutAndLoginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userLoginEmailAddress = "usereapu@liferay.com",
 				userLoginFullName = "userfnpu userlnpu");
 
@@ -217,7 +217,7 @@ definition {
 			AssertElementNotPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "usereaa@liferay.com");
 
 			Navigator.gotoStagedSitePage(
@@ -237,7 +237,7 @@ definition {
 
 		task ("And: the Power User can publish the staged site to live and add a Blogs Entry") {
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "usereapu@liferay.com");
 
 			Navigator.gotoStagedSitePage(
@@ -263,7 +263,7 @@ definition {
 
 		task ("And: the Portal Content Reviewer user can approve the blog entry") {
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "usereacr@liferay.com");
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -293,7 +293,7 @@ definition {
 
 		task ("And: the blog entry is visible") {
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "usereaa@liferay.com");
 
 			Navigator.gotoStagedSitePage(
@@ -317,7 +317,7 @@ definition {
 				value1 = "Blogs Entry Title");
 
 			User.loginPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 	}

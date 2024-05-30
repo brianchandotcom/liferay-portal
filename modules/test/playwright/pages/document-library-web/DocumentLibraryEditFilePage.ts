@@ -49,18 +49,17 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async changeViewInItemSelctor(assetType: string, viewType: string) {
-		await this.page
-			.frameLocator(`iframe[title="Select ${assetType}"]`)
-			.getByLabel('Select View, Currently Selected: ')
-			.waitFor();
-		await this.page
-			.frameLocator(`iframe[title="Select ${assetType}"]`)
-			.getByLabel('Select View, Currently Selected: ')
-			.click();
-		await this.page
-			.frameLocator(`iframe[title="Select ${assetType}"]`)
-			.getByRole('menuitem', {name: viewType})
-			.click();
+		const modalIframe = await this.page.frameLocator(
+			`iframe[title="Select ${assetType}"]`
+		);
+
+		clickAndExpectToBeVisible({
+			autoClick: true,
+			target: modalIframe.getByRole('menuitem', {name: viewType}),
+			trigger: modalIframe.getByLabel(
+				'Select View, Currently Selected: '
+			),
+		});
 	}
 	async goBack() {
 		await this.backButton.click();

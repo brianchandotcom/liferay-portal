@@ -44,11 +44,11 @@ const getDataRecordValues = ({
 	return dataRecordValues;
 };
 
-const getFieldProperties = (fieldName, pages) => {
+const getFieldProperties = (instanceId, pages) => {
 	const visitor = new PagesVisitor(pages);
 
 	const {itemSelectorURL, localizedValueEdited} = visitor.findField(
-		(field) => field.fieldName === fieldName
+		(field) => field.instanceId === instanceId
 	);
 
 	return {itemSelectorURL, localizedValueEdited};
@@ -112,7 +112,7 @@ export default function pageLanguageUpdate({
 
 						return {
 							...field,
-							...getFieldProperties(field.fieldName, pages),
+							...getFieldProperties(field.instanceId, pages),
 							editingLanguageId: nextEditingLanguageId,
 						};
 					},

@@ -74,11 +74,11 @@ public class CopyrightCheck extends BaseFileCheck {
 			return content;
 		}
 
-		if (!content.startsWith("/**\n * SPDX-FileCopyrightText: (c) ") &&
-			!content.startsWith("<%--\n/**\n * SPDX-FileCopyrightText: (c) ") &&
-			!content.startsWith(
-				_XML_DECLARATION +
-					"<!--\n/**\n * SPDX-FileCopyrightText: (c) ")) {
+		if ((fileName.endsWith(".java") &&
+			 !content.startsWith("/**\n * SPDX-FileCopyrightText: (c) ")) ||
+			((fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) &&
+			 !content.startsWith(
+				 "<%--\n/**\n * SPDX-FileCopyrightText: (c) "))) {
 
 			addMessage(fileName, "File must start with copyright");
 
@@ -163,9 +163,6 @@ public class CopyrightCheck extends BaseFileCheck {
 
 		return _currentBranchFileNames;
 	}
-
-	private static final String _XML_DECLARATION =
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
 	private static final Pattern _copyrightPattern = Pattern.compile(
 		"[\\+-] \\* SPDX-FileCopyrightText: \\(c\\) (\\d{4}) Liferay, Inc\\. " +

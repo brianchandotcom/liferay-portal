@@ -321,9 +321,10 @@ public class DocumentSerDes {
 		if (value instanceof Map) {
 			return _toJSON((Map)value);
 		}
-		else if (value.getClass(
-				).isArray()) {
 
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
 			StringBuilder sb = new StringBuilder("[");
 
 			Object[] values = (Object[])value;
@@ -340,12 +341,12 @@ public class DocumentSerDes {
 
 			return sb.toString();
 		}
-		else if (value instanceof String) {
+
+		if (value instanceof String) {
 			return "\"" + _escape(value) + "\"";
 		}
-		else {
-			return String.valueOf(value);
-		}
+
+		return String.valueOf(value);
 	}
 
 }

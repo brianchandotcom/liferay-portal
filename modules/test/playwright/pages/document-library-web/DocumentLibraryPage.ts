@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -29,8 +29,8 @@ export class DocumentLibraryPage {
 		);
 	}
 
-	async assertPrivateContentIcon() {
-		const privateFileIcon = await this.page
+	async assertPrivateFileIcon(frameLocator?: FrameLocator) {
+		const privateFileIcon = await (frameLocator ?? this.page)
 			.getByLabel('Not Visible to Guest Users')
 			.last();
 

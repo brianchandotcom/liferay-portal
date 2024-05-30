@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {DocumentLibraryPage} from './DocumentLibraryPage';
 
 export class DocumentLibraryEditFilePage {
@@ -42,24 +43,9 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async assertPrivateFileIconInSelectPopUp(assetType: string) {
-		const privateFileIcon = await this.page
-			.frameLocator(`iframe[title="Select ${assetType}"]`)
-			.getByLabel('Not Visible to Guest Users')
-			.last();
-
-		await privateFileIcon.waitFor();
-
-		await expect(privateFileIcon).toBeVisible();
-	}
-
-	async assertPrivateFileIcon() {
-		const privateFileIcon = await this.page
-			.getByLabel('Not Visible to Guest Users')
-			.last();
-
-		await privateFileIcon.waitFor();
-
-		await expect(privateFileIcon).toBeVisible();
+		await this.documentLibraryPage.assertPrivateFileIcon(
+			this.page.frameLocator(`iframe[title="Select ${assetType}"]`)
+		);
 	}
 
 	async changeViewInItemSelctor(assetType: string, viewType: string) {

@@ -59,15 +59,15 @@ testFeatureFlagsEnabled(
 
 		await documentLibraryPage.changeView('cards');
 
-		await documentLibraryPage.assertPrivateContentIcon();
+		await documentLibraryPage.assertPrivateFileIcon();
 
 		await documentLibraryPage.changeView('table');
 
-		await documentLibraryPage.assertPrivateContentIcon();
+		await documentLibraryPage.assertPrivateFileIcon();
 
 		await documentLibraryPage.changeView('list');
 
-		await documentLibraryPage.assertPrivateContentIcon();
+		await documentLibraryPage.assertPrivateFileIcon();
 
 		await documentLibraryPage.deleteFileEntry(title);
 	}
@@ -86,13 +86,13 @@ testFeatureFlagsEnabled(
 
 		await documentLibraryPage.editFileEntry(title);
 
-		await documentLibraryEditFilePage.assertPrivateFileIcon();
+		await documentLibraryPage.assertPrivateFileIcon();
 
 		await documentLibraryEditFilePage.goBack();
 
 		await page.getByRole('link', {name: title}).click();
 
-		await documentLibraryEditFilePage.assertPrivateFileIcon();
+		await documentLibraryPage.assertPrivateFileIcon();
 
 		await documentLibraryPage.deleteFileEntry(title);
 	}

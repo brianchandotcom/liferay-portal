@@ -5,9 +5,9 @@ import Loading from 'shared/components/Loading';
 import React from 'react';
 import WorkspaceList from 'shared/components/workspaces/workspace-list';
 import WorkspacesBasePage from 'shared/components/workspaces/BasePage';
+import {ENABLE_ADD_TRIAL_WORKSPACE} from 'shared/util/constants';
 import {isString} from 'lodash';
 import {PLANS} from 'shared/util/subscriptions';
-import {PROD_MODE} from 'shared/util/constants';
 import {Redirect} from 'react-router';
 import {Routes, toRoute} from 'shared/util/router';
 import {
@@ -72,7 +72,7 @@ const WorkspacesContent = ({
 				)
 			)}
 
-			{!PROD_MODE && (
+			{ENABLE_ADD_TRIAL_WORKSPACE && (
 				<div className='mt-4'>
 					<ClayLink
 						button

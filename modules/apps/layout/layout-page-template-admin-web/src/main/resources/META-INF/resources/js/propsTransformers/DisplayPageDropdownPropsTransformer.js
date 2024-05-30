@@ -217,7 +217,10 @@ function send(url) {
 export default function DisplayPageDropdownPropsTransformer({
 	actions,
 	additionalProps,
+	inputName,
+	inputValue,
 	portletNamespace,
+	title,
 	...otherProps
 }) {
 	const updateItem = (item) => {
@@ -247,5 +250,11 @@ export default function DisplayPageDropdownPropsTransformer({
 	return {
 		...otherProps,
 		actions: actions?.map(updateItem),
+		checkboxProps: {
+			'aria-label': sub(Liferay.Language.get('select-x'), title),
+			'name': inputName,
+			'value': inputValue,
+		},
+		title,
 	};
 }

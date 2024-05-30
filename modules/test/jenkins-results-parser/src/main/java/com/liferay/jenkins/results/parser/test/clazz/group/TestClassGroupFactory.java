@@ -12,6 +12,8 @@ import com.liferay.jenkins.results.parser.PortalAWSJob;
 import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
+import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
+import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 
 import java.io.File;
 
@@ -89,13 +91,19 @@ public class TestClassGroupFactory {
 	public static BatchTestClassGroup newBatchTestClassGroup(
 		Job job, JSONObject jsonObject) {
 
-		return _newBatchTestClassGroup(null, job, jsonObject);
+		return _newBatchTestClassGroup(null, job, jsonObject, null);
+	}
+
+	public static BatchTestClassGroup newBatchTestClassGroup(
+		Job job, TestBatch testBatch) {
+
+		return _newBatchTestClassGroup(null, job, null, testBatch);
 	}
 
 	public static BatchTestClassGroup newBatchTestClassGroup(
 		String batchName, Job job) {
 
-		return _newBatchTestClassGroup(batchName, job, null);
+		return _newBatchTestClassGroup(batchName, job, null, null);
 	}
 
 	public static SegmentTestClassGroup newSegmentTestClassGroup(
@@ -214,10 +222,15 @@ public class TestClassGroupFactory {
 	}
 
 	private static BatchTestClassGroup _newBatchTestClassGroup(
-		String batchName, Job job, JSONObject jsonObject) {
+		String batchName, Job job, JSONObject jsonObject, TestBatch testBatch) {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
-			batchName = jsonObject.getString("batch_name");
+			if (jsonObject != null) {
+				batchName = jsonObject.getString("batch_name");
+			}
+			else {
+				batchName = testBatch.getName();
+			}
 		}
 
 		String key = JobFactory.getKey(job) + "_" + batchName;
@@ -362,6 +375,11 @@ public class TestClassGroupFactory {
 				if (jsonObject != null) {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
+				}
+				else if (testBatch != null) {
+					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
+						batchName, portalTestClassJob,
+						(PlaywrightTestBatch)testBatch);
 				}
 				else {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(

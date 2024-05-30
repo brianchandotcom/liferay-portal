@@ -9,6 +9,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
+import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
@@ -76,6 +78,21 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		addDefaultProjectJobProperty(batchName);
+
+		setTestClasses();
+	}
+
+	protected PlaywrightBatchTestClassGroup(
+		String batchName, PortalTestClassJob portalTestClassJob,
+		PlaywrightTestBatch playwrightTestBatch) {
+
+		super(batchName, portalTestClassJob);
+
+		PlaywrightTestSelector playwrightTestSelector =
+			playwrightTestBatch.getTestSelector();
+
+		_projectNames.addAll(
+			playwrightTestSelector.getPlaywrightProjectNames());
 
 		setTestClasses();
 	}

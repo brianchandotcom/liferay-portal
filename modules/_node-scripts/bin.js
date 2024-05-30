@@ -14,6 +14,11 @@ const COMMANDS = {
 		description: 'builds frontend stuff of current project',
 		parameters: '',
 	},
+	'build:report': {
+		description: 'generates an aggregated report of build timings',
+		parameters:
+			'[<timings directory> (falls back to LIFERAY_NPM_SCRIPTS_TIMING env var)]',
+	},
 	'check:tsc': {
 		description:
 			'runs TypeScript checks in the current project or globally (if run from modules)',

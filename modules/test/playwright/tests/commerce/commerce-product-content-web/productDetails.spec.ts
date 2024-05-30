@@ -102,22 +102,27 @@ test('CanViewSingleSkuVirtualProductDetailPage', async ({
 
 	await page.goto(`/web/${site.name}/p/virtual`);
 
-	await expect(page.getByText('SkuVirtual')).toBeVisible();
-	await expect(page.getByText('mpn', {exact: true})).toBeVisible();
-	await expect(page.getByText('GTIN1')).toBeVisible();
-	await expect(page.getByText('Short description')).toBeVisible();
-
-	await expect(page.getByText('$ 100.00')).toBeVisible();
-	await expect(page.getByText('$ 100.00')).toHaveClass(
+	await expect(await productDetailsPage.skuField('SkuVirtual')).toBeVisible();
+	await expect(await productDetailsPage.mpnField('mpn')).toBeVisible();
+	await expect(await productDetailsPage.gtinField('GTIN1')).toBeVisible();
+	await expect(
+		await productDetailsPage.shortDescriptionField('Short description')
+	).toBeVisible();
+	await expect(await productDetailsPage.priceField('$ 100.00')).toBeVisible();
+	await expect(await productDetailsPage.priceField('$ 100.00')).toHaveClass(
 		/price-value-inactive/
 	);
-	await expect(page.getByText('$ 50.00')).toBeVisible();
-	await expect(page.getByText('$ 50.00')).toHaveClass(/price-value-promo/);
 	await expect(
-		page.getByText('Full description', {exact: true})
+		await productDetailsPage.promoPriceField('$ 50.00')
 	).toBeVisible();
 	await expect(
-		page.getByRole('link', {name: 'Download Sample File'})
+		await productDetailsPage.promoPriceField('$ 50.00')
+	).toHaveClass(/price-value-promo/);
+	await expect(
+		await productDetailsPage.fullDescriptionField('Full description')
+	).toBeVisible();
+	await expect(
+		await productDetailsPage.downloadSampleField('Download Sample File')
 	).toBeVisible();
 });
 
@@ -321,15 +326,21 @@ test('View product details page', async ({
 
 	await page.goto(`/web/${site.name}/p/productbundle`);
 
-	await expect(page.getByLabel('Size')).toBeVisible();
+	await expect(await productDetailsPage.optionSelector('Size')).toBeVisible();
 
-	await expect(page.getByLabel('Color')).toBeVisible();
+	await expect(
+		await productDetailsPage.optionSelector('Color')
+	).toBeVisible();
 
-	await page.getByLabel('Color').selectOption({label: 'Black'});
+	await (
+		await productDetailsPage.optionSelector('Color')
+	).selectOption({label: 'Black'});
 
-	await page.getByLabel('Size').selectOption({label: 'XL + $ 10.00'});
+	await (
+		await productDetailsPage.optionSelector('Size')
+	).selectOption({label: 'XL + $ 10.00'});
 
-	await expect(page.getByRole('cell', {name: 'Unit'})).toBeVisible();
+	await expect(await productDetailsPage.uomTable('Unit')).toBeVisible();
 
-	await expect(page.getByText('$ 50.00')).toBeVisible();
+	await expect(await productDetailsPage.priceField('$ 50.00')).toBeVisible();
 });

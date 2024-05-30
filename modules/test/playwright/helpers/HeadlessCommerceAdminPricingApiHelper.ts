@@ -73,7 +73,7 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 	}
 
-	async postPriceEntry(priceEntry?: TPriceEntry) {
+	async postPriceEntry(priceEntry: TPriceEntry) {
 		priceEntry = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceEntry.priceListId}/price-entries`,
 			{

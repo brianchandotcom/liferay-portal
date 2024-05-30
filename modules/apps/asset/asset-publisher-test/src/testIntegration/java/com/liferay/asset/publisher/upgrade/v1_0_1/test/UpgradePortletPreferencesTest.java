@@ -73,6 +73,14 @@ public class UpgradePortletPreferencesTest {
 		_assertUpgrade(_getReplacedClassNamesMap(map), map);
 	}
 
+	@Test
+	public void testUpgradeWithoutUpdating() throws Exception {
+		Map<String, String> map = _getRandomStringMap(
+			ListUtil.fromMapValues(_classNamesMap));
+
+		_assertUpgrade(map, map);
+	}
+
 	private String _addManualSelectionAssetPublisherPortletToLayout(
 			Map<String, String> map)
 		throws Exception {

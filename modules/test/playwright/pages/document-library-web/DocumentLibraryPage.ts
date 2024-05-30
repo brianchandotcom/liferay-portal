@@ -28,13 +28,15 @@ export class DocumentLibraryPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.documentLibrary}`
 		);
 	}
+
 	async assertPrivateContentIcon() {
-		await expect(
-			this.page
-				.getByLabel('Not Visible to Guest Users')
-				.locator('use')
-				.last()
-		).toBeVisible({timeout: 1000});
+		const privateFileIcon = await this.page
+			.getByLabel('Not Visible to Guest Users')
+			.last();
+
+		await privateFileIcon.waitFor();
+
+		await expect(privateFileIcon).toBeVisible();
 	}
 
 	async changeTab(tabName: string) {
@@ -46,7 +48,7 @@ export class DocumentLibraryPage {
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: viewName}),
 			trigger: this.page.getByLabel('Select View, Currently Selected: '),
-		})
+		});
 	}
 
 	async deleteAllFileEntries() {

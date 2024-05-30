@@ -42,22 +42,24 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async assertPrivateFileIconInSelectPopUp(assetType: string) {
-		await expect(
-			this.page
-				.frameLocator(`iframe[title="Select ${assetType}"]`)
-				.getByLabel('Not Visible to Guest Users')
-				.last()
-				.locator('use')
-		).toBeVisible({timeout: 1000});
+		const privateFileIcon = await this.page
+			.frameLocator(`iframe[title="Select ${assetType}"]`)
+			.getByLabel('Not Visible to Guest Users')
+			.last();
+
+		await privateFileIcon.waitFor();
+
+		await expect(privateFileIcon).toBeVisible();
 	}
 
 	async assertPrivateFileIcon() {
-		await expect(
-			this.page
-				.getByLabel('Not Visible to Guest Users')
-				.last()
-				.locator('use')
-		).toBeVisible({timeout: 1000});
+		const privateFileIcon = await this.page
+			.getByLabel('Not Visible to Guest Users')
+			.last();
+
+		await privateFileIcon.waitFor();
+
+		await expect(privateFileIcon).toBeVisible();
 	}
 
 	async changeViewInItemSelctor(assetType: string, viewType: string) {

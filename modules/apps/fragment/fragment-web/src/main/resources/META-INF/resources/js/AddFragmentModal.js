@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayCard from '@clayui/card';
+import {ClayCardWithInfo} from '@clayui/card';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
@@ -134,38 +134,22 @@ function FragmentTypeCard({active, fragmentType, onSelect}) {
 	const {description, name, symbol, title} = fragmentType;
 
 	return (
-		<ClayCard
-			active={active}
+		<ClayCardWithInfo
 			className={`fragment-type-card mb-0 fragment-type-card-${name}`}
-			onClick={() => onSelect(fragmentType)}
-			selectable
-		>
-			<ClayCard.AspectRatio className="card-item-first">
-				<div className="aspect-ratio-item aspect-ratio-item-center-middle card-type-asset-icon">
-					<ClayIcon className="text-white" symbol={symbol} />
-				</div>
-			</ClayCard.AspectRatio>
-
-			<ClayCard.Body>
-				<ClayCard.Row>
-					<div className="autofit-col autofit-col-expand">
-						<section className="autofit-section">
-							<ClayCard.Description displayType="title">
-								{title}
-							</ClayCard.Description>
-
-							<ClayCard.Description
-								className="text-dark"
-								displayType="subtitle"
-								truncate={false}
-							>
-								{description}
-							</ClayCard.Description>
-						</section>
-					</div>
-				</ClayCard.Row>
-			</ClayCard.Body>
-		</ClayCard>
+			description={description}
+			onSelectChange={() => onSelect(fragmentType)}
+			radioProps={{
+				'aria-label': title,
+				'name': 'fragments',
+				'value': name,
+			}}
+			selectableType="radio"
+			selected={active}
+			stickerProps={null}
+			symbol={symbol}
+			title={title}
+			truncate={false}
+		/>
 	);
 }
 

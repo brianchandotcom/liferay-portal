@@ -1,21 +1,23 @@
-.fragment-type-card {
-	cursor: pointer;
-	flex-basis: 0;
-	flex-grow: 1;
+.fragment-type-cards {
+	gap: 12px;
 
-	&:first-child {
-		margin-right: 12px;
-	}
+	.fragment-type-card {
+		flex: 1;
 
-	&:last-child {
-		margin-left: 12px;
-	}
+		&-basic .card-item-first {
+			background-color: $teal;
+		}
 
-	&-basic .card-item-first {
-		background-color: $teal;
-	}
+		&-form .card-item-first {
+			background-color: $orange;
+		}
 
-	&-form .card-item-first {
-		background-color: $orange;
+		.custom-control-label {
+			opacity: 0;
+		}
+
+		.lexicon-icon {
+			fill: $white;
+		}
 	}
 }

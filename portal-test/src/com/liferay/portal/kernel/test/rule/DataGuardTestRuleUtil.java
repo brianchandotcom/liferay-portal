@@ -52,9 +52,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Assert;
@@ -528,7 +530,9 @@ public class DataGuardTestRuleUtil {
 				"_serviceTrackerMap");
 
 		for (String modeClassName : serviceTrackerMap.keySet()) {
-			if (modeClassName.indexOf(CharPool.POUND) == -1) {
+			if (!_modelClassNameBlacklist.contains(modeClassName) &&
+				(modeClassName.indexOf(CharPool.POUND) == -1)) {
+
 				scrubbedPersistedModelLocalServices.put(
 					modeClassName, serviceTrackerMap.getService(modeClassName));
 			}
@@ -640,6 +644,9 @@ public class DataGuardTestRuleUtil {
 			basePersistence, "_sessionFactory", originalSessionFactory);
 	}
 
+	private static final Set<String> _modelClassNameBlacklist = new HashSet<>(
+		Arrays.asList(
+			"com.liferay.portal.security.audit.storage.model.AuditEvent"));
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
 		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =
@@ -706,7 +713,10 @@ public class DataGuardTestRuleUtil {
 		private void _record(Object object) {
 			BaseModel<?> baseModel = (BaseModel<?>)object;
 
-			if (baseModel.isNew()) {
+			if (baseModel.isNew() &&
+				!_modelClassNameBlacklist.contains(
+					baseModel.getModelClassName())) {
+
 				Map<Serializable, String> map = _records.computeIfAbsent(
 					baseModel.getModelClassName(),
 					className -> new ConcurrentHashMap<>());

@@ -4000,28 +4000,11 @@ public class DataFactory {
 
 		LayoutModel nonhiddenLayout = null;
 
-		String headingRenderNamespace = StringUtil.randomId();
 		String imageRenderNamespace = StringUtil.randomId();
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
 			if (layoutModel.getHidden()) {
-				originalFragmentEntryLinkModels.add(
-					newFragmentEntryLinkModel(
-						layoutModel, 0, segmentsExperienceId,
-						_readFile(
-							_getFragmentComponentInputStream("heading", "css")),
-						_readFile(
-							_getFragmentComponentInputStream(
-								"heading", "html")),
-						_readFile(
-							"fragment_component" +
-								"/fragment_component_heading_configuration.json"),
-						_readFile(
-							"fragment_component" +
-								"/fragment_component_heading_editValue.json"),
-						headingRenderNamespace, 0,
-						_FRAGMENT_COMPONENT_RENDER_KEY_HEADING));
 				originalFragmentEntryLinkModels.add(
 					newFragmentEntryLinkModel(
 						layoutModel, 0, segmentsExperienceId,
@@ -7576,29 +7559,15 @@ public class DataFactory {
 
 			String rendererKey = fragmentEntryLinkModel.getRendererKey();
 
-			if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_HEADING)) {
-				data = StringUtil.replace(
-					data, "${headingFragmentEntryLinkId}",
-					String.valueOf(
-						fragmentEntryLinkModel.getFragmentEntryLinkId()));
-			}
-			else if (rendererKey.equals(
-						_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
-
+			if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
 				data = StringUtil.replace(
 					data, "${paragraphFragmentEntryLinkId}",
 					String.valueOf(
 						fragmentEntryLinkModel.getFragmentEntryLinkId()));
 			}
-			else if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE)) {
-				data = StringUtil.replace(
-					data, "${imageFragmentEntryLinkId}",
-					String.valueOf(
-						fragmentEntryLinkModel.getFragmentEntryLinkId()));
-			}
 			else {
 				data = StringUtil.replace(
-					data, "${loginPortletFragmentEntryLinkId}",
+					data, "${imageFragmentEntryLinkId}",
 					String.valueOf(
 						fragmentEntryLinkModel.getFragmentEntryLinkId()));
 			}
@@ -7784,9 +7753,6 @@ public class DataFactory {
 
 	private static final String _DEPENDENCIES_DIR =
 		"/com/liferay/portal/tools/sample/sql/builder/dependencies/data/";
-
-	private static final String _FRAGMENT_COMPONENT_RENDER_KEY_HEADING =
-		"BASIC_COMPONENT-heading";
 
 	private static final String _FRAGMENT_COMPONENT_RENDER_KEY_IMAGE =
 		"BASIC_COMPONENT-image";

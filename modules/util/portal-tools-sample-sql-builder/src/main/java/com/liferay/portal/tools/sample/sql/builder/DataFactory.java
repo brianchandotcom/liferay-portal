@@ -6612,7 +6612,6 @@ public class DataFactory {
 		fragmentEntryLinkModel.setConfiguration(configuration);
 		fragmentEntryLinkModel.setCss(css);
 		fragmentEntryLinkModel.setHtml(html);
-		fragmentEntryLinkModel.setConfiguration(configuration);
 		fragmentEntryLinkModel.setEditableValues(editValue);
 		fragmentEntryLinkModel.setNamespace(nameSpace);
 		fragmentEntryLinkModel.setPosition(position);

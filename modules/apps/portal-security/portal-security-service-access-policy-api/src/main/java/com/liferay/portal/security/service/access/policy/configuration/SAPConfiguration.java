@@ -58,4 +58,22 @@ public interface SAPConfiguration {
 	)
 	public String systemUserPasswordSAPEntryServiceSignatures();
 
+	@Meta.AD(
+		deflt = "SYSTEM_TEMPLATE_DEFAULT",
+		name = "system-template-default-sap-entry-name", required = false
+	)
+	public String systemTemplateDefaultSAPEntryName();
+
+	@Meta.AD(
+		deflt = "System Service Access Policy for RESTClient Requests in Templates",
+		name = "system-template-default-sap-entry-description", required = false
+	)
+	public String systemTemplateDefaultSAPEntryDescription();
+
+	@Meta.AD(
+		deflt = "*", name = "system-template-default-sap-entry-service-signatures",
+		required = false
+	)
+	public String systemTemplateDefaultSAPEntryServiceSignatures();
+
 }

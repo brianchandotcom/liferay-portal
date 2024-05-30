@@ -65,42 +65,42 @@ public class SkuResourceFunctionalTest {
 
 	@Before
 	public void setUp() throws Exception {
-		testGroup = GroupTestUtil.addGroup();
+		_testGroup = GroupTestUtil.addGroup();
 
-		testCompany = CompanyLocalServiceUtil.getCompany(
-			testGroup.getCompanyId());
+		_testCompany = CompanyLocalServiceUtil.getCompany(
+			_testGroup.getCompanyId());
 
-		_skuResource.setContextCompany(testCompany);
+		_skuResource1.setContextCompany(_testCompany);
 
 		SkuResource.Builder builder = SkuResource.builder();
 
-		skuResource = builder.authentication(
+		_skuResource2 = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
 
-		User user = UserTestUtil.addUser(testCompany);
+		User user = UserTestUtil.addUser(_testCompany);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testCompany.getCompanyId(), testGroup.getGroupId(),
+			_testCompany.getCompanyId(), _testGroup.getGroupId(),
 			user.getUserId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			testGroup.getGroupId(), RandomTestUtil.randomString());
+			_testGroup.getGroupId(), RandomTestUtil.randomString());
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyTestUtil.addCommerceCurrency(
-				testCompany.getCompanyId());
+				_testCompany.getCompanyId());
 
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
-			testGroup.getCompanyId(), testGroup.getGroupId(), user.getUserId(),
-			commerceCurrency.getCode());
+			_testGroup.getCompanyId(), _testGroup.getGroupId(),
+			user.getUserId(), commerceCurrency.getCode());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		GroupTestUtil.deleteGroup(testGroup);
+		GroupTestUtil.deleteGroup(_testGroup);
 	}
 
 	@Test
@@ -147,7 +147,7 @@ public class SkuResourceFunctionalTest {
 			calendar.get(Calendar.MINUTE), false, BigDecimal.TEN, false,
 			BigDecimal.TEN, StringPool.BLANK, _serviceContext);
 
-		Sku channelProductSku = skuResource.getChannelProductSku(
+		Sku channelProductSku = _skuResource2.getChannelProductSku(
 			_commerceChannel.getCommerceChannelId(),
 			cpDefinition.getCProductId(), cpInstance.getCPInstanceId(), -1L);
 
@@ -222,7 +222,7 @@ public class SkuResourceFunctionalTest {
 			calendar.get(Calendar.MINUTE), false, BigDecimal.TEN, false,
 			BigDecimal.TEN, StringPool.BLANK, _serviceContext);
 
-		Sku channelProductSku = skuResource.getChannelProductSku(
+		Sku channelProductSku = _skuResource2.getChannelProductSku(
 			_commerceChannel.getCommerceChannelId(),
 			cpDefinition.getCProductId(), cpInstance.getCPInstanceId(), -1L);
 
@@ -235,10 +235,6 @@ public class SkuResourceFunctionalTest {
 				price.getPromoPrice(), commercePriceEntryPrice.doubleValue()));
 	}
 
-	protected SkuResource skuResource;
-	protected Company testCompany;
-	protected Group testGroup;
-
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;
 	private ServiceContext _serviceContext;
@@ -246,6 +242,10 @@ public class SkuResourceFunctionalTest {
 	@Inject
 	private
 		com.liferay.headless.commerce.delivery.catalog.resource.v1_0.SkuResource
-			_skuResource;
+			_skuResource1;
+
+	private SkuResource _skuResource2;
+	private Company _testCompany;
+	private Group _testGroup;
 
 }

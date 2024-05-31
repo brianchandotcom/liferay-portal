@@ -5,10 +5,11 @@
 
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 interface IProps {
 	children?: JSX.Element | JSX.Element[];
+	clearInputs?: {dates: {endDate: string; startDate: string}};
 	dateFilters: (dates: {endDate: string; startDate: string}) => void;
 	filterDescription?: string;
 	initialDates?: {endDate: string; startDate: string};
@@ -17,6 +18,7 @@ interface IProps {
 
 const DateFilter = ({
 	children,
+	clearInputs,
 	dateFilters,
 	filterDescription,
 	initialDates,
@@ -28,6 +30,16 @@ const DateFilter = ({
 	const [endActivityDate, setEndActivityDate] = useState(
 		initialDates?.endDate ? initialDates?.endDate : ''
 	);
+
+	useEffect(() => {
+		if (
+			!clearInputs?.dates?.startDate?.length &&
+			!clearInputs?.dates?.endDate?.length
+		) {
+			setStartActivityDate('');
+			setEndActivityDate('');
+		}
+	}, [clearInputs]);
 
 	return (
 		<div className="p-3 w-100">

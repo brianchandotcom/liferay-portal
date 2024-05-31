@@ -61,7 +61,8 @@ public class FormItemManager {
 	public List<FragmentEntryLink> addFragmentEntryLinks(
 			JSONObject errorJSONObject, String[] infoFieldUniqueIds,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			Layout layout, LayoutStructure layoutStructure, Locale locale,
+			boolean includeSubmitButton, Layout layout,
+			LayoutStructure layoutStructure, Locale locale,
 			long segmentsExperienceId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -124,24 +125,26 @@ public class FormItemManager {
 					serviceContext));
 		}
 
-		FragmentEntry fragmentEntry = _getFragmentEntry(
-			layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
-			DefaultInputFragmentEntryConfigurationProvider.
-				FORM_INPUT_SUBMIT_BUTTON);
+		if (includeSubmitButton) {
+			FragmentEntry fragmentEntry = _getFragmentEntry(
+				layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
+				DefaultInputFragmentEntryConfigurationProvider.
+					FORM_INPUT_SUBMIT_BUTTON);
 
-		if ((fragmentEntry == null) ||
-			!_isAllowedFragmentEntryKey(
-				fragmentEntry.getFragmentEntryKey(),
-				masterDropZoneLayoutStructureItem)) {
+			if ((fragmentEntry == null) ||
+				!_isAllowedFragmentEntryKey(
+					fragmentEntry.getFragmentEntryKey(),
+					masterDropZoneLayoutStructureItem)) {
 
-			missingInputTypes.add(_language.get(locale, "submit-button"));
-		}
-		else {
-			addedFragmentEntryLinks.add(
-				_addFragmentEntryLink(
-					formStyledLayoutStructureItem.getItemId(), fragmentEntry,
-					null, layout, layoutStructure, segmentsExperienceId,
-					serviceContext));
+				missingInputTypes.add(_language.get(locale, "submit-button"));
+			}
+			else {
+				addedFragmentEntryLinks.add(
+					_addFragmentEntryLink(
+						formStyledLayoutStructureItem.getItemId(),
+						fragmentEntry, null, layout, layoutStructure,
+						segmentsExperienceId, serviceContext));
+			}
 		}
 
 		if (missingInputTypes.size() == 1) {

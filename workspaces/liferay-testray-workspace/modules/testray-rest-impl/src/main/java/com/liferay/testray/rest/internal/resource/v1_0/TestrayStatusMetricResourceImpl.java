@@ -565,7 +565,7 @@ public class TestrayStatusMetricResourceImpl
 		params.add(testrayRoutineId);
 
 		if (Validator.isNotNull(testrayProductVersion)) {
-			sb.append("and pv.name_ = ? ");
+			sb.append("and pv.c_productVersionId_ = ? ");
 			params.add(testrayProductVersion);
 		}
 

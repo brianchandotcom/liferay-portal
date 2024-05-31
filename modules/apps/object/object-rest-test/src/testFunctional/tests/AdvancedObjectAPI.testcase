@@ -111,7 +111,9 @@ definition {
 		}
 
 		task ("Given deleting one of the employees related with the same manager") {
-			ObjectDefinitionAPI.deleteObjectEntry(en_US_plural_label = "employees", objectEntryId = ${employeeId3});
+			ObjectDefinitionAPI.deleteObjectEntry(
+				en_US_plural_label = "employees",
+				objectEntryId = ${employeeId3});
 		}
 
 		task ("When calling for 'employees' with a 'managerId' as aggregationTerms parameter") {

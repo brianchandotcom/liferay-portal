@@ -110,6 +110,15 @@ public class CompanyLocalServiceUtil {
 		getService().checkCompanyKey(companyId);
 	}
 
+	public static Company copyBPartitionCompany(
+			String name, long sourceCompanyId, long targetCompanyId,
+			String virtualHostname, String webId)
+		throws PortalException {
+
+		return getService().copyBPartitionCompany(
+			name, sourceCompanyId, targetCompanyId, virtualHostname, webId);
+	}
+
 	/**
 	 * Creates a new company with the primary key. Does not add the company to the database.
 	 *

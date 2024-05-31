@@ -18,7 +18,7 @@ export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-10863': true,
+		'LPD-20379': true,
 	}),
 	loginTest()
 );

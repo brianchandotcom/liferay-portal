@@ -599,7 +599,7 @@ public class ObjectDefinitionResourceTest
 							}
 						};
 					outputType = OutputType.create("partialValidation");
-					script = RandomTestUtil.randomString();
+					script = "isEmailAddress(customObjectField)";
 					system = false;
 				}
 			};
@@ -632,7 +632,7 @@ public class ObjectDefinitionResourceTest
 								}
 							};
 						outputType = OutputType.create("partialValidation");
-						script = RandomTestUtil.randomString();
+						script = "isEmailAddress(systemObjectField)";
 						system = true;
 					}
 				}

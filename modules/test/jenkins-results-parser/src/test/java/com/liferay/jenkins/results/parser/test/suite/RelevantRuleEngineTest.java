@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
@@ -144,7 +145,14 @@ public class RelevantRuleEngineTest {
 		Assert.assertEquals(expectedRelevantRuleNames, actualRelevantRuleNames);
 	}
 
-	private static final File _baseDir = new File(
-		"src/test/resources/dependencies/test/suite/RelevantRuleEngineTest");
+	private static final File _baseDir;
+
+	static {
+		File baseDir = new File(
+			"src/test/resources/dependencies/test/suite" +
+				"/RelevantRuleEngineTest");
+
+		_baseDir = JenkinsResultsParserUtil.getCanonicalFile(baseDir);
+	}
 
 }

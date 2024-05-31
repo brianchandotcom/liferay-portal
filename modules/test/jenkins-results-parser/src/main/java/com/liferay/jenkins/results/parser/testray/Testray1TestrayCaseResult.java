@@ -151,6 +151,12 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 		super(testrayBuild, jsonObject);
 	}
 
+	protected Testray1TestrayCaseResult(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		super(testrayServer, jsonObject);
+	}
+
 	@Override
 	protected synchronized void initTestrayAttachments() {
 		if (testrayAttachments != null) {

@@ -101,6 +101,27 @@ public class TestrayProject {
 		return _jsonObject.getString("name");
 	}
 
+	public TestrayCase getTestrayCaseByName(String testCaseName) {
+		String filter = JenkinsResultsParserUtil.combine(
+			"name eq '", testCaseName, "' and ",
+			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
+
+		try {
+			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"cases", TestrayCase.FIELD_NAMES, filter, null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			return TestrayFactory.newTestrayCase(
+				this, entityJSONObjects.get(0));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public TestrayComponent getTestrayComponentByID(long componentID) {
 		for (TestrayComponent testrayComponent : getTestrayComponents()) {
 			if (Objects.equals(componentID, testrayComponent.getID())) {

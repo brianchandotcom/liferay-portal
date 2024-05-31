@@ -16,6 +16,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,6 +81,37 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return matcher.group("portalSHA");
 	}
 
+	public String getPullRequestAuthor() {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_pullRequestAuthor)) {
+			return _pullRequestAuthor;
+		}
+
+		URL topLevelBuildURL = getTopLevelBuildURL();
+
+		if (topLevelBuildURL == null) {
+			_pullRequestAuthor = "Unknown";
+
+			return _pullRequestAuthor;
+		}
+
+		try {
+			TopLevelBuildReport topLevelBuildReport =
+				BuildReportFactory.newTopLevelBuildReport(topLevelBuildURL);
+
+			Map<String, String> buildParameters =
+				topLevelBuildReport.getBuildParameters();
+
+			_pullRequestAuthor = buildParameters.get("GITHUB_SENDER_USERNAME");
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			_pullRequestAuthor = "Unknown";
+		}
+
+		return _pullRequestAuthor;
+	}
+
 	public String getStartYearMonth() {
 		Matcher matcher = _getTestrayAttachmentURLMatcher();
 
@@ -88,6 +120,35 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		}
 
 		return matcher.group("startYearMonth");
+	}
+
+	public TestrayCaseResult getTestrayCaseResultByName(String testCaseName) {
+		TestrayCase testrayCase = _testrayProject.getTestrayCaseByName(
+			testCaseName);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("r_buildToCaseResult_c_buildId eq '");
+		sb.append(getID());
+		sb.append("' and r_caseToCaseResult_c_caseId eq '");
+		sb.append(testrayCase.getID());
+		sb.append("'");
+
+		try {
+			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
+				null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			return TestrayFactory.newTestrayCaseResult(
+				this, entityJSONObjects.get(0));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults() {
@@ -271,22 +332,14 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public TestrayCaseResult getTopLevelTestrayCaseResult() {
-		TestrayServer testrayServer = getTestrayServer();
-
-		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults(
-			testrayServer.getTestrayCaseTypeByName("Batch"), null);
-
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			if (!Objects.equals(
-					testrayCaseResult.getName(), "Top Level Build")) {
-
-				continue;
-			}
-
-			return testrayCaseResult;
+		if (_topLevelTestrayCaseResult != null) {
+			return _topLevelTestrayCaseResult;
 		}
 
-		return null;
+		_topLevelTestrayCaseResult = getTestrayCaseResultByName(
+			"Top Level Build");
+
+		return _topLevelTestrayCaseResult;
 	}
 
 	public URL getURL() {
@@ -317,51 +370,44 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			return _testrayAttachmentURLMatcher;
 		}
 
-		TestrayCaseResult topLevelTestrayCaseResult =
-			getTopLevelTestrayCaseResult();
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
-		if (topLevelTestrayCaseResult != null) {
-			for (TestrayAttachment testrayAttachment :
-					topLevelTestrayCaseResult.getTestrayAttachments()) {
+		StringBuilder sb = new StringBuilder();
 
-				Matcher testrayAttachmentURLMatcher =
-					_testrayAttachmentURLPattern.matcher(
-						String.valueOf(testrayAttachment.getURL()));
+		sb.append("r_buildToCaseResult_c_buildId eq '");
+		sb.append(getID());
+		sb.append("'");
 
-				if (testrayAttachmentURLMatcher.find()) {
-					_testrayAttachmentURLMatcher = testrayAttachmentURLMatcher;
+		try {
+			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
+				null, 5, 5);
 
-					return _testrayAttachmentURLMatcher;
-				}
+			for (JSONObject entityJSONObject : entityJSONObjects) {
+				testrayCaseResults.add(
+					TestrayFactory.newTestrayCaseResult(
+						this, entityJSONObject));
 			}
 		}
-
-		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults();
-
-		if (testrayCaseResults.isEmpty()) {
-			return null;
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
-
-		int count = 0;
 
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			count++;
+			if (testrayCaseResult != null) {
+				for (TestrayAttachment testrayAttachment :
+						testrayCaseResult.getTestrayAttachments()) {
 
-			if (count >= 5) {
-				break;
-			}
+					Matcher testrayAttachmentURLMatcher =
+						_testrayAttachmentURLPattern.matcher(
+							String.valueOf(testrayAttachment.getURL()));
 
-			for (TestrayAttachment testrayAttachment :
-					testrayCaseResult.getTestrayAttachments()) {
+					if (testrayAttachmentURLMatcher.find()) {
+						_testrayAttachmentURLMatcher =
+							testrayAttachmentURLMatcher;
 
-				Matcher testrayAttachmentURLMatcher =
-					_testrayAttachmentURLPattern.matcher(
-						String.valueOf(testrayAttachment.getURL()));
-
-				if (testrayAttachmentURLMatcher.find()) {
-					_testrayAttachmentURLMatcher = testrayAttachmentURLMatcher;
-
-					return _testrayAttachmentURLMatcher;
+						return _testrayAttachmentURLMatcher;
+					}
 				}
 			}
 		}
@@ -375,12 +421,12 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		"Portal SHA: (?<portalSHA>[^;]+);");
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"https://testray.liferay.com/reports/production/logs/",
-			"(?<startYearMonth>\\d{4}-\\d{2})/",
+			"https://.+/(?<startYearMonth>\\d{4}-\\d{2})/",
 			"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
 			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/.*"));
 
 	private final JSONObject _jsonObject;
+	private String _pullRequestAuthor;
 	private Matcher _testrayAttachmentURLMatcher;
 	private TestrayProductVersion _testrayProductVersion;
 	private final TestrayProject _testrayProject;
@@ -388,5 +434,6 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	private List<TestrayRun> _testrayRuns;
 	private final TestrayServer _testrayServer;
 	private TopLevelBuildReport _topLevelBuildReport;
+	private TestrayCaseResult _topLevelTestrayCaseResult;
 
 }

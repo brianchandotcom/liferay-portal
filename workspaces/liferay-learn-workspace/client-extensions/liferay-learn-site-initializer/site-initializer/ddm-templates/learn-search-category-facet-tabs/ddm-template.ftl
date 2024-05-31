@@ -8,7 +8,7 @@
 	<ul class="list-unstyled tab-list" id="tab-list">
 		<li class="facet-value">
 			<@clay.button
-				cssClass="btn-unstyled facet-clear tab-btn ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('selected-tab-btn', '')}"
+				cssClass="btn-unstyled facet-clear tab-btn text-center ${assetCategoriesSearchFacetDisplayContext.isNothingSelected()?then('selected-tab-btn', '')}"
 				displayType="link"
 				onClick="${namespace}updateSelection(event)"
 				value="clear"
@@ -24,7 +24,7 @@
 		<#list entries as entry>
 			<li class="facet-value">
 				<@clay.button
-					cssClass="btn-unstyled facet-term tab-btn term-name ${(entry.isSelected())?then('selected-tab-btn', '')}"
+					cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"
 					data\-term\-id="${entry.getFilterValue()}"
 					disabled="true"
 					displayType="link"
@@ -50,17 +50,20 @@
 			id="dropdownAlignment1"
 		>
 			<div class="d-flex facet-value-mobile justify-content-center opacity-75">
+				<#assign facetCount = 0 />
 				<#list entries as entry>
 					<#if entry.isSelected()>
+						<#assign facetCount++ />
 						<span class="term-text">${entry.getBucketText()}</span>
 						<#if entry.isFrequencyVisible()>
 							<span class="term-count">${entry.getFrequency()}</span>
 						</#if>
-					<#else>
-						<span class="term-text">All results</span>
-						<span class="term-count">${totalCount}</span>
 					</#if>
 				</#list>
+				<#if facetCount == 0>
+					<span class="term-text">All results</span>
+					<span class="term-count">${totalCount}</span>
+				</#if>
 			</div>
 		</button>
 

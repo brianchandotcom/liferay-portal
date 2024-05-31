@@ -242,12 +242,14 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
+		String title = "Heló";
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
 			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
-			Collections.singletonMap(LocaleUtil.US, "Heló"),
+			Collections.singletonMap(LocaleUtil.US, title),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -259,7 +261,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:title", "Heló");
+		_assertMetaTag(document, "og:title", title);
 	}
 
 	@Test
@@ -267,15 +269,16 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
+		String description = "description@#$%^&*()~`1234567890";
+		String title = "@#$%^&*()~`1234567890title";
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(
-				LocaleUtil.US, "description@#$%^&*()~`1234567890"),
+			Collections.singletonMap(LocaleUtil.US, description),
 			Collections.emptyMap(), 0, true,
-			Collections.singletonMap(
-				LocaleUtil.US, "@#$%^&*()~`1234567890title"),
+			Collections.singletonMap(LocaleUtil.US, title),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -287,9 +290,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(
-			document, "og:description", "description@#$%^&*()~`1234567890");
-		_assertMetaTag(document, "og:title", "@#$%^&*()~`1234567890title");
+		_assertMetaTag(document, "og:description", description);
+		_assertMetaTag(document, "og:title", title);
 	}
 
 	@Test

@@ -245,14 +245,16 @@ public class TestrayFactory {
 		try {
 			Matcher testray1URLMatcher = _testray1URLPattern.matcher(
 				testrayRoutineURL);
-			Matcher testray2URLMatcher = _testray2URLPattern.matcher(
-				testrayRoutineURL);
 
-			if (testray1URLMatcher.find()) {
+			String testrayServerVersion = _getTestrayVersion();
+
+			if (testray1URLMatcher.find() &&
+				testrayServerVersion.equals("testray-1")) {
+
 				testrayRoutine = new Testray1TestrayRoutine(
 					new URL(testrayRoutineURL));
 			}
-			else if (testray2URLMatcher.find()) {
+			else {
 				testrayRoutine = new TestrayRoutine(new URL(testrayRoutineURL));
 			}
 
@@ -318,20 +320,14 @@ public class TestrayFactory {
 
 		Matcher testray1URLMatcher = _testray1URLPattern.matcher(
 			testrayServerURL);
-		Matcher testray2URLMatcher = _testray2URLPattern.matcher(
-			testrayServerURL);
 
 		if (testray1URLMatcher.find() &&
 			testrayServerVersion.equals("testray-1")) {
 
 			testrayServer = new Testray1TestrayServer(testrayServerURL);
 		}
-		else if (testray2URLMatcher.find()) {
-			testrayServer = new TestrayServer(testray2URLMatcher.group());
-		}
 		else {
-			throw new RuntimeException(
-				"Invalid Testray URL: " + testrayServerURL);
+			testrayServer = new TestrayServer(testrayServerURL);
 		}
 
 		_testrayServers.put(testrayServerURL, testrayServer);
@@ -381,9 +377,7 @@ public class TestrayFactory {
 	}
 
 	private static final Pattern _testray1URLPattern = Pattern.compile(
-		"https://testray\\.liferay\\.com");
-	private static final Pattern _testray2URLPattern = Pattern.compile(
-		"https://webserver-testray2.*\\.lfr\\.cloud");
+		"https://testray(-old)?\\.liferay\\.com");
 	private static final Map<Build, TestrayAttachmentRecorder>
 		_testrayAttachmentRecorders = new HashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>

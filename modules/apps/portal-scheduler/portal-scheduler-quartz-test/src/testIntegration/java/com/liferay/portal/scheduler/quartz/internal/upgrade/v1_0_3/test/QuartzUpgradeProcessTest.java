@@ -65,14 +65,10 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _runUpgrade() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
 			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 				_upgradeStepRegistrator, _CLASS_NAME);
 
 			upgradeProcess.upgrade();
-		}
 	}
 
 	private static final String _CLASS_NAME =

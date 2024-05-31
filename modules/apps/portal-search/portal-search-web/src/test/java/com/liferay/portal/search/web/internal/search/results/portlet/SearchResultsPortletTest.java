@@ -8,6 +8,7 @@ package com.liferay.portal.search.web.internal.search.results.portlet;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.search.Document;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -97,6 +99,9 @@ public class SearchResultsPortletTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_searchResultsPortlet, "_portal", new PortalImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			PortalUtil.class, "_portal", new PortalImpl());
 	}
 
 	@Test
@@ -108,6 +113,30 @@ public class SearchResultsPortletTest {
 		render();
 
 		_assertDisplayContextDocuments(document);
+	}
+
+	@Test
+	public void testRedirectURL() throws Exception {
+		Mockito.doReturn(
+			"/search?delta=10&start=2"
+		).when(
+			_renderRequest
+		).getAttribute(
+			WebKeys.CURRENT_URL
+		);
+
+		render();
+
+		SearchResultsPortletDisplayContext searchResultsPortletDisplayContext =
+			_getDisplayContext();
+
+		SearchContainer<Document> searchContainer =
+			searchResultsPortletDisplayContext.getSearchContainer();
+
+		Assert.assertEquals(
+			"/search?delta=10",
+			searchContainer.getIteratorURL(
+			).toString());
 	}
 
 	protected void render() throws IOException, PortletException {

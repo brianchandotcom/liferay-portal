@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepository;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLPortletResourcePermissionUtil;
@@ -764,7 +765,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository destinationRepository = RepositoryProviderUtil.getRepository(
 			destinationRepositoryId);
 
-		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		Repository sourceRepository =
+			RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
+
+		FileShortcut fileShortcut = sourceRepository.getFileShortcut(
+			fileShortcutId);
 
 		FileShortcut targetFileShortcut = destinationRepository.addFileShortcut(
 			getUserId(), destinationFolderId, fileShortcut.getToFileEntryId(),
@@ -772,7 +777,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		_copyResourcePermissions(
 			fileShortcut.getCompanyId(), DLFileShortcut.class.getName(),
-			fileShortcut.getFileShortcutId(),
+			fileShortcut.getRepositoryId(), fileShortcut.getFileShortcutId(),
+			targetFileShortcut.getRepositoryId(),
 			targetFileShortcut.getFileShortcutId());
 
 		return targetFileShortcut;
@@ -3261,7 +3267,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		_copyResourcePermissions(
 			fileEntry.getCompanyId(), DLFileEntry.class.getName(),
-			fileEntry.getFileEntryId(), targetFileEntry.getFileEntryId());
+			fileEntry.getRepositoryId(), fileEntry.getFileEntryId(),
+			targetFileEntry.getRepositoryId(),
+			targetFileEntry.getFileEntryId());
 
 		return targetFileEntry;
 	}
@@ -3379,7 +3387,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		_copyResourcePermissions(
 			sourceFolder.getCompanyId(), DLFolder.class.getName(),
-			sourceFolder.getFolderId(), targetFolder.getFolderId());
+			sourceFolder.getRepositoryId(), sourceFolder.getFolderId(),
+			targetFolder.getRepositoryId(), targetFolder.getFolderId());
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -3566,9 +3575,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	private void _copyResourcePermissions(
-			long companyId, String className, long sourceResourcePrimKey,
+			long companyId, String className, long sourceRepositoryId,
+			long sourceResourcePrimKey, long targetRepositoryId,
 			long targetResourcePrimKey)
 		throws PortalException {
+
+		if (RepositoryUtil.isExternalRepository(sourceRepositoryId) ||
+			RepositoryUtil.isExternalRepository(targetRepositoryId)) {
+
+			return;
+		}
 
 		for (int scope : ResourceConstants.SCOPES) {
 			_resourcePermissionLocalService.deleteResourcePermissions(

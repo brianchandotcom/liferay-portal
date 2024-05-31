@@ -526,6 +526,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WARNING_FEEDBACK_SPECIFIC</td>
+	<td>//div[contains(@class,'form-feedback-item') and contains(.,'${key_warningMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WARNING_IMPORT</td>
 	<td>//span[contains(@class,'text-warning')]</td>
 	<td></td>

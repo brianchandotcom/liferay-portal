@@ -2659,9 +2659,9 @@ definition {
 
 			CreateObject.saveObject();
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "If activated, the account restriction field must be selected.");
+			AssertElementPresent(
+				key_warningMessage = "If activated, the account restriction field must be selected.",
+				locator1 = "Message#WARNING_FEEDBACK_SPECIFIC");
 
 			CreateObject.activeToogleAccountRestriction();
 

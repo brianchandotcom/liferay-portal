@@ -28,13 +28,13 @@ then
 	source .env
 fi
 
-docker build -t liferay-learn-workspace/build:latest docker/build
+docker build -t liferay-learn-workspace/bootstrap:latest docker/bootstrap
 
 cd ..
 
-docker run --name learn_build -v ./:/mnt/liferay-learn-workspace liferay-learn-workspace/build:latest
+docker run --name learn-bootstrap -v ./:/mnt/liferay-learn-workspace liferay-learn-workspace/bootstrap:latest
 
-docker rm learn_build
+docker rm learn-bootstrap
 
 cd quickstart || exit
 

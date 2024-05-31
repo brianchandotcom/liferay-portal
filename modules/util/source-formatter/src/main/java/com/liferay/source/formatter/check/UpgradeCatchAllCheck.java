@@ -245,7 +245,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				StringUtil.replace(regex, CharPool.PERIOD, "\\.\\s*"));
 		}
 
-		if (Character.isUpperCase(from.charAt(0))) {
+		if (Character.isUpperCase(from.charAt(0)) ||
+			StringUtil.startsWith(from, "new")) {
+
 			String[] classNames = JSONUtil.toStringArray(
 				jsonObject.getJSONArray("classNames"));
 
@@ -651,7 +653,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return true;
 	}
 
-	private static final String _CONSTRUCTOR_REGEX = "(:?[A-Z][a-z]+)+\\(.*\\)";
+	private static final String _CONSTRUCTOR_REGEX =
+		"n?e?w? ?(:?[A-Z][a-z]+)+\\(.*\\)";
 
 	private static final Pattern _parameterNamePattern = Pattern.compile(
 		"\\w+#(\\d+)#");

@@ -325,21 +325,7 @@ public class EditInfoItemStrutsActionTest {
 
 		ObjectEntry objectEntry = objectEntries.get(0);
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		Assert.assertEquals(
-			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
-		Assert.assertNull(values.get("myDate"));
-		Assert.assertNull(values.get("myDateTime"));
-		Assert.assertEquals("0.0", String.valueOf(values.get("myDecimal")));
-		Assert.assertEquals("0", String.valueOf(values.get("myInteger")));
-		Assert.assertEquals("0", String.valueOf(values.get("myLongInteger")));
-		Assert.assertTrue(
-			Validator.isNull(String.valueOf(values.get("myPicklist"))));
-		Assert.assertEquals(
-			0, GetterUtil.getLong(values.get("myPrecisionDecimal")));
-		Assert.assertEquals(
-			StringPool.BLANK, String.valueOf(values.get("myRichText")));
+		_assertEmptyValues(objectEntry);
 	}
 
 	@Test
@@ -604,21 +590,7 @@ public class EditInfoItemStrutsActionTest {
 		objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		Assert.assertEquals(
-			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
-		Assert.assertNull(values.get("myDate"));
-		Assert.assertNull(values.get("myDateTime"));
-		Assert.assertEquals("0.0", String.valueOf(values.get("myDecimal")));
-		Assert.assertEquals("0", String.valueOf(values.get("myInteger")));
-		Assert.assertEquals("0", String.valueOf(values.get("myLongInteger")));
-		Assert.assertTrue(
-			Validator.isNull(String.valueOf(values.get("myPicklist"))));
-		Assert.assertEquals(
-			0, GetterUtil.getLong(values.get("myPrecisionDecimal")));
-		Assert.assertEquals(
-			StringPool.BLANK, String.valueOf(values.get("myRichText")));
+		_assertEmptyValues(objectEntry);
 	}
 
 	private Layout _addLayout() throws Exception {
@@ -784,6 +756,24 @@ public class EditInfoItemStrutsActionTest {
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			_user.getUserId(), objectDefinition.getObjectDefinitionId());
+	}
+
+	private void _assertEmptyValues(ObjectEntry objectEntry) {
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(
+			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
+		Assert.assertNull(values.get("myDate"));
+		Assert.assertNull(values.get("myDateTime"));
+		Assert.assertEquals("0.0", String.valueOf(values.get("myDecimal")));
+		Assert.assertEquals("0", String.valueOf(values.get("myInteger")));
+		Assert.assertEquals("0", String.valueOf(values.get("myLongInteger")));
+		Assert.assertTrue(
+			Validator.isNull(String.valueOf(values.get("myPicklist"))));
+		Assert.assertEquals(
+			0, GetterUtil.getLong(values.get("myPrecisionDecimal")));
+		Assert.assertEquals(
+			StringPool.BLANK, String.valueOf(values.get("myRichText")));
 	}
 
 	private FileItem _createFileItem(byte[] bytes) throws Exception {

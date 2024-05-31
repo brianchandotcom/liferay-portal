@@ -82,6 +82,14 @@ public abstract class BaseLocalStagingTestCase {
 				buildParameterMap());
 	}
 
+	protected void publishLayouts(long[] layoutIds) throws PortalException {
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			liveGroup.getGroupId(), false, layoutIds,
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
+	}
+
 	protected void publishLayouts(Map<String, String[]> parameterMap)
 		throws PortalException {
 

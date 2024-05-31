@@ -5,9 +5,9 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
+import com.liferay.petra.function.UnsafeSupplierValue;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.LazyValue;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -209,10 +209,11 @@ public class FreeMarkerTemplate extends BaseTemplate {
 
 			Object value = _map.get(key);
 
-			if (value instanceof LazyValue) {
-				LazyValue lazyValue = (LazyValue)value;
+			if (value instanceof UnsafeSupplierValue) {
+				UnsafeSupplierValue<?, RuntimeException> unsafeSupplierValue =
+					(UnsafeSupplierValue<?, RuntimeException>)value;
 
-				value = lazyValue.getValue();
+				value = unsafeSupplierValue.getValue();
 			}
 
 			if (value == null) {

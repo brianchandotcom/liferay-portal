@@ -570,8 +570,8 @@ public class TestrayStatusMetricResourceImpl
 		}
 
 		if (Validator.isNotNull(testrayBuildName)) {
-			sb.append("and b.name_ like '%?%' ");
-			params.add(testrayBuildName);
+			sb.append("and b.name_ like ? ");
+			params.add("%" + testrayBuildName + "%");
 		}
 
 		if (Validator.isNotNull(testrayTaskStatus)) {

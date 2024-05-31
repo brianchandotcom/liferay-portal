@@ -61,3 +61,28 @@ test('This is a test for LPD-21554. Some page names result in 404 friendly URLs.
 
 	await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage.id));
 });
+
+test('Navigating to the URL of an uncreated page does not throw errors.', async ({
+	apiHelpers,
+	page,
+	site,
+}) => {
+
+	// Create a page because the site needs a page to redirect to an Utility Page
+
+	await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	// Try to access a page that doesn't exist
+
+	await page.goto(
+		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/test-page-name`
+	);
+
+	// Doesn't show an alert but the default 404 Utility Page
+
+	await expect(page.getByRole('alert')).toHaveCount(0);
+	await expect(page.getByText('Error Code: 404')).toBeVisible();
+});

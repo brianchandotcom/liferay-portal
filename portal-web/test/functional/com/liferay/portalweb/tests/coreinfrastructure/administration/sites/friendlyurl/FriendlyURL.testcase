@@ -27,14 +27,6 @@ definition {
 		}
 	}
 
-	@description = "Verify navigating to the URL of an uncreated portlet does not throw errors."
-	@priority = 3
-	test NavigatingToURLOfUncreatedPortletDoesNotThrowError {
-		property test.assert.warning.exceptions = "true";
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/home/-/testportlet");
-	}
-
 	@description = "This is a use case for LPS-163426. Verify redirection to localized friendly URL's when using a virtual host."
 	@priority = 4
 	test RedirectToLocalizedFriendlyURLWithVirtualHost {

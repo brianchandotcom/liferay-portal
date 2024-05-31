@@ -927,7 +927,7 @@ public class EditInfoItemStrutsActionTest {
 				).put(
 					"myDateTime",
 					() -> {
-						if (Validator.isNotNull(dateTimeValueInput)) {
+						if (dateTimeValueInput != null) {
 							return Collections.singletonList(
 								dateTimeValueInput);
 						}

@@ -386,8 +386,6 @@ public class EditInfoItemStrutsActionTest {
 			Arrays.asList(listTypeEntry2.getKey(), listTypeEntry3.getKey()),
 			listTypeEntry2.getKey(), "<p>SUBTITLE</p>", 0, null, null);
 
-		uploadPortletRequest.getParameterMap();
-
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
 		_editInfoItemStrutsAction.execute(
@@ -579,8 +577,6 @@ public class EditInfoItemStrutsActionTest {
 			objectEntry.getObjectEntryId(), StringPool.BLANK, StringPool.BLANK,
 			null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, null,
 			StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK, null);
-
-		uploadPortletRequest.getParameterMap();
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 

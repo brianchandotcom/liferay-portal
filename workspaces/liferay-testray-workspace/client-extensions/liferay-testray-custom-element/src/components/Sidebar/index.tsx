@@ -163,26 +163,14 @@ const Sidebar = () => {
 						<div className="tr-sidebar__content__list">
 							{sidebarItems.map(
 								({element, icon, label, path}, index) => {
-									const [, ...items] = sidebarItems;
-
 									if (path) {
-										const someItemIsActive = items.some(
-											(item) =>
-												item.path
-													? pathname.includes(
-															item.path
-													  )
-													: false
-										);
-
 										return (
 											<SidebarItem
 												active={
-													index === 0
-														? !someItemIsActive
-														: pathname.includes(
-																path
-														  )
+													pathname.includes(
+														'project'
+													) &&
+													!path.includes('testflow')
 												}
 												expanded={expanded}
 												icon={icon}
@@ -195,7 +183,16 @@ const Sidebar = () => {
 
 									return (
 										<div
-											className="tr-sidebar__content_list__item"
+											className={classNames(
+												'tr-sidebar__content_list__item"',
+												{
+													'tr-sidebar__content__list__item--active':
+														index === 3 &&
+														pathname.includes(
+															'compare-runs'
+														),
+												}
+											)}
 											key={index}
 										>
 											{element}

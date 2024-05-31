@@ -16,6 +16,7 @@ class TestrayCaseResultHistory extends Rest<CaseResultForm, TestrayCaseResult> {
 		super({
 			nestedFields:
 				'case,build.productVersion,build.routine,run,component.team.name,team',
+			nestedFieldsDepth: 2,
 			transformData: (caseResult) => ({
 				...caseResult,
 				build: caseResult?.r_buildToCaseResult_c_build
@@ -29,21 +30,12 @@ class TestrayCaseResultHistory extends Rest<CaseResultForm, TestrayCaseResult> {
 									?.r_routineToBuilds_c_routine,
 					  }
 					: undefined,
-				case: caseResult?.r_caseToCaseResult_c_case
+				component: caseResult?.r_componentToCaseResult_c_component
 					? {
-							...caseResult?.r_caseToCaseResult_c_case,
-							component: caseResult?.r_caseToCaseResult_c_case
-								?.r_componentToCases_c_component
-								? {
-										...caseResult?.r_caseToCaseResult_c_case
-											?.r_componentToCases_c_component,
-										team:
-											caseResult
-												?.r_caseToCaseResult_c_case
-												.r_componentToCases_c_component
-												.r_teamToComponents_c_team,
-								  }
-								: undefined,
+							...caseResult.r_componentToCaseResult_c_component,
+							team:
+								caseResult.r_componentToCaseResult_c_component
+									.r_teamToComponents_c_team,
 					  }
 					: undefined,
 				run: caseResult?.r_runToCaseResult_c_run

@@ -98,8 +98,10 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 					{
 						clickable: true,
 						key: 'team',
-						render: (_, {case: testrayCase}: TestrayCaseResult) =>
-							testrayCase?.component?.team?.name,
+						render: (
+							_,
+							{component: testrayComponent}: TestrayCaseResult
+						) => testrayComponent?.team?.name,
 						value: i18n.translate('team'),
 					},
 					{

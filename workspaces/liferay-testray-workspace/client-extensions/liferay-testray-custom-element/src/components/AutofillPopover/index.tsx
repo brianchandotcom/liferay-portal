@@ -44,7 +44,7 @@ const AutofillBuildsPopover: React.FC<AutofillBuildsPopoverProps> = ({
 
 	return (
 		<div
-			className={classNames('tr-compare-runs-popover', {
+			className={classNames('tr-autofill-builds-popover', {
 				'hidden': !visible && !expanded,
 				'hidden--expanded': !visible && expanded,
 				'visible': visible && !expanded,

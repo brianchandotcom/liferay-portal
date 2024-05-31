@@ -4,7 +4,7 @@
  */
 
 import classNames from 'classnames';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import i18n from '../../i18n';
 import TestrayIcons from '../Icons/TestrayIcon';
@@ -26,15 +26,15 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 	label,
 	path,
 }) => {
-	const LinkComponent = path
-		? Link
-		: ({children, ...props}: any) => <div {...props}>{children}</div>;
-
 	return (
-		<LinkComponent
-			className={classNames('tr-sidebar__content__list__item', {
-				'tr-sidebar__content__list__item--active': active,
-			})}
+		<NavLink
+			className={({isActive}) =>
+				classNames('tr-sidebar__content__list__item', {
+					'tr-sidebar__content__list__item--active': active
+						? true
+						: isActive,
+				})
+			}
 			to={path as string}
 		>
 			<Tooltip
@@ -60,7 +60,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 					{label}
 				</span>
 			</Tooltip>
-		</LinkComponent>
+		</NavLink>
 	);
 };
 

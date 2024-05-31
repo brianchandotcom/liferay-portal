@@ -60,7 +60,14 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 						},
 						{
 							title: i18n.translate('description'),
-							value: testrayBuild.description,
+
+							value: (
+								<div
+									dangerouslySetInnerHTML={{
+										__html: testrayBuild?.description,
+									}}
+								/>
+							),
 						},
 						{
 							title: i18n.translate('git-hash'),

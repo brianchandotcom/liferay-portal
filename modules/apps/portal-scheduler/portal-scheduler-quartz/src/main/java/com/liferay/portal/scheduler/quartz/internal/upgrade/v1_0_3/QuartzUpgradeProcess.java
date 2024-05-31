@@ -7,7 +7,9 @@ package com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_3;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -17,13 +19,24 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!DBPartition.isPartitionEnabled()) {
+		if (PortalUtil.getDefaultCompanyId() !=
+				CompanyThreadLocal.getCompanyId()) {
+
 			return;
 		}
 
 		for (String createIndexSQLStatement : _CREATE_INDEX_SQL_STATEMENTS) {
 			_addIndex(createIndexSQLStatement);
 		}
+	}
+
+	@Override
+	protected boolean isSkipUpgradeProcess() {
+		if (!DBPartition.isPartitionEnabled()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _addIndex(String createIndexSQLStatement) throws Exception {

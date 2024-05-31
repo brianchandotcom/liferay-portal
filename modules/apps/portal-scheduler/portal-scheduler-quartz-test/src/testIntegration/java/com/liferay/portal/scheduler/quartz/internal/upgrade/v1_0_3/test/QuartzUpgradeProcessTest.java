@@ -42,7 +42,10 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 	public void testUpgrade() throws Exception {
 		_dropQuartzIndexes();
 
-		_runUpgrade();
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, _CLASS_NAME);
+
+		upgradeProcess.upgrade();
 
 		_assertHasAllQuartzIndexes();
 	}
@@ -64,25 +67,18 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 		}
 	}
 
-	private void _runUpgrade() throws Exception {
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
-	}
-
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_3." +
 			"QuartzUpgradeProcess";
 
 	private static final Index[] _QUARTZ_INDEXES = {
-		new Index("IX_88328984", "QUARTZ_JOB_DETAILS", false),
-		new Index("IX_779BCA37", "QUARTZ_JOB_DETAILS", false),
 		new Index("IX_BE3835E5", "QUARTZ_FIRED_TRIGGERS", false),
 		new Index("IX_4BD722BM", "QUARTZ_FIRED_TRIGGERS", false),
 		new Index("IX_339E078M", "QUARTZ_FIRED_TRIGGERS", false),
 		new Index("IX_5005E3AF", "QUARTZ_FIRED_TRIGGERS", false),
 		new Index("IX_BC2F03B0", "QUARTZ_FIRED_TRIGGERS", false),
+		new Index("IX_88328984", "QUARTZ_JOB_DETAILS", false),
+		new Index("IX_779BCA37", "QUARTZ_JOB_DETAILS", false),
 		new Index("IX_91CA7CCE", "QUARTZ_TRIGGERS", false),
 		new Index("IX_D219AFDE", "QUARTZ_TRIGGERS", false),
 		new Index("IX_A85822A0", "QUARTZ_TRIGGERS", false),

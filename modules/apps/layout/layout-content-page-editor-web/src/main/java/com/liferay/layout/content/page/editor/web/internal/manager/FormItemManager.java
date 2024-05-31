@@ -177,7 +177,7 @@ public class FormItemManager {
 
 	public JSONArray removeLayoutStructureItemsJSONArray(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure) {
+		LayoutStructure layoutStructure, List<String> removedItemIds) {
 
 		JSONArray fragmentEntryLinkIdsJSONArray =
 			_jsonFactory.createJSONArray();
@@ -185,6 +185,12 @@ public class FormItemManager {
 		for (String itemId :
 				ListUtil.copy(
 					formStyledLayoutStructureItem.getChildrenItemIds())) {
+
+			if (ListUtil.isNotEmpty(removedItemIds) &&
+				!removedItemIds.contains(itemId)) {
+
+				continue;
+			}
 
 			layoutStructure.markLayoutStructureItemForDeletion(
 				itemId, Collections.emptyList());

@@ -50,7 +50,7 @@ GradleStylingCheck | .gradle | Applies rules to enforce consistency in code styl
 GroovyImportsCheck | .groovy | Sorts and groups imports in `.groovy` files. |
 HTMLEmptyLinesCheck | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
-[IfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies |
+[IfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies. |
 [InstanceInitializerCheck](check/instance_initializer_check.markdown#instanceinitializercheck) | .java | Performs several checks on class instance initializer. |
 InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
 JSONBatchEngineDataFileCheck | .ipynb, .json or .npmbridgerc | Remove elements in `*.batch-engine-data.json` files. |

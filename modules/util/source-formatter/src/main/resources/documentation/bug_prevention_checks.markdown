@@ -16,8 +16,8 @@ BNDBreakingChangeCommitMessageCheck | .bnd | Checks that commit message should c
 [BNDExportsCheck](check/bnd_exports_check.markdown#bndexportscheck) | .bnd | Checks that modules not ending with `-api`, `-client`, `-spi`, `-taglib`, `-test-util` do not export packages. |
 [BNDIncludeResourceCheck](check/bnd_include_resource_check.markdown#bndincluderesourcecheck) | .bnd | Checks for unnecessary including of `test-classes/integration`. |
 [BNDLiferayEnterpriseAppCheck](check/bnd_liferay_enterprise_app_check.markdown#bndliferayenterpriseappcheck) | .bnd | Checks for correct use of property `Liferay-Enterprise-App`. |
-[BNDLiferayRelengBundleCheck](check/bnd_liferay_releng_bundle_check.markdown#bndliferayrelengbundlecheck) | .bnd | Checks if `.lfrbuild-release-src` file exists for DXP module with `Liferay-Releng-Bundle: true` |
-[BNDLiferayRelengCategoryCheck](check/bnd_liferay_releng_category_check.markdown#bndliferayrelengcategorycheck) | .bnd | Validates `Liferay-Releng-Category` properties |
+[BNDLiferayRelengBundleCheck](check/bnd_liferay_releng_bundle_check.markdown#bndliferayrelengbundlecheck) | .bnd | Checks if `.lfrbuild-release-src` file exists for DXP module with `Liferay-Releng-Bundle: true`. |
+[BNDLiferayRelengCategoryCheck](check/bnd_liferay_releng_category_check.markdown#bndliferayrelengcategorycheck) | .bnd | Validates `Liferay-Releng-Category` properties. |
 [BNDMultipleAppBNDsCheck](check/bnd_multiple_app_bnds_check.markdown#bndmultipleappbndscheck) | .bnd | Checks for duplicate `app.bnd` (when both `/apps/` and `/apps/dxp/` contain the same module). |
 [BNDRangeCheck](check/bnd_range_check.markdown#bndrangecheck) | .bnd | Checks for use or range expressions. |
 [BNDSchemaVersionCheck](check/bnd_schema_version_check.markdown#bndschemaversioncheck) | .bnd | Checks for incorrect use of property `Liferay-Require-SchemaVersion`. |
@@ -25,7 +25,7 @@ BNDBreakingChangeCommitMessageCheck | .bnd | Checks that commit message should c
 CDNCheck | | Checks the URL in `artifact.properties` files. |
 CQLKeywordCheck | .cql | Checks that Cassandra keywords are upper case. |
 [CodeownersFileLocationCheck](check/codeowners_file_location_check.markdown#codeownersfilelocationcheck) | CODEOWNERS | Checks that `CODEOWNERS` files are located in `.github` directory. |
-[CompanyIterationCheck](check/company_iteration_check.markdown#companyiterationcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies |
+[CompanyIterationCheck](check/company_iteration_check.markdown#companyiterationcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies. |
 CompatClassImportsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that classes are imported from `compat` modules, when possible. |
 ComponentAnnotationCheck | .java | Performs several checks on classes with @Component annotation. |
 [ComponentExposureCheck](check/component_exposure_check.markdown#componentexposurecheck) | .java | Avoid exposing static component. |
@@ -157,16 +157,16 @@ JavaVerifyUpgradeConnectionCheck | .java | Finds cases where `DataAccess.getConn
 LFRBuildContentCheck | .lfrbuild-* | Finds `.lfrbuild*` files that are not empty. |
 LPS42924Check | .java | Finds cases where `PortalUtil.getClassName*` (instead of calling `classNameLocalService` directly). |
 LanguageKeysCheck | .java, .js or .jsx | Finds missing language keys in `Language.properties`. |
-LibraryVulnerabilitiesCheck | .gradle, .gradle, .gradle, .gradle, .json, .json, .properties, .properties, .xml or .xml | Checks the introduction of libraries and third party components with known vulnerabilities |
+LibraryVulnerabilitiesCheck | .gradle, .gradle, .gradle, .gradle, .json, .json, .properties, .properties, .xml or .xml | Checks the introduction of libraries and third party components with known vulnerabilities. |
 LocaleUtilCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where `com.liferay.portal.kernel.util.LocaleUtil` should be used (instead of `java.util.Locale`). |
 LogParametersCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates the values of parameters passed to `_log.*` calls. |
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/checks/annotation/missingdeprecated.html) | .java | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
 MissingDiamondOperatorCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for missing diamond operator for types that require diamond operator. |
 MissingModifierCheck | .java | Verifies that a method or global variable has a modifier specified. |
 ModifiedMethodCheck | .java | Checks for incorrect `modified` method with `@Modified` annotation. |
-NestedFieldAnnotationCheck | .java | Checks for `nested.field.support` in the `property` attribute of the `Component` annotation |
+NestedFieldAnnotationCheck | .java | Checks for `nested.field.support` in the `property` attribute of the `Component` annotation. |
 [NullAssertionInIfStatementCheck](check/null_assertion_in_if_statement_check.markdown#nullassertioninifstatementcheck) | .java | Verifies that null check should always be first in if-statement. |
-OSGiCommandsCheck | .java | Perform several checks on `*OSGiCommands` classes |
+OSGiCommandsCheck | .java | Perform several checks on `*OSGiCommands` classes. |
 PackageinfoBNDExportPackageCheck | packageinfo | Finds legacy `packageinfo` files. |
 PersistenceCallCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds illegal persistence calls across component boundaries. |
 [PersistenceUpdateCheck](check/persistence_update_check.markdown#persistenceupdatecheck) | .java | Checks that there are no stale references in service code from persistence updates. |
@@ -203,7 +203,7 @@ ServiceUpdateCheck | .java | Checks that there are no stale references in servic
 SystemEventCheck | .java | Finds missing or redundant usage of @SystemEvent for delete events. |
 TLDTypeCheck | .tld | Ensures the fully qualified name is used for types in `.tld` file. |
 TestClassMissingLiferayUnitTestRuleCheck | .java | Finds missing LiferayUnitTestRule. |
-[ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.markdown#threadcontextclassloadercheck) | .java | Checks usage of `Thread.setContextClassLoader` |
+[ThreadContextClassLoaderCheck](check/thread_context_class_loader_check.markdown#threadcontextclassloadercheck) | .java | Checks usage of `Thread.setContextClassLoader`. |
 TransactionalTestRuleCheck | .java | Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`. |
 URLInputStreamCheck | .java | Checks usages of `URL.openStream()`. |
 UnparameterizedClassCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds `Class` instantiation without generic type. |

@@ -28,7 +28,7 @@ export class HeadlessAdminWorkflowApiHelper {
 
 	async postWorkflowDefinitionSave(
 		name: string,
-		workflowDefinition: WorkflowDefinition
+		workflowDefinition: Partial<WorkflowDefinition>
 	): Promise<WorkflowDefinition> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/workflow-definitions/save`,

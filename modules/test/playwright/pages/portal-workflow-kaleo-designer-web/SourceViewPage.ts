@@ -7,14 +7,27 @@ import {Locator, Page} from '@playwright/test';
 
 export class SourceViewPage {
 	readonly diagramViewButton: Locator;
+	readonly saveButton: Locator;
+	readonly xmlFirstLine: Locator;
+	readonly page: Page;
 
 	constructor(page: Page) {
 		this.diagramViewButton = page
 			.locator('button[title="Diagram View"]')
 			.first();
+		this.saveButton = page.getByText('Save');
+		this.xmlFirstLine = page
+			.locator('pre')
+			.filter({hasText: '<?xml version="1.0"?>'});
 	}
 
 	async clickDiagramViewButton() {
 		await this.diagramViewButton.click();
+	}
+
+	async saveWorkflowDefinition() {
+		await this.xmlFirstLine.waitFor({state: 'visible'});
+
+		await this.saveButton.click();
 	}
 }

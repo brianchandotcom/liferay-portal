@@ -38,67 +38,17 @@ public class RelevantRuleEngine {
 	public List<RelevantRule> getMatchingRelevantRules(
 		List<File> modifiedFiles) {
 
-		for (File modifiedFile : modifiedFiles) {
-			for (String testPropertiesFilePath :
-					_getTestPropertiesFilePaths(modifiedFile, null)) {
-
-				if (!_testPropertiesModifiedFilePathsMap.containsKey(
-						testPropertiesFilePath)) {
-
-					_testPropertiesModifiedFilePathsMap.put(
-						testPropertiesFilePath, new HashSet<String>());
-				}
-
-				Set<String> modifiedFilePaths =
-					_testPropertiesModifiedFilePathsMap.get(
-						testPropertiesFilePath);
-
-				modifiedFilePaths.add(
-					JenkinsResultsParserUtil.getCanonicalPath(modifiedFile));
-			}
-		}
-
-		for (Map.Entry<String, Set<String>> entry :
-				_testPropertiesModifiedFilePathsMap.entrySet()) {
-
-			String testPropertiesFilePath = entry.getKey();
-
-			File testPropertiesFile = new File(testPropertiesFilePath);
-
-			Properties properties = JenkinsResultsParserUtil.getProperties(
-				testPropertiesFile);
-
-			String relevantRuleNamesPropertyValue =
-				JenkinsResultsParserUtil.getProperty(
-					properties, "relevant.rule.names");
-
-			if (relevantRuleNamesPropertyValue == null) {
-				continue;
-			}
-
-			String[] relevantRuleNames = relevantRuleNamesPropertyValue.split(
-				",");
-
-			for (String relevantRuleName : relevantRuleNames) {
-				_relevantRuleMap.put(
-					_getRelevantRule(
-						testPropertiesFilePath, relevantRuleName,
-						_getRelevantRuleProperties(
-							relevantRuleName, properties)),
-					entry.getValue());
-			}
-		}
+		_populateRelevantRuleMap(
+			_getTestPropertiesModifiedFilesMap(modifiedFiles));
 
 		List<RelevantRule> matchingRelevantRules = new ArrayList<>();
 
-		for (Map.Entry<RelevantRule, Set<String>> entry :
+		for (Map.Entry<RelevantRule, Set<File>> entry :
 				_relevantRuleMap.entrySet()) {
 
 			RelevantRule relevantRule = entry.getKey();
 
-			for (String modifiedFilePath : entry.getValue()) {
-				File modifiedFile = new File(modifiedFilePath);
-
+			for (File modifiedFile : entry.getValue()) {
 				if (relevantRule.matches(modifiedFile)) {
 					matchingRelevantRules.add(relevantRule);
 
@@ -131,21 +81,6 @@ public class RelevantRuleEngine {
 		_relevantRuleMap.put(relevantRule, new HashSet<>());
 
 		return relevantRule;
-	}
-
-	private Properties _getRelevantRuleProperties(
-		String relevantRuleName, File propertiesFile) {
-
-		String propertiesFileName = propertiesFile.getName();
-
-		if (!propertiesFileName.endsWith(".properties")) {
-			throw new RuntimeException(
-				"Invalid properties file: " + propertiesFile);
-		}
-
-		return _getRelevantRuleProperties(
-			relevantRuleName,
-			JenkinsResultsParserUtil.getProperties(propertiesFile));
 	}
 
 	private Properties _getRelevantRuleProperties(
@@ -195,10 +130,65 @@ public class RelevantRuleEngine {
 		return _getTestPropertiesFilePaths(file, testPropertiesFilePaths);
 	}
 
+	private Map<String, Set<File>> _getTestPropertiesModifiedFilesMap(
+		List<File> modifiedFiles) {
+
+		Map<String, Set<File>> testPropertiesModifiedFilesMap = new HashMap<>();
+
+		for (File modifiedFile : modifiedFiles) {
+			for (String testPropertiesFilePath :
+					_getTestPropertiesFilePaths(modifiedFile, null)) {
+
+				if (!testPropertiesModifiedFilesMap.containsKey(
+						testPropertiesFilePath)) {
+
+					testPropertiesModifiedFilesMap.put(
+						testPropertiesFilePath, new HashSet<File>());
+				}
+
+				Set<File> testPropertiesModifiedFiles =
+					testPropertiesModifiedFilesMap.get(testPropertiesFilePath);
+
+				testPropertiesModifiedFiles.add(modifiedFile);
+			}
+		}
+
+		return testPropertiesModifiedFilesMap;
+	}
+
+	private void _populateRelevantRuleMap(
+		Map<String, Set<File>> testPropertiesModifiedFilesMap) {
+
+		for (Map.Entry<String, Set<File>> entry :
+				testPropertiesModifiedFilesMap.entrySet()) {
+
+			String testPropertiesFilePath = entry.getKey();
+
+			File testPropertiesFile = new File(testPropertiesFilePath);
+
+			Properties properties = JenkinsResultsParserUtil.getProperties(
+				testPropertiesFile);
+
+			String relevantRuleNames = JenkinsResultsParserUtil.getProperty(
+				properties, "relevant.rule.names");
+
+			if (relevantRuleNames == null) {
+				continue;
+			}
+
+			for (String relevantRuleName : relevantRuleNames.split(",")) {
+				_relevantRuleMap.put(
+					_getRelevantRule(
+						testPropertiesFilePath, relevantRuleName,
+						_getRelevantRuleProperties(
+							relevantRuleName, properties)),
+					entry.getValue());
+			}
+		}
+	}
+
 	private final File _baseDir;
-	private final Map<RelevantRule, Set<String>> _relevantRuleMap =
-		new HashMap<>();
-	private final Map<String, Set<String>> _testPropertiesModifiedFilePathsMap =
+	private final Map<RelevantRule, Set<File>> _relevantRuleMap =
 		new HashMap<>();
 	private String _testSuiteName = "relevant";
 

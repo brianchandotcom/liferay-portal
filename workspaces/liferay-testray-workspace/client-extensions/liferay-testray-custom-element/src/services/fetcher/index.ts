@@ -54,22 +54,35 @@ function changeResource(resource: RequestInfo) {
 	return `${liferayHost}/o/c${resource}`;
 }
 
+const EXTEND_SESSION_5_MINUTES = 5 * 60 * 1000;
+
+const safeLiferaySessionExtend = () => {
+	const currentTimestamp = Date.now();
+	const lastTimestampStorage = sessionStorage.getItem('lastTimestamp') || 0;
+	let lastTimestamp = parseInt(String(lastTimestampStorage), 10);
+
+	if (!lastTimestampStorage) {
+		lastTimestamp = currentTimestamp;
+
+		sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
+	}
+
+	if (currentTimestamp - lastTimestamp > EXTEND_SESSION_5_MINUTES) {
+		try {
+			Liferay.Session.reset();
+
+			sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
+		} catch (error) {
+			console.error('Unable to extend Session', error);
+		}
+	}
+};
+
 const fetcher = async <T = any>(
 	resource: RequestInfo,
 	options?: RequestInit
 ): Promise<T | undefined> => {
-	const currentTimestamp = Date.now();
-	const lastTimestamp =
-		parseInt(sessionStorage.getItem('lastTimestamp') as string, 10) || 0;
-
-	if (!lastTimestamp) {
-		sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
-	}
-
-	if (currentTimestamp - lastTimestamp > 5 * 60 * 1000) {
-		Liferay.Session.reset();
-		sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
-	}
+	safeLiferaySessionExtend();
 
 	const response = await fetch(changeResource(resource), {
 		...options,

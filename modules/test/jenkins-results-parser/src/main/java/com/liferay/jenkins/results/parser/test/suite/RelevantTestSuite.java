@@ -5,9 +5,9 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,32 +17,17 @@ import java.util.List;
  */
 public class RelevantTestSuite {
 
-	public RelevantTestSuite(
-		String name, PortalTestClassJob portalTestClassJob) {
+	public RelevantTestSuite(File baseDir, List<File> modifiedFiles) {
+		_modifiedFiles = modifiedFiles;
 
-		_name = name;
-		_portalTestClassJob = portalTestClassJob;
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			portalTestClassJob.getPortalGitWorkingDirectory();
-
-		_relevantRuleEngine = new RelevantRuleEngine(
-			portalGitWorkingDirectory.getWorkingDirectory());
-	}
-
-	public String getName() {
-		return _name;
+		_relevantRuleEngine = new RelevantRuleEngine(baseDir);
 	}
 
 	public List<TestBatch> getTestBatches() {
 		List<TestBatch> testBatches = new ArrayList<>();
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			_portalTestClassJob.getPortalGitWorkingDirectory();
-
 		List<RelevantRule> relevantRules =
-			_relevantRuleEngine.getMatchingRelevantRules(
-				portalGitWorkingDirectory.getModifiedFilesList());
+			_relevantRuleEngine.getMatchingRelevantRules(_modifiedFiles);
 
 		for (RelevantRule relevantRule : relevantRules) {
 			testBatches.addAll(relevantRule.getTestBatches());
@@ -51,8 +36,7 @@ public class RelevantTestSuite {
 		return testBatches;
 	}
 
-	private final String _name;
-	private final PortalTestClassJob _portalTestClassJob;
+	private final List<File> _modifiedFiles;
 	private final RelevantRuleEngine _relevantRuleEngine;
 
 }

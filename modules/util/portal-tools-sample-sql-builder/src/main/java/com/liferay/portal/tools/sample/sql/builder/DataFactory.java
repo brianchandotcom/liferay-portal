@@ -4017,9 +4017,25 @@ public class DataFactory {
 						"",
 						_readFile(
 							"fragment_component" +
-								"/fragment_component_paragraph_content_edit" +
+								"/fragment_component_paragraph_title_edit" +
 									"Value.json"),
 						paragraphRenderNamespace, 0,
+						_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
+				originalFragmentEntryLinkModels.add(
+					newFragmentEntryLinkModel(
+						layoutModel, 0, segmentsExperienceId,
+						_readFile(
+							_getFragmentComponentInputStream(
+								"paragraph", "css")),
+						_readFile(
+							_getFragmentComponentInputStream(
+								"paragraph", "html")),
+						"",
+						_readFile(
+							"fragment_component" +
+								"/fragment_component_paragraph_content_edit" +
+									"Value.json"),
+						paragraphRenderNamespace, 1,
 						_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 				originalFragmentEntryLinkModels.add(
 					newFragmentEntryLinkModel(
@@ -7559,10 +7575,20 @@ public class DataFactory {
 			String rendererKey = fragmentEntryLinkModel.getRendererKey();
 
 			if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
-				data = StringUtil.replace(
-					data, "${paragraphContentFragmentEntryLinkId}",
-					String.valueOf(
-						fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				int position = fragmentEntryLinkModel.getPosition();
+
+				if (position == 0) {
+					data = StringUtil.replace(
+						data, "${paragraphTitleFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+				else {
+					data = StringUtil.replace(
+						data, "${paragraphContentFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
 			}
 			else {
 				data = StringUtil.replace(

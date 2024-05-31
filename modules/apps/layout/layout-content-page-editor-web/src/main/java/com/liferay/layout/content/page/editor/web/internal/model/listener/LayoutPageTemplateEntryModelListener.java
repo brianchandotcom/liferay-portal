@@ -138,7 +138,7 @@ public class LayoutPageTemplateEntryModelListener
 		}
 
 		_formItemManager.removeLayoutStructureItemsJSONArray(
-			formStyledLayoutStructureItem, layoutStructure);
+			formStyledLayoutStructureItem, layoutStructure, null);
 
 		formStyledLayoutStructureItem.setClassNameId(0);
 		formStyledLayoutStructureItem.setClassTypeId(0);

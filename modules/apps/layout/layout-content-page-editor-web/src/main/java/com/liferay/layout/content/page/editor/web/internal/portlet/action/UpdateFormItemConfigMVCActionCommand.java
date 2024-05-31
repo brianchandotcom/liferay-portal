@@ -38,8 +38,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -72,11 +75,11 @@ public class UpdateFormItemConfigMVCActionCommand
 			actionRequest, actionResponse);
 	}
 
-	private String[] _getCurrentUniqueFieldIds(
+	private Map<String, String> _getCurrentInputFields(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
 
-		List<String> fieldNames = new ArrayList<>();
+		Map<String, String> inputFields = new HashMap<>();
 
 		for (String itemId :
 				formStyledLayoutStructureItem.getChildrenItemIds()) {
@@ -104,11 +107,12 @@ public class UpdateFormItemConfigMVCActionCommand
 					themeDisplay.getLocale()));
 
 			if (Validator.isNotNull(fieldName)) {
-				fieldNames.add(fieldName);
+				inputFields.put(
+					fieldName, fragmentStyledLayoutStructureItem.getItemId());
 			}
 		}
 
-		return fieldNames.toArray(new String[0]);
+		return inputFields;
 	}
 
 	private JSONObject _updateFormStyledLayoutStructureItemConfig(
@@ -163,7 +167,7 @@ public class UpdateFormItemConfigMVCActionCommand
 
 			removedLayoutStructureItemsJSONArray =
 				_formItemManager.removeLayoutStructureItemsJSONArray(
-					formStyledLayoutStructureItem, layoutStructure);
+					formStyledLayoutStructureItem, layoutStructure, null);
 
 			if (formStyledLayoutStructureItem.getClassNameId() > 0) {
 				String[] infoFieldUniqueIds = StringUtil.split(
@@ -189,16 +193,19 @@ public class UpdateFormItemConfigMVCActionCommand
 
 				List<String> newInfoUniqueFieldIds = new ArrayList<>();
 
-				String[] currentInfoUniqueFieldIds = _getCurrentUniqueFieldIds(
+				Map<String, String> currentInputFields = _getCurrentInputFields(
 					formStyledLayoutStructureItem, layoutStructure,
 					themeDisplay);
+
+				Set<String> currentInfoFieldUniqueIds =
+					currentInputFields.keySet();
 
 				String[] infoFieldUniqueIds = StringUtil.split(
 					ParamUtil.getString(actionRequest, "fields"));
 
 				for (String infoFieldUniqueId : infoFieldUniqueIds) {
-					if (!ArrayUtil.contains(
-							currentInfoUniqueFieldIds, infoFieldUniqueId)) {
+					if (!currentInfoFieldUniqueIds.contains(
+							infoFieldUniqueId)) {
 
 						newInfoUniqueFieldIds.add(infoFieldUniqueId);
 					}
@@ -214,6 +221,26 @@ public class UpdateFormItemConfigMVCActionCommand
 							themeDisplay.getLocale(), segmentsExperienceId,
 							ServiceContextFactory.getInstance(
 								httpServletRequest));
+				}
+
+				List<String> removedItemIds = new ArrayList<>();
+
+				for (String currentInfoFieldUniqueId :
+						currentInfoFieldUniqueIds) {
+
+					if (!ArrayUtil.contains(
+							infoFieldUniqueIds, currentInfoFieldUniqueId)) {
+
+						removedItemIds.add(
+							currentInputFields.get(currentInfoFieldUniqueId));
+					}
+				}
+
+				if (ListUtil.isNotEmpty(removedItemIds)) {
+					removedLayoutStructureItemsJSONArray =
+						_formItemManager.removeLayoutStructureItemsJSONArray(
+							formStyledLayoutStructureItem, layoutStructure,
+							removedItemIds);
 				}
 			}
 		}

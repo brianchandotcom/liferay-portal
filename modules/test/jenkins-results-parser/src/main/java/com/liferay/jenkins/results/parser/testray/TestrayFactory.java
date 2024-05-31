@@ -16,6 +16,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGro
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -293,12 +294,16 @@ public class TestrayFactory {
 			return testrayServer;
 		}
 
+		String testrayServerVersion = _getTestrayVersion();
+
 		Matcher testray1URLMatcher = _testray1URLPattern.matcher(
 			testrayServerURL);
 		Matcher testray2URLMatcher = _testray2URLPattern.matcher(
 			testrayServerURL);
 
-		if (testray1URLMatcher.find()) {
+		if (testray1URLMatcher.find() &&
+			testrayServerVersion.equals("testray-1")) {
+
 			testrayServer = new Testray1TestrayServer(testrayServerURL);
 		}
 		else if (testray2URLMatcher.find()) {
@@ -343,6 +348,16 @@ public class TestrayFactory {
 			new TopLevelBuildTestrayCaseResult(testrayBuild, topLevelBuild));
 
 		return _topLevelBuildTestrayCaseResults.get(testrayBuildID);
+	}
+
+	private static String _getTestrayVersion() {
+		try {
+			return JenkinsResultsParserUtil.getBuildProperty(
+				"testray.server.version");
+		}
+		catch (IOException ioException) {
+			return "testray-2";
+		}
 	}
 
 	private static final Pattern _testray1URLPattern = Pattern.compile(

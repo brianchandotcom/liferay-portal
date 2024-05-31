@@ -1644,16 +1644,16 @@ public abstract class BaseBuild implements Build {
 		if (slaveOfflineRule.getOfflineSibling() &&
 			(jenkinsMaster.getSlavesPerHost() == 2)) {
 
-			Set<JenkinsSlave> slaveSiblings = jenkinsSlave.getSiblings();
+			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
 
-			for (JenkinsSlave sibling : slaveSiblings) {
+			for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
 				sb.append("\n\n\nOffline Sibling URL: https://");
 
 				sb.append(jenkinsMaster.getName());
 
 				sb.append(".liferay.com/computer/");
 
-				sb.append(sibling.getName());
+				sb.append(siblingJenkinsSlave.getName());
 
 				sb.append("\n");
 
@@ -1661,7 +1661,7 @@ public abstract class BaseBuild implements Build {
 					pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
 					" Reason: ", slaveOfflineRule.getName());
 
-				sibling.takeSlavesOffline(siblingMessage);
+					siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
 			}
 		}
 

@@ -176,6 +176,14 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async getProducts(searchParams = new URLSearchParams()) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${
+				this.basePath
+			}/products?${searchParams.toString()}`
+		);
+	}
+
 	async getProductByVersion(productId: number, version: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/by-version/${version}`
@@ -185,6 +193,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async getProductsPage(pageSize: number, search: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products?pageSize=${pageSize}&search=${search}`
+		);
+	}
+
+	async getProductVirtualSettings(productId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/product-virtual-settings`
 		);
 	}
 
@@ -417,8 +431,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					},
 				}
 			);
-		}
-		else {
+		} else {
 			postSpecification = await this.apiHelpers.post(
 				`${this.apiHelpers.baseUrl}${this.basePath}/specifications`,
 				{

@@ -4,12 +4,17 @@
  */
 
 import {Locator, Page, expect} from '@playwright/test';
+import path from 'path';
 
 import {PublishProductPayload, Steps} from '../types';
+import {products} from '../utils/constants';
 
 export class PublisherAppPage {
+	readonly addPackagesButton: Locator;
 	readonly backButton: Locator;
 	readonly cloudCompatibleRadio: Locator;
+	readonly compatibleVersionsCheckbox: Locator;
+	readonly confirmButton: Locator;
 	readonly continueButton: Locator;
 	readonly form: {
 		build: {
@@ -29,6 +34,7 @@ export class PublisherAppPage {
 	};
 	protected publishProductPayload: PublishProductPayload;
 	readonly logoUploadButton: Locator;
+	readonly compatibleVersionsModal: Locator;
 	readonly page: Page;
 	readonly selectFileButton: Locator;
 	readonly submissionCheckbox: Locator;
@@ -36,8 +42,15 @@ export class PublisherAppPage {
 	readonly zipFilesContainer: Locator;
 
 	constructor(page: Page) {
+		this.addPackagesButton = page.getByRole('button', {
+			name: 'Add Package(s)',
+		});
 		this.backButton = page.getByRole('button', {name: 'Back'});
 		this.cloudCompatibleRadio = page.locator('.radio-card-button-icon');
+		this.compatibleVersionsCheckbox = page.getByLabel(
+			products.free_dxp.appVersion[0]
+		);
+		this.confirmButton = page.getByRole('button', {name: 'Confirm'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.form = {
 			build: {
@@ -62,6 +75,7 @@ export class PublisherAppPage {
 			},
 		};
 		this.logoUploadButton = page.getByText('Upload Image');
+		this.compatibleVersionsModal = page.locator('.modal-content');
 		this.selectFileButton = page.getByRole('button', {
 			name: 'Select a file',
 		});
@@ -158,9 +172,22 @@ export class PublisherAppPage {
 			expect(await this.zipFilesContainer).toContainText(
 				this.publishProductPayload.zipFiles[0].split('/').at(-1)
 			);
-		}
-		else {
+		} else {
 			await this.cloudCompatibleRadio.last().click();
+			await this.addPackagesButton.click();
+
+			await this.page
+				.getByRole('heading', {
+					name: 'Select Compatible Versions',
+				})
+				.waitFor({state: 'visible'});
+
+			await this.compatibleVersionsCheckbox.first().click();
+			await this.confirmButton.click();
+			await this.importFile(
+				this.selectFileButton,
+				path.join(__dirname, '../dependencies/marketplace-test-app.jar')
+			);
 		}
 
 		for (const compatibleOffering of this.publishProductPayload

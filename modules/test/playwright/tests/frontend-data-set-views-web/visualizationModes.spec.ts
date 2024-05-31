@@ -367,6 +367,74 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
+	test('Add a field and assert its added to the last position in the table', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const SAMPLE_FIELD = 'name';
+		const SAMPLE_SCALAR_FIELD = 'id';
+		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const SAMPLE_OBJECT_CHILD_FIELD = 'id';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
+
+		await test.step('Add fields', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.*`,
+				fieldName: SAMPLE_OBJECT_FIELD,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
+				fieldName: SAMPLE_OBJECT_CHILD_FIELD,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Add a new field', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_FIELD,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Check if field is added to the last position', async () => {
+			const lastTableRow = visualizationModesPage.page.locator(
+				'table.orderable-table > tbody tr:last-child'
+			);
+
+			await expect(lastTableRow.locator('td').nth(1)).toHaveText(
+				SAMPLE_FIELD
+			);
+
+			await visualizationModesPage.assertTableFieldRowCount(4);
+		});
+	});
+
 	test('Configure table visualization mode with array fields @LPD-11769', async ({
 		page,
 		visualizationModesPage,

@@ -30,7 +30,18 @@ public class RelevantTestSuite {
 			_relevantRuleEngine.getMatchingRelevantRules(_modifiedFiles);
 
 		for (RelevantRule relevantRule : relevantRules) {
-			testBatches.addAll(relevantRule.getTestBatches());
+			for (TestBatch testBatch : relevantRule.getTestBatches()) {
+				if (testBatches.contains(testBatch)) {
+					TestBatch existingTestBatch = testBatches.get(
+						testBatches.indexOf(testBatch));
+
+					existingTestBatch.merge(testBatch);
+
+					continue;
+				}
+
+				testBatches.add(testBatch);
+			}
 		}
 
 		return testBatches;

@@ -20,6 +20,16 @@ public abstract class BaseTestBatch<T extends BaseTestSelector>
 		_testSelector = testSelector;
 	}
 
+	public boolean equals(Object object) {
+		if (object instanceof TestBatch) {
+			TestBatch testBatch = (TestBatch)object;
+
+			return _name.equals(testBatch.getName());
+		}
+
+		return false;
+	}
+
 	@Override
 	public String getName() {
 		return _name;
@@ -28,6 +38,11 @@ public abstract class BaseTestBatch<T extends BaseTestSelector>
 	@Override
 	public T getTestSelector() {
 		return _testSelector;
+	}
+
+	@Override
+	public int hashCode() {
+		return _name.hashCode();
 	}
 
 	@Override

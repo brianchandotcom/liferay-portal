@@ -200,8 +200,8 @@ public class GenerateTestrayCSVUtil {
 
 			if (_isSimilarError(testrayCaseResult, previousTestrayCaseResult) &&
 				!Objects.equals(
-					testrayCaseResult.getPullRequestAuthor(),
-					previousTestrayCaseResult.getPullRequestAuthor())) {
+					testrayCaseResult.getPullRequestSenderUsername(),
+					previousTestrayCaseResult.getPullRequestSenderUsername())) {
 
 				return Type.COMMON;
 			}

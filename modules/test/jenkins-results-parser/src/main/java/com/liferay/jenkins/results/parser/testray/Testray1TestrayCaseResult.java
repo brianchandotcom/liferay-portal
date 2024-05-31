@@ -72,7 +72,7 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
-	public String getPullRequestAuthor() {
+	public String getPullRequestSenderUsername() {
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(_pullRequestAuthor)) {
 			return _pullRequestAuthor;
 		}

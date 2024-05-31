@@ -101,10 +101,10 @@ public class TestrayCaseResult {
 		return testrayCase.getPriority();
 	}
 
-	public String getPullRequestAuthor() {
+	public String getPullRequestSenderUsername() {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
-		return testrayBuild.getPullRequestAuthor();
+		return testrayBuild.getPullRequestSenderUsername();
 	}
 
 	public Status getStatus() {

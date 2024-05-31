@@ -81,17 +81,19 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return matcher.group("portalSHA");
 	}
 
-	public String getPullRequestAuthor() {
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_pullRequestAuthor)) {
-			return _pullRequestAuthor;
+	public String getPullRequestSenderUsername() {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				_pullRequestSenderUsername)) {
+
+			return _pullRequestSenderUsername;
 		}
 
 		URL topLevelBuildURL = getTopLevelBuildURL();
 
 		if (topLevelBuildURL == null) {
-			_pullRequestAuthor = "Unknown";
+			_pullRequestSenderUsername = "Unknown";
 
-			return _pullRequestAuthor;
+			return _pullRequestSenderUsername;
 		}
 
 		try {
@@ -101,15 +103,16 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			Map<String, String> buildParameters =
 				topLevelBuildReport.getBuildParameters();
 
-			_pullRequestAuthor = buildParameters.get("GITHUB_SENDER_USERNAME");
+			_pullRequestSenderUsername = buildParameters.get(
+				"GITHUB_SENDER_USERNAME");
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 
-			_pullRequestAuthor = "Unknown";
+			_pullRequestSenderUsername = "Unknown";
 		}
 
-		return _pullRequestAuthor;
+		return _pullRequestSenderUsername;
 	}
 
 	public String getStartYearMonth() {
@@ -435,7 +438,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/.*"));
 
 	private final JSONObject _jsonObject;
-	private String _pullRequestAuthor;
+	private String _pullRequestSenderUsername;
 	private Matcher _testrayAttachmentURLMatcher;
 	private TestrayProductVersion _testrayProductVersion;
 	private TestrayProject _testrayProject;

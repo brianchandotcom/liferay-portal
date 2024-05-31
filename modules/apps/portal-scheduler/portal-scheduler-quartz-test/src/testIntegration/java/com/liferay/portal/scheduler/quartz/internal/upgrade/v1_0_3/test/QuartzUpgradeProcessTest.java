@@ -169,14 +169,6 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 		}
 	}
 
-	private void _assertHasAnyQuartzIndex() throws Exception {
-		for (Index index : _QUARTZ_INDEXES) {
-			Assert.assertFalse(
-				_dbInspector.hasIndex(
-					index.getTableName(), index.getIndexName()));
-		}
-	}
-
 	private void _dropQuartzIndexes() throws Exception {
 		for (Index index : _QUARTZ_INDEXES) {
 			_db.runSQL(
@@ -226,7 +218,5 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 		filter = "(&(component.name=com.liferay.portal.scheduler.quartz.internal.upgrade.registry.QuartzServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private final UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

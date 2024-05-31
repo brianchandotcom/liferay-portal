@@ -109,6 +109,16 @@ public class CompanyLocalServiceWrapper
 		_companyLocalService.checkCompanyKey(companyId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Company copyBPartitionCompany(
+			String name, long sourceCompanyId, long targetCompanyId,
+			String virtualHostname, String webId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.copyBPartitionCompany(
+			name, sourceCompanyId, targetCompanyId, virtualHostname, webId);
+	}
+
 	/**
 	 * Creates a new company with the primary key. Does not add the company to the database.
 	 *

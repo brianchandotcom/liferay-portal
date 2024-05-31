@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class TestrayRoutine {
 
 	public static final String[] FIELD_NAMES = {
-		"dateCreated", "dateModified", "id", "name"
+		"dateCreated", "dateModified", "id", "name", "routineToProjects"
 	};
 
 	public TestrayBuild createTestrayBuild(
@@ -189,6 +189,16 @@ public class TestrayRoutine {
 	}
 
 	public TestrayProject getTestrayProject() {
+		if (_testrayProject != null) {
+			return _testrayProject;
+		}
+
+		JSONObject projectJSONObject = _jsonObject.getJSONObject(
+			"routineToProjects");
+
+		_testrayProject = _testrayServer.getTestrayProjectByID(
+			projectJSONObject.getLong("id"));
+
 		return _testrayProject;
 	}
 
@@ -225,6 +235,13 @@ public class TestrayRoutine {
 
 		_testrayServer = testrayProject.getTestrayServer();
 
+		_jsonObject = jsonObject;
+	}
+
+	protected TestrayRoutine(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		_testrayServer = testrayServer;
 		_jsonObject = jsonObject;
 	}
 

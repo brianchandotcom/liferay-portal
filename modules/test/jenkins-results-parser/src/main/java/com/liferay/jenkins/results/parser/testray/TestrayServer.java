@@ -192,6 +192,32 @@ public class TestrayServer {
 		return testrayProjects;
 	}
 
+	public TestrayRoutine getTestrayRoutineByID(long routineId) {
+		try {
+			List<JSONObject> entityJSONObjects = requestGraphQL(
+				"routines", TestrayRoutine.FIELD_NAMES,
+				"id eq '" + routineId + "'", null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			JSONObject entityJSONObject = entityJSONObjects.get(0);
+
+			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
+				"projectToBuilds");
+
+			TestrayProject testrayProject = getTestrayProjectByID(
+				projectJSONObject.getLong("id"));
+
+			return testrayProject.getTestrayRoutineByID(
+				entityJSONObject.getLong("id"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public URL getURL() {
 		return _url;
 	}

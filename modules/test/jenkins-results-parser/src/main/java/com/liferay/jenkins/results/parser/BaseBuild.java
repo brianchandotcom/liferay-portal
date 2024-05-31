@@ -1619,9 +1619,8 @@ public abstract class BaseBuild implements Build {
 
 		String message = JenkinsResultsParserUtil.combine(
 			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
-			getBuildURL(), ". \n\n", slaveOfflineRuleString, "\n\n\nOffline Slave URL: ",
-			jenkinsSlave.getComputerURL(), "\n");
-
+			getBuildURL(), ". \n\n", slaveOfflineRuleString,
+			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n");
 
 		if (slaveOfflineRule.getOfflineSibling() &&
 			(jenkinsMaster.getSlavesPerHost() == 2)) {
@@ -1629,7 +1628,6 @@ public abstract class BaseBuild implements Build {
 			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
 
 			for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
-
 				message = JenkinsResultsParserUtil.combine(
 					message, siblingJenkinsSlave.getComputerURL(), "\n");
 
@@ -1637,7 +1635,7 @@ public abstract class BaseBuild implements Build {
 					pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
 					" Reason: ", slaveOfflineRule.getName());
 
-					siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
+				siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
 			}
 		}
 

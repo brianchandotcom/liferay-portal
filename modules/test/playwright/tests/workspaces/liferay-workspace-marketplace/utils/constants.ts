@@ -27,7 +27,6 @@ export const products = {
 		zipFiles: [path.join(dependenciesFolder, 'marketplace-test-app.zip')],
 	},
 	free_dxp: {
-		appVersion: ['Liferay Portal 7.4 GA110'],
 		categories: ['Customer Data Management'],
 		cloudCompatible: false,
 		compatibleOfferings: ['Self-Hosted'],

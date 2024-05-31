@@ -6,9 +6,9 @@
 package com.liferay.jenkins.results.parser.test.batch;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Kenji Heigel
@@ -54,6 +54,6 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 		validate(PLAYWRIGHT_TEST_PROJECT);
 	}
 
-	private final Set<String> _playwrightProjectNames = new HashSet<>();
+	private final Set<String> _playwrightProjectNames = new TreeSet<>();
 
 }

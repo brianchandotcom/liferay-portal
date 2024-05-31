@@ -311,6 +311,84 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@FeatureFlags("LPD-20213")
 	@Test
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormDeletingFields()
+		throws Exception {
+
+		InfoField<?>[] allInfoFields = ArrayUtil.append(
+			_INFO_FIELDS,
+			new InfoField<?>[] {
+				_getInfoField(
+					BooleanInfoFieldType.INSTANCE,
+					RandomTestUtil.randomString()),
+				_getInfoField(
+					TextInfoFieldType.INSTANCE, RandomTestUtil.randomString())
+			});
+
+		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
+				new ComponentEnablerTemporarySwapper(
+					_BUNDLE_SYMBOLIC_NAME, _COMPONENT_CLASS_NAME, true);
+			MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(allInfoFields)
+						).build(),
+						_portal, _editPageInfoItemCapability)) {
+
+			JSONObject addItemJSONObject =
+				ContentLayoutTestUtil.addItemToLayout(
+					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
+					_layoutStructureProvider, _segmentsExperienceId);
+
+			long classNameId = _portal.getClassNameId(
+				MockObject.class.getName());
+
+			String formItemId = addItemJSONObject.getString("addedItemId");
+
+			List<String> fields = TransformUtil.transform(
+				ListUtil.fromArray(allInfoFields), InfoField::getUniqueId);
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					StringUtil.merge(fields),
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			fields = TransformUtil.transform(
+				ListUtil.fromArray(_INFO_FIELDS), InfoField::getUniqueId);
+
+			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				_getMockLiferayPortletActionRequest(
+					StringUtil.merge(fields),
+					JSONUtil.put(
+						"classNameId", classNameId
+					).put(
+						"classTypeId", "0"
+					).toString(),
+					formItemId, _layout),
+				new MockLiferayPortletActionResponse());
+
+			_assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
+				updateFormJSONObject, 0, StringPool.BLANK, StringPool.BLANK, 2);
+
+			_assertFormStyledLayoutStructureItem(
+				classNameId, _INFO_FIELDS.length + 1, formItemId, allInfoFields,
+				true, false);
+		}
+	}
+
+	@FeatureFlags("LPD-20213")
+	@Test
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithEmptySpecificField()
 		throws Exception {
 

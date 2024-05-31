@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -58,10 +56,12 @@ public class DocumentShortcutResourceImpl
 		throws Exception {
 
 		return Page.of(
-			_toDocumentShortcuts(
+			transform(
 				_dlFileShortcutService.getGroupFileShortcuts(
 					siteId, pagination.getStartPosition(),
-					pagination.getEndPosition())),
+					pagination.getEndPosition()),
+				dlFileShortcut -> _toDocumentShortcut(
+					new LiferayFileShortcut(dlFileShortcut))),
 			pagination,
 			_dlFileShortcutService.getGroupFileShortcutsCount(siteId));
 	}
@@ -83,16 +83,6 @@ public class DocumentShortcutResourceImpl
 				_dtoConverterRegistry, fileShortcut.getFileShortcutId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
-	}
-
-	private List<DocumentShortcut> _toDocumentShortcuts(
-			List<DLFileShortcut> dlFileShortcuts)
-		throws Exception {
-
-		return transform(
-			dlFileShortcuts,
-			dlFileShortcut -> _toDocumentShortcut(
-				new LiferayFileShortcut(dlFileShortcut)));
 	}
 
 	@Reference

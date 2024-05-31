@@ -16,6 +16,11 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -112,6 +117,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -133,10 +140,10 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -151,6 +158,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.io.Closeable;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -178,6 +186,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -3375,25 +3385,33 @@ public class ObjectEntryLocalServiceTest {
 	public void testUpdateObjectEntryWithJavaDelegateObjectValidationRule()
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			ObjectEntryLocalServiceTest.class);
+		BiFunction<Map<String, Object>, String, String> biFunction =
+			(inputObjects, sourceName) -> {
+				Map<String, Object> entryDTO =
+					(Map<String, Object>)inputObjects.get(sourceName);
 
-		BundleContext bundleContext = bundle.getBundleContext();
+				Map<String, Object> entryValues =
+					(Map<String, Object>)entryDTO.get("properties");
+
+				return GetterUtil.getString(
+					entryValues.get("emailAddressRequired"));
+			};
+
+		Consumer<Map<String, Object>> consumer = inputObjects -> {
+			Assert.assertEquals(
+				"john@liferay.com", biFunction.apply(inputObjects, "entryDTO"));
+			Assert.assertEquals(
+				"bob@liferay.com",
+				biFunction.apply(inputObjects, "originalEntryDTO"));
+		};
 
 		String key =
 			ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
 				RandomTestUtil.randomString();
 
-		ServiceRegistration<ObjectValidationRuleEngine> serviceRegistration =
-			bundleContext.registerService(
-				ObjectValidationRuleEngine.class,
-				new TestObjectValidationRuleEngine(
-					TestPropsValues.getCompanyId(),
-					Collections.singletonList(_objectDefinition.getName()),
-					key),
-				null);
+		try (Closeable closeable = _registryTestObjectValidationRuleEngine(
+				consumer, key)) {
 
-		try {
 			ObjectEntry objectEntry = _addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddressRequired", "bob@liferay.com"
@@ -3414,9 +3432,6 @@ public class ObjectEntryLocalServiceTest {
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
-		}
-		finally {
-			serviceRegistration.unregister();
 		}
 	}
 
@@ -3470,6 +3485,97 @@ public class ObjectEntryLocalServiceTest {
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
+	@Test
+	public void testUpdateUserSystemObjectEntryWithJavaDelegateObjectValidationRule()
+		throws Exception {
+
+		Consumer<Map<String, Object>> consumer = inputObjects -> {
+			Map<String, Object> entryDTO =
+				(Map<String, Object>)inputObjects.get("entryDTO");
+
+			List<Map<String, Object>> customFields =
+				(List<Map<String, Object>>)entryDTO.get("customFields");
+
+			Map<String, Object> customField = customFields.get(0);
+
+			Assert.assertEquals("customFieldName", customField.get("name"));
+
+			Map<String, Object> customValue =
+				(Map<String, Object>)customField.get("customValue");
+
+			Assert.assertEquals("customFieldValue", customValue.get("data"));
+
+			Assert.assertEquals(
+				"textObjectFieldValue", entryDTO.get("textObjectFieldName"));
+		};
+
+		String key =
+			ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
+				RandomTestUtil.randomString();
+
+		try (Closeable closeable = _registryTestObjectValidationRuleEngine(
+				consumer, key)) {
+
+			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
+				PortalUtil.getClassNameId(User.class),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+				expandoTable, "customFieldName", ExpandoColumnConstants.STRING);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setExpandoBridgeAttributes(
+				HashMapBuilder.<String, Serializable>put(
+					expandoColumn.getName(), "customFieldValue"
+				).build());
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchSystemObjectDefinition(
+					"User");
+
+			User user = UserTestUtil.addUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE),
+				serviceContext.getLocale(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				new long[] {serviceContext.getScopeGroupId()}, serviceContext);
+
+			ObjectField objectField = _addCustomObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).build());
+
+			_objectEntryLocalService.
+				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
+					TestPropsValues.getUserId(), objectDefinition,
+					user.getPrimaryKey(),
+					HashMapBuilder.<String, Serializable>put(
+						objectField.getName(), "textObjectFieldValue"
+					).build(),
+					serviceContext);
+
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				StringPool.BLANK, TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(), true, key,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION, "",
+				false, Collections.emptyList());
+
+			UserTestUtil.updateUser(user);
 		}
 	}
 
@@ -3747,6 +3853,27 @@ public class ObjectEntryLocalServiceTest {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private Closeable _registryTestObjectValidationRuleEngine(
+			Consumer<Map<String, Object>> consumer, String key)
+		throws PortalException {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectEntryLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<ObjectValidationRuleEngine> serviceRegistration =
+			bundleContext.registerService(
+				ObjectValidationRuleEngine.class,
+				new TestObjectValidationRuleEngine(
+					TestPropsValues.getCompanyId(),
+					Collections.singletonList(_objectDefinition.getName()),
+					consumer, key),
+				null);
+
+		return serviceRegistration::unregister;
 	}
 
 	private void _testAddObjectEntryAsDraft() throws Exception {
@@ -4186,38 +4313,7 @@ public class ObjectEntryLocalServiceTest {
 		public Map<String, Object> execute(
 			Map<String, Object> inputObjects, String script) {
 
-			String emailAddressRequired = "";
-
-			if (inputObjects.containsKey("entryDTO") &&
-				Validator.isNotNull(inputObjects.get("entryDTO"))) {
-
-				Map<String, Object> entryDTO =
-					(Map<String, Object>)inputObjects.get("entryDTO");
-
-				Map<String, Object> entryValues =
-					(Map<String, Object>)entryDTO.get("properties");
-
-				emailAddressRequired = GetterUtil.getString(
-					entryValues.get("emailAddressRequired"));
-			}
-
-			String oldEmailAddressRequired = "";
-
-			if (inputObjects.containsKey("originalEntryDTO") &&
-				Validator.isNotNull(inputObjects.get("originalEntryDTO"))) {
-
-				Map<String, Object> originalEntryDTO =
-					(Map<String, Object>)inputObjects.get("originalEntryDTO");
-
-				Map<String, Object> originalEntryValues =
-					(Map<String, Object>)originalEntryDTO.get("properties");
-
-				oldEmailAddressRequired = GetterUtil.getString(
-					originalEntryValues.get("emailAddressRequired"));
-			}
-
-			Assert.assertEquals("john@liferay.com", emailAddressRequired);
-			Assert.assertEquals("bob@liferay.com", oldEmailAddressRequired);
+			_consumer.accept(inputObjects);
 
 			return HashMapBuilder.<String, Object>put(
 				"validationCriteriaMet", true
@@ -4246,15 +4342,17 @@ public class ObjectEntryLocalServiceTest {
 
 		private TestObjectValidationRuleEngine(
 			long allowedCompanyId, List<String> allowedObjectDefinitionNames,
-			String key) {
+			Consumer<Map<String, Object>> consumer, String key) {
 
 			_allowedCompanyId = allowedCompanyId;
 			_allowedObjectDefinitionNames = allowedObjectDefinitionNames;
+			_consumer = consumer;
 			_key = key;
 		}
 
 		private final long _allowedCompanyId;
 		private final List<String> _allowedObjectDefinitionNames;
+		private final Consumer<Map<String, Object>> _consumer;
 		private final String _key;
 
 	}

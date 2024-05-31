@@ -31,6 +31,8 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.client.extension.util.CETUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -260,6 +262,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
+		DepotEntryLocalService depotEntryLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
@@ -343,6 +347,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
+		_depotEntryLocalService = depotEntryLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
@@ -5322,6 +5328,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final DepotEntryGroupRelLocalService
+		_depotEntryGroupRelLocalService;
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;

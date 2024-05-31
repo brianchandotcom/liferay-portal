@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.messaging.Message;
@@ -382,6 +383,133 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	@Test
+	public void testCopyDBPartitionCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		_scheduleJob(company.getCompanyId(), _JOB_NAME);
+
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
+
+		String name = RandomTestUtil.randomString();
+		String virtualHostname = RandomTestUtil.randomString();
+		String webId = RandomTestUtil.randomString();
+
+		Company newCompany = null;
+
+		try {
+			newCompany = companyLocalService.copyBPartitionCompany(
+				name, company.getCompanyId(), 0, virtualHostname, webId);
+
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					_getCompanyIdsBySQL(), newCompany.getCompanyId()));
+
+			Assert.assertEquals(name, newCompany.getName());
+			Assert.assertEquals(
+				virtualHostname, newCompany.getVirtualHostname());
+			Assert.assertEquals(webId, newCompany.getWebId());
+
+			Assert.assertEquals(
+				_JOBS_COUNT + 2, _getJobsCount(_defaultCompanyId));
+			Assert.assertEquals(
+				1, _getPartitionedJobsCount(company.getCompanyId()));
+		}
+		finally {
+			removeDBPartitions(new long[] {company.getCompanyId()});
+
+			if (newCompany != null) {
+				removeDBPartitions(new long[] {newCompany.getCompanyId()});
+			}
+		}
+	}
+
+	@Test
+	public void testCopyDBPartitionCompanyWhenCompanyLocalServiceFails()
+		throws Exception {
+
+		Company company = CompanyTestUtil.addCompany();
+
+		_scheduleJob(company.getCompanyId(), _JOB_NAME);
+
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
+
+		long targetCompanyId = RandomTestUtil.nextLong();
+
+		try {
+			companyLocalService.copyBPartitionCompany(
+				company.getName(), company.getCompanyId(), targetCompanyId,
+				company.getVirtualHostname(), company.getWebId());
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertFalse(
+				ArrayUtil.contains(_getCompanyIdsBySQL(), targetCompanyId));
+
+			Assert.assertEquals(
+				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
+
+			_checkPartitionNonexists(targetCompanyId);
+		}
+		finally {
+			companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
+	public void testCopyDBPartitionCompanyWhenDBPartitionUtilFails()
+		throws Exception {
+
+		Company company = CompanyTestUtil.addCompany();
+
+		_scheduleJob(company.getCompanyId(), _JOB_NAME);
+
+		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
+
+		String name = RandomTestUtil.randomString();
+		long targetCompanyId = RandomTestUtil.nextLong();
+		String virtualHostname = RandomTestUtil.randomString();
+		String webId = RandomTestUtil.randomString();
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DBPartitionUtil.class, "_dbPartitionDB",
+					ProxyUtil.newProxyInstance(
+						DBPartitionDB.class.getClassLoader(),
+						new Class<?>[] {DBPartitionDB.class},
+						(proxy, method, args) -> {
+							if (Objects.equals(
+									method.getName(), "getCreateViewSQL") &&
+								StringUtil.equalsIgnoreCase(
+									(String)args[2], "VirtualHost")) {
+
+								throw new Exception();
+							}
+
+							return method.invoke(dbPartitionDB, args);
+						}))) {
+
+			companyLocalService.copyBPartitionCompany(
+				name, company.getCompanyId(), targetCompanyId, virtualHostname,
+				webId);
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertFalse(
+				ArrayUtil.contains(_getCompanyIdsBySQL(), targetCompanyId));
+
+			Assert.assertEquals(
+				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
+
+			_checkPartitionNonexists(targetCompanyId);
+		}
+		finally {
+			companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
@@ -540,6 +668,48 @@ public class CompanyLocalServiceDBPartitionTest
 			companyId -> _resourceActionLocalService.checkResourceActions());
 	}
 
+	private void _checkPartitionNonexists(long companyId) throws SQLException {
+		List<String> partitionNames = new ArrayList<>();
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		if (db.getDBType() == DBType.MYSQL) {
+			try (ResultSet resultSet = databaseMetaData.getSchemas()) {
+				while (resultSet.next()) {
+					partitionNames.add(resultSet.getString("TABLE_SCHEM"));
+				}
+			}
+		}
+		else {
+			try (ResultSet resultSet = databaseMetaData.getCatalogs()) {
+				while (resultSet.next()) {
+					partitionNames.add(resultSet.getString("TABLE_CAT"));
+				}
+			}
+		}
+
+		Assert.assertFalse(
+			partitionNames.contains(getPartitionName(companyId)));
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select companyId from ", defaultPartitionName,
+					".Company where companyId = '", companyId, "'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertFalse(resultSet.next());
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select virtualHostId from ", defaultPartitionName,
+					".VirtualHost where companyId = '", companyId, "'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertFalse(resultSet.next());
+		}
+	}
+
 	private void _checkStandaloneDBPartitionTables(
 			long companyId, String... expectedTableNames)
 		throws Exception {
@@ -628,6 +798,24 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		return objectNames;
+	}
+
+	private int _getPartitionedJobsCount(long companyId) throws Exception {
+		String partitionName = getPartitionName(companyId);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(1) from ", partitionName,
+					".QUARTZ_JOB_DETAILS where JOB_GROUP = '", _JOB_GROUP_NAME,
+					"' and JOB_NAME like '%@", companyId, "'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		throw new Exception("Table does not exist");
 	}
 
 	private int _getTablesCount(long companyId) throws Exception {

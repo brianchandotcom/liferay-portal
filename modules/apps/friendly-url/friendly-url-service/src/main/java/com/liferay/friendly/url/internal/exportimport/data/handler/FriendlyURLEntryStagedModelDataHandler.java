@@ -137,23 +137,21 @@ public class FriendlyURLEntryStagedModelDataHandler
 				friendlyURLEntry.getUuid(),
 				portletDataContext.getScopeGroupId());
 
-		FriendlyURLEntry importedFriendlyURLEntry = null;
+		FriendlyURLEntry importedFriendlyURLEntry =
+			(FriendlyURLEntry)friendlyURLEntry.clone();
+
+		importedFriendlyURLEntry.setGroupId(
+			portletDataContext.getScopeGroupId());
+		importedFriendlyURLEntry.setCompanyId(
+			portletDataContext.getCompanyId());
+		importedFriendlyURLEntry.setClassNameId(classNameId);
+		importedFriendlyURLEntry.setClassPK(
+			MapUtil.getLong(
+				newPrimaryKeysMap, friendlyURLEntry.getClassPK(),
+				friendlyURLEntry.getClassPK()));
 
 		if ((existingFriendlyURLEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
-
-			importedFriendlyURLEntry =
-				(FriendlyURLEntry)friendlyURLEntry.clone();
-
-			importedFriendlyURLEntry.setGroupId(
-				portletDataContext.getScopeGroupId());
-			importedFriendlyURLEntry.setCompanyId(
-				portletDataContext.getCompanyId());
-			importedFriendlyURLEntry.setClassNameId(classNameId);
-			importedFriendlyURLEntry.setClassPK(
-				MapUtil.getLong(
-					newPrimaryKeysMap, friendlyURLEntry.getClassPK(),
-					friendlyURLEntry.getClassPK()));
 
 			importedFriendlyURLEntry = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedFriendlyURLEntry);
@@ -168,7 +166,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 		}
 		else {
 			importedFriendlyURLEntry = _stagedModelRepository.updateStagedModel(
-				portletDataContext, friendlyURLEntry);
+				portletDataContext, importedFriendlyURLEntry);
 
 			boolean mainEntry = GetterUtil.getBoolean(
 				friendlyURLEntryElement.attributeValue("mainEntry"));

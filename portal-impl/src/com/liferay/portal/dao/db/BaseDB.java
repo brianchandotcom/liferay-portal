@@ -642,7 +642,7 @@ public abstract class BaseDB implements DB {
 
 					include = replaceTemplate(include);
 
-					runSQLTemplateString(include, true);
+					runSQLTemplateString(connection, include, true);
 				}
 				else {
 					sb.append(line);

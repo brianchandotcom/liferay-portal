@@ -10,6 +10,7 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.dto.v1_0.DocumentShortcut;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
@@ -2100,6 +2101,35 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DocumentShortcut createAssetLibraryDocumentShortcut(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("documentShortcut") DocumentShortcut documentShortcut)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.postAssetLibraryDocumentShortcut(
+					Long.valueOf(assetLibraryId), documentShortcut));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryDocumentShortcutBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.postAssetLibraryDocumentShortcutBatch(
+					Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response createSiteDocumentShortcutsPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("callbackURL") String callbackURL,
@@ -2115,6 +2145,35 @@ public class Mutation {
 					postSiteDocumentShortcutsPageExportBatch(
 						Long.valueOf(siteKey), callbackURL, contentType,
 						fieldNames));
+	}
+
+	@GraphQLField
+	public DocumentShortcut createSiteDocumentShortcut(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("documentShortcut") DocumentShortcut documentShortcut)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.postSiteDocumentShortcut(
+					Long.valueOf(siteKey), documentShortcut));
+	}
+
+	@GraphQLField
+	public Response createSiteDocumentShortcutBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.postSiteDocumentShortcutBatch(
+					Long.valueOf(siteKey), callbackURL, object));
 	}
 
 	@GraphQLField(

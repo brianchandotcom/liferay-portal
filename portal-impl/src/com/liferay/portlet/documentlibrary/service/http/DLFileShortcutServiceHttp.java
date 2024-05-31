@@ -86,37 +86,6 @@ public class DLFileShortcutServiceHttp {
 		}
 	}
 
-	public static long countByGroupId(
-		HttpPrincipal httpPrincipal, long groupId) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				DLFileShortcutServiceUtil.class, "countByGroupId",
-				_countByGroupIdParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return ((Long)returnObj).longValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static void deleteFileShortcut(
 			HttpPrincipal httpPrincipal, long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -124,7 +93,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "deleteFileShortcut",
-				_deleteFileShortcutParameterTypes2);
+				_deleteFileShortcutParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileShortcutId);
@@ -160,7 +129,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "getFileShortcut",
-				_getFileShortcutParameterTypes3);
+				_getFileShortcutParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileShortcutId);
@@ -201,7 +170,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "getGroupFileShortcuts",
-				_getGroupFileShortcutsParameterTypes4);
+				_getGroupFileShortcutsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -236,7 +205,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "getGroupFileShortcuts",
-				_getGroupFileShortcutsParameterTypes5);
+				_getGroupFileShortcutsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, start, end);
@@ -254,6 +223,37 @@ public class DLFileShortcutServiceHttp {
 			return (java.util.List
 				<com.liferay.document.library.kernel.model.DLFileShortcut>)
 					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static long getGroupFileShortcutsCount(
+		HttpPrincipal httpPrincipal, long groupId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileShortcutServiceUtil.class, "getGroupFileShortcutsCount",
+				_getGroupFileShortcutsCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Long)returnObj).longValue();
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -354,16 +354,16 @@ public class DLFileShortcutServiceHttp {
 			long.class, long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _countByGroupIdParameterTypes1 =
+	private static final Class<?>[] _deleteFileShortcutParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _deleteFileShortcutParameterTypes2 =
+	private static final Class<?>[] _getFileShortcutParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getFileShortcutParameterTypes3 =
+	private static final Class<?>[] _getGroupFileShortcutsParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getGroupFileShortcutsParameterTypes4 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getGroupFileShortcutsParameterTypes5 =
 		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getGroupFileShortcutsCountParameterTypes5 =
+		new Class[] {long.class};
 	private static final Class<?>[] _updateFileShortcutParameterTypes6 =
 		new Class[] {
 			long.class, long.class, long.class, long.class,

@@ -38,10 +38,6 @@ public class DLFileShortcutServiceUtil {
 			groupId, repositoryId, folderId, toFileEntryId, serviceContext);
 	}
 
-	public static long countByGroupId(long groupId) {
-		return getService().countByGroupId(groupId);
-	}
-
 	public static void deleteFileShortcut(long fileShortcutId)
 		throws PortalException {
 
@@ -62,6 +58,10 @@ public class DLFileShortcutServiceUtil {
 		long groupId, int start, int end) {
 
 		return getService().getGroupFileShortcuts(groupId, start, end);
+	}
+
+	public static long getGroupFileShortcutsCount(long groupId) {
+		return getService().getGroupFileShortcutsCount(groupId);
 	}
 
 	/**

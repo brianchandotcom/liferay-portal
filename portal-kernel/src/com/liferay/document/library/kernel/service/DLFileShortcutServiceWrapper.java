@@ -39,11 +39,6 @@ public class DLFileShortcutServiceWrapper
 	}
 
 	@Override
-	public long countByGroupId(long groupId) {
-		return _dlFileShortcutService.countByGroupId(groupId);
-	}
-
-	@Override
 	public void deleteFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -68,6 +63,11 @@ public class DLFileShortcutServiceWrapper
 
 		return _dlFileShortcutService.getGroupFileShortcuts(
 			groupId, start, end);
+	}
+
+	@Override
+	public long getGroupFileShortcutsCount(long groupId) {
+		return _dlFileShortcutService.getGroupFileShortcutsCount(groupId);
 	}
 
 	/**

@@ -46,24 +46,23 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({
 
 		testrayBuildImpl
 			.autofill(autofillBuild.buildA, autofillBuild.buildB)
-			.then(({caseAmount, runId1, runId2}) => {
+			.then(({caseAmount, testrayRunId1, testrayRunId2}) => {
 				Liferay.Util.openToast({
-					message: i18n.sub('x-case-results-were-autofilled', [
-						caseAmount,
-						runId1,
-						runId2,
-					]),
+					message: i18n.sub(
+						'x-case-results-were-autofilled',
+						caseAmount
+					),
 				});
 
-				setRunA(runId1);
-				setRunB(runId2);
+				setRunA(testrayRunId1);
+				setRunB(testrayRunId2);
 
 				setType('compareRuns');
 
 				Liferay.Util.openToast({
 					message: i18n.sub('runs-x-and-x-ready-to-be-compared', [
-						runId1,
-						runId2,
+						testrayRunId1,
+						testrayRunId2,
 					]),
 				});
 			})

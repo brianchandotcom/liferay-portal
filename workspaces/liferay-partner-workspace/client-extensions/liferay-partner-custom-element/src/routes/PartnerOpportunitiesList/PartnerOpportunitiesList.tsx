@@ -183,6 +183,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 			{
 				component: (
 					<DateFilter
+						clearInputs={filters?.closeDate}
 						dateFilters={(dates: {
 							endDate: string;
 							startDate: string;

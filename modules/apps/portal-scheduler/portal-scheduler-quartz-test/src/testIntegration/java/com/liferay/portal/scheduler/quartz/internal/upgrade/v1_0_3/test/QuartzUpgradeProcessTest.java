@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
@@ -59,12 +57,18 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _dropQuartzIndexes() throws Exception {
-		for (Index index : _QUARTZ_INDEXES) {
-			_db.runSQL(
-				StringBundler.concat(
-					"drop index ", index.getIndexName(), " on ",
-					index.getTableName()));
-		}
+		_db.runSQL(
+			StringBundler.concat(
+				"drop index ", _QUARTZ_INDEXES[0].getIndexName(), " on ",
+				_QUARTZ_INDEXES[0].getTableName()));
+		_db.runSQL(
+			StringBundler.concat(
+				"drop index ", _QUARTZ_INDEXES[5].getIndexName(), " on ",
+				_QUARTZ_INDEXES[5].getTableName()));
+		_db.runSQL(
+			StringBundler.concat(
+				"drop index ", _QUARTZ_INDEXES[7].getIndexName(), " on ",
+				_QUARTZ_INDEXES[7].getTableName()));
 	}
 
 	private static final String _CLASS_NAME =

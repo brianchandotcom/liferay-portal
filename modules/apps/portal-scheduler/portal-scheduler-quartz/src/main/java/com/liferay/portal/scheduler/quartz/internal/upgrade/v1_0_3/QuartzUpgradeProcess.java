@@ -30,7 +30,7 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 		String[] parts = StringUtil.split(
 			createIndexSQLStatement, CharPool.SPACE);
 
-		if (!hasIndex(parts[2], parts[4])) {
+		if (!hasIndex(parts[4], parts[2])) {
 			runSQL(createIndexSQLStatement);
 		}
 	}

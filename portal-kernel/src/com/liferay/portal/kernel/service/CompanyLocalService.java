@@ -118,6 +118,11 @@ public interface CompanyLocalService
 	 */
 	public void checkCompanyKey(long companyId) throws PortalException;
 
+	public Company copyBPartitionCompany(
+			String name, long sourceCompanyId, long targetCompanyId,
+			String virtualHostname, String webId)
+		throws PortalException;
+
 	/**
 	 * Creates a new company with the primary key. Does not add the company to the database.
 	 *

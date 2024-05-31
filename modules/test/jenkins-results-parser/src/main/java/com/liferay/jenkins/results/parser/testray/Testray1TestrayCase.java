@@ -23,10 +23,10 @@ public class Testray1TestrayCase extends TestrayCase {
 	}
 
 	@Override
-	public String getID() {
+	public long getID() {
 		JSONObject jsonObject = getJSONObject();
 
-		return jsonObject.optString("testrayCaseId");
+		return jsonObject.getLong("testrayCaseId");
 	}
 
 	@Override

@@ -12,12 +12,16 @@ import org.json.JSONObject;
  */
 public class TestrayCase {
 
+	public static final String[] FIELD_NAMES = {
+		"dateCreated", "dateModified", "id", "name"
+	};
+
 	public String getComponent() {
 		return null;
 	}
 
-	public String getID() {
-		return _jsonObject.getString("id");
+	public long getID() {
+		return _jsonObject.getLong("id");
 	}
 
 	public JSONObject getJSONObject() {

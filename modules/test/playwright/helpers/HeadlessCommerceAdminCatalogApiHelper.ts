@@ -431,7 +431,8 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					},
 				}
 			);
-		} else {
+		}
+		else {
 			postSpecification = await this.apiHelpers.post(
 				`${this.apiHelpers.baseUrl}${this.basePath}/specifications`,
 				{

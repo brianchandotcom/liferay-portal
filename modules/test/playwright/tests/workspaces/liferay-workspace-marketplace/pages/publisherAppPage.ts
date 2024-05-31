@@ -130,7 +130,8 @@ export class PublisherAppPage {
 				this.selectFileButton.nth(1),
 				path.join(__dirname, '../dependencies/marketplace-test-app.jar')
 			);
-		} else {
+		}
+		else {
 			await this.compatibleVersionsFirstCheckbox.click();
 			await this.confirmButton.click();
 			await this.importFile(

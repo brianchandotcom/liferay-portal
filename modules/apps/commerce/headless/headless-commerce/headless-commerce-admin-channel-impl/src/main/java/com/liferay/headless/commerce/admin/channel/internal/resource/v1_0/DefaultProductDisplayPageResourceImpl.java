@@ -162,7 +162,7 @@ public class DefaultProductDisplayPageResourceImpl
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction(
-				ActionKeys.DELETE, commerceChannel.getCommerceChannelId(),
+				ActionKeys.UPDATE, commerceChannel.getCommerceChannelId(),
 				"deleteChannelIdDefaultProductDisplayPage",
 				contextUser.getUserId(), CommerceChannel.class.getName(),
 				commerceChannel.getGroupId())

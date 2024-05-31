@@ -163,7 +163,7 @@ public class DefaultCategoryDisplayPageResourceImpl
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction(
-				ActionKeys.DELETE, commerceChannel.getCommerceChannelId(),
+				ActionKeys.UPDATE, commerceChannel.getCommerceChannelId(),
 				"deleteChannelIdDefaultCategoryDisplayPage",
 				contextUser.getUserId(), CommerceChannel.class.getName(),
 				commerceChannel.getGroupId())

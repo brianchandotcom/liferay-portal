@@ -319,15 +319,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		themeDisplay.setLanguageId("ar_SA");
-		themeDisplay.setLocale(locale);
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -335,7 +326,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
-				httpServletRequest, mockHttpServletResponse,
+				_getHttpServletRequest(locale), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
 			true, true);
 
@@ -371,15 +362,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		themeDisplay.setLanguageId("ar_SA");
-		themeDisplay.setLocale(locale);
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -387,7 +369,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
-				httpServletRequest, mockHttpServletResponse,
+				_getHttpServletRequest(locale), mockHttpServletResponse,
 				RandomTestUtil.randomString()),
 			true, true);
 
@@ -1825,10 +1807,17 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws PortalException {
+		return _getHttpServletRequest(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+	}
+
+	private HttpServletRequest _getHttpServletRequest(Locale locale)
+		throws PortalException {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		ThemeDisplay themeDisplay = _getThemeDisplay(locale);
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 
@@ -1866,6 +1855,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws PortalException {
+		return _getThemeDisplay(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+	}
+
+	private ThemeDisplay _getThemeDisplay(Locale locale)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		Company company = _companyLocalService.getCompany(
@@ -1873,12 +1869,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		themeDisplay.setCompany(company);
 
-		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
-		themeDisplay.setLocale(
-			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+		themeDisplay.setLocale(locale);
 		themeDisplay.setPortalDomain("localhost");
 		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
 		themeDisplay.setScopeGroupId(_group.getGroupId());

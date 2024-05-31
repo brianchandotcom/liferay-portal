@@ -108,8 +108,8 @@ public class RelevantRule {
 
 				_testBatches.add(
 					TestBatchFactory.newTestBatch(
-						getProperties(), testBatchName, getName(),
-						getTestSuiteName()));
+						new File(_filePath), getProperties(), testBatchName,
+						getName(), getTestSuiteName()));
 			}
 		}
 

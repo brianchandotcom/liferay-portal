@@ -40,9 +40,9 @@ public abstract class BaseTestSelector implements TestSelector {
 
 	protected void validate(String propertyName) {
 		if (getProperty(propertyName) == null) {
-			throw new RuntimeException(
-				"Unable to to create " + _batchName + " since " + propertyName +
-					" is not set");
+			throw new IllegalStateException(
+				"Unable to create batch " + _batchName + " since " +
+					propertyName + " is not set");
 		}
 	}
 

@@ -181,9 +181,12 @@ export default class SearchBuilder {
 					filter.value
 				);
 			}
-			else {
-				return SearchBuilder[customOperator](requestOperator, filter);
-			}
+
+			return SearchBuilder[customOperator](requestOperator, filter);
+		}
+
+		if (typeof filter === 'string') {
+			return filter;
 		}
 
 		return this.formatValuesToString(

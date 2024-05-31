@@ -515,18 +515,20 @@ const filterSchema = {
 	builds: {
 		fields: [
 			overrides(baseFilters.productVersion, {
-				name: 'productVersionToBuilds/id',
+				isCustomFilter: true,
+				name: 'testrayProductVersion',
 				type: 'select',
 			}),
 			{
+				isCustomFilter: true,
 				label: i18n.translate('build-name'),
-				name: 'name',
-				operator: 'contains',
+				name: 'testrayBuildName',
 				type: 'text',
 			},
 			{
+				isCustomFilter: true,
 				label: i18n.translate('status'),
-				name: 'buildToTasks/dueStatus',
+				name: 'testrayTaskStatus',
 				options: [
 					{
 						label: i18n.translate('abandoned'),

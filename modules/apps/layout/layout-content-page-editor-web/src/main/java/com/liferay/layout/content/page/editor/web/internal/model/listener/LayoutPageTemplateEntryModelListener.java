@@ -210,7 +210,7 @@ public class LayoutPageTemplateEntryModelListener
 
 			return _formItemManager.addFragmentEntryLinks(
 				_jsonFactory.createJSONObject(), null,
-				formStyledLayoutStructureItem, layout, layoutStructure,
+				formStyledLayoutStructureItem, true, layout, layoutStructure,
 				LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
 				serviceContext);
 		}

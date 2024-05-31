@@ -175,7 +175,7 @@ public class UpdateFormItemConfigMVCActionCommand
 					addedFragmentEntryLinks =
 						_formItemManager.addFragmentEntryLinks(
 							jsonObject, infoFieldUniqueIds,
-							formStyledLayoutStructureItem,
+							formStyledLayoutStructureItem, true,
 							themeDisplay.getLayout(), layoutStructure,
 							themeDisplay.getLocale(), segmentsExperienceId,
 							ServiceContextFactory.getInstance(
@@ -209,7 +209,7 @@ public class UpdateFormItemConfigMVCActionCommand
 						_formItemManager.addFragmentEntryLinks(
 							jsonObject,
 							newInfoUniqueFieldIds.toArray(new String[0]),
-							formStyledLayoutStructureItem,
+							formStyledLayoutStructureItem, false,
 							themeDisplay.getLayout(), layoutStructure,
 							themeDisplay.getLocale(), segmentsExperienceId,
 							ServiceContextFactory.getInstance(

@@ -80,7 +80,7 @@ export default function ProjectsPage() {
 				}}
 				linkText="Learn more about Projects"
 				onClickContinue={() => {
-					setShowNextStepsPage(false);
+					setShowNextStepsPage(true);
 				}}
 				showBackButton={false}
 				showOrderId={false}

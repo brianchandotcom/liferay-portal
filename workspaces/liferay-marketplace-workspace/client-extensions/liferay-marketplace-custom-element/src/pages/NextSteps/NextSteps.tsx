@@ -22,7 +22,9 @@ import './NextSteps.scss';
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import withProviders from '../../hoc/withProviders';
+import i18n from '../../i18n';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {PaymentStatus} from '../GetApp/enums/PaymentStatus';
 import getProductPriceModel from '../GetApp/utils/getProductPriceModel';
@@ -64,6 +66,7 @@ export function NextSteps({
 		isLoading,
 		product,
 	} = useNextSteps(orderId as string);
+	const {properties} = useMarketplaceContext();
 
 	const {name: appName = ''} = firstCartItem ?? {};
 
@@ -207,6 +210,12 @@ export function NextSteps({
 
 				<NewAppPageFooterButtons
 					backButtonText="Go to Dashboard"
+					continueButtonText={i18n.translate(
+						properties.featureFlags?.includes('LPD-21582') &&
+							cart.orderTypeExternalReferenceCode === 'DXPAPP'
+							? 'download-app'
+							: 'go-to-console'
+					)}
 					onClickBack={() => {
 						return CommerceSelectAccountImpl.selectAccount(
 							cart?.accountId
@@ -224,13 +233,31 @@ export function NextSteps({
 						});
 					}}
 					onClickContinue={() => {
-						if (onClickContinue) {
-							window.location.href =
-								'https://console.liferay.cloud/projects';
+						if (
+							properties.featureFlags?.includes('LPD-21582') &&
+							cart.orderTypeExternalReferenceCode === 'DXPAPP'
+						) {
+							Liferay.Util.navigate(
+								Liferay.ThemeDisplay.getLayoutURL().replace(
+									'/next-steps',
+									`/customer-dashboard#/order/${orderId}/download`
+								)
+							);
+						}
+
+						if (
+							cart.orderTypeExternalReferenceCode === 'CLOUDAPP'
+						) {
+							if (onClickContinue) {
+								window.location.href =
+									'https://console.liferay.cloud/projects';
+							}
 						}
 					}}
 					showBackButton={showBackButton}
-					showContinueButton={false}
+					showContinueButton={properties.featureFlags?.includes(
+						'LPD-21582'
+					)}
 				/>
 
 				{(paymentStatus === PaymentStatus.PAID || isTrial) && (

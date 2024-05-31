@@ -20,15 +20,21 @@ import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
 import './App.scss';
 import {PageRenderer} from '../../../../../components/Page';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {isTrialSKU} from '../../../../../utils/productUtils';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 
 type AppNavbarProps = {
+	showDownloadTab: boolean;
 	showLicenseTab: boolean;
 };
 
-const AppNavbar: React.FC<AppNavbarProps> = ({showLicenseTab}) => {
+const AppNavbar: React.FC<AppNavbarProps> = ({
+	showDownloadTab,
+	showLicenseTab,
+}) => {
 	const location = useLocation();
+	const {properties} = useMarketplaceContext();
 
 	const routeParams = location.pathname.split('/').filter(Boolean);
 
@@ -45,6 +51,20 @@ const AppNavbar: React.FC<AppNavbarProps> = ({showLicenseTab}) => {
 				>
 					Details
 				</NavLink>
+
+				{properties.featureFlags?.includes('LPD-21582') &&
+					showDownloadTab && (
+						<NavLink
+							className={({isActive}) =>
+								classNames('nav-link', {
+									active: isActive,
+								})
+							}
+							to="download"
+						>
+							Download
+						</NavLink>
+					)}
 
 				{showLicenseTab && (
 					<NavLink
@@ -70,6 +90,7 @@ const AppOutlet = () => {
 	const {isFreeApp} = getProductPriceModel(product);
 	const navigate = useNavigate();
 	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
+
 	const productCreatorAccountName = data?.product?.catalogName || '';
 
 	return (
@@ -96,6 +117,12 @@ const AppOutlet = () => {
 				/>
 
 				<AppNavbar
+					showDownloadTab={
+						data?.placedOrder.workflowStatusInfo.code === 0 &&
+						data?.placedOrder.placedOrderItems.some(
+							(item: PlacedOrderItems) => item.virtualItems.length
+						)
+					}
 					showLicenseTab={
 						!(
 							isFreeApp ||

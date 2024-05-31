@@ -30,6 +30,17 @@ class HeadlessCommerceDeliveryCatalog {
 			`o/headless-commerce-delivery-catalog/v1.0/channels?${searchParams.toString()}`
 		);
 	}
+
+	async getSkuInfo(
+		channelId: number,
+		productId: number,
+		skuId: number,
+		searchParams = new URLSearchParams()
+	) {
+		return fetcher<APIResponse<Channel>>(
+			`o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}/skus/${skuId}?${searchParams.toString()}`
+		);
+	}
 }
 
 const HeadlessCommerceDeliveryCatalogImpl = new HeadlessCommerceDeliveryCatalog();

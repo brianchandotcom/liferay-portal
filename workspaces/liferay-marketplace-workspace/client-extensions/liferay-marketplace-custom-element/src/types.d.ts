@@ -387,6 +387,13 @@ interface PlacedOrderItems {
 	thumbnail: string;
 	version: string;
 	virtualItemURLs: string;
+	virtualItems: VirtualItem[];
+}
+
+interface VirtualItem {
+	url: string;
+	usages: number;
+	version: string;
 }
 
 interface PostalAddressResponse {

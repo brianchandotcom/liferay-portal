@@ -17,6 +17,7 @@ import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {Analytics} from '../../../core/Analytics';
 import {OrderType} from '../../../enums/OrderType';
 import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
 import {safeJSONParse} from '../../../utils/util';
 
 type AppsTableProps = {
@@ -88,7 +89,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				{
 					key: 'type',
 					render: (type) => (
-						<span className="dashboard-table-row-type">{type}</span>
+						<div className="dashboard-table-row-type">{type}</div>
 					),
 					title: i18n.translate('license-type'),
 				},
@@ -237,23 +238,37 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 															: orderStatusIsNotCompleted
 													}
 													onClick={() => {
-														if (!virtualURL) {
+														if (
+															properties.featureFlags?.includes(
+																'LPD-21582'
+															) &&
+															!isFreeApp
+														) {
+															Liferay.Util.navigate(
+																`${Liferay.ThemeDisplay.getLayoutURL()}#order/${id}/download`
+															);
+														}
+														else {
+															if (!virtualURL) {
+																Analytics.track(
+																	'VIRTUAL_URL_NOT_FOUND',
+																	metadata
+																);
+
+																return alert(
+																	'Download file not found'
+																);
+															}
+
 															Analytics.track(
-																'VIRTUAL_URL_NOT_FOUND',
+																'DOWNLOAD_APP',
 																metadata
 															);
 
-															return alert(
-																'Download file not found'
+															window.open(
+																virtualURL
 															);
 														}
-
-														Analytics.track(
-															'DOWNLOAD_APP',
-															metadata
-														);
-
-														window.open(virtualURL);
 													}}
 													title={
 														orderStatusIsNotCompleted

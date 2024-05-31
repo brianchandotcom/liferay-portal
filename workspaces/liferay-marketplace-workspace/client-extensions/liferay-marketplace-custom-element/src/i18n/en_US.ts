@@ -112,6 +112,7 @@ export default {
 		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s header.',
 	'details': 'Details',
 	'discover-and-customize': 'Discover and customize',
+	'download': 'Download',
 	'download-app': 'Download App',
 	'download-key': 'Download Key',
 	'draft': 'Draft',
@@ -312,6 +313,7 @@ export default {
 	'subtotal-discount': 'Subtotal Discount',
 	'success': 'success',
 	'summary': 'Summary',
+	'supported-version': 'Supported Version',
 	'tags': 'Tags',
 	'tags-help-to-describe-your-solution-in-the-marketplace-select-the-tags-most-relevant-to-your-solution-they-can-be-changed-if-needed':
 		'Tags help to describe your solution in the Marketplace. Select the tags most relevant to your solution. They can be changed if needed.',
@@ -320,7 +322,6 @@ export default {
 	'text-block': 'Text Block',
 	'text-images-block': 'Text Images Block',
 	'text-video-block': 'Text Video Block',
-
 	'thank-you-for-your': 'Thank you for your',
 	'the-app-submission-is-compatible-with-liferay-experience-cloud-and':
 		'The app submission is compatible with Liferay SaaS and ',

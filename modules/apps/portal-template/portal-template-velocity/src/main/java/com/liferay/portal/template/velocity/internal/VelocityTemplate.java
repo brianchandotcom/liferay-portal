@@ -5,7 +5,7 @@
 
 package com.liferay.portal.template.velocity.internal;
 
-import com.liferay.portal.kernel.template.LazyValue;
+import com.liferay.petra.function.UnsafeSupplierValue;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -52,10 +52,12 @@ public class VelocityTemplate extends BaseTemplate {
 			public Object get(String key) {
 				Object value = super.get(key);
 
-				if (value instanceof LazyValue) {
-					LazyValue lazyValue = (LazyValue)value;
+				if (value instanceof UnsafeSupplierValue) {
+					UnsafeSupplierValue<?, RuntimeException>
+						unsafeSupplierValue =
+							(UnsafeSupplierValue<?, RuntimeException>)value;
 
-					value = lazyValue.getValue();
+					value = unsafeSupplierValue.getValue();
 				}
 
 				return value;

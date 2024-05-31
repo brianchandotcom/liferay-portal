@@ -5,6 +5,7 @@
 
 package com.liferay.users.admin.web.internal.template;
 
+import com.liferay.petra.function.UnsafeSupplierValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,7 +13,6 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.template.LazyValue;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -50,7 +50,7 @@ public class UsersTemplateContextContributor
 		contextObjects.put("is_default_user", user1.isDefaultUser());
 		contextObjects.put(
 			"is_female",
-			new LazyValue(
+			new UnsafeSupplierValue<>(
 				() -> {
 					try {
 						Contact contact = user1.getContact();
@@ -66,7 +66,7 @@ public class UsersTemplateContextContributor
 		contextObjects.put("is_guest_user", user1.isGuestUser());
 		contextObjects.put(
 			"is_male",
-			new LazyValue(
+			new UnsafeSupplierValue<>(
 				() -> {
 					try {
 						Contact contact = user1.getContact();
@@ -84,7 +84,7 @@ public class UsersTemplateContextContributor
 		contextObjects.put("language_id", user1.getLanguageId());
 		contextObjects.put(
 			"user2",
-			new LazyValue(
+			new UnsafeSupplierValue<>(
 				() -> {
 					Group group = themeDisplay.getSiteGroup();
 
@@ -102,7 +102,7 @@ public class UsersTemplateContextContributor
 				}));
 		contextObjects.put(
 			"user_birthday",
-			new LazyValue(
+			new UnsafeSupplierValue<>(
 				() -> {
 					try {
 						Contact contact = user1.getContact();

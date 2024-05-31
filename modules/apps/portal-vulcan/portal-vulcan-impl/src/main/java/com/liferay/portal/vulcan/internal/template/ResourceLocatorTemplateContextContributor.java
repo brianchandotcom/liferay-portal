@@ -5,12 +5,12 @@
 
 package com.liferay.portal.vulcan.internal.template;
 
+import com.liferay.petra.function.UnsafeSupplierValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.template.LazyValue;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.resource.locator.ResourceLocatorFactory;
@@ -39,7 +39,7 @@ public class ResourceLocatorTemplateContextContributor
 
 		contextObjects.put(
 			"resourceLocator",
-			new LazyValue(
+			new UnsafeSupplierValue<>(
 				() -> {
 					try {
 						User user = _portal.getUser(httpServletRequest);

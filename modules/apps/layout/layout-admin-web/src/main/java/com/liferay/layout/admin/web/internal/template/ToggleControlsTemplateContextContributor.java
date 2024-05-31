@@ -5,9 +5,9 @@
 
 package com.liferay.layout.admin.web.internal.template;
 
+import com.liferay.petra.function.UnsafeSupplierValue;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.template.LazyValue;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,7 +78,7 @@ public class ToggleControlsTemplateContextContributor
 		if (themeDisplay.isSignedIn()) {
 			contextObjects.put(
 				"toggle_controls_text",
-				new LazyValue(
+				new UnsafeSupplierValue<>(
 					() -> _language.get(
 						themeDisplay.getLocale(), "toggle-controls")));
 

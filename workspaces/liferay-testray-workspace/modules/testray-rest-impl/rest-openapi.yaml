@@ -5,10 +5,10 @@ components:
                 caseAmount:
                     format: int32
                     type: integer
-                runId1:
+                testrayRunId1:
                     format: int64
                     type: integer
-                runId2:
+                testrayRunId2:
                     format: int64
                     type: integer
         TestrayBuildMetric:

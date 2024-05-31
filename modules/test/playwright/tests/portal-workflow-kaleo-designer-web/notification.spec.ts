@@ -10,6 +10,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import getRandomString from '../../utils/getRandomString';
+import countSubstringOccurrences from './utils/countSubstringOccurrences';
+import {getWorkflowDefinition} from './utils/getWorkflowDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -49,8 +52,11 @@ const scriptedRecipientNotification = {
 	templateLanguage: 'text',
 } as Notification;
 
-let workflowDefinitionId: number;
+let workflowDefinitionIds: number[] = [];
+
 let workflowDefinitionName: string;
+
+let scriptManagementDisabled: boolean = false;
 
 test.beforeEach(async ({apiHelpers}) => {
 	const singleApproverWorkflowDefinition =
@@ -66,15 +72,22 @@ test.beforeEach(async ({apiHelpers}) => {
 			singleApproverWorkflowDefinition
 		);
 
-	workflowDefinitionId = workflowDefinition.id;
+	workflowDefinitionIds.push(workflowDefinition.id);
 });
 
 test.afterEach(async ({apiHelpers, scriptManagementPage}) => {
-	await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
-		workflowDefinitionId
-	);
+	for (const workflowDefinitionId of workflowDefinitionIds) {
+		await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
+			workflowDefinitionId
+		);
+	}
 
-	await scriptManagementPage.enableScriptManagementConfiguration();
+	workflowDefinitionIds = [];
+
+	if (scriptManagementDisabled) {
+		await scriptManagementPage.enableScriptManagementConfiguration();
+		scriptManagementDisabled = false;
+	}
 });
 
 test('cannot see scripted recipient option when script management configuration is disabled', async ({
@@ -84,6 +97,8 @@ test('cannot see scripted recipient option when script management configuration 
 	scriptManagementPage,
 }) => {
 	await scriptManagementPage.disableScriptManagementConfiguration();
+
+	scriptManagementDisabled = true;
 
 	await processBuilderPage.goto();
 
@@ -130,6 +145,8 @@ test('cannot save a workflow definition with a scripted recipient notification w
 	await diagramViewPage.saveWorkflowDefinition();
 
 	await scriptManagementPage.disableScriptManagementConfiguration();
+
+	scriptManagementDisabled = true;
 
 	await processBuilderPage.goto();
 
@@ -195,4 +212,57 @@ test('create a notification using role type', async ({
 		0,
 		roleTypeNotification
 	);
+});
+
+test('notification receptionType on source remains the same after clicking on notification link on diagram', async ({
+	apiHelpers,
+	diagramViewPage,
+	page,
+	processBuilderPage,
+	sourceViewPage,
+}) => {
+	const workflowDefinitionName = 'Workflow Definition' + getRandomString();
+
+	const workflowDefinition =
+		await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+			workflowDefinitionName,
+			getWorkflowDefinition('bcc-reception-type')
+		);
+
+	workflowDefinitionIds.push(workflowDefinition.id);
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickNode('Task');
+
+	const notificationEntry = processBuilderPage.page.getByRole('link', {
+		name: 'notification 1',
+	});
+
+	await notificationEntry.click();
+
+	await expect(
+		page.getByRole('tablist').filter({hasText: 'Recipient Type'})
+	).toHaveCount(6);
+
+	await diagramViewPage.clickSourceViewButton();
+
+	const requestPromise = page.waitForRequest('**/workflow-definitions/save');
+
+	await sourceViewPage.saveWorkflowDefinition();
+
+	const request = await requestPromise;
+
+	const xmlContent = request.postDataJSON().content;
+
+	expect(
+		await countSubstringOccurrences(
+			xmlContent,
+			`<recipients receptionType="bcc">`
+		)
+	).toBe(6);
 });

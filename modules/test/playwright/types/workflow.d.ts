@@ -30,9 +30,9 @@ interface ScriptedRecipient {
 }
 
 interface WorkflowDefinition {
-	active: true;
+	active: boolean;
 	content: string;
-	id?: number;
+	id: number;
 	name: string;
 	title_i18n: DataObject;
 	version: string;

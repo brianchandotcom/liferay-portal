@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<version>1</version>
+	<state>
+		<name>9c0bbdaf-0f91-4148-abf8-4bbfdaa36801</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						300,
+						100
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Start
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<name>1f06bddf-eb7d-48c9-bfe3-2b5996c9a058</name>
+				<target>c9760f69-50ab-405e-a38b-075dce5a337a</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>e70ff2ce-a585-4df1-8826-828322a46c85</name>
+		<description>Conclude the workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						300,
+						400
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				End
+			</label>
+		</labels>
+	</state>
+	<task>
+		<name>c9760f69-50ab-405e-a38b-075dce5a337a</name>
+		<description>Ask a user to work on the item.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						290.15625,
+						234
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<notification>
+				<name>notification 1</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="bcc">
+					<user />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>notification 2</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="bcc">
+					<roles>
+						<role>
+							<role-id>20105</role-id>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>notification 3</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="bcc">
+					<roles>
+						<role>
+							<role-type>site</role-type>
+							<name>Site Administrator</name>
+							<auto-create>false</auto-create>
+						</role>
+					</roles>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>notification 4</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="bcc">
+					<user />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>notification 5</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="bcc">
+					<user>
+						<email-address>test@liferay.com</email-address>
+					</user>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>notification 6</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="bcc">
+					<assignees />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<user />
+		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Task
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<name>d6c99678-764b-4c1b-a612-be95374e42c4</name>
+				<target>e70ff2ce-a585-4df1-8826-828322a46c85</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

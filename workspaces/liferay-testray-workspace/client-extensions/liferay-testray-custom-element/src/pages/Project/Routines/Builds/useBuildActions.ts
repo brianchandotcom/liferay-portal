@@ -16,7 +16,7 @@ import {Action, ActionsHookParameter} from '../../../../types';
 
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const formModal = useFormModal();
-	const {removeItemFromList, updateItemFromList} = useMutate();
+	const {removeItemFromList} = useMutate();
 	const {setBuildA, setBuildB} = useAutofillBuild();
 	const navigate = useNavigate();
 
@@ -42,18 +42,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 					.update(buildId, {
 						promoted: !buildPromoted,
 					})
-					.then(() => {
-						if (isHeaderActions) {
-							return mutate((prevData: any) => ({
-								...prevData,
-								promoted: !prevData?.promoted,
-							}));
-						}
-
-						updateItemFromList(mutate, buildId, {
-							promoted: !buildPromoted,
-						});
-					})
+					.then(() => mutate())
 					.then(modal.onSuccess)
 					.catch(modal.onError);
 			},

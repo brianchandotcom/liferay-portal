@@ -123,6 +123,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaFinderImplCheck() throws Exception {
+		test(
+			"upgrade/service/persistence/impl/UpgradeJavaFinderImplCheck." +
+				"testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaGetFDSTableSchemaParameterCheck()
 		throws Exception {
 
@@ -152,6 +159,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		throws Exception {
 
 		test("upgrade/UpgradeJavaGetLayoutDisplayPageProviderCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeJavaLocalServiceImplCheck() throws Exception {
+		test("upgrade/service/impl/UpgradeJavaLocalServiceImplCheck.testjava");
 	}
 
 	@Test
@@ -189,6 +201,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeJavaScreenContributorClassCheck() throws Exception {
 		test("upgrade/UpgradeJavaScreenContributorClassCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeJavaServiceImplCheck() throws Exception {
+		test("upgrade/service/impl/UpgradeJavaServiceImplCheck.testjava");
 	}
 
 	@Test

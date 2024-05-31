@@ -1,0 +1,7 @@
+assemble:
+    - fromTask: bootJar
+liferay-sample-etc-cron-2-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Sample Etc Cron 2 OAuth Application Headless Server
+    type: oAuthApplicationHeadlessServer

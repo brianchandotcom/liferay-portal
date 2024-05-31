@@ -1,7 +1,6 @@
 {
 	"fieldSets": [
 		{
-			"configurationRole": "style",
 			"fields": [
 				{
 					"dataType": "string",
@@ -22,7 +21,8 @@
 						]
 					}
 				}
-			]
+			],
+			"label": "image-options"
 		}
 	]
 }

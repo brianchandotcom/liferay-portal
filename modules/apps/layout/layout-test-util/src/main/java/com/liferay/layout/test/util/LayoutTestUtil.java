@@ -526,6 +526,22 @@ public class LayoutTestUtil {
 		return layoutTypePortlet.isColumnCustomizable(columnId);
 	}
 
+	public static Layout updateFriendlyURL(
+			Layout layout, Map<Locale, String> friendlyURLMap)
+		throws Exception {
+
+		return LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			layout.getMasterLayoutPlid(),
+			ServiceContextTestUtil.getServiceContext(
+				layout.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	public static Layout updateLayoutColumnCustomizable(
 			Layout layout, String columnId, boolean customizable)
 		throws Exception {

@@ -1995,8 +1995,10 @@ definition {
 		}
 
 		task ("Assert that there is an error in syntax") {
-			AssertTextEquals(
-				locator1 = "Message#WARNING_FEEDBACK",
+			SelectFrame(locator1 = "Message#ERROR_DISMISSIBLE");
+
+			AssertElementPresent(
+				locator1 = "Message#ERROR_DISMISSIBLE",
 				value1 = "Syntax Error");
 		}
 	}

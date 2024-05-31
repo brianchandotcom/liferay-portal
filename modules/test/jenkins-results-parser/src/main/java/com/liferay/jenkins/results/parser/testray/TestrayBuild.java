@@ -365,11 +365,12 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		_jsonObject = jsonObject;
 	}
 
-	private Matcher _getTestrayAttachmentURLMatcher() {
-		if (_testrayAttachmentURLMatcher != null) {
-			return _testrayAttachmentURLMatcher;
-		}
+	protected TestrayBuild(TestrayServer testrayServer, JSONObject jsonObject) {
+		_testrayServer = testrayServer;
+		_jsonObject = jsonObject;
+	}
 
+	protected List<TestrayCaseResult> getTestrayCaseResults(int maxCount) {
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
 		StringBuilder sb = new StringBuilder();
@@ -381,7 +382,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
 				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
-				null, 5, 5);
+				null, maxCount, 0);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				testrayCaseResults.add(
@@ -393,7 +394,15 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			throw new RuntimeException(ioException);
 		}
 
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+		return testrayCaseResults;
+	}
+
+	private Matcher _getTestrayAttachmentURLMatcher() {
+		if (_testrayAttachmentURLMatcher != null) {
+			return _testrayAttachmentURLMatcher;
+		}
+
+		for (TestrayCaseResult testrayCaseResult : getTestrayCaseResults(5)) {
 			if (testrayCaseResult != null) {
 				for (TestrayAttachment testrayAttachment :
 						testrayCaseResult.getTestrayAttachments()) {
@@ -429,8 +438,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	private String _pullRequestAuthor;
 	private Matcher _testrayAttachmentURLMatcher;
 	private TestrayProductVersion _testrayProductVersion;
-	private final TestrayProject _testrayProject;
-	private final TestrayRoutine _testrayRoutine;
+	private TestrayProject _testrayProject;
+	private TestrayRoutine _testrayRoutine;
 	private List<TestrayRun> _testrayRuns;
 	private final TestrayServer _testrayServer;
 	private TopLevelBuildReport _topLevelBuildReport;

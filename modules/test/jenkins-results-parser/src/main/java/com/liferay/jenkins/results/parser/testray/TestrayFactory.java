@@ -117,6 +117,16 @@ public class TestrayFactory {
 		return new TestrayBuild(testrayRoutine, jsonObject);
 	}
 
+	public static TestrayBuild newTestrayBuild(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		if (testrayServer instanceof Testray1TestrayServer) {
+			return new Testray1TestrayBuild(testrayServer, jsonObject);
+		}
+
+		return new TestrayBuild(testrayServer, jsonObject);
+	}
+
 	public static TestrayCase newTestrayCase(
 		TestrayProject testrayProject, JSONObject jsonObject) {
 
@@ -263,6 +273,16 @@ public class TestrayFactory {
 		}
 
 		return new TestrayRoutine(testrayProject, jsonObject);
+	}
+
+	public static TestrayRoutine newTestrayRoutine(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		if (testrayServer instanceof Testray1TestrayServer) {
+			return new Testray1TestrayRoutine(testrayServer, jsonObject);
+		}
+
+		return new TestrayRoutine(testrayServer, jsonObject);
 	}
 
 	public static TestrayRun newTestrayRun(

@@ -5,14 +5,21 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.BuildReportFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,6 +72,38 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
+	public String getPullRequestAuthor() {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_pullRequestAuthor)) {
+			return _pullRequestAuthor;
+		}
+
+		URL topLevelBuildURL = _getTopLevelBuildURL();
+
+		if (topLevelBuildURL == null) {
+			_pullRequestAuthor = "Unknown";
+
+			return _pullRequestAuthor;
+		}
+
+		try {
+			TopLevelBuildReport topLevelBuildReport =
+				BuildReportFactory.newTopLevelBuildReport(topLevelBuildURL);
+
+			Map<String, String> buildParameters =
+				topLevelBuildReport.getBuildParameters();
+
+			_pullRequestAuthor = buildParameters.get("GITHUB_SENDER_USERNAME");
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			_pullRequestAuthor = "Unknown";
+		}
+
+		return _pullRequestAuthor;
+	}
+
+	@Override
 	public Status getStatus() {
 		JSONObject jsonObject = getJSONObject();
 
@@ -108,12 +147,41 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 		return _testrayCase;
 	}
 
+	@Override
+	public List<TestrayCaseResult> getTestrayCaseResultHistory(int maxCount) {
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+				testrayServer.requestGet(
+					"/home/-/testray/case_results/" + getID() +
+						"/history.json"));
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			for (int i = 0; i < dataJSONArray.length(); i++) {
+				testrayCaseResults.add(
+					TestrayFactory.newTestrayCaseResult(
+						testrayServer, dataJSONArray.getJSONObject(i)));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return testrayCaseResults;
+	}
+
+	@Override
 	public String getType() {
 		TestrayCase testrayCase = getTestrayCase();
 
 		return testrayCase.getType();
 	}
 
+	@Override
 	public URL getURL() {
 		TestrayServer testrayServer = getTestrayServer();
 
@@ -127,6 +195,7 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 		}
 	}
 
+	@Override
 	public String[] getWarnings() {
 		JSONObject jsonObject = getJSONObject();
 
@@ -180,6 +249,45 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 		}
 	}
 
+	private URL _getTopLevelBuildURL() {
+		JSONObject jsonObject = getJSONObject();
+
+		JSONObject attachmentsJSONObject = jsonObject.getJSONObject(
+			"attachments");
+
+		for (String key : attachmentsJSONObject.keySet()) {
+			Matcher testrayAttachmentMatcher =
+				_testrayAttachmentPattern.matcher(
+					attachmentsJSONObject.getString(key));
+
+			if (!testrayAttachmentMatcher.find()) {
+				continue;
+			}
+
+			try {
+				return new URL(
+					JenkinsResultsParserUtil.combine(
+						"http://",
+						testrayAttachmentMatcher.group(
+							"topLevelMasterHostname"),
+						"/job/",
+						testrayAttachmentMatcher.group("topLevelJobName"), "/",
+						testrayAttachmentMatcher.group("topLevelBuildNumber")));
+			}
+			catch (MalformedURLException malformedURLException) {
+			}
+		}
+
+		return null;
+	}
+
+	private static final Pattern _testrayAttachmentPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"(?<startYearMonth>\\d{4}-\\d{2})/",
+			"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
+			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/.*"));
+
+	private String _pullRequestAuthor;
 	private TestrayCase _testrayCase;
 
 }

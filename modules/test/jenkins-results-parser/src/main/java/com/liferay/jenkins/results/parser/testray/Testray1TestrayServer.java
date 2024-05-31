@@ -25,7 +25,24 @@ public class Testray1TestrayServer extends TestrayServer {
 
 	@Override
 	public TestrayBuild getTestrayBuildByID(long buildID) {
-		return null;
+		String buildAPIURLPath = JenkinsResultsParserUtil.combine(
+			"/web/guest/home/-/testray/builds/", String.valueOf(buildID),
+			".json");
+
+		try {
+			JSONObject jsonObject = new JSONObject(requestGet(buildAPIURLPath));
+
+			if (!jsonObject.has("data")) {
+				return null;
+			}
+
+			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+			return TestrayFactory.newTestrayBuild(this, dataJSONObject);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Override
@@ -119,6 +136,29 @@ public class Testray1TestrayServer extends TestrayServer {
 		_initTestrayProjects();
 
 		return new ArrayList<>(_testrayProjectsByName.values());
+	}
+
+	@Override
+	public TestrayRoutine getTestrayRoutineByID(long routineId) {
+		String routineAPIURLPath = JenkinsResultsParserUtil.combine(
+			"/web/guest/home/-/testray/routines/", String.valueOf(routineId),
+			".json");
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+				requestGet(routineAPIURLPath));
+
+			if (!jsonObject.has("data")) {
+				return null;
+			}
+
+			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+			return TestrayFactory.newTestrayRoutine(this, dataJSONObject);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected Testray1TestrayServer(String urlString) {

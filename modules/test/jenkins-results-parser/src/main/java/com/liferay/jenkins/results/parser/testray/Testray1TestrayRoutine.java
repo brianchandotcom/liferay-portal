@@ -320,6 +320,22 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		return testrayBuilds;
 	}
 
+	@Override
+	public TestrayProject getTestrayProject() {
+		if (_testrayProject != null) {
+			return _testrayProject;
+		}
+
+		JSONObject jsonObject = getJSONObject();
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		_testrayProject = testrayServer.getTestrayProjectByID(
+			jsonObject.getLong("testrayProjectId"));
+
+		return _testrayProject;
+	}
+
 	public URL getURL() {
 		TestrayServer testrayServer = getTestrayServer();
 
@@ -342,6 +358,12 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		TestrayProject testrayProject, JSONObject jsonObject) {
 
 		super(testrayProject, jsonObject);
+	}
+
+	protected Testray1TestrayRoutine(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		super(testrayServer, jsonObject);
 	}
 
 	protected Testray1TestrayRoutine(URL testrayRoutineURL) {
@@ -399,5 +421,6 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		Collections.reverseOrder());
 	private final Map<String, TestrayBuild> _testrayBuildsByName =
 		new HashMap<>();
+	private TestrayProject _testrayProject;
 
 }

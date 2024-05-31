@@ -144,6 +144,33 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		return _testrayProductVersion;
 	}
 
+	public TestrayProject getTestrayProject() {
+		if (_testrayProject != null) {
+			return _testrayProject;
+		}
+
+		TestrayRoutine testrayRoutine = getTestrayRoutine();
+
+		_testrayProject = testrayRoutine.getTestrayProject();
+
+		return _testrayProject;
+	}
+
+	public TestrayRoutine getTestrayRoutine() {
+		if (_testrayRoutine != null) {
+			return _testrayRoutine;
+		}
+
+		JSONObject jsonObject = getJSONObject();
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		_testrayRoutine = testrayServer.getTestrayRoutineByID(
+			jsonObject.getLong("testrayRoutineId"));
+
+		return _testrayRoutine;
+	}
+
 	@Override
 	public synchronized List<TestrayRun> getTestrayRuns() {
 		if (_testrayRuns != null) {
@@ -199,11 +226,45 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		super(testrayRoutine, jsonObject);
 	}
 
+	protected Testray1TestrayBuild(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		super(testrayServer, jsonObject);
+	}
+
+	protected List<TestrayCaseResult> getTestrayCaseResults(int maxCount) {
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			JSONObject jsonObject = new JSONObject(
+				testrayServer.requestGet(
+					"/home/-/testray/case_results.json?testrayBuildId=" +
+						getID()));
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			for (int i = 0; i < dataJSONArray.length(); i++) {
+				testrayCaseResults.add(
+					TestrayFactory.newTestrayCaseResult(
+						this, dataJSONArray.getJSONObject(i)));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return testrayCaseResults;
+	}
+
 	private static final int _PAGE_COUNT = 100;
 
 	private static final int _PAGE_DELTA = 200;
 
 	private TestrayProductVersion _testrayProductVersion;
+	private TestrayProject _testrayProject;
+	private TestrayRoutine _testrayRoutine;
 	private List<TestrayRun> _testrayRuns;
 
 }

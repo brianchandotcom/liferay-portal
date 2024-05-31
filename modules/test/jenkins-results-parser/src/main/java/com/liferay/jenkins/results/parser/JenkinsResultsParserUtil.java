@@ -4713,7 +4713,7 @@ public class JenkinsResultsParserUtil {
 
 				boolean testray1Request = false;
 
-				if (url.matches("https://testray.liferay.com/?.+")) {
+				if (url.matches("https://testray-old.liferay.com/?.+")) {
 					testray1Request = true;
 				}
 
@@ -6810,7 +6810,7 @@ public class JenkinsResultsParserUtil {
 
 	private static final Pattern _testray2URLPattern = Pattern.compile(
 		"(?<baseURL>https://webserver-testray2(-(?<lxcEnvironment>.+))?" +
-			"\\.lfr\\.cloud).*");
+			"\\.lfr\\.cloud|https://testray\\.liferay\\.com).*");
 	private static final Set<String> _timeStamps = new HashSet<>();
 	private static final List<HttpRequestMethod> _updatingHttpRequestMethods =
 		Arrays.asList(

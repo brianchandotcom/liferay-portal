@@ -355,23 +355,33 @@ public class TestrayServer {
 			JSONObject responseJSONObject = new JSONObject(
 				requestPost("/o/graphql", requestJSONObject.toString()));
 
-			JSONObject dataJSONObject = responseJSONObject.getJSONObject(
-				"data");
+			try {
+				JSONObject dataJSONObject = responseJSONObject.getJSONObject(
+					"data");
 
-			JSONObject cJSONObject = dataJSONObject.getJSONObject("c");
+				JSONObject cJSONObject = dataJSONObject.getJSONObject("c");
 
-			JSONObject entityJSONObject = cJSONObject.getJSONObject(entityName);
+				JSONObject entityJSONObject = cJSONObject.getJSONObject(
+					entityName);
 
-			int lastPage = entityJSONObject.getInt("lastPage");
+				int lastPage = entityJSONObject.getInt("lastPage");
 
-			JSONArray itemsJSONArray = entityJSONObject.getJSONArray("items");
+				JSONArray itemsJSONArray = entityJSONObject.getJSONArray(
+					"items");
 
-			for (int i = 0; i < itemsJSONArray.length(); i++) {
-				entityJSONObjects.add(itemsJSONArray.getJSONObject(i));
+				for (int i = 0; i < itemsJSONArray.length(); i++) {
+					entityJSONObjects.add(itemsJSONArray.getJSONObject(i));
+				}
+
+				if ((page == lastPage) ||
+					(entityJSONObjects.size() >= maxCount)) {
+
+					break;
+				}
 			}
-
-			if ((page == lastPage) || (entityJSONObjects.size() >= maxCount)) {
-				break;
+			catch (Exception exception) {
+				throw new RuntimeException(
+					responseJSONObject.toString(), exception);
 			}
 		}
 

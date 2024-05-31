@@ -9,7 +9,8 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {marketplacePagesTest} from './fixtures/marketplacePages';
 import {marketplaceSiteFixture} from './fixtures/marketplaceSite';
-import {PUBLISH_SOLUTION} from './types';
+import {PUBLISH_SOLUTION, PublishProductPayload} from './types';
+import {products} from './utils/constants';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -17,11 +18,13 @@ export const test = mergeTests(
 	marketplacePagesTest
 );
 
+const accountName = 'Supplier Account';
+
 test.describe('Can Publish and Manage Solutions', () => {
 	test.beforeEach(
 		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
 			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: 'Supplier account',
+				name: accountName,
 				type: 'supplier',
 			});
 
@@ -122,5 +125,72 @@ test.describe('Can Publish and Manage Solutions', () => {
 		await expect(
 			publisherSolutionPage.underReviewStatus.last()
 		).toBeVisible();
+	});
+});
+
+test.describe('Can Publish Marketplace Apps', () => {
+	test('can publish free cloud app', async ({
+		page,
+		publisherAppPage,
+		publisherDashboardPage,
+	}) => {
+		publisherAppPage.setPublishProduct(
+			products.free_cloud as unknown as PublishProductPayload
+		);
+
+		// Go to Publisher Dashboard
+
+		await publisherDashboardPage.goto();
+		await publisherDashboardPage.selectAccount(accountName);
+		await publisherDashboardPage.gotoNewAppPage();
+
+		// Publish the app
+
+		await publisherAppPage.checkHeader({
+			accountName,
+			appName: 'New App',
+		});
+		await publisherAppPage.continue();
+		await publisherAppPage.fillProfile();
+		await publisherAppPage.continue();
+		await publisherAppPage.fillBuild();
+		await publisherAppPage.fillStoreFront();
+		await publisherAppPage.fillVersion();
+		await publisherAppPage.fillPricing();
+		await publisherAppPage.fillSupport();
+		await publisherAppPage.reviewAndSubmit();
+
+		expect(page.getByText(products.free_cloud.name)).toBeTruthy();
+	});
+
+	test.skip('can publish paid cloud app', async ({
+		page,
+		publisherAppPage,
+		publisherDashboardPage,
+	}) => {
+		publisherAppPage.setPublishProduct(
+			products.paid_cloud as unknown as PublishProductPayload
+		);
+
+		// Go to Publisher Dashboard
+
+		await publisherDashboardPage.goto();
+		await publisherDashboardPage.selectAccount(accountName);
+		await publisherDashboardPage.gotoNewAppPage();
+
+		// Publish the app
+
+		await publisherAppPage.checkHeader({accountName, appName: 'New App'});
+		await publisherAppPage.continue();
+		await publisherAppPage.fillProfile();
+		await publisherAppPage.continue();
+		await publisherAppPage.fillBuild();
+		await publisherAppPage.fillStoreFront();
+		await publisherAppPage.fillVersion();
+		await publisherAppPage.fillPricing();
+		await publisherAppPage.fillSupport();
+		await publisherAppPage.reviewAndSubmit();
+
+		expect(page.getByText(products.free_cloud.name)).toBeTruthy();
 	});
 });

@@ -175,7 +175,7 @@ public class ProductDisplayPageResourceImpl
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			ActionUtil.addAction(
-				ActionKeys.DELETE, getClass(), cpDisplayLayout.getClassPK(),
+				ActionKeys.UPDATE, getClass(), cpDisplayLayout.getClassPK(),
 				"deleteProductDisplayPage",
 				_cpDefinitionModelResourcePermission,
 				cpDisplayLayout.getCPDisplayLayoutId(), contextUriInfo)

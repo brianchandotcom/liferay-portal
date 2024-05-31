@@ -131,7 +131,8 @@ public class RelevantRuleEngineTest {
 					new File(_baseDir, "text_file_0.txt")));
 
 		List<String> expectedRelevantRuleNames = Arrays.asList(
-			"functional-smoke-0-rule", "modules-unit-0-rule");
+			"functional-smoke-0-rule", "modules-unit-0-rule",
+			"playwright-2-rule");
 
 		List<String> actualRelevantRuleNames = new ArrayList<>();
 

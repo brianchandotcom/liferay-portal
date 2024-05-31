@@ -94,8 +94,8 @@ public class TestrayBuildAutofillResourceImpl
 		JSONObject runsJSONObject = _getRunsIdsJSONObject(
 			testrayBuildId1, testrayBuildId2);
 
-		testrayBuildAutofill.setRunId1(runsJSONObject.getLong("runId1"));
-		testrayBuildAutofill.setRunId2(runsJSONObject.getLong("runId2"));
+		testrayBuildAutofill.setTestrayRunId1(runsJSONObject.getLong("runId1"));
+		testrayBuildAutofill.setTestrayRunId2(runsJSONObject.getLong("runId2"));
 
 		return testrayBuildAutofill;
 	}

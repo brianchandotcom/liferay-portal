@@ -9115,7 +9115,7 @@ public class ObjectEntryResourceTest {
 			() ->
 				manyToOneDepth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
-						"externalReferenceCode", "ERC1_1"
+						"externalReferenceCode", "ERC2_1"
 					).put(
 						"status",
 						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
@@ -9130,7 +9130,7 @@ public class ObjectEntryResourceTest {
 			() ->
 				manyToOneDepth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
-						"externalReferenceCode", "ERC2_1"
+						"externalReferenceCode", "ERC1_1"
 					).put(
 						"status",
 						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
@@ -9147,7 +9147,7 @@ public class ObjectEntryResourceTest {
 			() ->
 				manyToOneDepth2JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
-						"externalReferenceCode", "ERC1_2"
+						"externalReferenceCode", "ERC2_2"
 					).put(
 						"status",
 						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
@@ -9162,7 +9162,7 @@ public class ObjectEntryResourceTest {
 			() ->
 				manyToOneDepth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
-						"externalReferenceCode", "ERC2_2"
+						"externalReferenceCode", "ERC1_2"
 					).put(
 						"status",
 						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
@@ -9249,7 +9249,7 @@ public class ObjectEntryResourceTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
 					).toString(),
-					endpoint2 + "/by-external-reference-code/ERC1_1",
+					endpoint2 + "/by-external-reference-code/ERC2_1",
 					Http.Method.PATCH)
 		);
 
@@ -9262,7 +9262,7 @@ public class ObjectEntryResourceTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
 					).toString(),
-					endpoint2 + "/by-external-reference-code/ERC2_1",
+					endpoint2 + "/by-external-reference-code/ERC1_1",
 					Http.Method.PATCH)
 		);
 
@@ -9275,7 +9275,7 @@ public class ObjectEntryResourceTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_3, RandomTestUtil.randomString()
 					).toString(),
-					endpoint3 + "/by-external-reference-code/ERC1_2",
+					endpoint3 + "/by-external-reference-code/ERC2_2",
 					Http.Method.PATCH)
 		);
 
@@ -9288,7 +9288,7 @@ public class ObjectEntryResourceTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_3, RandomTestUtil.randomString()
 					).toString(),
-					endpoint3 + "/by-external-reference-code/ERC2_2",
+					endpoint3 + "/by-external-reference-code/ERC1_2",
 					Http.Method.PATCH)
 		);
 
@@ -9311,7 +9311,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/dateModified", _objectRelationship1.getName()));
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format(
 					"%s/externalReferenceCode",
 					_objectRelationship1.getName()));
@@ -9342,7 +9342,7 @@ public class ObjectEntryResourceTest {
 					"%s/%s/dateModified", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format(
 					"%s/%s/externalReferenceCode",
 					_objectRelationship1.getName(),

@@ -254,6 +254,10 @@ public abstract class BaseTestrayBuildAutofillResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TestrayBuildAutofill";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

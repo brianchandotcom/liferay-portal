@@ -212,6 +212,10 @@ public abstract class BaseTestrayTestSuiteResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TestrayTestSuite";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

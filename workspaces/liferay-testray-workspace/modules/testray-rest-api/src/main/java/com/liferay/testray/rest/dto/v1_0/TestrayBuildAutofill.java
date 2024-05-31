@@ -86,29 +86,29 @@ public class TestrayBuildAutofill implements Serializable {
 	private Supplier<Integer> _caseAmountSupplier;
 
 	@Schema
-	public Long getRunId1() {
-		if (_runId1Supplier != null) {
-			runId1 = _runId1Supplier.get();
+	public Long getTestrayRunId1() {
+		if (_testrayRunId1Supplier != null) {
+			testrayRunId1 = _testrayRunId1Supplier.get();
 
-			_runId1Supplier = null;
+			_testrayRunId1Supplier = null;
 		}
 
-		return runId1;
+		return testrayRunId1;
 	}
 
-	public void setRunId1(Long runId1) {
-		this.runId1 = runId1;
+	public void setTestrayRunId1(Long testrayRunId1) {
+		this.testrayRunId1 = testrayRunId1;
 
-		_runId1Supplier = null;
+		_testrayRunId1Supplier = null;
 	}
 
 	@JsonIgnore
-	public void setRunId1(
-		UnsafeSupplier<Long, Exception> runId1UnsafeSupplier) {
+	public void setTestrayRunId1(
+		UnsafeSupplier<Long, Exception> testrayRunId1UnsafeSupplier) {
 
-		_runId1Supplier = () -> {
+		_testrayRunId1Supplier = () -> {
 			try {
-				return runId1UnsafeSupplier.get();
+				return testrayRunId1UnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -121,35 +121,35 @@ public class TestrayBuildAutofill implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long runId1;
+	protected Long testrayRunId1;
 
 	@JsonIgnore
-	private Supplier<Long> _runId1Supplier;
+	private Supplier<Long> _testrayRunId1Supplier;
 
 	@Schema
-	public Long getRunId2() {
-		if (_runId2Supplier != null) {
-			runId2 = _runId2Supplier.get();
+	public Long getTestrayRunId2() {
+		if (_testrayRunId2Supplier != null) {
+			testrayRunId2 = _testrayRunId2Supplier.get();
 
-			_runId2Supplier = null;
+			_testrayRunId2Supplier = null;
 		}
 
-		return runId2;
+		return testrayRunId2;
 	}
 
-	public void setRunId2(Long runId2) {
-		this.runId2 = runId2;
+	public void setTestrayRunId2(Long testrayRunId2) {
+		this.testrayRunId2 = testrayRunId2;
 
-		_runId2Supplier = null;
+		_testrayRunId2Supplier = null;
 	}
 
 	@JsonIgnore
-	public void setRunId2(
-		UnsafeSupplier<Long, Exception> runId2UnsafeSupplier) {
+	public void setTestrayRunId2(
+		UnsafeSupplier<Long, Exception> testrayRunId2UnsafeSupplier) {
 
-		_runId2Supplier = () -> {
+		_testrayRunId2Supplier = () -> {
 			try {
-				return runId2UnsafeSupplier.get();
+				return testrayRunId2UnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -162,10 +162,10 @@ public class TestrayBuildAutofill implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long runId2;
+	protected Long testrayRunId2;
 
 	@JsonIgnore
-	private Supplier<Long> _runId2Supplier;
+	private Supplier<Long> _testrayRunId2Supplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -207,28 +207,28 @@ public class TestrayBuildAutofill implements Serializable {
 			sb.append(caseAmount);
 		}
 
-		Long runId1 = getRunId1();
+		Long testrayRunId1 = getTestrayRunId1();
 
-		if (runId1 != null) {
+		if (testrayRunId1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"runId1\": ");
+			sb.append("\"testrayRunId1\": ");
 
-			sb.append(runId1);
+			sb.append(testrayRunId1);
 		}
 
-		Long runId2 = getRunId2();
+		Long testrayRunId2 = getTestrayRunId2();
 
-		if (runId2 != null) {
+		if (testrayRunId2 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"runId2\": ");
+			sb.append("\"testrayRunId2\": ");
 
-			sb.append(runId2);
+			sb.append(testrayRunId2);
 		}
 
 		sb.append("}");

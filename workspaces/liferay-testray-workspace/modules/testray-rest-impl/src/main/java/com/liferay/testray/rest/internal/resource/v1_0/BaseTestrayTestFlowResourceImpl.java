@@ -262,6 +262,10 @@ public abstract class BaseTestrayTestFlowResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TestrayTestFlow";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

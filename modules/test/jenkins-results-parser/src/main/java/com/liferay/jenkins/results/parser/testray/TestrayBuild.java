@@ -31,8 +31,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	public static final String[] FIELD_NAMES = {
 		"dateCreated", "dateModified", "description", "dueDate",
-		"githubCompareURLs", "gitHash", "id", "name", "productVersionToBuilds",
-		"projectToBuilds", "routineToBuilds"
+		"dueStatus { key name }", "githubCompareURLs", "gitHash", "id", "name",
+		"productVersionToBuilds", "projectToBuilds", "routineToBuilds"
 	};
 
 	public int compareTo(TestrayBuild testrayBuild) {

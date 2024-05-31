@@ -52,12 +52,22 @@ public class TestrayRoutine {
 
 		JSONObject requestJSONObject = new JSONObject();
 
+		if (buildDate == null) {
+			buildDate = new Date();
+		}
+
 		if ((buildDescription != null) && (buildDescription.length() >= 280)) {
 			buildDescription = buildDescription.substring(0, 280);
 		}
 
 		requestJSONObject.put(
 			"description", buildDescription
+		).put(
+			"dueDate",
+			JenkinsResultsParserUtil.toDateString(
+				buildDate, "yyy-MM-dd'T'HH:mm:ss.SSS'Z'", "America/Los_Angeles")
+		).put(
+			"dueStatus", "ACTIVATED"
 		).put(
 			"gitHash", buildSHA
 		).put(

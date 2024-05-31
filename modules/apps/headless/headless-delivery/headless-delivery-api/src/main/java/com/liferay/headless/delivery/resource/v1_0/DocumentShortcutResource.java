@@ -59,6 +59,14 @@ public interface DocumentShortcutResource {
 			String fieldNames)
 		throws Exception;
 
+	public DocumentShortcut postAssetLibraryDocumentShortcut(
+			Long assetLibraryId, DocumentShortcut documentShortcut)
+		throws Exception;
+
+	public Response postAssetLibraryDocumentShortcutBatch(
+			Long assetLibraryId, String callbackURL, Object object)
+		throws Exception;
+
 	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
 		throws Exception;
 
@@ -69,6 +77,14 @@ public interface DocumentShortcutResource {
 	public Response postSiteDocumentShortcutsPageExportBatch(
 			Long siteId, String callbackURL, String contentType,
 			String fieldNames)
+		throws Exception;
+
+	public DocumentShortcut postSiteDocumentShortcut(
+			Long siteId, DocumentShortcut documentShortcut)
+		throws Exception;
+
+	public Response postSiteDocumentShortcutBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

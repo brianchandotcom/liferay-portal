@@ -733,14 +733,12 @@ export class PageEditorPage {
 	}
 
 	getTopper(fragmentId: string, isDesktop = true) {
-		const topper = isDesktop
+		return isDesktop
 			? this.page.locator(
 					`.lfr-layout-structure-item-topper-${fragmentId}`
 				)
 			: this.page
 					.frameLocator('.page-editor__global-context-iframe')
 					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`);
-
-		return topper;
 	}
 }

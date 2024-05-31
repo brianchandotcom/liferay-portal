@@ -5,7 +5,9 @@
 
 package com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_3.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -14,53 +16,44 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class QuartzUpgradeProcessTestHelper {
+@RunWith(Arquillian.class)
+public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 
-	public QuartzUpgradeProcessTestHelper(
-			UpgradeStepRegistrator upgradeStepRegistrator)
-		throws Exception {
-
-		_upgradeStepRegistrator = upgradeStepRegistrator;
-
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_db = DBManagerUtil.getDB();
 
 		_dbInspector = new DBInspector(DataAccess.getConnection());
 	}
 
-	public void assertHasAllQuartzIndexes() throws Exception {
-		for (Index index : _QUARTZ_INDEXES) {
-			Assert.assertTrue(
-				_dbInspector.hasIndex(
-					index.getTableName(), index.getIndexName()));
-		}
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_rebuildQuartzIndexes();
 	}
 
-	public void assertHasAnyQuartzIndex() throws Exception {
-		for (Index index : _QUARTZ_INDEXES) {
-			Assert.assertFalse(
-				_dbInspector.hasIndex(
-					index.getTableName(), index.getIndexName()));
-		}
+	@Test
+	public void testUpgrade() throws Exception {
+		_dropQuartzIndexes();
+
+		_runUpgrade();
+
+		_assertHasAllQuartzIndexes();
 	}
 
-	public void dropQuartzIndexes() throws Exception {
-		for (Index index : _QUARTZ_INDEXES) {
-			_db.runSQL(
-				StringBundler.concat(
-					"drop index ", index.getIndexName(), " on ",
-					index.getTableName()));
-		}
-	}
-
-	public void rebuildQuartzIndexes() throws Exception {
+	private static void _rebuildQuartzIndexes() throws Exception {
 		if (!_dbInspector.hasIndex("QUARTZ_JOB_DETAILS", "IX_88328984")) {
 			_db.runSQLTemplateString(
 				"create index IX_88328984 on QUARTZ_JOB_DETAILS (SCHED_NAME, " +
@@ -168,7 +161,32 @@ public class QuartzUpgradeProcessTestHelper {
 		}
 	}
 
-	public void runUpgrade() throws Exception {
+	private void _assertHasAllQuartzIndexes() throws Exception {
+		for (Index index : _QUARTZ_INDEXES) {
+			Assert.assertTrue(
+				_dbInspector.hasIndex(
+					index.getTableName(), index.getIndexName()));
+		}
+	}
+
+	private void _assertHasAnyQuartzIndex() throws Exception {
+		for (Index index : _QUARTZ_INDEXES) {
+			Assert.assertFalse(
+				_dbInspector.hasIndex(
+					index.getTableName(), index.getIndexName()));
+		}
+	}
+
+	private void _dropQuartzIndexes() throws Exception {
+		for (Index index : _QUARTZ_INDEXES) {
+			_db.runSQL(
+				StringBundler.concat(
+					"drop index ", index.getIndexName(), " on ",
+					index.getTableName()));
+		}
+	}
+
+	private void _runUpgrade() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
@@ -201,8 +219,14 @@ public class QuartzUpgradeProcessTestHelper {
 		new Index("IX_CD7132D0", "QUARTZ_TRIGGERS", false)
 	};
 
-	private final DB _db;
-	private final DBInspector _dbInspector;
+	private static DB _db;
+	private static DBInspector _dbInspector;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.portal.scheduler.quartz.internal.upgrade.registry.QuartzServiceUpgradeStepRegistrator))"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
 	private final UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

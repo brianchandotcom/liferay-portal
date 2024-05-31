@@ -469,7 +469,7 @@ public class CommerceTestUtil {
 
 		return CommerceShippingMethodLocalServiceUtil.addCommerceShippingMethod(
 			userId, groupId, RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), true, "fixedPrice", null, 1,
+			RandomTestUtil.randomLocaleStringMap(), true, "fixed", null, 1,
 			RandomTestUtil.randomString());
 	}
 

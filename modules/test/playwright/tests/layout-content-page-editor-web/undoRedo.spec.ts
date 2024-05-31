@@ -108,12 +108,12 @@ test('Undo and Redo buttons work as expected', async ({
 
 	// Change number of tabs to 5
 
-	await pageEditorPage.changeFragmentConfiguration(
-		tabsId,
-		'General',
-		'Number of Tabs',
-		'5'
-	);
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Number of Tabs',
+		fragmentId: tabsId,
+		tab: 'General',
+		value: '5',
+	});
 
 	await expect(tabsFragment.getByText('Tab 5')).toBeVisible();
 
@@ -185,32 +185,32 @@ test('Undo history works as expected', async ({
 
 	// Go to General Panel and change the Heading level 3 times
 
-	await pageEditorPage.changeFragmentConfiguration(
-		headingId,
-		'General',
-		'Heading Level',
-		'h2'
-	);
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Heading Level',
+		fragmentId: headingId,
+		tab: 'General',
+		value: 'h2',
+	});
 
 	const headingFragment = pageEditorPage.getFragment(headingId);
 
 	await expect(headingFragment.locator('h2')).toBeAttached();
 
-	await pageEditorPage.changeFragmentConfiguration(
-		headingId,
-		'General',
-		'Heading Level',
-		'h3'
-	);
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Heading Level',
+		fragmentId: headingId,
+		tab: 'General',
+		value: 'h3',
+	});
 
 	await expect(headingFragment.locator('h3')).toBeAttached();
 
-	await pageEditorPage.changeFragmentConfiguration(
-		headingId,
-		'General',
-		'Heading Level',
-		'h4'
-	);
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Heading Level',
+		fragmentId: headingId,
+		tab: 'General',
+		value: 'h4',
+	});
 
 	await expect(headingFragment.locator('h4')).toBeAttached();
 

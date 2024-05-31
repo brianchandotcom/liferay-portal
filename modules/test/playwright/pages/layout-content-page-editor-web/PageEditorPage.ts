@@ -97,26 +97,52 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
-	async changeFragmentConfiguration(
-		fragmentId: string,
-		tab: ConfigurationTab,
-		fieldLabel: string,
-		value: string,
-		isDesktop = true
-	) {
+	async changeFragmentConfiguration({
+		fieldLabel,
+		fragmentId,
+		isDesktop = true,
+		tab,
+		value,
+		valueFromStylebook,
+	}: {
+		fieldLabel: string;
+		fragmentId: string;
+		isDesktop?: boolean;
+		tab: ConfigurationTab;
+		value?: string;
+		valueFromStylebook?: boolean;
+	}) {
 		await this.selectFragment(fragmentId, isDesktop);
 		await this.goToConfigurationTab(tab);
 
 		// Change value in different way depending on field type
 
-		const field = await this.page.getByLabel(fieldLabel, {exact: true});
-		const type = await field.evaluate((element) => element.tagName);
+		const field = await this.page.getByLabel(fieldLabel, {
+			exact: true,
+		});
 
-		if (type === 'INPUT' || type === 'TEXTAREA') {
-			await field.fill(value);
+		if (valueFromStylebook) {
+			await field
+				.getByLabel('Value from Stylebook', {exact: true})
+				.click();
+
+			const valueButton = await this.page.getByTitle(value, {
+				exact: true,
+			});
+			await valueButton.click();
 		}
-		else if (type === 'SELECT') {
-			await field.selectOption(value);
+		else {
+			const type = await field.evaluate((element) => element.tagName);
+
+			if (type === 'INPUT' || type === 'TEXTAREA') {
+				await field.fill(value);
+			}
+			else if (type === 'SELECT') {
+				await field.selectOption(value);
+			}
+			else if (type === 'BUTTON') {
+				await field.click();
+			}
 		}
 
 		// The change is applied on blur

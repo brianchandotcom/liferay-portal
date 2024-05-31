@@ -124,19 +124,19 @@ test('can configure grid', async ({apiHelpers, page, pageEditorPage, site}) => {
 
 	// Change grid config and check it's applied
 
-	await pageEditorPage.changeFragmentConfiguration(
-		gridId,
-		'General',
-		'Number of Modules',
-		'2'
-	);
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Number of Modules',
+		fragmentId: gridId,
+		tab: 'General',
+		value: '2',
+	});
 
-	await pageEditorPage.changeFragmentConfiguration(
-		gridId,
-		'General',
-		'Layout',
-		'1 Module per Row'
-	);
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Layout',
+		fragmentId: gridId,
+		tab: 'General',
+		value: '1 Module per Row',
+	});
 
 	await expect(page.locator('.page-editor__col.col-12')).toHaveCount(2);
 });

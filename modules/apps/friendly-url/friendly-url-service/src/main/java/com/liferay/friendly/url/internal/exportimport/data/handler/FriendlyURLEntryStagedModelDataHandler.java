@@ -145,8 +145,6 @@ public class FriendlyURLEntryStagedModelDataHandler
 			importedFriendlyURLEntry =
 				(FriendlyURLEntry)friendlyURLEntry.clone();
 
-			importedFriendlyURLEntry.setDefaultLanguageId(
-				friendlyURLEntry.getDefaultLanguageId());
 			importedFriendlyURLEntry.setGroupId(
 				portletDataContext.getScopeGroupId());
 			importedFriendlyURLEntry.setCompanyId(

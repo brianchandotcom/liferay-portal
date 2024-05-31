@@ -755,11 +755,16 @@ public class LayoutTypePortletImpl
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 				portletId);
+
+		if (count1 > 0) {
+			return true;
+		}
+
 		long count2 =
 			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid(), portletId);
 
-		if ((count1 > 0) || (count2 > 0)) {
+		if (count2 > 0) {
 			return true;
 		}
 

@@ -7,6 +7,8 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
+import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -27,9 +29,9 @@ import org.json.JSONObject;
 public class TestrayCaseResult {
 
 	public static final String[] FIELD_NAMES = {
-		"attachments", "caseToCaseResult", "componentToCaseResult",
-		"dateCreated", "dateModified", "dueStatus{key name}", "errors", "id",
-		"startDate"
+		"attachments", "buildToCaseResult", "caseToCaseResult",
+		"componentToCaseResult", "dateCreated", "dateModified",
+		"dueStatus { key name }", "errors", "id", "startDate"
 	};
 
 	public TestrayAttachment getBuildResultTestrayAttachment() {
@@ -99,6 +101,12 @@ public class TestrayCaseResult {
 		return testrayCase.getPriority();
 	}
 
+	public String getPullRequestAuthor() {
+		TestrayBuild testrayBuild = getTestrayBuild();
+
+		return testrayBuild.getPullRequestAuthor();
+	}
+
 	public Status getStatus() {
 		JSONObject dueStatusJSONObject = _jsonObject.getJSONObject("dueStatus");
 
@@ -126,23 +134,98 @@ public class TestrayCaseResult {
 	}
 
 	public TestrayBuild getTestrayBuild() {
+		if (_testrayBuild != null) {
+			return _testrayBuild;
+		}
+
+		JSONObject buildJSONObject = _jsonObject.getJSONObject(
+			"buildToCaseResult");
+
+		if (buildJSONObject != null) {
+			_testrayBuild = _testrayServer.getTestrayBuildByID(
+				buildJSONObject.getLong("id"));
+		}
+
 		return _testrayBuild;
 	}
 
 	public TestrayCase getTestrayCase() {
+		if (_testrayCase != null) {
+			return _testrayCase;
+		}
+
+		JSONObject caseJSONObject = _jsonObject.optJSONObject(
+			"caseToCaseResult");
+
+		if (caseJSONObject != null) {
+			TestrayBuild testrayBuild = getTestrayBuild();
+
+			_testrayCase = TestrayFactory.newTestrayCase(
+				testrayBuild.getTestrayProject(), caseJSONObject);
+		}
+
 		return _testrayCase;
 	}
 
+	public List<TestrayCaseResult> getTestrayCaseResultHistory(int maxCount) {
+		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		TestrayCase testrayCase = getTestrayCase();
+
+		sb.append("r_caseToCaseResult_c_caseId eq '");
+		sb.append(testrayCase.getID());
+		sb.append("'");
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			List<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
+				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
+				"dateCreated:desc", maxCount, 25);
+
+			for (JSONObject entityJSONObject : entityJSONObjects) {
+				testrayCaseResults.add(
+					TestrayFactory.newTestrayCaseResult(
+						testrayServer, entityJSONObject));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return testrayCaseResults;
+	}
+
 	public TestrayComponent getTestrayComponent() {
+		if (_testrayComponent != null) {
+			return _testrayComponent;
+		}
+
+		JSONObject componentJSONObject = _jsonObject.optJSONObject(
+			"componentToCaseResult");
+
+		if (componentJSONObject != null) {
+			TestrayBuild testrayBuild = getTestrayBuild();
+
+			TestrayProject testrayProject = testrayBuild.getTestrayProject();
+
+			_testrayComponent = testrayProject.getTestrayComponentByID(
+				componentJSONObject.getLong("id"));
+		}
+
 		return _testrayComponent;
 	}
 
 	public TestrayProject getTestrayProject() {
-		return _testrayBuild.getTestrayProject();
+		TestrayBuild testrayBuild = getTestrayBuild();
+
+		return testrayBuild.getTestrayProject();
 	}
 
 	public TestrayServer getTestrayServer() {
-		return _testrayBuild.getTestrayServer();
+		return _testrayServer;
 	}
 
 	public TopLevelBuild getTopLevelBuild() {
@@ -219,26 +302,9 @@ public class TestrayCaseResult {
 		TestrayBuild testrayBuild, JSONObject jsonObject) {
 
 		_testrayBuild = testrayBuild;
-
 		_jsonObject = jsonObject;
 
-		JSONObject componentJSONObject = _jsonObject.optJSONObject(
-			"componentToCaseResult");
-
-		if (componentJSONObject != null) {
-			TestrayProject testrayProject = testrayBuild.getTestrayProject();
-
-			_testrayComponent = testrayProject.getTestrayComponentByID(
-				componentJSONObject.getLong("id"));
-		}
-
-		JSONObject caseJSONObject = _jsonObject.optJSONObject(
-			"caseToCaseResult");
-
-		if (caseJSONObject != null) {
-			_testrayCase = TestrayFactory.newTestrayCase(
-				testrayBuild.getTestrayProject(), caseJSONObject);
-		}
+		_testrayServer = testrayBuild.getTestrayServer();
 	}
 
 	protected TestrayCaseResult(
@@ -247,7 +313,16 @@ public class TestrayCaseResult {
 		_testrayBuild = testrayBuild;
 		_topLevelBuild = topLevelBuild;
 
+		_testrayServer = testrayBuild.getTestrayServer();
+
 		_jsonObject = new JSONObject();
+	}
+
+	protected TestrayCaseResult(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		_testrayServer = testrayServer;
+		_jsonObject = jsonObject;
 	}
 
 	protected synchronized void initTestrayAttachments() {
@@ -294,9 +369,10 @@ public class TestrayCaseResult {
 	protected Map<String, TestrayAttachment> testrayAttachments;
 
 	private final JSONObject _jsonObject;
-	private final TestrayBuild _testrayBuild;
+	private TestrayBuild _testrayBuild;
 	private TestrayCase _testrayCase;
 	private TestrayComponent _testrayComponent;
+	private final TestrayServer _testrayServer;
 	private TopLevelBuild _topLevelBuild;
 
 }

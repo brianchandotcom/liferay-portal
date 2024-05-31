@@ -177,6 +177,16 @@ public class TestrayFactory {
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 
+	public static TestrayCaseResult newTestrayCaseResult(
+		TestrayServer testrayServer, JSONObject jsonObject) {
+
+		if (testrayServer instanceof Testray1TestrayServer) {
+			return new Testray1TestrayCaseResult(testrayServer, jsonObject);
+		}
+
+		return new TestrayCaseResult(testrayServer, jsonObject);
+	}
+
 	public static TestrayCaseType newTestrayCaseType(
 		TestrayServer testrayServer, JSONObject jsonObject) {
 

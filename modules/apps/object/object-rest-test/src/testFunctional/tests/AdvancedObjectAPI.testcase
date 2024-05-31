@@ -43,7 +43,7 @@ definition {
 		}
 	}
 
-	@description = "Aggregation Terms in oneToMany relationship"
+	@description = "Ignored due to LPS-161483. Aggregation Terms in oneToMany relationship"
 	@disable-webdriver = "true"
 	@ignore = "true"
 	@priority = 5
@@ -86,7 +86,7 @@ definition {
 		}
 	}
 
-	@description = "Aggregation Terms in oneToMany relationship after object deletion"
+	@description = "Ignored due to LPS-161483. Aggregation Terms in oneToMany relationship after object deletion"
 	@disable-webdriver = "true"
 	@ignore = "true"
 	@priority = 5
@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("Given deleting one of the employees related with the same manager") {
-			ObjectDefinitionAPI.deleteObjectEntry(employeeId = ${employeeId3});
+			ObjectDefinitionAPI.deleteObjectEntry(en_US_plural_label = "employees", objectEntryId = ${employeeId3});
 		}
 
 		task ("When calling for 'employees' with a 'managerId' as aggregationTerms parameter") {
@@ -133,7 +133,7 @@ definition {
 		}
 	}
 
-	@description = "Aggregation Terms in oneToMany updated relationship"
+	@description = "Ignored due to LPS-161483. Aggregation Terms in oneToMany updated relationship"
 	@disable-webdriver = "true"
 	@ignore = "true"
 	@priority = 5

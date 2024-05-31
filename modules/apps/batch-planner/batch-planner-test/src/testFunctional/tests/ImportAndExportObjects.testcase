@@ -270,7 +270,7 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-189103"
+	@description = "Ignored until fixed in LPD-27260"
 	@ignore = "true"
 	@priority = 3
 	test SaveImportCustomObjectAsTemplate {

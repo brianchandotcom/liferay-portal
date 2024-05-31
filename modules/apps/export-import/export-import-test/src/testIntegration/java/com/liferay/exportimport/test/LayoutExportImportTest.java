@@ -609,7 +609,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@FeatureFlags("LPS-199086")
 	@Test
-	public void testLayoutExportImportWithChildLayoutReferencedWithButtonAndChildHasParentLayout()
+	public void testLayoutExportImportWithChildLayoutReferencedWithButtonAndChildLayoutHasParentLayout()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(

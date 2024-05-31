@@ -298,25 +298,24 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	public void testIncludeCustomTitleAndDescriptionForArabicTranslation()
 		throws Exception {
 
+		Locale locale = LocaleUtil.fromLanguageId("ar_SA");
 		String description = "الوصف العربي";
 		String title = "العنوان بالعربية";
 
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
-			Collections.singletonMap(
-				LocaleUtil.fromLanguageId("ar_SA"), "http://example.com"),
-			true,
+			Collections.singletonMap(locale, "http://example.com"), true,
 			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
+				locale, description
 			).put(
-				LocaleUtil.fromLanguageId("ar_SA"), description
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			Collections.emptyMap(), 0, true,
 			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
+				locale, title
 			).put(
-				LocaleUtil.fromLanguageId("ar_SA"), title
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -327,7 +326,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setLanguageId("ar_SA");
-		themeDisplay.setLocale(LocaleUtil.fromLanguageId("ar_SA"));
+		themeDisplay.setLocale(locale);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -351,25 +350,24 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	public void testIncludeCustomTitleAndDescriptionForUntranslatedLanguage()
 		throws Exception {
 
+		Locale locale = LocaleUtil.fromLanguageId("ar_SA");
 		String description = RandomTestUtil.randomString();
 		String title = RandomTestUtil.randomString();
 
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
-			Collections.singletonMap(
-				LocaleUtil.fromLanguageId("ar_SA"), "http://example.com"),
-			true,
+			Collections.singletonMap(locale, "http://example.com"), true,
 			HashMapBuilder.put(
-				LocaleUtil.US, description
+				locale, StringPool.BLANK
 			).put(
-				LocaleUtil.fromLanguageId("ar_SA"), StringPool.BLANK
+				LocaleUtil.US, description
 			).build(),
 			Collections.emptyMap(), 0, true,
 			HashMapBuilder.put(
-				LocaleUtil.US, title
+				locale, StringPool.BLANK
 			).put(
-				LocaleUtil.fromLanguageId("ar_SA"), StringPool.BLANK
+				LocaleUtil.US, title
 			).build(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -380,7 +378,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setLanguageId("ar_SA");
-		themeDisplay.setLocale(LocaleUtil.fromLanguageId("ar_SA"));
+		themeDisplay.setLocale(locale);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

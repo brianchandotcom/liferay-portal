@@ -336,7 +336,7 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-163951. Verify the image thumbnail in asset publisher can be published when using image URL."
+	@description = "Ignored due to LPS-163951. Verify the image thumbnail in asset publisher can be published when using image URL."
 	@ignore = "true"
 	@priority = 3
 	test CanPublishWCWithImagesViaAP {

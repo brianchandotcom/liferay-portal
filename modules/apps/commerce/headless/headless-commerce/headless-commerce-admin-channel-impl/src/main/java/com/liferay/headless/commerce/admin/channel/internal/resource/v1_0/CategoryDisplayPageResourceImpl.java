@@ -176,7 +176,7 @@ public class CategoryDisplayPageResourceImpl
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			ActionUtil.addAction(
-				ActionKeys.DELETE, getClass(), cpDisplayLayout.getClassPK(),
+				ActionKeys.UPDATE, getClass(), cpDisplayLayout.getClassPK(),
 				"deleteCategoryDisplayPage",
 				_assetCategoryModelResourcePermission,
 				cpDisplayLayout.getCPDisplayLayoutId(), contextUriInfo)

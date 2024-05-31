@@ -15,6 +15,6 @@
 		<suppress checks="JavaUpgradeVersionCheck" files="portal-messaging/src/main/java/com/liferay/portal/messaging/internal/upgrade/registry/PortalMessagingUpgradeStepRegistrator\.java" />
 		<suppress checks="JavaUpgradeVersionCheck" files="portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/upgrade/registry/PortalMonitoringUpgradeStepRegistrator\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-log4j/src/main/java/com/liferay/portal/log4j/internal/Log4jConfigUtil\.java" />
-		<suppress checks="JavaXMLSecurityCheck" files="portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/MonitoringGateKeeper\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/MonitoringControlImpl\.java" />
 	</source-check>
 </suppressions>

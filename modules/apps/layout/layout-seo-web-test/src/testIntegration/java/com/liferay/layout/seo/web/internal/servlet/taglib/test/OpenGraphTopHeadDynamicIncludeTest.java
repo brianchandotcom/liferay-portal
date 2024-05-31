@@ -153,9 +153,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeCustomCanonicalURL() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), true,
@@ -165,6 +162,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			true, Collections.emptyMap(), Collections.emptyMap(), 0, false,
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -239,9 +239,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeCustomTitle() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		String title = "Heló";
 
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
@@ -251,6 +248,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
 			Collections.singletonMap(LocaleUtil.US, title),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -266,9 +266,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeCustomTitleAndDescription() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		String description = "description@#$%^&*()~`1234567890";
 		String title = "@#$%^&*()~`1234567890title";
 
@@ -280,6 +277,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.emptyMap(), 0, true,
 			Collections.singletonMap(LocaleUtil.US, title),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -297,9 +297,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	@Test
 	public void testIncludeCustomTitleAndDescriptionForArabicTranslation()
 		throws Exception {
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
 
 		String description = "الوصف العربي";
 		String title = "العنوان بالعربية";
@@ -332,6 +329,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		themeDisplay.setLanguageId("ar_SA");
 		themeDisplay.setLocale(LocaleUtil.fromLanguageId("ar_SA"));
 
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
 		mockHttpServletResponse.setCharacterEncoding("UTF-8");
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -350,9 +350,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	@Test
 	public void testIncludeCustomTitleAndDescriptionForUntranslatedLanguage()
 		throws Exception {
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
 
 		String description = RandomTestUtil.randomString();
 		String title = RandomTestUtil.randomString();
@@ -385,6 +382,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		themeDisplay.setLanguageId("ar_SA");
 		themeDisplay.setLocale(LocaleUtil.fromLanguageId("ar_SA"));
 
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
 		mockHttpServletResponse.setCharacterEncoding("UTF-8");
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -402,12 +402,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeDefaultMappedTitleAndDescription() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		_layout = _layoutLocalService.updateLayout(_layout);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithMockInfoItem(
 			_serviceContext.getRequest(),
@@ -453,9 +453,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeImageAltNoImage() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
@@ -464,6 +461,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.singletonMap(LocaleUtil.US, "Image alternative text"),
 			0, false, Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -538,9 +538,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeLayoutOpenGraphImage() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
 			"image.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -553,6 +550,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			layoutOpenGraphImageFileEntry.getFileEntryId(), false,
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -571,9 +571,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeLayoutOpenGraphImageNoImageAlt() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
 			"image.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -586,6 +583,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			layoutOpenGraphImageFileEntry.getFileEntryId(), false,
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -607,9 +607,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	@Test
 	public void testIncludeLayoutOpenGraphImageWhenBothDefined()
 		throws Exception {
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
 
 		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
 			"image.jpg",
@@ -634,6 +631,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			siteOpenGraphImageFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
@@ -652,9 +652,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	@Test
 	public void testIncludeLayoutOpenGraphImageWhenBothDefinedLayoutImageAlt()
 		throws Exception {
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
 
 		FileEntry imageFileEntry = _addImageFileEntry(
 			"image.jpg",
@@ -677,6 +674,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			imageFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
 				_getHttpServletRequest(), mockHttpServletResponse,
@@ -697,9 +697,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeLayoutOpenGraphImageWithImageAlt() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
 			"image.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -713,6 +710,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			layoutOpenGraphImageFileEntry.getFileEntryId(), false,
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -1228,9 +1228,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeMappedImage() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -1244,6 +1241,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_layout = _layoutLocalService.updateLayout(_layout);
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithMockInfoItem(
 			httpServletRequest,
@@ -1264,9 +1264,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeMappedTitleAndDescription() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -1280,6 +1277,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_layout = _layoutLocalService.updateLayout(_layout);
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithMockInfoItem(
 			httpServletRequest,
@@ -1338,9 +1338,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeSecureURL() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
 			"image.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -1353,6 +1350,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			layoutOpenGraphImageFileEntry.getFileEntryId(), false,
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -1389,9 +1389,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeSiteOpenGraphImage() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
 			"image_site.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -1401,6 +1398,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.emptyMap(),
 			siteOpenGraphImageFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
@@ -1421,9 +1421,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	public void testIncludeSiteOpenGraphImageWhenOpenGraphDisabled()
 		throws Exception {
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
 			"image_site.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -1433,6 +1430,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.emptyMap(),
 			siteOpenGraphImageFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(

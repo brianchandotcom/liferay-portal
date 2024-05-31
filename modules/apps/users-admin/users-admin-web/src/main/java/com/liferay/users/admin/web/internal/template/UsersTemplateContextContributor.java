@@ -80,6 +80,7 @@ public class UsersTemplateContextContributor
 					return null;
 				}));
 		contextObjects.put("is_setup_complete", user1.isSetupComplete());
+
 		contextObjects.put("language", themeDisplay.getLanguageId());
 		contextObjects.put("language_id", user1.getLanguageId());
 		contextObjects.put(

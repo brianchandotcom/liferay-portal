@@ -299,6 +299,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
+		String description = "الوصف العربي";
+		String title = "العنوان بالعربية";
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
@@ -306,15 +309,15 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				LocaleUtil.fromLanguageId("ar_SA"), "http://example.com"),
 			true,
 			HashMapBuilder.put(
-				LocaleUtil.US, "Arabic description"
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).put(
-				LocaleUtil.fromLanguageId("ar_SA"), "الوصف العربي"
+				LocaleUtil.fromLanguageId("ar_SA"), description
 			).build(),
 			Collections.emptyMap(), 0, true,
 			HashMapBuilder.put(
-				LocaleUtil.US, "Arabic title"
+				LocaleUtil.US, RandomTestUtil.randomString()
 			).put(
-				LocaleUtil.fromLanguageId("ar_SA"), "العنوان بالعربية"
+				LocaleUtil.fromLanguageId("ar_SA"), title
 			).build(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -338,8 +341,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:description", "الوصف العربي");
-		_assertMetaTag(document, "og:title", "العنوان بالعربية");
+		_assertMetaTag(document, "og:description", description);
+		_assertMetaTag(document, "og:title", title);
 	}
 
 	@Test
@@ -349,6 +352,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
+		String description = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
+
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
@@ -356,13 +362,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				LocaleUtil.fromLanguageId("ar_SA"), "http://example.com"),
 			true,
 			HashMapBuilder.put(
-				LocaleUtil.US, "Arabic description"
+				LocaleUtil.US, description
 			).put(
 				LocaleUtil.fromLanguageId("ar_SA"), StringPool.BLANK
 			).build(),
 			Collections.emptyMap(), 0, true,
 			HashMapBuilder.put(
-				LocaleUtil.US, "Arabic title"
+				LocaleUtil.US, title
 			).put(
 				LocaleUtil.fromLanguageId("ar_SA"), StringPool.BLANK
 			).build(),
@@ -388,8 +394,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:description", "Arabic description");
-		_assertMetaTag(document, "og:title", "Arabic title");
+		_assertMetaTag(document, "og:description", description);
+		_assertMetaTag(document, "og:title", title);
 	}
 
 	@Test

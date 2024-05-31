@@ -38,10 +38,10 @@
 <div class="learn-recipe-categories-tags">
 	<#list taxonomyVocabularies as vocabulary>
 		<#if vocabulary = "Capability" || vocabulary = "Feature">
-
+		
 			<#assign
 				formattedVocabulary = (vocabulary?lower_case?replace(" ", ""))
-				searchTerm = request.getParameter("q")!
+				searchTerm = paramUtil.get(request, "highlight", "defaultValue")!
 			/>
 
 			<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
@@ -52,7 +52,7 @@
 					<div class="learn-recipe-category-tag mr-2">
 						<a
 							class="label tag-container"
-							href="/web/liferay-learn/search?q=${searchTerm}&${formattedVocabulary}=${taxonomyCategory.categoryId}"
+							href="/search?q=${searchTerm}&${formattedVocabulary}=${taxonomyCategory.categoryId}"
 						>
 							<span>${taxonomyCategory.categoryName}</span>
 						</a>
@@ -69,7 +69,7 @@
 					<div class="learn-recipe-category-tag mr-2">
 						<a
 							class="label tag-container"
-							href="/web/liferay-learn/search?q=${searchTerm}&deployment-approach=${taxonomyCategory.categoryId}"
+							href="/search?q=${searchTerm}&deployment-approach=${taxonomyCategory.categoryId}"
 						>
 							<span>${taxonomyCategory.categoryName}</span>
 						</a>

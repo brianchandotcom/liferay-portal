@@ -141,7 +141,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 		// Go to Publisher Dashboard
 
 		await publisherDashboardPage.goto();
-		await publisherDashboardPage.selectAccount(accountName);
+
 		await publisherDashboardPage.gotoNewAppPage();
 
 		// Publish the app
@@ -163,7 +163,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 		expect(page.getByText(products.free_cloud.name)).toBeTruthy();
 	});
 
-	test.skip('can publish paid cloud app', async ({
+	test('can publish paid cloud app', async ({
 		page,
 		publisherAppPage,
 		publisherDashboardPage,
@@ -175,7 +175,6 @@ test.describe('Can Publish Marketplace Apps', () => {
 		// Go to Publisher Dashboard
 
 		await publisherDashboardPage.goto();
-		await publisherDashboardPage.selectAccount(accountName);
 		await publisherDashboardPage.gotoNewAppPage();
 
 		// Publish the app
@@ -192,5 +191,55 @@ test.describe('Can Publish Marketplace Apps', () => {
 		await publisherAppPage.reviewAndSubmit();
 
 		expect(page.getByText(products.free_cloud.name)).toBeTruthy();
+	});
+
+	test('supporting DXP versions as virtual items', async ({
+		apiHelpers,
+		publisherAppPage,
+		publisherDashboardPage,
+	}) => {
+		publisherAppPage.setPublishProduct(
+			products.free_dxp as unknown as PublishProductPayload
+		);
+
+		// Go to Publisher Dashboard
+
+		await publisherDashboardPage.goto();
+		await publisherDashboardPage.gotoNewAppPage();
+
+		// Publish the app
+
+		await publisherAppPage.checkHeader({
+			accountName,
+			appName: 'New App',
+		});
+		await publisherAppPage.continue();
+		await publisherAppPage.fillProfile();
+		await publisherAppPage.continue();
+		await publisherAppPage.fillBuild();
+		await publisherAppPage.fillStoreFront();
+		await publisherAppPage.fillVersion();
+		await publisherAppPage.fillPricing();
+		await publisherAppPage.fillSupport();
+		await publisherAppPage.reviewAndSubmit();
+
+		const createdProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+				new URLSearchParams({
+					filter: `name eq '${products.free_dxp.name}'`,
+				})
+			);
+
+		const productId = createdProduct.items[0].productId;
+
+		const productVirtualSettings =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
+				productId
+			);
+
+		expect(
+			productVirtualSettings.productVirtualSettingsFileEntries[0]
+				.version === products.free_dxp.appVersion[0]
+		).toBeTruthy();
 	});
 });

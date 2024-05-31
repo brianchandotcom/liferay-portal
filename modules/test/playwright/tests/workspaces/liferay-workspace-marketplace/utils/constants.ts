@@ -26,6 +26,21 @@ export const products = {
 		},
 		zipFiles: [path.join(dependenciesFolder, 'marketplace-test-app.zip')],
 	},
+	free_dxp: {
+		appVersion: ['Liferay Portal 7.4 GA110'],
+		categories: ['Customer Data Management'],
+		cloudCompatible: false,
+		compatibleOfferings: ['Self-Hosted'],
+		description: 'My free dxp app',
+		logo: path.join(dependenciesFolder, 'marketplace-test-icon.png'),
+		name: 'Free DXP App',
+		tags: ['Client Extension Type'],
+		version: {
+			notes: 'Lorem Ipsum...',
+			version: '1.0.0',
+		},
+		zipFiles: [path.join(dependenciesFolder, 'marketplace-test-app.zip')],
+	},
 	paid_cloud: {
 		categories: ['Customer Data Management'],
 		cloudCompatible: true,

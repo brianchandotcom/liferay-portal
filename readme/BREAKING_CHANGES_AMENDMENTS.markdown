@@ -542,7 +542,7 @@ If the total time spent searching is still a concern, regulate it with the new P
 
 # 6de9f9ce7bd603ca6b0dbb5035c359c2c9c2ed4f
 
-The original author did not include the breaking change message. The correct message should be:
+This commit is missing a breaking change message. The correct message is:
 
 ```
 LPS-196539 SF rename variable name
@@ -551,11 +551,11 @@ LPS-196539 SF rename variable name
 
 ## What portal-kernel/src/com/liferay/portal/kernel/theme/PortletDisplay.java
 
-Methods getPortletSetup() and setPortletSetup() were renamed.
+The getPortletSetup() method is renamed to getPortletPreferences(), and setPortletSetup() is renamed to setPortletPreferences().
 
 ## Why
 
-Enforce variable name for PortletPreferences.
+This change makes the method names consistent with the `PortletPreferences` variable.
 
 ## Alternatives
 

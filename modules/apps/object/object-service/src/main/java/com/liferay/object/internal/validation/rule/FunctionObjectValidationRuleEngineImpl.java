@@ -118,6 +118,10 @@ public class FunctionObjectValidationRuleEngineImpl
 		JSONObject originalJSONObject = _jsonFactory.createJSONObject(
 			objectEntry);
 
+		if (!originalJSONObject.has("properties")) {
+			return originalJSONObject;
+		}
+
 		JSONObject payloadJSONObject = JSONUtil.put(
 			"creator", originalJSONObject.getJSONObject("creator")
 		).put(

@@ -63,7 +63,8 @@ public class DocumentShortcutResourceImpl
 				_dlFileShortcutService.getGroupFileShortcuts(
 					siteId, pagination.getStartPosition(),
 					pagination.getEndPosition())),
-			pagination, _dlFileShortcutService.countByGroupId(siteId));
+			pagination,
+			_dlFileShortcutService.getGroupFileShortcutsCount(siteId));
 	}
 
 	private DocumentShortcut _toDocumentShortcut(FileShortcut fileShortcut)

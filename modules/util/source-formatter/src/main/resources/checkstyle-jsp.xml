@@ -198,7 +198,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CompanyIterationCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies" />
+			<property name="description" value="Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies." />
 			<property name="enabled" value="false" />
 			<message key="company.local.service.use.for.loop" value="Use ''CompanyLocalService.{0}'' when iterating over ''{1}''" />
 			<message key="company.local.service.use.sql" value="Use ''CompanyLocalService.forEachCompany'' instead of SQL" />

@@ -278,7 +278,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CompanyIterationCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies" />
+			<property name="description" value="Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies." />
 			<property name="enabled" value="false" />
 			<message key="company.local.service.use.for.loop" value="Use ''CompanyLocalService.{0}'' when iterating over ''{1}''" />
 			<message key="company.local.service.use.sql" value="Use ''CompanyLocalService.forEachCompany'' instead of SQL" />
@@ -621,7 +621,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.NestedFieldAnnotationCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Checks for `nested.field.support` in the `property` attribute of the `Component` annotation" />
+			<property name="description" value="Checks for `nested.field.support` in the `property` attribute of the `Component` annotation." />
 			<property name="enabled" value="false" />
 			<message key="nested.field.support.missing" value="Set ''nested.field.support=true'' in the ''property'' attribute of ''Component'' annotation as one of methods has a ''NestedField'' annotation" />
 			<message key="nested.field.support.unneeded" value="Remove ''nested.field.support'' in the ''property'' attribute of ''Component'' annotation as no method has a ''NestedField'' annotation" />
@@ -658,7 +658,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.OSGiCommandsCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Perform several checks on `*OSGiCommands` classes" />
+			<property name="description" value="Perform several checks on `*OSGiCommands` classes." />
 			<property name="enabled" value="false" />
 			<message key="bad.class.name" value="The names of clases that implement OSGi commands must end with ''OSGiCommands''" />
 			<message key="bad.osgi.reference" value="OSGi references to `*OSGiCommands` classes are not allowed" />
@@ -834,7 +834,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ThreadContextClassLoaderCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Checks usage of `Thread.setContextClassLoader`" />
+			<property name="description" value="Checks usage of `Thread.setContextClassLoader`." />
 			<property name="enabled" value="false" />
 			<message key="thread.context.class.loader.util.use" value="Use ''ThreadContextClassLoaderUtil.swap()'' instead to swap the context class loader of the current thread" />
 		</module>
@@ -929,7 +929,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeDeprecatedAPICheck">
 			<property name="category" value="Upgrade" />
-			<property name="description" value="Finds calls to deprecated classes, constructors, fields or methods after an upgrade" />
+			<property name="description" value="Finds calls to deprecated classes, constructors, fields or methods after an upgrade." />
 			<message key="constructor.call.deprecated" value="Constructor ''{0}'' has been deprecated in version ''{1}''" />
 			<message key="field.call.deprecated" value="Field ''{0}'' has been deprecated in version ''{1}''" />
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated in version ''{1}''" />

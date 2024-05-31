@@ -106,7 +106,6 @@ public class DatabaseUtilTest extends BaseTestCase {
 		Assert.assertEquals(
 			"jdbc:postgresql://localhost:5432/lportal?currentSchema=schemaName",
 			DatabaseUtil.replaceSchemaName(
-
 				"jdbc:postgresql://localhost:5432/lportal", "schemaName"));
 
 		//

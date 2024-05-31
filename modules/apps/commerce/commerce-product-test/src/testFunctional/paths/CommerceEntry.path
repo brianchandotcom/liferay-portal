@@ -582,12 +582,12 @@
 </tr>
 <tr>
 	<td>COMBOBOX_DROPDOWN_OPTION_NAME</td>
-	<td>//div[contains(@class, 'dropdown-menu dropdown-menu-indicator-start dropdown-menu-select show')]//*[contains(text(),'${key_optionName}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu-select')]//*[contains(text(),'${key_optionName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DROPDOWN_OPTION_NAME_WITH_WARNING_MESSAGE</td>
-	<td>//div[contains(@class, 'dropdown-menu dropdown-menu-indicator-start dropdown-menu-select show')]//span[contains(text(),'${key_warning}')]/../../..//*[contains(text(),'${key_optionName}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu-select')]//span[contains(text(),'${key_warning}')]/../../..//*[contains(text(),'${key_optionName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1685,7 +1685,7 @@
 </tr>
 <tr>
 	<td>COMMERCE_FACET_DROPDOWN</td>
-	<td>//div[contains(@class,' dropdown-menu-select show')]//button[contains(.,'${key_entry}')]</td>
+	<td>//div[contains(@class,' dropdown-menu-select')]//button[contains(.,'${key_entry}')]</td>
 	<td></td>
 </tr>
 </tbody>

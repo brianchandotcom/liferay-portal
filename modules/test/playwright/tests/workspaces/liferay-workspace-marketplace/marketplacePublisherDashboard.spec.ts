@@ -193,7 +193,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 		expect(page.getByText(products.free_cloud.name)).toBeTruthy();
 	});
 
-	test('supporting DXP versions as virtual items', async ({
+	test('supporting one DXP version as virtual item', async ({
 		apiHelpers,
 		publisherAppPage,
 		publisherDashboardPage,
@@ -201,6 +201,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 		publisherAppPage.setPublishProduct(
 			products.free_dxp as unknown as PublishProductPayload
 		);
+		const appVersion = ['Liferay Portal 7.4 GA110'];
 
 		// Go to Publisher Dashboard
 
@@ -216,6 +217,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 		await publisherAppPage.continue();
 		await publisherAppPage.fillProfile();
 		await publisherAppPage.continue();
+		await publisherAppPage.selectPackages(appVersion);
 		await publisherAppPage.fillBuild();
 		await publisherAppPage.fillStoreFront();
 		await publisherAppPage.fillVersion();
@@ -239,7 +241,45 @@ test.describe('Can Publish Marketplace Apps', () => {
 
 		expect(
 			productVirtualSettings.productVirtualSettingsFileEntries[0]
-				.version === products.free_dxp.appVersion[0]
+				.version === appVersion[0]
 		).toBeTruthy();
+	});
+
+	test('supporting multiple DXP versions as virtual items', async ({
+		page,
+		publisherAppPage,
+		publisherDashboardPage,
+	}) => {
+		publisherAppPage.setPublishProduct(
+			products.free_dxp as unknown as PublishProductPayload
+		);
+		const appVersion = [
+			'Liferay Portal 7.4 GA110',
+			'Liferay Portal 7.4 GA109',
+		];
+
+		// Go to Publisher Dashboard
+
+		await publisherDashboardPage.goto();
+		await publisherDashboardPage.gotoNewAppPage();
+
+		// Publish the app
+
+		await publisherAppPage.checkHeader({
+			accountName,
+			appName: 'New App',
+		});
+		await publisherAppPage.continue();
+		await publisherAppPage.fillProfile();
+		await publisherAppPage.continue();
+		await publisherAppPage.selectPackages(appVersion);
+		await publisherAppPage.fillBuild();
+		await publisherAppPage.fillStoreFront();
+		await publisherAppPage.fillVersion();
+		await publisherAppPage.fillPricing();
+		await publisherAppPage.fillSupport();
+		await publisherAppPage.reviewAndSubmit();
+
+		expect(page.getByText(products.free_dxp.name)).toBeTruthy();
 	});
 });

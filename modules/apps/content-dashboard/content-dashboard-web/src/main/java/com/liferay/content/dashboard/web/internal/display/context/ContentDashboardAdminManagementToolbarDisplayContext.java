@@ -56,20 +56,16 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletResponse;
@@ -672,29 +668,24 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private JSONArray _getDateTypesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		Map<String, String> map = new HashMap<>();
+		ContentDashboardConstants.DateType[] dateTypes =
+			ContentDashboardConstants.DateType.values();
+
+		Arrays.sort(
+			dateTypes,
+			Comparator.comparing(
+				dateType -> _language.get(
+					httpServletRequest, dateType.getType())));
 
 		for (ContentDashboardConstants.DateType dateType :
-				ContentDashboardConstants.DateType.values()) {
+				Arrays.asList(dateTypes)) {
 
-			map.put(
-				dateType.getType(),
-				_language.get(httpServletRequest, dateType.getType()));
-		}
-
-		TreeMap<String, String> sortedMap =
-			TreeMapBuilder.<String, String>create(
-				new MapValuesComparator(map)
-			).putAll(
-				map
-			).build();
-
-		for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
 			jsonArray.put(
 				JSONUtil.put(
-					"label", entry.getValue()
+					"label",
+					_language.get(httpServletRequest, dateType.getType())
 				).put(
-					"value", entry.getKey()
+					"value", dateType.getType()
 				));
 		}
 
@@ -1056,23 +1047,5 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private final Locale _locale;
 	private final PortletResponse _portletResponse;
 	private final UserLocalService _userLocalService;
-
-	private static class MapValuesComparator implements Comparator<String> {
-
-		public MapValuesComparator(Map<String, String> map) {
-			_map = map;
-		}
-
-		@Override
-		public int compare(String key1, String key2) {
-			String value1 = _map.get(key1);
-			String value2 = _map.get(key2);
-
-			return value1.compareTo(value2);
-		}
-
-		private final Map<String, String> _map;
-
-	}
 
 }

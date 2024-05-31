@@ -2129,6 +2129,37 @@ public class Mutation {
 					Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the document shortcut and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteDocumentShortcut(
+			@GraphQLName("documentShortcutId") Long documentShortcutId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.deleteDocumentShortcut(
+					documentShortcutId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteDocumentShortcutBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentShortcutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentShortcutResource ->
+				documentShortcutResource.deleteDocumentShortcutBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField
 	public Response createSiteDocumentShortcutsPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,

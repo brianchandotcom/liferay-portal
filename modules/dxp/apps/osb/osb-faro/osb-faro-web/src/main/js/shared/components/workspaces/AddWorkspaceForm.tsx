@@ -56,6 +56,15 @@ const getProjectLocations = (): {label: string; value: string}[] => {
 	}
 };
 
+const getDefaultServerLocation = () => {
+	switch (FARO_ENV) {
+		case FaroEnv.Staging:
+			return STG;
+		default:
+			return US;
+	}
+};
+
 interface IAddWorkspaceFormProps extends React.HTMLAttributes<HTMLElement> {
 	close: Modal.close;
 	disabled: boolean;
@@ -167,7 +176,9 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 						ownerEmailAddress:
 							project?.ownerEmailAddress ||
 							currentUser.emailAddress,
-						serverLocation: project?.serverLocation || US,
+						serverLocation:
+							project?.serverLocation ||
+							getDefaultServerLocation(),
 						timeZoneId:
 							project?.getIn(['timeZone', 'timeZoneId']) ||
 							DEFAULT_TIME_ZONE

@@ -38,7 +38,7 @@
 <div class="learn-recipe-categories-tags">
 	<#list taxonomyVocabularies as vocabulary>
 		<#if vocabulary = "Capability" || vocabulary = "Feature">
-		
+
 			<#assign
 				formattedVocabulary = (vocabulary?lower_case?replace(" ", ""))
 				searchTerm = paramUtil.get(request, "highlight", "defaultValue")!

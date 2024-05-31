@@ -476,10 +476,6 @@ pre[class*='language-'] {
 	width: 100%;
 }
 
-.learn-article-nav-container {
-	min-width: 21rem;
-}
-
 .learn-article-nav {
 	align-self: flex-start;
 	font-weight: var(--font-weight-semi-bold);
@@ -684,6 +680,10 @@ pre[class*='language-'] {
 			font-weight: bolder;
 		}
 	}
+}
+
+.learn-article-nav-container {
+	min-width: 21rem;
 }
 
 .learn-banner {

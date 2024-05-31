@@ -5,9 +5,12 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -269,7 +272,7 @@ public class DocumentShortcut implements Serializable {
 	}
 
 	@GraphQLField(description = "The document shortcut's folder ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
 	@JsonIgnore
@@ -398,7 +401,7 @@ public class DocumentShortcut implements Serializable {
 	@GraphQLField(
 		description = "The ID of the document to which this shortcut is scoped."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long targetDocumentId;
 
 	@JsonIgnore
@@ -443,11 +446,69 @@ public class DocumentShortcut implements Serializable {
 	@GraphQLField(
 		description = "The title of the document to which this shortcut is scoped."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
+
+	@JsonGetter("viewableBy")
+	@Schema(
+		description = "A write-only property that specifies the default permissions."
+	)
+	@Valid
+	public ViewableBy getViewableBy() {
+		if (_viewableBySupplier != null) {
+			viewableBy = _viewableBySupplier.get();
+
+			_viewableBySupplier = null;
+		}
+
+		return viewableBy;
+	}
+
+	@JsonIgnore
+	public String getViewableByAsString() {
+		ViewableBy viewableBy = getViewableBy();
+
+		if (viewableBy == null) {
+			return null;
+		}
+
+		return viewableBy.toString();
+	}
+
+	public void setViewableBy(ViewableBy viewableBy) {
+		this.viewableBy = viewableBy;
+
+		_viewableBySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setViewableBy(
+		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
+
+		_viewableBySupplier = () -> {
+			try {
+				return viewableByUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A write-only property that specifies the default permissions."
+	)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected ViewableBy viewableBy;
+
+	@JsonIgnore
+	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -603,6 +664,22 @@ public class DocumentShortcut implements Serializable {
 			sb.append("\"");
 		}
 
+		ViewableBy viewableBy = getViewableBy();
+
+		if (viewableBy != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"viewableBy\": ");
+
+			sb.append("\"");
+
+			sb.append(viewableBy);
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -614,6 +691,44 @@ public class DocumentShortcut implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("ViewableBy")
+	public static enum ViewableBy {
+
+		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
+
+		@JsonCreator
+		public static ViewableBy create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (ViewableBy viewableBy : values()) {
+				if (Objects.equals(viewableBy.getValue(), value)) {
+					return viewableBy;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ViewableBy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

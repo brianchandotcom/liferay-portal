@@ -215,6 +215,35 @@ public class DocumentShortcut implements Cloneable, Serializable {
 
 	protected String title;
 
+	public ViewableBy getViewableBy() {
+		return viewableBy;
+	}
+
+	public String getViewableByAsString() {
+		if (viewableBy == null) {
+			return null;
+		}
+
+		return viewableBy.toString();
+	}
+
+	public void setViewableBy(ViewableBy viewableBy) {
+		this.viewableBy = viewableBy;
+	}
+
+	public void setViewableBy(
+		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
+
+		try {
+			viewableBy = viewableByUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ViewableBy viewableBy;
+
 	@Override
 	public DocumentShortcut clone() throws CloneNotSupportedException {
 		return (DocumentShortcut)super.clone();
@@ -244,6 +273,39 @@ public class DocumentShortcut implements Cloneable, Serializable {
 
 	public String toString() {
 		return DocumentShortcutSerDes.toJSON(this);
+	}
+
+	public static enum ViewableBy {
+
+		ANYONE("Anyone"), MEMBERS("Members"), OWNER("Owner");
+
+		public static ViewableBy create(String value) {
+			for (ViewableBy viewableBy : values()) {
+				if (Objects.equals(viewableBy.getValue(), value) ||
+					Objects.equals(viewableBy.name(), value)) {
+
+					return viewableBy;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ViewableBy(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

@@ -20,7 +20,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,11 +38,6 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 		_dbInspector = new DBInspector(DataAccess.getConnection());
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_rebuildQuartzIndexes();
-	}
-
 	@Test
 	public void testUpgrade() throws Exception {
 		_dropQuartzIndexes();
@@ -51,114 +45,6 @@ public class QuartzUpgradeProcessTest extends BaseDBPartitionTestCase {
 		_runUpgrade();
 
 		_assertHasAllQuartzIndexes();
-	}
-
-	private static void _rebuildQuartzIndexes() throws Exception {
-		if (!_dbInspector.hasIndex("QUARTZ_JOB_DETAILS", "IX_88328984")) {
-			_db.runSQLTemplateString(
-				"create index IX_88328984 on QUARTZ_JOB_DETAILS (SCHED_NAME, " +
-					"JOB_GROUP);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_JOB_DETAILS", "IX_779BCA37")) {
-			_db.runSQLTemplateString(
-				"create index IX_779BCA37 on QUARTZ_JOB_DETAILS (SCHED_NAME, " +
-					"REQUESTS_RECOVERY);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_FIRED_TRIGGERS", "IX_BE3835E5")) {
-			_db.runSQLTemplateString(
-				"create index IX_BE3835E5 on QUARTZ_FIRED_TRIGGERS (" +
-					"SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_FIRED_TRIGGERS", "IX_4BD722BM")) {
-			_db.runSQLTemplateString(
-				"create index IX_4BD722BM on QUARTZ_FIRED_TRIGGERS (" +
-					"SCHED_NAME, TRIGGER_GROUP);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_FIRED_TRIGGERS", "IX_339E078M")) {
-			_db.runSQLTemplateString(
-				"create index IX_339E078M on QUARTZ_FIRED_TRIGGERS (" +
-					"SCHED_NAME, INSTANCE_NAME, REQUESTS_RECOVERY);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_FIRED_TRIGGERS", "IX_5005E3AF")) {
-			_db.runSQLTemplateString(
-				"create index IX_5005E3AF on QUARTZ_FIRED_TRIGGERS (" +
-					"SCHED_NAME, JOB_NAME, JOB_GROUP);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_FIRED_TRIGGERS", "IX_BC2F03B0")) {
-			_db.runSQLTemplateString(
-				"create index IX_BC2F03B0 on QUARTZ_FIRED_TRIGGERS (" +
-					"SCHED_NAME, JOB_GROUP);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_91CA7CCE")) {
-			_db.runSQLTemplateString(
-				"create index IX_91CA7CCE on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"TRIGGER_GROUP, NEXT_FIRE_TIME, TRIGGER_STATE, " +
-						"MISFIRE_INSTR);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_D219AFDE")) {
-			_db.runSQLTemplateString(
-				"create index IX_D219AFDE on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"TRIGGER_GROUP, TRIGGER_STATE);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_A85822A0")) {
-			_db.runSQLTemplateString(
-				"create index IX_A85822A0 on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"JOB_NAME, JOB_GROUP);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_8AA50BE1")) {
-			_db.runSQLTemplateString(
-				"create index IX_8AA50BE1 on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"JOB_GROUP);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_F2DD7C7E")) {
-			_db.runSQLTemplateString(
-				"create index IX_F2DD7C7E on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"NEXT_FIRE_TIME, TRIGGER_STATE, MISFIRE_INSTR);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_1F92813C")) {
-			_db.runSQLTemplateString(
-				"create index IX_1F92813C on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"NEXT_FIRE_TIME, MISFIRE_INSTR);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_99108B6E")) {
-			_db.runSQLTemplateString(
-				"create index IX_99108B6E on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"TRIGGER_STATE);",
-				false);
-		}
-
-		if (!_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_CD7132D0")) {
-			_db.runSQLTemplateString(
-				"create index IX_CD7132D0 on QUARTZ_TRIGGERS (SCHED_NAME, " +
-					"CALENDAR_NAME);",
-				false);
-		}
 	}
 
 	private void _assertHasAllQuartzIndexes() throws Exception {

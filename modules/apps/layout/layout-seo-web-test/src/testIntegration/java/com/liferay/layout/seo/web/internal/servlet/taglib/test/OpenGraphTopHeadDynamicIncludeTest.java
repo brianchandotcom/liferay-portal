@@ -1598,6 +1598,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		if (Validator.isNotNull(expectedDescription)) {
 			_assertMetaTag(document, "og:description", expectedDescription);
 		}
+		else {
+			_assertMetaTag(
+				document, "og:description", _layout.getDescription(locale));
+		}
 
 		_assertMetaTag(document, "og:title", expectedTitle);
 	}

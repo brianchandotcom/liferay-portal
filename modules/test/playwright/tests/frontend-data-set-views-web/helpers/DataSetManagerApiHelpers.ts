@@ -115,6 +115,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		r_fdsViewFDSFieldRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 		renderer = 'default',
 		rendererType = 'internal',
+		sortable = false,
 		type = 'string',
 	}: {
 		extraBodyParams?: any;
@@ -123,6 +124,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		r_fdsViewFDSFieldRelationship_c_fdsViewERC?: string;
 		renderer?: string;
 		rendererType?: string;
+		sortable?: boolean;
 		type?: string;
 	}) {
 		const url = `${this.baseUrl}data-set-manager/table-sections`;
@@ -133,6 +135,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			r_fdsViewFDSFieldRelationship_c_fdsViewERC,
 			renderer,
 			rendererType,
+			sortable,
 			type,
 			...extraBodyParams,
 		};

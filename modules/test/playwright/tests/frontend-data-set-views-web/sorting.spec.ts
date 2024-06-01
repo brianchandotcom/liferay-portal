@@ -43,7 +43,7 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-test.describe('Configure sorting in Data Set Manager', () => {
+test.describe('Sorting in Data Set Manager', () => {
 	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
 		page,
 		sortingPage,
@@ -195,22 +195,41 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 	fragmentTest(
 		'When sorting is configured with at least 1 sort, the dropdown is displayed in the fragment @LPD-19503',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step('Create a new sorting', async () => {
+			await fragmentTest.step('Create sorting', async () => {
 				await dataSetManagerApiHelpers.createDataSetSort({
 					defaultValue: true,
-					fieldName: 'dateCreated',
-					label_i18n: {en_US: 'Date Created'},
+					fieldName: 'id',
+					label_i18n: {en_US: 'ID'},
+					orderType: 'asc',
+					r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
+				});
+
+				await dataSetManagerApiHelpers.createDataSetSort({
+					defaultValue: false,
+					fieldName: 'name',
+					label_i18n: {en_US: 'Name'},
 					r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
 				});
 			});
 
 			await fragmentTest.step(
-				'Add a field, so FDS has something to show',
+				'Add fields, so data is displayed',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetField({
-						label_i18n: {en_US: 'Date Modified'},
-						name: 'rendererType',
+						label_i18n: {
+							en_US: 'ID',
+						},
+						name: 'id',
 						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						sortable: true,
+						type: 'string',
+					});
+
+					await dataSetManagerApiHelpers.createDataSetField({
+						label_i18n: {en_US: 'Name'},
+						name: 'name',
+						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						sortable: true,
 						type: 'string',
 					});
 				}
@@ -229,6 +248,112 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 					await expect(
 						page.getByRole('button', {name: 'Order'})
 					).toBeVisible();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check that default sorting is applied',
+				async () => {
+					const firstIDText = await fdsFragmentPage.fdsTableWrapper
+						.locator(
+							'.dnd-tbody .dnd-tr:first-child .dnd-td:first-child'
+						)
+						.textContent();
+
+					const lastIDText = await fdsFragmentPage.fdsTableWrapper
+						.locator(
+							'.dnd-tbody .dnd-tr:last-child .dnd-td:first-child'
+						)
+						.textContent();
+
+					expect(firstIDText < lastIDText).toBeTruthy();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check that sorting is displayed in the dropdown',
+				async () => {
+					await page.getByRole('button', {name: 'Order'}).click();
+
+					await expect(
+						page.getByRole('menuitem', {name: 'ID'})
+					).toBeVisible();
+					await expect(
+						page.getByRole('menuitem', {name: 'Name'})
+					).toBeVisible();
+				}
+			);
+
+			await fragmentTest.step(
+				'Select "Descending" in the dropdown',
+				async () => {
+					await page
+						.getByRole('menuitem', {name: 'Descending'})
+						.click();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check that the first ID is greater than the last ID in the table',
+				async () => {
+					const firstIDText = await fdsFragmentPage.fdsTableWrapper
+						.locator(
+							'.dnd-tbody .dnd-tr:first-child .dnd-td:first-child'
+						)
+						.textContent();
+
+					const lastIDText = await fdsFragmentPage.fdsTableWrapper
+						.locator(
+							'.dnd-tbody .dnd-tr:last-child .dnd-td:first-child'
+						)
+						.textContent();
+
+					expect(firstIDText > lastIDText).toBeTruthy();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check that a different sort "Name" can be used',
+				async () => {
+					await page.getByRole('button', {name: 'Order'}).click();
+					await page.getByRole('menuitem', {name: 'Name'}).click();
+
+					const firstNameText = await fdsFragmentPage.fdsTableWrapper
+						.locator(
+							'.dnd-tbody .dnd-tr:first-child .dnd-td:nth-child(2)'
+						)
+						.textContent();
+
+					const lastNameText = await fdsFragmentPage.fdsTableWrapper
+						.locator(
+							'.dnd-tbody .dnd-tr:last-child .dnd-td:nth-child(2)'
+						)
+						.textContent();
+
+					expect(firstNameText > lastNameText).toBeTruthy();
+
+					await page.getByRole('button', {name: 'Order'}).click();
+					await page
+						.getByRole('menuitem', {name: 'Ascending'})
+						.click();
+
+					const firstNameTextAscending =
+						await fdsFragmentPage.fdsTableWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:first-child .dnd-td:nth-child(2)'
+							)
+							.textContent();
+
+					const lastNameTextAscending =
+						await fdsFragmentPage.fdsTableWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:last-child .dnd-td:nth-child(2)'
+							)
+							.textContent();
+
+					expect(
+						firstNameTextAscending < lastNameTextAscending
+					).toBeTruthy();
 				}
 			);
 		}

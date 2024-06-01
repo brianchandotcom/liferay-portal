@@ -80,7 +80,7 @@ public class CommerceNotificationHelperImpl
 			long groupId, CommerceNotificationType commerceNotificationType,
 			CommerceNotificationTemplate commerceNotificationTemplate,
 			String fromName, String toEmailAddress, String toFullName,
-			String subject, String body, Object object)
+			String cc, String bcc, String subject, String body, Object object)
 		throws PortalException {
 
 		User user = _userLocalService.getGuestUser(
@@ -94,16 +94,14 @@ public class CommerceNotificationHelperImpl
 				commerceNotificationTemplate.
 					getCommerceNotificationTemplateId(),
 				commerceNotificationTemplate.getFrom(), fromName,
-				toEmailAddress, toFullName,
-				commerceNotificationTemplate.getCc(),
-				commerceNotificationTemplate.getBcc(), subject, body, 0);
+				toEmailAddress, toFullName, cc, bcc, subject, body, 0);
 	}
 
 	private void _addNotificationQueueEntry(
 			long groupId, CommerceNotificationType commerceNotificationType,
 			CommerceNotificationTemplate commerceNotificationTemplate,
-			String fromName, User toUser, String subject, String body,
-			Object object)
+			String fromName, User toUser, String cc, String bcc, String subject,
+			String body, Object object)
 		throws PortalException {
 
 		_commerceNotificationQueueEntryLocalService.
@@ -114,9 +112,8 @@ public class CommerceNotificationHelperImpl
 				commerceNotificationTemplate.
 					getCommerceNotificationTemplateId(),
 				commerceNotificationTemplate.getFrom(), fromName,
-				toUser.getEmailAddress(), toUser.getFullName(),
-				commerceNotificationTemplate.getCc(),
-				commerceNotificationTemplate.getBcc(), subject, body, 0);
+				toUser.getEmailAddress(), toUser.getFullName(), cc, bcc,
+				subject, body, 0);
 	}
 
 	private String _formatString(
@@ -139,7 +136,9 @@ public class CommerceNotificationHelperImpl
 		List<CommerceDefinitionTermContributor> definitionTermContributors =
 			new ArrayList<>();
 
-		if (fieldType == _TOFIELD) {
+		if ((fieldType == _TOFIELD) || (fieldType == _CCFIELD) ||
+			(fieldType == _BCCFIELD)) {
+
 			definitionTermContributors.addAll(
 				_commerceDefinitionTermContributorRegistry.
 					getDefinitionTermContributorsByContributorKey(
@@ -214,6 +213,14 @@ public class CommerceNotificationHelperImpl
 			commerceNotificationType, _TOFIELD,
 			commerceNotificationTemplate.getTo(), object, userLocale);
 
+		String cc = _formatString(
+			commerceNotificationType, _CCFIELD,
+			commerceNotificationTemplate.getCc(), object, userLocale);
+
+		String bcc = _formatString(
+			commerceNotificationType, _BCCFIELD,
+			commerceNotificationTemplate.getBcc(), object, userLocale);
+
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
 
@@ -238,25 +245,29 @@ public class CommerceNotificationHelperImpl
 					_addNotificationQueueEntry(
 						groupId, commerceNotificationType,
 						commerceNotificationTemplate, fromName, toUserString,
-						toUserString, subject, body, object);
+						toUserString, cc, bcc, subject, body, object);
 				}
 				else {
 					_addNotificationQueueEntry(
 						groupId, commerceNotificationType,
-						commerceNotificationTemplate, fromName, toUser, subject,
-						body, object);
+						commerceNotificationTemplate, fromName, toUser, cc, bcc,
+						subject, body, object);
 				}
 			}
 			else {
 				_addNotificationQueueEntry(
 					groupId, commerceNotificationType,
-					commerceNotificationTemplate, fromName, toUser, subject,
-					body, object);
+					commerceNotificationTemplate, fromName, toUser, cc, bcc,
+					subject, body, object);
 			}
 		}
 	}
 
+	private static final int _BCCFIELD = 5;
+
 	private static final int _BODYFIELD = 2;
+
+	private static final int _CCFIELD = 4;
 
 	private static final int _SUBJECTFIELD = 1;
 

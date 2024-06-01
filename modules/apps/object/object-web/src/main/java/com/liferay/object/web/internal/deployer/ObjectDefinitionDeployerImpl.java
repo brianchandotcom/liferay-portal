@@ -33,6 +33,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.provider.InfoItemScopeProvider;
 import com.liferay.info.item.provider.InfoItemStatusProvider;
+import com.liferay.info.item.provider.RelatedInfoItemProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
@@ -85,6 +86,7 @@ import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemObj
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemPermissionProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemScopeProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemStatusProvider;
+import com.liferay.object.web.internal.info.item.provider.ObjectEntryRelatedInfoItemProvider;
 import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItemRenderer;
 import com.liferay.object.web.internal.info.item.updater.ObjectEntryInfoItemFieldValuesUpdater;
 import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer;
@@ -539,6 +541,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"javax.portlet.name", objectDefinition.getPortletId()
 				).put(
 					"mvc.command.name", "/object_entries/edit_object_entry"
+				).build()),
+			_bundleContext.registerService(
+				RelatedInfoItemProvider.class,
+				new ObjectEntryRelatedInfoItemProvider(
+					objectDefinition, _objectDefinitionLocalService,
+					_objectRelationshipLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
 				UserNotificationDefinition.class,

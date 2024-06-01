@@ -2493,6 +2493,11 @@ public class PropsValues {
 	public static final String[] VIRTUAL_HOSTS_IGNORE_EXTENSIONS =
 		PropsUtil.getArray(PropsKeys.VIRTUAL_HOSTS_IGNORE_EXTENSIONS);
 
+	public static final int VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT));
+
 	public static final boolean VIRTUAL_HOSTS_STRICT_ACCESS =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.VIRTUAL_HOSTS_STRICT_ACCESS));

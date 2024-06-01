@@ -39,6 +39,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -124,7 +125,34 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public List<VirtualHost> getVirtualHosts(long companyId, long layoutSetId) {
-		return virtualHostPersistence.findByC_L(companyId, layoutSetId);
+		if (_perCompanyInMemoryFilterLimit <= 0) {
+			return virtualHostPersistence.findByC_L(companyId, layoutSetId);
+		}
+
+		List<VirtualHost> virtualHosts = virtualHostPersistence.findByCompanyId(
+			companyId);
+
+		if (virtualHosts.size() > _perCompanyInMemoryFilterLimit) {
+			_perCompanyInMemoryFilterLimit = 0;
+		}
+
+		List<VirtualHost> filteredVirtualHosts = null;
+
+		for (VirtualHost virtualHost : virtualHosts) {
+			if (virtualHost.getLayoutSetId() == layoutSetId) {
+				if (filteredVirtualHosts == null) {
+					filteredVirtualHosts = new ArrayList<>(virtualHosts.size());
+				}
+
+				filteredVirtualHosts.add(virtualHost);
+			}
+		}
+
+		if (filteredVirtualHosts == null) {
+			return Collections.emptyList();
+		}
+
+		return filteredVirtualHosts;
 	}
 
 	@Override
@@ -293,5 +321,8 @@ public class VirtualHostLocalServiceImpl
 
 	@BeanReference(type = LayoutSetPersistence.class)
 	private LayoutSetPersistence _layoutSetPersistence;
+
+	private volatile int _perCompanyInMemoryFilterLimit =
+		PropsValues.VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT;
 
 }

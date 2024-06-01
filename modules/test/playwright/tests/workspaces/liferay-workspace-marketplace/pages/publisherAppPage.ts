@@ -124,19 +124,18 @@ export class PublisherAppPage {
 			await this.confirmButton.click();
 			await this.importFile(
 				this.selectFileButton.first(),
-				path.join(__dirname, '../dependencies/marketplace-test-app.jar')
+				path.join(__dirname, '../dependencies/marketplace-app.jar')
 			);
 			await this.importFile(
 				this.selectFileButton.nth(1),
-				path.join(__dirname, '../dependencies/marketplace-test-app.jar')
+				path.join(__dirname, '../dependencies/marketplace-app.jar')
 			);
-		}
-		else {
+		} else {
 			await this.compatibleVersionsFirstCheckbox.click();
 			await this.confirmButton.click();
 			await this.importFile(
 				this.selectFileButton,
-				path.join(__dirname, '../dependencies/marketplace-test-app.jar')
+				path.join(__dirname, '../dependencies/marketplace-app.jar')
 			);
 		}
 	}

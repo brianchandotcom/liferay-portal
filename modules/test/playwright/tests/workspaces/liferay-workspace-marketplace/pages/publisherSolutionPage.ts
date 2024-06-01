@@ -150,7 +150,7 @@ export class PublisherSolutionPage {
 			.fill(details['text-images'].description);
 		await this.importFile(
 			this.selectFileButton,
-			path.join(__dirname, '../dependencies/marketplace-test-icon.png')
+			path.join(__dirname, '../dependencies/marketplace-icon.png')
 		);
 	}
 
@@ -166,7 +166,7 @@ export class PublisherSolutionPage {
 
 		await this.importFile(
 			this.selectFileButton,
-			path.join(__dirname, '../dependencies/marketplace-test-icon.png')
+			path.join(__dirname, '../dependencies/marketplace-icon.png')
 		);
 	}
 

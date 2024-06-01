@@ -2859,6 +2859,10 @@ public interface PropsKeys {
 	public static final String VIRTUAL_HOSTS_IGNORE_PATHS =
 		"virtual.hosts.ignore.paths";
 
+	public static final String
+		VIRTUAL_HOSTS_PER_COMPANY_IN_MEMORY_FILTER_LIMIT =
+			"virtual.hosts.per.company.in.memory.filter.limit";
+
 	public static final String VIRTUAL_HOSTS_STRICT_ACCESS =
 		"virtual.hosts.strict.access";
 

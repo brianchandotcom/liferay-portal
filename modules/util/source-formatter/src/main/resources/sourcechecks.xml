@@ -1758,6 +1758,10 @@
 			<description name="Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface." />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeJavaFinderImplCheck">
+			<category name="Upgrade" />
+			<description name="Add Component annotation to `*FinderImpl.java` class" />
+		</check>
 		<check name="UpgradeJavaGetFDSTableSchemaParameterCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'getFDSTableSchema' of 'FDSTableSchema'." />
@@ -1776,6 +1780,10 @@
 			<category name="Upgrade" />
 			<description name="Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName." />
 			<weight>2</weight>
+		</check>
+		<check name="UpgradeJavaLocalServiceImplCheck">
+			<category name="Upgrade" />
+			<description name="Add Component annotation to `*LocalServiceImpl.java` class" />
 		</check>
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />
@@ -1796,6 +1804,10 @@
 		<check name="UpgradeJavaScreenContributorClassCheck">
 			<category name="Upgrade" />
 			<description name="Replace class `PortalSettingsConfigurationScreenContributor` by `ConfigurationScreenWrapper` and create an inner class." />
+		</check>
+		<check name="UpgradeJavaServiceImplCheck">
+			<category name="Upgrade" />
+			<description name="Add Component annotation to `*ServiceImpl.java` class" />
 		</check>
 		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
 			<category name="Upgrade" />

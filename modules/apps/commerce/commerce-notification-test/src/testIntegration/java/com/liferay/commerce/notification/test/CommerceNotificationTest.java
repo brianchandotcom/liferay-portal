@@ -168,6 +168,44 @@ public class CommerceNotificationTest {
 	}
 
 	@Test
+	public void testOrderCreatorCcFieldAndBccField() throws Exception {
+		_commerceNotificationTemplate =
+			CommerceNotificationTestUtil.addNotificationTemplate(
+				"[%ORDER_CREATOR%]", "[%ORDER_CREATOR%]",
+				CommerceOrderConstants.ORDER_NOTIFICATION_PLACED,
+				_serviceContext);
+
+		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		_commerceNotificationHelper.sendNotifications(
+			_group.getGroupId(), _user.getUserId(),
+			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
+
+		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries =
+			_commerceNotificationQueueEntryLocalService.
+				getCommerceNotificationQueueEntries(
+					_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
+
+		Assert.assertEquals(
+			commerceNotificationQueueEntries.toString(), 1,
+			commerceNotificationQueueEntries.size());
+
+		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
+			commerceNotificationQueueEntries.get(0);
+
+		User user = _userLocalService.getUser(_commerceOrder.getUserId());
+
+		Assert.assertEquals(
+			commerceNotificationQueueEntry.getCc(), user.getEmailAddress());
+
+		Assert.assertEquals(
+			commerceNotificationQueueEntry.getBcc(), user.getEmailAddress());
+	}
+
+	@Test
 	public void testOrderCreatorRecipient() throws Exception {
 		_commerceNotificationTemplate =
 			CommerceNotificationTestUtil.addNotificationTemplate(

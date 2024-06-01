@@ -29,6 +29,18 @@ public class CommerceNotificationTestUtil {
 				RandomTestUtil.randomLocaleStringMap(), serviceContext);
 	}
 
+	public static CommerceNotificationTemplate addCommerceNotificationTemplate(
+			String name, String description, String from, String to, String cc,
+			String bcc, String type, ServiceContext serviceContext)
+		throws PortalException {
+
+		return CommerceNotificationTemplateLocalServiceUtil.
+			addCommerceNotificationTemplate(
+				name, description, from, RandomTestUtil.randomLocaleStringMap(),
+				to, cc, bcc, type, true, RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), serviceContext);
+	}
+
 	public static CommerceNotificationTemplate addNotificationTemplate(
 			String to, String notificationType, ServiceContext serviceContext)
 		throws PortalException {
@@ -37,6 +49,17 @@ public class CommerceNotificationTestUtil {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), to, notificationType,
 			serviceContext);
+	}
+
+	public static CommerceNotificationTemplate addNotificationTemplate(
+			String cc, String bcc, String notificationType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCommerceNotificationTemplate(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), cc,
+			bcc, notificationType, serviceContext);
 	}
 
 }

@@ -32,7 +32,7 @@ String currentURL = PortalUtil.getCurrentURL(request);
 	</div>
 
 	<div dir="<%= LanguageUtil.get(request, "lang.dir") %>">
-		<aui:a cssClass="d-block" href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(currentURL) + "&groupId=" + themeDisplay.getScopeGroupId() + "&privateLayout=" + layout.isPrivateLayout()  + "&layoutId=" + layout.getLayoutId() + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false" %>'>
+		<aui:a cssClass="d-block" href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(currentURL) + "&groupId=" + themeDisplay.getScopeGroupId() + "&privateLayout=" + layout.isPrivateLayout() + "&layoutId=" + layout.getLayoutId() + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false" %>'>
 			<%= LanguageUtil.format(locale, "set-x-as-your-preferred-language", locale.getDisplayName(locale)) %>
 		</aui:a>
 	</div>

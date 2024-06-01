@@ -22,7 +22,7 @@ Locale userLocale = user.getLocale();
 		<c:if test="<%= LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), user.getLocale()) || (PortalUtil.isGroupControlPanelPath(themeDisplay.getURLCurrent()) && LanguageUtil.isAvailableLocale(userLocale)) %>">
 			<clay:link
 				cssClass="d-block"
-				href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(themeDisplay.getURLCurrent()) + "&groupId=" + themeDisplay.getScopeGroupId() + "&privateLayout=" + layout.isPrivateLayout()  + "&layoutId=" + layout.getLayoutId() + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false" %>'
+				href='<%= themeDisplay.getPathMain() + "/portal/update_language?redirect=" + URLCodec.encodeURL(themeDisplay.getURLCurrent()) + "&groupId=" + themeDisplay.getScopeGroupId() + "&privateLayout=" + layout.isPrivateLayout() + "&layoutId=" + layout.getLayoutId() + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false" %>'
 				label='<%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %>'
 			/>
 		</c:if>

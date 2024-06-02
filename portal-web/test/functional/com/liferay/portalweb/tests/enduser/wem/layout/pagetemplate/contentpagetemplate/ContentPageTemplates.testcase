@@ -29,55 +29,6 @@ definition {
 	test DeleteCollection {
 		property portal.acceptance = "true";
 
-		task ("Delete the page template collection") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Collection Name");
-
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-
-			PageTemplatesAdmin.deletePageTemplateSet(setName = "Collection Name");
-		}
-
-		task ("Assert the collection was deleted") {
-			PageTemplatesAdmin.viewPageTemplateSetNotPresent(setName = "Collection Name");
-		}
-	}
-
-	@description = "Delete a page template."
-	@priority = 5
-	test DeletePageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add a content page template") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection");
-
-			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection",
-				layoutPageTemplateEntryName = "Page Template Name",
-				layoutPageTemplateStatus = "Draft",
-				layoutPageTemplateType = "Content Page Template");
-
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-		}
-
-		task ("Delete the content page template") {
-			PageTemplatesAdmin.deletePageTemplate(pageTemplateName = "Page Template Name");
-		}
-
-		task ("Assert the content page template was deleted") {
-			PageTemplatesAdmin.viewPageTemplateNotPresent(pageTemplateName = "Page Template Name");
-		}
-	}
-
-	@description = "Rename a page template collection."
-	@priority = 4
-	test RenameCollection {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				description = "Collection Description Original",
@@ -97,11 +48,21 @@ definition {
 		task ("Assert the collection was renamed") {
 			Collection.viewPresent(collectionName = "Collection Name New");
 		}
+
+		task ("Delete the page template collection") {
+			PageTemplatesAdmin.deletePageTemplateSet(setName = "Collection Name New");
+		}
+
+		task ("Assert the collection was deleted") {
+			PageTemplatesAdmin.viewPageTemplateSetNotPresent(setName = "Collection Name New");
+		}
 	}
 
-	@description = "Rename a page template."
-	@priority = 4
-	test RenamePageTemplate {
+	@description = "Delete a page template."
+	@priority = 5
+	test DeletePageTemplate {
+		property portal.acceptance = "true";
+
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",
@@ -127,6 +88,14 @@ definition {
 
 		task ("Assert the content page template was renamed") {
 			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name New");
+		}
+
+		task ("Delete the content page template") {
+			PageTemplatesAdmin.deletePageTemplate(pageTemplateName = "Page Template Name New");
+		}
+
+		task ("Assert the content page template was deleted") {
+			PageTemplatesAdmin.viewPageTemplateNotPresent(pageTemplateName = "Page Template Name New");
 		}
 	}
 

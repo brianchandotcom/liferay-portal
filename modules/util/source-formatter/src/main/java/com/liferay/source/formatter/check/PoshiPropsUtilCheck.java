@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
@@ -40,6 +41,24 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 
 		properties.load(new FileInputStream(file));
 
+		return _checkInlinePassword(fileName, content, properties);
+	}
+
+	private String _checkInlinePassword(
+		String fileName, String content, Properties properties) {
+
+		Matcher matcher = _propsUtilGetPasswordPattern.matcher(content);
+
+		while (matcher.find()) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Pass '", matcher.group(2),
+					"' directly instead of assigning value to variable '",
+					matcher.group(1), "'"),
+				getLineNumber(content, matcher.start()) + 1);
+		}
+
 		String password = properties.getProperty(
 			"test.portal.default.admin.password");
 
@@ -52,7 +71,7 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 		Pattern pattern = Pattern.compile(
 			"(\\w*[Pp]assword = )\"" + password + "\"");
 
-		Matcher matcher = pattern.matcher(content);
+		matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			if (_isInsideTripleQuotes(content, matcher.start())) {
@@ -90,5 +109,8 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final Pattern _propsUtilGetPasswordPattern = Pattern.compile(
+		"\n\t+var (\\w+) = (PropsUtil.get\\(\"default.admin.password\"\\));");
 
 }

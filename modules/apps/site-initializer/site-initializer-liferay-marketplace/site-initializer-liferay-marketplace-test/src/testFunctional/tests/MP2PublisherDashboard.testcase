@@ -333,7 +333,7 @@ definition {
 
 		task ("And the user remains in the member list as a invited") {
 			User.loginUserPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "dashboard@adm.com");
 
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");

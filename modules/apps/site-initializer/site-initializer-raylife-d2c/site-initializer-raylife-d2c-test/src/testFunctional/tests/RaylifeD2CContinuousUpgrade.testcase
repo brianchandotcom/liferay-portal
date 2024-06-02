@@ -24,7 +24,7 @@ definition {
 	test CanAssertRaylifeD2CCatalogAfterUpgrade {
 		task ("Run pre-upgrade steps: Create a Raylife D2C site") {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://localhost:8080",
 				userEmailAddress = "test@liferay.com");
 

@@ -70,7 +70,7 @@ definition {
 
 			RaylifeAP.signIn(
 				emailAddress = "test@liferay.com",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 
 			AssertElementPresent(
 				key_title = "Hi, Test Test.",
@@ -99,7 +99,7 @@ definition {
 
 			RaylifeAP.signIn(
 				emailAddress = "test",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 
 			RaylifeAP.assertFieldRequiredMessage(field = "Please enter a valid email address.");
 
@@ -128,7 +128,7 @@ definition {
 
 			RaylifeAP.signIn(
 				emailAddress = "",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 
 			RaylifeAP.assertFieldRequiredMessage(field = "The Email Address field is required.");
 		}

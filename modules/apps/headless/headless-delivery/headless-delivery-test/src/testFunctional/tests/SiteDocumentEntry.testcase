@@ -214,7 +214,7 @@ definition {
 				documentId = ${documentId},
 				ratingValue = 1,
 				userEmailAddress = "userea@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		echo(${response});

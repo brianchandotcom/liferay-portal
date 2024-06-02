@@ -65,7 +65,7 @@ definition {
 				folderId = ${documentFolderId2},
 				ratingValue = 1,
 				userEmailAddress = "test2@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		echo(${response});
@@ -123,7 +123,7 @@ definition {
 				folderId = ${documentFolderId2},
 				ratingValue = 1,
 				userEmailAddress = "test2@liferay.com",
-				userPassword = "test");
+				userPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		echo(${response});

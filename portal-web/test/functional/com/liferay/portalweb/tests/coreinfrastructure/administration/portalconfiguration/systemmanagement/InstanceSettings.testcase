@@ -271,7 +271,7 @@ definition {
 
 		Type.typePause(
 			locator1 = "TextInput#PASSWORD",
-			value1 = PropsUtil.get("default.admin.password"));
+			value1 = "test");
 
 		User._clickSignInButton(localization = ${localization});
 
@@ -672,7 +672,7 @@ definition {
 
 		Type.typePause(
 			locator1 = "TextInput#PASSWORD",
-			value1 = PropsUtil.get("default.admin.password"));
+			value1 = "test");
 
 		User._clickSignInButton(localization = ${localization});
 

@@ -129,157 +129,63 @@ test.describe('Can Publish and Manage Solutions', () => {
 });
 
 test.describe('Can Publish Marketplace Apps', () => {
-	test('can publish free cloud app', async ({
-		page,
-		publisherAppPage,
-		publisherDashboardPage,
-	}) => {
-		publisherAppPage.setPublishProduct(
-			products.free_cloud as unknown as PublishProductPayload
-		);
+	for (const key of Object.keys(products)) {
+		const product = products[key as keyof typeof products];
 
-		// Go to Publisher Dashboard
-
-		await publisherDashboardPage.goto();
-
-		await publisherDashboardPage.gotoNewAppPage();
-
-		// Publish the app
-
-		await publisherAppPage.checkHeader({
-			accountName,
-			appName: 'New App',
-		});
-		await publisherAppPage.continue();
-		await publisherAppPage.fillProfile();
-		await publisherAppPage.continue();
-		await publisherAppPage.fillBuild();
-		await publisherAppPage.fillStoreFront();
-		await publisherAppPage.fillVersion();
-		await publisherAppPage.fillPricing();
-		await publisherAppPage.fillSupport();
-		await publisherAppPage.reviewAndSubmit();
-
-		expect(page.getByText(products.free_cloud.name)).toBeTruthy();
-	});
-
-	test('can publish paid cloud app', async ({
-		page,
-		publisherAppPage,
-		publisherDashboardPage,
-	}) => {
-		publisherAppPage.setPublishProduct(
-			products.paid_cloud as unknown as PublishProductPayload
-		);
-
-		// Go to Publisher Dashboard
-
-		await publisherDashboardPage.goto();
-		await publisherDashboardPage.gotoNewAppPage();
-
-		// Publish the app
-
-		await publisherAppPage.checkHeader({accountName, appName: 'New App'});
-		await publisherAppPage.continue();
-		await publisherAppPage.fillProfile();
-		await publisherAppPage.continue();
-		await publisherAppPage.fillBuild();
-		await publisherAppPage.fillStoreFront();
-		await publisherAppPage.fillVersion();
-		await publisherAppPage.fillPricing();
-		await publisherAppPage.fillSupport();
-		await publisherAppPage.reviewAndSubmit();
-
-		expect(page.getByText(products.free_cloud.name)).toBeTruthy();
-	});
-
-	test('supporting one DXP version as virtual item', async ({
-		apiHelpers,
-		publisherAppPage,
-		publisherDashboardPage,
-	}) => {
-		publisherAppPage.setPublishProduct(
-			products.free_dxp as unknown as PublishProductPayload
-		);
-		const appVersion = ['Liferay Portal 7.4 GA110'];
-
-		// Go to Publisher Dashboard
-
-		await publisherDashboardPage.goto();
-		await publisherDashboardPage.gotoNewAppPage();
-
-		// Publish the app
-
-		await publisherAppPage.checkHeader({
-			accountName,
-			appName: 'New App',
-		});
-		await publisherAppPage.continue();
-		await publisherAppPage.fillProfile();
-		await publisherAppPage.continue();
-		await publisherAppPage.selectPackages(appVersion);
-		await publisherAppPage.fillBuild();
-		await publisherAppPage.fillStoreFront();
-		await publisherAppPage.fillVersion();
-		await publisherAppPage.fillPricing();
-		await publisherAppPage.fillSupport();
-		await publisherAppPage.reviewAndSubmit();
-
-		const createdProduct =
-			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-				new URLSearchParams({
-					filter: `name eq '${products.free_dxp.name}'`,
-				})
+		test(`can publish "${product.name}"`, async ({
+			apiHelpers,
+			page,
+			publisherAppPage,
+			publisherDashboardPage,
+		}) => {
+			publisherAppPage.setPublishProduct(
+				product as unknown as PublishProductPayload
 			);
 
-		const productId = createdProduct.items[0].productId;
+			// Go to Publisher Dashboard
 
-		const productVirtualSettings =
-			await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
-				productId
-			);
+			await publisherDashboardPage.goto();
 
-		expect(
-			productVirtualSettings.productVirtualSettingsFileEntries[0]
-				.version === appVersion[0]
-		).toBeTruthy();
-	});
+			await publisherDashboardPage.gotoNewAppPage();
 
-	test('supporting multiple DXP versions as virtual items', async ({
-		page,
-		publisherAppPage,
-		publisherDashboardPage,
-	}) => {
-		publisherAppPage.setPublishProduct(
-			products.free_dxp as unknown as PublishProductPayload
-		);
-		const appVersion = [
-			'Liferay Portal 7.4 GA110',
-			'Liferay Portal 7.4 GA109',
-		];
+			// Publish the app
 
-		// Go to Publisher Dashboard
+			await publisherAppPage.checkHeader({
+				accountName,
+				appName: 'New App',
+			});
+			await publisherAppPage.continue();
+			await publisherAppPage.fillProfile();
+			await publisherAppPage.fillBuild();
 
-		await publisherDashboardPage.goto();
-		await publisherDashboardPage.gotoNewAppPage();
+			if (!product.cloudCompatible) {
+				const createdProduct =
+					await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+						new URLSearchParams({
+							filter: `name eq '${product.name}'`,
+						})
+					);
 
-		// Publish the app
+				const productId = createdProduct.items[0].productId;
 
-		await publisherAppPage.checkHeader({
-			accountName,
-			appName: 'New App',
+				const productVirtualSettings =
+					await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
+						productId
+					);
+
+				expect(
+					productVirtualSettings.productVirtualSettingsFileEntries[0]
+						.version === product.dxpVersions[0]
+				).toBeTruthy();
+			}
+
+			await publisherAppPage.fillStoreFront();
+			await publisherAppPage.fillVersion();
+			await publisherAppPage.fillPricing();
+			await publisherAppPage.fillSupport();
+			await publisherAppPage.reviewAndSubmit();
+
+			expect(page.getByText(product.name)).toBeTruthy();
 		});
-		await publisherAppPage.continue();
-		await publisherAppPage.fillProfile();
-		await publisherAppPage.continue();
-		await publisherAppPage.selectPackages(appVersion);
-		await publisherAppPage.fillBuild();
-		await publisherAppPage.fillStoreFront();
-		await publisherAppPage.fillVersion();
-		await publisherAppPage.fillPricing();
-		await publisherAppPage.fillSupport();
-		await publisherAppPage.reviewAndSubmit();
-
-		expect(page.getByText(products.free_dxp.name)).toBeTruthy();
-	});
+	}
 });

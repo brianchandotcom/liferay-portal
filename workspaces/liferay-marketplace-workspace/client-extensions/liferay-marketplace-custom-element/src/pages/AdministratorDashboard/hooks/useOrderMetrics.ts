@@ -7,6 +7,7 @@ import {addDays, eachDayOfInterval, format} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
+import {ORDER_TYPES} from '../../../enums/Order';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
 export const METRIC_PARAMETER = {
@@ -19,6 +20,13 @@ export const METRIC_PARAMETER = {
 };
 
 type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
+
+export const orderSearchBuilder = new SearchBuilder()
+	.in('orderTypeExternalReferenceCode', [
+		ORDER_TYPES.CLOUDAPP,
+		ORDER_TYPES.DXPAPP,
+	])
+	.and();
 
 const useOrderMetrics = (param: FilterType) => {
 	return useSWR('metrics/order', async () => {
@@ -40,20 +48,22 @@ const useOrderMetrics = (param: FilterType) => {
 		const requestsParams = [
 			new URLSearchParams({
 				fields: 'id,orderStatus,totalAmount',
+				filter: orderSearchBuilder.clone().build(),
 				pageSize: '-1',
 				sort: 'createDate:desc',
 			}),
 			new URLSearchParams({
 				fields: 'id',
-				filter: SearchBuilder.gt(
-					'createDate',
-					lastPeriod.toISOString()
-				),
+				filter: orderSearchBuilder
+					.clone()
+					.gt('createDate', lastPeriod.toISOString())
+					.build(),
 				pageSize: '1',
 			}),
 			new URLSearchParams({
 				fields: 'id',
-				filter: new SearchBuilder()
+				filter: orderSearchBuilder
+					.clone()
 					.lt('createDate', lastPeriod.toISOString())
 					.and()
 					.gt('createDate', beforeLastPeriod.toISOString())
@@ -111,15 +121,16 @@ const useOrderChartLineMetrics = () => {
 		const requestsParams = [
 			new URLSearchParams({
 				fields: 'id,createDate',
-				filter: SearchBuilder.gt(
-					'createDate',
-					lastPeriod.toISOString()
-				),
+				filter: orderSearchBuilder
+					.clone()
+					.gt('createDate', lastPeriod.toISOString())
+					.build(),
 				pageSize: '-1',
 			}),
 			new URLSearchParams({
 				fields: 'id,createDate',
-				filter: new SearchBuilder()
+				filter: orderSearchBuilder
+					.clone()
 					.gt('createDate', beforeLastPeriod.toISOString())
 					.and()
 					.lt('createDate', lastPeriod.toISOString())

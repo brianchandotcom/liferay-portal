@@ -109,6 +109,15 @@ export default class SearchBuilder {
 		return this.useURIEncode ? encodeURIComponent(query) : query;
 	}
 
+	public clone() {
+		const clone = new SearchBuilder({useURIEncode: this.useURIEncode});
+
+		clone.lock = this.lock;
+		clone.query = this.query;
+
+		return clone;
+	}
+
 	public contains(key: Key, value: Value) {
 		return this.setContext(SearchBuilder.contains(key, value));
 	}

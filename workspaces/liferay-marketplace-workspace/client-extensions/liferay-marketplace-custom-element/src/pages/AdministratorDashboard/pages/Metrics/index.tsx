@@ -8,6 +8,8 @@ import {useMemo} from 'react';
 import useSWR from 'swr';
 
 import ErrorBoundary from '../../../../components/ErrorBoundary';
+import SearchBuilder from '../../../../core/SearchBuilder';
+import {ORDER_TYPES} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import HeadlessCommerceAdminOrderImpl from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import InfoCard from '../../components/InfoCard';
@@ -42,6 +44,10 @@ const Metrics = () => {
 		() =>
 			HeadlessCommerceAdminOrderImpl.getOrders(
 				new URLSearchParams({
+					filter: SearchBuilder.in('orderTypeExternalReferenceCode', [
+						ORDER_TYPES.CLOUDAPP,
+						ORDER_TYPES.DXPAPP,
+					]),
 					nestedFields: 'account,orderItems',
 					pageSize: '30',
 					sort: 'createDate:desc',

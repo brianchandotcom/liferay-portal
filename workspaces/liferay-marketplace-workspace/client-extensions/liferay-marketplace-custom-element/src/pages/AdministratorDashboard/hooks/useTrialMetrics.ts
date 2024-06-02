@@ -21,6 +21,10 @@ export const METRIC_PARAMETER = {
 	week: 7,
 };
 
+const trialSearchBuilder = new SearchBuilder()
+	.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
+	.and();
+
 const getPeriodMetrics = (
 	lastPeriodValue: number,
 	beforeLastPeriodvalue: number
@@ -77,28 +81,24 @@ const useTrialMetrics = (param: FilterType) => {
 		new URLSearchParams({
 			fields:
 				'id,account,orderStatusInfo,createDate,customFields,name,accountId',
-			filter: new SearchBuilder()
-				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
-				.build(),
+			filter: trialSearchBuilder.clone().build(),
 			nestedFields: 'account,orderItems',
-			pageSize: '15',
+			pageSize: '30',
 			sort: 'createDate:desc',
 		}),
 		new URLSearchParams({
 			fields: 'id,orderStatus,customFields',
-			filter: new SearchBuilder()
+			filter: trialSearchBuilder
+				.clone()
 				.gt('createDate', lastPeriod.toISOString())
-				.and()
-				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
 				.build(),
 			pageSize: '-1',
 			sort: 'createDate:desc',
 		}),
 		new URLSearchParams({
 			fields: 'orderStatus,customFields',
-			filter: new SearchBuilder()
-				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
-				.and()
+			filter: trialSearchBuilder
+				.clone()
 				.lt('createDate', lastPeriod.toISOString())
 				.and()
 				.gt('createDate', beforeLastPeriod.toISOString())
@@ -109,9 +109,7 @@ const useTrialMetrics = (param: FilterType) => {
 		}),
 		new URLSearchParams({
 			fields: 'orderStatus',
-			filter: new SearchBuilder()
-				.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
-				.build(),
+			filter: trialSearchBuilder.clone().build(),
 			pageSize: '-1',
 		}),
 	];

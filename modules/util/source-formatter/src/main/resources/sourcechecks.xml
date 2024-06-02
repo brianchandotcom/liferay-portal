@@ -1431,7 +1431,7 @@
 		</check>
 		<check name="PoshiPropsUtilCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases where `PropsUtil.get` should be used (instead of hardcoded value)." />
+			<description name="Finds cases where `PropsUtil.get` should be inlined." />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="PoshiSmokeTestCheck">

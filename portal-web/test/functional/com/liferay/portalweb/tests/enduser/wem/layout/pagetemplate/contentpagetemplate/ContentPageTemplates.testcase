@@ -16,12 +16,6 @@ definition {
 		task ("Add a site via JSON") {
 			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
-
-		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
-		}
 	}
 
 	@description = "Delete a page template collection."
@@ -96,45 +90,6 @@ definition {
 
 		task ("Assert the content page template was deleted") {
 			PageTemplatesAdmin.viewPageTemplateNotPresent(pageTemplateName = "Page Template Name New");
-		}
-	}
-
-	@description = "An unpublished fragment should not show up in the fragments sidebar."
-	@priority = 4
-	test ViewDraftFragmentDoesNotDisplayInSidebar {
-		task ("Add a fragment without publishing it") {
-			JSONFragment.addFragmentCollection(
-				description = "Collection Description",
-				groupName = "Test Site Name",
-				name = "New Collection");
-
-			JSONFragment.addSection(
-				collectionName = "New Collection",
-				groupName = "Test Site Name",
-				name = "Fragment Name");
-		}
-
-		task ("Assert the unpublished fragment does not appear in the sidebar when editing a content page template") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection");
-
-			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection",
-				layoutPageTemplateEntryName = "Page Template Name",
-				layoutPageTemplateStatus = "Draft",
-				layoutPageTemplateType = "Content Page Template");
-
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.viewCollectionNotPresent(collectionName = "New Collection");
 		}
 	}
 

@@ -5,8 +5,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Account";
 
-	var password = PropsUtil.get("default.admin.password");
-
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -502,7 +500,7 @@ definition {
 			SAML.addVirtualInstances(virtualHosts = "www.able.com");
 
 			User.firstLoginUI(
-				password = ${password},
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -2332,7 +2330,7 @@ definition {
 
 		task ("When the user creates an account") {
 			Account.createAccount(
-				newPassword = ${password},
+				newPassword = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
@@ -2484,7 +2482,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserPG(
-				password = ${password},
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "useramea@liferay.com");
 
 			Account.openAccountsAdmin();
@@ -2542,7 +2540,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserPG(
-				password = ${password},
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "useramea@liferay.com");
 
 			Account.openAccountsAdmin();
@@ -3930,7 +3928,7 @@ definition {
 				virtualHost = "www.able.com");
 
 			User.firstLoginUI(
-				password = ${password},
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
@@ -4197,7 +4195,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "useramea@liferay.com");
 
 		Account.openAccountsAdmin();

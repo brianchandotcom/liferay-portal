@@ -10,8 +10,6 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Logging";
 
-	var password = PropsUtil.get("default.admin.password");
-
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -183,13 +181,13 @@ definition {
 
 		task ("And given a company admin user is added for that virtual instance") {
 			User.firstLoginUI(
-				password = ${password},
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			JSONUser.addUser(
 				creatorEmailAddress = "test@www.able.com",
-				creatorPassword = ${password},
+				creatorPassword = PropsUtil.get("default.admin.password"),
 				portalInstanceName = "www.able.com",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "userea@www.able.com",
@@ -203,7 +201,7 @@ definition {
 				roleTitle = "Administrator",
 				userScreenName = "usersn");
 
-			User.editPassword(newPassword = ${password});
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("And given the company admin logs in to the virtual instance") {
@@ -245,13 +243,13 @@ definition {
 
 		task ("And given a company admin user is added for that virtual instance") {
 			User.firstLoginUI(
-				password = ${password},
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
 
 			JSONUser.addUser(
 				creatorEmailAddress = "test@www.able.com",
-				creatorPassword = ${password},
+				creatorPassword = PropsUtil.get("default.admin.password"),
 				portalInstanceName = "www.able.com",
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "userea@www.able.com",
@@ -265,7 +263,7 @@ definition {
 				roleTitle = "Administrator",
 				userScreenName = "usersn");
 
-			User.editPassword(newPassword = ${password});
+			User.editPassword(newPassword = PropsUtil.get("default.admin.password"));
 		}
 
 		task ("And given the company admin logs in to the virtual instance") {
@@ -323,7 +321,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = ${password},
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "userea@liferay.com");
 
 			CompanyLogging.openServerLogsAdmin();

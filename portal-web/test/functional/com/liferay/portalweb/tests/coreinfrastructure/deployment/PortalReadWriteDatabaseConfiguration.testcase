@@ -10,8 +10,6 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Deployment";
 
-	var password = PropsUtil.get("default.admin.password");
-
 	setUp {
 		SignIn.signInTestSetup();
 	}
@@ -123,12 +121,12 @@ definition {
 			entryTitle = "Blogs Entry1 Title");
 
 		User.logoutPG(
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = 9080,
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);

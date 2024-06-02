@@ -10,8 +10,6 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Clustering";
 
-	var password = PropsUtil.get("default.admin.password");
-
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -52,7 +50,7 @@ definition {
 
 		User.loginPG(
 			nodePort = 9080,
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		echo("Successfully logged in to both nodes on JDBC_PING");

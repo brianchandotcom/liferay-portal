@@ -9,8 +9,6 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Smoke";
 
-	var password = PropsUtil.get("default.admin.password");
-
 	setUp {
 		TestCase.setUpPortalInstance();
 	}
@@ -106,7 +104,7 @@ definition {
 
 		User.firstLoginUI(
 			newPassword = "test2",
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");

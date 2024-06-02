@@ -107,10 +107,8 @@ definition {
 
 		// Click the Perform Garbage Collection button and confirm that no AS7Leak class instances appear
 
-		var password = PropsUtil.get("default.admin.password");
-
 		User.loginPG(
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com");
 
 		// FACES-1478

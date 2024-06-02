@@ -7,8 +7,6 @@ definition {
 	property test.prepare.bundle.properties = "false";
 	property testray.main.component.name = "Setup Wizard";
 
-	var password = PropsUtil.get("default.admin.password");
-
 	@description = "This is a use case for LPS-107347. It asserts that an admin is still required to change password with Setup Wizard disabled."
 	@priority = 4
 	test AdminIsRequiredToChangePasswordWithSetupWizardDisabled {
@@ -139,14 +137,14 @@ definition {
 		User.openUsersAdmin();
 
 		User.editEmailAddressCP(
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@test.com",
 			userScreenName = "test");
 
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@test.com");
 
 		Portlet.shutdownServer();
@@ -156,7 +154,7 @@ definition {
 		User.logoutPG();
 
 		User.firstLoginUI(
-			password = ${password},
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@test.com");
 	}
 

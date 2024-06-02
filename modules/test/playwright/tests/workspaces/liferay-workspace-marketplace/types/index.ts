@@ -24,8 +24,14 @@ export type PublishProductPayload = {
 	cloudCompatible: boolean;
 	compatibleOfferings: string[];
 	description: string;
+	dxpVersions: string[];
 	logo: string;
 	name: string;
+	price?: {
+		developer?: number;
+		standard?: number;
+	};
+	priceModel: 'free' | 'paid';
 	resourceRequirements: {
 		cpus: number;
 		ram: number;

@@ -43,6 +43,14 @@ definition {
 			Collection.viewPresent(collectionName = "Collection Name New");
 		}
 
+		task ("Assert the actions order of a collection") {
+			Click.waitForMenuToggleJSClick(
+				key_headerName = "Collection Name New",
+				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewOrder(menuItemList = "Edit,Permissions,Delete");
+		}
+
 		task ("Delete the page template collection") {
 			PageTemplatesAdmin.deletePageTemplateSet(setName = "Collection Name New");
 		}
@@ -82,6 +90,38 @@ definition {
 
 		task ("Assert the content page template was renamed") {
 			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name New");
+		}
+
+		task ("Change template to draft") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name New");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Change thumbnail of template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Change Thumbnail",
+				pageTemplateName = "Page Template Name New");
+
+			ItemSelector.uploadFile(uploadFileName = "Document_1.png");
+
+			LexiconCard.viewCardThumbnail(card = "Page Template Name New");
+
+			SelectFrameTop(value1 = "relative=top");
+		}
+
+		task ("Assert the actions order of a page template") {
+			LexiconEntry.openEntryMenu(rowEntry = "Page Template Name New");
+
+			MenuItem.viewOrder(menuItemList = "Edit,Preview,Move To,Change Thumbnail,Remove Thumbnail,Discard Draft,Rename,Export,Configure,Permissions,Delete");
+
+			LexiconEntry.openEntryMenu(rowEntry = "Page Template Name New");
 		}
 
 		task ("Delete the content page template") {

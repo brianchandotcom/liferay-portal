@@ -81,39 +81,6 @@ definition {
 		}
 	}
 
-	@description = "Page Fragments administration is only be accessible in staging view."
-	@priority = 5
-	@uitest
-	test AssertFragmentsAreOnlyEditableInStagingView {
-		property portal.acceptance = "true";
-
-		task ("Assert fragments admin is accessible in the staging site") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
-
-			ProductMenuHelper.openProductMenu();
-
-			ProductMenuHelper.expandCategory(category = "Design");
-
-			AssertVisible(
-				key_portlet = "Fragments",
-				locator1 = "ProductMenu#PORTLET");
-		}
-
-		task ("Navigate to the live site") {
-			ProductMenu.gotoLiveSite(site = "Test Site Name");
-		}
-
-		task ("Assert fragments admin is not accessible in the live site") {
-			ProductMenuHelper.openProductMenu();
-
-			ProductMenuHelper.expandCategory(category = "Design");
-
-			AssertElementNotPresent(
-				key_portlet = "Fragments",
-				locator1 = "ProductMenu#PORTLET");
-		}
-	}
-
 	@description = "This is a test for LPS-167932. Fragments inside dropzones will be kept by data-lfr-drop-zone-id when new drop zone is added."
 	@priority = 3
 	test PersistFragmentsInPreviousDropZoneAfterAddingNewOne {

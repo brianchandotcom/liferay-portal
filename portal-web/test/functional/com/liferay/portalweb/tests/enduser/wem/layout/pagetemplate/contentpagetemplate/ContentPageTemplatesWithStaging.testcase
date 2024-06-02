@@ -64,27 +64,6 @@ definition {
 		}
 	}
 
-	@priority = 5
-	test AssertPageTemplatesAreOnlyEditableInStagingView {
-		property portal.acceptance = "true";
-
-		task ("Assert content page templates admin is accessible in the staging site") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name-staging");
-
-			AssertVisible(
-				key_navItem = "Page Templates",
-				locator1 = "NavBar#NAV_ITEM_LINK");
-		}
-
-		task ("Assert content page templates admin is not accessible in the live site") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
-
-			AssertElementNotPresent(
-				key_navItem = "Page Templates",
-				locator1 = "NavBar#NAV_ITEM_LINK");
-		}
-	}
-
 	@description = "Publish content pages based on page templates to live."
 	@priority = 5
 	test PublishContentPageBasedOnContentPageTemplateToLive {

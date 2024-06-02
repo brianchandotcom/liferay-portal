@@ -181,7 +181,8 @@ export class PublisherAppPage {
 			expect(await this.zipFilesContainer).toContainText(
 				this.publishProductPayload.zipFiles[0].split('/').at(-1)
 			);
-		} else {
+		}
+		else {
 			await this.cloudCompatibleRadio.last().click();
 
 			for (const compatibleOffering of this.publishProductPayload

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -45,6 +46,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -150,6 +152,25 @@ public class UpdateLanguageActionTest {
 
 		_testGetRedirectWithFriendlyURL(false);
 		_testGetRedirectWithFriendlyURL(true);
+	}
+
+	@Test
+	public void testGetRedirectWithFriendlyURLEndingInAvailableLanguageId()
+		throws Exception {
+
+		_updateLayoutFriendlyURL(
+			StringPool.SLASH.concat(_defaultLocale.getLanguage()));
+
+		_assertGetRedirectWithLayoutFriendlyURL(false);
+
+		LayoutSet layoutSet = _layout.getLayoutSet();
+
+		layoutSet.setVirtualHostnames(
+			TreeMapBuilder.put(
+				_VIRTUAL_HOSTNAME, StringPool.BLANK
+			).build());
+
+		_assertGetRedirectWithLayoutFriendlyURL(true);
 	}
 
 	@Test
@@ -259,6 +280,20 @@ public class UpdateLanguageActionTest {
 			_assertRedirect(
 				targetURL, targetLocale, themeDisplay,
 				"/" + sourceLocale.getLanguage() + sourceURL);
+		}
+	}
+
+	private void _assertGetRedirectWithLayoutFriendlyURL(boolean virtualHost)
+		throws Exception {
+
+		for (Locale locale : _availableLocales) {
+			_assertGetRedirectWithLayoutFriendlyURL(
+				StringPool.BLANK, null, locale, virtualHost);
+
+			if (!Objects.equals(_defaultLocale, locale)) {
+				_assertGetRedirectWithLayoutFriendlyURL(
+					StringPool.BLANK, _defaultLocale, locale, virtualHost);
+			}
 		}
 	}
 
@@ -436,6 +471,15 @@ public class UpdateLanguageActionTest {
 			path, sourceLocale, _targetLocale, false);
 	}
 
+	private void _updateLayoutFriendlyURL(String suffix) throws Exception {
+		for (Locale locale : _availableLocales) {
+			_layout = _layoutLocalService.updateFriendlyURL(
+				TestPropsValues.getUserId(), _layout.getPlid(),
+				_layout.getFriendlyURL(locale) + suffix,
+				LocaleUtil.toLanguageId(locale));
+		}
+	}
+
 	private static final String _PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER =
 		"/-/asset_publisher/instanceID/content/";
 
@@ -461,6 +505,10 @@ public class UpdateLanguageActionTest {
 	private Group _group;
 	private JournalArticle _journalArticle;
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
 	private final Locale _sourceLocale = LocaleUtil.FRANCE;
 	private final Locale _sourceUKLocale = LocaleUtil.UK;
 	private final Locale _targetLocale = LocaleUtil.GERMANY;

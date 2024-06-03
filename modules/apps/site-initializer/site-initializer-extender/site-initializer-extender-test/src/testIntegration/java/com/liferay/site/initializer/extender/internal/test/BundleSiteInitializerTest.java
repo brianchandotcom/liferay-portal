@@ -44,6 +44,10 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.depot.model.DepotAppCustomization;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotAppCustomizationLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -1355,6 +1359,77 @@ public class BundleSiteInitializerTest {
 			_group.getGroupId(), false, "/test-public-child-layout");
 
 		Assert.assertEquals(productLayoutUuid, publicLayout.getUuid());
+	}
+
+	private void _assertDepotEntries1() throws Exception {
+		List<DepotEntry> depotEntries =
+			_depotEntryLocalService.getGroupConnectedDepotEntries(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(depotEntries.toString(), 2, depotEntries.size());
+
+		List<DepotAppCustomization> depotAppCustomizations =
+			_depotAppCustomizationLocalService.getDepotAppCustomizations(
+				depotEntries.get(
+					0
+				).getDepotEntryId());
+
+		Assert.assertTrue(
+			depotAppCustomizations.get(
+				0
+			).getEnabled());
+
+		depotAppCustomizations =
+			_depotAppCustomizationLocalService.getDepotAppCustomizations(
+				depotEntries.get(
+					1
+				).getDepotEntryId());
+
+		Assert.assertFalse(
+			depotAppCustomizations.get(
+				0
+			).getEnabled());
+	}
+
+	private void _assertDepotEntries2() throws Exception {
+		List<DepotEntry> depotEntries =
+			_depotEntryLocalService.getGroupConnectedDepotEntries(
+				_group.getGroupId(), -1, -1);
+
+		Assert.assertEquals(depotEntries.toString(), 3, depotEntries.size());
+
+		List<DepotAppCustomization> depotAppCustomizations =
+			_depotAppCustomizationLocalService.getDepotAppCustomizations(
+				depotEntries.get(
+					0
+				).getDepotEntryId());
+
+		Assert.assertFalse(
+			depotAppCustomizations.get(
+				0
+			).getEnabled());
+
+		depotAppCustomizations =
+			_depotAppCustomizationLocalService.getDepotAppCustomizations(
+				depotEntries.get(
+					1
+				).getDepotEntryId());
+
+		Assert.assertFalse(
+			depotAppCustomizations.get(
+				0
+			).getEnabled());
+
+		depotAppCustomizations =
+			_depotAppCustomizationLocalService.getDepotAppCustomizations(
+				depotEntries.get(
+					2
+				).getDepotEntryId());
+
+		Assert.assertTrue(
+			depotAppCustomizations.get(
+				0
+			).getEnabled());
 	}
 
 	private void _assertDLFileEntry() throws Exception {
@@ -3913,6 +3988,7 @@ public class BundleSiteInitializerTest {
 		_assertDataDefinition1();
 		_assertDDMStructure();
 		_assertDDMTemplate1();
+		_assertDepotEntries1();
 		_assertDLFileEntry();
 		_assertExpandoColumns1();
 		_assertExpandoValues1();
@@ -3954,6 +4030,7 @@ public class BundleSiteInitializerTest {
 		_assertCommerceSpecificationProducts2();
 		_assertDataDefinition2();
 		_assertDDMTemplate2();
+		_assertDepotEntries2();
 		_assertExpandoColumns2();
 		_assertExpandoValues2();
 		_assertJournalArticles2();
@@ -4048,6 +4125,13 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Inject
+	private DepotAppCustomizationLocalService
+		_depotAppCustomizationLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

@@ -99,16 +99,17 @@ public class UpdateFormItemConfigMVCActionCommand
 				continue;
 			}
 
-			String fieldName = GetterUtil.getString(
+			String inputFieldId = GetterUtil.getString(
 				_fragmentEntryConfigurationParser.getFieldValue(
 					fragmentEntryLink.getEditableValues(),
 					new FragmentConfigurationField(
 						"inputFieldId", "string", "", false, "text"),
 					themeDisplay.getLocale()));
 
-			if (Validator.isNotNull(fieldName)) {
+			if (Validator.isNotNull(inputFieldId)) {
 				inputFields.put(
-					fieldName, fragmentStyledLayoutStructureItem.getItemId());
+					inputFieldId,
+					fragmentStyledLayoutStructureItem.getItemId());
 			}
 		}
 

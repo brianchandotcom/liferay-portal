@@ -73,6 +73,14 @@
 	},
 	{
 		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-LIFERAY-VERSION",
+		"description": "Compatible Liferay Release Version",
+		"facetable": true,
+		"key": "liferay-version",
+		"title": "Liferay Version"
+	},
+	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-PUBLISHER-NAME",
 		"description": "Name of the primary app publisher",
 		"facetable": false,

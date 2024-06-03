@@ -2,6 +2,11 @@
 	"concurrencyPolicy": "Forbid",
 	"cpu": 1,
 	"env": {
+		"EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-liferay-client-id",
+		"EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-liferay-client-secret",
+		"EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "https://external-liferay.com",
+		"EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI": "https://external-liferay.com/o/oauth2/token",
+		"EXTERNAL_LIFERAY_OAUTH2_USER_AGENT_CLIENT_ID": "does-not-exist",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
 	},

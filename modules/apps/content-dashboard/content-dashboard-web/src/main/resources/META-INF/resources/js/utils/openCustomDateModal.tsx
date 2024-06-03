@@ -43,7 +43,7 @@ export default function openCustomDateModal(props: Props) {
 	render(CustomDateModal, {...props}, document.createElement('div'));
 }
 
-function CustomDateModal({
+export function CustomDateModal({
 	dateTypes,
 	filterUrl,
 	namespace,

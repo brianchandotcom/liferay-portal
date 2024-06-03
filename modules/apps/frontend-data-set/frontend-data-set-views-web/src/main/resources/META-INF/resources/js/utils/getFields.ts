@@ -65,30 +65,25 @@ function getValidFields({
 			const type = propertyValue.type;
 
 			if (propertyValue.items?.$ref) {
-				if (contextPath.includes(propertyKey)) {
-					fields.push({
-						label: propertyKey,
-						name: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX}`,
-						sortable: false,
-						type: type ? type : 'array',
+				const field: IField = {
+					label: propertyKey,
+					name: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX}`,
+					sortable: false,
+					type: type ? type : 'array',
+				};
+
+				if (!contextPath.includes(propertyKey)) {
+					field.children = getValidFields({
+						contextPath: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_DELIMITER}`,
+						schemaName: propertyValue.items.$ref.replace(
+							/^.*\//,
+							''
+						),
+						schemas,
 					});
 				}
-				else {
-					fields.push({
-						children: getValidFields({
-							contextPath: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_DELIMITER}`,
-							schemaName: propertyValue.items.$ref.replace(
-								/^.*\//,
-								''
-							),
-							schemas,
-						}),
-						label: propertyKey,
-						name: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX}`,
-						sortable: false,
-						type: type ? type : 'array',
-					});
-				}
+
+				fields.push(field);
 
 				return;
 			}

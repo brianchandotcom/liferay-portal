@@ -982,3 +982,8 @@ cfe06fb1e8fa813cb4b60221fdda64989b783abc^..ea35efe9fc6e180b335f3edbbebf2eac19cfc
 # Bundle Version 6.0.171
 #
 ea35efe9fc6e180b335f3edbbebf2eac19cfcf4d^..c29855e6b1dd22538fa5bd81aac73b9d3558ddb4=LPD-4680 LPD-25503
+
+#
+# Bundle Version 6.0.172
+#
+c29855e6b1dd22538fa5bd81aac73b9d3558ddb4^..f4064aa9c7e70e76b02a65866d59056b7b7ace5c=LPD-4680 LPD-23882 LPD-26025 LPD-26366

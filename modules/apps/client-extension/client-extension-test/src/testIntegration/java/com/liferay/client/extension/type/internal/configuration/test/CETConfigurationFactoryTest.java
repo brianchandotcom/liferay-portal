@@ -100,101 +100,106 @@ public class CETConfigurationFactoryTest {
 		String liferayMode = SystemProperties.get("liferay.mode");
 
 		try {
-			SystemProperties.clear("liferay.mode");
-
-			Dictionary<String, Object> properties =
-				HashMapDictionaryBuilder.<String, Object>put(
-					"baseURL", "${portalURL}/o/test_" + _VIRTUAL_HOSTNAME
-				).put(
-					"buildTimestamp", System.currentTimeMillis()
-				).put(
-					"description", ""
-				).put(
-					"dxp.lxc.liferay.com.virtualInstanceId", _VIRTUAL_HOSTNAME
-				).put(
-					"name", "Test " + _VIRTUAL_HOSTNAME
-				).put(
-					"projectId", "test"
-				).put(
-					"projectName", "test"
-				).put(
-					"properties", new String[] {""}
-				).put(
-					"sourceCodeURL", ""
-				).put(
-					"type", "customElement"
-				).put(
-					"typeSettings",
-					new String[] {
-						"friendlyURLMapping=test", "instanceable=false",
-						"urls=index.js", "useESM=false", "htmlElementName=test",
-						"portletCategoryName=category.client-extensions"
-					}
-				).put(
-					"webContextPath", "/test_" + _VIRTUAL_HOSTNAME
-				).build();
-
-			Bundle bundle = FrameworkUtil.getBundle(
-				CETConfigurationFactoryTest.class);
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			Configuration configuration = OSGiServiceUtil.callService(
-				bundleContext, ConfigurationAdmin.class,
-				(ConfigurationAdmin configurationAdmin) ->
-					configurationAdmin.getFactoryConfiguration(
-						"com.liferay.client.extension.type.configuration." +
-							"CETConfiguration",
-						"test/" + _VIRTUAL_HOSTNAME, StringPool.QUESTION));
-
-			ConfigurationTestUtil.saveConfiguration(
-				configuration.getPid(), properties);
-
-			_autoCloseables.add(
-				() -> ConfigurationTestUtil.deleteConfiguration(configuration));
-
-			CET cet = _cetManager.getCET(_virtualInstanceCompanyId, "LXC:test");
-
-			Assert.assertNotNull(cet);
-
-			Assert.assertEquals("Test " + _VIRTUAL_HOSTNAME, cet.getName());
-
-			String filterString = StringBundler.concat(
-				"(&(javax.portlet.name=com_liferay_client_extension_web",
-				"_internal_portlet_ClientExtensionEntryPortlet_",
-				_virtualInstanceCompanyId, "_LXC_test)",
-				"(objectClass=javax.portlet.Portlet))");
-			int timeout = 10_000;
-
-			ServiceTracker<Portlet, Portlet> serviceTracker =
-				ServiceTrackerFactory.open(bundleContext, filterString, null);
-
-			try {
-				Portlet portlet = serviceTracker.waitForService(timeout);
-
-				if (portlet == null) {
-					throw new TimeoutException(
-						StringBundler.concat(
-							"Time out on waiting for ", filterString, " after ",
-							timeout, "ms"));
-				}
-
-				ServiceReference<?> serviceReference =
-					serviceTracker.getServiceReference();
-
-				String[] prop = (String[])serviceReference.getProperty(
-					"com.liferay.portlet.header-portal-javascript");
-
-				Assert.assertFalse(prop[0].contains("?t="));
-			}
-			finally {
-				serviceTracker.close();
-			}
+			_testActivate();
 		}
 		finally {
 			featureFlagTestHelper.setFeatureFlagValue(
 				_virtualInstanceCompanyId, "LPS-202104", false);
+
 			SystemProperties.set("liferay.mode", liferayMode);
+		}
+	}
+
+	private void _testActivate() throws Exception {
+		SystemProperties.clear("liferay.mode");
+
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"baseURL", "${portalURL}/o/test_" + _VIRTUAL_HOSTNAME
+			).put(
+				"buildTimestamp", System.currentTimeMillis()
+			).put(
+				"description", ""
+			).put(
+				"dxp.lxc.liferay.com.virtualInstanceId", _VIRTUAL_HOSTNAME
+			).put(
+				"name", "Test " + _VIRTUAL_HOSTNAME
+			).put(
+				"projectId", "test"
+			).put(
+				"projectName", "test"
+			).put(
+				"properties", new String[] {""}
+			).put(
+				"sourceCodeURL", ""
+			).put(
+				"type", "customElement"
+			).put(
+				"typeSettings",
+				new String[] {
+					"friendlyURLMapping=test", "instanceable=false",
+					"urls=index.js", "useESM=false", "htmlElementName=test",
+					"portletCategoryName=category.client-extensions"
+				}
+			).put(
+				"webContextPath", "/test_" + _VIRTUAL_HOSTNAME
+			).build();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			CETConfigurationFactoryTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Configuration configuration = OSGiServiceUtil.callService(
+			bundleContext, ConfigurationAdmin.class,
+			(ConfigurationAdmin configurationAdmin) ->
+				configurationAdmin.getFactoryConfiguration(
+					"com.liferay.client.extension.type.configuration." +
+						"CETConfiguration",
+					"test/" + _VIRTUAL_HOSTNAME, StringPool.QUESTION));
+
+		ConfigurationTestUtil.saveConfiguration(
+			configuration.getPid(), properties);
+
+		_autoCloseables.add(
+			() -> ConfigurationTestUtil.deleteConfiguration(configuration));
+
+		CET cet = _cetManager.getCET(_virtualInstanceCompanyId, "LXC:test");
+
+		Assert.assertNotNull(cet);
+
+		Assert.assertEquals("Test " + _VIRTUAL_HOSTNAME, cet.getName());
+
+		String filterString = StringBundler.concat(
+			"(&(javax.portlet.name=com_liferay_client_extension_web",
+			"_internal_portlet_ClientExtensionEntryPortlet_",
+			_virtualInstanceCompanyId, "_LXC_test)",
+			"(objectClass=javax.portlet.Portlet))");
+		int timeout = 10_000;
+
+		ServiceTracker<Portlet, Portlet> serviceTracker =
+			ServiceTrackerFactory.open(bundleContext, filterString, null);
+
+		try {
+			Portlet portlet = serviceTracker.waitForService(timeout);
+
+			if (portlet == null) {
+				throw new TimeoutException(
+					StringBundler.concat(
+						"Time out on waiting for ", filterString, " after ",
+						timeout, "ms"));
+			}
+
+			ServiceReference<?> serviceReference =
+				serviceTracker.getServiceReference();
+
+			String[] prop = (String[])serviceReference.getProperty(
+				"com.liferay.portlet.header-portal-javascript");
+
+			Assert.assertFalse(prop[0].contains("?t="));
+		}
+		finally {
+			serviceTracker.close();
 		}
 	}
 

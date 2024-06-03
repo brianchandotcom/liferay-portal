@@ -27,18 +27,18 @@ import java.nio.charset.StandardCharsets;
  */
 public class HttpUtil {
 
-	public static HttpResponse doGet(URL url, String csrfToken)
+	public static HttpResponse doGet(String csrfToken, URL url)
 		throws Exception {
 
-		return _execute(url, csrfToken, "GET", null);
+		return _execute(csrfToken, "GET", url, null);
 	}
 
 	public static HttpResponse doPost(
-			URL url, String[][] parameters, String csrfToken, String content)
+			String content, String csrfToken, String[][] parameters, URL url)
 		throws Exception {
 
 		return _execute(
-			url, csrfToken, "POST",
+			csrfToken, "POST", url,
 			httpURLConnection -> {
 				httpURLConnection.setDoOutput(true);
 
@@ -72,7 +72,7 @@ public class HttpUtil {
 	}
 
 	private static HttpResponse _execute(
-			URL url, String csrfToken, String httpMethod,
+			String csrfToken, String httpMethod, URL url,
 			UnsafeConsumer<HttpURLConnection, Exception> unsafeConsumer)
 		throws Exception {
 
@@ -81,13 +81,12 @@ public class HttpUtil {
 		try {
 			httpURLConnection = (HttpURLConnection)url.openConnection();
 
-			httpURLConnection.setConnectTimeout(0);
-			httpURLConnection.setReadTimeout(0);
-
 			if (csrfToken != null) {
 				httpURLConnection.addRequestProperty("X-Csrf-Token", csrfToken);
 			}
 
+			httpURLConnection.setConnectTimeout(0);
+			httpURLConnection.setReadTimeout(0);
 			httpURLConnection.setRequestMethod(httpMethod);
 
 			if (unsafeConsumer != null) {
@@ -98,7 +97,7 @@ public class HttpUtil {
 
 			httpURLConnection.connect();
 
-			ByteBuffer byteBuffer = _read(httpURLConnection.getInputStream());
+			ByteBuffer bytes = _read(httpURLConnection.getInputStream());
 
 			return new HttpResponse(
 				System.currentTimeMillis() - startTime,
@@ -106,8 +105,7 @@ public class HttpUtil {
 				httpURLConnection.getResponseCode(),
 				httpURLConnection.getResponseMessage(),
 				new String(
-					byteBuffer.array(), 0, byteBuffer.limit(),
-					StandardCharsets.UTF_8));
+					bytes.array(), 0, bytes.limit(), StandardCharsets.UTF_8));
 		}
 		catch (IOException ioException1) {
 			if (httpURLConnection == null) {
@@ -120,8 +118,7 @@ public class HttpUtil {
 				}
 			}
 			catch (IOException ioException2) {
-				throw new IOException(
-					"Failed to consume error connection data", ioException2);
+				throw new IOException(ioException2);
 			}
 
 			throw ioException1;
@@ -134,40 +131,38 @@ public class HttpUtil {
 	}
 
 	private static ByteBuffer _read(InputStream inputStream) throws Exception {
-		byte[] byteBuffer = _byteBuffer.get();
+		byte[] bytes = _bytesThreadLocal.get();
 
-		int offset = 0;
+		int left = bytes.length;
 
 		int length = -1;
+		int offset = 0;
 
-		int left = byteBuffer.length;
-
-		while ((length = inputStream.read(byteBuffer, offset, left)) != -1) {
+		while ((length = inputStream.read(bytes, offset, left)) != -1) {
 			left -= length;
 			offset += length;
 
 			if (left == 0) {
-				int newLength = byteBuffer.length * 6 / 5;
+				int newLength = bytes.length * 6 / 5;
 
-				byte[] newBuffer = new byte[newLength];
+				byte[] newBytes = new byte[newLength];
 
-				System.arraycopy(
-					byteBuffer, 0, newBuffer, 0, byteBuffer.length);
+				System.arraycopy(bytes, 0, newBytes, 0, bytes.length);
 
-				left = newLength - byteBuffer.length;
+				left = newLength - bytes.length;
 
-				byteBuffer = newBuffer;
+				bytes = newBytes;
 
-				_byteBuffer.set(byteBuffer);
+				_bytesThreadLocal.set(bytes);
 			}
 		}
 
 		inputStream.close();
 
-		return ByteBuffer.wrap(byteBuffer, 0, offset);
+		return ByteBuffer.wrap(bytes, 0, offset);
 	}
 
-	private static final ThreadLocal<byte[]> _byteBuffer =
+	private static final ThreadLocal<byte[]> _bytesThreadLocal =
 		CentralizedThreadLocal.withInitial(() -> new byte[8192]);
 
 	static {

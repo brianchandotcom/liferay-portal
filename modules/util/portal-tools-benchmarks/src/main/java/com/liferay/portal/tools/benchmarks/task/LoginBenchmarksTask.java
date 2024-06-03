@@ -42,7 +42,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 				"viewLoginPage", _viewLoginPage(httpResponse.getCSRFToken())),
 			new AbstractMap.SimpleEntry<>(
 				"login",
-				_login(_email, _password, httpResponse.getCSRFToken())),
+				_login(httpResponse.getCSRFToken(), _email, _password)),
 			new AbstractMap.SimpleEntry<>("logout", _logout()));
 	}
 
@@ -97,18 +97,18 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 	private HttpResponse _homePage() throws Exception {
 		HttpResponse httpResponse = HttpUtil.doGet(
-			_newURL(StringPool.FORWARD_SLASH), null);
+			null, _newURL(StringPool.FORWARD_SLASH));
 
 		_assertResult(httpResponse, _KEY_HOME_PAGE);
 
 		return httpResponse;
 	}
 
-	private long _login(String userEmail, String password, String csrfToken)
+	private long _login(String csrfToken, String emailAddress, String password)
 		throws Exception {
 
 		HttpResponse httpResponse1 = HttpUtil.doPost(
-			_newURL(_URL_LOGIN_POST),
+			null, csrfToken,
 			new String[][] {
 				{
 					_P_P_ID_PREFIX + "_formDate",
@@ -117,21 +117,21 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 				{_P_P_ID_PREFIX + "_saveLastPath", StringPool.FALSE},
 				{_P_P_ID_PREFIX + "_redirect", StringPool.BLANK},
 				{_P_P_ID_PREFIX + "_doActionAfterLogin", StringPool.FALSE},
-				{_P_P_ID_PREFIX + "_login", userEmail},
+				{_P_P_ID_PREFIX + "_login", emailAddress},
 				{_P_P_ID_PREFIX + "_password", password},
 				{_P_P_ID_PREFIX + "_checkboxNames", "rememberMe"}
 			},
-			csrfToken, null);
+			_newURL(_URL_LOGIN_POST));
 
 		_assertRedirect(httpResponse1, _URL_REDIRECT);
 
 		HttpResponse httpResponse2 = HttpUtil.doGet(
-			_newURL(_URL_REDIRECT), csrfToken);
+			csrfToken, _newURL(_URL_REDIRECT));
 
 		_assertRedirect(httpResponse2, _URL_LOGIN_REDIRECT);
 
 		HttpResponse httpResponse3 = HttpUtil.doGet(
-			_newURL(_URL_LOGIN_REDIRECT), csrfToken);
+			csrfToken, _newURL(_URL_LOGIN_REDIRECT));
 
 		_assertResult(httpResponse3, _KEY_LOGIN);
 
@@ -139,7 +139,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	}
 
 	private long _logout() throws Exception {
-		HttpResponse httpResponse = HttpUtil.doGet(_newURL(_URL_LOGOUT), null);
+		HttpResponse httpResponse = HttpUtil.doGet(null, _newURL(_URL_LOGOUT));
 
 		return httpResponse.getDuration();
 	}
@@ -150,12 +150,12 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 	private long _viewLoginPage(String csrfToken) throws Exception {
 		HttpResponse httpResponse1 = HttpUtil.doGet(
-			_newURL(_URL_LOGIN_POPUP), csrfToken);
+			csrfToken, _newURL(_URL_LOGIN_POPUP));
 
 		_assertRedirect(httpResponse1, _URL_LOGIN_POPUP_REDIRECT);
 
 		HttpResponse httpResponse2 = HttpUtil.doGet(
-			_newURL(_URL_LOGIN_POPUP_REDIRECT), csrfToken);
+			csrfToken, _newURL(_URL_LOGIN_POPUP_REDIRECT));
 
 		_assertResult(httpResponse2, _KEY_LOGIN_POPUP);
 

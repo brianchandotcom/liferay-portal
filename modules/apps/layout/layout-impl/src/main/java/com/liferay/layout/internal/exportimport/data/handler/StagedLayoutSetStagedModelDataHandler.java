@@ -486,16 +486,17 @@ public class StagedLayoutSetStagedModelDataHandler
 
 			Layout layout = (Layout)stagedModel;
 
-			Element layoutElement = portletDataContext.getExportDataElement(
-				layout);
+			if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
+				Element layoutElement = portletDataContext.getExportDataElement(
+					layout);
 
-			if (!ArrayUtil.contains(layoutIds, layout.getLayoutId()) &&
-				(layoutElement.attributeValue(Constants.ACTION) == null)) {
-
-				layoutElement.addAttribute(Constants.ACTION, Constants.SKIP);
-				layoutElement.addAttribute(
-					"layout-parent-layout-id",
-					String.valueOf(layout.getParentLayoutId()));
+				if (layoutElement.attributeValue(Constants.ACTION) == null) {
+					layoutElement.addAttribute(
+						Constants.ACTION, Constants.SKIP);
+					layoutElement.addAttribute(
+						"layout-parent-layout-id",
+						String.valueOf(layout.getParentLayoutId()));
+				}
 
 				continue;
 			}

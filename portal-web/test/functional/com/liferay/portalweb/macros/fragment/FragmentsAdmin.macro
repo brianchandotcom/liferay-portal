@@ -39,7 +39,9 @@ definition {
 		}
 
 		if ((IsElementPresent(locator1 = "Message#SUBTITLE")) && (IsTextEqual(locator1 = "Message#SUBTITLE", value1 = "Select Fragment Type:"))) {
-			LexiconCard.clickCardTitle(card = ${fragmentType});
+			Click.clickAtNotVisible(
+				key_card = ${fragmentType},
+				locator1 = "Card#CARD_RADIO_WITH_LABEL");
 
 			Click(
 				key_text = "Next",

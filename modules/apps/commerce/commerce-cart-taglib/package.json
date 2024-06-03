@@ -6,5 +6,5 @@
 		"build": "node-scripts build",
 		"checkFormat": "liferay-npm-scripts check"
 	},
-	"version": "5.0.32"
+	"version": "5.0.33"
 }

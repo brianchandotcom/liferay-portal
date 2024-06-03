@@ -155,8 +155,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		};
 
 		InfoField<?>[] allInfoFields = ArrayUtil.append(
-			_INFO_FIELDS,
-			_getInfoField(infoFieldType, RandomTestUtil.randomString()));
+			_INFO_FIELDS, _getInfoField(infoFieldType));
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
 				new ComponentEnablerTemporarySwapper(
@@ -317,11 +316,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		InfoField<?>[] allInfoFields = ArrayUtil.append(
 			_INFO_FIELDS,
 			new InfoField<?>[] {
-				_getInfoField(
-					BooleanInfoFieldType.INSTANCE,
-					RandomTestUtil.randomString()),
-				_getInfoField(
-					TextInfoFieldType.INSTANCE, RandomTestUtil.randomString())
+				_getInfoField(BooleanInfoFieldType.INSTANCE),
+				_getInfoField(TextInfoFieldType.INSTANCE)
 			});
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
@@ -443,11 +439,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		InfoField<?>[] allInfoFields = ArrayUtil.append(
 			_INFO_FIELDS,
 			new InfoField<?>[] {
-				_getInfoField(
-					BooleanInfoFieldType.INSTANCE,
-					RandomTestUtil.randomString()),
-				_getInfoField(
-					TextInfoFieldType.INSTANCE, RandomTestUtil.randomString())
+				_getInfoField(BooleanInfoFieldType.INSTANCE),
+				_getInfoField(TextInfoFieldType.INSTANCE)
 			});
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
@@ -564,9 +557,12 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithSpecificInfoFields()
 		throws Exception {
 
+		InfoField<?> booleanInfoField = _getInfoField(
+			BooleanInfoFieldType.INSTANCE);
+		InfoField<?> textInfoField = _getInfoField(TextInfoFieldType.INSTANCE);
+
 		InfoField<?>[] customInfoFields = new InfoField<?>[] {
-			_getInfoField(BooleanInfoFieldType.INSTANCE, "custom-boolean"),
-			_getInfoField(TextInfoFieldType.INSTANCE, "custom-text")
+			booleanInfoField, textInfoField
 		};
 
 		InfoField<?>[] allInfoFields = ArrayUtil.append(
@@ -598,7 +594,11 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
-					"custom-boolean,custom-text",
+					StringUtil.merge(
+						new String[] {
+							booleanInfoField.getUniqueId(),
+							textInfoField.getUniqueId()
+						}),
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
@@ -657,8 +657,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		InfoField<?>[] allInfoFields = ArrayUtil.append(
 			_INFO_FIELDS,
 			new InfoField<?>[] {
-				_getInfoField(infoFieldType1, RandomTestUtil.randomString()),
-				_getInfoField(infoFieldType2, RandomTestUtil.randomString())
+				_getInfoField(infoFieldType1), _getInfoField(infoFieldType2)
 			});
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
@@ -823,13 +822,13 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	private static <T extends InfoFieldType> InfoField<T> _getInfoField(
-		T infoFieldTypeInstance, String uniqueId) {
+		T infoFieldTypeInstance) {
 
 		return InfoField.builder(
 		).infoFieldType(
 			infoFieldTypeInstance
 		).uniqueId(
-			uniqueId
+			RandomTestUtil.randomString()
 		).name(
 			RandomTestUtil.randomString()
 		).editable(
@@ -1062,19 +1061,13 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			"InputsFragmentCollectionContributor";
 
 	private static final InfoField<?>[] _INFO_FIELDS = new InfoField<?>[] {
-		_getInfoField(
-			BooleanInfoFieldType.INSTANCE, RandomTestUtil.randomString()),
-		_getInfoField(
-			DateInfoFieldType.INSTANCE, RandomTestUtil.randomString()),
-		_getInfoField(
-			FileInfoFieldType.INSTANCE, RandomTestUtil.randomString()),
-		_getInfoField(
-			NumberInfoFieldType.INSTANCE, RandomTestUtil.randomString()),
-		_getInfoField(
-			RelationshipInfoFieldType.INSTANCE, RandomTestUtil.randomString()),
-		_getInfoField(
-			SelectInfoFieldType.INSTANCE, RandomTestUtil.randomString()),
-		_getInfoField(TextInfoFieldType.INSTANCE, RandomTestUtil.randomString())
+		_getInfoField(BooleanInfoFieldType.INSTANCE),
+		_getInfoField(DateInfoFieldType.INSTANCE),
+		_getInfoField(FileInfoFieldType.INSTANCE),
+		_getInfoField(NumberInfoFieldType.INSTANCE),
+		_getInfoField(RelationshipInfoFieldType.INSTANCE),
+		_getInfoField(SelectInfoFieldType.INSTANCE),
+		_getInfoField(TextInfoFieldType.INSTANCE)
 	};
 
 	private Company _company;

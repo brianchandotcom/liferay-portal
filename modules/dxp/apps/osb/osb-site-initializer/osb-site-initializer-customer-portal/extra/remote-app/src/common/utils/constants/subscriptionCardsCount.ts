@@ -14,7 +14,7 @@ export const SUBSCRIPTION_TYPES = {
 		'LXC - SM',
 		'Other',
 	],
-	PurchasedAndProvisioned: ['Portal', 'DXP'],
+	PurchasedAndProvisioned: ['Portal', 'Liferay Self-Hosted'],
 } as const;
 
 export const PRODUCT_DISPLAY_EXCEPTION = {

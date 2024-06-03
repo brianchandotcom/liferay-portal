@@ -19,7 +19,7 @@ import useOrderItems from './hooks/useOrderItems';
 import getColumns from './utils/getColumns';
 import getRows from './utils/getRows';
 
-const accountSubscriptionGroupNames = ['DXP', 'Portal'];
+const accountSubscriptionGroupNames = ['Liferay Self-Hosted', 'Portal'];
 
 const AccountSubscriptionModal = ({
 	IsPortalOrDXP,

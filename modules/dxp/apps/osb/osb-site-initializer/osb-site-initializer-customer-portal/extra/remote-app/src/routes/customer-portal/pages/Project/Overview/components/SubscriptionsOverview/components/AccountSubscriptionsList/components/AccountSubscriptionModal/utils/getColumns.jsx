@@ -71,7 +71,7 @@ const displayInstanceSizeMap = {
 		'Production',
 		'Unlimited Enterprise-Wide',
 	],
-	DXP: [
+	'Liferay Self-Hosted': [
 		'Backup',
 		'Development',
 		'Flex',
@@ -107,23 +107,23 @@ export default function getColumns(
 
 	const displayColumns = [...columns];
 
-	let displayInstanceSizeForProduct = false;
-	const displayInstanceSizeByCategories = [
-		'DXP',
+	let displayInstanceSizeForProduct = [
 		'Commerce',
+		'Liferay Self-Hosted',
 		'Portal',
-	].some((category) => title.startsWith(category));
+	].some((category) => {
+	    if (title.startsWith(category)) {
+	        const productName = title.substring(category.length + 1);
 
-	if (displayInstanceSizeByCategories) {
-		const [category, ...product] = title?.split(' ');
-		const productName = product.join(' ');
+	        return displayInstanceSizeMap[
+            	category
+            ].includes(productName);
+	    }
 
-		displayInstanceSizeForProduct = displayInstanceSizeMap[
-			category
-		].includes(productName);
-	}
+	    return false;
+	});
 
-	if (!displayInstanceSizeByCategories || !displayInstanceSizeForProduct) {
+	if (!displayInstanceSizeForProduct) {
 		displayColumns.splice(2, 1);
 	}
 

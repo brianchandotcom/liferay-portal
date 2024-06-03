@@ -337,3 +337,8 @@ bd664ac8ffcf696ee5cf3afdade36297fb3c0227^..e49b5168de1a368fdb387bcefcaf458fb3e7d
 # Bundle Version 1.0.77
 #
 e49b5168de1a368fdb387bcefcaf458fb3e7d70a^..ca2dbc3bf0c979cee4f7805d275016eb1eae7690=LPD-18195
+
+#
+# Bundle Version 1.0.78
+#
+ca2dbc3bf0c979cee4f7805d275016eb1eae7690^..3c4369b6c040c983895dbde7d0abc3e405edcdb6=LPD-24966 LPD-25627 LPD-26187

@@ -106,7 +106,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 			return null;
 		}
 
-		return WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
+		return WorkflowDefinitionManagerUtil.liberalGetLatestWorkflowDefinition(
 			_workflowDefinitionLinkRequestHelper.getCompanyId(),
 			defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
 	}

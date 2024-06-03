@@ -206,6 +206,11 @@
 		<field name="nullConvertibleEntryId" type="long" />
 		<field name="name" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.PermissionCheckFinderEntry">
+		<field name="permissionCheckFinderEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.RedundantIndexEntry">
 		<field name="redundantIndexEntryId" type="long" />
 		<field name="companyId" type="long" />

@@ -24,6 +24,7 @@
 	<import class="com.liferay.portal.tools.service.builder.test.model.ManyColumnsEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.PermissionCheckFinderEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.RedundantIndexEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry" />
@@ -292,6 +293,13 @@
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="nullConvertibleEntryId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryImpl" table="PermissionCheckFinderEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="permissionCheckFinderEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.RedundantIndexEntryImpl" table="RedundantIndexEntry">

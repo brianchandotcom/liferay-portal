@@ -42,6 +42,8 @@ create unique index IX_2E833843 on LocalizedEntryLocalization (localizedEntryId,
 
 create unique index IX_46C721B9 on NullConvertibleEntry (name[$COLUMN_LENGTH:75$]);
 
+create index IX_61FDBFF1 on PermissionCheckFinderEntry (groupId);
+
 create unique index IX_32712A54 on RedundantIndexEntry (companyId, name[$COLUMN_LENGTH:75$]);
 
 create index IX_DA817981 on RenameFinderColumnEntry (columnToRename[$COLUMN_LENGTH:75$]);

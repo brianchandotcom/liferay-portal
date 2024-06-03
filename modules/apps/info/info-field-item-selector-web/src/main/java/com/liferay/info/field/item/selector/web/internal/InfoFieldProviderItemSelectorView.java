@@ -5,6 +5,7 @@
 
 package com.liferay.info.field.item.selector.web.internal;
 
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.field.item.selector.criterion.InfoFieldItemSelectorCriterion;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -12,6 +13,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.io.IOException;
 
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -66,16 +69,24 @@ public class InfoFieldProviderItemSelectorView
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
 
+		RenderResponse renderResponse =
+			(RenderResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			servletRequest, servletResponse, infoFieldItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new InfoFieldItemSelectorViewDescriptor(
-				httpServletRequest, _infoItemServiceRegistry, portletURL));
+				httpServletRequest, _fragmentEntryConfigurationParser,
+				_infoItemServiceRegistry, portletURL, renderResponse));
 	}
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new UUIDItemSelectorReturnType());
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

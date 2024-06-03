@@ -22,6 +22,9 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,7 +45,25 @@ public class DocumentShortcutResourceImpl
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {
 
-		return getSiteDocumentShortcutsPage(assetLibraryId, pagination);
+		return _getDocumentShortcutsPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_SHORTCUT, "postAssetLibraryDocumentShortcut",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_SHORTCUT,
+					"postAssetLibraryDocumentShortcutBatch",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getAssetLibraryDocumentShortcutsPage",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).build(),
+			assetLibraryId, pagination);
 	}
 
 	@Override
@@ -58,15 +79,24 @@ public class DocumentShortcutResourceImpl
 			Long siteId, Pagination pagination)
 		throws Exception {
 
-		return Page.of(
-			transform(
-				_dlFileShortcutService.getGroupFileShortcuts(
-					siteId, pagination.getStartPosition(),
-					pagination.getEndPosition()),
-				dlFileShortcut -> _toDocumentShortcut(
-					new LiferayFileShortcut(dlFileShortcut))),
-			pagination,
-			_dlFileShortcutService.getGroupFileShortcutsCount(siteId));
+		return _getDocumentShortcutsPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_SHORTCUT, "postSiteDocumentShortcut",
+					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_SHORTCUT, "postSiteDocumentShortcutBatch",
+					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getSiteDocumentShortcutsPage",
+					DLConstants.RESOURCE_NAME, siteId)
+			).build(),
+			siteId, pagination);
 	}
 
 	@Override
@@ -102,6 +132,23 @@ public class DocumentShortcutResourceImpl
 			groupId, contextHttpServletRequest,
 			documentShortcut.getViewableByAsString()
 		).build();
+	}
+
+	private Page<DocumentShortcut> _getDocumentShortcutsPage(
+			Map<String, Map<String, String>> actions, Long groupId,
+			Pagination pagination)
+		throws Exception {
+
+		return Page.of(
+			actions,
+			transform(
+				_dlFileShortcutService.getGroupFileShortcuts(
+					groupId, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				dlFileShortcut -> _toDocumentShortcut(
+					new LiferayFileShortcut(dlFileShortcut))),
+			pagination,
+			_dlFileShortcutService.getGroupFileShortcutsCount(groupId));
 	}
 
 	private DocumentShortcut _toDocumentShortcut(FileShortcut fileShortcut)

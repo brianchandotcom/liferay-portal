@@ -54,7 +54,6 @@ public class FragmentPanelAppTest {
 				_panelApp.isShow(
 					permissionChecker,
 					_groupLocalService.getGroup(group.getGroupId())));
-
 			Assert.assertTrue(
 				_panelApp.isShow(permissionChecker, group.getStagingGroup()));
 		}

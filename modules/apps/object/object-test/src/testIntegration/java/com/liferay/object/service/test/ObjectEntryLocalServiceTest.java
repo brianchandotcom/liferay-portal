@@ -2805,6 +2805,25 @@ public class ObjectEntryLocalServiceTest {
 		_assertObjectEntryValues(29, values1, valuesList.get(0));
 		_assertObjectEntryValues(29, values3, valuesList.get(1));
 
+		// Predicate and Search
+
+		valuesList = _objectEntryLocalService.getValuesList(
+			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), null, predicate, "John",
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, sorts);
+
+		Assert.assertEquals(valuesList.toString(), 1, valuesList.size());
+
+		_assertObjectEntryValues(29, values3, valuesList.get(0));
+
+		valuesList = _objectEntryLocalService.getValuesList(
+			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), null, predicate,
+			RandomTestUtil.randomString(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			sorts);
+
+		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
+
 		// Predicate with permissions check
 
 		PermissionThreadLocal.setPermissionChecker(

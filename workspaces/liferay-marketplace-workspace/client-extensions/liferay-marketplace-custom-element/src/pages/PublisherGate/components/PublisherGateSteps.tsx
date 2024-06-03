@@ -7,6 +7,7 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
+import useListTypeDefinition from '../../../hooks/useListTypeDefinition';
 import i18n from '../../../i18n';
 import zodSchema, {zodResolver} from '../../../schema/zod';
 import fetcher from '../../../services/fetcher';
@@ -36,6 +37,7 @@ const PublisherGateSteps = () => {
 				flag: 'en-us',
 			},
 			phoneNumber: '',
+			publisherType: [],
 			requestDescription: '',
 		},
 		mode: 'onBlur',
@@ -43,6 +45,8 @@ const PublisherGateSteps = () => {
 	});
 
 	const userInfo = form.watch();
+
+	const {data} = useListTypeDefinition('PUBLISHER-TYPE');
 
 	const submit = async (form: PublisherForm) => {
 		const formData = {...form, intlCode: form?.phone?.code};
@@ -53,15 +57,20 @@ const PublisherGateSteps = () => {
 			await fetcher.post('o/c/requestpublisheraccounts/', formData);
 
 			setStep(StepType.REQUESTED);
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	const StepsAccount = {
 		[StepType.FORM]: {
-			component: <PublisherGateForm form={form} setStep={setStep} />,
+			component: (
+				<PublisherGateForm
+					form={form}
+					listTypeDefinition={data}
+					setStep={setStep}
+				/>
+			),
 		},
 		[StepType.SUMMARY]: {
 			component: (
@@ -73,16 +82,17 @@ const PublisherGateSteps = () => {
 						<PublisherSummaryContent
 							title={i18n.translate('request-details')}
 							userInfo={{
-								emailAddress: userInfo.emailAddress,
-								extension: userInfo?.extension,
-								firstName: userInfo?.firstName,
-								lastName: userInfo?.lastName,
+								...userInfo,
 								phone: {
 									code: userInfo?.phone?.code as string,
 									flag: userInfo?.phone?.flag as string,
 								},
-								phoneNumber: userInfo.phoneNumber,
-								requestDescription: userInfo.requestDescription,
+								publisherType: userInfo.publisherType.map(
+									(type) =>
+										data?.listTypeEntries.find(
+											({key}) => type === key
+										)?.name || type
+								),
 							}}
 						/>
 					</div>

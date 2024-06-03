@@ -58,73 +58,82 @@ const DisplayCardInfo: React.FC<DisplayCardInfoProps> = ({
 const PublisherSummaryContent: React.FC<PublisherSummaryContentProps> = ({
 	title,
 	userInfo,
-}) => {
-	return (
-		<div className="border p-5 rounded">
-			{title && (
-				<>
-					<h1>{title}</h1>
-					<hr />
-				</>
+}) => (
+	<div className="border p-5 rounded">
+		{title && (
+			<>
+				<h1>{title}</h1>
+				<hr />
+			</>
+		)}
+		<div className="d-flex justify-content-between">
+			<span className="mb-3">
+				<DisplayCardInfo
+					className="mb-5"
+					icon="user"
+					info={`${userInfo?.firstName} ${userInfo?.lastName}`}
+					title={i18n.translate('name')}
+				/>
+			</span>
+
+			{userInfo?.requestStatus && (
+				<DisplayCardInfo
+					className="col-6 mb-5"
+					icon="warning-full"
+					info={
+						<ClayLabel
+							displayType={
+								STATUS[
+									userInfo?.requestStatus
+										?.key as keyof typeof STATUS
+								] as Status
+							}
+						>
+							{userInfo?.requestStatus?.name}
+						</ClayLabel>
+					}
+					title={i18n.translate('status')}
+				/>
 			)}
+		</div>
+
+		<div>
 			<div className="d-flex justify-content-between">
-				<span className="mb-3">
-					<DisplayCardInfo
-						className="mb-5"
-						icon="user"
-						info={`${userInfo?.firstName} ${userInfo?.lastName}`}
-						title={i18n.translate('name')}
-					/>
-				</span>
-				{userInfo?.requestStatus && (
-					<DisplayCardInfo
-						className="col-6 mb-5"
-						icon="warning-full"
-						info={
-							<ClayLabel
-								displayType={
-									STATUS[
-										userInfo?.requestStatus
-											?.key as keyof typeof STATUS
-									] as Status
-								}
-							>
-								{userInfo?.requestStatus?.name}
-							</ClayLabel>
-						}
-						title={i18n.translate('status')}
-					/>
-				)}
+				<DisplayCardInfo
+					className="mb-5"
+					icon="phone"
+					info={`${userInfo?.phone?.code ?? ''} ${
+						userInfo?.phoneNumber ?? ''
+					}`}
+					title={i18n.translate('phone')}
+				/>
+
+				<DisplayCardInfo
+					className="col-6 mb-5"
+					icon="envelope-closed"
+					info={userInfo?.emailAddress}
+					title={i18n.translate('email')}
+				/>
 			</div>
 
 			<div>
-				<div className="d-flex justify-content-between">
-					<DisplayCardInfo
-						className="mb-5"
-						icon="phone"
-						info={`${userInfo?.phone?.code ?? ''} ${
-							userInfo?.phoneNumber ?? ''
-						}`}
-						title={i18n.translate('phone')}
-					/>
-
-					<DisplayCardInfo
-						className="col-6 mb-5"
-						icon="envelope-closed"
-						info={userInfo?.emailAddress}
-						title={i18n.translate('email')}
-					/>
-				</div>
-				<span>
-					<DisplayCardInfo
-						icon="document"
-						info={userInfo?.requestDescription}
-						title={i18n.translate('description')}
-					/>
-				</span>
+				<DisplayCardInfo
+					className="mb-5"
+					icon="order-form-tag"
+					info={<small>{userInfo?.publisherType.join(', ')}</small>}
+					title={i18n.translate('publisher-type')}
+				/>
 			</div>
+
+			<span>
+				<DisplayCardInfo
+					icon="document"
+					info={userInfo?.requestDescription}
+					title={i18n.translate('description')}
+				/>
+			</span>
 		</div>
-	);
-};
+	</div>
+);
 
 export default PublisherSummaryContent;

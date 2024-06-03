@@ -4812,7 +4812,7 @@ public class JenkinsResultsParserUtil {
 						}
 					}
 
-					if (url.contains("/o/oauth2/token")) {
+					if (url.contains("/oauth2/")) {
 						httpURLConnection.setRequestProperty(
 							"accept", "application/json");
 						httpURLConnection.setRequestProperty(

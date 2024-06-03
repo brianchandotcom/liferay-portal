@@ -132,7 +132,7 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 		);
 
 		return connectDragSource(
-			<li className={classes}>
+			<li className={classes} data-testid={`criteria-item-${label}`}>
 				<span className='inline-item'>
 					<ClayIcon className='icon-root' symbol='drag' />
 				</span>

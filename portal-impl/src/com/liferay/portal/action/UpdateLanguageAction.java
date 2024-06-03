@@ -274,7 +274,11 @@ public class UpdateLanguageAction implements Action {
 	protected boolean isGroupFriendlyURL(
 		Group group, Layout layout, String layoutURL, Locale locale) {
 
-		if (Validator.isNull(layoutURL)) {
+		if (Validator.isNull(layoutURL) ||
+			PortalUtil.isGroupFriendlyURL(
+				layoutURL, group.getFriendlyURL(),
+				layout.getFriendlyURL(locale))) {
+
 			return true;
 		}
 
@@ -285,11 +289,7 @@ public class UpdateLanguageAction implements Action {
 		Locale layoutURLLocale = LocaleUtil.fromLanguageId(
 			layoutURLLanguageId, true, false);
 
-		if ((layoutURLLocale != null) ||
-			PortalUtil.isGroupFriendlyURL(
-				layoutURL, group.getFriendlyURL(),
-				layout.getFriendlyURL(locale))) {
-
+		if (layoutURLLocale != null) {
 			return true;
 		}
 

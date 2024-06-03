@@ -92,16 +92,16 @@ public class HttpResponse {
 	}
 
 	private String _getHeaderValue(String name) {
-		List<String> headers = _headers.get(name);
+		List<String> values = _headers.get(name);
 
-		if (ListUtil.isEmpty(headers)) {
+		if (ListUtil.isEmpty(values)) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(headers.size() * 2);
+		StringBundler sb = new StringBundler(values.size() * 2);
 
-		for (String header : headers) {
-			sb.append(header);
+		for (String value : values) {
+			sb.append(value);
 			sb.append(StringPool.COMMA);
 		}
 

@@ -55,7 +55,8 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 			modal.onClose();
 
 			setSelectedApp({} as Product);
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',

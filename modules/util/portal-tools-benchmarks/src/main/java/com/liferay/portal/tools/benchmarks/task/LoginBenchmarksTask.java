@@ -111,15 +111,15 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 			null, csrfToken,
 			new String[][] {
 				{
-					_P_P_ID_PREFIX + "_formDate",
+					_P_P_ID_NAMESPACE + "_formDate",
 					String.valueOf(System.currentTimeMillis())
 				},
-				{_P_P_ID_PREFIX + "_saveLastPath", StringPool.FALSE},
-				{_P_P_ID_PREFIX + "_redirect", StringPool.BLANK},
-				{_P_P_ID_PREFIX + "_doActionAfterLogin", StringPool.FALSE},
-				{_P_P_ID_PREFIX + "_login", emailAddress},
-				{_P_P_ID_PREFIX + "_password", password},
-				{_P_P_ID_PREFIX + "_checkboxNames", "rememberMe"}
+				{_P_P_ID_NAMESPACE + "_saveLastPath", StringPool.FALSE},
+				{_P_P_ID_NAMESPACE + "_redirect", StringPool.BLANK},
+				{_P_P_ID_NAMESPACE + "_doActionAfterLogin", StringPool.FALSE},
+				{_P_P_ID_NAMESPACE + "_login", emailAddress},
+				{_P_P_ID_NAMESPACE + "_password", password},
+				{_P_P_ID_NAMESPACE + "_checkboxNames", "rememberMe"}
 			},
 			_newURL(_URL_LOGIN_POST));
 
@@ -165,18 +165,18 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	private static final String _P_P_ID =
 		"com_liferay_login_web_portlet_LoginPortlet";
 
-	private static final String _P_P_ID_PREFIX = StringPool.UNDERLINE + _P_P_ID;
+	private static final String _P_P_ID_NAMESPACE = StringPool.UNDERLINE + _P_P_ID;
 
 	private static final String _URL_LOGIN_POPUP_REDIRECT =
 		StringBundler.concat(
 			"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=0&",
-			"p_p_state=exclusive&p_p_mode=view&", _P_P_ID_PREFIX,
+			"p_p_state=exclusive&p_p_mode=view&", _P_P_ID_NAMESPACE,
 			"_mvcRenderCommandName=/login/login&saveLastPath=false");
 
 	private static final String _URL_LOGIN_POST = StringBundler.concat(
 		"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=1&",
-		"p_p_state=normal&p_p_mode=view&", _P_P_ID_PREFIX,
-		"_javax.portlet.action=/login/login&", _P_P_ID_PREFIX,
+		"p_p_state=normal&p_p_mode=view&", _P_P_ID_NAMESPACE,
+		"_javax.portlet.action=/login/login&", _P_P_ID_NAMESPACE,
 		"_mvcRenderCommandName=/login/login");
 
 	private final String _emailAddress;

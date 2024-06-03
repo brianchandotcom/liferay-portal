@@ -8,14 +8,13 @@ package com.liferay.portal.tools.benchmarks.task;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.tools.benchmarks.http.HttpResponse;
 import com.liferay.portal.tools.benchmarks.http.HttpUtil;
 
 import java.net.URL;
 
-import java.util.AbstractMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -32,18 +31,17 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		_port = port;
 	}
 
-	public List<Map.Entry<String, Long>> execute() throws Exception {
+	public List<ObjectValuePair<String, Long>> execute() throws Exception {
 		HttpResponse httpResponse = _homePage();
 
 		return ListUtil.fromArray(
-			new AbstractMap.SimpleEntry<>(
-				"homePage", httpResponse.getDuration()),
-			new AbstractMap.SimpleEntry<>(
+			new ObjectValuePair<>("homePage", httpResponse.getDuration()),
+			new ObjectValuePair<>(
 				"viewLoginPage", _viewLoginPage(httpResponse.getCSRFToken())),
-			new AbstractMap.SimpleEntry<>(
+			new ObjectValuePair<>(
 				"login",
 				_login(httpResponse.getCSRFToken(), _emailAddress, _password)),
-			new AbstractMap.SimpleEntry<>("logout", _logout()));
+			new ObjectValuePair<>("logout", _logout()));
 	}
 
 	private void _assertRedirect(

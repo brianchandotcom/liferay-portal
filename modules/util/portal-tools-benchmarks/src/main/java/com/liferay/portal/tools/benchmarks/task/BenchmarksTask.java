@@ -5,14 +5,15 @@
 
 package com.liferay.portal.tools.benchmarks.task;
 
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Tina Tian
  */
 public interface BenchmarksTask {
 
-	public List<Map.Entry<String, Long>> execute() throws Exception;
+	public List<ObjectValuePair<String, Long>> execute() throws Exception;
 
 }

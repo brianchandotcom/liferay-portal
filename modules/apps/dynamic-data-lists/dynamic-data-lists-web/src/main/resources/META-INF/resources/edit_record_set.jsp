@@ -123,7 +123,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 							<aui:option><liferay-ui:message key="no-workflow" /></aui:option>
 
 							<%
-							List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+							List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.liberalGetActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 							for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 								boolean selected = false;

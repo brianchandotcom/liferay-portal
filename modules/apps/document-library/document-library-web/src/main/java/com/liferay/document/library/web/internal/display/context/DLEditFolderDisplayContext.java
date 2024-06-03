@@ -209,7 +209,7 @@ public class DLEditFolderDisplayContext {
 		}
 
 		_workflowDefinitions =
-			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
+			WorkflowDefinitionManagerUtil.liberalGetActiveWorkflowDefinitions(
 				_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 

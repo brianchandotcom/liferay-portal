@@ -209,10 +209,10 @@ public class LayoutPageTemplateEntryModelListener
 				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
 
 			return _formItemManager.addFragmentEntryLinks(
-				_jsonFactory.createJSONObject(), null,
-				formStyledLayoutStructureItem, true, layout, layoutStructure,
+				_jsonFactory.createJSONObject(), formStyledLayoutStructureItem,
+				true, layout, layoutStructure,
 				LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
-				serviceContext);
+				serviceContext, null);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

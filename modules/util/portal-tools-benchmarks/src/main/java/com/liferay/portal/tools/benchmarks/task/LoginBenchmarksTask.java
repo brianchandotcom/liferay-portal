@@ -62,11 +62,9 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	private void _assertResult(HttpResponse httpResponse, String key) {
 		Assert.assertEquals(httpResponse.getStatusCode(), 200);
 
-		if (key != null) {
-			String httpResponseString = httpResponse.toString();
+		String httpResponseString = httpResponse.toString();
 
-			Assert.assertTrue(httpResponseString.contains(key));
-		}
+		Assert.assertTrue(httpResponseString.contains(key));
 	}
 
 	private URL _creatURL(String path) throws Exception {

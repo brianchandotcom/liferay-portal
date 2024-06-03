@@ -225,12 +225,12 @@ public class TestrayRoutine {
 	}
 
 	public URL getURL() {
-		if (_url != null) {
-			return _url;
+		if (url != null) {
+			return url;
 		}
 
 		try {
-			_url = new URL(
+			url = new URL(
 				JenkinsResultsParserUtil.combine(
 					String.valueOf(_testrayProject.getURL()), "/",
 					String.valueOf(getID())));
@@ -239,7 +239,7 @@ public class TestrayRoutine {
 			throw new RuntimeException(malformedURLException);
 		}
 
-		return _url;
+		return url;
 	}
 
 	public void setJSONObject(JSONObject jsonObject) {
@@ -264,11 +264,19 @@ public class TestrayRoutine {
 	}
 
 	protected TestrayRoutine(URL url) {
-		_url = url;
+		setURL(url);
+	}
 
-		if (this instanceof Testray1TestrayRoutine) {
-			return;
-		}
+	protected void setTestrayProject(TestrayProject testrayProject) {
+		_testrayProject = testrayProject;
+	}
+
+	protected void setTestrayServer(TestrayServer testrayServer) {
+		_testrayServer = testrayServer;
+	}
+
+	protected void setURL(URL url) {
+		this.url = url;
 
 		Matcher matcher = _testrayRoutineURLPattern.matcher(url.toString());
 
@@ -299,13 +307,7 @@ public class TestrayRoutine {
 		}
 	}
 
-	protected void setTestrayProject(TestrayProject testrayProject) {
-		_testrayProject = testrayProject;
-	}
-
-	protected void setTestrayServer(TestrayServer testrayServer) {
-		_testrayServer = testrayServer;
-	}
+	protected URL url;
 
 	private static final Pattern _testrayRoutineURLPattern = Pattern.compile(
 		"(?<serverURL>https://[^/]+)/#/project/(?<projectID>\\d+)/routines/" +
@@ -314,6 +316,5 @@ public class TestrayRoutine {
 	private JSONObject _jsonObject;
 	private TestrayProject _testrayProject;
 	private TestrayServer _testrayServer;
-	private URL _url;
 
 }

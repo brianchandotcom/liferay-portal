@@ -366,15 +366,18 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		super(testrayServer, jsonObject);
 	}
 
-	protected Testray1TestrayRoutine(URL testrayRoutineURL) {
-		super(testrayRoutineURL);
+	protected Testray1TestrayRoutine(URL url) {
+		super(url);
+	}
 
-		Matcher matcher = _testrayRoutineURLPattern.matcher(
-			testrayRoutineURL.toString());
+	@Override
+	protected void setURL(URL url) {
+		this.url = url;
+
+		Matcher matcher = _testrayRoutineURLPattern.matcher(url.toString());
 
 		if (!matcher.find()) {
-			throw new RuntimeException(
-				"Invalid Routine URL " + testrayRoutineURL);
+			throw new RuntimeException("Invalid Routine URL " + url);
 		}
 
 		TestrayServer testrayServer = TestrayFactory.newTestrayServer(

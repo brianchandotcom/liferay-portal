@@ -58,11 +58,11 @@ export class ViewObjectEntriesPage {
 
 	async fillObjectEntry({
 		objectFieldBusinessType,
-		objectFieldName,
+		objectFieldLabel,
 		objectFieldValue,
 	}: {
 		objectFieldBusinessType?: ObjectFieldBusinessTypeName;
-		objectFieldName?: string;
+		objectFieldLabel?: string;
 		objectFieldValue: string;
 	}) {
 		if (objectFieldBusinessType === 'RichText') {
@@ -78,7 +78,7 @@ export class ViewObjectEntriesPage {
 		}
 
 		await this.page
-			.getByLabel(objectFieldName, {exact: true})
+			.getByLabel(objectFieldLabel, {exact: true})
 			.fill(objectFieldValue);
 	}
 
@@ -87,7 +87,7 @@ export class ViewObjectEntriesPage {
 		await this.page.getByRole('option', {name: optionName}).click();
 	}
 
-	async selectFileFromDocumentsAndMedia() {
+	async selectFileFromDocumentsAndMedia(fileName: string) {
 		await this.selectFileButton.click();
 
 		await this.selectFileIframe
@@ -104,8 +104,9 @@ export class ViewObjectEntriesPage {
 
 		await this.selectFileIframe
 			.locator(
-				'[id="_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_repositoryEntriesSearchContainer"] img'
+				'[id="_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_repositoryEntriesSearchContainer_1"] div'
 			)
+			.filter({hasText: fileName})
 			.first()
 			.click();
 	}

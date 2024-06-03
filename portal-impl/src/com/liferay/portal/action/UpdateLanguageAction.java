@@ -275,8 +275,9 @@ public class UpdateLanguageAction implements Action {
 	protected boolean isGroupFriendlyURL(
 		Group group, Layout layout, String layoutURL, Locale locale) {
 
-		if (Validator.isNull(layoutURL) ||
-			Objects.equals(layoutURL, StringPool.SLASH) ||
+		if (Objects.equals(layoutURL, PortalUtil.getPathContext()) ||
+			Objects.equals(
+				layoutURL, PortalUtil.getPathContext() + StringPool.SLASH) ||
 			PortalUtil.isGroupFriendlyURL(
 				layoutURL, group.getFriendlyURL(),
 				layout.getFriendlyURL(locale))) {
@@ -284,7 +285,8 @@ public class UpdateLanguageAction implements Action {
 			return true;
 		}
 
-		int pos = layoutURL.indexOf(CharPool.SLASH);
+		int pos = layoutURL.indexOf(
+			PortalUtil.getPathContext() + StringPool.SLASH);
 
 		String string = layoutURL.substring(pos + 1);
 

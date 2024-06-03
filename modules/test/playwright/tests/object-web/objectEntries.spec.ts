@@ -18,7 +18,7 @@ import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import getCollectionDefinition from '../layout-content-page-editor-web/utils/getCollectionDefinition';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import {getPageEditorDateFormat} from './utils/dateFormat';
+import {getFDSDateFormat, getPageEditorDateFormat} from './utils/dateFormat';
 import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
@@ -420,15 +420,25 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const listTypeDefinition =
-			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-
-		customListTypeDefinitions.push(listTypeDefinition);
-
-		await apiHelpers.listTypeAdmin.postListTypeEntry(
-			listTypeDefinition.externalReferenceCode,
-			'item1'
-		);
+		const ATTACHMENT_FILE_NAME = 'astronaut.png';
+		const {listTypeDefinition, objectEntry, objectFields} =
+			await mockObjectFields({
+				apiHelpers,
+				objectEntryReturn: {format: 'UI'},
+				objectFieldBusinessTypes: [
+					'attachment',
+					'boolean',
+					'date',
+					'decimal',
+					'integer',
+					'longInteger',
+					'longText',
+					'picklist',
+					'precisionDecimal',
+					'richText',
+					'text',
+				],
+			});
 
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postObjectDefinition({
@@ -438,184 +448,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 					en_US: getRandomString(),
 				},
 				name: 'ObjectDefinitionName' + getRandomInt(),
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'text',
-						indexed: true,
-						indexedAsKeyword: true,
-						label: {
-							en_US: 'text',
-						},
-						name: 'text',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-					{
-						DBType: 'Long',
-						businessType: 'LongInteger',
-						externalReferenceCode: 'longInteger',
-						id: 33573,
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {
-							en_US: 'longInteger',
-						},
-						localized: false,
-						name: 'longInteger',
-						required: false,
-						system: false,
-						type: 'Long',
-					},
-					{
-						DBType: 'Date',
-						businessType: 'Date',
-						externalReferenceCode: 'date',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {
-							en_US: 'date',
-						},
-						localized: false,
-						name: 'date',
-						required: false,
-						system: false,
-						type: 'Date',
-					},
-					{
-						DBType: 'Integer',
-						businessType: 'Integer',
-						externalReferenceCode: 'integer',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {
-							en_US: 'integer',
-						},
-						localized: false,
-						name: 'integer',
-						required: false,
-						system: false,
-						type: 'Integer',
-					},
-					{
-						DBType: 'Double',
-						businessType: 'Decimal',
-						externalReferenceCode: 'decimal',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {
-							en_US: 'decimal',
-						},
-						localized: false,
-						name: 'decimal',
-						required: false,
-						system: false,
-						type: 'Double',
-					},
-					{
-						DBType: 'Clob',
-						businessType: 'RichText',
-						externalReferenceCode: 'richText',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {
-							en_US: 'richText',
-						},
-						localized: false,
-						name: 'richText',
-						required: false,
-						system: false,
-						type: 'Clob',
-					},
-					{
-						DBType: 'Boolean',
-						businessType: 'Boolean',
-						externalReferenceCode: 'boolean',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'boolean'},
-						name: 'boolean',
-						required: false,
-						system: false,
-						type: 'Boolean',
-					},
-					{
-						DBType: 'Clob',
-						businessType: 'LongText',
-						externalReferenceCode: 'longText',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'longText'},
-						name: 'longText',
-						required: false,
-						system: false,
-						type: 'Clob',
-					},
-					{
-						DBType: 'BigDecimal',
-						businessType: 'PrecisionDecimal',
-						externalReferenceCode: 'precisionDecimal',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'precisionDecimal'},
-						name: 'precisionDecimal',
-						required: false,
-						system: false,
-						type: 'BigDecimal',
-					},
-					{
-						DBType: 'String',
-						businessType: 'Picklist',
-						externalReferenceCode: 'picklist',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {
-							en_US: 'picklist',
-						},
-						listTypeDefinitionExternalReferenceCode:
-							listTypeDefinition.externalReferenceCode,
-						name: 'picklist',
-						required: false,
-						state: false,
-					},
-					{
-						DBType: 'Long',
-						businessType: 'Attachment',
-						indexed: true,
-						indexedAsKeyword: false,
-						label: {
-							en_US: 'attachment',
-						},
-						name: 'attachment',
-						objectFieldSettings: [
-							{
-								name: 'acceptedFileExtensions',
-								value: 'jpeg, jpg, pdf, png',
-							},
-							{
-								name: 'fileSource',
-								value: 'documentsAndMedia',
-							},
-							{
-								name: 'maximumFileSize',
-								value: '100',
-							},
-						],
-						required: false,
-						type: 'Long',
-					},
-				],
+				objectFields,
 				panelCategoryKey: 'control_panel.object',
 				pluralLabel: {
 					en_US: 'NewObject',
@@ -627,57 +460,51 @@ test.describe('Manage object entries through View Object Entries', () => {
 				},
 			});
 
+		customListTypeDefinitions.push(listTypeDefinition);
 		customObjectDefinitions.push(objectDefinition);
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
 		await viewObjectEntriesPage.clickAddObjectEntry();
 
-		await viewObjectEntriesPage.selectFileFromDocumentsAndMedia();
+		for (const objectField of objectFields) {
+			switch (objectField.businessType) {
+				case 'Attachment': {
+					await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
+						ATTACHMENT_FILE_NAME
+					);
 
-		await page.getByLabel('boolean').check();
+					break;
+				}
+				case 'Boolean': {
+					objectEntry[objectField.name]
+						? await page
+								.getByLabel(objectField.label['en_US'])
+								.check()
+						: await page
+								.getByLabel(objectField.label['en_US'])
+								.uncheck();
 
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldName: 'date',
-			objectFieldValue: '05/14/2024',
-		});
+					break;
+				}
+				case 'Picklist': {
+					await viewObjectEntriesPage.selectDropdownItem(
+						objectField.label['en_US'],
+						objectEntry[objectField.name].key.toString()
+					);
 
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldName: 'decimal',
-			objectFieldValue: '12.34',
-		});
-
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldName: 'integer',
-			objectFieldValue: '1234',
-		});
-
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldName: 'longInteger',
-			objectFieldValue: '1122334455',
-		});
-
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldName: 'longText',
-			objectFieldValue: 'Text written on long text',
-		});
-
-		await viewObjectEntriesPage.selectDropdownItem('picklist', 'item1');
-
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldName: 'precisionDecimal',
-			objectFieldValue: '1.5',
-		});
-
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldBusinessType: 'RichText',
-			objectFieldValue: 'Text written on rich text',
-		});
-
-		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldName: 'text',
-			objectFieldValue: 'Text written on simple text',
-		});
+					break;
+				}
+				default: {
+					await viewObjectEntriesPage.fillObjectEntry({
+						objectFieldBusinessType: objectField.businessType,
+						objectFieldLabel: objectField.label['en_US'],
+						objectFieldValue:
+							objectEntry[objectField.name].toString(),
+					});
+				}
+			}
+		}
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
@@ -685,23 +512,56 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await viewObjectEntriesPage.backButton.click();
 
-		const objectEntries = [
-			'Yes',
-			'12.34',
-			'1234',
-			'1122334455',
-			'1.5',
-			'Text written on long text',
-			'Text written on simple text',
-			'Text written on rich text',
-			'item1',
-			'astronaut.png',
-		];
+		for (const {businessType, name} of objectFields) {
+			let matchString: string;
 
-		for (let i = 0; i < objectEntries.length; i++) {
-			const entry = objectEntries[i];
+			switch (businessType) {
+				case 'Attachment': {
+					matchString = ATTACHMENT_FILE_NAME;
 
-			await expect(page.getByText(entry)).toBeVisible();
+					break;
+				}
+				case 'Boolean': {
+					matchString = objectEntry[name] ? 'Yes' : 'No';
+
+					break;
+				}
+				case 'Date': {
+					const date = new Date(objectEntry[name]);
+
+					matchString = getFDSDateFormat(date);
+
+					break;
+				}
+				case 'Picklist': {
+					matchString = (objectEntry[name] as {key: string}).key;
+
+					break;
+				}
+				case 'MultiselectPicklist': {
+					(objectEntry[name] as string[]).forEach(
+						(listTypeEntry, index) => {
+							index < 1
+								? (matchString = `${listTypeEntry}`)
+								: (matchString += `, ${listTypeEntry}`);
+						}
+					);
+
+					break;
+				}
+				case 'RichText': {
+					matchString = objectEntry[name].substring(0, 35);
+
+					break;
+				}
+				default: {
+					matchString = objectEntry[name];
+				}
+			}
+
+			await expect(
+				page.locator('.dnd-td').getByText(matchString, {exact: true})
+			).toBeVisible();
 		}
 	});
 

@@ -33,6 +33,7 @@ import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -275,6 +276,7 @@ public class UpdateLanguageAction implements Action {
 		Group group, Layout layout, String layoutURL, Locale locale) {
 
 		if (Validator.isNull(layoutURL) ||
+			Objects.equals(layoutURL, StringPool.SLASH) ||
 			PortalUtil.isGroupFriendlyURL(
 				layoutURL, group.getFriendlyURL(),
 				layout.getFriendlyURL(locale))) {

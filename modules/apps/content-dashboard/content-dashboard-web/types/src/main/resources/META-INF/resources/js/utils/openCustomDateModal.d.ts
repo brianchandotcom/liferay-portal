@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+/// <reference types="react" />
+
 declare type Props = {
 	dateTypes: Array<{
 		label: string;
@@ -15,4 +17,12 @@ declare type Props = {
 	selectedStartDate: string | undefined;
 };
 export default function openCustomDateModal(props: Props): void;
+export declare function CustomDateModal({
+	dateTypes,
+	filterUrl,
+	namespace,
+	selectedDateType,
+	selectedEndDate,
+	selectedStartDate,
+}: Props): JSX.Element | null;
 export {};

@@ -15,7 +15,8 @@ import com.liferay.portal.tools.benchmarks.http.HttpUtil;
 import java.net.URL;
 
 import java.util.List;
-import java.util.Objects;
+
+import org.junit.Assert;
 
 /**
  * @author Tina Tian
@@ -51,38 +52,20 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 			String expectedRedirect, HttpResponse httpResponse)
 		throws Exception {
 
-		if (httpResponse.getStatusCode() != 302) {
-			throw new IllegalStateException(
-				"Response status code is wrong! Expect 302 but actual is " +
-					httpResponse.getStatusCode());
-		}
+		Assert.assertEquals(httpResponse.getStatusCode(), 302);
 
 		URL url = _newURL(expectedRedirect);
 
-		if (!Objects.equals(url.toString(), httpResponse.getRedirect())) {
-			throw new IllegalStateException(
-				StringBundler.concat(
-					"Redirect URL is wrong! Expect ", url, " but actual is ",
-					httpResponse.getRedirect()));
-		}
+		Assert.assertEquals(url.toString(), httpResponse.getRedirect());
 	}
 
 	private void _assertResult(HttpResponse httpResponse, String key) {
-		if (httpResponse.getStatusCode() != 200) {
-			throw new IllegalStateException(
-				"Response status code is wrong! Expect 200 but actual is " +
-					httpResponse.getStatusCode());
-		}
+		Assert.assertEquals(httpResponse.getStatusCode(), 200);
 
 		if (key != null) {
 			String httpResponseString = httpResponse.toString();
 
-			if (!httpResponseString.contains(key)) {
-				throw new IllegalStateException(
-					StringBundler.concat(
-						"Unable to find key ", key, " in response : \\n",
-						httpResponseString));
-			}
+			Assert.assertTrue(httpResponseString.contains(key));
 		}
 	}
 

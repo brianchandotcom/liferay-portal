@@ -5,10 +5,15 @@
 
 package com.liferay.info.field.item.selector.web.internal;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
+import com.liferay.info.field.item.selector.web.internal.search.InfoFieldItemSelectorChecker;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -17,6 +22,12 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRow;
@@ -26,13 +37,18 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +58,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,14 +70,20 @@ public class InfoFieldItemSelectorViewDescriptor
 
 	public InfoFieldItemSelectorViewDescriptor(
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceRegistry infoItemServiceRegistry,
-		PortletURL portletURL) {
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		InfoItemServiceRegistry infoItemServiceRegistry, PortletURL portletURL,
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_portletURL = portletURL;
+		_renderResponse = renderResponse;
 
+		_formItemId = ParamUtil.getString(httpServletRequest, "formItemId");
 		_itemType = ParamUtil.getString(httpServletRequest, "itemType");
+		_segmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId");
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -138,6 +161,10 @@ public class InfoFieldItemSelectorViewDescriptor
 			return searchContainer;
 		}
 
+		searchContainer.setRowChecker(
+			new InfoFieldItemSelectorChecker(
+				_renderResponse, _getCheckedUniqueInfoFieldIds()));
+
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			_itemType, _themeDisplay.getScopeGroupId());
 
@@ -180,6 +207,79 @@ public class InfoFieldItemSelectorViewDescriptor
 	@Override
 	public boolean isShowSearch() {
 		return true;
+	}
+
+	private List<String> _getCheckedUniqueInfoFieldIds() {
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				_segmentsExperienceId);
+
+		if (segmentsExperience == null) {
+			return Collections.emptyList();
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			segmentsExperience.getPlid());
+
+		if (layout == null) {
+			return Collections.emptyList();
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					draftLayout.getGroupId(), draftLayout.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			return Collections.emptyList();
+		}
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(_segmentsExperienceId));
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(_formItemId);
+
+		if (!(layoutStructureItem instanceof FormStyledLayoutStructureItem)) {
+			return Collections.emptyList();
+		}
+
+		List<String> checkedUniqueInfoFieldIds = new ArrayList<>();
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)layoutStructureItem;
+
+		for (String itemId :
+				formStyledLayoutStructureItem.getChildrenItemIds()) {
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)
+						layoutStructure.getLayoutStructureItem(itemId);
+
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			String inputFieldId = GetterUtil.getString(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValues(),
+					new FragmentConfigurationField(
+						"inputFieldId", "string", "", false, "text"),
+					_themeDisplay.getLocale()));
+
+			if (Validator.isNotNull(inputFieldId)) {
+				checkedUniqueInfoFieldIds.add(inputFieldId);
+			}
+		}
+
+		return checkedUniqueInfoFieldIds;
 	}
 
 	private Map<InfoField<?>, InfoFieldSet> _getInfoFieldMap() {
@@ -242,10 +342,15 @@ public class InfoFieldItemSelectorViewDescriptor
 	private static final Log _log = LogFactoryUtil.getLog(
 		InfoFieldItemSelectorViewDescriptor.class);
 
+	private final String _formItemId;
+	private final FragmentEntryConfigurationParser
+		_fragmentEntryConfigurationParser;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final String _itemType;
 	private final PortletURL _portletURL;
+	private final RenderResponse _renderResponse;
+	private final long _segmentsExperienceId;
 	private final ThemeDisplay _themeDisplay;
 
 }

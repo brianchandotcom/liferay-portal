@@ -164,8 +164,6 @@ public class CETConfigurationFactoryTest {
 
 		CET cet = _cetManager.getCET(_virtualInstanceCompanyId, "LXC:test");
 
-		Assert.assertNotNull(cet);
-
 		Assert.assertEquals("Test " + _VIRTUAL_HOSTNAME, cet.getName());
 
 		String filterString = StringBundler.concat(

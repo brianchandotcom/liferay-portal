@@ -171,40 +171,8 @@ public class WorkflowDefinitionManagerImpl
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
-		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-
-			List<KaleoDefinition> kaleoDefinitions = null;
-
-			if (active == null) {
-				kaleoDefinitions =
-					_kaleoDefinitionService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, start, end,
-						KaleoDefinitionOrderByComparator.getOrderByComparator(
-							orderByComparator, _kaleoWorkflowModelConverter),
-						serviceContext);
-			}
-			else {
-				kaleoDefinitions =
-					_kaleoDefinitionService.getScopeKaleoDefinitions(
-						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
-						end,
-						KaleoDefinitionOrderByComparator.getOrderByComparator(
-							orderByComparator, _kaleoWorkflowModelConverter),
-						serviceContext);
-			}
-
-			int size = kaleoDefinitions.size();
-
-			return _toWorkflowDefinitions(
-				kaleoDefinitions.toArray(new KaleoDefinition[size]),
-				orderByComparator);
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
+		return _getLatestWorkflowDefinitions(
+			active, companyId, false, start, end, orderByComparator);
 	}
 
 	@Override
@@ -310,6 +278,16 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinition(companyId, true, name);
+	}
+
+	@Override
+	public List<WorkflowDefinition> liberalGetLatestWorkflowDefinitions(
+			long companyId, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		return _getLatestWorkflowDefinitions(
+			null, companyId, true, start, end, orderByComparator);
 	}
 
 	@Override
@@ -514,6 +492,60 @@ public class WorkflowDefinitionManagerImpl
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	private List<WorkflowDefinition> _getLatestWorkflowDefinitions(
+			Boolean active, long companyId, boolean liberal, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+
+			List<KaleoDefinition> kaleoDefinitions = null;
+
+			if (active == null) {
+				kaleoDefinitions = _get(
+					liberal,
+					() -> _kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+						WorkflowDefinitionConstants.SCOPE_ALL, start, end,
+						KaleoDefinitionOrderByComparator.getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
+						serviceContext),
+					() -> _kaleoDefinitionService.getScopeKaleoDefinitions(
+						WorkflowDefinitionConstants.SCOPE_ALL, start, end,
+						KaleoDefinitionOrderByComparator.getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
+						serviceContext));
+			}
+			else {
+				kaleoDefinitions = _get(
+					liberal,
+					() -> _kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
+						end,
+						KaleoDefinitionOrderByComparator.getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
+						serviceContext),
+					() -> _kaleoDefinitionService.getScopeKaleoDefinitions(
+						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
+						end,
+						KaleoDefinitionOrderByComparator.getOrderByComparator(
+							orderByComparator, _kaleoWorkflowModelConverter),
+						serviceContext));
+			}
+
+			int size = kaleoDefinitions.size();
+
+			return _toWorkflowDefinitions(
+				kaleoDefinitions.toArray(new KaleoDefinition[size]),
+				orderByComparator);
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

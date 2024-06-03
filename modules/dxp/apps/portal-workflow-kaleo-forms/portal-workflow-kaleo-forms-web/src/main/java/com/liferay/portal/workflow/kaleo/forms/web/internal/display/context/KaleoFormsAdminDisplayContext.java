@@ -389,10 +389,11 @@ public class KaleoFormsAdminDisplayContext {
 
 			searchContainer.setResultsAndTotal(
 				() ->
-					WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(
-						_themeDisplay.getCompanyId(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						null),
+					WorkflowDefinitionManagerUtil.
+						liberalGetActiveWorkflowDefinitions(
+							_themeDisplay.getCompanyId(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(), null),
 				WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionsCount(
 					_themeDisplay.getCompanyId()));
 

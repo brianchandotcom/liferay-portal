@@ -135,10 +135,28 @@ export class JournalEditArticlePage {
 
 	async scheduleArticle(
 		title: string,
-		date: string,
-		{workflow} = {workflow: false}
+		publishDate: string,
+		{workflow} = {workflow: false},
+		expirationDate?: string,
+		reviewDate?: string
 	) {
 		await this.fillTitle(title);
+
+		if (!(await this.page.getByText('Never Expire').isVisible())) {
+			await this.page.getByRole('link', {name: 'Schedule'}).click();
+		}
+
+		if (expirationDate) {
+			await this.page.getByText('Never Expire').click();
+
+			await this.page.getByText('Expiration Date').fill(expirationDate);
+		}
+
+		if (reviewDate) {
+			await this.page.getByText('Never Review').click();
+
+			await this.page.getByText('Review Date').fill(reviewDate);
+		}
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -158,7 +176,7 @@ export class JournalEditArticlePage {
 			),
 		});
 
-		await this.page.getByPlaceholder('YYYY-MM-DD HH:mm').fill(date);
+		await this.page.getByPlaceholder('YYYY-MM-DD HH:mm').fill(publishDate);
 
 		await this.page
 			.locator('.modal-footer')
@@ -205,8 +223,10 @@ export class JournalEditArticlePage {
 
 	async assertScheduleDate(
 		title: string,
-		date: string,
-		{workflow} = {workflow: false}
+		publishDate: string,
+		{workflow} = {workflow: false},
+		expirationDate?: string,
+		reviewDate?: string
 	) {
 		await this.editArticle(title);
 
@@ -228,8 +248,20 @@ export class JournalEditArticlePage {
 			),
 		});
 
+		if (expirationDate) {
+			await expect(this.page.getByText('Expiration Date')).toHaveValue(
+				expirationDate
+			);
+		}
+
 		await expect(
 			this.page.getByPlaceholder('YYYY-MM-DD HH:mm')
-		).toHaveValue(date);
+		).toHaveValue(publishDate);
+
+		if (reviewDate) {
+			await expect(this.page.getByText('Review Date')).toHaveValue(
+				reviewDate
+			);
+		}
 	}
 }

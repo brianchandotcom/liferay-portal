@@ -972,16 +972,24 @@ scheduleTest(
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		const articleTitle = getRandomString();
-		const scheduleDate = '9987-11-26 13:00';
+		const expirationDate = '01/01/9999';
+		const publishDate = '9987-11-26 13:00';
+		const reviewDate = '01/01/9999';
 
 		await journalEditArticlePage.scheduleArticle(
 			articleTitle,
-			scheduleDate
+			publishDate,
+			undefined,
+			expirationDate,
+			reviewDate
 		);
 
 		await journalEditArticlePage.assertScheduleDate(
 			articleTitle,
-			scheduleDate
+			publishDate,
+			undefined,
+			expirationDate,
+			reviewDate
 		);
 	}
 );

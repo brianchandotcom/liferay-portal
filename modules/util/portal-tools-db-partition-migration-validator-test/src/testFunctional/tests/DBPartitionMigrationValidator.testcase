@@ -3,9 +3,8 @@ definition {
 
 	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
-	property database.partition.enabled = "false";
+	property database.partition.enabled = "true";
 	property database.types = "mysql";
-	property liferay.online.properties = "true";
 	property osgi.modules.includes = "portal-tools-db-partition-migration-validator";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -26,14 +25,11 @@ definition {
 	@priority = 4
 	test ValidateErrorAndWarningDuringValidation {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property liferay.online.properties = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("The database are set and we start a new database with database partitioning enabled") {
 			Portlet.shutdownServer();
-
-			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
 
 			Portlet.startServer(keepOsGiState = "true");
 
@@ -90,14 +86,11 @@ definition {
 	@priority = 4
 	test ValidateSuccessfulExportAndValidation {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property liferay.online.properties = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
 			Portlet.shutdownServer();
-
-			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
 
 			Portlet.startServer(keepOsGiState = "true");
 
@@ -146,13 +139,14 @@ definition {
 	@priority = 5
 	test ValidateWrongExportWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property liferay.online.properties = "false";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("The database is set and we add a new virtual instance without database partitioning enabled") {
 			Portlet.shutdownServer();
+
+			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=false");
 
 			Portlet.startServer(keepOsGiState = "true");
 

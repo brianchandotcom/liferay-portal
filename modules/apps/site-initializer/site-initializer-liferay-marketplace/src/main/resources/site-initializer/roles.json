@@ -79,6 +79,12 @@
 	},
 	{
 		"actions": [
+		],
+		"name": "Solution Publisher",
+		"type": 6
+	},
+	{
+		"actions": [
 			{
 				"actionId": "VIEW",
 				"resource": "com.liferay.commerce.model.CommerceOrderType",

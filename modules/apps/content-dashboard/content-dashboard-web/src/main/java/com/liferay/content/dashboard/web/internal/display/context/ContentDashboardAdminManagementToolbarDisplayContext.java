@@ -129,7 +129,13 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			).setParameter(
 				"contentDashboardItemSubtypePayload", (String)null
 			).setParameter(
+				"dateType", (String)null
+			).setParameter(
+				"endDate", (String)null
+			).setParameter(
 				"scopeId", (String)null
+			).setParameter(
+				"startDate", (String)null
 			).setParameter(
 				"status", WorkflowConstants.STATUS_ANY
 			);

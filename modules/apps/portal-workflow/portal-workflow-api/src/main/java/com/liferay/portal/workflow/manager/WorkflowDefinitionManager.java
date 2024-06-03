@@ -130,6 +130,14 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
+	public default List<WorkflowDefinition> liberalGetWorkflowDefinitions(
+			long companyId, String name, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Saves a workflow definition without activating it or validating its data.
 	 * To save the definition, validate its data, and activate it, use {@link

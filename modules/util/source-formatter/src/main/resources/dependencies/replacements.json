@@ -31,6 +31,12 @@
 		"to": "getFriendlyURL(new InfoItemReference(param#0#, param#1#), param#2#)"
 	},
 	{
+		"from": "LayoutFriendlyURLComposite(Layout paramName, String paramName)",
+		"issueKey": "LPD-8025",
+		"skipParametersValidation": true,
+		"to": "LayoutFriendlyURLComposite(param#0#, param#1#, false)"
+	},
+	{
 		"classNames": [
 			"IndexWriterHelperUtil"
 		],

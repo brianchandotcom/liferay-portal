@@ -45,17 +45,6 @@ public class WorkflowDefinitionManagerUtil {
 			companyId);
 	}
 
-	public static WorkflowDefinition getWorkflowDefinition(
-			long companyId, String name, int version)
-		throws WorkflowException {
-
-		WorkflowDefinitionManager workflowDefinitionManager =
-			_workflowDefinitionManagerSnapshot.get();
-
-		return workflowDefinitionManager.getWorkflowDefinition(
-			companyId, name, version);
-	}
-
 	public static int getWorkflowDefinitionsCount(long companyId, String name)
 		throws WorkflowException {
 
@@ -99,6 +88,17 @@ public class WorkflowDefinitionManagerUtil {
 
 		return workflowDefinitionManager.liberalGetLatestWorkflowDefinitions(
 			companyId, start, end, orderByComparator);
+	}
+
+	public static WorkflowDefinition liberalGetWorkflowDefinition(
+			long companyId, String name, int version)
+		throws WorkflowException {
+
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.liberalGetWorkflowDefinition(
+			companyId, name, version);
 	}
 
 	public static List<WorkflowDefinition> liberalGetWorkflowDefinitions(

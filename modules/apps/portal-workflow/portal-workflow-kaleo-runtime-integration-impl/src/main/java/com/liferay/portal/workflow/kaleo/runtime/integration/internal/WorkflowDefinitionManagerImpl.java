@@ -223,20 +223,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name, int version)
 		throws WorkflowException {
 
-		try {
-			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				_kaleoDefinitionVersionService.getKaleoDefinitionVersion(
-					companyId, name, getVersion(version)));
-		}
-		catch (NoSuchModelException noSuchModelException) {
-			throw new NoSuchWorkflowDefinitionException(noSuchModelException);
-		}
-		catch (WorkflowException workflowException) {
-			throw workflowException;
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
+		return _getWorkflowDefinition(companyId, false, name, version);
 	}
 
 	@Override
@@ -288,6 +275,14 @@ public class WorkflowDefinitionManagerImpl
 
 		return _getLatestWorkflowDefinitions(
 			null, companyId, true, start, end, orderByComparator);
+	}
+
+	@Override
+	public WorkflowDefinition liberalGetWorkflowDefinition(
+			long companyId, String name, int version)
+		throws WorkflowException {
+
+		return _getWorkflowDefinition(companyId, true, name, version);
 	}
 
 	@Override
@@ -546,6 +541,34 @@ public class WorkflowDefinitionManagerImpl
 			return _toWorkflowDefinitions(
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	private WorkflowDefinition _getWorkflowDefinition(
+			long companyId, boolean liberal, String name, int version)
+		throws WorkflowException {
+
+		try {
+			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+				_get(
+					liberal,
+					() ->
+						_kaleoDefinitionVersionLocalService.
+							getKaleoDefinitionVersion(
+								companyId, name, getVersion(version)),
+					() ->
+						_kaleoDefinitionVersionService.
+							getKaleoDefinitionVersion(
+								companyId, name, getVersion(version))));
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			throw new NoSuchWorkflowDefinitionException(noSuchModelException);
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

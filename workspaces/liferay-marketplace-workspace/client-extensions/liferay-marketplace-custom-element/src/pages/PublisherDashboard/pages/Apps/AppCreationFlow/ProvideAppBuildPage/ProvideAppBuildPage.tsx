@@ -424,6 +424,43 @@ export function ProvideAppBuildPage({
 		!buildAppPackageValues.length ||
 		buildAppPackageValues.some((versionEntry) => !versionEntry?.length);
 
+	const BuildAppPackageVersionsComponent = () => (
+		<>
+			{buildAppPackageVersions.map((version, index) => (
+				<div
+					className="mt-4 provide-app-build-page-dropzone-container"
+					key={index}
+				>
+					<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
+						<span>{version}</span>
+						<ClayButton
+							displayType="unstyled"
+							onClick={() => handleRemovePackageVersion(version)}
+						>
+							{i18n.translate('remove-a-version')}
+						</ClayButton>
+					</div>
+
+					<UploadAppPackagesComponent
+						isProcessing={isProcessing}
+						versionName={version}
+					/>
+				</div>
+			))}
+
+			{!isProcessing && (
+				<ClayButton
+					className="btn-block provide-app-build-page-add-package-button"
+					displayType="secondary"
+					onClick={() => setVisibleSelectVersionModal(true)}
+				>
+					<ClayIcon className="mr-1" symbol="plus" />
+					{i18n.translate('add-packages')}
+				</ClayButton>
+			)}
+		</>
+	);
+
 	return (
 		<div className="provide-app-build-page-container">
 			<Header
@@ -612,79 +649,43 @@ export function ProvideAppBuildPage({
 
 					<Section
 						description={i18n.translate(
-							appType.value === ProductType.CLOUD
+							!properties.featureFlags?.includes('LPD-21582') &&
+								appType.value === ProductType.CLOUD
 								? 'select-a-local-file-to-upload'
 								: 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
 						)}
 						label={i18n.translate(
-							appType.value === ProductType.CLOUD
+							!properties.featureFlags?.includes('LPD-21582') &&
+								appType.value === ProductType.CLOUD
 								? 'upload-zip-files'
 								: 'upload-liferay-plugin-packages'
 						)}
 						required
 						tooltip={i18n.translate(
-							appType.value === ProductType.CLOUD
+							!properties.featureFlags?.includes('LPD-21582') &&
+								appType.value === ProductType.CLOUD
 								? 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
 								: 'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 						)}
 						tooltipText={i18n.translate('more-info')}
 					>
-						{appType.value === ProductType.CLOUD && (
-							<UploadAppPackagesComponent
-								isProcessing={isProcessing}
-								versionName={ProductType.CLOUD}
-							/>
-						)}
-
-						{appType.value === ProductType.DXP && (
+						{!properties.featureFlags?.includes('LPD-21582') && (
 							<>
-								{buildAppPackageVersions.map(
-									(version, index) => (
-										<div
-											className="mt-4 provide-app-build-page-dropzone-container"
-											key={index}
-										>
-											<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
-												<span>{version}</span>
-
-												<ClayButton
-													displayType="unstyled"
-													onClick={() =>
-														handleRemovePackageVersion(
-															version
-														)
-													}
-												>
-													{i18n.translate(
-														'remove-a-version'
-													)}
-												</ClayButton>
-											</div>
-
-											<UploadAppPackagesComponent
-												isProcessing={isProcessing}
-												versionName={version}
-											/>
-										</div>
-									)
+								{appType.value === ProductType.CLOUD && (
+									<UploadAppPackagesComponent
+										isProcessing={isProcessing}
+										versionName={ProductType.CLOUD}
+									/>
 								)}
 
-								{!isProcessing && (
-									<ClayButton
-										className="btn-block provide-app-build-page-add-package-button"
-										displayType="secondary"
-										onClick={() =>
-											setVisibleSelectVersionModal(true)
-										}
-									>
-										<ClayIcon
-											className="mr-1"
-											symbol="plus"
-										/>
-										{i18n.translate('add-packages')}
-									</ClayButton>
+								{appType.value === ProductType.DXP && (
+									<BuildAppPackageVersionsComponent />
 								)}
 							</>
+						)}
+
+						{properties.featureFlags?.includes('LPD-21582') && (
+							<BuildAppPackageVersionsComponent />
 						)}
 
 						{visibleSelectVersionModal && (

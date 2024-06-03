@@ -51,7 +51,7 @@ function CustomDateModal({
 	selectedEndDate,
 	selectedStartDate,
 }: Props) {
-	const {observer, onOpenChange} = useModal({
+	const {observer, onOpenChange, open} = useModal({
 		defaultOpen: true,
 		onClose: () => onOpenChange(false),
 	});
@@ -80,6 +80,10 @@ function CustomDateModal({
 
 		navigate(url.toString());
 	};
+
+	if (!open) {
+		return null;
+	}
 
 	return (
 		<ClayModal observer={observer}>

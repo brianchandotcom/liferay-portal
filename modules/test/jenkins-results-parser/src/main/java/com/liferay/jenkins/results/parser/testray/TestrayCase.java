@@ -13,8 +13,7 @@ import org.json.JSONObject;
 public class TestrayCase {
 
 	public static final String[] FIELD_NAMES = {
-		"dateCreated", "dateModified", "id", "name",
-		"caseTypeToCases"
+		"caseTypeToCases", "dateCreated", "dateModified", "id", "name"
 	};
 
 	public String getComponent() {

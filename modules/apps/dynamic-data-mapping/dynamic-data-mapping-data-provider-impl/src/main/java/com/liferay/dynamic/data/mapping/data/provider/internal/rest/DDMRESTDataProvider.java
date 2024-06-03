@@ -158,6 +158,23 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		_multiVMPool.removePortalCache(DDMRESTDataProvider.class.getName());
 	}
 
+	protected Map<String, Object> getProxySettingsMap(String host) {
+		Map<String, Object> proxySettingsMap = new HashMap<>();
+
+		String proxyHost = SystemProperties.get("http.proxyHost");
+		String proxyPort = SystemProperties.get("http.proxyPort");
+
+		if (Validator.isNotNull(proxyHost) && Validator.isNotNull(proxyPort) &&
+			!_http.isNonProxyHost(host)) {
+
+			proxySettingsMap.put("proxyHostName", proxyHost);
+			proxySettingsMap.put(
+				"proxyHostPort", GetterUtil.getInteger(proxyPort));
+		}
+
+		return proxySettingsMap;
+	}
+
 	private void _addParameter(
 		DDMDataProviderRequest ddmDataProviderRequest,
 		String ddmDataProviderRequestParameterName, String parameterName,
@@ -394,17 +411,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			return ddmDataProviderResponse;
 		}
 
-		Map<String, Object> proxySettingsMap = new HashMap<>();
-
-		String proxyHost = SystemProperties.get("http.proxyHost");
-		String proxyPort = SystemProperties.get("http.proxyPort");
-
-		if (Validator.isNotNull(proxyHost) && Validator.isNotNull(proxyPort)) {
-			proxySettingsMap.put("proxyHostName", proxyHost);
-			proxySettingsMap.put(
-				"proxyHostPort", GetterUtil.getInteger(proxyPort));
-		}
-
 		JSONWebServiceClient jsonWebServiceClient =
 			_jsonWebServiceClientFactory.getInstance(
 				HashMapBuilder.<String, Object>put(
@@ -451,7 +457,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 					"trustSelfSignedCertificates",
 					_ddmDataProviderConfiguration.trustSelfSignedCertificates()
 				).putAll(
-					proxySettingsMap
+					getProxySettingsMap(uri.getHost())
 				).build(),
 				false);
 
@@ -518,6 +524,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Reference(target = "(ddm.data.provider.type=rest)")
 	private DDMDataProviderSettingsProvider _ddmDataProviderSettingsProvider;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private JSONWebServiceClientFactory _jsonWebServiceClientFactory;

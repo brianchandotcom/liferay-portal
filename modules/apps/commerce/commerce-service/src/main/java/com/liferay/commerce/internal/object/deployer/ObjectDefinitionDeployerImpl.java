@@ -7,13 +7,15 @@ package com.liferay.commerce.internal.object.deployer;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
-import com.liferay.commerce.internal.notification.term.contributor.SalesAgentNotificationTermEvaluator;
+import com.liferay.commerce.internal.notification.term.contributor.SalesAgentNotificationTermContributor;
+import com.liferay.commerce.internal.notification.term.evaluator.SalesAgentNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.type.ObjectDefinitionCommerceNotificationType;
 import com.liferay.commerce.internal.order.term.contributor.ObjectCommerceDefinitionTermContributor;
 import com.liferay.commerce.internal.order.term.contributor.ObjectRecipientCommerceDefinitionTermContributor;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -53,7 +55,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		if (StringUtil.equalsIgnoreCase(
 				"CommerceOrder", objectDefinition.getShortName())) {
 
-			return Collections.singletonList(
+			return Arrays.asList(
 				_bundleContext.registerService(
 					NotificationTermEvaluator.class,
 					new SalesAgentNotificationTermEvaluator(
@@ -61,6 +63,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						_commerceOrderLocalService, objectDefinition,
 						_permissionCheckerFactory, _roleLocalService,
 						_userLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"class.name", objectDefinition.getClassName()
+					).build()),
+				_bundleContext.registerService(
+					NotificationTermContributor.class,
+					new SalesAgentNotificationTermContributor(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"class.name", objectDefinition.getClassName()
 					).build()));
@@ -136,16 +144,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectDefinition.getClassName() + "#delete",
 						objectDefinition.getClassName() + "#update"
 					}
-				).build()),
-			_bundleContext.registerService(
-				NotificationTermEvaluator.class,
-				new SalesAgentNotificationTermEvaluator(
-					_accountEntryModelResourcePermission,
-					_commerceOrderLocalService, objectDefinition,
-					_permissionCheckerFactory, _roleLocalService,
-					_userLocalService),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"class.name", objectDefinition.getClassName()
 				).build()));
 	}
 

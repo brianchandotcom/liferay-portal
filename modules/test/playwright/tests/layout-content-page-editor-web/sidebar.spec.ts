@@ -11,6 +11,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {checkAccessibility} from '../../utils/checkAccessibility';
 import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(
@@ -131,4 +132,23 @@ test('checks if sidebars are open or closed depending on Product Menu', async ({
 	await expect(panel).toBeVisible();
 
 	await expect(configurationPanel).toBeVisible();
+});
+
+test('checks sidebar accessibility', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await checkAccessibility({
+		page,
+		selectors: ['.page-editor__sidebar'],
+	});
 });

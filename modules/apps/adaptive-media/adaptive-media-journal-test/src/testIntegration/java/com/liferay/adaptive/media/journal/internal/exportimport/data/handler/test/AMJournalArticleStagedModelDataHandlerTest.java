@@ -26,9 +26,11 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -112,25 +115,32 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		FileEntry fileEntry2 = _addImageFileEntry(serviceContext);
 
 		String content = _getDynamicContent(fileEntry1, fileEntry2);
+		boolean enabled = false;
 
-		JournalArticle journalArticle = _addJournalArticle(
-			content, _getServiceContext());
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
+		_withIFrameSanitizerConfiguration(
+			enabled,
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					content, _getServiceContext());
 
-		try {
-			exportImportStagedModel(journalArticle);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+				ExportImportThreadLocal.setPortletImportInProcess(true);
 
-		JournalArticle importedJournalArticle = (JournalArticle)getStagedModel(
-			journalArticle.getUuid(), liveGroup);
+				try {
+					exportImportStagedModel(journalArticle);
+				}
+				finally {
+					ExportImportThreadLocal.setPortletImportInProcess(false);
+				}
 
-		_assertXMLEquals(
-			_getExpectedDynamicContent(fileEntry1, fileEntry2),
-			importedJournalArticle.getContent());
+				JournalArticle importedJournalArticle =
+					(JournalArticle)getStagedModel(
+						journalArticle.getUuid(), liveGroup);
+
+				_assertXMLEquals(
+					_getExpectedDynamicContent(fileEntry1, fileEntry2),
+					importedJournalArticle.getContent());
+			});
 	}
 
 	@Test
@@ -144,24 +154,31 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 		String content = _getStaticContent(fileEntry1, fileEntry2);
 
-		JournalArticle journalArticle = _addJournalArticle(
-			content, serviceContext);
+		boolean enabled = false;
 
-		ExportImportThreadLocal.setPortletImportInProcess(true);
+		_withIFrameSanitizerConfiguration(
+			enabled,
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					content, serviceContext);
 
-		try {
-			exportImportStagedModel(journalArticle);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
+				ExportImportThreadLocal.setPortletImportInProcess(true);
 
-		JournalArticle importedJournalArticle = (JournalArticle)getStagedModel(
-			journalArticle.getUuid(), liveGroup);
+				try {
+					exportImportStagedModel(journalArticle);
+				}
+				finally {
+					ExportImportThreadLocal.setPortletImportInProcess(false);
+				}
 
-		_assertXMLEquals(
-			_getExpectedStaticContent(fileEntry1, fileEntry2),
-			importedJournalArticle.getContent());
+				JournalArticle importedJournalArticle =
+					(JournalArticle)getStagedModel(
+						journalArticle.getUuid(), liveGroup);
+
+				_assertXMLEquals(
+					_getExpectedStaticContent(fileEntry1, fileEntry2),
+					importedJournalArticle.getContent());
+			});
 	}
 
 	@Test
@@ -432,6 +449,26 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		sb.setIndex(sb.index() - 1);
 
 		return _getContent(sb.toString());
+	}
+
+	private void _withIFrameSanitizerConfiguration(
+			boolean enabled, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.portal.security.iframe.sanitizer." +
+						"configuration.IFrameConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", enabled
+					).put(
+						"removeIFrameTags", false
+					).put(
+						"sandboxAttributeValues", StringPool.BLANK
+					).build())) {
+
+			unsafeRunnable.run();
+		}
 	}
 
 	private JournalArticle _withPortletImportEnabled(

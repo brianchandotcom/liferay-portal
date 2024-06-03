@@ -126,7 +126,7 @@ function CustomDateModal({
 							range
 							value={getDateRange(startDate, endDate)}
 							years={{
-								end: new Date().getFullYear(),
+								end: new Date().getFullYear() + 10,
 								start: new Date().getFullYear() - 10,
 							}}
 						/>

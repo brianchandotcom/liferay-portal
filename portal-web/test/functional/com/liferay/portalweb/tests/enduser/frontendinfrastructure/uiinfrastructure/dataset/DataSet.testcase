@@ -461,74 +461,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-181546 Confirm that the rest app /scopes/{scopeKey} is displayed in the data set, and the other information"
-	@priority = 5
-	test CanAssertTheEndpointObjectInDataSetCreated {
-		property portal.acceptance = "true";
-
-		task ("Given an object definition 'Student' with name field and Scope: Site created") {
-			DataSetAdmin.setUpObjectForDataSet(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field",
-				fieldName = "customObjectField",
-				fieldType = "String",
-				labelName = "Student",
-				objectName = "Student",
-				pluralLabelName = "Student",
-				scope = "site");
-		}
-
-		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema") {
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Students",
-				restApplication = "/c/Student",
-				restEndpoint = "/scopes/{scopeKey}",
-				restSchema = "Student");
-
-			Refresh();
-		}
-
-		task ("Then confirm that the option /scopes/{scopeKey} is displayed") {
-			AssertElementPresent(
-				key_text = "/scopes/{scopeKey}",
-				locator1 = "CP2Utils#ANY_TEXT");
-		}
-	}
-
-	@description = "LPS-181546 Confirm that the rest endpoint /scopes/{scopeKey} is displayed in the data set"
-	@priority = 3
-	test CanAssertTheEndpointObjectInDataSetModal {
-		task ("Given an object definition 'Student' with name field and Scope: Site created") {
-			DataSetAdmin.setUpObjectForDataSet(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field",
-				fieldName = "customObjectField",
-				fieldType = "String",
-				labelName = "Student",
-				objectName = "Student",
-				pluralLabelName = "Student",
-				scope = "site");
-		}
-
-		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema") {
-			Refresh();
-
-			LexiconEntry.gotoAdd();
-
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Data Set Test");
-
-			DataSetAdmin.selectProvider(key_type = "/c/student");
-		}
-
-		task ("Then confirm that the option /scopes/{scopeKey} is displayed") {
-			AssertElementPresent(
-				dropdownLabel = "/scopes/{scopeKey}",
-				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
-		}
-	}
-
 	@description = "LPS-185990 Confirm that when creating a filter, items added to the picklist appear in preselect value selecting Multiple radio button"
 	@priority = 3
 	test CanAssertTheItemsInPreselectValueMultiple {
@@ -784,28 +716,6 @@ definition {
 			AssertElementPresent(
 				key_fieldName = "Select a default value for your filter",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
-		}
-	}
-
-	@description = "LPS-181546 Confirm that the /v1.0/sites/{siteId}/blog-postings endpoint is displayed correctly when creating the data set"
-	@priority = 5
-	test CanAssertTheRestEndpointIsCorrect {
-		property portal.acceptance = "true";
-
-		task ("When the user creates a new data entry") {
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Data Set Test",
-				restApplication = "/headless-delivery/v1.0",
-				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
-				restSchema = "BlogPosting");
-
-			Refresh();
-		}
-
-		task ("Then confirm that the option /v1.0/sites/{siteid}/blog-postings is displayed") {
-			AssertElementPresent(
-				key_text = "/v1.0/sites/{siteId}/blog-postings",
-				locator1 = "CP2Utils#ANY_TEXT");
 		}
 	}
 

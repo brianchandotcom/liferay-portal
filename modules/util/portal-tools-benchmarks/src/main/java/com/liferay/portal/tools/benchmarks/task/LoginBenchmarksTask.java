@@ -99,7 +99,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		HttpResponse httpResponse = HttpUtil.doGet(
 			null, _newURL(StringPool.FORWARD_SLASH));
 
-		_assertResult(httpResponse, _KEY_HOME_PAGE);
+		_assertResult(httpResponse, "Liferay.currentURL");
 
 		return httpResponse;
 	}
@@ -133,13 +133,13 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		HttpResponse httpResponse3 = HttpUtil.doGet(
 			csrfToken, _newURL(_URL_LOGIN_REDIRECT));
 
-		_assertResult(httpResponse3, _KEY_LOGIN);
+		_assertResult(httpResponse3, "ProductNavigationUserPersonalBarPortlet");
 
 		return _calculateDuration(httpResponse1, httpResponse2, httpResponse3);
 	}
 
 	private long _logout() throws Exception {
-		HttpResponse httpResponse = HttpUtil.doGet(null, _newURL(_URL_LOGOUT));
+		HttpResponse httpResponse = HttpUtil.doGet(null, _newURL("/c/portal/logout"));
 
 		return httpResponse.getDuration();
 	}
@@ -150,32 +150,22 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 	private long _viewLoginPage(String csrfToken) throws Exception {
 		HttpResponse httpResponse1 = HttpUtil.doGet(
-			csrfToken, _newURL(_URL_LOGIN_POPUP));
+			csrfToken, _newURL("/c/portal/login?windowState=exclusive"));
 
 		_assertRedirect(httpResponse1, _URL_LOGIN_POPUP_REDIRECT);
 
 		HttpResponse httpResponse2 = HttpUtil.doGet(
 			csrfToken, _newURL(_URL_LOGIN_POPUP_REDIRECT));
 
-		_assertResult(httpResponse2, _KEY_LOGIN_POPUP);
+		_assertResult(httpResponse2, "Remember Me");
 
 		return _calculateDuration(httpResponse1, httpResponse2);
 	}
-
-	private static final String _KEY_HOME_PAGE = "Liferay.currentURL";
-
-	private static final String _KEY_LOGIN =
-		"ProductNavigationUserPersonalBarPortlet";
-
-	private static final String _KEY_LOGIN_POPUP = "Remember Me";
 
 	private static final String _P_P_ID =
 		"com_liferay_login_web_portlet_LoginPortlet";
 
 	private static final String _P_P_ID_PREFIX = StringPool.UNDERLINE + _P_P_ID;
-
-	private static final String _URL_LOGIN_POPUP =
-		"/c/portal/login?windowState=exclusive";
 
 	private static final String _URL_LOGIN_POPUP_REDIRECT =
 		StringBundler.concat(
@@ -190,8 +180,6 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		"_mvcRenderCommandName=/login/login");
 
 	private static final String _URL_LOGIN_REDIRECT = StringPool.SLASH;
-
-	private static final String _URL_LOGOUT = "/c/portal/logout";
 
 	private static final String _URL_REDIRECT = "/c";
 

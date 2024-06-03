@@ -38,6 +38,7 @@ public class HtmlContentTransformerImplTest {
 	@Before
 	public void setUp() throws Exception {
 		_setUpHtmlContentTransformerImplStub();
+		_setUpPdfFileEntry();
 		_setUpPngFileEntry();
 	}
 
@@ -127,6 +128,26 @@ public class HtmlContentTransformerImplTest {
 	}
 
 	@Test
+	public void testReplacesTwoConsecutiveImageTagsWithUnsupportedMimeType()
+		throws Exception {
+
+		Mockito.when(
+			_amImageHTMLTagFactory.create(
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
+				_pngFileEntry)
+		).thenReturn(
+			"<whatever></whatever>"
+		);
+
+		Assert.assertEquals(
+			"<whatever></whatever><img data-fileentryid=\"1999\" " +
+				"src=\"adaptable\"/>",
+			_htmlContentTransformerImpl.transform(
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>" +
+					"<img data-fileentryid=\"1999\" src=\"adaptable\"/>"));
+	}
+
+	@Test
 	public void testReturnsNullForNullContent() throws Exception {
 		Assert.assertNull(_htmlContentTransformerImpl.transform(null));
 	}
@@ -199,6 +220,13 @@ public class HtmlContentTransformerImplTest {
 			AMImageMimeTypeProvider.class);
 
 		Mockito.when(
+			amImageMimeTypeProvider.isMimeTypeSupported(
+				ContentTypes.APPLICATION_PDF)
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
 			amImageMimeTypeProvider.isMimeTypeSupported(ContentTypes.IMAGE_PNG)
 		).thenReturn(
 			true
@@ -207,6 +235,20 @@ public class HtmlContentTransformerImplTest {
 		_htmlContentTransformerImpl = new HtmlContentTransformerImplStub(
 			_amImageHTMLTagFactory, amImageMimeTypeProvider,
 			_dlAppLocalService);
+	}
+
+	private void _setUpPdfFileEntry() throws Exception {
+		Mockito.when(
+			_dlAppLocalService.getFileEntry(1999L)
+		).thenReturn(
+			_pdfFileEntry
+		);
+
+		Mockito.when(
+			_pdfFileEntry.getMimeType()
+		).thenReturn(
+			ContentTypes.APPLICATION_PDF
+		);
 	}
 
 	private void _setUpPngFileEntry() throws Exception {
@@ -228,6 +270,7 @@ public class HtmlContentTransformerImplTest {
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
 	private HtmlContentTransformerImplStub _htmlContentTransformerImpl;
+	private final FileEntry _pdfFileEntry = Mockito.mock(FileEntry.class);
 	private final FileEntry _pngFileEntry = Mockito.mock(FileEntry.class);
 
 	private class HtmlContentTransformerImplStub

@@ -24,9 +24,9 @@ import java.util.Objects;
 public class LoginBenchmarksTask implements BenchmarksTask {
 
 	public LoginBenchmarksTask(
-		String hostName, int port, String emailAddress, String password) {
+		String hostname, int port, String emailAddress, String password) {
 
-		_hostName = hostName;
+		_hostname = hostname;
 		_port = port;
 		_emailAddress = emailAddress;
 		_password = password;
@@ -150,7 +150,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	}
 
 	private URL _newURL(String path) throws Exception {
-		return new URL("http", _hostName, _port, path);
+		return new URL("http", _hostname, _port, path);
 	}
 
 	private long _viewLoginPage(String csrfToken) throws Exception {
@@ -178,7 +178,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		StringPool.UNDERLINE + _P_P_ID;
 
 	private final String _emailAddress;
-	private final String _hostName;
+	private final String _hostname;
 	private final String _password;
 	private final int _port;
 

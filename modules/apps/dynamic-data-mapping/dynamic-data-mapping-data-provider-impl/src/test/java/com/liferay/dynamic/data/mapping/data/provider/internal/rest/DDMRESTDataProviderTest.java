@@ -38,13 +38,13 @@ public class DDMRESTDataProviderTest {
 		Mockito.when(
 			SystemProperties.get("http.proxyHost")
 		).thenReturn(
-			"192.168.111.152"
+			_PROXY_HOST
 		);
 
 		Mockito.when(
 			SystemProperties.get("http.proxyPort")
 		).thenReturn(
-			"3128"
+			String.valueOf(_PROXY_PORT)
 		);
 
 		ReflectionTestUtil.setFieldValue(_ddmrestDataProvider, "_http", _http);
@@ -76,13 +76,17 @@ public class DDMRESTDataProviderTest {
 
 		Assert.assertEquals(
 			HashMapBuilder.<String, Object>put(
-				"proxyHostName", "192.168.111.152"
+				"proxyHostName", _PROXY_HOST
 			).put(
-				"proxyHostPort", 3128
+				"proxyHostPort", _PROXY_PORT
 			).build(),
 			_ddmrestDataProvider.getProxySettingsMap(
 				RandomTestUtil.randomString()));
 	}
+
+	private static final String _PROXY_HOST = RandomTestUtil.randomString();
+
+	private static final int _PROXY_PORT = RandomTestUtil.randomInt();
 
 	private final DDMRESTDataProvider _ddmrestDataProvider =
 		new DDMRESTDataProvider();

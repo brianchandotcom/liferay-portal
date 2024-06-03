@@ -56,14 +56,19 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		Assert.assertTrue(httpResponseString.contains(key));
 	}
 
-	private void _assertRedirect(HttpResponse httpResponse, String redirect)
+	private URL _assertRedirect(HttpResponse httpResponse, String redirect)
 		throws Exception {
 
-		Assert.assertEquals(httpResponse.getStatusCode(), 302);
+		return _assertRedirect(httpResponse, _createURL(redirect));
+	}
 
-		URL url = _createURL(redirect);
+	private URL _assertRedirect(HttpResponse httpResponse, URL url)
+		throws Exception {
 
 		Assert.assertEquals(url.toString(), httpResponse.getRedirect());
+		Assert.assertEquals(httpResponse.getStatusCode(), 302);
+
+		return url;
 	}
 
 	private URL _createURL(String... strings) throws Exception {
@@ -129,16 +134,16 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	private long _viewLoginPage(String csrfToken) throws Exception {
 		HttpResponse httpResponse1 = HttpUtil.doGet(
 			csrfToken, _createURL("/c/portal/login?windowState=exclusive"));
-		String redirect = StringBundler.concat(
-			"/home?", _P_P_ID_NAMESPACE,
-			"_mvcRenderCommandName=/login/login&p_p_id=", _P_P_ID,
-			"&p_p_lifecycle=0&p_p_mode=view&p_p_state=exclusive&",
-			"saveLastPath=false");
 
-		_assertRedirect(httpResponse1, redirect);
+		URL url = _assertRedirect(
+			httpResponse1,
+			StringBundler.concat(
+				"/home?", _P_P_ID_NAMESPACE,
+				"_mvcRenderCommandName=/login/login&p_p_id=", _P_P_ID,
+				"&p_p_lifecycle=0&p_p_mode=view&p_p_state=exclusive&",
+				"saveLastPath=false"));
 
-		HttpResponse httpResponse2 = HttpUtil.doGet(
-			csrfToken, _createURL(redirect));
+		HttpResponse httpResponse2 = HttpUtil.doGet(csrfToken, url);
 
 		_assertContent(httpResponse2, "Remember Me");
 

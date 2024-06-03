@@ -29,10 +29,6 @@ definition {
 		property test.run.type = "single";
 
 		task ("The database are set and we start a new database with database partitioning enabled") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(keepOsGiState = "true");
-
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
@@ -90,10 +86,6 @@ definition {
 		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(keepOsGiState = "true");
-
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",

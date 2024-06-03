@@ -54,6 +54,7 @@
 				<#list entries as entry>
 					<#if entry.isSelected()>
 						<#assign facetCount++ />
+
 						<span class="term-text">${entry.getBucketText()}</span>
 						<#if entry.isFrequencyVisible()>
 							<span class="term-count">${entry.getFrequency()}</span>

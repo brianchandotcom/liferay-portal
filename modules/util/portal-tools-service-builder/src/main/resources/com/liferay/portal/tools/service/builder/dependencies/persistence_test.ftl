@@ -336,20 +336,20 @@ public class ${entity.name}PersistenceTest {
 	<#if entity.hasExternalReferenceCode()>
 		<#if entity.versionEntity??>
 			@Test(expected = ${duplicateEntityExternalReferenceCode}Exception.class)
-			public void testUpdateAddDraftWithExistingExternalReferenceCode()
+			public void testCreateDraftWithExistingExternalReferenceCode()
 				throws Exception {
 				${entity.name} ${entity.variableName} = add${entity.name}();
 
-				addDraftForExisting${entity.name}(${entity.variableName});
+				addDraft${entity.name}(${entity.variableName});
 
-				addDraftForExisting${entity.name}(${entity.variableName});
+				addDraft${entity.name}(${entity.variableName});
 			}
 
 			@Test
-			public void testUpdateAddDraft()throws Exception {
+			public void testCreateDraft() throws Exception {
 				${entity.name} ${entity.variableName} = add${entity.name}();
 
-				${entity.name} draft${entity.name} = addDraftForExisting${entity.name}(${entity.variableName});
+				${entity.name} draft${entity.name} = addDraft${entity.name}(${entity.variableName});
 
 				<#list entity.regularEntityColumns as entityColumn>
 					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
@@ -381,7 +381,7 @@ public class ${entity.name}PersistenceTest {
 			}
 
 			@Test(expected = ${duplicateEntityExternalReferenceCode}Exception.class)
-			public void testUpdateAddWithExistingExternalReferenceCodeHead()
+			public void testCreateWithExistingExternalReferenceCodeHead()
 				throws Exception {
 
 				${entity.name} ${entity.variableName}1 = add${entity.name}();
@@ -483,7 +483,7 @@ public class ${entity.name}PersistenceTest {
 				_${entity.pluralVariableName}.add(_persistence.update(${entity.variableName}2));
 			}
 
-			protected ${entity.name} addDraftForExisting${entity.name}(${entity.name} existing${entity.name}) throws Exception {
+			protected ${entity.name} addDraft${entity.name}(${entity.name} existing${entity.name}) throws Exception {
 				<#if entity.hasCompoundPK()>
 					${entity.PKClassName} pk = new ${entity.PKClassName}(
 

@@ -311,7 +311,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@FeatureFlags("LPD-20213")
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormDeletingFields()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormDeletingInfoFields()
 		throws Exception {
 
 		InfoField<?>[] allInfoFields = ArrayUtil.append(
@@ -389,7 +389,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@FeatureFlags("LPD-20213")
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithEmptySpecificField()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithEmptySpecificInfoField()
 		throws Exception {
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
@@ -437,7 +437,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@FeatureFlags("LPD-20213")
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithNewFields()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithNewInfoFields()
 		throws Exception {
 
 		InfoField<?>[] allInfoFields = ArrayUtil.append(
@@ -514,7 +514,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithNonexistingSpecificField()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithNonexistingSpecificInfoField()
 		throws Exception {
 
 		try (ComponentEnablerTemporarySwapper componentEnablerTemporarySwapper =
@@ -561,7 +561,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithSpecificFields()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormWithSpecificInfoFields()
 		throws Exception {
 
 		InfoField<?>[] customInfoFields = new InfoField<?>[] {

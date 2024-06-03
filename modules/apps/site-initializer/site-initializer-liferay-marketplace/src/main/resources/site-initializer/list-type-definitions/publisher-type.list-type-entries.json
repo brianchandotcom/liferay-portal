@@ -1,0 +1,20 @@
+[
+	{
+		"externalReferenceCode": "APP-PUBLISHER",
+		"key": "appPublisher",
+		"name": "App Publisher",
+		"name_i18n": {
+			"en-US": "App Publisher"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "SOLUTION-PUBLISHER",
+		"key": "solutionPublisher",
+		"name": "Solution Publisher",
+		"name_i18n": {
+			"en-US": "Solution Publisher"
+		},
+		"type": "string"
+	}
+]

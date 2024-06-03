@@ -170,20 +170,20 @@ public class UpdateFormItemConfigMVCActionCommand
 					formStyledLayoutStructureItem, layoutStructure, null);
 
 			if (formStyledLayoutStructureItem.getClassNameId() > 0) {
-				String[] infoFieldUniqueIds = StringUtil.split(
+				String[] uniqueInfoFieldIds = StringUtil.split(
 					ParamUtil.getString(actionRequest, "fields"));
 
 				if (!FeatureFlagManagerUtil.isEnabled("LPD-20213") ||
-					ArrayUtil.isNotEmpty(infoFieldUniqueIds)) {
+					ArrayUtil.isNotEmpty(uniqueInfoFieldIds)) {
 
 					addedFragmentEntryLinks =
 						_formItemManager.addFragmentEntryLinks(
-							jsonObject, infoFieldUniqueIds,
-							formStyledLayoutStructureItem, true,
+							jsonObject, formStyledLayoutStructureItem, true,
 							themeDisplay.getLayout(), layoutStructure,
 							themeDisplay.getLocale(), segmentsExperienceId,
 							ServiceContextFactory.getInstance(
-								httpServletRequest));
+								httpServletRequest),
+							uniqueInfoFieldIds);
 				}
 			}
 		}
@@ -191,48 +191,47 @@ public class UpdateFormItemConfigMVCActionCommand
 			if (FeatureFlagManagerUtil.isEnabled("LPD-20213") &&
 				(formStyledLayoutStructureItem.getClassNameId() > 0)) {
 
-				List<String> newInfoUniqueFieldIds = new ArrayList<>();
+				List<String> newUniqueInfoFieldIds = new ArrayList<>();
 
 				Map<String, String> currentInputFields = _getCurrentInputFields(
 					formStyledLayoutStructureItem, layoutStructure,
 					themeDisplay);
 
-				Set<String> currentInfoFieldUniqueIds =
+				Set<String> currentUniqueInfoFieldIds =
 					currentInputFields.keySet();
 
-				String[] infoFieldUniqueIds = StringUtil.split(
+				String[] uniqueInfoFieldIds = StringUtil.split(
 					ParamUtil.getString(actionRequest, "fields"));
 
-				for (String infoFieldUniqueId : infoFieldUniqueIds) {
-					if (!currentInfoFieldUniqueIds.contains(
-							infoFieldUniqueId)) {
+				for (String uniqueInfoFieldId : uniqueInfoFieldIds) {
+					if (!currentUniqueInfoFieldIds.contains(
+							uniqueInfoFieldId)) {
 
-						newInfoUniqueFieldIds.add(infoFieldUniqueId);
+						newUniqueInfoFieldIds.add(uniqueInfoFieldId);
 					}
 				}
 
-				if (ListUtil.isNotEmpty(newInfoUniqueFieldIds)) {
+				if (ListUtil.isNotEmpty(newUniqueInfoFieldIds)) {
 					addedFragmentEntryLinks =
 						_formItemManager.addFragmentEntryLinks(
-							jsonObject,
-							newInfoUniqueFieldIds.toArray(new String[0]),
-							formStyledLayoutStructureItem, false,
+							jsonObject, formStyledLayoutStructureItem, false,
 							themeDisplay.getLayout(), layoutStructure,
 							themeDisplay.getLocale(), segmentsExperienceId,
 							ServiceContextFactory.getInstance(
-								httpServletRequest));
+								httpServletRequest),
+							newUniqueInfoFieldIds.toArray(new String[0]));
 				}
 
 				List<String> removedItemIds = new ArrayList<>();
 
-				for (String currentInfoFieldUniqueId :
-						currentInfoFieldUniqueIds) {
+				for (String currentUniqueInfoFieldId :
+						currentUniqueInfoFieldIds) {
 
 					if (!ArrayUtil.contains(
-							infoFieldUniqueIds, currentInfoFieldUniqueId)) {
+							uniqueInfoFieldIds, currentUniqueInfoFieldId)) {
 
 						removedItemIds.add(
-							currentInputFields.get(currentInfoFieldUniqueId));
+							currentInputFields.get(currentUniqueInfoFieldId));
 					}
 				}
 

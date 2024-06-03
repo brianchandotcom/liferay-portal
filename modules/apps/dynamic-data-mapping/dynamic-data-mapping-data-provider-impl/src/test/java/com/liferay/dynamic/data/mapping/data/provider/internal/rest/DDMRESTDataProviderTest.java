@@ -7,14 +7,15 @@ package com.liferay.dynamic.data.mapping.data.provider.internal.rest;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Map;
-
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,11 +33,8 @@ public class DDMRESTDataProviderTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void testGetProxySettingsMap() {
-		MockedStatic<SystemProperties> systemPropertiesMockedStatic =
-			Mockito.mockStatic(SystemProperties.class);
-
+	@Before
+	public void setUp() {
 		Mockito.when(
 			SystemProperties.get("http.proxyHost")
 		).thenReturn(
@@ -49,38 +47,47 @@ public class DDMRESTDataProviderTest {
 			"3128"
 		);
 
-		DDMRESTDataProvider ddmrestDataProvider = new DDMRESTDataProvider();
+		ReflectionTestUtil.setFieldValue(_ddmrestDataProvider, "_http", _http);
+	}
 
-		Http http = Mockito.mock(Http.class);
+	@After
+	public void tearDown() {
+		_systemPropertiesMockedStatic.close();
+	}
 
-		ReflectionTestUtil.setFieldValue(ddmrestDataProvider, "_http", http);
-
+	@Test
+	public void testGetProxySettingsMap() {
 		Mockito.when(
-			http.isNonProxyHost(Mockito.anyString())
+			_http.isNonProxyHost(Mockito.anyString())
 		).thenReturn(
 			true
 		);
 
-		Map<String, Object> proxySettingsMap =
-			ddmrestDataProvider.getProxySettingsMap(
-				RandomTestUtil.randomString());
-
-		Assert.assertTrue(MapUtil.isEmpty(proxySettingsMap));
+		Assert.assertTrue(
+			MapUtil.isEmpty(
+				_ddmrestDataProvider.getProxySettingsMap(
+					RandomTestUtil.randomString())));
 
 		Mockito.when(
-			http.isNonProxyHost(Mockito.anyString())
+			_http.isNonProxyHost(Mockito.anyString())
 		).thenReturn(
 			false
 		);
 
-		proxySettingsMap = ddmrestDataProvider.getProxySettingsMap(
-			RandomTestUtil.randomString());
-
 		Assert.assertEquals(
-			"192.168.111.152", proxySettingsMap.get("proxyHostName"));
-		Assert.assertEquals(3128, proxySettingsMap.get("proxyHostPort"));
-
-		systemPropertiesMockedStatic.close();
+			HashMapBuilder.<String, Object>put(
+				"proxyHostName", "192.168.111.152"
+			).put(
+				"proxyHostPort", 3128
+			).build(),
+			_ddmrestDataProvider.getProxySettingsMap(
+				RandomTestUtil.randomString()));
 	}
+
+	private final DDMRESTDataProvider _ddmrestDataProvider =
+		new DDMRESTDataProvider();
+	private final Http _http = Mockito.mock(Http.class);
+	private final MockedStatic<SystemProperties> _systemPropertiesMockedStatic =
+		Mockito.mockStatic(SystemProperties.class);
 
 }

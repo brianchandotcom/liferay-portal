@@ -274,7 +274,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/cloud"
+																"en_US": "/capabilities/cloud",
+																"ja_JP": "/capabilities/cloud"
 															}
 														}
 													},
@@ -427,7 +428,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/commerce"
+																"en_US": "/capabilities/commerce",
+																"ja_JP": "/capabilities/commerce"
 															}
 														}
 													},
@@ -575,7 +577,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/content-management-system"
+																"en_US": "/capabilities/content-management-system",
+																"ja_JP": "/capabilities/content-management-system"
 															}
 														}
 													},
@@ -723,7 +726,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/development-and-tooling"
+																"en_US": "/capabilities/development-and-tooling",
+																"ja_JP": "/capabilities/development-and-tooling"
 															}
 														}
 													},
@@ -871,7 +875,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/digital-asset-management"
+																"en_US": "/capabilities/digital-asset-management",
+																"ja_JP": "/capabilities/digital-asset-management"
 															}
 														}
 													},
@@ -1019,7 +1024,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration"
+																"en_US": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration",
+																"ja_JP": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration"
 															}
 														}
 													},
@@ -1167,7 +1173,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/integration"
+																"en_US": "/capabilities/integration",
+																"ja_JP": "/capabilities/integration"
 															}
 														}
 													},
@@ -1315,7 +1322,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/personalization"
+																"en_US": "/capabilities/personalization",
+																"ja_JP": "/capabilities/personalization"
 															}
 														}
 													},
@@ -1463,7 +1471,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/platform"
+																"en_US": "/capabilities/platform",
+																"ja_JP": "/capabilities/platform"
 															}
 														}
 													},
@@ -1611,7 +1620,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/search"
+																"en_US": "/capabilities/search",
+																"ja_JP": "/capabilities/search"
 															}
 														}
 													},
@@ -1759,7 +1769,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/security"
+																"en_US": "/capabilities/security",
+																"ja_JP": "/capabilities/security"
 															}
 														}
 													},
@@ -1907,7 +1918,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/sites"
+																"en_US": "/capabilities/sites",
+																"ja_JP": "/capabilities/sites"
 															}
 														}
 													},
@@ -2097,7 +2109,8 @@
 															"fragmentLink": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/w/analytics-cloud/index"
+																		"en_US": "/w/analytics-cloud/index",
+																		"ja_JP": "/w/analytics-cloud/index"
 																	}
 																}
 															},
@@ -2245,7 +2258,8 @@
 															"fragmentLink": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/w/commerce/index"
+																		"en_US": "/w/commerce/index",
+																		"ja_JP": "/w/commerce/index"
 																	}
 																}
 															},
@@ -2393,7 +2407,8 @@
 															"fragmentLink": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/w/dxp/index"
+																		"en_US": "/w/dxp/index",
+																		"ja_JP": "/w/dxp/index"
 																	}
 																}
 															},
@@ -2541,7 +2556,8 @@
 															"fragmentLink": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/w/liferay-cloud/index"
+																		"en_US": "/w/liferay-cloud/index",
+																		"ja_JP": "/w/liferay-cloud/index"
 																	}
 																}
 															},
@@ -2689,7 +2705,8 @@
 															"fragmentLink": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/w/reference/index"
+																		"en_US": "/w/reference/index",
+																		"ja_JP": "/w/reference/index"
 																	}
 																}
 															},

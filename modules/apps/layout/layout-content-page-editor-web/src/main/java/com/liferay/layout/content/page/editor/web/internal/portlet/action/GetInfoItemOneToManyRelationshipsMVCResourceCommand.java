@@ -71,10 +71,10 @@ public class GetInfoItemOneToManyRelationshipsMVCResourceCommand
 			return;
 		}
 
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (String relatedItemClassName :
 				relatedInfoItemProvider.getRelatedItemClassNames()) {

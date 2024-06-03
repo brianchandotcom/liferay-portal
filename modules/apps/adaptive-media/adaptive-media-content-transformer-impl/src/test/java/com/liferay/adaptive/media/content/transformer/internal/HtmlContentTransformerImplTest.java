@@ -11,8 +11,8 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -36,12 +36,9 @@ public class HtmlContentTransformerImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws PortalException {
-		Mockito.when(
-			_dlAppLocalService.getFileEntry(1989L)
-		).thenReturn(
-			_fileEntry
-		);
+	public void setUp() throws Exception {
+		_setUpHtmlContentTransformerImplStub();
+		_setUpPngFileEntry();
 	}
 
 	@Test
@@ -51,7 +48,7 @@ public class HtmlContentTransformerImplTest {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
 				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
-				_fileEntry)
+				_pngFileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
 		);
@@ -82,7 +79,7 @@ public class HtmlContentTransformerImplTest {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
 				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
-				_fileEntry)
+				_pngFileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
 		);
@@ -101,7 +98,7 @@ public class HtmlContentTransformerImplTest {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
 				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
-				_fileEntry)
+				_pngFileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
 		);
@@ -117,7 +114,7 @@ public class HtmlContentTransformerImplTest {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
 				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
-				_fileEntry)
+				_pngFileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
 		);
@@ -157,7 +154,7 @@ public class HtmlContentTransformerImplTest {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
 				"<img data-fileentryid=\"1989\" \nsrc=\"adaptable\"/>",
-				_fileEntry)
+				_pngFileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
 		);
@@ -175,7 +172,7 @@ public class HtmlContentTransformerImplTest {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
 				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
-				_fileEntry)
+				_pngFileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
 		);
@@ -197,17 +194,41 @@ public class HtmlContentTransformerImplTest {
 		return text + StringPool.NEW_LINE + text;
 	}
 
+	private void _setUpHtmlContentTransformerImplStub() {
+		AMImageMimeTypeProvider amImageMimeTypeProvider = Mockito.mock(
+			AMImageMimeTypeProvider.class);
+
+		Mockito.when(
+			amImageMimeTypeProvider.isMimeTypeSupported(ContentTypes.IMAGE_PNG)
+		).thenReturn(
+			true
+		);
+
+		_htmlContentTransformerImpl = new HtmlContentTransformerImplStub(
+			_amImageHTMLTagFactory, amImageMimeTypeProvider,
+			_dlAppLocalService);
+	}
+
+	private void _setUpPngFileEntry() throws Exception {
+		Mockito.when(
+			_dlAppLocalService.getFileEntry(1989L)
+		).thenReturn(
+			_pngFileEntry
+		);
+
+		Mockito.when(
+			_pngFileEntry.getMimeType()
+		).thenReturn(
+			ContentTypes.IMAGE_PNG
+		);
+	}
+
 	private final AMImageHTMLTagFactory _amImageHTMLTagFactory = Mockito.mock(
 		AMImageHTMLTagFactory.class);
-	private final AMImageMimeTypeProvider _amImageMimeTypeProvider =
-		Mockito.mock(AMImageMimeTypeProvider.class);
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
-	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
-	private final HtmlContentTransformerImplStub _htmlContentTransformerImpl =
-		new HtmlContentTransformerImplStub(
-			_amImageHTMLTagFactory, _amImageMimeTypeProvider,
-			_dlAppLocalService);
+	private HtmlContentTransformerImplStub _htmlContentTransformerImpl;
+	private final FileEntry _pngFileEntry = Mockito.mock(FileEntry.class);
 
 	private class HtmlContentTransformerImplStub
 		extends HtmlContentTransformerImpl {
@@ -220,11 +241,6 @@ public class HtmlContentTransformerImplTest {
 			super(
 				amImageHTMLTagFactory, amImageMimeTypeProvider,
 				dlAppLocalService);
-		}
-
-		@Override
-		protected boolean isSupported(FileEntry fileEntry) {
-			return true;
 		}
 
 	}

@@ -1617,27 +1617,39 @@ public abstract class BaseBuild implements Build {
 
 		slaveOfflineRuleString = slaveOfflineRuleString.replace("\\", "\\\\");
 
-		String message = JenkinsResultsParserUtil.combine(
-			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
-			getBuildURL(), ". \n\n", slaveOfflineRuleString,
-			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n");
+		StringBuilder sb = new StringBuilder();
 
 		if (slaveOfflineRule.getOfflineSibling() &&
 			(jenkinsMaster.getSlavesPerHost() == 2)) {
 
 			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
 
-			for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
-				message = JenkinsResultsParserUtil.combine(
-					message, siblingJenkinsSlave.getComputerURL(), "\n");
+			if (!siblingJenkinsSlaves.isEmpty()) {
+				sb.append("\n\n\nOffline sibling ");
+				sb.append(
+					JenkinsResultsParserUtil.getNounForm(
+						siblingJenkinsSlaves.size(), "URLs", "URL"));
+				sb.append(":\n");
 
-				String siblingMessage = JenkinsResultsParserUtil.combine(
-					pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
-					" Reason: ", slaveOfflineRule.getName());
+				for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
+					sb.append(siblingJenkinsSlave.getComputerURL());
+					sb.append("\n");
 
-				siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
+					String siblingMessage = JenkinsResultsParserUtil.combine(
+						pinnedMessage, "Offline sibling: ",
+						jenkinsSlave.getName(), " Reason: ",
+						slaveOfflineRule.getName());
+
+					siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
+				}
 			}
 		}
+
+		String message = JenkinsResultsParserUtil.combine(
+			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
+			getBuildURL(), ". \n\n", slaveOfflineRuleString,
+			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n",
+			sb.toString());
 
 		System.out.println(message);
 

@@ -372,7 +372,7 @@ public class WorkflowDefinitionDisplayContext {
 	public List<WorkflowDefinition> getWorkflowDefinitions(String name)
 		throws PortalException {
 
-		return WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
+		return WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinitions(
 			_workflowDefinitionRequestHelper.getCompanyId(), name,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}

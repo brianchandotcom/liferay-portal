@@ -9,6 +9,7 @@ import {Page, expect} from '@playwright/test';
 interface Props {
 	bestPractices?: boolean;
 	page: Page;
+	selectors?: string[];
 }
 
 /**
@@ -19,14 +20,28 @@ interface Props {
  *
  * @param bestPractices enables best practices
  * @param page current page
+ * @param selectors an array of selectors to analyze
  */
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
-export async function checkAccessibility({bestPractices = false, page}: Props) {
+export async function checkAccessibility({
+	bestPractices = false,
+	page,
+	selectors,
+}: Props) {
 	const tags = bestPractices ? [...TAGS, 'best-practice'] : TAGS;
 
-	const results = await new AxeBuilder({page}).withTags(tags).analyze();
+	if (selectors) {
+		for (const selector of selectors) {
+			page.locator(selector).waitFor();
+		}
+	}
+
+	const results = await new AxeBuilder({page})
+		.withTags(tags)
+		.include(selectors)
+		.analyze();
 
 	await expect(results.violations, 'Accessibility issues').toEqual([]);
 }

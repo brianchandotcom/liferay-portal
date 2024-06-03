@@ -1625,7 +1625,7 @@ public abstract class BaseBuild implements Build {
 			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
 
 			if (!siblingJenkinsSlaves.isEmpty()) {
-				sb.append("\n\n\nOffline sibling ");
+				sb.append("\n\n\nOffline Sibling ");
 				sb.append(
 					JenkinsResultsParserUtil.getNounForm(
 						siblingJenkinsSlaves.size(), "URLs", "URL"));
@@ -1636,7 +1636,7 @@ public abstract class BaseBuild implements Build {
 					sb.append("\n");
 
 					String siblingMessage = JenkinsResultsParserUtil.combine(
-						pinnedMessage, "Offline sibling: ",
+						pinnedMessage, "Offline Sibling: ",
 						jenkinsSlave.getName(), " Reason: ",
 						slaveOfflineRule.getName());
 

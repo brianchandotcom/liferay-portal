@@ -101,13 +101,13 @@ public class HttpUtil {
 			ByteBuffer byteBuffer = _read(httpURLConnection.getInputStream());
 
 			return new HttpResponse(
+				System.currentTimeMillis() - startTime,
+				httpURLConnection.getHeaderFields(),
 				httpURLConnection.getResponseCode(),
 				httpURLConnection.getResponseMessage(),
-				httpURLConnection.getHeaderFields(),
 				new String(
 					byteBuffer.array(), 0, byteBuffer.limit(),
-					StandardCharsets.UTF_8),
-				System.currentTimeMillis() - startTime);
+					StandardCharsets.UTF_8));
 		}
 		catch (IOException ioException1) {
 			if (httpURLConnection == null) {

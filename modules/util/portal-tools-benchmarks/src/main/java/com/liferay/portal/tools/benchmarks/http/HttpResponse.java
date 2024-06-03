@@ -23,14 +23,14 @@ import java.util.regex.Pattern;
 public class HttpResponse {
 
 	public HttpResponse(
-		int statusCode, String statusLine, Map<String, List<String>> headers,
-		String text, long duration) {
+		long duration, Map<String, List<String>> headers, int statusCode,
+		String statusLine, String text) {
 
+		_duration = duration;
+		_headers = headers;
 		_statusCode = statusCode;
 		_statusLine = statusLine;
-		_headers = headers;
 		_text = text;
-		_duration = duration;
 	}
 
 	public String getCSRFToken() {

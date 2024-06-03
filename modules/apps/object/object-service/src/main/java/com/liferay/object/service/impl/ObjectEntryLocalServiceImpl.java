@@ -2143,7 +2143,11 @@ public class ObjectEntryLocalServiceImpl
 			return searchPredicate.withParentheses();
 		}
 
-		return predicate.and(searchPredicate.withParentheses());
+		return Predicate.withParentheses(
+			predicate
+		).and(
+			searchPredicate.withParentheses()
+		);
 	}
 
 	private DSLQuery _getAccountEntriesDSLQuery(long companyId, long userId)

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -183,9 +184,20 @@ public class DisplayPageLayoutTypeController
 				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			}
 			else if (!hasViewPermission) {
-				redirect = HttpComponentsUtil.setParameter(
-					themeDisplay.getURLSignIn(), "redirect",
-					themeDisplay.getURLCurrent());
+				if (themeDisplay.isSignedIn()) {
+					httpServletResponse.setStatus(
+						HttpServletResponse.SC_FORBIDDEN);
+				}
+				else if (AuthLoginGroupSettingsUtil.isPromptEnabled(
+							layout.getGroupId())) {
+
+					redirect = HttpComponentsUtil.setParameter(
+						themeDisplay.getURLSignIn(), "redirect",
+						themeDisplay.getURLCurrent());
+				}
+				else {
+					throw new NoSuchLayoutException();
+				}
 			}
 
 			if (Validator.isNotNull(redirect)) {

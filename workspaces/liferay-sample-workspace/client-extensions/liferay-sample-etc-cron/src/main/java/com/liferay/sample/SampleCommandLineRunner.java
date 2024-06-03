@@ -5,12 +5,15 @@
 
 package com.liferay.sample;
 
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.dto.v1_0.Site;
 import com.liferay.headless.admin.user.client.resource.v1_0.SiteResource;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardThreadResource;
+
+import java.net.URL;
 
 import java.util.Collection;
 
@@ -20,7 +23,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,21 +33,47 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		try {
+			_countMessageBoardThreads(
+				"liferay-sample-etc-cron-oauth-application-headless-server",
+				new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		try {
+			_countMessageBoardThreads(
+				"external-liferay", _externalLiferayHomePageURI);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
+
+	private void _countMessageBoardThreads(
+			String externalReferenceCode, URL endpoint)
+		throws Exception {
+
+		String authorization =
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				externalReferenceCode);
+
 		SiteResource siteResource = SiteResource.builder(
-		).bearerToken(
-			_oAuth2AccessToken.getTokenValue()
+		).header(
+			"Authorization", authorization
 		).endpoint(
-			_lxcDXPMainDomain, _lxcDXPServerProtocol
+			endpoint
 		).build();
 
 		Site site = siteResource.getSiteByFriendlyUrlPath("guest");
 
 		MessageBoardThreadResource messageBoardThreadResource =
 			MessageBoardThreadResource.builder(
-			).bearerToken(
-				_oAuth2AccessToken.getTokenValue()
+			).header(
+				"Authorization", authorization
 			).endpoint(
-				_lxcDXPMainDomain, _lxcDXPServerProtocol
+				endpoint
 			).build();
 
 		Page<MessageBoardThread> messageBoardThreadPage =
@@ -59,7 +87,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"There are " + messageBoardThreads.size() +
-					" message board threads in the Guest site");
+					" message board threads in Guest site on " + endpoint);
 		}
 
 		for (MessageBoardThread messageBoardThread : messageBoardThreads) {
@@ -76,13 +104,16 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 	private static final Log _log = LogFactory.getLog(
 		SampleCommandLineRunner.class);
 
+	@Value("${external.liferay.oauth2.headless.server.home.page.uri}")
+	private URL _externalLiferayHomePageURI;
+
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
-
-	@Autowired
-	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

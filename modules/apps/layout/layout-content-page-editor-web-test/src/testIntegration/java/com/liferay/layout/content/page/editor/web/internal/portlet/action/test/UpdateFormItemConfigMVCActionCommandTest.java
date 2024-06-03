@@ -342,14 +342,14 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			String formItemId = addItemJSONObject.getString("addedItemId");
 
-			List<String> fields = TransformUtil.transform(
+			List<String> uniqueInfoFieldIds = TransformUtil.transform(
 				ListUtil.fromArray(allInfoFields), InfoField::getUniqueId);
 
 			ReflectionTestUtil.invoke(
 				_mvcActionCommand, "doTransactionalCommand",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
-					StringUtil.merge(fields),
+					StringUtil.merge(uniqueInfoFieldIds),
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
@@ -358,14 +358,14 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
-			fields = TransformUtil.transform(
+			uniqueInfoFieldIds = TransformUtil.transform(
 				ListUtil.fromArray(_INFO_FIELDS), InfoField::getUniqueId);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "doTransactionalCommand",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
-					StringUtil.merge(fields),
+					StringUtil.merge(uniqueInfoFieldIds),
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
@@ -465,14 +465,14 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			String formItemId = addItemJSONObject.getString("addedItemId");
 
-			List<String> fields = TransformUtil.transform(
+			List<String> uniqueInfoFieldIds = TransformUtil.transform(
 				ListUtil.fromArray(_INFO_FIELDS), InfoField::getUniqueId);
 
 			ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
-					StringUtil.merge(fields),
+					StringUtil.merge(uniqueInfoFieldIds),
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
@@ -481,14 +481,14 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 					formItemId, _layout),
 				new MockLiferayPortletActionResponse());
 
-			fields = TransformUtil.transform(
+			uniqueInfoFieldIds = TransformUtil.transform(
 				ListUtil.fromArray(allInfoFields), InfoField::getUniqueId);
 
 			JSONObject updateFormJSONObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_updateFormStyledLayoutStructureItemConfig",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
 				_getMockLiferayPortletActionRequest(
-					StringUtil.merge(fields),
+					StringUtil.merge(uniqueInfoFieldIds),
 					JSONUtil.put(
 						"classNameId", classNameId
 					).put(
@@ -1008,14 +1008,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String fields, String itemConfig, String formItemId, Layout layout)
+			String uniqueInfoFieldIds, String itemConfig, String formItemId,
+			Layout layout)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				_company, _group, layout);
 
-		mockLiferayPortletActionRequest.addParameter("fields", fields);
+		mockLiferayPortletActionRequest.addParameter(
+			"fields", uniqueInfoFieldIds);
 		mockLiferayPortletActionRequest.addParameter("itemConfig", itemConfig);
 		mockLiferayPortletActionRequest.addParameter("itemId", formItemId);
 		mockLiferayPortletActionRequest.addParameter(

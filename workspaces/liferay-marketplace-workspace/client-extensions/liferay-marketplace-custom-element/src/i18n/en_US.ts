@@ -257,6 +257,7 @@ export default {
 	'publisher-account-request': 'Publisher Account Request.',
 	'publisher-dashboard': 'Publisher Dashboard',
 	'publisher-requests': 'Publisher Requests',
+	'publisher-type': 'Publisher Type',
 	'publisher-website-url': 'Publisher website URL',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
 		'Purchase and install new apps and they will show up here.',

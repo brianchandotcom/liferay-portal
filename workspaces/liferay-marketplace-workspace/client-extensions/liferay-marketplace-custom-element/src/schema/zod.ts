@@ -72,6 +72,7 @@ const zodSchema = {
 		phoneNumber: z
 			.string()
 			.min(1, {message: i18n.translate('this-field-is-required')}),
+		publisherType: z.array(z.string()).min(1),
 		requestDescription: z
 			.string()
 			.min(3, {message: 'Request Description is required'}),

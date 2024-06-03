@@ -23,7 +23,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Gregory Amerson
@@ -45,6 +47,19 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		try {
 			_countMessageBoardThreads(
 				"external-liferay", _externalLiferayHomePageURI);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		try {
+			String dadJoke = _getLiferaySampleEtcSpringBootDadJoke(
+				"liferay-sample-etc-cron-oauth-application-headless-server",
+				_liferaySampleEtcSpringBootURI + "/dad/joke");
+
+			if ((dadJoke != null) && _log.isInfoEnabled()) {
+				_log.info("Dad joke: " + dadJoke);
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -101,6 +116,25 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		}
 	}
 
+	private String _getLiferaySampleEtcSpringBootDadJoke(
+		String externalReferenceCode, String endpoint) {
+
+		return WebClient.create(
+		).get(
+		).uri(
+			endpoint
+		).header(
+			"Authorization",
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				externalReferenceCode)
+		).accept(
+			MediaType.TEXT_PLAIN
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		SampleCommandLineRunner.class);
 
@@ -109,6 +143,9 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Value("${liferay.sample.etc.spring.boot.uri}")
+	private URL _liferaySampleEtcSpringBootURI;
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;

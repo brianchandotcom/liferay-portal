@@ -7,10 +7,10 @@
 			"com_liferay_translation_web_internal_portlet_TranslationPortlet": false
 		},
 		"description_i18n": {
-			"en_US": "Test description 1"
+			"en_US": "Test Description 1"
 		},
 		"name_i18n": {
-			"en_US": "Test depot entry 1"
+			"en_US": "Test Depot Entry 1"
 		},
 		"typeSettings": [
 			{
@@ -47,10 +47,10 @@
 			"com_liferay_translation_web_internal_portlet_TranslationPortlet": false
 		},
 		"description_i18n": {
-			"en_US": "Test description 2"
+			"en_US": "Test Description 2"
 		},
 		"name_i18n": {
-			"en_US": "Test depot entry 2"
+			"en_US": "Test Depot Entry 2"
 		},
 		"typeSettings": [
 			{

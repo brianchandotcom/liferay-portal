@@ -86,27 +86,28 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		HttpResponse httpResponse1 = HttpUtil.doPost(
 			null, csrfToken,
 			new String[][] {
+				{_P_P_ID_NAMESPACE + "_checkboxNames", "rememberMe"},
+				{_P_P_ID_NAMESPACE + "_doActionAfterLogin", StringPool.FALSE},
 				{
 					_P_P_ID_NAMESPACE + "_formDate",
 					String.valueOf(System.currentTimeMillis())
 				},
-				{_P_P_ID_NAMESPACE + "_saveLastPath", StringPool.FALSE},
-				{_P_P_ID_NAMESPACE + "_redirect", StringPool.BLANK},
-				{_P_P_ID_NAMESPACE + "_doActionAfterLogin", StringPool.FALSE},
 				{_P_P_ID_NAMESPACE + "_login", emailAddress},
 				{_P_P_ID_NAMESPACE + "_password", password},
-				{_P_P_ID_NAMESPACE + "_checkboxNames", "rememberMe"}
+				{_P_P_ID_NAMESPACE + "_redirect", StringPool.BLANK},
+				{_P_P_ID_NAMESPACE + "_saveLastPath", StringPool.FALSE}
 			},
 			_createURL(
 				StringBundler.concat(
-					"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=1&",
-					"p_p_state=normal&p_p_mode=view&", _P_P_ID_NAMESPACE,
+					"/home?", _P_P_ID_NAMESPACE,
 					"_javax.portlet.action=/login/login&", _P_P_ID_NAMESPACE,
-					"_mvcRenderCommandName=/login/login")));
+					"_mvcRenderCommandName=/login/login&p_p_id=", _P_P_ID,
+					"&p_p_lifecycle=1&p_p_mode=view&p_p_state=normal")));
 
 		_assertRedirect("/c", httpResponse1);
 
-		HttpResponse httpResponse2 = HttpUtil.doGet(csrfToken, _createURL("/c"));
+		HttpResponse httpResponse2 = HttpUtil.doGet(
+			csrfToken, _createURL("/c"));
 
 		_assertRedirect(StringPool.SLASH, httpResponse2);
 
@@ -130,9 +131,10 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		HttpResponse httpResponse1 = HttpUtil.doGet(
 			csrfToken, _createURL("/c/portal/login?windowState=exclusive"));
 		String redirect = StringBundler.concat(
-			"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=0&",
-			"p_p_state=exclusive&p_p_mode=view&", _P_P_ID_NAMESPACE,
-			"_mvcRenderCommandName=/login/login&saveLastPath=false");
+			"/home?", _P_P_ID_NAMESPACE,
+			"_mvcRenderCommandName=/login/login&p_p_id=", _P_P_ID,
+			"&p_p_lifecycle=0&p_p_mode=view&p_p_state=exclusive&",
+			"saveLastPath=false");
 
 		_assertRedirect(redirect, httpResponse1);
 

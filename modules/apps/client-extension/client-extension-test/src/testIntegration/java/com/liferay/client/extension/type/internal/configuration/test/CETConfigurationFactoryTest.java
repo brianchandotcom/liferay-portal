@@ -150,9 +150,10 @@ public class CETConfigurationFactoryTest {
 			).put(
 				"typeSettings",
 				new String[] {
-					"friendlyURLMapping=test", "instanceable=false",
-					"urls=index.js", "useESM=false", "htmlElementName=test",
-					"portletCategoryName=category.client-extensions"
+					"friendlyURLMapping=test", "htmlElementName=test",
+					"instanceable=false",
+					"portletCategoryName=category.client-extensions",
+					"urls=index.js", "useESM=false"
 				}
 			).put(
 				"webContextPath", "/test_" + _VIRTUAL_HOSTNAME

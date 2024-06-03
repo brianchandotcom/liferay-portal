@@ -48,8 +48,15 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 			new ObjectValuePair<>("logout", _logout()));
 	}
 
-	private void _assertRedirect(
-			String redirect, HttpResponse httpResponse)
+	private void _assertContent(HttpResponse httpResponse, String key) {
+		Assert.assertEquals(httpResponse.getStatusCode(), 200);
+
+		String httpResponseString = httpResponse.toString();
+
+		Assert.assertTrue(httpResponseString.contains(key));
+	}
+
+	private void _assertRedirect(String redirect, HttpResponse httpResponse)
 		throws Exception {
 
 		Assert.assertEquals(httpResponse.getStatusCode(), 302);
@@ -57,14 +64,6 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		URL url = _creatURL(redirect);
 
 		Assert.assertEquals(url.toString(), httpResponse.getRedirect());
-	}
-
-	private void _assertContent(HttpResponse httpResponse, String key) {
-		Assert.assertEquals(httpResponse.getStatusCode(), 200);
-
-		String httpResponseString = httpResponse.toString();
-
-		Assert.assertTrue(httpResponseString.contains(key));
 	}
 
 	private URL _creatURL(String path) throws Exception {
@@ -114,7 +113,8 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		HttpResponse httpResponse3 = HttpUtil.doGet(
 			csrfToken, _creatURL(StringPool.SLASH));
 
-		_assertContent(httpResponse3, "ProductNavigationUserPersonalBarPortlet");
+		_assertContent(
+			httpResponse3, "ProductNavigationUserPersonalBarPortlet");
 
 		return _getDuration(httpResponse1, httpResponse2, httpResponse3);
 	}

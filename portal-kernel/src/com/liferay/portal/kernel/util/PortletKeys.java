@@ -16,6 +16,9 @@ public class PortletKeys {
 	public static final String ANNOUNCEMENTS =
 		"com_liferay_announcements_web_portlet_AnnouncementsPortlet";
 
+	public static final String ASSET_LIST =
+		"com_liferay_asset_list_web_portlet_AssetListPortlet";
+
 	public static final String BACKGROUND_TASK = "189";
 
 	public static final String BLOGS =
@@ -67,6 +70,9 @@ public class PortletKeys {
 
 	public static final String ITEM_SELECTOR =
 		"com_liferay_item_selector_web_portlet_ItemSelectorPortlet";
+
+	public static final String JOURNAL =
+		"com_liferay_journal_web_portlet_JournalPortlet";
 
 	public static final String LICENSE_MANAGER =
 		"com_liferay_license_manager_web_portlet_LicenseManagerPortlet";
@@ -168,6 +174,9 @@ public class PortletKeys {
 		"com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet";
 
 	public static final String STOCKS = "12";
+
+	public static final String TRANSLATION =
+		"com_liferay_translation_web_internal_portlet_TranslationPortlet";
 
 	public static final String TRANSLATOR = "26";
 

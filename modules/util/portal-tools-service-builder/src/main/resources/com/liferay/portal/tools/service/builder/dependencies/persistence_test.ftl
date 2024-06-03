@@ -593,6 +593,8 @@ public class ${entity.name}PersistenceTest {
 
 					Assert.assertTrue(InlineSQLHelperUtil.isEnabled(0));
 
+					_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
 					_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 				}
 				<#break>

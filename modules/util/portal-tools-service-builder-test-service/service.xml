@@ -376,7 +376,16 @@
 
 		<!-- Other fields -->
 
+		<column name="integer" type="int" />
 		<column name="name" type="String" />
+		<column name="type" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="integer" />
+			<order-column name="type" />
+		</order>
 
 		<!-- Finder methods -->
 

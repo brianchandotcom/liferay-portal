@@ -57,7 +57,7 @@
 			"externalReferenceCode": "8d2b5ace-d988-4dfd-be79-bc12585d2436",
 			"host": "Liferay",
 			"name": "GUEST_LANGUAGE_ID",
-			"purpose": "",
+			"purpose": "Stores the preferred language ID to use when the user's language ID is not available so the system displays content in the appropriate language. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -115,7 +115,7 @@
 			"externalReferenceCode": "17fceb56-de87-4382-a698-c7cdec280cbf",
 			"host": "Liferay",
 			"name": "SELECTED_CATEGORIES_COOKIE_",
-			"purpose": "",
+			"purpose": "Stores the selected categories for facilitating the addition of more than 400 categories when opening the categories selector popup. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -147,7 +147,7 @@
 			"externalReferenceCode": "24c26339-318a-4c99-ba28-5b25e796cc73",
 			"host": "Liferay",
 			"name": "liferay.cookie.consent",
-			"purpose": "",
+			"purpose": "Stores the end user's consent option (true/false) for the use of cookies through fragments. Preferences.",
 			"type": "First Party"
 		},
 		{

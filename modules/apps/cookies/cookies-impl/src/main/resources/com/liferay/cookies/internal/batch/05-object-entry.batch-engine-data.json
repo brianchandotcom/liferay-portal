@@ -17,7 +17,7 @@
 			"externalReferenceCode": "b739c129-37f0-4803-b498-dbcb18b8ec38",
 			"host": "Liferay",
 			"name": "FRAGMENTS_DISPLAY_STYLE_KEY",
-			"purpose": "",
+			"purpose": "Stores the end user's display style preference (cards or list) for fragments and widgets panels to customize their view. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -25,7 +25,7 @@
 			"externalReferenceCode": "c1b7e721-78c7-452d-a56b-f568731c32ca",
 			"host": "Liferay",
 			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragment-collection_collectionId_open",
-			"purpose": "",
+			"purpose": "Stores the open/close state of fragments and widget panels so the system remembers user preferences. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -33,7 +33,7 @@
 			"externalReferenceCode": "611a7f86-3de5-487e-a755-abbfb204f779",
 			"host": "Liferay",
 			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragments-sidebar_active-tab-id",
-			"purpose": "",
+			"purpose": "Stores the ID of the active tab selected in fragments and widgets panels. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -41,7 +41,7 @@
 			"externalReferenceCode": "2171285c-08b1-4531-9067-7688eece3829",
 			"host": "Liferay",
 			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_scrollPosition",
-			"purpose": "",
+			"purpose": "Stores the scroll position for fragments and widget panels in the page editor for saving purposes. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -49,7 +49,7 @@
 			"externalReferenceCode": "c2b23842-8703-464b-b94e-d037e9b87294",
 			"host": "Liferay",
 			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_sidebar-width",
-			"purpose": "",
+			"purpose": "Stores the width of the left sidebar in the page editor for customization. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -57,7 +57,7 @@
 			"externalReferenceCode": "c4a26f89-3473-4767-92bb-0f9933770a7d",
 			"host": "Liferay",
 			"name": "_com_liferay_product_navigation_control_menu_web_portlet_ProductNavigationControlMenuPortlet_active-tab-id",
-			"purpose": "",
+			"purpose": "Stores the ID for the selected tab in the add panel of a widget page. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -73,7 +73,7 @@
 			"externalReferenceCode": "863e24f5-b14e-4ec9-9ab8-45f5a8e9a0c2",
 			"host": "Liferay",
 			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___itemAdded",
-			"purpose": "",
+			"purpose": "Stores the scroll position in the navigation menu item admin when a new item is created. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -81,7 +81,7 @@
 			"externalReferenceCode": "b9e9b45d-af18-461a-857c-35239d636471",
 			"host": "Liferay",
 			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___scrollPosition",
-			"purpose": "",
+			"purpose": "Stores the scroll position for the info panel in the navigation menu item admin for saving purposes. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -89,7 +89,7 @@
 			"externalReferenceCode": "3850f785-6b1a-428f-a63f-5d934f9f5642",
 			"host": "Liferay",
 			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___selectedMenuItemId",
-			"purpose": "",
+			"purpose": "Stores the ID for the selected item in the navigation menu administration. Marketing.",
 			"type": "First Party"
 		}
 	]

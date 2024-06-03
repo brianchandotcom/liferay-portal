@@ -33,7 +33,7 @@
 			"externalReferenceCode": "5de342bd-1117-491a-9de9-7b88d9cf8d80",
 			"host": "Liferay",
 			"name": "CONSENT_TYPE_FUNCTIONAL",
-			"purpose": "",
+			"purpose": "Stores the end user's consent option (true/false) for functional cookies so the system remembers the user's preference. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -41,7 +41,7 @@
 			"externalReferenceCode": "6aad0ec5-52c1-40f7-80f8-a45e448e61ba",
 			"host": "Liferay",
 			"name": "CONSENT_TYPE_NECESSARY",
-			"purpose": "",
+			"purpose": "Stores the end user's consent option (true/false) for necessary cookies so the system ensures essential functionality. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -49,7 +49,7 @@
 			"externalReferenceCode": "57a36b90-89d3-437c-8093-7eada10d4d5d",
 			"host": "Liferay",
 			"name": "CONSENT_TYPE_PERFORMANCE",
-			"purpose": "",
+			"purpose": "Stores the end user's consent option (true/false) for performance cookies so the system manages performance-related preferences. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -57,7 +57,7 @@
 			"externalReferenceCode": "796e7443-cbea-4779-85a5-580ed37ee316",
 			"host": "Liferay",
 			"name": "CONSENT_TYPE_PERSONALIZATION",
-			"purpose": "",
+			"purpose": "Stores the end user's consent option (true/false) for personalization cookies so the system manages personalized content and settings. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -73,7 +73,7 @@
 			"externalReferenceCode": "15367faf-4404-4d79-a91c-bce191b25973",
 			"host": "Liferay",
 			"name": "HIGHLIGHTED_COMMENT_ID_KEY",
-			"purpose": "",
+			"purpose": "Stores the ID of the highlighted fragment comment when entering the page editor from a comment notification. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -99,7 +99,7 @@
 			"externalReferenceCode": "c34913d5-f72f-4a9f-b9ad-dcc02a873a48",
 			"host": "Liferay",
 			"name": "LFR_SESSION_STATE_userID",
-			"purpose": "",
+			"purpose": "Stores a timestamp and the unencrypted user ID in the cookie name to manage session duration. This allows session invalidation based on the configured session length or auto-extension if the \\\"Remember Me\\\" option is enabled. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -155,7 +155,7 @@
 			"externalReferenceCode": "78b8182b-e9bf-457e-9afc-5c3fdd6485ed",
 			"host": "Liferay",
 			"name": "modalExperienceState",
-			"purpose": "",
+			"purpose": "Stores the state of the modal when creating a new experience. Strictly necessary.",
 			"type": "First Party"
 		}
 	]

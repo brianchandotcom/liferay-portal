@@ -59,11 +59,12 @@ import org.osgi.service.component.annotations.Reference;
 public class FormItemManager {
 
 	public List<FragmentEntryLink> addFragmentEntryLinks(
-			JSONObject errorJSONObject, String[] infoFieldUniqueIds,
+			JSONObject errorJSONObject,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			boolean includeSubmitButton, Layout layout,
 			LayoutStructure layoutStructure, Locale locale,
-			long segmentsExperienceId, ServiceContext serviceContext)
+			long segmentsExperienceId, ServiceContext serviceContext,
+			String[] uniqueInfoFieldIds)
 		throws PortalException {
 
 		FragmentCollectionContributor fragmentCollectionContributor =
@@ -95,9 +96,9 @@ public class FormItemManager {
 					formStyledLayoutStructureItem, layout.getGroupId())) {
 
 			if (!infoField.isEditable() ||
-				(ArrayUtil.isNotEmpty(infoFieldUniqueIds) &&
+				(ArrayUtil.isNotEmpty(uniqueInfoFieldIds) &&
 				 !ArrayUtil.contains(
-					 infoFieldUniqueIds, infoField.getUniqueId()))) {
+					 uniqueInfoFieldIds, infoField.getUniqueId()))) {
 
 				continue;
 			}

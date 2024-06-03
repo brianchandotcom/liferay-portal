@@ -182,17 +182,17 @@ public class CETConfigurationFactoryTest {
 			if (portlet == null) {
 				throw new TimeoutException(
 					StringBundler.concat(
-						"Time out on waiting for ", filterString, " after ",
+						"Timeout on waiting for ", filterString, " after ",
 						timeout, "ms"));
 			}
 
 			ServiceReference<?> serviceReference =
 				serviceTracker.getServiceReference();
 
-			String[] prop = (String[])serviceReference.getProperty(
+			String[] value = (String[])serviceReference.getProperty(
 				"com.liferay.portlet.header-portal-javascript");
 
-			Assert.assertFalse(prop[0].contains("?t="));
+			Assert.assertFalse(value[0].contains("?t="));
 		}
 		finally {
 			serviceTracker.close();

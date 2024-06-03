@@ -77,21 +77,21 @@ public class QuartzDBPartitionUpgradeProcessTest
 			"QuartzDBPartitionUpgradeProcess";
 
 	private static final Index[] _QUARTZ_INDEXES = {
-		new Index("IX_BE3835E5", "QUARTZ_FIRED_TRIGGERS", false),
-		new Index("IX_4BD722BM", "QUARTZ_FIRED_TRIGGERS", false),
 		new Index("IX_339E078M", "QUARTZ_FIRED_TRIGGERS", false),
-		new Index("IX_5005E3AF", "QUARTZ_FIRED_TRIGGERS", false),
 		new Index("IX_BC2F03B0", "QUARTZ_FIRED_TRIGGERS", false),
+		new Index("IX_5005E3AF", "QUARTZ_FIRED_TRIGGERS", false),
+		new Index("IX_4BD722BM", "QUARTZ_FIRED_TRIGGERS", false),
+		new Index("IX_BE3835E5", "QUARTZ_FIRED_TRIGGERS", false),
 		new Index("IX_88328984", "QUARTZ_JOB_DETAILS", false),
 		new Index("IX_779BCA37", "QUARTZ_JOB_DETAILS", false),
+		new Index("IX_CD7132D0", "QUARTZ_TRIGGERS", false),
+		new Index("IX_8AA50BE1", "QUARTZ_TRIGGERS", false),
+		new Index("IX_A85822A0", "QUARTZ_TRIGGERS", false),
+		new Index("IX_1F92813C", "QUARTZ_TRIGGERS", false),
+		new Index("IX_F2DD7C7E", "QUARTZ_TRIGGERS", false),
 		new Index("IX_91CA7CCE", "QUARTZ_TRIGGERS", false),
 		new Index("IX_D219AFDE", "QUARTZ_TRIGGERS", false),
-		new Index("IX_A85822A0", "QUARTZ_TRIGGERS", false),
-		new Index("IX_8AA50BE1", "QUARTZ_TRIGGERS", false),
-		new Index("IX_F2DD7C7E", "QUARTZ_TRIGGERS", false),
-		new Index("IX_1F92813C", "QUARTZ_TRIGGERS", false),
-		new Index("IX_99108B6E", "QUARTZ_TRIGGERS", false),
-		new Index("IX_CD7132D0", "QUARTZ_TRIGGERS", false)
+		new Index("IX_99108B6E", "QUARTZ_TRIGGERS", false)
 	};
 
 	private static DB _db;

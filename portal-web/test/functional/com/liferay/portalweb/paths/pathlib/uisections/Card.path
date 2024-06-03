@@ -95,6 +95,11 @@
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//input[@type='radio']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CARD_RADIO_WITH_LABEL</td>
+	<td>//div[contains(@class,'card')]//input[@type='radio'][contains(@aria-label,'${key_card}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

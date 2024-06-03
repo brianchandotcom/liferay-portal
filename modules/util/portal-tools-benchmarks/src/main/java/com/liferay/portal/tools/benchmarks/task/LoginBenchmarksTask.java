@@ -34,7 +34,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 	public List<ObjectValuePair<String, Long>> execute() throws Exception {
 		HttpResponse httpResponse = HttpUtil.doGet(
-			null, _newURL(StringPool.FORWARD_SLASH));
+			null, _creatURL(StringPool.FORWARD_SLASH));
 
 		_assertResult(httpResponse, "Liferay.currentURL");
 
@@ -54,7 +54,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 		Assert.assertEquals(httpResponse.getStatusCode(), 302);
 
-		URL url = _newURL(expectedRedirect);
+		URL url = _creatURL(expectedRedirect);
 
 		Assert.assertEquals(url.toString(), httpResponse.getRedirect());
 	}
@@ -96,7 +96,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 				{_P_P_ID_NAMESPACE + "_password", password},
 				{_P_P_ID_NAMESPACE + "_checkboxNames", "rememberMe"}
 			},
-			_newURL(
+			_creatURL(
 				StringBundler.concat(
 					"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=1&",
 					"p_p_state=normal&p_p_mode=view&", _P_P_ID_NAMESPACE,
@@ -105,12 +105,12 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 		_assertRedirect("/c", httpResponse1);
 
-		HttpResponse httpResponse2 = HttpUtil.doGet(csrfToken, _newURL("/c"));
+		HttpResponse httpResponse2 = HttpUtil.doGet(csrfToken, _creatURL("/c"));
 
 		_assertRedirect(StringPool.SLASH, httpResponse2);
 
 		HttpResponse httpResponse3 = HttpUtil.doGet(
-			csrfToken, _newURL(StringPool.SLASH));
+			csrfToken, _creatURL(StringPool.SLASH));
 
 		_assertResult(httpResponse3, "ProductNavigationUserPersonalBarPortlet");
 
@@ -119,18 +119,18 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 	private long _logout() throws Exception {
 		HttpResponse httpResponse = HttpUtil.doGet(
-			null, _newURL("/c/portal/logout"));
+			null, _creatURL("/c/portal/logout"));
 
 		return httpResponse.getDuration();
 	}
 
-	private URL _newURL(String path) throws Exception {
+	private URL _creatURL(String path) throws Exception {
 		return new URL("http", _hostname, _port, path);
 	}
 
 	private long _viewLoginPage(String csrfToken) throws Exception {
 		HttpResponse httpResponse1 = HttpUtil.doGet(
-			csrfToken, _newURL("/c/portal/login?windowState=exclusive"));
+			csrfToken, _creatURL("/c/portal/login?windowState=exclusive"));
 		String redirect = StringBundler.concat(
 			"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=0&",
 			"p_p_state=exclusive&p_p_mode=view&", _P_P_ID_NAMESPACE,
@@ -139,7 +139,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		_assertRedirect(redirect, httpResponse1);
 
 		HttpResponse httpResponse2 = HttpUtil.doGet(
-			csrfToken, _newURL(redirect));
+			csrfToken, _creatURL(redirect));
 
 		_assertResult(httpResponse2, "Remember Me");
 

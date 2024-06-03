@@ -72,7 +72,8 @@ const safeLiferaySessionExtend = () => {
 			Liferay.Session.reset();
 
 			sessionStorage.setItem('lastTimestamp', String(currentTimestamp));
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('Unable to extend Session', error);
 		}
 	}

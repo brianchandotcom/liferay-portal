@@ -244,31 +244,31 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 															) &&
 															!isFreeApp
 														) {
+															const downloadURL = `order/${id}/download`;
 															Liferay.Util.navigate(
-																`${Liferay.ThemeDisplay.getLayoutURL()}#order/${id}/download`
+																downloadURL
 															);
+
+															return;
 														}
-														else {
-															if (!virtualURL) {
-																Analytics.track(
-																	'VIRTUAL_URL_NOT_FOUND',
-																	metadata
-																);
 
-																return alert(
-																	'Download file not found'
-																);
-															}
-
+														if (!virtualURL) {
 															Analytics.track(
-																'DOWNLOAD_APP',
+																'VIRTUAL_URL_NOT_FOUND',
 																metadata
 															);
 
-															window.open(
-																virtualURL
+															return alert(
+																'Download file not found'
 															);
 														}
+
+														Analytics.track(
+															'DOWNLOAD_APP',
+															metadata
+														);
+
+														window.open(virtualURL);
 													}}
 													title={
 														orderStatusIsNotCompleted

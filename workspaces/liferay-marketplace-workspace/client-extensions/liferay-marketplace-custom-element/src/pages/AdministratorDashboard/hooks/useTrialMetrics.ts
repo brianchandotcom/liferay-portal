@@ -8,7 +8,7 @@ import {useEffect, useMemo, useState} from 'react';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
-import {ORDER_STATUS, ORDER_TYPES} from '../../../enums/Order';
+import {ORDER_TYPES, ORDER_WORKFLOW_STATUS_CODE} from '../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
@@ -142,9 +142,10 @@ const useTrialMetrics = (param: FilterType) => {
 
 	useEffect(() => {
 		const isProcessing = orderItems.some(({orderStatusInfo}: any) =>
-			[ORDER_STATUS.PROCESSING, ORDER_STATUS.ON_HOLD].includes(
-				orderStatusInfo.code
-			)
+			[
+				ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+				ORDER_WORKFLOW_STATUS_CODE.ON_HOLD,
+			].includes(orderStatusInfo.code)
 		);
 
 		setRefreshInterval(
@@ -159,7 +160,8 @@ const useTrialMetrics = (param: FilterType) => {
 	} / ${availabilityResponse?.max}`;
 
 	const onHold = ordersTrial?.items?.filter(
-		(order: Order) => order.orderStatus === ORDER_STATUS.ON_HOLD
+		(order: Order) =>
+			order.orderStatus === ORDER_WORKFLOW_STATUS_CODE.ON_HOLD
 	).length;
 
 	const expiredTrialsLastPeriod = getExiredQuantity(orderLastPeriod?.items);

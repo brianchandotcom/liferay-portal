@@ -8,7 +8,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import Page from '../../../../components/Page';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {ORDER_STATUS} from '../../../../enums/Order';
+import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
 import PurchasedSolutionsTable from '../../components/PurchasedSolutionsTable';
 import {usePurchasedOrders} from '../../usePurchasedOrders';
 
@@ -41,9 +41,10 @@ const Solutions = () => {
 
 	useEffect(() => {
 		const isProcessing = orderItems.some(({orderStatusInfo}) =>
-			[ORDER_STATUS.PROCESSING, ORDER_STATUS.ON_HOLD].includes(
-				orderStatusInfo.code
-			)
+			[
+				ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+				ORDER_WORKFLOW_STATUS_CODE.ON_HOLD,
+			].includes(orderStatusInfo.code)
 		);
 
 		setRefreshInterval(

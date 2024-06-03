@@ -91,16 +91,18 @@ export function NextSteps({
 			<Header
 				description={
 					isPaidApp ? (
-						<p>
+						<span>
 							<p>
 								Congratulations on the purchase of{' '}
 								<strong>{appName}</strong>. You will need to
 								create a license your app before deploying to
 								your DXP instance.
 							</p>
+
 							<p>
 								Your Order ID is: <strong>{orderId}</strong>
 							</p>
+
 							<p>
 								To license your app, you can click Go to
 								Dashboard below. Find your Order ID and choose
@@ -108,9 +110,9 @@ export function NextSteps({
 								must have at least one of your instance details
 								available - IP address, MAC address or hostname.
 							</p>
-						</p>
+						</span>
 					) : (
-						<p>
+						<span>
 							<strong>{appName}</strong> app is ready for
 							download.
 							<p>
@@ -123,7 +125,7 @@ export function NextSteps({
 								<ClayIcon className="m-1" symbol="ellipsis-v" />
 								→ Download App.
 							</p>
-						</p>
+						</span>
 					)
 				}
 				title="Next steps"
@@ -138,9 +140,11 @@ export function NextSteps({
 								You will need to create a license for your app
 								before deploying it to your DXP instance
 							</p>
+
 							<p>
 								Your Order ID is: <strong>{orderId}</strong>
 							</p>
+
 							<p>
 								To license your app, you can click Go to
 								Dashboard below. Find your Order ID and choose
@@ -157,9 +161,9 @@ export function NextSteps({
 							the email address listed in the order. Once payment
 							is processed, you will be notified as to the next
 							steps to license your app.
-							<p className="mt-4">
+							<span className="mt-4">
 								Your Order ID is: <strong>{orderId}</strong>
-							</p>
+							</span>
 						</p>
 					)
 				}
@@ -246,12 +250,12 @@ export function NextSteps({
 						}
 
 						if (
-							cart.orderTypeExternalReferenceCode === 'CLOUDAPP'
+							cart.orderTypeExternalReferenceCode ===
+								'CLOUDAPP' &&
+							onClickContinue
 						) {
-							if (onClickContinue) {
-								window.location.href =
-									'https://console.liferay.cloud/projects';
-							}
+							window.location.href =
+								'https://console.liferay.cloud/projects';
 						}
 					}}
 					showBackButton={showBackButton}

@@ -17,11 +17,11 @@ import DownloadTable from './DownloadTable';
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
 const Download = () => {
-	const marketplaceContetx = useMarketplaceContext();
+	const marketplaceContext = useMarketplaceContext();
 	const outletContext = useOutletContext<OutletContext['data']>();
 	const [search, setSearch] = useState('');
 
-	const channel = marketplaceContetx.channel;
+	const channel = marketplaceContext.channel;
 	const virtualProducts = outletContext?.placedOrder.placedOrderItems;
 	const hasVersionSpecification = outletContext?.product.productSpecifications.find(
 		(specification) => specification.specificationKey === 'latest-version'
@@ -31,7 +31,6 @@ const Download = () => {
 		hasVersionSpecification
 			? null
 			: `marketplace-order-${outletContext?.placedOrder.id}`,
-
 		() =>
 			Promise.all(
 				virtualProducts.map((orderItem: PlacedOrderItems) =>
@@ -54,7 +53,7 @@ const Download = () => {
 		);
 
 		const virtualItemsWithVersion = virtualProducts[0].virtualItems?.map(
-			(virtualItem: any) => ({
+			(virtualItem: VirtualItem) => ({
 				...virtualItem,
 				productVersion: hasVersionSpecification
 					? hasVersionSpecification.value
@@ -62,7 +61,7 @@ const Download = () => {
 			})
 		);
 
-		return virtualItemsWithVersion.filter((item: any) =>
+		return virtualItemsWithVersion.filter((item: VirtualItem) =>
 			item.version.toLowerCase().includes(search)
 		);
 	}, [hasVersionSpecification, search, skus, virtualProducts]);

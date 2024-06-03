@@ -21,6 +21,7 @@ import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 import './App.scss';
 import {PageRenderer} from '../../../../../components/Page';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
+import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
 import {isTrialSKU} from '../../../../../utils/productUtils';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 
@@ -89,8 +90,8 @@ const AppOutlet = () => {
 	const product = data?.product;
 	const {isFreeApp} = getProductPriceModel(product);
 	const navigate = useNavigate();
-	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
 
+	const placedOrderItems = data?.placedOrder.placedOrderItems ?? [];
 	const productCreatorAccountName = data?.product?.catalogName || '';
 
 	return (
@@ -118,8 +119,9 @@ const AppOutlet = () => {
 
 				<AppNavbar
 					showDownloadTab={
-						data?.placedOrder.workflowStatusInfo.code === 0 &&
-						data?.placedOrder.placedOrderItems.some(
+						data?.placedOrder.workflowStatusInfo.code ===
+							ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
+						placedOrderItems.some(
 							(item: PlacedOrderItems) => item.virtualItems.length
 						)
 					}

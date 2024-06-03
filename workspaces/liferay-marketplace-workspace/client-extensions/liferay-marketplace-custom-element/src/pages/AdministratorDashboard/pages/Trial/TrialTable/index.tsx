@@ -12,7 +12,7 @@ import {formatDistance} from 'date-fns';
 
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
 import Table from '../../../../../components/Table/Table';
-import {ORDER_STATUS} from '../../../../../enums/Order';
+import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
 import i18n from '../../../../../i18n';
 
 type TrialTableProps = {
@@ -152,7 +152,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 						render: (_, order) => {
 							if (
 								order.orderStatusInfo?.code !==
-								ORDER_STATUS.COMPLETED
+								ORDER_WORKFLOW_STATUS_CODE.COMPLETED
 							) {
 								return null;
 							}

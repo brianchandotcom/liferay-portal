@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -100,33 +101,8 @@ public class WorkflowDefinitionManagerImpl
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
-		try {
-			if (orderByComparator == null) {
-				orderByComparator =
-					_workflowComparatorFactory.getDefinitionNameComparator(
-						true);
-			}
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-
-			List<KaleoDefinition> kaleoDefinitions =
-				_kaleoDefinitionService.getScopeKaleoDefinitions(
-					WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
-					KaleoDefinitionOrderByComparator.getOrderByComparator(
-						orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			int size = kaleoDefinitions.size();
-
-			return _toWorkflowDefinitions(
-				kaleoDefinitions.toArray(new KaleoDefinition[size]),
-				orderByComparator);
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
+		return _getActiveWorkflowDefinitions(
+			companyId, false, start, end, orderByComparator);
 	}
 
 	@Override
@@ -349,6 +325,16 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	@Override
+	public List<WorkflowDefinition> liberalGetActiveWorkflowDefinitions(
+			long companyId, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		return _getActiveWorkflowDefinitions(
+			companyId, true, start, end, orderByComparator);
+	}
+
+	@Override
 	public WorkflowDefinition saveWorkflowDefinition(
 			long companyId, long userId, String title, String name,
 			byte[] bytes)
@@ -463,6 +449,62 @@ public class WorkflowDefinitionManagerImpl
 
 	protected String getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
+	}
+
+	private <T> T _get(
+			boolean liberal,
+			UnsafeSupplier<T, PortalException> localServiceUnsafeSupplier,
+			UnsafeSupplier<T, PortalException> serviceUnsafeSupplier)
+		throws PortalException {
+
+		if (liberal) {
+			return localServiceUnsafeSupplier.get();
+		}
+
+		return serviceUnsafeSupplier.get();
+	}
+
+	private List<WorkflowDefinition> _getActiveWorkflowDefinitions(
+			long companyId, boolean liberal, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		try {
+			if (orderByComparator == null) {
+				orderByComparator =
+					_workflowComparatorFactory.getDefinitionNameComparator(
+						true);
+			}
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+
+			OrderByComparator<WorkflowDefinition> finalOrderByComparator =
+				orderByComparator;
+
+			List<KaleoDefinition> kaleoDefinitions = _get(
+				liberal,
+				() -> _kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+					WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
+					KaleoDefinitionOrderByComparator.getOrderByComparator(
+						finalOrderByComparator, _kaleoWorkflowModelConverter),
+					serviceContext),
+				() -> _kaleoDefinitionService.getScopeKaleoDefinitions(
+					WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
+					KaleoDefinitionOrderByComparator.getOrderByComparator(
+						finalOrderByComparator, _kaleoWorkflowModelConverter),
+					serviceContext));
+
+			int size = kaleoDefinitions.size();
+
+			return _toWorkflowDefinitions(
+				kaleoDefinitions.toArray(new KaleoDefinition[size]),
+				orderByComparator);
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
 	}
 
 	private List<WorkflowDefinition> _toWorkflowDefinitions(

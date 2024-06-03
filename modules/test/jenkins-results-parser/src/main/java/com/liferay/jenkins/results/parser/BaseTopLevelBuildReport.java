@@ -116,10 +116,10 @@ public abstract class BaseTopLevelBuildReport
 		try {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
-					"https://testray.liferay.com/reports/production/logs/",
+					"https://testray-old.liferay.com/reports/production/logs/",
 					getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
 					jobReport.getJobName(), "/",
-					String.valueOf(getBuildNumber()), "/build-result.json.gz"));
+					String.valueOf(getBuildNumber()), "/build-report.json.gz"));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -138,7 +138,7 @@ public abstract class BaseTopLevelBuildReport
 					"https://", jenkinsMaster.getName(),
 					".liferay.com/userContent/jobs/", jobReport.getJobName(),
 					"/builds/", String.valueOf(getBuildNumber()),
-					"/build-result.json"));
+					"/build-report.json"));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
@@ -157,7 +157,7 @@ public abstract class BaseTopLevelBuildReport
 			JenkinsResultsParserUtil.combine(
 				getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
 				jobReport.getJobName(), "/", String.valueOf(getBuildNumber()),
-				"/build-result.json.gz"));
+				"/build-report.json.gz"));
 	}
 
 	@Override

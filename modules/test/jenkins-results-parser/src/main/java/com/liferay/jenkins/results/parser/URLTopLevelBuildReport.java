@@ -65,7 +65,9 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 			}
 		}
 
-		_addTestResultsFromBuildResults();
+		if (buildReportJSONObject != null) {
+			_addTestResultsFromBuildResults();
+		}
 
 		return buildReportJSONObject;
 	}

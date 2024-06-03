@@ -179,11 +179,9 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 				throw new InfoFormException();
 			}
 
-			long maxFileSize =
-				objectEntryValuesException.getMaxFileSize() / _FILE_LENGTH_MB;
-
 			throw new InfoFormValidationException.FileSize(
-				infoFieldUniqueId, maxFileSize + " MB");
+				infoFieldUniqueId,
+				objectEntryValuesException.getMaxFileSize() + " MB");
 		}
 
 		if (exception instanceof
@@ -326,8 +324,6 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 
 		return null;
 	}
-
-	private static final long _FILE_LENGTH_MB = 1024 * 1024;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemExceptionRequestHandler.class);

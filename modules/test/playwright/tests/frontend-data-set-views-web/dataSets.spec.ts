@@ -22,10 +22,15 @@ export const test = mergeTests(
 	dataSetManagerSetupTest
 );
 
-const DATASET_LABEL = getRandomString();
+const blogPostsDataSetConfig = {
+	name: getRandomString(),
+	restApplication: '/headless-delivery/v1.0',
+	restEndpoint: '/v1.0/sites/{siteId}/blog-postings',
+	restSchema: 'BlogPosting',
+};
 
 const tableSectionsDataSetConfig = {
-	name: DATASET_LABEL,
+	name: getRandomString(),
 	restApplication: '/data-set-manager/table-sections',
 	restEndpoint: '/',
 	restSchema: 'FDSField',
@@ -114,6 +119,23 @@ test('Create data set via UI', async ({dataSetsPage, page}) => {
 
 	await test.step('Delete Data Set', async () => {
 		await dataSetsPage.deleteDataSet(tableSectionsDataSetConfig.name);
+	});
+});
+
+test('Create parameterized data set via UI', async ({dataSetsPage, page}) => {
+	await test.step('Create Data Set', async () => {
+		await dataSetsPage.goto();
+		await dataSetsPage.createDataSet(blogPostsDataSetConfig);
+	});
+
+	await assertTableColumnLabels(page);
+
+	await assertTableCellContent(page, blogPostsDataSetConfig);
+
+	await assertTableActionLabels(page);
+
+	await test.step('Delete Data Set', async () => {
+		await dataSetsPage.deleteDataSet(blogPostsDataSetConfig.name);
 	});
 });
 

@@ -1,4 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.4.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_4_0.dtd">
 
-<resource-action-mapping />
+<resource-action-mapping>
+	<model-resource>
+		<model-name>com.liferay.portal.tools.service.builder.test.model.PermissionCheckFinderEntry</model-name>
+		<portlet-ref />
+		<permissions>
+			<supports>
+				<action-key>VIEW</action-key>
+			</supports>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

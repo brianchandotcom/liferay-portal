@@ -330,7 +330,10 @@ public class ObjectEntryDisplayContextImpl
 					objectScopeProvider.getGroupId(
 						_objectRequestHelper.getRequest()),
 					rootObjectDefinition.getObjectDefinitionId(),
-					ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+					ObjectActionKeys.ADD_OBJECT_ENTRY) ||
+				ObjectEntryServiceUtil.hasModelResourcePermission(
+					rootObjectDefinition.getObjectDefinitionId(),
+					_objectEntry.getId(), ActionKeys.UPDATE)) {
 
 				creationMenu.addDropdownItem(
 					_getCreateNewRelatedModelDropdownItem(

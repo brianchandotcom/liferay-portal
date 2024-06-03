@@ -284,12 +284,14 @@ public class UpdateLanguageAction implements Action {
 			return true;
 		}
 
-		int pos = layoutURL.lastIndexOf(CharPool.SLASH);
+		int pos = layoutURL.indexOf(CharPool.SLASH);
 
-		String layoutURLLanguageId = layoutURL.substring(pos + 1);
+		String string = layoutURL.substring(pos + 1);
+
+		pos = string.indexOf(CharPool.SLASH);
 
 		Locale layoutURLLocale = LocaleUtil.fromLanguageId(
-			layoutURLLanguageId, true, false);
+			string.substring(pos + 1), true, false);
 
 		if (layoutURLLocale != null) {
 			return true;

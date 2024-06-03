@@ -9110,7 +9110,7 @@ public class ObjectEntryResourceTest {
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			"test3@liferay.com", "test3"
 		).apply(
 			() ->
 				manyToOneDepth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -9125,7 +9125,7 @@ public class ObjectEntryResourceTest {
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			"test2@liferay.com", "test2"
 		).apply(
 			() ->
 				manyToOneDepth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -9242,7 +9242,7 @@ public class ObjectEntryResourceTest {
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test2@liferay.com", "test2"
+			"test3@liferay.com", "test3"
 		).apply(
 			() ->
 				manyToOneDepth1JSONObjects[0] = HTTPTestUtil.invokeToJSONObject(
@@ -9255,7 +9255,7 @@ public class ObjectEntryResourceTest {
 
 		HTTPTestUtil.customize(
 		).withCredentials(
-			"test3@liferay.com", "test3"
+			"test2@liferay.com", "test2"
 		).apply(
 			() ->
 				manyToOneDepth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
@@ -9297,10 +9297,10 @@ public class ObjectEntryResourceTest {
 			// Depth 1
 
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format("%s/creator", _objectRelationship1.getName()));
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format("%s/creatorId", _objectRelationship1.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
@@ -9353,7 +9353,7 @@ public class ObjectEntryResourceTest {
 					"%s/%s/id", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format("%s/userId", _objectRelationship1.getName()));
 
 			// Sort by several fields
@@ -9369,7 +9369,7 @@ public class ObjectEntryResourceTest {
 					"%s/%s/id", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
 			_testSortByFieldName(
-				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
 				String.format("%s/creator", _objectRelationship1.getName()),
 				String.format("%s/creatorId", _objectRelationship1.getName()),
 				String.format(

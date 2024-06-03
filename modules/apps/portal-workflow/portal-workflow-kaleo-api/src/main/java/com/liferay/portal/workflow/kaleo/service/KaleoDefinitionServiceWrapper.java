@@ -39,6 +39,22 @@ public class KaleoDefinitionServiceWrapper
 			name, title, description, content, scope, version, serviceContext);
 	}
 
+	@Override
+	public KaleoDefinition getKaleoDefinition(long kaleoDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getKaleoDefinition(kaleoDefinitionId);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinition(
+			String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getKaleoDefinition(name, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -47,6 +63,30 @@ public class KaleoDefinitionServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _kaleoDefinitionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<KaleoDefinition> getScopeKaleoDefinitions(
+			String scope, boolean active, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
+				orderByComparator,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getScopeKaleoDefinitions(
+			scope, active, start, end, orderByComparator, serviceContext);
+	}
+
+	@Override
+	public java.util.List<KaleoDefinition> getScopeKaleoDefinitions(
+			String scope, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
+				orderByComparator,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getScopeKaleoDefinitions(
+			scope, start, end, orderByComparator, serviceContext);
 	}
 
 	@Override

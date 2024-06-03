@@ -37,11 +37,11 @@ public abstract class BaseRegexStringContentTransformer
 
 			FileEntry fileEntry = getFileEntry(matcher);
 
-			if (!isSupported(fileEntry)) {
-				return content;
-			}
+			String replacement = matcher.group(0);
 
-			String replacement = getReplacement(matcher.group(0), fileEntry);
+			if (isSupported(fileEntry)) {
+				replacement = getReplacement(replacement, fileEntry);
+			}
 
 			matcher.appendReplacement(
 				sb, Matcher.quoteReplacement(replacement));

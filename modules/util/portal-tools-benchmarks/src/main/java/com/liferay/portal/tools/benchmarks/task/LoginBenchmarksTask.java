@@ -125,8 +125,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 
 		_assertRedirect(httpResponse1, "/c");
 
-		HttpResponse httpResponse2 = HttpUtil.doGet(
-			csrfToken, _newURL("/c"));
+		HttpResponse httpResponse2 = HttpUtil.doGet(csrfToken, _newURL("/c"));
 
 		_assertRedirect(httpResponse2, StringPool.SLASH);
 
@@ -139,7 +138,8 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	}
 
 	private long _logout() throws Exception {
-		HttpResponse httpResponse = HttpUtil.doGet(null, _newURL("/c/portal/logout"));
+		HttpResponse httpResponse = HttpUtil.doGet(
+			null, _newURL("/c/portal/logout"));
 
 		return httpResponse.getDuration();
 	}
@@ -151,11 +151,15 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	private long _viewLoginPage(String csrfToken) throws Exception {
 		HttpResponse httpResponse1 = HttpUtil.doGet(
 			csrfToken, _newURL("/c/portal/login?windowState=exclusive"));
+		String redirect = StringBundler.concat(
+			"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=0&",
+			"p_p_state=exclusive&p_p_mode=view&", _P_P_ID_NAMESPACE,
+			"_mvcRenderCommandName=/login/login&saveLastPath=false");
 
-		_assertRedirect(httpResponse1, _URL_LOGIN_POPUP_REDIRECT);
+		_assertRedirect(httpResponse1, redirect);
 
 		HttpResponse httpResponse2 = HttpUtil.doGet(
-			csrfToken, _newURL(_URL_LOGIN_POPUP_REDIRECT));
+			csrfToken, _newURL(redirect));
 
 		_assertResult(httpResponse2, "Remember Me");
 
@@ -165,13 +169,8 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	private static final String _P_P_ID =
 		"com_liferay_login_web_portlet_LoginPortlet";
 
-	private static final String _P_P_ID_NAMESPACE = StringPool.UNDERLINE + _P_P_ID;
-
-	private static final String _URL_LOGIN_POPUP_REDIRECT =
-		StringBundler.concat(
-			"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=0&",
-			"p_p_state=exclusive&p_p_mode=view&", _P_P_ID_NAMESPACE,
-			"_mvcRenderCommandName=/login/login&saveLastPath=false");
+	private static final String _P_P_ID_NAMESPACE =
+		StringPool.UNDERLINE + _P_P_ID;
 
 	private static final String _URL_LOGIN_POST = StringBundler.concat(
 		"/home?p_p_id=", _P_P_ID, "&p_p_lifecycle=1&",

@@ -38,7 +38,7 @@ public class TestrayExtension {
 		_testrayPropertiesFile = testrayPropertiesFile;
 	}
 
-	private Object _jenkinsResultsParserVersion = "1.0.1187";
+	private Object _jenkinsResultsParserVersion = "1.0.1384";
 	private final Project _project;
 	private Object _testrayPropertiesFile = "testray.properties";
 

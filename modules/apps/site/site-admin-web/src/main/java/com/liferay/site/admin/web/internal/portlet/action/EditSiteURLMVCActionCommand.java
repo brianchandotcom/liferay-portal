@@ -138,11 +138,17 @@ public class EditSiteURLMVCActionCommand
 		siteAdministrationURL = HttpComponentsUtil.addParameter(
 			siteAdministrationURL, namespace + "mvcRenderCommandName",
 			"/configuration_admin/view_configuration_screen");
-		siteAdministrationURL = HttpComponentsUtil.addParameter(
-			siteAdministrationURL, namespace + "configurationScreenKey",
-			"site-configuration-site-url");
 
-		return siteAdministrationURL;
+		String configurationScreenKey = "site-configuration-site-url";
+
+		if (group.isPrivateLayoutsEnabled()) {
+			configurationScreenKey =
+				"site-configuration-public-private-site-url";
+		}
+
+		return HttpComponentsUtil.addParameter(
+			siteAdministrationURL, namespace + "configurationScreenKey",
+			configurationScreenKey);
 	}
 
 	@Reference

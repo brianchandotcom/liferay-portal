@@ -40,7 +40,7 @@ definition {
 
 		task ("Then hyperlink is available within an anchor tag") {
 			AssertElementPresent(
-				key_href = "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps.html",
+				key_href = "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps",
 				key_text = "How does bundle",
 				locator1 = "Link#ANY_HREF");
 		}

@@ -69,12 +69,7 @@ declare function getInfoItemRelationships({
 }: {
 	classNameId: string;
 	classTypeId?: string;
-}): Promise<
-	{
-		classNameId: string;
-		label: string;
-	}[]
->;
+}): Promise<unknown>;
 declare const _default: {
 	getAvailableListItemRenderers: typeof getAvailableListItemRenderers;
 	getAvailableListRenderers: typeof getAvailableListRenderers;

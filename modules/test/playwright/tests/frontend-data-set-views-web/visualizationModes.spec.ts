@@ -435,6 +435,87 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
+	test('Assert that it is possible to change the order of fields in the table using the keyboard', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const SAMPLE_SCALAR_FIELD = 'id';
+		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const SAMPLE_OBJECT_CHILD_FIELD = 'id';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
+
+		await test.step('Add fields', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.*`,
+				fieldName: SAMPLE_OBJECT_FIELD,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
+				fieldName: SAMPLE_OBJECT_CHILD_FIELD,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Focus the last field', async () => {
+			const lastTableRow = visualizationModesPage.page.locator(
+				'table.orderable-table > tbody tr:last-child'
+			);
+
+			await expect(lastTableRow).toBeVisible();
+
+			const firstCell = lastTableRow.locator('td > button').first();
+
+			await expect(firstCell).toBeVisible();
+
+			await firstCell.focus();
+
+			await expect(firstCell).toBeFocused();
+		});
+
+		await test.step('Move the field one place up', async () => {
+			await page.keyboard.press('Enter');
+
+			await page.keyboard.press('ArrowUp');
+
+			await page.keyboard.press('Enter');
+		});
+
+		await test.step('Assert that the field has moved one place up', async () => {
+			const tableRows = visualizationModesPage.page.locator(
+				'table.orderable-table > tbody tr'
+			);
+
+			await expect(tableRows).toHaveCount(3);
+
+			const movedTableRow = tableRows.nth(1).locator('td').nth(1);
+
+			await expect(movedTableRow).toHaveText(
+				`${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`
+			);
+		});
+	});
+
 	test('Configure table visualization mode with array fields @LPD-11769', async ({
 		page,
 		visualizationModesPage,

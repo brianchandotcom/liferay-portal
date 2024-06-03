@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "mdfClaimStatus == 'rejected'",
+		"conditionExpression": "oldValue('mdfClaimStatus') != 'rejected' AND mdfClaimStatus == 'rejected'",
 		"externalReferenceCode": "MDF-CLAIM-REJECTED-NOTIFICATION-1",
 		"label": {
 			"en_US": "Notification MDF Claim On Reject"

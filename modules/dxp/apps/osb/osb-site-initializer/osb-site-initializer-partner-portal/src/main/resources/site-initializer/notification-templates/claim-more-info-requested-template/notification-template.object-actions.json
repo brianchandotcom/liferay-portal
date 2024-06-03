@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "mdfClaimStatus == 'moreInfoRequested'",
+		"conditionExpression": "oldValue('mdfClaimStatus') != 'moreInfoRequested' AND mdfClaimStatus == 'moreInfoRequested'",
 		"externalReferenceCode": "MDF-CLAIM-MORE-INFO-REQUESTED-NOTIFICATION-1",
 		"label": {
 			"en_US": "Notification MDF Claim More Info Requested"

@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "mdfClaimStatus == 'inFinanceReview'",
+		"conditionExpression": "oldValue('mdfClaimStatus') != 'inFinanceReview' AND mdfClaimStatus == 'inFinanceReview'",
 		"externalReferenceCode": "MDF-CLAIM-IN-FINANCE-NOTIFICATION-1",
 		"label": {
 			"en_US": "Notification MDF Claim In Finance Review"

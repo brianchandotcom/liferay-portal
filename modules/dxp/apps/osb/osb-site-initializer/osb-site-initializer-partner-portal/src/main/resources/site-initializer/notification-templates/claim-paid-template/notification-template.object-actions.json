@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "mdfClaimStatus == 'claimPaid'",
+		"conditionExpression": "oldValue('mdfClaimStatus') != 'claimPaid' AND mdfClaimStatus == 'claimPaid'",
 		"externalReferenceCode": "MDF-CLAIM-PAID-NOTIFICATION-1",
 		"label": {
 			"en_US": "Notification MDF Claim Paid"

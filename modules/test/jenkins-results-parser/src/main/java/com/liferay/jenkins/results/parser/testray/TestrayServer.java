@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +43,10 @@ public class TestrayServer {
 	}
 
 	public TestrayBuild getTestrayBuildByID(long buildID) {
+		if (_testrayBuilds.containsKey(buildID)) {
+			return _testrayBuilds.get(buildID);
+		}
+
 		try {
 			List<JSONObject> entityJSONObjects = requestGraphQL(
 				"builds", TestrayBuild.FIELD_NAMES, "id eq '" + buildID + "'",
@@ -66,7 +71,12 @@ public class TestrayServer {
 				testrayProject.getTestrayRoutineByID(
 					routineJSONObject.getLong("id"));
 
-			return testrayRoutine.getTestrayBuildByID(buildID);
+			TestrayBuild testrayBuild = TestrayFactory.newTestrayBuild(
+				testrayRoutine, entityJSONObject);
+
+			_testrayBuilds.put(testrayBuild.getID(), testrayBuild);
+
+			return testrayBuild;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -138,6 +148,10 @@ public class TestrayServer {
 	}
 
 	public TestrayProject getTestrayProjectByID(long projectID) {
+		if (_testrayProjects.containsKey(projectID)) {
+			return _testrayProjects.get(projectID);
+		}
+
 		try {
 			List<JSONObject> entityJSONObjects = requestGraphQL(
 				"projects", TestrayProject.FIELD_NAMES,
@@ -147,8 +161,12 @@ public class TestrayServer {
 				return null;
 			}
 
-			return TestrayFactory.newTestrayProject(
+			TestrayProject testrayProject = TestrayFactory.newTestrayProject(
 				this, entityJSONObjects.get(0));
+
+			_testrayProjects.put(testrayProject.getID(), testrayProject);
+
+			return testrayProject;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -156,6 +174,12 @@ public class TestrayServer {
 	}
 
 	public TestrayProject getTestrayProjectByName(String projectName) {
+		for (TestrayProject testrayProject : _testrayProjects.values()) {
+			if (Objects.equals(testrayProject.getName(), projectName)) {
+				return testrayProject;
+			}
+		}
+
 		try {
 			List<JSONObject> entityJSONObjects = requestGraphQL(
 				"projects", TestrayProject.FIELD_NAMES,
@@ -165,8 +189,12 @@ public class TestrayServer {
 				return null;
 			}
 
-			return TestrayFactory.newTestrayProject(
+			TestrayProject testrayProject = TestrayFactory.newTestrayProject(
 				this, entityJSONObjects.get(0));
+
+			_testrayProjects.put(testrayProject.getID(), testrayProject);
+
+			return testrayProject;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -181,8 +209,12 @@ public class TestrayServer {
 					requestGraphQL(
 						"projects", TestrayProject.FIELD_NAMES, null, null)) {
 
-				testrayProjects.add(
-					TestrayFactory.newTestrayProject(this, entityJSONObject));
+				TestrayProject testrayProject =
+					TestrayFactory.newTestrayProject(this, entityJSONObject);
+
+				_testrayProjects.put(testrayProject.getID(), testrayProject);
+
+				testrayProjects.add(testrayProject);
 			}
 		}
 		catch (IOException ioException) {
@@ -193,6 +225,10 @@ public class TestrayServer {
 	}
 
 	public TestrayRoutine getTestrayRoutineByID(long routineId) {
+		if (_testrayRoutines.containsKey(routineId)) {
+			return _testrayRoutines.get(routineId);
+		}
+
 		try {
 			List<JSONObject> entityJSONObjects = requestGraphQL(
 				"routines", TestrayRoutine.FIELD_NAMES,
@@ -205,13 +241,17 @@ public class TestrayServer {
 			JSONObject entityJSONObject = entityJSONObjects.get(0);
 
 			JSONObject projectJSONObject = entityJSONObject.getJSONObject(
-				"projectToBuilds");
+				"routineToProjects");
 
 			TestrayProject testrayProject = getTestrayProjectByID(
 				projectJSONObject.getLong("id"));
 
-			return testrayProject.getTestrayRoutineByID(
-				entityJSONObject.getLong("id"));
+			TestrayRoutine testrayRoutine = TestrayFactory.newTestrayRoutine(
+				testrayProject, entityJSONObject);
+
+			_testrayRoutines.put(testrayRoutine.getID(), testrayRoutine);
+
+			return testrayRoutine;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -376,10 +416,18 @@ public class TestrayServer {
 
 			requestJSONObject.put("query", sb.toString());
 
-			System.out.println(getURL() + "/o/graphql query: " + sb);
+			long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			JSONObject responseJSONObject = new JSONObject(
 				requestPost("/o/graphql", requestJSONObject.toString()));
+
+			String duration = JenkinsResultsParserUtil.toDurationString(
+				JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(getURL()), "/o/graphql query: ",
+					sb.toString(), " in ", duration));
 
 			try {
 				JSONObject dataJSONObject = responseJSONObject.getJSONObject(
@@ -540,6 +588,12 @@ public class TestrayServer {
 			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 	}
 
+	private static final Map<Long, TestrayBuild> _testrayBuilds =
+		new HashMap<>();
+	private static final Map<Long, TestrayProject> _testrayProjects =
+		new HashMap<>();
+	private static final Map<Long, TestrayRoutine> _testrayRoutines =
+		new HashMap<>();
 	private static final Pattern _urlPathPattern = Pattern.compile(
 		"/+(?<urlPath>.*)");
 	private static final Pattern _urlPattern = Pattern.compile(

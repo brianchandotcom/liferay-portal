@@ -107,6 +107,12 @@ public class TestrayRoutine {
 	}
 
 	public TestrayBuild getTestrayBuildByID(long buildID) {
+		TestrayBuild testrayBuild = _testrayServer.getTestrayBuildByID(buildID);
+
+		if (testrayBuild != null) {
+			return testrayBuild;
+		}
+
 		String filter = JenkinsResultsParserUtil.combine(
 			"id eq '", String.valueOf(buildID), "' and ",
 			"r_routineToBuilds_c_routineId eq '", String.valueOf(getID()), "'");

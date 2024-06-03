@@ -13,7 +13,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.json.JSONObject;
@@ -102,24 +104,15 @@ public class TestrayProject {
 	}
 
 	public TestrayCase getTestrayCaseByName(String testCaseName) {
-		String filter = JenkinsResultsParserUtil.combine(
-			"name eq '", testCaseName, "' and ",
-			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
+		_initTestrayCases();
 
-		try {
-			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"cases", TestrayCase.FIELD_NAMES, filter, null, 1, 1);
+		return _testrayCases.get(testCaseName);
+	}
 
-			if (entityJSONObjects.isEmpty()) {
-				return null;
-			}
+	public List<TestrayCase> getTestrayCases() {
+		_initTestrayCases();
 
-			return TestrayFactory.newTestrayCase(
-				this, entityJSONObjects.get(0));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return new ArrayList<>(_testrayCases.values());
 	}
 
 	public TestrayComponent getTestrayComponentByID(long componentID) {
@@ -220,6 +213,13 @@ public class TestrayProject {
 	}
 
 	public TestrayRoutine getTestrayRoutineByID(long routineID) {
+		TestrayRoutine testrayRoutine = _testrayServer.getTestrayRoutineByID(
+			routineID);
+
+		if (testrayRoutine != null) {
+			return testrayRoutine;
+		}
+
 		String filter = JenkinsResultsParserUtil.combine(
 			"id eq '", String.valueOf(routineID), "'");
 
@@ -330,7 +330,34 @@ public class TestrayProject {
 		_jsonObject = jsonObject;
 	}
 
+	private synchronized void _initTestrayCases() {
+		if (_testrayCases != null) {
+			return;
+		}
+
+		_testrayCases = new HashMap<>();
+
+		String filter = JenkinsResultsParserUtil.combine(
+			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
+
+		try {
+			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"cases", TestrayCase.FIELD_NAMES, filter, null);
+
+			for (JSONObject entityJSONObject : entityJSONObjects) {
+				TestrayCase testrayCase = TestrayFactory.newTestrayCase(
+					this, entityJSONObject);
+
+				_testrayCases.put(testrayCase.getName(), testrayCase);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private final JSONObject _jsonObject;
+	private Map<String, TestrayCase> _testrayCases;
 	private List<TestrayComponent> _testrayComponents;
 	private final TestrayServer _testrayServer;
 	private List<TestrayTeam> _testrayTeams;

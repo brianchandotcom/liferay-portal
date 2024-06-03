@@ -3,25 +3,42 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
+import {DashboardTable} from '../../../../components/DashboardTable/DashboardTable';
+import {getSiteURL} from '../../../../components/InviteMemberModal/services';
 import Page from '../../../../components/Page';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {useAccount} from '../../../../hooks/data/useAccounts';
+import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import PublishedSolutionsTable from './PublishedSolutionsTable';
+
+const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';
 
 const Solutions = () => {
 	const [page, setPage] = useState(1);
 	const {catalogId} = useOutletContext<any>();
 	const {data: supplierAccount} = useAccount();
+	const {myUserAccount, properties} = useMarketplaceContext();
 	const navigate = useNavigate();
-	const {properties} = useMarketplaceContext();
+
+	const supplierAccountRoleBriefs =
+		myUserAccount.accountBriefs.find(({id}) => id === supplierAccount?.id)
+			?.roleBriefs ?? [];
+
+	const isSolutionPublisher = supplierAccountRoleBriefs.find(
+		({name}) => name === SOLUTION_PUBLISHER_ROLE
+	);
+
+	const canPublishSolution =
+		isSolutionPublisher && properties.featureFlags?.includes('LPD-20220');
 
 	const {
 		data: publishedSolutionsTable = {},
@@ -54,12 +71,14 @@ const Solutions = () => {
 		}
 	);
 
+	const items = publishedSolutionsTable?.items ?? [];
+
 	return (
 		<Page
 			description="Manage and publish solutions on the Marketplace"
 			pageRendererProps={{error, isLoading}}
 			rightButton={
-				properties.featureFlags?.includes('LPD-20229') && (
+				canPublishSolution && (
 					<ClayButton
 						disabled={!(catalogId && catalogId > 0)}
 						onClick={() => navigate('/solutions/publisher')}
@@ -70,10 +89,37 @@ const Solutions = () => {
 			}
 			title="Solutions"
 		>
-			<PublishedSolutionsTable
-				items={publishedSolutionsTable?.items ?? []}
-				mutate={mutate}
-			/>
+			{!isSolutionPublisher && (
+				<ClayAlert displayType="warning">
+					Dear <b>{Liferay.ThemeDisplay.getUserName()}</b>, To become
+					an Solution Publisher,{' '}
+					<a href={`${getSiteURL()}/publisher-gate`} target="_blank">
+						please fill out the request form
+					</a>
+					. This step is necessary to ensure the quality and security
+					of the published content. If you need assistance, our
+					support team is available to help. We appreciate your
+					understanding and cooperation!
+				</ClayAlert>
+			)}
+
+			{items.length ? (
+				<PublishedSolutionsTable items={items} mutate={mutate} />
+			) : (
+				<DashboardTable
+					emptyStateMessage={{
+						className: 'd-flex justify-content-center',
+						...(isSolutionPublisher && {
+							description1:
+								'Create and submit new Solutions and they will show up here.',
+							description2:
+								'Click on “Add Solution Template” to start.',
+						}),
+						title: 'No Solutions Yet',
+					}}
+					icon="grid"
+				/>
+			)}
 
 			{!!publishedSolutionsTable?.items?.length && (
 				<ClayPaginationBarWithBasicItems

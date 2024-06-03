@@ -159,20 +159,22 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	}
 
 	protected Map<String, Object> getProxySettingsMap(String host) {
-		Map<String, Object> proxySettingsMap = new HashMap<>();
+		if (_http.isNonProxyHost(host)) {
+			return Collections.emptyMap();
+		}
 
 		String proxyHost = SystemProperties.get("http.proxyHost");
 		String proxyPort = SystemProperties.get("http.proxyPort");
 
-		if (Validator.isNotNull(proxyHost) && Validator.isNotNull(proxyPort) &&
-			!_http.isNonProxyHost(host)) {
-
-			proxySettingsMap.put("proxyHostName", proxyHost);
-			proxySettingsMap.put(
-				"proxyHostPort", GetterUtil.getInteger(proxyPort));
+		if (Validator.isNull(proxyHost) || Validator.isNull(proxyPort)) {
+			return Collections.emptyMap();
 		}
 
-		return proxySettingsMap;
+		return HashMapBuilder.<String, Object>put(
+			"proxyHostName", proxyHost
+		).put(
+			"proxyHostPort", GetterUtil.getInteger(proxyPort)
+		).build();
 	}
 
 	private void _addParameter(

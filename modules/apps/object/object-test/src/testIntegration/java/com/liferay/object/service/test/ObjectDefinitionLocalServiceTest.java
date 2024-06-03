@@ -59,6 +59,8 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,6 +69,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -91,6 +94,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -105,10 +109,12 @@ import java.sql.Connection;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Queue;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -116,6 +122,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Marco Leo
@@ -1266,6 +1275,88 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testAuditRouter() throws Exception {
+		Queue<AuditMessage> auditMessages = new LinkedList<>();
+
+		AuditRouter auditRouter =
+			(AuditRouter)ReflectionTestUtil.getAndSetFieldValue(
+				_objectDefinitionModelListener, "_auditRouter",
+				ProxyUtil.newProxyInstance(
+					AuditRouter.class.getClassLoader(),
+					new Class<?>[] {AuditRouter.class},
+					(proxy, method, arguments) -> {
+						auditMessages.add((AuditMessage)arguments[0]);
+
+						return null;
+					}));
+
+		ObjectDefinition objectDefinition = _addCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName());
+
+		AuditMessage auditMessage = auditMessages.poll();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"active", objectDefinition.isActive()
+			).put(
+				"labelMap", objectDefinition.getLabelMap()
+			).put(
+				"name", objectDefinition.getName()
+			).put(
+				"scope", objectDefinition.getScope()
+			).toString(),
+			String.valueOf(auditMessage.getAdditionalInfo()),
+			JSONCompareMode.STRICT_ORDER);
+
+		auditMessages.clear();
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		auditMessage = auditMessages.poll();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"attributes",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"name", "active"
+					).put(
+						"newValue", "true"
+					).put(
+						"oldValue", "false"
+					))
+			).toString(),
+			String.valueOf(auditMessage.getAdditionalInfo()),
+			JSONCompareMode.STRICT_ORDER);
+
+		auditMessages.clear();
+
+		objectDefinition = _objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+
+		auditMessage = auditMessages.poll();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"active", objectDefinition.isActive()
+			).put(
+				"labelMap", objectDefinition.getLabelMap()
+			).put(
+				"name", objectDefinition.getName()
+			).put(
+				"scope", objectDefinition.getScope()
+			).toString(),
+			String.valueOf(auditMessage.getAdditionalInfo()),
+			JSONCompareMode.STRICT_ORDER);
+
+		ReflectionTestUtil.setFieldValue(
+			_objectDefinitionModelListener, "_auditRouter", auditRouter);
 	}
 
 	@Test
@@ -2833,6 +2924,11 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.model.listener.ObjectDefinitionModelListener"
+	)
+	private ModelListener<ObjectDefinition> _objectDefinitionModelListener;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

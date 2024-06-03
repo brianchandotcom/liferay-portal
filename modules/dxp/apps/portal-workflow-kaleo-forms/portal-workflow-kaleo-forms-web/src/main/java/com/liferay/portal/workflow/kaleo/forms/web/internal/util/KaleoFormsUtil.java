@@ -375,7 +375,7 @@ public class KaleoFormsUtil {
 		long companyId, String name, int version) {
 
 		try {
-			return WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+			return WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				companyId, name, version);
 		}
 		catch (Exception exception) {
@@ -461,7 +461,7 @@ public class KaleoFormsUtil {
 		throws Exception {
 
 		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+			WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				companyId, workflowDefinitionName, workflowDefinitionVersion);
 
 		return TransformUtil.transform(

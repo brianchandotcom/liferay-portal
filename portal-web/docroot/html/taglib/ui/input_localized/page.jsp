@@ -29,6 +29,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 					cssClass='<%= "language-value " + cssClass %>'
 					editorName="<%= editorName %>"
 					name="<%= inputEditorName %>"
+					onBlurMethod='<%= randomNamespace + "onBlurMethod" %>'
 					onChangeMethod='<%= randomNamespace + "onChangeEditor" %>'
 					onInitMethod='<%= randomNamespace + "onInitEditor" %>'
 					placeholder="<%= placeholder %>"
@@ -36,12 +37,25 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 				/>
 
 				<aui:script>
+					var edited = false;
+
+					function <%= namespace + randomNamespace %>onBlurMethod() {
+						if (edited && Liferay.FeatureFlags['LPD-11228']) {
+							edited = false;
+
+							Liferay.fire('journal:storeState', {fieldName: "<%= inputEditorName %>"});
+						}
+					}
+
 					function <%= namespace + randomNamespace %>onChangeEditor() {
+						if (Liferay.FeatureFlags['LPD-11228']) edited = true;
+
 						var inputLocalized = Liferay.component('<%= namespace + HtmlUtil.escapeJS(fieldName) %>');
 
 						var editor = window['<%= namespace + HtmlUtil.escapeJS(inputEditorName) %>'];
 
 						inputLocalized.updateInputLanguage(editor.getHTML());
+
 					}
 
 					function <%= namespace + randomNamespace %>onInitEditor() {

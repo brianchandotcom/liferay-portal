@@ -170,6 +170,20 @@
 
 		<column name="companyId" type="long" />
 	</entity>
+	<entity external-reference-code="group" local-service="true" name="ERCVersionedEntry" remote-service="false" uuid="true" versioned="true">
+
+		<!-- PK fields -->
+
+		<column name="ercVersionedEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
 	<entity local-service="true" name="FinderWhereClauseEntry" remote-service="false">
 
 		<!-- PK fields -->

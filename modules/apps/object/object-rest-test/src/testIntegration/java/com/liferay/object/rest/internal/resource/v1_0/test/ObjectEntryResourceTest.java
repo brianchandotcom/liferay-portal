@@ -5626,6 +5626,8 @@ public class ObjectEntryResourceTest {
 						"PersistentAuditMessageProcessorConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"enabled", true
+					).put(
+						"flushInterval", 1
 					).build())) {
 
 			ObjectEntry serviceBuilderObjectEntry =

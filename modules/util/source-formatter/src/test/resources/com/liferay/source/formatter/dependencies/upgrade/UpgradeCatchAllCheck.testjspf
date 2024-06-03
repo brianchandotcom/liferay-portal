@@ -8,5 +8,7 @@
 <%
 indexer.getClassNames();
 
+JSONUtil.isValid("test123");
+
 themeDisplay.getPortletGroupId();
 %>

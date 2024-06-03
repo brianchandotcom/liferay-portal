@@ -55,6 +55,16 @@
 		"to": "updateDocument(param#1#, param#2#)"
 	},
 	{
+		"from": "JSONUtil.isValid",
+		"issueKey": "LPD-8007",
+		"to": "JSONUtil.isJSONObject",
+		"validExtensions": [
+			"java",
+			"jsp",
+			"jspf"
+		]
+	},
+	{
 		"from": "LayoutFriendlyURLComposite(Layout paramName, String paramName)",
 		"issueKey": "LPD-8025",
 		"skipParametersValidation": true,

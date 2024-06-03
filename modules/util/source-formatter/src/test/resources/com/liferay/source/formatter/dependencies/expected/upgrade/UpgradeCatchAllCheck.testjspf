@@ -8,5 +8,7 @@
 <%
 indexer.getSearchClassNames();
 
+JSONUtil.isJSONObject("test123");
+
 themeDisplay.getScopeGroupId();
 %>

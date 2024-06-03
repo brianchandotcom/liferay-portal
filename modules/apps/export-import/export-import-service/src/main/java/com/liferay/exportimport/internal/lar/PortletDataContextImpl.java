@@ -2532,8 +2532,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			try {
 				workflowDefinition =
-					WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
-						getCompanyId(), displayName);
+					WorkflowDefinitionManagerUtil.
+						liberalGetLatestWorkflowDefinition(
+							getCompanyId(), displayName);
 			}
 			catch (WorkflowException workflowException) {
 				if (_log.isDebugEnabled()) {

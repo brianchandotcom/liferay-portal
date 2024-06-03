@@ -162,21 +162,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name)
 		throws WorkflowException {
 
-		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-
-			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				_kaleoDefinitionService.getKaleoDefinition(
-					name, serviceContext));
-		}
-		catch (WorkflowException workflowException) {
-			throw workflowException;
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
+		return _getLatestWorkflowDefinition(companyId, false, name);
 	}
 
 	@Override
@@ -332,6 +318,14 @@ public class WorkflowDefinitionManagerImpl
 
 		return _getActiveWorkflowDefinitions(
 			companyId, true, start, end, orderByComparator);
+	}
+
+	@Override
+	public WorkflowDefinition liberalGetLatestWorkflowDefinition(
+			long companyId, String name)
+		throws WorkflowException {
+
+		return _getLatestWorkflowDefinition(companyId, true, name);
 	}
 
 	@Override
@@ -501,6 +495,31 @@ public class WorkflowDefinitionManagerImpl
 			return _toWorkflowDefinitions(
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	private WorkflowDefinition _getLatestWorkflowDefinition(
+			long companyId, boolean liberal, String name)
+		throws WorkflowException {
+
+		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+
+			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+				_get(
+					liberal,
+					() -> _kaleoDefinitionLocalService.getKaleoDefinition(
+						name, serviceContext),
+					() -> _kaleoDefinitionService.getKaleoDefinition(
+						name, serviceContext)));
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

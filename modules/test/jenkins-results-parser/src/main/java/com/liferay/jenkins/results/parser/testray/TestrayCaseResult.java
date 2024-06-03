@@ -17,7 +17,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
+
+import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,6 +65,44 @@ public class TestrayCaseResult {
 
 	public String getErrors() {
 		return _jsonObject.optString("errors");
+	}
+
+	public ErrorType getErrorType() {
+		if (_errorType != null) {
+			return _errorType;
+		}
+
+		for (String didNotRunErrors : _DID_NOT_RUN_ERRORS) {
+			String errors = getErrors();
+
+			if (errors.contains(didNotRunErrors)) {
+				_errorType = ErrorType.DID_NOT_RUN;
+
+				return _errorType;
+			}
+		}
+
+		for (TestrayCaseResult previousTestrayCaseResult :
+				getTestrayCaseResultHistory(5)) {
+
+			if (Objects.equals(getID(), previousTestrayCaseResult.getID())) {
+				continue;
+			}
+
+			if (_isSimilarError(previousTestrayCaseResult) &&
+				!Objects.equals(
+					getPullRequestSenderUsername(),
+					previousTestrayCaseResult.getPullRequestSenderUsername())) {
+
+				_errorType = ErrorType.COMMON;
+
+				return _errorType;
+			}
+		}
+
+		_errorType = ErrorType.UNIQUE;
+
+		return _errorType;
 	}
 
 	public URL getHistoryURL() {
@@ -183,7 +224,7 @@ public class TestrayCaseResult {
 		try {
 			List<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
 				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
-				"dateCreated:desc", maxCount, 25);
+				"dateCreated:desc", maxCount, 5);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				testrayCaseResults.add(
@@ -255,6 +296,23 @@ public class TestrayCaseResult {
 
 	public String[] getWarnings() {
 		return null;
+	}
+
+	public static enum ErrorType {
+
+		COMMON("Common"), DID_NOT_RUN("Did not run"), UNIQUE("Unique");
+
+		@Override
+		public String toString() {
+			return _name;
+		}
+
+		private ErrorType(String name) {
+			_name = name;
+		}
+
+		private final String _name;
+
 	}
 
 	public static enum Status {
@@ -368,6 +426,40 @@ public class TestrayCaseResult {
 
 	protected Map<String, TestrayAttachment> testrayAttachments;
 
+	private boolean _isSimilarError(
+		TestrayCaseResult previousTestrayCaseResult) {
+
+		String thisErrors = getErrors();
+
+		String previousErrors = previousTestrayCaseResult.getErrors();
+
+		try {
+			double jaroWinklerDistance = StringUtils.getJaroWinklerDistance(
+				thisErrors, previousErrors);
+
+			if (jaroWinklerDistance > _MAX_JARO_WINKLER_DISTANCE) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			if (Objects.equals(thisErrors, previousErrors)) {
+				return true;
+			}
+
+			return false;
+		}
+	}
+
+	private static final String[] _DID_NOT_RUN_ERRORS = {
+		"Aborted prior to running test", "Failed prior to running test",
+		"Failed for unknown reason", "timed out after 2 hours"
+	};
+
+	private static final double _MAX_JARO_WINKLER_DISTANCE = 0.8;
+
+	private ErrorType _errorType;
 	private final JSONObject _jsonObject;
 	private TestrayBuild _testrayBuild;
 	private TestrayCase _testrayCase;

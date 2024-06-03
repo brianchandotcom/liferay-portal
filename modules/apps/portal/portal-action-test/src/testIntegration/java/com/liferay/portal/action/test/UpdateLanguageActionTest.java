@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.UpdateLanguageAction;
@@ -41,6 +42,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -71,25 +73,18 @@ public class UpdateLanguageActionTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_availableLocales = _language.getAvailableLocales();
-		_defaultLocale = LocaleUtil.getDefault();
-		_localesEnabled = PropsValues.LOCALES_ENABLED;
+		_originalAvailableLocales = _language.getAvailableLocales();
+		_originalDefaultLocale = LocaleUtil.getDefault();
+		_originalLocalesEnabled = PropsValues.LOCALES_ENABLED;
 
 		_language.init();
 
 		CompanyTestUtil.resetCompanyLocales(
-			_portal.getDefaultCompanyId(),
-			Arrays.asList(
-				LocaleUtil.GERMANY, LocaleUtil.FRANCE, LocaleUtil.UK,
-				LocaleUtil.US),
-			LocaleUtil.US);
+			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
 
-		PropsValues.LOCALES_ENABLED = new String[] {
-			_language.getLanguageId(LocaleUtil.GERMANY),
-			_language.getLanguageId(LocaleUtil.FRANCE),
-			_language.getLanguageId(LocaleUtil.UK),
-			_language.getLanguageId(LocaleUtil.US)
-		};
+		PropsValues.LOCALES_ENABLED = TransformUtil.transformToArray(
+			_availableLocales, locale -> _language.getLanguageId(locale),
+			String.class);
 	}
 
 	@AfterClass
@@ -97,9 +92,10 @@ public class UpdateLanguageActionTest {
 		_language.init();
 
 		CompanyTestUtil.resetCompanyLocales(
-			_portal.getDefaultCompanyId(), _availableLocales, _defaultLocale);
+			_portal.getDefaultCompanyId(), _originalAvailableLocales,
+			_originalDefaultLocale);
 
-		PropsValues.LOCALES_ENABLED = _localesEnabled;
+		PropsValues.LOCALES_ENABLED = _originalLocalesEnabled;
 	}
 
 	@Before
@@ -445,13 +441,16 @@ public class UpdateLanguageActionTest {
 
 	private static final String _VIRTUAL_HOSTNAME = "test.com";
 
-	private static Set<Locale> _availableLocales;
-	private static Locale _defaultLocale;
+	private static final List<Locale> _availableLocales = Arrays.asList(
+		LocaleUtil.GERMANY, LocaleUtil.FRANCE, LocaleUtil.UK, LocaleUtil.US);
+	private static final Locale _defaultLocale = LocaleUtil.US;
 
 	@Inject
 	private static Language _language;
 
-	private static String[] _localesEnabled;
+	private static Set<Locale> _originalAvailableLocales;
+	private static Locale _originalDefaultLocale;
+	private static String[] _originalLocalesEnabled;
 
 	@Inject
 	private static Portal _portal;

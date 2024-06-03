@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -263,6 +265,38 @@ public class TestrayRoutine {
 
 	protected TestrayRoutine(URL url) {
 		_url = url;
+
+		if (this instanceof Testray1TestrayRoutine) {
+			return;
+		}
+
+		Matcher matcher = _testrayRoutineURLPattern.matcher(url.toString());
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid Routine URL " + url);
+		}
+
+		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
+			matcher.group("serverURL"));
+
+		setTestrayServer(testrayServer);
+
+		String filter = JenkinsResultsParserUtil.combine(
+			"id eq '", matcher.group("routineID"), "'");
+
+		try {
+			List<JSONObject> entityJSONObjects = testrayServer.requestGraphQL(
+				"routines", TestrayRoutine.FIELD_NAMES, filter, null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return;
+			}
+
+			setJSONObject(entityJSONObjects.get(0));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected void setTestrayProject(TestrayProject testrayProject) {
@@ -272,6 +306,10 @@ public class TestrayRoutine {
 	protected void setTestrayServer(TestrayServer testrayServer) {
 		_testrayServer = testrayServer;
 	}
+
+	private static final Pattern _testrayRoutineURLPattern = Pattern.compile(
+		"(?<serverURL>https://[^/]+)/#/project/(?<projectID>\\d+)/routines/" +
+			"(?<routineID>\\d+)");
 
 	private JSONObject _jsonObject;
 	private TestrayProject _testrayProject;

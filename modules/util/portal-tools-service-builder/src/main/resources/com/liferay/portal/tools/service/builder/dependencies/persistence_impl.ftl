@@ -859,12 +859,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				<#if entity.hasExternalReferenceCode()>
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						${entity.name} erc${entity.name} = fetchByERC_${entity.externalReferenceCode?cap_first[0..0]}<#if entity.versionEntity??>_Head</#if>
-						(${entity.variableName}.getExternalReferenceCode(), ${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id()
-							<#if entity.versionEntity??>
-								, ${entity.variableName}.isHead()
-							</#if>
-						);
+						<#if entity.versionEntity??>
+							${entity.name} erc${entity.name} = fetchByERC_${entity.externalReferenceCode?cap_first[0..0]}_Head(${entity.variableName}.getExternalReferenceCode(), ${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id(), ${entity.variableName}.isHead());
+						<#else>
+							${entity.name} erc${entity.name} = fetchByERC_${entity.externalReferenceCode?cap_first[0..0]}(${entity.variableName}.getExternalReferenceCode(), ${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id());
+						</#if>
 					<#else>
 						${entity.name} erc${entity.name} = fetchBy${entity.externalReferenceCode?cap_first[0..0]}_ERC(${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id(), ${entity.variableName}.getExternalReferenceCode());
 					</#if>

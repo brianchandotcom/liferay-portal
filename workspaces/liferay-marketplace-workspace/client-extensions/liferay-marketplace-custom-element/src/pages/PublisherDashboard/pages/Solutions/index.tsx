@@ -91,15 +91,13 @@ const Solutions = () => {
 		>
 			{!isSolutionPublisher && (
 				<ClayAlert displayType="warning">
-					Dear <b>{Liferay.ThemeDisplay.getUserName()}</b>, To become
-					an Solution Publisher,{' '}
+					Dear <b>{Liferay.ThemeDisplay.getUserName()}</b>, Publishing
+					solutions on the Liferay Solutions Marketplace is only
+					available to existing Liferay partners currently. If you are
+					a partner and wish to be able to publish your solutions here{' '}
 					<a href={`${getSiteURL()}/publisher-gate`} target="_blank">
-						please fill out the request form
+						please complete this form.
 					</a>
-					. This step is necessary to ensure the quality and security
-					of the published content. If you need assistance, our
-					support team is available to help. We appreciate your
-					understanding and cooperation!
 				</ClayAlert>
 			)}
 

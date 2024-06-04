@@ -37,7 +37,7 @@ const PublisherGateSteps = () => {
 				flag: 'en-us',
 			},
 			phoneNumber: '',
-			publisherType: [],
+			publisherType: ['appPublisher'],
 			requestDescription: '',
 		},
 		mode: 'onBlur',

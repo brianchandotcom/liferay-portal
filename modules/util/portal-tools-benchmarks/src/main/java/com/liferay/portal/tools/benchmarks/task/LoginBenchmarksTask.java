@@ -147,10 +147,10 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		URL url = _assertRedirect(
 			httpResponse1,
 			StringBundler.concat(
-				"/home?", _P_P_ID_NAMESPACE,
-				"_mvcRenderCommandName=/login/login&p_p_id=", _P_P_ID,
-				"&p_p_lifecycle=0&p_p_mode=view&p_p_state=exclusive&",
-				"saveLastPath=false"));
+				"/home?p_p_id=", _P_P_ID,
+				"&p_p_lifecycle=0&p_p_state=exclusive&p_p_mode=view&",
+				_P_P_ID_NAMESPACE,
+				"_mvcRenderCommandName=/login/login&saveLastPath=false"));
 
 		HttpResponse httpResponse2 = HttpUtil.doGet(csrfToken, url);
 

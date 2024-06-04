@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {checkAccessibility} from '../../utils/checkAccessibility';
 import {featureFlagPagesTest} from './fixtures/featureFlagPagesTest';
 
 const DEPENDENCY_FEATURE_FLAG = 'LPD-00000';
@@ -25,6 +26,8 @@ test('LPS-167698 - Assert that a feature flag can be enabled and disabled.', asy
 	featureFlagsInstanceSettingsPage,
 }) => {
 	await featureFlagsInstanceSettingsPage.goto();
+
+	await checkAccessibility({page: featureFlagsInstanceSettingsPage.page});
 
 	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
 		DEPENDENCY_FEATURE_FLAG,

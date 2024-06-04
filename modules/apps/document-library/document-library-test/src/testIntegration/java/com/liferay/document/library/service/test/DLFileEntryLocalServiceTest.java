@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -27,6 +28,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -55,8 +57,11 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
@@ -98,6 +103,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1254,6 +1260,56 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateFileEntryDynamicQueryTransactionInterval()
+		throws Exception {
+
+		for (int i = 0; i < 20; i++) {
+			_dlFileEntryLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
+				new ByteArrayInputStream(new byte[0]), 0, null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+		}
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		try {
+			_dlFileEntryLocalService.forEachFileEntry(
+				TestPropsValues.getCompanyId(),
+				dlFileEntry -> {
+					if (atomicInteger.incrementAndGet() == 20) {
+						throw new TestException();
+					}
+
+					dlFileEntry.setDescription("Updated");
+				},
+				0L, new String[] {ContentTypes.TEXT_PLAIN});
+
+			Assert.fail("TestException was not thrown");
+		}
+		catch (SystemException systemException) {
+			if (!(systemException.getCause() instanceof TestException)) {
+				throw systemException;
+			}
+		}
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
+		).from(
+			DLFileEntryTable.INSTANCE
+		).where(
+			DLFileEntryTable.INSTANCE.description.eq("Updated")
+		);
+
+		int countUpdated = _dlFileEntryLocalService.dslQueryCount(dslQuery);
+
+		Assert.assertEquals(10, countUpdated);
+	}
+
+	@Test
 	public void testUpdateFileEntryRefreshesStoreUUID() throws Exception {
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -1612,7 +1668,13 @@ public class DLFileEntryLocalServiceTest {
 	@Inject
 	private DDMStorageEngineManager _ddmStorageEngineManager;
 
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private static class TestException extends RuntimeException {
+	}
 
 }

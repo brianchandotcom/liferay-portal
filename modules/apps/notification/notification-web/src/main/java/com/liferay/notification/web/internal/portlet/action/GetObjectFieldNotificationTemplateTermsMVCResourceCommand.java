@@ -6,8 +6,8 @@
 package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
-import com.liferay.notification.term.contributor.NotificationTermProviderRegistry;
-import com.liferay.notification.term.contributor.NotificationTermProvider;
+import com.liferay.notification.term.provider.NotificationTermProviderRegistry;
+import com.liferay.notification.term.provider.NotificationTermProvider;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;

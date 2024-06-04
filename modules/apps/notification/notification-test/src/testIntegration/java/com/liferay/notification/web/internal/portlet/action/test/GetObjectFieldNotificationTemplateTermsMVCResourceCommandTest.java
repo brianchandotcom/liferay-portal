@@ -6,7 +6,7 @@
 package com.liferay.notification.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.notification.term.contributor.NotificationTermProvider;
+import com.liferay.notification.term.provider.NotificationTermProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;

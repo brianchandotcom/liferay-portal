@@ -562,7 +562,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addOrUpdateListTypeDefinitions(
 					serviceContext, stringUtilReplaceValues));
 
-			_invoke(() -> _addUserAccounts(serviceContext));
+			_invoke(
+				() -> _addUserAccounts(
+					serviceContext, stringUtilReplaceValues));
 
 			Map<String, ObjectDefinition>
 				accountEntryRestrictedObjectDefinitions = new HashMap<>();
@@ -4514,7 +4516,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addUserAccounts(ServiceContext serviceContext)
+	private void _addUserAccounts(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
@@ -4534,7 +4538,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getRequest()
 			).build();
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_replace(json, stringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -4548,6 +4553,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			List<Group> oldGroups = new ArrayList<>();
 
+			long imageId = jsonObject.getLong("imageId");
 			int j = 0;
 			long userId = 0;
 
@@ -4592,10 +4598,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 				userId, ListUtil.toLongArray(oldGroups, GroupModel::getGroupId),
 				serviceContext);
 
+			if (imageId > 0) {
+				_userLocalService.updatePortrait(
+					userId,
+					FileUtil.getBytes(
+						DLAppLocalServiceUtil.getFileEntry(
+							imageId
+						).getContentStream()));
+			}
+
 			if (jsonObject.has("organizationBriefs")) {
 				_addOrganizationUser(
 					jsonObject.getJSONArray("organizationBriefs"),
 					serviceContext, userId);
+			}
+
+			if (jsonObject.has("userGroupBriefs")) {
+				_addUserGroupsUser(
+					jsonObject.getJSONArray("userGroupBriefs"), serviceContext,
+					userId);
 			}
 
 			for (; j < accountBriefsJSONArray.length(); j++) {
@@ -4620,6 +4641,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			userAccountResource.patchUserAccount(
 				userAccount.getId(), userAccount);
+		}
+	}
+
+	private void _addUserGroupsUser(
+			JSONArray jsonArray, ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		if (JSONUtil.isEmpty(jsonArray)) {
+			return;
+		}
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+				serviceContext.getCompanyId(), jsonObject.getString("name"));
+
+			if (userGroup == null) {
+				continue;
+			}
+
+			_userLocalService.addUserGroupUser(
+				userGroup.getUserGroupId(), userId);
 		}
 	}
 

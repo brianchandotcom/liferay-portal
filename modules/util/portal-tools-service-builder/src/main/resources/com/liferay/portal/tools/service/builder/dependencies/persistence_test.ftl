@@ -1371,7 +1371,7 @@ public class ${entity.name}PersistenceTest {
 				${entity.variableName}.set${entityColumn.methodName}(
 
 				<#if stringUtil.equals(entityColumn.name, "headId") && entity.versionEntity??>
-					- RandomTestUtil.nextLong()
+					-pk
 				<#elseif stringUtil.equals(entityColumn.type, "boolean")>
 					RandomTestUtil.randomBoolean()
 				<#elseif stringUtil.equals(entityColumn.type, "double")>

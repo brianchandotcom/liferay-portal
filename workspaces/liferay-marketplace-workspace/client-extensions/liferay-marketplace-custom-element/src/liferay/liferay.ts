@@ -52,6 +52,7 @@ type ILiferay = {
 	Util: {
 		LocalStorage: LiferayStorage;
 		SessionStorage: LiferayStorage;
+		fetch: typeof fetch;
 		navigate: (path: string) => void;
 		openModal: (options?: {}) => void;
 		openToast: (options?: {

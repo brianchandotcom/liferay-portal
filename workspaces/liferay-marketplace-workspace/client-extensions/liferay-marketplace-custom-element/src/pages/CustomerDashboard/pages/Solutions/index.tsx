@@ -12,12 +12,12 @@ import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
 import PurchasedSolutionsTable from '../../components/PurchasedSolutionsTable';
 import {usePurchasedOrders} from '../../usePurchasedOrders';
 
-const DISABLED_REFRESH_INTERVAL = 0;
-const REFRESH_INTERVAL_IN_SECONDS = 60;
+const ACTIVE_REFRESH_INTERVAL = 60 * 1000;
+const DEFAULT_REFRESH_INTERVAL = 240 * 1000;
 
 const Solutions = () => {
 	const [refreshInterval, setRefreshInterval] = useState(
-		DISABLED_REFRESH_INTERVAL
+		DEFAULT_REFRESH_INTERVAL
 	);
 	const {channel} = useMarketplaceContext();
 	const {selectedAccount} = useOutletContext<any>();
@@ -48,9 +48,7 @@ const Solutions = () => {
 		);
 
 		setRefreshInterval(
-			isProcessing
-				? REFRESH_INTERVAL_IN_SECONDS
-				: DISABLED_REFRESH_INTERVAL
+			isProcessing ? ACTIVE_REFRESH_INTERVAL : DEFAULT_REFRESH_INTERVAL
 		);
 	}, [orderItems]);
 

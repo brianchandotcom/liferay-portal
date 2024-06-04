@@ -1012,7 +1012,7 @@ public class PullRequest {
 		}
 
 		public String getId() {
-			return String.valueOf(_commentJSONObject.getInt("id"));
+			return String.valueOf(_commentJSONObject.getLong("id"));
 		}
 
 		public Date getModifiedDate() {

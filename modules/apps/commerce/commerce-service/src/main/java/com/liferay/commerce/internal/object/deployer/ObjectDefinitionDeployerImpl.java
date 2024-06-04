@@ -7,7 +7,7 @@ package com.liferay.commerce.internal.object.deployer;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
-import com.liferay.commerce.internal.notification.term.contributor.SalesAgentNotificationTermContributor;
+import com.liferay.commerce.internal.notification.term.contributor.SalesAgentNotificationTermProvider;
 import com.liferay.commerce.internal.notification.term.evaluator.SalesAgentNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.type.ObjectDefinitionCommerceNotificationType;
 import com.liferay.commerce.internal.order.term.contributor.ObjectCommerceDefinitionTermContributor;
@@ -15,7 +15,7 @@ import com.liferay.commerce.internal.order.term.contributor.ObjectRecipientComme
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.notification.term.contributor.NotificationTermContributor;
+import com.liferay.notification.term.contributor.NotificationTermProvider;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -67,8 +67,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"class.name", objectDefinition.getClassName()
 					).build()),
 				_bundleContext.registerService(
-					NotificationTermContributor.class,
-					new SalesAgentNotificationTermContributor(),
+					NotificationTermProvider.class,
+					new SalesAgentNotificationTermProvider(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"class.name", objectDefinition.getClassName()
 					).build()));

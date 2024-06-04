@@ -5,8 +5,8 @@
 
 package com.liferay.notification.internal.term.contributor;
 
-import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorTracker;
+import com.liferay.notification.term.contributor.NotificationTermProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -27,34 +27,32 @@ public class NotificationTermContributorTrackerImpl
 	implements NotificationTermContributorTracker {
 
 	@Override
-	public List<NotificationTermContributor> getNotificationTermContributors(
+	public List<NotificationTermProvider> getNotificationTermContributors(
 		String className) {
 
-		List<NotificationTermContributor> notificationTermContributors =
+		List<NotificationTermProvider> notificationTermProviders =
 			new ArrayList<>();
 
 		List
 			<ServiceTrackerCustomizerFactory.ServiceWrapper
-				<NotificationTermContributor>>
-					notificationTermEvaluatorWrappers =
-						_serviceTrackerMap.getService(className);
+				<NotificationTermProvider>> notificationTermEvaluatorWrappers =
+					_serviceTrackerMap.getService(className);
 
 		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<NotificationTermContributor>
-					tableActionProviderServiceWrapper :
-						notificationTermEvaluatorWrappers) {
+				<NotificationTermProvider> tableActionProviderServiceWrapper :
+					notificationTermEvaluatorWrappers) {
 
-			notificationTermContributors.add(
+			notificationTermProviders.add(
 				tableActionProviderServiceWrapper.getService());
 		}
 
-		return notificationTermContributors;
+		return notificationTermProviders;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, NotificationTermContributor.class, "class.name",
+			bundleContext, NotificationTermProvider.class, "class.name",
 			ServiceTrackerCustomizerFactory.serviceWrapper(bundleContext));
 	}
 
@@ -67,6 +65,6 @@ public class NotificationTermContributorTrackerImpl
 		<String,
 		 List
 			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <NotificationTermContributor>>> _serviceTrackerMap;
+				 <NotificationTermProvider>>> _serviceTrackerMap;
 
 }

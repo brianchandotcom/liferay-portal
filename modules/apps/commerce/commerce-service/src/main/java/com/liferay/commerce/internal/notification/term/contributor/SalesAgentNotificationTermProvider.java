@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.internal.notification.term.contributor;
 
-import com.liferay.notification.term.contributor.NotificationTermContributor;
+import com.liferay.notification.term.contributor.NotificationTermProvider;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -13,11 +13,11 @@ import java.util.Map;
 /**
  * @author Luca Pellizzon
  */
-public class SalesAgentNotificationTermContributor
-	implements NotificationTermContributor {
+public class SalesAgentNotificationTermProvider
+	implements NotificationTermProvider {
 
 	@Override
-	public Map<String, String> contributeTerms() {
+	public Map<String, String> getNotificationTerms() {
 		return HashMapBuilder.put(
 			"sales-agent", "[%SALES_AGENT%]"
 		).build();

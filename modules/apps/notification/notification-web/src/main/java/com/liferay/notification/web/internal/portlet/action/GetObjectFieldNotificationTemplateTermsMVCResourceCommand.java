@@ -6,8 +6,8 @@
 package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
-import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorTracker;
+import com.liferay.notification.term.contributor.NotificationTermProvider;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
@@ -105,15 +105,15 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 				objectDefinition.getObjectDefinitionId()),
 			objectDefinition.getShortName(), themeDisplay);
 
-		List<NotificationTermContributor> notificationTermContributors =
+		List<NotificationTermProvider> notificationTermProviders =
 			_notificationTermContributorTracker.getNotificationTermContributors(
 				objectDefinition.getClassName());
 
-		for (NotificationTermContributor notificationTermContributor :
-				notificationTermContributors) {
+		for (NotificationTermProvider notificationTermProvider :
+				notificationTermProviders) {
 
 			Map<String, String> stringStringMap =
-				notificationTermContributor.contributeTerms();
+				notificationTermProvider.getNotificationTerms();
 
 			for (Map.Entry<String, String> entry : stringStringMap.entrySet()) {
 				termsJSONArray.put(

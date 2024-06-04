@@ -6,7 +6,7 @@
 package com.liferay.notification.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.notification.term.contributor.NotificationTermContributor;
+import com.liferay.notification.term.contributor.NotificationTermProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -117,11 +117,11 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 		_companyLocalService.deleteCompany(company);
 	}
 
-	public static class TestNotificationTermContributor
-		implements NotificationTermContributor {
+	public static class TestNotificationTermProvider
+		implements NotificationTermProvider {
 
 		@Override
-		public Map<String, String> contributeTerms() {
+		public Map<String, String> getNotificationTerms() {
 			return HashMapBuilder.put(
 				"test", "[%TEST%]"
 			).build();
@@ -142,8 +142,8 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 
 				return Collections.singletonList(
 					_bundleContext.registerService(
-						NotificationTermContributor.class,
-						new TestNotificationTermContributor(),
+						NotificationTermProvider.class,
+						new TestNotificationTermProvider(),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"class.name", objectDefinition.getClassName()
 						).build()));

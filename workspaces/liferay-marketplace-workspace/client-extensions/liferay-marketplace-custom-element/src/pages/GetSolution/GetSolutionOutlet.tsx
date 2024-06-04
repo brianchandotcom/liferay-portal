@@ -8,13 +8,15 @@ import {useForm} from 'react-hook-form';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {z} from 'zod';
 
+import Loading from '../../components/Loading';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import {Analytics} from '../../core/Analytics';
 import {ORDER_TYPES} from '../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../hooks/useMarketplaceSpringBootOAuth2';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import fetcher from '../../services/fetcher';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
-import {postOrder} from '../../utils/api';
+import headlessCommerceDeliveryCart from '../../services/rest/HeadlessCommerceDeliveryCart';
 import AccountEmailInfo from '../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/AccountInfo';
 import {ProductCardRevamp} from '../GetApp/components/ProductCard/ProductCard';
 import {StepWizardRevamp} from '../GetApp/components/StepWizard/StepWizard';
@@ -25,26 +27,6 @@ type GetSolutionOutletProps = {
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator> & {
 	accountSelected: Account | undefined;
-};
-
-const productCustomFields = [
-	'Github Username',
-	'Project Name',
-	'Site Initializer',
-];
-
-const getProductCustomFields = (customFields: CustomField[]) => {
-	let data = {};
-
-	productCustomFields.forEach((fieldName) => {
-		customFields.forEach((field) => {
-			if (field.name === fieldName) {
-				data = {...data, [fieldName]: field.customValue.data};
-			}
-		});
-	});
-
-	return data;
 };
 
 const steps = [
@@ -129,51 +111,42 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 		})();
 	}, [fetchAccount, myUserAccount, setValue]);
 
-	const customFields =
-		product?.customFields?.filter((item) =>
-			productCustomFields.find((field) => item.name === field)
-		) || [];
-
-	const onSubmit = async (responeAccount?: Account) => {
-		const accountId = Number(account?.id || responeAccount?.id);
-
-		await postOrder({
-			account: {
-				id: accountId,
-				type:
-					(account?.type as string) ||
-					(responeAccount?.type as string),
-			},
-			accountExternalReferenceCode: account?.externalReferenceCode,
+	const onSubmit = async () => {
+		const accountId = Number(account?.id);
+		const cart = await headlessCommerceDeliveryCart.createCart(channel.id, {
 			accountId,
-			channel: {
-				currencyCode: channel?.currencyCode,
-				id: channel?.id,
-				type: channel?.type,
-			},
-			channelId: channel?.id,
-			currencyCode: 'USD',
-			customFields: getProductCustomFields(customFields),
-			orderItems: [
+			cartItems: [
 				{
-					id: 0,
+					price: {
+						currency: channel.currencyCode,
+						discount: 0,
+					},
+					productId: product?.productId,
 					quantity: 1,
-					skuId: Number(sku),
+					settings: {
+						maxQuantity: 1,
+					},
+					skuId: sku,
 				},
 			],
-			orderStatus: 1,
+			currencyCode: channel.currencyCode,
 			orderTypeExternalReferenceCode: ORDER_TYPES.SOLUTIONS7,
-			shippingAmount: 0,
-			shippingWithTaxAmount: 0,
 		});
 
-		await CommerceSelectAccountImpl.selectAccount(accountId);
-
-		const trialAvailability = await marketplaceSpringBootOAuth2.getTrialAvailability();
+		const [trialAvailability] = await Promise.all([
+			marketplaceSpringBootOAuth2.getTrialAvailability(),
+			headlessCommerceDeliveryCart.checkoutCart(cart.id),
+			CommerceSelectAccountImpl.selectAccount(accountId),
+		]);
 
 		const maxTrialsReached = trialAvailability.fallback
 			? false
 			: trialAvailability.available === 0;
+
+		Analytics.track('TRIAL_CREATION', {
+			accountId,
+			productName: product.name,
+		});
 
 		navigate(`/finish${maxTrialsReached ? '?state=hold' : ''}`, {
 			replace: true,
@@ -186,6 +159,12 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 
 	return (
 		<div>
+			{accountForm.formState.isSubmitting && (
+				<Loading.FullScreen>
+					Hang Tight, the trial submission of {product.name} is being
+					sent to Liferay
+				</Loading.FullScreen>
+			)}
 			<ProductCardRevamp
 				icon={getIcon(product?.urlImage)}
 				subtitle="7 Days Trial"
@@ -232,7 +211,7 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 								accountSelected: account,
 								accounts,
 								navigate,
-								onSubmit,
+								onSubmit: accountForm.handleSubmit(onSubmit),
 								product,
 								setAccounts,
 								setSelectedAccount,

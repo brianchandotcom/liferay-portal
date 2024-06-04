@@ -107,7 +107,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testExportImportContentWithMultipleDynamicReferences()
+	public void testExportImportContentWithMultipleDynamicReferencesIFrameSanitizerDisabled()
 		throws Exception {
 
 		_testExportImportContentWithMultipleDynamicReferences(false);
@@ -121,7 +121,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testExportImportContentWithMultipleStaticReferences()
+	public void testExportImportContentWithMultipleStaticReferencesIFrameSanitizerDisabled()
 		throws Exception {
 
 		_testExportImportContentWithMultipleStaticReferences(false);

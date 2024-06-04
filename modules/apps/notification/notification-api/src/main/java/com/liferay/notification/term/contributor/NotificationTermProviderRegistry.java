@@ -10,9 +10,9 @@ import java.util.List;
 /**
  * @author Luca Pellizzon
  */
-public interface NotificationTermContributorTracker {
+public interface NotificationTermProviderRegistry {
 
-	public List<NotificationTermProvider> getNotificationTermContributors(
+	public List<NotificationTermProvider> getNotificationTermProviders(
 		String className);
 
 }

@@ -6,7 +6,7 @@
 package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
-import com.liferay.notification.term.contributor.NotificationTermContributorTracker;
+import com.liferay.notification.term.contributor.NotificationTermProviderRegistry;
 import com.liferay.notification.term.contributor.NotificationTermProvider;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -106,7 +106,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 			objectDefinition.getShortName(), themeDisplay);
 
 		List<NotificationTermProvider> notificationTermProviders =
-			_notificationTermContributorTracker.getNotificationTermContributors(
+			_notificationTermProviderRegistry.getNotificationTermProviders(
 				objectDefinition.getClassName());
 
 		for (NotificationTermProvider notificationTermProvider :
@@ -136,8 +136,8 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 	}
 
 	@Reference
-	private NotificationTermContributorTracker
-		_notificationTermContributorTracker;
+	private NotificationTermProviderRegistry
+		_notificationTermProviderRegistry;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

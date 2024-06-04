@@ -125,7 +125,7 @@ fragmentTest(
 		});
 
 		await fragmentTest.step(
-			'Assert that preloaded filter values are in UI',
+			'Assert that preloaded filter values are in UI @LPS-191295',
 			async () => {
 				await expect(activeFilterButton).toBeVisible();
 			}

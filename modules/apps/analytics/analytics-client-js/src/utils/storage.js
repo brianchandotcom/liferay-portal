@@ -7,15 +7,16 @@ import ProcessLock from 'browser-tabs-lock';
 
 const getItem = (key) => {
 	const Liferay = window.Liferay;
+
 	let data;
 
 	try {
 		let item;
 
-		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
+		if (Liferay && Liferay.FeatureFlags['LPD-10588']) {
 			item = Liferay.Util.LocalStorage.getItem(
 				key,
-				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+				Liferay.Util.LocalStorage.TYPES.PERFORMANCE
 			);
 		}
 		else {
@@ -35,11 +36,11 @@ const setItem = (key, value) => {
 	const Liferay = window.Liferay;
 
 	try {
-		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
+		if (Liferay && Liferay.FeatureFlags['LPD-10588']) {
 			Liferay.Util.LocalStorage.setItem(
 				key,
 				JSON.stringify(value),
-				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+				Liferay.Util.LocalStorage.TYPES.PERFORMANCE
 			);
 		}
 		else {
@@ -55,10 +56,10 @@ const removeItem = (key) => {
 	const Liferay = window.Liferay;
 
 	try {
-		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
+		if (Liferay && Liferay.FeatureFlags['LPD-10588']) {
 			Liferay.Util.LocalStorage.removeItem(
 				key,
-				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+				Liferay.Util.LocalStorage.TYPES.PERFORMANCE
 			);
 		}
 		else {

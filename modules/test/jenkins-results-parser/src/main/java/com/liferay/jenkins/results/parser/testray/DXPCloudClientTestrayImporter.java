@@ -583,18 +583,9 @@ public class DXPCloudClientTestrayImporter {
 		TestrayServer testrayServer = TestrayFactory.newTestrayServer(
 			_testrayServerURL);
 
-		if ((testrayServer instanceof Testray1TestrayServer) &&
-			!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
-			!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserPassword)) {
-
-			testrayServer.setHTTPAuthorization(
-				new JenkinsResultsParserUtil.BasicHTTPAuthorization(
-					_testrayUserPassword, _testrayUserName));
-		}
-		else if (!JenkinsResultsParserUtil.isNullOrEmpty(
-					_testrayOAuth2ClientId) &&
-				 !JenkinsResultsParserUtil.isNullOrEmpty(
-					 _testrayOAuth2ClientSecret)) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayOAuth2ClientId) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(
+				_testrayOAuth2ClientSecret)) {
 
 			URL tokenURL;
 
@@ -609,6 +600,15 @@ public class DXPCloudClientTestrayImporter {
 				new JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization(
 					_testrayOAuth2ClientId, _testrayOAuth2ClientSecret,
 					tokenURL));
+		}
+		else if ((testrayServer instanceof Testray1TestrayServer) &&
+				 !JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
+				 !JenkinsResultsParserUtil.isNullOrEmpty(
+					 _testrayUserPassword)) {
+
+			testrayServer.setHTTPAuthorization(
+				new JenkinsResultsParserUtil.BasicHTTPAuthorization(
+					_testrayUserPassword, _testrayUserName));
 		}
 
 		TestrayProject testrayProject = testrayServer.getTestrayProjectByName(

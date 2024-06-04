@@ -113,7 +113,7 @@ public class CommercePaymentServiceUpgradeStepRegistrator
 		registry.register(
 			"1.7.0", "1.8.0",
 			UpgradeProcessFactory.addColumns(
-				"CommercePaymentEntry", "payload VARCHAR(75) null"));
+				"CommercePaymentEntry", "payload TEXT null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce payment upgrade step registrator finished");

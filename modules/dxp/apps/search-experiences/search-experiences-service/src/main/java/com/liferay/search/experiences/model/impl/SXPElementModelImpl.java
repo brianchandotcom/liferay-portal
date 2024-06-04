@@ -121,6 +121,9 @@ public class SXPElementModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY SXPElement.sxpElementId ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY sxpElement.sxpElementId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

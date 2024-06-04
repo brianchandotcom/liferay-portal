@@ -116,6 +116,9 @@ public class BookmarksEntryModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY BookmarksEntry.folderId ASC, BookmarksEntry.name ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY bookmarksEntry.folderId ASC, bookmarksEntry.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

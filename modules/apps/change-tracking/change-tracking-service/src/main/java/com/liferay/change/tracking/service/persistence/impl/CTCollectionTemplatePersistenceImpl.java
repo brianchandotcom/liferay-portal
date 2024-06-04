@@ -614,7 +614,8 @@ public class CTCollectionTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CTCollectionTemplateModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CTCollectionTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CTCollectionTemplateModelImpl.ORDER_BY_SQL);
@@ -814,7 +815,8 @@ public class CTCollectionTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CTCollectionTemplateModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CTCollectionTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CTCollectionTemplateModelImpl.ORDER_BY_SQL);

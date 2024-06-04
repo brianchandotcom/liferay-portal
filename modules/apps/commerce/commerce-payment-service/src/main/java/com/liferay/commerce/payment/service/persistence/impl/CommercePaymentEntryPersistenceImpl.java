@@ -625,7 +625,8 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);
@@ -825,7 +826,8 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);
@@ -1589,7 +1591,8 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);
@@ -1801,7 +1804,8 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);
@@ -2636,7 +2640,8 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);
@@ -2853,7 +2858,8 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryModelImpl.ORDER_BY_SQL);

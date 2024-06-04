@@ -86,6 +86,9 @@ public class PermissionCheckFinderEntryModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY PermissionCheckFinderEntry.integer_ ASC, PermissionCheckFinderEntry.type_ ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY permissionCheckFinderEntry.integer_ ASC, permissionCheckFinderEntry.type_ ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

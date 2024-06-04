@@ -115,6 +115,9 @@ public class AnnouncementsEntryModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY AnnouncementsEntry.priority ASC, AnnouncementsEntry.modifiedDate ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY announcementsEntry.priority ASC, announcementsEntry.modifiedDate ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

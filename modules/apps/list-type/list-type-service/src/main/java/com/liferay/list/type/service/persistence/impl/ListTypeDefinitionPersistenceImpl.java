@@ -655,7 +655,8 @@ public class ListTypeDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_SQL);
@@ -865,7 +866,8 @@ public class ListTypeDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_SQL);
@@ -1662,7 +1664,8 @@ public class ListTypeDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_SQL);
@@ -1879,7 +1882,8 @@ public class ListTypeDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ListTypeDefinitionModelImpl.ORDER_BY_SQL);

@@ -111,6 +111,9 @@ public class CPOptionCategoryModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CPOptionCategory.title ASC, CPOptionCategory.priority ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY cpOptionCategory.title ASC, cpOptionCategory.priority ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

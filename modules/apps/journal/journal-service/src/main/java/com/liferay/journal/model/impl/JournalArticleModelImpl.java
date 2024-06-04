@@ -140,6 +140,9 @@ public class JournalArticleModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

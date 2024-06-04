@@ -123,6 +123,9 @@ public class CommerceOrderTypeModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CommerceOrderType.createDate DESC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY commerceOrderType.createDate DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

@@ -612,7 +612,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -809,7 +810,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -1531,7 +1533,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -1735,7 +1738,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -2476,7 +2480,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -2680,7 +2685,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -3455,7 +3461,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -3672,7 +3679,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -4445,7 +4453,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -4649,7 +4658,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -5426,7 +5436,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);
@@ -5638,7 +5649,8 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					BatchPlannerPlanModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BatchPlannerPlanModelImpl.ORDER_BY_SQL);

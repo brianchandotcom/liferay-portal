@@ -67,7 +67,8 @@ public class StyleBookServiceUpgradeStepRegistrator
 				@Override
 				protected String[][] getTableAndPrimaryKeyColumnNames() {
 					return new String[][] {
-						{"StyleBookEntry", "styleBookEntryId"}
+						{"StyleBookEntry", "styleBookEntryId"},
+						{"StyleBookEntryVersion", "styleBookEntryId"}
 					};
 				}
 

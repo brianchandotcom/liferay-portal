@@ -206,6 +206,13 @@ definition {
 		}
 	}
 
+	@summary = "Type password into locator"
+	macro typePassword(password) {
+		Type.typePause(
+			locator1 = "TextInput#PASSWORD",
+			value1 = ${password});
+	}
+
 	@summary = "Default summary"
 	macro updatePortalProperties(newProperty = null, oldProperty = null) {
 		if (isSet(oldProperty)) {

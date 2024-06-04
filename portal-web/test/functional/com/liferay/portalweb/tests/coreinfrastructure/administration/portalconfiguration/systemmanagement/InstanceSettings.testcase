@@ -269,9 +269,7 @@ definition {
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "userea@liferay.com");
 
-		Type.typePause(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "test");
+		TestCase.typePassword(password = PropsUtil.get("default.admin.password"));
 
 		User._clickSignInButton(localization = ${localization});
 
@@ -670,9 +668,7 @@ definition {
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "userea@liferay.com");
 
-		Type.typePause(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "test");
+		TestCase.typePassword(password = PropsUtil.get("default.admin.password"));
 
 		User._clickSignInButton(localization = ${localization});
 

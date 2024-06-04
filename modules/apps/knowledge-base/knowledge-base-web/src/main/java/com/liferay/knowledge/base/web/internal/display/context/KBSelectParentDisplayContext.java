@@ -168,7 +168,9 @@ public class KBSelectParentDisplayContext {
 
 		_kbFolderView = false;
 
-		if (getResourceClassNameId() == _KB_FOLDER_CLASS_NAME_ID) {
+		if (getResourceClassNameId() == PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName())) {
+
 			_kbFolderView = true;
 		}
 
@@ -183,9 +185,13 @@ public class KBSelectParentDisplayContext {
 	}
 
 	private void _initParentData() throws PortalException {
+		long kbFolderClassNameId = PortalUtil.getClassNameId(
+			KBFolderConstants.getClassName());
+
 		_parentResourceClassNameId = ParamUtil.getLong(
 			_httpServletRequest, "parentResourceClassNameId",
-			_KB_FOLDER_CLASS_NAME_ID);
+			kbFolderClassNameId);
+
 		_parentResourcePrimKey = ParamUtil.getLong(
 			_httpServletRequest, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -193,7 +199,7 @@ public class KBSelectParentDisplayContext {
 		if (_parentResourcePrimKey !=
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			if (_parentResourceClassNameId == _KB_FOLDER_CLASS_NAME_ID) {
+			if (_parentResourceClassNameId == kbFolderClassNameId) {
 				KBFolder parentKBFolder =
 					KBFolderLocalServiceUtil.fetchKBFolder(
 						_parentResourcePrimKey);
@@ -203,7 +209,7 @@ public class KBSelectParentDisplayContext {
 						_themeDisplay.getPermissionChecker(), parentKBFolder,
 						ActionKeys.VIEW)) {
 
-					_parentResourceClassNameId = _KB_FOLDER_CLASS_NAME_ID;
+					_parentResourceClassNameId = kbFolderClassNameId;
 
 					_parentResourcePrimKey =
 						KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -219,7 +225,7 @@ public class KBSelectParentDisplayContext {
 						_themeDisplay.getPermissionChecker(), parentKBArticle,
 						ActionKeys.VIEW)) {
 
-					_parentResourceClassNameId = _KB_FOLDER_CLASS_NAME_ID;
+					_parentResourceClassNameId = kbFolderClassNameId;
 
 					_parentResourcePrimKey =
 						KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -279,9 +285,6 @@ public class KBSelectParentDisplayContext {
 				currentURL.toString());
 		}
 	}
-
-	private static final long _KB_FOLDER_CLASS_NAME_ID =
-		PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _kbFolderView;

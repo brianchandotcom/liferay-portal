@@ -11,6 +11,7 @@ interface Props {
 	page: Page;
 	selectors?: string[];
 	selectorsToExclude?: string[];
+	soft?: boolean;
 }
 
 /**
@@ -23,6 +24,7 @@ interface Props {
  * @param selectors an array of selectors to analyze
  * @param selectorsToExclude an array of selectors toexclude from the analysis
  * @param page current page
+ * @param soft A flag to enable soft assertions
  */
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
@@ -32,6 +34,7 @@ export async function checkAccessibility({
 	page,
 	selectors,
 	selectorsToExclude,
+	soft = true,
 }: Props) {
 	const tags = bestPractices ? [...TAGS, 'best-practice'] : TAGS;
 
@@ -47,5 +50,5 @@ export async function checkAccessibility({
 		.exclude(selectorsToExclude)
 		.analyze();
 
-	await expect(results.violations, 'Accessibility issues').toEqual([]);
+	await (soft ? expect.soft : expect)(results.violations, 'Accessibility issues').toEqual([]);
 }

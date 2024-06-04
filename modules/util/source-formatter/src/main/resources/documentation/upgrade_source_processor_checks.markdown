@@ -2,7 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-UpgradeBNDDeclarativeServicesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist |
+UpgradeBNDDeclarativeServicesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist. |
 UpgradeBNDIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it. |
 UpgradeCatchAllCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Performs replacements on Liferay's outdated code. |
 [UpgradeCatchAllJSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Sorts and groups imports in `UpgradeCatchAllCheck.testjsp` file. |

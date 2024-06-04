@@ -8,7 +8,7 @@ JSPUpgradeRemovedTagsCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds remov
 JavaUpgradeModelPermissionsCheck | .java | Replace setGroupPermissions and setGuestPermissions by new implementation. |
 [PropertiesUpgradeLiferayPluginPackageFileCheck](check/properties_upgrade_liferay_plugin_package_file_check.markdown#propertiesupgradeliferaypluginpackagefilecheck) | .eslintignore, .prettierignore or .properties | Performs several upgrade checks in `liferay-plugin-package.properties` file. |
 PropertiesUpgradeLiferayPluginPackageLiferayVersionsCheck | .eslintignore, .prettierignore or .properties | Validates and upgrades the version in `liferay-plugin-package.properties` file. |
-UpgradeBNDDeclarativeServicesCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist |
+UpgradeBNDDeclarativeServicesCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist. |
 UpgradeBNDIncludeResourceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it. |
 UpgradeCatchAllCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Performs replacements on Liferay's outdated code. |
 [UpgradeCatchAllJSPImportsCheck](check/jsp_imports_check.markdown#jspimportscheck) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Sorts and groups imports in `UpgradeCatchAllCheck.testjsp` file. |
@@ -54,5 +54,5 @@ UpgradeVelocityVariableReferenceMigrationCheck | .bnd, .ftl, .gradle, .java, .js
 UpgradeVelocityVariableSetMigrationCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration of set variables from a Velocity file to a Freemarker file with the syntax replacements. |
 XMLUpgradeCompatibilityVersionCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks and upgrades the compatibility version in `*.xml` file. |
 XMLUpgradeDTDVersionCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks and upgrades the DTD version in `*.xml` file. |
-XMLUpgradeDeclarativeServicesCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Sets dependency-injector to ds in `service.xml` file |
+XMLUpgradeDeclarativeServicesCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Sets dependency-injector to ds in `service.xml` file. |
 XMLUpgradeRemovedDefinitionsCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds removed XML definitions when upgrading. |

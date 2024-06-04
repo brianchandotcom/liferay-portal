@@ -66,7 +66,7 @@ export function getCheckedListTypeEntries(
 export function getSystemObjectFieldLabelFromObjectEntry(
 	titleFieldName: string,
 	entry: ObjectEntry,
-	itemObject: LabelValueObject
+	itemObject: {['value']: string}
 ) {
 	if (titleFieldName === 'creator') {
 		const {name} = entry.creator;
@@ -102,7 +102,7 @@ export function getSystemObjectFieldLabelFromObjectEntry(
 
 	return {
 		...itemObject,
-		label: entry[titleFieldName],
+		label: String(entry[titleFieldName]),
 	};
 }
 

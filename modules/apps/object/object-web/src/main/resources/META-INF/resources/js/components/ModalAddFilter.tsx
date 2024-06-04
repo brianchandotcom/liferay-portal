@@ -301,19 +301,19 @@ export function ModalAddFilter({
 									value: system
 										? String(objectEntry.id)
 										: objectEntry.externalReferenceCode,
-								} as LabelValueObject;
+								};
 
 								if (titleObjectField.system) {
 									return getSystemObjectFieldLabelFromObjectEntry(
 										titleObjectField.name,
 										objectEntry,
 										newItemsObject
-									) as LabelValueObject;
+									);
 								}
 
-								let label = objectEntry[
-									titleObjectField?.name
-								] as string;
+								let label = String(
+									objectEntry[titleObjectField?.name]
+								);
 
 								if (
 									titleObjectField.businessType ===

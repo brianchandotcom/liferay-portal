@@ -15,9 +15,11 @@ export declare function getCheckedListTypeEntries(
 export declare function getSystemObjectFieldLabelFromObjectEntry(
 	titleFieldName: string,
 	entry: ObjectEntry,
-	itemObject: LabelValueObject
+	itemObject: {
+		['value']: string;
+	}
 ): {
-	label: unknown;
+	label: string;
 	value: string;
 };
 export declare function getCheckedObjectRelationshipItems(

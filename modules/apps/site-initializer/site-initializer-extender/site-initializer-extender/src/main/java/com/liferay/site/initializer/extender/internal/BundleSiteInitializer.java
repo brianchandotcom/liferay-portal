@@ -72,6 +72,7 @@ import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
@@ -562,6 +563,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext, siteNavigationMenuItemSettingsBuilder,
 					stringUtilReplaceValues));
 
+			_invoke(
+				() -> _addOrUpdateBlogPostings(
+					serviceContext, stringUtilReplaceValues));
 			_invoke(() -> _addPortletSettings(serviceContext));
 			_invoke(
 				() -> _updateLayoutSets(
@@ -1490,6 +1494,50 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_assetListEntryLocalService.updateAssetListEntry(
 				assetListEntry.getAssetListEntryId(),
 				assetListJSONObject.getString("title"));
+		}
+	}
+
+	private void _addOrUpdateBlogPostings(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/blog-postings.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		BlogPostingResource.Builder builder =
+			_blogPostingResourceFactory.create();
+
+		BlogPostingResource blogPostingResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_replace(json, stringUtilReplaceValues));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			BlogPosting blogPosting = BlogPosting.toDTO(
+				String.valueOf(jsonArray.getJSONObject(i)));
+
+			if (blogPosting == null) {
+				_log.error(
+					"Unable to transform blog posting from JSON: " + json);
+
+				continue;
+			}
+
+			blogPosting =
+				blogPostingResource.putSiteBlogPostingByExternalReferenceCode(
+					serviceContext.getScopeGroupId(),
+					blogPosting.getExternalReferenceCode(), blogPosting);
+
+			stringUtilReplaceValues.put(
+				"BLOG_POSTING_ID:" + blogPosting.getExternalReferenceCode(),
+				String.valueOf(blogPosting.getId()));
 		}
 	}
 

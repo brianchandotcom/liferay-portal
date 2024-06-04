@@ -91,11 +91,13 @@ public class TestrayBuildAutofillResourceImpl
 
 		testrayBuildAutofill.setCaseAmount(values.size());
 
-		JSONObject runsJSONObject = _getRunsIdsJSONObject(
+		JSONObject runsJSONObject = _getTestrayRunIdsJSONObject(
 			testrayBuildId1, testrayBuildId2);
 
-		testrayBuildAutofill.setTestrayRunId1(runsJSONObject.getLong("runId1"));
-		testrayBuildAutofill.setTestrayRunId2(runsJSONObject.getLong("runId2"));
+		testrayBuildAutofill.setTestrayRunId1(
+			runsJSONObject.getLong("testrayRunId1"));
+		testrayBuildAutofill.setTestrayRunId2(
+			runsJSONObject.getLong("testrayRunId2"));
 
 		return testrayBuildAutofill;
 	}
@@ -140,7 +142,7 @@ public class TestrayBuildAutofillResourceImpl
 			values, _serviceContextHelper.getServiceContext());
 	}
 
-	private JSONObject _getRunsIdsJSONObject(
+	private JSONObject _getTestrayRunIdsJSONObject(
 			Long testrayBuildId1, Long testrayBuildId2)
 		throws Exception {
 
@@ -172,14 +174,14 @@ public class TestrayBuildAutofillResourceImpl
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"runId1",
+			"testrayRunId1",
 			values.get(
 				0
 			).get(
 				"runId"
 			)
 		).put(
-			"runId2",
+			"testrayRunId2",
 			values.get(
 				1
 			).get(

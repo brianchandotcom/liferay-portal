@@ -49,7 +49,7 @@
 			"externalReferenceCode": "a5e9578a-1307-4d89-998f-cc91609dc189",
 			"host": "Liferay",
 			"name": "_hjAbsoluteSessionInProgress",
-			"purpose": "",
+			"purpose": "Stores a true or false value for Hotjar to know whether it's the current users first page view. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -57,7 +57,7 @@
 			"externalReferenceCode": "59d7f57b-fc51-4e37-8177-4fcaf62a01c7",
 			"host": "Liferay",
 			"name": "_hjFirstSeen",
-			"purpose": "",
+			"purpose": "Stores a true or false value for Hotjar to know whether it's seeing the user for the first time. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -65,7 +65,7 @@
 			"externalReferenceCode": "f5c92d83-57bd-4f83-8e92-70427bffd002",
 			"host": "Liferay",
 			"name": "_hjIncludedInPageviewSample",
-			"purpose": "",
+			"purpose": "Stores a true or false value for Hotjar to know whether the user's data should be included in the data sampling defined by the site's daily page view limit. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -73,7 +73,7 @@
 			"externalReferenceCode": "e9f2eb7c-9c73-45ce-94ec-c54f0b199428",
 			"host": "Liferay",
 			"name": "_hjIncludedInSessionSample",
-			"purpose": "",
+			"purpose": "Stores a true or false value for Hotjar to know whether the user's data should be included in the data sampling defined by the site's daily session limit. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -81,7 +81,7 @@
 			"externalReferenceCode": "b81c84db-1469-4581-9e81-849d9470d090",
 			"host": "Liferay",
 			"name": "_hjSession",
-			"purpose": "",
+			"purpose": "Stores session data so requests in the session window are attributes to the same session. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -89,7 +89,7 @@
 			"externalReferenceCode": "3ce10a77-8d95-41b6-b9f2-e7674314df17",
 			"host": "Liferay",
 			"name": "_hjSessionUser",
-			"purpose": "",
+			"purpose": "Stores the current user's Hotjar user ID so Hotjar can track user's behavior. Statistics.",
 			"type": "First Party"
 		},
 		{

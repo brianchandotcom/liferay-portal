@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -94,59 +93,6 @@ public abstract class BaseTopLevelBuildReport
 
 	@Override
 	public TestrayS3Object getBuildReportTestrayS3Object() {
-		JobReport jobReport = getJobReport();
-
-		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();
-
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
-
-		return testrayS3Bucket.getTestrayS3Object(
-			JenkinsResultsParserUtil.combine(
-				getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
-				jobReport.getJobName(), "/", String.valueOf(getBuildNumber()),
-				"/build-report.json.gz"));
-	}
-
-	@Override
-	public URL getBuildResultJSONTestrayURL() {
-		JobReport jobReport = getJobReport();
-
-		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();
-
-		try {
-			return new URL(
-				JenkinsResultsParserUtil.combine(
-					"https://testray-old.liferay.com/reports/production/logs/",
-					getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
-					jobReport.getJobName(), "/",
-					String.valueOf(getBuildNumber()), "/build-report.json.gz"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	@Override
-	public URL getBuildResultJSONUserContentURL() {
-		JobReport jobReport = getJobReport();
-
-		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();
-
-		try {
-			return new URL(
-				JenkinsResultsParserUtil.combine(
-					"https://", jenkinsMaster.getName(),
-					".liferay.com/userContent/jobs/", jobReport.getJobName(),
-					"/builds/", String.valueOf(getBuildNumber()),
-					"/build-report.json"));
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(malformedURLException);
-		}
-	}
-
-	@Override
-	public TestrayS3Object getBuildResultTestrayS3Object() {
 		JobReport jobReport = getJobReport();
 
 		JenkinsMaster jenkinsMaster = jobReport.getJenkinsMaster();

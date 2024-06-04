@@ -48,7 +48,20 @@ public class TestrayS3Object {
 			return null;
 		}
 
-		return new String(_blob.getContent(), StandardCharsets.UTF_8);
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		try {
+			return new String(_blob.getContent(), StandardCharsets.UTF_8);
+		}
+		finally {
+			long duration =
+				JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					getURLString(), " in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+		}
 	}
 
 	@Override

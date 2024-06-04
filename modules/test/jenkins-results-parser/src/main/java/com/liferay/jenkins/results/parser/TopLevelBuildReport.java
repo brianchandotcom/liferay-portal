@@ -25,12 +25,6 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public TestrayS3Object getBuildReportTestrayS3Object();
 
-	public URL getBuildResultJSONTestrayURL();
-
-	public URL getBuildResultJSONUserContentURL();
-
-	public TestrayS3Object getBuildResultTestrayS3Object();
-
 	public List<DownstreamBuildReport> getDownstreamBuildReports();
 
 	public URL getTestResultsJSONUserContentURL();

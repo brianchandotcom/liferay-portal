@@ -11,8 +11,8 @@ buildscript {
 
 	if (Boolean.getBoolean("gradle.develocity.enabled")) {
 		dependencies {
-			classpath group: "com.gradle", name: "develocity-gradle-plugin", version: "3.17.4"
 			classpath group: "com.gradle", name: "common-custom-user-data-gradle-plugin", version: "2.0.1"
+			classpath group: "com.gradle", name: "develocity-gradle-plugin", version: "3.17.4"
 		}
 	}
 }
@@ -20,8 +20,8 @@ buildscript {
 apply plugin: "com.liferay.settings.plugin"
 
 if (Boolean.getBoolean("gradle.develocity.enabled")) {
-	apply plugin: "com.gradle.develocity"
 	apply plugin: "com.gradle.common-custom-user-data-gradle-plugin"
+	apply plugin: "com.gradle.develocity"
 
 	develocity {
 		buildScan {

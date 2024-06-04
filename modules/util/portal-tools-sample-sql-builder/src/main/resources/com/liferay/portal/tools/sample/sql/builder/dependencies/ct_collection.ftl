@@ -4,8 +4,35 @@ ${dataFactory.toInsertSQL(ctSchemaVersionModel)}
 
 <#--Create a Publications specific group-->
 
-<#assign publicationGroupModel = dataFactory.newPublicationGroupModel() />
-${dataFactory.toInsertSQL(publicationGroupModel)}
+<#assign
+	groupModel = dataFactory.newPublicationGroupModel()
+	groupId = groupModel.groupId
+/>
+
+<#include "ddl.ftl">
+
+<@insertDLFolder
+	_ddmStructureId = dataFactory.defaultDLDDMStructureId
+	_dlFolderDepth = 1
+	_groupModel = groupModel
+	_parentDLFolderId = 0
+/>
+
+<#assign homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "home") />
+
+<@insertContentPageLayout
+	_fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
+	_layoutModels = homePageContentLayoutModels
+	_templateFileName = "default-homepage-layout-definition.json"
+/>
+
+<#list dataFactory.newGroupLayoutModels(groupId) as groupLayoutModel>
+	<@insertLayout _layoutModel = groupLayoutModel />
+</#list>
+
+<@insertGroup _groupModel = groupModel />
+
+${csvFileWriter.write("repository", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + groupId + ", " + groupModel.name + "\n")}
 
 <#--CTCollection data creation-->
 
@@ -19,7 +46,7 @@ ${dataFactory.toInsertSQL(publicationGroupModel)}
 	<#assign
 		ctCollectionId = ctCollectionModel.ctCollectionId
 		ctCollectionIdString = ctCollectionModel.ctCollectionId?c
-		publicationGroupId = publicationGroupModel.groupId
+		publicationGroupId = groupId
 	/>
 
 	<#include "ct_ddm.ftl">

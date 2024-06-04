@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -136,7 +138,7 @@ public class DisplayPageLayoutTypeControllerTest {
 	}
 
 	@Test
-	public void testDisplayPageTypeControllerWithInfoItemWithoutGuestPermissions()
+	public void testDisplayPageTypeControllerWithInfoItemWithoutGuestPermissionsWithPromptDisabled()
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -161,38 +163,89 @@ public class DisplayPageLayoutTypeControllerTest {
 
 		Assert.assertTrue(layout.isPublished());
 
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				LayoutConstants.TYPE_ASSET_DISPLAY);
-
 		try {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), _guestUser.getUserId());
 
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(layout, _guestUser);
-
-			serviceContext.setRequest(mockHttpServletRequest);
+			serviceContext.setRequest(
+				_getMockHttpServletRequest(layout, _guestUser));
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			layoutTypeController.includeLayoutContent(
-				mockHttpServletRequest, mockHttpServletResponse, layout);
-
-			Assert.assertEquals(
-				HttpServletResponse.SC_FOUND,
-				mockHttpServletResponse.getStatus());
-
-			String redirectURL = mockHttpServletResponse.getRedirectedUrl();
-
-			Assert.assertTrue(redirectURL.contains("redirect"));
+			_assertIncludeLayoutContent(true, layout.getPlid(), _guestUser);
 		}
 		finally {
 			ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		}
+	}
+
+	@Test
+	public void testDisplayPageTypeControllerWithInfoItemWithoutGuestPermissionsWithPromptEnabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_AUTH_LOGIN_CONFIGURATION,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"promptEnabled", true
+					).build())) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+					null, _group.getGroupId(), 0,
+					_portal.getClassNameId(AssetCategory.class.getName()), 0,
+					RandomTestUtil.randomString(), 0,
+					WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+			Layout layout = _layoutLocalService.getLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			Assert.assertNotNull(draftLayout);
+
+			_setUpInfoItem(false);
+
+			_addFragmentEntryLink(draftLayout);
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			Assert.assertTrue(layout.isPublished());
+
+			LayoutTypeController layoutTypeController =
+				LayoutTypeControllerTracker.getLayoutTypeController(
+					LayoutConstants.TYPE_ASSET_DISPLAY);
+
+			try {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), _guestUser.getUserId());
+
+				MockHttpServletRequest mockHttpServletRequest =
+					_getMockHttpServletRequest(layout, _guestUser);
+
+				serviceContext.setRequest(mockHttpServletRequest);
+
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				MockHttpServletResponse mockHttpServletResponse =
+					new MockHttpServletResponse();
+
+				layoutTypeController.includeLayoutContent(
+					mockHttpServletRequest, mockHttpServletResponse, layout);
+
+				Assert.assertEquals(
+					HttpServletResponse.SC_FOUND,
+					mockHttpServletResponse.getStatus());
+
+				String redirectURL = mockHttpServletResponse.getRedirectedUrl();
+
+				Assert.assertTrue(redirectURL.contains("redirect"));
+			}
+			finally {
+				ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+			}
 		}
 	}
 
@@ -390,6 +443,9 @@ public class DisplayPageLayoutTypeControllerTest {
 				_permissionCheckerFactory.create(_guestUser), _assetCategory,
 				ActionKeys.VIEW));
 	}
+
+	private static final String _AUTH_LOGIN_CONFIGURATION =
+		"com.liferay.login.web.internal.configuration.AuthLoginConfiguration";
 
 	private AssetCategory _assetCategory;
 

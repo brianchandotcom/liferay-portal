@@ -32,6 +32,7 @@ const useBuildTestActions = () => {
 								managementToolbarProps: {
 									applyFilters: false,
 									display: {columns: false},
+									filterSchema: 'user',
 								},
 							}}
 							tableProps={{

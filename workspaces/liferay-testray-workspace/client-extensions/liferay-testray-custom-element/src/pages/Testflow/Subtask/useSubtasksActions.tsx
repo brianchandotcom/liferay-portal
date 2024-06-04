@@ -67,7 +67,9 @@ const useSubtasksActions = () => {
 						<UserListView
 							listViewProps={{
 								managementToolbarProps: {
+									applyFilters: false,
 									display: {columns: false},
+									filterSchema: 'user',
 								},
 							}}
 							tableProps={{

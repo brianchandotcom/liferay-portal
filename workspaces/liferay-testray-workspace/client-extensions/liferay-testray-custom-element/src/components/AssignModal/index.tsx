@@ -27,6 +27,7 @@ const CaseResultAssignModal: React.FC<AssignModalProps> = ({
 					addButton: undefined,
 					applyFilters: false,
 					display: {columns: false},
+					filterSchema: 'user',
 				},
 			}}
 			tableProps={{

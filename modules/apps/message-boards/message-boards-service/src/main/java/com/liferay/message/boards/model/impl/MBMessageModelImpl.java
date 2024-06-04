@@ -133,6 +133,9 @@ public class MBMessageModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY MBMessage.createDate ASC, MBMessage.messageId ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY mbMessage.createDate ASC, mbMessage.messageId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

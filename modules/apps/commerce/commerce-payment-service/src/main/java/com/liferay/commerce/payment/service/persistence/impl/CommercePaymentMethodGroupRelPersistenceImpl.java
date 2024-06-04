@@ -621,7 +621,9 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentMethodGroupRelModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL);
@@ -825,7 +827,9 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentMethodGroupRelModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL);
@@ -1556,7 +1560,9 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentMethodGroupRelModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL);
@@ -1766,7 +1772,9 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentMethodGroupRelModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL);

@@ -2015,7 +2015,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -2206,7 +2206,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -3719,7 +3719,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -3928,7 +3928,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -4694,7 +4694,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -4890,7 +4890,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -5619,7 +5619,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -5815,7 +5815,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -9406,7 +9406,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -9621,7 +9621,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -10446,7 +10446,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -10650,7 +10650,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -10813,7 +10813,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -11969,7 +11969,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -12173,7 +12173,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -13004,7 +13004,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -13219,7 +13219,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -14066,7 +14066,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -14281,7 +14281,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -15130,7 +15130,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -15345,7 +15345,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -16194,7 +16194,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -16409,7 +16409,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -19691,7 +19691,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -19912,7 +19912,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -20816,7 +20816,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);
@@ -21037,7 +21037,7 @@ public class BlogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BlogsEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BlogsEntryModelImpl.ORDER_BY_SQL);

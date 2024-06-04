@@ -110,6 +110,9 @@ public class SourceModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY Reports_Source.sourceId ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY source.sourceId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

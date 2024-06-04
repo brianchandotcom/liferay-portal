@@ -107,6 +107,9 @@ public class CommerceCatalogModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CommerceCatalog.createDate DESC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY commerceCatalog.createDate DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

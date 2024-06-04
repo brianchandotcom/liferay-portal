@@ -610,7 +610,8 @@ public class OAuthClientEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthClientEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(OAuthClientEntryModelImpl.ORDER_BY_SQL);
@@ -807,7 +808,8 @@ public class OAuthClientEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthClientEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(OAuthClientEntryModelImpl.ORDER_BY_SQL);
@@ -1489,7 +1491,8 @@ public class OAuthClientEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthClientEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(OAuthClientEntryModelImpl.ORDER_BY_SQL);
@@ -1686,7 +1689,8 @@ public class OAuthClientEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthClientEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(OAuthClientEntryModelImpl.ORDER_BY_SQL);
@@ -2459,7 +2463,8 @@ public class OAuthClientEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthClientEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(OAuthClientEntryModelImpl.ORDER_BY_SQL);
@@ -2679,7 +2684,8 @@ public class OAuthClientEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthClientEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(OAuthClientEntryModelImpl.ORDER_BY_SQL);

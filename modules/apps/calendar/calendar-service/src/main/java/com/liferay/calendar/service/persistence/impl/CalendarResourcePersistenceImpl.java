@@ -2026,7 +2026,8 @@ public class CalendarResourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
@@ -2223,7 +2224,8 @@ public class CalendarResourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
@@ -3504,7 +3506,8 @@ public class CalendarResourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
@@ -3721,7 +3724,8 @@ public class CalendarResourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
@@ -3895,7 +3899,8 @@ public class CalendarResourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
@@ -5074,7 +5079,8 @@ public class CalendarResourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
@@ -5278,7 +5284,8 @@ public class CalendarResourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);

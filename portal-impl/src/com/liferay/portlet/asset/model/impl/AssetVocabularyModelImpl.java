@@ -116,6 +116,9 @@ public class AssetVocabularyModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY AssetVocabulary.name ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY assetVocabulary.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

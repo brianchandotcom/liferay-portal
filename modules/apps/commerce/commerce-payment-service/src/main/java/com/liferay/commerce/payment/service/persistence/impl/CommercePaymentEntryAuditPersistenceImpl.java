@@ -634,7 +634,9 @@ public class CommercePaymentEntryAuditPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryAuditModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryAuditModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryAuditModelImpl.ORDER_BY_SQL);
@@ -840,7 +842,9 @@ public class CommercePaymentEntryAuditPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CommercePaymentEntryAuditModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					CommercePaymentEntryAuditModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CommercePaymentEntryAuditModelImpl.ORDER_BY_SQL);

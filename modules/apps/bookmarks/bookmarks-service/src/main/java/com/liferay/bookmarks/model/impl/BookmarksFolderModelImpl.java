@@ -113,6 +113,9 @@ public class BookmarksFolderModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY BookmarksFolder.parentFolderId ASC, BookmarksFolder.name ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY bookmarksFolder.parentFolderId ASC, bookmarksFolder.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

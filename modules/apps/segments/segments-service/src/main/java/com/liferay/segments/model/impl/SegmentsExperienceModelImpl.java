@@ -120,6 +120,9 @@ public class SegmentsExperienceModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY SegmentsExperience.priority DESC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY segmentsExperience.priority DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

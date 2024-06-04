@@ -647,7 +647,7 @@ public class ObjectFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ObjectFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL);
@@ -855,7 +855,7 @@ public class ObjectFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ObjectFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL);
@@ -1644,7 +1644,7 @@ public class ObjectFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ObjectFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL);
@@ -1859,7 +1859,7 @@ public class ObjectFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ObjectFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL);
@@ -2592,7 +2592,7 @@ public class ObjectFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ObjectFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL);
@@ -2787,7 +2787,7 @@ public class ObjectFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ObjectFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ObjectFolderModelImpl.ORDER_BY_SQL);

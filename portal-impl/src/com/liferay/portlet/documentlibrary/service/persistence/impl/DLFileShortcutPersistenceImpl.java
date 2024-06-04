@@ -2010,7 +2010,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);
@@ -2205,7 +2205,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);
@@ -3962,7 +3962,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);
@@ -4165,7 +4165,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);
@@ -5488,7 +5488,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);
@@ -5696,7 +5696,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);
@@ -6537,7 +6537,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);
@@ -6751,7 +6751,7 @@ public class DLFileShortcutPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
+				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileShortcutModelImpl.ORDER_BY_SQL);

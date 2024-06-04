@@ -168,6 +168,9 @@ public class CPDefinitionModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

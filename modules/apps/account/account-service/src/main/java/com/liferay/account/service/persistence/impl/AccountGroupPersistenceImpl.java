@@ -647,7 +647,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -855,7 +855,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -1644,7 +1644,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -1859,7 +1859,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -2449,7 +2449,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -2596,7 +2596,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -3586,7 +3586,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -3781,7 +3781,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -4509,7 +4509,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -4713,7 +4713,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -5475,7 +5475,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -5690,7 +5690,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -6490,7 +6490,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);
@@ -6705,7 +6705,7 @@ public class AccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountGroupModelImpl.ORDER_BY_SQL);

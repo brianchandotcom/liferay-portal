@@ -636,7 +636,9 @@ public class NotificationQueueEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
@@ -840,7 +842,9 @@ public class NotificationQueueEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
@@ -1561,7 +1565,9 @@ public class NotificationQueueEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
@@ -1772,7 +1778,9 @@ public class NotificationQueueEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
@@ -2560,7 +2568,9 @@ public class NotificationQueueEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
@@ -2778,7 +2788,9 @@ public class NotificationQueueEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);

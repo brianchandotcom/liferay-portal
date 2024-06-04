@@ -117,6 +117,9 @@ public class DDMFormInstanceModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY DDMFormInstance.formInstanceId ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY ddmFormInstance.formInstanceId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

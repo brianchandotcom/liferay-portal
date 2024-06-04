@@ -603,7 +603,9 @@ public class PermissionCheckFinderEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PermissionCheckFinderEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					PermissionCheckFinderEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PermissionCheckFinderEntryModelImpl.ORDER_BY_SQL);
@@ -804,7 +806,9 @@ public class PermissionCheckFinderEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PermissionCheckFinderEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					PermissionCheckFinderEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PermissionCheckFinderEntryModelImpl.ORDER_BY_SQL);

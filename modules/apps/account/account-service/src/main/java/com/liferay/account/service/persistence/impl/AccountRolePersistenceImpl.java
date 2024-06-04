@@ -603,7 +603,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
@@ -796,7 +796,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
@@ -1480,7 +1480,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
@@ -1673,7 +1673,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
@@ -1823,7 +1823,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
@@ -3061,7 +3061,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
@@ -3262,7 +3262,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
@@ -3420,7 +3420,7 @@ public class AccountRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);

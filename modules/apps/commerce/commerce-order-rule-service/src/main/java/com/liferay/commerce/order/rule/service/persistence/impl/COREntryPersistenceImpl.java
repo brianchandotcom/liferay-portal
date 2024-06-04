@@ -642,7 +642,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -845,7 +845,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -1629,7 +1629,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -1838,7 +1838,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -2603,7 +2603,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -2799,7 +2799,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -3558,7 +3558,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -3767,7 +3767,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -4555,7 +4555,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -4764,7 +4764,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -5542,7 +5542,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -5751,7 +5751,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -6573,7 +6573,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);
@@ -6790,7 +6790,7 @@ public class COREntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(COREntryModelImpl.ORDER_BY_JPQL);
+				sb.append(COREntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(COREntryModelImpl.ORDER_BY_SQL);

@@ -123,6 +123,9 @@ public class CommerceNotificationTemplateModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CommerceNotificationTemplate.modifiedDate DESC, CommerceNotificationTemplate.name DESC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY commerceNotificationTemplate.modifiedDate DESC, commerceNotificationTemplate.name DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

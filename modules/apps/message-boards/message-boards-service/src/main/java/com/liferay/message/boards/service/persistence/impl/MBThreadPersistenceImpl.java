@@ -2010,7 +2010,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -2201,7 +2201,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -3152,7 +3152,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -3350,7 +3350,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -3503,7 +3503,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -4582,7 +4582,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -4780,7 +4780,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -5517,7 +5517,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -5713,7 +5713,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -7668,7 +7668,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -7883,7 +7883,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -8711,7 +8711,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -8915,7 +8915,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -9081,7 +9081,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -10244,7 +10244,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -10448,7 +10448,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -10614,7 +10614,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -11779,7 +11779,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -11983,7 +11983,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -12769,7 +12769,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);
@@ -12973,7 +12973,7 @@ public class MBThreadPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBThreadModelImpl.ORDER_BY_JPQL);
+				sb.append(MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MBThreadModelImpl.ORDER_BY_SQL);

@@ -4599,12 +4599,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext);
 
 			if (imageId > 0) {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					imageId);
+
 				_userLocalService.updatePortrait(
-					userId,
-					FileUtil.getBytes(
-						DLAppLocalServiceUtil.getFileEntry(
-							imageId
-						).getContentStream()));
+					userId, FileUtil.getBytes(fileEntry.getContentStream()));
 			}
 
 			if (jsonObject.has("organizationBriefs")) {

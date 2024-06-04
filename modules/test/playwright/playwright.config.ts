@@ -39,6 +39,7 @@ import {config as loginWebConfig} from './tests/login-web/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/config';
 import {config as notificationWebConfig} from './tests/notification-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
+import {config as openIdLinkConfig} from './tests/openid-link/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
 import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-web/config';
@@ -98,6 +99,7 @@ export default defineConfig({
 		messageBoardsWebConfig,
 		notificationWebConfig,
 		objectWebConfig,
+		openIdLinkConfig,
 		osbFaroWebConfig,
 		portalDefaultPermissionsWebConfig,
 		portalSearchAdminWebConfig,

@@ -57,7 +57,8 @@ export default async function main() {
 		bundleJavaScriptExports(
 			globalImports,
 			overridenPackageSymbols,
-			projectExports
+			projectExports,
+			projectWebContextPath
 		),
 
 		// CSS Bundling

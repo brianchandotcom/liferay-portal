@@ -3,19 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import path from 'path';
+
 import {BUILD_MAIN_EXPORTS_PATH} from '../../util/constants.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
 import getExternals from './getExternals.mjs';
 import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
 import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
+import relocateSourcemap from './relocateSourcemap.mjs';
 import runEsbuild from './runEsbuild.mjs';
 import writeExportBridge from './writeExportBridge.mjs';
 
 export default async function bundleJavaScriptExports(
 	globalImports,
 	overridenPackageSymbols,
-	projectExports
+	projectExports,
+	projectWebContextPath
 ) {
 	if (!projectExports.length) {
 		return;
@@ -25,12 +29,12 @@ export default async function bundleJavaScriptExports(
 		projectExports
 			.filter((moduleName) => !moduleName.endsWith('.css'))
 			.map((moduleName) =>
-				bundle(globalImports, overridenPackageSymbols, moduleName)
+				bundle(globalImports, overridenPackageSymbols, projectWebContextPath, moduleName)
 			)
 	);
 }
 
-async function bundle(globalImports, overridenPackageSymbols, moduleName) {
+async function bundle(globalImports, overridenPackageSymbols, projectWebContextPath, moduleName) {
 	const esbuildConfig = {
 		bundle: true,
 		entryPoints: [getEntryPoint(moduleName)],
@@ -47,5 +51,12 @@ async function bundle(globalImports, overridenPackageSymbols, moduleName) {
 
 	await writeExportBridge(overridenPackageSymbols, moduleName);
 
-	return runEsbuild(esbuildConfig, getFlatName(moduleName));
+	const flatModuleName = getFlatName(moduleName);
+
+	await runEsbuild(esbuildConfig, flatModuleName);
+
+	await relocateSourcemap(
+		path.join(BUILD_MAIN_EXPORTS_PATH, 'exports', `${flatModuleName}.js.map`),
+		projectWebContextPath
+	);
 }

@@ -113,6 +113,10 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 		);
 	}
 
+	async deleteTrial(orderId: string) {
+		await this.oAuth2Client.fetch(`/trial/${orderId}`, { method: "DELETE" })
+	}
+
 	async downloadLicenseKey(id: number) {
 		const response = await this.oAuth2Client.fetch(
 			`/provisioning/license-keys/${id}/download`

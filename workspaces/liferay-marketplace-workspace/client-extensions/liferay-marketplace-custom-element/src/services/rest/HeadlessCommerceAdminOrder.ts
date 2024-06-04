@@ -6,6 +6,12 @@
 import fetcher from '../fetcher';
 
 class HeadlessCommerceAdminOrder {
+	deleteOrder(orderId: string) {
+		return fetcher.delete(
+			`o/headless-commerce-admin-order/v1.0/orders/${orderId}`
+		);
+	}
+
 	getOrders(searchParams = new URLSearchParams()) {
 		return fetcher<APIResponse>(
 			`o/headless-commerce-admin-order/v1.0/orders?${searchParams.toString()}`

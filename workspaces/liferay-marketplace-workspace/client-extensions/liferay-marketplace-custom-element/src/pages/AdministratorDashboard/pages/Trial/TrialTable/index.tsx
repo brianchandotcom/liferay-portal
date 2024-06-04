@@ -11,12 +11,16 @@ import {Status} from '@clayui/modal/lib/types';
 import {formatDistance} from 'date-fns';
 
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
+import Loading from '../../../../../components/Loading';
 import Table from '../../../../../components/Table/Table';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
+import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../../i18n';
+import HeadlessCommerceAdminOrderImpl from '../../../../../services/rest/HeadlessCommerceAdminOrder';
 
 type TrialTableProps = {
 	items: Order[];
+	revalidate: () => void;
 };
 
 type DropDownItems = {
@@ -33,25 +37,9 @@ const ORDER_STATUS_LABEL = {
 
 const CONSOLE_CLOUD_URL = 'https://console.liferay.cloud';
 
-const itemsDropdown = [
-	{
-		id: 1,
-		name: i18n.translate('go-to-trial'),
-		onClick: (order: Order) =>
-			window.open(
-				`https://${
-					order?.customFields?.['trial-virtualhost'] as string
-				}`
-			),
-	},
-	{
-		id: 2,
-		name: i18n.translate('go-to-console'),
-		onClick: () => window.open(CONSOLE_CLOUD_URL),
-	},
-];
+const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
+	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
-const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 	if (!items.length) {
 		return (
 			<DashboardEmptyTable
@@ -64,6 +52,46 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 			/>
 		);
 	}
+
+	const itemsDropdown = [
+		{
+			id: 1,
+			name: i18n.translate('go-to-trial'),
+			onClick: (order: Order) =>
+				window.open(
+					`https://${
+						order?.customFields?.['trial-virtualhost'] as string
+					}`
+				),
+		},
+		{
+			id: 2,
+			name: i18n.translate('go-to-console'),
+			onClick: () => window.open(CONSOLE_CLOUD_URL),
+		},
+		{
+			id: 3,
+			name: i18n.translate('delete'),
+			onClick: async (order: Order) => {
+				if (
+					!confirm(
+						i18n.sub(
+							'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it',
+							'order'
+						)
+					)
+				) {
+					return;
+				}
+
+				const orderId = String(order.id);
+
+				await HeadlessCommerceAdminOrderImpl.deleteOrder(orderId);
+				await marketplaceSpringBootOAuth2.deleteTrial(orderId);
+				await revalidate();
+			},
+		},
+	];
 
 	return (
 		<>
@@ -87,16 +115,29 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 					{
 						key: 'orderStatusInfo',
 						render: (orderStatusInfo) => (
-							<ClayLabel
-								className="text-nowrap"
-								displayType={
-									ORDER_STATUS_LABEL[
-										orderStatusInfo?.label as keyof typeof ORDER_STATUS_LABEL
-									] as Status
-								}
-							>
-								{orderStatusInfo?.label_i18n}
-							</ClayLabel>
+							<div className="align-items-center d-flex">
+								<ClayLabel
+									className="text-nowrap"
+									displayType={
+										ORDER_STATUS_LABEL[
+											orderStatusInfo?.label as keyof typeof ORDER_STATUS_LABEL
+										] as Status
+									}
+								>
+									{orderStatusInfo?.label_i18n}
+								</ClayLabel>
+
+								{[
+									ORDER_WORKFLOW_STATUS_CODE.ON_HOLD,
+									ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+								].includes(orderStatusInfo.code) && (
+									<Loading
+										displayType="primary"
+										shape="circle"
+										size="sm"
+									/>
+								)}
+							</div>
 						),
 						title: i18n.translate('trial-status'),
 					},
@@ -151,8 +192,8 @@ const TrialTable: React.FC<TrialTableProps> = ({items}) => {
 						key: 'accountId',
 						render: (_, order) => {
 							if (
-								order.orderStatusInfo?.code !==
-								ORDER_WORKFLOW_STATUS_CODE.COMPLETED
+								order.orderStatusInfo?.code ===
+								ORDER_WORKFLOW_STATUS_CODE.PROCESSING
 							) {
 								return null;
 							}

@@ -28,24 +28,24 @@ public abstract class BaseAddComponentAnnotationCheck extends BaseUpgradeCheck {
 			return content;
 		}
 
-		String serviceBaseImplName = null;
+		String validExtendedClassName = null;
 
 		for (String extendedClassName : javaClass.getExtendedClassNames()) {
 			if (isValidClassName(extendedClassName)) {
-				serviceBaseImplName = extendedClassName;
+				validExtendedClassName = extendedClassName;
 
 				break;
 			}
 		}
 
-		if (Validator.isNull(serviceBaseImplName)) {
+		if (Validator.isNull(validExtendedClassName)) {
 			return content;
 		}
 
 		return content.replaceFirst(
 			"public class",
 			joinLines(
-				getAnnotationContent(serviceBaseImplName, content, javaClass),
+				getAnnotationContent(validExtendedClassName, content, javaClass),
 				"public class"));
 	}
 

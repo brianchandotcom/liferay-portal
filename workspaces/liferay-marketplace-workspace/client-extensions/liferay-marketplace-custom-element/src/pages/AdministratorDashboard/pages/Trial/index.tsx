@@ -26,6 +26,7 @@ const Trial = () => {
 		availability,
 		expired,
 		isLoading,
+		mutate,
 		orderTableData,
 		orders,
 	} = useTrialMetrics('week');
@@ -129,7 +130,12 @@ const Trial = () => {
 				</div>
 
 				<div className="border d-flex flex-column justify-content-center p-6 rounded-lg">
-					<TrialTable items={orderTableData?.items || []} />
+					<TrialTable
+						items={orderTableData?.items || []}
+						revalidate={() =>
+							mutate((data: any) => data, {revalidate: true})
+						}
+					/>
 				</div>
 			</div>
 		</Page>

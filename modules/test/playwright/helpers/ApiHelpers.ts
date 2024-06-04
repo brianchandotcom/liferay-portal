@@ -233,6 +233,10 @@ export class ApiHelpers {
 			'x-csrf-token': authToken,
 		};
 	}
+
+	getAuthorizationHeader() {
+		return ApiHelpers._authorization;
+	}
 }
 
 export class DataApiHelpers extends ApiHelpers {

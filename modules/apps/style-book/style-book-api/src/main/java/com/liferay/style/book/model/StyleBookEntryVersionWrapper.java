@@ -42,6 +42,7 @@ public class StyleBookEntryVersionWrapper
 		attributes.put("styleBookEntryVersionId", getStyleBookEntryVersionId());
 		attributes.put("version", getVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("styleBookEntryId", getStyleBookEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -89,6 +90,13 @@ public class StyleBookEntryVersionWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long styleBookEntryId = (Long)attributes.get("styleBookEntryId");
@@ -209,6 +217,16 @@ public class StyleBookEntryVersionWrapper
 	@Override
 	public boolean getDefaultStyleBookEntry() {
 		return model.getDefaultStyleBookEntry();
+	}
+
+	/**
+	 * Returns the external reference code of this style book entry version.
+	 *
+	 * @return the external reference code of this style book entry version
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -409,6 +427,16 @@ public class StyleBookEntryVersionWrapper
 	@Override
 	public void setDefaultStyleBookEntry(boolean defaultStyleBookEntry) {
 		model.setDefaultStyleBookEntry(defaultStyleBookEntry);
+	}
+
+	/**
+	 * Sets the external reference code of this style book entry version.
+	 *
+	 * @param externalReferenceCode the external reference code of this style book entry version
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

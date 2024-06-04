@@ -39,6 +39,7 @@ public class StyleBookEntryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("headId", getHeadId());
 		attributes.put("styleBookEntryId", getStyleBookEntryId());
 		attributes.put("groupId", getGroupId());
@@ -74,6 +75,13 @@ public class StyleBookEntryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long headId = (Long)attributes.get("headId");
@@ -200,6 +208,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public boolean getDefaultStyleBookEntry() {
 		return model.getDefaultStyleBookEntry();
+	}
+
+	/**
+	 * Returns the external reference code of this style book entry.
+	 *
+	 * @return the external reference code of this style book entry
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -410,6 +428,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public void setDefaultStyleBookEntry(boolean defaultStyleBookEntry) {
 		model.setDefaultStyleBookEntry(defaultStyleBookEntry);
+	}
+
+	/**
+	 * Sets the external reference code of this style book entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this style book entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

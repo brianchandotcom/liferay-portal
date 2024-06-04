@@ -30,24 +30,26 @@ public class StyleBookEntryServiceWrapper
 
 	@Override
 	public StyleBookEntry addStyleBookEntry(
-			long groupId, String name, String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _styleBookEntryService.addStyleBookEntry(
-			groupId, name, styleBookEntryKey, serviceContext);
-	}
-
-	@Override
-	public StyleBookEntry addStyleBookEntry(
-			long groupId, String frontendTokensValues, String name,
+			String externalReferenceCode, long groupId, String name,
 			String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryService.addStyleBookEntry(
-			groupId, frontendTokensValues, name, styleBookEntryKey,
+			externalReferenceCode, groupId, name, styleBookEntryKey,
 			serviceContext);
+	}
+
+	@Override
+	public StyleBookEntry addStyleBookEntry(
+			String externalReferenceCode, long groupId,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.addStyleBookEntry(
+			externalReferenceCode, groupId, frontendTokensValues, name,
+			styleBookEntryKey, serviceContext);
 	}
 
 	@Override
@@ -65,6 +67,15 @@ public class StyleBookEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryService.deleteStyleBookEntry(styleBookEntryId);
+	}
+
+	@Override
+	public StyleBookEntry deleteStyleBookEntry(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.deleteStyleBookEntry(
+			externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -90,6 +101,15 @@ public class StyleBookEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _styleBookEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public StyleBookEntry getStyleBookEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryService.getStyleBookEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

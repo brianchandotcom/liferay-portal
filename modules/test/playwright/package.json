@@ -1,13 +1,13 @@
 {
 	"author": "",
 	"dependencies": {
-		"@axe-core/playwright": "^4.9.1",
 		"moment": "2.29.4",
 		"uuid": "9.0.0",
 		"yauzl": "^3.0.0"
 	},
 	"description": "",
 	"devDependencies": {
+		"@axe-core/playwright": "^4.9.1",
 		"@liferay/eslint-plugin": "1.5.0",
 		"@liferay/npm-scripts": "49.2.3",
 		"@playwright/test": "1.39.0",

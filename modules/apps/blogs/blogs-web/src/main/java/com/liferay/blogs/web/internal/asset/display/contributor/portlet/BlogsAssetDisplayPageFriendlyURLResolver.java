@@ -41,8 +41,8 @@ public class BlogsAssetDisplayPageFriendlyURLResolver
 	@Override
 	protected boolean isSameFriendlyURL(String url1, String url2) {
 		return Objects.equals(
-			_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(url1),
-			_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(url2));
+			_friendlyURLNormalizer.normalizeWithEncoding(url1),
+			_friendlyURLNormalizer.normalizeWithEncoding(url2));
 	}
 
 	@Reference

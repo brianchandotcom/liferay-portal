@@ -26,17 +26,18 @@ if (Boolean.getBoolean("gradle.develocity.enabled")) {
 	develocity {
 		buildScan {
 			allowUntrustedServer = true
-
-			def isCI = System.getenv('JENKINS_URL') != null
-
 			server = System.getProperty("gradle.develocity.server.url") ?: null
+
 			if (System.getProperty("gradle.develocity.tag")) {
 				tag System.getProperty("gradle.develocity.tag")
 			}
 
 			termsOfUseAgree = "yes"
 			termsOfUseUrl = "https://gradle.com/terms-of-service"
-			uploadInBackground = !isCI
+
+			if (System.getenv("JENKINS_URL") == null) {
+				uploadInBackground = true
+			}
 		}
 	}
 }

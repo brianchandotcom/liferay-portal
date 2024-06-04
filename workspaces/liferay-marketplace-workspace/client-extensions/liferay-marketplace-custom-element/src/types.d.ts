@@ -300,6 +300,7 @@ type DefaultProperties = {
 	featureFlags: string[];
 	featurePreviews: ['use-product-id-for-specification'];
 	marketoFormId: string;
+	trialAccountCheck: 'false' | 'true';
 	trialEulaURL: string;
 	trialProductId: string;
 };

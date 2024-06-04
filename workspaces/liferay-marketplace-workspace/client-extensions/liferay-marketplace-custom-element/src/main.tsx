@@ -35,6 +35,9 @@ class WebComponent extends HTMLElement {
 								featurePreview.trim()
 							) as any,
 						marketoFormId: this.getAttribute('marketoFormId') || '',
+						trialAccountCheck:
+							(this.getAttribute('trialAccountCheck') as any) ||
+							'true',
 						trialEulaURL: this.getAttribute('trialEulaURL') || '',
 						trialProductId:
 							this.getAttribute('trialProductId') || '',

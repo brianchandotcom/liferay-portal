@@ -63,7 +63,8 @@ public class AnnouncementsUtil {
 			LinkedHashMapBuilder.<Long, long[]>put(
 				0L, new long[] {0}
 			).put(
-				_USER_CLASS_NAME_ID, new long[] {userId}
+				PortalUtil.getClassNameId(User.class.getName()),
+				new long[] {userId}
 			).build();
 
 		// Organization announcements
@@ -73,7 +74,9 @@ public class AnnouncementsUtil {
 		long[] organizationIds = userBag.getUserOrgIds();
 
 		if (organizationIds.length > 0) {
-			scopes.put(_ORGANIZATION_CLASS_NAME_ID, organizationIds);
+			scopes.put(
+				PortalUtil.getClassNameId(Organization.class.getName()),
+				organizationIds);
 		}
 
 		// Site announcements
@@ -81,7 +84,8 @@ public class AnnouncementsUtil {
 		long[] groupIds = userBag.getUserGroupIds();
 
 		if (groupIds.length > 0) {
-			scopes.put(_GROUP_CLASS_NAME_ID, groupIds);
+			scopes.put(
+				PortalUtil.getClassNameId(Group.class.getName()), groupIds);
 		}
 
 		// User group announcements
@@ -90,10 +94,10 @@ public class AnnouncementsUtil {
 			UserGroupLocalServiceUtil.getUserUserGroups(userId);
 
 		if (!userGroups.isEmpty()) {
-			long[] userGroupIds = ListUtil.toLongArray(
-				userGroups, UserGroup.USER_GROUP_ID_ACCESSOR);
-
-			scopes.put(_USER_GROUP_CLASS_NAME_ID, userGroupIds);
+			scopes.put(
+				PortalUtil.getClassNameId(UserGroup.class.getName()),
+				ListUtil.toLongArray(
+					userGroups, UserGroup.USER_GROUP_ID_ACCESSOR));
 		}
 
 		// Role announcements
@@ -142,7 +146,9 @@ public class AnnouncementsUtil {
 		}
 
 		if (!roleIds.isEmpty()) {
-			scopes.put(_ROLE_CLASS_NAME_ID, ArrayUtil.toLongArray(roleIds));
+			scopes.put(
+				PortalUtil.getClassNameId(Role.class.getName()),
+				ArrayUtil.toLongArray(roleIds));
 		}
 
 		return scopes;
@@ -257,23 +263,8 @@ public class AnnouncementsUtil {
 		return false;
 	}
 
-	private static final long _GROUP_CLASS_NAME_ID = PortalUtil.getClassNameId(
-		Group.class.getName());
-
-	private static final long _ORGANIZATION_CLASS_NAME_ID =
-		PortalUtil.getClassNameId(Organization.class.getName());
-
 	private static final boolean _PERMISSIONS_CHECK_GUEST_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.PERMISSIONS_CHECK_GUEST_ENABLED));
-
-	private static final long _ROLE_CLASS_NAME_ID = PortalUtil.getClassNameId(
-		Role.class.getName());
-
-	private static final long _USER_CLASS_NAME_ID = PortalUtil.getClassNameId(
-		User.class.getName());
-
-	private static final long _USER_GROUP_CLASS_NAME_ID =
-		PortalUtil.getClassNameId(UserGroup.class.getName());
 
 }

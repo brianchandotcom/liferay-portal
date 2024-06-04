@@ -69,6 +69,7 @@ import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
@@ -1432,7 +1433,7 @@ public class BundleSiteInitializerTest {
 			).getEnabled());
 	}
 
-	private void _assertDLFileEntry() throws Exception {
+	private void _assertDLFileEntry1() throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Table of Contents.markdown");
@@ -1446,6 +1447,24 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Genesis"));
 		Assert.assertTrue(string.contains("## New Testament"));
 		Assert.assertTrue(string.contains("1. Revelation"));
+	}
+
+	private void _assertDLFileEntry2() throws Exception {
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Table of Contents.markdown");
+
+		String string = new String(
+			StreamUtil.toByteArray(
+				_dlFileEntryLocalService.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		Assert.assertTrue(string.contains("## Old Testament"));
+		Assert.assertTrue(string.contains("1. Genesis"));
+		Assert.assertTrue(string.contains("## New Testament"));
+		Assert.assertTrue(string.contains("1. Revelation"));
+		Assert.assertTrue(string.contains("## Content Update"));
+		Assert.assertTrue(string.contains("1. Test Update"));
 	}
 
 	private void _assertExpandoColumns1() {
@@ -3682,6 +3701,13 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			Arrays.toString(organizationBriefs), 1, organizationBriefs.length);
 
+		UserGroupBrief[] userGroupBriefs = userAccount.getUserGroupBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(userGroupBriefs), 2, userGroupBriefs.length);
+
+		Assert.assertTrue(userAccount.getImageId() > 0);
+
 		_assertUserSiteGroups(userAccount.getId());
 
 		userAccount = userAccountResource.getUserAccountByEmailAddress(
@@ -3703,6 +3729,13 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			Arrays.toString(organizationBriefs), 1, organizationBriefs.length);
+
+		userGroupBriefs = userAccount.getUserGroupBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(userGroupBriefs), 1, userGroupBriefs.length);
+
+		Assert.assertTrue(userAccount.getImageId() == 0);
 
 		_assertUserSiteGroups(userAccount.getId());
 	}
@@ -3738,10 +3771,17 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			Arrays.toString(organizationBriefs), 1, organizationBriefs.length);
 
+		UserGroupBrief[] userGroupBriefs = userAccount.getUserGroupBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(userGroupBriefs), 2, userGroupBriefs.length);
+
+		Assert.assertTrue(userAccount.getImageId() > 0);
+
 		_assertUserSiteGroups(userAccount.getId());
 
 		userAccount = userAccountResource.getUserAccountByEmailAddress(
-			"test.user2.update@liferay.com");
+			"test.user2@liferay.com");
 
 		Assert.assertNotNull(userAccount);
 
@@ -3751,7 +3791,7 @@ public class BundleSiteInitializerTest {
 			Arrays.toString(accountBriefs), 2, accountBriefs.length);
 
 		Assert.assertEquals(
-			"testalternatename2update", userAccount.getAlternateName());
+			"testalternatename2", userAccount.getAlternateName());
 		Assert.assertEquals(
 			UserAccount.Status.INACTIVE, userAccount.getStatus());
 
@@ -3759,6 +3799,13 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			Arrays.toString(organizationBriefs), 2, organizationBriefs.length);
+
+		userGroupBriefs = userAccount.getUserGroupBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(userGroupBriefs), 2, userGroupBriefs.length);
+
+		Assert.assertTrue(userAccount.getImageId() >= 0);
 
 		_assertUserSiteGroups(userAccount.getId());
 
@@ -3781,6 +3828,13 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			Arrays.toString(organizationBriefs), 0, organizationBriefs.length);
+
+		userGroupBriefs = userAccount.getUserGroupBriefs();
+
+		Assert.assertEquals(
+			Arrays.toString(userGroupBriefs), 0, userGroupBriefs.length);
+
+		Assert.assertTrue(userAccount.getImageId() == 0);
 
 		_assertUserSiteGroups(userAccount.getId());
 	}
@@ -3989,7 +4043,7 @@ public class BundleSiteInitializerTest {
 		_assertDDMStructure();
 		_assertDDMTemplate1();
 		_assertDepotEntries1();
-		_assertDLFileEntry();
+		_assertDLFileEntry1();
 		_assertExpandoColumns1();
 		_assertExpandoValues1();
 		_assertFragmentEntries();
@@ -4031,6 +4085,7 @@ public class BundleSiteInitializerTest {
 		_assertDataDefinition2();
 		_assertDDMTemplate2();
 		_assertDepotEntries2();
+		_assertDLFileEntry2();
 		_assertExpandoColumns2();
 		_assertExpandoValues2();
 		_assertJournalArticles2();

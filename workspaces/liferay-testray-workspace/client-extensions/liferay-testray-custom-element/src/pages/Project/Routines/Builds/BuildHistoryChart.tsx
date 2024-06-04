@@ -12,102 +12,110 @@ type BuildHistoryChartProps = {
 	builds: TestrayBuild[];
 };
 
-const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => (
-	<div className="graph-container graph-container-sm">
-		<ClayChart
-			axis={{
-				x: {
-					label: {
-						position: 'outer-center',
-						text: i18n.translate('builds-ordered-by-date'),
+const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => {
+	const buildReverse = [...builds].reverse();
+
+	return (
+		<div className="graph-container graph-container-sm">
+			<ClayChart
+				axis={{
+					x: {
+						label: {
+							position: 'outer-center',
+							text: i18n.translate('builds-ordered-by-date'),
+						},
 					},
-				},
-				y: {
-					label: {
-						position: 'outer-middle',
-						text: i18n.translate('tests').toUpperCase(),
+					y: {
+						label: {
+							position: 'outer-middle',
+							text: i18n.translate('tests').toUpperCase(),
+						},
 					},
-				},
-			}}
-			bar={{
-				width: {
-					max: 30,
-				},
-			}}
-			data={{
-				colors: {
-					[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
-					[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
-					[Statuses.INCOMPLETE]: DATA_COLORS['metrics.incomplete'],
-					[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
-					[Statuses.TEST_FIX]: DATA_COLORS['metrics.testfix'],
-				},
-				columns: [
-					[
-						Statuses.PASSED,
-						...builds.map(
-							({testrayStatusMetric}) =>
-								testrayStatusMetric?.passed
-						),
-					],
-					[
-						Statuses.FAILED,
-						...builds.map(
-							({testrayStatusMetric}) =>
-								testrayStatusMetric?.failed
-						),
-					],
-					[
-						Statuses.BLOCKED,
-						...builds.map(
-							({testrayStatusMetric}) =>
-								testrayStatusMetric?.blocked
-						),
-					],
-					[
-						Statuses.TEST_FIX,
-						...builds.map(
-							({testrayStatusMetric}) =>
-								testrayStatusMetric?.testfix
-						),
-					],
-					[
-						Statuses.INCOMPLETE,
-						...builds.map(
-							({testrayStatusMetric}) =>
-								(testrayStatusMetric?.inProgress as number) +
-								(testrayStatusMetric?.untested as number)
-						),
-					],
-				],
-				stack: {
-					normalize: true,
-				},
-				type: 'area',
-			}}
-			legend={{
-				inset: {
-					anchor: 'top-right',
-					step: 1,
-					x: 10,
-					y: -30,
-				},
-				item: {
-					tile: {
-						height: 12,
-						width: 12,
+				}}
+				bar={{
+					width: {
+						max: 30,
 					},
-				},
-				position: 'inset',
-			}}
-			padding={{bottom: 5, top: 30}}
-			tooltip={{
-				format: {
-					title: (index: number) => builds[index]?.testrayBuildName,
-				},
-			}}
-		/>
-	</div>
-);
+				}}
+				data={{
+					colors: {
+						[Statuses.BLOCKED]: DATA_COLORS['metrics.blocked'],
+						[Statuses.FAILED]: DATA_COLORS['metrics.failed'],
+						[Statuses.INCOMPLETE]:
+							DATA_COLORS['metrics.incomplete'],
+						[Statuses.PASSED]: DATA_COLORS['metrics.passed'],
+						[Statuses.TEST_FIX]: DATA_COLORS['metrics.testfix'],
+					},
+					columns: [
+						[
+							Statuses.PASSED,
+							...buildReverse
+								.map(
+									({testrayStatusMetric}) =>
+										testrayStatusMetric?.passed
+								)
+								.sort(),
+						],
+						[
+							Statuses.FAILED,
+							...buildReverse.map(
+								({testrayStatusMetric}) =>
+									testrayStatusMetric?.failed
+							),
+						],
+						[
+							Statuses.BLOCKED,
+							...buildReverse.map(
+								({testrayStatusMetric}) =>
+									testrayStatusMetric?.blocked
+							),
+						],
+						[
+							Statuses.TEST_FIX,
+							...buildReverse.map(
+								({testrayStatusMetric}) =>
+									testrayStatusMetric?.testfix
+							),
+						],
+						[
+							Statuses.INCOMPLETE,
+							...buildReverse.map(
+								({testrayStatusMetric}) =>
+									(testrayStatusMetric?.inProgress as number) +
+									(testrayStatusMetric?.untested as number)
+							),
+						],
+					],
+					stack: {
+						normalize: true,
+					},
+					type: 'area',
+				}}
+				legend={{
+					inset: {
+						anchor: 'top-right',
+						step: 1,
+						x: 10,
+						y: -30,
+					},
+					item: {
+						tile: {
+							height: 12,
+							width: 12,
+						},
+					},
+					position: 'inset',
+				}}
+				padding={{bottom: 5, top: 30}}
+				tooltip={{
+					format: {
+						title: (index: number) =>
+							buildReverse[index]?.testrayBuildName,
+					},
+				}}
+			/>
+		</div>
+	);
+};
 
 export default BuildHistoryChart;

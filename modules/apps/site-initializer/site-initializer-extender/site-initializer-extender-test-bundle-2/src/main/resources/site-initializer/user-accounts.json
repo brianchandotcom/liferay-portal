@@ -10,10 +10,19 @@
 		"externalReferenceCode": "TESTUSER1",
 		"familyName": "User1",
 		"givenName": "Test",
+		"imageId": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/portrait.png#]",
 		"name": "Test User 1",
 		"organizationBriefs": [
 			{
 				"name": "Test Organization 1"
+			}
+		],
+		"userGroupBriefs": [
+			{
+				"name": "Test User Group 1"
+			},
+			{
+				"name": "Test User Group 2"
 			}
 		]
 	},
@@ -26,11 +35,12 @@
 				"externalReferenceCode": "TESTACCOUNT4"
 			}
 		],
-		"alternateName": "testAlternateName2Update",
-		"emailAddress": "test.user2.update@liferay.com",
+		"alternateName": "testAlternateName2",
+		"emailAddress": "test.user2@liferay.com",
 		"externalReferenceCode": "TESTUSER2",
 		"familyName": "User2",
 		"givenName": "Test",
+		"imageId": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/portrait.png#]",
 		"name": "Test User 2",
 		"organizationBriefs": [
 			{
@@ -38,6 +48,14 @@
 			},
 			{
 				"name": "Test Organization 2"
+			}
+		],
+		"userGroupBriefs": [
+			{
+				"name": "Test User Group 1"
+			},
+			{
+				"name": "Test User Group 2"
 			}
 		]
 	},

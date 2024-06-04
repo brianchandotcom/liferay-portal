@@ -6,38 +6,21 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaClassParser;
-
-import java.util.List;
 
 /**
  * @author Kyle Miho
  */
-public class UpgradeJavaFinderImplCheck extends BaseUpgradeCheck {
+public class UpgradeJavaFinderImplCheck
+	extends BaseAddComponentAnnotationCheck {
 
 	@Override
-	protected String format(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String getAnnotationContent(
+		String className, String content, JavaClass javaClass) {
 
-		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
-
-		String finderBaseImplName = _getFinderBaseImplName(javaClass);
-
-		if (Validator.isNull(finderBaseImplName) ||
-			javaClass.hasAnnotation("Component")) {
-
-			return content;
-		}
-
-		String modelName = StringUtil.extractFirst(
-			finderBaseImplName, "BaseImpl");
-
-		return content.replaceFirst(
-			"(public class)",
-			"@Component(service = " + modelName + ".class)\n$1");
+		return String.format(
+			"@Component(service = %s.class)",
+			StringUtil.extractFirst(className, "BaseImpl"));
 	}
 
 	@Override
@@ -47,16 +30,9 @@ public class UpgradeJavaFinderImplCheck extends BaseUpgradeCheck {
 		};
 	}
 
-	private String _getFinderBaseImplName(JavaClass javaClass) {
-		List<String> extendedClassNames = javaClass.getExtendedClassNames();
-
-		for (String extendedClassName : extendedClassNames) {
-			if (extendedClassName.contains("FinderBaseImpl")) {
-				return extendedClassName;
-			}
-		}
-
-		return null;
+	@Override
+	protected boolean isValidClassName(String className) {
+		return className.contains("FinderBaseImpl");
 	}
 
 }

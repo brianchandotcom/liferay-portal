@@ -5,51 +5,28 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaClassParser;
-
-import java.util.List;
 
 /**
  * @author Kyle Miho
  */
-public class UpgradeJavaServiceImplCheck extends BaseUpgradeCheck {
+public class UpgradeJavaServiceImplCheck
+	extends BaseAddComponentAnnotationCheck {
 
 	@Override
-	protected String format(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String getAnnotationContent(
+		String className, String content, JavaClass javaClass) {
 
-		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
-
-		String serviceBaseImplName = _getServiceBaseImplName(javaClass);
-
-		if (Validator.isNull(serviceBaseImplName) ||
-			javaClass.hasAnnotation("Component")) {
-
-			return content;
-		}
-
-		String contextName = _getContextName(javaClass);
-
-		String contextPath = StringUtil.extractFirst(
-			serviceBaseImplName, "ServiceBaseImpl");
-
-		String component = StringBundler.concat(
-			"@Component(", StringPool.NEW_LINE, StringPool.TAB, "property = {",
-			StringPool.NEW_LINE, StringPool.TAB, StringPool.TAB,
-			"\"json.web.service.context.name=", contextName, "\",",
-			StringPool.NEW_LINE, StringPool.TAB, StringPool.TAB,
-			"\"json.web.service.context.path=", contextPath, StringPool.QUOTE,
-			StringPool.NEW_LINE, StringPool.TAB, "},", StringPool.NEW_LINE,
-			StringPool.TAB, "service = AopService.class", StringPool.NEW_LINE,
-			")");
-
-		return content.replaceFirst("(public class)", component + "\n$1");
+		return joinLines(
+			"@Component", "\tproperty = {",
+			String.format(
+				"\t\t\"json.web.service.context.name=%s\",",
+				_getContextName(javaClass)),
+			String.format(
+				"\t\t\"json.web.service.context.path=%s\",",
+				_getContextPath(className)),
+			"\t}", "\tservice = AopService.class", ")");
 	}
 
 	@Override
@@ -60,27 +37,24 @@ public class UpgradeJavaServiceImplCheck extends BaseUpgradeCheck {
 		};
 	}
 
-	private String _getContextName(JavaClass javaClass) {
+	@Override
+	protected boolean isValidClassName(String className) {
+		if (className.contains("LocalServiceBaseImpl")) {
+			return false;
+		}
+
+		return className.contains("ServiceBaseImpl");
+	}
+
+	private static String _getContextName(JavaClass javaClass) {
 		String contextName = StringUtil.extractFirst(
 			javaClass.getPackageName(), ".service.impl");
 
 		return StringUtil.extractLast(contextName, ".");
 	}
 
-	private String _getServiceBaseImplName(JavaClass javaClass) {
-		List<String> extendedClassNames = javaClass.getExtendedClassNames();
-
-		for (String extendedClassName : extendedClassNames) {
-			if (extendedClassName.contains("ServiceBaseImpl")) {
-				if (extendedClassName.contains("LocalServiceBaseImpl")) {
-					return null;
-				}
-
-				return extendedClassName;
-			}
-		}
-
-		return null;
+	private static String _getContextPath(String baseImplName) {
+		return StringUtil.extractFirst(baseImplName, "ServiceBaseImpl");
 	}
 
 }

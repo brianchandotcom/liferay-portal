@@ -5,41 +5,25 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.parser.JavaClass;
-import com.liferay.source.formatter.parser.JavaClassParser;
-
-import java.util.List;
 
 /**
  * @author Kyle Miho
  */
-public class UpgradeJavaLocalServiceImplCheck extends BaseUpgradeCheck {
+public class UpgradeJavaLocalServiceImplCheck
+	extends BaseAddComponentAnnotationCheck {
 
 	@Override
-	protected String format(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String getAnnotationContent(
+		String className, String content, JavaClass javaClass) {
 
-		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
-
-		if (Validator.isNull(_getLocalServiceBaseImplName(javaClass)) ||
-			javaClass.hasAnnotation("Component")) {
-
-			return content;
-		}
-
-		String component = StringBundler.concat(
-			"@Component(", StringPool.NEW_LINE, StringPool.TAB,
-			"property = \"model.class.name=",
-			_getFullyQualifiedModelClassName(javaClass), "\",",
-			StringPool.NEW_LINE, StringPool.TAB, "service = AopService.class",
-			StringPool.NEW_LINE, ")");
-
-		return content.replaceFirst("(public class)", component + "\n$1");
+		return joinLines(
+			"@Component(",
+			String.format(
+				"\tproperty = \"model.class.name=%s\"\n",
+				_getFullyQualifiedModelClassName(javaClass)),
+			"\tservice=AopService.class", ")");
 	}
 
 	@Override
@@ -48,6 +32,11 @@ public class UpgradeJavaLocalServiceImplCheck extends BaseUpgradeCheck {
 			"com.liferay.portal.aop.AopService",
 			"org.osgi.service.component.annotations.Component"
 		};
+	}
+
+	@Override
+	protected boolean isValidClassName(String className) {
+		return className.contains("LocalServiceBaseImpl");
 	}
 
 	private String _getFullyQualifiedModelClassName(JavaClass javaClass) {
@@ -59,18 +48,6 @@ public class UpgradeJavaLocalServiceImplCheck extends BaseUpgradeCheck {
 
 		return StringUtil.replace(
 			fullyQualifiedLocalServiceImplClassName, ".service.impl", ".model");
-	}
-
-	private String _getLocalServiceBaseImplName(JavaClass javaClass) {
-		List<String> extendedClassNames = javaClass.getExtendedClassNames();
-
-		for (String extendedClassName : extendedClassNames) {
-			if (extendedClassName.contains("LocalServiceBaseImpl")) {
-				return extendedClassName;
-			}
-		}
-
-		return null;
 	}
 
 }

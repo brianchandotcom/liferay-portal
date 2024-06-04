@@ -49,8 +49,10 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -1465,6 +1467,24 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Revelation"));
 		Assert.assertTrue(string.contains("## Content Update"));
 		Assert.assertTrue(string.contains("1. Test Update"));
+
+		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Old Testament");
+
+		Assert.assertNotNull(dlFolder);
+
+		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			_group.getGroupId(), dlFolder.getFolderId(), "Genesis.txt");
+
+		Assert.assertNotNull(dlFileEntry);
+
+		string = new String(
+			StreamUtil.toByteArray(
+				_dlFileEntryLocalService.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		Assert.assertTrue(string.isEmpty());
 	}
 
 	private void _assertExpandoColumns1() {
@@ -4190,6 +4210,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

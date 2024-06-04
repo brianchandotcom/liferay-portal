@@ -1059,9 +1059,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		WorkflowTask workflowTask = _getWorkflowTask(ctEntry, model);
 
-		if ((workflowTask == null) ||
-			!Objects.equals(workflowTask.getName(), "review")) {
-
+		if ((workflowTask == null) || workflowTask.isCompleted()) {
 			return null;
 		}
 
@@ -1187,7 +1185,10 @@ public class GetEntryRenderDataMVCResourceCommand
 			).put(
 				"assignButton",
 				() -> {
-					if (currentCTCollectionId != ctEntry.getCtCollectionId()) {
+					if ((currentCTCollectionId !=
+							ctEntry.getCtCollectionId()) ||
+						workflowTask.isCompleted()) {
+
 						return null;
 					}
 

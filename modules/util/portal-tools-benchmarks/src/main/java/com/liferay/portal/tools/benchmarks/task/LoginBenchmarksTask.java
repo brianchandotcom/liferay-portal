@@ -49,7 +49,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	}
 
 	private void _assertContent(HttpResponse httpResponse, String key) {
-		Assert.assertEquals(httpResponse.getStatusCode(), 200);
+		Assert.assertEquals(200, httpResponse.getStatusCode());
 
 		String httpResponseString = httpResponse.toString();
 
@@ -66,7 +66,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		throws Exception {
 
 		Assert.assertEquals(url.toString(), httpResponse.getRedirect());
-		Assert.assertEquals(httpResponse.getStatusCode(), 302);
+		Assert.assertEquals(302, httpResponse.getStatusCode());
 
 		return url;
 	}

@@ -15,7 +15,7 @@ const ReferencedEntity: React.FC<{
 
 	const entity = referencedEntities.getIn([
 		type,
-		parseReferencedEntityId(id, referencedEntities)
+		parseReferencedEntityId(id, referencedEntities, type)
 	]);
 
 	return entity ? (

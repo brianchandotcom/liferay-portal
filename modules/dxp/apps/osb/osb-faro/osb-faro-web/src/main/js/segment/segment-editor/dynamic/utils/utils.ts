@@ -486,11 +486,16 @@ export const invalidateCriterionWithMissingProperty = (
 
 export const parseReferencedEntityId = (
 	id: string,
-	referencedEntities: ReferencedEntities
+	referencedEntities: ReferencedEntities,
+	type: EntityType
 ) => {
 	let parsedId = id;
 
-	if (parsedId && parsedId.indexOf('_') === -1) {
+	if (
+		type === EntityType.Assets &&
+		parsedId &&
+		parsedId.indexOf('_') === -1
+	) {
 		const keys = Object.keys(
 			referencedEntities.getIn([EntityType.Assets]).toObject()
 		);

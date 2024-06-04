@@ -34,14 +34,15 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, boolean defaultStyleBookEntry,
-			String frontendTokensValues, String name, String styleBookEntryKey,
+			String externalReferenceCode, long userId, long groupId,
+			boolean defaultStyleBookEntry, String frontendTokensValues,
+			String name, String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.addStyleBookEntry(
-			userId, groupId, defaultStyleBookEntry, frontendTokensValues, name,
-			styleBookEntryKey, serviceContext);
+			externalReferenceCode, userId, groupId, defaultStyleBookEntry,
+			frontendTokensValues, name, styleBookEntryKey, serviceContext);
 	}
 
 	/**
@@ -141,6 +142,15 @@ public class StyleBookEntryLocalServiceWrapper
 
 		return _styleBookEntryLocalService.deleteStyleBookEntry(
 			styleBookEntryId);
+	}
+
+	@Override
+	public StyleBookEntry deleteStyleBookEntry(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.deleteStyleBookEntry(
+			externalReferenceCode, groupId);
 	}
 
 	/**

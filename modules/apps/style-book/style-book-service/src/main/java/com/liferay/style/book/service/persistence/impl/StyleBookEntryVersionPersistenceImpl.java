@@ -18,19 +18,26 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.exception.NoSuchEntryVersionException;
 import com.liferay.style.book.model.StyleBookEntryVersion;
 import com.liferay.style.book.model.StyleBookEntryVersionTable;
@@ -8833,6 +8840,49 @@ public class StyleBookEntryVersionPersistenceImpl
 		StyleBookEntryVersionModelImpl styleBookEntryVersionModelImpl =
 			(StyleBookEntryVersionModelImpl)styleBookEntryVersion;
 
+		if (Validator.isNull(
+				styleBookEntryVersion.getExternalReferenceCode())) {
+
+			styleBookEntryVersion.setExternalReferenceCode(
+				String.valueOf(styleBookEntryVersion.getPrimaryKey()));
+		}
+		else {
+			if (!Objects.equals(
+					styleBookEntryVersionModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					styleBookEntryVersion.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = styleBookEntryVersion.getCompanyId();
+
+					long groupId = styleBookEntryVersion.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = styleBookEntryVersion.getPrimaryKey();
+					}
+
+					try {
+						styleBookEntryVersion.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								StyleBookEntryVersion.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								styleBookEntryVersion.
+									getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -9388,6 +9438,7 @@ public class StyleBookEntryVersionPersistenceImpl
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("version");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("styleBookEntryId");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");

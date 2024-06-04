@@ -875,6 +875,8 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 		draftStyleBookEntry.setCtCollectionId(
 			publishedStyleBookEntry.getCtCollectionId());
 		draftStyleBookEntry.setUuid(publishedStyleBookEntry.getUuid());
+		draftStyleBookEntry.setExternalReferenceCode(
+			publishedStyleBookEntry.getExternalReferenceCode());
 		draftStyleBookEntry.setHeadId(publishedStyleBookEntry.getPrimaryKey());
 		draftStyleBookEntry.setGroupId(publishedStyleBookEntry.getGroupId());
 		draftStyleBookEntry.setCompanyId(

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../../../../../../../../../common/I18n';
+import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 
-const getInitialColumns = (articleWhatIsMyInstanceSizingValueURL) => [
+const getInitialColumns = articleWhatIsMyInstanceSizingValueURL => [
 	{
 		accessor: 'start-end-date',
 		align: 'center',
@@ -15,8 +15,8 @@ const getInitialColumns = (articleWhatIsMyInstanceSizingValueURL) => [
 		header: {
 			name: i18n.translate('start-end-date'),
 			styles:
-				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
-		},
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3'
+		}
 	},
 	{
 		accessor: 'quantity',
@@ -25,8 +25,8 @@ const getInitialColumns = (articleWhatIsMyInstanceSizingValueURL) => [
 		header: {
 			name: i18n.translate('purchased'),
 			styles:
-				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
-		},
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3'
+		}
 	},
 	{
 		accessor: 'instance-size',
@@ -34,22 +34,22 @@ const getInitialColumns = (articleWhatIsMyInstanceSizingValueURL) => [
 		bodyClass: 'border-0',
 		header: {
 			name: (
-				<div className="align-items-center d-flex justify-content-center">
-					<p className="m-0">{i18n.translate('instance-size')}</p>
+				<div className='align-items-center d-flex justify-content-center'>
+					<p className='m-0'>{i18n.translate('instance-size')}</p>
 
 					<PopoverIconButton
 						popoverLink={{
 							textLink: i18n.translate(
 								'learn-more-about-instance-sizing'
 							),
-							url: articleWhatIsMyInstanceSizingValueURL,
+							url: articleWhatIsMyInstanceSizingValueURL
 						}}
 					/>
 				</div>
 			),
 			styles:
-				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
-		},
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3'
+		}
 	},
 	{
 		accessor: 'subscription-term-status',
@@ -58,9 +58,9 @@ const getInitialColumns = (articleWhatIsMyInstanceSizingValueURL) => [
 		header: {
 			name: i18n.translate('status'),
 			styles:
-				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
-		},
-	},
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3'
+		}
+	}
 ];
 
 const displayInstanceSizeMap = {
@@ -69,7 +69,7 @@ const displayInstanceSizeMap = {
 		'Development',
 		'Non-Production',
 		'Production',
-		'Unlimited Enterprise-Wide',
+		'Unlimited Enterprise-Wide'
 	],
 	'Liferay Self-Hosted': [
 		'Backup',
@@ -79,7 +79,7 @@ const displayInstanceSizeMap = {
 		'Non-Production',
 		'OEM',
 		'Production',
-		'Unlimited Enterprise-Wide',
+		'Unlimited Enterprise-Wide'
 	],
 	Portal: [
 		'Backup',
@@ -95,8 +95,8 @@ const displayInstanceSizeMap = {
 		'OEM',
 		'Portal Per User',
 		'Production',
-		'Production (Additional JVM)',
-	],
+		'Production (Additional JVM)'
+	]
 };
 
 export default function getColumns(
@@ -107,20 +107,18 @@ export default function getColumns(
 
 	const displayColumns = [...columns];
 
-	let displayInstanceSizeForProduct = [
+	const displayInstanceSizeForProduct = [
 		'Commerce',
 		'Liferay Self-Hosted',
-		'Portal',
-	].some((category) => {
-	    if (title.startsWith(category)) {
-	        const productName = title.substring(category.length + 1);
+		'Portal'
+	].some(category => {
+		if (title.startsWith(category)) {
+			const productName = title.substring(category.length + 1);
 
-	        return displayInstanceSizeMap[
-            	category
-            ].includes(productName);
-	    }
+			return displayInstanceSizeMap[category].includes(productName);
+		}
 
-	    return false;
+		return false;
 	});
 
 	if (!displayInstanceSizeForProduct) {

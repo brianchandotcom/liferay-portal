@@ -19,7 +19,7 @@ public class UpgradeJavaServiceImplCheck
 		String className, String content, JavaClass javaClass) {
 
 		return joinLines(
-			"@Component", "\tproperty = {",
+			"@Component(", "\tproperty = {",
 			String.format(
 				"\t\t\"json.web.service.context.name=%s\",",
 				_getContextName(javaClass)),

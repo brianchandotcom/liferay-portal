@@ -1673,7 +1673,7 @@
 	<source-processor name="UpgradeSourceProcessor">
 		<check name="UpgradeBNDDeclarativeServicesCheck">
 			<category name="Upgrade" />
-			<description name="Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist" />
+			<description name="Adds `-dsannotations-options: inherit` to `bnd.bnd` if it does not yet exist." />
 		</check>
 		<check name="UpgradeBNDIncludeResourceCheck">
 			<category name="Upgrade" />
@@ -1991,7 +1991,7 @@
 		</check>
 		<check name="XMLUpgradeDeclarativeServicesCheck">
 			<category name="Upgrade" />
-			<description name="Sets dependency-injector to ds in `service.xml` file" />
+			<description name="Sets dependency-injector to ds in `service.xml` file." />
 		</check>
 		<check name="XMLUpgradeDTDVersionCheck">
 			<category name="Upgrade" />

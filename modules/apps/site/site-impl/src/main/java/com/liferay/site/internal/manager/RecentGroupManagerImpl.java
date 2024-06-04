@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.manager.RecentGroupManager;
@@ -56,6 +58,14 @@ public class RecentGroupManagerImpl implements RecentGroupManager {
 	@Override
 	public void addRecentGroup(
 		HttpServletRequest httpServletRequest, long groupId) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isSignedIn()) {
+			return;
+		}
 
 		long liveGroupId = _getLiveGroupId(groupId);
 
@@ -90,6 +100,14 @@ public class RecentGroupManagerImpl implements RecentGroupManager {
 
 	@Override
 	public List<Group> getRecentGroups(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isSignedIn()) {
+			return Collections.emptyList();
+		}
+
 		String value = _getRecentGroupsValue(httpServletRequest);
 
 		try {

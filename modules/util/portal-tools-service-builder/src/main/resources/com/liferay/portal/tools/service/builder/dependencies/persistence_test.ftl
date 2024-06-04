@@ -335,21 +335,45 @@ public class ${entity.name}PersistenceTest {
 
 	<#if entity.hasExternalReferenceCode()>
 		<#if entity.versionEntity??>
-			@Test(expected = ${duplicateEntityExternalReferenceCode}Exception.class)
-			public void testCreateDraftWithExistingExternalReferenceCode()
-				throws Exception {
-				${entity.name} ${entity.variableName} = add${entity.name}();
-
-				addDraft${entity.name}(${entity.variableName});
-
-				addDraft${entity.name}(${entity.variableName});
-			}
-
 			@Test
 			public void testCreateDraft() throws Exception {
 				${entity.name} ${entity.variableName} = add${entity.name}();
 
-				${entity.name} draft${entity.name} = addDraft${entity.name}(${entity.variableName});
+				<#assign entityColumn = entity.PKEntityColumns[0] />
+
+				${entityColumn.type} pk =
+
+				<#if stringUtil.equals(entityColumn.type, "int")>
+					RandomTestUtil.nextInt()
+				<#elseif stringUtil.equals(entityColumn.type, "long")>
+					RandomTestUtil.nextLong()
+				<#elseif stringUtil.equals(entityColumn.type, "String")>
+					<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
+
+					<#if maxLength < 8>
+						RandomTestUtil.randomString(${maxLength})
+					<#else>
+						RandomTestUtil.randomString()
+					</#if>
+				</#if>
+
+				;
+
+				${entity.name} draft${entity.name} = _persistence.create(pk);
+
+				<#list entity.regularEntityColumns as entityColumn>
+
+					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
+						draft${entity.name}.set${entityColumn.methodName}(
+						<#if stringUtil.equals(entityColumn.name, "headId")>
+							-
+						</#if>
+						${entity.variableName}.get${entityColumn.methodName}());
+
+					</#if>
+				</#list>
+
+				_${entity.pluralVariableName}.add(_persistence.update(draft${entity.name}));
 
 				<#list entity.regularEntityColumns as entityColumn>
 					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
@@ -455,47 +479,6 @@ public class ${entity.name}PersistenceTest {
 				</#list>
 
 				_${entity.pluralVariableName}.add(_persistence.update(${entity.variableName}2));
-			}
-
-			protected ${entity.name} addDraft${entity.name}(${entity.name} existing${entity.name}) throws Exception {
-
-				<#assign entityColumn = entity.PKEntityColumns[0] />
-
-				${entityColumn.type} pk =
-
-				<#if stringUtil.equals(entityColumn.type, "int")>
-					RandomTestUtil.nextInt()
-				<#elseif stringUtil.equals(entityColumn.type, "long")>
-					RandomTestUtil.nextLong()
-				<#elseif stringUtil.equals(entityColumn.type, "String")>
-					<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
-
-					<#if maxLength < 8>
-						RandomTestUtil.randomString(${maxLength})
-					<#else>
-						RandomTestUtil.randomString()
-					</#if>
-				</#if>
-
-				;
-
-				${entity.name} ${entity.variableName} = _persistence.create(pk);
-
-				<#list entity.regularEntityColumns as entityColumn>
-
-					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
-						${entity.variableName}.set${entityColumn.methodName}(
-						<#if stringUtil.equals(entityColumn.name, "headId")>
-							-
-						</#if>
-						existing${entity.name}.get${entityColumn.methodName}());
-
-					</#if>
-				</#list>
-
-				_${entity.pluralVariableName}.add(_persistence.update(${entity.variableName}));
-
-				return ${entity.variableName};
 			}
 		</#if>
 

@@ -155,7 +155,7 @@
 			"externalReferenceCode": "336a227c-eb20-481a-9160-deb1cbd96e83",
 			"host": "Liferay",
 			"name": "maintenanceSeen",
-			"purpose": "",
+			"purpose": "Stores whether user has frequently dismissed server maintenance message (true/false) so Analytics Cloud stop displaying it. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -163,7 +163,7 @@
 			"externalReferenceCode": "82819a34-1bfd-4e5d-ad0b-429fcb9f9117",
 			"host": "Liferay",
 			"name": "sidebar",
-			"purpose": "",
+			"purpose": "Stores whether sidebar is open (true/false) so it can be displayed the same way when user returns to Analytics Cloud. Preferences.",
 			"type": "First Party"
 		},
 		{

@@ -65,7 +65,7 @@
 			"externalReferenceCode": "524c3049-b6d0-488c-b8a1-777708af9527",
 			"host": "Liferay",
 			"name": "ab_test_variant_id",
-			"purpose": "",
+			"purpose": "Stores the ID of the current experience to gather information from A/B tests. Marketing.",
 			"type": "First Party"
 		},
 		{

@@ -97,7 +97,7 @@
 			"externalReferenceCode": "8818db63-0e64-48b3-a609-bc6ddadc39a4",
 			"host": "Liferay",
 			"name": "ac_client_batch",
-			"purpose": "",
+			"purpose": "Stores a list of the session's event IDs to avoid sending duplicate events to Analytics Cloud. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -105,7 +105,7 @@
 			"externalReferenceCode": "100522f5-949f-410e-a983-ed156cec2775",
 			"host": "Liferay",
 			"name": "ac_client_channel_id",
-			"purpose": "",
+			"purpose": "Stores the Channel ID of the current website the user is accessing to send to Analytics Cloud. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -113,7 +113,7 @@
 			"externalReferenceCode": "79765961-2d08-444d-b549-7c3bbdabb580",
 			"host": "Liferay",
 			"name": "ac_client_context",
-			"purpose": "",
+			"purpose": "Stores a list of page and user properties to send to Analytics Cloud so event analysis can have necessary context. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -121,7 +121,7 @@
 			"externalReferenceCode": "192a7263-1d3f-4ab8-aa6b-449a69ec470d",
 			"host": "Liferay",
 			"name": "ac_client_identity",
-			"purpose": "",
+			"purpose": "Stores the current user's Analytics Cloud user ID (SHA-256 hash generated with the user's email and userId) so users with accounts can be tracked by Analytics Cloud as known individuals. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -129,7 +129,7 @@
 			"externalReferenceCode": "50913b94-dd64-4812-b311-9c428cd40590",
 			"host": "Liferay",
 			"name": "ac_client_previous_email_address_hash",
-			"purpose": "",
+			"purpose": "Stores the email ID of the last user to log in (SHA-256 hash) to identify whether the last user to log in is the same as the previous user and assign events from current session's anonymous browsing to this user. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -137,7 +137,7 @@
 			"externalReferenceCode": "c2a8f09e-6f95-4fc8-84f7-d50165a2c385",
 			"host": "Liferay",
 			"name": "ac_client_storage_version",
-			"purpose": "",
+			"purpose": "Stores the current version of internal storage settings so the locally stores data structure can be compatible with the current version of the browser. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -145,7 +145,7 @@
 			"externalReferenceCode": "c86f9553-cb17-4ea7-94f6-caa207f2ac1c",
 			"host": "Liferay",
 			"name": "ac_client_user_id",
-			"purpose": "",
+			"purpose": "Stores the current user's Analytics Cloud user ID so guest users can be tracked by Analytics Cloud as anonymous individuals and properly segmented. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -153,7 +153,7 @@
 			"externalReferenceCode": "8e1fd120-ae3c-4af2-9ce8-573c3ded34e8",
 			"host": "Liferay",
 			"name": "ac_message_queue",
-			"purpose": "",
+			"purpose": "Stores an array of events that haven't yet been sent to Analytics Cloud so they can be sent when possible. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -161,7 +161,7 @@
 			"externalReferenceCode": "2d43f854-d24f-4c07-854c-2c3f975fecdd",
 			"host": "Liferay",
 			"name": "ac_message_queue_identity",
-			"purpose": "",
+			"purpose": "Stores an array of identities that haven't yet been sent to Analytics Cloud so they can be sent when possible. Statistics.",
 			"type": "First Party"
 		}
 	]

@@ -38,7 +38,9 @@ public class PermissionCheckFinderEntryWrapper
 		attributes.put(
 			"permissionCheckFinderEntryId", getPermissionCheckFinderEntryId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("integer", getInteger());
 		attributes.put("name", getName());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -58,10 +60,22 @@ public class PermissionCheckFinderEntryWrapper
 			setGroupId(groupId);
 		}
 
+		Integer integer = (Integer)attributes.get("integer");
+
+		if (integer != null) {
+			setInteger(integer);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -78,6 +92,16 @@ public class PermissionCheckFinderEntryWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the integer of this permission check finder entry.
+	 *
+	 * @return the integer of this permission check finder entry
+	 */
+	@Override
+	public int getInteger() {
+		return model.getInteger();
 	}
 
 	/**
@@ -110,6 +134,16 @@ public class PermissionCheckFinderEntryWrapper
 		return model.getPrimaryKey();
 	}
 
+	/**
+	 * Returns the type of this permission check finder entry.
+	 *
+	 * @return the type of this permission check finder entry
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -123,6 +157,16 @@ public class PermissionCheckFinderEntryWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the integer of this permission check finder entry.
+	 *
+	 * @param integer the integer of this permission check finder entry
+	 */
+	@Override
+	public void setInteger(int integer) {
+		model.setInteger(integer);
 	}
 
 	/**
@@ -155,6 +199,16 @@ public class PermissionCheckFinderEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this permission check finder entry.
+	 *
+	 * @param type the type of this permission check finder entry
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	@Override

@@ -55,14 +55,18 @@ public class PermissionCheckFinderEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{permissionCheckFinderEntryId=");
 		sb.append(permissionCheckFinderEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", integer=");
+		sb.append(integer);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -76,12 +80,20 @@ public class PermissionCheckFinderEntryCacheModel
 		permissionCheckFinderEntryImpl.setPermissionCheckFinderEntryId(
 			permissionCheckFinderEntryId);
 		permissionCheckFinderEntryImpl.setGroupId(groupId);
+		permissionCheckFinderEntryImpl.setInteger(integer);
 
 		if (name == null) {
 			permissionCheckFinderEntryImpl.setName("");
 		}
 		else {
 			permissionCheckFinderEntryImpl.setName(name);
+		}
+
+		if (type == null) {
+			permissionCheckFinderEntryImpl.setType("");
+		}
+		else {
+			permissionCheckFinderEntryImpl.setType(type);
 		}
 
 		permissionCheckFinderEntryImpl.resetOriginalValues();
@@ -94,7 +106,10 @@ public class PermissionCheckFinderEntryCacheModel
 		permissionCheckFinderEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
+
+		integer = objectInput.readInt();
 		name = objectInput.readUTF();
+		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -103,16 +118,27 @@ public class PermissionCheckFinderEntryCacheModel
 
 		objectOutput.writeLong(groupId);
 
+		objectOutput.writeInt(integer);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
 	}
 
 	public long permissionCheckFinderEntryId;
 	public long groupId;
+	public int integer;
 	public String name;
+	public String type;
 
 }

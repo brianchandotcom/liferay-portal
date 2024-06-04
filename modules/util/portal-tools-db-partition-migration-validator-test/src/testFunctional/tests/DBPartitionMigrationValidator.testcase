@@ -131,17 +131,12 @@ definition {
 	@priority = 5
 	test ValidateWrongExportWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "false";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("The database is set and we add a new virtual instance without database partitioning enabled") {
-			Portlet.shutdownServer();
-
-			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=false");
-
-			Portlet.startServer(keepOsGiState = "true");
-
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",

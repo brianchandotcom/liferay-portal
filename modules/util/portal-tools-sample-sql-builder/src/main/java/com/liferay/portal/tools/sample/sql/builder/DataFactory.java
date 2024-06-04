@@ -3185,15 +3185,17 @@ public class DataFactory {
 			 i++) {
 
 			LayoutModel publicLayoutModel = _newContentPageLayoutModel(
-				groupId, "Public Layout " + i, 0, 0);
+				groupId, 0, 0, "CT Public Layout " + i,
+				"CT Public Layout " + i);
 
 			publicLayoutModel.setCtCollectionId(ctCollectionId);
 
 			layoutModels.add(publicLayoutModel);
 
 			LayoutModel draftLayout = _newContentPageLayoutModel(
-				groupId, "Draft Layout " + i, getClassNameId(Layout.class),
-				publicLayoutModel.getPlid());
+				groupId, getClassNameId(Layout.class),
+				publicLayoutModel.getPlid(), "CT Draft Layout " + i,
+				"CT Draft Layout " + i);
 
 			draftLayout.setCtCollectionId(ctCollectionId);
 
@@ -3305,10 +3307,7 @@ public class DataFactory {
 
 		List<CTCollectionModel> ctCollectionModels = new ArrayList<>();
 
-		for (int i = 1;
-			 i <= BenchmarksPropsValues.MAX_PUBLICATION_COUNT;
-			 i++) {
-
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_PUBLICATION_COUNT; i++) {
 			ctCollectionModels.add(
 				newCTCollectionModel(i, ctSchemaVersionModel));
 		}
@@ -5442,7 +5441,7 @@ public class DataFactory {
 
 		return newGroupModel(
 			getClassNameId(Group.class), groupId, groupId, "Publication Group",
-			false);
+			true);
 	}
 
 	public List<ReleaseModel> newReleaseModels() throws Exception {
@@ -6167,8 +6166,8 @@ public class DataFactory {
 		systemUserPasswordSAPEntry.setEnabled(true);
 		systemUserPasswordSAPEntry.setName("SYSTEM_USER_PASSWORD");
 		systemUserPasswordSAPEntry.setTitle(
-			"System Service Access Policy for Requests Authenticated Using User " +
-				"Password");
+			"System Service Access Policy for Requests Authenticated Using " +
+				"User Password");
 
 		systemSAPEntries.add(systemUserPasswordSAPEntry);
 

@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.DuplicateObjectValidationRuleExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
@@ -23,7 +24,6 @@ import com.liferay.object.exception.RequiredObjectValidationRuleSettingException
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
-import com.liferay.object.internal.validation.rule.util.ObjectValidationRuleThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
@@ -393,18 +393,11 @@ public class ObjectValidationRuleLocalServiceImpl
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
 
-			long primaryKey = GetterUtil.getLong(baseModel.getPrimaryKeyObj());
-
-			if (ObjectValidationRuleThreadLocal.
-					isSkipObjectValidationRuleExecution(
-						primaryKey,
-						objectValidationRule.getObjectValidationRuleId())) {
-
+			if (ObjectEntryThreadLocal.isSkipObjectValidationRules()) {
 				continue;
 			}
 
-			ObjectValidationRuleThreadLocal.addObjectEntryId(
-				primaryKey, objectValidationRule.getObjectValidationRuleId());
+			ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
 
 			Map<String, Object> results = new HashMap<>();
 

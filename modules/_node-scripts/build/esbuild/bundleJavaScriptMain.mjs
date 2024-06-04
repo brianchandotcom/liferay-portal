@@ -11,6 +11,7 @@ import getCssLoaderPlugin from './plugins/getCssLoaderPlugin.mjs';
 import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
 import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
 import getScssLoaderPlugin from './plugins/getScssLoaderPlugin.mjs';
+import relocateSourcemap from './relocateSourcemap.mjs';
 import runEsbuild from './runEsbuild.mjs';
 
 export default async function bundleJavaScriptMain(
@@ -47,5 +48,10 @@ export default async function bundleJavaScriptMain(
 		target: ['es2020'],
 	};
 
-	return runEsbuild(esbuildConfig, 'main');
+	await runEsbuild(esbuildConfig, 'main');
+
+	await relocateSourcemap(
+		path.join(BUILD_MAIN_EXPORTS_PATH, 'index.js.map'),
+		projectWebContextPath
+	);
 }

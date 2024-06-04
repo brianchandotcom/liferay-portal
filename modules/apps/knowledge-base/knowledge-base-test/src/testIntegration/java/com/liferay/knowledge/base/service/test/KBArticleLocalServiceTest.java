@@ -38,10 +38,8 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -59,6 +57,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
@@ -73,7 +72,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -91,7 +89,9 @@ public class KBArticleLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -101,19 +101,10 @@ public class KBArticleLocalServiceTest {
 		_kbFolderClassNameId = ClassNameLocalServiceUtil.getClassNameId(
 			KBFolderConstants.getClassName());
 
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
 		_user = TestPropsValues.getUser();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, _user.getUserId());
-	}
-
-	@After
-	public void tearDown() {
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -763,6 +754,37 @@ public class KBArticleLocalServiceTest {
 			childKBFolder.getKbFolderId(), kbFolder.getKbFolderId());
 		Assert.assertEquals(
 			originalKBArticleTreePath, kbArticle.buildTreePath());
+	}
+
+	@FeatureFlags("LPS-188058")
+	@Test(expected = KBArticleStatusException.class)
+	public void testCheckKBArticlesFailsWhenPublishingAndParentKBArticleIsScheduled()
+		throws Exception {
+
+		Date displayDate = new Date(
+			System.currentTimeMillis() + (2 * Time.DAY));
+
+		KBArticle parentKBArticle = _addKbArticle(displayDate);
+
+		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, _serviceContext);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, parentKBArticle.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, childKBArticle.getStatus());
+
+		childKBArticle.setDisplayDate(new Date());
+
+		_kbArticleLocalService.updateKBArticle(childKBArticle);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
 	}
 
 	@Test
@@ -1586,12 +1608,16 @@ public class KBArticleLocalServiceTest {
 	}
 
 	private KBArticle _addKbArticle() throws PortalException {
+		return _addKbArticle(new Date());
+	}
+
+	private KBArticle _addKbArticle(Date displayDate) throws PortalException {
 		return _kbArticleLocalService.addKBArticle(
 			null, _user.getUserId(), _kbFolderClassNameId,
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			new Date(), null, null, null, _serviceContext);
+			displayDate, null, null, null, _serviceContext);
 	}
 
 	private void _testKBArticleLock(
@@ -1672,11 +1698,7 @@ public class KBArticleLocalServiceTest {
 	@Inject
 	private KBFolderLocalService _kbFolderLocalService;
 
-	private String _originalName;
 	private ServiceContext _serviceContext;
 	private User _user;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

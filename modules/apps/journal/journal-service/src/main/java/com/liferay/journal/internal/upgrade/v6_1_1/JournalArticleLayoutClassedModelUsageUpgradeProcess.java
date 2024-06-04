@@ -39,10 +39,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 	public JournalArticleLayoutClassedModelUsageUpgradeProcess(
 		ClassNameLocalService classNameLocalService) {
 
-		_journalArticleClassNameId = classNameLocalService.getClassNameId(
-			JournalArticle.class.getName());
-		_portletClassNameId = classNameLocalService.getClassNameId(
-			Portlet.class.getName());
+		_classNameLocalService = classNameLocalService;
 	}
 
 	@Override
@@ -97,20 +94,25 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"portletPreferencesId from PortletPreferenceValue where name = ",
 			"'selectionStyle' and smallValue = 'manual') inner join ",
 			"AssetEntry on AssetEntry.classUuid = temp.uuid and ",
-			"AssetEntry.classNameId = ", _journalArticleClassNameId,
+			"AssetEntry.classNameId = ",
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and AssetEntry.visible = [$TRUE$] where not exists (select 1 ",
 			"from LayoutClassedModelUsage where ",
 			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
 			"LayoutClassedModelUsage.classNameId = ",
-			_journalArticleClassNameId,
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and LayoutClassedModelUsage.containerKey = ",
 			"PortletPreferences.portletId and ",
-			"LayoutClassedModelUsage.containerType = ", _portletClassNameId,
+			"LayoutClassedModelUsage.containerType = ",
+			_classNameLocalService.getClassNameId(Portlet.class.getName()),
 			" and LayoutClassedModelUsage.plid = PortletPreferences.plid) and ",
 			"not exists (select 1 from LayoutClassedModelUsage where ",
 			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
 			"LayoutClassedModelUsage.classNameId = ",
-			_journalArticleClassNameId,
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and LayoutClassedModelUsage.containerKey is null and ",
 			"LayoutClassedModelUsage.containerType = 0 and ",
 			"LayoutClassedModelUsage.plid = 0 )");
@@ -158,7 +160,10 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					preparedStatement.setTimestamp(5, timestamp);
 					preparedStatement.setTimestamp(6, timestamp);
 
-					preparedStatement.setLong(7, _journalArticleClassNameId);
+					preparedStatement.setLong(
+						7,
+						_classNameLocalService.getClassNameId(
+							JournalArticle.class.getName()));
 					preparedStatement.setLong(
 						8, resourcePrimKeysEntry.getKey());
 					preparedStatement.setString(9, null);
@@ -188,7 +193,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"PortletPreferenceValue on PortletPreferenceValue.name = ",
 			"'assetEntryId' inner join AssetEntry on AssetEntry.entryId = ",
 			"CAST_LONG(PortletPreferenceValue.smallValue) and ",
-			"AssetEntry.classNameId = ", _journalArticleClassNameId,
+			"AssetEntry.classNameId = ",
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and AssetEntry.visible = [$TRUE$] where ",
 			"PortletPreferences.ownerId = ", PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			" and PortletPreferences.ownerType = ",
@@ -200,15 +207,18 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"(select 1 from LayoutClassedModelUsage where ",
 			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
 			"LayoutClassedModelUsage.classNameId = ",
-			_journalArticleClassNameId,
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and LayoutClassedModelUsage.containerKey = ",
 			"PortletPreferences.portletId and ",
-			"LayoutClassedModelUsage.containerType = ", _portletClassNameId,
+			"LayoutClassedModelUsage.containerType = ",
+			_classNameLocalService.getClassNameId(Portlet.class.getName()),
 			" and LayoutClassedModelUsage.plid = PortletPreferences.plid) and ",
 			"not exists (select 1 from LayoutClassedModelUsage where ",
 			"LayoutClassedModelUsage.classPK = AssetEntry.classPK and ",
 			"LayoutClassedModelUsage.classNameId = ",
-			_journalArticleClassNameId,
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and LayoutClassedModelUsage.containerKey is null and ",
 			"LayoutClassedModelUsage.containerType = 0 and ",
 			"LayoutClassedModelUsage.plid = 0 )");
@@ -236,15 +246,18 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			"from LayoutClassedModelUsage where ",
 			"LayoutClassedModelUsage.classPK = JournalArticle.resourcePrimKey ",
 			"and LayoutClassedModelUsage.classNameId = ",
-			_journalArticleClassNameId,
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and LayoutClassedModelUsage.containerKey = ",
 			"JournalContentSearch.portletId and ",
-			"LayoutClassedModelUsage.containerType = ", _portletClassNameId,
+			"LayoutClassedModelUsage.containerType = ",
+			_classNameLocalService.getClassNameId(Portlet.class.getName()),
 			" and LayoutClassedModelUsage.plid = Layout.plid) where not ",
 			"exists (select 1 from LayoutClassedModelUsage where ",
 			"LayoutClassedModelUsage.classPK = JournalArticle.resourcePrimKey ",
 			"and LayoutClassedModelUsage.classNameId = ",
-			_journalArticleClassNameId,
+			_classNameLocalService.getClassNameId(
+				JournalArticle.class.getName()),
 			" and LayoutClassedModelUsage.containerKey is null and ",
 			"LayoutClassedModelUsage.containerType = 0 and ",
 			"LayoutClassedModelUsage.plid = 0 )");
@@ -273,9 +286,13 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					long plid = (Long)values[4];
 
 					_addLayoutClassedModelUsage(
-						groupId, companyId, _journalArticleClassNameId,
-						resourcePrimKey, portletId, _portletClassNameId, plid,
-						layoutClassedModelUsageTypes, preparedStatement,
+						groupId, companyId,
+						_classNameLocalService.getClassNameId(
+							JournalArticle.class.getName()),
+						resourcePrimKey, portletId,
+						_classNameLocalService.getClassNameId(
+							Portlet.class.getName()),
+						plid, layoutClassedModelUsageTypes, preparedStatement,
 						resourcePrimKeysMap);
 				},
 				"Unable to create journal articles search layout classed " +
@@ -358,9 +375,13 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					String portletId = (String)values[4];
 
 					_addLayoutClassedModelUsage(
-						groupId, companyId, _journalArticleClassNameId, classPK,
-						portletId, _portletClassNameId, plid,
-						layoutClassedModelUsageTypes, preparedStatement,
+						groupId, companyId,
+						_classNameLocalService.getClassNameId(
+							JournalArticle.class.getName()),
+						classPK, portletId,
+						_classNameLocalService.getClassNameId(
+							Portlet.class.getName()),
+						plid, layoutClassedModelUsageTypes, preparedStatement,
 						resourcePrimKeysMap);
 
 					Map<Long, Long> companyResourcePrimKeysMap =
@@ -412,7 +433,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		}
 	}
 
-	private final long _journalArticleClassNameId;
-	private final long _portletClassNameId;
+	private final ClassNameLocalService _classNameLocalService;
 
 }

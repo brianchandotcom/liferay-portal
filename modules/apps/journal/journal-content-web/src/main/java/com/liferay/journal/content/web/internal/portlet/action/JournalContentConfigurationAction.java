@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.trash.TrashHelper;
@@ -88,7 +87,8 @@ public class JournalContentConfigurationAction
 
 		try {
 			JournalContentDisplayContext.create(
-				portletRequest, portletResponse, _CLASS_NAME_ID,
+				portletRequest, portletResponse,
+				_portal.getClassNameId(DDMStructure.class),
 				_ddmTemplateModelResourcePermission, _itemSelector,
 				_trashHelper);
 		}
@@ -212,8 +212,8 @@ public class JournalContentConfigurationAction
 		}
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			_getArticleGroupId(portletRequest), _CLASS_NAME_ID, ddmTemplateKey,
-			true);
+			_getArticleGroupId(portletRequest),
+			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
 
 		if (ddmTemplate == null) {
 			return 0;
@@ -221,9 +221,6 @@ public class JournalContentConfigurationAction
 
 		return ddmTemplate.getTemplateId();
 	}
-
-	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
-		DDMStructure.class);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentConfigurationAction.class);

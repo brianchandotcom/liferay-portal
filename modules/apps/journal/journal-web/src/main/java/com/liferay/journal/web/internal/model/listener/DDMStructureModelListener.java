@@ -37,8 +37,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			DDMStructure originalDDMStructure, DDMStructure ddmStructure)
 		throws ModelListenerException {
 
-		if ((ddmStructure.getClassNameId() !=
-				_getJournalArticleClassNameId()) ||
+		if ((ddmStructure.getClassNameId() != _portal.getClassNameId(
+				JournalArticle.class)) ||
 			Objects.equals(
 				originalDDMStructure.getStructureKey(),
 				ddmStructure.getStructureKey())) {
@@ -61,18 +61,6 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			JournalWebConfiguration.class, properties);
 	}
 
-	private long _getJournalArticleClassNameId() {
-		if (_journalArticleClassNameId != null) {
-			return _journalArticleClassNameId;
-		}
-
-		_journalArticleClassNameId = _portal.getClassNameId(
-			JournalArticle.class);
-
-		return _journalArticleClassNameId;
-	}
-
-	private Long _journalArticleClassNameId;
 	private volatile JournalWebConfiguration _journalWebConfiguration;
 
 	@Reference

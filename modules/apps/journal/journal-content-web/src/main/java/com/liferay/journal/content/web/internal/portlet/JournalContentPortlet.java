@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -187,7 +187,8 @@ public class JournalContentPortlet extends MVCPortlet {
 
 		try {
 			JournalContentDisplayContext.create(
-				renderRequest, renderResponse, _CLASS_NAME_ID,
+				renderRequest, renderResponse,
+				_portal.getClassNameId(DDMStructure.class),
 				_ddmTemplateModelResourcePermission, _itemSelector,
 				_trashHelper);
 		}
@@ -245,7 +246,8 @@ public class JournalContentPortlet extends MVCPortlet {
 
 			try {
 				JournalContentDisplayContext.create(
-					resourceRequest, resourceResponse, _CLASS_NAME_ID,
+					resourceRequest, resourceResponse,
+					_portal.getClassNameId(DDMStructure.class),
 					_ddmTemplateModelResourcePermission, _itemSelector,
 					_trashHelper);
 			}
@@ -272,9 +274,6 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	private static final String _ALIAS = "web-content";
 
-	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
-		DDMStructure.class);
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortlet.class);
 
@@ -298,6 +297,9 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

@@ -54,4 +54,20 @@ export class MessageBoardsWidgetPage {
 
 		await this.page.getByRole('button', {name: buttonName}).click();
 	}
+
+	async addCategory(site: Site, layout: Layout, categoryName: string) {
+		await this.page.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyURL}`
+		);
+
+		await this.page.getByRole('link', {name: 'Add Category'}).click();
+
+		await this.page
+			.locator(
+				'[id="_com_liferay_message_boards_web_portlet_MBPortlet_name"]'
+			)
+			.fill(categoryName);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+	}
 }

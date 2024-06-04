@@ -91,13 +91,13 @@ public class TestrayBuildAutofillResourceImpl
 
 		testrayBuildAutofill.setCaseAmount(values.size());
 
-		JSONObject runsJSONObject = _getTestrayRunIdsJSONObject(
+		JSONObject jsonObject = _getTestrayRunIdsJSONObject(
 			testrayBuildId1, testrayBuildId2);
 
 		testrayBuildAutofill.setTestrayRunId1(
-			runsJSONObject.getLong("testrayRunId1"));
+			jsonObject.getLong("testrayRunId1"));
 		testrayBuildAutofill.setTestrayRunId2(
-			runsJSONObject.getLong("testrayRunId2"));
+			jsonObject.getLong("testrayRunId2"));
 
 		return testrayBuildAutofill;
 	}

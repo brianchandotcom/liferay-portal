@@ -24,9 +24,9 @@ public class UpgradeJavaServiceImplCheck
 				"\t\t\"json.web.service.context.name=%s\",",
 				_getContextName(javaClass)),
 			String.format(
-				"\t\t\"json.web.service.context.path=%s\",",
+				"\t\t\"json.web.service.context.path=%s\"",
 				_getContextPath(className)),
-			"\t}", "\tservice = AopService.class", ")");
+			"\t},", "\tservice = AopService.class", ")");
 	}
 
 	@Override

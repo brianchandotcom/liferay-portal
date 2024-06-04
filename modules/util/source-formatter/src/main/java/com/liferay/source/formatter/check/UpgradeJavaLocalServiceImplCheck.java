@@ -21,9 +21,9 @@ public class UpgradeJavaLocalServiceImplCheck
 		return joinLines(
 			"@Component(",
 			String.format(
-				"\tproperty = \"model.class.name=%s\"\n",
+				"\tproperty = \"model.class.name=%s\",",
 				_getFullyQualifiedModelClassName(javaClass)),
-			"\tservice=AopService.class", ")");
+			"\tservice = AopService.class", ")");
 	}
 
 	@Override

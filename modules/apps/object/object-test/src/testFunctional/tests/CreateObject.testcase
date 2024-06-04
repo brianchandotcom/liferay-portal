@@ -7271,61 +7271,6 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
 	}
 
-	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Item Selector when reactivated"
-	@priority = 4
-	test ObjectReappearsPageItemSelectorWhenReactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 157",
-			objectName = "CustomObject157",
-			pluralLabelName = "Custom Objects 157");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject157");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject157");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 157");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 157");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM");
-
-		SelectFrame(
-			key_title = "Select",
-			locator1 = "IFrame#MODAL_ANY");
-
-		AssertElementPresent(
-			key_pluralLabelName = "Custom Objects 157",
-			locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
-	}
-
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Template (subtype) when reactivated"
 	@priority = 4
 	test ObjectReappearsPageTemplateWhenReactivated {

@@ -62,7 +62,7 @@ const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 										<ClayList.ItemTitle>
 											{`${title} `}
 
-											<span className="text-muted">
+											<span className="small text-secondary">
 												({key})
 											</span>
 										</ClayList.ItemTitle>

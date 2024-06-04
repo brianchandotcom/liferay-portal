@@ -27,18 +27,15 @@ public class FacetBucketUtil {
 			for (String value : field.getValues()) {
 				value = value.substring(1, value.length() - 1);
 
-				String fieldToAggregate = facet.getFieldName(
-				).split(
-					"\\."
-				)[1];
-
 				String[] pairs = value.split(StringPool.COMMA_AND_SPACE);
 
-				if (_pairsContainsFieldAggregateAndTerm(
-					term, pairs, fieldToAggregate)){
+				if (_pairsContainsFilterValue(facet, pairs) &&
+					_pairsContainsFieldAggregate(facet, term, pairs)) {
+
 					return true;
 				}
 			}
+
 			return false;
 		}
 
@@ -66,8 +63,8 @@ public class FacetBucketUtil {
 		return false;
 	}
 
-	private static boolean _pairsContainsFieldAggregateAndTerm(
-		String term, String[] pairs, String fieldToAggregate) {
+	private static boolean _pairsContainsFieldAggregate(
+		Facet facet, String term, String[] pairs) {
 
 		for (String pair : pairs) {
 			String[] keyValue = pair.split(StringPool.EQUAL);
@@ -76,9 +73,31 @@ public class FacetBucketUtil {
 
 			String value = keyValue[1].trim();
 
-			if (key.contentEquals(fieldToAggregate) &&
+			if (key.contentEquals(
+					facet.getFieldName(
+					).split(
+						"\\."
+					)[1]) &&
 				value.contentEquals(term)) {
 
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean _pairsContainsFilterValue(
+		Facet facet, String[] pairs) {
+
+		for (String pair : pairs) {
+			String[] keyValue = pair.split(StringPool.EQUAL);
+
+			NestedFacet nestedFacet = (NestedFacet)facet;
+
+			String filterValue = nestedFacet.getFilterValue();
+
+			if (filterValue.contentEquals(keyValue[1].trim())) {
 				return true;
 			}
 		}

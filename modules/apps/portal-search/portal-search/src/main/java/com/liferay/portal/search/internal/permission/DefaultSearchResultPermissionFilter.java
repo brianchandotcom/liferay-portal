@@ -704,8 +704,16 @@ public class DefaultSearchResultPermissionFilter
 						searchContextFacet.getFieldName(), null);
 
 					if (searchContextFacet instanceof NestedFacet) {
-						facet = new NestedFacetImpl(
+						NestedFacetImpl nestedFacetImpl = new NestedFacetImpl(
 							searchContextFacet.getFieldName(), null);
+
+						NestedFacet searchContextNestedFacet =
+							(NestedFacet)searchContextFacet;
+
+						nestedFacetImpl.setFilterValue(
+							searchContextNestedFacet.getFilterValue());
+
+						facet = nestedFacetImpl;
 					}
 					else if (searchContextFacet instanceof RangeFacet) {
 						facet = new RangeFacet(null);

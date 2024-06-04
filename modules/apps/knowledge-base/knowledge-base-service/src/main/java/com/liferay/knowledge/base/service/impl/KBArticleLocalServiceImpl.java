@@ -2310,6 +2310,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					KBArticleTable.INSTANCE.status.neq(
 						WorkflowConstants.STATUS_PENDING)
 				)
+			).orderBy(
+				KBArticleTable.INSTANCE.createDate.ascending()
 			));
 	}
 

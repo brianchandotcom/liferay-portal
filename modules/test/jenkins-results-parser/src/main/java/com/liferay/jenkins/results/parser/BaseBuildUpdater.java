@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -302,7 +303,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 		String message = JenkinsResultsParserUtil.combine(
 			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
-			getBuildURL(), ". \n\n", slaveOfflineRuleString,
+			build.getBuildURL(), ". \n\n", slaveOfflineRuleString,
 			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n");
 
 		if (slaveOfflineRule.getOfflineSibling() &&

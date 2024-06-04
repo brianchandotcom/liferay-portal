@@ -71,6 +71,14 @@ export class ViewObjectDefinitionsPage {
 		);
 	}
 
+	async changeObjectActivateStatus(objectDefinitionName: string) {
+		await this.clickEditObjectDefinitionLink(objectDefinitionName);
+
+		await this.page.getByRole('switch', {name: 'Activate Object'}).click();
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+	}
+
 	async clickDefaultObjectFolder() {
 		await this.defaultObjectFolder.click();
 	}

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -61,10 +62,12 @@ public class PortalImplGetLayoutFriendlyURLSeparatorCompositeTest {
 
 		LayoutTestUtil.addTypePortletLayout(_group);
 
+		User user = _userLocalService.fetchGuestUser(_group.getCompanyId());
+
 		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
-			layout, false);
+			layout, false, user);
 		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
-			layout, true);
+			layout, true, user);
 	}
 
 	@Test
@@ -78,7 +81,8 @@ public class PortalImplGetLayoutFriendlyURLSeparatorCompositeTest {
 		LayoutTestUtil.addTypePortletLayout(_group);
 
 		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
-			layout, false);
+			layout, false,
+			_userLocalService.fetchGuestUser(_group.getCompanyId()));
 	}
 
 	@Test
@@ -92,10 +96,45 @@ public class PortalImplGetLayoutFriendlyURLSeparatorCompositeTest {
 		LayoutTestUtil.addTypePortletLayout(_group);
 
 		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
-			layout, true);
+			layout, true,
+			_userLocalService.fetchGuestUser(_group.getCompanyId()));
+	}
+
+	@Test
+	public void testNullFriendlyURLFirstLayoutWithoutPermission()
+		throws Exception {
+
+		_addLayoutWithoutPermission(true);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		LayoutTestUtil.addTypePortletLayout(_group);
+
+		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
+			layout, false, UserTestUtil.addUser(_group.getGroupId()));
+	}
+
+	@Test
+	public void testNullFriendlyURLFirstLayoutWithoutPermissionLoginPromptEnabled()
+		throws Exception {
+
+		_addLayoutWithoutPermission(true);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		LayoutTestUtil.addTypePortletLayout(_group);
+
+		_assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
+			layout, true, UserTestUtil.addUser(_group.getGroupId()));
 	}
 
 	private Layout _addLayoutWithoutPermission() throws Exception {
+		return _addLayoutWithoutPermission(false);
+	}
+
+	private Layout _addLayoutWithoutPermission(boolean removeSiteMember)
+		throws Exception {
+
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		RoleTestUtil.removeResourcePermission(
@@ -103,11 +142,18 @@ public class PortalImplGetLayoutFriendlyURLSeparatorCompositeTest {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(layout.getPlid()), ActionKeys.VIEW);
 
+		if (removeSiteMember) {
+			RoleTestUtil.removeResourcePermission(
+				RoleConstants.SITE_MEMBER, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), ActionKeys.VIEW);
+		}
+
 		return layout;
 	}
 
 	private void _assertGetActualLayoutQueryStringCompositeWithNullFriendlyURL(
-			Layout layout, boolean promptEnabled)
+			Layout layout, boolean promptEnabled, User user)
 		throws Exception {
 
 		try (GroupConfigurationTemporarySwapper
@@ -118,8 +164,7 @@ public class PortalImplGetLayoutFriendlyURLSeparatorCompositeTest {
 							"promptEnabled", promptEnabled
 						).build())) {
 
-			UserTestUtil.setUser(
-				_userLocalService.fetchGuestUser(_group.getCompanyId()));
+			UserTestUtil.setUser(user);
 
 			LayoutQueryStringComposite layoutQueryStringComposite =
 				_portal.getActualLayoutQueryStringComposite(

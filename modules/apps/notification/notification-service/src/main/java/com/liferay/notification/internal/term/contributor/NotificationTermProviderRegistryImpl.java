@@ -5,7 +5,7 @@
 
 package com.liferay.notification.internal.term.contributor;
 
-import com.liferay.notification.term.contributor.NotificationTermContributorTracker;
+import com.liferay.notification.term.contributor.NotificationTermProviderRegistry;
 import com.liferay.notification.term.contributor.NotificationTermProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -22,12 +22,12 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Luca Pellizzon
  */
-@Component(service = NotificationTermContributorTracker.class)
-public class NotificationTermContributorTrackerImpl
-	implements NotificationTermContributorTracker {
+@Component(service = NotificationTermProviderRegistry.class)
+public class NotificationTermProviderRegistryImpl
+	implements NotificationTermProviderRegistry {
 
 	@Override
-	public List<NotificationTermProvider> getNotificationTermContributors(
+	public List<NotificationTermProvider> getNotificationTermProviders(
 		String className) {
 
 		List<NotificationTermProvider> notificationTermProviders =

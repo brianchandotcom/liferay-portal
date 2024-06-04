@@ -386,51 +386,25 @@ public class ${entity.name}PersistenceTest {
 
 				${entity.name} ${entity.variableName}1 = add${entity.name}();
 
-				<#if entity.hasCompoundPK()>
-					${entity.PKClassName} pk = new ${entity.PKClassName}(
+				<#assign entityColumn = entity.PKEntityColumns[0] />
 
-					<#list entity.PKEntityColumns as entityColumn>
-						<#if stringUtil.equals(entityColumn.type, "int")>
-							RandomTestUtil.nextInt()
-						<#elseif stringUtil.equals(entityColumn.type, "long")>
-							RandomTestUtil.nextLong()
-						<#elseif stringUtil.equals(entityColumn.type, "String")>
-							<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
+				${entityColumn.type} pk =
 
-							<#if maxLength < 8>
-								RandomTestUtil.randomString(${maxLength})
-							<#else>
-								RandomTestUtil.randomString()
-							</#if>
-						</#if>
+				<#if stringUtil.equals(entityColumn.type, "int")>
+					RandomTestUtil.nextInt()
+				<#elseif stringUtil.equals(entityColumn.type, "long")>
+					RandomTestUtil.nextLong()
+				<#elseif stringUtil.equals(entityColumn.type, "String")>
+					<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
 
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
-
-					);
-				<#else>
-					<#assign entityColumn = entity.PKEntityColumns[0] />
-
-					${entityColumn.type} pk =
-
-					<#if stringUtil.equals(entityColumn.type, "int")>
-						RandomTestUtil.nextInt()
-					<#elseif stringUtil.equals(entityColumn.type, "long")>
-						RandomTestUtil.nextLong()
-					<#elseif stringUtil.equals(entityColumn.type, "String")>
-						<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
-
-						<#if maxLength < 8>
-							RandomTestUtil.randomString(${maxLength})
-						<#else>
-							RandomTestUtil.randomString()
-						</#if>
+					<#if maxLength < 8>
+						RandomTestUtil.randomString(${maxLength})
+					<#else>
+						RandomTestUtil.randomString()
 					</#if>
-
-					;
 				</#if>
+
+				;
 
 				${entity.name} ${entity.variableName}2 = _persistence.create(pk);
 
@@ -484,51 +458,26 @@ public class ${entity.name}PersistenceTest {
 			}
 
 			protected ${entity.name} addDraft${entity.name}(${entity.name} existing${entity.name}) throws Exception {
-				<#if entity.hasCompoundPK()>
-					${entity.PKClassName} pk = new ${entity.PKClassName}(
 
-					<#list entity.PKEntityColumns as entityColumn>
-						<#if stringUtil.equals(entityColumn.type, "int")>
-							RandomTestUtil.nextInt()
-						<#elseif stringUtil.equals(entityColumn.type, "long")>
-							RandomTestUtil.nextLong()
-						<#elseif stringUtil.equals(entityColumn.type, "String")>
-							<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
+				<#assign entityColumn = entity.PKEntityColumns[0] />
 
-							<#if maxLength < 8>
-								RandomTestUtil.randomString(${maxLength})
-							<#else>
-								RandomTestUtil.randomString()
-							</#if>
-						</#if>
+				${entityColumn.type} pk =
 
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
+				<#if stringUtil.equals(entityColumn.type, "int")>
+					RandomTestUtil.nextInt()
+				<#elseif stringUtil.equals(entityColumn.type, "long")>
+					RandomTestUtil.nextLong()
+				<#elseif stringUtil.equals(entityColumn.type, "String")>
+					<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
 
-					);
-				<#else>
-					<#assign entityColumn = entity.PKEntityColumns[0] />
-
-					${entityColumn.type} pk =
-
-					<#if stringUtil.equals(entityColumn.type, "int")>
-						RandomTestUtil.nextInt()
-					<#elseif stringUtil.equals(entityColumn.type, "long")>
-						RandomTestUtil.nextLong()
-					<#elseif stringUtil.equals(entityColumn.type, "String")>
-						<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn) />
-
-						<#if maxLength < 8>
-							RandomTestUtil.randomString(${maxLength})
-						<#else>
-							RandomTestUtil.randomString()
-						</#if>
+					<#if maxLength < 8>
+						RandomTestUtil.randomString(${maxLength})
+					<#else>
+						RandomTestUtil.randomString()
 					</#if>
-
-					;
 				</#if>
+
+				;
 
 				${entity.name} ${entity.variableName} = _persistence.create(pk);
 

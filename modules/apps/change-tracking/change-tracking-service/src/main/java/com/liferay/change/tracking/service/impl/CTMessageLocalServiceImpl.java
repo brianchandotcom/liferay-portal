@@ -53,10 +53,15 @@ public class CTMessageLocalServiceImpl extends CTMessageLocalServiceBaseImpl {
 
 		List<Message> messages = new ArrayList<>(ctMessages.size());
 
+		Message currentMessage = null;
+
 		for (CTMessage ctMessage : ctMessages) {
-			messages.add(
-				(Message)_jsonFactory.deserialize(
-					ctMessage.getMessageContent()));
+			currentMessage = (Message)_jsonFactory.deserialize(
+				ctMessage.getMessageContent());
+
+			currentMessage.put("companyId", ctMessage.getCompanyId());
+
+			messages.add(currentMessage);
 		}
 
 		return messages;

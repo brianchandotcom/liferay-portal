@@ -1,0 +1,24 @@
+[
+	{
+		"alternativeHeadline": "Test Blog Posting 1",
+		"articleBody": "<p>Test Article Body 1</p>",
+		"description": "Test Description 1",
+		"externalReferenceCode": "TESTBLOGPOSTING1",
+		"friendlyUrlPath": "test-blog-posting-1",
+		"headline": "Test Headline 1",
+		"image": {
+			"caption": "Test",
+			"imageId": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/portrait.png#]"
+		},
+		"viewableBy": "Anyone"
+	},
+	{
+		"alternativeHeadline": "Test Blog Posting 2",
+		"articleBody": "<p>Test Article Body 2</p>",
+		"description": "Test Description 2",
+		"externalReferenceCode": "TESTBLOGPOSTING2",
+		"friendlyUrlPath": "test-blog-posting-2",
+		"headline": "Test Headline 2",
+		"viewableBy": "Anyone"
+	}
+]

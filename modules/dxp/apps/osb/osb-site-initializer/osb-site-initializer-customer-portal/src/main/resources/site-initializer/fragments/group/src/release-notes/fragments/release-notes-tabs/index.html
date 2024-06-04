@@ -1,5 +1,5 @@
 [#if themeDisplay?has_content]
-	[#assign displayPortalURLs = (themeDisplay.getURLCurrent()?split("dxp-release-notes/"))! /]
+	[#assign displayPortalURLs = (themeDisplay.getURLCurrent()?split("release-notes/"))! /]
 
 	[#assign currentDisplayPaths = (displayPortalURLs?last?split("/"))! /]
 
@@ -11,7 +11,7 @@
 [#macro tab key label]
 	[#assign
 		activeTab = currentTabId == key
-		inputURL = displayPortalURLs?first + "dxp-release-notes/" + key + currentDisplayIds
+		inputURL = displayPortalURLs?first + "release-notes/" + key + currentDisplayIds
 	/]
 
 	<li aria-label="${activeTab?then('Current Page', '')}" class="nav-item">

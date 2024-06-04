@@ -7,9 +7,7 @@
 
 const editMode = layoutMode === 'edit';
 const previewMode = layoutMode === 'preview';
-const siteURL = Liferay.ThemeDisplay.getLayoutURL().split(
-	'/dxp-release-notes'
-)[0];
+const siteURL = Liferay.ThemeDisplay.getLayoutURL().split('/release-notes')[0];
 
 const fetchRequest = async (input) => {
 	const response = await fetch(input, {
@@ -38,7 +36,7 @@ const handleRedirect = async (classnameId) => {
 
 			if (releaseCategory) {
 				location.assign(
-					`${siteURL}/e/dxp-release-notes/release-highlights/${classnameId}/${releaseCategory.id}?r=${releaseCategory.id}`
+					`${siteURL}/e/release-notes/release-highlights/${classnameId}/${releaseCategory.id}?r=${releaseCategory.id}`
 				);
 			}
 		}

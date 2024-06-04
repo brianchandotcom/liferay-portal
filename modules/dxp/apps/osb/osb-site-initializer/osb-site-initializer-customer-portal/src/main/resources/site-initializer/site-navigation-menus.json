@@ -49,8 +49,8 @@
 						"externalReferenceCode": "toolsMenuItem",
 						"menuItems": [
 							{
-								"externalReferenceCode": "dxpReleaseNotesMenuItem",
-								"friendlyURL": "/dxp-release-notes",
+								"externalReferenceCode": "releaseNotesMenuItem",
+								"friendlyURL": "/release-notes",
 								"type": "layout"
 							},
 							{

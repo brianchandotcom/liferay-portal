@@ -6,11 +6,28 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import getRandomString from '../../utils/getRandomString';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	fragmentsPagesTest,
+	loginTest(),
+	objectPagesTest,
+	pageEditorPagesTest,
+	isolatedSiteTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	})
+);
 
 test.describe('Manage object definitions through Model Builder', () => {
 	test.beforeEach(({page}) => {
@@ -437,6 +454,65 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await apiHelpers.objectAdmin.deleteObjectDefinition(
 			objectDefinition1.id
+		);
+	});
+});
+
+test.describe('Manage object definitions through a Page', () => {
+	test('can display an object reactivated on the Page Item Selector', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		const headingDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([headingDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectFragment(headingDefinition.id);
+
+		await page.getByLabel('Select element-text').click();
+
+		await page.getByLabel('Select Item').click();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('menuitem', {name: objectDefinition.name})
+		).toBeVisible();
+
+		// Clean up
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			objectDefinition.id
 		);
 	});
 });

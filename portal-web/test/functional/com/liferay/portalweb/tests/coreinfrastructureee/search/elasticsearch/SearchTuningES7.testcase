@@ -991,9 +991,9 @@ definition {
 				http://${portalHostname}:${port}/liferay-${companyId}-search-tuning-rankings/_search?pretty \
 					-H 'Content-Type: application/json' \
 					-d '{
-						"query":
-						{
-							"match_all":{}
+						"query": {
+							"match_all": {
+							}
 						}
 					}'
 			''';
@@ -1003,9 +1003,9 @@ definition {
 				http://${portalHostname}:${port}/liferay-${companyId}-search-tuning-synonyms/_search?pretty \
 					-H 'Content-Type: application/json' \
 					-d '{
-						"query":
-						{
-							"match_all":{}
+						"query": {
+							"match_all": {
+							}
 						}
 					}'
 			''';

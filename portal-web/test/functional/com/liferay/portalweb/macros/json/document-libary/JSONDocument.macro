@@ -18,7 +18,8 @@ definition {
 				-H 'Content-Type: application/json' \
 				-u 'test@liferay.com:test'
 				-d '{
-					"creator": {},
+					"creator": {
+					},
 					"parentCommentId": "${parentCommentId}",
 					"text": "${commentBody}"
 				}'

@@ -10,7 +10,8 @@ definition {
 				-H 'Content-Type: application/json' \
 				-d '{
 					"query": {
-						"match_all": {}
+						"match_all": {
+						}
 					}
 				}'
 		''';

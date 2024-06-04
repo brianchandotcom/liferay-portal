@@ -684,9 +684,9 @@ definition {
 				http://${portalHostname}:${port}/liferay-${companyId}/_doc \
 					-H 'Content-Type: application/json' \
 					-d '{
-						"companyId" : "${companyId}",
-						"userName" : "alpha bravo",
-						"entryClassName" : "com.liferay.portal.kernel.model.User"
+						"companyId": "${companyId}",
+						"entryClassName": "com.liferay.portal.kernel.model.User",
+						"userName": "alpha bravo"
 					}'
 			''';
 
@@ -698,21 +698,16 @@ definition {
 				http://${portalHostname}:${port}/liferay-${companyId}/_search?pretty \
 					-H 'Content-Type: application/json' \
 					-d '{
-						"query":
-						{
-							"bool":
-							{
-								"must":
-								[
+						"query": {
+							"bool": {
+								"must": [
 									{
-										"match":
-										{
+										"match": {
 											"userName": "test test"
 										}
 									},
 									{
-										"match":
-										{
+										"match": {
 											"entryClassName": "com.liferay.portal.kernel.model.User"
 										}
 									}
@@ -761,15 +756,11 @@ definition {
 				http://${portalHostname}:${port}/liferay-${companyId}/_search?pretty \
 					-H 'Content-Type: application/json' \
 					-d '{
-						"query":
-						{
-							"bool":
-							{
-								"must":
-								[
+						"query": {
+							"bool": {
+								"must": [
 									{
-										"match":
-										{
+										"match": {
 											"userName": "alpha bravo"
 										}
 									}

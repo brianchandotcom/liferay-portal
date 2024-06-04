@@ -33,7 +33,6 @@ definition {
 						"objectActionTriggerKey": "${whenAction}",
 						"parameters": {
 							"objectDefinitionExternalReferenceCode": "L_ACCOUNT",
-							"system": "true",
 							"predefinedValues": [
 								{
 									"businessType": "Text",
@@ -53,7 +52,8 @@ definition {
 									"name": "type",
 									"value": "${valueType}"
 								}
-							]
+							],
+							"system": "true"
 						}
 					}'
 			''';
@@ -79,7 +79,6 @@ definition {
 						"objectActionTriggerKey": "${whenAction}",
 						"parameters": {
 							"objectDefinitionExternalReferenceCode": "L_POSTAL_ADDRESS",
-							"system": "true",
 							"predefinedValues": [
 								{
 									"businessType": "Text",
@@ -99,7 +98,8 @@ definition {
 									"name": "streetAddressLine1",
 									"value": "${valueStreet1}"
 								}
-							]
+							],
+							"system": "true"
 						}
 					}'
 			''';
@@ -125,7 +125,6 @@ definition {
 						"objectActionTriggerKey": "${whenAction}",
 						"parameters": {
 							"objectDefinitionExternalReferenceCode": "L_COMMERCE_ORDER",
-							"system": "true",
 							"predefinedValues": [
 								{
 									"businessType": "LongInteger",
@@ -172,7 +171,8 @@ definition {
 									"name": "shippingAmount",
 									"value": "${valueShippingAmount}"
 								}
-							]
+							],
+							"system": "true"
 						}
 					}'
 			''';
@@ -198,7 +198,6 @@ definition {
 						"objectActionTriggerKey": "${whenAction}",
 						"parameters": {
 							"objectDefinitionExternalReferenceCode": "L_COMMERCE_PRODUCT_GROUP",
-							"system": "true",
 							"predefinedValues": [
 								{
 									"businessType": "Text",
@@ -209,7 +208,8 @@ definition {
 									"name": "title",
 									"value": "${valueTitle}"
 								}
-							]
+							],
+							"system": "true"
 						}
 					}'
 			''';
@@ -235,7 +235,6 @@ definition {
 						"objectActionTriggerKey": "${whenAction}",
 						"parameters": {
 							"objectDefinitionExternalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION",
-							"system": "true",
 							"predefinedValues": [
 								{
 									"businessType": "Boolean",
@@ -273,7 +272,8 @@ definition {
 									"name": "productType",
 									"value": "${valueProductType}"
 								}
-							]
+							],
+							"system": "true"
 						}
 					}'
 			''';
@@ -299,7 +299,6 @@ definition {
 						"objectActionTriggerKey": "${whenAction}",
 						"parameters": {
 							"objectDefinitionExternalReferenceCode": "L_USER",
-							"system": "true",
 							"predefinedValues": [
 								{
 									"businessType": "Text",
@@ -337,7 +336,8 @@ definition {
 									"name": "givenName",
 									"value": "${valueGivenName}"
 								}
-							]
+							],
+							"system": "true"
 						}
 					}'
 			''';
@@ -363,7 +363,6 @@ definition {
 						"objectActionTriggerKey": "${whenAction}",
 						"parameters": {
 							"objectDefinitionExternalReferenceCode": "L_ORGANIZATION",
-							"system": "true",
 							"predefinedValues": [
 								{
 									"businessType": "Text",
@@ -374,7 +373,8 @@ definition {
 									"name": "name",
 									"value": "${valueName}"
 								}
-							]
+							],
+							"system": "true"
 						}
 					}'
 			''';

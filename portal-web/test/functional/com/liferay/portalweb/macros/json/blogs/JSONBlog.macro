@@ -25,7 +25,8 @@ definition {
 				-H 'Content-Type: application/json' \
 				-u '${userEmailAddress}:${userPassword}'
 				-d '{
-					"creator": {},
+					"creator": {
+					},
 					"parentCommentId": "${parentCommentId}",
 					"text": "${commentBody}"
 				}'

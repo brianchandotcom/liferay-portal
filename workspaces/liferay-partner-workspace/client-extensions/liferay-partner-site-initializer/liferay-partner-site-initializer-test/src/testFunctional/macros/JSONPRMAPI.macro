@@ -24,15 +24,15 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"name": "${accountName}",
-					"externalReferenceCode": "${externalReferenceCode}",
-					"partnerCountry": "US",
 					"currency": "BRL",
-					"marketingPlan": true,
-					"solutionDeliveryCertification": true,
-					"newProjectExistingBusiness": 1,
+					"externalReferenceCode": "${externalReferenceCode}",
 					"marketingPerformance": 3,
-					"r_prtLvlToAcc_c_partnerLevelERC": "GOLD-PRTLVL"
+					"marketingPlan": true,
+					"name": "${accountName}",
+					"newProjectExistingBusiness": 1,
+					"partnerCountry": "US",
+					"r_prtLvlToAcc_c_partnerLevelERC": "GOLD-PRTLVL",
+					"solutionDeliveryCertification": true
 				}'
 		''';
 
@@ -642,15 +642,15 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"name": "${accountName}",
-					"externalReferenceCode": "${externalReferenceCode}",
-					"partnerCountry": "US",
 					"currency": "BRL",
-					"marketingPlan": true,
-					"solutionDeliveryCertification": true,
-					"newProjectExistingBusiness": 1,
+					"externalReferenceCode": "${externalReferenceCode}",
 					"marketingPerformance": 3,
-					"r_prtLvlToAcc_c_partnerLevelERC": "GOLD-PRTLVL"
+					"marketingPlan": true,
+					"name": "${accountName}",
+					"newProjectExistingBusiness": 1,
+					"partnerCountry": "US",
+					"r_prtLvlToAcc_c_partnerLevelERC": "GOLD-PRTLVL",
+					"solutionDeliveryCertification": true
 				}'
 		''';
 

@@ -850,6 +850,78 @@ public class KBArticleLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, parentKBArticle.getStatus());
 	}
 
+	@FeatureFlags("LPS-188058")
+	@Test
+	public void testCheckKBArticlesWhenChildKBArticleIsPublishedOnlyAfterParentKBArticleIsPublished()
+		throws Exception {
+
+		Date displayDate = new Date(
+			System.currentTimeMillis() + (2 * Time.DAY));
+
+		KBArticle parentKBArticle = _addKbArticle(displayDate);
+
+		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, _serviceContext);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		childKBArticle = _kbArticleLocalService.fetchKBArticle(
+			childKBArticle.getKbArticleId());
+		parentKBArticle = _kbArticleLocalService.fetchKBArticle(
+			parentKBArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, childKBArticle.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, parentKBArticle.getStatus());
+
+		displayDate = new Date(System.currentTimeMillis() - (2 * Time.MINUTE));
+
+		childKBArticle.setDisplayDate(displayDate);
+
+		childKBArticle = _kbArticleLocalService.updateKBArticle(childKBArticle);
+
+		try {
+			_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof KBArticleStatusException);
+		}
+
+		childKBArticle = _kbArticleLocalService.fetchKBArticle(
+			childKBArticle.getKbArticleId());
+		parentKBArticle = _kbArticleLocalService.fetchKBArticle(
+			parentKBArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, childKBArticle.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, parentKBArticle.getStatus());
+
+		parentKBArticle.setDisplayDate(displayDate);
+
+		parentKBArticle = _kbArticleLocalService.updateKBArticle(
+			parentKBArticle);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		childKBArticle = _kbArticleLocalService.fetchKBArticle(
+			childKBArticle.getKbArticleId());
+		parentKBArticle = _kbArticleLocalService.fetchKBArticle(
+			parentKBArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, childKBArticle.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, parentKBArticle.getStatus());
+	}
+
 	@Test
 	public void testDeleteGroupKBArticlesDeletesKBArticles() throws Exception {
 		_addKbArticle();

@@ -187,12 +187,12 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			throw new CTCollectionStatusException(
-				"CTCollection is already published");
+				"Change tracking collection is already published");
 		}
 
 		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
 			throw new CTCollectionStatusException(
-				"CTCollection is unable to be published");
+				"Change tracking collection is not a draft");
 		}
 
 		_ctProcessLocalService.addCTProcess(userId, ctCollectionId);

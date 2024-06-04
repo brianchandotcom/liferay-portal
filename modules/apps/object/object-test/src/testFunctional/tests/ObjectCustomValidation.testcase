@@ -2055,12 +2055,12 @@ definition {
 			SelectFrame(locator1 = "Message#ERROR_DISMISSIBLE");
 
 			AssertElementPresent(
-					locator1 = "Message#ERROR_DISMISSIBLE",
+				locator1 = "Message#ERROR_DISMISSIBLE",
 				value1 = "Syntax Error");
 		}
 	}
 
-	@description = "LPS-1527	35 - Verify that it's possible to validate Groovy syntax when creating Actions"
+	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating Actions"
 	@priority = 4
 	test CanValidateGroovyAction {
 		property test.liferay.virtual.instance = "false";
@@ -2175,7 +2175,7 @@ definition {
 			SelectFrame(locator1 = "Message#ERROR_DISMISSIBLE");
 
 			AssertElementPresent(
-					locator1 = "Message#ERROR_DISMISSIBLE",
+				locator1 = "Message#ERROR_DISMISSIBLE",
 				value1 = "Syntax Error");
 		}
 	}

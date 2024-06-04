@@ -319,6 +319,82 @@ public class ObjectEntryServiceTest {
 						String.valueOf(TestPropsValues.getCompanyId()),
 						role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY));
 			});
+
+		// User can add an object entry to descendant object definitions
+		// with the update permission.
+
+		_setUser(_adminUser);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_rootObjectDefinition.getObjectDefinitionId()),
+			role.getRoleId(), new String[] {ActionKeys.UPDATE});
+
+		_setUser(_user);
+
+		iterator = _tree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			if (node.isRoot()) {
+				continue;
+			}
+
+			Assert.assertNotNull(
+				_objectEntryService.addObjectEntry(
+					0, node.getPrimaryKey(),
+					HashMapBuilder.<String, Serializable>put(
+						() -> {
+							Edge edge = node.getEdge();
+
+							ObjectRelationship objectRelationship =
+								_objectRelationshipLocalService.
+									getObjectRelationship(
+										edge.getObjectRelationshipId());
+
+							ObjectField objectField =
+								_objectFieldLocalService.getObjectField(
+									objectRelationship.getObjectFieldId2());
+
+							return objectField.getName();
+						},
+						() -> {
+							Node parentNode = node.getParentNode();
+
+							ObjectEntry objectEntry = objectEntries.get(
+								parentNode.getPrimaryKey());
+
+							return objectEntry.getObjectEntryId();
+						}
+					).build(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(), _user.getUserId())));
+		}
+
+		// User cannot add an object entry to a root object definition
+		// with the update permission.
+
+		AssertUtils.assertFailure(
+			PortalException.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
+				" must have ADD_OBJECT_ENTRY permission for ",
+				_rootObjectDefinition.getResourceName(), " "),
+			() -> _objectEntryService.addObjectEntry(
+				0, _rootObjectDefinition.getObjectDefinitionId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _user.getUserId())));
 	}
 
 	@Test
@@ -423,6 +499,54 @@ public class ObjectEntryServiceTest {
 			objectEntry -> Assert.assertNotNull(
 				_objectEntryService.deleteObjectEntry(
 					objectEntry.getObjectEntryId())));
+
+		// User can delete an object entry of a descendant object definition
+		// with the update permission.
+
+		_setUser(_adminUser);
+
+		objectEntryTree = TreeTestUtil.createObjectEntryTree(
+			"1", _objectEntryLocalService, _objectFieldLocalService,
+			_rootObjectDefinition.getRootObjectDefinitionId(),
+			_objectRelationshipLocalService, _treeFactory);
+
+		objectEntryRootNode = objectEntryTree.getRootNode();
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryRootNode.getPrimaryKey()),
+			role.getRoleId(), new String[] {ActionKeys.UPDATE});
+
+		_setUser(_user);
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			objectEntryTree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectEntryLocalService,
+			objectEntry -> {
+				if (objectEntry.getRootObjectEntryId() ==
+						objectEntry.getObjectEntryId()) {
+
+					return;
+				}
+
+				Assert.assertNotNull(
+					_objectEntryService.deleteObjectEntry(
+						objectEntry.getObjectEntryId()));
+			});
+
+		long rootObjectEntryId = objectEntryRootNode.getPrimaryKey();
+
+		// User cannot delete an object entry of a root object definition
+		// with the update permission.
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have DELETE permission for ",
+				_rootObjectDefinition.getClassName(), " ", rootObjectEntryId),
+			() -> _objectEntryService.deleteObjectEntry(rootObjectEntryId));
 	}
 
 	@Test
@@ -563,6 +687,46 @@ public class ObjectEntryServiceTest {
 			objectEntry -> Assert.assertNotNull(
 				_objectEntryService.getObjectEntry(
 					objectEntry.getObjectEntryId())));
+
+		// User can view an object entry of a descendant object definition
+		// with the update permission.
+
+		_setUser(_adminUser);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryRootNode.getPrimaryKey()),
+			role.getRoleId(), new String[] {ActionKeys.UPDATE});
+
+		_setUser(_user);
+
+		TreeTestUtil.forEachNodeObjectEntry(
+			objectEntryTree.iterator(), _objectEntryLocalService,
+			objectEntry -> {
+				if (objectEntry.getRootObjectEntryId() ==
+						objectEntry.getObjectEntryId()) {
+
+					return;
+				}
+
+				Assert.assertNotNull(
+					_objectEntryService.getObjectEntry(
+						objectEntry.getObjectEntryId()));
+			});
+
+		long rootObjectEntryId = objectEntryRootNode.getPrimaryKey();
+
+		// User cannot view an object entry of a root object definition
+		// with the update permission.
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have VIEW permission for ",
+				_rootObjectDefinition.getClassName(), " ", rootObjectEntryId),
+			() -> _objectEntryService.getObjectEntry(rootObjectEntryId));
 	}
 
 	@Test

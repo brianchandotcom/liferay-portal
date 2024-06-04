@@ -110,152 +110,28 @@ public class AMJournalArticleStagedModelDataHandlerTest
 	public void testExportImportContentWithMultipleDynamicReferences()
 		throws Exception {
 
-		ServiceContext serviceContext = _getServiceContext();
-
-		FileEntry fileEntry1 = _addImageFileEntry(serviceContext);
-		FileEntry fileEntry2 = _addImageFileEntry(serviceContext);
-
-		boolean enabled = false;
-
-		String content = _getDynamicContent(enabled, fileEntry1, fileEntry2);
-
-		_withIFrameSanitizerConfiguration(
-			enabled,
-			() -> {
-				JournalArticle journalArticle = _addJournalArticle(
-					content, serviceContext);
-
-				ExportImportThreadLocal.setPortletImportInProcess(true);
-
-				try {
-					exportImportStagedModel(journalArticle);
-				}
-				finally {
-					ExportImportThreadLocal.setPortletImportInProcess(false);
-				}
-
-				JournalArticle importedJournalArticle =
-					(JournalArticle)getStagedModel(
-						journalArticle.getUuid(), liveGroup);
-
-				_assertXMLEquals(
-					_getExpectedDynamicContent(enabled, fileEntry1, fileEntry2),
-					importedJournalArticle.getContent());
-			});
+		_testExportImportContentWithMultipleDynamicReferences(false);
 	}
 
 	@Test
 	public void testExportImportContentWithMultipleDynamicReferencesIFrameSanitizerEnabled()
 		throws Exception {
 
-		ServiceContext serviceContext = _getServiceContext();
-
-		FileEntry fileEntry1 = _addImageFileEntry(serviceContext);
-		FileEntry fileEntry2 = _addImageFileEntry(serviceContext);
-
-		boolean enabled = true;
-
-		String content = _getDynamicContent(enabled, fileEntry1, fileEntry2);
-
-		_withIFrameSanitizerConfiguration(
-			enabled,
-			() -> {
-				JournalArticle journalArticle = _addJournalArticle(
-					content, serviceContext);
-
-				ExportImportThreadLocal.setPortletImportInProcess(true);
-
-				try {
-					exportImportStagedModel(journalArticle);
-				}
-				finally {
-					ExportImportThreadLocal.setPortletImportInProcess(false);
-				}
-
-				JournalArticle importedJournalArticle =
-					(JournalArticle)getStagedModel(
-						journalArticle.getUuid(), liveGroup);
-
-				_assertXMLEquals(
-					_getExpectedDynamicContent(enabled, fileEntry1, fileEntry2),
-					importedJournalArticle.getContent());
-			});
+		_testExportImportContentWithMultipleDynamicReferences(true);
 	}
 
 	@Test
 	public void testExportImportContentWithMultipleStaticReferences()
 		throws Exception {
 
-		ServiceContext serviceContext = _getServiceContext();
-
-		FileEntry fileEntry1 = _addImageFileEntry(serviceContext);
-		FileEntry fileEntry2 = _addImageFileEntry(serviceContext);
-
-		String content = _getStaticContent(fileEntry1, fileEntry2);
-
-		boolean enabled = false;
-
-		_withIFrameSanitizerConfiguration(
-			enabled,
-			() -> {
-				JournalArticle journalArticle = _addJournalArticle(
-					content, serviceContext);
-
-				ExportImportThreadLocal.setPortletImportInProcess(true);
-
-				try {
-					exportImportStagedModel(journalArticle);
-				}
-				finally {
-					ExportImportThreadLocal.setPortletImportInProcess(false);
-				}
-
-				JournalArticle importedJournalArticle =
-					(JournalArticle)getStagedModel(
-						journalArticle.getUuid(), liveGroup);
-
-				_assertXMLEquals(
-					_getExpectedStaticContent(enabled, fileEntry1, fileEntry2),
-					importedJournalArticle.getContent());
-			});
+		_testExportImportContentWithMultipleStaticReferences(false);
 	}
 
 	@Test
 	public void testExportImportContentWithMultipleStaticReferencesIFrameSanitizerEnabled()
 		throws Exception {
 
-		ServiceContext serviceContext = _getServiceContext();
-
-		FileEntry fileEntry1 = _addImageFileEntry(serviceContext);
-		FileEntry fileEntry2 = _addImageFileEntry(serviceContext);
-
-		String content = _getStaticContent(fileEntry1, fileEntry2);
-
-		boolean enabled = true;
-
-		_withIFrameSanitizerConfiguration(
-			enabled,
-			() -> {
-				JournalArticle journalArticle = _addJournalArticle(
-					content, serviceContext);
-
-				ExportImportThreadLocal.setPortletImportInProcess(true);
-
-				try {
-					exportImportStagedModel(journalArticle);
-				}
-				finally {
-					ExportImportThreadLocal.setPortletImportInProcess(false);
-				}
-
-				JournalArticle importedJournalArticle =
-					(JournalArticle)getStagedModel(
-						journalArticle.getUuid(), liveGroup);
-
-				_assertXMLEquals(
-					_getExpectedStaticContent(enabled, fileEntry1, fileEntry2),
-					importedJournalArticle.getContent());
-			});
+		_testExportImportContentWithMultipleStaticReferences(true);
 	}
 
 	@Test
@@ -552,6 +428,78 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		sb.setIndex(sb.index() - 1);
 
 		return _getContent(sb.toString());
+	}
+
+	private void _testExportImportContentWithMultipleDynamicReferences(
+			boolean enabled)
+		throws Exception {
+
+		ServiceContext serviceContext = _getServiceContext();
+
+		FileEntry fileEntry1 = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry2 = _addImageFileEntry(serviceContext);
+
+		String content = _getDynamicContent(enabled, fileEntry1, fileEntry2);
+
+		_withIFrameSanitizerConfiguration(
+			enabled,
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					content, serviceContext);
+
+				ExportImportThreadLocal.setPortletImportInProcess(true);
+
+				try {
+					exportImportStagedModel(journalArticle);
+				}
+				finally {
+					ExportImportThreadLocal.setPortletImportInProcess(false);
+				}
+
+				JournalArticle importedJournalArticle =
+					(JournalArticle)getStagedModel(
+						journalArticle.getUuid(), liveGroup);
+
+				_assertXMLEquals(
+					_getExpectedDynamicContent(enabled, fileEntry1, fileEntry2),
+					importedJournalArticle.getContent());
+			});
+	}
+
+	private void _testExportImportContentWithMultipleStaticReferences(
+			boolean enabled)
+		throws Exception {
+
+		ServiceContext serviceContext = _getServiceContext();
+
+		FileEntry fileEntry1 = _addImageFileEntry(serviceContext);
+		FileEntry fileEntry2 = _addImageFileEntry(serviceContext);
+
+		String content = _getStaticContent(fileEntry1, fileEntry2);
+
+		_withIFrameSanitizerConfiguration(
+			enabled,
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					content, serviceContext);
+
+				ExportImportThreadLocal.setPortletImportInProcess(true);
+
+				try {
+					exportImportStagedModel(journalArticle);
+				}
+				finally {
+					ExportImportThreadLocal.setPortletImportInProcess(false);
+				}
+
+				JournalArticle importedJournalArticle =
+					(JournalArticle)getStagedModel(
+						journalArticle.getUuid(), liveGroup);
+
+				_assertXMLEquals(
+					_getExpectedStaticContent(enabled, fileEntry1, fileEntry2),
+					importedJournalArticle.getContent());
+			});
 	}
 
 	private void _withIFrameSanitizerConfiguration(

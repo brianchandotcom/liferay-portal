@@ -5,12 +5,14 @@
 
 package com.liferay.portal.tools.benchmarks.task;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.tools.benchmarks.http.HttpResponse;
 import com.liferay.portal.tools.benchmarks.http.HttpUtil;
+import com.liferay.portal.tools.benchmarks.http.ThreadLocalCookieStore;
 
 import java.net.URL;
 
@@ -33,19 +35,26 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 	}
 
 	public List<ObjectValuePair<String, Long>> execute() throws Exception {
-		HttpResponse httpResponse = HttpUtil.doGet(
-			null, _createURL(StringPool.FORWARD_SLASH));
+		try (SafeCloseable safeCloseable =
+				ThreadLocalCookieStore.withSafeCloseable()) {
 
-		_assertContent(httpResponse, "Liferay.currentURL");
+			HttpResponse httpResponse = HttpUtil.doGet(
+				null, _createURL(StringPool.FORWARD_SLASH));
 
-		return ListUtil.fromArray(
-			new ObjectValuePair<>("viewHomePage", httpResponse.getDuration()),
-			new ObjectValuePair<>(
-				"viewLoginPage", _viewLoginPage(httpResponse.getCSRFToken())),
-			new ObjectValuePair<>(
-				"login",
-				_login(httpResponse.getCSRFToken(), _emailAddress, _password)),
-			new ObjectValuePair<>("logout", _logout()));
+			_assertContent(httpResponse, "Liferay.currentURL");
+
+			return ListUtil.fromArray(
+				new ObjectValuePair<>(
+					"viewHomePage", httpResponse.getDuration()),
+				new ObjectValuePair<>(
+					"viewLoginPage",
+					_viewLoginPage(httpResponse.getCSRFToken())),
+				new ObjectValuePair<>(
+					"login",
+					_login(
+						httpResponse.getCSRFToken(), _emailAddress, _password)),
+				new ObjectValuePair<>("logout", _logout()));
+		}
 	}
 
 	private void _assertContent(HttpResponse httpResponse, String key) {

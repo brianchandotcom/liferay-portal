@@ -12,6 +12,7 @@ buildscript {
 	if (Boolean.getBoolean("gradle.develocity.enabled")) {
 		dependencies {
 			classpath group: "com.gradle", name: "develocity-gradle-plugin", version: "3.17.4"
+			classpath group: "com.gradle", name: "common-custom-user-data-gradle-plugin", version: "2.0.1"
 		}
 	}
 }
@@ -20,25 +21,22 @@ apply plugin: "com.liferay.settings.plugin"
 
 if (Boolean.getBoolean("gradle.develocity.enabled")) {
 	apply plugin: "com.gradle.develocity"
+	apply plugin: "com.gradle.common-custom-user-data-gradle-plugin"
 
 	develocity {
 		buildScan {
 			allowUntrustedServer = true
 
-			if (System.getenv("JENKINS_HOME")) {
-				link "CI Build URL", System.getenv("BUILD_URL")
-			}
+			def isCI = System.getenv('JENKINS_URL') != null
 
 			server = System.getProperty("gradle.develocity.server.url") ?: null
-			tag System.getenv("JENKINS_HOME") ? "CI" : "LOCAL"
-
 			if (System.getProperty("gradle.develocity.tag")) {
 				tag System.getProperty("gradle.develocity.tag")
 			}
 
 			termsOfUseAgree = "yes"
 			termsOfUseUrl = "https://gradle.com/terms-of-service"
-			uploadInBackground = true
+			uploadInBackground = !isCI
 		}
 	}
 }

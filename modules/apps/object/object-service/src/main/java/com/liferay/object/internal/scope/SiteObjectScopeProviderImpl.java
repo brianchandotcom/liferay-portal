@@ -79,7 +79,7 @@ public class SiteObjectScopeProviderImpl implements ObjectScopeProvider {
 	public boolean isValidGroupId(long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		if ((group != null) && group.isSite()) {
+		if ((group != null) && (group.isSite() || group.isUserGroup())) {
 			return true;
 		}
 

@@ -94,3 +94,35 @@ test('LPD-29524 Search for message board thread by keywords', async ({
 		page.getByRole('link', {name: messageBoardThread2.headline})
 	).toBeHidden();
 });
+
+test('LPD-27633 Do not show site in breadcrumb', async ({
+	messageBoardsPage,
+	messageBoardsWidgetPage,
+	page,
+	site,
+	workflowPage,
+}) => {
+	await page.goto(site.friendlyUrlPath);
+
+	const layout = await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+	const categoryName = getRandomString();
+
+	await messageBoardsWidgetPage.addCategory(site, layout, categoryName);
+
+	await page
+		.locator(
+			'[id="_com_liferay_message_boards_web_portlet_MBPortlet_mbCategoriesSearchContainer_1_menu"]'
+		)
+		.click();
+
+	await page.getByRole('menuitem', {name: 'Move'}).click();
+
+	await page.getByRole('button', {name: 'Select'}).click();
+
+	await expect(
+		page
+			.frameLocator('iframe[title="Select Category"]')
+			.getByText(site.name)
+	).toBeHidden();
+});

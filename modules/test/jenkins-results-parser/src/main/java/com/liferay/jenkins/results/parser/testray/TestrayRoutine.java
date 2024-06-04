@@ -281,7 +281,7 @@ public class TestrayRoutine {
 		Matcher matcher = _testrayRoutineURLPattern.matcher(url.toString());
 
 		if (!matcher.find()) {
-			throw new RuntimeException("Invalid Routine URL " + url);
+			throw new RuntimeException("Invalid routine URL " + url);
 		}
 
 		TestrayServer testrayServer = TestrayFactory.newTestrayServer(

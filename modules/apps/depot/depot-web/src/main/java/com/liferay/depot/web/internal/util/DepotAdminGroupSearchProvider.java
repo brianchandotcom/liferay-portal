@@ -31,7 +31,6 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -61,13 +60,6 @@ public class DepotAdminGroupSearchProvider {
 		throws PortalException {
 
 		return _getGroupSearch(null, portletRequest, portletURL);
-	}
-
-	@Activate
-	protected void activate() {
-		_classNameIds = new long[] {
-			_portal.getClassNameId(DepotEntry.class.getName())
-		};
 	}
 
 	private GroupSearch _getGroupConnectedDepotGroupsGroupSearch(
@@ -133,28 +125,38 @@ public class DepotAdminGroupSearchProvider {
 		if (Validator.isNotNull(keywords)) {
 			groupSearch.setResultsAndTotal(
 				() -> _groupService.search(
-					company.getCompanyId(), _classNameIds, keywords,
-					groupParams, groupSearch.getStart(), groupSearch.getEnd(),
-					groupSearch.getOrderByComparator()),
+					company.getCompanyId(),
+					new long[] {
+						_portal.getClassNameId(DepotEntry.class.getName())
+					},
+					keywords, groupParams, groupSearch.getStart(),
+					groupSearch.getEnd(), groupSearch.getOrderByComparator()),
 				_groupService.searchCount(
-					company.getCompanyId(), _classNameIds, keywords,
-					groupParams));
+					company.getCompanyId(),
+					new long[] {
+						_portal.getClassNameId(DepotEntry.class.getName())
+					},
+					keywords, groupParams));
 		}
 		else {
 			groupSearch.setResultsAndTotal(
 				() -> _groupService.search(
-					company.getCompanyId(), _classNameIds, keywords,
-					groupParams, groupSearch.getStart(), groupSearch.getEnd(),
-					groupSearch.getOrderByComparator()),
+					company.getCompanyId(),
+					new long[] {
+						_portal.getClassNameId(DepotEntry.class.getName())
+					},
+					keywords, groupParams, groupSearch.getStart(),
+					groupSearch.getEnd(), groupSearch.getOrderByComparator()),
 				_groupService.searchCount(
-					company.getCompanyId(), _classNameIds, keywords,
-					groupParams));
+					company.getCompanyId(),
+					new long[] {
+						_portal.getClassNameId(DepotEntry.class.getName())
+					},
+					keywords, groupParams));
 		}
 
 		return groupSearch;
 	}
-
-	private long[] _classNameIds;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

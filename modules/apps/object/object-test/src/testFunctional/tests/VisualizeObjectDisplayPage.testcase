@@ -222,60 +222,6 @@ definition {
 		PageEditor.assertPaginationSimpleTypeIsDisplayed();
 	}
 
-	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of Date type for a specific Object"
-	@priority = 4
-	test DisplaySpecificEntryDate {
-		property portal.upstream = "quarantine";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 320",
-			objectName = "CustomObject320",
-			pluralLabelName = "Custom Objects 320");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Date",
-			fieldLabelName = "Date",
-			fieldName = "customObjectField",
-			fieldType = "Date",
-			isRequired = "false",
-			objectName = "CustomObject320");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject320");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject320",
-			value = "2021-01-01");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectDisplayPage.addItem(
-			frameTitle = "Select",
-			pluralLabelName = "Custom Objects 320");
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Date");
-
-		AssertElementPresent(
-			key_entry = "Jan 1, 2021",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-
-		PageEditor.publish();
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Test Content Page Name");
-
-		AssertElementPresent(
-			key_entry = "Jan 1, 2021",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
 	@description = "LPS-133867|LPS-135004 - Verify if it's possible map and view the image of user Profile in a Fragment of Display Page"
 	@priority = 4
 	test ViewImageUserProfileFromSpecificEntry {

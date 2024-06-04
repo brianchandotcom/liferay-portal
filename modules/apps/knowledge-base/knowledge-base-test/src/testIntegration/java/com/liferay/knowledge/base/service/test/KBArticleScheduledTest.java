@@ -62,6 +62,68 @@ public class KBArticleScheduledTest {
 			_group, _user.getUserId());
 	}
 
+	@Test
+	public void testChildArticleScheduledAfterParentCanBePublishedOnItsScheduledDate()
+		throws Exception {
+
+		Date displayDate = new Date(
+			System.currentTimeMillis() + (2 * Time.DAY));
+
+		KBArticle parentKBArticle = _addKbArticle(displayDate);
+
+		KBArticle childKBArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, _serviceContext);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		childKBArticle = _kbArticleLocalService.fetchKBArticle(
+			childKBArticle.getKbArticleId());
+		parentKBArticle = _kbArticleLocalService.fetchKBArticle(
+			parentKBArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, childKBArticle.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, parentKBArticle.getStatus());
+
+		parentKBArticle.setDisplayDate(new Date());
+
+		parentKBArticle = _kbArticleLocalService.updateKBArticle(
+			parentKBArticle);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		childKBArticle = _kbArticleLocalService.fetchKBArticle(
+			childKBArticle.getKbArticleId());
+		parentKBArticle = _kbArticleLocalService.fetchKBArticle(
+			parentKBArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, childKBArticle.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, parentKBArticle.getStatus());
+
+		childKBArticle.setDisplayDate(new Date());
+
+		childKBArticle = _kbArticleLocalService.updateKBArticle(childKBArticle);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		childKBArticle = _kbArticleLocalService.fetchKBArticle(
+			childKBArticle.getKbArticleId());
+		parentKBArticle = _kbArticleLocalService.fetchKBArticle(
+			parentKBArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, childKBArticle.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, parentKBArticle.getStatus());
+	}
+
 	@Test(expected = KBArticleStatusException.class)
 	public void testChildArticleScheduledFailsIfScheduledBeforeParent()
 		throws Exception {

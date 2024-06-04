@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
@@ -116,6 +117,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -1054,8 +1056,17 @@ public class PortalImpl implements Portal {
 		Layout layout = null;
 
 		if (Validator.isNull(friendlyURL)) {
-			layout = LayoutServiceUtil.fetchFirstLayout(
-				groupId, privateLayout, true);
+			if (AuthLoginGroupSettingsUtil.isPromptEnabled(groupId) &&
+				!_isSignedIn(
+					(HttpServletRequest)requestContext.get("request"))) {
+
+				layout = LayoutLocalServiceUtil.fetchDefaultLayout(
+					groupId, privateLayout);
+			}
+			else {
+				layout = LayoutServiceUtil.fetchFirstLayout(
+					groupId, privateLayout, true);
+			}
 
 			if (layout == null) {
 				throw new NoSuchLayoutException(
@@ -7998,6 +8009,32 @@ public class PortalImpl implements Portal {
 		}
 
 		return virtualHostnames.firstKey();
+	}
+
+	private boolean _isSignedIn(HttpServletRequest httpServletRequest) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			return permissionChecker.isSignedIn();
+		}
+
+		User user = null;
+
+		try {
+			user = getUser(httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		if ((user == null) || user.isGuestUser()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _layoutContainsPortletId(Layout layout, String portletId) {

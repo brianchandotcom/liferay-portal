@@ -5,8 +5,8 @@
 
 package com.liferay.notification.internal.term.contributor;
 
-import com.liferay.notification.term.contributor.NotificationTermProviderRegistry;
-import com.liferay.notification.term.contributor.NotificationTermProvider;
+import com.liferay.notification.term.provider.NotificationTermProviderRegistry;
+import com.liferay.notification.term.provider.NotificationTermProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

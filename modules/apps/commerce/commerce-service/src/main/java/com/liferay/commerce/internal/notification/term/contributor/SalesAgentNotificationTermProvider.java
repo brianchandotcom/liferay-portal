@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.internal.notification.term.contributor;
 
-import com.liferay.notification.term.contributor.NotificationTermProvider;
+import com.liferay.notification.term.provider.NotificationTermProvider;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;

@@ -124,6 +124,9 @@ public class StyleBookEntryVersionPersistenceTest {
 
 		newStyleBookEntryVersion.setUuid(RandomTestUtil.randomString());
 
+		newStyleBookEntryVersion.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newStyleBookEntryVersion.setStyleBookEntryId(RandomTestUtil.nextLong());
 
 		newStyleBookEntryVersion.setGroupId(RandomTestUtil.nextLong());
@@ -174,6 +177,9 @@ public class StyleBookEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			existingStyleBookEntryVersion.getUuid(),
 			newStyleBookEntryVersion.getUuid());
+		Assert.assertEquals(
+			existingStyleBookEntryVersion.getExternalReferenceCode(),
+			newStyleBookEntryVersion.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingStyleBookEntryVersion.getStyleBookEntryId(),
 			newStyleBookEntryVersion.getStyleBookEntryId());
@@ -385,10 +391,11 @@ public class StyleBookEntryVersionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"StyleBookEntryVersion", "mvccVersion", true, "ctCollectionId",
 			true, "styleBookEntryVersionId", true, "version", true, "uuid",
-			true, "styleBookEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "defaultStyleBookEntry", true, "name", true,
-			"previewFileEntryId", true, "styleBookEntryKey", true);
+			true, "externalReferenceCode", true, "styleBookEntryId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"defaultStyleBookEntry", true, "name", true, "previewFileEntryId",
+			true, "styleBookEntryKey", true);
 	}
 
 	@Test
@@ -715,6 +722,9 @@ public class StyleBookEntryVersionPersistenceTest {
 		styleBookEntryVersion.setVersion(RandomTestUtil.nextInt());
 
 		styleBookEntryVersion.setUuid(RandomTestUtil.randomString());
+
+		styleBookEntryVersion.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		styleBookEntryVersion.setStyleBookEntryId(RandomTestUtil.nextLong());
 

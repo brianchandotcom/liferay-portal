@@ -29,23 +29,25 @@ public class StyleBookEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static StyleBookEntry addStyleBookEntry(
-			long groupId, String name, String styleBookEntryKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addStyleBookEntry(
-			groupId, name, styleBookEntryKey, serviceContext);
-	}
-
-	public static StyleBookEntry addStyleBookEntry(
-			long groupId, String frontendTokensValues, String name,
+			String externalReferenceCode, long groupId, String name,
 			String styleBookEntryKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addStyleBookEntry(
-			groupId, frontendTokensValues, name, styleBookEntryKey,
+			externalReferenceCode, groupId, name, styleBookEntryKey,
 			serviceContext);
+	}
+
+	public static StyleBookEntry addStyleBookEntry(
+			String externalReferenceCode, long groupId,
+			String frontendTokensValues, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addStyleBookEntry(
+			externalReferenceCode, groupId, frontendTokensValues, name,
+			styleBookEntryKey, serviceContext);
 	}
 
 	public static StyleBookEntry copyStyleBookEntry(
@@ -61,6 +63,14 @@ public class StyleBookEntryServiceUtil {
 		throws PortalException {
 
 		return getService().deleteStyleBookEntry(styleBookEntryId);
+	}
+
+	public static StyleBookEntry deleteStyleBookEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteStyleBookEntry(
+			externalReferenceCode, groupId);
 	}
 
 	public static StyleBookEntry deleteStyleBookEntry(
@@ -84,6 +94,14 @@ public class StyleBookEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static StyleBookEntry getStyleBookEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getStyleBookEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static StyleBookEntry publishDraft(long styleBookEntryId)

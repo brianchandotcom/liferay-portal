@@ -69,7 +69,7 @@ public class StyleBookEntryVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -81,6 +81,8 @@ public class StyleBookEntryVersionCacheModel
 		sb.append(version);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", styleBookEntryId=");
 		sb.append(styleBookEntryId);
 		sb.append(", groupId=");
@@ -126,6 +128,14 @@ public class StyleBookEntryVersionCacheModel
 		}
 		else {
 			styleBookEntryVersionImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			styleBookEntryVersionImpl.setExternalReferenceCode("");
+		}
+		else {
+			styleBookEntryVersionImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		styleBookEntryVersionImpl.setStyleBookEntryId(styleBookEntryId);
@@ -198,6 +208,7 @@ public class StyleBookEntryVersionCacheModel
 
 		version = objectInput.readInt();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		styleBookEntryId = objectInput.readLong();
 
@@ -233,6 +244,13 @@ public class StyleBookEntryVersionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(styleBookEntryId);
@@ -284,6 +302,7 @@ public class StyleBookEntryVersionCacheModel
 	public long styleBookEntryVersionId;
 	public int version;
 	public String uuid;
+	public String externalReferenceCode;
 	public long styleBookEntryId;
 	public long groupId;
 	public long companyId;

@@ -6,10 +6,17 @@
 package com.liferay.info.field.item.selector.web.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.item.selector.criterion.InfoFieldItemSelectorCriterion;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -17,10 +24,14 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -34,12 +45,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.taglib.search.ResultRow;
 
 import java.util.Arrays;
@@ -72,6 +86,8 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(
@@ -175,6 +191,78 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		Assert.assertEquals(5, searchContainer.getTotal());
 	}
 
+	@FeatureFlags("LPD-20213")
+	@Test
+	public void testRowCheckerWithCheckedInfoFields() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, _objectDefinition1.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, _group.getGroupId());
+
+		List<InfoField<?>> allInfoFields = ListUtil.filter(
+			infoForm.getAllInfoFields(), InfoField::isEditable);
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+			false,
+			String.valueOf(
+				_portal.getClassNameId(_objectDefinition1.getClassName())),
+			"0", _layout.fetchDraftLayout(), _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			allInfoFields.toArray(new InfoField<?>[0]));
+
+		mockHttpServletRequest.setParameter(
+			"formItemId", jsonObject.getString("addedItemId"));
+
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(mockHttpServletRequest);
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
+
+		RowChecker rowChecker = searchContainer.getRowChecker();
+
+		for (Object infoField : searchContainer.getResults()) {
+			Assert.assertTrue(rowChecker.isChecked(infoField));
+		}
+	}
+
+	@FeatureFlags("LPD-20213")
+	@Test
+	public void testRowCheckerWithoutCheckedInfoFields() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+			false,
+			String.valueOf(
+				_portal.getClassNameId(_objectDefinition1.getClassName())),
+			"0", _layout, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			new InfoField<?>[0]);
+
+		mockHttpServletRequest.setParameter(
+			"formItemId", jsonObject.getString("addedItemId"));
+
+		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
+			_getItemSelectorViewDescriptor(mockHttpServletRequest);
+
+		SearchContainer<Object> searchContainer =
+			itemSelectorViewDescriptor.getSearchContainer();
+
+		RowChecker rowChecker = searchContainer.getRowChecker();
+
+		for (Object infoField : searchContainer.getResults()) {
+			Assert.assertFalse(rowChecker.isChecked(infoField));
+		}
+	}
+
 	private ItemSelectorViewDescriptor<Object> _getItemSelectorViewDescriptor(
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
@@ -197,6 +285,11 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 
 		mockHttpServletRequest.setParameter(
 			"itemType", _objectDefinition1.getClassName());
+		mockHttpServletRequest.setParameter(
+			"segmentsExperienceId",
+			String.valueOf(
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
 
 		_infoFieldProviderItemSelectorView.renderHTML(
 			mockHttpServletRequest, new MockHttpServletResponse(),
@@ -244,6 +337,14 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 	private ItemSelectorView<ItemSelectorCriterion>
 		_infoFieldProviderItemSelectorView;
 
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	private Layout _layout;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
 
@@ -252,5 +353,11 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

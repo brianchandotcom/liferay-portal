@@ -1060,8 +1060,15 @@ public class PortalImpl implements Portal {
 				!_isSignedIn(
 					(HttpServletRequest)requestContext.get("request"))) {
 
-				layout = LayoutLocalServiceUtil.fetchDefaultLayout(
-					groupId, privateLayout);
+				// Ensure that virtual layouts are merged. See LPS-42222.
+
+				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+					groupId, privateLayout,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
+				}
 			}
 			else {
 				layout = LayoutServiceUtil.fetchFirstLayout(

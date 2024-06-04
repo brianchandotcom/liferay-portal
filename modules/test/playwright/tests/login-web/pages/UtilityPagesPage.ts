@@ -23,7 +23,7 @@ export class UtilityPagesPage {
 		);
 	}
 
-	async add(title: string, pageType: string) {
+	async add(title: string, pageType: string, timeout = 0) {
 		await this.newButton.click();
 
 		await this.page.getByRole('menuitem', {name: pageType}).click();
@@ -33,6 +33,7 @@ export class UtilityPagesPage {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('button', {name: 'Publish'}),
+			timeout,
 			trigger: this.page.getByRole('button', {name: 'Save'}),
 		});
 	}

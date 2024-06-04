@@ -1,0 +1,12 @@
+[
+	{
+		"assetEntries": [
+			{
+				"classNameId": "com.liferay.blogs.model.BlogsEntry",
+				"classPK": "[#BLOG_POSTING_ID:TESTBLOGPOSTING2#]"
+			}
+		],
+		"classNameId": "com.liferay.blogs.model.BlogsEntry",
+		"classPK": "[#BLOG_POSTING_ID:TESTBLOGPOSTING1#]"
+	}
+]

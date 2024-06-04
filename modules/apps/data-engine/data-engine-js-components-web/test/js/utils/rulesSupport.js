@@ -9,7 +9,9 @@ import {
 	clearSecondOperandValue,
 	clearTargetValue,
 	findRuleByFieldName,
+	syncActions,
 } from '../../../src/main/resources/META-INF/resources/js/utils/rulesSupport';
+import pages from '../__mock__/mockPages.es';
 
 const mockActions = [
 	{
@@ -198,6 +200,56 @@ describe('RulesSupport', () => {
 			expect(findRuleByFieldName('select1', null, rules)).toBeTruthy();
 
 			expect(findRuleByFieldName('text2', null, rules)).toBeTruthy();
+		});
+	});
+
+	describe('syncActions(pages, actions)', () => {
+		it('returns jump-to-page action with a valid target when there are two pages and the orignal target points to the second page', () => {
+			const action = [
+				{
+					action: 'jump-to-page',
+					source: '0',
+					target: '1', // Target is zero-based, which means that we should jump to the second page.
+				},
+			];
+
+			const twoPages = [pages[0], pages[0]]; // There are two pages, so we should be able to jump to the second one.
+
+			const syncedActions = syncActions(twoPages, action);
+
+			expect(syncedActions[0].target).toEqual('1');
+		});
+
+		it('returns empty jump-to-page action target when there is only one page', () => {
+			const action = [
+				{
+					action: 'jump-to-page',
+					source: '0',
+					target: '0', // Target is zero-based, which means that we should jump to the first page.
+				},
+			];
+
+			const onePage = [pages[0]]; // But target should be irrelevant if there is only one page. There is no page to jump to.
+
+			const syncedActions = syncActions(onePage, action);
+
+			expect(syncedActions[0].target).toEqual('');
+		});
+
+		it('returns empty jump-to-page action target when the orignal target equals the ammount of pages', () => {
+			const action = [
+				{
+					action: 'jump-to-page',
+					source: '0',
+					target: '2', // Target is zero-based, which means that we should jump to the third page.
+				},
+			];
+
+			const twoPages = [pages[0], pages[0]]; // There are only two pages, so we should not be able to jump to the third one.
+
+			const syncedActions = syncActions(twoPages, action);
+
+			expect(syncedActions[0].target).toEqual('');
 		});
 	});
 });

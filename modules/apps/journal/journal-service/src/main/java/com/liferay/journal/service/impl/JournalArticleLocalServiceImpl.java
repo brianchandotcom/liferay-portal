@@ -102,7 +102,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -162,7 +161,10 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -6067,53 +6069,76 @@ public class JournalArticleLocalServiceImpl
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Expiring article " + article.getId());
+				try {
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Expiring article " + article.getId());
+							}
+
+							if (isExpireAllArticleVersions(companyId)) {
+								List<JournalArticle> currentArticles =
+									journalArticleLocalService.getArticles(
+										article.getGroupId(),
+										article.getArticleId(),
+										QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+										new ArticleVersionComparator(true));
+
+								for (JournalArticle currentArticle :
+										currentArticles) {
+
+									if (currentArticle.getVersion() >=
+											article.getVersion()) {
+
+										continue;
+									}
+
+									currentArticle.setExpirationDate(
+										article.getExpirationDate());
+									currentArticle.setStatus(
+										WorkflowConstants.STATUS_EXPIRED);
+
+									currentArticle =
+										journalArticlePersistence.update(
+											currentArticle);
+
+									notifySubscribers(
+										0, currentArticle, "expired",
+										new ServiceContext());
+								}
+							}
+
+							article.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+							JournalArticle updatedJournalArticle =
+								journalArticleLocalService.updateJournalArticle(
+									article);
+
+							notifySubscribers(
+								0, updatedJournalArticle, "expired",
+								new ServiceContext());
+
+							updatePreviousApprovedArticle(
+								updatedJournalArticle);
+
+							if (indexer != null) {
+								indexableActionableDynamicQuery.addDocuments(
+									indexer.getDocument(updatedJournalArticle));
+							}
+
+							return null;
+						});
 				}
-
-				if (isExpireAllArticleVersions(companyId)) {
-					List<JournalArticle> currentArticles =
-						journalArticleLocalService.getArticles(
-							article.getGroupId(), article.getArticleId(),
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-							new ArticleVersionComparator(true));
-
-					for (JournalArticle currentArticle : currentArticles) {
-						if (currentArticle.getVersion() >=
-								article.getVersion()) {
-
-							continue;
-						}
-
-						currentArticle.setExpirationDate(
-							article.getExpirationDate());
-						currentArticle.setStatus(
-							WorkflowConstants.STATUS_EXPIRED);
-
-						currentArticle = journalArticlePersistence.update(
-							currentArticle);
-
-						notifySubscribers(
-							0, currentArticle, "expired", new ServiceContext());
+				catch (Throwable throwable) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Error expiring article " + article.getId(),
+							throwable);
 					}
 				}
-
-				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-				article = journalArticleLocalService.updateJournalArticle(
-					article);
-
-				notifySubscribers(0, article, "expired", new ServiceContext());
-
-				updatePreviousApprovedArticle(article);
-
-				if (indexer != null) {
-					indexableActionableDynamicQuery.addDocuments(
-						indexer.getDocument(article));
-				}
 			});
-		indexableActionableDynamicQuery.setTransactionConfig(
-			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
 		indexableActionableDynamicQuery.performActions();
 	}
@@ -6156,24 +6181,42 @@ public class JournalArticleLocalServiceImpl
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Publishing article " + article.getId());
+				try {
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Publishing article " + article.getId());
+							}
+
+							long userId = _portal.getValidUserId(
+								article.getCompanyId(),
+								article.getStatusByUserId());
+
+							ServiceContext serviceContext =
+								new ServiceContext();
+
+							serviceContext.setCommand(Constants.UPDATE);
+							serviceContext.setScopeGroupId(
+								article.getGroupId());
+
+							journalArticleLocalService.updateStatus(
+								userId, article.getId(),
+								WorkflowConstants.STATUS_APPROVED,
+								new HashMap<>(), serviceContext);
+
+							return null;
+						});
 				}
-
-				long userId = _portal.getValidUserId(
-					article.getCompanyId(), article.getStatusByUserId());
-
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCommand(Constants.UPDATE);
-				serviceContext.setScopeGroupId(article.getGroupId());
-
-				journalArticleLocalService.updateStatus(
-					userId, article.getId(), WorkflowConstants.STATUS_APPROVED,
-					new HashMap<>(), serviceContext);
+				catch (Throwable throwable) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Error publishing article " + article.getId(),
+							throwable);
+					}
+				}
 			});
-		actionableDynamicQuery.setTransactionConfig(
-			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
 		actionableDynamicQuery.performActions();
 	}
@@ -8281,6 +8324,11 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;
+
+	private final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW,
+			new Class<?>[] {PortalException.class, SystemException.class});
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;

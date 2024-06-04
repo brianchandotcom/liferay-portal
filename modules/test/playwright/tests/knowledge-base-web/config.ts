@@ -9,4 +9,7 @@ export const config = {
 	},
 	name: 'knowledge-base-web',
 	testDir: 'tests/knowledge-base-web',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

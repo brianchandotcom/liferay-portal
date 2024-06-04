@@ -10,31 +10,63 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {knowledgeBasePages} from '../../fixtures/knowledgeBasePagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import {KnowledgeBaseEditArticlePage} from '../../pages/knowledge-base-web/KnowledgeBaseEditArticlePage';
 import getLoggedInPage from '../../utils/getLoggedInPage';
 import getRandomString from '../../utils/getRandomString';
+import {performLogout} from '../../utils/performLogin';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {KnowledgeBaseUrls} from './utils/knowledgeBaseUrls';
 
-const testFeatureFlagsDisabled = mergeTests(
+const baseTest = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
-		'LPD-11003': false,
-		'LPS-188058': false,
-	}),
 	isolatedSiteTest,
 	knowledgeBasePages,
 	loginTest()
 );
+
+const testFeatureFlagsDisabled = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-11003': false,
+		'LPS-188058': false,
+	})
+);
 const testFeatureFlagsEnabled = mergeTests(
-	apiHelpersTest,
+	baseTest,
 	featureFlagsTest({
 		'LPD-11003': true,
 		'LPS-188058': true,
-	}),
-	isolatedSiteTest,
-	knowledgeBasePages,
-	loginTest()
+	})
+);
+
+baseTest(
+	'LPD-27537: Article should be shown to guest users',
+	async ({apiHelpers, page, site}) => {
+		const content = getRandomString();
+		const title = getRandomString();
+
+		const knowledgeBaseArticle =
+			await apiHelpers.headlessDelivery.postSiteKnowledgeBaseArticle({
+				articleBody: content,
+				siteId: site.id,
+				title,
+			});
+
+		await performLogout(page);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				'/c/knowledge_base/find_kb_article?resourcePrimKey=' +
+				knowledgeBaseArticle.id
+		);
+
+		await expect(
+			page.getByText('Error:Your request failed to complete.')
+		).toBeHidden();
+
+		await expect(page.getByText('Knowledge Base Article')).toBeVisible();
+	}
 );
 
 testFeatureFlagsEnabled(

@@ -11,6 +11,8 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.manager.CETManager;
@@ -33,6 +35,7 @@ import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
+import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -125,12 +128,13 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_accountGroupLocalService, _accountGroupRelService,
 			_accountResourceFactory, _accountRoleLocalService,
 			_accountRoleResourceFactory, _assetCategoryLocalService,
-			_assetListEntryLocalService, bundle, _cetManager,
-			_clientExtensionEntryLocalService, _configurationProvider,
-			_dataDefinitionResourceFactory, _ddmStructureLocalService,
-			_ddmTemplateLocalService, _defaultDDMStructureHelper,
-			_depotEntryGroupRelLocalService, _depotEntryLocalService,
-			_dlFileEntryTypeLocalService, _dlURLHelper,
+			_assetEntryLocalService, _assetLinkLocalService,
+			_assetListEntryLocalService, _blogPostingResourceFactory, bundle,
+			_cetManager, _clientExtensionEntryLocalService,
+			_configurationProvider, _dataDefinitionResourceFactory,
+			_ddmStructureLocalService, _ddmTemplateLocalService,
+			_defaultDDMStructureHelper, _depotEntryGroupRelLocalService,
+			_depotEntryLocalService, _dlFileEntryTypeLocalService, _dlURLHelper,
 			_documentFolderResourceFactory, _documentResourceFactory,
 			_expandoValueLocalService, _fragmentsImporter, _groupLocalService,
 			_journalArticleLocalService, _jsonFactory,
@@ -207,7 +211,16 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private BlogPostingResource.Factory _blogPostingResourceFactory;
 
 	private BundleContext _bundleContext;
 

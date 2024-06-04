@@ -11,6 +11,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:asset:asset-api")
+	compileOnly project(":apps:asset:asset-link-api")
 	compileOnly project(":apps:asset:asset-list-api")
 	compileOnly project(":apps:client-extension:client-extension-api")
 	compileOnly project(":apps:client-extension:client-extension-type-api")

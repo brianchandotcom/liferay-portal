@@ -6,11 +6,9 @@
 package com.liferay.change.tracking.store.internal;
 
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.store.model.CTSContent;
 import com.liferay.change.tracking.store.service.CTSContentLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -24,13 +22,8 @@ public class CTStoreFactoryImpl implements CTStoreFactory {
 	@Override
 	public Store createCTStore(Store store, String storeType) {
 		return new CTStore(
-			_ctEntryLocalService,
-			_classNameLocalService.getClassNameId(CTSContent.class),
-			_ctsContentLocalService, store, storeType);
+			_ctEntryLocalService, _ctsContentLocalService, store, storeType);
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

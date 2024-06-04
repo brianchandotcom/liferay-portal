@@ -16,6 +16,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.InputStream;
 
@@ -33,12 +34,11 @@ import java.util.Set;
 public class CTStore implements Store {
 
 	public CTStore(
-		CTEntryLocalService ctEntryLocalService, long ctsContentClassNameId,
+		CTEntryLocalService ctEntryLocalService,
 		CTSContentLocalService ctsContentLocalService, Store store,
 		String storeType) {
 
 		_ctEntryLocalService = ctEntryLocalService;
-		_ctsContentClassNameId = ctsContentClassNameId;
 		_ctsContentLocalService = ctsContentLocalService;
 		_store = store;
 		_storeType = storeType;
@@ -327,7 +327,8 @@ public class CTStore implements Store {
 
 		for (CTEntry ctEntry :
 				_ctEntryLocalService.getCTEntries(
-					ctCollectionId, _ctsContentClassNameId)) {
+					ctCollectionId,
+					PortalUtil.getClassNameId(CTSContent.class.getName()))) {
 
 			if (ctEntry.getChangeType() ==
 					CTConstants.CT_CHANGE_TYPE_DELETION) {
@@ -392,7 +393,6 @@ public class CTStore implements Store {
 	}
 
 	private final CTEntryLocalService _ctEntryLocalService;
-	private final long _ctsContentClassNameId;
 	private final CTSContentLocalService _ctsContentLocalService;
 	private final Store _store;
 	private final String _storeType;

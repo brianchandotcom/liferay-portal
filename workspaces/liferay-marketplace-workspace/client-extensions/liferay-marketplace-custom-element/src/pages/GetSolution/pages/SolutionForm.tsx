@@ -89,7 +89,10 @@ const AccountForm = () => {
 		return <Loading />;
 	}
 
-	if (placedOrderResponse.items.length) {
+	if (
+		properties.trialAccountCheck === 'true' &&
+		placedOrderResponse.items.length
+	) {
 		return (
 			<div>
 				<h1 className="text-center">Trial not available.</h1>

@@ -32,32 +32,60 @@ exit 0
 
 	<macrodef name="run-script-extraction">
 		<attribute default="lportal" name="database.schema.name" />
-		<attribute default="" name="database.schema.password" />
+		<attribute default="" name="database.type" />
 
 		<sequential>
-			<get-database-property property.name="database.host" />
 			<if>
-				<equals arg1="${database.host}" arg2="localhost_mysql" />
+				<equals arg1="${database.type}" arg2="mysql" />
 				<then>
-					<property name="custom.database.url" value="localhost:3307" />
+					<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
+						<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
+						<arg value="--export" />
+						<arg value="--jdbc-url" />
+						<arg value="${database.mysql.url}" />
+						<arg value="--user" />
+						<arg value="${database.mysql.username}" />
+						<arg value="--password" />
+						<arg value="${database.mysql.password}" />
+						<arg value="--schema-name" />
+						<arg value="${database.schema.name}" />
+					</exec>
 				</then>
 				<else>
-					<property name="custom.database.url" value="${database.host}" />
+					<if>
+						<or>
+							<equals arg1="${database.schema.name}" arg2="lportal" />
+							<equals arg1="${database.schema.name}" arg2="lportal_target" />
+						</or>
+						<then>
+							<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
+								<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
+								<arg value="--export" />
+								<arg value="--jdbc-url" />
+								<arg value="jdbc:postgresql://${database.postgresql.host}/${database.schema.name}" />
+								<arg value="--user" />
+								<arg value="${database.postgresql.username}" />
+								<arg value="--password" />
+								<arg value="${database.postgresql.password}" />
+							</exec>
+						</then>
+						<else>
+							<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
+								<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
+								<arg value="--export" />
+								<arg value="--jdbc-url" />
+								<arg value="${database.postgresql.url}" />
+								<arg value="--user" />
+								<arg value="${database.postgresql.username}" />
+								<arg value="--password" />
+								<arg value="${database.postgresql.password}" />
+								<arg value="--schema-name" />
+								<arg value="${database.schema.name}" />
+							</exec>
+						</else>
+					</if>
 				</else>
 			</if>
-
-			<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
-				<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
-				<arg value="--export" />
-				<arg value="--jdbc-url" />
-				<arg value="jdbc:mysql://${custom.database.url}/${database.source.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
-				<arg value="--user" />
-				<arg value="${database.mysql.username}" />
-				<arg value="--password" />
-				<arg value="${database.schema.password}" />
-				<arg value="--schema-name" />
-				<arg value="${database.schema.name}" />
-			</exec>
 		</sequential>
 	</macrodef>
 
@@ -92,6 +120,15 @@ exit 0
 		</if>
 
 		<if>
+			<not>
+				<isset property="database.type" />
+			</not>
+			<then>
+				<get-testcase-property property.name="database.type" />
+			</then>
+		</if>
+
+		<if>
 			<and>
 				<isset property="ignore.migration.errors" />
 				<equals arg1="${ignore.migration.errors}" arg2="true" />
@@ -99,10 +136,10 @@ exit 0
 			<then>
 				<modify-script-exit-code />
 
-				<run-script-extraction database.schema.name="${database.schema.name}" database.schema.password="${database.schema.password}" />
+				<run-script-extraction database.schema.name="${database.schema.name}" database.type="${database.type}" />
 			</then>
 			<else>
-				<run-script-extraction database.schema.name="${database.schema.name}" database.schema.password="${database.schema.password}" />
+				<run-script-extraction database.schema.name="${database.schema.name}" database.type="${database.type}" />
 			</else>
 		</if>
 

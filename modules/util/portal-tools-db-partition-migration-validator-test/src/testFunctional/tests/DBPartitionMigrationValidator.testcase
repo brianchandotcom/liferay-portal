@@ -4,7 +4,7 @@ definition {
 	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
 	property database.partition.enabled = "true";
-	property database.types = "mysql";
+	property database.types = "mysql, postgresql";
 	property osgi.modules.includes = "portal-tools-db-partition-migration-validator";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -40,9 +40,7 @@ definition {
 		task ("When run the migration tool to export the partition, the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidator.executeExtraction(
-				databaseSchemaName = ${sourceSchemaName},
-				databaseSchemaPassword = "");
+			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = ${sourceSchemaName});
 
 			var sourceFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -50,9 +48,7 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidator.executeExtraction(
-				databaseSchemaName = "lportal",
-				databaseSchemaPassword = "");
+			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = "lportal");
 
 			var targetFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -101,9 +97,7 @@ definition {
 		task ("When run the migration tool to export the source database, then the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidator.executeExtraction(
-				databaseSchemaName = ${sourceSchemaName},
-				databaseSchemaPassword = "");
+			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = ${sourceSchemaName});
 
 			var sourceFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -111,9 +105,7 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidator.executeExtraction(
-				databaseSchemaName = "lportal_target",
-				databaseSchemaPassword = "");
+			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = "lportal_target");
 
 			var targetFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -146,7 +138,6 @@ definition {
 		task ("When the database is set from non partitioned environment with multiple companies defined") {
 			DBPartitionMigrationValidator.executeExtraction(
 				databaseSchemaName = "lportal",
-				databaseSchemaPassword = "",
 				ignoreErrors = "true");
 		}
 

@@ -53,9 +53,9 @@ definition {
 		}
 	}
 
-	@summary = "Execute ${sqlStatement}"
-	macro executeSQLStatement(sqlStatement = null) {
-		Variables.assertDefined(parameterList = ${sqlStatement});
+	@summary = "Execute ${sqlStatement} with autocommit ${autoCommit}"
+	macro executeSettingAutoCommitSQLStatement(autoCommit = null, sqlStatement = null) {
+		Variables.assertDefined(parameterList = "${autoCommit},${sqlStatement}");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var inputFile = "sqltemp.sql";
@@ -63,11 +63,22 @@ definition {
 
 		FileUtil.write("${liferayHome}/${inputFile}", ${sqlStatement});
 
-		AntCommands.runCommand("build-test.xml", "execute-sql -Dsql.input.file=${liferayHome}/${inputFile} -Dsql.output.file=${liferayHome}/${outputFile}");
+		AntCommands.runCommand("build-test.xml", "execute-sql -Dsql.autocommit=${autoCommit} -Dsql.input.file=${liferayHome}/${inputFile} -Dsql.output.file=${liferayHome}/${outputFile}");
 
 		var output = FileUtil.read("${liferayHome}/${outputFile}");
 
 		return ${output};
+	}
+
+	@summary = "Execute ${sqlStatement}"
+	macro executeSQLStatement(sqlStatement = null) {
+		Variables.assertDefined(parameterList = ${sqlStatement});
+
+		var result = SQL.executeSettingAutoCommitSQLStatement(
+			autoCommit = "false",
+			sqlStatement = ${sqlStatement});
+
+		return ${result};
 	}
 
 	@summary = "Assert an index on the MySQL database"

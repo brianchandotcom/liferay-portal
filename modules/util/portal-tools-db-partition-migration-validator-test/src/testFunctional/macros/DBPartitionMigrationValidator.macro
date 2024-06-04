@@ -16,8 +16,10 @@ definition {
 	}
 
 	@summary = "Runs the db partition migration validator tool for extraction"
-	macro executeExtraction(databaseSchemaPassword = null, databaseSchemaName = null, ignoreErrors = null) {
-		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-extraction -Ddatabase.schema.name=${databaseSchemaName} -Ddatabase.schema.password=${databaseSchemaPassword} -Dignore.migration.errors=${ignoreErrors}");
+	macro executeExtraction(databaseSchemaName = null, ignoreErrors = null) {
+		var databaseType = PropsUtil.get("database.type");
+
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-extraction -Ddatabase.schema.name=${databaseSchemaName} -Ddatabase.type=${databaseType} -Dignore.migration.errors=${ignoreErrors}");
 	}
 
 	@summary = "Runs the db partition migration validator tool for validation"
@@ -27,7 +29,20 @@ definition {
 
 	@summary = "Sets a schema and updates its webId to use as target"
 	macro generateTargetDatabase() {
-		SQL.executeSQLStatement(sqlStatement = "CREATE DATABASE lportal_target character set utf8;");
+		var databaseType = PropsUtil.get("database.type");
+
+		if (${databaseType} == "mysql") {
+			var autoCommit = "false";
+			var sqlStatement = "CREATE DATABASE lportal_target character set utf8;";
+		}
+		else if (${databaseType} == "postgresql") {
+			var autoCommit = "true";
+			var sqlStatement = "CREATE DATABASE lportal_target ENCODING 'utf8';";
+		}
+
+		SQL.executeSettingAutoCommitSQLStatement(
+			autoCommit = ${autoCommit},
+			sqlStatement = ${sqlStatement});
 
 		var liferayPortalWeb = PropsUtil.get("liferay.app.server.classes.portal.dir");
 

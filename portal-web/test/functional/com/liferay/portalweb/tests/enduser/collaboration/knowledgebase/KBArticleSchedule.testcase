@@ -213,56 +213,6 @@ definition {
 			listEntryLabel = "Approved");
 	}
 
-	@description = "This test ensures that a child article scheduled after the parent will be published on its scheduled date."
-	@priority = 5
-	test ChildArticleScheduledAfterParentCanBePublishedOnItsScheduledDate {
-		KBArticle.updateCheckInterval(fieldValue = 1);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addArticleWithScheduledDate(
-			increaseMinutes = 1,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addArticleWithScheduledDate(
-			addChildArticleWithScheduledDate = "true",
-			increaseMinutes = 2,
-			kbArticleContent = "Knowledge Base Child Article Content",
-			kbArticleTitle = "Knowledge Base Child Article Title",
-			kbParentArticleTitle = "Knowledge Base Article Title");
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled parent article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
-
-		Pause(value1 = 120000);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		LexiconList.viewListEntryLabel(
-			listEntry = "Knowledge Base Article Title",
-			listEntryLabel = "Approved");
-
-		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
-
-		LexiconList.viewListEntryLabel(
-			listEntry = "Knowledge Base Child Article Title",
-			listEntryLabel = "Scheduled");
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled child article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
-
-		Pause(value1 = 120000);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
-
-		LexiconList.viewListEntryLabel(
-			listEntry = "Knowledge Base Child Article Title",
-			listEntryLabel = "Approved");
-	}
-
 	@description = "This test ensures that a child article scheduled before the parent will not be published until its parent is published."
 	@priority = 5
 	test ChildArticleScheduledBeforeParentCanBePublishedWhenParentIsPublished {

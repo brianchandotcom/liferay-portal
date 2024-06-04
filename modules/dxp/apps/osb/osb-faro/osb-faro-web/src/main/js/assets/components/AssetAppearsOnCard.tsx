@@ -12,11 +12,11 @@ import {AssetTypes} from 'shared/util/constants';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {getUrl} from 'shared/util/urls';
-import {Link, useParams} from 'react-router-dom';
 import {metricsListColumns} from 'shared/util/table-columns';
 import {pickBy} from 'lodash';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {Routes} from 'shared/util/router';
+import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
@@ -208,12 +208,12 @@ const getTableColumns = ({accessors, channelId, groupId, rangeSelectors}) => {
 
 				return (
 					<td className='table-cell-expand'>
-						<Link
+						<ClayLink
 							className='font-weight-semibold text-truncate-inline text-dark'
-							to={url}
+							href={url}
 						>
 							<TextTruncate title={data.title} />
-						</Link>
+						</ClayLink>
 					</td>
 				);
 			},
@@ -224,20 +224,19 @@ const getTableColumns = ({accessors, channelId, groupId, rangeSelectors}) => {
 		},
 		{
 			accessor: 'url',
-			cellRenderer: ({data}) => {
-				const url = generateURL(data);
-
-				return (
-					<td className='table-cell-expand'>
-						<Link
-							className='text-secondary text-truncate-inline'
-							to={url}
-						>
-							<TextTruncate title={data.touchpoint} />
-						</Link>
-					</td>
-				);
-			},
+			cellRenderer: ({data}) => (
+				<td className='table-cell-expand'>
+					<ClayLink
+						className='text-secondary text-truncate-inline'
+						// @ts-ignore
+						externalLink
+						href={data.touchpoint}
+						target='_blank'
+					>
+						<TextTruncate title={data.touchpoint} />
+					</ClayLink>
+				</td>
+			),
 			className: 'table-cell-expand',
 			label: Liferay.Language.get('canonical-url'),
 			sortable: false

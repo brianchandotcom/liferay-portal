@@ -116,8 +116,9 @@ module.exports = stylelint.createPlugin(
 								// so we have to reattach them to the next
 								// node.
 
-								const blanks =
-									comment.raws.before.match(/^\n+/);
+								const blanks = comment.raws.before.match(
+									/^\n+/
+								);
 
 								if (blanks && next) {
 									next.raws.before = '\n' + next.raws.before;

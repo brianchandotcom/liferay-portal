@@ -53,8 +53,9 @@ module.exports = stylelint.createPlugin(
 					return;
 				}
 
-				const [, left, params, right] =
-					rule.params.match(PARAMS_REGEXP);
+				const [, left, params, right] = rule.params.match(
+					PARAMS_REGEXP
+				);
 
 				if (params.endsWith(SCSS_EXT)) {
 					const desired =

@@ -6,7 +6,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import {Page, expect} from '@playwright/test';
 
-interface Props {
+interface Params {
 	bestPractices?: boolean;
 	page: Page;
 	selectors?: string[];
@@ -20,10 +20,10 @@ interface Props {
  * It uses the axe API to analyze a page and return a JSON object that lists
  * any accessibility issues found.
  *
- * @param bestPractices enables best practices
- * @param selectors an array of selectors to analyze
- * @param selectorsToExclude an array of selectors toexclude from the analysis
- * @param page current page
+ * @param bestPractices Enables best practices
+ * @param selectors An array of selectors to analyze
+ * @param selectorsToExclude An array of selectors toexclude from the analysis
+ * @param page Current page
  * @param soft A flag to enable soft assertions
  */
 
@@ -35,7 +35,7 @@ export async function checkAccessibility({
 	selectors,
 	selectorsToExclude,
 	soft = true,
-}: Props) {
+}: Params) {
 	const tags = bestPractices ? [...TAGS, 'best-practice'] : TAGS;
 
 	if (selectors) {
@@ -50,5 +50,8 @@ export async function checkAccessibility({
 		.exclude(selectorsToExclude)
 		.analyze();
 
-	await (soft ? expect.soft : expect)(results.violations, 'Accessibility issues').toEqual([]);
+	await (soft ? expect.soft : expect)(
+		results.violations,
+		'Accessibility issues'
+	).toEqual([]);
 }

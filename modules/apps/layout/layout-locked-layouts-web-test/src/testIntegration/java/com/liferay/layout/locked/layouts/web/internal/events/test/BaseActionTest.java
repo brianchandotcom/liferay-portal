@@ -62,8 +62,7 @@ public class BaseActionTest {
 	}
 
 	protected LifecycleAction getLifecycleAction(String className, String key) {
-		Bundle bundle = FrameworkUtil.getBundle(
-			UnlockLayoutsLogoutPostActionTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(BaseActionTest.class);
 
 		ServiceTrackerList<LifecycleAction> lifecycleActions =
 			ServiceTrackerListFactory.open(

@@ -86,7 +86,20 @@ export const fragmentTest = mergeTests(
 fragmentTest(
 	'Date-time filter is displayed in fragment, and applied to data @LPD-10754',
 	async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+		const fieldLabel = getRandomString();
+
 		const filterLabel = getRandomString();
+
+		async function assertDataIsFetched() {
+			await fragmentTest.step(
+				'Assert that the data entry is fetched',
+				async () => {
+					await expect(
+						fdsFragmentPage.page.getByText(fieldLabel).first()
+					).toBeVisible();
+				}
+			);
+		}
 
 		await fragmentTest.step('Create a new date-time filter', async () => {
 			await dataSetManagerApiHelpers.createDataSetDateFilter({
@@ -98,8 +111,6 @@ fragmentTest(
 				type: 'date-time',
 			});
 		});
-
-		const fieldLabel = getRandomString();
 
 		await fragmentTest.step(
 			'Add a field, so FDS has something to show',
@@ -121,7 +132,7 @@ fragmentTest(
 		});
 
 		const activeFilterButton = fdsFragmentPage.page.getByRole('button', {
-			name: `${filterLabel}: 1/1/2020 - 1/2/3020`,
+			name: `${filterLabel}:`,
 		});
 
 		await fragmentTest.step(
@@ -131,14 +142,7 @@ fragmentTest(
 			}
 		);
 
-		await fragmentTest.step(
-			'Assert that the data entry is fetched',
-			async () => {
-				await expect(
-					fdsFragmentPage.page.getByText(fieldLabel).first()
-				).toBeVisible();
-			}
-		);
+		await assertDataIsFetched();
 
 		await fragmentTest.step('Set an impossible date range', async () => {
 			await activeFilterButton.click();
@@ -168,5 +172,16 @@ fragmentTest(
 				await expect(fdsFragmentPage.emptyStateTitle).toBeVisible();
 			}
 		);
+
+		await fragmentTest.step('Remove the filter @LPS-191295', async () => {
+			const removeFilterButton =
+				fdsFragmentPage.page.getByLabel('Remove Filter');
+
+			await expect(removeFilterButton).toBeVisible();
+
+			await removeFilterButton.click();
+		});
+
+		await assertDataIsFetched();
 	}
 );

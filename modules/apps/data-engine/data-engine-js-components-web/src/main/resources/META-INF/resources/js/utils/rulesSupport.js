@@ -147,7 +147,7 @@ export function syncActions(pages, actions) {
 		else if (action.action === 'jump-to-page') {
 			const target = parseInt(action.target, 10) + 1;
 
-			if (pages.length < 3 || target > pages.length) {
+			if (pages.length < 2 || target > pages.length) {
 				action.target = '';
 			}
 		}

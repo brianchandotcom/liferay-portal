@@ -358,6 +358,11 @@ public class SearchResultsPortletTest {
 		return argumentCaptor.getValue();
 	}
 
+	private void _setUpPortalUtil() {
+		ReflectionTestUtil.setFieldValue(
+			PortalUtil.class, "_portal", new PortalImpl());
+	}
+
 	private void _setUpPortletSharedSearchResponse() {
 		Mockito.doReturn(
 			null
@@ -400,11 +405,6 @@ public class SearchResultsPortletTest {
 		).getThemeDisplay(
 			Mockito.any()
 		);
-	}
-
-	private void _setUpPortalUtil() {
-		ReflectionTestUtil.setFieldValue(
-			PortalUtil.class, "_portal", new PortalImpl());
 	}
 
 	private void _setUpPropsUtil() {

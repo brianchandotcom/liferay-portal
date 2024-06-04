@@ -10,8 +10,8 @@ import java.util.Map;
 /**
  * @author Luca Pellizzon
  */
-public interface NotificationTermContributor {
+public interface NotificationTermProvider {
 
-	public Map<String, String> contributeTerms();
+	public Map<String, String> getNotificationTerms();
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface NotificationTermContributorTracker {
 
-	public List<NotificationTermContributor> getNotificationTermContributors(
+	public List<NotificationTermProvider> getNotificationTermContributors(
 		String className);
 
 }

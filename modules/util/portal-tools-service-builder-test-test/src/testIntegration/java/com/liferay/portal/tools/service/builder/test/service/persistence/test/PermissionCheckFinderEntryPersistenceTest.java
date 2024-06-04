@@ -124,7 +124,11 @@ public class PermissionCheckFinderEntryPersistenceTest {
 
 		newPermissionCheckFinderEntry.setGroupId(RandomTestUtil.nextLong());
 
+		newPermissionCheckFinderEntry.setInteger(RandomTestUtil.nextInt());
+
 		newPermissionCheckFinderEntry.setName(RandomTestUtil.randomString());
+
+		newPermissionCheckFinderEntry.setType(RandomTestUtil.randomString());
 
 		_permissionCheckFinderEntries.add(
 			_persistence.update(newPermissionCheckFinderEntry));
@@ -141,8 +145,14 @@ public class PermissionCheckFinderEntryPersistenceTest {
 			existingPermissionCheckFinderEntry.getGroupId(),
 			newPermissionCheckFinderEntry.getGroupId());
 		Assert.assertEquals(
+			existingPermissionCheckFinderEntry.getInteger(),
+			newPermissionCheckFinderEntry.getInteger());
+		Assert.assertEquals(
 			existingPermissionCheckFinderEntry.getName(),
 			newPermissionCheckFinderEntry.getName());
+		Assert.assertEquals(
+			existingPermissionCheckFinderEntry.getType(),
+			newPermissionCheckFinderEntry.getType());
 	}
 
 	@Test
@@ -207,7 +217,7 @@ public class PermissionCheckFinderEntryPersistenceTest {
 
 		return OrderByComparatorFactoryUtil.create(
 			"PermissionCheckFinderEntry", "permissionCheckFinderEntryId", true,
-			"groupId", true, "name", true);
+			"groupId", true, "integer", true, "name", true, "type", true);
 	}
 
 	@Test
@@ -465,7 +475,11 @@ public class PermissionCheckFinderEntryPersistenceTest {
 
 		permissionCheckFinderEntry.setGroupId(RandomTestUtil.nextLong());
 
+		permissionCheckFinderEntry.setInteger(RandomTestUtil.nextInt());
+
 		permissionCheckFinderEntry.setName(RandomTestUtil.randomString());
+
+		permissionCheckFinderEntry.setType(RandomTestUtil.randomString());
 
 		_permissionCheckFinderEntries.add(
 			_persistence.update(permissionCheckFinderEntry));

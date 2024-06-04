@@ -59,7 +59,8 @@ public class PermissionCheckFinderEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"permissionCheckFinderEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"name", Types.VARCHAR}
+		{"groupId", Types.BIGINT}, {"integer_", Types.INTEGER},
+		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -68,20 +69,22 @@ public class PermissionCheckFinderEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("permissionCheckFinderEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("integer_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PermissionCheckFinderEntry (permissionCheckFinderEntryId LONG not null primary key,groupId LONG,name VARCHAR(75) null)";
+		"create table PermissionCheckFinderEntry (permissionCheckFinderEntryId LONG not null primary key,groupId LONG,integer_ INTEGER,name VARCHAR(75) null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table PermissionCheckFinderEntry";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY permissionCheckFinderEntry.permissionCheckFinderEntryId ASC";
+		" ORDER BY permissionCheckFinderEntry.integer ASC, permissionCheckFinderEntry.type ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY PermissionCheckFinderEntry.permissionCheckFinderEntryId ASC";
+		" ORDER BY PermissionCheckFinderEntry.integer_ ASC, PermissionCheckFinderEntry.type_ ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -118,7 +121,14 @@ public class PermissionCheckFinderEntryModelImpl
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PERMISSIONCHECKFINDERENTRYID_COLUMN_BITMASK = 2L;
+	public static final long INTEGER_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long TYPE_COLUMN_BITMASK = 4L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
@@ -231,7 +241,11 @@ public class PermissionCheckFinderEntryModelImpl
 			attributeGetterFunctions.put(
 				"groupId", PermissionCheckFinderEntry::getGroupId);
 			attributeGetterFunctions.put(
+				"integer", PermissionCheckFinderEntry::getInteger);
+			attributeGetterFunctions.put(
 				"name", PermissionCheckFinderEntry::getName);
+			attributeGetterFunctions.put(
+				"type", PermissionCheckFinderEntry::getType);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -261,9 +275,17 @@ public class PermissionCheckFinderEntryModelImpl
 				(BiConsumer<PermissionCheckFinderEntry, Long>)
 					PermissionCheckFinderEntry::setGroupId);
 			attributeSetterBiConsumers.put(
+				"integer",
+				(BiConsumer<PermissionCheckFinderEntry, Integer>)
+					PermissionCheckFinderEntry::setInteger);
+			attributeSetterBiConsumers.put(
 				"name",
 				(BiConsumer<PermissionCheckFinderEntry, String>)
 					PermissionCheckFinderEntry::setName);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<PermissionCheckFinderEntry, String>)
+					PermissionCheckFinderEntry::setType);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -311,6 +333,20 @@ public class PermissionCheckFinderEntryModelImpl
 	}
 
 	@Override
+	public int getInteger() {
+		return _integer;
+	}
+
+	@Override
+	public void setInteger(int integer) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_integer = integer;
+	}
+
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -327,6 +363,25 @@ public class PermissionCheckFinderEntryModelImpl
 		}
 
 		_name = name;
+	}
+
+	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
 	}
 
 	public long getColumnBitmask() {
@@ -389,7 +444,9 @@ public class PermissionCheckFinderEntryModelImpl
 		permissionCheckFinderEntryImpl.setPermissionCheckFinderEntryId(
 			getPermissionCheckFinderEntryId());
 		permissionCheckFinderEntryImpl.setGroupId(getGroupId());
+		permissionCheckFinderEntryImpl.setInteger(getInteger());
 		permissionCheckFinderEntryImpl.setName(getName());
+		permissionCheckFinderEntryImpl.setType(getType());
 
 		permissionCheckFinderEntryImpl.resetOriginalValues();
 
@@ -405,8 +462,12 @@ public class PermissionCheckFinderEntryModelImpl
 			this.<Long>getColumnOriginalValue("permissionCheckFinderEntryId"));
 		permissionCheckFinderEntryImpl.setGroupId(
 			this.<Long>getColumnOriginalValue("groupId"));
+		permissionCheckFinderEntryImpl.setInteger(
+			this.<Integer>getColumnOriginalValue("integer_"));
 		permissionCheckFinderEntryImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
+		permissionCheckFinderEntryImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
 
 		return permissionCheckFinderEntryImpl;
 	}
@@ -415,17 +476,29 @@ public class PermissionCheckFinderEntryModelImpl
 	public int compareTo(
 		PermissionCheckFinderEntry permissionCheckFinderEntry) {
 
-		long primaryKey = permissionCheckFinderEntry.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getInteger() < permissionCheckFinderEntry.getInteger()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getInteger() > permissionCheckFinderEntry.getInteger()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		value = getType().compareTo(permissionCheckFinderEntry.getType());
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -492,12 +565,22 @@ public class PermissionCheckFinderEntryModelImpl
 
 		permissionCheckFinderEntryCacheModel.groupId = getGroupId();
 
+		permissionCheckFinderEntryCacheModel.integer = getInteger();
+
 		permissionCheckFinderEntryCacheModel.name = getName();
 
 		String name = permissionCheckFinderEntryCacheModel.name;
 
 		if ((name != null) && (name.length() == 0)) {
 			permissionCheckFinderEntryCacheModel.name = null;
+		}
+
+		permissionCheckFinderEntryCacheModel.type = getType();
+
+		String type = permissionCheckFinderEntryCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			permissionCheckFinderEntryCacheModel.type = null;
 		}
 
 		return permissionCheckFinderEntryCacheModel;
@@ -565,9 +648,13 @@ public class PermissionCheckFinderEntryModelImpl
 
 	private long _permissionCheckFinderEntryId;
 	private long _groupId;
+	private int _integer;
 	private String _name;
+	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<PermissionCheckFinderEntry, Object> function =
 			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
 				columnName);
@@ -598,7 +685,20 @@ public class PermissionCheckFinderEntryModelImpl
 		_columnOriginalValues.put(
 			"permissionCheckFinderEntryId", _permissionCheckFinderEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("integer_", _integer);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("type_", _type);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("integer_", "integer");
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -616,7 +716,11 @@ public class PermissionCheckFinderEntryModelImpl
 
 		columnBitmasks.put("groupId", 2L);
 
-		columnBitmasks.put("name", 4L);
+		columnBitmasks.put("integer_", 4L);
+
+		columnBitmasks.put("name", 8L);
+
+		columnBitmasks.put("type_", 16L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

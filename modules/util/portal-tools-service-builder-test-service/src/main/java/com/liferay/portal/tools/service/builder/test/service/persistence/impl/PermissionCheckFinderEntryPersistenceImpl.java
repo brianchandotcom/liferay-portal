@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchPermissionCheckFinderEntryException;
 import com.liferay.portal.tools.service.builder.test.model.PermissionCheckFinderEntry;
@@ -36,6 +37,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -966,6 +968,13 @@ public class PermissionCheckFinderEntryPersistenceImpl
 		"permissionCheckFinderEntry.groupId = ?";
 
 	public PermissionCheckFinderEntryPersistenceImpl() {
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("integer", "integer_");
+		dbColumnNames.put("type", "type_");
+
+		setDBColumnNames(dbColumnNames);
+
 		setModelClass(PermissionCheckFinderEntry.class);
 
 		setModelImplClass(PermissionCheckFinderEntryImpl.class);
@@ -1486,6 +1495,11 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -1608,6 +1622,9 @@ public class PermissionCheckFinderEntryPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionCheckFinderEntryPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"integer", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

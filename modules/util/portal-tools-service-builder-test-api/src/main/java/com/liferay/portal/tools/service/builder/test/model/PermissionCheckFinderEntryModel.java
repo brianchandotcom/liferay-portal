@@ -75,6 +75,20 @@ public interface PermissionCheckFinderEntryModel
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the integer of this permission check finder entry.
+	 *
+	 * @return the integer of this permission check finder entry
+	 */
+	public int getInteger();
+
+	/**
+	 * Sets the integer of this permission check finder entry.
+	 *
+	 * @param integer the integer of this permission check finder entry
+	 */
+	public void setInteger(int integer);
+
+	/**
 	 * Returns the name of this permission check finder entry.
 	 *
 	 * @return the name of this permission check finder entry
@@ -88,6 +102,21 @@ public interface PermissionCheckFinderEntryModel
 	 * @param name the name of this permission check finder entry
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the type of this permission check finder entry.
+	 *
+	 * @return the type of this permission check finder entry
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this permission check finder entry.
+	 *
+	 * @param type the type of this permission check finder entry
+	 */
+	public void setType(String type);
 
 	@Override
 	public PermissionCheckFinderEntry cloneWithOriginalValues();

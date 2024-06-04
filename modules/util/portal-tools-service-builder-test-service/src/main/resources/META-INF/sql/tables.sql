@@ -243,7 +243,9 @@ create table NullConvertibleEntry (
 create table PermissionCheckFinderEntry (
 	permissionCheckFinderEntryId LONG not null primary key,
 	groupId LONG,
-	name VARCHAR(75) null
+	integer_ INTEGER,
+	name VARCHAR(75) null,
+	type_ VARCHAR(75) null
 );
 
 create table RedundantIndexEntry (

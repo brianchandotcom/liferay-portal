@@ -93,8 +93,13 @@ export interface IDateFilter extends IFilter {
 
 export interface ISelectionFilter extends IFilter {
 	include: boolean;
+	itemKey: string;
+	itemLabel: string;
 	multiple: boolean;
 	preselectedValues: string;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
 	source: string;
 	sourceType: ESelectionFilterSourceType;
 }

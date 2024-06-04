@@ -38,10 +38,13 @@ function Body({
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>(false);
+	const [fieldValidationError, setFieldValidationError] = useState<boolean>(
+		false
+	);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		filter ? false : true
+		false
 	);
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
@@ -64,48 +67,45 @@ function Body({
 	const fromFormElementId = `${namespace}From`;
 	const toFormElementId = `${namespace}To`;
 
-	const validate = ({
-		from,
-		i18nFilterLabels,
-		selectedField,
-		to,
-	}: {
-		from: string;
-		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
-		selectedField: IField | undefined;
-		to: string;
-	}) => {
+	const isi18nFilterLabelsValid = (
+		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
+	) => {
+		let isValid = true;
+
+		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
+			isValid = false;
+		}
+
+		Object.values(i18nFilterLabels).forEach((value) => {
+			if (!value) {
+				isValid = false;
+			}
+		});
+
+		return isValid;
+	};
+
+	const validate = () => {
+		let isValid = true;
+
+		if (Liferay.FeatureFlags['LPD-10754']) {
+			const isLabelValid = isi18nFilterLabelsValid(i18nFilterLabels);
+			setLabelValidationError(!isLabelValid);
+
+			isValid = isLabelValid;
+		}
+
 		if (!selectedField) {
-			return false;
+			setFieldValidationError(true);
+
+			isValid = false;
 		}
 
 		if (selectedField && !filter) {
-			if (inUseFields.includes(selectedField.name)) {
+			if (inUseFields.includes(selectedField?.name)) {
 				setFieldInUseValidationError(true);
 
-				return false;
-			}
-			else {
-				setFieldInUseValidationError(false);
-			}
-		}
-
-		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
-			return false;
-		}
-		else {
-			let isI18nFilterLabelValid = true;
-
-			Object.values(i18nFilterLabels).forEach((value) => {
-				if (!value) {
-					isI18nFilterLabelValid = false;
-				}
-			});
-
-			if (!isI18nFilterLabelValid) {
-				setLabelValidationError(true);
-
-				return false;
+				isValid = false;
 			}
 		}
 
@@ -119,21 +119,16 @@ function Body({
 
 			setIsValidDateRange(!isInvalidRange);
 
-			return false;
+			isValid = false;
 		}
 
-		return true;
+		return isValid;
 	};
 
 	const saveDateRangeFilter = () => {
 		setSaveButtonDisabled(true);
 
-		const success = validate({
-			from,
-			i18nFilterLabels,
-			selectedField,
-			to,
-		});
+		const success = validate();
 
 		if (success) {
 			const formData = {
@@ -157,20 +152,27 @@ function Body({
 				<FilterModalConfiguration
 					fieldInUseValidationError={fieldInUseValidationError}
 					fieldNames={fieldNames}
+					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
-					onChange={({i18nFilterLabels, selectedField}) => {
-						setI18nFilterLabels(i18nFilterLabels);
-						setSelectedField(selectedField);
-
-						validate({
-							from,
-							i18nFilterLabels,
-							selectedField,
-							to,
-						});
+					onBlur={() => {
+						setLabelValidationError(
+							!isi18nFilterLabelsValid(i18nFilterLabels)
+						);
+					}}
+					onChangeField={(newValue) => {
+						setSelectedField(newValue);
+						setFieldValidationError(!newValue);
+						setFieldInUseValidationError(
+							newValue
+								? inUseFields.includes(newValue.name)
+								: false
+						);
+					}}
+					onChangeLabel={(newValue) => {
+						setI18nFilterLabels(newValue);
 					}}
 				/>
 

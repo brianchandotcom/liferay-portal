@@ -18,7 +18,6 @@ import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
-import {FDSViewType} from '../../../../FDSViews';
 import CheckboxMultiSelect from '../../../../components/CheckboxMultiSelect';
 import FilterModalConfiguration from '../../../../components/FilterModalConfiguration';
 import FilterModalFooter from '../../../../components/FilterModalFooter';
@@ -26,7 +25,6 @@ import RequiredMark from '../../../../components/RequiredMark';
 import getAllPicklists from '../../../../utils/getAllPicklists';
 import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
 import {
-	EFilterType,
 	ESelectionFilterSourceType,
 	IField,
 	IFilter,
@@ -42,7 +40,6 @@ function Header() {
 
 interface IBodyProps {
 	closeModal: Function;
-	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
@@ -63,7 +60,30 @@ function Body({
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>(false);
-	const [labelValidationError, setLabelValidationError] = useState(false);
+	const [fieldValidationError, setFieldValidationError] = useState<boolean>(
+		false
+	);
+	const [labelValidationError, setLabelValidationError] = useState<boolean>(
+		false
+	);
+	const [sourceValidationError, setSourceValidationError] = useState<boolean>(
+		false
+	);
+	const [sourceTypeValidationError, setSourceTypeValidationError] = useState<
+		boolean
+	>(false);
+
+	const [
+		requiredRESTApplicationValidationError,
+		setRequiredRESTApplicationValidationError,
+	] = useState(false);
+	const [restSchemaValidationError, setRESTSchemaValidationError] = useState(
+		false
+	);
+	const [
+		restEndpointValidationError,
+		setRESTEndpointValidationError,
+	] = useState(false);
 
 	const [filteredSourceItems, setFilteredSourceItems] = useState<TItem[]>([]);
 	const [preselectedValueInput, setPreselectedValueInput] = useState('');
@@ -91,12 +111,14 @@ function Body({
 		fdsFilterLabelTranslations
 	);
 	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
-		string
+		string | undefined
 	>('');
-	const [selectedRESTSchema, setSelectedRESTSchema] = useState<string>('');
-	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<string>(
-		''
-	);
+	const [selectedRESTSchema, setSelectedRESTSchema] = useState<
+		string | undefined
+	>('');
+	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
+		string | undefined
+	>('');
 	const [selectedItemKey, setSelectedItemKey] = useState<string>('');
 	const [selectedItemLabel, setSelectedItemLabel] = useState<string>('');
 
@@ -122,58 +144,91 @@ function Body({
 		return responseJSON;
 	}
 
-	const validate = ({i18nFilterLabels}: any) => {
+	const isi18nFilterLabelsValid = (
+		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
+	) => {
+		let isValid = true;
+
+		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
+			isValid = false;
+		}
+
+		Object.values(i18nFilterLabels).forEach((value) => {
+			if (!value) {
+				isValid = false;
+			}
+		});
+
+		return isValid;
+	};
+
+	const validate = () => {
+		let isValid = true;
+
 		if (Liferay.FeatureFlags['LPD-10754']) {
-			if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
-				setLabelValidationError(true);
+			const isLabelValid = isi18nFilterLabelsValid(i18nFilterLabels);
+			setLabelValidationError(!isLabelValid);
 
-				return false;
-			}
-			else {
-				let isI18nFilterLabelValid = true;
-
-				Object.values(i18nFilterLabels).forEach((value) => {
-					if (!value) {
-						isI18nFilterLabelValid = false;
-					}
-				});
-
-				if (!isI18nFilterLabelValid) {
-					setLabelValidationError(true);
-
-					return false;
-				}
-			}
-
-			setLabelValidationError(false);
+			isValid = isLabelValid;
 		}
 
 		if (!selectedField) {
-			return false;
+			setFieldValidationError(true);
+
+			isValid = false;
 		}
 
 		if (selectedField && !filter) {
-			if (inUseFields.includes(selectedField.name)) {
+			if (inUseFields.includes(selectedField?.name)) {
 				setFieldInUseValidationError(true);
 
-				return true;
-			}
-			else {
-				setFieldInUseValidationError(false);
+				isValid = false;
 			}
 		}
 
-		if (Liferay.FeatureFlags['LPD-10754'] && (!source || !sourceType)) {
-			return false;
+		if (Liferay.FeatureFlags['LPD-10754'] && !sourceType) {
+			setSourceTypeValidationError(true);
+
+			isValid = false;
 		}
 
-		return true;
+		if (Liferay.FeatureFlags['LPD-10754'] && !source) {
+			setSourceValidationError(true);
+
+			isValid = false;
+		}
+
+		if (
+			Liferay.FeatureFlags['LPD-10754'] &&
+			sourceType &&
+			sourceType === ESelectionFilterSourceType.API_HEADLESS
+		) {
+			if (!selectedRESTApplication) {
+				setRequiredRESTApplicationValidationError(true);
+
+				isValid = false;
+			}
+
+			if (!selectedRESTSchema) {
+				setRESTSchemaValidationError(true);
+
+				isValid = false;
+			}
+
+			if (!selectedRESTEndpoint) {
+				setRESTEndpointValidationError(true);
+
+				isValid = false;
+			}
+		}
+
+		return isValid;
 	};
 
 	const saveSelectionFilter = () => {
 		setSaveButtonDisabled(true);
 
-		const success = validate({i18nFilterLabels});
+		const success = validate();
 
 		if (success) {
 			let formData: any = {
@@ -185,6 +240,11 @@ function Body({
 				if (sourceType === ESelectionFilterSourceType.API_HEADLESS) {
 					formData = {
 						...formData,
+						itemKey: selectedItemKey,
+						itemLabel: selectedItemLabel,
+						preselectedValues: JSON.stringify(
+							preselectedValues.map((item: any) => item.value)
+						),
 						restApplication: selectedRESTApplication,
 						restEndpoint: selectedRESTEndpoint,
 						restSchema: selectedRESTSchema,
@@ -196,6 +256,11 @@ function Body({
 				if (sourceType === ESelectionFilterSourceType.PICKLIST) {
 					formData = {
 						...formData,
+						preselectedValues: JSON.stringify(
+							preselectedValues.map(
+								(item: any) => item.externalReferenceCode
+							)
+						),
 						source: (source as IPickList)?.externalReferenceCode,
 						sourceType,
 					};
@@ -213,11 +278,6 @@ function Body({
 				...formData,
 				include: includeMode === 'include',
 				multiple,
-				preselectedValues: JSON.stringify(
-					preselectedValues.map(
-						(item: any) => item.externalReferenceCode
-					)
-				),
 			};
 
 			onSave(formData);
@@ -226,78 +286,6 @@ function Body({
 			setSaveButtonDisabled(false);
 		}
 	};
-
-	useEffect(() => {
-		if ((filter as ISelectionFilter)?.sourceType === ESelectionFilterSourceType.PICKLIST) {
-			getAllPicklists().then((items) => {
-				setPicklists(items);
-
-				const picklist = items.find((item) =>
-					Liferay.FeatureFlags['LPD-10754']
-						? String(item.externalReferenceCode) ===
-						(filter as any)?.source
-						: String(item.externalReferenceCode) ===
-						(filter as any)?.listTypeDefinitionERC
-				);
-
-				if (picklist) {
-					setSource(picklist);
-				}
-			});
-		}
-
-		if (filter) {
-			const selectionFilter = filter as ISelectionFilter;
-			setSourceType(selectionFilter.sourceType);
-		}
-	}, [filter]);
-
-	useEffect(() => {
-		if (source && filter) {
-			let validSavedPreselectedValues: any[] = [];
-		
-			if (sourceType === ESelectionFilterSourceType.API_HEADLESS) {
-				console.log((filter as ISelectionFilter).preselectedValues)
-				//validSavedPreselectedValues = (filter as ISelectionFilter).preselectedValues;
-			}
-
-			if (sourceType === ESelectionFilterSourceType.PICKLIST) {
-				validSavedPreselectedValues = (source as IPickList).listTypeEntries.filter(
-					(item) =>
-						JSON.parse(
-							(filter as ISelectionFilter).preselectedValues || '[]'
-						).includes(item.externalReferenceCode)
-				);
-			}
-
-			setPreselectedValues(validSavedPreselectedValues);
-
-			setIncludeMode(
-				validSavedPreselectedValues?.length
-					? filter && (filter as ISelectionFilter).include
-						? 'include'
-						: 'exclude'
-					: 'include'
-			);
-		}
-	}, [filter, source]);
-
-	useEffect(() => {
-		if (sourceType === ESelectionFilterSourceType.PICKLIST) {
-			setFilteredSourceItems(
-				!source
-					? []
-					: (source as IPickList).listTypeEntries
-							.filter((item) =>
-								fuzzy.match(preselectedValueInput, item.name)
-							)
-							.map((item) => ({
-								label: item.name,
-								value: String(item.externalReferenceCode),
-							}))
-			);
-		}
-	}, [preselectedValueInput, source, sourceType]);
 
 	useEffect(() => {
 		if (source && sourceType === ESelectionFilterSourceType.API_HEADLESS) {
@@ -329,7 +317,113 @@ function Body({
 		sourceType,
 	]);
 
-	if (!Liferay.FeatureFlags['LPD-10754'] && sourceType === ESelectionFilterSourceType.API_HEADLESS && !picklists.length) {
+	useEffect(() => {
+		if (
+			(filter as ISelectionFilter)?.sourceType ===
+			ESelectionFilterSourceType.PICKLIST
+		) {
+			getAllPicklists().then((items) => {
+				setPicklists(items);
+
+				const picklist = items.find((item) =>
+					Liferay.FeatureFlags['LPD-10754']
+						? String(item.externalReferenceCode) ===
+						  (filter as any)?.source
+						: String(item.externalReferenceCode) ===
+						  (filter as any)?.listTypeDefinitionERC
+				);
+
+				if (picklist) {
+					setSource(picklist);
+				}
+			});
+		}
+	}, [filter]);
+
+	useEffect(() => {
+		if (filter) {
+			const selectionFilter = filter as ISelectionFilter;
+
+			if (
+				selectionFilter.sourceType ===
+				ESelectionFilterSourceType.API_HEADLESS
+			) {
+				setSelectedRESTApplication(selectionFilter.restApplication);
+				setSelectedRESTSchema(selectionFilter.restSchema);
+				setSelectedRESTEndpoint(selectionFilter.restEndpoint);
+
+				setSelectedItemKey(selectionFilter.itemKey);
+				setSelectedItemLabel(selectionFilter.itemLabel);
+
+				setSource(selectionFilter.source);
+			}
+		}
+	}, [filter]);
+
+	useEffect(() => {
+		if (filter) {
+			const selectionFilter = filter as ISelectionFilter;
+			setSourceType(selectionFilter.sourceType);
+
+			let validSavedPreselectedValues: any[] = [];
+
+			if (
+				source &&
+				sourceType === ESelectionFilterSourceType.API_HEADLESS
+			) {
+				validSavedPreselectedValues = filteredSourceItems.filter(
+					(item) =>
+						JSON.parse(
+							(filter as ISelectionFilter).preselectedValues ||
+								'[]'
+						).includes(item.value)
+				);
+			}
+
+			if (source && sourceType === ESelectionFilterSourceType.PICKLIST) {
+				validSavedPreselectedValues = (source as IPickList).listTypeEntries.filter(
+					(item) =>
+						JSON.parse(
+							(filter as ISelectionFilter).preselectedValues ||
+								'[]'
+						).includes(item.externalReferenceCode)
+				);
+			}
+
+			setPreselectedValues(validSavedPreselectedValues);
+
+			setIncludeMode(
+				validSavedPreselectedValues?.length
+					? filter && (filter as ISelectionFilter).include
+						? 'include'
+						: 'exclude'
+					: 'include'
+			);
+		}
+	}, [filter, filteredSourceItems, source, sourceType]);
+
+	useEffect(() => {
+		if (sourceType === ESelectionFilterSourceType.PICKLIST) {
+			setFilteredSourceItems(
+				!source
+					? []
+					: (source as IPickList).listTypeEntries
+							.filter((item) =>
+								fuzzy.match(preselectedValueInput, item.name)
+							)
+							.map((item) => ({
+								label: item.name,
+								value: String(item.externalReferenceCode),
+							}))
+			);
+		}
+	}, [preselectedValueInput, source, sourceType]);
+
+	if (
+		!Liferay.FeatureFlags['LPD-10754'] &&
+		sourceType === ESelectionFilterSourceType.API_HEADLESS &&
+		!picklists.length
+	) {
 		return (
 			<ClayAlert displayType="info" title="Info">
 				{Liferay.Language.get(
@@ -345,15 +439,27 @@ function Body({
 				<FilterModalConfiguration
 					fieldInUseValidationError={fieldInUseValidationError}
 					fieldNames={fieldNames}
+					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
-					onChange={({i18nFilterLabels, selectedField}) => {
-						setI18nFilterLabels(i18nFilterLabels);
-						setSelectedField(selectedField);
-
-						validate({i18nFilterLabels, selectedField});
+					onBlur={() => {
+						setLabelValidationError(
+							!isi18nFilterLabelsValid(i18nFilterLabels)
+						);
+					}}
+					onChangeField={(newValue) => {
+						setSelectedField(newValue);
+						setFieldValidationError(!newValue);
+						setFieldInUseValidationError(
+							newValue
+								? inUseFields.includes(newValue.name)
+								: false
+						);
+					}}
+					onChangeLabel={(newValue) => {
+						setI18nFilterLabels(newValue);
 					}}
 				/>
 
@@ -373,7 +479,11 @@ function Body({
 									</ClayForm.Text>
 								</ClayLayout.SheetSection>
 
-								<ClayForm.Group>
+								<ClayForm.Group
+									className={classNames({
+										'has-error': sourceTypeValidationError,
+									})}
+								>
 									<label htmlFor={sourceOptionFormElementId}>
 										{Liferay.Language.get('source')}
 
@@ -388,8 +498,9 @@ function Body({
 										onChange={(event) => {
 											const newSourceType = event.target
 												.value as ESelectionFilterSourceType;
-												
+
 											setSourceType(newSourceType);
+											setSourceTypeValidationError(false);
 
 											setSource(undefined);
 											setPreselectedValueInput('');
@@ -424,6 +535,18 @@ function Body({
 										title={Liferay.Language.get('source')}
 										value={sourceType || ''}
 									/>
+
+									{sourceTypeValidationError && (
+										<ClayForm.FeedbackGroup>
+											<ClayForm.FeedbackItem>
+												<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+												{Liferay.Language.get(
+													'this-field-is-required'
+												)}
+											</ClayForm.FeedbackItem>
+										</ClayForm.FeedbackGroup>
+									)}
 								</ClayForm.Group>
 							</>
 						)}
@@ -438,7 +561,11 @@ function Body({
 											namespace={namespace}
 											onChange={(item: IPickList) => {
 												setSource(item);
+												setSourceValidationError(false);
 											}}
+											sourceValidationError={
+												sourceValidationError
+											}
 										/>
 									)}
 
@@ -446,6 +573,8 @@ function Body({
 									sourceType ===
 										ESelectionFilterSourceType.API_HEADLESS && (
 										<ApiRestApplication
+											filter={filter as ISelectionFilter}
+											namespace={namespace}
 											onChange={({
 												selectedItemKey,
 												selectedItemLabel,
@@ -453,24 +582,40 @@ function Body({
 												selectedRESTEndpoint,
 												selectedRESTSchema,
 											}) => {
+												let apiSource;
+
 												if (
 													selectedRESTApplication &&
 													selectedRESTEndpoint
 												) {
-													setSource(
-														`${selectedRESTApplication}${selectedRESTEndpoint}`
+													apiSource = `${selectedRESTApplication}${selectedRESTEndpoint}`;
+													setSource(apiSource);
+													setSourceValidationError(
+														false
 													);
 												}
 
 												setSelectedRESTApplication(
 													selectedRESTApplication
 												);
+												setRequiredRESTApplicationValidationError(
+													!selectedRESTApplication
+												);
+
 												setSelectedRESTEndpoint(
 													selectedRESTEndpoint
 												);
+												setRESTEndpointValidationError(
+													!selectedRESTEndpoint
+												);
+
 												setSelectedRESTSchema(
 													selectedRESTSchema
 												);
+												setRESTSchemaValidationError(
+													!selectedRESTSchema
+												);
+
 												setSelectedItemKey(
 													selectedItemKey
 												);
@@ -478,7 +623,16 @@ function Body({
 													selectedItemLabel
 												);
 											}}
+											requiredRESTApplicationValidationError={
+												requiredRESTApplicationValidationError
+											}
 											restApplications={restApplications}
+											restEndpointValidationError={
+												restEndpointValidationError
+											}
+											restSchemaValidationError={
+												restSchemaValidationError
+											}
 										/>
 									)}
 

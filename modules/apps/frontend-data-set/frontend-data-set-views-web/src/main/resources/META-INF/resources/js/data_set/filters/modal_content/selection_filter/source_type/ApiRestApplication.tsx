@@ -14,9 +14,11 @@ import RESTApplicationItem from '../../../../../components/RestApplicationItem';
 import RestSchemaSelection from '../../../../../components/RestSchemaSelection';
 import {FUZZY_OPTIONS} from '../../../../../utils/constants';
 import getFields from '../../../../../utils/getFields';
-import {IField} from '../../../../../utils/types';
+import {IField, ISelectionFilter} from '../../../../../utils/types';
 
 interface IApiRestApplicationModalContentProps {
+	filter?: ISelectionFilter;
+	namespace: string;
 	onChange: ({
 		selectedItemKey,
 		selectedItemLabel,
@@ -26,30 +28,43 @@ interface IApiRestApplicationModalContentProps {
 	}: {
 		selectedItemKey: string;
 		selectedItemLabel: string;
-		selectedRESTApplication: string;
-		selectedRESTEndpoint: string;
-		selectedRESTSchema: string;
+		selectedRESTApplication: string | undefined;
+		selectedRESTEndpoint: string | undefined;
+		selectedRESTSchema: string | undefined;
 	}) => void;
+	requiredRESTApplicationValidationError: boolean;
 	restApplications: string[];
+	restEndpointValidationError: boolean;
+	restSchemaValidationError: boolean;
 }
 
 function ApiRestApplication({
+	filter,
+	namespace,
 	onChange,
+	requiredRESTApplicationValidationError,
 	restApplications,
+	restEndpointValidationError,
+	restSchemaValidationError,
 }: IApiRestApplicationModalContentProps) {
 	const [fields, setFields] = useState<IField[]>([]);
 	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
-		string
-	>('');
-	const [selectedRESTSchema, setSelectedRESTSchema] = useState<string>('');
-	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<string>(
-		''
+		string | undefined
+	>(filter?.restApplication ? filter.restApplication : undefined);
+	const [selectedRESTSchema, setSelectedRESTSchema] = useState<
+		string | undefined
+	>(filter?.restSchema ? filter.restSchema : undefined);
+	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
+		string | undefined
+	>(filter?.restEndpoint ? filter.restEndpoint : undefined);
+	const [selectedItemKey, setSelectedItemKey] = useState<string>(
+		filter?.itemKey ? filter.itemKey : ''
 	);
-	const [selectedItemKey, setSelectedItemKey] = useState<string>('');
-	const [selectedItemLabel, setSelectedItemLabel] = useState<string>('');
+	const [selectedItemLabel, setSelectedItemLabel] = useState<string>(
+		filter?.itemLabel ? filter.itemLabel : ''
+	);
 
 	useEffect(() => {
-		console.log('1');
 		if (selectedRESTApplication && selectedRESTSchema) {
 			getFields({
 				restApplication: selectedRESTApplication,
@@ -66,7 +81,6 @@ function ApiRestApplication({
 				}
 			});
 		}
-		console.log('2');
 	}, [selectedRESTApplication, selectedRESTSchema]);
 
 	const ItemKeyDropdownMenu = ({
@@ -200,7 +214,8 @@ function ApiRestApplication({
 	return (
 		<>
 			<RestSchemaSelection
-				namespace="namespace"
+				filter={filter}
+				namespace={namespace}
 				onChange={({
 					selectedRESTApplication: selectedRESTApplication,
 					selectedRESTEndpoint: selectedRESTEndpoint,
@@ -222,7 +237,12 @@ function ApiRestApplication({
 						selectedRESTSchema,
 					});
 				}}
+				requiredRESTApplicationValidationError={
+					requiredRESTApplicationValidationError
+				}
 				restApplications={restApplications}
+				restEndpointValidationError={restEndpointValidationError}
+				restSchemaValidationError={restSchemaValidationError}
 			/>
 
 			{selectedRESTSchema && (

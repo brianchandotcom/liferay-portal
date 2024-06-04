@@ -5,9 +5,11 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import RequiredMark from '../../../../../components/RequiredMark';
+import ValidationFeedback from '../../../../../components/ValidationFeedback';
 import getAllPicklists from '../../../../../utils/getAllPicklists';
 import {IFilter, IPickList} from '../../../../../utils/types';
 
@@ -15,9 +17,15 @@ interface IObjectPicklistProps {
 	filter?: IFilter;
 	namespace: string;
 	onChange: Function;
+	sourceValidationError: boolean;
 }
 
-function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
+function ObjectPicklist({
+	filter,
+	namespace,
+	onChange,
+	sourceValidationError,
+}: IObjectPicklistProps) {
 	const [picklists, setPicklists] = useState<IPickList[]>();
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
 
@@ -27,7 +35,7 @@ function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
 		getAllPicklists().then((items) => {
 			setPicklists(items);
 		});
-	});
+	}, []);
 
 	useEffect(() => {
 		const picklist = picklists?.find((item) =>
@@ -51,7 +59,11 @@ function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
 					)}
 				</ClayAlert>
 			) : (
-				<ClayForm.Group>
+				<ClayForm.Group
+					className={classNames({
+						'has-error': sourceValidationError,
+					})}
+				>
 					<label htmlFor={objectPicklistFormElementId}>
 						{Liferay.Language.get('picklist')}
 
@@ -91,6 +103,8 @@ function ObjectPicklist({filter, namespace, onChange}: IObjectPicklistProps) {
 							}
 						/>
 					)}
+
+					{sourceValidationError && <ValidationFeedback />}
 				</ClayForm.Group>
 			)}
 		</>

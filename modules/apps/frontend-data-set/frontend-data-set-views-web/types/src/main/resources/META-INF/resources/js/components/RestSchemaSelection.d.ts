@@ -6,14 +6,23 @@
 /// <reference types="react" />
 
 import '../../css/FDSEntries.scss';
+import {ISelectionFilter} from '../utils/types';
 interface IRestSchemaSelectionProps {
+	filter?: ISelectionFilter;
 	namespace: string;
 	onChange: Function;
+	requiredRESTApplicationValidationError: boolean;
 	restApplications: string[];
+	restEndpointValidationError: boolean;
+	restSchemaValidationError: boolean;
 }
 declare function RestSchemaSelection({
+	filter,
 	namespace,
 	onChange,
+	requiredRESTApplicationValidationError,
 	restApplications,
+	restEndpointValidationError,
+	restSchemaValidationError,
 }: IRestSchemaSelectionProps): JSX.Element;
 export default RestSchemaSelection;

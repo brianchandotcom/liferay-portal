@@ -19,27 +19,29 @@ import ValidationFeedback from './ValidationFeedback';
 interface IFilterModalConfigurationProps {
 	fieldInUseValidationError: boolean;
 	fieldNames?: string[];
+	fieldValidationError: boolean;
 	fields: IField[];
 	filter?: IFilter;
 	labelValidationError?: boolean;
 	namespace: string;
-	onChange: ({
-		i18nFilterLabels,
-		selectedField,
-	}: {
-		i18nFilterLabels: any;
-		selectedField: IField | undefined;
-	}) => void;
+	onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+	onChangeField: (selectedField: IField | undefined) => void;
+	onChangeLabel: (
+		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
+	) => void;
 }
 
 function FilterModalConfiguration({
 	fieldInUseValidationError,
 	fieldNames,
+	fieldValidationError,
 	fields,
 	filter,
 	labelValidationError,
 	namespace,
-	onChange,
+	onBlur,
+	onChangeField,
+	onChangeLabel,
 }: IFilterModalConfigurationProps) {
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
@@ -53,7 +55,6 @@ function FilterModalConfiguration({
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
 		fieldNames?.includes(item.name) ? item.name : undefined
 	);
-
 	const nameFormElementId = `${namespace}Name`;
 	const selectedFieldFormElementId = `${namespace}SelectedField`;
 
@@ -130,11 +131,9 @@ function FilterModalConfiguration({
 					id={nameFormElementId}
 					label={Liferay.Language.get('name')}
 					name="label"
+					onBlur={onBlur}
 					onChange={(values) => {
-						onChange({
-							i18nFilterLabels: values,
-							selectedField,
-						});
+						onChangeLabel(values);
 						setI18nFilterLabels(values);
 					}}
 					placeholder={Liferay.Language.get('add-a-name')}
@@ -143,19 +142,16 @@ function FilterModalConfiguration({
 				/>
 
 				{Liferay.FeatureFlags['LPD-10754'] && labelValidationError && (
-					<ClayForm.FeedbackGroup>
-						<ClayForm.FeedbackItem>
-							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-							{Liferay.Language.get('this-field-is-required')}
-						</ClayForm.FeedbackItem>
-					</ClayForm.FeedbackGroup>
+					<ValidationFeedback />
 				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group
 				className={classNames({
-					'has-error': fieldInUseValidationError,
+					'has-error':
+						fieldInUseValidationError ||
+						(Liferay.FeatureFlags['LPD-10754'] &&
+							fieldValidationError),
 				})}
 			>
 				<label htmlFor={selectedFieldFormElementId}>
@@ -174,10 +170,7 @@ function FilterModalConfiguration({
 						if (newVal) {
 							setSelectedField(newVal);
 
-							onChange({
-								i18nFilterLabels,
-								selectedField: newVal,
-							});
+							onChangeField(newVal);
 						}
 					}}
 				/>
@@ -188,6 +181,10 @@ function FilterModalConfiguration({
 							'this-field-is-being-used-by-another-filter'
 						)}
 					/>
+				)}
+
+				{Liferay.FeatureFlags['LPD-10754'] && fieldValidationError && (
+					<ValidationFeedback />
 				)}
 			</ClayForm.Group>
 		</>

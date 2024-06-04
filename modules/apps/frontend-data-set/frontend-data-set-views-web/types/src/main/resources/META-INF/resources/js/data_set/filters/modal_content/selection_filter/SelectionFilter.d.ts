@@ -5,12 +5,10 @@
 
 /// <reference types="react" />
 
-import {FDSViewType} from '../../../../FDSViews';
 import {IField, IFilter} from '../../../../utils/types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
 	closeModal: Function;
-	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;

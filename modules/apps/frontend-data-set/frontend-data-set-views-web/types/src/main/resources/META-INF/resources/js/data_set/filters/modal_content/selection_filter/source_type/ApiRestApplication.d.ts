@@ -5,7 +5,10 @@
 
 /// <reference types="react" />
 
+import {ISelectionFilter} from '../../../../../utils/types';
 interface IApiRestApplicationModalContentProps {
+	filter?: ISelectionFilter;
+	namespace: string;
 	onChange: ({
 		selectedItemKey,
 		selectedItemLabel,
@@ -15,14 +18,22 @@ interface IApiRestApplicationModalContentProps {
 	}: {
 		selectedItemKey: string;
 		selectedItemLabel: string;
-		selectedRESTApplication: string;
-		selectedRESTEndpoint: string;
-		selectedRESTSchema: string;
+		selectedRESTApplication: string | undefined;
+		selectedRESTEndpoint: string | undefined;
+		selectedRESTSchema: string | undefined;
 	}) => void;
+	requiredRESTApplicationValidationError: boolean;
 	restApplications: string[];
+	restEndpointValidationError: boolean;
+	restSchemaValidationError: boolean;
 }
 declare function ApiRestApplication({
+	filter,
+	namespace,
 	onChange,
+	requiredRESTApplicationValidationError,
 	restApplications,
+	restEndpointValidationError,
+	restSchemaValidationError,
 }: IApiRestApplicationModalContentProps): JSX.Element;
 export default ApiRestApplication;

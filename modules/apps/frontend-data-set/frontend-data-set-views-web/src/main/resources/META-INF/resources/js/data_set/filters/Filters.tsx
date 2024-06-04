@@ -9,7 +9,6 @@ import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {FDSViewType} from '../../FDSViews';
 import OrderableTable from '../../components/OrderableTable';
 import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
@@ -29,7 +28,7 @@ import SelectionFilterModalContent from './modal_content/selection_filter/Select
 
 import '../../../css/Filters.scss';
 import {IDataSet} from '../../DataSets';
-import RequiredMark from '../../components/RequiredMark';
+import {FDSViewType} from '../../FDSViews';
 import sortItems from '../../utils/sortItems';
 
 const FILTER_TYPES = {
@@ -38,11 +37,11 @@ const FILTER_TYPES = {
 		availableFieldsFilter: (item: IField) => !!item,
 		displayType: Liferay.Language.get('client-extension-filter'),
 		fdsViewRelationship:
-			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER,
+			OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER,
 		fdsViewRelationshipId:
-			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID,
+			OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTER_ID,
 		label: Liferay.Language.get('client-extension'),
-		url: API_URL.FDS_CLIENT_EXTENSION_FILTERS,
+		url: API_URL.CLIENT_EXTENSION_FILTERS,
 	},
 	[EFilterType.DATE_RANGE]: {
 		Component: DateRangeFilterModalContent,
@@ -50,21 +49,20 @@ const FILTER_TYPES = {
 			item.format === EFieldFormat.DATE ||
 			item.format === EFieldFormat.DATE_TIME,
 		displayType: Liferay.Language.get('date-filter'),
-		fdsViewRelationship: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER,
-		fdsViewRelationshipId: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER_ID,
+		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER,
+		fdsViewRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTER_ID,
 		label: Liferay.Language.get('date-range'),
-		url: API_URL.FDS_DATE_FILTERS,
+		url: API_URL.DATE_FILTERS,
 	},
 	[EFilterType.SELECTION]: {
 		Component: SelectionFilterModalContent,
 		availableFieldsFilter: (item: IField) =>
 			item.type === EFieldType.STRING && !item.format,
 		displayType: Liferay.Language.get('dynamic-filter'),
-		fdsViewRelationship: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER,
-		fdsViewRelationshipId:
-			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID,
+		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER,
+		fdsViewRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER_ID,
 		label: Liferay.Language.get('selection'),
-		url: API_URL.FDS_DYNAMIC_FILTERS,
+		url: API_URL.SELECTION_FILTERS,
 	},
 };
 
@@ -72,8 +70,8 @@ type FilterCollection = Array<IFilter>;
 
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
+	dataSet: IDataSet | FDSViewType;
 	fdsFilterClientExtensions?: IClientExtensionRenderer[];
-	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
@@ -149,7 +147,6 @@ function AddFDSFilterModalContent({
 			<Component.Body
 				closeModal={closeModal}
 				fdsFilterClientExtensions={fdsFilterClientExtensions}
-				fdsView={fdsView}
 				fieldNames={fieldNames}
 				fields={fields}
 				filter={filter}
@@ -166,10 +163,9 @@ function Filters({
 	fdsFilterClientExtensions,
 	fieldTreeItems: fields,
 	namespace,
-	restApplications
+	restApplications,
 }: IDataSetSectionProps) {
 	const [filters, setFilters] = useState<IFilter[]>([]);
-console.log(restApplications)
 	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(

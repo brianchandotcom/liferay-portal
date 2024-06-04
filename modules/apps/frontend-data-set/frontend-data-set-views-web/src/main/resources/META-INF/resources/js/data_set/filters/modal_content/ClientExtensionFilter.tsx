@@ -13,6 +13,8 @@ import React, {useState} from 'react';
 
 import FilterModalConfiguration from '../../../components/FilterModalConfiguration';
 import FilterModalFooter from '../../../components/FilterModalFooter';
+import RequiredMark from '../../../components/RequiredMark';
+import ValidationFeedback from '../../../components/ValidationFeedback';
 import {IClientExtensionFilter, IField, IFilter} from '../../../utils/types';
 
 function Header() {
@@ -38,13 +40,22 @@ function Body({
 	namespace,
 	onSave,
 }: IBodyProps) {
+	const [
+		clientExtensionValidationError,
+		setClientExtensionValidationError,
+	] = useState<boolean>(false);
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>(false);
-	const [labelValidationError, setLabelValidationError] = useState(false);
+	const [fieldValidationError, setFieldValidationError] = useState<boolean>(
+		false
+	);
+	const [labelValidationError, setLabelValidationError] = useState<boolean>(
+		false
+	);
 
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		filter ? false : true
+		false
 	);
 	const [selectedClientExtension, setSelectedClientExtension] = useState<
 		IClientExtensionRenderer | undefined
@@ -70,64 +81,61 @@ function Body({
 	);
 	const fdsFilterClientExtensionFormElementId = `${namespace}fdsFilterClientExtensionERC`;
 
-	const validate = ({
-		i18nFilterLabels,
-		selectedClientExtension,
-		selectedField,
-	}: {
-		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>;
-		selectedClientExtension?: IClientExtensionRenderer;
-		selectedField: IField | undefined;
-	}) => {
-		if (!selectedClientExtension) {
-			return false;
+	const isi18nFilterLabelsValid = (
+		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
+	) => {
+		let isValid = true;
+
+		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
+			isValid = false;
+		}
+
+		Object.values(i18nFilterLabels).forEach((value) => {
+			if (!value) {
+				isValid = false;
+			}
+		});
+
+		return isValid;
+	};
+
+	const validate = () => {
+		let isValid = true;
+
+		if (Liferay.FeatureFlags['LPD-10754']) {
+			const isLabelValid = isi18nFilterLabelsValid(i18nFilterLabels);
+			setLabelValidationError(!isLabelValid);
+
+			isValid = isLabelValid;
 		}
 
 		if (!selectedField) {
-			return false;
+			setFieldValidationError(true);
+
+			isValid = false;
 		}
 
 		if (selectedField && !filter) {
-			if (inUseFields.includes(selectedField.name)) {
+			if (inUseFields.includes(selectedField?.name)) {
 				setFieldInUseValidationError(true);
 
-				return false;
-			}
-			else {
-				setFieldInUseValidationError(false);
+				isValid = false;
 			}
 		}
 
-		if (!i18nFilterLabels || !Object.values(i18nFilterLabels).length) {
-			return false;
-		}
-		else {
-			let isI18nFilterLabelValid = true;
+		if (!selectedClientExtension) {
+			setClientExtensionValidationError(true);
 
-			Object.values(i18nFilterLabels).forEach((value) => {
-				if (!value) {
-					isI18nFilterLabelValid = false;
-				}
-			});
-
-			if (!isI18nFilterLabelValid) {
-				setLabelValidationError(true);
-
-				return false;
-			}
+			isValid = false;
 		}
 
-		return true;
+		return isValid;
 	};
 
 	const saveClientExtensionFilter = () => {
 		setSaveButtonDisabled(true);
 
-		const success = validate({
-			i18nFilterLabels,
-			selectedClientExtension,
-			selectedField,
-		});
+		const success = validate();
 
 		if (success) {
 			const formData = {
@@ -150,25 +158,43 @@ function Body({
 				<FilterModalConfiguration
 					fieldInUseValidationError={fieldInUseValidationError}
 					fieldNames={fieldNames}
+					fieldValidationError={fieldValidationError}
 					fields={fields}
 					filter={filter}
 					labelValidationError={labelValidationError}
 					namespace={namespace}
-					onChange={({i18nFilterLabels, selectedField}) => {
-						setI18nFilterLabels(i18nFilterLabels);
-						setSelectedField(selectedField);
-
-						validate({i18nFilterLabels, selectedField});
+					onBlur={() => {
+						setLabelValidationError(
+							!isi18nFilterLabelsValid(i18nFilterLabels)
+						);
+					}}
+					onChangeField={(newValue) => {
+						setSelectedField(newValue);
+						setFieldValidationError(!newValue);
+						setFieldInUseValidationError(
+							newValue
+								? inUseFields.includes(newValue.name)
+								: false
+						);
+					}}
+					onChangeLabel={(newValue) => {
+						setI18nFilterLabels(newValue);
 					}}
 				/>
 
 				{!fieldInUseValidationError && (
-					<ClayForm.Group className="form-group-autofit">
+					<ClayForm.Group
+						className={classNames('form-group-autofit', {
+							'has-error': clientExtensionValidationError,
+						})}
+					>
 						<div className={classNames('form-group-item')}>
 							<label
 								htmlFor={fdsFilterClientExtensionFormElementId}
 							>
 								{Liferay.Language.get('client-extension')}
+
+								<RequiredMark />
 							</label>
 
 							<ClayDropDown
@@ -207,6 +233,9 @@ function Body({
 													setSelectedClientExtension(
 														filterClientExtension
 													);
+													setClientExtensionValidationError(
+														!filterClientExtension
+													);
 												}}
 												roleItem="option"
 											>
@@ -216,6 +245,10 @@ function Body({
 									)}
 								</ClayDropDown.ItemList>
 							</ClayDropDown>
+
+							{clientExtensionValidationError && (
+								<ValidationFeedback />
+							)}
 						</div>
 					</ClayForm.Group>
 				)}

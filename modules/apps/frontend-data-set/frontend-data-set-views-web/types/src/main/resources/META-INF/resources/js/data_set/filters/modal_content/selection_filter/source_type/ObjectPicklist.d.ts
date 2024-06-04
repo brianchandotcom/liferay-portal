@@ -10,10 +10,12 @@ interface IObjectPicklistProps {
 	filter?: IFilter;
 	namespace: string;
 	onChange: Function;
+	sourceValidationError: boolean;
 }
 declare function ObjectPicklist({
 	filter,
 	namespace,
 	onChange,
+	sourceValidationError,
 }: IObjectPicklistProps): JSX.Element;
 export default ObjectPicklist;

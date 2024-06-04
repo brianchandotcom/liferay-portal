@@ -14,48 +14,46 @@ import React, {useState} from 'react';
 import '../../css/FDSEntries.scss';
 import {ALLOWED_ENDPOINTS_PARAMETERS, FUZZY_OPTIONS} from '../utils/constants';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
+import {ISelectionFilter} from '../utils/types';
 import RequiredMark from './RequiredMark';
 import RESTApplicationItem from './RestApplicationItem';
 import ValidationFeedback from './ValidationFeedback';
 
 interface IRestSchemaSelectionProps {
+	filter?: ISelectionFilter;
 	namespace: string;
 	onChange: Function;
+	requiredRESTApplicationValidationError: boolean;
 	restApplications: string[];
+	restEndpointValidationError: boolean;
+	restSchemaValidationError: boolean;
 }
 
 function RestSchemaSelection({
+	filter,
 	namespace,
 	onChange,
+	requiredRESTApplicationValidationError,
 	restApplications,
+	restEndpointValidationError,
+	restSchemaValidationError,
 }: IRestSchemaSelectionProps) {
 	const [
 		noEnpointsRESTApplicationValidationError,
 		setNoEnpointsRESTApplicationValidationError,
-	] = useState(false);
-	const [
-		requiredRESTApplicationValidationError,
-		setRequiredRESTApplicationValidationError,
-	] = useState(false);
-	const [restSchemaValidationError, setRESTSchemaValidationError] = useState(
-		false
-	);
-	const [
-		restEndpointValidationError,
-		setRESTEndpointValidationError,
 	] = useState(false);
 	const [restSchemaEndpoints, setRESTSchemaEndpoints] = useState<
 		Map<string, Array<string>>
 	>(new Map());
 	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
 		string | null
-	>();
-	const [selectedRESTSchema, setSelectedRESTSchema] = useState<
-		string | null
-	>();
+	>(filter?.restApplication ? filter.restApplication : null);
+	const [selectedRESTSchema, setSelectedRESTSchema] = useState<string | null>(
+		filter?.restSchema ? filter.restSchema : null
+	);
 	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
 		string | null
-	>();
+	>(filter?.restEndpoint ? filter.restEndpoint : null);
 
 	const isPathValid = (
 		path: string,
@@ -117,7 +115,6 @@ function RestSchemaSelection({
 
 		if (schemaEndpoints.size === 0) {
 			setSelectedRESTSchema(null);
-
 			setSelectedRESTEndpoint(null);
 
 			setNoEnpointsRESTApplicationValidationError(true);
@@ -150,7 +147,6 @@ function RestSchemaSelection({
 		}
 		else {
 			setSelectedRESTSchema(null);
-
 			setSelectedRESTEndpoint(null);
 
 			setNoEnpointsRESTApplicationValidationError(false);
@@ -243,8 +239,6 @@ function RestSchemaSelection({
 			<RestApplicationDropdownMenu
 				onItemClick={(item: string) => {
 					setSelectedRESTApplication(item);
-					setRequiredRESTApplicationValidationError(false);
-
 					getRESTSchemas(item);
 
 					onChange({
@@ -355,8 +349,6 @@ function RestSchemaSelection({
 						endpoint = null;
 					}
 
-					setRESTSchemaValidationError(false);
-
 					onChange({
 						selectedRESTApplication,
 						selectedRESTEndpoint:
@@ -456,8 +448,6 @@ function RestSchemaSelection({
 			<RestEndpointDropdownMenu
 				onItemClick={(item: string) => {
 					setSelectedRESTEndpoint(item);
-
-					setRESTEndpointValidationError(false);
 
 					onChange({
 						selectedRESTApplication,

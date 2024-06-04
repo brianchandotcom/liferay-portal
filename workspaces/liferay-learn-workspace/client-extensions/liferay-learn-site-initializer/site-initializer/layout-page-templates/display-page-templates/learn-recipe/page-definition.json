@@ -29,7 +29,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\njustify-content:space-between;\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n  align-items: center;\n\tjustify-content:space-between;\n}",
 							"fragmentStyle": {
 								"marginBottom": "3",
 								"paddingLeft": "3"
@@ -47,27 +47,38 @@
 						"pageElements": [
 							{
 								"definition": {
-									"widgetInstance": {
-										"widgetConfig": {
-											"displayStyle": "ddmTemplate_BREADCRUMB-HORIZONTAL-FTL",
-											"displayStyleGroupId": "20119",
-											"showCurrentGroup": "true",
-											"showGuestGroup": "false",
-											"showLayout": "true",
-											"showParentGroups": "true",
-											"showPortletBreadcrumb": "true"
-										},
-										"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
-									}
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n  .learn-recipe-breadcrumbs {\n  \tmargin-bottom: var(--spacer-3, 1rem);\n\t\ta,\n\t\tli {\n\t\t\tborder-radius: 1px;\n\t\t\tcolor: var(--color-state-neutral-darken-1, #6C6C75);\n\t\t\tfont-size: 0.8125rem;\n\t\t\ttext-decoration: none;\n\t\t\ttext-underline-offset: 0.23em;\n\t\t\ttransition: color 0.15s ease-in-out,\n\t\t\t\tbackground-color 0.15s ease-in-out,\n\t\t\t\tborder-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n\t\t}\n  }\n  .learn-recipe-breadcrumb {\n\t\t\tdisplay: inline-flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tlist-style: none;\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t\tli + li::before {\n\t\t\t\tcontent: '/';\n\t\t\t\tpadding: 0 4px;\n\t\t\t}\n\t\t}\n}",
+									"fragment": {
+										"key": "BASIC_COMPONENT-html"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "element-html",
+											"value": {
+												"html": {
+													"mapping": {
+														"fieldKey": "_ddmTemplate_LEARN_RECIPE_BREADCRUMB",
+														"itemReference": {
+															"contextSource": "DisplayPageItem"
+														}
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
 								},
-								"id": "025f55ff-4e85-de33-55d6-0fc46a992c9d",
-								"type": "Widget"
+								"id": "f1c96945-20a9-3da7-af1c-66e59f570936",
+								"type": "Fragment"
 							},
 							{
 								"definition": {
 									"cssClasses": [
 										"recipe-feedback"
 									],
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n\tdisplay: flex;\n\ttext-wrap: nowrap;\n}",
 									"fragment": {
 										"key": "BASIC_COMPONENT-button"
 									},

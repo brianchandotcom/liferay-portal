@@ -96,9 +96,13 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 						);
 					}
 
-					Liferay.Util.getWindow(
+					var assignWindow = Liferay.Util.getWindow(
 						'<portlet:namespace />assignToDialog'
-					).destroy();
+					);
+
+					if (assignWindow) {
+						assignWindow.destroy();
+					}
 				});
 		});
 	}

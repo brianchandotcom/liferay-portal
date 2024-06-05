@@ -37,7 +37,12 @@ public class CTMessageLocalServiceImpl extends CTMessageLocalServiceBaseImpl {
 		CTMessage ctMessage = ctMessagePersistence.create(ctMessageId);
 
 		ctMessage.setCtCollectionId(ctCollectionId);
-		ctMessage.setMessageContent(_jsonFactory.serialize(message));
+
+		Message newMessage = message.clone();
+
+		newMessage.remove("companyId");
+
+		ctMessage.setMessageContent(_jsonFactory.serialize(newMessage));
 
 		return ctMessagePersistence.update(ctMessage);
 	}

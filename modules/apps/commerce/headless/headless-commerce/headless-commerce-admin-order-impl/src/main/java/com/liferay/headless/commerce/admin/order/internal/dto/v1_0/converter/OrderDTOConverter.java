@@ -162,6 +162,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 					commerceOrder::getRequestedDeliveryDate);
 				setShippingAddressId(commerceOrder::getShippingAddressId);
 
+				setShippingAmount(commerceOrder::getShippingAmount);
 				setShippingAmountFormatted(
 					() -> {
 						CommerceMoney commerceOrderShippingAmountCommerceMoney =
@@ -566,6 +567,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 						return taxAmount.doubleValue();
 					});
+				setTotal(commerceOrder::getTotal);
 				setTotalAmount(
 					() -> {
 						CommerceMoney commerceOrderTotalCommerceMoney =

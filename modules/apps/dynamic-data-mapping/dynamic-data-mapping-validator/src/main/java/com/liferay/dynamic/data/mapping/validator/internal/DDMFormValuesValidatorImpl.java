@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -21,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustNotSetValue;
@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -104,7 +105,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	}
 
 	protected Boolean evaluateValidationExpression(
-			String dataType, String ddmFormFieldName,
+			DDMFormField ddmFormField,
 			DDMFormFieldValidation ddmFormFieldValidation,
 			DDMFormFieldValue ddmFormFieldValue)
 		throws DDMFormValuesValidationException {
@@ -155,32 +156,34 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 					).build());
 			}
 
-			if (dataType.equals(FieldConstants.BOOLEAN)) {
+			if (StringUtil.equals(
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.CHECKBOX)) {
+
 				ddmExpression.setVariable(
-					ddmFormFieldName,
+					ddmFormField.getName(),
 					GetterUtil.getBoolean(value.getString(locale)));
 			}
-			else if (dataType.equals(FieldConstants.DOUBLE)) {
+			else if (StringUtil.equals(
+						ddmFormField.getType(),
+						DDMFormFieldTypeConstants.NUMERIC)) {
+
 				String valueString = value.getString(locale);
 
 				if (NumberUtil.hasDecimalSeparator(valueString)) {
 					ddmExpression.setVariable(
-						ddmFormFieldName,
+						ddmFormField.getName(),
 						GetterUtil.getDouble(valueString, locale));
 				}
 				else {
 					ddmExpression.setVariable(
-						ddmFormFieldName, GetterUtil.getInteger(valueString));
+						ddmFormField.getName(),
+						GetterUtil.getInteger(valueString));
 				}
-			}
-			else if (dataType.equals(FieldConstants.INTEGER)) {
-				ddmExpression.setVariable(
-					ddmFormFieldName,
-					GetterUtil.getInteger(value.getString(locale)));
 			}
 			else {
 				ddmExpression.setVariable(
-					ddmFormFieldName, value.getString(locale));
+					ddmFormField.getName(), value.getString(locale));
 			}
 
 			return ddmExpression.evaluate();
@@ -223,8 +226,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 
 		Boolean valid = evaluateValidationExpression(
-			ddmFormField.getDataType(), ddmFormField.getName(),
-			ddmFormFieldValidation, ddmFormFieldValue);
+			ddmFormField, ddmFormFieldValidation, ddmFormFieldValue);
 
 		if (!Objects.equals(Boolean.TRUE, valid)) {
 			throw new MustSetValidValue(

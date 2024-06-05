@@ -91,7 +91,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 				AntivirusAsyncConfiguration.class, properties);
 
 		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
-			antivirusAsyncConfiguration.retryCronExpression());
+			antivirusAsyncConfiguration.batchScanCronExpression());
 
 		_triggerConfiguration.setStartDate(
 			new Date(

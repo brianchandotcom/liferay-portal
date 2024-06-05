@@ -42,7 +42,9 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
+import com.liferay.portal.search.facet.nested.NestedFacet;
 import com.liferay.portal.search.internal.facet.FacetImpl;
+import com.liferay.portal.search.internal.facet.NestedFacetImpl;
 import com.liferay.portal.search.internal.facet.SimpleFacetCollector;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -701,7 +703,11 @@ public class DefaultSearchResultPermissionFilter
 					Facet facet = new FacetImpl(
 						searchContextFacet.getFieldName(), null);
 
-					if (searchContextFacet instanceof RangeFacet) {
+					if (searchContextFacet instanceof NestedFacet) {
+						facet = new NestedFacetImpl(
+							searchContextFacet.getFieldName(), null);
+					}
+					else if (searchContextFacet instanceof RangeFacet) {
 						facet = new RangeFacet(null);
 
 						facet.setFieldName(searchContextFacet.getFieldName());

@@ -208,6 +208,50 @@ public class CommerceOrderSystemObjectDefinitionManager
 				true
 			).system(
 				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("formatted-shipping-amount")
+			).name(
+				"shippingAmountFormatted"
+			).readOnly(
+				"true"
+			).build(),
+			new PrecisionDecimalObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("tax-amount")
+			).name(
+				"taxAmount"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("formatted-tax-amount")
+			).name(
+				"taxAmountFormatted"
+			).readOnly(
+				"true"
+			).build(),
+			new PrecisionDecimalObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("total")
+			).name(
+				"total"
+			).required(
+				true
+			).system(
+				true
+			).build(),
+			new TextObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("formatted-total-amount")
+			).name(
+				"totalFormatted"
+			).readOnly(
+				"true"
 			).build());
 	}
 
@@ -239,7 +283,7 @@ public class CommerceOrderSystemObjectDefinitionManager
 
 	@Override
 	public int getVersion() {
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -303,6 +347,36 @@ public class CommerceOrderSystemObjectDefinitionManager
 
 						return new BigDecimal(shippingAmountString);
 					});
+				setShippingAmountFormatted(
+					() -> GetterUtil.getString(
+						values.get("shippingAmountFormatted")));
+				setTaxAmount(
+					() -> {
+						String taxAmountString = GetterUtil.getString(
+							values.get("taxAmount"));
+
+						if (Validator.isNull(taxAmountString)) {
+							return null;
+						}
+
+						return new BigDecimal(taxAmountString);
+					});
+				setTaxAmountFormatted(
+					() -> GetterUtil.getString(
+						values.get("taxAmountFormatted")));
+				setTotal(
+					() -> {
+						String totalString = GetterUtil.getString(
+							values.get("total"));
+
+						if (Validator.isNull(totalString)) {
+							return null;
+						}
+
+						return new BigDecimal(totalString);
+					});
+				setTotalFormatted(
+					() -> GetterUtil.getString(values.get("totalFormatted")));
 			}
 		};
 	}

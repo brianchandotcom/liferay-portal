@@ -60,6 +60,7 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
@@ -528,6 +529,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addOrUpdateDDMStructures(
 					serviceContext, stringUtilReplaceValues));
 			_invoke(() -> _addOrUpdateDepotEntries(serviceContext));
+
+			_invoke(
+				() -> _addKeywords(serviceContext, stringUtilReplaceValues));
 
 			_invoke(
 				() -> _addOrUpdateDocuments(
@@ -1064,6 +1068,112 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getScopeGroupId(),
 			"/site-initializer/fragments/group", serviceContext,
 			stringUtilReplaceValues);
+	}
+
+	private void _addKeywords(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		_addKeywords(
+			"ASSET_LIBRARY", "/site-initializer/keywords/asset-libraries",
+			serviceContext, stringUtilReplaceValues);
+
+		_addKeywords(
+			"SITE", "/site-initializer/keywords/group", serviceContext,
+			stringUtilReplaceValues);
+	}
+
+	private void _addKeywords(
+			String replaceKey, String resourcePath,
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			resourcePath + "/keywords.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		KeywordResource.Builder keywordResourceBuilder =
+			_keywordResourceFactory.create();
+
+		KeywordResource keywordResource = keywordResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			long groupId = 0;
+
+			if (jsonObject.has("assetLibraryName")) {
+				Group group = _groupLocalService.fetchGroup(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("assetLibraryName"));
+
+				if (group == null) {
+					_log.error(
+						"Unable to get a valid asset library with ID " +
+							jsonObject.getLong("assetLibraryId"));
+
+					break;
+				}
+
+				groupId = group.getGroupId();
+			}
+
+			JSONArray keywordsJSONArray = jsonObject.getJSONArray("keywords");
+
+			for (int j = 0; j < keywordsJSONArray.length(); j++) {
+				Keyword keyword = Keyword.toDTO(
+					String.valueOf(keywordsJSONArray.getJSONObject(j)));
+
+				if (keyword == null) {
+					_log.error(
+						"Unable to transform keyword from JSON: " + json);
+
+					continue;
+				}
+
+				Keyword existingKeyword = null;
+
+				if (groupId != 0) {
+					existingKeyword =
+						keywordResource.getAssetLibraryKeywordsPage(
+							groupId, null, null,
+							keywordResource.toFilter(
+								"name eq '" + keyword.getName() + "'"),
+							null, null
+						).fetchFirstItem();
+				}
+				else {
+					existingKeyword = keywordResource.getSiteKeywordsPage(
+						groupId, null, null,
+						keywordResource.toFilter(
+							"name eq '" + keyword.getName() + "'"),
+						null, null
+					).fetchFirstItem();
+
+					groupId = serviceContext.getScopeGroupId();
+				}
+
+				if (existingKeyword != null) {
+					continue;
+				}
+
+				keyword = keywordResource.postAssetLibraryKeyword(
+					groupId, keyword);
+
+				stringUtilReplaceValues.put(
+					replaceKey + "_KEYWORD_ID:" + keyword.getName(),
+					String.valueOf(keyword.getId()));
+			}
+		}
 	}
 
 	private void _addLayoutPageTemplates(

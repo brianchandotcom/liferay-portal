@@ -82,6 +82,16 @@ dsmTest(
 				await filtersPage.newDateRangeFilterModal.fromDatePickerTrigger.click();
 
 				await expect(filtersPage.newDateRangeFilterModal.datePicker).toBeVisible();
+
+				await filtersPage.page.keyboard.press('Escape');
+			}
+		);
+
+		await dsmTest.step('Cancel date range filter, check no filters are created @LPS-181281',
+			async () => {
+				await filtersPage.cancelAddFilterModal();
+
+				await expect(filtersPage.assertFiltersTableRowCount(0));
 			}
 		);
 

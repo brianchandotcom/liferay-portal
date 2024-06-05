@@ -10,6 +10,9 @@ import {DataSetPage} from '../DataSetPage';
 
 export class FiltersPage {
 	private readonly dataSetPage: DataSetPage;
+
+	private readonly filterTable: Locator;
+
 	readonly newDateRangeFilterModal: {
 		datePicker: Locator;
 		filterBySelect: Locator;
@@ -37,6 +40,7 @@ export class FiltersPage {
 
 	constructor(page: Page) {
 		this.dataSetPage = new DataSetPage(page);
+		this.filterTable = page.locator('table');
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
 			.and(page.getByTitle('New Filter'));
@@ -75,6 +79,16 @@ export class FiltersPage {
 		});
 
 		await this.dataSetPage.selectTab('Filters');
+	}
+
+	async assertFiltersTableRowCount(rowCount: number) {
+		await expect(
+			this.filterTable.locator('tbody').locator('tr')
+		).toHaveCount(rowCount);
+	}
+
+	async cancelAddFilterModal() {
+		await this.newFilterModal.cancelButton.click();
 	}
 
 	async createSelectionFilter({

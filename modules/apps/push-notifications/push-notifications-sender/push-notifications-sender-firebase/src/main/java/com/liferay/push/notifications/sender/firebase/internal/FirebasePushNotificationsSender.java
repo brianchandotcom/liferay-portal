@@ -136,24 +136,41 @@ public class FirebasePushNotificationsSender
 		return response.getString("notification_key");
 	}
 
-		if (newPayloadJSONObject.length() > 0) {
-			builder.data(
-				HashMapBuilder.put(
-					PushNotificationsConstants.KEY_PAYLOAD,
-					newPayloadJSONObject.toString()
-				).build());
-		}
+	private String _getAccessToken() throws IOException {
+		_googleCredentials.refresh();
 
-		return builder.build();
+		return _googleCredentials.getAccessToken(
+		).getTokenValue();
 	}
 
-	private Notification _buildNotification(JSONObject payloadJSONObject) {
-		Notification.Builder builder = new Notification.Builder();
+	private String _getNotificationKey(String authorizationToken)
+		throws IOException, JSONException {
 
-		if (payloadJSONObject.has(PushNotificationsConstants.KEY_BADGE)) {
-			builder.badge(
-				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE));
-		}
+		Http.Options options = new Http.Options();
+
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+		options.addHeader("access_token_auth", "true");
+		options.addHeader("project_id", _projectNumber);
+		options.addHeader(AUTHORIZATION, "Bearer " + authorizationToken);
+		options.setPost(false);
+		options.setLocation(
+			StringBundler.concat(
+				BASE_GOOGLE_NOTIFICATIONS_API, "?notification_key_name=",
+				GOOGLE_GROUP_ID));
+
+		String responseString = _httpUtil.URLtoString(options);
+
+		JSONObject response = JSONFactoryUtil.createJSONObject(responseString);
+
+		return response.getString("notification_key");
+	}
+
+	private String _getProjectId() {
+		ServiceAccountCredentials serviceAccountCredentials =
+			(ServiceAccountCredentials)_googleCredentials;
+
+		return serviceAccountCredentials.getProjectId();
+	}
 
 	private void _initGoogleCloudServices() throws PortalException {
 		String serviceAccountKey =

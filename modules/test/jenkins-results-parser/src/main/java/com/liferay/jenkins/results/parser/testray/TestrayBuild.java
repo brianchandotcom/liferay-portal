@@ -72,13 +72,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 	}
 
 	public String getPortalSHA() {
-		Matcher matcher = _portalSHAPattern.matcher(getDescription());
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		return matcher.group("portalSHA");
+		return _jsonObject.getString("gitHash");
 	}
 
 	public String getPullRequestSenderUsername() {
@@ -429,8 +423,6 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	private static final Pattern _portalBranchPattern = Pattern.compile(
 		"Portal Branch: (?<portalBranch>[^;]+);");
-	private static final Pattern _portalSHAPattern = Pattern.compile(
-		"Portal SHA: (?<portalSHA>[^;]+);");
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://.+/(?<startYearMonth>\\d{4}-\\d{2})/",

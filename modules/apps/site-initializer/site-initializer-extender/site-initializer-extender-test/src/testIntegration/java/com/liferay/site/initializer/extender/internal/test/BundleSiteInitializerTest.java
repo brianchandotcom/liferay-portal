@@ -13,6 +13,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.link.model.AssetLink;
+import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
@@ -622,6 +624,17 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"TESTASSETCATEGORY4",
 			testAssetCategory4.getExternalReferenceCode());
+	}
+
+	private void _assertAssetLinkEntries(
+		long blogPostingId, long assetLinkEntriesCount) {
+
+		List<AssetLink> links = _assetLinkLocalService.getLinks(
+			_portal.getClassNameId(BlogsEntry.class), blogPostingId);
+
+		Assert.assertNotNull(links);
+		Assert.assertEquals(
+			links.toString(), assetLinkEntriesCount, links.size());
 	}
 
 	private void _assertAssetListEntries() {
@@ -4216,6 +4229,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;

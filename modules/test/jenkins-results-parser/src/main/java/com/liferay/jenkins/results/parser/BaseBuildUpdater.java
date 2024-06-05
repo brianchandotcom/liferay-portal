@@ -313,7 +313,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 			for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
 				message = JenkinsResultsParserUtil.combine(
-					message, "Offline Slave URL: ", siblingJenkinsSlave.getComputerURL(), "\n");
+					message, "Offline Slave URL: ",
+					siblingJenkinsSlave.getComputerURL(), "\n");
 
 				String siblingMessage = JenkinsResultsParserUtil.combine(
 					pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),

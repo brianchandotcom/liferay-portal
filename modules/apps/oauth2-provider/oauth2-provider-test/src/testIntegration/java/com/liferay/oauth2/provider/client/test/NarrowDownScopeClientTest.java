@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -52,7 +53,8 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			getToken(
 				"oauthTestApplication", null,
 				getAuthorizationCodeBiFunction(
-					"test@liferay.com", "test", null, "GET"),
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					null, "GET"),
 				this::parseScopeString));
 
 		Assert.assertEquals(
@@ -65,7 +67,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 		Response response = getToken(
 			"oauthTestApplication", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", "test", "GET"),
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, "GET"),
 			Function.identity());
 
 		JSONObject jsonObject = parseJSONObject(response);
@@ -84,7 +86,8 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 
 		String scopeString = getToken(
 			"oauthTestApplication", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseScopeString);
 
 		Assert.assertEquals(
@@ -96,7 +99,8 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			getToken(
 				"oauthTestApplication", null,
 				getResourceOwnerPasswordBiFunction(
-					"test@liferay.com", "test", "GET POST PUT"),
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					"GET POST PUT"),
 				this::parseError));
 	}
 

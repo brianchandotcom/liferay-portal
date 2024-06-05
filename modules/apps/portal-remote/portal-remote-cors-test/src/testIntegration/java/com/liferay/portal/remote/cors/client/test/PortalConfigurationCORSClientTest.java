@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -70,7 +71,7 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	@Test
 	public void testNoCORSUsingPortalSession() throws Exception {
 		Cookie authenticatedCookie = _getAuthenticatedCookie(
-			"test@liferay.com", "test");
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD);
 
 		Invocation.Builder invocationBuilder = _getWebTarget(
 			"web", "guest"

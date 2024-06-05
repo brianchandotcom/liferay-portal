@@ -5634,7 +5634,7 @@ public class DataFactory {
 	}
 
 	public SegmentsExperienceModel newSegmentsExperienceModel(
-		long groupId, long plid, long segmentsEntryId) {
+		long groupId, long segmentsEntryId, long plid) {
 
 		SegmentsExperienceModel segmentsExperienceModel =
 			new SegmentsExperienceModelImpl();

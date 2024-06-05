@@ -331,3 +331,23 @@ export function getUpdatedJobParameters({jobParameters, key, value}) {
 
 	return updatedJobParameters;
 }
+
+export async function updateJob({data, id, redirect}) {
+	const headers = {
+		'Content-Type': 'application/json',
+		'accept': 'application/json',
+	};
+
+	const jobsResponse = await liferayRequest({
+		body: JSON.stringify(data),
+		headers,
+		method: 'PUT',
+		urlPath: '/o/c/jobs/' + id,
+	});
+
+	const jobsResult = JSON.parse(await jobsResponse.text());
+
+	if (jobsResult && redirect) {
+		redirect(jobsResult);
+	}
+}

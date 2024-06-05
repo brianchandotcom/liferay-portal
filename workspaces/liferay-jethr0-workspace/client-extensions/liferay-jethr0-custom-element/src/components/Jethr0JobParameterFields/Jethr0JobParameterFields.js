@@ -13,6 +13,7 @@ import {
 import Jethr0JobFieldLabel from '../Jethr0JobFieldLabel/Jethr0JobFieldLabel';
 
 function Jethr0JobParameterFields({
+	disabled,
 	jobDefinitionParameters,
 	jobParameters,
 	routine,
@@ -37,7 +38,7 @@ function Jethr0JobParameterFields({
 				/>
 
 				<Jethr0Input
-					disabled={jobParameter?.fromRoutine ? true : false}
+					disabled={(jobParameter?.fromRoutine || disabled) ? true : false}
 					id={key}
 					onChange={(event) => {
 						setJobParameters(

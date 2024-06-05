@@ -125,9 +125,7 @@ public class SlaveOfflineRule {
 			build.getBuildURL(), ". \n\n", slaveOfflineRuleString,
 			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n");
 
-		if (getOfflineSibling() &&
-			(jenkinsMaster.getSlavesPerHost() == 2)) {
-
+		if (getOfflineSibling() && (jenkinsMaster.getSlavesPerHost() == 2)) {
 			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
 
 			for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
@@ -158,8 +156,7 @@ public class SlaveOfflineRule {
 			!notificationRecipients.isEmpty()) {
 
 			NotificationUtil.sendEmail(
-				message, "jenkins", "Slave Offline",
-				notificationRecipients);
+				message, "jenkins", "Slave Offline", notificationRecipients);
 		}
 	}
 

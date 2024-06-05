@@ -7,7 +7,9 @@ package com.liferay.account.internal.validator;
 
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -22,12 +24,13 @@ public class AccountEntryEmailAddressValidatorImpl
 	public AccountEntryEmailAddressValidatorImpl(
 		AccountEntryDomainValidator accountEntryDomainValidator, long companyId,
 		EmailAddressValidator emailAddressValidator,
-		EmailValidator emailValidator) {
+		EmailValidator emailValidator, UserLocalService userLocalService) {
 
 		_accountEntryDomainValidator = accountEntryDomainValidator;
 		_companyId = companyId;
 		_emailAddressValidator = emailAddressValidator;
 		_emailValidator = emailValidator;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -44,6 +47,18 @@ public class AccountEntryEmailAddressValidatorImpl
 	public boolean isBlockedDomain(String domainOrEmailAddress) {
 		return _accountEntryDomainValidator.isBlockedDomain(
 			_toDomain(domainOrEmailAddress));
+	}
+
+	@Override
+	public boolean isEmailAddressAlreadyUsed(String emailAddress) {
+		User user = _userLocalService.fetchUserByEmailAddress(
+			_companyId, emailAddress);
+
+		if (user != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -101,5 +116,6 @@ public class AccountEntryEmailAddressValidatorImpl
 	private final long _companyId;
 	private final EmailAddressValidator _emailAddressValidator;
 	private final EmailValidator _emailValidator;
+	private final UserLocalService _userLocalService;
 
 }

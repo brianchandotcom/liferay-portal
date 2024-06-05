@@ -12,6 +12,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,6 +83,19 @@ public class AccountEntryEmailAddressValidatorTest {
 			validatorArgs -> validatorArgs.blockedDomains = _BLOCKED_DOMAINS,
 			validator -> Assert.assertTrue(
 				validator.isBlockedDomain(_BLOCKED_DOMAINS[0])));
+	}
+
+	@Test
+	public void testIsEmailAddressAlreadyUsed() throws Exception {
+		_withValidator(
+			validatorArgs -> validatorArgs.blockedDomains = _EMPTY_STRING_ARRAY,
+			validator -> {
+				Assert.assertTrue(
+					validator.isEmailAddressAlreadyUsed("test@liferay.com"));
+				Assert.assertFalse(
+					validator.isEmailAddressAlreadyUsed(
+						RandomTestUtil.randomString() + "@liferay.com"));
+			});
 	}
 
 	@Test

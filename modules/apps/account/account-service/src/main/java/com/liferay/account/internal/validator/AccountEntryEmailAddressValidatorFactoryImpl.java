@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
@@ -68,7 +69,8 @@ public class AccountEntryEmailAddressValidatorFactoryImpl
 				blockedDomains, domainValidator,
 				emailAddressDomainValidationEnabled, validDomains),
 			companyId, _emailAddressValidator,
-			new EmailValidator(false, false, domainValidator));
+			new EmailValidator(false, false, domainValidator),
+			_userLocalService);
 	}
 
 	private AccountEntryEmailDomainsConfiguration
@@ -97,5 +99,8 @@ public class AccountEntryEmailAddressValidatorFactoryImpl
 
 	@Reference
 	private EmailAddressValidator _emailAddressValidator;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

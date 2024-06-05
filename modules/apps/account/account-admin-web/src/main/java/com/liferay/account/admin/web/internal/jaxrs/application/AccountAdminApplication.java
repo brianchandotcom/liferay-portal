@@ -90,6 +90,11 @@ public class AccountAdminApplication extends Application {
 
 			errorMessage = "x-has-an-invalid-email-domain";
 		}
+		else if (accountEntryEmailAddressValidator.isEmailAddressAlreadyUsed(
+					emailAddress)) {
+
+			errorMessage = "x-cannot-be-used-to-invite-a-new-user";
+		}
 
 		if (Validator.isNotNull(errorMessage)) {
 			errorMessage = _language.format(

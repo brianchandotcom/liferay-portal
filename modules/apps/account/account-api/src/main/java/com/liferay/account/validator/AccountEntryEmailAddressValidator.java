@@ -16,6 +16,8 @@ public interface AccountEntryEmailAddressValidator {
 
 	public boolean isBlockedDomain(String domainOrEmailAddress);
 
+	public boolean isEmailAddressAlreadyUsed(String emailAddress);
+
 	public boolean isEmailAddressDomainValidationEnabled();
 
 	public boolean isValidDomain(String domainOrEmailAddress);

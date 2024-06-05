@@ -229,7 +229,7 @@ pre[class*='language-'] {
 	padding: 1.5rem 0;
 }
 
-.learn-article {
+.learn-article, .learn-recipe-container {
 	font-family: var(--font-family-sans-serif);
 	max-width: var(--container-max-xl);
 	padding: var(--spacer-4);
@@ -254,7 +254,7 @@ pre[class*='language-'] {
 		}
 	}
 
-	.learn-article-breadcrumbs {
+	.learn-article-breadcrumbs, .learn-recipe-breadcrumbs {
 		margin-bottom: var(--spacer-3, 1rem);
 		a,
 		li {
@@ -268,7 +268,7 @@ pre[class*='language-'] {
 				border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 		}
 
-		.learn-article-breadcrumb {
+		.learn-article-breadcrumb, .learn-recipe-breadcrumb {
 			display: inline-flex;
 			flex-wrap: wrap;
 			list-style: none;

@@ -1,12 +1,14 @@
 <#assign
-	journalRecipeId = .vars["reserved-article-id"].data
-	taxonomyCategoryBriefs = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalRecipeId}").taxonomyCategoryBriefs
+	taxonomyCategoryBriefs = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${.vars['reserved-article-id'].data}").taxonomyCategoryBriefs
 />
+
 <#list taxonomyCategoryBriefs as taxonomyCategoryBrief>
 	<#if taxonomyCategoryBrief.taxonomyCategoryName == 'Recipe'>
+
 		<#assign recipeCategoryId = taxonomyCategoryBrief.taxonomyCategoryId />
 	</#if>
 </#list>
+
 <div class="learn-recipe-breadcrumbs">
 	<div>
 		<div class="align-items-baseline d-flex justify-content-between mb-3">

@@ -47,7 +47,6 @@
 						"pageElements": [
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n  .learn-recipe-breadcrumbs {\n  \tmargin-bottom: var(--spacer-3, 1rem);\n\t\ta,\n\t\tli {\n\t\t\tborder-radius: 1px;\n\t\t\tcolor: var(--color-state-neutral-darken-1, #6C6C75);\n\t\t\tfont-size: 0.8125rem;\n\t\t\ttext-decoration: none;\n\t\t\ttext-underline-offset: 0.23em;\n\t\t\ttransition: color 0.15s ease-in-out,\n\t\t\t\tbackground-color 0.15s ease-in-out,\n\t\t\t\tborder-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n\t\t}\n  }\n  .learn-recipe-breadcrumb {\n\t\t\tdisplay: inline-flex;\n\t\t\tflex-wrap: wrap;\n\t\t\tlist-style: none;\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t\tli + li::before {\n\t\t\t\tcontent: '/';\n\t\t\t\tpadding: 0 4px;\n\t\t\t}\n\t\t}\n}",
 									"fragment": {
 										"key": "BASIC_COMPONENT-html"
 									},
@@ -1173,5 +1172,5 @@
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},
-	"version": 1.1
+	"version": 1.0
 }

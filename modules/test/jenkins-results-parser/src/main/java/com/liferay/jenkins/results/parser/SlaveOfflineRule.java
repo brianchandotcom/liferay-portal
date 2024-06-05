@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,7 +108,7 @@ public class SlaveOfflineRule {
 	public void takeSlaveOffline(Build build) {
 		String pinnedMessage = "";
 
-		if (!slaveOfflineRule.shutdown) {
+		if (!shutdown) {
 			pinnedMessage = "PINNED\n";
 		}
 
@@ -115,16 +116,16 @@ public class SlaveOfflineRule {
 
 		JenkinsMaster jenkinsMaster = jenkinsSlave.getJenkinsMaster();
 
-		String slaveOfflineRuleString = slaveOfflineRule.toString();
+		String slaveOfflineRuleString = toString();
 
 		slaveOfflineRuleString = slaveOfflineRuleString.replace("\\", "\\\\");
 
 		String message = JenkinsResultsParserUtil.combine(
-			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
+			pinnedMessage, getName(), " failure detected at ",
 			build.getBuildURL(), ". \n\n", slaveOfflineRuleString,
 			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n");
 
-		if (slaveOfflineRule.getOfflineSibling() &&
+		if (getOfflineSibling() &&
 			(jenkinsMaster.getSlavesPerHost() == 2)) {
 
 			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
@@ -136,7 +137,7 @@ public class SlaveOfflineRule {
 
 				String siblingMessage = JenkinsResultsParserUtil.combine(
 					pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
-					" Reason: ", slaveOfflineRule.getName());
+					" Reason: ", getName());
 
 				siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
 			}
@@ -153,15 +154,12 @@ public class SlaveOfflineRule {
 
 		jenkinsSlave.takeSlavesOffline(message);
 
-		String notificationRecipients =
-			slaveOfflineRule.getNotificationRecipients();
-
 		if ((notificationRecipients != null) &&
 			!notificationRecipients.isEmpty()) {
 
 			NotificationUtil.sendEmail(
 				message, "jenkins", "Slave Offline",
-				slaveOfflineRule.notificationRecipients);
+				notificationRecipients);
 		}
 	}
 

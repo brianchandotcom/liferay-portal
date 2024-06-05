@@ -1,0 +1,19 @@
+{
+	"friendlyURL": "/education",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Education"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

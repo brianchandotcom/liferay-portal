@@ -112,10 +112,12 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 		for (NotificationTermProvider notificationTermProvider :
 				notificationTermProviders) {
 
-			Map<String, String> stringStringMap =
+			Map<String, String> notificationTerms =
 				notificationTermProvider.getNotificationTerms();
 
-			for (Map.Entry<String, String> entry : stringStringMap.entrySet()) {
+			for (Map.Entry<String, String> entry :
+					notificationTerms.entrySet()) {
+
 				termsJSONArray.put(
 					JSONUtil.put(
 						"termLabel",

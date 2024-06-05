@@ -4668,6 +4668,17 @@ public class ObjectEntryLocalServiceImpl
 					guestUser, dlFileEntry.getSize(),
 					objectField.getObjectFieldId(), objectField.getName());
 
+				if (existingObjectEntry != null) {
+					Map<String, Serializable> existingValues =
+						existingObjectEntry.getValues();
+
+					if (dlFileEntry.getFileEntryId() == GetterUtil.getLong(
+							existingValues.get(entry.getKey()))) {
+
+						return;
+					}
+				}
+
 				_addFileEntry(
 					dlFileEntry, entry, objectDefinition, objectEntryId,
 					objectField.getObjectFieldId(),

@@ -69,13 +69,13 @@ public class InfoFieldItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<InfoField<?>> {
 
 	public InfoFieldItemSelectorViewDescriptor(
-		HttpServletRequest httpServletRequest,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		HttpServletRequest httpServletRequest,
 		InfoItemServiceRegistry infoItemServiceRegistry, PortletURL portletURL,
 		RenderResponse renderResponse) {
 
-		_httpServletRequest = httpServletRequest;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+		_httpServletRequest = httpServletRequest;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_portletURL = portletURL;
 		_renderResponse = renderResponse;

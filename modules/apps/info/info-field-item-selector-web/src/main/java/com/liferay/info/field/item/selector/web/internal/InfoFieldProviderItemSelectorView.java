@@ -68,7 +68,6 @@ public class InfoFieldProviderItemSelectorView
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
-
 		RenderResponse renderResponse =
 			(RenderResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
@@ -77,7 +76,7 @@ public class InfoFieldProviderItemSelectorView
 			servletRequest, servletResponse, infoFieldItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new InfoFieldItemSelectorViewDescriptor(
-				httpServletRequest, _fragmentEntryConfigurationParser,
+				_fragmentEntryConfigurationParser, httpServletRequest,
 				_infoItemServiceRegistry, portletURL, renderResponse));
 	}
 

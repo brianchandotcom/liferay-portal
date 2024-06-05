@@ -74,6 +74,13 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		assetCategory.getLeftCategoryId;
 	}
 
+	public void method(boolean showHiddenPages) {
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion();
+
+		layoutItemSelectorCriterion.setShowHiddenPages(null);
+		layoutItemSelectorCriterion.setShowHiddenPages(showHiddenPages);
+	}
+
 	public void method(CommerceAddress commerceAddress) {
 		CommerceAddressLocalServiceUtil.updateCommerceAddress(commerceAddress);
 		CommerceAddressLocalServiceUtil.updateCommerceAddress(null);

@@ -497,7 +497,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@Override
 	public Company copyBPartitionCompany(
-			String name, long sourceCompanyId, long targetCompanyId,
+			String name, long sourceCompanyId, Long targetCompanyId,
 			String virtualHostname, String webId)
 		throws PortalException {
 
@@ -532,7 +532,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				"Source company ID " + sourceCompanyId + " does not exist");
 		}
 
-		if (targetCompanyId == 0) {
+		if (targetCompanyId == null) {
 			targetCompanyId = _getNextCompanyId();
 		}
 

@@ -35,7 +35,6 @@ import {Liferay} from '../../common/services/liferay';
 import {Filters} from '../../common/utils/constants/filters';
 import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
-import setURLParams from '../../common/utils/setURLParams';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFRequests from './hooks/useGetListItemsFromMDFRequests';
@@ -56,41 +55,34 @@ const MDFRequestList = () => {
 	const {userAccount} = useDynamicFieldEntries();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
-	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
-		openRequestFilter,
-		urlParams,
-		isChannel
-	);
-
-	const pagination = usePagination(urlParams);
-
 	const [requestTableSort, setRequestTableSort] = useState<string>(
 		'dateCreated:desc'
 	);
 
 	const debouncedRequestTableSort = useDebounce(requestTableSort, 1000);
 
+	const {filters, onFilter, setFilters} = useFilters(
+		openRequestFilter,
+		urlParams,
+		debouncedRequestTableSort,
+		isChannel,
+		'mdfReqToMDFClms'
+	);
+
+	const pagination = usePagination();
+
 	const {data, isValidating, mutate} = useGetListItemsFromMDFRequests(
 		false,
 		pagination.activePage,
 		pagination.activeDelta,
-		setURLParams({
-			filter: filtersTerm,
-			nestedFields: 'mdfReqToMDFClms',
-			sort: debouncedRequestTableSort,
-			urlParams,
-		})
+		urlParams
 	);
 
 	const {data: dataCSV} = useGetListItemsFromMDFRequests(
 		true,
 		pagination.activePage,
 		maxPagination.MAX_ITEMS.size,
-		setURLParams({
-			filter: filtersTerm,
-			nestedFields: 'mdfReqToMDFClms',
-			urlParams,
-		})
+		urlParams
 	);
 
 	const companiesEntries:

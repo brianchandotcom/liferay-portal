@@ -40,7 +40,6 @@ import {
 import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
-import setURLParams from '../../common/utils/setURLParams';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
@@ -58,7 +57,22 @@ const DealRegistrationList = () => {
 			  ) as boolean)
 	);
 
-	const {filters, filtersTerm, onFilter} = useFilters(submittedDealsFilter);
+	const [dealRegistrationTableSort, setDealRegistrationTableSort] = useState<
+		string
+	>('partnerAccountName:asc');
+
+	const debouncedDealRegistrationTableSort = useDebounce(
+		dealRegistrationTableSort,
+		1000
+	);
+
+	const urlParams = useQueryParams();
+
+	const {filters, onFilter} = useFilters(
+		debouncedDealRegistrationTableSort,
+		urlParams,
+		submittedDealsFilter
+	);
 
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<DealRegistrationItem>({});
@@ -71,33 +85,18 @@ const DealRegistrationList = () => {
 
 	const pagination = usePagination();
 
-	const urlParams = useQueryParams();
-
 	const siteURL = useLiferayNavigate();
-
-	const [dealRegistrationTableSort, setDealRegistrationTableSort] = useState<
-		string
-	>('partnerAccountName:asc');
-
-	const debouncedDealRegistrationTableSort = useDebounce(
-		dealRegistrationTableSort,
-		1000
-	);
 
 	const {data, isValidating} = useGetListItemsFromDealRegistration(
 		pagination.activePage,
 		pagination.activeDelta,
-		setURLParams({
-			filter: filtersTerm,
-			sort: debouncedDealRegistrationTableSort,
-			urlParams,
-		})
+		urlParams
 	);
 
 	const {data: dataCSV} = useGetListItemsFromDealRegistration(
 		pagination.activePage,
 		maxPagination.MAX_ITEMS_SF.size,
-		setURLParams({filter: filtersTerm, urlParams})
+		urlParams
 	);
 
 	const actions = usePermissionActions(ObjectActionName.DEAL_REGISTRATION);
@@ -270,6 +269,7 @@ const DealRegistrationList = () => {
 									searchTerm,
 								})
 							}
+							urlParams={urlParams}
 						/>
 
 						<div className="bd-highlight flex-shrink-2 mt-1">

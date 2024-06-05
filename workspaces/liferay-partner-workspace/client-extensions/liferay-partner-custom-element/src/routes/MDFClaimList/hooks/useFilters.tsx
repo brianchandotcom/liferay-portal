@@ -7,12 +7,12 @@ import {useEffect, useState} from 'react';
 
 import {Filters} from '../../../common/utils/constants/filters';
 import {getCamelCase} from '../../../common/utils/getCamelCase';
-import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 import getDateCreatedFilterTerm from '../utils/getDateCreatedFilterTerm';
 
 export default function useFilters(
 	openClaimsFilter: boolean,
+	sort: string,
 	urlParams: URLSearchParams,
 	isChannel?: boolean
 ) {
@@ -49,8 +49,6 @@ export default function useFilters(
 
 		return initialFilter;
 	});
-
-	const [filtersTerm, setFilterTerm] = useState('');
 
 	const mdfClaimRoleFilter = isChannel
 		? openClaimsFilter
@@ -174,28 +172,24 @@ export default function useFilters(
 			urlParams.delete('type');
 		}
 
-		if (filters.searchTerm) {
-			initialFilter = initialFilter.concat(
-				getSearchFilterTerm(filters.searchTerm)
-			);
-		}
-
 		onFilter({
 			hasValue: hasFilter,
 		});
 
-		setFilterTerm(initialFilter);
+		urlParams.set('filter', initialFilter);
+		urlParams.set('sort', sort);
 	}, [
 		filters.submitDate,
 		filters.partner,
 		filters.searchTerm,
 		filters.status,
 		filters.type,
-		setFilters,
-		openClaimsFilter,
 		mdfClaimRoleFilter,
+		openClaimsFilter,
+		setFilters,
+		sort,
 		urlParams,
 	]);
 
-	return {filters, filtersTerm, onFilter, setFilters};
+	return {filters, onFilter, setFilters};
 }

@@ -33,7 +33,6 @@ import TableColumn from '../../common/interfaces/tableColumn';
 import {Filters} from '../../common/utils/constants/filters';
 import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
-import setURLParams from '../../common/utils/setURLParams';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFClaims from './hooks/useGetListItemsFromMDFClaims';
@@ -55,34 +54,31 @@ const MDFClaimList = () => {
 
 	const {companiesEntries} = useDynamicFieldEntries();
 
-	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
-		openClaimsFilter,
-		urlParams,
-		isChannel
-	);
-
-	const pagination = usePagination(urlParams);
-
 	const [claimTableSort, setClaimTableSort] = useState<string>(
 		'dateCreated:desc'
 	);
 
 	const debouncedClaimTableSort = useDebounce(claimTableSort, 1000);
 
+	const {filters, onFilter, setFilters} = useFilters(
+		openClaimsFilter,
+		debouncedClaimTableSort,
+		urlParams,
+		isChannel
+	);
+
+	const pagination = usePagination();
+
 	const {data, isValidating, mutate} = useGetListItemsFromMDFClaims(
 		pagination.activePage,
 		pagination.activeDelta,
-		setURLParams({
-			filter: filtersTerm,
-			sort: debouncedClaimTableSort,
-			urlParams,
-		})
+		urlParams
 	);
 
 	const {data: dataCSV} = useGetListItemsFromMDFClaims(
 		pagination.activePage,
 		maxPagination.MAX_ITEMS.size,
-		setURLParams({filter: filtersTerm, urlParams})
+		urlParams
 	);
 
 	const siteURL = useLiferayNavigate();

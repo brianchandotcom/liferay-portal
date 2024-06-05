@@ -34,7 +34,6 @@ import {
 import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
-import setURLParams from '../../common/utils/setURLParams';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFromPartnerOpportunities';
@@ -55,10 +54,24 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 			  ) as boolean)
 	);
 
-	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
+	const [opportunitiesTableSort, setOpportunitiesTableSort] = useState<
+		string
+	>('partnerAccountName:asc');
+
+	const debouncedDealRegistrationTableSort = useDebounce(
+		opportunitiesTableSort,
+		1000
+	);
+
+	const urlParams = useQueryParams();
+
+	const {filters, onFilter, setFilters} = useFilters(
+		debouncedDealRegistrationTableSort,
+		urlParams,
 		openOpportunitiesFilter,
 		isRenewalListing
 	);
+
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<
 		PartnerOpportunitiesItem
@@ -72,31 +85,16 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 
 	const pagination = usePagination();
 
-	const urlParams = useQueryParams();
-
-	const [opportunitiesTableSort, setOpportunitiesTableSort] = useState<
-		string
-	>('partnerAccountName:asc');
-
-	const debouncedDealRegistrationTableSort = useDebounce(
-		opportunitiesTableSort,
-		1000
-	);
-
 	const {data, isValidating} = useGetListItemsFromPartnerOpportunities(
 		pagination.activePage,
 		pagination.activeDelta,
-		setURLParams({
-			filter: filtersTerm,
-			sort: debouncedDealRegistrationTableSort,
-			urlParams,
-		})
+		urlParams
 	);
 
 	const {data: dataCSV} = useGetListItemsFromPartnerOpportunities(
 		pagination.activePage,
 		maxPagination.MAX_ITEMS_SF.size,
-		setURLParams({filter: filtersTerm, urlParams})
+		urlParams
 	);
 
 	const {totalCount: totalPagination} = data;

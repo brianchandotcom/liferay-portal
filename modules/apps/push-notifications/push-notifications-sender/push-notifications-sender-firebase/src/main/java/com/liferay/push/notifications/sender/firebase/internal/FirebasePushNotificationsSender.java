@@ -64,15 +64,32 @@ public class FirebasePushNotificationsSender
 
 	@Override
 	public void send(List<String> tokens, JSONObject payloadJSONObject)
-		throws Exception {
+		throws IOException, JSONException, PushNotificationsException {
 
-		if (_sender == null) {
+			if (_googleCredentials == null) {
 			throw new PushNotificationsException(
 				"Firebase push notifications sender is not configured " +
 					"properly");
 		}
 
-		_sender.send(_buildMessage(tokens, payloadJSONObject));
+		String notificationKey = tokens.get(0);
+
+		if (tokens.size() > 1) {
+			String accessToken = _getAccessToken();
+
+			notificationKey = _getNotificationKey(accessToken);
+
+			if (Validator.isNull(notificationKey)) {
+				notificationKey = _createNotificationGroup(accessToken, tokens);
+			}
+		}
+
+		_send(buildMessage(payloadJSONObject, notificationKey));
+
+		if (tokens.size() > 1) {
+			_removeNotificationGroup(
+				_getAccessToken(), tokens, notificationKey);
+		}
 	}
 
 	@Activate

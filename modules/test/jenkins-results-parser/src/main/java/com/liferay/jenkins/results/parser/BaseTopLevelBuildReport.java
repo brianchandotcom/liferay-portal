@@ -62,7 +62,7 @@ public abstract class BaseTopLevelBuildReport
 		try {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
-					"https://testray.liferay.com/reports/production/logs/",
+					"https://storage.cloud.google.com/testray-results/",
 					getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
 					jobReport.getJobName(), "/",
 					String.valueOf(getBuildNumber()), "/build-report.json.gz"));

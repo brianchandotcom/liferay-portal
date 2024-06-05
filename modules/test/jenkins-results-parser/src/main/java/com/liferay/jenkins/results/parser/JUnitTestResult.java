@@ -233,7 +233,7 @@ public class JUnitTestResult extends BaseTestResult {
 	private static final int _LINES_ERROR_STACK_DISPLAY_SIZE_MAX = 1500;
 
 	private static final String _URL_BASE_LOGS_DEFAULT =
-		"https://testray.liferay.com/reports/production/logs";
+		"https://storage.cloud.google.com/testray-results/";
 
 	private final String _className;
 	private final long _duration;

@@ -549,7 +549,7 @@ public class AxisBuild extends BaseBuild {
 			"(?<axisVariable>" + AxisBuild._AXIS_VARIABLE_REGEX + ")/",
 			"(?<buildNumber>\\d+)/?"));
 	protected static final String defaultLogBaseURL =
-		"https://testray.liferay.com/reports/production/logs";
+		"https://storage.cloud.google.com/testray-results";
 
 	private static final String _AXIS_VARIABLE_REGEX =
 		"AXIS_VARIABLE=(?<axisNumber>[^,/]+)(,[^/]+)?";

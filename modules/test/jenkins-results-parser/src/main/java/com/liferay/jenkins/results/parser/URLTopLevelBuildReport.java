@@ -69,7 +69,7 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 		try {
 			URL jenkinsConsoleURL = new URL(
 				JenkinsResultsParserUtil.combine(
-					"https://testray.liferay.com/reports/production/logs/",
+					"https://storage.cloud.google.com/testray-results/",
 					getStartYearMonth(), "/", jenkinsMaster.getName(), "/",
 					jobReport.getJobName(), "/",
 					String.valueOf(getBuildNumber()),

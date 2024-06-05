@@ -20,7 +20,17 @@ function showRemoveButton() {
 	removeButton.addEventListener('click', onRemoveFile);
 }
 
+let previousFiles = null;
+
 function onInputChange() {
+	if (!fileInput.files.length && previousFiles) {
+		const dataTransfer = new DataTransfer();
+
+		dataTransfer.items.add(previousFiles);
+
+		fileInput.files = dataTransfer.files;
+	}
+
 	fileName.innerText = fileInput.files[0].name;
 	fileInput.setAttribute('name', input.name);
 
@@ -31,6 +41,8 @@ function onInputChange() {
 }
 
 function onRemoveFile() {
+	previousFiles = null;
+
 	fileInput.value = '';
 	fileName.innerText = '';
 
@@ -68,6 +80,8 @@ else {
 	}
 	else {
 		selectButton.addEventListener('click', () => {
+			previousFiles = fileInput.files[0] || null;
+
 			fileInput.click();
 		});
 	}

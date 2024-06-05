@@ -97,9 +97,9 @@ function AddFDSFilterModalContent({
 		filterType as EFilterType
 	];
 
-	const saveFDSFilter = async (body: any) => {
-		body = {
-			...body,
+	const saveFDSFilter = async (formData: any) => {
+		formData = {
+			...formData,
 			[fdsViewRelationshipId]: dataSet.id,
 		};
 
@@ -112,7 +112,7 @@ function AddFDSFilterModalContent({
 		}
 
 		const response = await fetch(url, {
-			body: JSON.stringify(body),
+			body: JSON.stringify(formData),
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
@@ -315,7 +315,7 @@ function Filters({
 		}
 	};
 
-	const handleEdit = ({item}: {item: IFilter}) =>
+	const onEdit = ({item}: {item: IFilter}) =>
 		openModal({
 			className: 'overflow-auto',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
@@ -355,7 +355,7 @@ function Filters({
 			size: Liferay.FeatureFlags['LPD-10754'] ? 'lg' : 'md',
 		});
 
-	const handleDelete = async ({item}: {item: IFilter}) => {
+	const onDelete = async ({item}: {item: IFilter}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this-filter'
@@ -407,12 +407,12 @@ function Filters({
 					{
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
-						onClick: handleEdit,
+						onClick: onEdit,
 					},
 					{
 						icon: 'trash',
 						label: Liferay.Language.get('delete'),
-						onClick: handleDelete,
+						onClick: onDelete,
 					},
 				]}
 				creationMenuItems={Object.keys(FILTER_TYPES).map((type) => ({

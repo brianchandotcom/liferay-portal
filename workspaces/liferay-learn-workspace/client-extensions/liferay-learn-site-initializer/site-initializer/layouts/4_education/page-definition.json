@@ -130,7 +130,7 @@
 			},
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n}",
+					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n\n.learn-education-home__card:hover {\n   background: #EDF3FE !important;\n   border-color: #0053F0 !important;\n}\n}",
 					"fragmentStyle": {
 						"marginTop": "-6rem",
 						"maxWidth": "var(--container-max-lg)",
@@ -427,6 +427,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -540,6 +543,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -593,6 +599,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -633,6 +642,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -706,6 +718,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -819,6 +834,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -872,6 +890,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -912,6 +933,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -985,6 +1009,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -1098,6 +1125,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -1151,6 +1181,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -1191,6 +1224,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -1521,6 +1557,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -1634,6 +1673,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -1687,6 +1729,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -1727,6 +1772,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -1800,6 +1848,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -1913,6 +1964,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -1966,6 +2020,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2006,6 +2063,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2079,6 +2139,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -2192,6 +2255,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2245,6 +2311,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2285,6 +2354,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2614,6 +2686,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -2727,6 +2802,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2780,6 +2858,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__time"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2820,6 +2901,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2836,7 +2920,7 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Beginner"
+																						"en_US": "Practioner"
 																					}
 																				}
 																			}
@@ -2860,6 +2944,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -2933,6 +3020,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -3046,6 +3136,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3099,6 +3192,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__time"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3139,6 +3235,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3179,6 +3278,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3252,6 +3354,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"cssClasses": [
+														"learn-education-home__card"
+													],
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
@@ -3365,6 +3470,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__content-type"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3418,6 +3526,9 @@
 														"pageElements": [
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__time"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3458,6 +3569,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__persona"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3498,6 +3612,9 @@
 															},
 															{
 																"definition": {
+																	"cssClasses": [
+																		"card-tag__expertise"
+																	],
 																	"fragment": {
 																		"key": "dialect-text",
 																		"siteKey": "Liferay Learn"
@@ -3559,7 +3676,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "liferay-learn-education"
+			"key": "liferay-learn"
 		}
 	},
 	"version": 1.0

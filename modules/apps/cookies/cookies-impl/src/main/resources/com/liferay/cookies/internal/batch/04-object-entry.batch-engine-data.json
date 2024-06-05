@@ -17,7 +17,7 @@
 			"externalReferenceCode": "3e083fed-87e2-4aef-a4d1-05cc426a06a5",
 			"host": "Liferay",
 			"name": "__zlcmid",
-			"purpose": "",
+			"purpose": "Stores a unique ID to identify the user's session. Statistics.",
 			"type": "First Party"
 		},
 		{

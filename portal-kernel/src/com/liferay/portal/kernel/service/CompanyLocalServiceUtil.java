@@ -111,7 +111,7 @@ public class CompanyLocalServiceUtil {
 	}
 
 	public static Company copyBPartitionCompany(
-			String name, long sourceCompanyId, long targetCompanyId,
+			String name, long sourceCompanyId, Long targetCompanyId,
 			String virtualHostname, String webId)
 		throws PortalException {
 

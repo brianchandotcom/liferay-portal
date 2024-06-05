@@ -57,18 +57,34 @@ dsmTest(
 			});
 		});
 
+		const dateFilterOption = filtersPage.page.getByRole('option', {
+			name: 'dateCreated',
+		});
+
 		await dsmTest.step(
 			'Check if date-time filter is available',
 			async () => {
 				await filtersPage.newDateRangeFilterModal.filterBySelect.click();
 
-				expect(
-					filtersPage.page.getByRole('option', {
-						name: 'dateCreated',
-					})
-				).toBeVisible();
+				await expect(dateFilterOption).toBeVisible();
 			}
 		);
+
+		await dsmTest.step(
+			'Check date-time filter modal contains from and to fields @LPS-181281',
+			async () => {
+				await dateFilterOption.click();
+
+				await expect(filtersPage.newDateRangeFilterModal.fromInput).toBeVisible();
+
+				await expect(filtersPage.newDateRangeFilterModal.toInput).toBeVisible();
+
+				await filtersPage.newDateRangeFilterModal.fromDatePickerTrigger.click();
+
+				await expect(filtersPage.newDateRangeFilterModal.datePicker).toBeVisible();
+			}
+		);
+
 	}
 );
 

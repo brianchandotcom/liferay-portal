@@ -10,7 +10,6 @@ import CreateJenkinsCohortPage from './pages/CreateJenkinsCohortPage/CreateJenki
 import CreateJenkinsServerPage from './pages/CreateJenkinsServerPage/CreateJenkinsServerPage';
 import CreateJobPage from './pages/CreateJobPage/CreateJobPage';
 import CreateRoutinePage from './pages/CreateRoutinePage/CreateRoutinePage';
-import UpdateJobPage from './pages/UpdateJobPage/UpdateJobPage';
 import JenkinsCohortPage from './pages/JenkinsCohortPage/JenkinsCohortPage';
 import JenkinsCohortsPage from './pages/JenkinsCohortsPage/JenkinsCohortsPage';
 import JenkinsServerPage from './pages/JenkinsServerPage/JenkinsServerPage';
@@ -21,6 +20,7 @@ import JobsPage from './pages/JobsPage/JobsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import RoutinePage from './pages/RoutinePage/RoutinePage';
 import RoutinesPage from './pages/RoutinesPage/RoutinesPage';
+import UpdateJobPage from './pages/UpdateJobPage/UpdateJobPage';
 import UpstreamBranchPage from './pages/UpstreamBranchPage/UpstreamBranchPage';
 import UpstreamBranchesPage from './pages/UpstreamBranchesPage/UpstreamBranchesPage';
 
@@ -75,7 +75,10 @@ function App() {
 						path="/routines/:routineId/create-job"
 					/>
 					<Route element={<RoutinesPage />} path="/routines" />
-					<Route element={<UpdateJobPage />} path="/jobs/:id/update" />
+					<Route
+						element={<UpdateJobPage />}
+						path="/jobs/:id/update"
+					/>
 					<Route
 						element={<UpstreamBranchesPage />}
 						path="/upstream-branches"

@@ -143,10 +143,11 @@ function JobInformation({job}) {
 				/>
 
 				<strong>{'Job Blessed: '}</strong>
-				{job.blessed ?
-					<ClayBadge displayType="success" label="blessed" /> :
+				{job.blessed ? (
+					<ClayBadge displayType="success" label="blessed" />
+				) : (
 					<ClayBadge displayType="secondary" label="normal" />
-				}
+				)}
 				<br />
 
 				<Jethr0InformationField

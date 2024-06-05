@@ -31,7 +31,7 @@ function UpdateJobPage() {
 	const [jobPriority, setJobPriority] = useState(4);
 
 	async function updateJobData({id}) {
-		let job = await getJobById({id});
+		const job = await getJobById({id});
 
 		setJobBlessed(job.blessed);
 		setJobDefinitionKey(job.type.key);
@@ -45,8 +45,6 @@ function UpdateJobPage() {
 	if (!job) {
 		updateJobData({id, setJob});
 	}
-
-	console.log(job);
 
 	function redirectToJobPage(data) {
 		if (data !== null && data.id !== null) {
@@ -101,7 +99,7 @@ function UpdateJobPage() {
 		return;
 	}
 
-	let breadcrumbs = [
+	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jobs', name: 'Jobs'},
 		{active: true, link: '/jobs/create', name: 'Create Job'},
@@ -127,7 +125,7 @@ function UpdateJobPage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
-				<Jethr0NavigationBar active={'Jobs'} />
+				<Jethr0NavigationBar active="Jobs" />
 
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 
@@ -136,10 +134,7 @@ function UpdateJobPage() {
 				</Heading>
 
 				<ClayForm.Group>
-					<Jethr0JobFieldLabel
-						labelKey="jobId"
-						labelName="Job ID"
-					/>
+					<Jethr0JobFieldLabel labelKey="jobId" labelName="Job ID" />
 
 					<Jethr0Input
 						disabled={true}
@@ -236,7 +231,7 @@ function UpdateJobPage() {
 							onClick: () => {
 								updateJob({
 									data: jobData,
-									id: id,
+									id,
 									redirect: redirectToJobPage,
 								});
 							},

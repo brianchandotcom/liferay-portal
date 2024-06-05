@@ -38,7 +38,9 @@ function Jethr0JobParameterFields({
 				/>
 
 				<Jethr0Input
-					disabled={(jobParameter?.fromRoutine || disabled) ? true : false}
+					disabled={
+						jobParameter?.fromRoutine || disabled ? true : false
+					}
 					id={key}
 					onChange={(event) => {
 						setJobParameters(

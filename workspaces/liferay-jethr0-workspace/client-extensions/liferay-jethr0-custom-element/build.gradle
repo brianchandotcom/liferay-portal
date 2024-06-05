@@ -1,4 +1,4 @@
 packageRunBuild {
-    inputs.dir "src"
-    outputs.dir "build"
+	inputs.dir "src"
+	outputs.dir "build"
 }

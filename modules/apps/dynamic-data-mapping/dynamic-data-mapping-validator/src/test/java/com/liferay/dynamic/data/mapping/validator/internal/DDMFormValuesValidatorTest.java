@@ -113,6 +113,20 @@ public class DDMFormValuesValidatorTest {
 						null, "10,0", LocaleUtil.BRAZIL))));
 		Assert.assertTrue(
 			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
+				new DDMFormField("Field", DDMFormFieldTypeConstants.NUMERIC),
+				_createDDMFormFieldValidation(
+					new DDMFormFieldValidationExpression() {
+						{
+							setName("gt");
+							setValue("Field>{parameter}");
+						}
+					},
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"999999999", LocaleUtil.US)),
+				DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+					"Field", "3245870178")));
+		Assert.assertTrue(
+			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
 				new DDMFormField("Field", DDMFormFieldTypeConstants.TEXT),
 				_createDDMFormFieldValidation(
 					null,

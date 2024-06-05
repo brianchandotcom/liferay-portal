@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Michael Hashimoto

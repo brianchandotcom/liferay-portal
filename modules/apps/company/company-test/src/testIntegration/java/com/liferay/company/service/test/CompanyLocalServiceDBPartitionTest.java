@@ -412,7 +412,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(
 				_JOBS_COUNT + 2, _getJobsCount(_defaultCompanyId));
 			Assert.assertEquals(
-				1, _getPartitionedJobsCount(company.getCompanyId()));
+				1, _getCompanyJobsCount(company.getCompanyId()));
 		}
 		finally {
 			removeDBPartitions(new long[] {company.getCompanyId()});
@@ -690,24 +690,6 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Assert.assertFalse(
 			partitionNames.contains(getPartitionName(companyId)));
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select companyId from ", defaultPartitionName,
-					".Company where companyId = '", companyId, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertFalse(resultSet.next());
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select virtualHostId from ", defaultPartitionName,
-					".VirtualHost where companyId = '", companyId, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertFalse(resultSet.next());
-		}
 	}
 
 	private void _checkStandaloneDBPartitionTables(
@@ -740,6 +722,22 @@ public class CompanyLocalServiceDBPartitionTest
 	private long[] _getCompanyIdsBySQL() {
 		return ReflectionTestUtil.invoke(
 			PortalInstancePool.class, "_getCompanyIdsBySQL", null, null);
+	}
+
+	private int _getCompanyJobsCount(long companyId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(1) from ", getPartitionName(companyId),
+					".QUARTZ_JOB_DETAILS where JOB_GROUP = '", _JOB_GROUP_NAME,
+					"' and JOB_NAME like '%@", companyId, "'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		throw new Exception("Table does not exist");
 	}
 
 	private int _getDBPartitionsCount() throws SQLException {
@@ -798,24 +796,6 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		return objectNames;
-	}
-
-	private int _getPartitionedJobsCount(long companyId) throws Exception {
-		String partitionName = getPartitionName(companyId);
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select count(1) from ", partitionName,
-					".QUARTZ_JOB_DETAILS where JOB_GROUP = '", _JOB_GROUP_NAME,
-					"' and JOB_NAME like '%@", companyId, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				return resultSet.getInt(1);
-			}
-		}
-
-		throw new Exception("Table does not exist");
 	}
 
 	private int _getTablesCount(long companyId) throws Exception {

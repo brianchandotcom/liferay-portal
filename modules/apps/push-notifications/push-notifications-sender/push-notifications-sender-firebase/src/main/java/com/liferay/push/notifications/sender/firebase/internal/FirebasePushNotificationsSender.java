@@ -90,8 +90,29 @@ public class FirebasePushNotificationsSender
 		_initGoogleCloudServices();
 	}
 
-			return;
-		}
+	protected JSONObject buildMessage(
+		JSONObject payloadJSONObject, String notificationKey) {
+
+		JSONObject messageContent = JSONUtil.put(
+			"android", payloadJSONObject.getJSONObject("android")
+		).put(
+			"apns", payloadJSONObject.getJSONObject("apns")
+		).put(
+			"data", payloadJSONObject.getJSONObject("data")
+		).put(
+			"fcm_options", payloadJSONObject.getJSONObject("fcm_options")
+		).put(
+			"name", payloadJSONObject.getString("name")
+		).put(
+			"notification", payloadJSONObject.getJSONObject("notification")
+		).put(
+			"token", notificationKey
+		).put(
+			"webpush", payloadJSONObject.getJSONObject("webpush")
+		);
+
+		return JSONUtil.put("message", messageContent);
+	}
 
 	@Deactivate
 	protected void deactivate() {

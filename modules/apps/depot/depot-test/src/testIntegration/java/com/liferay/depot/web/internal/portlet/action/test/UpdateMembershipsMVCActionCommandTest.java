@@ -144,7 +144,7 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 		try {
 			ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_validateGroups",
+				_mvcActionCommand, "_validateGroupIds",
 				new Class<?>[] {ActionRequest.class},
 				new MockActionRequest(
 					permissionChecker,
@@ -248,7 +248,7 @@ public class UpdateMembershipsMVCActionCommandTest {
 				new long[] {role.getRoleId()});
 
 			ReflectionTestUtil.invoke(
-				_mvcActionCommand, "_validateGroups",
+				_mvcActionCommand, "_validateGroupIds",
 				new Class<?>[] {ActionRequest.class},
 				new MockActionRequest(
 					permissionChecker,

@@ -65,6 +65,11 @@ public class CommerceOrderModelPreFilterContributor
 			}
 		}
 
+		if (nestedBooleanFilter.hasClauses()) {
+			commerceAccountIdBooleanFilter.add(
+				nestedBooleanFilter, BooleanClauseOccur.SHOULD);
+		}
+
 		commerceAccountIdBooleanFilter.add(
 			new MissingFilter("commerceAccountId"), BooleanClauseOccur.SHOULD);
 

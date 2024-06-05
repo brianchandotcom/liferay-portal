@@ -93,8 +93,8 @@ export async function syncAllContacts(page) {
 	await page.getByRole('button', {exact: true, name: 'Next'}).click();
 }
 
-export async function syncAnalyticsCloud(page, propertyName) {
-	await createChannel(page, propertyName);
+export async function syncAnalyticsCloud(apiHelpers, page, propertyName) {
+	await createChannel(apiHelpers, propertyName);
 
 	await createDataSource(page);
 

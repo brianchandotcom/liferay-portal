@@ -19,6 +19,7 @@ import {
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {faroConfig} from './faro.config';
+import {createChannel} from './utils/channel';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -68,13 +69,9 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 	apiHelpers,
 	page,
 }) => {
-	const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
-
-	const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
-
-	const channel = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
-		'My Property - ' + getRandomString(),
-		project.groupId
+	const {channel, project} = await createChannel(
+		apiHelpers,
+		'My Property - ' + getRandomString()
 	);
 
 	await apiHelpers.jsonWebServicesOSBAsah.createIndividuals([
@@ -256,7 +253,7 @@ test('shows outside pages in path analysis', async ({apiHelpers, page}) => {
 
 	const channelName = 'My Property - ' + getRandomString();
 
-	await syncAnalyticsCloud(page, channelName);
+	await syncAnalyticsCloud(apiHelpers, page, channelName);
 
 	await goToWithReferrer(
 		page,
@@ -331,7 +328,7 @@ test('shows tracked pages in path analysis', async ({apiHelpers, page}) => {
 
 	const channelName = 'My Property - ' + getRandomString();
 
-	await syncAnalyticsCloud(page, channelName);
+	await syncAnalyticsCloud(apiHelpers, page, channelName);
 
 	await navigateToSitePage(page, '', pageTitle1);
 

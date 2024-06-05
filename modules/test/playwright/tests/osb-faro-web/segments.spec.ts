@@ -23,12 +23,13 @@ export const test = mergeTests(
 );
 
 test('check if updated custom event displayName is shown on segment criteria card', async ({
+	apiHelpers,
 	page,
 }) => {
 	const channelName = 'My Property - ' + getRandomString();
 	const customEventName = 'CustomEvent' + new Date().getTime();
 
-	await syncAnalyticsCloud(page, channelName);
+	await syncAnalyticsCloud(apiHelpers, page, channelName);
 	await page.goto(liferayConfig.environment.baseUrl);
 	await page.waitForTimeout(3000);
 

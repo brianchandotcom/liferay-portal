@@ -3,24 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {faroConfig} from '../faro.config';
+export async function createChannel(apiHelpers, name) {
+	const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
 
-export async function createChannel(page, name) {
-	await page.goto(faroConfig.environment.baseUrl);
+	const project = projects.find(({name}) => name === 'FARO-DEV-liferay');
 
-	await page
-		.getByRole('link', {
-			name: 'FARO-DEV-liferay Liferay Demo Enterprise Plan',
-		})
-		.click();
+	const channel = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+		name,
+		project.groupId
+	);
 
-	await page.getByRole('link', {name: 'Settings'}).click();
-
-	await page.getByRole('link', {name: 'Properties'}).click();
-
-	await page.getByTestId('addproperty-button').click();
-
-	await page.getByLabel('Property Name').fill(name);
-
-	await page.getByRole('button', {name: 'Save'}).click();
+	return {
+		channel,
+		project,
+	};
 }

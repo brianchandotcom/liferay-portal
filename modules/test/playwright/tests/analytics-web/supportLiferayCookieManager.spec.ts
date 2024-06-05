@@ -5,6 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -21,11 +23,13 @@ import {createChannel} from '../osb-faro-web/utils/channel';
 import {createDataSource} from '../osb-faro-web/utils/dataSource';
 
 export const test = mergeTests(
-	loginAnalyticsCloudTest(),
-	loginTest(),
+	apiHelpersTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-10588': true,
-	})
+	}),
+	loginAnalyticsCloudTest(),
+	loginTest()
 );
 
 async function changeCookiePreference(page, options) {
@@ -40,6 +44,8 @@ async function changeCookiePreference(page, options) {
 	await page.getByRole('link', {name: 'Cookies'}).click();
 
 	const cookieBannerCheckbox = await page.getByLabel('Enabled');
+
+	await page.waitForTimeout(3000);
 
 	if (enableCookieBanner) {
 		await cookieBannerCheckbox.check();
@@ -70,10 +76,10 @@ async function changeCookiePreference(page, options) {
 	await page.waitForTimeout(3000);
 }
 
-async function connectACToDXP(page) {
+async function connectACToDXP(apiHelpers, page) {
 	const propertyName = 'My Property - ' + getRandomString();
 
-	await createChannel(page, propertyName);
+	await createChannel(apiHelpers, propertyName);
 
 	await createDataSource(page);
 
@@ -108,8 +114,8 @@ async function checkAnalyticsInstance(page) {
 }
 
 test.describe('LPD-6540 Support Liferay Cookie Manager', () => {
-	test.beforeEach(async ({page}) => {
-		await connectACToDXP(page);
+	test.beforeEach(async ({apiHelpers, page}) => {
+		await connectACToDXP(apiHelpers, page);
 	});
 
 	test('When Cookie Preference Handling and Explicit Cookie Consent Mode are both Enabled, AC tracking should be disabled by default and only be enabled as soon the user accepts the performance cookies', async ({

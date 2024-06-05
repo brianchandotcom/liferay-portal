@@ -16,6 +16,7 @@ import Footer from './Footer';
 import RequiredMark from '../../../components/RequiredMark';
 import ValidationFeedback from '../../../components/ValidationFeedback';
 import {IClientExtensionFilter, IField, IFilter} from '../../../utils/types';
+import ClayAlert from '@clayui/alert';
 
 function Header() {
 	return <>{Liferay.Language.get('new-client-extension-filter')}</>;
@@ -152,6 +153,16 @@ function Body({
 		}
 	};
 
+	if (!fdsFilterClientExtensions.length) {
+		return (
+			<ClayAlert displayType="info" title="Info">
+				{Liferay.Language.get(
+					'no-frontend-data-set-filter-client-extensions-are-available.-add-a-client-extension-first-in-order-to-create-a-filter'
+				)}
+			</ClayAlert>
+		);
+	}
+	
 	return (
 		<>
 			<ClayModal.Body>

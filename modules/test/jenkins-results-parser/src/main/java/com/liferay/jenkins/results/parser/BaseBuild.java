@@ -1603,75 +1603,7 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		String pinnedMessage = "";
-
-		if (!slaveOfflineRule.shutdown) {
-			pinnedMessage = "PINNED\n";
-		}
-
-		JenkinsSlave jenkinsSlave = getJenkinsSlave();
-
-		JenkinsMaster jenkinsMaster = jenkinsSlave.getJenkinsMaster();
-
-		String slaveOfflineRuleString = slaveOfflineRule.toString();
-
-		slaveOfflineRuleString = slaveOfflineRuleString.replace("\\", "\\\\");
-
-		StringBuilder sb = new StringBuilder();
-
-		if (slaveOfflineRule.getOfflineSibling() &&
-			(jenkinsMaster.getSlavesPerHost() == 2)) {
-
-			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
-
-			if (!siblingJenkinsSlaves.isEmpty()) {
-				sb.append("\n\n\nOffline Sibling ");
-				sb.append(
-					JenkinsResultsParserUtil.getNounForm(
-						siblingJenkinsSlaves.size(), "URLs", "URL"));
-				sb.append(":\n");
-
-				for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
-					sb.append(siblingJenkinsSlave.getComputerURL());
-					sb.append("\n");
-
-					String siblingMessage = JenkinsResultsParserUtil.combine(
-						pinnedMessage, "Offline Sibling: ",
-						jenkinsSlave.getName(), " Reason: ",
-						slaveOfflineRule.getName());
-
-					siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
-				}
-			}
-		}
-
-		String message = JenkinsResultsParserUtil.combine(
-			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
-			getBuildURL(), ". \n\n", slaveOfflineRuleString,
-			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n",
-			sb.toString());
-
-		System.out.println(message);
-
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (topLevelBuild != null) {
-			message = JenkinsResultsParserUtil.combine(
-				message, "Top Level Build URL: ", topLevelBuild.getBuildURL());
-		}
-
-		jenkinsSlave.takeSlavesOffline(message);
-
-		String notificationRecipients =
-			slaveOfflineRule.getNotificationRecipients();
-
-		if ((notificationRecipients != null) &&
-			!notificationRecipients.isEmpty()) {
-
-			NotificationUtil.sendEmail(
-				message, "jenkins", "Slave Offline",
-				slaveOfflineRule.notificationRecipients);
-		}
+		slaveOfflineRule.takeSlaveOffline(this);
 	}
 
 	@Override

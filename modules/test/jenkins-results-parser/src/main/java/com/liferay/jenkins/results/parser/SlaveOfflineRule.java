@@ -104,6 +104,67 @@ public class SlaveOfflineRule {
 		return shutdown;
 	}
 
+	public void takeSlaveOffline(Build build) {
+		String pinnedMessage = "";
+
+		if (!slaveOfflineRule.shutdown) {
+			pinnedMessage = "PINNED\n";
+		}
+
+		JenkinsSlave jenkinsSlave = build.getJenkinsSlave();
+
+		JenkinsMaster jenkinsMaster = jenkinsSlave.getJenkinsMaster();
+
+		String slaveOfflineRuleString = slaveOfflineRule.toString();
+
+		slaveOfflineRuleString = slaveOfflineRuleString.replace("\\", "\\\\");
+
+		String message = JenkinsResultsParserUtil.combine(
+			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
+			build.getBuildURL(), ". \n\n", slaveOfflineRuleString,
+			"\n\n\nOffline Slave URL: ", jenkinsSlave.getComputerURL(), "\n");
+
+		if (slaveOfflineRule.getOfflineSibling() &&
+			(jenkinsMaster.getSlavesPerHost() == 2)) {
+
+			Set<JenkinsSlave> siblingJenkinsSlaves = jenkinsSlave.getSiblings();
+
+			for (JenkinsSlave siblingJenkinsSlave : siblingJenkinsSlaves) {
+				message = JenkinsResultsParserUtil.combine(
+					message, "Offline Slave URL: ",
+					siblingJenkinsSlave.getComputerURL(), "\n");
+
+				String siblingMessage = JenkinsResultsParserUtil.combine(
+					pinnedMessage, "Offline sibling: ", jenkinsSlave.getName(),
+					" Reason: ", slaveOfflineRule.getName());
+
+				siblingJenkinsSlave.takeSlavesOffline(siblingMessage);
+			}
+		}
+
+		System.out.println(message);
+
+		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
+
+		if (topLevelBuild != null) {
+			message = JenkinsResultsParserUtil.combine(
+				message, "Top Level Build URL: ", topLevelBuild.getBuildURL());
+		}
+
+		jenkinsSlave.takeSlavesOffline(message);
+
+		String notificationRecipients =
+			slaveOfflineRule.getNotificationRecipients();
+
+		if ((notificationRecipients != null) &&
+			!notificationRecipients.isEmpty()) {
+
+			NotificationUtil.sendEmail(
+				message, "jenkins", "Slave Offline",
+				slaveOfflineRule.notificationRecipients);
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

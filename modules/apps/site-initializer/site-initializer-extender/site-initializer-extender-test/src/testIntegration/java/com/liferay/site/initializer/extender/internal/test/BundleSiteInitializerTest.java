@@ -15,6 +15,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CustomElementCET;
@@ -82,7 +83,9 @@ import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGro
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -686,6 +689,72 @@ public class BundleSiteInitializerTest {
 			testAssetVocabulary2.getExternalReferenceCode());
 
 		_assertAssetCategories();
+	}
+
+	private void _assertBlogPostings1() throws Exception {
+		BlogPostingResource.Builder blogPostingResourceBuilder =
+			_blogPostingResourceFactory.create();
+
+		BlogPostingResource blogPostingResource =
+			blogPostingResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
+
+		BlogPosting blogPosting =
+			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
+				_group.getGroupId(), "TESTBLOGPOSTING1");
+
+		Assert.assertEquals("Test Headline 1", blogPosting.getHeadline());
+		Assert.assertTrue(blogPosting.getImage() != null);
+
+		_assertAssetLinkEntries(blogPosting.getId(), 2);
+
+		blogPosting =
+			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
+				_group.getGroupId(), "TESTBLOGPOSTING2");
+
+		Assert.assertEquals("Test Headline 2", blogPosting.getHeadline());
+		Assert.assertTrue(blogPosting.getImage() == null);
+
+		_assertAssetLinkEntries(blogPosting.getId(), 2);
+	}
+
+	private void _assertBlogPostings2() throws Exception {
+		BlogPostingResource.Builder blogPostingResourceBuilder =
+			_blogPostingResourceFactory.create();
+
+		BlogPostingResource blogPostingResource =
+			blogPostingResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
+
+		BlogPosting blogPosting =
+			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
+				_group.getGroupId(), "TESTBLOGPOSTING1");
+
+		Assert.assertEquals("Test Headline 1", blogPosting.getHeadline());
+		Assert.assertTrue(blogPosting.getImage() != null);
+
+		_assertAssetLinkEntries(blogPosting.getId(), 2);
+
+		blogPosting =
+			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
+				_group.getGroupId(), "TESTBLOGPOSTING2");
+
+		Assert.assertEquals(
+			"Test Headline 2 Update", blogPosting.getHeadline());
+		Assert.assertTrue(blogPosting.getImage() != null);
+
+		_assertAssetLinkEntries(blogPosting.getId(), 4);
+
+		blogPosting =
+			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
+				_group.getGroupId(), "TESTBLOGPOSTING3");
+
+		Assert.assertEquals("Test Headline 3", blogPosting.getHeadline());
+		Assert.assertTrue(blogPosting.getImage() == null);
+
+		_assertAssetLinkEntries(blogPosting.getId(), 2);
 	}
 
 	private void _assertClientExtension() throws Exception {
@@ -4050,6 +4119,7 @@ public class BundleSiteInitializerTest {
 		_assertAccounts1();
 		_assertAssetListEntries();
 		_assertAssetVocabularies();
+		_assertBlogPostings1();
 		_assertClientExtension();
 		_assertCommerceCatalogs1();
 		_assertCommerceChannel1();
@@ -4098,6 +4168,7 @@ public class BundleSiteInitializerTest {
 
 		_assertAccountGroups2();
 		_assertAccounts2();
+		_assertBlogPostings2();
 		_assertCommerceCatalogs2();
 		_assertCommerceChannel2();
 		_assertCommerceOrderType2();
@@ -4151,6 +4222,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private BlogPostingResource.Factory _blogPostingResourceFactory;
 
 	@Inject
 	private CETFactory _cetFactory;

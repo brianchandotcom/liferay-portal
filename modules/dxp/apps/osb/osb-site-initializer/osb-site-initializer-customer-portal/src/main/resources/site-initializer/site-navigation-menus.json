@@ -238,7 +238,7 @@
 								"useNewTab": false
 							},
 							{
-								"externalReferenceCode": "escalateATicketBetaMenuItem",
+								"externalReferenceCode": "escalateATicketMenuItem",
 								"friendlyURL": "/support-ticket-escalation",
 								"type": "layout"
 							}

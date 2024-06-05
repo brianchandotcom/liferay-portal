@@ -101,6 +101,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 			GraphQLDTOProperty.of("externalReferenceCode", String.class));
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of("status", true, String.class));
+		graphQLDTOProperties.add(
+			GraphQLDTOProperty.of("statusCode", Integer.class));
 
 		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties =
 			new ArrayList<>();
@@ -508,6 +510,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		Status status = objectEntry.getStatus();
 
 		properties.put("status", status.getLabel());
+		properties.put("statusCode", status.getCode());
 
 		return properties;
 	}

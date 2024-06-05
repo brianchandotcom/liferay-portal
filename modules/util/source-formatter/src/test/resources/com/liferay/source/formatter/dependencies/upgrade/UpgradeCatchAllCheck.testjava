@@ -422,6 +422,10 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		AssetVocabularyLocalServiceUtil.fetchAssetVocabularyByExternalReferenceCode(companyId, externalReferenceCode);
 		_assetVocabularyLocalService.fetchAssetVocabularyByExternalReferenceCode(companyId, externalReferenceCode);
 
+		CommerceCatalogLocalServiceUtil.fetchCommerceCatalogByExternalReferenceCode(companyId, externalReferenceCode);
+		_commerceCatalogLocalService.fetchCommerceCatalogByExternalReferenceCode(123, "test123");
+		_commerceCatalogLocalService.fetchCommerceCatalogByExternalReferenceCode(companyId, externalReferenceCode);
+
 		CommercePriceListLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 		_commercePriceListLocalService.fetchByExternalReferenceCode(123, "test123");
 		_commercePriceListLocalService.fetchByExternalReferenceCode(companyId, externalReferenceCode);
@@ -595,6 +599,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

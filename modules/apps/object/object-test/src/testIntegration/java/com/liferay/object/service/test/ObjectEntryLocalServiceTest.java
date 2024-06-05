@@ -3485,7 +3485,7 @@ public class ObjectEntryLocalServiceTest {
 		try {
 			user.setEmailAddress(RandomTestUtil.randomString());
 
-			ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
+			ObjectEntryThreadLocal.clearExecutedObjectValidationIds();
 
 			_userLocalService.updateUser(user);
 
@@ -3630,6 +3630,8 @@ public class ObjectEntryLocalServiceTest {
 			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values)
 		throws Exception {
+
+		ObjectEntryThreadLocal.clearExecutedObjectValidationIds();
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,

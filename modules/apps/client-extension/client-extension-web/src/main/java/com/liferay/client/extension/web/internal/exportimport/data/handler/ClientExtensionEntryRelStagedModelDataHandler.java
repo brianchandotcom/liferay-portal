@@ -11,11 +11,14 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,6 +92,22 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				clientExtensionEntryRel.getClassName());
 
+		if (Objects.equals(
+				clientExtensionEntryRel.getClassName(),
+				LayoutSet.class.getName())) {
+
+			LayoutSet existingImportedLayoutSet =
+				_layoutSetLocalService.fetchLayoutSet(
+					portletDataContext.getScopeGroupId(),
+					portletDataContext.isPrivateLayout());
+
+			if (existingImportedLayoutSet != null) {
+				classPKs.put(
+					clientExtensionEntryRel.getClassPK(),
+					existingImportedLayoutSet.getLayoutSetId());
+			}
+		}
+
 		importedClientExtensionEntryRel.setClassPK(
 			MapUtil.getLong(
 				classPKs, clientExtensionEntryRel.getClassPK(),
@@ -125,6 +144,9 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -49,7 +49,7 @@
 			"externalReferenceCode": "a5e9578a-1307-4d89-998f-cc91609dc189",
 			"host": "Liferay",
 			"name": "_hjAbsoluteSessionInProgress",
-			"purpose": "Stores a true or false value for Hotjar to know whether it's the current users first page view. Statistics.",
+			"purpose": "Stores a true or false value for Hotjar to distinguish the user's first page view. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -57,7 +57,7 @@
 			"externalReferenceCode": "59d7f57b-fc51-4e37-8177-4fcaf62a01c7",
 			"host": "Liferay",
 			"name": "_hjFirstSeen",
-			"purpose": "Stores a true or false value for Hotjar to know whether it's seeing the user for the first time. Statistics.",
+			"purpose": "Stores a true or false value for Hotjar to determine whether it's seeing the user for the first time. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -65,7 +65,7 @@
 			"externalReferenceCode": "f5c92d83-57bd-4f83-8e92-70427bffd002",
 			"host": "Liferay",
 			"name": "_hjIncludedInPageviewSample",
-			"purpose": "Stores a true or false value for Hotjar to know whether the user's data should be included in the data sampling defined by the site's daily page view limit. Statistics.",
+			"purpose": "Stores a true or false value for Hotjar to determine whether to include the user's data in the data sampling defined by the site's daily page view limit. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -73,7 +73,7 @@
 			"externalReferenceCode": "e9f2eb7c-9c73-45ce-94ec-c54f0b199428",
 			"host": "Liferay",
 			"name": "_hjIncludedInSessionSample",
-			"purpose": "Stores a true or false value for Hotjar to know whether the user's data should be included in the data sampling defined by the site's daily session limit. Statistics.",
+			"purpose": "Stores a true or false value for Hotjar to determine whether to include the user's data in the data sampling defined by the site's daily session limit. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -113,7 +113,7 @@
 			"externalReferenceCode": "79765961-2d08-444d-b549-7c3bbdabb580",
 			"host": "Liferay",
 			"name": "ac_client_context",
-			"purpose": "Stores a list of page and user properties to send to Analytics Cloud so event analysis can have necessary context. Statistics.",
+			"purpose": "Stores a list of page and user properties to send to Analytics Cloud so event analysis has the necessary context. Statistics.",
 			"type": "First Party"
 		},
 		{

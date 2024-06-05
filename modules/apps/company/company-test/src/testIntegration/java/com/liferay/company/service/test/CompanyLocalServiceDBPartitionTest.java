@@ -398,7 +398,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		try {
 			newCompany = companyLocalService.copyBPartitionCompany(
-				name, company.getCompanyId(), 0, virtualHostname, webId);
+				name, company.getCompanyId(), null, virtualHostname, webId);
 
 			Assert.assertTrue(
 				ArrayUtil.contains(

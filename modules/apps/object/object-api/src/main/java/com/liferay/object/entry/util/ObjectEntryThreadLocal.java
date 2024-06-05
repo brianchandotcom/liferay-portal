@@ -7,13 +7,45 @@ package com.liferay.object.entry.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Marcela Cunha
  */
 public class ObjectEntryThreadLocal {
 
+	public static void addExecutedObjectValidationRuleId(
+		long objectValidationRuleId) {
+
+		Set<Long> executedObjectValidationRuleIds =
+			_executedObjectValidationRuleIds.get();
+
+		executedObjectValidationRuleIds.add(objectValidationRuleId);
+
+		_executedObjectValidationRuleIds.set(executedObjectValidationRuleIds);
+	}
+
+	public static void clearExecutedObjectValidationIds() {
+		Set<Long> executedObjectValidationRuleIds =
+			_executedObjectValidationRuleIds.get();
+
+		executedObjectValidationRuleIds.clear();
+
+		_executedObjectValidationRuleIds.set(executedObjectValidationRuleIds);
+	}
+
 	public static boolean isDisassociateRelatedModels() {
 		return _disassociateRelatedModelsThreadLocal.get();
+	}
+
+	public static boolean isObjectValidationRuleExecuted(
+		long objectValidationRuleId) {
+
+		Set<Long> executedObjectValidationRuleIds =
+			_executedObjectValidationRuleIds.get();
+
+		return executedObjectValidationRuleIds.contains(objectValidationRuleId);
 	}
 
 	public static boolean isSkipObjectEntryResourcePermission() {
@@ -59,6 +91,10 @@ public class ObjectEntryThreadLocal {
 			ObjectEntryThreadLocal.class +
 				"._disassociateRelatedModelsThreadLocal",
 			() -> false);
+	private static final ThreadLocal<Set<Long>>
+		_executedObjectValidationRuleIds = new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class + "._executedObjectValidationRuleIds",
+			HashSet::new);
 	private static final ThreadLocal<Boolean>
 		_skipObjectEntryResourcePermissionThreadLocal =
 			new CentralizedThreadLocal<>(

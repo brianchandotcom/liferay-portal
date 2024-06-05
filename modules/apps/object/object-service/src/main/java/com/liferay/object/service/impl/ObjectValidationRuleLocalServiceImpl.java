@@ -393,11 +393,11 @@ public class ObjectValidationRuleLocalServiceImpl
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
 
-			if (ObjectEntryThreadLocal.isSkipObjectValidationRules()) {
+			if (ObjectEntryThreadLocal.isObjectValidationRuleExecuted(
+					objectValidationRule.getObjectValidationRuleId())) {
+
 				continue;
 			}
-
-			ObjectEntryThreadLocal.setSkipObjectValidationRules(true);
 
 			Map<String, Object> results = new HashMap<>();
 
@@ -447,6 +447,9 @@ public class ObjectValidationRuleLocalServiceImpl
 				results = objectValidationRuleEngine.execute(
 					(Map<String, Object>)variables.get("entryDTO"), null);
 			}
+
+			ObjectEntryThreadLocal.addExecutedObjectValidationRuleId(
+				objectValidationRule.getObjectValidationRuleId());
 
 			Locale locale = LocaleUtil.getMostRelevantLocale();
 

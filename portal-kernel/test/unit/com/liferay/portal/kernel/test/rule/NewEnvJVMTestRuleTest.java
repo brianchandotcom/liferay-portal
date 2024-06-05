@@ -186,6 +186,18 @@ public class NewEnvJVMTestRuleTest {
 		Assert.assertNotEquals(parentEnvironment, environment);
 	}
 
+	@NewEnv.JVMArgsLine("-Dparent.java.home=${java.home}")
+	@Test
+	public void testNewJVM9() {
+		Assert.assertEquals(1, _counter.getAndIncrement());
+
+		assertProcessId();
+
+		Assert.assertEquals(
+			System.getProperty("parent.java.home"),
+			System.getProperty("java.home"));
+	}
+
 	@Rule
 	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 

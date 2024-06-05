@@ -6,8 +6,8 @@
 package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
-import com.liferay.notification.term.provider.NotificationTermProviderRegistry;
 import com.liferay.notification.term.provider.NotificationTermProvider;
+import com.liferay.notification.term.provider.NotificationTermProviderRegistry;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
@@ -138,8 +138,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 	}
 
 	@Reference
-	private NotificationTermProviderRegistry
-		_notificationTermProviderRegistry;
+	private NotificationTermProviderRegistry _notificationTermProviderRegistry;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

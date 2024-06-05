@@ -25,6 +25,8 @@ type TProduct = {
 	};
 	productConfiguration?: {
 		allowBackOrder?: boolean;
+		minOrderQuantity?: number;
+		multipleOrderQuantity?: number;
 	};
 	productId?: number;
 	productOptions?: any[];
@@ -78,6 +80,7 @@ type TSkuUnitOfMeasure = {
 	name?: {
 		[key: string]: string;
 	};
+	precision?: number;
 	primary?: boolean;
 	priority?: number;
 	rate?: number;

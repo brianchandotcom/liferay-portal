@@ -56,7 +56,7 @@ export class CommerceLayoutsPage {
 		this.addWidgetLabel = (widgetName) => {
 			return page
 				.getByTestId('addPanelTabItem')
-				.filter({hasText: widgetName})
+				.filter({has: page.locator(`text="${widgetName}"`)})
 				.getByRole('button', {exact: true, name: 'Add Content'});
 		};
 		this.availableThemesFrame = page.frameLocator(

@@ -33,7 +33,7 @@ export class DisplayPageTemplatesPage {
 		name,
 	}: {
 		contentSubtype?: 'Basic Web Content';
-		contentType: 'Web Content Article' | 'Blogs Entry';
+		contentType: string;
 		name: string;
 	}) {
 		await this.newButton.click();

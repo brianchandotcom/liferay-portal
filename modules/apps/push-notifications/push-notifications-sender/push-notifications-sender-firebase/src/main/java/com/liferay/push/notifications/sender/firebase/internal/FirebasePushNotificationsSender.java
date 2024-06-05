@@ -241,38 +241,32 @@ public class FirebasePushNotificationsSender
 		}
 	}
 
-		String title = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_TITLE);
+	private void _send(JSONObject message)
+		throws IOException, PushNotificationsException {
 
-		if (Validator.isNotNull(title)) {
-			builder.title(title);
+		Http.Options options = new Http.Options();
+
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+
+		options.addHeader(AUTHORIZATION, "Bearer " + _getAccessToken());
+
+		options.setBody(
+			message.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		options.setLocation(
+			"https://fcm.googleapis.com/v1/projects/" + _getProjectId() +
+				"/messages:send");
+
+		options.setPost(true);
+
+		_httpUtil.URLtoString(options);
+
+		Http.Response optionsResponse = options.getResponse();
+
+		if (optionsResponse.getResponseCode() != OK_CODE) {
+			throw new PushNotificationsException(
+				"Unable to send the push notification");
 		}
-
-		JSONArray titleLocalizedArgumentsJSONArray =
-			payloadJSONObject.getJSONArray(
-				PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS);
-
-		if (titleLocalizedArgumentsJSONArray != null) {
-			List<String> localizedArguments = new ArrayList<>();
-
-			for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
-				 i++) {
-
-				localizedArguments.add(
-					titleLocalizedArgumentsJSONArray.getString(i));
-			}
-
-			builder.titleLocalizationArguments(localizedArguments);
-		}
-
-		String titleLocalizedKey = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_TITLE_LOCALIZED);
-
-		if (Validator.isNotNull(titleLocalizedKey)) {
-			builder.titleLocalizationKey(titleLocalizedKey);
-		}
-
-		return builder.build();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

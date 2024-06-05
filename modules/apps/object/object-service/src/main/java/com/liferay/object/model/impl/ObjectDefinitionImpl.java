@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFolderLocalServiceUtil;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -20,10 +21,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
+@Component(service = ObjectDefinition.class)
 public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	public static String getShortName(String name) {
@@ -122,9 +127,26 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(
+				getRootObjectDefinitionId());
+
 		if (isModifiable() && isSystem()) {
-			return ObjectDefinitionUtil.
-				getModifiableSystemObjectDefinitionRESTContextPath(getName());
+			if (!isRootDescendantNode()) {
+				return ObjectDefinitionUtil.
+					getModifiableSystemObjectDefinitionRESTContextPath(
+						getName());
+			}
+
+			return StringBundler.concat(
+				ObjectDefinitionUtil.
+					getModifiableSystemObjectDefinitionRESTContextPath(
+						rootObjectDefinition.getName()),
+				StringPool.SLASH,
+				_getRESTContextPathForRootDescantNode(
+					ObjectDefinitionUtil.
+						getModifiableSystemObjectDefinitionRESTContextPath(
+							getName())));
 		}
 
 		String shortName = TextFormatter.formatPlural(
@@ -133,10 +155,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		if (!isRootDescendantNode()) {
 			return "/c/" + shortName;
 		}
-
-		ObjectDefinition rootObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				getRootObjectDefinitionId());
 
 		return StringBundler.concat(
 			"/c/",
@@ -236,5 +254,36 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 		return false;
 	}
+
+	private String _getRESTContextPathForRootDescantNode(
+		String restContextPath) {
+
+		int lengthWithoutSlashes = StringUtil.removeSubstring(
+			restContextPath, "/"
+		).length();
+
+		int slashCount = restContextPath.length() - lengthWithoutSlashes;
+
+		String[] parts = restContextPath.split("/");
+
+		if (slashCount <= 1) {
+			return parts[1];
+		}
+
+		StringBuilder result = new StringBuilder();
+
+		for (int i = 2; i < parts.length; i++) {
+			if (result.length() > 0) {
+				result.append("/");
+			}
+
+			result.append(parts[i]);
+		}
+
+		return result.toString();
+	}
+
+	@Reference
+	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 }

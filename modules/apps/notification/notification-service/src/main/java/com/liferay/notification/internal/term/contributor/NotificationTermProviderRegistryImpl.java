@@ -5,13 +5,11 @@
 
 package com.liferay.notification.internal.term.contributor;
 
-import com.liferay.notification.term.provider.NotificationTermProviderRegistry;
 import com.liferay.notification.term.provider.NotificationTermProvider;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
+import com.liferay.notification.term.provider.NotificationTermProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -30,30 +28,13 @@ public class NotificationTermProviderRegistryImpl
 	public List<NotificationTermProvider> getNotificationTermProviders(
 		String className) {
 
-		List<NotificationTermProvider> notificationTermProviders =
-			new ArrayList<>();
-
-		List
-			<ServiceTrackerCustomizerFactory.ServiceWrapper
-				<NotificationTermProvider>> notificationTermEvaluatorWrappers =
-					_serviceTrackerMap.getService(className);
-
-		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<NotificationTermProvider> tableActionProviderServiceWrapper :
-					notificationTermEvaluatorWrappers) {
-
-			notificationTermProviders.add(
-				tableActionProviderServiceWrapper.getService());
-		}
-
-		return notificationTermProviders;
+		return _serviceTrackerMap.getService(className);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, NotificationTermProvider.class, "class.name",
-			ServiceTrackerCustomizerFactory.serviceWrapper(bundleContext));
+			bundleContext, NotificationTermProvider.class, "class.name");
 	}
 
 	@Deactivate
@@ -61,10 +42,7 @@ public class NotificationTermProviderRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap
-		<String,
-		 List
-			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <NotificationTermProvider>>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, List<NotificationTermProvider>>
+		_serviceTrackerMap;
 
 }

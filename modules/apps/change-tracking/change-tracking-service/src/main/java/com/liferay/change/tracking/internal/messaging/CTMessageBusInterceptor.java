@@ -51,8 +51,6 @@ public class CTMessageBusInterceptor implements MessageBusInterceptor {
 
 		message.setDestinationName(destinationName);
 
-		message.remove("companyId");
-
 		Map<String, Object> messageValues = message.getValues();
 
 		Collection<Object> values = messageValues.values();

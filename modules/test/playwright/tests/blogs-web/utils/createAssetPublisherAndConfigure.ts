@@ -58,7 +58,8 @@ export async function createAssetPublisherAndConfigure({
 	await configurationModal.locator('.portlet-body').waitFor();
 
 	const configurationDynamicLabel = await configurationModal.getByText(
-		'Dynamic'
+		'Dynamic',
+		{exact: true}
 	);
 	if (await configurationDynamicLabel.isHidden()) {
 		await configurationModal

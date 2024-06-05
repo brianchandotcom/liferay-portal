@@ -4,6 +4,6 @@
  */
 
 export const config = {
-	name: 'object',
+	name: 'object-web',
 	testDir: 'tests/object-web',
 };

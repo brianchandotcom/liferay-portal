@@ -5,14 +5,14 @@
 
 /// <reference types="react" />
 
-export interface IFilterModalFooterProps {
+export interface IFooterProps {
 	closeModal: Function;
 	onSave: Function;
 	saveButtonDisabled: boolean;
 }
-declare function FilterModalFooter({
+declare function Footer({
 	closeModal,
 	onSave,
 	saveButtonDisabled,
-}: IFilterModalFooterProps): JSX.Element;
-export default FilterModalFooter;
+}: IFooterProps): JSX.Element;
+export default Footer;

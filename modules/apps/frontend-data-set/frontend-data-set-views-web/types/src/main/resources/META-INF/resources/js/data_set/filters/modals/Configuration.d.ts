@@ -5,7 +5,7 @@
 
 import React from 'react';
 import {IField, IFilter} from '../../../utils/types';
-interface IFilterModalConfigurationProps {
+interface IConfigurationProps {
 	fieldInUseValidationError: boolean;
 	fieldNames?: string[];
 	fieldValidationError: boolean;
@@ -19,7 +19,7 @@ interface IFilterModalConfigurationProps {
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
 	) => void;
 }
-declare function FilterModalConfiguration({
+declare function Configuration({
 	fieldInUseValidationError,
 	fieldNames,
 	fieldValidationError,
@@ -30,5 +30,5 @@ declare function FilterModalConfiguration({
 	onBlur,
 	onChangeField,
 	onChangeLabel,
-}: IFilterModalConfigurationProps): JSX.Element;
-export default FilterModalConfiguration;
+}: IConfigurationProps): JSX.Element;
+export default Configuration;

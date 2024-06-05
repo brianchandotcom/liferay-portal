@@ -8,6 +8,8 @@
 import {ISelectionFilter} from '../../../../../utils/types';
 interface IApiRestApplicationModalContentProps {
 	filter?: ISelectionFilter;
+	itemKeyValidationError: boolean;
+	itemLabelValidationError: boolean;
 	namespace: string;
 	onChange: ({
 		selectedItemKey,
@@ -29,6 +31,8 @@ interface IApiRestApplicationModalContentProps {
 }
 declare function ApiRestApplication({
 	filter,
+	itemKeyValidationError,
+	itemLabelValidationError,
 	namespace,
 	onChange,
 	requiredRESTApplicationValidationError,

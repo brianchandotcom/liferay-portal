@@ -15,9 +15,13 @@ import RestSchemaSelection from '../../../../../components/RestSchemaSelection';
 import {FUZZY_OPTIONS} from '../../../../../utils/constants';
 import getFields from '../../../../../utils/getFields';
 import {IField, ISelectionFilter} from '../../../../../utils/types';
+import classNames from 'classnames';
+import ValidationFeedback from '../../../../../components/ValidationFeedback';
 
 interface IApiRestApplicationModalContentProps {
 	filter?: ISelectionFilter;
+	itemKeyValidationError: boolean;
+	itemLabelValidationError: boolean;
 	namespace: string;
 	onChange: ({
 		selectedItemKey,
@@ -40,6 +44,8 @@ interface IApiRestApplicationModalContentProps {
 
 function ApiRestApplication({
 	filter,
+	itemKeyValidationError,
+	itemLabelValidationError,
 	namespace,
 	onChange,
 	requiredRESTApplicationValidationError,
@@ -247,7 +253,9 @@ function ApiRestApplication({
 
 			{selectedRESTSchema && (
 				<>
-					<ClayForm.Group className="form-group-autofit">
+					<ClayForm.Group className={classNames("form-group-autofit", {
+							"has-error": itemKeyValidationError || itemLabelValidationError,
+					})}>
 						<div className="form-group-item">
 							<label>
 								{Liferay.Language.get('item-key')}
@@ -294,6 +302,8 @@ function ApiRestApplication({
 									}}
 								/>
 							</ClayDropDown>
+
+							{itemKeyValidationError && <ValidationFeedback />}
 						</div>
 
 						<div className="form-group-item">
@@ -344,6 +354,8 @@ function ApiRestApplication({
 									}}
 								/>
 							</ClayDropDown>
+
+							{itemLabelValidationError && <ValidationFeedback />}
 						</div>
 					</ClayForm.Group>
 				</>

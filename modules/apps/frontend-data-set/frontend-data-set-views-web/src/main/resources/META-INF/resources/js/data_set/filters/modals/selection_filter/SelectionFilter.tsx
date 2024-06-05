@@ -121,7 +121,9 @@ function Body({
 	>('');
 	const [selectedItemKey, setSelectedItemKey] = useState<string>('');
 	const [selectedItemLabel, setSelectedItemLabel] = useState<string>('');
-
+	const [itemKeyValidationError, setItemKeyValidationError] = useState<boolean>(false);
+	const [itemLabelValidationError, setItemLabelValidationError] = useState<boolean>(false);
+	
 	const includeModeFormElementId = `${namespace}IncludeMode`;
 	const multipleFormElementId = `${namespace}Multiple`;
 	const sourceOptionFormElementId = `${namespace}SourceOption`;
@@ -203,6 +205,18 @@ function Body({
 			sourceType &&
 			sourceType === ESelectionFilterSourceType.API_HEADLESS
 		) {
+			if (!selectedItemKey) {
+				setItemKeyValidationError(true);
+
+				isValid = false;
+			}
+
+			if (!selectedItemLabel) {
+				setItemLabelValidationError(true);
+
+				isValid = false;
+			}
+
 			if (!selectedRESTApplication) {
 				setRequiredRESTApplicationValidationError(true);
 
@@ -573,6 +587,8 @@ function Body({
 									sourceType ===
 										ESelectionFilterSourceType.API_HEADLESS && (
 										<ApiRestApplication
+											itemKeyValidationError={itemKeyValidationError}
+											itemLabelValidationError={itemLabelValidationError}
 											filter={filter as ISelectionFilter}
 											namespace={namespace}
 											onChange={({
@@ -619,9 +635,12 @@ function Body({
 												setSelectedItemKey(
 													selectedItemKey
 												);
+												setItemKeyValidationError(false);
+
 												setSelectedItemLabel(
 													selectedItemLabel
 												);
+												setItemLabelValidationError(false);
 											}}
 											requiredRESTApplicationValidationError={
 												requiredRESTApplicationValidationError

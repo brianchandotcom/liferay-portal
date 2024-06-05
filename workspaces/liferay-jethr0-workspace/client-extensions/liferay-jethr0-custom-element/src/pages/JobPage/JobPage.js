@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
@@ -141,11 +142,12 @@ function JobInformation({job}) {
 					fieldValue={job.id}
 				/>
 
-				<Jethr0InformationField
-					fieldLabel="Job Blessed"
-					fieldType="BOOLEAN"
-					fieldValue={job.blessed}
-				/>
+				<strong>{'Job Blessed: '}</strong>
+				{job.blessed ?
+					<ClayBadge displayType="success" label="blessed" /> :
+					<ClayBadge displayType="secondary" label="normal" />
+				}
+				<br />
 
 				<Jethr0InformationField
 					fieldLabel="Job State"
@@ -293,6 +295,10 @@ function JobPage() {
 
 						<Jethr0ButtonsRow
 							buttons={[
+								{
+									link: '/jobs/' + id + '/update',
+									title: 'Update',
+								},
 								{
 									onClick: () => {
 										deleteJobById({

@@ -984,7 +984,7 @@ scheduleTest(
 			reviewDate
 		);
 
-		await journalEditArticlePage.assertScheduleDate(
+		await journalEditArticlePage.assertScheduledArticleDates(
 			articleTitle,
 			publishDate,
 			undefined,
@@ -1029,7 +1029,7 @@ scheduleTest(
 
 		await journalPage.goto(site.friendlyUrlPath);
 
-		await journalEditArticlePage.assertScheduleDate(
+		await journalEditArticlePage.assertScheduledArticleDates(
 			articleTitle,
 			articleDate,
 			{workflow: true}

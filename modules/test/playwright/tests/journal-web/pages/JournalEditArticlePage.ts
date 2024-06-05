@@ -221,7 +221,7 @@ export class JournalEditArticlePage {
 		await row.locator('span.label').filter({hasText: 'Pending'}).waitFor();
 	}
 
-	async assertScheduleDate(
+	async assertScheduledArticleDates(
 		title: string,
 		publishDate: string,
 		{workflow} = {workflow: false},

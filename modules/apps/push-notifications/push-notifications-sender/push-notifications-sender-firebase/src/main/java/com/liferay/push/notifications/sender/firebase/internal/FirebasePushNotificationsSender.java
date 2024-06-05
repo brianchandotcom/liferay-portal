@@ -185,27 +185,44 @@ public class FirebasePushNotificationsSender
 		}
 	}
 
-		JSONArray bodyLocalizedArgumentsJSONArray =
-			payloadJSONObject.getJSONArray(
-				PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS);
+	private void _removeNotificationGroup(
+			String authorizationToken, List<String> tokens,
+			String notificationKey)
+		throws IOException, PushNotificationsException {
 
-		if (bodyLocalizedArgumentsJSONArray != null) {
-			List<String> bodyLocalizedArguments = new ArrayList<>();
+		Http.Options options = new Http.Options();
 
-			for (int i = 0; i < bodyLocalizedArgumentsJSONArray.length(); i++) {
-				bodyLocalizedArguments.add(
-					bodyLocalizedArgumentsJSONArray.getString(i));
-			}
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+		options.addHeader("access_token_auth", "true");
 
-			builder.bodyLocalizationArguments(bodyLocalizedArguments);
+		options.addHeader("project_id", _projectNumber);
+		options.addHeader(AUTHORIZATION, "Bearer " + authorizationToken);
+
+		JSONObject data = JSONUtil.put(
+			"notification_key", notificationKey
+		).put(
+			"notification_key_name", GOOGLE_GROUP_ID
+		).put(
+			"operation", "remove"
+		).put(
+			"registration_ids", tokens
+		);
+
+		options.setBody(
+			data.toString(), ContentTypes.APPLICATION_JSON, "UTF-8");
+
+		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
+		options.setPost(true);
+
+		_httpUtil.URLtoString(options);
+
+		Http.Response optionsResponse = options.getResponse();
+
+		if (optionsResponse.getResponseCode() != OK_CODE) {
+			throw new PushNotificationsException(
+				"Unable to remove notification group");
 		}
-
-		String sound = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_SOUND);
-
-		if (Validator.isNotNull(sound)) {
-			builder.sound(sound);
-		}
+	}
 
 		String title = payloadJSONObject.getString(
 			PushNotificationsConstants.KEY_TITLE);

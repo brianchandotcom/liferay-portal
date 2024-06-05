@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 
@@ -51,7 +52,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		formData.add("client_id", "oauthTestApplicationRO");
 		formData.add("client_secret", "oauthTestApplicationSecret");
 		formData.add("grant_type", "password");
-		formData.add("password", "test");
+		formData.add("password", PropsValues.DEFAULT_ADMIN_PASSWORD);
 		formData.add("username", "test@liferay.com");
 
 		tokenInvocationBuilder.header("Origin", _TEST_CORS_URI);
@@ -70,7 +71,8 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		Invocation.Builder invocationBuilder = authorize(
@@ -113,7 +115,8 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		Invocation.Builder invocationBuilder = authorize(

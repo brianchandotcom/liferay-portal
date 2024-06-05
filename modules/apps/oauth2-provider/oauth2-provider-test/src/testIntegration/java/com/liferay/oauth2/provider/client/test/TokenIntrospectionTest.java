@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 
@@ -48,7 +49,8 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 
 		String token = getToken(
 			applicationClientId, null,
-			getAuthorizationCodeBiFunction("test@liferay.com", "test", null),
+			getAuthorizationCodeBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(token);
@@ -78,7 +80,7 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		String token = getToken(
 			applicationClientId, null,
 			getAuthorizationCodePKCEBiFunction(
-				"test@liferay.com", "test", null),
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(token);

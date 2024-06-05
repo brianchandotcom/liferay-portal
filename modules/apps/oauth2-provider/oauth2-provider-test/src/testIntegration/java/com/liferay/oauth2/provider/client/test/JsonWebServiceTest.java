@@ -16,6 +16,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -71,7 +72,8 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		invocationBuilder = authorize(webTarget.request(), tokenString);
@@ -106,7 +108,8 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		String token = getToken(
 			"oauthTestApplicationRW", null,
 			getResourceOwnerPasswordBiFunction(
-				"test@liferay.com", "test", "everything.write"),
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+				"everything.write"),
 			this::parseTokenString);
 
 		invocationBuilder = authorize(webTarget.request(), token);

@@ -10,6 +10,7 @@ import com.liferay.oauth2.provider.internal.test.PasswordAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.util.PropsValues;
 
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
 import org.apache.cxf.rs.security.jose.jws.JwsHeaders;
@@ -34,7 +35,8 @@ public class IssueJWTAccessTokenTest extends BaseTokenEndpointTestCase {
 	public void testIssuedJWTAccessToken() {
 		_verifyJWTAccessToken(
 			getAccessToken(
-				new PasswordAuthorizationGrant("test@liferay.com", "test"),
+				new PasswordAuthorizationGrant(
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 				clientAuthentications.get(TEST_CLIENT_ID_1)));
 	}
 

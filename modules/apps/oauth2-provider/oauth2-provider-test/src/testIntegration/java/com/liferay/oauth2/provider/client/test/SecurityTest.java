@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.net.URI;
 
@@ -61,7 +62,8 @@ public class SecurityTest extends BaseClientTestCase {
 			"SAMEORIGIN",
 			parseXFrameOptionsHeader(
 				getCodeResponse(
-					"test@liferay.com", "test", null,
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
 							"client_id", "oauthTestApplicationCode"
@@ -80,7 +82,8 @@ public class SecurityTest extends BaseClientTestCase {
 			"invalid_request",
 			parseErrorParameter(
 				getCodeResponse(
-					"test@liferay.com", "test", null,
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
 							"client_id", "oauthTestApplicationCode"
@@ -96,7 +99,7 @@ public class SecurityTest extends BaseClientTestCase {
 	public void testPreventCSRFUsingPKCE() {
 		String authorizationCode = parseAuthorizationCodeString(
 			getCodeResponse(
-				"test@liferay.com", "test", null,
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCodePKCE"
@@ -126,7 +129,7 @@ public class SecurityTest extends BaseClientTestCase {
 
 		String responseState = parseStateString(
 			getCodeResponse(
-				"test@liferay.com", "test", null,
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCode"
@@ -145,7 +148,7 @@ public class SecurityTest extends BaseClientTestCase {
 	@Test
 	public void testPreventOpenRedirect() {
 		Response response = getCodeResponse(
-			"test@liferay.com", "test", null,
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCode"
@@ -166,7 +169,7 @@ public class SecurityTest extends BaseClientTestCase {
 	public void testRedirectUriMustMatch() {
 		String authorizationCode = parseAuthorizationCodeString(
 			getCodeResponse(
-				"test@liferay.com", "test", null,
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 				getCodeFunction(
 					webTarget -> webTarget.queryParam(
 						"client_id", "oauthTestApplicationCode"

@@ -417,3 +417,53 @@ test('LPD-27013 Cannot assign tasks once task is completed', async ({
 		})
 	).toBeVisible({visible: false});
 });
+
+test('LPD-24758 Error when viewing Workflow tab in publication history', async ({
+	changeTrackingPage,
+	ctCollection,
+	journalEditArticlePage,
+	page,
+	workflowTasksPage,
+}) => {
+	const p1_journalName = getRandomString();
+
+	await journalEditArticlePage.goto();
+
+	await journalEditArticlePage.submitArticleForWorkflow(p1_journalName);
+
+	await workflowTasksPage.goToAssignedToMyRoles();
+
+	await workflowTasksPage.assignToMe(p1_journalName);
+
+	await workflowTasksPage.approve(p1_journalName);
+
+	const apiHelpers = new ApiHelpers(page);
+
+	await apiHelpers.headlessChangeTracking.publishCTCollection(
+		ctCollection.id
+	);
+
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection('0');
+
+	await changeTrackingPage.goToReviewChangesHistory(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(p1_journalName);
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	const displayData = [
+		'Status',
+		'Assigned to',
+		'Task Name',
+		'Create Date',
+		'Due Date',
+		'Usages',
+		'Activities',
+	];
+
+	for (const data of displayData) {
+		await expect(page.getByText(data, {exact: true})).toBeVisible();
+	}
+
+	await expect(page.getByLabel('more-actions')).toBeHidden();
+});

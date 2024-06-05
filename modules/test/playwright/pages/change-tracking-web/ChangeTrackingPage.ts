@@ -43,6 +43,31 @@ export class ChangeTrackingPage {
 			.waitFor();
 	}
 
+	async goToReviewChangesHistory(title: string) {
+		await this.goto();
+
+		await this.page
+			.locator('li[data-nav-item-index="2"] a span')
+			.filter({hasText: 'History'})
+			.first()
+			.click();
+
+		await this.page
+			.locator('#fnsd___table-id div')
+			.filter({hasText: title})
+			.first()
+			.waitFor();
+
+		await this.page.getByRole('link', {exact: true, name: title}).click();
+
+		await this.page
+			.locator(
+				'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_controlMenu'
+			)
+			.filter({hasText: 'Review Changes'})
+			.waitFor();
+	}
+
 	async reviewChange(title: string) {
 		await this.page.getByRole('link', {name: title}).first().click();
 

@@ -18,9 +18,11 @@ import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.link.constants.AssetLinkConstants;
 import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
@@ -565,6 +567,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(
 				() -> _addOrUpdateBlogPostings(
+					serviceContext, stringUtilReplaceValues));
+
+			_invoke(
+				() -> _addOrUpdateAssetLinkEntries(
 					serviceContext, stringUtilReplaceValues));
 			_invoke(() -> _addPortletSettings(serviceContext));
 			_invoke(
@@ -1391,6 +1397,56 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_objectDefinitionLocalService.
 					enableAccountEntryRestrictedForNondefaultStorageType(
 						serviceBuilderObjectField);
+			}
+		}
+	}
+
+	private void _addOrUpdateAssetLinkEntries(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/asset-link-entries.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_replace(json, stringUtilReplaceValues));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+				_portal.getClassNameId(jsonObject.getString("classNameId")),
+				jsonObject.getLong("classPK"));
+
+			if (assetEntry1 == null) {
+				continue;
+			}
+
+			JSONArray assetEntriesJSONArray = jsonObject.getJSONArray(
+				"assetEntries");
+
+			for (int j = 0; j < assetEntriesJSONArray.length(); j++) {
+				JSONObject assetEntryJSONObject =
+					assetEntriesJSONArray.getJSONObject(j);
+
+				AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+					_portal.getClassNameId(
+						assetEntryJSONObject.getString("classNameId")),
+					assetEntryJSONObject.getLong("classPK"));
+
+				if (assetEntry2 == null) {
+					continue;
+				}
+
+				_assetLinkLocalService.updateLink(
+					serviceContext.getUserId(), assetEntry1.getEntryId(),
+					assetEntry2.getEntryId(), AssetLinkConstants.TYPE_RELATED,
+					0);
 			}
 		}
 	}

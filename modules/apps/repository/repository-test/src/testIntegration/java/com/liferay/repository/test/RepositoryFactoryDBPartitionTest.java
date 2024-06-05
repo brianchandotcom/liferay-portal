@@ -14,20 +14,18 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -62,83 +60,50 @@ public class RepositoryFactoryDBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testAddFolderInRepositoryWhenSameRepositoryIdExistsInDifferentPartition()
+	public void testCreateRepositoryWhenSameRepositoryIdExistsInDifferentPartition()
 		throws Exception {
 
 		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
 
 		long counterValue = _getCounterValue();
 
-		long companyId = COMPANY_IDS[0];
-		long groupId = counterValue + 100;
 		long repositoryId = counterValue + 1000;
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
 
-			User user = _userLocalService.getGuestUser(companyId);
+			long groupId = counterValue + 100;
 
-			Group group = _addGroup(user.getUserId(), groupId);
+			Repository repository = _createRepository(
+				COMPANY_IDS[0], groupId, repositoryId);
 
-			Assert.assertEquals(groupId, group.getGroupId());
-
-			com.liferay.portal.kernel.model.Repository repositoryModel =
-				_addRepository(group, user.getUserId(), repositoryId);
-
-			Assert.assertEquals(
-				repositoryId, repositoryModel.getRepositoryId());
-
-			_repositoryFactory.createRepository(
-				repositoryModel.getRepositoryId());
+			Assert.assertEquals(groupId, _getGroupId(repository));
 		}
 
-		companyId = COMPANY_IDS[1];
-		groupId = counterValue + 200;
-
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[1])) {
 
-			User user = _userLocalService.getGuestUser(companyId);
+			long groupId = counterValue + 200;
 
-			Group group = _addGroup(user.getUserId(), groupId);
+			Repository repository = _createRepository(
+				COMPANY_IDS[1], groupId, repositoryId);
 
-			Assert.assertEquals(groupId, group.getGroupId());
-
-			com.liferay.portal.kernel.model.Repository repositoryModel =
-				_addRepository(group, user.getUserId(), repositoryId);
-
-			Assert.assertEquals(
-				repositoryId, repositoryModel.getRepositoryId());
-
-			Repository repository = _repositoryFactory.createRepository(
-				repositoryModel.getRepositoryId());
-
-			String originalUserId = PrincipalThreadLocal.getName();
-
-			try {
-				PrincipalThreadLocal.setName(user.getUserId());
-
-				Folder folder = repository.addFolder(
-					null, user.getUserId(), repositoryModel.getDlFolderId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), new ServiceContext());
-
-				Assert.assertEquals(
-					folder.getCompanyId(), repositoryModel.getCompanyId());
-			}
-			finally {
-				PrincipalThreadLocal.setName(originalUserId);
-			}
+			Assert.assertEquals(groupId, _getGroupId(repository));
 		}
 	}
 
-	private Group _addGroup(long userId, long groupId) throws Exception {
+	private Repository _createRepository(
+			long companyId, long groupId, long repositoryId)
+		throws Exception {
+
+		User user = _userLocalService.getGuestUser(companyId);
+
 		String name = RandomTestUtil.randomString();
 
 		_counterLocalService.reset(Counter.class.getName(), groupId - 1);
 
-		return _groupLocalService.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
+		Group group = _groupLocalService.addGroup(
+			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), name
@@ -150,31 +115,34 @@ public class RepositoryFactoryDBPartitionTest extends BaseDBPartitionTestCase {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name), true,
 			true, new ServiceContext());
-	}
 
-	private com.liferay.portal.kernel.model.Repository _addRepository(
-			Group group, long userId, long repositoryId)
-		throws PortalException {
+		Assert.assertEquals(groupId, group.getGroupId());
 
 		DLFolder dlFolder = _dlFolderLocalService.addFolder(
-			null, userId, group.getGroupId(), group.getGroupId(), false,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, user.getUserId(), group.getGroupId(), group.getGroupId(),
+			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			new ServiceContext());
 
 		_counterLocalService.reset(Counter.class.getName(), repositoryId - 1);
 
-		return _repositoryLocalService.addRepository(
-			userId, group.getGroupId(),
-			_portal.getClassNameId(LiferayRepository.class.getName()),
-			dlFolder.getFolderId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), "Test Portlet",
-			new UnicodeProperties(), true, new ServiceContext());
+		com.liferay.portal.kernel.model.Repository repositoryModel =
+			_repositoryLocalService.addRepository(
+				user.getUserId(), group.getGroupId(),
+				_portal.getClassNameId(LiferayRepository.class.getName()),
+				dlFolder.getFolderId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "Test Portlet",
+				new UnicodeProperties(), true, new ServiceContext());
+
+		Assert.assertEquals(repositoryId, repositoryModel.getRepositoryId());
+
+		return _repositoryFactory.createRepository(
+			repositoryModel.getRepositoryId());
 	}
 
 	private long _getCounterValue() {
-		long counterValue1;
-		long counterValue2;
+		long counterValue1 = 1;
+		long counterValue2 = 1;
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
@@ -189,6 +157,15 @@ public class RepositoryFactoryDBPartitionTest extends BaseDBPartitionTestCase {
 		}
 
 		return Math.max(counterValue1, counterValue2);
+	}
+
+	private long _getGroupId(Repository repository) {
+		while (!(repository instanceof LiferayRepository)) {
+			repository = ReflectionTestUtil.getFieldValue(
+				repository, "_repository");
+		}
+
+		return ReflectionTestUtil.getFieldValue(repository, "_groupId");
 	}
 
 	@Inject

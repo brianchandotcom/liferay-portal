@@ -1,4 +1,4 @@
-@component-name = "portal-knowledge-base"
+@component-name = "portal-content-management"
 definition {
 
 	property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}feature.flag.LPS-188058=true";

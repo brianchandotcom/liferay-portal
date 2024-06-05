@@ -2405,7 +2405,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), User.class.getName());
 
-		_addCustomObjectField(
+		ObjectField objectField1 = _addCustomObjectField(
 			new LongIntegerObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -2414,7 +2414,7 @@ public class ObjectEntryLocalServiceTest {
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
 			).build());
-		_addCustomObjectField(
+		ObjectField objectField2 = _addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -2489,6 +2489,11 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(0L, extensionValues.get("longField"));
 		Assert.assertNull(extensionValues.get("textField"));
+
+		_objectFieldLocalService.deleteObjectField(
+			objectField1.getObjectFieldId());
+		_objectFieldLocalService.deleteObjectField(
+			objectField2.getObjectFieldId());
 	}
 
 	@Test

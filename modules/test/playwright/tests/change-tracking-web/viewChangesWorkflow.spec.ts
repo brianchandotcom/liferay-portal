@@ -379,3 +379,41 @@ test('LPD-22771 Assign button is not visible in other publications', async ({
 
 	await expect(assignButton).toBeVisible({visible: false});
 });
+
+test('LPD-27013 Cannot assign tasks once task is completed', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+	workflowTasksPage,
+}) => {
+	await workflowTasksPage.goToAssignedToMyRoles();
+
+	await workflowTasksPage.assignToMe(journalName);
+
+	await workflowTasksPage.approve(journalName);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.viewDisplayTab('Workflow');
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	const assignButton = page.getByRole('button', {
+		exact: true,
+		name: 'Assign to...',
+	});
+
+	await expect(assignButton).toBeVisible({visible: false});
+
+	const moreActionsButton = page.getByLabel('more-actions');
+
+	await moreActionsButton.click();
+
+	await expect(
+		page.getByRole('menuitem', {
+			name: 'Assign to...',
+		})
+	).toBeVisible({visible: false});
+});

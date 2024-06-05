@@ -119,7 +119,7 @@ public interface CompanyLocalService
 	public void checkCompanyKey(long companyId) throws PortalException;
 
 	public Company copyBPartitionCompany(
-			String name, long sourceCompanyId, long targetCompanyId,
+			String name, long sourceCompanyId, Long targetCompanyId,
 			String virtualHostname, String webId)
 		throws PortalException;
 

@@ -107,7 +107,7 @@
 			"externalReferenceCode": "4222c0a9-8877-4c4d-a8a7-d1e846b8bf4b",
 			"host": "Liferay",
 			"name": "SERVER_ID",
-			"purpose": "",
+			"purpose": "Stores the web server ID to keep the user connected to the same Liferay instance with access to the session and cached data. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -115,7 +115,7 @@
 			"externalReferenceCode": "f60d0a0c-ba65-4b17-8c7d-c5b995447305",
 			"host": "Liferay",
 			"name": "access_token",
-			"purpose": "",
+			"purpose": "Stores a unique access token to identify the logged-in user in the Liferay Cloud console. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -147,7 +147,7 @@
 			"externalReferenceCode": "f26e0ecd-6682-44d2-ab76-ddaa9c13e054",
 			"host": "Liferay",
 			"name": "connect.sid",
-			"purpose": "",
+			"purpose": "Stores a session ID to identify a single session in the Liferay Cloud backend infrastructure. Strictly necessary.",
 			"type": "First Party"
 		},
 		{

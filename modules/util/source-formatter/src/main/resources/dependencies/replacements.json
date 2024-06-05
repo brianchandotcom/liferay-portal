@@ -22,6 +22,14 @@
 		"to": "getFriendlyURL(new InfoItemReference(param#0#, param#1#), param#2#)"
 	},
 	{
+		"classNames": [
+			"LayoutItemSelectorCriterion"
+		],
+		"from": "setShowHiddenPages(boolean paramName)",
+		"issueKey": "LPD-8038",
+		"to": ""
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

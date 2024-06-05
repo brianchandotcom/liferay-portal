@@ -5,26 +5,26 @@ liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Jethr0 Etc Spring Boot OAuth Application Headless Server
     scopes:
-        - C_Build.everything
-        - C_BuildRun.everything
-        - C_Environment.everything
-        - C_GitBranch.everything
-        - C_GitCommit.everything
-        - C_GitPullRequest.everything
-        - C_GitUser.everything
-        - C_JenkinsCohort.everything
-        - C_JenkinsNode.everything
-        - C_JenkinsServer.everything
-        - C_Job.everything
-        - C_JobComparator.everything
-        - C_JobDefinition.everything
-        - C_JobDefinitionParameter.everything
-        - C_JobPrioritizer.everything
-        - C_JobQueueOrder.everything
-        - C_Routine.everything
-        - C_Task.everything
-        - C_TaskRun.everything
-        - C_TestSuite.everything
+        - c_build.everything
+        - c_buildrun.everything
+        - c_environment.everything
+        - c_gitbranch.everything
+        - c_gitcommit.everything
+        - c_gitpullrequest.everything
+        - c_gituser.everything
+        - c_jenkinscohort.everything
+        - c_jenkinsnode.everything
+        - c_jenkinsserver.everything
+        - c_job.everything
+        - c_jobcomparator.everything
+        - c_jobdefinition.everything
+        - c_jobdefinitionparameter.everything
+        - c_jobprioritizer.everything
+        - c_jobqueueorder.everything
+        - c_routine.everything
+        - c_task.everything
+        - c_taskrun.everything
+        - c_testsuite.everything
     type: oAuthApplicationHeadlessServer
 liferay-jethr0-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081

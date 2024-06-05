@@ -6,29 +6,24 @@
 import {test} from '@playwright/test';
 
 import {EditObjectDefinitionPage} from '../pages/object-web/EditObjectDefinitionPage';
-import {ActionBuilderPage} from '../pages/object-web/object-action/ActionBuilderPage';
-import {SidePanelObjectActionPage} from '../pages/object-web/object-action/SidePanelObjectActionPage';
+import {EditObjectActionPage} from '../pages/object-web/object-action/EditObjectActionPage';
 import {ViewObjectActionsPage} from '../pages/object-web/object-action/ViewObjectActionsPage';
 import {ObjectLayoutsPage} from '../pages/object-web/object-layout/ObjectLayoutsPage';
 
 const editObjectDefinitionPagesTest = test.extend<{
-	actionBuilderPage: ActionBuilderPage;
+	editObjectActionPage: EditObjectActionPage;
 	editObjectDefinitionPage: EditObjectDefinitionPage;
 	objectLayoutsPage: ObjectLayoutsPage;
-	sidePanelObjectActionPage: SidePanelObjectActionPage;
 	viewObjectActionsPage: ViewObjectActionsPage;
 }>({
-	actionBuilderPage: async ({page}, use) => {
-		await use(new ActionBuilderPage(page));
+	editObjectActionPage: async ({page}, use) => {
+		await use(new EditObjectActionPage(page));
 	},
 	editObjectDefinitionPage: async ({page}, use) => {
 		await use(new EditObjectDefinitionPage(page));
 	},
 	objectLayoutsPage: async ({page}, use) => {
 		await use(new ObjectLayoutsPage(page));
-	},
-	sidePanelObjectActionPage: async ({page}, use) => {
-		await use(new SidePanelObjectActionPage(page));
 	},
 	viewObjectActionsPage: async ({page}, use) => {
 		await use(new ViewObjectActionsPage(page));

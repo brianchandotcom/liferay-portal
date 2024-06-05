@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -66,99 +67,59 @@ public class DDMFormValuesValidatorTest {
 	}
 
 	@Test
-	public void testEvaluateDateValidationExpression() throws Exception {
-		String ddmFormFieldName = "Field";
-
-		DDMFormFieldValidation ddmFormFieldValidation =
-			new DDMFormFieldValidation();
-
-		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
-			new DDMFormFieldValidationExpression() {
-				{
-					setValue("dateValidation(Field, \"{parameter}\")");
-				}
-			});
-		ddmFormFieldValidation.setParameterLocalizedValue(
-			DDMFormValuesTestUtil.createLocalizedValue(
-				"{\"startsFrom\": \"responseDate\"}", LocaleUtil.US));
-
+	public void testEvaluateValidationExpression() throws Exception {
 		Assert.assertTrue(
 			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
-				"date", ddmFormFieldName, ddmFormFieldValidation,
+				new DDMFormField("Field", DDMFormFieldTypeConstants.DATE),
+				_createDDMFormFieldValidation(
+					new DDMFormFieldValidationExpression() {
+						{
+							setValue("dateValidation(Field, \"{parameter}\")");
+						}
+					},
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"{\"startsFrom\": \"responseDate\"}", LocaleUtil.US)),
 				DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-					ddmFormFieldName, null)));
-	}
-
-	@Test
-	public void testEvaluateDDMFormFieldValidationExpressionNull()
-		throws Exception {
-
-		String ddmFormFieldName = "Field";
-
-		DDMFormFieldValidation ddmFormFieldValidation =
-			new DDMFormFieldValidation();
-
-		ddmFormFieldValidation.setDDMFormFieldValidationExpression(null);
-		ddmFormFieldValidation.setParameterLocalizedValue(
-			DDMFormValuesTestUtil.createLocalizedValue("10", LocaleUtil.US));
-
+					"Field", null)));
 		Assert.assertTrue(
 			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
-				"double", ddmFormFieldName, ddmFormFieldValidation,
+				new DDMFormField("Field", DDMFormFieldTypeConstants.NUMERIC),
+				_createDDMFormFieldValidation(
+					new DDMFormFieldValidationExpression() {
+						{
+							setName("eq");
+							setValue("Field=={parameter}");
+						}
+					},
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"10.0", LocaleUtil.US)),
 				DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-					ddmFormFieldName, "12")));
-	}
-
-	@Test
-	public void testEvaluateForDoubleType() throws Exception {
-		String ddmFormFieldName = "Field";
-
-		DDMFormFieldValidation ddmFormFieldValidation =
-			new DDMFormFieldValidation();
-
-		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
-			new DDMFormFieldValidationExpression() {
-				{
-					setName("eq");
-					setValue("Field=={parameter}");
-				}
-			});
-		ddmFormFieldValidation.setParameterLocalizedValue(
-			DDMFormValuesTestUtil.createLocalizedValue("10", LocaleUtil.US));
-
+					"Field", "10")));
 		Assert.assertTrue(
 			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
-				"double", ddmFormFieldName, ddmFormFieldValidation,
-				DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-					ddmFormFieldName, "10")));
-	}
-
-	@Test
-	public void testEvaluateForDoubleTypeWithSeparator() throws Exception {
-		String ddmFormFieldName = "Field";
-
-		DDMFormFieldValidation ddmFormFieldValidation =
-			new DDMFormFieldValidation();
-
-		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
-			new DDMFormFieldValidationExpression() {
-				{
-					setName("eq");
-					setValue("Field=={parameter}");
-				}
-			});
-		ddmFormFieldValidation.setParameterLocalizedValue(
-			DDMFormValuesTestUtil.createLocalizedValue("10.0", LocaleUtil.US));
-
-		LocalizedValue localizedValue = new LocalizedValue();
-
-		localizedValue.addString(LocaleUtil.BRAZIL, "10,0");
-
-		Assert.assertTrue(
-			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
-				"double", "Field", ddmFormFieldValidation,
+				new DDMFormField("Field", DDMFormFieldTypeConstants.NUMERIC),
+				_createDDMFormFieldValidation(
+					new DDMFormFieldValidationExpression() {
+						{
+							setName("eq");
+							setValue("Field=={parameter}");
+						}
+					},
+					DDMFormValuesTestUtil.createLocalizedValue(
+						null, "10.0", LocaleUtil.US)),
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					ddmFormFieldName, localizedValue)));
+					"Field",
+					DDMFormValuesTestUtil.createLocalizedValue(
+						null, "10,0", LocaleUtil.BRAZIL))));
+		Assert.assertTrue(
+			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
+				new DDMFormField("Field", DDMFormFieldTypeConstants.TEXT),
+				_createDDMFormFieldValidation(
+					null,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						StringUtil.randomString(), LocaleUtil.US)),
+				DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+					"Field", StringUtil.randomString())));
 	}
 
 	@Test(expected = MustSetValidValue.class)
@@ -892,6 +853,20 @@ public class DDMFormValuesValidatorTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
+	private DDMFormFieldValidation _createDDMFormFieldValidation(
+		DDMFormFieldValidationExpression ddmFormFieldValidationExpression,
+		LocalizedValue localizedValue) {
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
+			ddmFormFieldValidationExpression);
+		ddmFormFieldValidation.setParameterLocalizedValue(localizedValue);
+
+		return ddmFormFieldValidation;
 	}
 
 	private void _setUpDDMFormValuesValidator() throws Exception {

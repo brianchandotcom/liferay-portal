@@ -194,7 +194,7 @@ public class SlaveOfflineRule {
 		notificationRecipients = configurationsMap.get(
 			"notificationRecipients");
 
-		offlineSibling = configurationsMap.get("offlineSibling");
+		offlineSibling = configurationsMap.get("offlineSiblings");
 
 		if (configurationsMap.containsKey("shutdown")) {
 			shutdown = Boolean.parseBoolean(configurationsMap.get("shutdown"));

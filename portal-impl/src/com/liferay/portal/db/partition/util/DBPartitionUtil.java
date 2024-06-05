@@ -160,7 +160,9 @@ public class DBPartitionUtil {
 			long sourceCompanyId, long targetCompanyId)
 		throws PortalException {
 
-		if (!DBPartition.isPartitionEnabled()) {
+		if (!DBPartition.isPartitionEnabled() ||
+			(sourceCompanyId == _defaultCompanyId)) {
+
 			return false;
 		}
 

@@ -68,7 +68,16 @@ public class FacetDiscounter {
 	}
 
 	private void _exclude(Document document) {
-		Field field = document.getField(_facet.getFieldName());
+		Field field;
+
+		String fieldName = _facet.getFieldName();
+
+		if (fieldName.startsWith("nestedFieldArray")) {
+			field = document.getField("nestedFieldArray");
+		}
+		else {
+			field = document.getField(fieldName);
+		}
 
 		if (field == null) {
 			return;

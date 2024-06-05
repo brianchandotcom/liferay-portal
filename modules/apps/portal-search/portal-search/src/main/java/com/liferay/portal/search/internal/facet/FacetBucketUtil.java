@@ -5,12 +5,14 @@
 
 package com.liferay.portal.search.internal.facet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.facet.nested.NestedFacet;
 
 /**
  * @author Bryan Engler
@@ -20,6 +22,25 @@ public class FacetBucketUtil {
 
 	public static boolean isFieldInBucket(
 		Field field, String term, Facet facet) {
+
+		if (facet instanceof NestedFacet) {
+			for (String value : field.getValues()) {
+				value = value.substring(1, value.length() - 1);
+
+				String fieldToAggregate = facet.getFieldName(
+				).split(
+					"\\."
+				)[1];
+
+				String[] pairs = value.split(StringPool.COMMA_AND_SPACE);
+
+				if (_pairsContainsFieldAggregateAndTerm(
+					term, pairs, fieldToAggregate)){
+					return true;
+				}
+			}
+			return false;
+		}
 
 		if (facet instanceof RangeFacet) {
 			String[] range = RangeParserUtil.parserRange(term);
@@ -40,6 +61,26 @@ public class FacetBucketUtil {
 
 		if (ArrayUtil.contains(field.getValues(), term, false)) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _pairsContainsFieldAggregateAndTerm(
+		String term, String[] pairs, String fieldToAggregate) {
+
+		for (String pair : pairs) {
+			String[] keyValue = pair.split(StringPool.EQUAL);
+
+			String key = keyValue[0].trim();
+
+			String value = keyValue[1].trim();
+
+			if (key.contentEquals(fieldToAggregate) &&
+				value.contentEquals(term)) {
+
+				return true;
+			}
 		}
 
 		return false;

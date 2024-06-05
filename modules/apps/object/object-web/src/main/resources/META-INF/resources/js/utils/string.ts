@@ -68,17 +68,22 @@ export function specialCharactersInString(str: string) {
  */
 export function toCamelCase(
 	str: string,
-	removeSpecialCharacters?: boolean
+	removeSpecialCharacters?: boolean,
+	keepFirstLetterCase?: boolean
 ): string {
 	const split = str.split(' ');
-	const capitalizeFirstLetters = split.map((str: string) =>
-		firstLetterUppercase(str)
-	);
-	const join = capitalizeFirstLetters.join('');
+	const capitalizeFirstLetters = split.map((str: string, index: number) => {
+		if (keepFirstLetterCase && index === 0) {
+			return str;
+		}
+
+		return firstLetterUppercase(str);
+	});
+	let text = capitalizeFirstLetters.join('');
 
 	if (removeSpecialCharacters) {
-		return firstLetterLowercase(removeAllSpecialCharacters(join));
+		text = removeAllSpecialCharacters(text);
 	}
 
-	return firstLetterLowercase(join);
+	return keepFirstLetterCase ? text : firstLetterLowercase(text);
 }

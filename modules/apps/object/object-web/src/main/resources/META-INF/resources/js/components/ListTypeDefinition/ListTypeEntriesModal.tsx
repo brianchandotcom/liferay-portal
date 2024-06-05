@@ -66,7 +66,7 @@ function ListTypeEntriesModal() {
 		}
 		setState((previousValues) => ({
 			...previousValues,
-			itemKey: toCamelCase(value),
+			itemKey: toCamelCase(value, false, true),
 		}));
 	};
 
@@ -76,6 +76,7 @@ function ListTypeEntriesModal() {
 		if (modalType !== 'edit' && keyChanged === false) {
 			newItemKey = toCamelCase(
 				newName_i18n[defaultLanguageId] as string,
+				true,
 				true
 			);
 		}

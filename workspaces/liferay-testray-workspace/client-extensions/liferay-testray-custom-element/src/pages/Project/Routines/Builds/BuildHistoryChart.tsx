@@ -13,7 +13,7 @@ type BuildHistoryChartProps = {
 };
 
 const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => {
-	const buildReverse = [...builds].reverse();
+	builds = [...builds].reverse();
 
 	return (
 		<div className="graph-container graph-container-sm">
@@ -49,7 +49,7 @@ const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => {
 					columns: [
 						[
 							Statuses.PASSED,
-							...buildReverse
+							...builds
 								.map(
 									({testrayStatusMetric}) =>
 										testrayStatusMetric?.passed
@@ -58,28 +58,28 @@ const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => {
 						],
 						[
 							Statuses.FAILED,
-							...buildReverse.map(
+							...builds.map(
 								({testrayStatusMetric}) =>
 									testrayStatusMetric?.failed
 							),
 						],
 						[
 							Statuses.BLOCKED,
-							...buildReverse.map(
+							...builds.map(
 								({testrayStatusMetric}) =>
 									testrayStatusMetric?.blocked
 							),
 						],
 						[
 							Statuses.TEST_FIX,
-							...buildReverse.map(
+							...builds.map(
 								({testrayStatusMetric}) =>
 									testrayStatusMetric?.testfix
 							),
 						],
 						[
 							Statuses.INCOMPLETE,
-							...buildReverse.map(
+							...builds.map(
 								({testrayStatusMetric}) =>
 									(testrayStatusMetric?.inProgress as number) +
 									(testrayStatusMetric?.untested as number)
@@ -110,7 +110,7 @@ const BuildHistoryChart: React.FC<BuildHistoryChartProps> = ({builds}) => {
 				tooltip={{
 					format: {
 						title: (index: number) =>
-							buildReverse[index]?.testrayBuildName,
+							builds[index]?.testrayBuildName,
 					},
 				}}
 			/>

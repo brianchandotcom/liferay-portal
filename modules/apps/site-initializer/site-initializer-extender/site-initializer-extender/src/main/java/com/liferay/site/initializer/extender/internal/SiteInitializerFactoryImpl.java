@@ -28,6 +28,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
+import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
@@ -137,7 +138,7 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_depotEntryLocalService, _dlFileEntryTypeLocalService, _dlURLHelper,
 			_documentFolderResourceFactory, _documentResourceFactory,
 			_expandoValueLocalService, _fragmentsImporter, _groupLocalService,
-			_journalArticleLocalService, _jsonFactory,
+			_journalArticleLocalService, _jsonFactory, _keywordResourceFactory,
 			_knowledgeBaseArticleResourceFactory,
 			_knowledgeBaseFolderResourceFactory, _layoutLocalService,
 			_layoutPageTemplateEntryLocalService, _layoutsImporter,
@@ -277,6 +278,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private KeywordResource.Factory _keywordResourceFactory;
 
 	@Reference
 	private KnowledgeBaseArticleResource.Factory

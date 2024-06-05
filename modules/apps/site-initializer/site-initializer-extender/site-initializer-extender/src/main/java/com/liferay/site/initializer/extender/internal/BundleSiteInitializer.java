@@ -62,6 +62,7 @@ import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionReso
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
@@ -282,7 +283,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
-		JSONFactory jsonFactory,
+		JSONFactory jsonFactory, KeywordResource.Factory keywordResourceFactory,
 		KnowledgeBaseArticleResource.Factory
 			knowledgeBaseArticleResourceFactory,
 		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
@@ -371,6 +372,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_groupLocalService = groupLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
 		_jsonFactory = jsonFactory;
+		_keywordResourceFactory = keywordResourceFactory;
 		_knowledgeBaseArticleResourceFactory =
 			knowledgeBaseArticleResourceFactory;
 		_knowledgeBaseFolderResourceFactory =
@@ -5595,6 +5597,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final GroupLocalService _groupLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JSONFactory _jsonFactory;
+	private final KeywordResource.Factory _keywordResourceFactory;
 	private final KnowledgeBaseArticleResource.Factory
 		_knowledgeBaseArticleResourceFactory;
 	private final KnowledgeBaseFolderResource.Factory

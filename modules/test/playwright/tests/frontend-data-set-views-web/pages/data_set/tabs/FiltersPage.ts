@@ -11,7 +11,12 @@ import {DataSetPage} from '../DataSetPage';
 export class FiltersPage {
 	private readonly dataSetPage: DataSetPage;
 	readonly newDateRangeFilterModal: {
+		datePicker: Locator;
 		filterBySelect: Locator;
+		fromInput: Locator;
+		fromDatePickerTrigger: Locator;
+		toInput: Locator;
+		toDatePickerTrigger: Locator;
 	};
 	private readonly newFilterButton: Locator;
 	private readonly newFilterModal: {
@@ -36,7 +41,12 @@ export class FiltersPage {
 			.getByRole('button', {name: 'New Filter'})
 			.and(page.getByTitle('New Filter'));
 		this.newDateRangeFilterModal = {
+			datePicker: page.getByRole('dialog', { name: 'Choose date'}),
 			filterBySelect: page.getByLabel('Filter By'),
+			fromDatePickerTrigger: page.locator('div').filter({ hasText: /^From$/ }).getByRole('button'),
+			fromInput: page.locator('div').filter({ hasText: /^From$/ }).getByPlaceholder('YYYY-MM-DD'),
+			toDatePickerTrigger: page.locator('div').filter({ hasText: /^From$/ }).getByRole('button'),
+			toInput: page.locator('div').filter({ hasText: /^To$/ }).getByPlaceholder('YYYY-MM-DD'),
 		};
 		this.newFilterModal = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),

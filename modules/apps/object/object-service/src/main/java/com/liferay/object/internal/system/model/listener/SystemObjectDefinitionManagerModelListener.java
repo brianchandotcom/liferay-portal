@@ -305,15 +305,6 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 
 		DTOConverter<T, ?> dtoConverter = _getDTOConverter();
 
-		try {
-			return dtoConverter.toDTO(defaultDTOConverterContext);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
 		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
 	}
 

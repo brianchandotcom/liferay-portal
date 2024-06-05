@@ -3375,7 +3375,7 @@ public class ObjectEntryLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
 				RandomTestUtil.randomString();
 
-		try (Closeable closeable = _registryTestObjectValidationRuleEngine(
+		try (Closeable closeable = _registerTestObjectValidationRuleEngine(
 				consumer, key)) {
 
 			ObjectEntry objectEntry = _addObjectEntry(
@@ -3543,7 +3543,7 @@ public class ObjectEntryLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
 				RandomTestUtil.randomString();
 
-		try (Closeable closeable = _registryTestObjectValidationRuleEngine(
+		try (Closeable closeable = _registerTestObjectValidationRuleEngine(
 				consumer, key)) {
 
 			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
@@ -3884,7 +3884,7 @@ public class ObjectEntryLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 	}
 
-	private Closeable _registryTestObjectValidationRuleEngine(
+	private Closeable _registerTestObjectValidationRuleEngine(
 			Consumer<Map<String, Object>> consumer, String key)
 		throws PortalException {
 

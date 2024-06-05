@@ -3221,6 +3221,76 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testPartialUpdateObjectEntryWithAttachmentObjectField()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			objectDefinition = _createObjectDefinition(
+				Collections.singletonList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"attachmentObjectFieldName"
+					).objectFieldSettings(
+						Arrays.asList(
+							_createObjectFieldSetting(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS,
+								"txt"),
+							_createObjectFieldSetting(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+								ObjectFieldSettingConstants.
+									VALUE_USER_COMPUTER),
+							_createObjectFieldSetting(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
+								"100"))
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"attachmentObjectFieldName",
+							_getAttachmentObjectFieldValue()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			long expectedFileEntryId = _getFileEntryId(objectEntry);
+
+			Role role = _roleLocalService.getRole(
+				companyId, RoleConstants.ADMINISTRATOR);
+
+			User user = _addUser();
+
+			_userLocalService.addRoleUser(role.getRoleId(), user);
+
+			objectEntry = _defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				objectEntry.getId(),
+				new ObjectEntry() {
+					{
+						properties = Collections.emptyMap();
+					}
+				});
+
+			Assert.assertEquals(
+				expectedFileEntryId, _getFileEntryId(objectEntry));
+		}
+		finally {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Test
 	public void testSearchObjectEntriesWithAccountEntryRestricted()
 		throws Exception {
 
@@ -4411,6 +4481,15 @@ public class DefaultObjectEntryManagerImplTest
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return dlFileEntry.getFileEntryId();
+	}
+
+	private long _getFileEntryId(ObjectEntry objectEntry) {
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		FileEntry fileEntry = (FileEntry)properties.get(
+			"attachmentObjectFieldName");
+
+		return fileEntry.getId();
 	}
 
 	private String _getListEntryKey(ObjectEntry objectEntry) {

@@ -191,8 +191,8 @@ public class TestrayRoutine {
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"builds", TestrayBuild.FIELD_NAMES, sb.toString(), null,
-				maxSize, 0);
+				"builds", TestrayBuild.FIELD_NAMES, sb.toString(),
+				"dateCreated:desc", maxSize, 0);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				testrayBuilds.add(

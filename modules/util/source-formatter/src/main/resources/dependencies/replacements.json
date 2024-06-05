@@ -1,6 +1,15 @@
 [
 	{
 		"classNames": [
+			"CommerceCatalogLocalService",
+			"CommerceCatalogLocalServiceUtil"
+		],
+		"from": "fetchCommerceCatalogByExternalReferenceCode(long paramName, String paramName)",
+		"issueKey": "LPD-7751",
+		"to": "fetchCommerceCatalogByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
+		"classNames": [
 			"AssetDisplayPageFriendlyURLProvider"
 		],
 		"from": "getFriendlyURL(String paramName, long paramName, Locale paramName, ThemeDisplay paramName)",

@@ -15,16 +15,20 @@ import {ObjectFieldsPage} from '../pages/object-web/object-fields/ObjectFieldsPa
 import {EditObjectValidationPage} from '../pages/object-web/object-validation/EditObjectValidationPage';
 import {ModalAddObjectValidationPage} from '../pages/object-web/object-validation/ModalAddObjectValidationPage';
 import {ObjectValidationsPage} from '../pages/object-web/object-validation/ObjectValidationsPage';
+import {EditObjectViewPage} from '../pages/object-web/object-view/EditObjectViewPage';
+import {ObjectViewPage} from '../pages/object-web/object-view/ObjectViewsPage';
 
 const objectPagesTest = test.extend<{
 	editObjectDefinitionPage: EditObjectDefinitionPage;
 	editObjectValidationPage: EditObjectValidationPage;
+	editObjectViewPage: EditObjectViewPage;
 	modalAddObjectDefinitionPage: ModalAddObjectDefinitionPage;
 	modalAddObjectValidationPage: ModalAddObjectValidationPage;
 	modalEditObjectFolderPage: ModalEditObjectFolderPage;
 	modelBuilderPage: ModelBuilderPage;
 	objectFieldsPage: ObjectFieldsPage;
 	objectValidationsPage: ObjectValidationsPage;
+	objectViewPage: ObjectViewPage;
 	viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 	viewObjectEntriesPage: ViewObjectEntriesPage;
 }>({
@@ -33,6 +37,9 @@ const objectPagesTest = test.extend<{
 	},
 	editObjectValidationPage: async ({page}, use) => {
 		await use(new EditObjectValidationPage(page));
+	},
+	editObjectViewPage: async ({page}, use) => {
+		await use(new EditObjectViewPage(page));
 	},
 	modalAddObjectDefinitionPage: async ({page}, use) => {
 		await use(new ModalAddObjectDefinitionPage(page));
@@ -51,6 +58,9 @@ const objectPagesTest = test.extend<{
 	},
 	objectValidationsPage: async ({page}, use) => {
 		await use(new ObjectValidationsPage(page));
+	},
+	objectViewPage: async ({page}, use) => {
+		await use(new ObjectViewPage(page));
 	},
 	viewObjectDefinitionsPage: async ({page}, use) => {
 		await use(new ViewObjectDefinitionsPage(page));

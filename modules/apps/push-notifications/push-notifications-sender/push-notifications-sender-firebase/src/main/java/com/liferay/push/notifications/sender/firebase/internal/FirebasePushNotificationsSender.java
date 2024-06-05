@@ -98,44 +98,43 @@ public class FirebasePushNotificationsSender
 		_googleCredentials = null;
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_sender = null;
+	private String _createNotificationGroup(
+			String authorizationToken, List<String> tokens)
+		throws IOException, JSONException, PushNotificationsException {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+		options.addHeader("access_token_auth", "true");
+		options.addHeader("project_id", _projectNumber);
+		options.addHeader(AUTHORIZATION, "Bearer " + authorizationToken);
+		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
+		options.setPost(true);
+
+		JSONObject data = JSONUtil.put(
+			"notification_key_name", GOOGLE_GROUP_ID
+		).put(
+			"operation", "create"
+		).put(
+			"registration_ids", tokens
+		);
+
+		options.setBody(
+			data.toString(), ContentTypes.APPLICATION_JSON, "UTF-8");
+
+		String responseString = _httpUtil.URLtoString(options);
+
+		Http.Response optionsResponse = options.getResponse();
+
+		if (optionsResponse.getResponseCode() != OK_CODE) {
+			throw new PushNotificationsException(
+				"Unable to create a notification group");
+		}
+
+		JSONObject response = JSONFactoryUtil.createJSONObject(responseString);
+
+		return response.getString("notification_key");
 	}
-
-	private Message _buildMessage(
-		List<String> tokens, JSONObject payloadJSONObject) {
-
-		Message.Builder builder = new Message.Builder();
-
-		boolean silent = payloadJSONObject.getBoolean(
-			PushNotificationsConstants.KEY_SILENT);
-
-		if (silent) {
-			builder.contentAvailable(silent);
-		}
-
-		builder.notification(_buildNotification(payloadJSONObject));
-		builder.to(tokens);
-
-		JSONObject newPayloadJSONObject = _jsonFactory.createJSONObject();
-
-		Iterator<String> iterator = payloadJSONObject.keys();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
-			if (!key.equals(PushNotificationsConstants.KEY_BADGE) &&
-				!key.equals(PushNotificationsConstants.KEY_BODY) &&
-				!key.equals(PushNotificationsConstants.KEY_BODY_LOCALIZED) &&
-				!key.equals(
-					PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS) &&
-				!key.equals(PushNotificationsConstants.KEY_SOUND) &&
-				!key.equals(PushNotificationsConstants.KEY_SILENT)) {
-
-				newPayloadJSONObject.put(key, payloadJSONObject.get(key));
-			}
-		}
 
 		if (newPayloadJSONObject.length() > 0) {
 			builder.data(

@@ -879,8 +879,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
-				false, null, null, null, null, LocaleUtil.getSiteDefault(),
-				null, null);
+				false, null, null, null, null,
+				LocaleUtil.getMostRelevantLocale(), null, null);
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -918,8 +918,8 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		DTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
-				false, null, null, null, null, LocaleUtil.getSiteDefault(),
-				null, null);
+				false, null, null, null, null,
+				LocaleUtil.getMostRelevantLocale(), null, null);
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(

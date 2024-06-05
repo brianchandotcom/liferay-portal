@@ -25,7 +25,11 @@ test('checks that the card checkbox has the correct aria label', async ({
 
 	const displayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.publishNewTemplate(displayPageTemplateName);
+	await displayPageTemplatesPage.publishNewTemplate({
+		contentSubtype: 'Basic Web Content',
+		contentType: 'Web Content Article',
+		name: displayPageTemplateName,
+	});
 
 	await expect(
 		page.getByLabel(`Select ${displayPageTemplateName}`)

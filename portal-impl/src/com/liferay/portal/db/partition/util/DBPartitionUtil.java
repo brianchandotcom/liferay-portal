@@ -499,33 +499,33 @@ public class DBPartitionUtil {
 			long targetCompanyId, Statement statement)
 		throws Exception {
 
+		if (!_isCopyableQuartzTable(tableName)) {
+			return;
+		}
+
 		List<String> columnNames = _getColumnNames(
 			statement.getConnection(), tableName);
+
+		String columnName = "";
 
 		if (StringUtil.endsWith(tableName, "JOB_DETAILS")) {
 			columnNames.removeIf(value -> value.equalsIgnoreCase("job_name"));
 
-			statement.executeUpdate(
-				StringBundler.concat(
-					"insert into ", partitionName, StringPool.PERIOD, tableName,
-					"(job_name, ", StringUtil.merge(columnNames),
-					") select REPLACE(job_name, '@", sourceCompanyId, "', '@",
-					targetCompanyId, "') as job_name, ",
-					StringUtil.merge(columnNames), " from ", partitionName,
-					StringPool.PERIOD, tableName,
-					_getQuartzWhereClauseSQL(sourceCompanyId, tableName)));
-
-			return;
+			columnName = "job_name";
 		}
+		else {
+			columnNames.removeIf(
+				value -> value.equalsIgnoreCase("trigger_name"));
 
-		columnNames.removeIf(value -> value.equalsIgnoreCase("trigger_name"));
+			columnName = "trigger_name";
+		}
 
 		statement.executeUpdate(
 			StringBundler.concat(
 				"insert into ", partitionName, StringPool.PERIOD, tableName,
-				"(trigger_name, ", StringUtil.merge(columnNames),
-				") select REPLACE (trigger_name, '@", sourceCompanyId, "', '@",
-				targetCompanyId, "') as trigger_name, ",
+				"(", columnName, ", ", StringUtil.merge(columnNames),
+				") select REPLACE (", columnName, ", '@", sourceCompanyId,
+				"', '@", targetCompanyId, "') as ", columnName, ", ",
 				StringUtil.merge(columnNames), " from ", partitionName,
 				StringPool.PERIOD, tableName,
 				_getQuartzWhereClauseSQL(sourceCompanyId, tableName)));

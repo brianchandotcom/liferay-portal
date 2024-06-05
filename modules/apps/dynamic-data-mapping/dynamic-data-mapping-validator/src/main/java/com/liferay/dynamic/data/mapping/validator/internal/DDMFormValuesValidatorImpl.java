@@ -178,7 +178,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				else {
 					ddmExpression.setVariable(
 						ddmFormField.getName(),
-						GetterUtil.getInteger(valueString));
+						GetterUtil.getNumber(valueString));
 				}
 			}
 			else {

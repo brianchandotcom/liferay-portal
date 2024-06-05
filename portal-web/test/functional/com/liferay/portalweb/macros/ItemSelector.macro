@@ -331,7 +331,7 @@ definition {
 
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#ERROR_INVALID_VIMEO_VIDEO",
-					value1 = "The embed code for this video is not valid.");
+					value1 = "This video does not exist.");
 			}
 			else {
 				AssertTextEquals(

@@ -19,8 +19,8 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import CheckboxMultiSelect from '../../../../components/CheckboxMultiSelect';
-import FilterModalConfiguration from '../../../../components/FilterModalConfiguration';
-import FilterModalFooter from '../../../../components/FilterModalFooter';
+import Configuration from '../Configuration';
+import Footer from '../Footer';
 import RequiredMark from '../../../../components/RequiredMark';
 import getAllPicklists from '../../../../utils/getAllPicklists';
 import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
@@ -436,7 +436,7 @@ function Body({
 	return (
 		<>
 			<ClayModal.Body>
-				<FilterModalConfiguration
+				<Configuration
 					fieldInUseValidationError={fieldInUseValidationError}
 					fieldNames={fieldNames}
 					fieldValidationError={fieldValidationError}
@@ -1165,7 +1165,7 @@ function Body({
 				)}
 			</ClayModal.Body>
 
-			<FilterModalFooter
+			<Footer
 				closeModal={closeModal}
 				onSave={saveSelectionFilter}
 				saveButtonDisabled={saveButtonDisabled}

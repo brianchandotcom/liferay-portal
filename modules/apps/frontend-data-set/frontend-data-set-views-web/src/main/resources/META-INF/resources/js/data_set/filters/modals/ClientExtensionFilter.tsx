@@ -3,23 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayDatePicker from '@clayui/date-picker';
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
+import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {format, getYear, isBefore, isEqual} from 'date-fns';
 import React, {useState} from 'react';
 
-import FilterModalConfiguration from '../../../components/FilterModalConfiguration';
-import FilterModalFooter from '../../../components/FilterModalFooter';
-import {IDateFilter, IField, IFilter} from '../../../utils/types';
+import Configuration from './Configuration';
+import Footer from './Footer';
+import RequiredMark from '../../../components/RequiredMark';
+import ValidationFeedback from '../../../components/ValidationFeedback';
+import {IClientExtensionFilter, IField, IFilter} from '../../../utils/types';
 
 function Header() {
-	return <>{Liferay.Language.get('new-date-range-filter')}</>;
+	return <>{Liferay.Language.get('new-client-extension-filter')}</>;
 }
 
 interface IBodyProps {
 	closeModal: Function;
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IFilter;
@@ -29,43 +33,53 @@ interface IBodyProps {
 
 function Body({
 	closeModal,
+	fdsFilterClientExtensions,
 	fieldNames,
 	fields,
 	filter,
 	namespace,
 	onSave,
 }: IBodyProps) {
+	const [
+		clientExtensionValidationError,
+		setClientExtensionValidationError,
+	] = useState<boolean>(false);
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>(false);
 	const [fieldValidationError, setFieldValidationError] = useState<boolean>(
 		false
 	);
-	const [labelValidationError, setLabelValidationError] = useState(false);
+	const [labelValidationError, setLabelValidationError] = useState<boolean>(
+		false
+	);
 
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
 		false
+	);
+	const [selectedClientExtension, setSelectedClientExtension] = useState<
+		IClientExtensionRenderer | undefined
+	>(
+		filter
+			? fdsFilterClientExtensions.find(
+					(clientExtensionRenderer: IClientExtensionRenderer) =>
+						clientExtensionRenderer.externalReferenceCode ===
+						(filter as IClientExtensionFilter)
+							.fdsFilterClientExtensionERC
+			  )
+			: undefined
 	);
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
 	);
-
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
 		fieldNames?.includes(item.name) ? item.name : undefined
 	);
-
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
 	);
-	const [from, setFrom] = useState<string>(
-		(filter as IDateFilter)?.from ?? ''
-	);
-	const [to, setTo] = useState<string>((filter as IDateFilter)?.to ?? '');
-	const [isValidDateRange, setIsValidDateRange] = useState<boolean>(true);
-
-	const fromFormElementId = `${namespace}From`;
-	const toFormElementId = `${namespace}To`;
+	const fdsFilterClientExtensionFormElementId = `${namespace}fdsFilterClientExtensionERC`;
 
 	const isi18nFilterLabelsValid = (
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
@@ -109,15 +123,8 @@ function Body({
 			}
 		}
 
-		const dateTo = new Date(to);
-		const dateFrom = new Date(from);
-
-		if (to && from) {
-			const isInvalidRange = !(
-				isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo)
-			);
-
-			setIsValidDateRange(!isInvalidRange);
+		if (!selectedClientExtension) {
+			setClientExtensionValidationError(true);
 
 			isValid = false;
 		}
@@ -125,18 +132,17 @@ function Body({
 		return isValid;
 	};
 
-	const saveDateRangeFilter = () => {
+	const saveClientExtensionFilter = () => {
 		setSaveButtonDisabled(true);
 
 		const success = validate();
 
 		if (success) {
 			const formData = {
+				fdsFilterClientExtensionERC:
+					selectedClientExtension?.externalReferenceCode,
 				fieldName: selectedField?.name,
-				from,
 				label_i18n: i18nFilterLabels,
-				to,
-				type: selectedField?.format,
 			};
 
 			onSave(formData);
@@ -149,7 +155,7 @@ function Body({
 	return (
 		<>
 			<ClayModal.Body>
-				<FilterModalConfiguration
+				<Configuration
 					fieldInUseValidationError={fieldInUseValidationError}
 					fieldNames={fieldNames}
 					fieldValidationError={fieldValidationError}
@@ -177,73 +183,80 @@ function Body({
 				/>
 
 				{!fieldInUseValidationError && (
-					<ClayForm.Group className="form-group-autofit">
-						<div
-							className={classNames('form-group-item', {
-								'has-error': !isValidDateRange,
-							})}
-						>
-							<label htmlFor={fromFormElementId}>
-								{Liferay.Language.get('from')}
+					<ClayForm.Group
+						className={classNames('form-group-autofit', {
+							'has-error': clientExtensionValidationError,
+						})}
+					>
+						<div className={classNames('form-group-item')}>
+							<label
+								htmlFor={fdsFilterClientExtensionFormElementId}
+							>
+								{Liferay.Language.get('client-extension')}
+
+								<RequiredMark />
 							</label>
 
-							<ClayDatePicker
-								inputName={fromFormElementId}
-								onChange={(value: any) => {
-									setFrom(value);
+							<ClayDropDown
+								closeOnClick
+								menuElementAttrs={{
+									className:
+										'fds-cell-renderers-dropdown-menu',
 								}}
-								placeholder="YYYY-MM-DD"
-								value={
-									from
-										? format(new Date(from), 'yyyy-MM-dd')
-										: ''
+								trigger={
+									<ClayButton
+										aria-labelledby={`${namespace}cellRenderersLabel`}
+										className="form-control form-control-select form-control-select-secondary"
+										displayType="secondary"
+										name={
+											fdsFilterClientExtensionFormElementId
+										}
+									>
+										{selectedClientExtension
+											? selectedClientExtension.name
+											: Liferay.Language.get('select')}
+									</ClayButton>
 								}
-								years={{
-									end: getYear(new Date()) + 25,
-									start: getYear(new Date()) - 50,
-								}}
-							/>
+							>
+								<ClayDropDown.ItemList
+									items={fdsFilterClientExtensions}
+									role="listbox"
+								>
+									{fdsFilterClientExtensions.map(
+										(
+											filterClientExtension: IClientExtensionRenderer
+										) => (
+											<ClayDropDown.Item
+												className="align-items-center d-flex justify-content-between"
+												key={filterClientExtension.name}
+												onClick={() => {
+													setSelectedClientExtension(
+														filterClientExtension
+													);
+													setClientExtensionValidationError(
+														!filterClientExtension
+													);
+												}}
+												roleItem="option"
+											>
+												{filterClientExtension.name}
+											</ClayDropDown.Item>
+										)
+									)}
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
 
-							{!isValidDateRange && (
-								<ClayForm.FeedbackGroup>
-									<ClayForm.FeedbackItem>
-										<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-										{Liferay.Language.get(
-											'date-range-is-invalid.-from-must-be-before-to'
-										)}
-									</ClayForm.FeedbackItem>
-								</ClayForm.FeedbackGroup>
+							{clientExtensionValidationError && (
+								<ValidationFeedback />
 							)}
-						</div>
-
-						<div className="form-group-item">
-							<label htmlFor={toFormElementId}>
-								{Liferay.Language.get('to')}
-							</label>
-
-							<ClayDatePicker
-								inputName={toFormElementId}
-								onChange={(value: any) => {
-									setTo(value);
-								}}
-								placeholder="YYYY-MM-DD"
-								value={
-									to ? format(new Date(to), 'yyyy-MM-dd') : ''
-								}
-								years={{
-									end: getYear(new Date()) + 25,
-									start: getYear(new Date()) - 50,
-								}}
-							/>
 						</div>
 					</ClayForm.Group>
 				)}
 			</ClayModal.Body>
 
-			<FilterModalFooter
+			<Footer
 				closeModal={closeModal}
-				onSave={saveDateRangeFilter}
+				onSave={saveClientExtensionFilter}
 				saveButtonDisabled={saveButtonDisabled}
 			/>
 		</>

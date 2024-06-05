@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {IField, IFilter} from '../utils/types';
+import {IField, IFilter} from '../../../utils/types';
 interface IFilterModalConfigurationProps {
 	fieldInUseValidationError: boolean;
 	fieldNames?: string[];

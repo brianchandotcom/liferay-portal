@@ -12,11 +12,11 @@ import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import {IField, IFilter} from '../utils/types';
-import RequiredMark from './RequiredMark';
-import ValidationFeedback from './ValidationFeedback';
+import {IField, IFilter} from '../../../utils/types';
+import RequiredMark from '../../../components/RequiredMark';
+import ValidationFeedback from '../../../components/ValidationFeedback';
 
-interface IFilterModalConfigurationProps {
+interface IConfigurationProps {
 	fieldInUseValidationError: boolean;
 	fieldNames?: string[];
 	fieldValidationError: boolean;
@@ -31,7 +31,7 @@ interface IFilterModalConfigurationProps {
 	) => void;
 }
 
-function FilterModalConfiguration({
+function Configuration({
 	fieldInUseValidationError,
 	fieldNames,
 	fieldValidationError,
@@ -42,7 +42,7 @@ function FilterModalConfiguration({
 	onBlur,
 	onChangeField,
 	onChangeLabel,
-}: IFilterModalConfigurationProps) {
+}: IConfigurationProps) {
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
 	);
@@ -191,4 +191,4 @@ function FilterModalConfiguration({
 	);
 }
 
-export default FilterModalConfiguration;
+export default Configuration;

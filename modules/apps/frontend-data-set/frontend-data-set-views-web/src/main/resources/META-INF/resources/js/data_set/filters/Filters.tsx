@@ -22,9 +22,9 @@ import {
 	IFilter,
 } from '../../utils/types';
 import {IDataSetSectionProps} from '../DataSet';
-import ClientExtensionFilterModalContent from './modal_content/ClientExtensionFilter';
-import DateRangeFilterModalContent from './modal_content/DateRangeFilter';
-import SelectionFilterModalContent from './modal_content/selection_filter/SelectionFilter';
+import ClientExtensionFilterModalContent from './modals/ClientExtensionFilter';
+import DateRangeFilterModalContent from './modals/DateRangeFilter';
+import SelectionFilterModalContent from './modals/selection_filter/SelectionFilter';
 
 import '../../../css/Filters.scss';
 import {IDataSet} from '../../DataSets';

@@ -7,17 +7,17 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React from 'react';
 
-export interface IFilterModalFooterProps {
+export interface IFooterProps {
 	closeModal: Function;
 	onSave: Function;
 	saveButtonDisabled: boolean;
 }
 
-function FilterModalFooter({
+function Footer({
 	closeModal,
 	onSave,
 	saveButtonDisabled,
-}: IFilterModalFooterProps) {
+}: IFooterProps) {
 	return (
 		<ClayModal.Footer
 			last={
@@ -42,4 +42,4 @@ function FilterModalFooter({
 	);
 }
 
-export default FilterModalFooter;
+export default Footer;

@@ -4,7 +4,7 @@
  */
 
 export default function getChartColumns(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	setColumnsMDFChart: any,
 	setTitleChart: any,
@@ -13,22 +13,22 @@ export default function getChartColumns(
 	const chartColumns: any[] = [];
 
 	const totalMDFActivitiesAmount = totalMDFRequested(
-		mdfCurrency,
+		displayCurrency,
 		mdfRequests,
 		chartColumns
 	);
 
-	totalMDFApprovedRequests(mdfCurrency, mdfRequests, chartColumns);
+	totalMDFApprovedRequests(displayCurrency, mdfRequests, chartColumns);
 
-	totalRequestedMDFToClaims(mdfCurrency, mdfRequests, chartColumns);
+	totalRequestedMDFToClaims(displayCurrency, mdfRequests, chartColumns);
 
-	totalApprovedMDFToClaims(mdfCurrency, mdfRequests, chartColumns);
+	totalApprovedMDFToClaims(displayCurrency, mdfRequests, chartColumns);
 
-	totalPaidMDFToClaims(mdfCurrency, mdfRequests, chartColumns);
+	totalPaidMDFToClaims(displayCurrency, mdfRequests, chartColumns);
 
-	expiringSoonTotalActivities(mdfCurrency, mdfRequests, chartColumns);
+	expiringSoonTotalActivities(displayCurrency, mdfRequests, chartColumns);
 
-	expiredTotalActivites(mdfCurrency, mdfRequests, chartColumns);
+	expiredTotalActivites(displayCurrency, mdfRequests, chartColumns);
 	setValueChart(totalMDFActivitiesAmount);
 	setTitleChart('Total MDF ');
 	setColumnsMDFChart(chartColumns);
@@ -37,7 +37,7 @@ export default function getChartColumns(
 const expiredDate = 30;
 
 function expiredTotalActivites(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	chartColumns: any
 ) {
@@ -52,7 +52,7 @@ function expiredTotalActivites(
 		(acc: any, value: any) =>
 			acc +
 			parseFloat(
-				mdfCurrency === 'USD'
+				displayCurrency === 'USD'
 					? value.convertedMDFRequestAmount
 					: value.mdfRequestAmount
 			),
@@ -69,7 +69,7 @@ function expiredTotalActivites(
 }
 
 function expiringSoonTotalActivities(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	chartColumns: any
 ) {
@@ -88,7 +88,7 @@ function expiringSoonTotalActivities(
 		(acc: any, value: any) =>
 			acc +
 			parseFloat(
-				mdfCurrency === 'USD'
+				displayCurrency === 'USD'
 					? value.convertedMDFRequestAmount
 					: value.mdfRequestAmount
 			),
@@ -105,7 +105,7 @@ function expiringSoonTotalActivities(
 }
 
 function totalRequestedMDFToClaims(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	chartColumns: any
 ) {
@@ -123,7 +123,7 @@ function totalRequestedMDFToClaims(
 	const totalClaimsRequestedAmount = claimesRequested?.reduce(
 		(acc: any, value: any) =>
 			acc +
-				(mdfCurrency === 'USD'
+				(displayCurrency === 'USD'
 					? value?.convertedTotalClaimAmount
 					: value?.totalClaimAmount) || 0,
 		0
@@ -143,7 +143,7 @@ function totalRequestedMDFToClaims(
 }
 
 function totalApprovedMDFToClaims(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	chartColumns: any
 ) {
@@ -159,7 +159,7 @@ function totalApprovedMDFToClaims(
 	const totalClaimesApprovedAmount = claimsApproved?.reduce(
 		(acc: any, value: any) =>
 			acc +
-				(mdfCurrency === 'USD'
+				(displayCurrency === 'USD'
 					? value?.convertedTotalClaimAmount
 					: value?.totalClaimAmount) || 0,
 		0
@@ -179,7 +179,7 @@ function totalApprovedMDFToClaims(
 }
 
 function totalPaidMDFToClaims(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	chartColumns: any
 ) {
@@ -195,7 +195,7 @@ function totalPaidMDFToClaims(
 		(acc: any, value: any) =>
 			acc +
 			parseFloat(
-				(mdfCurrency === 'USD'
+				(displayCurrency === 'USD'
 					? value.convertedClaimPaid
 					: value.claimPaid) || 0
 			),
@@ -216,7 +216,7 @@ function totalPaidMDFToClaims(
 }
 
 function totalMDFRequested(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	chartColumns: any
 ) {
@@ -224,7 +224,7 @@ function totalMDFRequested(
 		(prevValue: any, currValue: any) =>
 			prevValue +
 			(parseFloat(
-				mdfCurrency === 'USD'
+				displayCurrency === 'USD'
 					? currValue.convertedTotalMDFRequestAmount
 					: currValue.totalMDFRequestAmount
 			) || 0),
@@ -246,7 +246,7 @@ function totalMDFRequested(
 }
 
 function totalMDFApprovedRequests(
-	mdfCurrency: any,
+	displayCurrency: any,
 	mdfRequests: any,
 	chartColumns: any
 ) {
@@ -257,7 +257,7 @@ function totalMDFApprovedRequests(
 		(acc: any, value: any) =>
 			acc +
 			parseFloat(
-				mdfCurrency === 'USD'
+				displayCurrency === 'USD'
 					? value.convertedTotalMDFRequestAmount
 					: value.totalMDFRequestAmount
 			),

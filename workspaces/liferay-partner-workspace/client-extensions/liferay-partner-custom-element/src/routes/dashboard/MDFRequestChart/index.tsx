@@ -15,6 +15,7 @@ import {siteURL} from '../../../common/components/dashboard/utils/siteURL';
 import {ObjectActionName} from '../../../common/enums/objectActionName';
 import {PermissionActionType} from '../../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
+import useIsChannel from '../../../common/hooks/useIsChannel';
 import usePermissionActions from '../../../common/hooks/usePermissionActions';
 import {Liferay} from '../../../common/services/liferay';
 import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
@@ -29,6 +30,8 @@ const MDFRequestChart = () => {
 
 	const [loading, setLoading] = useState(false);
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
+
+	const {isChannel} = useIsChannel();
 
 	const getMDFRequests = async () => {
 		setLoading(true);
@@ -69,10 +72,7 @@ const MDFRequestChart = () => {
 				)
 			));
 
-		const currency =
-			account && !myUserAccount.organizationBriefs.length
-				? account.currency
-				: 'USD';
+		const currency = account && !isChannel ? account.currency : 'USD';
 
 		if (mdfRequests && currency) {
 			setCurrencyData(currency);
@@ -95,6 +95,7 @@ const MDFRequestChart = () => {
 
 	useEffect(() => {
 		getMDFRequests();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const chartData = {

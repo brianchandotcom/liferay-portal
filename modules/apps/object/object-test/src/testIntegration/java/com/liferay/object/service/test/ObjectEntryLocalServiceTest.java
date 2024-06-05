@@ -31,6 +31,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -1982,65 +1983,6 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddSystemObjectEntryWithObjectValidationRule()
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-
-		String emailAddress = user.getEmailAddress();
-
-		ObjectDefinition userObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), User.class.getName());
-
-		ObjectValidationRule objectValidationRule =
-			_objectValidationRuleLocalService.addObjectValidationRule(
-				StringPool.BLANK, TestPropsValues.getUserId(),
-				userObjectDefinition.getObjectDefinitionId(), true,
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap(
-					"Old value must be " + emailAddress),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-				"oldValue(\"emailAddress\") == \"" + emailAddress + "\"", false,
-				Collections.emptyList());
-
-		user.setEmailAddress(RandomTestUtil.randomString());
-
-		user = _userLocalService.updateUser(user);
-
-		try {
-			user.setEmailAddress(RandomTestUtil.randomString());
-
-			_userLocalService.updateUser(user);
-
-			Assert.fail();
-		}
-		catch (ModelListenerException modelListenerException) {
-			ObjectValidationRuleEngineException
-				objectValidationRuleEngineException =
-					(ObjectValidationRuleEngineException)
-						modelListenerException.getCause();
-
-			List<ObjectValidationRuleResult> objectValidationRuleResults =
-				objectValidationRuleEngineException.
-					getObjectValidationRuleResults();
-
-			Assert.assertEquals(
-				objectValidationRuleResults.toString(), 1,
-				objectValidationRuleResults.size());
-
-			_assertObjectValidationRuleResult(
-				objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
-				null, objectValidationRuleResults.get(0));
-		}
-		finally {
-			_objectValidationRuleLocalService.deleteObjectValidationRule(
-				objectValidationRule);
-		}
-	}
-
-	@Test
 	public void testAuditRouter() throws Exception {
 		Queue<AuditMessage> auditMessages = new LinkedList<>();
 
@@ -3509,6 +3451,67 @@ public class ObjectEntryLocalServiceTest {
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
+	}
+
+	@Test
+	public void testUpdateUserSystemObjectEntryWithDDMObjectValidationRule()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		String emailAddress = user.getEmailAddress();
+
+		ObjectDefinition userObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), User.class.getName());
+
+		ObjectValidationRule objectValidationRule =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				StringPool.BLANK, TestPropsValues.getUserId(),
+				userObjectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(
+					"Old value must be " + emailAddress),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				"oldValue(\"emailAddress\") == \"" + emailAddress + "\"", false,
+				Collections.emptyList());
+
+		user.setEmailAddress(RandomTestUtil.randomString());
+
+		user = _userLocalService.updateUser(user);
+
+		try {
+			user.setEmailAddress(RandomTestUtil.randomString());
+
+			ObjectEntryThreadLocal.setSkipObjectValidationRules(false);
+
+			_userLocalService.updateUser(user);
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
+
+			_assertObjectValidationRuleResult(
+				objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
+				null, objectValidationRuleResults.get(0));
+		}
+		finally {
+			_objectValidationRuleLocalService.deleteObjectValidationRule(
+				objectValidationRule);
 		}
 	}
 

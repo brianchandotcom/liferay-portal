@@ -109,3 +109,44 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 		)}/${title}`
 	);
 });
+
+test('LPD-24858 Categories with blank spaces in friendly URL', async ({
+	apiHelpers,
+	blogsEditBlogEntryPage,
+	displayPageTemplatesPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const vocabularyName = getRandomString();
+	const friendlyUrlCategories = ['category 1', 'category 2', 'category 3'];
+
+	await friendlyURLCategoriesSetup({
+		apiHelpers,
+		displayPageTemplatesPage,
+		friendlyUrlCategories,
+		page,
+		pageEditorPage,
+		site,
+		vocabularyName,
+	});
+
+	await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+
+	const title = getRandomString();
+
+	await blogsEditBlogEntryPage.editBlogEntry({
+		content: getRandomString(),
+		friendlyUrl: {categories: friendlyUrlCategories, vocabularyName},
+		publish: true,
+		title,
+	});
+
+	const response = await page.goto(`/web${site.friendlyUrlPath}/b/${title}`);
+
+	await expect(response.url()).toContain(
+		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+			.map((category) => encodeURIComponent(category))
+			.join('/')}/${title}`
+	);
+});

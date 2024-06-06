@@ -35,6 +35,7 @@ export class PublisherAppPage {
 	readonly logoUploadButton: Locator;
 	readonly page: Page;
 	readonly selectFileButton: Locator;
+	readonly standardLicenses: Locator;
 	readonly submissionCheckbox: Locator;
 	readonly submitButton: Locator;
 	readonly zipFilesContainer: Locator;
@@ -75,6 +76,7 @@ export class PublisherAppPage {
 		this.selectFileButton = page.getByRole('button', {
 			name: 'Select a file',
 		});
+		this.standardLicenses = page.getByText('Standard License prices');
 		this.submitButton = page.getByRole('button', {
 			name: 'Submit App',
 		});
@@ -164,7 +166,8 @@ export class PublisherAppPage {
 			await this.form.build.ram.fill(
 				this.publishProductPayload.resourceRequirements.ram.toString()
 			);
-		} else {
+		}
+		else {
 			await this.cloudCompatibleRadio.last().click();
 		}
 
@@ -212,6 +215,12 @@ export class PublisherAppPage {
 		await this.waitForStep('storefront');
 	}
 
+	async fillLicensing() {
+		await this.continue();
+
+		await this.waitForStep('support');
+	}
+
 	async fillStoreFront() {
 		expect(this.continueButton).toBeDisabled();
 
@@ -250,13 +259,21 @@ export class PublisherAppPage {
 		if (this.publishProductPayload.priceModel === 'paid') {
 			await this.paidPriceModel.click();
 
-			await this.continue(); // Select the App Price
+			await this.continue(); // Select the App License
+			await this.waitForStep('licensing');
+			await this.continue();
+
+			await expect(this.standardLicenses).toBeVisible();
+
+			await this.continue();
+			await this.waitForStep('support');
 		}
-
-		await this.continue(); // Select License terms
-		await this.continue(); // Select Trial Condition
-
-		await this.waitForStep('support');
+		else {
+			await this.continue();
+			await this.waitForStep('licensing');
+			await this.continue();
+			await this.waitForStep('support');
+		}
 	}
 
 	async fillSupport() {

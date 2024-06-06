@@ -1,0 +1,21 @@
+[
+	{
+		"assetLibraryName": "Test Depot Entry 1",
+		"keywords": [
+			{
+				"name": "Test Asset Library Keyword 1"
+			},
+			{
+				"name": "Test Asset Library Keyword 2"
+			}
+		]
+	},
+	{
+		"assetLibraryName": "Test Depot Entry 2",
+		"keywords": [
+			{
+				"name": "Test Asset Library Keyword 3"
+			}
+		]
+	}
+]

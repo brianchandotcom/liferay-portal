@@ -13,8 +13,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -124,7 +124,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getFolderLocalRepository(folderId);
 	}
 
-	@Test(expected = RepositoryException.class)
+	@Test(expected = NoSuchRepositoryException.class)
 	public void testCreateLocalRepositoryFromNonexistentRepositoryId()
 		throws Exception {
 
@@ -240,7 +240,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getFolderRepository(folderId);
 	}
 
-	@Test(expected = RepositoryException.class)
+	@Test(expected = NoSuchRepositoryException.class)
 	public void testCreateRepositoryFromNonexistentRepositoryId()
 		throws Exception {
 

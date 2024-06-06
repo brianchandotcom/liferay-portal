@@ -5,7 +5,7 @@ definition {
 	property custom.properties = "virtual.hosts.default.site.name=Guest";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Export/Import Framework";
+	property testray.main.component.name = "Export/Import";
 
 	setUp {
 		TestCase.setUpPortalInstance();

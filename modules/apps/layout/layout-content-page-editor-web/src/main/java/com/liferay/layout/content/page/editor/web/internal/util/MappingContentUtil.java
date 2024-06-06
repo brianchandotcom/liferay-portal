@@ -155,6 +155,8 @@ public class MappingContentUtil {
 							"fields", fieldSetFieldsJSONArray
 						).put(
 							"label", infoFieldSet.getLabel(locale)
+						).put(
+							"name", infoFieldSet.getName()
 						));
 				}
 			}

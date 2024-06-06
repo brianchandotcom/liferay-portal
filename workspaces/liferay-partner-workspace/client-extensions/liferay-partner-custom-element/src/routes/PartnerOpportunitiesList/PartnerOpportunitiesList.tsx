@@ -295,6 +295,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 									searchTerm,
 								})
 							}
+							urlParams={urlParams}
 						/>
 
 						<div className="bd-highlight flex-shrink-2 mt-1">

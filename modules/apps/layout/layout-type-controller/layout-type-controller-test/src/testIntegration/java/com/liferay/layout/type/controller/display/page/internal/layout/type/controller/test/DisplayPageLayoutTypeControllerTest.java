@@ -186,7 +186,7 @@ public class DisplayPageLayoutTypeControllerTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					_AUTH_LOGIN_CONFIGURATION,
+					_PID,
 					HashMapDictionaryBuilder.<String, Object>put(
 						"promptEnabled", true
 					).build())) {
@@ -444,7 +444,7 @@ public class DisplayPageLayoutTypeControllerTest {
 				ActionKeys.VIEW));
 	}
 
-	private static final String _AUTH_LOGIN_CONFIGURATION =
+	private static final String _PID =
 		"com.liferay.login.web.internal.configuration.AuthLoginConfiguration";
 
 	private AssetCategory _assetCategory;

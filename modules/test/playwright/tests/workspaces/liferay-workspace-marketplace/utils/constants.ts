@@ -5,6 +5,8 @@
 
 import * as path from 'path';
 
+import {PublishSolution} from '../types';
+
 const dependenciesFolder = path.join(__dirname, '..', 'dependencies');
 
 export const products = {
@@ -67,3 +69,37 @@ export const products = {
 		zipFiles: [path.join(dependenciesFolder, 'folder.marketplace.zip')],
 	},
 } as const;
+
+export const solutions: {
+	[key: string]: PublishSolution;
+} = {
+	solution_1: {
+		companyProfile: {
+			description: 'Company Description',
+			email: 'test@liferay.com',
+			phone: '1111111111',
+			website: 'https://liferay.com',
+		},
+		contactUs: {
+			email: 'test@liferay.com',
+		},
+		details: {
+			'text-block': {
+				description: 'Text Block Description',
+				title: 'Text Block Title',
+			},
+			'text-images': {
+				description: 'Text Image Block Description',
+				title: 'Text Image Block Title',
+			},
+		},
+		header: {
+			description: 'Solution Header Description',
+			title: 'Solution Header Title',
+		},
+		profile: {
+			description: 'Solution Test Description',
+			name: 'Solution Test Name',
+		},
+	},
+};

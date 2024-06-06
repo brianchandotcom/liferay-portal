@@ -44,7 +44,7 @@ export type PublishProductPayload = {
 	zipFiles: string[];
 };
 
-type PublishSolution = {
+export type PublishSolution = {
 	companyProfile: CompanyProfile;
 	contactUs: ContactUs;
 	details: SolutionDetails;
@@ -78,33 +78,3 @@ export type Steps =
 	| 'submit'
 	| 'support'
 	| 'version';
-
-export const PUBLISH_SOLUTION: PublishSolution = {
-	companyProfile: {
-		description: 'Company Description',
-		email: 'test@liferay.com',
-		phone: '1111111111',
-		website: 'liferay.com',
-	},
-	contactUs: {
-		email: 'test@liferay.com',
-	},
-	details: {
-		'text-block': {
-			description: 'Text Block Description',
-			title: 'Text Block Title',
-		},
-		'text-images': {
-			description: 'Text Image Block Description',
-			title: 'Text Image Block Title',
-		},
-	},
-	header: {
-		description: 'Solution Header Description',
-		title: 'Solution Header Title',
-	},
-	profile: {
-		description: 'Solution Test Description',
-		name: 'Solution Test Name',
-	},
-};

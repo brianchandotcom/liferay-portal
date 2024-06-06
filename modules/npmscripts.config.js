@@ -826,6 +826,7 @@ module.exports = {
 			'tar',
 			'timers-browserify',
 			'typescript',
+			'unzipper',
 			'webpack',
 		],
 	},

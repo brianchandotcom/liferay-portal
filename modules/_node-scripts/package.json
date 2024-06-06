@@ -17,7 +17,8 @@
 		"resolve": "^1.19.0",
 		"stylelint": "13.2.0",
 		"tar": "^7.2.0",
-		"typescript": "^5.4.5"
+		"typescript": "^5.4.5",
+		"unzipper": "^0.11.6"
 	},
 	"exports": "./index.js",
 	"name": "@liferay/node-scripts",

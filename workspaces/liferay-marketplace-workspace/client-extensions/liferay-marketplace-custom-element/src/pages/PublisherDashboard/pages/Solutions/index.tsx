@@ -30,8 +30,9 @@ const Solutions = () => {
 	const navigate = useNavigate();
 
 	const supplierAccountRoleBriefs =
-		myUserAccount.accountBriefs.find(({id}) => id === supplierAccount?.id)
-			?.roleBriefs ?? [];
+		(myUserAccount.accountBriefs ?? []).find(
+			({id}) => id === supplierAccount?.id
+		)?.roleBriefs ?? [];
 
 	const isSolutionPublisher = supplierAccountRoleBriefs.find(
 		({name}) => name === SOLUTION_PUBLISHER_ROLE

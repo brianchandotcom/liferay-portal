@@ -6,11 +6,13 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {addDays, format} from 'date-fns';
+import {useNavigate} from 'react-router-dom';
 
 import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
 import i18n from '../../../i18n';
+import {TRIAL_CUSTOM_FIELDS} from '../pages/Solutions/Solution';
 
 type PurchasedSolutionsTableProps = {
 	items: PlacedOrder[];
@@ -19,6 +21,8 @@ type PurchasedSolutionsTableProps = {
 const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 	items,
 }) => {
+	const navigate = useNavigate();
+
 	if (!items.length) {
 		return (
 			<DashboardEmptyTable
@@ -117,28 +121,52 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 				{
 					align: 'center',
 					key: 'status',
-					render: () => (
-						<div onClick={(event) => event.stopPropagation()}>
-							<ClayDropDown
-								trigger={
-									<ClayButtonWithIcon
-										aria-label="Kebab Button"
-										displayType={null}
-										symbol="ellipsis-v"
-										title="Kebab Button"
-									/>
-								}
-							>
-								<ClayDropDown.ItemList>
-									<ClayDropDown.Item>
-										{i18n.translate('view-details')}
-									</ClayDropDown.Item>
-								</ClayDropDown.ItemList>
-							</ClayDropDown>
-						</div>
-					),
+					render: (_, {customFields, id}) => {
+						const virtualHost =
+							customFields[TRIAL_CUSTOM_FIELDS.VIRTUAL_HOST];
+
+						return (
+							<div onClick={(event) => event.stopPropagation()}>
+								<ClayDropDown
+									trigger={
+										<ClayButtonWithIcon
+											aria-label="Kebab Button"
+											displayType={null}
+											symbol="ellipsis-v"
+											title="Kebab Button"
+										/>
+									}
+								>
+									<ClayDropDown.ItemList>
+										{virtualHost && (
+											<ClayDropDown.Item
+												onClick={() => {
+													window.open(
+														virtualHost.startsWith(
+															'https'
+														)
+															? virtualHost
+															: `https://${virtualHost}`
+													);
+												}}
+											>
+												{i18n.translate('go-to-trial')}
+											</ClayDropDown.Item>
+										)}
+
+										<ClayDropDown.Item
+											onClick={() => navigate(`${id}`)}
+										>
+											{i18n.translate('view-details')}
+										</ClayDropDown.Item>
+									</ClayDropDown.ItemList>
+								</ClayDropDown>
+							</div>
+						);
+					},
 				},
 			]}
+			onClickRow={({id}) => navigate(`${id}`)}
 			rows={items}
 		/>
 	);

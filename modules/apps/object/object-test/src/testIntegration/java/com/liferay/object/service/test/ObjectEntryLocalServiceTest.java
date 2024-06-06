@@ -2805,7 +2805,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertObjectEntryValues(29, values1, valuesList.get(0));
 		_assertObjectEntryValues(29, values3, valuesList.get(1));
 
-		// Predicate and Search
+		// Predicate and search
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),

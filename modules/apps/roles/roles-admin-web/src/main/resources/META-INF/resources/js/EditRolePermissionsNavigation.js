@@ -147,6 +147,7 @@ export default function EditRolePermissionsNavigation({
 						<ClayVerticalNav.Item
 							active={item.active}
 							className={item.className}
+							data-qa-id={item.id}
 							items={item.items}
 							key={item.id}
 							onClick={

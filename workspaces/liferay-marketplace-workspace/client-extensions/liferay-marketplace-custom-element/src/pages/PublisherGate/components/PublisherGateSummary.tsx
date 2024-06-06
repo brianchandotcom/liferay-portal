@@ -23,7 +23,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 	submit,
 }) => {
 	return (
-		<div className="publisher-gate-page-container">
+		<>
 			<div className="publisher-gate-page-body">
 				<Header
 					description={i18n.translate(
@@ -85,7 +85,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

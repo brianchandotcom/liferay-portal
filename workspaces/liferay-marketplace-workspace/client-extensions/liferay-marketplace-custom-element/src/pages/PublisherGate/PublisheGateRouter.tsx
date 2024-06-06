@@ -10,12 +10,17 @@ import {PublisherGatePage} from './PublisherGatePage';
 import PublisherGateSteps from './components/PublisherGateSteps';
 
 const PublisherGateRouter = () => (
-	<HashRouter>
-		<Routes>
-			<Route element={<PublisherGatePage />} index />
-			<Route element={<PublisherGateSteps />} path="request-account" />
-		</Routes>
-	</HashRouter>
+	<div className="publisher-gate-page-container">
+		<HashRouter>
+			<Routes>
+				<Route element={<PublisherGatePage />} index />
+				<Route
+					element={<PublisherGateSteps />}
+					path="request-account"
+				/>
+			</Routes>
+		</HashRouter>
+	</div>
 );
 
 export default withProviders(PublisherGateRouter);

@@ -22,7 +22,7 @@ export function PublisherGatePage() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="publisher-gate-page-container">
+		<>
 			<div className="publisher-gate-page-body">
 				<Header
 					description={i18n.translate(
@@ -81,6 +81,6 @@ export function PublisherGatePage() {
 					</ClayButton>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

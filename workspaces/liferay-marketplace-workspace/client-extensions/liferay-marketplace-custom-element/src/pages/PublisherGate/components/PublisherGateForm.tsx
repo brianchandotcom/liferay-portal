@@ -7,13 +7,14 @@ import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down/lib/DropDown';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
+import {Fragment, useState} from 'react';
 import {UseFormReturn} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 
 import {Header} from '../../../components/Header/Header';
 import FormInput from '../../../components/Input/formInput';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
+import {Tooltip} from '../../../components/Tooltip/Tooltip';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {phones} from '../../../utils/phones';
@@ -23,6 +24,12 @@ type PublisherGateFormProps = {
 	form: UseFormReturn<PublisherForm, any>;
 	listTypeDefinition?: ListTypeDefinition;
 	setStep: React.Dispatch<React.SetStateAction<StepType>>;
+};
+
+const tooltipText = {
+	appPublisher: 'Ability to publish DXP and Cloud - Free or Charged',
+	solutionPublisher:
+		'Solutions built on Liferay, requires existing Liferay Partnership',
 };
 
 const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
@@ -43,7 +50,7 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 	};
 
 	return (
-		<div className="publisher-gate-page-container">
+		<>
 			<div className="publisher-gate-page-body">
 				<Header
 					description={i18n.translate(
@@ -176,16 +183,39 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 						</label>
 
 						{listTypeEntries.map((listTypeEntry, index) => (
-							<ClayCheckbox
-								aria-label={listTypeEntry.name}
-								checked={form
-									.watch('publisherType')
-									.includes(listTypeEntry.key)}
-								key={index}
-								label={listTypeEntry.name}
-								value={listTypeEntry.key}
-								{...form.register('publisherType')}
-							/>
+							<Fragment key={index}>
+								<ClayCheckbox
+									aria-label={listTypeEntry.name}
+									checked={form
+										.watch('publisherType')
+										.includes(listTypeEntry.key)}
+									key={index}
+									label={
+										(
+											<div className="d-flex justify-content-between w-25">
+												{listTypeEntry.name}
+												{(tooltipText as any)[
+													listTypeEntry.key
+												] && (
+													<Tooltip
+														showTooltipBackground={
+															false
+														}
+														tooltip={
+															(tooltipText as any)[
+																listTypeEntry
+																	.key
+															]
+														}
+													/>
+												)}
+											</div>
+										) as any
+									}
+									value={listTypeEntry.key}
+									{...form.register('publisherType')}
+								/>
+							</Fragment>
 						))}
 					</ClayForm.Group>
 
@@ -252,7 +282,7 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

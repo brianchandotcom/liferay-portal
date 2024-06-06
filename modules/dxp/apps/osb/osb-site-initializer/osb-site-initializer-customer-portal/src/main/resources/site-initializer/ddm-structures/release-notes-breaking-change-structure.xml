@@ -27,7 +27,7 @@
 							},
 							"readOnly": false,
 							"repeatable": false,
-							"required": true,
+							"required": false,
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
@@ -35,148 +35,25 @@
 							"type": "text"
 						},
 						{
-							"dataType": "",
+							"dataType": "string",
 							"fieldReference": "Description",
+							"indexType": "text",
 							"label": {
 								"en_US": "Description"
 							},
-							"localizable": false,
-							"multiple": false,
+							"localizable": true,
 							"name": "Description",
-							"nestedFields": [
-								{
-									"dataType": "string",
-									"fieldReference": "WhatChanged",
-									"indexType": "keyword",
-									"label": {
-										"en_US": "What changed?"
-									},
-									"localizable": true,
-									"name": "WhatChanged",
-									"predefinedValue": {
-										"en_US": ""
-									},
-									"readOnly": false,
-									"repeatable": false,
-									"required": true,
-									"showLabel": true,
-									"tip": {
-										"en_US": ""
-									},
-									"type": "rich_text"
-								},
-								{
-									"dataType": "string",
-									"fieldReference": "WhoIsAffected",
-									"indexType": "keyword",
-									"label": {
-										"en_US": "Who is affected?"
-									},
-									"localizable": true,
-									"name": "WhoIsAffected",
-									"predefinedValue": {
-										"en_US": ""
-									},
-									"readOnly": false,
-									"repeatable": false,
-									"required": true,
-									"showLabel": true,
-									"tip": {
-										"en_US": ""
-									},
-									"type": "rich_text"
-								},
-								{
-									"dataType": "string",
-									"fieldReference": "WhatDoINeedToDo",
-									"indexType": "keyword",
-									"label": {
-										"en_US": "What do I need to do?"
-									},
-									"localizable": true,
-									"name": "WhatDoINeedToDo",
-									"predefinedValue": {
-										"en_US": ""
-									},
-									"readOnly": false,
-									"repeatable": false,
-									"required": true,
-									"showLabel": true,
-									"tip": {
-										"en_US": ""
-									},
-									"type": "rich_text"
-								},
-								{
-									"dataType": "string",
-									"fieldReference": "WhyWasTheChangeMade",
-									"indexType": "keyword",
-									"label": {
-										"en_US": "Why was the change made?"
-									},
-									"localizable": true,
-									"name": "WhyWasTheChangeMade",
-									"predefinedValue": {
-										"en_US": ""
-									},
-									"readOnly": false,
-									"repeatable": false,
-									"required": true,
-									"showLabel": true,
-									"tip": {
-										"en_US": ""
-									},
-									"type": "rich_text"
-								}
-							],
-							"options": [
-							],
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
 							"repeatable": false,
-							"required": false,
-							"rows": [
-								{
-									"columns": [
-										{
-											"fields": [
-												"WhatChanged"
-											],
-											"size": 12
-										}
-									]
-								},
-								{
-									"columns": [
-										{
-											"fields": [
-												"WhoIsAffected"
-											],
-											"size": 12
-										}
-									]
-								},
-								{
-									"columns": [
-										{
-											"fields": [
-												"WhatDoINeedToDo"
-											],
-											"size": 12
-										}
-									]
-								},
-								{
-									"columns": [
-										{
-											"fields": [
-												"WhyWasTheChangeMade"
-											],
-											"size": 12
-										}
-									]
-								}
-							],
+							"required": true,
 							"showLabel": true,
-							"type": "fieldset"
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text"
 						},
 						{
 							"dataType": "",

@@ -48,7 +48,17 @@ public class ObjectDefinitionImplTest {
 
 		// Unmodifiable system object definition
 
-		_testGetRESTContextPath("", false, "AccountEntry", null, true);
+		try {
+			ObjectDefinition objectDefinition = _createObjectDefinition(
+				false, "AccountEntry", true);
+
+			objectDefinition.getRESTContextPath();
+
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			Assert.assertNotNull(unsupportedOperationException);
+		}
 	}
 
 	@FeatureFlags("LPS-187142")
@@ -71,87 +81,69 @@ public class ObjectDefinitionImplTest {
 			"CommerceReturnItem", "CommerceReturn", true);
 	}
 
+	private ObjectDefinition _createObjectDefinition(
+		boolean modifiable, String objectDefinitionName, boolean system) {
+
+		ObjectDefinition objectDefinition = new ObjectDefinitionImpl();
+
+		objectDefinition.setModifiable(modifiable);
+		objectDefinition.setName(objectDefinitionName);
+		objectDefinition.setPluralLabel(
+			TextFormatter.formatPlural(
+				StringUtil.lowerCaseFirstLetter(objectDefinitionName)));
+		objectDefinition.setSystem(system);
+
+		return objectDefinition;
+	}
+
 	private void _testGetRESTContextPath(
 		String expectedRESTContextPath, boolean modifiable,
 		String objectDefinitionName, String rootObjectDefinitionName,
 		boolean system) {
 
 		ObjectDefinition objectDefinition = Mockito.spy(
-			new ObjectDefinitionImpl());
+			_createObjectDefinition(modifiable, objectDefinitionName, system));
 
-		objectDefinition.setModifiable(modifiable);
-		objectDefinition.setName(objectDefinitionName);
-		objectDefinition.setSystem(system);
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			Mockito.mock(ObjectDefinitionLocalService.class);
 
-		if (!modifiable && system) {
-			try {
-				objectDefinition.getRESTContextPath();
-				Assert.fail();
-			}
-			catch (UnsupportedOperationException
-						unsupportedOperationException) {
+		ReflectionTestUtil.setFieldValue(
+			ObjectDefinitionLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<ObjectDefinitionLocalService>(
+				ObjectDefinitionLocalServiceUtil.class,
+				ObjectDefinitionLocalService.class) {
 
-				Assert.assertNotNull(unsupportedOperationException);
-			}
-		}
-		else {
-			if (!system) {
-				objectDefinition.setPluralLabel(
-					TextFormatter.formatPlural(
-						StringUtil.lowerCaseFirstLetter(objectDefinitionName)));
-			}
-
-			ObjectDefinitionLocalService objectDefinitionLocalService =
-				Mockito.mock(ObjectDefinitionLocalService.class);
-
-			ReflectionTestUtil.setFieldValue(
-				ObjectDefinitionLocalServiceUtil.class, "_serviceSnapshot",
-				new Snapshot<ObjectDefinitionLocalService>(
-					ObjectDefinitionLocalServiceUtil.class,
-					ObjectDefinitionLocalService.class) {
-
-					@Override
-					public ObjectDefinitionLocalService get() {
-						return objectDefinitionLocalService;
-					}
-
-				});
-
-			if (rootObjectDefinitionName != null) {
-				ObjectDefinition rootObjectDefinition =
-					new ObjectDefinitionImpl();
-
-				rootObjectDefinition.setName(rootObjectDefinitionName);
-
-				long rootObjectDefinitionId = RandomTestUtil.randomLong();
-
-				objectDefinition.setRootObjectDefinitionId(
-					rootObjectDefinitionId);
-
-				if (!system) {
-					objectDefinition.setPluralLabel(
-						TextFormatter.formatPlural(
-							StringUtil.lowerCaseFirstLetter(
-								rootObjectDefinitionName)));
+				@Override
+				public ObjectDefinitionLocalService get() {
+					return objectDefinitionLocalService;
 				}
 
-				Mockito.when(
-					objectDefinitionLocalService.fetchObjectDefinition(
-						rootObjectDefinitionId)
-				).thenReturn(
-					rootObjectDefinition
-				);
+			});
 
-				Mockito.doReturn(
-					true
-				).when(
-					objectDefinition
-				).isRootDescendantNode();
-			}
+		if (rootObjectDefinitionName != null) {
+			ObjectDefinition rootObjectDefinition = _createObjectDefinition(
+				modifiable, rootObjectDefinitionName, system);
 
-			Assert.assertEquals(
-				expectedRESTContextPath, objectDefinition.getRESTContextPath());
+			long rootObjectDefinitionId = RandomTestUtil.randomLong();
+
+			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
+
+			Mockito.when(
+				objectDefinitionLocalService.fetchObjectDefinition(
+					rootObjectDefinitionId)
+			).thenReturn(
+				rootObjectDefinition
+			);
+
+			Mockito.doReturn(
+				true
+			).when(
+				objectDefinition
+			).isRootDescendantNode();
 		}
+
+		Assert.assertEquals(
+			expectedRESTContextPath, objectDefinition.getRESTContextPath());
 	}
 
 }

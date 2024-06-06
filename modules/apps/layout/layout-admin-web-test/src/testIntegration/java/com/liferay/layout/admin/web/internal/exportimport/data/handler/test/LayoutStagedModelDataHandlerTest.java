@@ -101,6 +101,10 @@ public class LayoutStagedModelDataHandlerTest
 	public void testClientExtensionEntries() throws Exception {
 		_testClientExtensionByType(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, "http://css.css");
+		_testClientExtensionByType(
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, "http://css.css");
+		_testClientExtensionByType(
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, "http://js.js");
 	}
 
 	@Test

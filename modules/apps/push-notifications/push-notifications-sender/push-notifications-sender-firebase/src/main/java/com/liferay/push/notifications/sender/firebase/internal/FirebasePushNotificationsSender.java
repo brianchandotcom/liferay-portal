@@ -31,6 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -66,17 +67,16 @@ public class FirebasePushNotificationsSender
 	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws IOException, JSONException, PushNotificationsException {
 
-			if (_googleCredentials == null) {
+		if (_googleCredentials == null) {
 			throw new PushNotificationsException(
 				"Firebase push notifications sender is not configured " +
 					"properly");
 		}
 
 		String notificationKey = tokens.get(0);
+		String accessToken = _getAccessToken();
 
 		if (tokens.size() > 1) {
-			String accessToken = _getAccessToken();
-
 			notificationKey = _getNotificationKey(accessToken);
 
 			if (Validator.isNull(notificationKey)) {
@@ -84,11 +84,10 @@ public class FirebasePushNotificationsSender
 			}
 		}
 
-		_send(buildMessage(payloadJSONObject, notificationKey));
+		_send(accessToken, buildMessage(payloadJSONObject, notificationKey));
 
 		if (tokens.size() > 1) {
-			_removeNotificationGroup(
-				_getAccessToken(), tokens, notificationKey);
+			_removeNotificationGroup(accessToken, tokens, notificationKey);
 		}
 	}
 
@@ -111,21 +110,11 @@ public class FirebasePushNotificationsSender
 		JSONObject payloadJSONObject, String notificationKey) {
 
 		JSONObject messageContent = JSONUtil.put(
-			"android", payloadJSONObject.getJSONObject("android")
+			"android", _buildAndroidData(payloadJSONObject)
 		).put(
-			"apns", payloadJSONObject.getJSONObject("apns")
-		).put(
-			"data", payloadJSONObject.getJSONObject("data")
-		).put(
-			"fcm_options", payloadJSONObject.getJSONObject("fcm_options")
-		).put(
-			"name", payloadJSONObject.getString("name")
-		).put(
-			"notification", payloadJSONObject.getJSONObject("notification")
+			"data", _buildMessagePayload(payloadJSONObject)
 		).put(
 			"token", notificationKey
-		).put(
-			"webpush", payloadJSONObject.getJSONObject("webpush")
 		);
 
 		return JSONUtil.put("message", messageContent);
@@ -134,6 +123,59 @@ public class FirebasePushNotificationsSender
 	@Deactivate
 	protected void deactivate() {
 		_googleCredentials = null;
+	}
+
+	private JSONObject _buildAndroidData(JSONObject payloadJSONObject) {
+		return JSONUtil.put(
+			"notification",
+			JSONUtil.put(
+				"body", payloadJSONObject.getString("body")
+			).put(
+				"body_loc_args",
+				payloadJSONObject.getJSONArray("bodyLocalizedArguments")
+			).put(
+				"body_loc_key", payloadJSONObject.getString("bodyLocalizedKey")
+			).put(
+				"notification_count", payloadJSONObject.getInt("badge")
+			).put(
+				"sound", payloadJSONObject.getString("sound")
+			).put(
+				"title", payloadJSONObject.getString("title")
+			).put(
+				"title_loc_args",
+				payloadJSONObject.getJSONArray("titleLocalizedArguments")
+			).put(
+				"title_loc_key",
+				payloadJSONObject.getString("titleLocalizedKey")
+			));
+	}
+
+	private JSONObject _buildMessagePayload(JSONObject payloadJSONObject) {
+		Iterator<String> keys = payloadJSONObject.keys();
+		List<String> notificationKeys = Arrays.asList(
+			"badge", "notification_count", "body", "bodyLocalizedKey",
+			"bodyLocalizedArguments", "sound", "title", "titleLocalizedKey",
+			"titleLocalizedArguments");
+
+		JSONObject jsonObject = JSONUtil.put(
+			"title", payloadJSONObject.getString("title")
+		).put(
+			"title_loc_args",
+			payloadJSONObject.getString("titleLocalizedArguments")
+		).put(
+			"title_loc_key", payloadJSONObject.getString("titleLocalizedKey")
+		);
+
+		while (keys.hasNext()) {
+			String key = keys.next();
+
+			if (!notificationKeys.contains(key)) {
+				jsonObject.put(key, payloadJSONObject.get(key));
+			}
+		}
+
+		//return JSONUtil.put("payload", jsonObject);
+		return jsonObject;
 	}
 
 	private String _createNotificationGroup(
@@ -279,14 +321,14 @@ public class FirebasePushNotificationsSender
 		}
 	}
 
-	private void _send(JSONObject message)
+	private void _send(String accessToken, JSONObject message)
 		throws IOException, PushNotificationsException {
 
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 
-		options.addHeader(AUTHORIZATION, "Bearer " + _getAccessToken());
+		options.addHeader(AUTHORIZATION, "Bearer " + accessToken);
 
 		options.setBody(
 			message.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);

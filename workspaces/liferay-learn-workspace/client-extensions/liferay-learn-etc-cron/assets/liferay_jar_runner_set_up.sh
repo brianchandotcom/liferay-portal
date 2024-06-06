@@ -29,7 +29,7 @@ function clone_repository {
 
 		rm -f .git/index.lock
 
-		git reset --hard origin/master && git clean -e .latest_hash -fx && git pull
+		git reset --hard origin/master && git pull
 
 		popd
 	else
@@ -94,8 +94,6 @@ function generate_docs {
 function main {
 	clone_repository
 
-	replace_tokens
-
 	generate_docs
 
 	copy_resources
@@ -128,14 +126,6 @@ function prepare_import {
 	then
 		export LIFERAY_LEARN_ETC_CRON_LIFERAY_URL="https://$(cat /etc/liferay/lxc/dxp-metadata/com.liferay.lxc.dxp.mainDomain)"
 	fi
-}
-
-function replace_tokens {
-	pushd ~/liferay-learn/docs
-
-	./replace_tokens.sh
-
-	popd
 }
 
 function send_slack_message {

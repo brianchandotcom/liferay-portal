@@ -7,23 +7,32 @@ package com.liferay.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Map;
+import javax.portlet.ActionRequest;
+import javax.portlet.Portlet;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -34,6 +43,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Tamas Molnar
+ * @author Eric Yan
  */
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
@@ -44,42 +54,11 @@ public class StagingGetScopeGroupIdTest extends BaseLocalStagingTestCase {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		GroupTestUtil.addGroup(TestPropsValues.getUserId(), liveLayout);
-		GroupTestUtil.addGroup(TestPropsValues.getUserId(), stagingLayout);
-
-		_liveLayoutScopeGroup = liveLayout.getScopeGroup();
-		_stagingLayoutScopeGroup = stagingLayout.getScopeGroup();
-
-		_stagingLayoutScopeGroup.setLiveGroupId(
-			_liveLayoutScopeGroup.getGroupId());
-
-		_stagingLayoutScopeGroup = GroupLocalServiceUtil.updateGroup(
-			_stagingLayoutScopeGroup);
-
-		_mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, stagingLayout);
-	}
-
 	@Ignore
 	@Test
-	public void testGetScopeGroupId() throws Exception {
-		_testGetScopeGroupId(
-			false, false, JournalContentPortletKeys.JOURNAL_CONTENT);
-		_testGetScopeGroupId(
-			false, true, JournalContentPortletKeys.JOURNAL_CONTENT);
-		_testGetScopeGroupId(
-			true, false, JournalContentPortletKeys.JOURNAL_CONTENT);
-		_testGetScopeGroupId(
-			true, true, JournalContentPortletKeys.JOURNAL_CONTENT);
-
-		_testGetScopeGroupId(false, false, BlogsPortletKeys.BLOGS);
-		_testGetScopeGroupId(false, true, BlogsPortletKeys.BLOGS);
-		_testGetScopeGroupId(true, false, BlogsPortletKeys.BLOGS);
-		_testGetScopeGroupId(true, true, BlogsPortletKeys.BLOGS);
+	public void testPortletScopeGroupIdWithPortletLayout() throws Exception {
+		_testPortletScopeGroupId(
+			liveLayout, stagingLayout, BlogsPortletKeys.BLOGS);
 	}
 
 	@Override
@@ -87,74 +66,101 @@ public class StagingGetScopeGroupIdTest extends BaseLocalStagingTestCase {
 		return new String[] {BlogsPortletKeys.BLOGS_ADMIN};
 	}
 
-	private Group _getExpectedGroup(
-		boolean checkStagingGroup, boolean layoutScopeGroup,
-		String rootPortletId) {
-
-		if (_isStagedPortlet(rootPortletId)) {
-			if (layoutScopeGroup) {
-				return _stagingLayoutScopeGroup;
-			}
-
-			return stagingGroup;
-		}
-
-		if (layoutScopeGroup) {
-			if (checkStagingGroup) {
-				return _stagingLayoutScopeGroup;
-			}
-
-			return _liveLayoutScopeGroup;
-		}
-
-		if (checkStagingGroup) {
-			return stagingGroup;
-		}
-
-		return liveGroup;
-	}
-
-	private Map<String, String[]> _getLayoutScopedPreferenceMap() {
-		return HashMapBuilder.put(
-			"lfrScopeLayoutUuid",
-			new String[] {String.valueOf(stagingLayout.getUuid())}
-		).put(
-			"lfrScopeType", new String[] {"layout"}
-		).build();
-	}
-
-	private boolean _isStagedPortlet(String rootPortletId) {
-		return !ArrayUtil.contains(getNotStagedPortletIds(), rootPortletId);
-	}
-
-	private void _testGetScopeGroupId(
-			boolean checkStagingGroup, boolean layoutScopeGroup,
-			String rootPortletId)
+	private void _testPortletScopeGroupId(
+			Layout liveLayout, Layout stagingLayout, String portletId)
 		throws Exception {
 
-		String portletId = null;
+		LayoutTestUtil.addPortletToLayout(stagingLayout, portletId);
 
-		if (layoutScopeGroup) {
-			portletId = LayoutTestUtil.addPortletToLayout(
-				stagingLayout, rootPortletId, _getLayoutScopedPreferenceMap());
-		}
-		else {
-			portletId = LayoutTestUtil.addPortletToLayout(
-				stagingLayout, rootPortletId);
-		}
+		_updateLayoutPortletScope(
+			stagingLayout, portletId, stagingLayout.getUuid(), "layout");
+		publishLayouts();
 
-		Group expectedGroup = _getExpectedGroup(
-			checkStagingGroup, layoutScopeGroup, rootPortletId);
+		Group scopeGroup = GroupLocalServiceUtil.fetchGroup(
+			liveLayout.getCompanyId(), _portal.getClassNameId(Layout.class),
+			liveLayout.getPlid());
+
+		_testScopeGroupId(
+			scopeGroup.getGroupId(), liveLayout, stagingLayout, portletId,
+			false);
+		_testScopeGroupId(
+			scopeGroup.getGroupId(), liveLayout, stagingLayout, portletId,
+			true);
+	}
+
+	private void _testScopeGroupId(
+			long expectedScopeGroupId, Layout liveLayout, Layout stagingLayout,
+			String portletId, boolean checkStagingGroup)
+		throws Exception {
+
+		_mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, liveLayout);
 
 		Assert.assertEquals(
-			expectedGroup.getGroupId(),
+			expectedScopeGroupId,
+			PortalUtil.getScopeGroupId(
+				_mockHttpServletRequest, portletId, checkStagingGroup));
+
+		_mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, stagingLayout);
+
+		Assert.assertEquals(
+			expectedScopeGroupId,
 			PortalUtil.getScopeGroupId(
 				_mockHttpServletRequest, portletId, checkStagingGroup));
 	}
 
-	private Group _liveLayoutScopeGroup;
+	private void _updateLayoutPortletScope(
+			Layout layout, String layoutPortletId, String lfrScopeLayoutUuid,
+			String lfrScopeType)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(layout.getCompanyId()));
+		themeDisplay.setLanguageId(layout.getDefaultLanguageId());
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayPortletActionRequest.setParameter(
+			"portletResource", layoutPortletId);
+		mockLiferayPortletActionRequest.setParameter(
+			"scope",
+			StringBundler.concat(
+				lfrScopeType, StringPool.COMMA, lfrScopeLayoutUuid));
+		mockLiferayPortletActionRequest.setPreferences(
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, layoutPortletId));
+
+		ReflectionTestUtil.invoke(
+			_portlet, "_updateScope", new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
+	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
-	private Group _stagingLayoutScopeGroup;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject(
+		filter = "component.name=com.liferay.portlet.configuration.web.internal.portlet.PortletConfigurationPortlet"
+	)
+	private Portlet _portlet;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 }

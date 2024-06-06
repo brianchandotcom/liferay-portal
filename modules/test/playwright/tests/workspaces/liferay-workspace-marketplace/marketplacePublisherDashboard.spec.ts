@@ -42,7 +42,7 @@ test.describe('Can Publish and Manage Solutions', () => {
 				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
 			const accountSupplierRole = rolesResponse?.items?.filter((role) => {
-				return role.name === 'Account Supplier';
+				return role.name === 'Solution Publisher';
 			});
 
 			await apiHelpers.headlessAdminUser.assingUserToAccountRole(
@@ -158,26 +158,24 @@ test.describe('Can Publish Marketplace Apps', () => {
 			await publisherAppPage.fillProfile();
 			await publisherAppPage.fillBuild();
 
-			if (!product.cloudCompatible) {
-				const createdProduct =
-					await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-						new URLSearchParams({
-							filter: `name eq '${product.name}'`,
-						})
-					);
+			const createdProduct =
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq '${product.name}'`,
+					})
+				);
 
-				const productId = createdProduct.items[0].productId;
+			const productId = createdProduct.items[0].productId;
 
-				const productVirtualSettings =
-					await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
-						productId
-					);
+			const productVirtualSettings =
+				await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
+					productId
+				);
 
-				expect(
-					productVirtualSettings.productVirtualSettingsFileEntries[0]
-						.version === product.dxpVersions[0]
-				).toBeTruthy();
-			}
+			expect(
+				productVirtualSettings.productVirtualSettingsFileEntries[0]
+					.version === product.dxpVersions[0]
+			).toBeTruthy();
 
 			await publisherAppPage.fillStoreFront();
 			await publisherAppPage.fillVersion();

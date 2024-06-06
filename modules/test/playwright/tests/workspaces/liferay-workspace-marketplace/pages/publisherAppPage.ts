@@ -158,68 +158,51 @@ export class PublisherAppPage {
 		if (this.publishProductPayload.cloudCompatible) {
 			await this.cloudCompatibleRadio.first().click();
 
-			for (const compatibleOffering of this.publishProductPayload
-				.compatibleOfferings) {
-				await this.page
-					.getByText(compatibleOffering, {exact: true})
-					.click();
-			}
-
 			await this.form.build.cpu.fill(
 				this.publishProductPayload.resourceRequirements.cpus.toString()
 			);
 			await this.form.build.ram.fill(
 				this.publishProductPayload.resourceRequirements.ram.toString()
 			);
-
-			await this.importFile(
-				this.selectFileButton,
-				await zipFolder(this.publishProductPayload.zipFiles[0])
-			);
-
-			expect(await this.zipFilesContainer).toHaveCount(1);
-			expect(await this.zipFilesContainer).toContainText(
-				this.publishProductPayload.zipFiles[0].split('/').at(-1)
-			);
-		}
-		else {
+		} else {
 			await this.cloudCompatibleRadio.last().click();
+		}
 
-			for (const compatibleOffering of this.publishProductPayload
-				.compatibleOfferings) {
-				await this.page
-					.getByText(compatibleOffering, {exact: true})
-					.click();
-			}
-
-			let i = 0;
-
-			await this.addPackagesButton.click();
+		for (const compatibleOffering of this.publishProductPayload
+			.compatibleOfferings) {
 			await this.page
-				.getByRole('heading', {
-					name: 'Select Compatible Versions',
-				})
-				.waitFor({state: 'visible'});
+				.getByText(compatibleOffering, {exact: true})
+				.click();
+		}
 
-			for (const dxpVersion of this.publishProductPayload.dxpVersions) {
-				await this.page.getByLabel(dxpVersion).click();
-			}
+		await this.addPackagesButton.click();
 
-			await this.confirmButton.click();
+		await this.page
+			.getByRole('heading', {
+				name: 'Select Compatible Versions',
+			})
+			.waitFor({state: 'visible'});
 
-			for (const _ of this.publishProductPayload.dxpVersions) {
-				await this.importFile(
-					this.selectFileButton.nth(i),
-					await zipFolder(
-						path.join(
-							__dirname,
-							'../dependencies/folder.marketplace.jar'
-						)
+		for (const dxpVersion of this.publishProductPayload.dxpVersions) {
+			await this.page.getByLabel(dxpVersion).click();
+		}
+
+		await this.confirmButton.click();
+
+		let i = 0;
+
+		for (const _ of this.publishProductPayload.dxpVersions) {
+			await this.importFile(
+				this.selectFileButton.nth(i),
+				await zipFolder(
+					path.join(
+						__dirname,
+						'../dependencies/folder.marketplace.jar'
 					)
-				);
+				)
+			);
 
-				i++;
-			}
+			i++;
 		}
 
 		await this.continue();

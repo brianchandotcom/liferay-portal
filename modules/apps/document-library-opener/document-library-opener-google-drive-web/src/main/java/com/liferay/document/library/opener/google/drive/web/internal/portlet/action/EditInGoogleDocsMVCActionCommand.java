@@ -107,11 +107,14 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		if (!fileEntry.isCheckedOut()) {
+			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+		}
 
 		return _dlOpenerGoogleDriveManager.checkOut(
-			serviceContext.getUserId(),
-			_dlAppService.getFileEntry(fileEntryId));
+			serviceContext.getUserId(), fileEntry);
 	}
 
 	private void _executeCommand(

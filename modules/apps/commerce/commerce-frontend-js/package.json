@@ -56,7 +56,7 @@
 	"private": true,
 	"scripts": {
 		"build": "node-scripts build",
-		"checkFormat": "liferay-npm-scripts check",
+		"checkFormat": "node-scripts format --check",
 		"coverage": "liferay-npm-scripts test --coverage --silent --verbose",
 		"format": "liferay-npm-scripts format",
 		"test": "liferay-npm-scripts test"

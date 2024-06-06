@@ -15,8 +15,8 @@
 	"name": "@liferay/site-navigation-menu-item-display-page",
 	"scripts": {
 		"build": "node-scripts build",
-		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
 		"test": "liferay-npm-scripts test"
 	},
 	"version": "1.0.66"

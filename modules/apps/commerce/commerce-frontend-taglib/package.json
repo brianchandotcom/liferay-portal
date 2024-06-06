@@ -14,7 +14,7 @@
 	"name": "commerce-frontend-taglib",
 	"scripts": {
 		"build": "node-scripts build",
-		"checkFormat": "liferay-npm-scripts check",
+		"checkFormat": "node-scripts format --check",
 		"format": "liferay-npm-scripts format"
 	},
 	"version": "23.1.1"

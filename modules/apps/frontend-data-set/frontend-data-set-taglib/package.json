@@ -1,11 +1,10 @@
 {
-	"dependencies": {
-	},
+	"dependencies": {},
 	"name": "@liferay/frontend-data-set-taglib",
 	"private": true,
 	"scripts": {
-		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
 	},
 	"version": "1.0.42"
 }

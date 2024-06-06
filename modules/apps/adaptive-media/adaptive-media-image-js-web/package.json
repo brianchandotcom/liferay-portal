@@ -1,8 +1,8 @@
 {
 	"name": "adaptive-media-image-js-web",
 	"scripts": {
-		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
 	},
 	"version": "5.0.14"
 }

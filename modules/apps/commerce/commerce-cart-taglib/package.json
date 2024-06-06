@@ -1,10 +1,9 @@
 {
-	"dependencies": {
-	},
+	"dependencies": {},
 	"name": "commerce-cart-taglib",
 	"scripts": {
 		"build": "node-scripts build",
-		"checkFormat": "liferay-npm-scripts check"
+		"checkFormat": "node-scripts format --check"
 	},
 	"version": "5.0.33"
 }

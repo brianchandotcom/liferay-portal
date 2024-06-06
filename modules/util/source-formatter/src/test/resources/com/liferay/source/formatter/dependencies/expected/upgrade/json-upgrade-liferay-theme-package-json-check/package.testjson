@@ -13,10 +13,10 @@
 	},
 	"scripts": {
 		"build": "gulp build",
-		"checkFormat": "liferay-npm-scripts check",
+		"checkFormat": "node-scripts format --check",
 		"deploy": "gulp deploy",
 		"extend": "gulp extend",
-		"format": "liferay-npm-scripts fix",
+		"format": "node-scripts format",
 		"init": "gulp init",
 		"kickstart": "gulp kickstart",
 		"status": "gulp status",

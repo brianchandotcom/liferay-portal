@@ -1,8 +1,8 @@
 {
 	"name": "@liferay/osb-site-initializer-customer-portal",
 	"scripts": {
-		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
 	},
 	"version": "1.0.0"
 }

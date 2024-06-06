@@ -36,9 +36,8 @@
 	"private": true,
 	"scripts": {
 		"build": "node-scripts build",
-		"checkFormat": "liferay-npm-scripts check",
-		"csf": "liferay-npm-scripts fix",
-		"format": "liferay-npm-scripts fix",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
 		"test": "env TZ=utc liferay-npm-scripts test",
 		"test:watch": "env TZ=utc liferay-npm-scripts test --watch"
 	},

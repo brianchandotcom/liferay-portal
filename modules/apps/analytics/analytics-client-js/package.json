@@ -39,8 +39,8 @@
 	},
 	"scripts": {
 		"build": "liferay-npm-scripts webpack",
-		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
 		"start": "liferay-npm-scripts webpack --watch",
 		"test": "TZ=Etc/GMT liferay-npm-scripts test"
 	},

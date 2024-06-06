@@ -13,8 +13,8 @@
 	"name": "segments-simulation-web",
 	"scripts": {
 		"build": "node-scripts build",
-		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
 		"test": "env TZ=utc liferay-npm-scripts test"
 	},
 	"version": "3.0.51"

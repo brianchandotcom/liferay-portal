@@ -7522,7 +7522,7 @@ public class ServiceBuilder {
 		for (EntityFinder entityFinder : entity.getEntityFinders()) {
 			finderName = entityFinder.getName();
 
-			if (finderName.equals("HeadId")) {
+			if (finderName.equals("HeadId") || finderName.startsWith("ERC")) {
 				continue;
 			}
 

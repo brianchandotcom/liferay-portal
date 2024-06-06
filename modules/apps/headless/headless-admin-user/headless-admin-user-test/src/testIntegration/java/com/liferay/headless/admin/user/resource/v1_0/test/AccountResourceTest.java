@@ -38,6 +38,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -543,6 +544,13 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				Arrays.toString(emailAddresses2),
 			emailAddresses1.length, emailAddresses2.length);
 
+		Arrays.sort(
+			emailAddresses1,
+			Comparator.comparing(EmailAddress::getEmailAddress));
+		Arrays.sort(
+			emailAddresses2,
+			Comparator.comparing(EmailAddress::getEmailAddress));
+
 		for (int i = 0; i < emailAddresses1.length; i++) {
 			Assert.assertTrue(
 				emailAddresses1[i] + " does not equal " + emailAddresses2[i],
@@ -555,6 +563,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			Arrays.toString(phones1) + " does not equal " +
 				Arrays.toString(phones2),
 			phones1.length, phones2.length);
+
+		Arrays.sort(phones1, Comparator.comparing(Phone::getPhoneNumber));
+		Arrays.sort(phones2, Comparator.comparing(Phone::getPhoneNumber));
 
 		for (int i = 0; i < phones1.length; i++) {
 			Assert.assertTrue(
@@ -571,6 +582,13 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				Arrays.toString(postalAddresses2),
 			postalAddresses1.length, postalAddresses2.length);
 
+		Arrays.sort(
+			postalAddresses1,
+			Comparator.comparing(PostalAddress::getAddressLocality));
+		Arrays.sort(
+			postalAddresses2,
+			Comparator.comparing(PostalAddress::getAddressLocality));
+
 		for (int i = 0; i < postalAddresses1.length; i++) {
 			Assert.assertTrue(
 				postalAddresses1[i] + " does not equal " + postalAddresses2[i],
@@ -583,6 +601,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			Arrays.toString(webUrls1) + " does not equal " +
 				Arrays.toString(webUrls2),
 			webUrls1.length, webUrls2.length);
+
+		Arrays.sort(webUrls1, Comparator.comparing(WebUrl::getUrl));
+		Arrays.sort(webUrls2, Comparator.comparing(WebUrl::getUrl));
 
 		for (int i = 0; i < webUrls1.length; i++) {
 			Assert.assertTrue(

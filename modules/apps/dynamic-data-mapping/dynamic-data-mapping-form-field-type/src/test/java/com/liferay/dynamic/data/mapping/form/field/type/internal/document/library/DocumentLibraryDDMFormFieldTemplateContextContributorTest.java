@@ -245,12 +245,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		ThemeDisplay themeDisplay = _mockThemeDisplay();
 
-		Mockito.when(
-			themeDisplay.isSignedIn()
-		).thenReturn(
-			Boolean.TRUE
-		);
-
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
 				themeDisplay);

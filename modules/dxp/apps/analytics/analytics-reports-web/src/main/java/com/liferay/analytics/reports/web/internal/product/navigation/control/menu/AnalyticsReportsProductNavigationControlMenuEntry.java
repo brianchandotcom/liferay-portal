@@ -182,17 +182,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_hasResourcePermission(
-				ActionKeys.UPDATE, themeDisplay.getScopeGroupId(),
-				httpServletRequest.getParameter("p_l_id"), _resourceNames)) {
-
-			return true;
-		}
-
 		InfoItemReference infoItemReference = _getInfoItemReference(
 			httpServletRequest);
 
@@ -220,8 +209,15 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 				_analyticsReportsInfoItemRegistry.getAnalyticsReportsInfoItem(
 					infoItemReference.getClassName());
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		if ((analyticsReportsInfoItem == null) ||
-			!analyticsReportsInfoItem.isShow(analyticsReportsInfoItemObject)) {
+			(!analyticsReportsInfoItem.isShow(analyticsReportsInfoItemObject) &&
+			 !_hasResourcePermission(
+				 ActionKeys.UPDATE, httpServletRequest.getParameter("p_l_id"),
+				 _resourceNames, themeDisplay))) {
 
 			return false;
 		}

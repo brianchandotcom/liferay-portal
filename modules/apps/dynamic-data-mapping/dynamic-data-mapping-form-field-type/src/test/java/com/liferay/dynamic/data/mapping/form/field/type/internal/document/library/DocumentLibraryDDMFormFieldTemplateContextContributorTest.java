@@ -240,14 +240,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetParametersShouldContainDownloadURL()
+	public void testGetParametersShouldContainFileEntryURL()
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = _mockThemeDisplay();
-
-		DocumentLibraryDDMFormFieldTemplateContextContributor
-			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				themeDisplay);
 
 		String downloadURL = RandomTestUtil.randomString();
 
@@ -259,24 +255,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			downloadURL
 		);
 
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			_createDDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setProperty("ddmFormInstanceRecordId", 0L);
-
-		Map<String, Object> parameters =
-			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
-				new DDMFormField("field", "document_library"),
-				ddmFormFieldRenderingContext);
-
-		Assert.assertEquals(downloadURL, parameters.get("fileEntryURL"));
-	}
-
-	@Test
-	public void testGetParametersShouldContainFileEntryURL() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
-				_mockThemeDisplay());
+				themeDisplay);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			_createDDMFormFieldRenderingContext();
@@ -289,7 +270,18 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 				new DDMFormField("field", "document_library"),
 				ddmFormFieldRenderingContext);
 
-		Assert.assertTrue(parameters.containsKey("fileEntryURL"));
+		Assert.assertEquals(
+			String.valueOf(new TestMockLiferayPortletURL()),
+			parameters.get("fileEntryURL"));
+
+		ddmFormFieldRenderingContext.setProperty("ddmFormInstanceRecordId", 0L);
+
+		parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				ddmFormFieldRenderingContext);
+
+		Assert.assertEquals(downloadURL, parameters.get("fileEntryURL"));
 	}
 
 	@Test

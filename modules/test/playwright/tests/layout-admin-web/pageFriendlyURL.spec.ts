@@ -134,3 +134,38 @@ test('Canonical URL doesnt change with localized Friendly URL.', async ({
 		liferayConfig.environment.baseUrl + '/' + site.name + '/test-page-name'
 	);
 });
+
+test('Friendly URLs Only Display Locale Once.', async ({
+   apiHelpers,
+   layoutPage,
+   page,
+   pageConfigurationPage,
+   site,
+}) => {
+	await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
+		]),
+		siteId: site.id,
+		title: 'Test Page Name',
+	});
+
+	// The configuration action must be available from the card
+	// The configuration view should only allow setting the FriendlyURL and the associated language
+
+	await layoutPage.goto(site.friendlyUrlPath);
+	await pageConfigurationPage.goToSection('Test Page Name', 'General');
+	await pageConfigurationPage.setFriendlyURL(
+		'/test-pagina',
+		'spanish'
+	);
+
+	await page.goto('/es/web/' + site.name + '/test-page-name');
+
+	const newURL = new URL(page.url());
+
+	expect(newURL.pathname).toBe('/es/web/' + site.name + '/test-pagina');
+});

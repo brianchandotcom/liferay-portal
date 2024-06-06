@@ -129,10 +129,9 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 						getName());
 			}
 
-			String shortName = TextFormatter.formatPlural(
-				StringUtil.toLowerCase(getShortName()));
-
-			return "/c/" + shortName;
+			return "/c/" +
+				TextFormatter.formatPlural(
+					StringUtil.toLowerCase(getShortName()));
 		}
 
 		ObjectDefinition rootObjectDefinition =
@@ -151,14 +150,12 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 							getName())));
 		}
 
-		String shortName = TextFormatter.formatPlural(
-			StringUtil.toLowerCase(getShortName()));
-
 		return StringBundler.concat(
 			"/c/",
 			TextFormatter.formatPlural(
 				StringUtil.toLowerCase(rootObjectDefinition.getShortName())),
-			StringPool.SLASH, shortName);
+			StringPool.SLASH,
+			TextFormatter.formatPlural(StringUtil.toLowerCase(getShortName())));
 	}
 
 	@Override

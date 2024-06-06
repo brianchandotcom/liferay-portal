@@ -704,14 +704,17 @@ public class DefaultSearchResultPermissionFilter
 						searchContextFacet.getFieldName(), null);
 
 					if (searchContextFacet instanceof NestedFacet) {
+						NestedFacet nestedFacet =
+							(NestedFacet)searchContextFacet;
+
 						NestedFacetImpl nestedFacetImpl = new NestedFacetImpl(
 							searchContextFacet.getFieldName(), null);
 
-						NestedFacet searchContextNestedFacet =
-							(NestedFacet)searchContextFacet;
-
+						nestedFacetImpl.setFilterField(
+							nestedFacet.getFilterField());
 						nestedFacetImpl.setFilterValue(
-							searchContextNestedFacet.getFilterValue());
+							nestedFacet.getFilterValue());
+						nestedFacetImpl.setPath(nestedFacet.getPath());
 
 						facet = nestedFacetImpl;
 					}

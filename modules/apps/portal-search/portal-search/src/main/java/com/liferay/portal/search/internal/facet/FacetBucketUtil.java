@@ -9,8 +9,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
@@ -24,36 +26,11 @@ public class FacetBucketUtil {
 		Field field, String term, Facet facet) {
 
 		if (facet instanceof NestedFacet) {
-			for (String value : field.getValues()) {
-				value = value.substring(1, value.length() - 1);
-
-				String[] pairs = value.split(StringPool.COMMA_AND_SPACE);
-
-				if (_pairsContainsFilterValue(facet, pairs) &&
-					_pairsContainsFieldAggregate(facet, term, pairs)) {
-
-					return true;
-				}
-			}
-
-			return false;
+			return _isNestedValueInBucket(field, term, (NestedFacet)facet);
 		}
 
 		if (facet instanceof RangeFacet) {
-			String[] range = RangeParserUtil.parserRange(term);
-
-			String lower = range[0];
-			String upper = range[1];
-
-			String value = field.getValue();
-
-			if (Validator.isNotNull(lower) && (lower.compareTo(value) <= 0) &&
-				Validator.isNotNull(upper) && (value.compareTo(upper) <= 0)) {
-
-				return true;
-			}
-
-			return false;
+			return _isRangeValueInBucket(field, term);
 		}
 
 		if (ArrayUtil.contains(field.getValues(), term, false)) {
@@ -63,22 +40,40 @@ public class FacetBucketUtil {
 		return false;
 	}
 
-	private static boolean _pairsContainsFieldAggregate(
-		Facet facet, String term, String[] pairs) {
+	private static boolean _fieldValuePairsContainsFieldValue(
+		String field, String value, String[] fieldValuePairs) {
 
-		for (String pair : pairs) {
-			String[] keyValue = pair.split(StringPool.EQUAL);
+		for (String fieldValuePair : fieldValuePairs) {
+			if (fieldValuePair.equals(field + "=" + value)) {
+				return true;
+			}
+		}
 
-			String key = keyValue[0].trim();
+		return false;
+	}
 
-			String value = keyValue[1].trim();
+	private static boolean _isNestedValueInBucket(
+		Field field, String term, NestedFacet nestedFacet) {
 
-			if (key.contentEquals(
-					facet.getFieldName(
-					).split(
-						"\\."
-					)[1]) &&
-				value.contentEquals(term)) {
+		String filterField = _removePath(
+			nestedFacet.getPath(), nestedFacet.getFilterField());
+		String filterValue = nestedFacet.getFilterValue();
+
+		FacetConfiguration facetConfiguration =
+			nestedFacet.getFacetConfiguration();
+
+		String valueField = _removePath(
+			nestedFacet.getPath(), facetConfiguration.getFieldName());
+
+		for (String value : field.getValues()) {
+			value = _removeCurlyBraces(value);
+
+			String[] fieldValuePairs = value.split(StringPool.COMMA_AND_SPACE);
+
+			if (_fieldValuePairsContainsFieldValue(
+					filterField, filterValue, fieldValuePairs) &&
+				_fieldValuePairsContainsFieldValue(
+					valueField, term, fieldValuePairs)) {
 
 				return true;
 			}
@@ -87,22 +82,29 @@ public class FacetBucketUtil {
 		return false;
 	}
 
-	private static boolean _pairsContainsFilterValue(
-		Facet facet, String[] pairs) {
+	private static boolean _isRangeValueInBucket(Field field, String term) {
+		String[] range = RangeParserUtil.parserRange(term);
 
-		for (String pair : pairs) {
-			String[] keyValue = pair.split(StringPool.EQUAL);
+		String lower = range[0];
+		String upper = range[1];
 
-			NestedFacet nestedFacet = (NestedFacet)facet;
+		String value = field.getValue();
 
-			String filterValue = nestedFacet.getFilterValue();
+		if (Validator.isNotNull(lower) && (lower.compareTo(value) <= 0) &&
+			Validator.isNotNull(upper) && (value.compareTo(upper) <= 0)) {
 
-			if (filterValue.contentEquals(keyValue[1].trim())) {
-				return true;
-			}
+			return true;
 		}
 
 		return false;
+	}
+
+	private static String _removeCurlyBraces(String value) {
+		return value.substring(1, value.length() - 1);
+	}
+
+	private static String _removePath(String path, String string) {
+		return StringUtil.removeSubstring(string, path + StringPool.PERIOD);
 	}
 
 }

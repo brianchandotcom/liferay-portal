@@ -25,7 +25,7 @@ export class ObjectValidationsPage {
 	async goto(objectDefinitionLabel: string) {
 		await this.viewObjectDefinitionsPage.goto();
 
-		await this.viewObjectDefinitionsPage.clickEditObjectDefinitionFDSLink(
+		await this.viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
 			objectDefinitionLabel
 		);
 

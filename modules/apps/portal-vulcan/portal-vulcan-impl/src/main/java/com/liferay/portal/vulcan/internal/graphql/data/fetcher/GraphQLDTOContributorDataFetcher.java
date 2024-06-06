@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.internal.graphql.data.fetcher;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContext;
@@ -19,7 +20,10 @@ import java.io.Serializable;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.HttpMethod;
 
 /**
  * @author Carlos Correa
@@ -43,6 +47,8 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 			graphQLDTOContributorDataFetchingProcessor;
 		_graphQLDTOProperty = graphQLDTOProperty;
 		_operation = operation;
+
+		_httpMethod = _httpMethods.get(operation);
 	}
 
 	public GraphQLDTOContributorDataFetcher(
@@ -66,6 +72,15 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
+
+		httpServletRequest = new HttpServletRequestWrapper(httpServletRequest) {
+
+			@Override
+			public String getMethod() {
+				return _httpMethod;
+			}
+
+		};
 
 		if (_operation == GraphQLDTOContributor.Operation.CREATE) {
 			return _graphQLDTOContributorDataFetchingProcessor.create(
@@ -125,10 +140,26 @@ public class GraphQLDTOContributorDataFetcher extends BaseDataFetcher {
 			"Operation not supported: " + _operation);
 	}
 
+	private static final Map<GraphQLDTOContributor.Operation, String>
+		_httpMethods = HashMapBuilder.put(
+			GraphQLDTOContributor.Operation.CREATE, HttpMethod.POST
+		).put(
+			GraphQLDTOContributor.Operation.DELETE, HttpMethod.DELETE
+		).put(
+			GraphQLDTOContributor.Operation.GET, HttpMethod.GET
+		).put(
+			GraphQLDTOContributor.Operation.GET_RELATIONSHIP, HttpMethod.GET
+		).put(
+			GraphQLDTOContributor.Operation.LIST, HttpMethod.GET
+		).put(
+			GraphQLDTOContributor.Operation.UPDATE, HttpMethod.PUT
+		).build();
+
 	private final GraphQLDTOContributor _graphQLDTOContributor;
 	private final GraphQLDTOContributorDataFetchingProcessor
 		_graphQLDTOContributorDataFetchingProcessor;
 	private final GraphQLDTOProperty _graphQLDTOProperty;
+	private final String _httpMethod;
 	private final GraphQLDTOContributor.Operation _operation;
 
 }

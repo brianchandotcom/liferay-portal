@@ -122,17 +122,24 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectDefinition rootObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				getRootObjectDefinitionId());
-
-		if (isModifiable() && isSystem()) {
-			if (!isRootDescendantNode()) {
+		if (!isRootDescendantNode()) {
+			if (isModifiable() && isSystem()) {
 				return ObjectDefinitionUtil.
 					getModifiableSystemObjectDefinitionRESTContextPath(
 						getName());
 			}
 
+			String shortName = TextFormatter.formatPlural(
+				StringUtil.toLowerCase(getShortName()));
+
+			return "/c/" + shortName;
+		}
+
+		ObjectDefinition rootObjectDefinition =
+			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+				getRootObjectDefinitionId());
+
+		if (isModifiable() && isSystem()) {
 			return StringBundler.concat(
 				ObjectDefinitionUtil.
 					getModifiableSystemObjectDefinitionRESTContextPath(
@@ -146,10 +153,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 		String shortName = TextFormatter.formatPlural(
 			StringUtil.toLowerCase(getShortName()));
-
-		if (!isRootDescendantNode()) {
-			return "/c/" + shortName;
-		}
 
 		return StringBundler.concat(
 			"/c/",

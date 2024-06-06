@@ -522,6 +522,10 @@ definition {
 			Questions.search(
 				searchKey = "tag1",
 				searchTag = "true");
+
+			// Pausing 1 second for giving the time to perform the search LPD-27732
+
+			Pause(locator1 = 1000);
 		}
 
 		task ("Then only the matching tag is displayed") {

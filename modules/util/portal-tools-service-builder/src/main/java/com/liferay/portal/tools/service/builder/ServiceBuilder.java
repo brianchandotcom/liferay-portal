@@ -2605,8 +2605,9 @@ public class ServiceBuilder {
 			}
 
 			if (entity.hasEntityColumns()) {
-				if (entity.hasExternalReferenceCode() ||
-					entity.hasEntityColumn("externalReferenceCode")) {
+				if ((entity.hasExternalReferenceCode() ||
+					 entity.hasEntityColumn("externalReferenceCode")) &&
+					(entity.getVersionedEntity() == null)) {
 
 					exceptions.add(
 						getDuplicateEntityExternalReferenceCodeException(

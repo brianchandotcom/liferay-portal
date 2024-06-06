@@ -17,6 +17,10 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -170,6 +174,33 @@ public class EditRolePermissionsNavigationDisplayContext {
 		).setParameter(
 			"p_p_isolated", "true"
 		).buildString();
+	}
+
+	private List<NavigationItem> _getObjectsNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		for (ObjectDefinition objectDefinition :
+				ObjectDefinitionLocalServiceUtil.getObjectDefinitions(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+			if (objectDefinition.isApproved() &&
+				!objectDefinition.isRootDescendantNode() &&
+				!objectDefinition.isUnmodifiableSystemObject() &&
+				Validator.isNull(objectDefinition.getPanelCategoryKey())) {
+
+				NavigationItem navigationItem = NavigationItem.create(
+					objectDefinition.getLabel(_locale),
+					_getPortletResourceNavigationItemConsumer(
+						objectDefinition.getPortletId()));
+
+				navigationItem.setId(
+					"object_" + objectDefinition.getObjectDefinitionId());
+
+				navigationItems.add(navigationItem);
+			}
+		}
+
+		return navigationItems;
 	}
 
 	private NavigationItem _getPanelCategoryNavigationItem(
@@ -364,6 +395,22 @@ public class EditRolePermissionsNavigationDisplayContext {
 									APPLICATIONS_MENU_APPLICATIONS));
 						navigationItem.setInitialExpanded(true);
 					}));
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-19843")) {
+				List<NavigationItem> navigationItems =
+					_getObjectsNavigationItems();
+
+				if (!navigationItems.isEmpty()) {
+					topLevelNavigationItem.addNavigationItems(
+						NavigationItem.create(
+							LanguageUtil.get(_locale, "objects"),
+							navigationItem -> {
+								navigationItem.addNavigationItems(
+									navigationItems);
+								navigationItem.setInitialExpanded(true);
+							}));
+				}
+			}
 		}
 
 		if (!_accountRoleGroupScope) {

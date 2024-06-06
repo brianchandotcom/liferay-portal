@@ -55,7 +55,7 @@ if (Validator.isNotNull(portletResource)) {
 
 	<clay:sheet>
 		<clay:sheet-header>
-			<h3 class="sheet-title"><%= HtmlUtil.escape(portletResourceLabel) %></h3>
+			<h3 class="sheet-title" data-qa-id="portletResourceLabel"><%= HtmlUtil.escape(portletResourceLabel) %></h3>
 		</clay:sheet-header>
 
 		<%

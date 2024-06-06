@@ -57,19 +57,19 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 	</clay:content-col>
 </clay:content-row>
 
-	<clay:content-row
-		cssClass="ai-creator-config-checkbox c-my-5"
+<clay:content-row
+	cssClass="ai-creator-config-checkbox c-my-5"
+>
+	<clay:content-col
+		expand="<%= true %>"
 	>
-		<clay:content-col
-			expand="<%= true %>"
-		>
-			<clay:checkbox
-				checked="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.isDALLEEnabled() %>"
-				id='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
-				label='<%= LanguageUtil.get(request, "enable-dalle-to-create-images") %>'
-				name='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
-			/>
-		</clay:content-col>
-	</clay:content-row>
+		<clay:checkbox
+			checked="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.isDALLEEnabled() %>"
+			id='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+			label='<%= LanguageUtil.get(request, "enable-dalle-to-create-images") %>'
+			name='<%= liferayPortletResponse.getNamespace() + "enableDALLE" %>'
+		/>
+	</clay:content-col>
+</clay:content-row>
 
 <%@ include file="/configuration/error_ai_creator_openai_client_exception.jspf" %>

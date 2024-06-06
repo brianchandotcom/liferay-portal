@@ -311,7 +311,7 @@ public class FileEntryContentDashboardItem
 		try {
 			FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
 			FileVersion latestTrustedFileVersion =
-				_fileEntry.getLatestFileVersion(true);
+				_getLatestApprovedFileVersion(_fileEntry);
 
 			List<FileVersion> fileVersions = new ArrayList<>();
 
@@ -567,6 +567,17 @@ public class FileEntryContentDashboardItem
 
 		return contentDashboardItemVersions.get(
 			contentDashboardItemVersions.size() - 1);
+	}
+
+	private FileVersion _getLatestApprovedFileVersion(FileEntry fileEntry) {
+		List<FileVersion> approvedFileVersions = fileEntry.getFileVersions(
+			WorkflowConstants.STATUS_APPROVED, 0, 1);
+
+		if (ListUtil.isEmpty(approvedFileVersions)) {
+			return null;
+		}
+
+		return approvedFileVersions.get(0);
 	}
 
 	private URL _getLatestVersionURL() {

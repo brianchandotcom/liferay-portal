@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -106,7 +107,8 @@ public class CookiesManagerImplTest {
 
 				@Override
 				public String getContextPath() {
-					return StringPool.SLASH + RandomTestUtil.randomString();
+					return PortalUtil.getPathModule() + StringPool.SLASH +
+						RandomTestUtil.randomString();
 				}
 
 			};

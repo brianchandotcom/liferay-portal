@@ -77,26 +77,29 @@ dsmTest(
 			async () => {
 				await dateFilterOption.click();
 
-				await expect(filtersPage.newDateRangeFilterModal.fromInput).toBeVisible();
+				await expect(
+					filtersPage.newDateRangeFilterModal.fromInput).toBeVisible();
 
-				await expect(filtersPage.newDateRangeFilterModal.toInput).toBeVisible();
+				await expect(
+					filtersPage.newDateRangeFilterModal.toInput).toBeVisible();
 
 				await filtersPage.newDateRangeFilterModal.fromDatePickerTrigger.click();
 
-				await expect(filtersPage.newDateRangeFilterModal.datePicker).toBeVisible();
+				await expect(
+					filtersPage.newDateRangeFilterModal.datePicker).toBeVisible();
 
 				await filtersPage.page.keyboard.press('Escape');
 			}
 		);
 
-		await dsmTest.step('Cancel date range filter, check no filters are created @LPS-181281',
+		await dsmTest.step(
+			'Cancel date range filter, check no filters are created @LPS-181281',
 			async () => {
 				await filtersPage.cancelAddFilterModal();
 
 				await filtersPage.assertFiltersTableRowCount(0);
 			}
 		);
-
 	}
 );
 
@@ -232,6 +235,47 @@ dsmTest(
 				await expect(filtersPage.newDateRangeFilterModal.saveButton).toBeDisabled();
 			});
 
+	}
+);
+
+dsmTest('No date filters can be created if schema has no date fields',
+	async ({dataSetManagerApiHelpers, filtersPage}) => {
+
+		const dataSetERC = getRandomString();
+		const dataSetLabel = "No date dataset";
+
+		await dsmTest.step('Create Data Set with no date fields', async () => {
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: dataSetERC,
+				label: dataSetLabel,
+				restApplication: '/headless-delivery/v1.0',
+				restEndpoint: '/v1.0/sites/{siteId}/blog-posting-images',
+				restSchema: 'BlogPostingImage',
+			});
+		});
+
+		await dsmTest.step('Navigate to Filters section', async () => {
+			await filtersPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await dsmTest.step('Create a date range filter', async () => {
+			await filtersPage.openNewFilterModal({
+				dropdownItemLabel: 'Date Range',
+				expectSaveHidden: true,
+			});
+		});
+
+		await dsmTest.step('Create a date range filter', async () => {
+			await expect(filtersPage.newDateRangeFilterModal.modalBody).toContainText('There are no fields compatible with this type of filter.');
+
+			await filtersPage.newDateRangeFilterModal.closeButton.click();
+
+			await dataSetManagerApiHelpers.deleteDataSet({
+				erc: dataSetERC,
+			});
+		});
 	}
 );
 

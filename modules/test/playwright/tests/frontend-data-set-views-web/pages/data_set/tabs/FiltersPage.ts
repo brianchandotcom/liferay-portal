@@ -10,9 +10,11 @@ import {DataSetPage} from '../DataSetPage';
 
 interface NewFilterModal {
 	cancelButton: Locator;
+	closeButton: Locator;
 	filterByDropdown: Locator;
 	filterBySelect: Locator;
 	formFeedback: Locator;
+	modalBody: Locator;
 	nameInput: Locator;
 	saveButton: Locator;
 };
@@ -54,9 +56,14 @@ export class FiltersPage {
 			.and(page.getByTitle('New Filter'));
 		this.newFilterModal = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
+			closeButton: page.getByRole('button', {
+				name: 'Close',
+				exact: true
+			}),
 			filterByDropdown: page.locator('.fds-field-name-dropdown-menu'),
 			filterBySelect: page.getByLabel('Filter By'),
 			formFeedback: page.locator('.form-feedback-item'),
+			modalBody: page.locator('.modal-body'),
 			nameInput: page.getByPlaceholder('Add a name'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
@@ -176,7 +183,13 @@ export class FiltersPage {
 		});
 	}
 
-	async openNewFilterModal({dropdownItemLabel}: {dropdownItemLabel: string}) {
+	async openNewFilterModal({
+		dropdownItemLabel,
+		expectSaveHidden = false
+	}: {
+		dropdownItemLabel: string
+		expectSaveHidden?: boolean
+	}) {
 		await expect(this.newFilterButton).toBeVisible();
 
 		await this.newFilterButton.click();
@@ -189,7 +202,12 @@ export class FiltersPage {
 
 		await menuItem.click();
 
-		await expect(this.newFilterModal.saveButton).toBeVisible();
+		if (expectSaveHidden) {
+			await expect(this.newFilterModal.saveButton).toBeHidden();
+		}
+		else {
+			await expect(this.newFilterModal.saveButton).toBeVisible();
+		}
 	}
 
 	async saveAddFilterModal() {

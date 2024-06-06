@@ -19,37 +19,49 @@ type OrderDetailsStatusDescriptionProps = {
 	productOwner?: string;
 };
 
-const getOrderDetailsType = (orderTypeExternalReferenceCode: string) =>
-	orderTypeExternalReferenceCode === OrderType.DXP
-		? OrderAppTypeEnum.DXPAPP
-		: OrderAppTypeEnum.CLOUDAPP;
+const getOrderDetailsType = (orderTypeExternalReferenceCode: string) => {
+	if (orderTypeExternalReferenceCode === OrderType.DXP) {
+		return OrderAppTypeEnum.DXPAPP;
+	}
+
+	if (orderTypeExternalReferenceCode === OrderType.CLOUD) {
+		return OrderAppTypeEnum.CLOUDAPP;
+	}
+};
 
 const OrderDetailsStatusDescription = ({
 	order,
 	productOwner,
-}: OrderDetailsStatusDescriptionProps) => (
-	<div className="align-items-center d-flex">
-		<div className="order-details-publisher">{productOwner}</div>
+}: OrderDetailsStatusDescriptionProps) => {
+	const orderType = getOrderDetailsType(
+		order?.orderTypeExternalReferenceCode as string
+	);
 
-		<div className="align-items-center app-details-status d-flex mx-3">
-			<OrderStatus orderStatus={order?.orderStatusInfo.label}>
-				{order?.orderStatusInfo.label}
-			</OrderStatus>
-		</div>
+	return (
+		<div className="align-items-center d-flex">
+			<div className="order-details-publisher">{productOwner}</div>
 
-		<ClayLabel className="rounded" displayType="info" large>
-			<div className="align-items-center d-flex">
-				<img
-					alt="Purchased Order Icon"
-					className="mr-1"
-					src={purchasedAppIcon}
-				/>
-				{getOrderDetailsType(
-					order?.orderTypeExternalReferenceCode as string
-				)}
+			<div className="align-items-center app-details-status d-flex mx-3">
+				<OrderStatus orderStatus={order?.orderStatusInfo.label}>
+					{order?.orderStatusInfo.label}
+				</OrderStatus>
 			</div>
-		</ClayLabel>
-	</div>
-);
+
+			{orderType && (
+				<ClayLabel className="rounded" displayType="info" large>
+					<div className="align-items-center d-flex">
+						<img
+							alt="Purchased Order Icon"
+							className="mr-1"
+							src={purchasedAppIcon}
+						/>
+
+						{orderType}
+					</div>
+				</ClayLabel>
+			)}
+		</div>
+	);
+};
 
 export default OrderDetailsStatusDescription;

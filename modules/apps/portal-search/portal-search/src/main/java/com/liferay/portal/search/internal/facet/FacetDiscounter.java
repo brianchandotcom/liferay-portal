@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,16 +69,15 @@ public class FacetDiscounter {
 	}
 
 	private void _exclude(Document document) {
-		Field field;
-
 		String fieldName = _facet.getFieldName();
 
-		if (fieldName.startsWith("nestedFieldArray")) {
-			field = document.getField("nestedFieldArray");
+		if (_facet instanceof NestedFacet) {
+			NestedFacet nestedFacet = (NestedFacet)_facet;
+
+			fieldName = nestedFacet.getPath();
 		}
-		else {
-			field = document.getField(fieldName);
-		}
+
+		Field field = document.getField(fieldName);
 
 		if (field == null) {
 			return;

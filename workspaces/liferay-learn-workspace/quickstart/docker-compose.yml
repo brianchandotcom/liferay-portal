@@ -35,7 +35,7 @@ services:
             - 127.0.0.1:3307:3306
     deployer:
         build: docker/deployer
-        container_name: deploy
+        container_name: deployer
         depends_on:
             liferay:
                 condition: service_healthy

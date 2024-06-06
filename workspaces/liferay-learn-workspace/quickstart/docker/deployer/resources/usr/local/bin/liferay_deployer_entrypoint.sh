@@ -5,7 +5,7 @@ function main {
 	mysql -u root -h database -s -N -e "UPDATE lportal.Group_ SET externalReferenceCode='LIFERAY_LEARN'
 		WHERE groupKey = 'Guest'"
 
-	./gradlew --gradle-user-home="$HOME"/.gradle -Pliferay.workspace.home.dir=/opt/liferay clean deploy
+	./gradlew --gradle-user-home="$HOME"/.gradle -Pliferay.workspace.home.dir=/opt/liferay clean createDockerfile deploy
 
 	cd /mnt/liferay-learn || exit
 

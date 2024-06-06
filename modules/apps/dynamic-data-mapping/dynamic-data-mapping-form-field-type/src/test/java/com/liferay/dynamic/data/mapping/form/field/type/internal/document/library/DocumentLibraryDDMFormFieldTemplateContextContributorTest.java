@@ -255,14 +255,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
 				themeDisplay);
 
-		String mockDownloadUrl = "downloadUrl";
+		String downloadURL = RandomTestUtil.randomString();
 
 		Mockito.when(
 			_dlURLHelper.getDownloadURL(
 				_fileEntry, _fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK)
 		).thenReturn(
-			mockDownloadUrl
+			downloadURL
 		);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
@@ -275,7 +275,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 				new DDMFormField("field", "document_library"),
 				ddmFormFieldRenderingContext);
 
-		Assert.assertEquals(mockDownloadUrl, parameters.get("fileEntryURL"));
+		Assert.assertEquals(downloadURL, parameters.get("fileEntryURL"));
 	}
 
 	@Test
@@ -287,7 +287,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			_createDDMFormFieldRenderingContext();
 
-		ddmFormFieldRenderingContext.setProperty("ddmFormInstanceRecordId", 1L);
+		ddmFormFieldRenderingContext.setProperty(
+			"ddmFormInstanceRecordId", RandomTestUtil.randomLong());
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(

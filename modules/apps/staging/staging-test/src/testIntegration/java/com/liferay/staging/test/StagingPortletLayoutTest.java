@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -34,7 +34,6 @@ import javax.portlet.Portlet;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,14 +46,13 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
-public class StagingGetScopeGroupIdTest extends BaseLocalStagingTestCase {
+public class StagingPortletLayoutTest extends BaseLocalStagingTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Ignore
 	@Test
 	public void testPortletScopeGroupIdWithPortletLayout() throws Exception {
 		_testPortletScopeGroupId(

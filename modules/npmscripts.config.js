@@ -823,6 +823,7 @@ module.exports = {
 			'resolve',
 			'stylelint',
 			'swagger-ui-react',
+			'tar',
 			'timers-browserify',
 			'typescript',
 			'webpack',

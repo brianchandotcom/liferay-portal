@@ -449,9 +449,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				).setParameter(
 					"ddmFormFieldName", ddmFormField.getName()
 				).setParameter(
-					"ddmFormInstanceRecordId",
-					_getDDMFormInstanceRecordId(
-						ddmFormField, ddmFormFieldRenderingContext)
+					"ddmFormInstanceRecordId", ddmFormInstanceRecordId
 				).setParameter(
 					"fileEntryId", fileEntry.getFileEntryId()
 				).setResourceID(

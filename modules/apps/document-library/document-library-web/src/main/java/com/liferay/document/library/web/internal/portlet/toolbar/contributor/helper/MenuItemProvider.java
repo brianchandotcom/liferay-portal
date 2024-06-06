@@ -312,10 +312,6 @@ public class MenuItemProvider {
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10793")) {
-			return null;
-		}
-
 		long folderId = _getFolderId(folder);
 
 		if (!_hasPermission(

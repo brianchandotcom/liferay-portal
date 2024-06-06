@@ -120,12 +120,10 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 				portletResponse);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10793")) {
 			_add(
 				menuItems,
 				_menuItemProvider.getAICreatorMenuItem(
 					folder, themeDisplay, portletRequest));
-		}
 
 		MenuItem lastExtensionMenuItem = null;
 

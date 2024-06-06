@@ -6,7 +6,7 @@ liferay-adyen-batch:
     oAuthApplicationHeadlessServer: liferay-adyen-batch-oauth-application-headless-server
     type: batch
 liferay-adyen-batch-oauth-application-headless-server:
-    .serviceAddress: localhost:58082
+    .serviceAddress: localhost:8080
     .serviceScheme: http
     name: Liferay Adyen Batch OAuth Application Headless Server
     scopes:

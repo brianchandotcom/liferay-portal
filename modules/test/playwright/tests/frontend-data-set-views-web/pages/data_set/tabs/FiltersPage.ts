@@ -10,6 +10,7 @@ import {DataSetPage} from '../DataSetPage';
 
 interface NewFilterModal {
 	cancelButton: Locator;
+	filterByDropdown: Locator;
 	filterBySelect: Locator;
 	nameInput: Locator;
 	saveButton: Locator;
@@ -52,6 +53,7 @@ export class FiltersPage {
 			.and(page.getByTitle('New Filter'));
 		this.newFilterModal = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
+			filterByDropdown: page.locator('.fds-field-name-dropdown-menu'),
 			filterBySelect: page.getByLabel('Filter By'),
 			nameInput: page.getByPlaceholder('Add a name'),
 			saveButton: page.getByRole('button', {name: 'Save'}),

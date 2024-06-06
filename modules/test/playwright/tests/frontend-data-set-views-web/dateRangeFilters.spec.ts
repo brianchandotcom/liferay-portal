@@ -167,6 +167,39 @@ dsmTest(
 			await filtersPage.assertFiltersTableRowCount(1);
 		});
 
+		await dsmTest.step('Assert "filter by" is disabled when editing a filter @LPS-183056', async () => {
+			await filtersPage
+				.getRowByText(filterNewName)
+				.locator('.actions-cell button')
+				.click();
+
+			const editButton = filtersPage.page.getByRole(
+				'menuitem',
+				{
+					name: 'Edit',
+				}
+			);
+
+			await expect(editButton).toBeInViewport();
+
+			await editButton.click();
+
+			const filterBySelect = filtersPage.newDateRangeFilterModal.filterBySelect;
+
+			await filterBySelect.click();
+
+			const filterByDropdown = filtersPage.newDateRangeFilterModal.filterByDropdown;
+
+			await expect(filterByDropdown).toBeVisible();
+
+			for (const option of await filterByDropdown.getByRole('button').all()) {
+				await expect(option).toBeDisabled();
+			}
+
+			await filtersPage.page.keyboard.press('Escape');
+
+			await expect(filterByDropdown).not.toBeVisible();
+		});
 	}
 );
 

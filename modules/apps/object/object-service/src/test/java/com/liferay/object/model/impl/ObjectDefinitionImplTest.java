@@ -11,6 +11,8 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -32,76 +34,124 @@ public class ObjectDefinitionImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetRESTContextPathOfModifiableSystemObjectNoRootDescendantNode() {
-		_testGetRESTContextPathOfModifiableSystemObject(
-			"/headless-builder/endpoints", "APIEndpoint", null);
+	public void testGetRESTContextPath() {
+
+		// Modifiable custom object definition
+
+		_testGetRESTContextPath(
+			"/c/customobjects", true, "CustomObject", null, false);
+
+		// Modifiable system object definition
+
+		_testGetRESTContextPath(
+			"/headless-builder/endpoints", true, "APIEndpoint", null, true);
+
+		// Unmodifiable system object definition
+
+		_testGetRESTContextPath("", false, "AccountEntry", null, true);
 	}
 
 	@FeatureFlags("LPS-187142")
 	@Test
-	public void testGetRESTContextPathOfModifiableSystemObjectRootDescendantNode() {
-		_testGetRESTContextPathOfModifiableSystemObject(
-			"/headless-builder/applications/endpoints", "APIEndpoint",
-			"APIApplication");
-		_testGetRESTContextPathOfModifiableSystemObject(
-			"/commerce-returns/commerce-return-items", "CommerceReturnItem",
-			"CommerceReturn");
+	public void testGetRESTContextPathRootDescendantNode() {
+
+		// Modifiable custom object definition
+
+		_testGetRESTContextPath(
+			"/c/rootobjects/customobjects", true, "CustomObject", "RootObject",
+			false);
+
+		// Modifiable system object definition
+
+		_testGetRESTContextPath(
+			"/headless-builder/applications/endpoints", true, "APIEndpoint",
+			"APIApplication", true);
+		_testGetRESTContextPath(
+			"/commerce-returns/commerce-return-items", true,
+			"CommerceReturnItem", "CommerceReturn", true);
 	}
 
-	private void _testGetRESTContextPathOfModifiableSystemObject(
-		String expectedRESTContextPath, String objectDefinitionName,
-		String rootObjectDefinitionName) {
+	private void _testGetRESTContextPath(
+		String expectedRESTContextPath, boolean modifiable,
+		String objectDefinitionName, String rootObjectDefinitionName,
+		boolean system) {
 
 		ObjectDefinition objectDefinition = Mockito.spy(
 			new ObjectDefinitionImpl());
 
-		objectDefinition.setModifiable(true);
+		objectDefinition.setModifiable(modifiable);
 		objectDefinition.setName(objectDefinitionName);
-		objectDefinition.setSystem(true);
+		objectDefinition.setSystem(system);
 
-		ObjectDefinitionLocalService objectDefinitionLocalService =
-			Mockito.mock(ObjectDefinitionLocalService.class);
+		if (!modifiable && system) {
+			try {
+				objectDefinition.getRESTContextPath();
+				Assert.fail();
+			}
+			catch (UnsupportedOperationException
+						unsupportedOperationException) {
 
-		ReflectionTestUtil.setFieldValue(
-			ObjectDefinitionLocalServiceUtil.class, "_serviceSnapshot",
-			new Snapshot<ObjectDefinitionLocalService>(
-				ObjectDefinitionLocalServiceUtil.class,
-				ObjectDefinitionLocalService.class) {
+				Assert.assertNotNull(unsupportedOperationException);
+			}
+		}
+		else {
+			if (!system) {
+				objectDefinition.setPluralLabel(
+					TextFormatter.formatPlural(
+						StringUtil.lowerCaseFirstLetter(objectDefinitionName)));
+			}
 
-				@Override
-				public ObjectDefinitionLocalService get() {
-					return objectDefinitionLocalService;
+			ObjectDefinitionLocalService objectDefinitionLocalService =
+				Mockito.mock(ObjectDefinitionLocalService.class);
+
+			ReflectionTestUtil.setFieldValue(
+				ObjectDefinitionLocalServiceUtil.class, "_serviceSnapshot",
+				new Snapshot<ObjectDefinitionLocalService>(
+					ObjectDefinitionLocalServiceUtil.class,
+					ObjectDefinitionLocalService.class) {
+
+					@Override
+					public ObjectDefinitionLocalService get() {
+						return objectDefinitionLocalService;
+					}
+
+				});
+
+			if (rootObjectDefinitionName != null) {
+				ObjectDefinition rootObjectDefinition =
+					new ObjectDefinitionImpl();
+
+				rootObjectDefinition.setName(rootObjectDefinitionName);
+
+				long rootObjectDefinitionId = RandomTestUtil.randomLong();
+
+				objectDefinition.setRootObjectDefinitionId(
+					rootObjectDefinitionId);
+
+				if (!system) {
+					objectDefinition.setPluralLabel(
+						TextFormatter.formatPlural(
+							StringUtil.lowerCaseFirstLetter(
+								rootObjectDefinitionName)));
 				}
 
-			});
+				Mockito.when(
+					objectDefinitionLocalService.fetchObjectDefinition(
+						rootObjectDefinitionId)
+				).thenReturn(
+					rootObjectDefinition
+				);
 
-		if (rootObjectDefinitionName != null) {
-			ObjectDefinition rootObjectDefinition = new ObjectDefinitionImpl();
+				Mockito.doReturn(
+					true
+				).when(
+					objectDefinition
+				).isRootDescendantNode();
+			}
 
-			rootObjectDefinition.setModifiable(true);
-			rootObjectDefinition.setName(rootObjectDefinitionName);
-			rootObjectDefinition.setSystem(true);
-
-			long rootObjectDefinitionId = RandomTestUtil.randomLong();
-
-			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
-
-			Mockito.when(
-				objectDefinitionLocalService.fetchObjectDefinition(
-					rootObjectDefinitionId)
-			).thenReturn(
-				rootObjectDefinition
-			);
-
-			Mockito.doReturn(
-				true
-			).when(
-				objectDefinition
-			).isRootDescendantNode();
+			Assert.assertEquals(
+				expectedRESTContextPath, objectDefinition.getRESTContextPath());
 		}
-
-		Assert.assertEquals(
-			expectedRESTContextPath, objectDefinition.getRESTContextPath());
 	}
 
 }

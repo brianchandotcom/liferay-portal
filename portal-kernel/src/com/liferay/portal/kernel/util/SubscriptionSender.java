@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -140,6 +141,8 @@ public class SubscriptionSender implements Serializable {
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
 				_classLoader)) {
 
+			long companyId = CompanyThreadLocal.getCompanyId();
+
 			for (Tuple tuple : _persistedSubscribersTuples) {
 				String className = (String)tuple.getObject(0);
 				long classPK = (long)tuple.getObject(1);
@@ -243,8 +246,12 @@ public class SubscriptionSender implements Serializable {
 			});
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public long getCompanyId() {
-		return companyId;
+		return CompanyThreadLocal.getCompanyId();
 	}
 
 	public Object getContextAttribute(String key) {
@@ -267,6 +274,8 @@ public class SubscriptionSender implements Serializable {
 		if (!_runtimeSubscribersOVPs.isEmpty()) {
 			return true;
 		}
+
+		long companyId = CompanyThreadLocal.getCompanyId();
 
 		for (Tuple tuple : _persistedSubscribersTuples) {
 			String className = (String)tuple.getObject(0);
@@ -295,7 +304,8 @@ public class SubscriptionSender implements Serializable {
 			setScopeGroupId(serviceContext.getScopeGroupId());
 		}
 
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+		Company company = CompanyLocalServiceUtil.getCompany(
+			CompanyThreadLocal.getCompanyId());
 
 		setContextAttribute("[$COMPANY_ID$]", company.getCompanyId());
 		setContextAttribute("[$COMPANY_MX$]", company.getMx());
@@ -385,8 +395,11 @@ public class SubscriptionSender implements Serializable {
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
 	}
 
 	public void setContextAttribute(String key, EscapableObject<String> value) {
@@ -754,6 +767,8 @@ public class SubscriptionSender implements Serializable {
 
 		String emailAddress = to.getAddress();
 
+		long companyId = CompanyThreadLocal.getCompanyId();
+
 		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
 			companyId, emailAddress);
 
@@ -1008,7 +1023,6 @@ public class SubscriptionSender implements Serializable {
 
 	protected String body;
 	protected boolean bulk;
-	protected long companyId;
 	protected long creatorUserId;
 	protected long currentUserId;
 	protected List<FileAttachment> fileAttachments = new ArrayList<>();

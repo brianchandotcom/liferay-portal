@@ -55,10 +55,13 @@ import java.io.IOException;
 import java.io.Writer;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -325,13 +328,31 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		return infoItemReference;
 	}
 
+	private List<String> _getResourceNames(
+		String portletId, Map<String, List<String>> resourceNames) {
+
+		for (Map.Entry<String, List<String>> entry : resourceNames.entrySet()) {
+			if (portletId.contains(entry.getKey())) {
+				return entry.getValue();
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
 	private boolean _hasResourcePermission(
-		String actionId, long groupId, String plid,
-		Map<String, List<String>> resourceNames) {
+		String actionId, String plid, Map<String, List<String>> resourceNames,
+		ThemeDisplay themeDisplay) {
+
+		if (!themeDisplay.isSignedIn()) {
+			return false;
+		}
 
 		if (Validator.isNotNull(plid)) {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
+
+			Set<String> resourceNamesSet = new HashSet<>();
 
 			List<PortletPreferences> portletPreferencesList =
 				_portletPreferencesLocalService.getPortletPreferencesByPlid(
@@ -340,20 +361,17 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			for (PortletPreferences portletPreferences :
 					portletPreferencesList) {
 
-				String portletId = portletPreferences.getPortletId();
+				resourceNamesSet.addAll(
+					_getResourceNames(
+						portletPreferences.getPortletId(), resourceNames));
+			}
 
-				for (Map.Entry<String, List<String>> entry :
-						resourceNames.entrySet()) {
+			for (String resourceName : resourceNamesSet) {
+				if (permissionChecker.hasPermission(
+						themeDisplay.getScopeGroupId(), resourceName, "0",
+						actionId)) {
 
-					if (portletId.contains(entry.getKey())) {
-						for (String resourceName : entry.getValue()) {
-							if (permissionChecker.hasPermission(
-									groupId, resourceName, "0", actionId)) {
-
-								return true;
-							}
-						}
-					}
+					return true;
 				}
 			}
 		}

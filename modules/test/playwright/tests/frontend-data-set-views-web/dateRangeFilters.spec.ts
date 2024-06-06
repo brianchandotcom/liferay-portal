@@ -91,7 +91,7 @@ dsmTest(
 			async () => {
 				await filtersPage.cancelAddFilterModal();
 
-				await expect(filtersPage.assertFiltersTableRowCount(0));
+				await filtersPage.assertFiltersTableRowCount(0);
 			}
 		);
 

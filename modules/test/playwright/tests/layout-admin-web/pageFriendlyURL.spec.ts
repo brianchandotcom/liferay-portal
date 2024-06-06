@@ -7,18 +7,22 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pagesPagesTest
 );
 
 test('This is a test for LPD-21554. Some page names result in 404 friendly URLs.', async ({
@@ -85,4 +89,48 @@ test('Navigating to the URL of an uncreated page does not throw errors.', async 
 
 	await expect(page.getByRole('alert')).toHaveCount(0);
 	await expect(page.getByText('Error Code: 404')).toBeVisible();
+});
+
+test('Canonical URL doesnt change with localized Friendly URL.', async ({
+	apiHelpers,
+	browser,
+	layoutPage,
+	pageConfigurationPage,
+	site,
+}) => {
+	await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
+		]),
+		siteId: site.id,
+		title: 'Test Page Name',
+	});
+
+	// The configuration action must be available from the card
+	// The configuration view should only allow setting the canonicalURL SEO field
+
+	await layoutPage.goto(site.friendlyUrlPath);
+	await pageConfigurationPage.goToSection('Test Page Name', 'SEO');
+	await pageConfigurationPage.setCanonicalURL(
+		liferayConfig.environment.baseUrl + '/' + site.name + '/test-page-name'
+	);
+
+	// Create a new incognito browser context
+
+	const context = await browser.newContext();
+
+	// Create a new page inside context.
+
+	const newPage = await context.newPage();
+
+	await newPage.goto('/es/web/' + site.name + '/test-page-name');
+
+	expect(
+		await newPage.locator('link[rel="canonical"]').getAttribute('href')
+	).toBe(
+		liferayConfig.environment.baseUrl + '/' + site.name + '/test-page-name'
+	);
 });

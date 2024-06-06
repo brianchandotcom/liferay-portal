@@ -6,16 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 const MOCKED_IMAGE_PATH =
 	'USER_IMAGES_URL_https://images.freeimages.com/images/large-previews/83f/paris-1213603.jpg';
 
-export const test = mergeTests(
-	loginTest(),
-	documentLibraryPagesTest
-);
+export const test = mergeTests(loginTest(), documentLibraryPagesTest);
 
 test('LPD-6717 Create AI Image option in Management Toolbar without API Key opens an alert', async ({
 	documentLibraryPage,

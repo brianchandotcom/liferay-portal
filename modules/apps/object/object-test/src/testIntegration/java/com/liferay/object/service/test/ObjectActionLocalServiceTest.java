@@ -158,6 +158,10 @@ public class ObjectActionLocalServiceTest {
 			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_DATE,
+					ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+					"Birthday", "birthday", false),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
 					ObjectFieldConstants.DB_TYPE_DATE_TIME, true, true, null,
 					"Time", "time",
@@ -492,6 +496,8 @@ public class ObjectActionLocalServiceTest {
 				TestPropsValues.getUserId(), 0,
 				_objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
+					"birthday", "2000-12-25"
+				).put(
 					"firstName", "John"
 				).put(
 					"lastName", "Smith"
@@ -501,7 +507,8 @@ public class ObjectActionLocalServiceTest {
 			// On after create
 
 			_assertWebhookObjectAction(
-				"John", "Smith", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				"2000-12-25T00:00:00.000Z", "John", "Smith",
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				_objectDefinition, null, null,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -550,7 +557,7 @@ public class ObjectActionLocalServiceTest {
 			// On after update
 
 			_assertWebhookObjectAction(
-				"João", "o Discípulo Amado",
+				"2000-12-25T00:00:00.000Z", "João", "o Discípulo Amado",
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				_objectDefinition, "John", "Smith",
 				WorkflowConstants.STATUS_APPROVED);
@@ -626,7 +633,7 @@ public class ObjectActionLocalServiceTest {
 			// On after remove
 
 			_assertWebhookObjectAction(
-				"Jack", "White",
+				"2000-12-25T00:00:00.000Z", "Jack", "White",
 				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 				_objectDefinition, "Jack", "White",
 				WorkflowConstants.STATUS_APPROVED);
@@ -654,7 +661,8 @@ public class ObjectActionLocalServiceTest {
 				serviceContext);
 
 			_assertWebhookObjectAction(
-				"John", null, ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				null, "John", null,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				_objectDefinition, null, null, WorkflowConstants.STATUS_DRAFT);
 
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -667,7 +675,8 @@ public class ObjectActionLocalServiceTest {
 				serviceContext);
 
 			_assertWebhookObjectAction(
-				"Peter", null, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				null, "Peter", null,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				_objectDefinition, "John", null,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -756,7 +765,7 @@ public class ObjectActionLocalServiceTest {
 			// Hierarchy, on after root update
 
 			_assertWebhookObjectAction(
-				"John", null,
+				null, "John", null,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
 				objectDefinitionA, null, null,
 				WorkflowConstants.STATUS_APPROVED);
@@ -780,7 +789,7 @@ public class ObjectActionLocalServiceTest {
 			// Hierarchy, on after root update
 
 			_assertWebhookObjectAction(
-				"John", null,
+				null, "John", null,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
 				objectDefinitionA, null, null,
 				WorkflowConstants.STATUS_APPROVED);
@@ -1091,8 +1100,9 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertWebhookObjectAction(
-			"John", "Smith", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			_objectDefinition, null, null, WorkflowConstants.STATUS_APPROVED);
+			null, "John", "Smith",
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, _objectDefinition,
+			null, null, WorkflowConstants.STATUS_APPROVED);
 
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -1105,8 +1115,9 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertWebhookObjectAction(
-			"Peter", "White", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			_objectDefinition, null, null, WorkflowConstants.STATUS_APPROVED);
+			null, "Peter", "White",
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, _objectDefinition,
+			null, null, WorkflowConstants.STATUS_APPROVED);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
 		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
@@ -1155,16 +1166,16 @@ public class ObjectActionLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
 
 		_assertWebhookObjectAction(
-			"John", "Smith", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
-			_objectDefinition, "John", "Smith",
-			WorkflowConstants.STATUS_APPROVED);
+			null, "John", "Smith",
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, _objectDefinition,
+			"John", "Smith", WorkflowConstants.STATUS_APPROVED);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry4);
 
 		_assertWebhookObjectAction(
-			"Peter", "White", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
-			_objectDefinition, "Peter", "White",
-			WorkflowConstants.STATUS_APPROVED);
+			null, "Peter", "White",
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, _objectDefinition,
+			"Peter", "White", WorkflowConstants.STATUS_APPROVED);
 
 		_objectActionLocalService.deleteObjectAction(objectAction2);
 
@@ -1215,9 +1226,9 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertWebhookObjectAction(
-			"John", "Smith", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			_objectDefinition, "Peter", "White",
-			WorkflowConstants.STATUS_APPROVED);
+			null, "John", "Smith",
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, _objectDefinition,
+			"Peter", "White", WorkflowConstants.STATUS_APPROVED);
 
 		objectEntry6 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
@@ -1229,7 +1240,7 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertWebhookObjectAction(
-			"João", "o Discípulo Amado",
+			null, "João", "o Discípulo Amado",
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, _objectDefinition,
 			"Peter", "White", WorkflowConstants.STATUS_APPROVED);
 
@@ -2285,9 +2296,9 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	private void _assertWebhookObjectAction(
-			String firstName, String lastName, String objectActionTriggerKey,
-			ObjectDefinition objectDefinition, String originalFirstName,
-			String originalLastName, int status)
+			String birthday, String firstName, String lastName,
+			String objectActionTriggerKey, ObjectDefinition objectDefinition,
+			String originalFirstName, String originalLastName, int status)
 		throws Exception {
 
 		Assert.assertEquals(1, _argumentsList.size());
@@ -2320,6 +2331,12 @@ public class ObjectActionLocalServiceTest {
 			status,
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			birthday,
+			JSONUtil.getValue(
+				payloadJSONObject,
+				"JSONObject/objectEntryDTO" + objectDefinition.getShortName(),
+				"JSONObject/properties", "Object/birthday"));
 		Assert.assertEquals(
 			firstName,
 			JSONUtil.getValue(

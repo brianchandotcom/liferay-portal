@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,19 +60,21 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalEditDDMTemplateDisplayContext {
 
 	public JournalEditDDMTemplateDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		DDMTemplateHelper ddmTemplateHelper,
+		JournalDDMTemplateHelper journalDDMTemplateHelper,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_httpServletRequest = httpServletRequest;
+		_ddmTemplateHelper = ddmTemplateHelper;
+		_journalDDMTemplateHelper = journalDDMTemplateHelper;
 		_renderResponse = renderResponse;
 
-		_ddmTemplateHelper = (DDMTemplateHelper)httpServletRequest.getAttribute(
-			DDMTemplateHelper.class.getName());
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
 		_journalFileUploadsConfiguration =
-			(JournalFileUploadsConfiguration)httpServletRequest.getAttribute(
+			(JournalFileUploadsConfiguration)renderRequest.getAttribute(
 				JournalFileUploadsConfiguration.class.getName());
 
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		JournalServiceConfiguration journalServiceConfiguration;
@@ -93,7 +96,7 @@ public class JournalEditDDMTemplateDisplayContext {
 		_journalServiceConfiguration = journalServiceConfiguration;
 
 		_journalWebConfiguration =
-			(JournalWebConfiguration)httpServletRequest.getAttribute(
+			(JournalWebConfiguration)renderRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 	}
 
@@ -325,9 +328,6 @@ public class JournalEditDDMTemplateDisplayContext {
 	}
 
 	public JSONArray getTemplateVariableGroupJSONArray() throws Exception {
-		JournalDDMTemplateHelper journalDDMTemplateHelper =
-			(JournalDDMTemplateHelper)_httpServletRequest.getAttribute(
-				JournalDDMTemplateHelper.class.getName());
 		JSONArray templateVariableGroupJSONArray =
 			JSONFactoryUtil.createJSONArray();
 		ResourceBundle resourceBundle = getTemplateHandlerResourceBundle();
@@ -348,7 +348,7 @@ public class JournalEditDDMTemplateDisplayContext {
 				templateVariableDefinitionJSONArray.put(
 					JSONUtil.put(
 						"content",
-						journalDDMTemplateHelper.getDataContent(
+						_journalDDMTemplateHelper.getDataContent(
 							templateVariableDefinition)
 					).put(
 						"label",
@@ -361,7 +361,7 @@ public class JournalEditDDMTemplateDisplayContext {
 						templateVariableDefinition.isRepeatable()
 					).put(
 						"tooltip",
-						journalDDMTemplateHelper.getPaletteItemTitle(
+						_journalDDMTemplateHelper.getPaletteItemTitle(
 							_httpServletRequest, resourceBundle,
 							templateVariableDefinition)
 					));
@@ -465,6 +465,7 @@ public class JournalEditDDMTemplateDisplayContext {
 	private Long _ddmTemplateId;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
+	private final JournalDDMTemplateHelper _journalDDMTemplateHelper;
 	private final JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
 	private final JournalServiceConfiguration _journalServiceConfiguration;

@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new JournalEditDDMTemplateDisplayContext(request, renderResponse);
+JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = (JournalEditDDMTemplateDisplayContext)request.getAttribute(JournalEditDDMTemplateDisplayContext.class.getName());
 
 DDMTemplate ddmTemplate = journalEditDDMTemplateDisplayContext.getDDMTemplate();
 

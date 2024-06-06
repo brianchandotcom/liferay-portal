@@ -141,6 +141,13 @@ public class ObjectDefinitionGraphQLDTOContributor
 					GraphQLDTOProperty.of(relationshipName, Map.class));
 			}
 			else {
+				if (objectField.isLocalized()) {
+					graphQLDTOProperties.add(
+						GraphQLDTOProperty.of(
+							objectField.getI18nObjectFieldName(), true,
+							Map.class));
+				}
+
 				graphQLDTOProperties.add(
 					GraphQLDTOProperty.of(
 						objectField.getName(),

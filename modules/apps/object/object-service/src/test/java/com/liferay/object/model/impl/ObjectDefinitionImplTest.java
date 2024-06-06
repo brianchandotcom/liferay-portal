@@ -6,11 +6,12 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -30,18 +31,14 @@ public class ObjectDefinitionImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetRESTContextPathOfModifiableSystemObjectNoRootDescendantNode()
-		throws IllegalAccessException, NoSuchFieldException {
-
+	public void testGetRESTContextPathOfModifiableSystemObjectNoRootDescendantNode() {
 		_testGetRESTContextPathOfModifiableSystemObject(
 			"APIEndpoint", null, null, "/headless-builder/endpoints");
 	}
 
 	@FeatureFlags("LPS-187142")
 	@Test
-	public void testGetRESTContextPathOfModifiableSystemObjectRootDescendantNode()
-		throws IllegalAccessException, NoSuchFieldException {
-
+	public void testGetRESTContextPathOfModifiableSystemObjectRootDescendantNode() {
 		_testGetRESTContextPathOfModifiableSystemObject(
 			"APIEndpoint", "APIApplication", null,
 			"/headless-builder/applications/endpoints");
@@ -54,10 +51,9 @@ public class ObjectDefinitionImplTest {
 	}
 
 	private void _testGetRESTContextPathOfModifiableSystemObject(
-			String objectDefinitionName, String rootObjectDefinitionName,
-			String secondLevelObjectDefinitionName,
-			String expectedRESTContextPath)
-		throws IllegalAccessException, NoSuchFieldException {
+		String objectDefinitionName, String rootObjectDefinitionName,
+		String secondLevelObjectDefinitionName,
+		String expectedRESTContextPath) {
 
 		ObjectDefinition objectDefinition = Mockito.spy(
 			new ObjectDefinitionImpl());
@@ -66,8 +62,21 @@ public class ObjectDefinitionImplTest {
 		objectDefinition.setName(objectDefinitionName);
 		objectDefinition.setSystem(true);
 
-		ObjectDefinitionPersistence objectDefinitionPersistence = Mockito.mock(
-			ObjectDefinitionPersistence.class);
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			Mockito.mock(ObjectDefinitionLocalService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			ObjectDefinitionLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<ObjectDefinitionLocalService>(
+				ObjectDefinitionLocalServiceUtil.class,
+				ObjectDefinitionLocalService.class) {
+
+				@Override
+				public ObjectDefinitionLocalService get() {
+					return objectDefinitionLocalService;
+				}
+
+			});
 
 		if (rootObjectDefinitionName != null) {
 			ObjectDefinition rootObjectDefinition = new ObjectDefinitionImpl();
@@ -79,7 +88,7 @@ public class ObjectDefinitionImplTest {
 			objectDefinition.setRootObjectDefinitionId(12345);
 
 			Mockito.when(
-				objectDefinitionPersistence.fetchByPrimaryKey(12345)
+				objectDefinitionLocalService.fetchObjectDefinition(12345)
 			).thenReturn(
 				rootObjectDefinition
 			);
@@ -103,7 +112,7 @@ public class ObjectDefinitionImplTest {
 			secondLevelObjectDefinition.setRootObjectDefinitionId(67890);
 
 			Mockito.when(
-				objectDefinitionPersistence.fetchByPrimaryKey(67890)
+				objectDefinitionLocalService.fetchObjectDefinition(67890)
 			).thenReturn(
 				secondLevelObjectDefinition
 			);
@@ -114,12 +123,6 @@ public class ObjectDefinitionImplTest {
 				objectDefinition
 			).isRootDescendantNode();
 		}
-
-		Field nameField = ObjectDefinitionImpl.class.getDeclaredField(
-			"_objectDefinitionPersistence");
-
-		nameField.setAccessible(true);
-		nameField.set(objectDefinition, objectDefinitionPersistence);
 
 		Assert.assertEquals(
 			expectedRESTContextPath, objectDefinition.getRESTContextPath());

@@ -4,7 +4,7 @@ definition {
 	property custom.properties = "feature.flag.LPS-178642=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Headless Builder";
+	property testray.main.component.name = "API Builder";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -276,7 +276,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given going to Control Panel > Object > Headless Builder") {
+		task ("Given going to Control Panel > Object > API Builder") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",

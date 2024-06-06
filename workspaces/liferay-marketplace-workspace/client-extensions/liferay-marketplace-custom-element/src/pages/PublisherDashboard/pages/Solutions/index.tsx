@@ -30,7 +30,7 @@ const Solutions = () => {
 	const navigate = useNavigate();
 
 	const supplierAccountRoleBriefs =
-		(myUserAccount.accountBriefs ?? []).find(
+		(myUserAccount?.accountBriefs ?? []).find(
 			({id}) => id === supplierAccount?.id
 		)?.roleBriefs ?? [];
 

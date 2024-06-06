@@ -7,6 +7,7 @@ package com.liferay.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -55,6 +57,22 @@ public class StagingPortletLayoutTest extends BaseLocalStagingTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testPortletScopeGroupIdWithContentLayout() throws Exception {
+		Layout stagingContentLayout = LayoutTestUtil.addTypeContentLayout(
+			stagingGroup);
+
+		publishLayouts();
+
+		Layout liveContentLayout =
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+				stagingContentLayout.getUuid(), liveGroup.getGroupId(),
+				stagingContentLayout.isPrivateLayout());
+
+		_testPortletScopeGroupId(
+			liveContentLayout, stagingContentLayout, BlogsPortletKeys.BLOGS);
+	}
+
+	@Test
 	public void testPortletScopeGroupIdWithPortletLayout() throws Exception {
 		_testPortletScopeGroupId(
 			liveLayout, stagingLayout, BlogsPortletKeys.BLOGS);
@@ -69,7 +87,23 @@ public class StagingPortletLayoutTest extends BaseLocalStagingTestCase {
 			Layout liveLayout, Layout stagingLayout, String portletId)
 		throws Exception {
 
-		LayoutTestUtil.addPortletToLayout(stagingLayout, portletId);
+		Layout layout = null;
+
+		if (stagingLayout.isTypeContent()) {
+			layout = stagingLayout.fetchDraftLayout();
+
+			ContentLayoutTestUtil.addPortletToLayout(layout, portletId);
+		}
+		else {
+			layout = stagingLayout;
+
+			LayoutTestUtil.addPortletToLayout(layout, portletId);
+		}
+
+		if (layout.isDraftLayout()) {
+			ContentLayoutTestUtil.publishLayout(layout, stagingLayout);
+		}
+
 		publishLayouts();
 
 		_testScopeGroupId(
@@ -80,7 +114,12 @@ public class StagingPortletLayoutTest extends BaseLocalStagingTestCase {
 			true);
 
 		_updateLayoutPortletScope(
-			stagingLayout, portletId, StringPool.BLANK, "company");
+			layout, portletId, StringPool.BLANK, "company");
+
+		if (layout.isDraftLayout()) {
+			ContentLayoutTestUtil.publishLayout(layout, stagingLayout);
+		}
+
 		publishLayouts();
 
 		Company company = _companyLocalService.getCompany(
@@ -92,12 +131,26 @@ public class StagingPortletLayoutTest extends BaseLocalStagingTestCase {
 			company.getGroupId(), liveLayout, stagingLayout, portletId, true);
 
 		_updateLayoutPortletScope(
-			stagingLayout, portletId, stagingLayout.getUuid(), "layout");
+			layout, portletId, layout.getUuid(), "layout");
+
+		if (layout.isDraftLayout()) {
+			ContentLayoutTestUtil.publishLayout(layout, stagingLayout);
+		}
+
 		publishLayouts();
 
+		Layout scopeLayout = null;
+
+		if (liveLayout.isTypeContent()) {
+			scopeLayout = liveLayout.fetchDraftLayout();
+		}
+		else {
+			scopeLayout = liveLayout;
+		}
+
 		Group scopeGroup = GroupLocalServiceUtil.fetchGroup(
-			liveLayout.getCompanyId(), _portal.getClassNameId(Layout.class),
-			liveLayout.getPlid());
+			scopeLayout.getCompanyId(), _portal.getClassNameId(Layout.class),
+			scopeLayout.getPlid());
 
 		_testScopeGroupId(
 			scopeGroup.getGroupId(), liveLayout, stagingLayout, portletId,

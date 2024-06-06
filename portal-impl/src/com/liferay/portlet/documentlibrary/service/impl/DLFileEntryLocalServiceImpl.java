@@ -895,16 +895,20 @@ public class DLFileEntryLocalServiceImpl
 						version, " for file entry ", fileEntryId));
 			}
 
-			int count = _dlFileVersionPersistence.countByF_S(
+			int fileVersionsCount = _dlFileVersionPersistence.countByF_S(
 				fileEntryId, WorkflowConstants.STATUS_APPROVED);
 
-			count += _dlFileVersionPersistence.countByF_S(
+			fileVersionsCount += _dlFileVersionPersistence.countByF_S(
 				fileEntryId, WorkflowConstants.STATUS_SCHEDULED);
 
-			if ((count <= 1) &&
+			int fileVersionsExpiredCount = _dlFileVersionPersistence.countByF_S(
+				fileEntryId, WorkflowConstants.STATUS_EXPIRED);
+
+			if ((fileVersionsCount <= 1) &&
 				!((dlFileVersion.getStatus() ==
 					WorkflowConstants.STATUS_EXPIRED) &&
-				  (count == 1))) {
+				  ((fileVersionsCount == 1) ||
+				   (fileVersionsExpiredCount > 1)))) {
 
 				throw new InvalidFileVersionException(
 					StringBundler.concat(

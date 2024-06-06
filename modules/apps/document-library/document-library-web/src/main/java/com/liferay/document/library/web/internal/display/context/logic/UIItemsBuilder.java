@@ -680,9 +680,12 @@ public class UIItemsBuilder {
 		fileVersionsCount += _fileEntry.getFileVersionsCount(
 			WorkflowConstants.STATUS_SCHEDULED);
 
+		int fileVersionsExpired = _fileEntry.getFileVersionsCount(
+			WorkflowConstants.STATUS_EXPIRED);
+
 		if ((fileVersionsCount > 1) ||
-			((fileVersionsCount == 1) &&
-			 (_fileVersion.getStatus() == WorkflowConstants.STATUS_EXPIRED))) {
+			((_fileVersion.getStatus() == WorkflowConstants.STATUS_EXPIRED) &&
+			 ((fileVersionsCount == 1) || (fileVersionsExpired > 1)))) {
 
 			return true;
 		}

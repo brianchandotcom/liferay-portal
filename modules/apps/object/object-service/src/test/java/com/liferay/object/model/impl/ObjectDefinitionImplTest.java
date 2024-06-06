@@ -101,24 +101,8 @@ public class ObjectDefinitionImplTest {
 		String objectDefinitionName, String rootObjectDefinitionName,
 		boolean system) {
 
-		ObjectDefinition objectDefinition = Mockito.spy(
-			_createObjectDefinition(modifiable, objectDefinitionName, system));
-
-		ObjectDefinitionLocalService objectDefinitionLocalService =
-			Mockito.mock(ObjectDefinitionLocalService.class);
-
-		ReflectionTestUtil.setFieldValue(
-			ObjectDefinitionLocalServiceUtil.class, "_serviceSnapshot",
-			new Snapshot<ObjectDefinitionLocalService>(
-				ObjectDefinitionLocalServiceUtil.class,
-				ObjectDefinitionLocalService.class) {
-
-				@Override
-				public ObjectDefinitionLocalService get() {
-					return objectDefinitionLocalService;
-				}
-
-			});
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			modifiable, objectDefinitionName, system);
 
 		if (rootObjectDefinitionName != null) {
 			ObjectDefinition rootObjectDefinition = _createObjectDefinition(
@@ -128,12 +112,30 @@ public class ObjectDefinitionImplTest {
 
 			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
 
+			ObjectDefinitionLocalService objectDefinitionLocalService =
+				Mockito.mock(ObjectDefinitionLocalService.class);
+
+			ReflectionTestUtil.setFieldValue(
+				ObjectDefinitionLocalServiceUtil.class, "_serviceSnapshot",
+				new Snapshot<ObjectDefinitionLocalService>(
+					ObjectDefinitionLocalServiceUtil.class,
+					ObjectDefinitionLocalService.class) {
+
+					@Override
+					public ObjectDefinitionLocalService get() {
+						return objectDefinitionLocalService;
+					}
+
+				});
+
 			Mockito.when(
 				objectDefinitionLocalService.fetchObjectDefinition(
 					rootObjectDefinitionId)
 			).thenReturn(
 				rootObjectDefinition
 			);
+
+			objectDefinition = Mockito.spy(objectDefinition);
 
 			Mockito.doReturn(
 				true

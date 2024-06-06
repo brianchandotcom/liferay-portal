@@ -1548,7 +1548,7 @@
 			<finder-column name="ownerType" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="PortalPreferenceValue" remote-service="false">
+	<entity cache-enabled="false" local-service="true" name="PortalPreferenceValue" remote-service="false">
 
 		<!-- PK fields -->
 

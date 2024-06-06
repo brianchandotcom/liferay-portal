@@ -766,7 +766,7 @@ translationTest(
 			name: 'Select a language',
 		});
 
-		await clickAndExpectToBeVisible({
+		clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('option', {
 				name: 'Catalan Language: Not Translated',
@@ -782,7 +782,7 @@ translationTest(
 
 		await fillAndClickOutside(page, localizableField);
 
-		await clickAndExpectToBeVisible({
+		clickAndExpectToBeVisible({
 			target: page.getByRole('option', {
 				name: 'Catalan Language: Translated',
 			}),
@@ -792,7 +792,7 @@ translationTest(
 
 		await page.getByLabel('Add Duplicate Field Text').click();
 
-		await clickAndExpectToBeVisible({
+		clickAndExpectToBeVisible({
 			target: page.getByRole('option', {
 				name: 'Catalan Language: Translating 2/3',
 			}),
@@ -805,7 +805,7 @@ translationTest(
 			page.locator('input.ddm-field-text').nth(1)
 		);
 
-		await clickAndExpectToBeVisible({
+		clickAndExpectToBeVisible({
 			target: page.getByRole('option', {
 				name: 'Catalan Language: Translated',
 			}),

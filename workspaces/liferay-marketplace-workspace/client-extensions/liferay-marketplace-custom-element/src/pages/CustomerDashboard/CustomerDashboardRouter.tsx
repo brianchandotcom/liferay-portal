@@ -16,6 +16,8 @@ import CreateLicense from './pages/Apps/App/Licenses/CreateLicense';
 import Licenses from './pages/Apps/App/Licenses/Licenses';
 import Members from './pages/Members';
 import Solutions from './pages/Solutions';
+import Solution from './pages/Solutions/Solution';
+import SolutionOutlet from './pages/Solutions/SolutionOutlet';
 
 const CustomerDashboardRouter = () => {
 	const {properties} = useMarketplaceContext();
@@ -36,6 +38,13 @@ const CustomerDashboardRouter = () => {
 					</Route>
 					<Route element={<Members />} path="members" />
 					<Route element={<Solutions />} path="solutions" />
+
+					<Route
+						element={<SolutionOutlet />}
+						path="solutions/:orderId"
+					>
+						<Route element={<Solution />} index />
+					</Route>
 				</Route>
 
 				<Route

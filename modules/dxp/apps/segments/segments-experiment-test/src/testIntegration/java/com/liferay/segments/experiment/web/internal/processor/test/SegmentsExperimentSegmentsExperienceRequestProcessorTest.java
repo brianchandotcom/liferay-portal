@@ -272,75 +272,6 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 	}
 
 	@Test
-	public void testGetSegmentsExperienceIdsWithoutLiferayAnalyticsEnableAllGroupIds()
-		throws Exception {
-
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						AnalyticsConfiguration.class.getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"liferayAnalyticsDataSourceId",
-							RandomTestUtil.randomLong()
-						).put(
-							"liferayAnalyticsEnableAllGroupIds", false
-						).put(
-							"liferayAnalyticsFaroBackendSecuritySignature",
-							RandomTestUtil.randomString()
-						).put(
-							"liferayAnalyticsFaroBackendURL",
-							RandomTestUtil.randomString()
-						).build())) {
-
-			long[] segmentsExperienceIds =
-				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					_group.getGroupId(), _layout.getPlid(),
-					new long[] {12345L});
-
-			Assert.assertEquals(
-				Arrays.toString(segmentsExperienceIds), 1,
-				segmentsExperienceIds.length);
-
-			Assert.assertEquals(12345L, segmentsExperienceIds[0]);
-		}
-	}
-
-	@Test
-	public void testGetSegmentsExperienceIdsWithoutSegmentsExperienceIds()
-		throws Exception {
-
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						AnalyticsConfiguration.class.getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"liferayAnalyticsDataSourceId",
-							RandomTestUtil.randomLong()
-						).put(
-							"liferayAnalyticsEnableAllGroupIds", true
-						).put(
-							"liferayAnalyticsFaroBackendSecuritySignature",
-							RandomTestUtil.randomString()
-						).put(
-							"liferayAnalyticsFaroBackendURL",
-							RandomTestUtil.randomString()
-						).build())) {
-
-			long[] segmentsExperienceIds =
-				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
-					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					_group.getGroupId(), _layout.getPlid(), new long[0]);
-
-			Assert.assertEquals(
-				Arrays.toString(segmentsExperienceIds), 0,
-				segmentsExperienceIds.length);
-		}
-	}
-
-	@Test
 	public void testGetSegmentsExperienceIdsWithNonexistentSegmentsEntryId()
 		throws Exception {
 
@@ -410,6 +341,75 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 
 			Assert.assertEquals(
 				defaultSegmentsExperienceId, segmentsExperienceIds[0]);
+		}
+	}
+
+	@Test
+	public void testGetSegmentsExperienceIdsWithoutLiferayAnalyticsEnableAllGroupIds()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId",
+							RandomTestUtil.randomLong()
+						).put(
+							"liferayAnalyticsEnableAllGroupIds", false
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							RandomTestUtil.randomString()
+						).put(
+							"liferayAnalyticsFaroBackendURL",
+							RandomTestUtil.randomString()
+						).build())) {
+
+			long[] segmentsExperienceIds =
+				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_group.getGroupId(), _layout.getPlid(),
+					new long[] {12345L});
+
+			Assert.assertEquals(
+				Arrays.toString(segmentsExperienceIds), 1,
+				segmentsExperienceIds.length);
+
+			Assert.assertEquals(12345L, segmentsExperienceIds[0]);
+		}
+	}
+
+	@Test
+	public void testGetSegmentsExperienceIdsWithoutSegmentsExperienceIds()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId",
+							RandomTestUtil.randomLong()
+						).put(
+							"liferayAnalyticsEnableAllGroupIds", true
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							RandomTestUtil.randomString()
+						).put(
+							"liferayAnalyticsFaroBackendURL",
+							RandomTestUtil.randomString()
+						).build())) {
+
+			long[] segmentsExperienceIds =
+				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					_group.getGroupId(), _layout.getPlid(), new long[0]);
+
+			Assert.assertEquals(
+				Arrays.toString(segmentsExperienceIds), 0,
+				segmentsExperienceIds.length);
 		}
 	}
 

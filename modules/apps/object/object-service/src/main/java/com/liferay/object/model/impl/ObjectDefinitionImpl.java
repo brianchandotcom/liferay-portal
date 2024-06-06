@@ -11,7 +11,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFolderLocalServiceUtil;
-import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -21,14 +20,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(service = ObjectDefinition.class)
 public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	public static String getShortName(String name) {
@@ -128,7 +123,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		}
 
 		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionPersistence.fetchByPrimaryKey(
+			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
 				getRootObjectDefinitionId());
 
 		if (isModifiable() && isSystem()) {
@@ -282,8 +277,5 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 		return result.toString();
 	}
-
-	@Reference
-	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 }

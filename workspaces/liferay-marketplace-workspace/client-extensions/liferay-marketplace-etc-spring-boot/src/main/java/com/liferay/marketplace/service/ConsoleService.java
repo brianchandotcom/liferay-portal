@@ -37,10 +37,13 @@ public class ConsoleService {
 		).delete(
 		).uri(
 			"/projects/" + projectName
-		);
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Deleted project " + projectId);
+			_log.info("Deleted project " + projectName);
 		}
 	}
 

@@ -45,7 +45,9 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		).delete(
 		).uri(
 			"/trial/" + orderId
-		);
+		).retrieve()
+		.bodyToMono(Void.class)
+		.block();
 	}
 
 	private JSONObject _getAvailabilityJSONObject() throws Exception {

@@ -40,7 +40,7 @@ export class FiltersPage {
 
 	constructor(page: Page) {
 		this.dataSetPage = new DataSetPage(page);
-		this.filterTable = page.locator('table');
+		this.filterTable = page.getByRole('table');
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
 			.and(page.getByTitle('New Filter'));

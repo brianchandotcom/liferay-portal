@@ -16,6 +16,7 @@ export class EditObjectActionPage {
 	readonly inputWhenCombo: Locator;
 	readonly optionNotification: Locator;
 	readonly page: Page;
+	readonly viewObjectActionsPage: ViewObjectActionsPage;
 
 	constructor(page: Page) {
 		this.actionBuilderTab = page
@@ -40,6 +41,7 @@ export class EditObjectActionPage {
 		this.optionNotification = page
 			.frameLocator('iframe')
 			.getByRole('option', {name: 'Notification'});
+		this.viewObjectActionsPage = new ViewObjectActionsPage(page);
 	}
 
 	async chooseNotificationOption() {
@@ -55,4 +57,23 @@ export class EditObjectActionPage {
 		await this.actionBuilderTab.click();
 	}
 
+	async addNewAction(thenOption: string, whenOption: string) {
+		await this.viewObjectActionsPage.openObjectActionSidePanel();
+
+		await this.actionLabelInput.fill(whenOption);
+
+		await this.actionBuilderTab.click();
+
+		await this.inputWhenCombo.click();
+		await this.iframeLocator
+			.getByRole('option', {name: whenOption})
+			.click();
+
+		await this.inputThenCombo.click();
+		await this.iframeLocator
+			.getByRole('option', {name: thenOption})
+			.click();
+
+		await this.iframeLocator.getByRole('button', {name: 'Save'}).click();
+	}
 }

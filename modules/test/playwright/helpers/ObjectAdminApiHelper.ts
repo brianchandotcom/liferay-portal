@@ -39,6 +39,24 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
+	async getObjectActionsByExternalReferenceCode(
+		objectDefinitionExternalReferenceCode: string
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}/object-actions`
+		);
+	}
+
+	async postObjectActionByExternalReferenceCode(
+		externalReferenceCode: string,
+		objectAction?: Partial<ObjectAction>
+	): Promise<ObjectAction> {
+		return this.apiHelpers.post<Partial<ObjectAction>>(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-actions`,
+			{data: objectAction}
+		);
+	}
+
 	async postObjectDefinition(data: DataObject): Promise<ObjectDefinition> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
@@ -50,16 +68,6 @@ export class ObjectAdminApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}/publish`,
 			{}
-		);
-	}
-
-	async postObjectActionByExternalReferenceCode(
-		externalReferenceCode: string,
-		objectAction?: Partial<ObjectAction>
-	): Promise<ObjectAction> {
-		return this.apiHelpers.post<Partial<ObjectAction>>(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}/object-actions`,
-			{data: objectAction}
 		);
 	}
 

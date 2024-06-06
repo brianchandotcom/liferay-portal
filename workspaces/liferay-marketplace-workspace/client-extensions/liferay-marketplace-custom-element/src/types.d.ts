@@ -528,6 +528,7 @@ interface DeliveryProduct {
 	attachments: DeliveryProductAttachment[];
 	catalogName?: string;
 	categories: ProductCategories[];
+	createDate: string;
 	customFields?: CustomField[];
 	description: string;
 	externalReferenceCode: string;
@@ -538,6 +539,7 @@ interface DeliveryProduct {
 	productId: number;
 	productSpecifications: DeliveryProductSpecification[];
 	productType: string;
+	shortDescription: string;
 	skus: DeliverySKU[];
 	urlImage: string;
 }

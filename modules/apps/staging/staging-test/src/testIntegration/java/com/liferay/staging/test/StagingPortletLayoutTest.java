@@ -10,6 +10,7 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -69,6 +70,26 @@ public class StagingPortletLayoutTest extends BaseLocalStagingTestCase {
 		throws Exception {
 
 		LayoutTestUtil.addPortletToLayout(stagingLayout, portletId);
+		publishLayouts();
+
+		_testScopeGroupId(
+			liveGroup.getGroupId(), liveLayout, stagingLayout, portletId,
+			false);
+		_testScopeGroupId(
+			stagingGroup.getGroupId(), liveLayout, stagingLayout, portletId,
+			true);
+
+		_updateLayoutPortletScope(
+			stagingLayout, portletId, StringPool.BLANK, "company");
+		publishLayouts();
+
+		Company company = _companyLocalService.getCompany(
+			liveGroup.getCompanyId());
+
+		_testScopeGroupId(
+			company.getGroupId(), liveLayout, stagingLayout, portletId, false);
+		_testScopeGroupId(
+			company.getGroupId(), liveLayout, stagingLayout, portletId, true);
 
 		_updateLayoutPortletScope(
 			stagingLayout, portletId, stagingLayout.getUuid(), "layout");

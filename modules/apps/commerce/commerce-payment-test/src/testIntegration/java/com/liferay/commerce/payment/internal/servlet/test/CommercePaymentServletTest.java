@@ -84,29 +84,25 @@ public class CommercePaymentServletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_user = UserTestUtil.addUser();
-
+		_originalCommerceGroup = CommerceGroupThreadLocal.get();
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
+		_user = UserTestUtil.addUser();
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
+		_group = GroupTestUtil.addGroup();
+
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
-
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
-
-		_originalCommerceGroup = CommerceGroupThreadLocal.get();
 
 		CommerceGroupThreadLocal.set(
 			_groupLocalService.fetchGroup(_commerceChannel.getGroupId()));
@@ -121,6 +117,9 @@ public class CommercePaymentServletTest {
 		_mockHttpServletRequest = new MockHttpServletRequest("GET", "");
 
 		_mockHttpServletRequest.setAttribute("LOCALE", LocaleUtil.ITALY);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 	}
 
 	@After

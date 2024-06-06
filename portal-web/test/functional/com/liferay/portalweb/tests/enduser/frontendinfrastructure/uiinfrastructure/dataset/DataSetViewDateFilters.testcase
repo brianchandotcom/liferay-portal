@@ -23,56 +23,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-183056. Confirm that the "Filter by" field is not editable after the filter is created."
-	@ignore = "true"
-	@priority = 4
-	test CanAssertFilterbyInDateIsNotEditable {
-		task ("Given the creation of a new data set") {
-			DataSetAdmin.goToDataSetAdminPage();
-
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Data Set Fields Test",
-				restApplication = "/headless-admin-taxonomy/v1.0",
-				restEndpoint = "/v1.0/keywords/ranked",
-				restSchema = "Keyword");
-		}
-
-		task ("And adding a data set view") {
-			DataSetAdmin.createFDSViewViaAPI(
-				dataSetName = "Data Set Fields Test",
-				dataSetViewDescription = "FDSViewDescription",
-				key_dataSetViewNameList = "View Fields Test");
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Data Set Fields Test",
-				key_viewName = "View Fields Test");
-		}
-
-		task ("When the user accesses the Filters tab") {
-			DataSetAdmin.goToTab(tabName = "Filters");
-		}
-
-		task ("And create a new filter") {
-			DataSetAdmin.createFilters(
-				filterName = "Test Filter",
-				key_filterList = "dateCreated");
-		}
-
-		task ("And create a new filter") {
-			Click(
-				key_fieldName = "dateCreated",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("Then Assert the Filter by field is not editable") {
-			AssertNotEditable(locator1 = "DataSet#FILTER_BY_SELECT");
-		}
-	}
-
 	@description = "LPS-190851. Cannot create a date filter when the chosen endpoint does not have a date field"
 	@priority = 5
 	test CannotCreateFilterWithoutDateTypeField {

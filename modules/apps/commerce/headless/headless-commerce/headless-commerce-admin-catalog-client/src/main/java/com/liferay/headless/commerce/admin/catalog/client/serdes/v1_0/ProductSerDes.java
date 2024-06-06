@@ -112,6 +112,20 @@ public class ProductSerDes {
 			sb.append(String.valueOf(product.getCatalog()));
 		}
 
+		if (product.getCatalogExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"catalogExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(product.getCatalogExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (product.getCatalogId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -796,6 +810,15 @@ public class ProductSerDes {
 			map.put("catalog", String.valueOf(product.getCatalog()));
 		}
 
+		if (product.getCatalogExternalReferenceCode() == null) {
+			map.put("catalogExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"catalogExternalReferenceCode",
+				String.valueOf(product.getCatalogExternalReferenceCode()));
+		}
+
 		if (product.getCatalogId() == null) {
 			map.put("catalogId", null);
 		}
@@ -1191,6 +1214,11 @@ public class ProductSerDes {
 			else if (Objects.equals(jsonParserFieldName, "catalog")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "catalogExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "catalogId")) {
 				return false;
 			}
@@ -1389,6 +1417,14 @@ public class ProductSerDes {
 				if (jsonParserFieldValue != null) {
 					product.setCatalog(
 						CatalogSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "catalogExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					product.setCatalogExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "catalogId")) {

@@ -174,9 +174,25 @@ export class ApiHelpers {
 		});
 	}
 
-	async putResponse(url: string) {
+	async put<T>(url: string, options: PostOptions<T> = {}) {
+		const response = await this.putResponse(url, options);
+
+		if (response.status() === 204) {
+			return;
+		}
+
+		return response.json();
+	}
+
+	async putResponse<T>(
+		url: string,
+		{data, failOnStatusCode, headers, multipart}: PostOptions<T> = {}
+	) {
 		return await this.page.request.put(url, {
-			headers: await this.getHeader(),
+			data,
+			failOnStatusCode: failOnStatusCode || false,
+			headers: headers || (await this.getHeader()),
+			multipart,
 		});
 	}
 
@@ -277,6 +293,10 @@ export class DataApiHelpers extends ApiHelpers {
 					await this.headlessCommerceAdminPricing.deleteDiscount(
 						item.id
 					);
+
+					break;
+				case 'objectDefinition':
+					await this.objectAdmin.deleteObjectDefinition(item.id);
 
 					break;
 				case 'option':

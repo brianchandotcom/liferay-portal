@@ -29,6 +29,7 @@ import org.mockserver.matchers.Times;
 import org.mockserver.model.Header;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.mockserver.verify.VerificationTimes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -60,9 +61,10 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 			new JSONFactoryImpl()
 		);
 
-		Mockito.mockStatic(
-			JWSAlgorithmFamilyJWSKeySelector.class
-		).when(
+		_mockedStatic = Mockito.mockStatic(
+			JWSAlgorithmFamilyJWSKeySelector.class);
+
+		_mockedStatic.when(
 			(MockedStatic.Verification)
 				JWSAlgorithmFamilyJWSKeySelector.fromJWKSetURL(Mockito.any())
 		).thenReturn(
@@ -98,7 +100,21 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		new MockServerClient(
+			"localhost", 63636
+		).verify(
+			HttpRequest.request(
+			).withMethod(
+				"GET"
+			).withPath(
+				"/o/oauth2/application"
+			),
+			VerificationTimes.exactly(0)
+		);
+
 		_clientAndServer.stop();
+
+		_mockedStatic.close();
 	}
 
 	@Test
@@ -142,6 +158,7 @@ public class LiferayOAuth2ClientConfigurationExternalTest {
 	}
 
 	private static ClientAndServer _clientAndServer;
+	private static MockedStatic<JWSAlgorithmFamilyJWSKeySelector> _mockedStatic;
 
 	@Autowired
 	private LiferayOAuth2ClientConfiguration _liferayOAuth2ClientConfiguration;

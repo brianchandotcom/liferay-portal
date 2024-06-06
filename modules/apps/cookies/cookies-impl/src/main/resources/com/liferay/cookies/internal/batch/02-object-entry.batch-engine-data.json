@@ -17,7 +17,7 @@
 			"externalReferenceCode": "87fcbcb0-1e6f-4e7a-9737-be62ec0d8a45",
 			"host": "Liferay",
 			"name": "ACCESSIBILITY_SETTING_EXPANDED_TEXT",
-			"purpose": "",
+			"purpose": "Stores the value (true/false) of the Expanded Text accessibility menu setting so that a guest user's choice is remembered. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -25,7 +25,7 @@
 			"externalReferenceCode": "2ed1a7ca-2d49-47eb-98f0-5fccc6ed6140",
 			"host": "Liferay",
 			"name": "ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING",
-			"purpose": "",
+			"purpose": "Stores the value (true/false) of the Increased Text Spacing accessibility menu setting so that a guest user's choice is remembered. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -33,7 +33,7 @@
 			"externalReferenceCode": "aed2afc1-81d5-4dc2-83c1-ebacdedc2e95",
 			"host": "Liferay",
 			"name": "ACCESSIBILITY_SETTING_REDUCED_MOTION",
-			"purpose": "",
+			"purpose": "Stores the value (true/false) of the Reduced Motion accessibility menu setting so that a guest user's choice is remembered. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -41,7 +41,7 @@
 			"externalReferenceCode": "3a82e14e-0697-4861-b98b-57c31f1a7cd8",
 			"host": "Liferay",
 			"name": "ACCESSIBILITY_SETTING_UNDERLINED_LINKS1",
-			"purpose": "",
+			"purpose": "Stores the value (true/false) of the Underlined Links accessibility menu setting so that a guest user's choice is remembered. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -123,7 +123,7 @@
 			"externalReferenceCode": "5d32ec64-b1da-4315-89e6-faa9670a58d1",
 			"host": "Liferay",
 			"name": "_com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet_userID_hideReindexConfirmationModal",
-			"purpose": "",
+			"purpose": "Stores the value (true/false) of the user's decision whether to permanently hide the reindex confirmation dialog, so the user's preference can be honored. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -139,7 +139,7 @@
 			"externalReferenceCode": "61778df1-0112-4474-9fc3-9d01a4432787",
 			"host": "Liferay",
 			"name": "com.liferay.search.experiences.web_addSXPElementSidebar",
-			"purpose": "",
+			"purpose": "Stores the current state (open/closed) of the Add Query Elements sidebar in Search Blueprints, so the sidebar has the correct state when the user returns from a different section. Preferences.",
 			"type": "First Party"
 		},
 		{

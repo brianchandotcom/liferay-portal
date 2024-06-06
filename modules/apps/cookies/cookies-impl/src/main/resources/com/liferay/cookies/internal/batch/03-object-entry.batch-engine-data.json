@@ -139,7 +139,7 @@
 			"externalReferenceCode": "adfcd410-727d-4e25-b9ed-c472ccaa556f",
 			"host": "Liferay",
 			"name": "com.liferay.search.experiences.web_successMessage",
-			"purpose": "",
+			"purpose": "Stores a localized success message briefly when a Search Blueprints blueprint or element is saved, so the message can be displayed on a different page. Strictly necessary.",
 			"type": "First Party"
 		},
 		{

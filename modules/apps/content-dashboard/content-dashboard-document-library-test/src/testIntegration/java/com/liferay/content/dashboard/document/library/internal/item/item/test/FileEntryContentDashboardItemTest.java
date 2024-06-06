@@ -594,6 +594,40 @@ public class FileEntryContentDashboardItemTest {
 				_getMockHttpServletRequest()));
 	}
 
+	private FileEntry _getFileEntry(int numVersions) throws Exception {
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"example.jpg",
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			"example.jpg", StringPool.BLANK, "description", StringPool.BLANK,
+			new byte[0], null, null, null, _serviceContext);
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			_portal.getClassNameId(FileEntry.class.getName()),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		if (numVersions > 1) {
+			for (int i = 1; i < numVersions; i++) {
+				fileEntry = _dlAppLocalService.updateFileEntry(
+					fileEntry.getUserId(), fileEntry.getFileEntryId(),
+					fileEntry.getFileName(), fileEntry.getMimeType(),
+					fileEntry.getTitle(), StringUtil.randomString(),
+					fileEntry.getDescription(), RandomTestUtil.randomString(),
+					DLVersionNumberIncrease.MINOR, fileEntry.getContentStream(),
+					fileEntry.getSize(), fileEntry.getDisplayDate(),
+					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+					_serviceContext);
+			}
+		}
+
+		return fileEntry;
+	}
+
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
@@ -643,35 +677,7 @@ public class FileEntryContentDashboardItemTest {
 			_getVersionableContentDashboardItem(int numVersions)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"example.jpg",
-			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			"example.jpg", StringPool.BLANK, "description", StringPool.BLANK,
-			new byte[0], null, null, null, _serviceContext);
-
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			_portal.getClassNameId(FileEntry.class.getName()),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			RandomTestUtil.randomString(),
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0, 0, 0,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
-		if (numVersions > 1) {
-			for (int i = 1; i < numVersions; i++) {
-				fileEntry = _dlAppLocalService.updateFileEntry(
-					fileEntry.getUserId(), fileEntry.getFileEntryId(),
-					fileEntry.getFileName(), fileEntry.getMimeType(),
-					fileEntry.getTitle(), StringUtil.randomString(),
-					fileEntry.getDescription(), RandomTestUtil.randomString(),
-					DLVersionNumberIncrease.MINOR, fileEntry.getContentStream(),
-					fileEntry.getSize(), fileEntry.getDisplayDate(),
-					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-					_serviceContext);
-			}
-		}
+		FileEntry fileEntry = _getFileEntry(numVersions);
 
 		return (VersionableContentDashboardItem<FileEntry>)
 			_contentDashboardItemFactory.create(fileEntry.getFileEntryId());

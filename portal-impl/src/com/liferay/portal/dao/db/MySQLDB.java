@@ -205,6 +205,10 @@ public class MySQLDB extends BaseDB {
 
 	@Override
 	protected String reword(String data) throws IOException {
+		if (Validator.isNull(data)) {
+			return null;
+		}
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
 

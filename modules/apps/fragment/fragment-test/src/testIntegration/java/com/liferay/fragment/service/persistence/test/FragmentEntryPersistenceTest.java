@@ -849,7 +849,7 @@ public class FragmentEntryPersistenceTest {
 
 		fragmentEntry.setUuid(RandomTestUtil.randomString());
 
-		fragmentEntry.setHeadId(RandomTestUtil.nextLong());
+		fragmentEntry.setHeadId(-pk);
 
 		fragmentEntry.setGroupId(RandomTestUtil.nextLong());
 

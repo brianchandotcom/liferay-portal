@@ -13,6 +13,13 @@ create index IX_84557D43 on ERCCompanyEntry (uuid_[$COLUMN_LENGTH:75$]);
 create unique index IX_DA61F9E2 on ERCGroupEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_17A11405 on ERCGroupEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_6EA6F478 on ERCVersionedEntry (externalReferenceCode[$COLUMN_LENGTH:75$], groupId, head);
+create unique index IX_4DC13E66 on ERCVersionedEntry (headId);
+create unique index IX_A1B6E921 on ERCVersionedEntry (uuid_[$COLUMN_LENGTH:75$], groupId, head);
+
+create unique index IX_D06D55F9 on ERCVersionedEntryVersion (ercVersionedEntryId, version);
+create unique index IX_1F1BC169 on ERCVersionedEntryVersion (uuid_[$COLUMN_LENGTH:75$], version, groupId);
+
 create unique index IX_6E042099 on EagerBlobEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_420C1E47 on FinderWhereClauseEntry (name[$COLUMN_LENGTH:75$]);

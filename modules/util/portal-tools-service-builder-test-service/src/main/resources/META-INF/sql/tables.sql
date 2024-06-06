@@ -71,6 +71,27 @@ create table ERCGroupEntry (
 	companyId LONG
 );
 
+create table ERCVersionedEntry (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
+	headId LONG,
+	head BOOLEAN,
+	ercVersionedEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG
+);
+
+create table ERCVersionedEntryVersion (
+	ercVersionedEntryVersionId LONG not null primary key,
+	version INTEGER,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
+	ercVersionedEntryId LONG,
+	groupId LONG,
+	companyId LONG
+);
+
 create table EagerBlobEntry (
 	uuid_ VARCHAR(75) null,
 	eagerBlobEntryId LONG not null primary key,

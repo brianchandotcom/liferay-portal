@@ -64,6 +64,24 @@
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="headId" type="long" />
+		<field name="ercVersionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersion">
+		<field name="ercVersionedEntryVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="ercVersionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry">
 		<field name="finderWhereClauseEntryId" type="long" />
 		<field name="name" type="String" />

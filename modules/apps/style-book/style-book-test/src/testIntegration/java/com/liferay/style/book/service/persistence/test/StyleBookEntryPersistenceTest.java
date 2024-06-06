@@ -679,7 +679,7 @@ public class StyleBookEntryPersistenceTest {
 
 		styleBookEntry.setUuid(RandomTestUtil.randomString());
 
-		styleBookEntry.setHeadId(RandomTestUtil.nextLong());
+		styleBookEntry.setHeadId(-pk);
 
 		styleBookEntry.setGroupId(RandomTestUtil.nextLong());
 

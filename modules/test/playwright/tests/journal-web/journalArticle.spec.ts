@@ -98,13 +98,6 @@ const translationTest = mergeTests(
 	})
 );
 
-const aiCreateImageTest = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-10793': true,
-	})
-);
-
 const privateContentIconTest = mergeTests(baseTest);
 
 autoSaveAsDraftTest(
@@ -947,7 +940,7 @@ scheduleTest(
 	}
 );
 
-aiCreateImageTest(
+baseTest(
 	'LPD-6800 Create AI Image option visible from Item Selector',
 	async ({journalEditArticlePage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});

@@ -18,8 +18,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTPreferencesService;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,8 +52,6 @@ import java.util.List;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -134,7 +130,8 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		throws Exception {
 
 		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-			_serviceTrackerMap.getService(Long.valueOf(classNameId));
+			_ctCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
+				Long.valueOf(classNameId));
 
 		if (ctCollectionHistoryProvider == null) {
 			return Page.of(
@@ -276,28 +273,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			_ctCollectionService.updateCTCollection(
 				contextUser.getUserId(), ctCollectionId, ctCollection.getName(),
 				ctCollection.getDescription()));
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<CTCollectionHistoryProvider<?>>)
-				(Class<?>)CTCollectionHistoryProvider.class,
-			null,
-			(serviceReference, emitter) -> {
-				CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-					bundleContext.getService(serviceReference);
-
-				try {
-					emitter.emit(
-						_classNameLocalService.getClassNameId(
-							ctCollectionHistoryProvider.getModelClass()));
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			});
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(
@@ -499,15 +474,16 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	private static final EntityModel _entityModel =
 		new CTCollectionEntityModel();
 
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
 	@Reference(
 		target = "(component.name=com.liferay.change.tracking.rest.internal.dto.v1_0.converter.CTCollectionDTOConverter)"
 	)
 	private DTOConverter
 		<com.liferay.change.tracking.model.CTCollection, CTCollection>
 			_ctCollectionDTOConverter;
+
+	@Reference
+	private CTCollectionHistoryProviderRegistry
+		_ctCollectionHistoryProviderRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
@@ -538,9 +514,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
-
-	private ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
-		_serviceTrackerMap;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

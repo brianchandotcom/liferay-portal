@@ -14,9 +14,8 @@ import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
+import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
 import com.liferay.change.tracking.web.internal.timeline.DefaultCTCollectionHistoryProvider;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,8 +37,6 @@ import java.util.Map;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,28 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCResourceCommand.class
 )
 public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<CTCollectionHistoryProvider<?>>)
-				(Class<?>)CTCollectionHistoryProvider.class,
-			null,
-			(serviceReference, emitter) -> {
-				CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-					bundleContext.getService(serviceReference);
-
-				try {
-					emitter.emit(
-						_classNameLocalService.getClassNameId(
-							ctCollectionHistoryProvider.getModelClass()));
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			});
-	}
 
 	@Override
 	protected void doServeResource(
@@ -157,7 +131,8 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-			_serviceTrackerMap.getService(classNameId);
+			_ctCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
+				classNameId);
 
 		if (ctCollectionHistoryProvider == null) {
 			ctCollectionHistoryProvider =
@@ -208,7 +183,8 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
+	private CTCollectionHistoryProviderRegistry
+		_ctCollectionHistoryProviderRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
@@ -221,8 +197,5 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Language _language;
-
-	private ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
-		_serviceTrackerMap;
 
 }

@@ -196,7 +196,7 @@ public class CommercePaymentServletTest {
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
 			BigDecimal.ONE);
 
-		CommerceOrder checkoutOrder =
+		CommerceOrder checkoutCommerceOrder =
 			_commerceOrderEngine.checkoutCommerceOrder(
 				commerceOrder, _user.getUserId());
 
@@ -207,26 +207,26 @@ public class CommercePaymentServletTest {
 		_commercePaymentEngine.processPayment(
 			commerceOrder.getCommerceOrderId(), null, _mockHttpServletRequest);
 
-		CommerceOrder paymentOrder =
+		CommerceOrder paymentCommerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
-				checkoutOrder.getCommerceOrderId());
+				checkoutCommerceOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
 			CommerceOrderPaymentConstants.STATUS_AUTHORIZED,
-			paymentOrder.getPaymentStatus());
+			paymentCommerceOrder.getPaymentStatus());
 
-		Assert.assertNotNull(paymentOrder.getTransactionId());
+		Assert.assertNotNull(paymentCommerceOrder.getTransactionId());
 
 		_commercePaymentEngine.completePayment(
-			paymentOrder.getCommerceOrderId(), paymentOrder.getTransactionId(),
-			_mockHttpServletRequest);
+			paymentCommerceOrder.getCommerceOrderId(),
+			paymentCommerceOrder.getTransactionId(), _mockHttpServletRequest);
 
-		paymentOrder = _commerceOrderLocalService.getCommerceOrder(
-			checkoutOrder.getCommerceOrderId());
+		paymentCommerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			checkoutCommerceOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
 			CommerceOrderPaymentConstants.STATUS_COMPLETED,
-			paymentOrder.getPaymentStatus());
+			paymentCommerceOrder.getPaymentStatus());
 
 		_mockHttpServletRequest = new MockHttpServletRequest(
 			"GET", "/o/payment");
@@ -248,12 +248,12 @@ public class CommercePaymentServletTest {
 		_servlet.service(
 			_mockHttpServletRequest, new MockHttpServletResponse());
 
-		paymentOrder = _commerceOrderLocalService.getCommerceOrder(
-			checkoutOrder.getCommerceOrderId());
+		paymentCommerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			checkoutCommerceOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
 			CommerceOrderPaymentConstants.STATUS_COMPLETED,
-			paymentOrder.getPaymentStatus());
+			paymentCommerceOrder.getPaymentStatus());
 	}
 
 	@Rule

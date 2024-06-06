@@ -63,9 +63,10 @@ public class LiferayOAuth2ResourceServerEnableWebSecurityTest {
 			new JSONFactoryImpl()
 		);
 
-		Mockito.mockStatic(
-			JWSAlgorithmFamilyJWSKeySelector.class
-		).when(
+		_mockedStatic = Mockito.mockStatic(
+			JWSAlgorithmFamilyJWSKeySelector.class);
+
+		_mockedStatic.when(
 			(MockedStatic.Verification)
 				JWSAlgorithmFamilyJWSKeySelector.fromJWKSetURL(Mockito.any())
 		).thenReturn(
@@ -102,6 +103,8 @@ public class LiferayOAuth2ResourceServerEnableWebSecurityTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_clientAndServer.stop();
+
+		_mockedStatic.close();
 	}
 
 	@Test
@@ -154,6 +157,7 @@ public class LiferayOAuth2ResourceServerEnableWebSecurityTest {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	private static ClientAndServer _clientAndServer;
+	private static MockedStatic<JWSAlgorithmFamilyJWSKeySelector> _mockedStatic;
 
 	@Autowired
 	private JwtDecoder _jwtDecoder;

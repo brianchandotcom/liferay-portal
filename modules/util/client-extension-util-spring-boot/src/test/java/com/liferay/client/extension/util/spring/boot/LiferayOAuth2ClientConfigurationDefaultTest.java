@@ -69,9 +69,10 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 			new JSONFactoryImpl()
 		);
 
-		Mockito.mockStatic(
-			JWSAlgorithmFamilyJWSKeySelector.class
-		).when(
+		_mockedStatic = Mockito.mockStatic(
+			JWSAlgorithmFamilyJWSKeySelector.class);
+
+		_mockedStatic.when(
 			(MockedStatic.Verification)
 				JWSAlgorithmFamilyJWSKeySelector.fromJWKSetURL(Mockito.any())
 		).thenReturn(
@@ -108,6 +109,8 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_clientAndServer.stop();
+
+		_mockedStatic.close();
 	}
 
 	@Before
@@ -171,6 +174,7 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	private static ClientAndServer _clientAndServer;
+	private static MockedStatic<JWSAlgorithmFamilyJWSKeySelector> _mockedStatic;
 
 	@Autowired
 	private AuthorizedClientServiceOAuth2AuthorizedClientManager

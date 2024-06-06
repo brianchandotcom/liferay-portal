@@ -66,7 +66,7 @@ export class PageConfigurationPage {
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'english'}),
+			target: this.page.getByRole('menuitem').filter({hasText: 'default'}),
 			trigger: this.page
 				.getByLabel('Current translation')
 				.nth(1)

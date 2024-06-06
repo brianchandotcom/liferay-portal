@@ -15,8 +15,8 @@ import com.liferay.commerce.internal.order.term.contributor.ObjectRecipientComme
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.notification.term.provider.NotificationTermProvider;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.notification.term.provider.NotificationTermProvider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;

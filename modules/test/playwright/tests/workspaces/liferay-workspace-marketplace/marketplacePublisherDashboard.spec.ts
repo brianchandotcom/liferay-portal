@@ -9,8 +9,8 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {marketplacePagesTest} from './fixtures/marketplacePages';
 import {marketplaceSiteFixture} from './fixtures/marketplaceSite';
-import {PUBLISH_SOLUTION, PublishProductPayload} from './types';
-import {products} from './utils/constants';
+import {PublishProductPayload} from './types';
+import {products, solutions} from './utils/constants';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -18,13 +18,14 @@ export const test = mergeTests(
 	marketplacePagesTest
 );
 
-const accountName = 'Supplier Account';
+const ACCOUNT_NAME = 'Supplier Account';
+const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';
 
 test.describe('Can Publish and Manage Solutions', () => {
 	test.beforeEach(
 		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
 			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: accountName,
+				name: ACCOUNT_NAME,
 				type: 'supplier',
 			});
 
@@ -42,7 +43,7 @@ test.describe('Can Publish and Manage Solutions', () => {
 				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
 			const accountSupplierRole = rolesResponse?.items?.filter((role) => {
-				return role.name === 'Solution Publisher';
+				return role.name === SOLUTION_PUBLISHER_ROLE;
 			});
 
 			await apiHelpers.headlessAdminUser.assingUserToAccountRole(
@@ -67,65 +68,69 @@ test.describe('Can Publish and Manage Solutions', () => {
 		await expect(publisherSolutionPage.newSolutionButton).toBeEnabled();
 	});
 
-	test('LPD-26707 Add new solution template', async ({
-		marketplace,
-		page,
-		publisherSolutionPage,
-	}) => {
-		await publisherSolutionPage.goto(
-			`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
-		);
-		await publisherSolutionPage.goToNewSolution();
-		await publisherSolutionPage.goToDefineSolutionProfile();
-		await publisherSolutionPage.fillDefineSolutionProfile(
-			PUBLISH_SOLUTION.profile
-		);
+	for (const key of Object.keys(solutions)) {
+		const solution = solutions[key as keyof typeof solutions];
 
-		await expect(publisherSolutionPage.continueButton).toBeEnabled();
+		test(`LPD-26707 can publish solution "${solution.profile.name}" template`, async ({
+			marketplace,
+			page,
+			publisherSolutionPage,
+		}) => {
+			await publisherSolutionPage.goto(
+				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
+			);
+			await publisherSolutionPage.goToNewSolution();
+			await publisherSolutionPage.goToDefineSolutionProfile();
+			await publisherSolutionPage.fillDefineSolutionProfile(
+				solution.profile
+			);
 
-		await publisherSolutionPage.goToCustomizeSolutionHeader();
-		await publisherSolutionPage.fillCustomizeSolutionHeader(
-			PUBLISH_SOLUTION.header
-		);
+			await expect(publisherSolutionPage.continueButton).toBeEnabled();
 
-		await expect(publisherSolutionPage.continueButton).toBeEnabled();
+			await publisherSolutionPage.goToCustomizeSolutionHeader();
+			await publisherSolutionPage.fillCustomizeSolutionHeader(
+				solution.header
+			);
 
-		await publisherSolutionPage.goToCustomizeSolutionDetails();
-		await publisherSolutionPage.fillCustomizeSolutionDetails(
-			PUBLISH_SOLUTION.details
-		);
+			await expect(publisherSolutionPage.continueButton).toBeEnabled();
 
-		await expect(publisherSolutionPage.continueButton).toBeEnabled();
-		await publisherSolutionPage.goToCompanyProfile();
-		await publisherSolutionPage.fillCompanyProfile(
-			PUBLISH_SOLUTION.companyProfile
-		);
+			await publisherSolutionPage.goToCustomizeSolutionDetails();
+			await publisherSolutionPage.fillCustomizeSolutionDetails(
+				solution.details
+			);
 
-		await expect(publisherSolutionPage.continueButton).toBeEnabled();
-		await publisherSolutionPage.goToContactUs();
-		await publisherSolutionPage.emailInput.fill('test@example.com');
+			await expect(publisherSolutionPage.continueButton).toBeEnabled();
+			await publisherSolutionPage.goToCompanyProfile();
+			await publisherSolutionPage.fillCompanyProfile(
+				solution.companyProfile
+			);
 
-		await expect(publisherSolutionPage.continueButton).toBeEnabled();
+			await expect(publisherSolutionPage.continueButton).toBeEnabled();
+			await publisherSolutionPage.goToContactUs();
+			await publisherSolutionPage.emailInput.fill('test@example.com');
 
-		await clickAndExpectToBeVisible({
-			target: publisherSolutionPage.reviewAndSubmitTitle,
-			trigger: publisherSolutionPage.continueButton,
+			await expect(publisherSolutionPage.continueButton).toBeEnabled();
+
+			await clickAndExpectToBeVisible({
+				target: publisherSolutionPage.reviewAndSubmitTitle,
+				trigger: publisherSolutionPage.continueButton,
+			});
+
+			await publisherSolutionPage.reviewAndSubmit();
+
+			await page
+				.getByText(`Solution ${solution.profile.name} submitted`)
+				.waitFor({state: 'visible'});
+
+			await expect(
+				page.getByText(solution.profile.name).last()
+			).toBeVisible();
+
+			await expect(
+				publisherSolutionPage.underReviewStatus.last()
+			).toBeVisible();
 		});
-
-		await publisherSolutionPage.reviewAndSubmit();
-
-		await page
-			.getByText(`Solution ${PUBLISH_SOLUTION.profile.name} submitted`)
-			.waitFor({state: 'visible'});
-
-		await expect(
-			page.getByText(PUBLISH_SOLUTION.profile.name).last()
-		).toBeVisible();
-
-		await expect(
-			publisherSolutionPage.underReviewStatus.last()
-		).toBeVisible();
-	});
+	}
 });
 
 test.describe('Can Publish Marketplace Apps', () => {
@@ -151,7 +156,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 			// Publish the app
 
 			await publisherAppPage.checkHeader({
-				accountName,
+				accountName: ACCOUNT_NAME,
 				appName: 'New App',
 			});
 			await publisherAppPage.continue();

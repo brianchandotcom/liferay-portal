@@ -80,7 +80,7 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 			sb.append(buildDescription);
 		}
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildSHA)) {
+		if ((buildSHA != null) && buildSHA.matches("[0-9a-f]{40}")) {
 			sb.append("&gitHash=");
 			sb.append(buildSHA);
 		}

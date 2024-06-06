@@ -894,13 +894,14 @@ public class CommerceShipmentTest {
 				HashMapBuilder.put(
 					LocaleUtil.JAPAN, translatedShippingMethodName
 				).put(
-					PortalUtil.getSiteDefaultLocale(_group), "flat rate"
+					PortalUtil.getSiteDefaultLocale(_group),
+					RandomTestUtil.randomString()
 				).build(),
 				HashMapBuilder.put(
 					LocaleUtil.JAPAN, translatedShippingMethodDescription
 				).put(
 					PortalUtil.getSiteDefaultLocale(_group),
-					"flat rate description"
+					RandomTestUtil.randomString()
 				).build(),
 				true, "fixed");
 

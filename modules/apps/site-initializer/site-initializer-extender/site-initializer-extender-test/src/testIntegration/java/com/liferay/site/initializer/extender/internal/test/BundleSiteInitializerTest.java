@@ -69,6 +69,8 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
+import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
@@ -1903,6 +1905,72 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test KB Article 3 Title", kbArticle3.getTitle());
 		Assert.assertEquals(
 			"This is the body for Test KB Article 3.", kbArticle3.getContent());
+	}
+
+	private void _assertKeywords1() throws Exception {
+		KeywordResource.Builder keywordResourceBuilder =
+			_keywordResourceFactory.create();
+
+		KeywordResource keywordResource = keywordResourceBuilder.user(
+			_serviceContext.fetchUser()
+		).build();
+
+		Page<Keyword> keywordsPage = keywordResource.getSiteKeywordsPage(
+			_group.getGroupId(), null, null, null, null, null);
+
+		Assert.assertEquals(
+			keywordsPage.toString(), 2, keywordsPage.getTotalCount());
+
+		Group group = _groupLocalService.fetchGroup(
+			_serviceContext.getCompanyId(), "Test Depot Entry 1");
+
+		keywordsPage = keywordResource.getAssetLibraryKeywordsPage(
+			group.getGroupId(), null, null, null, null, null);
+
+		Assert.assertEquals(
+			keywordsPage.toString(), 2, keywordsPage.getTotalCount());
+
+		group = _groupLocalService.fetchGroup(
+			_serviceContext.getCompanyId(), "Test Depot Entry 2");
+
+		keywordsPage = keywordResource.getAssetLibraryKeywordsPage(
+			group.getGroupId(), null, null, null, null, null);
+
+		Assert.assertEquals(
+			keywordsPage.toString(), 1, keywordsPage.getTotalCount());
+	}
+
+	private void _assertKeywords2() throws Exception {
+		KeywordResource.Builder keywordResourceBuilder =
+			_keywordResourceFactory.create();
+
+		KeywordResource keywordResource = keywordResourceBuilder.user(
+			_serviceContext.fetchUser()
+		).build();
+
+		Page<Keyword> keywordsPage = keywordResource.getSiteKeywordsPage(
+			_group.getGroupId(), null, null, null, null, null);
+
+		Assert.assertEquals(
+			keywordsPage.toString(), 3, keywordsPage.getTotalCount());
+
+		Group group = _groupLocalService.fetchGroup(
+			_serviceContext.getCompanyId(), "Test Depot Entry 1");
+
+		keywordsPage = keywordResource.getAssetLibraryKeywordsPage(
+			group.getGroupId(), null, null, null, null, null);
+
+		Assert.assertEquals(
+			keywordsPage.toString(), 2, keywordsPage.getTotalCount());
+
+		group = _groupLocalService.fetchGroup(
+			_serviceContext.getCompanyId(), "Test Depot Entry 2");
+
+		keywordsPage = keywordResource.getAssetLibraryKeywordsPage(
+			group.getGroupId(), null, null, null, null, null);
+
+		Assert.assertEquals(
+			keywordsPage.toString(), 2, keywordsPage.getTotalCount());
 	}
 
 	private void _assertLayoutPageTemplateEntries() throws Exception {
@@ -4152,6 +4220,7 @@ public class BundleSiteInitializerTest {
 		_assertFragmentEntries();
 		_assertJournalArticles1();
 		_assertKBArticles();
+		_assertKeywords1();
 		_assertLayoutPageTemplateEntries();
 		_assertLayoutSets();
 		_assertLayouts1();
@@ -4193,6 +4262,7 @@ public class BundleSiteInitializerTest {
 		_assertExpandoColumns2();
 		_assertExpandoValues2();
 		_assertJournalArticles2();
+		_assertKeywords2();
 		_assertLayouts2();
 		_assertListTypeDefinitions2();
 		_assertNotificationTemplate2();
@@ -4326,6 +4396,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private KBFolderLocalService _kbFolderLocalService;
+
+	@Inject
+	private KeywordResource.Factory _keywordResourceFactory;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

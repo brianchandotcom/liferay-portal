@@ -17,7 +17,7 @@
 			"externalReferenceCode": "a01f9aa5-7f03-4600-8d96-0fba22ec891e",
 			"host": "Liferay",
 			"name": "COMMERCE_CONTINUE_AS_GUEST",
-			"purpose": "",
+			"purpose": "Stores the user's preference (true/false) to continue checking out an order as a guest. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -25,7 +25,7 @@
 			"externalReferenceCode": "e640a012-4a2c-4413-ac2f-a4436080e637",
 			"host": "Liferay",
 			"name": "COMPANY_ID",
-			"purpose": "",
+			"purpose": "Stores the company id to associate the user with a company. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -65,7 +65,7 @@
 			"externalReferenceCode": "0e86dedb-3cad-4d0d-b06e-606afdc13d33",
 			"host": "Liferay",
 			"name": "COOKIE_SUPPORT",
-			"purpose": "",
+			"purpose": "Stores the user's preference (true/false) to store cookies in the browser. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -82,7 +82,7 @@
 			"externalReferenceCode": "cf6fcb94-ca9b-4301-93a7-16ffaf1488cb",
 			"host": "Liferay",
 			"name": "ID",
-			"purpose": "",
+			"purpose": "Stores the encrypted user id to remember the user's login details when the \\\"Remember Me\\\" option is enabled. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -90,7 +90,7 @@
 			"externalReferenceCode": "9903020c-e43c-46fa-9ed5-828b1ac6d56c",
 			"host": "Liferay",
 			"name": "JSESSIONID",
-			"purpose": "",
+			"purpose": "Stores a unique identifier to maintain the user's session on the server. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -123,7 +123,7 @@
 			"externalReferenceCode": "9bfb8f39-0483-4a70-9e0f-b08c17b4b56c",
 			"host": "Liferay",
 			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
-			"purpose": "",
+			"purpose": "Stores the order id of a guest user to link it to their account once they log in. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -131,7 +131,7 @@
 			"externalReferenceCode": "ff2d8782-3198-4d36-817c-7cfeb6c02e11",
 			"host": "Liferay",
 			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
-			"purpose": "",
+			"purpose": "Stores the order id of the contextual order to use while punching out. Strictly necessary.",
 			"type": "First Party"
 		},
 		{

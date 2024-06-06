@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,10 +53,11 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalEditDDMStructuresDisplayContext {
 
 	public JournalEditDDMStructuresDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
+		_liferayPortletResponse = portal.getLiferayPortletResponse(
 			renderResponse);
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

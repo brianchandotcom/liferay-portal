@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,14 +61,15 @@ public class JournalEditDDMTemplateDisplayContext {
 
 	public JournalEditDDMTemplateDisplayContext(
 		DDMTemplateHelper ddmTemplateHelper,
-		JournalDDMTemplateHelper journalDDMTemplateHelper,
+		JournalDDMTemplateHelper journalDDMTemplateHelper, Portal portal,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_ddmTemplateHelper = ddmTemplateHelper;
 		_journalDDMTemplateHelper = journalDDMTemplateHelper;
+		_portal = portal;
 		_renderResponse = renderResponse;
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
 
 		_journalFileUploadsConfiguration =
 			(JournalFileUploadsConfiguration)renderRequest.getAttribute(
@@ -258,7 +259,7 @@ public class JournalEditDDMTemplateDisplayContext {
 		if (Validator.isNull(_script)) {
 			TemplateHandler templateHandler =
 				TemplateHandlerRegistryUtil.getTemplateHandler(
-					PortalUtil.getClassNameId(JournalArticle.class));
+					_portal.getClassNameId(JournalArticle.class));
 
 			_script = templateHandler.getTemplatesHelpContent(
 				TemplateConstants.LANG_TYPE_FTL);
@@ -316,7 +317,7 @@ public class JournalEditDDMTemplateDisplayContext {
 
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(
-				PortalUtil.getClassNameId(JournalArticle.class));
+				_portal.getClassNameId(JournalArticle.class));
 
 		Class<?> clazz = getClass();
 
@@ -390,7 +391,7 @@ public class JournalEditDDMTemplateDisplayContext {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			TemplateContextHelper.getTemplateVariableGroups(
-				PortalUtil.getClassNameId(JournalArticle.class), getClassPK(),
+				_portal.getClassNameId(JournalArticle.class), getClassPK(),
 				TemplateConstants.LANG_TYPE_FTL, themeDisplay.getLocale());
 
 		return templateVariableGroups.values();
@@ -470,6 +471,7 @@ public class JournalEditDDMTemplateDisplayContext {
 		_journalFileUploadsConfiguration;
 	private final JournalServiceConfiguration _journalServiceConfiguration;
 	private final JournalWebConfiguration _journalWebConfiguration;
+	private final Portal _portal;
 	private String _redirect;
 	private final RenderResponse _renderResponse;
 	private String _script;

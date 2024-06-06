@@ -208,7 +208,7 @@ public class JournalPortlet extends MVCPortlet {
 				renderRequest.setAttribute(
 					JournalEditDDMStructuresDisplayContext.class.getName(),
 					new JournalEditDDMStructuresDisplayContext(
-						renderRequest, renderResponse));
+						_portal, renderRequest, renderResponse));
 			}
 			else if (Objects.equals(
 						path, "/ddm_template/edit_properties.jsp") ||
@@ -217,7 +217,7 @@ public class JournalPortlet extends MVCPortlet {
 				renderRequest.setAttribute(
 					JournalEditDDMTemplateDisplayContext.class.getName(),
 					new JournalEditDDMTemplateDisplayContext(
-						_ddmTemplateHelper, _journalDDMTemplateHelper,
+						_ddmTemplateHelper, _journalDDMTemplateHelper, _portal,
 						renderRequest, renderResponse));
 			}
 		}

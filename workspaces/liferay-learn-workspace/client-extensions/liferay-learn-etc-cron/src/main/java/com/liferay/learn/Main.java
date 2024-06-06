@@ -55,6 +55,7 @@ import com.vladsch.flexmark.util.ast.TextCollectingVisitor;
 import com.vladsch.flexmark.util.data.MutableDataSet;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import java.net.URL;
 
@@ -368,10 +369,8 @@ public class Main {
 						continue;
 					}
 
-					File file = new File(fileName);
-
 					if (StringUtil.equals(
-							DigestUtils.md5Hex(file.toString()),
+							DigestUtils.md5Hex(new FileInputStream(fileName)),
 							_getMD5Hex(siteStructuredContent)) &&
 						!_skipDiffCheck) {
 
@@ -1471,7 +1470,9 @@ public class Main {
 		ContentFieldValue englishMD5HexContentFieldValue =
 			new ContentFieldValue() {
 				{
-					setData(() -> DigestUtils.md5Hex(englishFile.toString()));
+					setData(
+						() -> DigestUtils.md5Hex(
+							new FileInputStream(englishFile)));
 				}
 			};
 		ContentFieldValue englishNavigationContentFieldValue =
@@ -1533,7 +1534,8 @@ public class Main {
 										{
 											setData(
 												() -> DigestUtils.md5Hex(
-													japaneseFile.toString()));
+													new FileInputStream(
+														japaneseFile)));
 										}
 									}
 								).build());

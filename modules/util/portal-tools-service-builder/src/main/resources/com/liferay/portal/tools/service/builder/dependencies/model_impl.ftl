@@ -209,7 +209,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	public static final String ORDER_BY_SQL = " ORDER BY ${orderBySQL}";
 
-	<#if entity.isPermissionCheckEnabled()>
+	<#if entity.isPermissionCheckEnabled() && serviceBuilder.isVersionGTE_7_4_0()>
 		<#assign orderBySQLInlineDistinct = "" />
 
 		<#list orderList as order>

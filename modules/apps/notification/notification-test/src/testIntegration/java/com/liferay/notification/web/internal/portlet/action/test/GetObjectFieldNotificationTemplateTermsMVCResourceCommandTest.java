@@ -7,7 +7,6 @@ package com.liferay.notification.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.term.provider.NotificationTermProvider;
-import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -32,22 +30,22 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayOutputStream;
 
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Luca Pellizzon
@@ -62,18 +60,48 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_COMMERCE_ORDER", _company.getCompanyId());
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest.
+				class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			TestNotificationTermProvider.class,
+			new TestNotificationTermProvider(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"class.name", objectDefinition.getClassName()
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
+
 	@Test
 	public void testGetCommerceOrderObjectFieldNotificationTemplateTerms()
 		throws Exception {
-
-		Company company = CompanyTestUtil.addCompany();
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(company);
+		themeDisplay.setCompany(_company);
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 
 		mockLiferayResourceRequest.setAttribute(
@@ -82,7 +110,7 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_COMMERCE_ORDER", company.getCompanyId());
+					"L_COMMERCE_ORDER", _company.getCompanyId());
 
 		mockLiferayResourceRequest.setParameter(
 			"objectDefinitionId",
@@ -98,23 +126,24 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 			(ByteArrayOutputStream)
 				mockLiferayResourceResponse.getPortletOutputStream();
 
-		JSONObject byteArrayToJSONObject = _jsonFactory.createJSONObject(
-			byteArrayOutputStream.toString());
+		JSONObject byteArrayOutputStreamJSONObject =
+			_jsonFactory.createJSONObject(byteArrayOutputStream.toString());
 
-		JSONArray termsJSONArray = (JSONArray)byteArrayToJSONObject.get(
+		JSONArray jsonArray = (JSONArray)byteArrayOutputStreamJSONObject.get(
 			"terms");
 
-		Iterator<JSONObject> termsJSONArrayIterator = termsJSONArray.iterator();
+		Iterator<JSONObject> iterator = jsonArray.iterator();
 
-		while (termsJSONArrayIterator.hasNext()) {
-			JSONObject jsonObject = termsJSONArrayIterator.next();
+		while (iterator.hasNext()) {
+			JSONObject notificationTermJSONObject = iterator.next();
 
-			if (Objects.equals(jsonObject.get("termLabel"), "test")) {
-				Assert.assertEquals("[%TEST%]", jsonObject.get("termName"));
+			if (Objects.equals(
+					notificationTermJSONObject.get("termLabel"), "test")) {
+
+				Assert.assertEquals(
+					"[%TEST%]", notificationTermJSONObject.get("termName"));
 			}
 		}
-
-		_companyLocalService.deleteCompany(company);
 	}
 
 	public static class TestNotificationTermProvider
@@ -129,40 +158,16 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 
 	}
 
-	@Component(service = ObjectDefinitionDeployer.class)
-	public static class TestObjectDefinitionDeployerImpl
-		implements ObjectDefinitionDeployer {
-
-		@Override
-		public List<ServiceRegistration<?>> deploy(
-			ObjectDefinition objectDefinition) {
-
-			if (StringUtil.equalsIgnoreCase(
-					"CommerceOrder", objectDefinition.getShortName())) {
-
-				return Collections.singletonList(
-					_bundleContext.registerService(
-						NotificationTermProvider.class,
-						new TestNotificationTermProvider(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"class.name", objectDefinition.getClassName()
-						).build()));
-			}
-
-			return Collections.emptyList();
-		}
-
-		@Activate
-		protected void activate(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
-		private BundleContext _bundleContext;
-
-	}
+	private static Company _company;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private static ServiceRegistration<TestNotificationTermProvider>
+		_serviceRegistration;
 
 	@Inject
 	private JSONFactory _jsonFactory;
@@ -171,8 +176,5 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 		filter = "mvc.command.name=/notification_templates/get_object_field_notification_template_terms"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

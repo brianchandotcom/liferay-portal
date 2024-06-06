@@ -12,6 +12,7 @@ interface NewFilterModal {
 	cancelButton: Locator;
 	filterByDropdown: Locator;
 	filterBySelect: Locator;
+	formFeedback: Locator;
 	nameInput: Locator;
 	saveButton: Locator;
 };
@@ -55,6 +56,7 @@ export class FiltersPage {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
 			filterByDropdown: page.locator('.fds-field-name-dropdown-menu'),
 			filterBySelect: page.getByLabel('Filter By'),
+			formFeedback: page.locator('.form-feedback-item'),
 			nameInput: page.getByPlaceholder('Add a name'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
@@ -94,6 +96,16 @@ export class FiltersPage {
 		await expect(
 			this.filterTable.locator('tbody').locator('tr')
 		).toHaveCount(rowCount);
+	}
+
+	async assertValidationError(text: string) {
+		const visualFeedback = this.newFilterModal.formFeedback.filter(
+			{ has: this.page.locator('.form-feedback-indicator')}
+		).first();
+
+		await expect(visualFeedback).toBeVisible();
+
+		await expect(visualFeedback).toContainText(text);
 	}
 
 	async cancelAddFilterModal() {

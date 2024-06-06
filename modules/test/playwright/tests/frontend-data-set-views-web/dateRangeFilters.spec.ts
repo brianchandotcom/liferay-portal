@@ -200,6 +200,16 @@ dsmTest(
 
 			await expect(filterByDropdown).not.toBeVisible();
 		});
+
+		await dsmTest.step('Assert date range correctness @LPS-183056', async () => {
+  			await filtersPage.newDateRangeFilterModal.fromInput.fill("2001-12-10");
+
+			await filtersPage.newDateRangeFilterModal.toInput.fill("2001-12-09");
+
+			await filtersPage.assertValidationError('Date range is invalid');
+
+			await filtersPage.cancelAddFilterModal();
+		});
 	}
 );
 

@@ -345,7 +345,7 @@
 													"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "false",
-													"frequencyThreshold": "0",
+													"frequencyThreshold": "1",
 													"maxTerms": "10",
 													"order": "key:asc",
 													"parameterName": "Product Capabilities",

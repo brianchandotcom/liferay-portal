@@ -536,6 +536,23 @@ public class ObjectDefinitionGraphQLTest {
 					"JSONObject/c", "JSONObject/" + pluralName,
 					"JSONArray/items"));
 
+			// Unknown "Accept-Language" header
+
+			Assert.assertEquals(
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT, "textEng"
+					)
+				).toString(),
+				JSONUtil.getValueAsString(
+					_invoke("unknown", graphQLField), "JSONObject/data",
+					"JSONObject/c", "JSONObject/" + pluralName,
+					"JSONArray/items"));
+
 			// Without "Accept-Language" header
 
 			Assert.assertEquals(

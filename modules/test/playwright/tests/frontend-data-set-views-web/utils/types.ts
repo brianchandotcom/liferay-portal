@@ -43,3 +43,8 @@ export interface ISelectionFilter extends IBaseFilter {
 	selectionType: 'Multiple' | 'Single';
 	source: 'Object Picklist';
 }
+
+export interface IDateRangeFilter extends IBaseFilter {
+	from?: string;
+	to?: string;
+}

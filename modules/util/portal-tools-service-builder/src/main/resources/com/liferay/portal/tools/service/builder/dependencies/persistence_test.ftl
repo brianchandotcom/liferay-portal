@@ -578,22 +578,24 @@ public class ${entity.name}PersistenceTest {
 			<#if stringUtil.equals(entityFinder.name, "GroupId") && entity.isPermissionCheckEnabled(entityFinder)>
 				@Test
 				public void testFilterFindByGroupId() throws Exception {
-					PermissionThreadLocal.setPermissionChecker(
-						new SimplePermissionChecker() {
-							{
-								init(TestPropsValues.getUser());
-							}
+					<#if serviceBuilder.isVersionGTE_7_4_0()>
+						PermissionThreadLocal.setPermissionChecker(
+							new SimplePermissionChecker() {
+								{
+									init(TestPropsValues.getUser());
+								}
 
-							@Override
-							public boolean isCompanyAdmin(long companyId) {
-								return false;
-							}
+								@Override
+								public boolean isCompanyAdmin(long companyId) {
+									return false;
+								}
 
-						});
+							});
 
-					Assert.assertTrue(InlineSQLHelperUtil.isEnabled(0));
+						Assert.assertTrue(InlineSQLHelperUtil.isEnabled(0));
 
-					_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+						_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+					</#if>
 					_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 				}
 				<#break>

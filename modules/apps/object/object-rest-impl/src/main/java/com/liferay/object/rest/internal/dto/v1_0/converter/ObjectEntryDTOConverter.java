@@ -795,7 +795,9 @@ public class ObjectEntryDTOConverter
 				map.put(objectFieldName, fileEntry);
 			}
 			else if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+						ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
+					 objectField.compareBusinessType(
+						 ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
 
 				Timestamp timestamp = (Timestamp)serializable;
 
@@ -805,7 +807,9 @@ public class ObjectEntryDTOConverter
 
 				String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
-				if (StringUtil.equals(
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
+					StringUtil.equals(
 						ObjectFieldSettingUtil.getValue(
 							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
 							objectField),

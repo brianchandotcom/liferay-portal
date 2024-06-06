@@ -1282,17 +1282,17 @@ public class Main {
 
 		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
 
-		if ((data == null) || !data.containsKey("show-children-cards") ||
+		if ((data == null) || !data.containsKey("showChildrenCards") ||
 			!StringUtil.equals(
 				data.get(
-					"show-children-cards"
+					"showChildrenCards"
 				).toString(),
 				"false")) {
 
 			return true;
 		}
 
-		return GetterUtil.getBoolean(data.get("show-children-cards"));
+		return GetterUtil.getBoolean(data.get("showChildrenCards"));
 	}
 
 	private void _loadTaxonomyCategories(

@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -243,14 +245,18 @@ public class TestrayFactory {
 		}
 
 		try {
-			Matcher testray1URLMatcher = _testray1URLPattern.matcher(
+			Matcher testrayURLMatcher = _testrayURLPattern.matcher(
 				testrayRoutineURL);
 
-			String testrayServerVersion = _getTestrayVersion();
+			if (!testrayURLMatcher.find()) {
+				throw new RuntimeException(
+					"Invalid Testray URL " + testrayRoutineURL);
+			}
 
-			if (testray1URLMatcher.find() &&
-				testrayServerVersion.equals("testray-1")) {
+			String testrayVersion = _getTestrayVersion(
+				testrayURLMatcher.group());
 
+			if (testrayVersion.equals("testray-1")) {
 				testrayRoutine = new Testray1TestrayRoutine(
 					new URL(testrayRoutineURL));
 			}
@@ -316,14 +322,17 @@ public class TestrayFactory {
 			return testrayServer;
 		}
 
-		String testrayServerVersion = _getTestrayVersion();
-
-		Matcher testray1URLMatcher = _testray1URLPattern.matcher(
+		Matcher testrayURLMatcher = _testrayURLPattern.matcher(
 			testrayServerURL);
 
-		if (testray1URLMatcher.find() &&
-			testrayServerVersion.equals("testray-1")) {
+		if (!testrayURLMatcher.find()) {
+			throw new RuntimeException(
+				"Invalid Testray URL " + testrayServerURL);
+		}
 
+		String testrayVersion = _getTestrayVersion(testrayURLMatcher.group());
+
+		if (testrayVersion.equals("testray-1")) {
 			testrayServer = new Testray1TestrayServer(testrayServerURL);
 		}
 		else {
@@ -366,18 +375,45 @@ public class TestrayFactory {
 		return _topLevelBuildTestrayCaseResults.get(testrayBuildID);
 	}
 
-	private static String _getTestrayVersion() {
+	private static String _getTestrayVersion(String testrayServerURL) {
 		try {
-			return JenkinsResultsParserUtil.getBuildProperty(
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			for (String propertyName : buildProperties.stringPropertyNames()) {
+				Matcher matcher = _testrayServerURLPropertyPattern.matcher(
+					propertyName);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				String propertyValue = JenkinsResultsParserUtil.getProperty(
+					buildProperties, propertyName);
+
+				if (!Objects.equals(propertyValue, testrayServerURL)) {
+					continue;
+				}
+
+				return matcher.group("serverVersion");
+			}
+
+			String testrayVersion = JenkinsResultsParserUtil.getBuildProperty(
 				"testray.server.version");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayVersion)) {
+				return testrayVersion;
+			}
+
+			return _TESTRAY_SERVER_VERSION_DEFAULT;
 		}
 		catch (IOException ioException) {
-			return "testray-2";
+			throw new RuntimeException(ioException);
 		}
 	}
 
-	private static final Pattern _testray1URLPattern = Pattern.compile(
-		"https://testray(-old)?\\.liferay\\.com");
+	private static final String _TESTRAY_SERVER_VERSION_DEFAULT = "testray-2";
+
 	private static final Map<Build, TestrayAttachmentRecorder>
 		_testrayAttachmentRecorders = new HashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>
@@ -386,6 +422,11 @@ public class TestrayFactory {
 		new HashMap<>();
 	private static final Map<String, TestrayServer> _testrayServers =
 		new HashMap<>();
+	private static final Pattern _testrayServerURLPropertyPattern =
+		Pattern.compile("testray.server.url\\[(?<serverVersion>[^\\]]+)\\]");
+	private static final Pattern _testrayURLPattern = Pattern.compile(
+		"https://(testray(-old)?\\.liferay\\.com|webserver-testray2" +
+			"(-prd|-uat)?.lfr.cloud)");
 	private static final Map<Long, TopLevelBuildTestrayCaseResult>
 		_topLevelBuildTestrayCaseResults = new HashMap<>();
 

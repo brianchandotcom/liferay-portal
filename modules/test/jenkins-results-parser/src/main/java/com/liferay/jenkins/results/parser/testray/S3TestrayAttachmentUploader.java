@@ -32,10 +32,7 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 	@Override
 	public URL getTestrayServerLogsURL() {
 		try {
-			return new URL(
-				JenkinsResultsParserUtil.combine(
-					String.valueOf(getTestrayServerURL()),
-					"/reports_test/production/logs"));
+			return new URL("https://storage.cloud.google.com/testray-results");
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

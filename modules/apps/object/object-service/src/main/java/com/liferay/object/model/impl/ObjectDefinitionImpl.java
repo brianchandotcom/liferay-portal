@@ -139,15 +139,19 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 				getRootObjectDefinitionId());
 
 		if (isModifiable() && isSystem()) {
-			return StringBundler.concat(
+			String rootRESTContextPath =
 				ObjectDefinitionUtil.
 					getModifiableSystemObjectDefinitionRESTContextPath(
-						rootObjectDefinition.getName()),
-				StringPool.SLASH,
-				_getRESTContextPathForRootDescantNode(
-					ObjectDefinitionUtil.
-						getModifiableSystemObjectDefinitionRESTContextPath(
-							getName())));
+						rootObjectDefinition.getName());
+
+			String restContextPath =
+				ObjectDefinitionUtil.
+					getModifiableSystemObjectDefinitionRESTContextPath(
+						getName());
+
+			return rootRESTContextPath +
+				restContextPath.substring(
+					restContextPath.lastIndexOf(StringPool.SLASH));
 		}
 
 		return StringBundler.concat(
@@ -248,34 +252,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		}
 
 		return false;
-	}
-
-	private String _getRESTContextPathForRootDescantNode(
-		String restContextPath) {
-
-		int lengthWithoutSlashes = StringUtil.removeSubstring(
-			restContextPath, "/"
-		).length();
-
-		int slashCount = restContextPath.length() - lengthWithoutSlashes;
-
-		String[] parts = restContextPath.split("/");
-
-		if (slashCount <= 1) {
-			return parts[1];
-		}
-
-		StringBuilder result = new StringBuilder();
-
-		for (int i = 2; i < parts.length; i++) {
-			if (result.length() > 0) {
-				result.append("/");
-			}
-
-			result.append(parts[i]);
-		}
-
-		return result.toString();
 	}
 
 }

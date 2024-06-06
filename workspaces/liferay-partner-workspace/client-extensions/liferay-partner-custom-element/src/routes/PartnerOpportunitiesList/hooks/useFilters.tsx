@@ -6,7 +6,6 @@
 import {useCallback, useEffect, useState} from 'react';
 
 import {Filters} from '../../../common/utils/constants/filters';
-import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import getCloseDateFilterTerm from '../utils/constants/getCloseDateFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 
@@ -53,12 +52,6 @@ export default function useFilters(
 			initialFilter = initialFilter
 				? initialFilter.concat(opportunitiesInitialFilter)
 				: `${opportunitiesInitialFilter}`;
-		}
-
-		if (filters.searchTerm) {
-			initialFilter = initialFilter
-				? initialFilter.concat(getSearchFilterTerm(filters.searchTerm))
-				: getSearchFilterTerm(filters.searchTerm);
 		}
 
 		if (

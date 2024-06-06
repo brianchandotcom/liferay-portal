@@ -84,6 +84,44 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
+	public void testCookiePathIsCustomContextWhenUsingCustomContextWithCustomModuleWebContextPath()
+		throws Exception {
+
+		Cookie cookie = new Cookie(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		String customContextPath =
+			StringPool.SLASH + RandomTestUtil.randomString();
+
+		MockHttpServletRequest customContextMockHttpServletRequest =
+			new MockHttpServletRequest() {
+
+				@Override
+				public String getContextPath() {
+					return customContextPath;
+				}
+
+			};
+
+		HttpServletRequestWrapper httpServletRequestWrapper =
+			new HttpServletRequestWrapper(customContextMockHttpServletRequest) {
+
+				@Override
+				public String getContextPath() {
+					return PortalUtil.getPathModule() + StringPool.SLASH +
+						RandomTestUtil.randomString();
+				}
+
+			};
+
+		CookiesManagerUtil.addCookie(
+			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
+			httpServletRequestWrapper, _mockHttpServletResponse);
+
+		Assert.assertEquals(customContextPath, cookie.getPath());
+	}
+
+	@Test
 	public void testCookiePathIsSlashWhenUsingRootContext() throws Exception {
 		Cookie cookie = new Cookie(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());

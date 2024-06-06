@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -105,12 +104,9 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommand
 				objectDefinition.getObjectDefinitionId()),
 			objectDefinition.getShortName(), themeDisplay);
 
-		List<NotificationTermProvider> notificationTermProviders =
-			_notificationTermProviderRegistry.getNotificationTermProviders(
-				objectDefinition.getClassName());
-
 		for (NotificationTermProvider notificationTermProvider :
-				notificationTermProviders) {
+				_notificationTermProviderRegistry.getNotificationTermProviders(
+					objectDefinition.getClassName())) {
 
 			Map<String, String> notificationTerms =
 				notificationTermProvider.getNotificationTerms();

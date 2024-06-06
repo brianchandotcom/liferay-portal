@@ -14,9 +14,6 @@ const MOCKED_IMAGE_PATH =
 
 export const test = mergeTests(
 	loginTest(),
-	featureFlagsTest({
-		'LPD-10793': true,
-	}),
 	documentLibraryPagesTest
 );
 

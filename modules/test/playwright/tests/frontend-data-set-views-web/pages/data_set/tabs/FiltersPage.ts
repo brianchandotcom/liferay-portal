@@ -5,37 +5,43 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ISelectionFilter} from '../../../utils/types';
+import {IDateRangeFilter, ISelectionFilter} from '../../../utils/types';
 import {DataSetPage} from '../DataSetPage';
+
+interface NewFilterModal {
+	cancelButton: Locator;
+	filterBySelect: Locator;
+	nameInput: Locator;
+	saveButton: Locator;
+};
+
+interface NewSelectionFilterModal extends NewFilterModal {
+	filterModeRarioButtons: Locator;
+	nameInput: Locator;
+	newFilterModalheading: Locator;
+	picklistDropdown: Locator;
+	preselectedValuesMultiSelect: Locator;
+	selectionRadioButtons: Locator;
+	sourceDropdown: Locator;
+};
+
+interface NewDateRangeFilterModal extends NewFilterModal {
+	datePicker: Locator;
+	fromInput: Locator;
+	fromDatePickerTrigger: Locator;
+	toInput: Locator;
+	toDatePickerTrigger: Locator;
+};
 
 export class FiltersPage {
 	private readonly dataSetPage: DataSetPage;
 
 	private readonly filterTable: Locator;
 
-	readonly newDateRangeFilterModal: {
-		datePicker: Locator;
-		filterBySelect: Locator;
-		fromInput: Locator;
-		fromDatePickerTrigger: Locator;
-		toInput: Locator;
-		toDatePickerTrigger: Locator;
-	};
+	readonly newDateRangeFilterModal: NewDateRangeFilterModal;
 	private readonly newFilterButton: Locator;
-	private readonly newFilterModal: {
-		cancelButton: Locator;
-		saveButton: Locator;
-	};
-	private readonly newSelectionFilterModal: {
-		filterBySelect: Locator;
-		filterModeRarioButtons: Locator;
-		nameInput: Locator;
-		newFilterModalheading: Locator;
-		picklistDropdown: Locator;
-		preselectedValuesMultiSelect: Locator;
-		selectionRadioButtons: Locator;
-		sourceDropdown: Locator;
-	};
+	private readonly newFilterModal: NewFilterModal;
+	private readonly newSelectionFilterModal: NewSelectionFilterModal;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -44,22 +50,23 @@ export class FiltersPage {
 		this.newFilterButton = page
 			.getByRole('button', {name: 'New Filter'})
 			.and(page.getByTitle('New Filter'));
-		this.newDateRangeFilterModal = {
-			datePicker: page.getByRole('dialog', { name: 'Choose date'}),
+		this.newFilterModal = {
+			cancelButton: page.getByRole('button', {name: 'Cancel'}),
 			filterBySelect: page.getByLabel('Filter By'),
+			nameInput: page.getByPlaceholder('Add a name'),
+			saveButton: page.getByRole('button', {name: 'Save'}),
+		};
+		this.newDateRangeFilterModal = {
+			...this.newFilterModal,
+			datePicker: page.getByRole('dialog', { name: 'Choose date'}),
 			fromDatePickerTrigger: page.locator('div').filter({ hasText: /^From$/ }).getByRole('button'),
 			fromInput: page.locator('div').filter({ hasText: /^From$/ }).getByPlaceholder('YYYY-MM-DD'),
 			toDatePickerTrigger: page.locator('div').filter({ hasText: /^From$/ }).getByRole('button'),
 			toInput: page.locator('div').filter({ hasText: /^To$/ }).getByPlaceholder('YYYY-MM-DD'),
 		};
-		this.newFilterModal = {
-			cancelButton: page.getByRole('button', {name: 'Cancel'}),
-			saveButton: page.getByRole('button', {name: 'Save'}),
-		};
 		this.newSelectionFilterModal = {
-			filterBySelect: page.getByLabel('Filter ByRequired'),
+			...this.newFilterModal,
 			filterModeRarioButtons: page.getByText('Filter ModeIncludeExclude'),
-			nameInput: page.getByPlaceholder('Add a name'),
 			newFilterModalheading: page.getByRole('heading', {
 				name: 'New Selection Filter',
 			}),

@@ -27,6 +27,7 @@ export const dsmTest = mergeTests(
 
 let dataSetERC: string;
 let dataSetLabel: string;
+const NAME_COLUMN_INDEX = 1;
 
 dsmTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
@@ -95,6 +96,36 @@ dsmTest(
 			}
 		);
 
+	}
+);
+
+dsmTest(
+	'Ability to save DSM date filters @LPS-181281',
+	async ({filtersPage}) => {
+		const filterName = "Creation Date";
+
+		await dsmTest.step('Navigate to Filters section', async () => {
+			await filtersPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await dsmTest.step('Create a date range filter', async () => {
+			await filtersPage.createDateRangeFilter({
+				filterBy: 'dateCreated',
+				name: filterName
+			});
+		});
+
+		await dsmTest.step('Assert filter is saved', async () => {
+			await expect(filtersPage
+				.getRowByText(filterName)
+				.locator('td')
+				.nth(NAME_COLUMN_INDEX)
+			).toHaveText(filterName);
+
+			await filtersPage.assertFiltersTableRowCount(1);
+		});
 	}
 );
 

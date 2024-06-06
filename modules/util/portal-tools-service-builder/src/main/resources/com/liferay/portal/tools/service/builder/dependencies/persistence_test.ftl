@@ -596,6 +596,7 @@ public class ${entity.name}PersistenceTest {
 
 						_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 					</#if>
+
 					_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 				}
 				<#break>

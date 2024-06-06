@@ -501,9 +501,9 @@ function MappingSelector({
 								options={[
 									NOT_SELECTED_OPTION,
 									...(relationships || []).map(
-										({classNameId, label}) => ({
+										({label, name}) => ({
 											label,
-											value: classNameId,
+											value: name,
 										})
 									),
 								]}

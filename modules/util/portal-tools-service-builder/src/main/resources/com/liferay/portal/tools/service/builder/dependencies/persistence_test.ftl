@@ -377,9 +377,7 @@ public class ${entity.name}PersistenceTest {
 
 				<#list entity.regularEntityColumns as entityColumn>
 					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
-						<#if stringUtil.equals(entityColumn.name, "mvccVersion")>
-
-						<#elseif stringUtil.equals(entityColumn.name, "headId")>
+						<#if stringUtil.equals(entityColumn.name, "headId")>
 							Assert.assertEquals(${entity.variableName}.get${entityColumn.methodName}(), -draft${entity.name}.get${entityColumn.methodName}());
 						<#elseif stringUtil.equals(entityColumn.name, "status")>
 							Assert.assertEquals(2, draft${entity.name}.get${entityColumn.methodName}());

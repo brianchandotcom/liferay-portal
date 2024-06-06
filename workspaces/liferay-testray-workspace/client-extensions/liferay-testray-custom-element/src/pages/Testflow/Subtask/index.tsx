@@ -24,6 +24,7 @@ import {
 } from '../../../services/rest';
 import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
 import {getTimeFromNow} from '../../../util/date';
+import SubtaskAlertBar from './SubtaskAlertBar';
 import SubtasksCaseResults from './SubtaskCaseResults';
 import SubtaskHeaderActions from './SubtaskHeaderActions';
 
@@ -64,7 +65,9 @@ const Subtasks = () => {
 
 	return (
 		<>
-			{hasSubtaskEditPermission && (
+			{!hasSubtaskEditPermission || !!testraySubtask.mergedToSubtask ? (
+				<SubtaskAlertBar testraySubtask={testraySubtask} />
+			) : (
 				<SubtaskHeaderActions setForceRefetch={setForceRefetch} />
 			)}
 
@@ -110,9 +113,11 @@ const Subtasks = () => {
 											}
 										/>
 									),
+
 									visible:
-										!!testraySubtask.user ||
-										hasSubtaskEditPermission,
+										!testraySubtask.mergedToSubtask &&
+										(!!testraySubtask.user ||
+											hasSubtaskEditPermission),
 								},
 								{
 									title: i18n.translate('updated'),

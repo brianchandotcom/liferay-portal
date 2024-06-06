@@ -429,6 +429,8 @@ export default {
 	'this-field-is-required': 'This field is required.',
 	'this-role-is-for-general-liferay-employees-and-enables-authenticated-users-to-view-test-results':
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
+	'this-subtask-has-been-merged-wihth-x':
+		'This subtask has been merged wihth {0}.',
 	'this-user-does-not-have-authentication-with-jira':
 		'This user does not have authentication with jira',
 	'time-x-total-issues': 'Time {0} Total Issues',
@@ -456,6 +458,7 @@ export default {
 	'view-in-jira': 'View in JIRA',
 	'view-page': 'View Page',
 	'view-task': 'View Task',
+	'view-x': 'View {0}',
 	'warning': 'Warning',
 	'warnings': 'Warnings',
 	'warnings-x': 'Warnings ({0})',
@@ -468,6 +471,8 @@ export default {
 	'x-jobs-in-progress': '{0} Jobs in Progress',
 	'x-minutes': '{0} Minutes',
 	'x-results-for-x': '{0} Results for {1}',
+	'x-successfully-merged-with-x-view-x':
+		'{0} successfully merged with {1}. <u><a class="font-weight-bold" id="testray-link">View {2}</a></u>',
 	'x-tests-were-split-into-x-successfully-view-x':
 		'{0} tests were split into {1} successfully. <u><a class="font-weight-bold" id="testray-link">View {2}</a></u>',
 	'you-are-not-the-assigned-user': 'You are not the assigned user.',

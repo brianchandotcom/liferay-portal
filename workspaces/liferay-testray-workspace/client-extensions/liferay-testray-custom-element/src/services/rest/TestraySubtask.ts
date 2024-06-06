@@ -72,7 +72,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 						},
 						[]
 					) || [],
-				mergedToSubtaskId: subtask.r_mergedToTestraySubtask_c_subtaskId,
+				mergedToSubtask: subtask.r_mergedToTestraySubtask_c_subtask,
 				splitFromSubtask: subtask.r_splitFromTestraySubtask_c_subtask,
 				task: subtask.r_taskToSubtasks_c_task,
 				tests: subtask.subtaskToCaseResults?.length,
@@ -229,6 +229,11 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 			dueStatus: parentTestraySubtask.dueStatus.key,
 			score: sumScore,
 		});
+
+		return {
+			childTestraySubtasks,
+			parentTestraySubtask,
+		};
 	}
 
 	public async split(

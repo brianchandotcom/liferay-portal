@@ -331,10 +331,10 @@ export type TestraySubtask = {
 	issues: string;
 	mbMessageId: number;
 	mbThreadId: number;
-	mergedToSubtaskId: TestraySubtask;
+	mergedToSubtask: TestraySubtask;
 	name: string;
 	number: number;
-	r_mergedToTestraySubtask_c_subtaskId: TestraySubtask;
+	r_mergedToTestraySubtask_c_subtask: TestraySubtask;
 	r_splitFromTestraySubtask_c_subtask: TestraySubtask;
 	r_taskToSubtasks_c_task: TestrayTask;
 	r_userToSubtasks_user: UserAccount;

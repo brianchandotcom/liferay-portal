@@ -12,7 +12,6 @@ import com.liferay.document.library.web.internal.portlet.toolbar.contributor.hel
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.util.DLPortletToolbarContributorUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -120,10 +119,10 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 				portletResponse);
 		}
 
-			_add(
-				menuItems,
-				_menuItemProvider.getAICreatorMenuItem(
-					folder, themeDisplay, portletRequest));
+		_add(
+			menuItems,
+			_menuItemProvider.getAICreatorMenuItem(
+				folder, themeDisplay, portletRequest));
 
 		MenuItem lastExtensionMenuItem = null;
 

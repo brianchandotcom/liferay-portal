@@ -98,6 +98,34 @@ export class FiltersPage {
 		await this.newFilterModal.cancelButton.click();
 	}
 
+	async createDateRangeFilter({
+		filterBy,
+		name,
+		from,
+		to,
+	}: IDateRangeFilter) {
+		await this.openNewFilterModal({
+			dropdownItemLabel: 'Date Range',
+		});
+
+		await this.newDateRangeFilterModal.nameInput.click();
+		await this.newDateRangeFilterModal.nameInput.fill(name);
+
+		await this.newDateRangeFilterModal.filterBySelect.click();
+
+		const dateFilterOption = this.page.getByRole('option', {
+			name: filterBy,
+		});
+
+		await dateFilterOption.click();
+
+		from && await this.newDateRangeFilterModal.fromInput.fill(from);
+
+		to && await this.newDateRangeFilterModal.toInput.fill(to);
+
+		await this.saveAddFilterModal();
+	}
+
 	async createSelectionFilter({
 		filterBy,
 		filterMode,
@@ -125,7 +153,13 @@ export class FiltersPage {
 			.click();
 		await this.page.getByText(selectionType).click();
 		await this.page.locator('label').filter({hasText: filterMode}).click();
-		await this.newFilterModal.saveButton.click();
+		await this.saveAddFilterModal();
+	}
+
+	getRowByText(text: string) {
+		return 	this.filterTable.locator('tbody').locator('tr').filter({
+			has: this.page.getByText(text, {exact: true}).first(),
+		});
 	}
 
 	async openNewFilterModal({dropdownItemLabel}: {dropdownItemLabel: string}) {
@@ -142,5 +176,9 @@ export class FiltersPage {
 		await menuItem.click();
 
 		await expect(this.newFilterModal.saveButton).toBeVisible();
+	}
+
+	async saveAddFilterModal() {
+		await this.newFilterModal.saveButton.click();
 	}
 }

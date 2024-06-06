@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,6 +42,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -49,13 +53,13 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalEditDDMStructuresDisplayContext {
 
 	public JournalEditDDMStructuresDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_httpServletRequest = httpServletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			renderResponse);
 
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		JournalServiceConfiguration journalServiceConfiguration;
@@ -77,7 +81,7 @@ public class JournalEditDDMStructuresDisplayContext {
 		_journalServiceConfiguration = journalServiceConfiguration;
 
 		_journalWebConfiguration =
-			(JournalWebConfiguration)httpServletRequest.getAttribute(
+			(JournalWebConfiguration)renderRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 	}
 

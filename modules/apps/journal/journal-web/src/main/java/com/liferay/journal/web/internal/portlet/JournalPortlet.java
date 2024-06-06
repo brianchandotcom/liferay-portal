@@ -58,6 +58,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
+import com.liferay.journal.web.internal.display.context.JournalEditDDMStructuresDisplayContext;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -149,18 +150,6 @@ public class JournalPortlet extends MVCPortlet {
 			AssetVocabularyLocalService.class.getName(),
 			_assetVocabularyLocalService);
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
-
-		if (Objects.equals(
-				getPath(renderRequest, renderResponse),
-				"/edit_ddm_template.jsp")) {
-
-			renderRequest.setAttribute(
-				DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
-			renderRequest.setAttribute(
-				JournalDDMTemplateHelper.class.getName(),
-				_journalDDMTemplateHelper);
-		}
-
 		renderRequest.setAttribute(
 			DDMFormValuesFactory.class.getName(), _ddmFormValuesFactory);
 		renderRequest.setAttribute(
@@ -209,6 +198,24 @@ public class JournalPortlet extends MVCPortlet {
 					_journalHelper, journalWebConfiguration, renderRequest,
 					renderResponse, _resourcePermissionLocalService,
 					_roleLocalService, _trashHelper));
+
+			String path = getPath(renderRequest, renderResponse);
+
+			if (Objects.equals(path, "/data_engine/basic_info.jsp") ||
+				Objects.equals(path, "/edit_data_definition.jsp")) {
+
+				renderRequest.setAttribute(
+					JournalEditDDMStructuresDisplayContext.class.getName(),
+					new JournalEditDDMStructuresDisplayContext(
+						renderRequest, renderResponse));
+			}
+			else if (Objects.equals(path, "/edit_ddm_template.jsp")) {
+				renderRequest.setAttribute(
+					DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
+				renderRequest.setAttribute(
+					JournalDDMTemplateHelper.class.getName(),
+					_journalDDMTemplateHelper);
+			}
 		}
 		catch (ConfigurationException configurationException) {
 			throw new PortletException(configurationException);

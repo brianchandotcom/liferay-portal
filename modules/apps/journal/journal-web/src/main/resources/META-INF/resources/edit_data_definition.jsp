@@ -10,7 +10,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-JournalEditDDMStructuresDisplayContext journalEditDDMStructuresDisplayContext = new JournalEditDDMStructuresDisplayContext(request, liferayPortletResponse);
+JournalEditDDMStructuresDisplayContext journalEditDDMStructuresDisplayContext = (JournalEditDDMStructuresDisplayContext)request.getAttribute(JournalEditDDMStructuresDisplayContext.class.getName());
 
 DDMStructure ddmStructure = journalEditDDMStructuresDisplayContext.getDDMStructure();
 

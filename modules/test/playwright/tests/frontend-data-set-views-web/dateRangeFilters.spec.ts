@@ -210,6 +210,28 @@ dsmTest(
 
 			await filtersPage.cancelAddFilterModal();
 		});
+
+		await dsmTest.step('Check a filter can not be created on an already used field @LPS-190851',
+			async () => {
+				await filtersPage.openNewFilterModal({
+					dropdownItemLabel: 'Date Range',
+				});
+
+				await filtersPage.newDateRangeFilterModal.filterBySelect.click();
+
+				const dateFilterOption = filtersPage.page.getByRole('option', {
+					name: 'dateCreated',
+				});
+
+				await expect(dateFilterOption).toContainText("In Use");
+
+				await dateFilterOption.click();
+
+				await filtersPage.assertValidationError('This field is being used by another filter');
+
+				await expect(filtersPage.newDateRangeFilterModal.saveButton).toBeDisabled();
+			});
+
 	}
 );
 

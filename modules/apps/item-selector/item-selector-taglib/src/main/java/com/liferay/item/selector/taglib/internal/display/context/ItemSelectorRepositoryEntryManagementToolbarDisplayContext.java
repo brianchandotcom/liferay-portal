@@ -20,7 +20,6 @@ import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -353,9 +352,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 					"allowedCreationMenuUIItemKeys");
 
 		if (allowedCreationMenuUIItemKeys == null) {
-				return SetUtil.fromArray(
-					DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.AI_CREATOR,
-					DLUIItemKeys.UPLOAD);
+			return SetUtil.fromArray(
+				DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.AI_CREATOR,
+				DLUIItemKeys.UPLOAD);
 		}
 
 		return allowedCreationMenuUIItemKeys;

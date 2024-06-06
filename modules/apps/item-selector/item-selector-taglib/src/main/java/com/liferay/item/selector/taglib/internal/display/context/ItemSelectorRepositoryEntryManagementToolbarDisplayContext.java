@@ -353,14 +353,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 					"allowedCreationMenuUIItemKeys");
 
 		if (allowedCreationMenuUIItemKeys == null) {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-10793")) {
 				return SetUtil.fromArray(
 					DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.AI_CREATOR,
 					DLUIItemKeys.UPLOAD);
-			}
-
-			return SetUtil.fromArray(
-				DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.UPLOAD);
 		}
 
 		return allowedCreationMenuUIItemKeys;

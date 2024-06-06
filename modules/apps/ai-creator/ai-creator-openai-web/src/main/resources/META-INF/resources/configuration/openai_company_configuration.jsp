@@ -57,7 +57,6 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 	</clay:content-col>
 </clay:content-row>
 
-<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10793") %>'>
 	<clay:content-row
 		cssClass="ai-creator-config-checkbox c-my-5"
 	>
@@ -72,6 +71,5 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 			/>
 		</clay:content-col>
 	</clay:content-row>
-</c:if>
 
 <%@ include file="/configuration/error_ai_creator_openai_client_exception.jspf" %>

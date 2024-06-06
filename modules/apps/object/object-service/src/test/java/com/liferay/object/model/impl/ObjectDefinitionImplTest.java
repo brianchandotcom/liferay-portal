@@ -10,6 +10,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -33,23 +34,23 @@ public class ObjectDefinitionImplTest {
 	@Test
 	public void testGetRESTContextPathOfModifiableSystemObjectNoRootDescendantNode() {
 		_testGetRESTContextPathOfModifiableSystemObject(
-			"APIEndpoint", null, "/headless-builder/endpoints");
+			"/headless-builder/endpoints", "APIEndpoint", null);
 	}
 
 	@FeatureFlags("LPS-187142")
 	@Test
 	public void testGetRESTContextPathOfModifiableSystemObjectRootDescendantNode() {
 		_testGetRESTContextPathOfModifiableSystemObject(
-			"APIEndpoint", "APIApplication",
-			"/headless-builder/applications/endpoints");
+			"/headless-builder/applications/endpoints", "APIEndpoint",
+			"APIApplication");
 		_testGetRESTContextPathOfModifiableSystemObject(
-			"CommerceReturnItem", "CommerceReturn",
-			"/commerce-returns/commerce-return-items");
+			"/commerce-returns/commerce-return-items", "CommerceReturnItem",
+			"CommerceReturn");
 	}
 
 	private void _testGetRESTContextPathOfModifiableSystemObject(
-		String objectDefinitionName, String rootObjectDefinitionName,
-		String expectedRESTContextPath) {
+		String expectedRESTContextPath, String objectDefinitionName,
+		String rootObjectDefinitionName) {
 
 		ObjectDefinition objectDefinition = Mockito.spy(
 			new ObjectDefinitionImpl());
@@ -81,10 +82,13 @@ public class ObjectDefinitionImplTest {
 			rootObjectDefinition.setName(rootObjectDefinitionName);
 			rootObjectDefinition.setSystem(true);
 
-			objectDefinition.setRootObjectDefinitionId(12345);
+			long rootObjectDefinitionId = RandomTestUtil.randomLong();
+
+			objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
 
 			Mockito.when(
-				objectDefinitionLocalService.fetchObjectDefinition(12345)
+				objectDefinitionLocalService.fetchObjectDefinition(
+					rootObjectDefinitionId)
 			).thenReturn(
 				rootObjectDefinition
 			);

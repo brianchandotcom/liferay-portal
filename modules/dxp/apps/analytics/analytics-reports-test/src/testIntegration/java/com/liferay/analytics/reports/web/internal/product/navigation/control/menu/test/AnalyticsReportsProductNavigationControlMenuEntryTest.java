@@ -210,14 +210,12 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 
 	@Test
 	public void testIsShowWithResourcePermission() throws Exception {
-		long plid = 123L;
-
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		portletPreferences.setPortletPreferencesId(RandomTestUtil.nextLong());
 		portletPreferences.setCompanyId(TestPropsValues.getCompanyId());
 		portletPreferences.setOwnerId(TestPropsValues.getUserId());
-		portletPreferences.setPlid(plid);
+		portletPreferences.setPlid(123L);
 		portletPreferences.setPortletId(
 			"com_liferay_blogs_web_portlet_BlogsPortlet_INSTANCE_rqst");
 		portletPreferences.setNew(true);
@@ -230,13 +228,9 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 			_mockPermissionChecker(
 				ActionKeys.UPDATE, true, "com.liferay.blogs.model.BlogsEntry"));
 
-		MockHttpServletRequest mockHttpServletRequest =
-			(MockHttpServletRequest)_getHttpServletRequest();
-
-		mockHttpServletRequest.setParameter("p_l_id", String.valueOf(plid));
-
 		Assert.assertTrue(
-			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
+			_productNavigationControlMenuEntry.isShow(
+				_getHttpServletRequest()));
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws PortalException {
@@ -248,6 +242,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 			new InfoItemReference(MockObject.class.getName(), 0));
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+		mockHttpServletRequest.setParameter(
+			"p_l_id", RandomTestUtil.randomString());
 
 		return mockHttpServletRequest;
 	}

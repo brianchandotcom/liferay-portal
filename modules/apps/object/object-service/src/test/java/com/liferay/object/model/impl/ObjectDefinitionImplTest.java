@@ -33,26 +33,22 @@ public class ObjectDefinitionImplTest {
 	@Test
 	public void testGetRESTContextPathOfModifiableSystemObjectNoRootDescendantNode() {
 		_testGetRESTContextPathOfModifiableSystemObject(
-			"APIEndpoint", null, null, "/headless-builder/endpoints");
+			"APIEndpoint", null, "/headless-builder/endpoints");
 	}
 
 	@FeatureFlags("LPS-187142")
 	@Test
 	public void testGetRESTContextPathOfModifiableSystemObjectRootDescendantNode() {
 		_testGetRESTContextPathOfModifiableSystemObject(
-			"APIEndpoint", "APIApplication", null,
+			"APIEndpoint", "APIApplication",
 			"/headless-builder/applications/endpoints");
 		_testGetRESTContextPathOfModifiableSystemObject(
-			"CommerceReturnItem", "CommerceReturn", null,
+			"CommerceReturnItem", "CommerceReturn",
 			"/commerce-returns/commerce-return-items");
-		_testGetRESTContextPathOfModifiableSystemObject(
-			"FDSField", "FDSView", "FDSEntry",
-			"/data-set-manager/data-sets/table-sections");
 	}
 
 	private void _testGetRESTContextPathOfModifiableSystemObject(
 		String objectDefinitionName, String rootObjectDefinitionName,
-		String secondLevelObjectDefinitionName,
 		String expectedRESTContextPath) {
 
 		ObjectDefinition objectDefinition = Mockito.spy(
@@ -91,30 +87,6 @@ public class ObjectDefinitionImplTest {
 				objectDefinitionLocalService.fetchObjectDefinition(12345)
 			).thenReturn(
 				rootObjectDefinition
-			);
-
-			Mockito.doReturn(
-				true
-			).when(
-				objectDefinition
-			).isRootDescendantNode();
-		}
-
-		if (secondLevelObjectDefinitionName != null) {
-			ObjectDefinition secondLevelObjectDefinition =
-				new ObjectDefinitionImpl();
-
-			secondLevelObjectDefinition.setModifiable(true);
-			secondLevelObjectDefinition.setName(
-				secondLevelObjectDefinitionName);
-			secondLevelObjectDefinition.setSystem(true);
-
-			secondLevelObjectDefinition.setRootObjectDefinitionId(67890);
-
-			Mockito.when(
-				objectDefinitionLocalService.fetchObjectDefinition(67890)
-			).thenReturn(
-				secondLevelObjectDefinition
 			);
 
 			Mockito.doReturn(

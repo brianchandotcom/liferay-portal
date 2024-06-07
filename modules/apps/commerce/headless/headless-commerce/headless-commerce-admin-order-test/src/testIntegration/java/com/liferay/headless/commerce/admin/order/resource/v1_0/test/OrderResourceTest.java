@@ -9,20 +9,25 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -38,6 +43,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -245,7 +251,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		).build();
 
 		Order expectedOrder = orderResource.postOrder(
-			_randomOrderWithNestedFields());
+			_randomOrderWithNestedFields(false));
 
 		Order actualOrder = orderResource.getOrder(expectedOrder.getId());
 
@@ -280,6 +286,15 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	@Test
 	public void testPatchOrderByExternalReferenceCode() throws Exception {
 		super.testPatchOrderByExternalReferenceCode();
+	}
+
+	@Test
+	public void testPostOrder() throws Exception {
+		super.testPostOrder();
+
+		_testPostOrderWithOrderItems(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+		_testPostOrderWithOrderItems(CommerceOrderConstants.ORDER_STATUS_OPEN);
 	}
 
 	@Override
@@ -366,7 +381,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		return orderResource.postOrder(order);
 	}
 
-	private OrderItem _randomOrderItem() throws Exception {
+	private OrderItem _randomOrderItem(boolean useUnitOfMeasure)
+		throws Exception {
+
 		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
 			testGroup.getGroupId());
 
@@ -389,20 +406,63 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 				shippingAddressId = _orderAddress.getAddressId();
 				skuId = cpInstance.getCPInstanceId();
 				subscription = RandomTestUtil.randomBoolean();
+
+				setUnitOfMeasureKey(
+					() -> {
+						if (!useUnitOfMeasure) {
+							return null;
+						}
+
+						CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+							CPTestUtil.addCPInstanceUnitOfMeasure(
+								TestPropsValues.getGroupId(),
+								cpInstance.getCPInstanceId(),
+								RandomTestUtil.randomString(), BigDecimal.TEN,
+								cpInstance.getSku());
+
+						return cpInstanceUnitOfMeasure.getKey();
+					});
 			}
 		};
 	}
 
-	private Order _randomOrderWithNestedFields() throws Exception {
+	private Order _randomOrderWithNestedFields(boolean useUnitOfMeasure)
+		throws Exception {
+
 		Order order = randomOrder();
 
-		OrderItem orderItem = _randomOrderItem();
+		OrderItem orderItem = _randomOrderItem(useUnitOfMeasure);
 
 		orderItem.setOrderId(order.getId());
 
 		order.setOrderItems(new OrderItem[] {orderItem});
 
 		return order;
+	}
+
+	private void _testPostOrderWithOrderItems(int commerceOrderStatus)
+		throws Exception {
+
+		Order order = _randomOrderWithNestedFields(true);
+
+		order.setOrderStatus(commerceOrderStatus);
+
+		Order postOrder = testPostOrder_addOrder(order);
+
+		Order getOrder = orderResource.getOrder(postOrder.getId());
+
+		assertEquals(postOrder, getOrder);
+		assertValid(getOrder);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrderItemLocalService.getCommerceOrderItems(
+				getOrder.getId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			Assert.assertEquals(
+				BigDecimal.TEN,
+				commerceOrderItem.getUnitOfMeasureIncrementalOrderQuantity());
+		}
 	}
 
 	private AccountEntry _accountEntry;
@@ -422,6 +482,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 
 	@Inject
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Inject
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Inject
 	private CountryLocalService _countryLocalService;

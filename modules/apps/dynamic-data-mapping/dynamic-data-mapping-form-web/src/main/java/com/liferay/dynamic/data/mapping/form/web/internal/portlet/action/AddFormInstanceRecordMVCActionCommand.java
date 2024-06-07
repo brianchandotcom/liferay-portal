@@ -117,18 +117,25 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			actionRequest, ddmForm);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String languageId = ParamUtil.getString(
+			actionRequest, "defaultLanguageId");
+
+		if (Validator.isNull(languageId)) {
+			languageId = _language.getLanguageId(actionRequest);
+		}
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		_createDDMFormFieldOptionsFromDataProvider(
-			actionRequest, ddmForm, themeDisplay.getLocale());
+			actionRequest, ddmForm, locale);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
 			_ddmFormEvaluator.evaluate(
 				DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
-					ddmForm, ddmFormValues,
-					LocaleUtil.fromLanguageId(
-						_language.getLanguageId(actionRequest))
+					ddmForm, ddmFormValues, locale
 				).withCompanyId(
 					_portal.getCompanyId(actionRequest)
 				).withDDMFormInstanceId(

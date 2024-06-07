@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/education",
+	"friendlyURL": "/education/index",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Education"
+		"en_US": "Home"
 	},
 	"permissions": [
 		{
@@ -15,5 +15,5 @@
 	],
 	"private": false,
 	"system": false,
-	"type": "node"
+	"type": "content"
 }

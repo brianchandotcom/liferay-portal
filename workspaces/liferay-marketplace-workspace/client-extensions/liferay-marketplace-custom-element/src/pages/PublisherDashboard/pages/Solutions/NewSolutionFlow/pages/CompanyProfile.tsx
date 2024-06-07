@@ -52,6 +52,7 @@ const CompanyProfile = () => {
 					className="mt-3"
 					htmlFor="description"
 					info={tooltipInfo.descriptionInfo}
+					required
 				>
 					{i18n.translate('description')}
 				</Form.Label>
@@ -76,6 +77,7 @@ const CompanyProfile = () => {
 					className="mt-5"
 					htmlFor="website"
 					info={tooltipInfo.websiteInfo}
+					required
 				>
 					{i18n.translate('website')}
 				</Form.Label>

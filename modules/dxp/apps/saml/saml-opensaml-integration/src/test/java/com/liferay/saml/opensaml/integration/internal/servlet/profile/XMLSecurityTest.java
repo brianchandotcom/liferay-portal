@@ -107,6 +107,16 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			samlSpIdpConnection
 		);
 
+		PortalCache<String, String> portalCache = new TestPortalCache<>(
+			StringPool.BLANK);
+
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
+			portalCache);
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
+			portalCache);
+
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "credentialResolver", credentialResolver);
 		ReflectionTestUtil.setFieldValue(
@@ -129,16 +139,6 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "samlSpSessionLocalService",
 			samlSpSessionLocalService);
-
-		PortalCache<String, String> portalCache = new TestPortalCache<>(
-			StringPool.BLANK);
-
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
-			portalCache);
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
-			portalCache);
 
 		_webSsoProfileImpl.activate(
 			SystemBundleUtil.getBundleContext(), new HashMap<String, Object>());

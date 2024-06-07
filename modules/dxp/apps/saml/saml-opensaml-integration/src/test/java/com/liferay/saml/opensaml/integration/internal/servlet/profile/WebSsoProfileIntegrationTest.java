@@ -140,6 +140,16 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SamlSpSessionLocalServiceUtil.class,
 			SamlSpSessionLocalService.class);
 
+		PortalCache<String, String> portalCache = new TestPortalCache<>(
+			StringPool.BLANK);
+
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
+			portalCache);
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
+			portalCache);
+
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "credentialResolver", credentialResolver);
 		ReflectionTestUtil.setFieldValue(
@@ -169,16 +179,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			getMockPortletService(
 				SamlSpIdpConnectionLocalServiceUtil.class,
 				SamlSpIdpConnectionLocalService.class));
-
-		PortalCache<String, String> portalCache = new TestPortalCache<>(
-			StringPool.BLANK);
-
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
-			portalCache);
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
-			portalCache);
 
 		_webSsoProfileImpl.activate(
 			SystemBundleUtil.getBundleContext(), new HashMap<String, Object>());

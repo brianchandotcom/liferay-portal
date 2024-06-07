@@ -102,6 +102,16 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			SamlSpSessionLocalServiceUtil.class,
 			SamlSpSessionLocalService.class);
 
+		PortalCache<String, String> portalCache = new TestPortalCache<>(
+			StringPool.BLANK);
+
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
+			portalCache);
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
+			portalCache);
+
 		_singleLogoutProfileImpl = new SingleLogoutProfileImpl();
 
 		ReflectionTestUtil.setFieldValue(
@@ -126,16 +136,6 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "samlSpSessionLocalService",
 			_samlSpSessionLocalService);
-
-		PortalCache<String, String> portalCache = new TestPortalCache<>(
-			StringPool.BLANK);
-
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
-			portalCache);
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
-			portalCache);
 
 		_singleLogoutProfileImpl.activate(SystemBundleUtil.getBundleContext());
 

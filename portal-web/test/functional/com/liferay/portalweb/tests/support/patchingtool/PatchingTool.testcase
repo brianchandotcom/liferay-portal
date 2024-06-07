@@ -1,4 +1,4 @@
-@component-name = "support-qa"
+@component-name = "portal-solutions"
 definition {
 
 	property deploy.latest.marketplace.app.disabled = "true";

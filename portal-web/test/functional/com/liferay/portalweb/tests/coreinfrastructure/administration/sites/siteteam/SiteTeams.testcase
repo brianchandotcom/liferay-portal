@@ -1,4 +1,4 @@
-@component-name = "portal-user-management"
+@component-name = "portal-commerce"
 definition {
 
 	property ci.retries.disabled = "true";

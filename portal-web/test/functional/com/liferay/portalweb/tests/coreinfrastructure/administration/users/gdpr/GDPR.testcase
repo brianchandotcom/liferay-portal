@@ -1,4 +1,4 @@
-@component-name = "portal-user-management"
+@component-name = "portal-commerce"
 definition {
 
 	property custom.properties = "jsonws.web.service.paths.excludes=";

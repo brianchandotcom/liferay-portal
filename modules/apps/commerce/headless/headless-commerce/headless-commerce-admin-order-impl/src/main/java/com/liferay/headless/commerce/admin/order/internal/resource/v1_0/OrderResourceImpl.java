@@ -22,6 +22,7 @@ import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -606,7 +607,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			for (OrderItem orderItem : orderItems) {
 				CommerceOrderItem commerceOrderItem =
 					OrderItemUtil.addOrUpdateCommerceOrderItem(
-						_cpInstanceService, _commerceOrderItemService,
+						_cpInstanceService, _cpInstanceUnitOfMeasureService,
+						_commerceOrderItemService,
 						_commerceOrderModelResourcePermission, orderItem,
 						commerceOrder,
 						_commerceContextFactory.create(
@@ -942,6 +944,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

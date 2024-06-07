@@ -11,7 +11,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
@@ -182,6 +184,7 @@ public class OrderItemUtil {
 
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			CPInstanceService cpInstanceService,
+			CPInstanceUnitOfMeasureService cpInstanceUnitOfMeasureService,
 			CommerceOrderItemService commerceOrderItemService,
 			ModelResourcePermission<CommerceOrder>
 				commerceOrderModelResourcePermission,
@@ -248,11 +251,26 @@ public class OrderItemUtil {
 					GetterUtil.getLong(orderItem.getReplacedSkuId()),
 					BigDecimalUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
-					StringPool.BLANK, commerceContext, serviceContext);
+					GetterUtil.getString(orderItem.getUnitOfMeasureKey()),
+					commerceContext, serviceContext);
 		}
 		else {
 			quantity = BigDecimal.valueOf(
 				GetterUtil.get(orderItem.getQuantity(), quantity.intValue()));
+
+			BigDecimal unitOfMeasureIncrementalOrderQuantity = BigDecimal.ONE;
+
+			String unitOfMeasureKey = GetterUtil.getString(
+				orderItem.getUnitOfMeasureKey());
+
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				cpInstanceUnitOfMeasureService.fetchCPInstanceUnitOfMeasure(
+					cpInstance.getCPInstanceId(), unitOfMeasureKey);
+
+			if (cpInstanceUnitOfMeasure != null) {
+				unitOfMeasureIncrementalOrderQuantity =
+					cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+			}
 
 			commerceOrderItem =
 				commerceOrderItemService.importCommerceOrderItem(
@@ -264,7 +282,8 @@ public class OrderItemUtil {
 					quantity,
 					BigDecimalUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
-					BigDecimal.ONE, StringPool.BLANK, serviceContext);
+					unitOfMeasureIncrementalOrderQuantity, unitOfMeasureKey,
+					serviceContext);
 		}
 
 		commerceOrderItem =

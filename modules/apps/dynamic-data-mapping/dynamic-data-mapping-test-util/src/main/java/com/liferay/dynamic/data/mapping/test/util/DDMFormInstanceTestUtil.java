@@ -88,6 +88,12 @@ public class DDMFormInstanceTestUtil {
 	}
 
 	public static DDMFormValues createSettingsDDMFormValues() {
+		return createSettingsDDMFormValues(true);
+	}
+
+	public static DDMFormValues createSettingsDDMFormValues(
+		boolean requireCaptcha) {
+
 		DDMForm ddmForm = DDMFormFactory.create(DDMFormInstanceSettings.class);
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
@@ -121,7 +127,7 @@ public class DDMFormInstanceTestUtil {
 				"requireAuthentication", "false"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"requireCaptcha", "true"));
+				"requireCaptcha", String.valueOf(requireCaptcha)));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"sendEmailNotification", "false"));

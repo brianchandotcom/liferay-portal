@@ -13,7 +13,6 @@ import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesCon
 import {Liferay} from '../../../common/services/liferay';
 import {
 	getAccountByExternalReferenceCode,
-	getAccountByExternalReferenceCodeOrganizations,
 	getAccountSubscriptionGroups,
 	getKoroneikiAccounts,
 	getStructuredContentFolders,
@@ -97,53 +96,28 @@ const AppContextProvider = ({children}) => {
 		};
 
 		const getUserProjectAccess = async (userAccount, projectExternalReferenceCode) => {
-			let userProjectAccess = Boolean(userAccount.organizationBriefs);
-			let denyAccess = false;
-
-			const organizationBriefs = userAccount.organizationBriefs;
-
-			if (organizationBriefs) {
-				try {
-					const {data: dataAccountOrg} = await client.query({
-						query: getAccountByExternalReferenceCodeOrganizations,
-						variables: {
-							externalReferenceCode: projectExternalReferenceCode
-						}
-					});
-
-					if (dataAccountOrg) {
-						const accountOrganizations = dataAccountOrg.accountByExternalReferenceCodeOrganizations?.items;
-
-						const filteredOrganizationBriefs = organizationBriefs.filter(
-							(organizationBrief) => (
-								accountOrganizations.some(
-									(accountOrganization) => accountOrganization.name === organizationBrief.name
-								)
-							)
-						);
-
-						userProjectAccess = filteredOrganizationBriefs.length > 0;
-					}
-				}
-				catch (error) {
-					const message = error.message;
-
-					if (!message.includes('(/accountByExternalReferenceCodeOrganizations) : null')) {
-						console.error(error);
-					}
-
-					denyAccess = true;
-				}
-			}
-
-			const accountAccess = Boolean(userAccount.accountBriefs?.find(
+			let userProjectAccess = Boolean(userAccount.accountBriefs?.find(
 				(accountBrief) =>
 					accountBrief.externalReferenceCode ===
 					projectExternalReferenceCode
 			));
 
-			if (accountAccess) {
-				userProjectAccess = accountAccess;
+			let denyAccess = false;
+
+			if (!userProjectAccess) {
+				try {
+					const {data} = await client.query({
+						query: getAccountByExternalReferenceCode,
+						variables: {
+							externalReferenceCode: projectExternalReferenceCode
+						}
+					});
+
+					userProjectAccess = Boolean(data);
+				}
+				catch (error) {
+					denyAccess = true;
+				}
 			}
 
 			const currentUserProjectAccess = {

@@ -49,12 +49,7 @@ const baseTest = mergeTests(
 	workflowPagesTest
 );
 
-const bulkTest = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-16469': true,
-	})
-);
+const bulkTest = mergeTests(baseTest);
 
 const expect = baseExpect.extend({
 	toBeSuccessful: (response: APIResponse) => ({

@@ -482,8 +482,14 @@ public class ObjectDefinitionGraphQLTest {
 						new GraphQLField(
 							"items",
 							new GraphQLField(_OBJECT_FIELD_NAME_LONG_TEXT),
+							new GraphQLField(
+								_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n"),
 							new GraphQLField(_OBJECT_FIELD_NAME_RICH_TEXT),
-							new GraphQLField(_OBJECT_FIELD_NAME_TEXT)))));
+							new GraphQLField(
+								_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n"),
+							new GraphQLField(_OBJECT_FIELD_NAME_TEXT),
+							new GraphQLField(
+								_OBJECT_FIELD_NAME_TEXT + "_i18n")))));
 
 			// "Accept-Language" header
 
@@ -492,9 +498,30 @@ public class ObjectDefinitionGraphQLTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEsp"
 					).put(
+						_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "longTextEng"
+						).put(
+							"es_ES", "longTextEsp"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEsp</p>"
 					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "<p>richTextEng</p>"
+						).put(
+							"es_ES", "<p>richTextEsp</p>"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_TEXT, "textEsp"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "textEng"
+						).put(
+							"es_ES", "textEsp"
+						)
 					)
 				).toString(),
 				JSONUtil.getValueAsString(
@@ -509,9 +536,30 @@ public class ObjectDefinitionGraphQLTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
 					).put(
+						_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "longTextEng"
+						).put(
+							"es_ES", "longTextEsp"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
 					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "<p>richTextEng</p>"
+						).put(
+							"es_ES", "<p>richTextEsp</p>"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_TEXT, "textEng"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "textEng"
+						).put(
+							"es_ES", "textEsp"
+						)
 					)
 				).toString(),
 				JSONUtil.getValueAsString(
@@ -526,9 +574,30 @@ public class ObjectDefinitionGraphQLTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_LONG_TEXT, ""
 					).put(
+						_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "longTextEng"
+						).put(
+							"es_ES", "longTextEsp"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_RICH_TEXT, ""
 					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "<p>richTextEng</p>"
+						).put(
+							"es_ES", "<p>richTextEsp</p>"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_TEXT, ""
+					).put(
+						_OBJECT_FIELD_NAME_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "textEng"
+						).put(
+							"es_ES", "textEsp"
+						)
 					)
 				).toString(),
 				JSONUtil.getValueAsString(
@@ -543,9 +612,30 @@ public class ObjectDefinitionGraphQLTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
 					).put(
+						_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "longTextEng"
+						).put(
+							"es_ES", "longTextEsp"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
 					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "<p>richTextEng</p>"
+						).put(
+							"es_ES", "<p>richTextEsp</p>"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_TEXT, "textEng"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "textEng"
+						).put(
+							"es_ES", "textEsp"
+						)
 					)
 				).toString(),
 				JSONUtil.getValueAsString(
@@ -560,9 +650,30 @@ public class ObjectDefinitionGraphQLTest {
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
 					).put(
+						_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "longTextEng"
+						).put(
+							"es_ES", "longTextEsp"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
 					).put(
+						_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "<p>richTextEng</p>"
+						).put(
+							"es_ES", "<p>richTextEsp</p>"
+						)
+					).put(
 						_OBJECT_FIELD_NAME_TEXT, "textEng"
+					).put(
+						_OBJECT_FIELD_NAME_TEXT + "_i18n",
+						JSONUtil.put(
+							"en_US", "textEng"
+						).put(
+							"es_ES", "textEsp"
+						)
 					)
 				).toString(),
 				JSONUtil.getValueAsString(

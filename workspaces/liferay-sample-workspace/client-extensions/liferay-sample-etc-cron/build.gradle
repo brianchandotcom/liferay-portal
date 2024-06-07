@@ -24,7 +24,6 @@ bootRun {
 	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "<client-secret>"
 	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "https://external-liferay.com/"
 	environment "EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI", "https://external-liferay.com/o/oauth2/token"
-	environment "EXTERNAL_LIFERAY_OAUTH2_USER_AGENT_CLIENT_ID", "does-not-exist"
 }
 
 dependencies {

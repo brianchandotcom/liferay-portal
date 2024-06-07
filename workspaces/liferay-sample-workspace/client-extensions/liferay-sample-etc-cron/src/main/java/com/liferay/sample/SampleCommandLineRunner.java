@@ -37,7 +37,10 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// TODO
+		// Get a token from the auto-provisioned
+		// liferay-sample-etc-cron-oauth-application-headless-server
+		// and call the headless API of the DXP Main Domain server to count
+		// the number of message board threads
 
 		try {
 			_countMessageBoardThreads(
@@ -48,7 +51,9 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 			_log.error(exception);
 		}
 
-		// TODO
+		// Get a token from a pre-existing OAuth2 application in an externally
+		// managed DXP instance and call the headless API/ to count the number
+		// of message board threads
 
 		try {
 			_countMessageBoardThreads(
@@ -58,10 +63,14 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 			_log.error(exception);
 		}
 
-		// TODO
+		// Call a route on the liferay-sample-etc-spring-boot application
+		// which is configured to accept tokens from the auto-provisioned
+		// liferay-sample-etc-cron-oauth-application-headless-server
 
 		try {
-			String dadJoke = _getDadJoke();
+			String dadJoke = _getDadJoke(
+				"liferay-sample-etc-cron-oauth-application-headless-server",
+				_liferaySampleEtcSpringBootHomePageURL);
 
 			if ((dadJoke != null) && _log.isInfoEnabled()) {
 				_log.info("Dad joke: " + dadJoke);
@@ -123,15 +132,18 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		}
 	}
 
-	private String _getDadJoke() {
+	private String _getDadJoke(
+		String externalReferenceCode,
+		URL liferaySampleEtcSpringBootHomePageURL) {
+
 		return WebClient.create(
 		).get(
 		).uri(
-			_liferaySampleEtcSpringBootHomePageURL + "/dad/joke"
+			liferaySampleEtcSpringBootHomePageURL + "/dad/joke"
 		).header(
 			"Authorization",
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-sample-etc-cron-oauth-application-headless-server")
+				externalReferenceCode)
 		).accept(
 			MediaType.TEXT_PLAIN
 		).retrieve(

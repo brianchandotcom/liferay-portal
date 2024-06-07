@@ -352,7 +352,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_SUBSCRIPTION_INFO</td>
-	<td>//div[@contains(@class,'commerce-subscription-info')]/div/div[contains(.,'${key_subscriptionName} Subscription')]/..//span</td>
+	<td>//div[contains(@class,'commerce-subscription-info')]/div/div[contains(.,'${key_subscriptionName} Subscription')]/..//span</td>
 	<td></td>
 </tr>
 <tr>

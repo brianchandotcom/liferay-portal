@@ -793,6 +793,8 @@ public class CommerceCheckoutTest {
 		BigDecimal expectedTotal = expectedSubtotal.add(
 			commerceOrder.getShippingAmount());
 
+		expectedTotal = expectedTotal.add(commerceOrder.getTaxAmount());
+
 		BigDecimal actualTotal = commerceOrder.getTotal();
 
 		Assert.assertEquals(

@@ -5,19 +5,17 @@
 
 package com.liferay.saml.opensaml.integration.internal.helper;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.saml.helper.RelayStateHelper;
 
 import java.util.Objects;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Bowerman
@@ -30,7 +28,7 @@ public class RelayStateHelperImpl implements RelayStateHelper {
 		if (Validator.isNotNull(relayStateToken) &&
 			relayStateToken.startsWith("RDR_")) {
 
-			return _relayStateTokensToRedirects.get(relayStateToken);
+			return _relayStateTokensToRedirectsPortalCache.get(relayStateToken);
 		}
 
 		return relayStateToken;
@@ -38,45 +36,46 @@ public class RelayStateHelperImpl implements RelayStateHelper {
 
 	@Override
 	public String getRelayStateTokenFromRedirect(String redirect) {
-		String relayStateToken = _redirectsToRelayStateTokens.get(redirect);
+		String relayStateToken = _redirectsToRelayStateTokensPortalCache.get(
+			redirect);
 
 		if (relayStateToken != null) {
-			String mappedRedirect = _relayStateTokensToRedirects.get(
+			String mappedRedirect = _relayStateTokensToRedirectsPortalCache.get(
 				relayStateToken);
 
 			if (Objects.equals(redirect, mappedRedirect)) {
 				return relayStateToken;
 			}
 
-			_redirectsToRelayStateTokens.remove(redirect);
-			_relayStateTokensToRedirects.remove(relayStateToken);
+			_redirectsToRelayStateTokensPortalCache.remove(redirect);
+			_relayStateTokensToRedirectsPortalCache.remove(relayStateToken);
 		}
 
 		relayStateToken = "RDR_" + PortalUUIDUtil.generate();
 
-		_redirectsToRelayStateTokens.put(redirect, relayStateToken);
+		_redirectsToRelayStateTokensPortalCache.put(redirect, relayStateToken);
 
-		_relayStateTokensToRedirects.put(relayStateToken, redirect);
+		_relayStateTokensToRedirectsPortalCache.put(relayStateToken, redirect);
 
 		return relayStateToken;
 	}
 
 	@Activate
 	protected void activate() {
-		CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
-
-		cacheBuilder.expireAfterAccess(10, TimeUnit.MINUTES);
-
-		Cache<String, String> redirectsToRelayStateTokensCache =
-			cacheBuilder.build();
-		Cache<String, String> relayStateTokensToRedirectsCache =
-			cacheBuilder.build();
-
-		_redirectsToRelayStateTokens = redirectsToRelayStateTokensCache.asMap();
-		_relayStateTokensToRedirects = relayStateTokensToRedirectsCache.asMap();
+		_redirectsToRelayStateTokensPortalCache =
+			(PortalCache<String, String>)_singleVMPool.getPortalCache(
+				RelayStateHelperImpl.class.getName() +
+					"_redirectsToRelayStateTokens");
+		_relayStateTokensToRedirectsPortalCache =
+			(PortalCache<String, String>)_singleVMPool.getPortalCache(
+				RelayStateHelperImpl.class.getName() +
+					"_relayStateTokensToRedirects");
 	}
 
-	private ConcurrentMap<String, String> _redirectsToRelayStateTokens;
-	private ConcurrentMap<String, String> _relayStateTokensToRedirects;
+	private PortalCache<String, String> _redirectsToRelayStateTokensPortalCache;
+	private PortalCache<String, String> _relayStateTokensToRedirectsPortalCache;
+
+	@Reference
+	private SingleVMPool _singleVMPool;
 
 }

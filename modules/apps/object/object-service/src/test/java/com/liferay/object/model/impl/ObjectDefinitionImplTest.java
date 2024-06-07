@@ -82,31 +82,29 @@ public class ObjectDefinitionImplTest {
 	}
 
 	private ObjectDefinition _createObjectDefinition(
-		boolean modifiable, String objectDefinitionName, boolean system) {
+		boolean modifiable, String name, boolean system) {
 
 		ObjectDefinition objectDefinition = new ObjectDefinitionImpl();
 
 		objectDefinition.setModifiable(modifiable);
-		objectDefinition.setName(objectDefinitionName);
+		objectDefinition.setName(name);
 		objectDefinition.setPluralLabel(
-			TextFormatter.formatPlural(
-				StringUtil.lowerCaseFirstLetter(objectDefinitionName)));
+			TextFormatter.formatPlural(StringUtil.lowerCaseFirstLetter(name)));
 		objectDefinition.setSystem(system);
 
 		return objectDefinition;
 	}
 
 	private void _testGetRESTContextPath(
-		String expectedRESTContextPath, boolean modifiable,
-		String objectDefinitionName, String rootObjectDefinitionName,
-		boolean system) {
+		String expectedRESTContextPath, boolean modifiable, String name,
+		String rootName, boolean system) {
 
 		ObjectDefinition objectDefinition = _createObjectDefinition(
-			modifiable, objectDefinitionName, system);
+			modifiable, name, system);
 
-		if (rootObjectDefinitionName != null) {
+		if (rootName != null) {
 			ObjectDefinition rootObjectDefinition = _createObjectDefinition(
-				modifiable, rootObjectDefinitionName, system);
+				modifiable, rootName, system);
 
 			long rootObjectDefinitionId = RandomTestUtil.randomLong();
 

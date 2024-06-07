@@ -151,15 +151,11 @@ const ActionForm = ({
 		initialValues?.label_i18n ?? {}
 	);
 	const [labelValidationError, setLabelValidationError] = useState(false);
-	const [
-		permissionKeyValidationError,
-		setPermissionKeyValidationError,
-	] = useState(false);
+	const [permissionKeyValidationError, setPermissionKeyValidationError] =
+		useState(false);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(!editing);
-	const [
-		successMessageTranslations,
-		setSuccessMessageTranslations,
-	] = useState(initialValues?.successMessage_i18n ?? {});
+	const [successMessageTranslations, setSuccessMessageTranslations] =
+		useState(initialValues?.successMessage_i18n ?? {});
 	const [titleTranslations, setTitleTranslations] = useState(
 		initialValues?.title_i18n ?? {}
 	);
@@ -307,9 +303,8 @@ const ActionForm = ({
 					'text/xml'
 				);
 
-				const symbolElements = spritemapDocument.querySelectorAll(
-					'symbol'
-				);
+				const symbolElements =
+					spritemapDocument.querySelectorAll('symbol');
 
 				const iconSymbols = Array.from(symbolElements!).map(
 					(element) => ({
@@ -339,9 +334,10 @@ const ActionForm = ({
 	const urlFormElementId = `${namespace}URL`;
 
 	const ModalBody = ({closeModal}: {closeModal: Function}) => {
-		const [filteredIconSymbols, setFilteredIconSymbols] = useState<
-			Array<{label: string; value: string}>
-		>(availableIconSymbols);
+		const [filteredIconSymbols, setFilteredIconSymbols] =
+			useState<Array<{label: string; value: string}>>(
+				availableIconSymbols
+			);
 		const [query, setQuery] = useState('');
 
 		const onSearch = (query: string) => {
@@ -353,7 +349,7 @@ const ActionForm = ({
 				query
 					? availableIconSymbols.filter((item) =>
 							String(item.value).match(regexp)
-					  )
+						)
 					: availableIconSymbols
 			);
 		};
@@ -421,7 +417,7 @@ const ActionForm = ({
 									labelValidationError
 										? Liferay.Language.get(
 												'this-field-is-required'
-										  )
+											)
 										: undefined
 								}
 								id={labelFormElementId}
@@ -640,10 +636,10 @@ const ActionForm = ({
 										actionData.type === ACTION_TYPE.MODAL
 											? Liferay.Language.get(
 													'add-the-title-of-the-modal'
-											  )
+												)
 											: Liferay.Language.get(
 													'add-the-title-of-the-side-panel'
-											  )
+												)
 									}
 									translations={titleTranslations}
 								/>

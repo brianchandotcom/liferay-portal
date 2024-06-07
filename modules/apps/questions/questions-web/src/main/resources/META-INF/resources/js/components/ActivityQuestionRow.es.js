@@ -30,7 +30,7 @@ export default function ActivityQuestionRow({
 		currentSection || currentSection === '0'
 			? currentSection
 			: question.messageBoardSection &&
-			  question.messageBoardSection.title;
+				question.messageBoardSection.title;
 
 	const creatorInformation = question.creator
 		? {
@@ -38,13 +38,13 @@ export default function ActivityQuestionRow({
 				name: question.creator.name,
 				portraitURL: question.creator.image,
 				userId: String(question.creator.id),
-		  }
+			}
 		: {
 				link: `/questions/${sectionTitle}`,
 				name: '',
 				portraitURL: '',
 				userId: '0',
-		  };
+			};
 
 	const isRowSelected = question.friendlyUrlPath === rowSelected;
 

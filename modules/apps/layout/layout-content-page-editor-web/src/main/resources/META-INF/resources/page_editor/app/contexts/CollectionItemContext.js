@@ -106,21 +106,18 @@ const useGetContent = (
 		collectionItemContext.collectionItem
 	);
 
-	const [
-		itemClassName,
-		itemClassPK,
-		itemExternalReferenceCode,
-	] = withinCollection
-		? [
-				collectionItemClassName,
-				collectionItemClassPK,
-				collectionItemExternalReferenceCode,
-		  ]
-		: [
-				displayPagePreviewItemClassName,
-				displayPagePreviewItemClassPK,
-				displayPagePreviewItemExternalReferenceCode,
-		  ];
+	const [itemClassName, itemClassPK, itemExternalReferenceCode] =
+		withinCollection
+			? [
+					collectionItemClassName,
+					collectionItemClassPK,
+					collectionItemExternalReferenceCode,
+				]
+			: [
+					displayPagePreviewItemClassName,
+					displayPagePreviewItemClassPK,
+					displayPagePreviewItemExternalReferenceCode,
+				];
 
 	const previousEditableValues = usePrevious(editableValues);
 	const previousLanguageId = usePrevious(languageId);

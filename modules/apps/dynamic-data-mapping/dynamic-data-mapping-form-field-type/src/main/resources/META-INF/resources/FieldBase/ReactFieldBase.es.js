@@ -223,9 +223,8 @@ export default function FieldBase({
 	warningMessage,
 }) {
 	const {editingLanguageId, pages} = useFormState();
-	const [disabledRepeatableButton, setDisabledRepeatableButton] = useState(
-		false
-	);
+	const [disabledRepeatableButton, setDisabledRepeatableButton] =
+		useState(false);
 	const dispatch = useForm();
 
 	const hasError = displayErrors && errorMessage && !valid;
@@ -601,7 +600,8 @@ export default function FieldBase({
 							className={classNames(
 								'ddm-form-field-repeatable-delete-button p-0',
 								{
-									'ddm-form-field-repeatable-button-disabled': disabledRepeatableButton,
+									'ddm-form-field-repeatable-button-disabled':
+										disabledRepeatableButton,
 								}
 							)}
 							disabled={readOnly || disabledRepeatableButton}
@@ -627,7 +627,8 @@ export default function FieldBase({
 						className={classNames(
 							'ddm-form-field-repeatable-add-button p-0',
 							{
-								'ddm-form-field-repeatable-button-disabled': disabledRepeatableButton,
+								'ddm-form-field-repeatable-button-disabled':
+									disabledRepeatableButton,
 								'hide': overMaximumRepetitionsLimit,
 							}
 						)}

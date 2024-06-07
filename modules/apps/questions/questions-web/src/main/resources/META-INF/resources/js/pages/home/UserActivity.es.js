@@ -155,7 +155,7 @@ export default withRouter(
 												.messageBoardSection &&
 												question.messageBoardThread
 													.messageBoardSection.id) ||
-										  context.rootTopicId
+											context.rootTopicId
 								}
 								key={question.id}
 								linkProps={{

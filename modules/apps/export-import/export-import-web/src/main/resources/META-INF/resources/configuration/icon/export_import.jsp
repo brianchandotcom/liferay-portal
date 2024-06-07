@@ -22,8 +22,7 @@
 				portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
 				portletId: '<%= portletDisplay.getId() %>',
 				title: '<liferay-ui:message key="export-import" />',
-				url:
-					'<%= HtmlUtil.escapeJS(portletDisplay.getURLExportImport()) %>',
+				url: '<%= HtmlUtil.escapeJS(portletDisplay.getURLExportImport()) %>',
 			});
 		}
 	);

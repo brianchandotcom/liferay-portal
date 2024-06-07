@@ -34,13 +34,11 @@ const Languages = ({
 	siteDefaultLocaleId,
 	translatedLanguages,
 }) => {
-	const [currentInheritLocales, setCurrentInheritLocales] = useState(
-		inheritLocales
-	);
+	const [currentInheritLocales, setCurrentInheritLocales] =
+		useState(inheritLocales);
 
-	const [customDefaultLocaleId, setCustomDefaultLocaleId] = useState(
-		siteDefaultLocaleId
-	);
+	const [customDefaultLocaleId, setCustomDefaultLocaleId] =
+		useState(siteDefaultLocaleId);
 
 	const [customLocales, setCustomLocales] = useState(siteAvailableLocales);
 
@@ -49,10 +47,8 @@ const Languages = ({
 	);
 
 	const [languageWarning, setLanguageWarning] = useState(false);
-	const [
-		languageTranslationWarning,
-		setLanguageTranslationWarning,
-	] = useState(false);
+	const [languageTranslationWarning, setLanguageTranslationWarning] =
+		useState(false);
 
 	const [showModal, setShowModal] = useState(false);
 

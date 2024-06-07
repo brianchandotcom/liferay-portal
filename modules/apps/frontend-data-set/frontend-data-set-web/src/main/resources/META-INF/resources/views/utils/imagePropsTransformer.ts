@@ -53,7 +53,7 @@ export default function imagePropsTransformer(
 					? getValueFromItem(
 							imageData.itemData,
 							imageData.options.labelKey
-					  )
+						)
 					: ''),
 			src: imageData.value,
 		};
@@ -65,12 +65,12 @@ export default function imagePropsTransformer(
 						...imageProps,
 						alt: imageData.value.link.label,
 						src: imageData.value.link.href,
-				  }
+					}
 				: {
 						...imageProps,
 						alt: imageData.value.alt,
 						src: imageData.value.src,
-				  };
+					};
 	}
 	else if ('link' in imageData) {
 		imageProps = {

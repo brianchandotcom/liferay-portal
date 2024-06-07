@@ -27,7 +27,7 @@ export default function dropInGroup(
 					operatorName: operators[0].name,
 					propertyName: source.propertyName,
 					value: source.defaultValue,
-			  };
+				};
 
 	const targetIndex =
 		target.position === POSITIONS.bottom ? target.index + 1 : target.index;

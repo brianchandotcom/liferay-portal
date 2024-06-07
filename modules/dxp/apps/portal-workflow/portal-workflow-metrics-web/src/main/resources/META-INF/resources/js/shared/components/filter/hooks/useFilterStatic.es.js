@@ -28,6 +28,7 @@ const useFilterStatic = ({
 		});
 
 		setItems(mappedItems);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedKeys, staticItems]);
 

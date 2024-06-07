@@ -31,10 +31,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 							if (form) {
 								postForm(form, {
 									data: {
-										deleteDispatchLogIds: getCheckedCheckboxes(
-											form,
-											`${portletNamespace}allRowIds`
-										),
+										deleteDispatchLogIds:
+											getCheckedCheckboxes(
+												form,
+												`${portletNamespace}allRowIds`
+											),
 									},
 									url: data?.deleteDispatchLogsURL,
 								});

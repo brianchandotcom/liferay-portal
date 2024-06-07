@@ -12,6 +12,7 @@ export async function getCommonLicenseKey(
 	productName,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-environment/${environment}/common-license-key?dateEnd=${dateEnd}&dateStart=${dateStart}`,
@@ -32,6 +33,7 @@ export async function getDevelopmentLicenseKey(
 	selectedVersion,
 	productName
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-version/${selectedVersion}/development-license-key`,
@@ -51,6 +53,7 @@ export async function getActivationDownloadKey(
 	provisioningServerAPI,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/${licenseKey}/download`,
@@ -70,6 +73,7 @@ export async function getAggregatedActivationDownloadKey(
 	provisioningServerAPI,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/download?${selectedKeysIDs}`,
@@ -89,6 +93,7 @@ export async function getMultipleActivationDownloadKey(
 	provisioningServerAPI,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/download-zip?${selectedKeysIDs}`,
@@ -109,6 +114,7 @@ export async function getExportedLicenseKeys(
 	sessionId,
 	productName
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/license-keys/export?filter=active+eq+true+and+startswith(productName,'${productName}')`,
@@ -128,6 +134,7 @@ export async function getExportedSelectedLicenseKeys(
 	provisioningServerAPI,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/export?${selectedKeysIDs}`,
@@ -151,6 +158,7 @@ export async function associateContactRoleNameByEmailByProject({
 	roleName,
 	sessionId,
 }) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${roleName}&firstName=${firstName}&lastName=${lastName}`,
@@ -176,6 +184,7 @@ export async function deleteContactRoleNameByEmailByProject({
 	rolesToDelete,
 	sessionId,
 }) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${rolesToDelete}`,
@@ -199,6 +208,7 @@ export async function putDeactivateKeys(
 	licenseKeyIds,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/deactivate?${licenseKeyIds}`,
@@ -220,6 +230,7 @@ export async function getNewGenerateKeyFormValues(
 	productGroupName,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productGroupName}/generate-form`,
@@ -239,6 +250,7 @@ export async function createNewGenerateKey(
 	sessionId,
 	licenseKey
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/accounts/${accountKey}/license-keys`,
@@ -260,6 +272,7 @@ export async function putSubscriptionInKey(
 	licenseKeyIds,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyIds=${licenseKeyIds}`,
@@ -280,6 +293,7 @@ export async function deleteSubscriptionInKey(
 	licenseKeyIds,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyIds=${licenseKeyIds}`,
@@ -300,6 +314,7 @@ export async function getSubscriptionInKey(
 	licenseKeyIds,
 	sessionId
 ) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyId=${licenseKeyIds}`,

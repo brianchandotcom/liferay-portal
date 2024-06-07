@@ -221,8 +221,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 								%>
 
 								title: '<liferay-ui:message key="users" />',
-								url:
-									'<%= HtmlUtil.escapeJS(String.valueOf(itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), liferayPortletResponse.getNamespace() + "selectUsers", userOAuth2ItemSelectorCriterion))) %>',
+								url: '<%= HtmlUtil.escapeJS(String.valueOf(itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), liferayPortletResponse.getNamespace() + "selectUsers", userOAuth2ItemSelectorCriterion))) %>',
 							});
 						});
 					}

@@ -79,10 +79,10 @@ const Details = ({
 	const {restApplication, restEndpoint, restSchema} = Liferay.FeatureFlags[
 		'LPD-15729'
 	]
-		? ((dataSet as unknown) as IDataSet)
-		: ((dataSet as unknown) as FDSViewType)[
+		? (dataSet as unknown as IDataSet)
+		: (dataSet as unknown as FDSViewType)[
 				OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW
-		  ];
+			];
 
 	return (
 		<ClayLayout.Sheet className="mt-3" size="lg">

@@ -45,7 +45,8 @@ export default function RelationshipSection({
 
 		const terms = (await response.json()) as Item[];
 
-		const newRelationshipSections = relationshipSections as RelationshipSections[];
+		const newRelationshipSections =
+			relationshipSections as RelationshipSections[];
 
 		newRelationshipSections[currentRelationshipSectionIndex].terms = terms;
 
@@ -70,6 +71,7 @@ export default function RelationshipSection({
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [panelExpanded]);
 

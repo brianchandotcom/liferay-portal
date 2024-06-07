@@ -308,7 +308,8 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 								window['<portlet:namespace />updateContent'] = function () {
 									var content = document.getElementById('<portlet:namespace />content');
 
-									var activeTab = <portlet:namespace />kaleoDesigner.contentTabView.getActiveTab();
+									var activeTab =
+										<portlet:namespace />kaleoDesigner.contentTabView.getActiveTab();
 
 									if (activeTab === <portlet:namespace />kaleoDesigner.sourceNode) {
 										content.value = <portlet:namespace />kaleoDesigner.editor.get('value');
@@ -434,7 +435,8 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 											reader.onloadend = function (evt) {
 												if (evt.target.readyState == FileReader.DONE) {
-													previousContent = <portlet:namespace />kaleoDesigner.getEditorContent();
+													previousContent =
+														<portlet:namespace />kaleoDesigner.getEditorContent();
 
 													<portlet:namespace />kaleoDesigner.setEditorContent(
 														evt.target.result

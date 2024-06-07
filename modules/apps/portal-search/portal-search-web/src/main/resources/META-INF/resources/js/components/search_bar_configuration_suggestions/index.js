@@ -184,17 +184,17 @@ function SearchBarConfigurationSuggestions({
 			<div className="search-bar-configuration-suggestions-root">
 				{removeEmptyFields(suggestionsContributorConfiguration)
 					.length ? (
-					removeEmptyFields(
-						suggestionsContributorConfiguration
-					).map(({[ITEM_ID_PROPERTY]: key, ...item}) => (
-						<input
-							hidden
-							key={key}
-							name={`${namespace}${suggestionsContributorConfigurationName}`}
-							readOnly
-							value={JSON.stringify(item)}
-						/>
-					))
+					removeEmptyFields(suggestionsContributorConfiguration).map(
+						({[ITEM_ID_PROPERTY]: key, ...item}) => (
+							<input
+								hidden
+								key={key}
+								name={`${namespace}${suggestionsContributorConfigurationName}`}
+								readOnly
+								value={JSON.stringify(item)}
+							/>
+						)
+					)
 				) : (
 					<input
 						hidden
@@ -207,6 +207,7 @@ function SearchBarConfigurationSuggestions({
 				<InputSets>
 					{suggestionsContributorConfiguration.map(
 						(valueItem, valueIndex) => (
+
 							// eslint-disable-next-line react/jsx-key
 							<InputSets.Item
 								{...getInputSetItemProps(valueItem, valueIndex)}
@@ -223,7 +224,8 @@ function SearchBarConfigurationSuggestions({
 					{!!contributorOptions.length && (
 						<div
 							className={getCN({
-								'c-mt-4': !suggestionsContributorConfiguration.length,
+								'c-mt-4':
+									!suggestionsContributorConfiguration.length,
 							})}
 						>
 							<SuggestionContributorAddButton>

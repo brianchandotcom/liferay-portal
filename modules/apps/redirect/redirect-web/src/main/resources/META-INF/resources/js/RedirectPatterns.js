@@ -14,7 +14,8 @@ import {v4 as uuidv4} from 'uuid';
 
 import '../css/redirect_pattern.scss';
 
-const REGEX_URL_ALLOW_RELATIVE = /((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
+const REGEX_URL_ALLOW_RELATIVE =
+	/((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
 const urlAllowRelative = (url) => REGEX_URL_ALLOW_RELATIVE.test(url);
 
@@ -188,7 +189,7 @@ const RedirectPattern = ({
 					...item,
 					error: false,
 					id: uuidv4(),
-			  }))
+				}))
 			: [emptyRow()]
 	);
 

@@ -437,7 +437,7 @@ export class A11yChecker {
 			? {
 					exclude: this.denylist,
 					include: [target],
-			  }
+				}
 			: target;
 
 		const results = await axe.run(
@@ -492,13 +492,8 @@ export class A11yChecker {
 		]);
 
 		records.forEach((record) => {
-			const {
-				addedNodes,
-				attributeName,
-				removedNodes,
-				target,
-				type,
-			} = record;
+			const {addedNodes, attributeName, removedNodes, target, type} =
+				record;
 
 			let node =
 				type === 'attributes' || !!removedNodes.length

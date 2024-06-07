@@ -610,8 +610,8 @@ SideNavigation.prototype = {
 						return;
 					}
 
-					const otherMenuWidth = otherMenu.getBoundingClientRect()
-						.width;
+					const otherMenuWidth =
+						otherMenu.getBoundingClientRect().width;
 
 					const contentMargin =
 						document.body.scrollWidth -
@@ -812,7 +812,9 @@ SideNavigation.prototype = {
 		const instance = this;
 
 		import(
+
 			// eslint-disable-next-line lines-around-comment
+
 			/* webpackIgnore: true */
 			themeDisplay.getPathContext() +
 				'/o/frontend-js-web/__liferay__/index.js'

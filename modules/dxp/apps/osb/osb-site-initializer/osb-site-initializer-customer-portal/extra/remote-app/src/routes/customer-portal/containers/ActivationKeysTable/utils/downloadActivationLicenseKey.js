@@ -68,13 +68,15 @@ export async function downloadAggregatedActivationKey(
 				selectedKeysObject.productName !==
 				selectedKeysAccumulator.productName
 			) {
-				selectedKeysAccumulator.productName = DIFFERENT_AGGREGATED_NAMES;
+				selectedKeysAccumulator.productName =
+					DIFFERENT_AGGREGATED_NAMES;
 			}
 			if (
 				selectedKeysObject.productVersion !==
 				selectedKeysAccumulator.productVersion
 			) {
-				selectedKeysAccumulator.productVersion = DIFFERENT_AGGREGATED_VERSIONS;
+				selectedKeysAccumulator.productVersion =
+					DIFFERENT_AGGREGATED_VERSIONS;
 			}
 
 			return selectedKeysAccumulator;

@@ -30,6 +30,7 @@ export function FormBasicBusinessType({form}) {
 				type: ActionTypes.SET_SELECTED_PRODUCT,
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state.selectedProduct, newSelectedProduct]);
 

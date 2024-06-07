@@ -71,7 +71,7 @@ const getSelectedNodeIds = (
 		? fragmentEntryKeysArray.filter(
 				(fragmentEntryKey) =>
 					!fragmentEntryKeys.includes(fragmentEntryKey)
-		  )
+			)
 		: fragmentEntryKeys;
 };
 

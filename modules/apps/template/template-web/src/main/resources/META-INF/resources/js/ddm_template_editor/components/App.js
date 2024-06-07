@@ -39,7 +39,8 @@ export default function App({
 			<div className="ddm_template_editor__App">
 				<div
 					className={classNames('ddm_template_editor__App-content', {
-						'ddm_template_editor__App-content--sidebar-open': selectedSidebarPanelId,
+						'ddm_template_editor__App-content--sidebar-open':
+							selectedSidebarPanelId,
 					})}
 				>
 					<ClosableAlert

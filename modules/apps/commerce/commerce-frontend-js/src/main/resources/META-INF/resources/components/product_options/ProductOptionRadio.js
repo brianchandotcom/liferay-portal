@@ -44,9 +44,8 @@ const ProductOptionRadio = ({
 	const [selectedSkuId, setSelectedSkuId] = useState(sku?.id);
 	const skuOptionsKey = isFromMiniCart ? 'miniCartSkuOptions' : 'skuOptions';
 
-	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
-		skuOptionsAtom
-	);
+	const [skuOptionsAtomState, setSkuOptionsAtomState] =
+		useLiferayState(skuOptionsAtom);
 
 	const [productOptionValues, setProductOptionValues] = useState(
 		productOption.productOptionValues
@@ -55,7 +54,7 @@ const ProductOptionRadio = ({
 	const currentJSONObject = json
 		? JSON.parse(json).filter(
 				(jsonObject) => jsonObject.key === productOption.key
-		  )[0]
+			)[0]
 		: null;
 
 	const initialProductOptionValue =
@@ -65,7 +64,7 @@ const ProductOptionRadio = ({
 					currentJSONObject,
 					isFromMiniCart,
 					productOption,
-			  });
+				});
 
 	const defaultProductOptionValue = initialProductOptionValue
 		? initialProductOptionValue
@@ -99,7 +98,7 @@ const ProductOptionRadio = ({
 							],
 							value: [defaultProductOptionValue?.key],
 						},
-				  ],
+					],
 		});
 
 		return () =>
@@ -107,8 +106,9 @@ const ProductOptionRadio = ({
 				? setSkuOptionsAtomState({
 						...skuOptionsAtomState,
 						miniCartSkuOptions: [],
-				  })
+					})
 				: setSkuOptionsAtomState(initialSkuOptionsAtomState);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -123,22 +123,17 @@ const ProductOptionRadio = ({
 			currentProductOptionValue?.key
 	);
 
-	const [
-		selectedProductOptionValue,
-		setSelectedProductOptionValue,
-	] = useState({
-		productOptionValueId: currentProductOptionValue?.id,
-		skuId: selectedSkuId,
-	});
+	const [selectedProductOptionValue, setSelectedProductOptionValue] =
+		useState({
+			productOptionValueId: currentProductOptionValue?.id,
+			skuId: selectedSkuId,
+		});
 
-	const [
-		selectedProductOptionValueKey,
-		setSelectedProductOptionValueKey,
-	] = useState(currentProductOptionValue?.key);
+	const [selectedProductOptionValueKey, setSelectedProductOptionValueKey] =
+		useState(currentProductOptionValue?.key);
 
-	const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
-		'v1'
-	);
+	const DeliveryCatalogAPIServiceProvider =
+		ServiceProvider.DeliveryCatalogAPI('v1');
 
 	const handleChange = (value) => {
 		if (skuOptionsAtomState.updating) {
@@ -310,6 +305,7 @@ const ProductOptionRadio = ({
 				setProductOptionValues(responseProductOptionValues.items);
 			});
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[selectedProductOptionValue]
 	);

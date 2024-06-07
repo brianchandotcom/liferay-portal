@@ -48,6 +48,7 @@ const getLayoutReportsComponent = ({
 
 const languageSelectorIsInTheDocument = ({fn, useNot = false}) => {
 	['Home', 'en-US', 'http://localhost:8080'].forEach((str) => {
+
 		// eslint-disable-next-line @liferay/expect-assert
 		const expected = useNot ? expect(fn(str)).not : expect(fn(str));
 

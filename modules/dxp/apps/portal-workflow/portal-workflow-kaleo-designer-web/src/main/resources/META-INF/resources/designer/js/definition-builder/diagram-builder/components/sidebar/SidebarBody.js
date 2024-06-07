@@ -56,7 +56,7 @@ export default function SidebarBody({children, displayDefaultContent = true}) {
 								onDragStart(event, key, setElementRectangle)
 							}
 						/>
-				  ))
+					))
 				: children}
 		</div>
 	);

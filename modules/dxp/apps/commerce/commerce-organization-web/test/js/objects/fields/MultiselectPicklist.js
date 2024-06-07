@@ -150,9 +150,8 @@ describe('MultiselectPicklist object field', () => {
 				fireEvent.focus(element);
 			});
 
-			const dropDownListItems = container.querySelectorAll(
-				'.dropdown-item'
-			);
+			const dropDownListItems =
+				container.querySelectorAll('.dropdown-item');
 
 			dropDownListItems.forEach((button, index) => {
 				const {

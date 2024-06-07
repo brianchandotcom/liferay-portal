@@ -48,10 +48,8 @@ export function ScopeContainer({
 	sites,
 	values,
 }: ScopeContainerProps) {
-	const [
-		selectedPanelCategoryValue,
-		setSelectedPanelCategoryValue,
-	] = useState('');
+	const [selectedPanelCategoryValue, setSelectedPanelCategoryValue] =
+		useState('');
 
 	const setPanelCategoryKey = (
 		sites: Scope[],
@@ -73,6 +71,7 @@ export function ScopeContainer({
 			values.scope === 'company' ? companies : sites,
 			values.panelCategoryKey as string
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.scope, companies, sites]);
 

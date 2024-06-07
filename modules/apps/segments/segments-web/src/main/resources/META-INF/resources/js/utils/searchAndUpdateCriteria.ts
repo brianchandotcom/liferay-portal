@@ -51,7 +51,7 @@ export default function searchAndUpdateCriteria(
 						destIndex,
 						addedItem,
 						replace
-				  )
+					)
 				: criteriaItem;
 		}),
 	} as Criteria;

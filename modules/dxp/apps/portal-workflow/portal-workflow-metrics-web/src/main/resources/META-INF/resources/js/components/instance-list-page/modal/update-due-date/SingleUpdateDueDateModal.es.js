@@ -25,15 +25,10 @@ export default function SingleUpdateDueDateModal() {
 
 	const toaster = useToaster();
 
-	const {
-		closeModal,
-		setUpdateDueDate,
-		updateDueDate,
-		visibleModal,
-	} = useContext(ModalContext);
-	const {selectedInstance, setSelectedItems} = useContext(
-		InstanceListContext
-	);
+	const {closeModal, setUpdateDueDate, updateDueDate, visibleModal} =
+		useContext(ModalContext);
+	const {selectedInstance, setSelectedItems} =
+		useContext(InstanceListContext);
 
 	const {comment, dueDate} = updateDueDate;
 

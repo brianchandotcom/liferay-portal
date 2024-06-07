@@ -53,7 +53,7 @@ function renderItemSelector({
 					? {
 							classPK: selectedItemClassPK,
 							title: selectedItemTitle,
-					  }
+						}
 					: null
 			}
 			transformValueCallback={() => {}}

@@ -65,7 +65,7 @@ const _invalidFileCountContent = (
 						),
 						_translatedStrongKeys(translatedKeys.continue),
 						_translatedStrongKeys(translatedKeys.cancel)
-				  )}</div>`
+					)}</div>`
 				: ''
 		}
 	</div>`;
@@ -130,7 +130,7 @@ const _showWarningModal = ({
 			? sub(
 					Liferay.Language.get('maximum-of-x-files-per-envelope'),
 					MAXIMUM_SELECTED_FILES
-			  )
+				)
 			: Liferay.Language.get('file-extensions-not-supported'),
 	});
 

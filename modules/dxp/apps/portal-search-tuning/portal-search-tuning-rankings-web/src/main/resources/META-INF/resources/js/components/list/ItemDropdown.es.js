@@ -82,12 +82,12 @@ class ItemDropdown extends Component {
 										Liferay.Language.get('unpin-result'),
 										Liferay.Language.get('unpin-results'),
 										itemCount
-								  )
+									)
 								: getPluralMessage(
 										Liferay.Language.get('pin-result'),
 										Liferay.Language.get('pin-results'),
 										itemCount
-								  )}
+									)}
 						</ClayDropDown.Item>
 					)}
 
@@ -101,12 +101,12 @@ class ItemDropdown extends Component {
 										Liferay.Language.get('show-result'),
 										Liferay.Language.get('show-results'),
 										itemCount
-								  )
+									)
 								: getPluralMessage(
 										Liferay.Language.get('hide-result'),
 										Liferay.Language.get('hide-results'),
 										itemCount
-								  )}
+									)}
 						</ClayDropDown.Item>
 					)}
 				</ClayDropDown.ItemList>

@@ -26,7 +26,7 @@ const FiltersDropdown = () => {
 			query
 				? initialFilters.filter(({label}) =>
 						label.toLowerCase().match(query.toLowerCase())
-				  ) || []
+					) || []
 				: initialFilters
 		);
 	};

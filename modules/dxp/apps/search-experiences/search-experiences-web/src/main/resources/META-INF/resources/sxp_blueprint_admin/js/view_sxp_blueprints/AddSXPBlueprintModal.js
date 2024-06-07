@@ -258,17 +258,12 @@ export function AddSXPBlueprintModal({
 		onClose: () => setVisibleModal(false),
 	});
 
-	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
-		null
-	);
-	const [
-		modelPrefilterContributors,
-		setModelPrefilterContributors,
-	] = useState(null);
-	const [
-		queryPrefilterContributors,
-		setQueryPrefilterContributors,
-	] = useState(null);
+	const [keywordQueryContributors, setKeywordQueryContributors] =
+		useState(null);
+	const [modelPrefilterContributors, setModelPrefilterContributors] =
+		useState(null);
+	const [queryPrefilterContributors, setQueryPrefilterContributors] =
+		useState(null);
 	const [visibleModal, setVisibleModal] = useState(false);
 
 	useEffect(() => {
@@ -283,18 +278,15 @@ export function AddSXPBlueprintModal({
 		[
 			{
 				setProperty: setKeywordQueryContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
+				url: '/o/search-experiences-rest/v1.0/keyword-query-contributors',
 			},
 			{
 				setProperty: setModelPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
+				url: '/o/search-experiences-rest/v1.0/model-prefilter-contributors',
 			},
 			{
 				setProperty: setQueryPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
+				url: '/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 			},
 		].forEach(({setProperty, url}) =>
 			fetchData(url)

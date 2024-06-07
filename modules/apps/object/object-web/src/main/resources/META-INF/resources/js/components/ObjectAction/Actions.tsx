@@ -52,15 +52,15 @@ function ObjectActionLastExecutionDataRenderer({
 				itemData.status.label === 'never-ran'
 					? 'label-info'
 					: itemData.status.label === 'failed'
-					? 'label-danger'
-					: 'label-success'
+						? 'label-danger'
+						: 'label-success'
 			)}
 		>
 			{itemData.status.label === 'never-ran'
 				? Liferay.Language.get('never-ran')
 				: itemData.status.label === 'failed'
-				? Liferay.Language.get('failed')
-				: Liferay.Language.get('success')}
+					? Liferay.Language.get('failed')
+					: Liferay.Language.get('success')}
 		</strong>
 	);
 }

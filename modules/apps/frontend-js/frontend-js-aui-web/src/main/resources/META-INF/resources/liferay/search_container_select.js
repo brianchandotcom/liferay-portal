@@ -77,8 +77,7 @@ AUI.add(
 
 				rowSelector: {
 					validator: Lang.isString,
-					value:
-						'dd[data-selectable="true"],li[data-selectable="true"],tr[data-selectable="true"]',
+					value: 'dd[data-selectable="true"],li[data-selectable="true"],tr[data-selectable="true"]',
 				},
 
 				sessionStorageItemKey: {
@@ -226,15 +225,18 @@ AUI.add(
 				_notifyRowToggle() {
 					const instance = this;
 
-					const allSelectedElements = instance.getAllSelectedElements();
+					const allSelectedElements =
+						instance.getAllSelectedElements();
 
 					const payload = {
 						actions: instance._getActions(allSelectedElements),
 						elements: {
 							allElements: instance._getAllElements(),
 							allSelectedElements,
-							currentPageElements: instance._getCurrentPageElements(),
-							currentPageSelectedElements: instance.getCurrentPageSelectedElements(),
+							currentPageElements:
+								instance._getCurrentPageElements(),
+							currentPageSelectedElements:
+								instance.getCurrentPageSelectedElements(),
 						},
 					};
 

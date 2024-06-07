@@ -10,9 +10,8 @@ const TEST_WALKTHROUGH_CONFIG = {
 	closeOnClickOutside: false,
 	closeable: true,
 	pages: {
-		[themeDisplay.getLayoutRelativeURL() +
-		location.search +
-		location.hash]: ['teststep1', 'teststep2'],
+		[themeDisplay.getLayoutRelativeURL() + location.search + location.hash]:
+			['teststep1', 'teststep2'],
 	},
 	skippable: true,
 	steps: [

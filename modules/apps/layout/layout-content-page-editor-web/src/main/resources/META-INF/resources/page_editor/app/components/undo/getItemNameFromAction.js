@@ -31,14 +31,13 @@ export function getItemNameFromAction({action, state}) {
 	const fragmentEntryLinks = action.fragmentEntryLinks
 		? Object.values(action.fragmentEntryLinks).reduce(
 				(acc, fragmentEntryLink) => {
-					acc[
-						fragmentEntryLink.fragmentEntryLinkId
-					] = fragmentEntryLink;
+					acc[fragmentEntryLink.fragmentEntryLinkId] =
+						fragmentEntryLink;
 
 					return acc;
 				},
 				{}
-		  )
+			)
 		: state.fragmentEntryLinks;
 
 	const item =

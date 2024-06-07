@@ -16,9 +16,8 @@ import ViewsContext from '../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
 
 function SortDropdown() {
-	const [{sorts}, viewsDispatch]: [{sorts: TSort[]}, Function] = useContext(
-		ViewsContext
-	);
+	const [{sorts}, viewsDispatch]: [{sorts: TSort[]}, Function] =
+		useContext(ViewsContext);
 
 	const activeSort = sorts?.find((sort: TSort) => sort.active);
 

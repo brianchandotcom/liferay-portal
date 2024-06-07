@@ -31,10 +31,11 @@ export function ExportImportManagementToolbarPropsTransformer({
 								postForm(form, {
 									data: {
 										cmd: 'delete',
-										deleteBackgroundTaskIds: getCheckedCheckboxes(
-											form,
-											`${portletNamespace}allRowIds`
-										),
+										deleteBackgroundTaskIds:
+											getCheckedCheckboxes(
+												form,
+												`${portletNamespace}allRowIds`
+											),
 									},
 								});
 							}

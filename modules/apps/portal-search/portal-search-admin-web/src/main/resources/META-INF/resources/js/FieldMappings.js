@@ -199,7 +199,8 @@ const FieldMappings = ({
 									editorTextInput,
 								}) => {
 									editorElementRef.current = editorElement;
-									editorTextInputRef.current = editorTextInput;
+									editorTextInputRef.current =
+										editorTextInput;
 								}}
 							/>
 						</ClayLayout.SheetSection>

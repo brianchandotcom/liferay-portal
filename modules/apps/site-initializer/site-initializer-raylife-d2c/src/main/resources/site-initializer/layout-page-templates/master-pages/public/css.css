@@ -37,8 +37,7 @@
 	font-family: 'Source Serif Pro';
 	font-style: normal;
 	font-weight: 400;
-	src: 
-		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSerifPro/SourceSerifPro-Regular.ttf$]);
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSerifPro/SourceSerifPro-Regular.ttf$]);
 }
 
 /*GENERAL*/
@@ -48,11 +47,11 @@ a {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    transition: all 5000s ease-in-out 0s;
-    transition-property: background-color, color;
+	transition: all 5000s ease-in-out 0s;
+	transition-property: background-color, color;
 }
 
 /*COMPONENTS*/

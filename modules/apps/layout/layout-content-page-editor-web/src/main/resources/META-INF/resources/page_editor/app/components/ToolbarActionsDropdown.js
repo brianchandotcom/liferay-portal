@@ -56,7 +56,7 @@ export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 										label: Liferay.Language.get('undo-all'),
 										onClick: onHistoryItemClick,
 									},
-							  ]
+								]
 							: null,
 						label: Liferay.Language.get('history'),
 						symbolLeft: 'time',

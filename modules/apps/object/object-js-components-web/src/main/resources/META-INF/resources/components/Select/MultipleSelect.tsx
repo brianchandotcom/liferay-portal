@@ -217,21 +217,22 @@ export function MultipleSelect({
 												const newOptions = options.map(
 													(option) => {
 														return {
-															children: option.children.map(
-																(child) => {
-																	if (
-																		child.value ===
-																		item.value
-																	) {
-																		return {
-																			...child,
-																			checked,
-																		};
-																	}
+															children:
+																option.children.map(
+																	(child) => {
+																		if (
+																			child.value ===
+																			item.value
+																		) {
+																			return {
+																				...child,
+																				checked,
+																			};
+																		}
 
-																	return child;
-																}
-															),
+																		return child;
+																	}
+																),
 															label: option.label,
 															value: option.value,
 														};

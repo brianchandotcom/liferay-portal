@@ -18,6 +18,7 @@ const baseURL = window.location.origin + Liferay.ThemeDisplay.getPathContext();
 const NEXT_STEP_DELAY = 1000;
 
 const fetchHeadless = async (url, options) => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${baseURL}/${url}`, {
 		...options,

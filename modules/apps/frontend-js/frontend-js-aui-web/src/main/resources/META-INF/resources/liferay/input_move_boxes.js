@@ -215,11 +215,8 @@ AUI.add(
 							],
 						});
 
-						moveToolbar.get(
-							'toolbarRenderer'
-						).TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
-							'{cssClass}'
-						);
+						moveToolbar.get('toolbarRenderer').TEMPLATES.icon =
+							Liferay.Util.getLexiconIconTpl('{cssClass}');
 
 						moveToolbar.render(moveButtonsColumn);
 
@@ -343,9 +340,8 @@ AUI.add(
 
 							const noItemsSelected = !selectedIndexes.length;
 
-							const firstItemSelected = selectedIndexes.includes(
-								0
-							);
+							const firstItemSelected =
+								selectedIndexes.includes(0);
 
 							const lastItemSelected = selectedIndexes.includes(
 								length - 1

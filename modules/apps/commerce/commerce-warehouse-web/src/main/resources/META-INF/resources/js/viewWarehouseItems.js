@@ -18,15 +18,13 @@ export default function ({ADD, CMD, UPDATE, namespace}) {
 		form.querySelector(`#${namespace}${CMD}`).value =
 			commerceInventoryWarehouseItemId > 0 ? UPDATE : ADD;
 
-		form.querySelector(
-			`#${namespace}commerceInventoryWarehouseId`
-		).value = commerceInventoryWarehouseId;
+		form.querySelector(`#${namespace}commerceInventoryWarehouseId`).value =
+			commerceInventoryWarehouseId;
 		form.querySelector(
 			`#${namespace}commerceInventoryWarehouseItemId`
 		).value = commerceInventoryWarehouseItemId;
-		form.querySelector(
-			`#${namespace}unitOfMeasureKey`
-		).value = commerceInventoryWarehouseItemUom;
+		form.querySelector(`#${namespace}unitOfMeasureKey`).value =
+			commerceInventoryWarehouseItemUom;
 
 		const quantityInput = document.querySelector(
 			`#${namespace}commerceInventoryWarehouseItemQuantity${index}`

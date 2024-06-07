@@ -134,6 +134,7 @@ const MultiselectPicklist = ({
 				hasError ? Liferay.Language.get('this-field-is-required') : null
 			);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
 

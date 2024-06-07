@@ -64,15 +64,16 @@ export default function SearchBar({
 	 */
 
 	const _getLowestSuggestionsDisplayThreshold = useCallback(() => {
-		const characterThresholdArray = cleanSuggestionsContributorConfiguration(
-			suggestionsContributorConfiguration,
-			isDXP,
-			isSearchExperiencesSupported
-		).map((config) =>
-			config.attributes?.characterThreshold
-				? parseInt(config.attributes.characterThreshold, 10)
-				: parseInt(suggestionsDisplayThreshold, 10)
-		);
+		const characterThresholdArray =
+			cleanSuggestionsContributorConfiguration(
+				suggestionsContributorConfiguration,
+				isDXP,
+				isSearchExperiencesSupported
+			).map((config) =>
+				config.attributes?.characterThreshold
+					? parseInt(config.attributes.characterThreshold, 10)
+					: parseInt(suggestionsDisplayThreshold, 10)
+			);
 
 		return Math.min(...characterThresholdArray);
 	}, [
@@ -122,7 +123,8 @@ export default function SearchBar({
 				body: _getSuggestionsContributorConfiguration(),
 				headers: new Headers({
 					'Accept': 'application/json',
-					'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+					'Accept-Language':
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
 					'Content-Type': 'application/json',
 				}),
 				method: 'POST',

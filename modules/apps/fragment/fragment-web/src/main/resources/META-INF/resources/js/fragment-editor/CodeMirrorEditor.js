@@ -353,7 +353,7 @@ const CodeMirrorEditor = ({
 							? null
 							: Liferay.Language.get(
 									'use-ctrl-m-to-enable-or-disable-the-tab-key'
-							  )
+								)
 					}
 					className="codemirror-editor-wrapper h-100"
 					ref={ref}

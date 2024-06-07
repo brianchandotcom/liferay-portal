@@ -103,18 +103,12 @@ export default function updatePriorities(defaultLanguageId, namespace) {
 				).value;
 
 				setFormValues(form, {
-					['priorityImage' +
-					i +
-					'_' +
-					prioritiesLastLanguageId]: priorityImage,
-					['priorityName' +
-					i +
-					'_' +
-					prioritiesLastLanguageId]: priorityName,
-					['priorityValue' +
-					i +
-					'_' +
-					prioritiesLastLanguageId]: priorityValue,
+					['priorityImage' + i + '_' + prioritiesLastLanguageId]:
+						priorityImage,
+					['priorityName' + i + '_' + prioritiesLastLanguageId]:
+						priorityName,
+					['priorityValue' + i + '_' + prioritiesLastLanguageId]:
+						priorityValue,
 				});
 			}
 

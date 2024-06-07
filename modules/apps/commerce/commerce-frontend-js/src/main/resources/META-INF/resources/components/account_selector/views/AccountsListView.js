@@ -15,9 +15,8 @@ import AccountCreationModal from './AccountCreationModal';
 import EmptyListView from './EmptyListView';
 import ListView from './ListView';
 
-const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
-	'v1'
-);
+const DeliveryCatalogAPIServiceProvider =
+	ServiceProvider.DeliveryCatalogAPI('v1');
 
 export default function AccountsListView({
 	accountEntryAllowedTypes,

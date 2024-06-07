@@ -38,14 +38,14 @@ const fetchMock = new FetchMock({
 			items: processItems,
 			totalCount: processItems.length,
 		}),
+
 		// eslint-disable-next-line sort-keys
 		'/o/portal-workflow-metrics/v1.0/indexes': fetchMockResponse({
 			items: [],
 			totalCount: 0,
 		}),
-		'/o/portal-workflow-metrics/v1.0/processes/1234/metrics': fetchMockResponse(
-			pending
-		),
+		'/o/portal-workflow-metrics/v1.0/processes/1234/metrics':
+			fetchMockResponse(pending),
 		'default': fetchMockResponse({items: [], totalCount: 0}),
 	},
 });
@@ -93,8 +93,9 @@ describe('The App component should', () => {
 	});
 
 	it('Navigate to settings indexes page', async () => {
-		const kebabButton = document.getElementById('headerKebab').children[0]
-			.children[0].children[0];
+		const kebabButton =
+			document.getElementById('headerKebab').children[0].children[0]
+				.children[0];
 
 		fireEvent.click(kebabButton);
 

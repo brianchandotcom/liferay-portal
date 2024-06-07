@@ -84,6 +84,7 @@ function Header({items = [], instanceIds, totalCount, withoutUnassigned}) {
 		) {
 			setSelectTasks({selectAll, tasks: items});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
 
@@ -92,6 +93,7 @@ function Header({items = [], instanceIds, totalCount, withoutUnassigned}) {
 			...selectTasks,
 			selectAll: totalCount > 0 && totalCount === tasks.length,
 		}));
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [totalCount]);
 

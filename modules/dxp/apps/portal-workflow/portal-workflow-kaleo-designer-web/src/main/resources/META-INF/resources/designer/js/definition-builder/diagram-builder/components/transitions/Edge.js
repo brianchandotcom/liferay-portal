@@ -42,14 +42,14 @@ function Edge(props) {
 
 	const nodes = useStoreState((state) => state.nodes);
 
-	const sourceNode = useMemo(() => nodes.find((node) => node.id === source), [
-		source,
-		nodes,
-	]);
-	const targetNode = useMemo(() => nodes.find((node) => node.id === target), [
-		target,
-		nodes,
-	]);
+	const sourceNode = useMemo(
+		() => nodes.find((node) => node.id === source),
+		[source, nodes]
+	);
+	const targetNode = useMemo(
+		() => nodes.find((node) => node.id === target),
+		[target, nodes]
+	);
 
 	const {sourcePos, sx, sy, targetPos, tx, ty} = getEdgeParams(
 		sourceNode,

@@ -96,7 +96,7 @@ function OrdersListView({
 							? Liferay.fire(OPEN_MODAL, {
 									id: `${namespace}add-order-modal`,
 									size: MEDIUM_MODAL_SIZE,
-							  })
+								})
 							: liferayNavigate(createOrderURL)
 					}
 				>

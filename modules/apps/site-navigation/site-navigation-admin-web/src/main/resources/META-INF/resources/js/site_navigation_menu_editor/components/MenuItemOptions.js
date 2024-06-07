@@ -40,7 +40,8 @@ export default function MenuItemOptions({
 	const deleteMenuItem = () => {
 		fetch(deleteSiteNavigationMenuItemURL, {
 			body: objectToFormData({
-				[`${portletNamespace}siteNavigationMenuItemId`]: siteNavigationMenuItemId,
+				[`${portletNamespace}siteNavigationMenuItemId`]:
+					siteNavigationMenuItemId,
 				[`${portletNamespace}deleteChildren`]:
 					deletionType === DELETION_TYPES.bulk,
 			}),
@@ -76,7 +77,8 @@ export default function MenuItemOptions({
 				onClick: () =>
 					child.onClick({
 						order: numberOfChildren,
-						parentSiteNavigationMenuItemId: siteNavigationMenuItemId,
+						parentSiteNavigationMenuItemId:
+							siteNavigationMenuItemId,
 					}),
 			})),
 			label: Liferay.Language.get('add-child'),

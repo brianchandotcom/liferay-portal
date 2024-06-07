@@ -70,10 +70,10 @@ export default function TimeRangeFilter({
 	const dateEnd = filters[dateEndKey];
 	const dateStart = filters[dateStartKey];
 
-	const customRange = useMemo(() => getCustomTimeRange(dateEnd, dateStart), [
-		dateEnd,
-		dateStart,
-	]);
+	const customRange = useMemo(
+		() => getCustomTimeRange(dateEnd, dateStart),
+		[dateEnd, dateStart]
+	);
 
 	const staticItems = useMemo(
 		() =>

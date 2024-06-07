@@ -85,7 +85,8 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 
 	const alignElementRef = useRef();
 
-	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions();
+	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS =
+		getSiteActivitiesContributorActivityOptions();
 
 	const _handleChangeAttributeInput = (property) => (event) => {
 		onInputSetItemChange(index, {

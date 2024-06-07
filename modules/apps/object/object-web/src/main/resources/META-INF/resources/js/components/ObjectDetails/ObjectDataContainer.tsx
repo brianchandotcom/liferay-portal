@@ -34,9 +34,8 @@ export function ObjectDataContainer({
 	setValues,
 	values,
 }: ObjectDataContainerProps) {
-	const [selectedLocale, setSelectedLocale] = useState<
-		Liferay.Language.Locale
-	>(defaultLanguageId);
+	const [selectedLocale, setSelectedLocale] =
+		useState<Liferay.Language.Locale>(defaultLanguageId);
 
 	const isReadOnly = !values.modifiable && values.system;
 

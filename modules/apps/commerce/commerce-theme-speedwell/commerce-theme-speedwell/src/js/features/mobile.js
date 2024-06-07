@@ -15,24 +15,23 @@ Liferay.component(
 		const IS_FIXED_CLASS = 'is-fixed';
 
 		function setupFiltersHeader() {
-			filtersHeader.querySelector(
-				'.title'
-			).innerText = Liferay.Language.get('filters');
+			filtersHeader.querySelector('.title').innerText =
+				Liferay.Language.get('filters');
 		}
 
 		function listenToFiltersButton() {
-			const filtersAreClosed = !filtersButton.classList.contains(
-				IS_OPEN_CLASS
-			);
+			const filtersAreClosed =
+				!filtersButton.classList.contains(IS_OPEN_CLASS);
 
 			filtersButton.classList.toggle(IS_OPEN_CLASS, filtersAreClosed);
 
 			filtersHeader
 				.querySelector('.close-button')
-				[filtersAreClosed ? 'addEventListener' : 'removeEventListener'](
-					'click',
-					listenToFiltersButton
-				);
+				[
+					filtersAreClosed
+						? 'addEventListener'
+						: 'removeEventListener'
+				]('click', listenToFiltersButton);
 		}
 
 		function isFixed(element) {
@@ -81,8 +80,8 @@ Liferay.component(
 		}
 
 		if (addToCartInline) {
-			addToCartInlineDefaultPosition = addToCartInline.getBoundingClientRect()
-				.top;
+			addToCartInlineDefaultPosition =
+				addToCartInline.getBoundingClientRect().top;
 			window.addEventListener('scroll', fixAddToCartButton);
 		}
 

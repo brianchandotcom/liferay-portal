@@ -83,8 +83,7 @@ describe('CodeMirrorEditor', () => {
 
 	it('gets hints when property has an enum array', () => {
 		const codeMirror = createCodeMirrorEditor({
-			value:
-				'{"elementDefinition": {"uiConfiguration": {"fieldSets": [ {"fields": [{"type":"',
+			value: '{"elementDefinition": {"uiConfiguration": {"fieldSets": [ {"fields": [{"type":"',
 		});
 
 		const {list} = getCodeMirrorHints(
@@ -196,8 +195,7 @@ describe('CodeMirrorEditor', () => {
 		const {container} = render(<div />);
 
 		const codeMirror = createCodeMirrorEditor({
-			value:
-				'{"elementDefinition": {"uiConfiguration": {"fieldSets": [{"fields": [{"defaultValue',
+			value: '{"elementDefinition": {"uiConfiguration": {"fieldSets": [{"fields": [{"defaultValue',
 		});
 
 		const {list} = getCodeMirrorHints(
@@ -218,8 +216,7 @@ describe('CodeMirrorEditor', () => {
 
 	it('autocompletes with [] for array type', () => {
 		const codeMirror = createCodeMirrorEditor({
-			value:
-				'{"elementDefinition": {"configuration": {"queryConfiguration": {"qu',
+			value: '{"elementDefinition": {"configuration": {"queryConfiguration": {"qu',
 		});
 
 		const {from, list, to} = getCodeMirrorHints(
@@ -273,8 +270,7 @@ describe('CodeMirrorEditor', () => {
 
 	it('autocompletes minimally for other type', () => {
 		const codeMirror = createCodeMirrorEditor({
-			value:
-				'{"elementDefinition": {"configuration": {"queryConfiguration": {"queryEntries": [{"en',
+			value: '{"elementDefinition": {"configuration": {"queryConfiguration": {"queryEntries": [{"en',
 		});
 
 		const {from, list, to} = getCodeMirrorHints(

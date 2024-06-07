@@ -147,17 +147,17 @@ export function BuilderScreen({
 												? viewColumn.sortOrder === 'asc'
 													? Liferay.Language.get(
 															'ascending'
-													  )
+														)
 													: Liferay.Language.get(
 															'descending'
-													  )
+														)
 												: filter
-												? viewColumn?.objectFieldBusinessType
-												: getLocalizableLabel(
-														creationLanguageId as Liferay.Language.Locale,
-														viewColumn?.label,
-														viewColumn.objectFieldName
-												  )
+													? viewColumn?.objectFieldBusinessType
+													: getLocalizableLabel(
+															creationLanguageId as Liferay.Language.Locale,
+															viewColumn?.label,
+															viewColumn.objectFieldName
+														)
 										}
 										thirdColumnValues={
 											viewColumn?.valueList ??

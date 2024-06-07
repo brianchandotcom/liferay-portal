@@ -20,12 +20,8 @@ const ActionsInfo = ({
 	sectionsLength,
 	setSections,
 }) => {
-	const {
-		functionActionExecutors,
-		selectedItem,
-		setSelectedItem,
-		statuses,
-	} = useContext(DiagramBuilderContext);
+	const {functionActionExecutors, selectedItem, setSelectedItem, statuses} =
+		useContext(DiagramBuilderContext);
 	const {actions} = selectedItem.data;
 
 	const [script, setScript] = useState(actions?.script?.[index] || '');
@@ -92,9 +88,8 @@ const ActionsInfo = ({
 		);
 	}
 
-	const [selectedActionType, setSelectedActionType] = useState(
-		defaultActionType
-	);
+	const [selectedActionType, setSelectedActionType] =
+		useState(defaultActionType);
 
 	if (
 		selectedItem.type === 'task' &&

@@ -25,6 +25,7 @@ export function useProductQuotes() {
 
 	useEffect(() => {
 		_getProductQuotes();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

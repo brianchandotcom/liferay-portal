@@ -24,7 +24,7 @@ export default function SearchResultsMessage({
 					? sub(Liferay.Language.get('showing-x-x'), [
 							numberOfResults.toString(),
 							resultType,
-					  ])
+						])
 					: Liferay.Language.get('no-results-found');
 
 				setText(message);

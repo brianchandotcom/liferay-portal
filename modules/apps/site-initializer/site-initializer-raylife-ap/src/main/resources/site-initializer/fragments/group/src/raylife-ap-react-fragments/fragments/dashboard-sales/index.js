@@ -118,9 +118,8 @@ export default function () {
 			).then((results) => {
 				const thisMonthGoalResult = results?.data?.items;
 
-				const arrayValuesOfGoalsThisMonth = getArrayWithValuesOfGoals(
-					thisMonthGoalResult
-				);
+				const arrayValuesOfGoalsThisMonth =
+					getArrayWithValuesOfGoals(thisMonthGoalResult);
 
 				setSumOfGoalsCurrentMonth(
 					getSumFromArrayOfValues(arrayValuesOfGoalsThisMonth)
@@ -172,9 +171,8 @@ export default function () {
 			).then((results) => {
 				const policiesThreeMonthsSalesResult = results?.data?.items;
 
-				const arrayValuesOfSalesThreeMonths = getArrayFromArrayOfObjects(
-					policiesThreeMonthsSalesResult
-				);
+				const arrayValuesOfSalesThreeMonths =
+					getArrayFromArrayOfObjects(policiesThreeMonthsSalesResult);
 
 				setSumOfSalesThreeMonths(
 					getSumFromArrayOfValues(arrayValuesOfSalesThreeMonths)
@@ -227,9 +225,8 @@ export default function () {
 			).then((results) => {
 				const allYearGoalsResult = results?.data?.items;
 
-				const arrayValuesOfGoalsAllYear = getArrayWithValuesOfGoals(
-					allYearGoalsResult
-				);
+				const arrayValuesOfGoalsAllYear =
+					getArrayWithValuesOfGoals(allYearGoalsResult);
 
 				setSumOfGoalsYearToDate(
 					getSumFromArrayOfValues(arrayValuesOfGoalsAllYear)
@@ -244,9 +241,8 @@ export default function () {
 			).then((results) => {
 				const policiesSalesUntilCurrentMonth = results?.data?.items;
 
-				const arrayValueOfSalesUntilCurrentMonth = getArrayFromArrayOfObjects(
-					policiesSalesUntilCurrentMonth
-				);
+				const arrayValueOfSalesUntilCurrentMonth =
+					getArrayFromArrayOfObjects(policiesSalesUntilCurrentMonth);
 
 				setSumOfSalesYearToDate(
 					getSumFromArrayOfValues(arrayValueOfSalesUntilCurrentMonth)
@@ -257,6 +253,7 @@ export default function () {
 		setDaysUntilGoal(
 			getDaysUntilGoal(getCurrentDay, getCurrentMonth, selectedFilterDate)
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedFilterDate]);
 

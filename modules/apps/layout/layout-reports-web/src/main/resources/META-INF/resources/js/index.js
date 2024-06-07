@@ -23,9 +23,8 @@ export function App(props) {
 		`layoutReportsPanelToggleId`
 	);
 
-	const layoutReportsPanelId = document.getElementById(
-		`layoutReportsPanelId`
-	);
+	const layoutReportsPanelId =
+		document.getElementById(`layoutReportsPanelId`);
 
 	const sidenavInstance = Liferay.SideNavigation.instance(
 		layoutReportsPanelToggle

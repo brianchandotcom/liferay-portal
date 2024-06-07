@@ -53,7 +53,7 @@ export function formatPointForForecast(point) {
 				high: point.forecastUpperBound,
 				low: point.forecastLowerBound,
 				mid: point.forecast,
-		  };
+			};
 }
 
 export function formatPointsForChart(points, categories) {
@@ -65,7 +65,7 @@ export function formatPointsForChart(points, categories) {
 					`${c.id}`,
 					...getValuesForCategory(points, c),
 				]),
-		  ];
+			];
 }
 
 export function getCategoriesArray(items = []) {
@@ -114,7 +114,7 @@ export function getPredictionDate(points) {
 					.slice()
 					.reverse()
 					.find((d) => d.actual !== NULL_VALUE).timestamp
-		  );
+			);
 }
 
 export function hasNoActualNorForecastValue({actual, forecast}) {

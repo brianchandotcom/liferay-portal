@@ -52,9 +52,8 @@ export default class SidePanel extends React.Component {
 				document.querySelector(this.props.wrapperSelector) ||
 				document.querySelector('body'),
 		};
-		this.handleIframeClickOnSubmit = this.handleIframeClickOnSubmit.bind(
-			this
-		);
+		this.handleIframeClickOnSubmit =
+			this.handleIframeClickOnSubmit.bind(this);
 		this.handleIframeSubmit = this.handleIframeSubmit.bind(this);
 		this.handleContentLoaded = this.handleContentLoaded.bind(this);
 		this.close = this.close.bind(this);
@@ -136,9 +135,10 @@ export default class SidePanel extends React.Component {
 		}
 
 		if (this.iframeRef.current?.contentWindow) {
-			const nestedIframe = this.iframeRef.current.contentDocument.querySelector(
-				'.side-panel iframe'
-			);
+			const nestedIframe =
+				this.iframeRef.current.contentDocument.querySelector(
+					'.side-panel iframe'
+				);
 
 			if (
 				!nestedIframe ||
@@ -206,7 +206,8 @@ export default class SidePanel extends React.Component {
 			},
 			() => {
 				if (this.iframeRef.current?.contentWindow) {
-					this.iframeRef.current.contentWindow.location = this.state.currentURL;
+					this.iframeRef.current.contentWindow.location =
+						this.state.currentURL;
 				}
 			}
 		);
@@ -319,9 +320,8 @@ export default class SidePanel extends React.Component {
 				});
 			}
 
-			const submitButton = iframeDocument.querySelector(
-				'[type="submit"]'
-			);
+			const submitButton =
+				iframeDocument.querySelector('[type="submit"]');
 
 			if (submitButton) {
 				submitButton.addEventListener(

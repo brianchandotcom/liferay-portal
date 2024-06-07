@@ -15,9 +15,8 @@ export default function ({
 	orderRuleId,
 	rootPortletId,
 }) {
-	const orderRuleOrderTypesResource = CommerceServiceProvider.AdminOrderAPI(
-		'v1'
-	);
+	const orderRuleOrderTypesResource =
+		CommerceServiceProvider.AdminOrderAPI('v1');
 
 	function selectItem(orderType) {
 		const orderTypeData = {

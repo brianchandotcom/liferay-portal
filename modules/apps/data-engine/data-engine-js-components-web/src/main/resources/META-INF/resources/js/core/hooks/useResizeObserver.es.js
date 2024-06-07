@@ -13,14 +13,8 @@ export function useResizeObserver(targetRef) {
 
 		if ('ResizeObserver' in window) {
 			resizeObserver = new ResizeObserver((entries) => {
-				const {
-					bottom,
-					height,
-					left,
-					right,
-					top,
-					width,
-				} = entries[0].contentRect;
+				const {bottom, height, left, right, top, width} =
+					entries[0].contentRect;
 
 				setContentRect({bottom, height, left, right, top, width});
 			});

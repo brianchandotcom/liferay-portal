@@ -64,14 +64,14 @@ const InputQuantitySelector = forwardRef(
 						max,
 						unitOfMeasure.incrementalOrderQuantity,
 						unitOfMeasure.precision
-				  )
+					)
 				: getProductMaxQuantity(Math.ceil(max), Math.ceil(step)),
 			min: unitOfMeasure
 				? getMinQuantity(
 						min,
 						unitOfMeasure.incrementalOrderQuantity,
 						unitOfMeasure.precision
-				  )
+					)
 				: getMinQuantity(Math.ceil(min), Math.ceil(step)),
 			quantity,
 			step: unitOfMeasure

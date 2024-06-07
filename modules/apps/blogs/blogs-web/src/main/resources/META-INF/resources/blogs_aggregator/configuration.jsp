@@ -92,10 +92,8 @@ if (organizationId > 0) {
 								);
 							},
 							selectEventName: '<portlet:namespace />selectOrganization',
-							title:
-								'<liferay-ui:message arguments="organization" key="select-x" />',
-							url:
-								'<%= blogsAggregatorViewDisplayContext.getOrganizationItemSelectorURL() %>',
+							title: '<liferay-ui:message arguments="organization" key="select-x" />',
+							url: '<%= blogsAggregatorViewDisplayContext.getOrganizationItemSelectorURL() %>',
 						});
 					}
 				);

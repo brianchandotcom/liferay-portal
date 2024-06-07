@@ -56,7 +56,7 @@ const updateUsedCategoryPortlet = ({category, item, used}) => {
 				categories: category.categories.map((category) =>
 					updateUsedCategoryPortlet({category, item, used})
 				),
-		  }
+			}
 		: category;
 };
 
@@ -102,9 +102,8 @@ const normalizeCollections = (collection) => {
 	};
 
 	if (collection.categories?.length) {
-		normalizedElement.collections = collection.categories.map(
-			normalizeCollections
-		);
+		normalizedElement.collections =
+			collection.categories.map(normalizeCollections);
 	}
 
 	return normalizedElement;
@@ -189,7 +188,7 @@ const AddPanel = ({
 							id: 'content',
 							label: Liferay.Language.get('content'),
 						},
-				  ]
+					]
 				: []),
 		],
 		[contents, hasAddContentPermission, widgets]

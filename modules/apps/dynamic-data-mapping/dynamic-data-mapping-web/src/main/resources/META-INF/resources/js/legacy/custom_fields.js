@@ -150,9 +150,8 @@ AUI.add(
 		const UNLOCALIZABLE_FIELD_ATTRS =
 			Liferay.FormBuilder.UNLOCALIZABLE_FIELD_ATTRS;
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get(
-			'please-enter-a-unique-field-name'
-		);
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName =
+			Liferay.Language.get('please-enter-a-unique-field-name');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function (
 			value,
@@ -173,9 +172,10 @@ AUI.add(
 			return !duplicate;
 		};
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get(
-			'please-enter-only-alphanumeric-characters-or-underscore'
-		);
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName =
+			Liferay.Language.get(
+				'please-enter-only-alphanumeric-characters-or-underscore'
+			);
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function (value) {
 			return LiferayFormBuilderUtil.validateFieldName(value);
@@ -357,10 +357,11 @@ AUI.add(
 						'p_p_state': 'pop_up',
 					};
 
-					const documentLibrarySelectorURL = Liferay.Util.PortletURL.createPortletURL(
-						themeDisplay.getLayoutRelativeControlPanelURL(),
-						documentLibrarySelectorParameters
-					);
+					const documentLibrarySelectorURL =
+						Liferay.Util.PortletURL.createPortletURL(
+							themeDisplay.getLayoutRelativeControlPanelURL(),
+							documentLibrarySelectorParameters
+						);
 
 					return documentLibrarySelectorURL.toString();
 				},
@@ -429,7 +430,8 @@ AUI.add(
 
 					const boundingBox = instance.get('boundingBox');
 
-					const documentLibraryDialogOpen = instance._isDocumentLibraryDialogOpen();
+					const documentLibraryDialogOpen =
+						instance._isDocumentLibraryDialogOpen();
 
 					if (
 						!documentLibraryDialogOpen &&
@@ -494,9 +496,10 @@ AUI.add(
 						LiferayFormBuilderUtil.getFileEntry(
 							val,
 							(fileEntry) => {
-								const url = LiferayFormBuilderUtil.getFileEntryURL(
-									fileEntry
-								);
+								const url =
+									LiferayFormBuilderUtil.getFileEntryURL(
+										fileEntry
+									);
 
 								instance._syncFileLabel(fileEntry.title, url);
 							}
@@ -614,10 +617,11 @@ AUI.add(
 						'p_p_state': 'pop_up',
 					};
 
-					const webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
-						themeDisplay.getLayoutRelativeControlPanelURL(),
-						webContentSelectorParameters
-					);
+					const webContentSelectorURL =
+						Liferay.Util.PortletURL.createRenderURL(
+							themeDisplay.getLayoutRelativeControlPanelURL(),
+							webContentSelectorParameters
+						);
 
 					return webContentSelectorURL.toString();
 				},
@@ -958,34 +962,34 @@ AUI.add(
 			instance._syncLocaleUI(event.newVal);
 		};
 
-		LocalizableFieldSupport.prototype._afterLocalizableFieldChange = function (
-			event
-		) {
-			const instance = this;
+		LocalizableFieldSupport.prototype._afterLocalizableFieldChange =
+			function (event) {
+				const instance = this;
 
-			const builder = instance.get('builder');
+				const builder = instance.get('builder');
 
-			const translationManager = builder.translationManager;
+				const translationManager = builder.translationManager;
 
-			const editingLocale = translationManager.get('editingLocale');
+				const editingLocale = translationManager.get('editingLocale');
 
-			instance._updateLocalizationMapAttribute(
-				editingLocale,
-				event.attrName
-			);
-		};
+				instance._updateLocalizationMapAttribute(
+					editingLocale,
+					event.attrName
+				);
+			};
 
-		LocalizableFieldSupport.prototype._afterLocalizableFieldRender = function () {
-			const instance = this;
+		LocalizableFieldSupport.prototype._afterLocalizableFieldRender =
+			function () {
+				const instance = this;
 
-			const builder = instance.get('builder');
+				const builder = instance.get('builder');
 
-			const translationManager = builder.translationManager;
+				const translationManager = builder.translationManager;
 
-			const editingLocale = translationManager.get('editingLocale');
+				const editingLocale = translationManager.get('editingLocale');
 
-			instance._updateLocalizationMap(editingLocale);
-		};
+				instance._updateLocalizationMap(editingLocale);
+			};
 
 		LocalizableFieldSupport.prototype._getReadOnlyAttributes = function (
 			val
@@ -1082,143 +1086,137 @@ AUI.add(
 			});
 		};
 
-		LocalizableFieldSupport.prototype._updateLocalizationMapAttribute = function (
-			locale,
-			attributeName
-		) {
-			const instance = this;
+		LocalizableFieldSupport.prototype._updateLocalizationMapAttribute =
+			function (locale, attributeName) {
+				const instance = this;
 
-			if (attributeName === 'options') {
-				instance._updateLocalizationMapOptions(locale);
-			}
-			else {
-				const localizationMap = instance.get('localizationMap');
+				if (attributeName === 'options') {
+					instance._updateLocalizationMapOptions(locale);
+				}
+				else {
+					const localizationMap = instance.get('localizationMap');
 
-				const localeMap = localizationMap[locale] || {};
+					const localeMap = localizationMap[locale] || {};
 
-				localeMap[attributeName] = instance.get(attributeName);
+					localeMap[attributeName] = instance.get(attributeName);
 
-				localizationMap[locale] = localeMap;
+					localizationMap[locale] = localeMap;
 
-				instance.set('localizationMap', localizationMap);
-			}
-		};
+					instance.set('localizationMap', localizationMap);
+				}
+			};
 
-		LocalizableFieldSupport.prototype._updateLocalizationMapOptions = function (
-			locale
-		) {
-			const instance = this;
+		LocalizableFieldSupport.prototype._updateLocalizationMapOptions =
+			function (locale) {
+				const instance = this;
 
-			const options = instance.get('options');
+				const options = instance.get('options');
 
-			if (options) {
-				options.forEach((item) => {
-					let localizationMap = item.localizationMap;
+				if (options) {
+					options.forEach((item) => {
+						let localizationMap = item.localizationMap;
 
-					if (!isObject(localizationMap)) {
-						localizationMap = {};
-					}
+						if (!isObject(localizationMap)) {
+							localizationMap = {};
+						}
 
-					localizationMap[locale] = {
-						label: item.label,
-					};
+						localizationMap[locale] = {
+							label: item.label,
+						};
 
-					item.localizationMap = localizationMap;
-				});
-			}
-		};
+						item.localizationMap = localizationMap;
+					});
+				}
+			};
 
 		const SerializableFieldSupport = function () {};
 
-		SerializableFieldSupport.prototype._addDefinitionFieldLocalizedAttributes = function (
-			fieldJSON
-		) {
-			const instance = this;
+		SerializableFieldSupport.prototype._addDefinitionFieldLocalizedAttributes =
+			function (fieldJSON) {
+				const instance = this;
 
-			LOCALIZABLE_FIELD_ATTRS.forEach((attr) => {
-				if (attr === 'options') {
-					if (
-						instanceOf(instance, A.FormBuilderMultipleChoiceField)
-					) {
-						instance._addDefinitionFieldOptions(fieldJSON);
+				LOCALIZABLE_FIELD_ATTRS.forEach((attr) => {
+					if (attr === 'options') {
+						if (
+							instanceOf(
+								instance,
+								A.FormBuilderMultipleChoiceField
+							)
+						) {
+							instance._addDefinitionFieldOptions(fieldJSON);
+						}
 					}
-				}
-				else {
-					fieldJSON[attr] = instance._getLocalizedValue(attr);
-				}
-			});
-		};
+					else {
+						fieldJSON[attr] = instance._getLocalizedValue(attr);
+					}
+				});
+			};
 
-		SerializableFieldSupport.prototype._addDefinitionFieldUnlocalizedAttributes = function (
-			fieldJSON
-		) {
-			const instance = this;
+		SerializableFieldSupport.prototype._addDefinitionFieldUnlocalizedAttributes =
+			function (fieldJSON) {
+				const instance = this;
 
-			UNLOCALIZABLE_FIELD_ATTRS.forEach((attr) => {
-				fieldJSON[attr] = instance.get(attr);
-			});
-		};
+				UNLOCALIZABLE_FIELD_ATTRS.forEach((attr) => {
+					fieldJSON[attr] = instance.get(attr);
+				});
+			};
 
-		SerializableFieldSupport.prototype._addDefinitionFieldOptions = function (
-			fieldJSON
-		) {
-			const instance = this;
+		SerializableFieldSupport.prototype._addDefinitionFieldOptions =
+			function (fieldJSON) {
+				const instance = this;
 
-			const options = instance.get('options');
+				const options = instance.get('options');
 
-			const fieldOptions = [];
+				const fieldOptions = [];
 
-			if (options) {
-				const builder = instance.get('builder');
+				if (options) {
+					const builder = instance.get('builder');
 
-				const translationManager = builder.translationManager;
+					const translationManager = builder.translationManager;
 
-				const availableLocales = translationManager.get(
-					'availableLocales'
-				);
+					const availableLocales =
+						translationManager.get('availableLocales');
 
-				options.forEach((option) => {
-					const fieldOption = {};
+					options.forEach((option) => {
+						const fieldOption = {};
 
-					const localizationMap = option.localizationMap;
+						const localizationMap = option.localizationMap;
 
-					fieldOption.value = option.value;
-					fieldOption.label = {};
+						fieldOption.value = option.value;
+						fieldOption.label = {};
 
-					availableLocales.forEach((locale) => {
-						const label = instance._getValue(
-							'label',
-							locale,
-							localizationMap
-						);
+						availableLocales.forEach((locale) => {
+							const label = instance._getValue(
+								'label',
+								locale,
+								localizationMap
+							);
 
-						fieldOption.label[
-							locale
-						] = LiferayFormBuilderUtil.normalizeValue(label);
+							fieldOption.label[locale] =
+								LiferayFormBuilderUtil.normalizeValue(label);
+						});
+
+						fieldOptions.push(fieldOption);
 					});
 
-					fieldOptions.push(fieldOption);
+					fieldJSON.options = fieldOptions;
+				}
+			};
+
+		SerializableFieldSupport.prototype._addDefinitionFieldNestedFields =
+			function (fieldJSON) {
+				const instance = this;
+
+				const nestedFields = [];
+
+				instance.get('fields').each((childField) => {
+					nestedFields.push(childField.serialize());
 				});
 
-				fieldJSON.options = fieldOptions;
-			}
-		};
-
-		SerializableFieldSupport.prototype._addDefinitionFieldNestedFields = function (
-			fieldJSON
-		) {
-			const instance = this;
-
-			const nestedFields = [];
-
-			instance.get('fields').each((childField) => {
-				nestedFields.push(childField.serialize());
-			});
-
-			if (nestedFields.length) {
-				fieldJSON.nestedFields = nestedFields;
-			}
-		};
+				if (nestedFields.length) {
+					fieldJSON.nestedFields = nestedFields;
+				}
+			};
 
 		SerializableFieldSupport.prototype._getLocalizedValue = function (
 			attribute
@@ -1273,6 +1271,7 @@ AUI.add(
 			}
 
 			for (const localizationMapLocale in localizationMap) {
+
 				// eslint-disable-next-line @liferay/aui/no-object
 				value = A.Object.getValue(localizationMap, [
 					localizationMapLocale,
@@ -1435,10 +1434,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMColorField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMColorField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.forEach((item, index, collection) => {
 						const attributeName = item.attributeName;
@@ -1478,10 +1478,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMDateField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMDateField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.forEach((item, index, collection) => {
 						const attributeName = item.attributeName;
@@ -1509,10 +1510,11 @@ AUI.add(
 										let retVal = val;
 
 										if (Array.isArray(val)) {
-											const formattedValue = A.DataType.Date.parse(
-												instance.get('dateFormat'),
-												val[0]
-											);
+											const formattedValue =
+												A.DataType.Date.parse(
+													instance.get('dateFormat'),
+													val[0]
+												);
 
 											retVal = [formattedValue];
 										}
@@ -1669,9 +1671,10 @@ AUI.add(
 										const isBackwardNavigation =
 											isTabPressed && isShiftPressed;
 
-										const hasClassName = domEvent.target.hasClass(
-											'yui3-calendar-focused'
-										);
+										const hasClassName =
+											domEvent.target.hasClass(
+												'yui3-calendar-focused'
+											);
 
 										if (
 											isBackwardNavigation &&
@@ -1719,10 +1722,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMDecimalField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMDecimalField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.forEach((item, index, collection) => {
 						const attributeName = item.attributeName;
@@ -1774,10 +1778,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMDocumentLibraryField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMDocumentLibraryField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.forEach((item) => {
 						const attributeName = item.attributeName;
@@ -1918,10 +1923,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMIntegerField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMIntegerField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.forEach((item, index, collection) => {
 						const attributeName = item.attributeName;
@@ -1961,10 +1967,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMIntegerField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMIntegerField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.forEach((item, index, collection) => {
 						const attributeName = item.attributeName;
@@ -2168,10 +2175,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMSeparatorField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMSeparatorField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.push({
 						attributeName: 'style',
@@ -2237,10 +2245,11 @@ AUI.add(
 				getPropertyModel() {
 					const instance = this;
 
-					const model = DDMJournalArticleField.superclass.getPropertyModel.apply(
-						instance,
-						arguments
-					);
+					const model =
+						DDMJournalArticleField.superclass.getPropertyModel.apply(
+							instance,
+							arguments
+						);
 
 					model.push({
 						attributeName: 'style',

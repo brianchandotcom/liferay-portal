@@ -241,9 +241,11 @@ export function ModalImportContent({
 										else {
 											setError(undefined);
 											setExternalReferenceCode(
-												(JSONFile as {
-													externalReferenceCode: string;
-												}).externalReferenceCode
+												(
+													JSONFile as {
+														externalReferenceCode: string;
+													}
+												).externalReferenceCode
 											);
 											setImportedObjectDefinitions(
 												undefined
@@ -285,7 +287,8 @@ export function ModalImportContent({
 
 						<ClayButton
 							className={classNames({
-								'lfr-object__modal-import-content-loading-button': importLoading,
+								'lfr-object__modal-import-content-loading-button':
+									importLoading,
 							})}
 							disabled={
 								getImportButtonDisableState() || importLoading

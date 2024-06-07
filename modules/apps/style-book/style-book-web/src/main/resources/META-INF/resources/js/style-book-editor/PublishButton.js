@@ -17,12 +17,10 @@ export default function PublishButton() {
 	const [openPublishModal, setOpenPublishModal] = useState(false);
 	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 
-	const {
-		observer: observerPublishModal,
-		onClose: onClosePublishModal,
-	} = useModal({
-		onClose: () => setOpenPublishModal(false),
-	});
+	const {observer: observerPublishModal, onClose: onClosePublishModal} =
+		useModal({
+			onClose: () => setOpenPublishModal(false),
+		});
 
 	const handleSubmit = () => {
 		if (formRef.current) {

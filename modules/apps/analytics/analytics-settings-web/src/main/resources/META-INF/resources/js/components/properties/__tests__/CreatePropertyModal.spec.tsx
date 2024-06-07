@@ -94,6 +94,7 @@ const Component: React.FC<IModalProps> = ({onCancel}) => {
 								}
 								onClick={() => {}}
 							>
+
 								{/* {submitting && <Loading inline />} */}
 
 								{Liferay.Language.get('create')}

@@ -111,7 +111,9 @@
 	&.result-ranking-item-focus {
 		border-color: transparent;
 		border-radius: 2px;
-		box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primaryL2;
+		box-shadow:
+			0 0 0 0.125rem $white,
+			0 0 0 0.25rem $primaryL2;
 		z-index: 2;
 
 		&.result-ranking-item-reorder {

@@ -11,11 +11,10 @@ type ScreenReaderAnnouncerContextType = {
 	sendMessage: (message: string) => void;
 };
 
-const ScreenReaderAnnouncerContext = React.createContext<
-	ScreenReaderAnnouncerContextType
->({
-	sendMessage: () => {},
-});
+const ScreenReaderAnnouncerContext =
+	React.createContext<ScreenReaderAnnouncerContextType>({
+		sendMessage: () => {},
+	});
 
 function ScreenReaderAnnouncerContextProvider({
 	children,

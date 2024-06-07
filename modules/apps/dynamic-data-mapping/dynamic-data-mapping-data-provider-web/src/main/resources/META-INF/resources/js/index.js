@@ -35,10 +35,11 @@ export function DDMDataProviderManagementToolbarPropsTransformer({
 							if (form && searchContainer) {
 								postForm(form, {
 									data: {
-										deleteDataProviderInstanceIds: getCheckedCheckboxes(
-											searchContainer,
-											`${portletNamespace}allRowIds`
-										),
+										deleteDataProviderInstanceIds:
+											getCheckedCheckboxes(
+												searchContainer,
+												`${portletNamespace}allRowIds`
+											),
 									},
 									url: deleteDataProviderURL,
 								});

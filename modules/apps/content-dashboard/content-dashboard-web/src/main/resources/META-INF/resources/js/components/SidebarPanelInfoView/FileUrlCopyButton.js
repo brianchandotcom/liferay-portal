@@ -63,8 +63,8 @@ const FileUrlCopyButton = ({url}) => {
 								showFeedback
 									? 'check'
 									: error
-									? 'exclamation-circle'
-									: 'copy'
+										? 'exclamation-circle'
+										: 'copy'
 							}
 							title={Liferay.Language.get('copy')}
 						/>

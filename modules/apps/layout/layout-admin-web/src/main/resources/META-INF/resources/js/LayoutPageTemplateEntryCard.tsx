@@ -66,10 +66,8 @@ export default function LayoutPageTemplateEntryCard({
 	};
 
 	const [entryIndex, setEntryIndex] = useState(0);
-	const [
-		layoutPageTemplateEntryList,
-		setLayoutPageTemplateEntryList,
-	] = useState<LayoutPageTemplateEntryList | null>(null);
+	const [layoutPageTemplateEntryList, setLayoutPageTemplateEntryList] =
+		useState<LayoutPageTemplateEntryList | null>(null);
 
 	const updateEntryIndex = (direction: 'previous' | 'next') => {
 		setEntryIndex((previousIndex) => {
@@ -230,7 +228,8 @@ function PreviewModalContent({
 	setLayoutPageTemplateEntryList,
 	updateEntryIndex,
 }: IPreviewModalContentProps) {
-	const iframeRef = useRef() as React.MutableRefObject<HTMLIFrameElement | null>;
+	const iframeRef =
+		useRef() as React.MutableRefObject<HTMLIFrameElement | null>;
 
 	const layoutPageTemplateEntry = layoutPageTemplateEntryList
 		? layoutPageTemplateEntryList[entryIndex]

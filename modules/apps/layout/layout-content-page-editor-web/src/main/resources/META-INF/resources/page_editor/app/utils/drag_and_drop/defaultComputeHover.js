@@ -174,10 +174,8 @@ export default function defaultComputeHover({
 					!shouldBeIgnoredInElevation(parent)
 				) {
 					if (maximumDepth > 1) {
-						const [
-							grandParent,
-							parentSibling,
-						] = getElevatedTargetItem(parent, maximumDepth - 1);
+						const [grandParent, parentSibling] =
+							getElevatedTargetItem(parent, maximumDepth - 1);
 
 						if (grandParent) {
 							return [grandParent, parentSibling];
@@ -265,15 +263,13 @@ function getItemPosition(item, monitor, targetRefs, orientation) {
 	const totalElevationBorderSize =
 		elevationStepSize * MAXIMUM_ELEVATION_STEPS;
 
-	const [
-		targetPositionWithMiddle,
-		targetPositionWithoutMiddle,
-	] = getDropTargetPosition(
-		clientOffset,
-		totalElevationBorderSize,
-		targetPositions,
-		targetData
-	);
+	const [targetPositionWithMiddle, targetPositionWithoutMiddle] =
+		getDropTargetPosition(
+			clientOffset,
+			totalElevationBorderSize,
+			targetPositions,
+			targetData
+		);
 
 	let elevationDepth = 0;
 

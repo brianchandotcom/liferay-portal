@@ -74,10 +74,8 @@ function PageContentSelectors({
 	const [selectedSegmentEntry, setSelectedSegmentEntry] = useState(
 		segmentsEntries?.[0]
 	);
-	const [
-		selectedSegmentsExperience,
-		setSelectedSegmentsExperience,
-	] = useState(segmentsExperiences?.[0]);
+	const [selectedSegmentsExperience, setSelectedSegmentsExperience] =
+		useState(segmentsExperiences?.[0]);
 
 	const formRef = useRef(null);
 	const firstRenderRef = useRef(true);
@@ -145,11 +143,11 @@ function PageContentSelectors({
 			return;
 		}
 
-		// @ts-ignore
+		const sidenavInstance =
 
-		const sidenavInstance = Liferay.SideNavigation.initialize(
-			simulationToggle
-		);
+			// @ts-ignore
+
+			Liferay.SideNavigation.initialize(simulationToggle);
 
 		sidenavInstance.on('closed.lexicon.sidenav', () => {
 			fetchDeactivateSimulation();
@@ -174,6 +172,7 @@ function PageContentSelectors({
 
 			Liferay.SideNavigation.destroy(simulationToggle);
 		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fetchDeactivateSimulation]);
 
@@ -222,6 +221,7 @@ function PageContentSelectors({
 				);
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedPreviewOption]);
 

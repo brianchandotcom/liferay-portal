@@ -541,7 +541,7 @@ function getNumberOfItems(collection, collectionConfig) {
 			: Math.min(
 					collectionConfig.numberOfPages * itemsPerPage,
 					collection.totalNumberOfItems
-			  );
+				);
 	}
 
 	return collectionConfig.displayAllItems
@@ -549,7 +549,7 @@ function getNumberOfItems(collection, collectionConfig) {
 		: Math.min(
 				collectionConfig.numberOfItems,
 				collection.totalNumberOfItems
-		  );
+			);
 }
 
 function getNumberOfPages(collection, collectionConfig) {
@@ -563,7 +563,7 @@ function getNumberOfPages(collection, collectionConfig) {
 		: Math.min(
 				Math.ceil(collection.totalNumberOfItems / itemsPerPage),
 				collectionConfig.numberOfPages
-		  );
+			);
 }
 
 export default Collection;

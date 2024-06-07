@@ -29,7 +29,7 @@ export default function RESTApplicationDropdownMenu({
 			query
 				? initialRESTApplications.filter((restApplication) =>
 						restApplication.match(regexp)
-				  ) || []
+					) || []
 				: initialRESTApplications
 		);
 	};

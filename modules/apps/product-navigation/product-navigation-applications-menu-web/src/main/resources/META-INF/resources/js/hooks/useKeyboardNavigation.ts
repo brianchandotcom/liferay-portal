@@ -50,9 +50,8 @@ export default function useKeyboardNavigation() {
 	useEventListener(
 		'blur',
 		(event) => {
-			const keyboardEvent = (event as unknown) as React.FocusEvent<
-				HTMLElement
-			>;
+			const keyboardEvent =
+				event as unknown as React.FocusEvent<HTMLElement>;
 
 			const menu = keyboardEvent.target?.closest(
 				'.applications-menu-nav-columns'

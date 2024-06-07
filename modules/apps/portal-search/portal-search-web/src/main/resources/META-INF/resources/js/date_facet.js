@@ -161,13 +161,11 @@ AUI.add(
 
 				const toDate = instance.toInputDatePicker.getDate();
 
-				const dateFromParameter = DateFacetFilterUtil.toLocaleDateStringFormatted(
-					fromDate
-				);
+				const dateFromParameter =
+					DateFacetFilterUtil.toLocaleDateStringFormatted(fromDate);
 
-				const dateToParameter = DateFacetFilterUtil.toLocaleDateStringFormatted(
-					toDate
-				);
+				const dateToParameter =
+					DateFacetFilterUtil.toLocaleDateStringFormatted(toDate);
 
 				const param = instance.parameterName;
 				const paramFrom = param + 'From';

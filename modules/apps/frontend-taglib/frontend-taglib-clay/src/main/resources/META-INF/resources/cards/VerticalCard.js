@@ -47,9 +47,10 @@ export default function VerticalCard({
 	title,
 	...otherProps
 }) {
-	const normalizedActions = useMemo(() => normalizeDropdownItems(actions), [
-		actions,
-	]);
+	const normalizedActions = useMemo(
+		() => normalizeDropdownItems(actions),
+		[actions]
+	);
 
 	const [selected, setSelected] = useState(initialSelected);
 
@@ -144,7 +145,7 @@ export default function VerticalCard({
 				selectable
 					? (selected) => {
 							setSelected(selected);
-					  }
+						}
 					: null
 			}
 			selectable={selectable}

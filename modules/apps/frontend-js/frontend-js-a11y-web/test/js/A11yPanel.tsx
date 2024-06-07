@@ -92,11 +92,8 @@ describe('A11yPanel', () => {
 		});
 
 		it('clicking in a tag will navigate to the desired violation description', () => {
-			const {
-				getAllByRole,
-				getByText,
-				queryByText,
-			} = renderA11yToolSidebar();
+			const {getAllByRole, getByText, queryByText} =
+				renderA11yToolSidebar();
 
 			const [firstViolationTab] = getAllByRole('tab');
 
@@ -120,11 +117,8 @@ describe('A11yPanel', () => {
 		describe('Violations Filter', () => {
 			describe('by Impact', () => {
 				it('when selecting CRITICAL impact it shows only CRITICAL violations', () => {
-					const {
-						container,
-						getByLabelText,
-						getByTestId,
-					} = renderA11yToolSidebar();
+					const {container, getByLabelText, getByTestId} =
+						renderA11yToolSidebar();
 
 					userEvents.click(getByLabelText('open-violations-filter'));
 
@@ -137,19 +131,15 @@ describe('A11yPanel', () => {
 					expect(getByTestId('moderate')).not.toBeChecked();
 					expect(getByTestId('minor')).not.toBeChecked();
 
-					const tabs = container.querySelectorAll(
-						'button[role="tab"]'
-					);
+					const tabs =
+						container.querySelectorAll('button[role="tab"]');
 
 					expect(tabs.length).toBe(1);
 				});
 
 				it('when selecting CRITICAL, SERIOUS impacts it shows only corresponding violations', () => {
-					const {
-						getAllByText,
-						getByLabelText,
-						getByTestId,
-					} = renderA11yToolSidebar();
+					const {getAllByText, getByLabelText, getByTestId} =
+						renderA11yToolSidebar();
 
 					userEvents.click(getByLabelText('open-violations-filter'));
 
@@ -172,11 +162,8 @@ describe('A11yPanel', () => {
 				});
 
 				it('when selecting CRITICAL, SERIOUS, MODERATE impacts it shows only corresponding violations', () => {
-					const {
-						getAllByText,
-						getByLabelText,
-						getByTestId,
-					} = renderA11yToolSidebar();
+					const {getAllByText, getByLabelText, getByTestId} =
+						renderA11yToolSidebar();
 
 					userEvents.click(getByLabelText('open-violations-filter'));
 
@@ -203,11 +190,8 @@ describe('A11yPanel', () => {
 				});
 
 				it('when selecting CRITICAL, SERIOUS, MODERATE, MINOR impacts it shows only corresponding violations', () => {
-					const {
-						getAllByText,
-						getByLabelText,
-						getByTestId,
-					} = renderA11yToolSidebar();
+					const {getAllByText, getByLabelText, getByTestId} =
+						renderA11yToolSidebar();
 
 					userEvents.click(getByLabelText('open-violations-filter'));
 
@@ -240,11 +224,8 @@ describe('A11yPanel', () => {
 
 			describe('by Category', () => {
 				it('when clicking in a not match category, it will show the violations empty state', () => {
-					const {
-						getByLabelText,
-						getByTestId,
-						getByText,
-					} = renderA11yToolSidebar();
+					const {getByLabelText, getByTestId, getByText} =
+						renderA11yToolSidebar();
 
 					userEvents.click(getByLabelText('open-violations-filter'));
 
@@ -260,12 +241,8 @@ describe('A11yPanel', () => {
 				});
 
 				it('when clicking in a valid category, it will show the violations labelled with this category', () => {
-					const {
-						container,
-						getByLabelText,
-						getByTestId,
-						getByText,
-					} = renderA11yToolSidebar();
+					const {container, getByLabelText, getByTestId, getByText} =
+						renderA11yToolSidebar();
 
 					userEvents.click(getByLabelText('open-violations-filter'));
 
@@ -273,9 +250,8 @@ describe('A11yPanel', () => {
 
 					fireEvent.click(getByTestId('wcag2aa'));
 
-					const tabs = container.querySelectorAll(
-						'button[role="tab"]'
-					);
+					const tabs =
+						container.querySelectorAll('button[role="tab"]');
 
 					expect(tabs.length).toBe(1);
 					expect(
@@ -304,11 +280,8 @@ describe('A11yPanel', () => {
 		});
 
 		xit('navigates to the desired occurrence when clicking', () => {
-			const {
-				getAllByRole,
-				getAllByText,
-				getByText,
-			} = renderA11yToolSidebar();
+			const {getAllByRole, getAllByText, getByText} =
+				renderA11yToolSidebar();
 
 			const [firstViolation] = getAllByRole('tab');
 
@@ -359,12 +332,8 @@ describe('A11yPanel', () => {
 			.mockImplementation(() => null);
 
 		it(`Violations -> Violation -> Go Back() navigates to Violations and doesn't throw anything on console`, () => {
-			const {
-				getAllByRole,
-				getByLabelText,
-				getByRole,
-				getByText,
-			} = renderA11yToolSidebar();
+			const {getAllByRole, getByLabelText, getByRole, getByText} =
+				renderA11yToolSidebar();
 
 			const [firstViolation] = getAllByRole('tab');
 
@@ -389,12 +358,8 @@ describe('A11yPanel', () => {
 		});
 
 		xit(`Violations -> Violation -> Occurrence -> Go Back() navigates to Violation and doesn't throw anything on console`, () => {
-			const {
-				getAllByRole,
-				getByRole,
-				getByText,
-				queryByText,
-			} = renderA11yToolSidebar();
+			const {getAllByRole, getByRole, getByText, queryByText} =
+				renderA11yToolSidebar();
 
 			const [firstViolation] = getAllByRole('tab');
 

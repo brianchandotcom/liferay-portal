@@ -306,10 +306,8 @@ describe('WebContent Plugin', () => {
 		])(
 			'is not fired if asset missing %s attribute',
 			async (label, attrs) => {
-				const [
-					element,
-					paragraph,
-				] = await createDynamicWebContentElement(attrs);
+				const [element, paragraph] =
+					await createDynamicWebContentElement(attrs);
 
 				await userEvent.click(paragraph);
 

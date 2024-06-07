@@ -139,10 +139,10 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 			);
 
 			function updateData() {
-				document.<portlet:namespace />fm.<portlet:namespace />addAccountEntryIds.value = searchContainer.getData();
-				document.<portlet:namespace />fm.<portlet:namespace />deleteAccountEntryIds.value = Array.from(
-					deleteAccountEntryIdsSet
-				).join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />addAccountEntryIds.value =
+					searchContainer.getData();
+				document.<portlet:namespace />fm.<portlet:namespace />deleteAccountEntryIds.value =
+					Array.from(deleteAccountEntryIdsSet).join(',');
 			}
 
 			const searchContainerContentBox = searchContainer.get('contentBox');

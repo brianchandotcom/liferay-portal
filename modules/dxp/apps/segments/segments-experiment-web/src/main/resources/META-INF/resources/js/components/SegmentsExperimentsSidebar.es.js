@@ -82,37 +82,27 @@ function SegmentsExperimentsSidebar({
 		terminateExperimentModal,
 	} = state;
 
-	const {
-		observer: creationModalObserver,
-		onClose: onCreationModalClose,
-	} = useModal({
-		onClose: () => dispatch(closeCreationModal()),
-	});
-	const {
-		observer: editionModalObserver,
-		onClose: onEditionModalClose,
-	} = useModal({
-		onClose: () => dispatch(closeEditionModal()),
-	});
-	const {
-		observer: deletionModalObserver,
-		onClose: onDeletionModalClose,
-	} = useModal({
-		onClose: () => dispatch(closeDeletionModal()),
-	});
-	const {
-		observer: terminateModalObserver,
-		onClose: onTerminateModalClose,
-	} = useModal({
-		onClose: () => dispatch(closeTerminateModal()),
-	});
+	const {observer: creationModalObserver, onClose: onCreationModalClose} =
+		useModal({
+			onClose: () => dispatch(closeCreationModal()),
+		});
+	const {observer: editionModalObserver, onClose: onEditionModalClose} =
+		useModal({
+			onClose: () => dispatch(closeEditionModal()),
+		});
+	const {observer: deletionModalObserver, onClose: onDeletionModalClose} =
+		useModal({
+			onClose: () => dispatch(closeDeletionModal()),
+		});
+	const {observer: terminateModalObserver, onClose: onTerminateModalClose} =
+		useModal({
+			onClose: () => dispatch(closeTerminateModal()),
+		});
 
-	const {
-		observer: publishModalObserver,
-		onClose: onPublishModalClose,
-	} = useModal({
-		onClose: () => dispatch(closePublishModal()),
-	});
+	const {observer: publishModalObserver, onClose: onPublishModalClose} =
+		useModal({
+			onClose: () => dispatch(closePublishModal()),
+		});
 
 	useEffect(() => {
 		const segmentsExperimentAction = getSegmentsExperimentAction();
@@ -304,13 +294,8 @@ function SegmentsExperimentsSidebar({
 	}
 
 	function _handleExperimentCreation(experimentData) {
-		const {
-			description,
-			goal,
-			goalTarget,
-			name,
-			segmentsExperienceId,
-		} = experimentData;
+		const {description, goal, goalTarget, name, segmentsExperienceId} =
+			experimentData;
 
 		const body = {
 			description,
@@ -370,13 +355,8 @@ function SegmentsExperimentsSidebar({
 	}
 
 	function _handleExperimentEdition(experimentData) {
-		const {
-			description,
-			goal,
-			goalTarget,
-			name,
-			segmentsExperimentId,
-		} = experimentData;
+		const {description, goal, goalTarget, name, segmentsExperimentId} =
+			experimentData;
 
 		const body = {
 			description,

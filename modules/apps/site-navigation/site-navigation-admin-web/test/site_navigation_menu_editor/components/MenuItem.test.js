@@ -95,7 +95,7 @@ describe('MenuItem', () => {
 						? {
 								order: to.order,
 								parentSiteNavigationMenuItemId: to.parentId,
-						  }
+							}
 						: null
 				);
 			});
@@ -114,7 +114,7 @@ describe('MenuItem', () => {
 						? {
 								order: to.order,
 								parentSiteNavigationMenuItemId: to.parentId,
-						  }
+							}
 						: null
 				);
 			});

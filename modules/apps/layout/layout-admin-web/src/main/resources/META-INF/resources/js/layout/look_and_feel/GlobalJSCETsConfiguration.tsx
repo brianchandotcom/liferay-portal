@@ -294,10 +294,10 @@ export default function GlobalJSCETsConfiguration({
 											{scriptLocation === 'bottom'
 												? Liferay.Language.get(
 														'page-bottom-js-client-extensions'
-												  )
+													)
 												: Liferay.Language.get(
 														'page-head-js-client-extensions'
-												  )}
+													)}
 										</ClayTable.Cell>
 									</ClayTable.Row>
 

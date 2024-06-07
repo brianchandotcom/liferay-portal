@@ -150,6 +150,7 @@ const DropArea = ({
 			dropArea.removeEventListener('drop', onDropFile);
 			input.removeEventListener('change', onChangeFile);
 		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -175,6 +176,7 @@ const DropArea = ({
 			setShowBadgeInfo(true);
 			_setShowUpload(false);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [files]);
 

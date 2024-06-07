@@ -16,16 +16,16 @@ export default function ({
 	pricingFDSName,
 	spritemap,
 }) {
-	const CommerceProductGroupsResource = CommerceServiceProvider.AdminCatalogAPI(
-		'v1'
-	);
+	const CommerceProductGroupsResource =
+		CommerceServiceProvider.AdminCatalogAPI('v1');
 
 	const id = commercePricingClassId;
 
 	function selectItem(product) {
 		const productData = {
 			productExternalReferenceCode: product.externalReferenceCode,
-			productGroupExternalReferenceCode: pricingClassExternalReferenceCode,
+			productGroupExternalReferenceCode:
+				pricingClassExternalReferenceCode,
 			productGroupId: id,
 			productId: product.productId,
 		};
@@ -49,8 +49,7 @@ export default function ({
 	}
 
 	ItemFinder('itemFinder', 'item-finder-root', {
-		apiUrl:
-			'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
+		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
 		getSelectedItems,
 		inputPlaceholder: Liferay.Language.get('find-a-product'),
 		itemCreation: false,

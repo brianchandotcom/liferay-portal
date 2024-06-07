@@ -1,11 +1,12 @@
 .private-footer {
-	border-top: 1px solid #E2E2E4;
+	border-top: 1px solid #e2e2e4;
 	font-size: 13px;
 	line-height: 16px;
 }
 
-.private-footer, .private-footer a {
-	color: #6C6C75;
+.private-footer,
+.private-footer a {
+	color: #6c6c75;
 }
 
 @media (max-width: 575px) {

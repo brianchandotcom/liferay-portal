@@ -23,14 +23,13 @@ import './RightSidebarObjectFieldDetails.scss';
 import {handleTriggerDeleteObjectField} from '../../ObjectField/deleteObjectFieldUtil';
 
 export function RightSidebarObjectFieldDetails() {
-	const [objectFieldDeleteInfo, setObjectFieldDeleteInfo] = useState<
-		ObjectFieldDeleteInfoProps
-	>({
-		deleteLastPublishedObjectDefinitionObjectField: false,
-		deleteObjectFieldObjectValidationRuleSetting: false,
-		showObjectFieldDeletionConfirmationModal: false,
-		showObjectFieldDeletionNotAllowedModal: false,
-	});
+	const [objectFieldDeleteInfo, setObjectFieldDeleteInfo] =
+		useState<ObjectFieldDeleteInfoProps>({
+			deleteLastPublishedObjectDefinitionObjectField: false,
+			deleteObjectFieldObjectValidationRuleSetting: false,
+			showObjectFieldDeletionConfirmationModal: false,
+			showObjectFieldDeletionNotAllowedModal: false,
+		});
 
 	const [
 		{
@@ -51,21 +50,17 @@ export function RightSidebarObjectFieldDetails() {
 
 	const {edges, nodes} = store.getState();
 
-	const objectDefinitionNodeData = selectedObjectDefinitionNode?.data as ObjectDefinitionNodeData;
+	const objectDefinitionNodeData =
+		selectedObjectDefinitionNode?.data as ObjectDefinitionNodeData;
 
-	const {
-		errors,
-		handleChange,
-		handleValidate,
-		setValues,
-		values,
-	} = useObjectFieldForm({
-		forbiddenChars,
-		forbiddenLastChars,
-		forbiddenNames,
-		initialValues: objectFieldInitialValues,
-		onSubmit: () => {},
-	});
+	const {errors, handleChange, handleValidate, setValues, values} =
+		useObjectFieldForm({
+			forbiddenChars,
+			forbiddenLastChars,
+			forbiddenNames,
+			initialValues: objectFieldInitialValues,
+			onSubmit: () => {},
+		});
 
 	const onSubmit = async (editedObjectField?: Partial<ObjectField>) => {
 		const validationErrors = handleValidate(editedObjectField ?? values);
@@ -110,7 +105,8 @@ export function RightSidebarObjectFieldDetails() {
 							objectDefinitionNodes: nodes,
 							objectRelationshipEdges: edges,
 							selectedObjectDefinitionNode,
-							updatedObjectField: updatedObjectFieldResponse as ObjectField,
+							updatedObjectField:
+								updatedObjectFieldResponse as ObjectField,
 						},
 						type: TYPES.UPDATE_OBJECT_FIELD_NODE_ROW,
 					});
@@ -149,43 +145,47 @@ export function RightSidebarObjectFieldDetails() {
 				<span>{Liferay.Language.get('field-details')}</span>
 
 				<div className="lfr-objects__model-builder-right-sidebar-definition-node-title-buttons-container">
-					{!values.system && values.businessType !== 'Relationship' && (
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('delete')}
-							className="lfr-objects__model-builder-right-sidebar-definition-node-title-delete-button"
-							displayType="secondary"
-							onClick={() =>
-								handleTriggerDeleteObjectField({
-									baseResourceURL,
-									objectFieldId: selectedObjectField?.id!,
-									objectFieldLabel: stringUtils.getLocalizableLabel(
-										objectDefinitionNodeData.defaultLanguageId,
-										objectDefinitionNodeData.label,
-										objectDefinitionNodeData.name
-									),
-									onAfterDelete: () => {
-										if (
-											selectedObjectField &&
-											selectedObjectDefinitionNode
-										) {
-											dispatch({
-												payload: {
-													objectDefinitionNodes: nodes,
-													objectRelationshipEdges: edges,
-													selectedObjectDefinitionNode,
-													selectedObjectField,
-												},
-												type: TYPES.DELETE_OBJECT_FIELD,
-											});
-										}
-									},
-									setObjectFieldDeleteInfo,
-								})
-							}
-							symbol="trash"
-							title={Liferay.Language.get('delete')}
-						/>
-					)}
+					{!values.system &&
+						values.businessType !== 'Relationship' && (
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('delete')}
+								className="lfr-objects__model-builder-right-sidebar-definition-node-title-delete-button"
+								displayType="secondary"
+								onClick={() =>
+									handleTriggerDeleteObjectField({
+										baseResourceURL,
+										objectFieldId: selectedObjectField?.id!,
+										objectFieldLabel:
+											stringUtils.getLocalizableLabel(
+												objectDefinitionNodeData.defaultLanguageId,
+												objectDefinitionNodeData.label,
+												objectDefinitionNodeData.name
+											),
+										onAfterDelete: () => {
+											if (
+												selectedObjectField &&
+												selectedObjectDefinitionNode
+											) {
+												dispatch({
+													payload: {
+														objectDefinitionNodes:
+															nodes,
+														objectRelationshipEdges:
+															edges,
+														selectedObjectDefinitionNode,
+														selectedObjectField,
+													},
+													type: TYPES.DELETE_OBJECT_FIELD,
+												});
+											}
+										},
+										setObjectFieldDeleteInfo,
+									})
+								}
+								symbol="trash"
+								title={Liferay.Language.get('delete')}
+							/>
+						)}
 				</div>
 			</div>
 

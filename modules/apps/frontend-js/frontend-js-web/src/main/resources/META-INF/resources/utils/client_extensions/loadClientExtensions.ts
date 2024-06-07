@@ -22,9 +22,7 @@ interface ClientExtensionDefinitionsHandler<T> {
 }
 
 export default function loadClientExtensions(
-	clientExtensionDefinitionsHandlers: ClientExtensionDefinitionsHandler<
-		unknown
-	>[]
+	clientExtensionDefinitionsHandlers: ClientExtensionDefinitionsHandler<unknown>[]
 ) {
 	for (const {
 		clientExtensionDefinitions,

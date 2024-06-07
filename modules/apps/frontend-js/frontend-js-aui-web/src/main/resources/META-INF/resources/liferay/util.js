@@ -1,4 +1,5 @@
 /* eslint-disable @liferay/aui/no-one */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -60,12 +61,13 @@
 							const Layout = Liferay.Layout;
 
 							if (Layout) {
-								instance._dragListener = Layout.getLayoutHandler().on(
-									'drag:start',
-									() => {
-										instance.fire('save');
-									}
-								);
+								instance._dragListener =
+									Layout.getLayoutHandler().on(
+										'drag:start',
+										() => {
+											instance.fire('save');
+										}
+									);
 							}
 
 							const title = instance.get('node');
@@ -73,9 +75,8 @@
 							instance._titleListener = title.on(
 								'mouseupoutside',
 								(event) => {
-									const editable = Util._getEditableInstance(
-										title
-									);
+									const editable =
+										Util._getEditableInstance(title);
 
 									if (
 										!editable
@@ -523,6 +524,7 @@
 			// eslint-disable-next-line prefer-object-spread
 			config = Object.assign(
 				{},
+
 				// eslint-disable-next-line prefer-object-spread
 				Object.assign({}, currentTarget.dataset),
 				config
@@ -750,6 +752,7 @@
 		Util,
 		'afterIframeLoaded',
 		(event) => {
+
 			// eslint-disable-next-line @liferay/aui/no-node
 			const nodeInstances = A.Node._instances;
 
@@ -846,6 +849,7 @@
 			const defaultValues = {
 				eventName: 'selectStructure',
 			};
+
 			// eslint-disable-next-line @liferay/aui/no-merge
 			config = A.merge(defaultValues, config);
 
@@ -1125,14 +1129,14 @@
 							const defaultIconsTpl =
 								A.ToolbarRenderer.prototype.TEMPLATES.icon;
 
-							A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
-								'{cssClass}'
-							);
+							A.ToolbarRenderer.prototype.TEMPLATES.icon =
+								Liferay.Util.getLexiconIconTpl('{cssClass}');
 
 							editable._comboBox.icons.destroy();
 							editable._comboBox._renderIcons();
 
-							A.ToolbarRenderer.prototype.TEMPLATES.icon = defaultIconsTpl;
+							A.ToolbarRenderer.prototype.TEMPLATES.icon =
+								defaultIconsTpl;
 						}
 					});
 
@@ -1187,6 +1191,7 @@
 
 				const editURL = new Liferay.Util.PortletURL.createPortletURL(
 					config.uri,
+
 					// eslint-disable-next-line @liferay/aui/no-merge
 					A.merge(
 						{

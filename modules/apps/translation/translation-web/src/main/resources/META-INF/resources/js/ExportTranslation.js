@@ -255,9 +255,8 @@ const ExportTranslation = ({
 		experiences?.length ? experiences.map(({value}) => value) : []
 	);
 
-	const [selectedExperienceValue, setSelectedExperienceValue] = useState(
-		EXPORT_DEFAULT
-	);
+	const [selectedExperienceValue, setSelectedExperienceValue] =
+		useState(EXPORT_DEFAULT);
 
 	const exportTranslationURL = addParams(
 		'download=true',
@@ -270,7 +269,7 @@ const ExportTranslation = ({
 				? languageIds.concat(selectedLanguageId)
 				: languageIds.filter(
 						(languageId) => languageId !== selectedLanguageId
-				  )
+					)
 		);
 	};
 
@@ -280,7 +279,7 @@ const ExportTranslation = ({
 				? experiencesIds.concat(selectedExperienceId)
 				: experiencesIds.filter(
 						(experienceId) => experienceId !== selectedExperienceId
-				  )
+					)
 		);
 	};
 
@@ -303,9 +302,8 @@ const ExportTranslation = ({
 					params.segmentsExperienceIds = selectedExperienceValue;
 				}
 				else if (selectedExperiencesIds.length) {
-					params.segmentsExperienceIds = selectedExperiencesIds.join(
-						','
-					);
+					params.segmentsExperienceIds =
+						selectedExperiencesIds.join(',');
 				}
 
 				location.href = addParams(params, exportTranslationURL);

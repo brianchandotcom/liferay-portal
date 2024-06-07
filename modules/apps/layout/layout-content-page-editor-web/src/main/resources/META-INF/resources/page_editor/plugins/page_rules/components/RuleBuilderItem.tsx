@@ -92,11 +92,11 @@ export default function RuleBuilderItem({
 							? sub(
 									Liferay.Language.get('delete-action-x'),
 									description
-							  )
+								)
 							: sub(
 									Liferay.Language.get('delete-condition-x'),
 									description
-							  )
+								)
 					}
 					borderless
 					className="lfr-portal-tooltip page-editor__rule-builder-delete-button"

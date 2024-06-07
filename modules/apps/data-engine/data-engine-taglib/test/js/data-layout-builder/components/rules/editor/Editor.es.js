@@ -444,9 +444,10 @@ describe('Editor', () => {
 						fireEvent.click(getByText('other-field'));
 					});
 
-					const allFields = STRING_DATATYPE_FIELDS.concat(
-						NUMBER_TYPE_FIELDS
-					).concat(UPLOAD_TYPE_FIELD);
+					const allFields =
+						STRING_DATATYPE_FIELDS.concat(
+							NUMBER_TYPE_FIELDS
+						).concat(UPLOAD_TYPE_FIELD);
 
 					const otherValueButton = await waitFor(() => {
 						return getByTestId('field-right-id');
@@ -600,9 +601,10 @@ describe('Editor', () => {
 			it.each(['show', 'require', 'enable'])(
 				'shows all fields on target dropdown when the type is %p',
 				async (type) => {
-					const fields = STRING_DATATYPE_FIELDS.concat(
-						NUMBER_TYPE_FIELDS
-					).concat(UPLOAD_TYPE_FIELD);
+					const fields =
+						STRING_DATATYPE_FIELDS.concat(
+							NUMBER_TYPE_FIELDS
+						).concat(UPLOAD_TYPE_FIELD);
 					const props = defaultProps();
 					const {getByText, queryAllByText} = render(
 						<Editor

@@ -242,9 +242,8 @@ describe('Blogs Plugin', () => {
 		])(
 			'is not fired if asset missing %s attribute',
 			async (label, attrs) => {
-				const [element, paragraph] = await createDynamicBlogElement(
-					attrs
-				);
+				const [element, paragraph] =
+					await createDynamicBlogElement(attrs);
 
 				await userEvent.click(paragraph);
 

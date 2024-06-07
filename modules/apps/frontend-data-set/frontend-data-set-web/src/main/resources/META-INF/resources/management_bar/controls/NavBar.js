@@ -18,9 +18,8 @@ import SortDropdown from './SortDropdown';
 import FiltersDropdown from './filters/FiltersDropdown';
 
 function NavBar({creationMenu, showSearch}) {
-	const [{customViewsEnabled, filters, sorts, views}] = useContext(
-		ViewsContext
-	);
+	const [{customViewsEnabled, filters, sorts, views}] =
+		useContext(ViewsContext);
 
 	const [showMobile, setShowMobile] = useState(false);
 

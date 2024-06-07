@@ -18,9 +18,8 @@ export default function ({namespace}) {
 				`${namespace}transitionCommerceOrderId`
 			).value = link.dataset.commerceorderid;
 
-			document.getElementById(
-				`${namespace}workflowTaskId`
-			).value = workflowTaskId;
+			document.getElementById(`${namespace}workflowTaskId`).value =
+				workflowTaskId;
 			document.getElementById(`${namespace}transitionName`).value =
 				link.dataset.transitionname;
 

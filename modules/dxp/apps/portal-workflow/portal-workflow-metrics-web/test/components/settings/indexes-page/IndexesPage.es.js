@@ -128,9 +128,8 @@ xdescribe('The IndexesPage component should', () => {
 				jest.runAllTimers();
 			});
 
-			const reindexAllStatus = container.querySelectorAll(
-				'.progress-group'
-			)[0];
+			const reindexAllStatus =
+				container.querySelectorAll('.progress-group')[0];
 
 			expect(indexesItems[2].children[1].children[0]).toBeDisabled();
 			expect(indexesItems[3].children[1].children[0]).toBeDisabled();
@@ -272,9 +271,8 @@ xdescribe('The IndexesPage component should', () => {
 		xit('Render all indexes on progress', () => {
 			const indexActions = getAllByRole('listitem');
 
-			const reindexAllStatus = container.querySelectorAll(
-				'.progress-group'
-			)[0];
+			const reindexAllStatus =
+				container.querySelectorAll('.progress-group')[0];
 
 			expect(reindexAllStatus.children[1]).toHaveTextContent('50%');
 

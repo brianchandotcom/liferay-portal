@@ -10,4 +10,4 @@ export const VIEWPORT_SIZES = {
 	tablet: 'tablet',
 } as const;
 
-export type ViewportSize = typeof VIEWPORT_SIZES[keyof typeof VIEWPORT_SIZES];
+export type ViewportSize = (typeof VIEWPORT_SIZES)[keyof typeof VIEWPORT_SIZES];

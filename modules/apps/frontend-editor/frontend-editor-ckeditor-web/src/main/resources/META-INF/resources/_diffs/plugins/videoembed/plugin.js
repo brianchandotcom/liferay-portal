@@ -293,9 +293,8 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 					element.getOuterHtml()
 				);
 
-				const widgetFragment = new CKEDITOR.htmlParser.fragment.fromHtml(
-					embedContent
-				);
+				const widgetFragment =
+					new CKEDITOR.htmlParser.fragment.fromHtml(embedContent);
 
 				upcastWidget = widgetFragment.children[0];
 
@@ -388,9 +387,8 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 							);
 
 							if (selectedEmbed) {
-								const embedAlignment = getEmbedAlignment(
-									selectedElement
-								);
+								const embedAlignment =
+									getEmbedAlignment(selectedElement);
 
 								if (embedAlignment === alignValue) {
 									removeEmbedAlignment(
@@ -406,13 +404,11 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 								}
 
 								currentElement = selectedElement;
-								currentAlignment = getEmbedAlignment(
-									selectedElement
-								);
+								currentAlignment =
+									getEmbedAlignment(selectedElement);
 
-								const imageElement = selectedElement.findOne(
-									'img'
-								);
+								const imageElement =
+									selectedElement.findOne('img');
 
 								if (imageElement) {
 									editor.resizer.show(imageElement.$);
@@ -420,9 +416,10 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 
 								event.cancel();
 
-								const elementPath = new CKEDITOR.dom.elementPath(
-									selectedElement
-								);
+								const elementPath =
+									new CKEDITOR.dom.elementPath(
+										selectedElement
+									);
 
 								ALIGN_VALUES.forEach((alignValue) => {
 									const command = editor.getCommand(
@@ -447,9 +444,8 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 							) &&
 							lastElement.findOne('[data-widget] [data-embed-id]')
 						) {
-							const embedAlignment = getEmbedAlignment(
-								lastElement
-							);
+							const embedAlignment =
+								getEmbedAlignment(lastElement);
 
 							event.sender.setState(
 								embedAlignment === alignValue
@@ -488,16 +484,16 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				data(event) {
 					const instance = this;
 
-					const stylesJSON = instance.element.getAttribute(
-						'data-styles'
-					);
+					const stylesJSON =
+						instance.element.getAttribute('data-styles');
 
 					let styles = stylesJSON ? JSON.parse(stylesJSON) : null;
 
 					if (!styles) {
 						const iframe = instance.wrapper.findOne('iframe');
 
-						const bounds = instance.wrapper.$.getBoundingClientRect();
+						const bounds =
+							instance.wrapper.$.getBoundingClientRect();
 						const width = iframe.getAttribute('width');
 
 						const pwidth =

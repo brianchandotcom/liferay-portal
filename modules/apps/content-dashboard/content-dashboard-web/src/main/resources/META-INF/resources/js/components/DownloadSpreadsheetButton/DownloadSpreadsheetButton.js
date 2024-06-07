@@ -37,17 +37,14 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	const [loading, setLoading] = useState(false);
 	const [toastMessage, setToastMessage] = useState(initialToastState);
 	const [feedbackStatus, setFeedbackStatus] = useState(initialFeedbackState);
-	const [showPendingRequestModal, setShowPendingRequestModal] = useState(
-		false
-	);
+	const [showPendingRequestModal, setShowPendingRequestModal] =
+		useState(false);
 	const [tentativeNavigationPath, setTentativeNavigationPath] = useState('');
 	const [cancelAndLeaveButtonText, setCancelAndLeaveButtonText] = useState(
 		Liferay.Language.get('cancel-and-leave')
 	);
-	const [
-		disableCancelAndLeaveButton,
-		setDisableCancelAndLeaveButton,
-	] = useState(false);
+	const [disableCancelAndLeaveButton, setDisableCancelAndLeaveButton] =
+		useState(false);
 
 	let defaultDelayTimeout = null;
 	let feedbackDelayTimeout = null;
@@ -73,7 +70,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 			? Liferay.Language.get('xls-generation-was-cancelled')
 			: `${Liferay.Language.get(
 					'xls-generation-failed.-try-again'
-			  )}. ${error}`;
+				)}. ${error}`;
 
 		const feedbackContent = abortedRequest
 			? Liferay.Language.get('xls-generation-was-cancelled')
@@ -115,17 +112,17 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 	const buttonTextKey = loading
 		? Liferay.Language.get('generating-xls')
 		: feedbackStatus.show
-		? feedbackStatus.content
-		: Liferay.Language.get('export-xls');
+			? feedbackStatus.content
+			: Liferay.Language.get('export-xls');
 
 	const clayIconSymbol =
 		feedbackStatus.type === 'success'
 			? 'check-circle'
 			: feedbackStatus.type === 'danger'
-			? 'exclamation-circle'
-			: feedbackStatus.type === 'warning'
-			? 'warning'
-			: 'download';
+				? 'exclamation-circle'
+				: feedbackStatus.type === 'warning'
+					? 'warning'
+					: 'download';
 
 	const disabledGenerateButton =
 		loading || feedbackStatus.show || !parseInt(total, 10);

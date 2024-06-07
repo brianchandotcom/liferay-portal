@@ -38,9 +38,8 @@ export function useLocation() {
 			autocomplete.addListener('place_changed', () => {
 				infoWindow.close();
 
-				const address = GoogleMapsService.getAutocompletePlaces(
-					autocomplete
-				);
+				const address =
+					GoogleMapsService.getAutocompletePlaces(autocomplete);
 
 				callback(address);
 			});

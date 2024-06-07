@@ -54,7 +54,7 @@
 .fragment_608 .row:nth-of-type(odd) {
 	background-color: var(--table-accent-bg);
 }
-    
+
 .fragment_608 .row:nth-of-type(even) {
 	background-color: var(--table-bg);
 }

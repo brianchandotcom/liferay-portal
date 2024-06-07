@@ -24,24 +24,18 @@ export default function DefaultObjectRelationshipEdge({
 }: EdgeProps<ObjectRelationshipEdgeData[]>) {
 	const {nodes} = useStoreState((state) => state);
 
-	const sourceNode = useMemo(() => nodes.find((node) => node.id === source), [
-		source,
-		nodes,
-	]) as Node<ObjectDefinitionNodeData>;
+	const sourceNode = useMemo(
+		() => nodes.find((node) => node.id === source),
+		[source, nodes]
+	) as Node<ObjectDefinitionNodeData>;
 
-	const targetNode = useMemo(() => nodes.find((node) => node.id === target), [
-		target,
-		nodes,
-	]) as Node<ObjectDefinitionNodeData>;
+	const targetNode = useMemo(
+		() => nodes.find((node) => node.id === target),
+		[target, nodes]
+	) as Node<ObjectDefinitionNodeData>;
 
-	const {
-		sourcePos,
-		sourceX,
-		sourceY,
-		targetPos,
-		targetX,
-		targetY,
-	} = getEdgeParams(sourceNode, targetNode);
+	const {sourcePos, sourceX, sourceY, targetPos, targetX, targetY} =
+		getEdgeParams(sourceNode, targetNode);
 
 	const edgePath = getSmoothStepPath({
 		sourcePosition: sourcePos,

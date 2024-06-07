@@ -38,14 +38,13 @@ export default function FiltersAndSorting({
 							{
 								...(previousData.apiEndpointToAPIFilters?.[0]
 									?.id && {
-									id:
-										previousData
-											.apiEndpointToAPIFilters?.[0].id,
+									id: previousData
+										.apiEndpointToAPIFilters?.[0].id,
 								}),
 								oDataFilter: value,
 							},
 						],
-				  }
+					}
 				: {apiEndpointToAPIFilters: []}),
 		}));
 	};
@@ -59,14 +58,13 @@ export default function FiltersAndSorting({
 							{
 								...(previousData.apiEndpointToAPISorts?.[0]
 									?.id && {
-									id:
-										previousData.apiEndpointToAPISorts?.[0]
-											.id,
+									id: previousData.apiEndpointToAPISorts?.[0]
+										.id,
 								}),
 								oDataSort: value,
 							},
 						],
-				  }
+					}
 				: {apiEndpointToAPISorts: []}),
 		}));
 	};

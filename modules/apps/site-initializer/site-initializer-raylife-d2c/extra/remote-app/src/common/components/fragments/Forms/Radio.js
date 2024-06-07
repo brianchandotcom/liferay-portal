@@ -28,7 +28,8 @@ export const Radio = forwardRef(
 				className={classNames(
 					'align-items-baseline d-flex flex-row mb-3 py-2 py-sm-3 px-sm-3 px-2 radio-card rounded user-select-auto',
 					{
-						'bg-brand-primary-lighten-5 border border-primary text-brand-primary': selected,
+						'bg-brand-primary-lighten-5 border border-primary text-brand-primary':
+							selected,
 						'card-outlined': !selected,
 					}
 				)}

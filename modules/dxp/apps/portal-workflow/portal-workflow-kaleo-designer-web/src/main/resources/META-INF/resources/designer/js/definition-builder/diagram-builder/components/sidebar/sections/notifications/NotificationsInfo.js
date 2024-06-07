@@ -296,7 +296,7 @@ const NotificationsInfo = ({
 										assignmentType: ['user'],
 									},
 								],
-						  ]
+							]
 						: [...previousItem.data.notifications.recipients],
 					template: initialValues.templateValues,
 					templateLanguage: initialValues.templateLanguageValues,

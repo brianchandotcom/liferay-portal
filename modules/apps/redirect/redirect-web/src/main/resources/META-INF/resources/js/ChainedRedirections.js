@@ -10,9 +10,8 @@ import React, {useState} from 'react';
 import ChainedRedirectionsModal from './ChainedRedirectionsModal';
 
 export default function ChainedRedirections({portletNamespace, ...restProps}) {
-	const [redirectEntryChainCause, setRedirectEntryChainCause] = useState(
-		null
-	);
+	const [redirectEntryChainCause, setRedirectEntryChainCause] =
+		useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [callback, setCallback] = useState();
 	const BRIDGE_COMPONENT_ID = `${portletNamespace}RedirectsChainedRedirections`;

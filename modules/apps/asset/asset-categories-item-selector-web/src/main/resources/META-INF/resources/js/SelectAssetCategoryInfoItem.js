@@ -97,10 +97,10 @@ function SelectAssetCategory({
 						{selectedItemsCount > 1
 							? `${selectedItemsCount} ${Liferay.Language.get(
 									'items-selected'
-							  )}`
+								)}`
 							: `${selectedItemsCount} ${Liferay.Language.get(
 									'item-selected'
-							  )}`}
+								)}`}
 					</p>
 
 					<ClayButton

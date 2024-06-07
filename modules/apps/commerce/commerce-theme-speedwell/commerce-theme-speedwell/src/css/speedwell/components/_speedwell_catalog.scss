@@ -91,7 +91,8 @@
 				&.is-open {
 					background-color: white;
 					transform: scale3d(25, 25, 1);
-					transition: transform 0.4s ease-out,
+					transition:
+						transform 0.4s ease-out,
 						background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 					box-shadow: none;
 

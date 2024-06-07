@@ -69,7 +69,7 @@ export default function DatePicker({
 		const rawDate =
 			(localizable
 				? localizedValue?.[locale] ??
-				  localizedValue?.[defaultLanguageId]
+					localizedValue?.[defaultLanguageId]
 				: value) ??
 			predefinedValue ??
 			'';
@@ -122,9 +122,8 @@ export default function DatePicker({
 	 * Creates the input mask and update it whenever the format changes
 	 */
 	useEffect(() => {
-		const {mask, pipeFormat} = datetimeUtils.generateInputMask(
-			momentFormat
-		);
+		const {mask, pipeFormat} =
+			datetimeUtils.generateInputMask(momentFormat);
 
 		maskRef.current = createTextMaskInputElement({
 			guide: true,

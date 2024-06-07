@@ -49,7 +49,7 @@ export default function TableHead({
 													...product,
 													selected:
 														product.selectable,
-											  }
+												}
 											: {...product, selected: false};
 									})
 								);

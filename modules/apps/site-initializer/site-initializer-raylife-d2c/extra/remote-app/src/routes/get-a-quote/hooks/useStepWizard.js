@@ -39,6 +39,7 @@ export function useStepWizard() {
 
 	useEffect(() => {
 		_updateStepPercentage();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form]);
 
@@ -46,6 +47,7 @@ export function useStepWizard() {
 		dispatchEvent({
 			hide: true,
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedStep.section]);
 
@@ -53,6 +55,7 @@ export function useStepWizard() {
 		if (loadInitialData) {
 			calculateAllSteps();
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loadInitialData]);
 

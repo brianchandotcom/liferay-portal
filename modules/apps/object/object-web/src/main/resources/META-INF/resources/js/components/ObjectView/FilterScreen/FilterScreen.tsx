@@ -190,7 +190,7 @@ export function FilterScreen() {
 											return objectField;
 										}
 									}
-							  )
+								)
 					}
 					observer={observer}
 					onClose={onClose}

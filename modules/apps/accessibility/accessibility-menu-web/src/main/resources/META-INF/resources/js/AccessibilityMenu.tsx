@@ -54,10 +54,8 @@ const OPEN_ACCESSIBILITY_MENU_EVENT_NAME = 'openAccessibilityMenu';
 const AccessibilityMenu = (props: Props) => {
 	const [settings, setSettings] = useLiferayState(accessibilityMenuAtom);
 
-	const [
-		hasFunctionalCookiesConsent,
-		setHasFunctionalCookiesConsent,
-	] = useState(checkConsent(COOKIE_TYPES.FUNCTIONAL));
+	const [hasFunctionalCookiesConsent, setHasFunctionalCookiesConsent] =
+		useState(checkConsent(COOKIE_TYPES.FUNCTIONAL));
 
 	const {observer, onOpenChange, open} = useModal();
 

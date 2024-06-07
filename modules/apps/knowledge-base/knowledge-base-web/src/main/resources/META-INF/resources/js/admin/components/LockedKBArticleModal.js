@@ -71,10 +71,10 @@ export default function LockedArticleModal({
 											'article-in-edition-by-user-x-description'
 										),
 										userName
-								  )
+									)
 								: Liferay.Language.get(
 										'article-in-edition-description'
-								  )}
+									)}
 						</p>
 					</ClayModal.Body>
 

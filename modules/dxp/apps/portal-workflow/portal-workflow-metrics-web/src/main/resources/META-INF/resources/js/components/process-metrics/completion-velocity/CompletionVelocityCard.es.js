@@ -37,9 +37,10 @@ function CompletionVelocityCard({routeParams}) {
 		[completionDateEnd, completionDateStart]
 	);
 
-	const velocityUnits = useMemo(() => getVelocityUnits(timeRange), [
-		timeRange,
-	]);
+	const velocityUnits = useMemo(
+		() => getVelocityUnits(timeRange),
+		[timeRange]
+	);
 
 	const defaultUnit =
 		velocityUnits.find((unit) => unit.defaultVelocityUnit) || {};

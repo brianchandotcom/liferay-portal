@@ -29,11 +29,8 @@ export default function useCheckFormsValidity() {
 	const validations = new Map();
 
 	return async () => {
-		const {
-			fragmentEntryLinks,
-			layoutData,
-			selectedViewportSize,
-		} = stateRef.current;
+		const {fragmentEntryLinks, layoutData, selectedViewportSize} =
+			stateRef.current;
 
 		const forms = getFormItems(layoutData).filter((form) => {
 			const formElement = document.querySelector(
@@ -84,7 +81,7 @@ export default function useCheckFormsValidity() {
 				: FormService.getFormFields(payload).then((fields) => ({
 						fields,
 						itemId,
-				  }));
+					}));
 
 			return promise.then(({fields, itemId}) => {
 				return FormService.getFormConfig({classNameId}).then(
@@ -210,12 +207,11 @@ async function checkUnmappedInputChild(
 			continue;
 		}
 
-		const allowedFieldTypes = await FormService.getFragmentEntryInputFieldTypes(
-			{
+		const allowedFieldTypes =
+			await FormService.getFragmentEntryInputFieldTypes({
 				fragmentEntryKey: fragmentEntryLink.fragmentEntryKey,
 				groupId: fragmentEntryLink.groupId,
-			}
-		);
+			});
 
 		const isSpecialFieldType =
 			allowedFieldTypes.includes('captcha') ||

@@ -89,9 +89,8 @@ describe('MiniCart Opener', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const ComponentElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const ComponentElement =
+					container.querySelector(COMPONENT_SELECTOR);
 
 				expect(ComponentElement.classList.contains('has-badge')).toBe(
 					true
@@ -128,9 +127,8 @@ describe('MiniCart Opener', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const ComponentElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const ComponentElement =
+					container.querySelector(COMPONENT_SELECTOR);
 
 				expect(ComponentElement.classList.contains('has-badge')).toBe(
 					true
@@ -164,9 +162,8 @@ describe('MiniCart Opener', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const ComponentElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const ComponentElement =
+					container.querySelector(COMPONENT_SELECTOR);
 
 				expect(ComponentElement.classList.contains('has-badge')).toBe(
 					true

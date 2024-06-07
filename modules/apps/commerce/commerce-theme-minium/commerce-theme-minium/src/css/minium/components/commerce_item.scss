@@ -7,7 +7,9 @@
 	max-height: 130px;
 	overflow: hidden;
 	position: relative;
-	transition: max-height 0.2s ease-in, padding 0.1s ease-in;
+	transition:
+		max-height 0.2s ease-in,
+		padding 0.1s ease-in;
 
 	&--search {
 		font-size: 14px;

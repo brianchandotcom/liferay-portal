@@ -37,7 +37,7 @@ a:hover {
 	color: var(--primary);
 }
 
-.container-fluid, 
+.container-fluid,
 .container-fluid-max-xl {
 	position: relative;
 }
@@ -47,7 +47,7 @@ a:hover {
 /*Buttons*/
 
 .masterclass-btn.btn,
-.portlet-login .form button  {
+.portlet-login .form button {
 	border-radius: 0;
 	font-family: var(--font-family-sans-serif);
 	font-weight: var(--font-weight-bolder);
@@ -79,11 +79,11 @@ a:hover {
 }
 
 .masterclass-btn:hover .link-arrow {
-    transform: translate(4px, -1px);
+	transform: translate(4px, -1px);
 	transition: all 0.15s ease-in-out;
 }
 
-.portlet-boundary .btn  {
+.portlet-boundary .btn {
 	border-radius: 0;
 }
 
@@ -111,7 +111,7 @@ a:hover {
 
 .portlet-login .form .input-checkbox-wrapper .field {
 	margin-right: 6px;
-	transform: translatey(2px);
+	transform: translateY(2px);
 }
 
 .portlet-login .form .form-check {
@@ -149,7 +149,7 @@ a:hover {
 
 .list-menu ul {
 	font-family: var(--font-family-sans-serif);
-    list-style: none;
+	list-style: none;
 	padding-left: 0;
 }
 

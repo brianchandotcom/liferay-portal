@@ -16,9 +16,12 @@
 
 	var analyticsClientChannelId =
 		'<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID) %>';
-	var analyticsClientGroupIds = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS) %>;
-	var analyticsCookiesConsentMode = <%= (boolean)request.getAttribute(AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE) %>;
-	var analyticsFeatureFlagEnabled = <%= FeatureFlagManagerUtil.isEnabled("LPD-10588") %>;
+	var analyticsClientGroupIds =
+		<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS) %>;
+	var analyticsCookiesConsentMode =
+		<%= (boolean)request.getAttribute(AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE) %>;
+	var analyticsFeatureFlagEnabled =
+		<%= FeatureFlagManagerUtil.isEnabled("LPD-10588") %>;
 
 	var cookieManagers = {
 		'cookie.onetrust': {
@@ -119,12 +122,14 @@
 				a.onload = c;
 				m.parentNode.insertBefore(a, m);
 			})('https://analytics-js-cdn.liferay.com', () => {
-				var config = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
+				var config =
+					<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
 
 				var dxpMiddleware = function (request) {
 					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
 					request.context.channelId = analyticsClientChannelId;
-					request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+					request.context.groupId =
+						themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 					return request;
 				};
@@ -154,7 +159,8 @@
 							) {
 								Analytics.dispose();
 
-								var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+								var groupId =
+									themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 								if (
 									!themeDisplay.isControlPanel() &&
@@ -178,9 +184,8 @@
 							}
 
 							var selectedIndex = result.findIndex((enabled) => enabled);
-							var selectedCookieManager = Object.values(cookieManagers)[
-								selectedIndex
-							];
+							var selectedCookieManager =
+								Object.values(cookieManagers)[selectedIndex];
 
 							if (selectedCookieManager) {
 								selectedCookieManager.onConsentChange(() => {

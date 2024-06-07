@@ -52,6 +52,7 @@ if (numberOfOptions < options.length) {
 
 			const input = node.querySelector('input');
 			input.value = option.value;
+
 			// eslint-disable-next-line no-undef
 			input.id = `${fragmentEntryLinkNamespace}-checkbox-${option.value}`;
 
@@ -67,6 +68,7 @@ if (numberOfOptions < options.length) {
 
 			label.setAttribute(
 				'for',
+
 				// eslint-disable-next-line no-undef
 				`${fragmentEntryLinkNamespace}-checkbox-${option.value}`
 			);

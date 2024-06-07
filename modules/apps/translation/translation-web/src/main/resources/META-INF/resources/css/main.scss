@@ -50,7 +50,8 @@ $productMenuWidth: 320px;
 		nav {
 			height: auto;
 			left: 0;
-			transition: left ease $productMenuTransitionDuration,
+			transition:
+				left ease $productMenuTransitionDuration,
 				width ease $productMenuTransitionDuration;
 			width: 100%;
 			z-index: $toolbarZIndex;

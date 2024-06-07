@@ -246,10 +246,11 @@ DateRangeFilter.propTypes = {
 	}),
 };
 
-const filterImplementation: FilterImplementation<DateRangeFilterImplementationArgs> = {
-	Component: DateRangeFilter,
-	getOdataString,
-	getSelectedItemsLabel,
-};
+const filterImplementation: FilterImplementation<DateRangeFilterImplementationArgs> =
+	{
+		Component: DateRangeFilter,
+		getOdataString,
+		getSelectedItemsLabel,
+	};
 
 export default filterImplementation;

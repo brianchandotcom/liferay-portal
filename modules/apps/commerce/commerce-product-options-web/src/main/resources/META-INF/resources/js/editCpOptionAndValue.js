@@ -106,9 +106,8 @@ export default function ({bcp47LanguageId, isCPOptionSelectDate, namespace}) {
 			optionValueSelectDateObj.setTime(slugify(timeInput.value));
 			optionValueSelectDateObj.setTimezone(timeZoneInput.value);
 
-			labelInput.value = optionValueSelectDateObj.getLabel(
-				bcp47LanguageId
-			);
+			labelInput.value =
+				optionValueSelectDateObj.getLabel(bcp47LanguageId);
 		};
 
 		dateInput.addEventListener('focus', debounce(handleOnLabelInput, 200));

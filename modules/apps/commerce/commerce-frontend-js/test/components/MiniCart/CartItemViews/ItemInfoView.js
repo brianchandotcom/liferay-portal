@@ -67,12 +67,10 @@ describe('MiniCart Item Info View', () => {
 				const BaseViewElement = container.querySelector(
 					COMPONENT_SELECTOR_BASE
 				);
-				const ItemNameElement = BaseViewElement.querySelector(
-					'.item-name'
-				);
-				const ItemSKUElement = BaseViewElement.querySelector(
-					'.item-sku'
-				);
+				const ItemNameElement =
+					BaseViewElement.querySelector('.item-name');
+				const ItemSKUElement =
+					BaseViewElement.querySelector('.item-sku');
 
 				expect(BaseViewElement).toBeInTheDocument();
 				expect(ItemNameElement).toBeInTheDocument();
@@ -84,9 +82,8 @@ describe('MiniCart Item Info View', () => {
 				const BundleViewElement = container.querySelector(
 					COMPONENT_SELECTOR_BUNDLE
 				);
-				const ChildItemsElements = BundleViewElement.querySelectorAll(
-					'.child-item span'
-				);
+				const ChildItemsElements =
+					BundleViewElement.querySelectorAll('.child-item span');
 
 				expect(BundleViewElement).toBeInTheDocument();
 				expect(ChildItemsElements.length).toEqual(2);
@@ -113,12 +110,10 @@ describe('MiniCart Item Info View', () => {
 				const BaseViewElement = container.querySelector(
 					COMPONENT_SELECTOR_BASE
 				);
-				const ItemNameElement = BaseViewElement.querySelector(
-					'.item-name'
-				);
-				const ItemSKUElement = BaseViewElement.querySelector(
-					'.item-sku'
-				);
+				const ItemNameElement =
+					BaseViewElement.querySelector('.item-name');
+				const ItemSKUElement =
+					BaseViewElement.querySelector('.item-sku');
 
 				expect(BaseViewElement).toBeInTheDocument();
 				expect(ItemNameElement).toBeInTheDocument();
@@ -130,9 +125,8 @@ describe('MiniCart Item Info View', () => {
 				const OptionsViewElement = container.querySelector(
 					COMPONENT_SELECTOR_OPTIONS
 				);
-				const OptionsText = OptionsViewElement.querySelector(
-					'.options'
-				);
+				const OptionsText =
+					OptionsViewElement.querySelector('.options');
 
 				expect(OptionsViewElement).toBeInTheDocument();
 				expect(OptionsText.innerHTML).toEqual(OPTIONS_PROPS.options);
@@ -169,12 +163,10 @@ describe('MiniCart Item Info View', () => {
 				const BaseViewElement = container.querySelector(
 					COMPONENT_SELECTOR_BASE
 				);
-				const ItemNameElement = BaseViewElement.querySelector(
-					'.item-name'
-				);
-				const ItemSKUElement = BaseViewElement.querySelector(
-					'.item-sku'
-				);
+				const ItemNameElement =
+					BaseViewElement.querySelector('.item-name');
+				const ItemSKUElement =
+					BaseViewElement.querySelector('.item-sku');
 
 				expect(BaseViewElement).toBeInTheDocument();
 				expect(ItemNameElement).toBeInTheDocument();
@@ -186,9 +178,8 @@ describe('MiniCart Item Info View', () => {
 				const BundleViewElement = container.querySelector(
 					COMPONENT_SELECTOR_BUNDLE
 				);
-				const ChildItemsElements = BundleViewElement.querySelectorAll(
-					'.child-item span'
-				);
+				const ChildItemsElements =
+					BundleViewElement.querySelectorAll('.child-item span');
 
 				expect(BundleViewElement).toBeInTheDocument();
 				expect(ChildItemsElements.length).toEqual(3);
@@ -200,9 +191,8 @@ describe('MiniCart Item Info View', () => {
 				const OptionsViewElement = container.querySelector(
 					COMPONENT_SELECTOR_OPTIONS
 				);
-				const OptionsText = OptionsViewElement.querySelector(
-					'.options'
-				);
+				const OptionsText =
+					OptionsViewElement.querySelector('.options');
 
 				expect(OptionsViewElement).toBeInTheDocument();
 				expect(OptionsText.innerHTML).toEqual(

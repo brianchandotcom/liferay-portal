@@ -68,10 +68,10 @@ export default function TooltipContent({
 									{Number(value) === 1
 										? `${Liferay.Language.get(
 												'entry'
-										  ).toLowerCase()} `
+											).toLowerCase()} `
 										: `${Liferay.Language.get(
 												'entries'
-										  ).toLowerCase()} `}
+											).toLowerCase()} `}
 
 									<b>
 										(

@@ -61,8 +61,7 @@ describe('utils/settingsContext', () => {
 													},
 													value: {
 														expression: {
-															value:
-																'isEmailAddress(oldFieldName)',
+															value: 'isEmailAddress(oldFieldName)',
 														},
 													},
 												},

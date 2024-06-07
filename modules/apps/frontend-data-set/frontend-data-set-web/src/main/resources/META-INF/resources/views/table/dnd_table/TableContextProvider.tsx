@@ -24,7 +24,7 @@ function TableContextProvider({
 }) {
 	const [{modifiedFields}, viewsDispatch]: [
 		IViewsContext,
-		TViewsContextDispatch
+		TViewsContextDispatch,
 	] = useContext(ViewsContext);
 
 	const [tableWidth, setTableWidth] = useState<number>(0);

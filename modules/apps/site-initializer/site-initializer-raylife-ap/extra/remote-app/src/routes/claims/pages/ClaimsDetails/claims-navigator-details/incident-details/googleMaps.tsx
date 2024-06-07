@@ -19,10 +19,8 @@ const GoogleMaps = ({address}: LocationType) => {
 	useEffect(() => {
 		try {
 			(async () => {
-				const [
-					latitude,
-					longitude,
-				] = await GoogleMapsService.GeoLocation(address);
+				const [latitude, longitude] =
+					await GoogleMapsService.GeoLocation(address);
 
 				setPosition({lat: latitude, lng: longitude});
 			})();

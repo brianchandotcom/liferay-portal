@@ -33,6 +33,7 @@
 		'email': '_handleEmail',
 		'font': '_handleFont',
 		'i': '_handleEm',
+
 		// eslint-disable-next-line @liferay/no-abbreviations
 		'img': '_handleImage',
 		'justify': '_handleTextAlign',
@@ -89,11 +90,13 @@
 
 	const REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
 
-	const REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
+	const REGEX_COLOR =
+		/^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
 	const REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
-	const REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$/i;
+	const REGEX_IMAGE_SRC =
+		/^(?:https?:\/\/|\/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$/i;
 
 	const REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
 

@@ -186,8 +186,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 					Liferay.Util.openModal({
 						customEvents: [
 							{
-								name:
-									'<%= liferayPortletResponse.getNamespace() + "verifyPassword" %>',
+								name: '<%= liferayPortletResponse.getNamespace() + "verifyPassword" %>',
 								onEvent: function (event) {
 									var passwordInput = document.getElementById(
 										'<portlet:namespace />password'

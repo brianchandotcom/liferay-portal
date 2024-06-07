@@ -17,15 +17,10 @@ import {ModalContext} from '../../ModalProvider.es';
 
 export default function SingleTransitionModal() {
 	const [comment, setComment] = useState('');
-	const {
-		closeModal,
-		setSingleTransition,
-		singleTransition,
-		visibleModal,
-	} = useContext(ModalContext);
-	const {selectedInstance, setSelectedItems} = useContext(
-		InstanceListContext
-	);
+	const {closeModal, setSingleTransition, singleTransition, visibleModal} =
+		useContext(ModalContext);
+	const {selectedInstance, setSelectedItems} =
+		useContext(InstanceListContext);
 	const {title, transitionName} = singleTransition;
 	const [errorToast, setErrorToast] = useState(false);
 
@@ -55,6 +50,7 @@ export default function SingleTransitionModal() {
 		if (selectedInstance?.id && visibleModal === 'singleTransition') {
 			fetchData();
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [visibleModal]);
 

@@ -146,9 +146,8 @@ export default function ValidationDate({
 					onChange={({target: {value}}) => {
 						dispatch({
 							payload: {
-								selectedValidation: transformSelectedValidation(
-									value
-								),
+								selectedValidation:
+									transformSelectedValidation(value),
 							},
 							type: EVENT_TYPES.CHANGE_SELECTED_VALIDATION,
 						});
@@ -168,14 +167,13 @@ export default function ValidationDate({
 									tooltip: Liferay.Language.get(
 										'starts-from-tooltip'
 									),
-							  }
+								}
 							: {
 									parameters: endDate,
 									title: Liferay.Language.get('end-date'),
-									tooltip: Liferay.Language.get(
-										'ends-on-tooltip'
-									),
-							  };
+									tooltip:
+										Liferay.Language.get('ends-on-tooltip'),
+								};
 
 					return (
 						<React.Fragment key={index}>

@@ -64,9 +64,8 @@ AUI.add(
 						form.delegate(
 							STR_CLICK,
 							(event) => {
-								const portletId = event.currentTarget.attr(
-									'data-portletid'
-								);
+								const portletId =
+									event.currentTarget.attr('data-portletid');
 
 								const contentNode = instance.byId(
 									'content_' + portletId
@@ -107,9 +106,10 @@ AUI.add(
 							const {id} = event.target;
 
 							if (id.includes(instance.ns('PORTLET_DATA'))) {
-								const controlCheckboxes = document.querySelectorAll(
-									`[data-root-control-id=${id}]`
-								);
+								const controlCheckboxes =
+									document.querySelectorAll(
+										`[data-root-control-id=${id}]`
+									);
 
 								if (controlCheckboxes.length) {
 									controlCheckboxes.forEach(
@@ -157,13 +157,13 @@ AUI.add(
 						});
 					}
 
-					const contentOptionsLink = instance.byId(
-						'contentOptionsLink'
-					);
+					const contentOptionsLink =
+						instance.byId('contentOptionsLink');
 
 					if (contentOptionsLink) {
 						contentOptionsLink.on(STR_CLICK, () => {
-							const contentOptionsDialog = instance._getContentOptionsDialog();
+							const contentOptionsDialog =
+								instance._getContentOptionsDialog();
 
 							contentOptionsDialog.show();
 						});
@@ -183,7 +183,8 @@ AUI.add(
 
 					if (globalConfigurationLink) {
 						globalConfigurationLink.on(STR_CLICK, () => {
-							const globalConfigurationDialog = instance._getGlobalConfigurationDialog();
+							const globalConfigurationDialog =
+								instance._getGlobalConfigurationDialog();
 
 							globalConfigurationDialog.show();
 						});
@@ -205,7 +206,8 @@ AUI.add(
 
 					if (scheduledPublishingEventsLink) {
 						scheduledPublishingEventsLink.on(STR_CLICK, () => {
-							const scheduledPublishingEventsDialog = instance._getScheduledPublishingEventsDialog();
+							const scheduledPublishingEventsDialog =
+								instance._getScheduledPublishingEventsDialog();
 
 							scheduledPublishingEventsDialog.show();
 						});
@@ -372,8 +374,8 @@ AUI.add(
 
 						globalConfigurationNode.show();
 
-						globalConfigurationDialog = Liferay.Util.Window.getWindow(
-							{
+						globalConfigurationDialog =
+							Liferay.Util.Window.getWindow({
 								dialog: {
 									bodyContent: globalConfigurationNode,
 									centered: true,
@@ -416,10 +418,10 @@ AUI.add(
 								title: Liferay.Language.get(
 									'application-configuration'
 								),
-							}
-						);
+							});
 
-						instance._globalConfigurationDialog = globalConfigurationDialog;
+						instance._globalConfigurationDialog =
+							globalConfigurationDialog;
 					}
 
 					return globalConfigurationDialog;
@@ -460,8 +462,8 @@ AUI.add(
 
 						scheduledPublishingEventsNode.show();
 
-						scheduledPublishingEventsDialog = Liferay.Util.Window.getWindow(
-							{
+						scheduledPublishingEventsDialog =
+							Liferay.Util.Window.getWindow({
 								dialog: {
 									bodyContent: scheduledPublishingEventsNode,
 									centered: true,
@@ -487,10 +489,10 @@ AUI.add(
 									width: 400,
 								},
 								title: Liferay.Language.get('scheduled-events'),
-							}
-						);
+							});
 
-						instance._scheduledPublishingEventsDialog = scheduledPublishingEventsDialog;
+						instance._scheduledPublishingEventsDialog =
+							scheduledPublishingEventsDialog;
 					}
 
 					return scheduledPublishingEventsDialog;
@@ -696,27 +698,30 @@ AUI.add(
 						const liveGroupIdNode = instance.byId('liveGroupId');
 
 						if (liveGroupIdNode) {
-							redirectParameters.liveGroupId = liveGroupIdNode.val();
+							redirectParameters.liveGroupId =
+								liveGroupIdNode.val();
 						}
 
-						const privateLayoutNode = instance.byId(
-							'privateLayout'
-						);
+						const privateLayoutNode =
+							instance.byId('privateLayout');
 
 						if (privateLayoutNode) {
-							redirectParameters.privateLayout = privateLayoutNode.val();
+							redirectParameters.privateLayout =
+								privateLayoutNode.val();
 						}
 
 						const rootNodeNameNode = instance.byId('rootNodeName');
 
 						if (rootNodeNameNode) {
-							redirectParameters.rootNodeName = rootNodeNameNode.val();
+							redirectParameters.rootNodeName =
+								rootNodeNameNode.val();
 						}
 
-						const redirectPortletURL = Liferay.Util.PortletURL.createPortletURL(
-							redirectNode.val(),
-							redirectParameters
-						);
+						const redirectPortletURL =
+							Liferay.Util.PortletURL.createPortletURL(
+								redirectNode.val(),
+								redirectParameters
+							);
 
 						redirectNode.val(redirectPortletURL.toString());
 					}
@@ -724,9 +729,10 @@ AUI.add(
 					if (cmdNode) {
 						const form = instance.get('form');
 
-						const formPortletURL = Liferay.Util.PortletURL.createActionURL(
-							form.get('action')
-						);
+						const formPortletURL =
+							Liferay.Util.PortletURL.createActionURL(
+								form.get('action')
+							);
 
 						form.set('action', formPortletURL.toString());
 
@@ -1136,9 +1142,8 @@ AUI.add(
 				showNotification(dateChecker) {
 					const instance = this;
 
-					const message = instance._getNotificationMessage(
-						dateChecker
-					);
+					const message =
+						instance._getNotificationMessage(dateChecker);
 
 					Liferay.Util.openToast({
 						message,

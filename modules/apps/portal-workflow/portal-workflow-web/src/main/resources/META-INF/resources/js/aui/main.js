@@ -419,7 +419,8 @@ AUI.add(
 					namespace
 				);
 
-				const openDefinitionLinkNode = instance._getOpenDefinitionLinkNode();
+				const openDefinitionLinkNode =
+					instance._getOpenDefinitionLinkNode();
 
 				let openDefinitionLinkNamespace;
 
@@ -434,9 +435,10 @@ AUI.add(
 				else if (
 					!instance._hasDefinitionLinkChanged(openDefinitionLinkNode)
 				) {
-					openDefinitionLinkNamespace = instance._getDefinitionLinkNodeNamespace(
-						openDefinitionLinkNode
-					);
+					openDefinitionLinkNamespace =
+						instance._getDefinitionLinkNodeNamespace(
+							openDefinitionLinkNode
+						);
 
 					instance._doToggleDefinitionLinkEditionMode(
 						openDefinitionLinkNamespace
@@ -445,9 +447,10 @@ AUI.add(
 					instance._doToggleDefinitionLinkEditionMode(namespace);
 				}
 				else {
-					openDefinitionLinkNamespace = instance._getDefinitionLinkNodeNamespace(
-						openDefinitionLinkNode
-					);
+					openDefinitionLinkNamespace =
+						instance._getDefinitionLinkNodeNamespace(
+							openDefinitionLinkNode
+						);
 
 					Liferay.Util.openConfirmModal({
 						message: Liferay.Language.get(

@@ -31,9 +31,8 @@ export function StyleDisplaySelector({
 	handleConfigurationChanged,
 	listStyle,
 }) {
-	const [availableListStyles, setAvailableListStyles] = useState(
-		DEFAULT_LIST_STYLES
-	);
+	const [availableListStyles, setAvailableListStyles] =
+		useState(DEFAULT_LIST_STYLES);
 
 	const listStyleId = useId();
 

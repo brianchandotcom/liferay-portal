@@ -64,15 +64,15 @@ class ChangeTrackingRescheduleView extends ChangeTrackingBaseScheduleView {
 										typeof this.state.date === 'string'
 											? this.state.date
 											: this.state.date.getFullYear() +
-											  '-' +
-											  this.pad(
+												'-' +
+												this.pad(
 													this.state.date.getMonth() +
 														1
-											  ) +
-											  '-' +
-											  this.pad(
+												) +
+												'-' +
+												this.pad(
 													this.state.date.getDate()
-											  )
+												)
 									}
 									years={{
 										end: new Date().getFullYear() + 1,

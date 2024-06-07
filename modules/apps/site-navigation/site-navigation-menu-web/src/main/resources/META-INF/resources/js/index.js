@@ -231,9 +231,10 @@ export function NavigationMenuConfiguration({
 			selectSiteNavigationMenuTypeSelect.addEventListener(
 				'change',
 				() => {
-					const selectedSelectSiteNavigationMenuType = document.querySelector(
-						`${namespace}selectSiteNavigationMenuType option:checked`
-					);
+					const selectedSelectSiteNavigationMenuType =
+						document.querySelector(
+							`${namespace}selectSiteNavigationMenuType option:checked`
+						);
 
 					if (selectedSelectSiteNavigationMenuType) {
 						rootMenuItemNameSpan.innerText =

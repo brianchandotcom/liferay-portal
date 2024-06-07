@@ -6,6 +6,7 @@
 AUI.add(
 	'liferay-auto-fields',
 	(A) => {
+
 		// eslint-disable-next-line @liferay/aui/no-object
 		const AObject = A.Object;
 		const Lang = A.Lang;
@@ -354,23 +355,20 @@ AUI.add(
 						.get('id')
 						.replace(/([0-9]+)$/, guid);
 
-					const inputLocalizedNamespace = inputLocalized.get(
-						'namespace'
-					);
+					const inputLocalizedNamespace =
+						inputLocalized.get('namespace');
 
 					const inputLocalizedNamespaceId = `${inputLocalizedNamespace}${inputLocalizedId}`;
 
 					Liferay.InputLocalized.register(inputLocalizedNamespaceId, {
 						adminMode: inputLocalized.get('adminMode'),
-						availableLocales: inputLocalized.get(
-							'availableLocales'
-						),
+						availableLocales:
+							inputLocalized.get('availableLocales'),
 						boundingBox: `#${inputLocalizedNamespaceId}PaletteBoundingBox`,
 						columns: inputLocalized.get('columns'),
 						contentBox: `#${inputLocalizedNamespaceId}PaletteContentBox`,
-						defaultLanguageId: inputLocalized.get(
-							'defaultLanguageId'
-						),
+						defaultLanguageId:
+							inputLocalized.get('defaultLanguageId'),
 						fieldPrefix: inputLocalized.get('fieldPrefix'),
 						fieldPrefixSeparator: inputLocalized.get(
 							'fieldPrefixSeparator'
@@ -402,9 +400,8 @@ AUI.add(
 						selected: inputLocalized
 							.get('items')
 							.indexOf(inputLocalized.getSelectedLanguageId()),
-						selectedLanguageId: inputLocalized.get(
-							'selectedLanguageId'
-						),
+						selectedLanguageId:
+							inputLocalized.get('selectedLanguageId'),
 						toggleSelection: inputLocalized.get('toggleSelection'),
 						translatedLanguages: inputLocalized.get(
 							'translatedLanguages'

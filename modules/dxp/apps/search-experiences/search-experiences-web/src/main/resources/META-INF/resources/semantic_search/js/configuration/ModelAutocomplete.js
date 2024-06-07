@@ -22,9 +22,8 @@ function ModelAutocomplete({
 	required,
 	value = '',
 }) {
-	const [autocompleteSearchValue, setAutocompleteSearchValue] = useState(
-		value
-	);
+	const [autocompleteSearchValue, setAutocompleteSearchValue] =
+		useState(value);
 	const [networkState, setNetworkState] = useState(() => ({
 		error: false,
 		loading: false,

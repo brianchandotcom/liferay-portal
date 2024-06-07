@@ -43,7 +43,8 @@ export default function VisibilityButton({
 				'page-editor__page-structure__tree-node__visibility-button ' +
 					className,
 				{
-					'page-editor__page-structure__tree-node__visibility-button--visible': visible,
+					'page-editor__page-structure__tree-node__visibility-button--visible':
+						visible,
 				}
 			)}
 			disabled={node.isMasterItem || node.hiddenAncestor}

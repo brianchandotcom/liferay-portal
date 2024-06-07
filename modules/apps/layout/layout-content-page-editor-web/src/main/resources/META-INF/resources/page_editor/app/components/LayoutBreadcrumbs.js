@@ -133,9 +133,8 @@ function useBreadcrumbItems() {
 				addLayoutDataItems(state.layoutData.items[activeItemId]);
 			}
 			else if (activeItemType === ITEM_TYPES.editable) {
-				const [, fragmentEntryLinkId, editableId] = activeItemId.match(
-					/^([^-]+)-([^\n]+)$/
-				);
+				const [, fragmentEntryLinkId, editableId] =
+					activeItemId.match(/^([^-]+)-([^\n]+)$/);
 
 				items.push({
 					label: editableId,

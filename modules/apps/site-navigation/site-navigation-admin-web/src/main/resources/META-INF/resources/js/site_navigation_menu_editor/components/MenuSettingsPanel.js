@@ -15,9 +15,10 @@ export function MenuSettingsPanel({configButtonRef, titleId}) {
 		siteNavigationMenuName,
 	} = useConstants();
 
-	const contentRequestBody = useMemo(() => ({siteNavigationMenuId}), [
-		siteNavigationMenuId,
-	]);
+	const contentRequestBody = useMemo(
+		() => ({siteNavigationMenuId}),
+		[siteNavigationMenuId]
+	);
 
 	return (
 		<SidebarPanelContent

@@ -11,9 +11,8 @@ export default function ({
 	editCommerceInventoryWarehousePortletURL,
 	namespace,
 }) {
-	const CommerceInventoryWarehouseResource = CommerceServiceProvider.AdminInventoryAPI(
-		'v1'
-	);
+	const CommerceInventoryWarehouseResource =
+		CommerceServiceProvider.AdminInventoryAPI('v1');
 
 	const form = document.getElementById(`${namespace}fm`);
 

@@ -155,9 +155,10 @@ AUI.add(
 												click() {
 													fullScreenDialog.hide();
 													instance._switchMode({
-														content: fullScreenEditor.get(
-															'value'
-														),
+														content:
+															fullScreenEditor.get(
+																'value'
+															),
 													});
 												},
 											},
@@ -174,26 +175,31 @@ AUI.add(
 									.use(
 										'liferay-fullscreen-source-editor',
 										(A) => {
-											fullScreenEditor = new A.LiferayFullScreenSourceEditor(
-												{
-													boundingBox: dialog
-														.getStdModNode(
-															A.WidgetStdMod.BODY
-														)
-														.appendChild(
-															'<div></div>'
-														),
-													dataProcessor: host.getNativeEditor()
-														.dataProcessor,
-													previewCssClass:
-														'alloy-editor alloy-editor-placeholder',
-													value: host.getHTML(),
-												}
-											).render();
+											fullScreenEditor =
+												new A.LiferayFullScreenSourceEditor(
+													{
+														boundingBox: dialog
+															.getStdModNode(
+																A.WidgetStdMod
+																	.BODY
+															)
+															.appendChild(
+																'<div></div>'
+															),
+														dataProcessor:
+															host.getNativeEditor()
+																.dataProcessor,
+														previewCssClass:
+															'alloy-editor alloy-editor-placeholder',
+														value: host.getHTML(),
+													}
+												).render();
 
-											instance._fullScreenDialog = fullScreenDialog;
+											instance._fullScreenDialog =
+												fullScreenDialog;
 
-											instance._fullScreenEditor = fullScreenEditor;
+											instance._fullScreenEditor =
+												fullScreenEditor;
 										}
 									);
 							}
@@ -295,9 +301,8 @@ AUI.add(
 					editorFullscreen.toggleClass('hide');
 					editorSwitchTheme.toggleClass('hide');
 
-					instance._isVisible = editorWrapper.hasClass(
-						CSS_SHOW_SOURCE
-					);
+					instance._isVisible =
+						editorWrapper.hasClass(CSS_SHOW_SOURCE);
 
 					editorSwitch
 						.one('.lexicon-icon')

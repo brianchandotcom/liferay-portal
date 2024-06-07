@@ -50,6 +50,7 @@ export function FormBasicBusinessInformation({form, isMobile}) {
 			},
 			templateName: 'hi-template',
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

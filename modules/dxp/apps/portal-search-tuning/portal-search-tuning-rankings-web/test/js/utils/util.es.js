@@ -194,10 +194,7 @@ describe('utils', () => {
 			expect(toggleListItem([102, 103, 104], 102)).toEqual([103, 104]);
 			expect(toggleListItem([102, 103, 104], 103)).toEqual([102, 104]);
 			expect(toggleListItem([102, 103, 104], 105)).toEqual([
-				102,
-				103,
-				104,
-				105,
+				102, 103, 104, 105,
 			]);
 		});
 	});

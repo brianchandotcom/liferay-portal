@@ -70,7 +70,7 @@ class EventEmitter<Data> {
 }
 
 const DEFAULT_DISPATCH: Dispatch = () => {};
-const DEFAULT_GET_STATE: GetState = () => ({} as State);
+const DEFAULT_GET_STATE: GetState = () => ({}) as State;
 
 const StoreDispatchContext = React.createContext(DEFAULT_DISPATCH);
 const StoreGetStateContext = React.createContext(DEFAULT_GET_STATE);

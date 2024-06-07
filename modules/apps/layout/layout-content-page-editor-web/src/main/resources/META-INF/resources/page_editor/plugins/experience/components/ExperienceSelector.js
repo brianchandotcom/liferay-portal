@@ -334,9 +334,8 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 			) {
 				event.preventDefault();
 
-				const allFocusableElements = getKeyboardFocusableElements(
-					document
-				);
+				const allFocusableElements =
+					getKeyboardFocusableElements(document);
 
 				const index = allFocusableElements.indexOf(buttonRef.current);
 

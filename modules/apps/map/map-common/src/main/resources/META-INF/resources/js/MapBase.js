@@ -146,22 +146,17 @@ class MapBase extends EventEmitter {
 		this._map = null;
 		this._originalPosition = null;
 
-		this._handleGeoJSONLayerFeatureClicked = this._handleGeoJSONLayerFeatureClicked.bind(
-			this
-		);
-		this._handleGeoJSONLayerFeaturesAdded = this._handleGeoJSONLayerFeaturesAdded.bind(
-			this
-		);
-		this._handleGeoLocationMarkerDragended = this._handleGeoLocationMarkerDragended.bind(
-			this
-		);
-		this._handleHomeButtonClicked = this._handleHomeButtonClicked.bind(
-			this
-		);
+		this._handleGeoJSONLayerFeatureClicked =
+			this._handleGeoJSONLayerFeatureClicked.bind(this);
+		this._handleGeoJSONLayerFeaturesAdded =
+			this._handleGeoJSONLayerFeaturesAdded.bind(this);
+		this._handleGeoLocationMarkerDragended =
+			this._handleGeoLocationMarkerDragended.bind(this);
+		this._handleHomeButtonClicked =
+			this._handleHomeButtonClicked.bind(this);
 		this._handlePositionChanged = this._handlePositionChanged.bind(this);
-		this._handleSearchButtonClicked = this._handleSearchButtonClicked.bind(
-			this
-		);
+		this._handleSearchButtonClicked =
+			this._handleSearchButtonClicked.bind(this);
 
 		this.on('positionChange', this._handlePositionChanged);
 
@@ -246,12 +241,10 @@ class MapBase extends EventEmitter {
 		}
 
 		if (this._customControls) {
-			const homeControl = this._customControls[
-				this.constructor.CONTROLS.HOME
-			];
-			const searchControl = this._customControls[
-				this.constructor.CONTROLS.SEARCH
-			];
+			const homeControl =
+				this._customControls[this.constructor.CONTROLS.HOME];
+			const searchControl =
+				this._customControls[this.constructor.CONTROLS.SEARCH];
 
 			if (homeControl) {
 				homeControl.addEventListener(
@@ -295,11 +288,10 @@ class MapBase extends EventEmitter {
 			const searchControl = buildFragment(TPL_SEARCH_BOX).querySelector(
 				'div.col-md-6.search-controls'
 			);
-			customControls[
-				this.constructor.CONTROLS.SEARCH
-			] = new this.constructor.SearchImpl({
-				inputNode: searchControl.querySelector('input'),
-			});
+			customControls[this.constructor.CONTROLS.SEARCH] =
+				new this.constructor.SearchImpl({
+					inputNode: searchControl.querySelector('input'),
+				});
 			this.addControl(searchControl, this.constructor.POSITION.TOP_LEFT);
 		}
 

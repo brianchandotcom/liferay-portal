@@ -31,10 +31,11 @@ export default function propsTransformer({
 							if (form) {
 								postForm(form, {
 									data: {
-										oAuth2AuthorizationIds: getCheckedCheckboxes(
-											form,
-											`${portletNamespace}allRowIds`
-										),
+										oAuth2AuthorizationIds:
+											getCheckedCheckboxes(
+												form,
+												`${portletNamespace}allRowIds`
+											),
 									},
 									url: revokeOauthAuthorizationsURL,
 								});

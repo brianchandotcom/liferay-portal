@@ -31,7 +31,7 @@ html:not(#__):not(#___) .cadmin.modal-header {
 }
 
 html:not(#__):not(#___) .cadmin p {
-	margin: 0px 0px;
+	margin: 0;
 }
 
 html:not(#__):not(#___) .cadmin .modal-header,
@@ -51,7 +51,7 @@ html:not(#__):not(#___) .cadmin textarea {
 
 html:not(#__):not(#___) .cadmin .modal-footer {
 	border-top: 1px solid white;
-	padding-top: 0px;
+	padding-top: 0;
 }
 
 html:not(#__):not(#___) .cadmin .modal-body {

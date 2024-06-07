@@ -45,8 +45,7 @@
 				selectEventName:
 					'<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
 				title: '<liferay-ui:message key="select-layout" />',
-				url:
-					'<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>',
+				url: '<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>',
 			});
 		});
 	</aui:script>

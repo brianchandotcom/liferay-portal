@@ -29,9 +29,8 @@ const MAP_CONFIG = {
 };
 
 const getMapName = (name) => {
-	const {fieldName, instanceId, portletNamespace, repeatedIndex} = parseName(
-		name
-	);
+	const {fieldName, instanceId, portletNamespace, repeatedIndex} =
+		parseName(name);
 
 	return `${portletNamespace}map$$${fieldName}$${instanceId}$${repeatedIndex}`;
 };
@@ -155,6 +154,7 @@ export function useGeolocation({
 				mapRef.current.dispose();
 			}
 		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

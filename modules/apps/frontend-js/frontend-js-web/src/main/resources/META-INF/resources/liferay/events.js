@@ -27,6 +27,7 @@
 			CLICK_EVENTS[guid] = fn;
 
 			if (!Liferay._baseDelegateHandle) {
+
 				// eslint-disable-next-line @liferay/aui/no-get-body
 				Liferay._baseDelegateHandle = A.getBody().delegate(
 					'click',
@@ -61,6 +62,7 @@
 
 				Liferay.fire('submitForm', {
 					action,
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					form: A.one(form),
 					singleSubmit,

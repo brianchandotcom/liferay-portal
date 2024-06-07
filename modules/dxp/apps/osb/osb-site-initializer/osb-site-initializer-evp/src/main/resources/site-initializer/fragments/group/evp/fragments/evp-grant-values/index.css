@@ -1,6 +1,6 @@
 #available-funds {
 	font-weight: normal;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	margin-left: 5px;
 }
 
@@ -11,7 +11,7 @@
 
 .funds-row {
 	font-weight: bold;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .hours-row {

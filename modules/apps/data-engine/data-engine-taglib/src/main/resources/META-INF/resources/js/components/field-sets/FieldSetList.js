@@ -93,19 +93,23 @@ export default function FieldSetList({searchTerm}) {
 											fieldSet,
 											isDeleteAction: true,
 											modal: {
-												actionMessage: Liferay.Language.get(
-													'delete'
-												),
-												fieldSetMessage: Liferay.Language.get(
-													'the-fieldset-will-be-deleted-permanently-from'
-												),
-												headerMessage: Liferay.Language.get(
-													'delete'
-												),
+												actionMessage:
+													Liferay.Language.get(
+														'delete'
+													),
+												fieldSetMessage:
+													Liferay.Language.get(
+														'the-fieldset-will-be-deleted-permanently-from'
+													),
+												headerMessage:
+													Liferay.Language.get(
+														'delete'
+													),
 												status: 'danger',
-												warningMessage: Liferay.Language.get(
-													'this-action-may-erase-data-permanently'
-												),
+												warningMessage:
+													Liferay.Language.get(
+														'this-action-may-erase-data-permanently'
+													),
 											},
 											onPropagate: deleteFieldSet,
 										}),

@@ -43,8 +43,7 @@ const itemWithAudit = {
 				familyName: 'Test',
 				givenName: 'Test',
 				id: 20122,
-				image:
-					'/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
+				image: '/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
 				name: 'Test Test',
 				userGroupBriefs: [
 					{
@@ -70,8 +69,7 @@ const itemWithAudit = {
 				familyName: 'Test',
 				givenName: 'Test',
 				id: 20122,
-				image:
-					'/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
+				image: '/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
 				name: 'Test Test',
 				userGroupBriefs: [],
 			},
@@ -98,8 +96,7 @@ const itemWithAudit = {
 				familyName: 'Test',
 				givenName: 'Test',
 				id: 20122,
-				image:
-					'/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
+				image: '/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
 				name: 'Test Test',
 				userGroupBriefs: [],
 			},
@@ -113,8 +110,7 @@ const itemWithAudit = {
 		familyName: 'Test',
 		givenName: 'Test',
 		id: 20122,
-		image:
-			'/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
+		image: '/image/user_portrait?img_id=38678&img_id_token=7NJsMSX85wO4BAtets1FsmiCKXE%3D&t=1713281378882',
 		name: 'Test Test',
 	},
 	dateCreated: '2024-04-12T08:28:45Z',
@@ -128,8 +124,7 @@ const itemWithAudit = {
 	image: {
 		id: 39346,
 		link: {
-			href:
-				'/documents/20119/0/trooper+%281%29.png/a0f947f9-68c8-2410-c6eb-85de1aa70b4f?version=1.0&t=1713171423854&download=true&objectDefinitionExternalReferenceCode=aab85379-959d-b246-0907-e723df904044&objectEntryExternalReferenceCode=0b31f896-94e4-8519-ca5b-c74bb374036d',
+			href: '/documents/20119/0/trooper+%281%29.png/a0f947f9-68c8-2410-c6eb-85de1aa70b4f?version=1.0&t=1713171423854&download=true&objectDefinitionExternalReferenceCode=aab85379-959d-b246-0907-e723df904044&objectEntryExternalReferenceCode=0b31f896-94e4-8519-ca5b-c74bb374036d',
 			label: 'trooper (1).png',
 		},
 		name: 'trooper (1).png',

@@ -54,7 +54,7 @@ export function updateProductFields(data) {
 				? sub(
 						Liferay.Language.get('x-in-stock'),
 						cpInstance.availability.stockQuantity
-				  )
+					)
 				: '';
 	}
 

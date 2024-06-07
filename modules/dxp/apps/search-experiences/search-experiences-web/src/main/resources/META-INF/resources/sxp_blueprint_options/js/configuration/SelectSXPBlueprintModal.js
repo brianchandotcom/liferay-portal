@@ -208,10 +208,10 @@ const SelectSXPBlueprintModal = ({
 											selectedExternalReferenceCode
 												? Liferay.Language.get(
 														'selected'
-												  )
+													)
 												: Liferay.Language.get(
 														'select'
-												  )}
+													)}
 										</ClayButton>
 									</ClayTable.Cell>
 								</ClayTable.Row>

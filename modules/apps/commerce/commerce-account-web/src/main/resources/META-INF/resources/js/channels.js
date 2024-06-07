@@ -16,9 +16,8 @@ export default function ({
 	dataSetId,
 	rootPortletId,
 }) {
-	const AccountAddressChannelResource = CommerceServiceProvider.AdminChannelAPI(
-		'v1'
-	);
+	const AccountAddressChannelResource =
+		CommerceServiceProvider.AdminChannelAPI('v1');
 
 	function selectItem(channel) {
 		const channelData = {

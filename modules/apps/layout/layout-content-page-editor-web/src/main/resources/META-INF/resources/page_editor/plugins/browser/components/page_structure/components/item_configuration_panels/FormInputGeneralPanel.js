@@ -218,10 +218,8 @@ export function FormInputGeneralPanel({item}) {
 						inputItem?.itemId !== item.itemId &&
 						inputItem?.type === LAYOUT_DATA_ITEM_TYPES.fragment
 					) {
-						const {
-							editableValues,
-							fragmentEntryType,
-						} = selectFragmentEntryLink(state, inputItem);
+						const {editableValues, fragmentEntryType} =
+							selectFragmentEntryLink(state, inputItem);
 
 						if (
 							fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
@@ -566,7 +564,7 @@ function FormInputMappingOptions({
 								? relationships.find(
 										({classNameId}) =>
 											`${classNameId}` === relationship
-								  ).label
+									).label
 								: type}
 						</p>
 					)}

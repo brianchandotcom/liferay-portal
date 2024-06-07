@@ -38,9 +38,8 @@ export function ModalAddObjectField({
 	setVisibility,
 }: ModalAddObjectField) {
 	const [error, setError] = useState<string>('');
-	const [objectDefinition, setObjectDefinition] = useState<
-		ObjectDefinition
-	>();
+	const [objectDefinition, setObjectDefinition] =
+		useState<ObjectDefinition>();
 	const [objectFieldBusinessTypes, setObjectFieldBusinessTypes] = useState<
 		ObjectFieldBusinessType[]
 	>([]);
@@ -92,16 +91,11 @@ export function ModalAddObjectField({
 		}
 	};
 
-	const {
-		errors,
-		handleChange,
-		handleSubmit,
-		setValues,
-		values,
-	} = useObjectFieldForm({
-		initialValues,
-		onSubmit,
-	});
+	const {errors, handleChange, handleSubmit, setValues, values} =
+		useObjectFieldForm({
+			initialValues,
+			onSubmit,
+		});
 
 	const showEnableTranslationToggle =
 		values.businessType === 'LongText' ||
@@ -110,9 +104,10 @@ export function ModalAddObjectField({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectDefinitionResponse =
+				await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
 
 			setObjectDefinition(objectDefinitionResponse);
 
@@ -126,11 +121,10 @@ export function ModalAddObjectField({
 				method: 'GET',
 			});
 
-			const {
-				objectFieldBusinessTypes,
-			} = (await objectFieldBusinessTypesResponse.json()) as {
-				objectFieldBusinessTypes: ObjectFieldBusinessType[];
-			};
+			const {objectFieldBusinessTypes} =
+				(await objectFieldBusinessTypesResponse.json()) as {
+					objectFieldBusinessTypes: ObjectFieldBusinessType[];
+				};
 
 			setObjectFieldBusinessTypes(
 				objectFieldBusinessTypes.filter((objectFieldBusinessType) => {
@@ -150,6 +144,7 @@ export function ModalAddObjectField({
 				objectDefinition?.enableLocalization &&
 				showEnableTranslationToggle,
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionExternalReferenceCode, values.businessType]);
 

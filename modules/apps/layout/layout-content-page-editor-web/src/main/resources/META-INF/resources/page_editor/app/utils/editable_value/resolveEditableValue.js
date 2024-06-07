@@ -17,7 +17,7 @@ export default function resolveEditableValue(
 				...editableValue,
 				editableTypeOptions: editableValue.config,
 				languageId,
-		  }).catch(() =>
+			}).catch(() =>
 				Promise.resolve(
 					getEditableLocalizedValue(
 						editableValue,
@@ -25,12 +25,12 @@ export default function resolveEditableValue(
 						editableValue
 					)
 				)
-		  )
+			)
 		: Promise.resolve(
 				getEditableLocalizedValue(
 					editableValue,
 					languageId,
 					editableValue
 				)
-		  );
+			);
 }

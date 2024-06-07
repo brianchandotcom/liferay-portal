@@ -74,7 +74,7 @@ const ImportMappingItem = ({
 								const label = columnHasNoName
 									? `${Liferay.Language.get('column')} ${
 											fileField + 1
-									  }`
+										}`
 									: fileField;
 
 								return (

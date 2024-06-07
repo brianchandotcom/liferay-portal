@@ -242,9 +242,8 @@ function appendXMLAssignments(
 			assignmentType === 'scriptedAssignment' &&
 			dataAssignments.script?.length
 		) {
-			const xmlScriptedAssignment = XMLUtil.createObj(
-				'scriptedAssignment'
-			);
+			const xmlScriptedAssignment =
+				XMLUtil.createObj('scriptedAssignment');
 
 			dataAssignments.script.forEach((item) => {
 				buffer.push(

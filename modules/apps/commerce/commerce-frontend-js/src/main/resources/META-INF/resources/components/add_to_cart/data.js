@@ -111,7 +111,7 @@ export async function addToCart(
 						? (includedCartItem = Array.isArray(option.value)
 								? option.value === []
 								: option.value === currentSkuOption.value ||
-								  option.skuOptionValueKey ===
+									option.skuOptionValueKey ===
 										currentSkuOption.skuOptionValueKey)
 						: (includedCartItem = false);
 				});

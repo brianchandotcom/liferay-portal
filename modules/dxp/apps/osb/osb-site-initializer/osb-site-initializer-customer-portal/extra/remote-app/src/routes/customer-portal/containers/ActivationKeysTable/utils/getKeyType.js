@@ -6,9 +6,8 @@
 import {hasVirtualCluster} from '.';
 
 export function getKeyType(licenseEntryType) {
-	const hasVirtualClusterForActivationKeys = hasVirtualCluster(
-		licenseEntryType
-	);
+	const hasVirtualClusterForActivationKeys =
+		hasVirtualCluster(licenseEntryType);
 
 	return hasVirtualClusterForActivationKeys
 		? 'Virtual Cluster'

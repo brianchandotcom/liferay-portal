@@ -22,12 +22,12 @@ export function NavigationMenuSelectorField({field, onValueSelect, value}) {
 					value.parentSiteNavigationMenuItemId !== '0'
 						? `... / ${value.title}`
 						: value.title,
-		  }
+			}
 		: {
 				title: config.isPrivateLayoutsEnabled
 					? Liferay.Language.get('public-pages-hierarchy')
 					: Liferay.Language.get('pages-hierarchy'),
-		  };
+			};
 
 	return (
 		<ItemSelector

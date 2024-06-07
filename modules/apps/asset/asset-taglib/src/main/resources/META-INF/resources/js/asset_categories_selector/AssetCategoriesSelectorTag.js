@@ -74,32 +74,33 @@ export default function (props) {
 				</ClayLink>
 			)}
 
-			{initialPublicVocabularies && !!initialPublicVocabularies.length && (
-				<div aria-labelledby={publicVocabulariesId} role="group">
-					{props.showLabel && (
-						<>
-							<div
-								className="border-0 mb-0 sheet-subtitle text-uppercase"
-								id={publicVocabulariesId}
-							>
-								{Liferay.Language.get('public-categories')}
-							</div>
+			{initialPublicVocabularies &&
+				!!initialPublicVocabularies.length && (
+					<div aria-labelledby={publicVocabulariesId} role="group">
+						{props.showLabel && (
+							<>
+								<div
+									className="border-0 mb-0 sheet-subtitle text-uppercase"
+									id={publicVocabulariesId}
+								>
+									{Liferay.Language.get('public-categories')}
+								</div>
 
-							<p className="small text-secondary">
-								{Liferay.Language.get(
-									'they-can-be-displayed-through-pages-widgets-fragments-and-searches'
-								)}
-							</p>
-						</>
-					)}
+								<p className="small text-secondary">
+									{Liferay.Language.get(
+										'they-can-be-displayed-through-pages-widgets-fragments-and-searches'
+									)}
+								</p>
+							</>
+						)}
 
-					<AssetCategoriesSelectorTag
-						{...props}
-						id={`${publicVocabulariesId}_categories`}
-						initialVocabularies={initialPublicVocabularies}
-					/>
-				</div>
-			)}
+						<AssetCategoriesSelectorTag
+							{...props}
+							id={`${publicVocabulariesId}_categories`}
+							initialVocabularies={initialPublicVocabularies}
+						/>
+					</div>
+				)}
 
 			{initialInternalVocabularies &&
 				!!initialInternalVocabularies.length && (

@@ -81,7 +81,8 @@ export function CreateAPIEndpointModalContent({
 							beginStringWithForwardSlash(parameter)
 					),
 				}),
-				r_apiApplicationToAPIEndpoints_c_apiApplicationId: currentAPIApplicationId,
+				r_apiApplicationToAPIEndpoints_c_apiApplicationId:
+					currentAPIApplicationId,
 				...(localUIData.scope?.key && {
 					scope: {key: localUIData.scope.key},
 				}),

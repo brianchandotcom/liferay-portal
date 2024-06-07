@@ -46,7 +46,7 @@ select {
 }
 
 .business-home-cover .form-feedback-indicator::before {
-	content: url('[resources:error.svg]');
+	content: url([resources:error.svg]);
 	margin-right: 4px;
 }
 

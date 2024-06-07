@@ -41,6 +41,7 @@ const WhatsNewModal = () => {
 		Liferay.on('openSettingsModalEvent', handler);
 
 		return () => Liferay.detach('openSettingsModalEvent', handler);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [visible]);
 

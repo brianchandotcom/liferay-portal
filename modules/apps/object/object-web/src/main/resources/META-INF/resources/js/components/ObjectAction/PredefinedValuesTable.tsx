@@ -67,20 +67,20 @@ export default function PredefinedValuesTable({
 								disabled={isDateTime || values.system}
 								label={Liferay.Language.get('input-as-a-value')}
 								onChange={({target: {checked}}) => {
-									const newPredefinedValues = predefinedValues.map(
-										(objectField) => {
+									const newPredefinedValues =
+										predefinedValues.map((objectField) => {
 											return objectField.name === name
 												? {
 														...objectField,
 														inputAsValue: checked,
-												  }
+													}
 												: objectField;
-										}
-									);
+										});
 									setValues({
 										parameters: {
 											...values.parameters,
-											predefinedValues: newPredefinedValues,
+											predefinedValues:
+												newPredefinedValues,
 										},
 									});
 								}}
@@ -132,10 +132,11 @@ export default function PredefinedValuesTable({
 										setValues({
 											parameters: {
 												...values.parameters,
-												predefinedValues: updatePredefinedValues(
-													name,
-													value
-												),
+												predefinedValues:
+													updatePredefinedValues(
+														name,
+														value
+													),
 											},
 										});
 									}}
@@ -154,15 +155,17 @@ export default function PredefinedValuesTable({
 										setValues({
 											parameters: {
 												...values.parameters,
-												predefinedValues: updatePredefinedValues(
-													name,
-													value
-												),
+												predefinedValues:
+													updatePredefinedValues(
+														name,
+														value
+													),
 											},
 										});
 									}}
 									onOpenModal={() => {
-										const parentWindow = Liferay.Util.getOpener();
+										const parentWindow =
+											Liferay.Util.getOpener();
 
 										parentWindow.Liferay.fire(
 											'openExpressionBuilderModal',
@@ -171,16 +174,17 @@ export default function PredefinedValuesTable({
 													setValues({
 														parameters: {
 															...values.parameters,
-															predefinedValues: updatePredefinedValues(
-																name,
-																value
-															),
+															predefinedValues:
+																updatePredefinedValues(
+																	name,
+																	value
+																),
 														},
 													});
 												},
-												required: objectFieldsMap.get(
-													name
-												)?.required,
+												required:
+													objectFieldsMap.get(name)
+														?.required,
 												source: value,
 												validateExpressionURL,
 											}
@@ -190,10 +194,10 @@ export default function PredefinedValuesTable({
 										inputAsValue
 											? Liferay.Language.get(
 													'input-a-value'
-											  )
+												)
 											: Liferay.Language.get(
 													'input-a-value-or-create-an-expression'
-											  )
+												)
 									}
 									value={value}
 								/>
@@ -308,7 +312,7 @@ export default function PredefinedValuesTable({
 										label,
 										name,
 										value: '',
-								  };
+									};
 						}
 					);
 					setValues({
@@ -364,7 +368,7 @@ export default function PredefinedValuesTable({
 											),
 											target: 'event',
 										},
-								  ]
+									]
 								: [],
 						}}
 						id="PredefinedValuesTable"
@@ -373,17 +377,15 @@ export default function PredefinedValuesTable({
 							!values.system
 								? [
 										{
-											href:
-												'deletePredefinedValueObjectField',
+											href: 'deletePredefinedValueObjectField',
 											icon: 'trash',
-											id:
-												'deletePredefinedValueObjectField',
+											id: 'deletePredefinedValueObjectField',
 											label: Liferay.Language.get(
 												'delete'
 											),
 											target: 'event',
 										},
-								  ]
+									]
 								: []
 						}
 						onActionDropdownItemClick={onActionDropdownItemClick}

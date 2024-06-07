@@ -28,9 +28,8 @@ export function PaginationOptions({
 	const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useControlledState(
 		initialNumberOfItemsPerPage
 	);
-	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] = useState(
-		null
-	);
+	const [numberOfItemsPerPageError, setNumberOfItemsPerPageError] =
+		useState(null);
 	const [numberOfPages, setNumberOfPages] = useState(initialNumberOfPages);
 
 	const isMaximumValuePerPageError =

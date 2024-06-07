@@ -14,7 +14,7 @@
 .link-arrow {
 	display: inline-block;
 	margin-left: var(--spacer-2);
-	transform: translate(0px, -1px);
+	transform: translate(0, -1px);
 }
 
 .masterclass-link:hover .link-arrow {

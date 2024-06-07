@@ -184,8 +184,8 @@ export function AssetCategoryTree({
 							inheritSelection
 								? 'multiple-recursive'
 								: multiSelection
-								? 'multiple'
-								: 'single'
+									? 'multiple'
+									: 'single'
 						}
 						showExpanderOnHover={false}
 					>
@@ -237,30 +237,32 @@ export function AssetCategoryTree({
 												)
 											}
 										>
-											{multiSelection && !item.disabled && (
-												<Checkbox
-													checked={selection.has(
-														item.id
-													)}
-													onChange={(event) => {
-														selection.toggle(
-															item.id,
-															{
-																parentSelection: false,
-																selectionMode: event
-																	.nativeEvent
-																	.shiftKey
-																	? 'multiple-recursive'
-																	: null,
-															}
-														);
-													}}
-													onClick={(event) =>
-														event.stopPropagation()
-													}
-													tabIndex="-1"
-												/>
-											)}
+											{multiSelection &&
+												!item.disabled && (
+													<Checkbox
+														checked={selection.has(
+															item.id
+														)}
+														onChange={(event) => {
+															selection.toggle(
+																item.id,
+																{
+																	parentSelection: false,
+																	selectionMode:
+																		event
+																			.nativeEvent
+																			.shiftKey
+																			? 'multiple-recursive'
+																			: null,
+																}
+															);
+														}}
+														onClick={(event) =>
+															event.stopPropagation()
+														}
+														tabIndex="-1"
+													/>
+												)}
 
 											<ClayIcon symbol={item.icon} />
 

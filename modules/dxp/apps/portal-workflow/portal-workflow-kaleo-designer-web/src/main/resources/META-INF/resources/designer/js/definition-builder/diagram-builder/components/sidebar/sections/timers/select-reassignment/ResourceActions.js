@@ -36,6 +36,7 @@ const ResourceActions = ({
 		if (actionData.resourceAction) {
 			setResourceActions(actionData.resourceAction);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

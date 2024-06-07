@@ -6,7 +6,9 @@
 	margin: 10px;
 	padding: 5px;
 	position: relative;
-	transition: border-radius $transition, background-color $transition;
+	transition:
+		border-radius $transition,
+		background-color $transition;
 	width: calc(100% - 20px);
 
 	@media screen and (hover: none) {
@@ -72,7 +74,9 @@
 		font-weight: bold;
 		padding: 5px 10px;
 		position: relative;
-		transition: opacity $transition, transform $transition;
+		transition:
+			opacity $transition,
+			transform $transition;
 		white-space: nowrap;
 
 		.minium-sidebar:not(:hover) & {
@@ -87,7 +91,9 @@
 		bottom: 100%;
 		left: 0;
 		position: absolute;
-		transition: opacity $transition, transform $transition;
+		transition:
+			opacity $transition,
+			transform $transition;
 		width: 100%;
 
 		.minium-user-nav:not(:hover):not(:focus) & {

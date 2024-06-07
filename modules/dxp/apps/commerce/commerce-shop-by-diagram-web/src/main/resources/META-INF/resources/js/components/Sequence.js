@@ -15,10 +15,8 @@ export default function Sequence({containerRef, highlighted, target}) {
 			y: sequenceY,
 		} = target.getBoundingClientRect();
 
-		const {
-			x: parentX,
-			y: parentY,
-		} = containerRef.current.getBoundingClientRect();
+		const {x: parentX, y: parentY} =
+			containerRef.current.getBoundingClientRect();
 
 		const relativeX = sequenceX - parentX;
 		const relativeY = sequenceY - parentY;

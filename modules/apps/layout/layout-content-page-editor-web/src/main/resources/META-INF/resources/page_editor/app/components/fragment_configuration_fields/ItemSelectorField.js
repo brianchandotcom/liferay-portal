@@ -46,7 +46,7 @@ export function ItemSelectorField({field, onValueSelect, value = {}}) {
 								title:
 									collectionItem.title ||
 									Liferay.Language.get('collection-item'),
-						  }
+							}
 						: value
 				}
 				showEditControls={!isWithinCollection}

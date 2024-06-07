@@ -18,8 +18,7 @@ const nodeRule = (id: string, impact: ImpactValue, target: string) => ({
 			relatedNodes: [],
 		},
 	],
-	html:
-		'<button class="nav-link btn btn-unstyled" type="button" aria-controls="_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__useId_10tabPanel0" id="_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__useId_10tab0" aria-disabled="true" aria-selected="false" role="tab">',
+	html: '<button class="nav-link btn btn-unstyled" type="button" aria-controls="_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__useId_10tabPanel0" id="_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__useId_10tab0" aria-disabled="true" aria-selected="false" role="tab">',
 	impact,
 	none: [],
 	target: [target],

@@ -44,6 +44,7 @@ const TimerFields = ({
 				return updatedSectios;
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [timerIdentifier, timerScale, timersIndex, timerValue]);
 

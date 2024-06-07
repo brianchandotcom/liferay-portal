@@ -145,7 +145,8 @@ export function ConfigurationContainer({
 					}}
 					onToggle={() =>
 						setValues({
-							enableObjectEntryHistory: !values.enableObjectEntryHistory,
+							enableObjectEntryHistory:
+								!values.enableObjectEntryHistory,
 						})
 					}
 					toggled={values.enableObjectEntryHistory}
@@ -170,7 +171,8 @@ export function ConfigurationContainer({
 					}}
 					onToggle={() =>
 						setValues({
-							enableObjectEntryDraft: !values.enableObjectEntryDraft,
+							enableObjectEntryDraft:
+								!values.enableObjectEntryDraft,
 						})
 					}
 					toggled={values.enableObjectEntryDraft}

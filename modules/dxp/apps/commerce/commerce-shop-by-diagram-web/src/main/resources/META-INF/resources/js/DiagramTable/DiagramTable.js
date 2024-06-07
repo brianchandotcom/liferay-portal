@@ -229,7 +229,7 @@ function DiagramTable({
 					(counter, product) =>
 						product.selected ? counter + 1 : counter,
 					0
-			  )
+				)
 			: 0;
 
 	return (
@@ -276,13 +276,13 @@ function DiagramTable({
 							selectedProductsCounter === 1
 								? Liferay.Language.get(
 										'the-product-was-successfully-added-to-the-cart'
-								  )
+									)
 								: sub(
 										Liferay.Language.get(
 											'x-products-were-successfully-added-to-the-cart'
 										),
 										selectedProductsCounter
-								  );
+									);
 
 						openToast({
 							message,

@@ -119,9 +119,8 @@ const FrontendDataSet = ({
 		let initialVisibleFieldNames = {};
 
 		if (activeViewSettings) {
-			const {name: activeViewName, visibleFieldNames} = JSON.parse(
-				activeViewSettings
-			);
+			const {name: activeViewName, visibleFieldNames} =
+				JSON.parse(activeViewSettings);
 
 			if (activeViewName) {
 				const activeView = views.find(
@@ -154,16 +153,14 @@ const FrontendDataSet = ({
 						const filterImplementation =
 							FILTER_IMPLEMENTATIONS[filter.type];
 
-						filter.odataFilterString = filterImplementation.getOdataString(
-							filter
-						);
-						filter.selectedItemsLabel = filterImplementation.getSelectedItemsLabel(
-							filter
-						);
+						filter.odataFilterString =
+							filterImplementation.getOdataString(filter);
+						filter.selectedItemsLabel =
+							filterImplementation.getSelectedItemsLabel(filter);
 					}
 
 					return filter;
-			  })
+				})
 			: [];
 
 		const paginationDelta =
@@ -497,13 +494,12 @@ const FrontendDataSet = ({
 
 						const filteredCreationMenu = {};
 
-						filteredCreationMenu.primaryItems = filterCreationActions(
-							{
+						filteredCreationMenu.primaryItems =
+							filterCreationActions({
 								customActions:
 									currentCreationMenu?.primaryItems,
 								globalCollectionActions: data?.actions,
-							}
-						);
+							});
 
 						return filteredCreationMenu;
 					});
@@ -741,7 +737,7 @@ const FrontendDataSet = ({
 				: {
 						...itemsChanges,
 						[itemKey]: {},
-				  };
+					};
 		});
 	}
 

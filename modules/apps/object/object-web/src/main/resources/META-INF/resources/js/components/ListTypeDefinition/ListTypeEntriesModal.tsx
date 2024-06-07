@@ -126,6 +126,7 @@ function ListTypeEntriesModal() {
 
 		return () =>
 			Liferay.detach('openListTypeEntriesModal', openModal as () => void);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

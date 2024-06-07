@@ -11,7 +11,9 @@
 	grid-template-columns: auto 120px minmax(min-content, 100px) min-content;
 	overflow: visible;
 	position: relative;
-	transition: height 0.2s ease-in, padding 0.1s ease-in;
+	transition:
+		height 0.2s ease-in,
+		padding 0.1s ease-in;
 	width: 100%;
 
 	.mini-cart-item-details {

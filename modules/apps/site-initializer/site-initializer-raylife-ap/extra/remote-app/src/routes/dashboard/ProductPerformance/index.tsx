@@ -79,9 +79,8 @@ const ProductPerformance = () => {
 	const [sixMonthsGoalsData, setSixMonthsGoalsData] = useState<number[]>([]);
 	const [yearToDateSales, setYearToDateSales] = useState<number[]>([]);
 	const [yearToDateGoals, setYearToDateGoals] = useState<number[]>([]);
-	const [currentTooltip, setCurrentTooltip] = useState<number[]>(
-		yearToDateGoals
-	);
+	const [currentTooltip, setCurrentTooltip] =
+		useState<number[]>(yearToDateGoals);
 	const inicialProductValue = 'All';
 	const [productValues, setProductsValues] = useState(inicialProductValue);
 
@@ -115,6 +114,7 @@ const ProductPerformance = () => {
 				});
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [width]);
 
@@ -474,6 +474,7 @@ const ProductPerformance = () => {
 	};
 	useEffect(() => {
 		productsBaseSetup();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -518,8 +519,9 @@ const ProductPerformance = () => {
 			style: 'currency',
 		});
 
-	const findActiveProduct = products.find((product) => product.active)
-		?.productName;
+	const findActiveProduct = products.find(
+		(product) => product.active
+	)?.productName;
 
 	const isFilterAllActive = (product: ProductCell) => !product.active;
 
@@ -549,9 +551,8 @@ const ProductPerformance = () => {
 					<p className="m-0 text-paragraph">
 						<ClayButton
 							className={classNames('general-filter mr-1', {
-								'disabled font-weight-bolder': products.every(
-									isFilterAllActive
-								),
+								'disabled font-weight-bolder':
+									products.every(isFilterAllActive),
 							})}
 							displayType="unstyled"
 							onClick={() => {

@@ -30,7 +30,8 @@ export default function ItemConfigurationSidebar() {
 				className={classNames(
 					'flex-column page-editor__item-configuration-sidebar',
 					{
-						'page-editor__item-configuration-sidebar--open': itemConfigurationOpen,
+						'page-editor__item-configuration-sidebar--open':
+							itemConfigurationOpen,
 					}
 				)}
 				tabIndex={activeItemId ? null : 0}

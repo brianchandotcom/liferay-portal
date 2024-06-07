@@ -16,9 +16,8 @@ export default function ({
 	pricingFDSName,
 	spritemap,
 }) {
-	const CommerceDiscountSkusResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommerceDiscountSkusResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	const id = commerceDiscountId;
 

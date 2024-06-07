@@ -134,10 +134,11 @@ export function useObjectActionForm({
 	useEffect(() => {
 		if (values.parameters?.objectDefinitionExternalReferenceCode) {
 			const makeFetch = async () => {
-				const response = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-					values.parameters
-						?.objectDefinitionExternalReferenceCode as string
-				);
+				const response =
+					await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+						values.parameters
+							?.objectDefinitionExternalReferenceCode as string
+					);
 
 				const filteredFields = response.filter(
 					({businessType, system}) =>

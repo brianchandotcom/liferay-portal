@@ -50,12 +50,10 @@ export default function BaseAPIEndpointFields({
 	>([]);
 	const [scopeOptions, setScopeOptions] = useState<SelectOption[]>([]);
 
-	const [selectedHttpMethod, setSelectedHttpMethod] = useState<
-		SelectOption
-	>();
-	const [selectedRetrieveType, setSelectedRetrieveType] = useState<
-		SelectOption
-	>();
+	const [selectedHttpMethod, setSelectedHttpMethod] =
+		useState<SelectOption>();
+	const [selectedRetrieveType, setSelectedRetrieveType] =
+		useState<SelectOption>();
 	const [selectedScope, setSelectedScope] = useState<SelectOption>();
 
 	useEffect(() => {
@@ -91,8 +89,7 @@ export default function BaseAPIEndpointFields({
 
 	useEffect(() => {
 		fetchJSON<FetchedListType>({
-			input:
-				'/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/SCOPE_PICKLIST',
+			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/SCOPE_PICKLIST',
 		}).then((response) => {
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({
@@ -101,7 +98,7 @@ export default function BaseAPIEndpointFields({
 								? Liferay.Language.get('site')
 								: Liferay.Language.get('company'),
 						value: entry.key,
-				  }))
+					}))
 				: [];
 
 			if (options.length) {
@@ -110,8 +107,7 @@ export default function BaseAPIEndpointFields({
 		});
 
 		fetchJSON<FetchedListType>({
-			input:
-				'/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/RETRIEVE_TYPE_PICKLIST',
+			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/RETRIEVE_TYPE_PICKLIST',
 		}).then((response) => {
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({
@@ -120,7 +116,7 @@ export default function BaseAPIEndpointFields({
 								? Liferay.Language.get('single-element')
 								: Liferay.Language.get('collection'),
 						value: entry.key,
-				  }))
+					}))
 				: [];
 
 			if (options.length) {
@@ -129,14 +125,13 @@ export default function BaseAPIEndpointFields({
 		});
 
 		fetchJSON<FetchedListType>({
-			input:
-				'/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/HTTP_METHOD_PICKLIST',
+			input: '/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/HTTP_METHOD_PICKLIST',
 		}).then((response) => {
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({
 						label: Liferay.Language.get(entry.key).toUpperCase(),
 						value: entry.key,
-				  }))
+					}))
 				: [];
 
 			if (options.length) {
@@ -334,13 +329,13 @@ export default function BaseAPIEndpointFields({
 							!selectedRetrieveType
 								? Liferay.Language.get(
 										Liferay.Language.get('select-type')
-								  )
+									)
 								: sub(
 										Liferay.Language.get(
 											'type-x-is-selected'
 										),
 										selectedRetrieveType.label
-								  )
+									)
 						}
 					/>
 
@@ -393,11 +388,11 @@ export default function BaseAPIEndpointFields({
 						!selectedScope
 							? Liferay.Language.get(
 									Liferay.Language.get('select-scope')
-							  )
+								)
 							: sub(
 									Liferay.Language.get('scope-x-is-selected'),
 									selectedScope.label
-							  )
+								)
 					}
 				/>
 
@@ -480,19 +475,21 @@ export default function BaseAPIEndpointFields({
 										onBlur={() =>
 											setData((previousData) => ({
 												...previousData,
-												parameter: stringBetweenCurlyBraces(
-													removeLeadingForwardSlash(
-														previousData.parameter!
-													)
-												),
+												parameter:
+													stringBetweenCurlyBraces(
+														removeLeadingForwardSlash(
+															previousData.parameter!
+														)
+													),
 											}))
 										}
 										onChange={({target: {value}}) =>
 											setData((previousData) => ({
 												...previousData,
-												parameter: makeURLPathParameterString(
-													value
-												),
+												parameter:
+													makeURLPathParameterString(
+														value
+													),
 											}))
 										}
 										placeholder={endpointParameterLabel}
@@ -501,7 +498,7 @@ export default function BaseAPIEndpointFields({
 											data.parameter
 												? removeLeadingForwardSlash(
 														data.parameter
-												  )
+													)
 												: STR_BLANK
 										}
 									/>

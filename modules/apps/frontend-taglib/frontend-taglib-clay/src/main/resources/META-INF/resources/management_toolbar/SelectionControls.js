@@ -13,7 +13,8 @@ import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import LinkOrButton from './LinkOrButton';
 
 function disableActionIfNeeded(item, event, bulkSelection) {
-	const selectedElementNodes = event.elements.allSelectedElements.getDOMNodes();
+	const selectedElementNodes =
+		event.elements.allSelectedElements.getDOMNodes();
 
 	const selectedElementModels = selectedElementNodes.map(
 		(node) => node.dataset.modelclassname
@@ -79,7 +80,8 @@ const SelectionControls = ({
 	const searchContainerRef = useRef();
 
 	const updateControls = ({bulkSelection, elements}) => {
-		const currentPageSelectedElementsCount = elements.currentPageSelectedElements.size();
+		const currentPageSelectedElementsCount =
+			elements.currentPageSelectedElements.size();
 
 		const selectedElementsCount = bulkSelection
 			? itemsTotal
@@ -143,7 +145,8 @@ const SelectionControls = ({
 			const elements = {
 				allSelectedElements,
 				currentPageElements: select._getCurrentPageElements(),
-				currentPageSelectedElements: select.getCurrentPageSelectedElements(),
+				currentPageSelectedElements:
+					select.getCurrentPageSelectedElements(),
 			};
 
 			if (allSelectedElements.size()) {
@@ -194,7 +197,7 @@ const SelectionControls = ({
 										'select-all-x-on-the-page'
 									),
 									itemsType
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'clear-selection.-there-are-currently-x-of-x-x-selected'
@@ -202,7 +205,7 @@ const SelectionControls = ({
 									selectedItems,
 									itemsTotal,
 									itemsType
-							  )
+								)
 					}
 					checked={checkboxStatus !== 'unchecked'}
 					disabled={disabled}
@@ -245,7 +248,7 @@ const SelectionControls = ({
 						{selectedItems === itemsTotal
 							? `${Liferay.Language.get(
 									'all-selected'
-							  )} (${selectedItemsLabel})`
+								)} (${selectedItemsLabel})`
 							: selectedItemsLabel}
 					</span>
 				</ManagementToolbar.Item>

@@ -319,14 +319,12 @@ describe('replaceTemplateVariable', () => {
 												{
 													boost: 2,
 													field: 'localized_title',
-													locale:
-														'${context.language_id}',
+													locale: '${context.language_id}',
 												},
 												{
 													boost: 1,
 													field: 'content',
-													locale:
-														'${context.language_id}',
+													locale: '${context.language_id}',
 												},
 											],
 											label: 'Field',

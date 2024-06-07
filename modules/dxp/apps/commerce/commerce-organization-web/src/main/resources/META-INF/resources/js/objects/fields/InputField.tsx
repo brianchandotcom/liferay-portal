@@ -76,6 +76,7 @@ const InputField = ({
 		if (!readOnly && mode === 'edit') {
 			onChangeHandler({target: {value}});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

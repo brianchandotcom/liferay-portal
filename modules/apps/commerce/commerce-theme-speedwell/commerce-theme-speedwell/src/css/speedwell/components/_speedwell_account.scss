@@ -97,7 +97,9 @@
 				font-weight: bold;
 				padding: 5px 10px;
 				position: relative;
-				transition: opacity $transition, transform $transition;
+				transition:
+					opacity $transition,
+					transform $transition;
 				white-space: nowrap;
 
 				.minium-sidebar:not(:hover) & {

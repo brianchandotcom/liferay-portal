@@ -55,21 +55,23 @@ const defaultLocalizableTextConfig = {
 		icon: 'en-us',
 		localeId: 'en_US',
 	},
-	name:
-		'_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US',
+	name: '_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US',
 	spritemap,
 };
 
 describe('Field LocalizableText', () => {
+
 	// eslint-disable-next-line no-console
 	const originalWarn = console.warn;
 
 	afterAll(() => {
+
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
 	});
 
 	beforeAll(() => {
+
 		// eslint-disable-next-line no-console
 		console.warn = (...args) => {
 			if (/DataProvider: Trying/.test(args[0])) {

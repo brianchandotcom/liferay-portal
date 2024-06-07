@@ -230,14 +230,10 @@ describe('SegmentEdit', () => {
 	it('renders a dismissible alert which is effectively dismissible', async () => {
 		const isSegmentationEnabled = false;
 
-		const {
-			container,
-			getByLabelText,
-			getByText,
-			queryByText,
-		} = _renderSegmentEditComponent({
-			isSegmentationEnabled,
-		});
+		const {container, getByLabelText, getByText, queryByText} =
+			_renderSegmentEditComponent({
+				isSegmentationEnabled,
+			});
 
 		expect(getByText('segmentation-is-disabled')).toBeInTheDocument();
 

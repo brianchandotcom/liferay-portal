@@ -71,10 +71,8 @@ function DiagramBuilder() {
 		dispatch,
 	] = useObjectFolderContext();
 
-	const [
-		showAddObjectRelationshipModal,
-		setShowAddObjectRelationshipModal,
-	] = useState(false);
+	const [showAddObjectRelationshipModal, setShowAddObjectRelationshipModal] =
+		useState(false);
 	const [
 		newObjectRelationshipSourceNodeProps,
 		setNewObjectRelationshipSourceNodeProps,
@@ -115,11 +113,12 @@ function DiagramBuilder() {
 				(node) => isNode(node) && node.id === connection.target
 			) as Node<ObjectDefinitionNodeData>;
 
-			const unsupportedObjectRelationship = getUnsupportedObjectRelationshipErrorMessage(
-				nodes,
-				sourceNode,
-				targetNode
-			);
+			const unsupportedObjectRelationship =
+				getUnsupportedObjectRelationshipErrorMessage(
+					nodes,
+					sourceNode,
+					targetNode
+				);
 
 			if (unsupportedObjectRelationship?.errorMessage) {
 				openToast({
@@ -161,8 +160,8 @@ function DiagramBuilder() {
 	);
 
 	const onNodeDragStop = async (node: Node<ObjectDefinitionNodeData>) => {
-		const updatedObjectFolderItems = selectedObjectFolder.objectFolderItems.map(
-			(objectFolderItem) => {
+		const updatedObjectFolderItems =
+			selectedObjectFolder.objectFolderItems.map((objectFolderItem) => {
 				if (
 					objectFolderItem.objectDefinitionExternalReferenceCode ===
 					node.data?.externalReferenceCode
@@ -175,8 +174,7 @@ function DiagramBuilder() {
 				}
 
 				return objectFolderItem;
-			}
-		);
+			});
 
 		const updatedObjectFolder = {
 			...selectedObjectFolder,

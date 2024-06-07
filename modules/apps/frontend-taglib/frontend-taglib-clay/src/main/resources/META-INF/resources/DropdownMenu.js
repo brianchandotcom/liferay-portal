@@ -43,7 +43,7 @@ export default function DropdownMenu({
 										label
 											.toLowerCase()
 											.indexOf(value.toLowerCase()) !== -1
-							  )
+								)
 							: items
 					);
 
@@ -51,7 +51,7 @@ export default function DropdownMenu({
 				},
 				searchValue,
 				searchable,
-		  }
+			}
 		: {};
 
 	return (

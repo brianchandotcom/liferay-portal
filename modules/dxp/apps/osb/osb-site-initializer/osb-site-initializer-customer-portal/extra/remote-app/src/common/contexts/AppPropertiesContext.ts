@@ -31,5 +31,5 @@ export function useAppPropertiesContext() {
 		client: ApolloClient<any>;
 	};
 
-	return (context as unknown) as ContextType;
+	return context as unknown as ContextType;
 }

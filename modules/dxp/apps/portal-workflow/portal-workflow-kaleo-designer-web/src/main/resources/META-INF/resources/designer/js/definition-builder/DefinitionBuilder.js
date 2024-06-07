@@ -24,16 +24,12 @@ export default function DefinitionBuilder(props) {
 	const [definitionInfo, setDefinitionInfo] = useState(null);
 	const [definitionName, setDefinitionName] = useState(props.definitionName);
 	const [definitionTitle, setDefinitionTitle] = useState(props.title);
-	const [
-		definitionTitleTranslations,
-		setDefinitionTitleTranslations,
-	] = useState(props.translations);
+	const [definitionTitleTranslations, setDefinitionTitleTranslations] =
+		useState(props.translations);
 	const [deserialize, setDeserialize] = useState(false);
 	const [elements, setElements] = useState(defaultNodes);
-	const [
-		hadGroovyOrJavaScriptBefore,
-		setHadGroovyOrJavaScriptBefore,
-	] = useState(false);
+	const [hadGroovyOrJavaScriptBefore, setHadGroovyOrJavaScriptBefore] =
+		useState(false);
 	const [hasGroovyOrJavaScript, setHasGroovyOrJavaScript] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState('');
 	const [showDefinitionInfo, setShowDefinitionInfo] = useState(false);

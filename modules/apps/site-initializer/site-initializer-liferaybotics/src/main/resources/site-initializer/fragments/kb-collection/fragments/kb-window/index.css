@@ -1,7 +1,7 @@
 .kb-window {
 	font-family: 'Open Sans', sans-serif;
 	font-style: normal;
-	font-weight: 600;	
+	font-weight: 600;
 }
 
 .kb-window .header-wrapper {
@@ -21,17 +21,17 @@
 }
 
 .kb-window .header-wrapper .header {
-	color: #28282B;
+	color: #28282b;
 	font-size: 1.125rem;
 	line-height: 1.6875rem;
 }
 
 .kb-window .header-wrapper .go-back {
-  margin: auto!important;
-	cursor: pointer!important;
-	font-family: "Font Awesome 5 Free";
+	cursor: pointer !important;
+	font-family: 'Font Awesome 5 Free';
 	font-size: 2rem;
 	font-weight: 900;
+	margin: auto !important;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	color: var(--primary);
@@ -42,34 +42,34 @@
 	text-rendering: auto;
 }
 
-.kb-window .portlet-custom-filter  {
-	display:none!important;
+.kb-window .portlet-custom-filter {
+	display: none !important;
 }
 
 .kb-window .portlet-type-facet {
-	display:none!important;
+	display: none !important;
 }
 
 .kb-window .custom-control-label {
-	display:none!important;
+	display: none !important;
 }
 
 .kb-window .splitter.splitter-spaced {
-	display:none!important;
+	display: none !important;
 }
 
 .kb-window .document-library-breadcrumb {
-	display:none!important;
+	display: none !important;
 }
 
 .kb-window nav {
-	display:none!important;
+	display: none !important;
 }
 
 .kb-window .middle {
-	margin:auto!important;
+	margin: auto !important;
 }
 
 .margin-0 {
-	margin:0!important;
+	margin: 0 !important;
 }

@@ -132,9 +132,8 @@ describe('MiniCart Item', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const CartItemElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const CartItemElement =
+					container.querySelector(COMPONENT_SELECTOR);
 
 				expect(CartItemElement.innerHTML).toMatchSnapshot();
 			}
@@ -296,12 +295,12 @@ describe('MiniCart Item', () => {
 				await wait(() => {
 					jest.advanceTimersByTime(REMOVAL_TIMEOUT);
 
-					const CartItemElement = container.querySelector(
-						COMPONENT_SELECTOR
-					);
-					const CartItemRemovalElement = CartItemElement.querySelector(
-						`${COMPONENT_SELECTOR}-removing.active`
-					);
+					const CartItemElement =
+						container.querySelector(COMPONENT_SELECTOR);
+					const CartItemRemovalElement =
+						CartItemElement.querySelector(
+							`${COMPONENT_SELECTOR}-removing.active`
+						);
 
 					expect(CartItemRemovalElement).toBeInTheDocument();
 					expect(CartItemElement.innerHTML).toMatchSnapshot();
@@ -315,9 +314,8 @@ describe('MiniCart Item', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const CartItemElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const CartItemElement =
+					container.querySelector(COMPONENT_SELECTOR);
 				const CartItemDeleteButton = container.querySelector(
 					`${COMPONENT_SELECTOR}-delete button`
 				);
@@ -333,11 +331,8 @@ describe('MiniCart Item', () => {
 							REMOVAL_TIMEOUT
 					);
 
-					const {
-						CartResource,
-						setIsUpdating,
-						updateCartModel,
-					} = BASE_CONTEXT_MOCK;
+					const {CartResource, setIsUpdating, updateCartModel} =
+						BASE_CONTEXT_MOCK;
 
 					expect(CartResource.deleteItemById).toHaveBeenCalledWith(
 						BASE_PROPS.item.id
@@ -423,11 +418,8 @@ describe('MiniCart Item', () => {
 				await wait(() => {
 					jest.advanceTimersByTime(UPDATE_AFTER);
 
-					const {
-						CartResource,
-						setIsUpdating,
-						updateCartModel,
-					} = BASE_CONTEXT_MOCK;
+					const {CartResource, setIsUpdating, updateCartModel} =
+						BASE_CONTEXT_MOCK;
 
 					expect(CartResource.updateItemById).toHaveBeenCalledWith(
 						BASE_PROPS.item.id,
@@ -475,10 +467,8 @@ describe('MiniCart Item', () => {
 					await wait(() => {
 						jest.advanceTimersByTime(UPDATE_AFTER);
 
-						const {
-							CartResource,
-							updateCartModel,
-						} = BASE_CONTEXT_MOCK;
+						const {CartResource, updateCartModel} =
+							BASE_CONTEXT_MOCK;
 
 						expect(
 							CartResource.updateItemById

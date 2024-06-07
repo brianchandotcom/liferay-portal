@@ -36,7 +36,7 @@ const REGEX = /^(-?(?:[\d]*\.?[\d]+))(px|em|vh|vw|rem|%)$/;
 
 const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM] as const;
 
-type Unit = typeof UNITS[number];
+type Unit = (typeof UNITS)[number];
 type Value = {unit: Unit; value: number | string};
 
 const isUnit = (unit: string): unit is Unit => {
@@ -103,9 +103,10 @@ export default function LengthInput({
 	const inputId = useId();
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const initialValue = useMemo(() => getInitialValue(currentValue), [
-		currentValue,
-	]);
+	const initialValue = useMemo(
+		() => getInitialValue(currentValue),
+		[currentValue]
+	);
 
 	const [value, setValue] = useControlledState(initialValue.value);
 	const [unit, setUnit] = useState(initialValue.unit);

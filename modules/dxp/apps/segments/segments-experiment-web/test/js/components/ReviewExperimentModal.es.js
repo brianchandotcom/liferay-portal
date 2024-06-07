@@ -168,12 +168,10 @@ describe('ReviewExperimentModal', () => {
 			const getEstimatedTimeMock = jest.fn(
 				getEstimatedTimeMockFactory(10)
 			);
-			const {
-				findByDisplayValue,
-				getByDisplayValue,
-			} = renderReviewExperimentModal({
-				getEstimatedTimeMock,
-			});
+			const {findByDisplayValue, getByDisplayValue} =
+				renderReviewExperimentModal({
+					getEstimatedTimeMock,
+				});
 
 			act(() => jest.runAllTimers());
 

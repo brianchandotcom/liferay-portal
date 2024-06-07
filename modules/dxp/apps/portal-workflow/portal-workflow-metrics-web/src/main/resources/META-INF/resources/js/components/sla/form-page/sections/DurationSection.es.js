@@ -102,7 +102,7 @@ export default function DurationSection({onChangeHandler}) {
 				{calendars.length > 1
 					? Liferay.Language.get(
 							'define-the-sla-duration-and-calendar-format'
-					  )
+						)
 					: Liferay.Language.get('define-the-sla-duration')}
 			</div>
 

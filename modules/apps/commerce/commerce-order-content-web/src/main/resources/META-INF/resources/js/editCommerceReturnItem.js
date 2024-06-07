@@ -34,8 +34,9 @@ export default function ({
 
 	form.addEventListener('submit', () => {
 		const quantity = form.querySelector(`#${namespace}quantity`).value;
-		const returnReason = form.querySelector(`#${namespace}returnReason`)
-			.value;
+		const returnReason = form.querySelector(
+			`#${namespace}returnReason`
+		).value;
 
 		const returnItemData = {
 			quantity,

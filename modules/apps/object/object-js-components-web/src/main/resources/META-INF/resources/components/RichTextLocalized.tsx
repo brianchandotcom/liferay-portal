@@ -93,6 +93,7 @@ export function RichTextLocalized({
 				editor.setData(translations[selectedLocale] as string);
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedLocale]);
 
@@ -201,16 +202,16 @@ export function RichTextLocalized({
 														defaultLanguage.label
 															? 'info'
 															: value
-															? 'success'
-															: 'warning'
+																? 'success'
+																: 'warning'
 													}
 												>
 													{locale.label ===
 													defaultLanguage.label
 														? ariaLabels.default
 														: value
-														? ariaLabels.translated
-														: ariaLabels.untranslated}
+															? ariaLabels.translated
+															: ariaLabels.untranslated}
 												</ClayLabel>
 											</ClayLayout.ContentSection>
 										</ClayLayout.ContentCol>

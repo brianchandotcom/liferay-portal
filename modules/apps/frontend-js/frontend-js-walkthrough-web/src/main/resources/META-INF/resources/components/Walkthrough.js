@@ -192,9 +192,8 @@ const Step = ({
 		title,
 	} = steps[currentStep];
 
-	const [currentAlignment, setCurrentAlignment] = useState(
-		defaultPositioning
-	);
+	const [currentAlignment, setCurrentAlignment] =
+		useState(defaultPositioning);
 
 	const [checkboxValue, setCheckboxValue] = useState(false);
 
@@ -221,8 +220,8 @@ const Step = ({
 					index === steps.length - 1
 						? index - 1
 						: isNext
-						? index + 1
-						: index - 1
+							? index + 1
+							: index - 1
 				);
 				onPopoverVisible(false);
 			}
@@ -440,7 +439,7 @@ const Step = ({
 															? previous
 															: SITE_PREFIX_PATH.concat(
 																	previous
-															  )
+																)
 													);
 												}
 											}}
@@ -461,7 +460,7 @@ const Step = ({
 															? next
 															: SITE_PREFIX_PATH.concat(
 																	next
-															  )
+																)
 													);
 												}
 											}}
@@ -497,11 +496,9 @@ const Walkthrough = ({
 	skippable = true,
 	steps = [],
 }) => {
-	const [
-		currentStepIndex,
-		setCurrentStepIndex,
-	] = useLocalStorage(LOCAL_STORAGE_KEYS.CURRENT_STEP, () =>
-		!steps.length ? null : 0
+	const [currentStepIndex, setCurrentStepIndex] = useLocalStorage(
+		LOCAL_STORAGE_KEYS.CURRENT_STEP,
+		() => (!steps.length ? null : 0)
 	);
 
 	const [popoverVisible, setPopoverVisible] = useLocalStorage(

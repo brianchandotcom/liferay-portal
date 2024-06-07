@@ -71,7 +71,7 @@ function FilterResume(props) {
 										active: false,
 										odataFilterString: undefined,
 										selectedData: undefined,
-								  }
+									}
 								: {}),
 						})),
 					})

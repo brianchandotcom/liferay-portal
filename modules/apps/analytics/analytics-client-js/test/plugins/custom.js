@@ -326,10 +326,8 @@ describe('Custom Asset Plugin', () => {
 		])(
 			'is not fired if asset missing %s attribute',
 			async (label, attrs) => {
-				const [
-					element,
-					paragraph,
-				] = await createDynamicCustomAssetElement(attrs);
+				const [element, paragraph] =
+					await createDynamicCustomAssetElement(attrs);
 
 				await userEvent.click(paragraph);
 

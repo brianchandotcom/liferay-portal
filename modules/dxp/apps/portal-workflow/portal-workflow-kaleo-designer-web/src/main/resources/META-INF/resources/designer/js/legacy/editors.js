@@ -161,9 +161,8 @@ AUI.add(
 
 					const editorForm = instance.get('editorForm');
 
-					instance.addSectionButton = editorForm.get(
-						'addSectionButton'
-					);
+					instance.addSectionButton =
+						editorForm.get('addSectionButton');
 
 					if (instance.addSectionButton) {
 						instance.toolbar.add([instance.addSectionButton]);
@@ -413,9 +412,8 @@ AUI.add(
 					dynamicView.append(view);
 
 					if (!instance.get('dynamicViewSingleton')) {
-						const dynamicViews = dynamicView.all(
-							'.celleditor-view'
-						);
+						const dynamicViews =
+							dynamicView.all('.celleditor-view');
 
 						dynamicViews.each(
 							A.bind(
@@ -554,6 +552,7 @@ AUI.add(
 				);
 
 				if (!editorForm) {
+
 					// eslint-disable-next-line @liferay/aui/no-merge
 					config = A.merge(
 						{
@@ -643,9 +642,10 @@ AUI.add(
 
 						instance.getScriptLanguages(scriptLanguages);
 
-						const scriptLanguagesJSONArray = instance.convertScriptLanguagesToJSONArray(
-							scriptLanguages
-						);
+						const scriptLanguagesJSONArray =
+							instance.convertScriptLanguagesToJSONArray(
+								scriptLanguages
+							);
 
 						return scriptLanguagesJSONArray;
 					},
@@ -653,6 +653,7 @@ AUI.add(
 
 				strings: {
 					valueFn() {
+
 						// eslint-disable-next-line @liferay/aui/no-merge
 						return A.merge(KaleoDesignerStrings, {
 							assignmentTypeLabel:
@@ -784,9 +785,8 @@ AUI.add(
 						options: instance.get('assignmentsType'),
 					});
 
-					const selectWrapper = A.Node.create('<div/>').append(
-						select
-					);
+					const selectWrapper =
+						A.Node.create('<div/>').append(select);
 
 					const typeSelect = selectWrapper.one('select');
 
@@ -1236,6 +1236,7 @@ AUI.add(
 
 				strings: {
 					valueFn() {
+
 						// eslint-disable-next-line @liferay/aui/no-merge
 						return A.merge(KaleoDesignerStrings, {
 							assignmentTypeLabel:
@@ -1315,9 +1316,8 @@ AUI.add(
 						options: instance.get('assignmentsType'),
 					});
 
-					const selectWrapper = A.Node.create('<div/>').append(
-						select
-					);
+					const selectWrapper =
+						A.Node.create('<div/>').append(select);
 
 					const typeSelect = selectWrapper.one('select');
 
@@ -1409,36 +1409,37 @@ AUI.add(
 			NotificationRecipientsEditorFormConfig
 		);
 
-		NotificationRecipientsEditorFormConfig.prototype._valueAssignmentsType = function () {
-			const instance = this;
+		NotificationRecipientsEditorFormConfig.prototype._valueAssignmentsType =
+			function () {
+				const instance = this;
 
-			const strings = instance.getStrings();
+				const strings = instance.getStrings();
 
-			const assignmentsTypes = [
-				{
-					label: strings.defaultAssignmentLabel,
-					value: STR_BLANK,
-				},
-				{
-					label: strings.role,
-					value: 'roleId',
-				},
-				{
-					label: strings.roleType,
-					value: 'roleType',
-				},
-				{
-					label: strings.scriptedRecipient,
-					value: 'scriptedRecipient',
-				},
-				{
-					label: strings.user,
-					value: 'user',
-				},
-			];
+				const assignmentsTypes = [
+					{
+						label: strings.defaultAssignmentLabel,
+						value: STR_BLANK,
+					},
+					{
+						label: strings.role,
+						value: 'roleId',
+					},
+					{
+						label: strings.roleType,
+						value: 'roleType',
+					},
+					{
+						label: strings.scriptedRecipient,
+						value: 'scriptedRecipient',
+					},
+					{
+						label: strings.user,
+						value: 'user',
+					},
+				];
 
-			return assignmentsTypes;
-		};
+				return assignmentsTypes;
+			};
 
 		const TimerNotificationRecipientsEditorForm = A.Component.create(
 			NotificationRecipientsEditorFormConfig
@@ -1911,33 +1912,31 @@ AUI.add(
 			);
 		};
 
-		NotificationsEditorFormConfig.prototype._showRecipientsEditor = function (
-			bodyContentNode,
-			index
-		) {
-			const instance = this;
+		NotificationsEditorFormConfig.prototype._showRecipientsEditor =
+			function (bodyContentNode, index) {
+				const instance = this;
 
-			const executionTypeSelect = bodyContentNode.one(
-				'.execution-type-select'
-			);
+				const executionTypeSelect = bodyContentNode.one(
+					'.execution-type-select'
+				);
 
-			const editorContainer = bodyContentNode.one(
-				'.recipients-editor-container'
-			);
+				const editorContainer = bodyContentNode.one(
+					'.recipients-editor-container'
+				);
 
-			const recipients = instance.get('recipients');
+				const recipients = instance.get('recipients');
 
-			const value = recipients[index];
+				const value = recipients[index];
 
-			instance.showEditorForm(
-				TimerNotificationRecipientsEditorForm,
-				editorContainer,
-				value,
-				{
-					executionTypeSelect,
-				}
-			);
-		};
+				instance.showEditorForm(
+					TimerNotificationRecipientsEditorForm,
+					editorContainer,
+					value,
+					{
+						executionTypeSelect,
+					}
+				);
+			};
 
 		const TimerNotificationsEditorForm = A.Component.create(
 			NotificationsEditorFormConfig
@@ -1953,9 +1952,10 @@ AUI.add(
 
 						instance.getScriptLanguages(scriptLanguages);
 
-						const scriptLanguagesJSONArray = instance.convertScriptLanguagesToJSONArray(
-							scriptLanguages
-						);
+						const scriptLanguagesJSONArray =
+							instance.convertScriptLanguagesToJSONArray(
+								scriptLanguages
+							);
 
 						return scriptLanguagesJSONArray;
 					},
@@ -3021,10 +3021,11 @@ AUI.add(
 							'.timer-actions-editor-container'
 						);
 
-						const timerActionsEditorForm = instance.getEmbeddedEditorForm(
-							TaskTimerActionsEditorForm,
-							timerActionsEditorContainer
-						);
+						const timerActionsEditorForm =
+							instance.getEmbeddedEditorForm(
+								TaskTimerActionsEditorForm,
+								timerActionsEditorContainer
+							);
 
 						value.timerActions.push({});
 
@@ -3032,7 +3033,8 @@ AUI.add(
 
 						value.reassignments.push({});
 
-						const timerActionValue = timerActionsEditorForm.getValue();
+						const timerActionValue =
+							timerActionsEditorForm.getValue();
 
 						timerActionValue.actionType.forEach(
 							(actionType, index2) => {

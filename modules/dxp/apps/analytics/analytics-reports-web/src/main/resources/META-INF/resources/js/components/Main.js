@@ -42,9 +42,10 @@ export default function Main({
 
 	const {firstDate, lastDate} = useDateTitle();
 
-	const dateFormatters = useMemo(() => dateFormat(languageTag), [
-		languageTag,
-	]);
+	const dateFormatters = useMemo(
+		() => dateFormat(languageTag),
+		[languageTag]
+	);
 
 	const title = dateFormatters.formatChartTitle([firstDate, lastDate]);
 

@@ -86,13 +86,11 @@ class PortletInit {
 			this._updateHistory(true);
 		}
 
-		this.portletModes = pageRenderState.portlets[
-			this._portletId
-		].allowedPM.slice(0);
+		this.portletModes =
+			pageRenderState.portlets[this._portletId].allowedPM.slice(0);
 
-		this.windowStates = pageRenderState.portlets[
-			this._portletId
-		].allowedWS.slice(0);
+		this.windowStates =
+			pageRenderState.portlets[this._portletId].allowedWS.slice(0);
 	}
 
 	/**

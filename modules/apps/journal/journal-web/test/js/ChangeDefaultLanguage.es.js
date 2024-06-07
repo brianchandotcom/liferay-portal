@@ -58,11 +58,8 @@ describe('ChangeDefaultLanguage', () => {
 	});
 
 	it('change default language', async () => {
-		const {
-			findByText,
-			getByText,
-			getByTitle,
-		} = _renderChangeDefaultLanguageComponent();
+		const {findByText, getByText, getByTitle} =
+			_renderChangeDefaultLanguageComponent();
 
 		fireEvent.click(getByTitle('es_ES'));
 

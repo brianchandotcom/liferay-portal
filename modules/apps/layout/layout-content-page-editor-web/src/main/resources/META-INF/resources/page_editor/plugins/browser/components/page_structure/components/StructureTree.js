@@ -110,9 +110,8 @@ export default function PageStructureSidebar() {
 	);
 	const layoutDataRef = useSelectorRef((store) => store.layoutData);
 
-	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] = useState(
-		null
-	);
+	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] =
+		useState(null);
 
 	const [editingNodeId, setEditingNodeId] = useState(null);
 	const [expandedKeys, setExpandedKeys] = useState([]);
@@ -173,9 +172,8 @@ export default function PageStructureSidebar() {
 	};
 
 	const handleNodeFocus = () => {
-		const focusedItem = document.activeElement?.querySelector(
-			'[data-item-id]'
-		);
+		const focusedItem =
+			document.activeElement?.querySelector('[data-item-id]');
 
 		if (focusedItem) {
 			hoverItem(focusedItem.dataset.itemId);
@@ -569,15 +567,14 @@ function fragmentIsMapped(item, fragmentEntryLinks) {
 		return formIsMapped(item);
 	}
 	else if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		const {editableValues, fragmentEntryType} = fragmentEntryLinks[
-			item.config.fragmentEntryLinkId
-		];
+		const {editableValues, fragmentEntryType} =
+			fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
 		return fragmentEntryType === FRAGMENT_ENTRY_TYPES.input
 			? Boolean(
 					editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]
 						?.inputFieldId
-			  )
+				)
 			: false;
 	}
 
@@ -680,7 +677,7 @@ function visit(
 									? masterLayoutData
 									: layoutData,
 								item.itemId
-						  )
+							)
 						: null;
 				}
 
@@ -692,7 +689,7 @@ function visit(
 							collectionConfig,
 							pageContents,
 							mappingFields
-					  )
+						)
 					: null;
 
 				children.push({

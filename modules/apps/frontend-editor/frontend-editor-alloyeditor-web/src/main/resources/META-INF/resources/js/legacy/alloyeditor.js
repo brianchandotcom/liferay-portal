@@ -347,9 +347,8 @@ AUI.add(
 				_onLocaleChangedHandler(event) {
 					const instance = this;
 
-					const contentsLanguage = event.item.getAttribute(
-						'data-value'
-					);
+					const contentsLanguage =
+						event.item.getAttribute('data-value');
 					const contentsLanguageDir =
 						Liferay.Language.direction[contentsLanguage];
 
@@ -396,13 +395,12 @@ AUI.add(
 
 					// LPS-84186
 
-					window[
-						instance.get('namespace')
-					]._localeChangeHandle = Liferay.on(
-						'inputLocalized:localeChanged',
-						instance._onLocaleChangedHandler,
-						instance
-					);
+					window[instance.get('namespace')]._localeChangeHandle =
+						Liferay.on(
+							'inputLocalized:localeChanged',
+							instance._onLocaleChangedHandler,
+							instance
+						);
 
 					const nativeEditor = instance.getNativeEditor();
 

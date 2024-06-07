@@ -480,9 +480,10 @@ AUI.add(
 
 					const scheduler = instance.get('scheduler');
 
-					const schedulerEvents = scheduler.getEventsByCalendarBookingId(
-						calendarBookingId
-					);
+					const schedulerEvents =
+						scheduler.getEventsByCalendarBookingId(
+							calendarBookingId
+						);
 
 					const remoteServices = scheduler.get('remoteServices');
 
@@ -662,9 +663,8 @@ AUI.add(
 					);
 					const maxDaysDisplayed = scheduler.get('maxDaysDisplayed');
 
-					const calendarContainer = scheduler.get(
-						'calendarContainer'
-					);
+					const calendarContainer =
+						scheduler.get('calendarContainer');
 
 					const calendarIds = Object.keys(
 						calendarContainer.get('availableCalendars')

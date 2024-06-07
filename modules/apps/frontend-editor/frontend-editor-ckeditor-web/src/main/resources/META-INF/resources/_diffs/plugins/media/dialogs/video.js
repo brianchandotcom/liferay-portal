@@ -142,8 +142,8 @@ CKEDITOR.dialog.add('video', (editor) => {
 								filebrowser: {
 									action: 'Browse',
 									target: 'info:poster',
-									url:
-										editor.config.filebrowserVideoBrowseUrl,
+									url: editor.config
+										.filebrowserVideoBrowseUrl,
 								},
 								hidden: 'true',
 								id: 'browse',

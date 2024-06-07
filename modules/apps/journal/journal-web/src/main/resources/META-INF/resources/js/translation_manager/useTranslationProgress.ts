@@ -24,14 +24,11 @@ export default function useTranslationProgress({
 	const [translations, setTranslations] = useState(
 		fieldToTranslations(initialFields)
 	);
-	const [
-		translationProgress,
-		setTranslationProgress,
-	] = useState<TranslationProgress | null>();
+	const [translationProgress, setTranslationProgress] =
+		useState<TranslationProgress | null>();
 
-	const [selectedLanguageId, setSelectedLanguageId] = useState<
-		Liferay.Language.Locale
-	>(initialSelectedLanguageId);
+	const [selectedLanguageId, setSelectedLanguageId] =
+		useState<Liferay.Language.Locale>(initialSelectedLanguageId);
 
 	const updateTranslations = useCallback(() => {
 		const localizableFields = getAllLocalizableFields(fields);
@@ -83,7 +80,7 @@ export default function useTranslationProgress({
 			? {
 					totalItems: Object.keys(fields).length,
 					translatedItems,
-			  }
+				}
 			: null;
 
 		setTranslationProgress(translationProgress);
@@ -191,7 +188,8 @@ export function getAllLocalizableFields(initialFields: Record<string, Field>) {
 	).reduce(
 		(acc, field) => ({
 			...acc,
-			[`${field.dataset.fieldName}${field.dataset.ddmLocalizableFieldId}`]: {},
+			[`${field.dataset.fieldName}${field.dataset.ddmLocalizableFieldId}`]:
+				{},
 		}),
 		{}
 	);

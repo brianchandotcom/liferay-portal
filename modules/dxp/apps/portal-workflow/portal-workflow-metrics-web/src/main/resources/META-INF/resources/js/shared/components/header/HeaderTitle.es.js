@@ -20,6 +20,7 @@ const HeaderTitle = ({container, title}) => {
 				document.title = document.title.replace(prevTitle, title);
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [title]);
 

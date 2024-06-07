@@ -394,9 +394,8 @@ export default function _JournalPortlet({
 							);
 
 							if (!friendlyUrlInputComponent.getValue()) {
-								const friendlyURL = url.searchParams.get(
-									friendlyURLKey
-								);
+								const friendlyURL =
+									url.searchParams.get(friendlyURLKey);
 								friendlyUrlInputComponent.updateInputLanguage(
 									friendlyURL,
 									defaultLanguageId

@@ -54,8 +54,10 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 		);
 	const imageProps =
 		schema.image && imagePropsTransformer(item[schema.image]);
-	const localizedDescription = getLocalizedValue(item, schema.description)
-		?.value;
+	const localizedDescription = getLocalizedValue(
+		item,
+		schema.description
+	)?.value;
 	const localizedTitle = getLocalizedValue(item, schema.title)?.value || '';
 	const selectedItemKey = selectedItemsKey && item[selectedItemsKey];
 	const formattedActions =
@@ -90,7 +92,7 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 				selectable
 					? () => {
 							selectItems(selectedItemKey);
-					  }
+						}
 					: undefined
 			}
 			selected={cardSelected}

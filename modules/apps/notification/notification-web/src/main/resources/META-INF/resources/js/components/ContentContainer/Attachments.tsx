@@ -70,9 +70,10 @@ export function Attachments({
 	const getAttachmentFields = async function fetchObjectFields(
 		objectDefinitionExternalReferenceCode: string
 	) {
-		const items = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-			objectDefinitionExternalReferenceCode
-		);
+		const items =
+			await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+				objectDefinitionExternalReferenceCode
+			);
 
 		const fields: ObjectField[] = items?.filter(
 			(field) => field.businessType === 'Attachment'
@@ -142,6 +143,7 @@ export function Attachments({
 					.map((field) => field.value) as string[],
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [attachmentsFields]);
 
@@ -169,15 +171,17 @@ export function Attachments({
 									externalReferenceCode as string
 								);
 
-								const selectedObjectDefinitionItem = objectDefinitionItems.find(
-									(objectDefinitionItem) =>
-										objectDefinitionItem.value ===
-										externalReferenceCode
-								);
+								const selectedObjectDefinitionItem =
+									objectDefinitionItems.find(
+										(objectDefinitionItem) =>
+											objectDefinitionItem.value ===
+											externalReferenceCode
+									);
 
 								setValues({
 									...values,
-									objectDefinitionExternalReferenceCode: externalReferenceCode as string,
+									objectDefinitionExternalReferenceCode:
+										externalReferenceCode as string,
 									objectDefinitionId:
 										selectedObjectDefinitionItem?.id,
 								});

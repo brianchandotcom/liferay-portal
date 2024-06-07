@@ -52,6 +52,7 @@ const Clear = ({filters = [], filterKeys = [], withoutRouteParams}) => {
 
 			replaceHistory(query, routerProps);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filterState, routerProps, withoutRouteParams]);
 
@@ -93,6 +94,7 @@ const FilterItem = ({filter, item, withoutRouteParams}) => {
 
 			replaceHistory(query, routerProps);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filterState, routerProps, withoutRouteParams]);
 

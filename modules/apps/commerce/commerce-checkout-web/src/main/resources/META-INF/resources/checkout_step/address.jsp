@@ -175,7 +175,8 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 				);
 
 				if (useAsBillingField) {
-					useAsBillingField.checked = <%= baseAddressCheckoutStepDisplayContext.isShippingUsedAsBilling() %>;
+					useAsBillingField.checked =
+						<%= baseAddressCheckoutStepDisplayContext.isShippingUsedAsBilling() %>;
 				}
 			},
 			['aui-base']
@@ -385,7 +386,8 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 						Liferay.Service(
 							'/commerce.commercecountrymanagerimpl/<%= baseAddressCheckoutStepDisplayContext.getCommerceCountrySelectionMethodName() %>-by-channel-id',
 							{
-								channelId: <%= commerceContext.getCommerceChannelId() %>,
+								channelId:
+									<%= commerceContext.getCommerceChannelId() %>,
 								end: -1,
 								start: -1,
 							},
@@ -406,8 +408,7 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 							const callbackList = [
 								{
 									regionId: '0',
-									name:
-										'- <liferay-ui:message key="select-region" />',
+									name: '- <liferay-ui:message key="select-region" />',
 									nameCurrentValue:
 										'- <liferay-ui:message key="select-region" />',
 								},

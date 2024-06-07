@@ -226,7 +226,8 @@ function VariantTable({
 														onClick={() =>
 															onVariantEdition({
 																name,
-																variantId: segmentsExperimentRelId,
+																variantId:
+																	segmentsExperimentRelId,
 															})
 														}
 													>
@@ -245,7 +246,8 @@ function VariantTable({
 															setDeleteModalState(
 																{
 																	open: true,
-																	variantId: segmentsExperimentRelId,
+																	variantId:
+																		segmentsExperimentRelId,
 																}
 															);
 														}}
@@ -297,7 +299,8 @@ function VariantTable({
 											onClick={() => {
 												dispatch(
 													openPublishModal({
-														experienceId: segmentsExperienceId,
+														experienceId:
+															segmentsExperienceId,
 														experienceName: name,
 													})
 												);

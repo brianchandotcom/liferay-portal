@@ -114,8 +114,7 @@
 				},
 				selectEventName: 'uploadCPDefinitionVirtualSetting',
 				title: '<liferay-ui:message key="select-file" />',
-				url:
-					'<%= cpDefinitionVirtualSettingDisplayContext.getSampleItemSelctorURL() %>',
+				url: '<%= cpDefinitionVirtualSettingDisplayContext.getSampleItemSelctorURL() %>',
 			});
 		});
 

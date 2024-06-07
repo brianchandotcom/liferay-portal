@@ -25,8 +25,9 @@ const TemplateSelect = ({
 		initialTemplateOptions
 	);
 	const [selectedTemplateId, setSelectedTemplateId] = useState(() => {
-		const id = initialTemplateOptions.find((option) => option.selected)
-			?.value;
+		const id = initialTemplateOptions.find(
+			(option) => option.selected
+		)?.value;
 
 		return id || NULL_TEMPLATE_VALUE;
 	});

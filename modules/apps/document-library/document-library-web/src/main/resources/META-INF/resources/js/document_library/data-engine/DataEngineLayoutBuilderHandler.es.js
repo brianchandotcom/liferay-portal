@@ -52,9 +52,8 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 		const nameInput = document.getElementById(`${namespace}name`);
 		const name = getInputLocalizedValues(namespace, 'name');
 
-		const {
-			defaultLanguageId,
-		} = dataLayoutBuilder.current.state.dataDefinition;
+		const {defaultLanguageId} =
+			dataLayoutBuilder.current.state.dataDefinition;
 
 		if (!nameInput.value || !name[defaultLanguageId]) {
 			openToast({

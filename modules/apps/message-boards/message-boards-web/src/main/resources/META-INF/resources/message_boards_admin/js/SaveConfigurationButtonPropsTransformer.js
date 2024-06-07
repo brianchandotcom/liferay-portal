@@ -24,7 +24,8 @@ export default function propsTransformer({
 
 				if (emailMessageAdded) {
 					setFormValues(form, {
-						'preferences--emailMessageAddedBody--': emailMessageAdded.getHTML(),
+						'preferences--emailMessageAddedBody--':
+							emailMessageAdded.getHTML(),
 					});
 				}
 
@@ -33,7 +34,8 @@ export default function propsTransformer({
 
 				if (emailMessageUpdated) {
 					setFormValues(form, {
-						'preferences--emailMessageUpdatedBody--': emailMessageUpdated.getHTML(),
+						'preferences--emailMessageUpdatedBody--':
+							emailMessageUpdated.getHTML(),
 					});
 				}
 			}

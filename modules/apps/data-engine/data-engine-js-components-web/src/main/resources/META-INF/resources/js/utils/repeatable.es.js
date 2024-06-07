@@ -5,7 +5,8 @@
 
 const FIELD_NAME_REGEX = /(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)\$\$(\w+)/;
 
-const NESTED_FIELD_NAME_REGEX = /(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)#(.+)\$(\w+)\$(\d+)\$\$(\w+)/;
+const NESTED_FIELD_NAME_REGEX =
+	/(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)#(.+)\$(\w+)\$(\d+)\$\$(\w+)/;
 
 export function parseName(name) {
 	const result = FIELD_NAME_REGEX.exec(name);
@@ -17,7 +18,7 @@ export function parseName(name) {
 				instanceId: result[3],
 				portletNamespace: result[1],
 				repeatedIndex: Number(result[4]),
-		  }
+			}
 		: {};
 }
 

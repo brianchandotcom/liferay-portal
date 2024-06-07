@@ -17,4 +17,4 @@ export const EDITABLE_TYPES = {
 	'text': 'text',
 } as const;
 
-export type EditableType = typeof EDITABLE_TYPES[keyof typeof EDITABLE_TYPES];
+export type EditableType = (typeof EDITABLE_TYPES)[keyof typeof EDITABLE_TYPES];

@@ -70,8 +70,7 @@ export default function ObjectFoldersSideBar({
 			onClick: () => {
 				setModalImportProperties({
 					JSONInputId: 'objectFolderJSON',
-					apiURL:
-						'/o/object-admin/v1.0/object-folders/by-external-reference-code/',
+					apiURL: '/o/object-admin/v1.0/object-folders/by-external-reference-code/',
 					importURL: importObjectFolderURL,
 					modalImportKey: 'objectFolder',
 				});

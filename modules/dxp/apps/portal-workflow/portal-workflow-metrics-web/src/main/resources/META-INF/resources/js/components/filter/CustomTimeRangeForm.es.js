@@ -63,9 +63,11 @@ export default function CustomTimeRangeForm({
 		setFormVisible(false);
 	};
 
-	const onChange = (setter) => ({target: {value}}) => {
-		setter(value);
-	};
+	const onChange =
+		(setter) =>
+		({target: {value}}) => {
+			setter(value);
+		};
 
 	const onApply = () => {
 		const {dateEnd: dateEndError, dateStart: dateStartError} = errors || {};

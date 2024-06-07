@@ -23,10 +23,10 @@ class ErrorBoundary extends Component {
 						'an-error-has-occurred-and-we-were-unable-to-load-x'
 					),
 					[this.props.component]
-			  )
+				)
 			: Liferay.Language.get(
 					'an-error-has-occurred-and-we-were-unable-to-load-the-results'
-			  ),
+				),
 	};
 
 	static getDerivedStateFromError() {
@@ -53,7 +53,7 @@ class ErrorBoundary extends Component {
 						displayState={DISPLAY_STATES.EMPTY}
 						title={Liferay.Language.get('unable-to-load-content')}
 					/>
-			  )
+				)
 			: this.props.children;
 	}
 }

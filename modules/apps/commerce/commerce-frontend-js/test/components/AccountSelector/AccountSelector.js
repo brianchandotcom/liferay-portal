@@ -18,9 +18,8 @@ import {
 } from '../../tests_utilities/fake_data/accounts';
 import {getOrders} from '../../tests_utilities/fake_data/orders';
 
-const ACCOUNTS_HEADLESS_API_ENDPOINT = ServiceProvider.DeliveryCatalogAPI(
-	'v1'
-).baseURL(24324);
+const ACCOUNTS_HEADLESS_API_ENDPOINT =
+	ServiceProvider.DeliveryCatalogAPI('v1').baseURL(24324);
 
 const COMMERCE_DELIVERY_CATALOG_HEADLESS_API_ENDPOINT =
 	'/headless-commerce-delivery-catalog/v1.0/channels/24324/accounts';
@@ -98,9 +97,10 @@ describe('AccountSelector', () => {
 				).not.toBeInTheDocument()
 			);
 
-			const accountsList = renderedComponent.baseElement.querySelectorAll(
-				'.accounts-list li'
-			);
+			const accountsList =
+				renderedComponent.baseElement.querySelectorAll(
+					'.accounts-list li'
+				);
 
 			const accountsListItem = accountsList[0];
 
@@ -126,9 +126,10 @@ describe('AccountSelector', () => {
 				).not.toBeInTheDocument()
 			);
 
-			const accountsListItem = renderedComponent.baseElement.querySelectorAll(
-				'.accounts-list li'
-			)[0];
+			const accountsListItem =
+				renderedComponent.baseElement.querySelectorAll(
+					'.accounts-list li'
+				)[0];
 
 			fetchMock.post(
 				new RegExp('account-selector/setCurrentAccounts'),
@@ -179,16 +180,16 @@ describe('AccountSelector', () => {
 		});
 
 		it('must display the account name', () => {
-			const currentAccountName = renderedComponent.container.querySelector(
-				'.btn-account-selector .account-name .text-truncate'
-			).innerHTML;
+			const currentAccountName =
+				renderedComponent.container.querySelector(
+					'.btn-account-selector .account-name .text-truncate'
+				).innerHTML;
 			expect(currentAccountName).toBe('My Account Name');
 		});
 
 		it('must display an order placeholder"', () => {
-			const orderPlaceholder = renderedComponent.getByText(
-				/no-order-selected/i
-			);
+			const orderPlaceholder =
+				renderedComponent.getByText(/no-order-selected/i);
 			expect(orderPlaceholder).toBeInTheDocument();
 		});
 

@@ -19,7 +19,7 @@
 	font-size: var(--font-size-lg);
 	font-weight: var(--font-weight-bold);
 	justify-content: center;
-	margin-bottom: calc(var(--spacer-1)*10);
+	margin-bottom: calc(var(--spacer-1) * 10);
 	padding: var(--spacer-5) var(--spacer-4);
 }
 

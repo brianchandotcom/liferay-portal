@@ -105,8 +105,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				});
 			},
 			selectEventName: '<portlet:namespace />selectEntity',
-			title:
-				'<liferay-ui:message arguments="personalized-variation" key="new-x" />',
+			title: '<liferay-ui:message arguments="personalized-variation" key="new-x" />',
 			url: '<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>',
 		});
 	}

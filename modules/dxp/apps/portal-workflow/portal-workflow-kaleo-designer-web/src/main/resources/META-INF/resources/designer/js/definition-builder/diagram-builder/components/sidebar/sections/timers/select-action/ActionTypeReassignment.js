@@ -45,14 +45,14 @@ const ActionTypeReassignment = ({
 			setActionSections((currentSections) => {
 				const updatedSections = [...currentSections];
 
-				updatedSections[
-					actionSectionsIndex
-				].assignmentType = reassignmentType;
+				updatedSections[actionSectionsIndex].assignmentType =
+					reassignmentType;
 				updatedSections[actionSectionsIndex].sectionData = subSections;
 
 				return updatedSections;
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [subSections]);
 
@@ -83,6 +83,7 @@ const ActionTypeReassignment = ({
 					setSubSections(retrievedUsers);
 				});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

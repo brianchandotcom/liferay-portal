@@ -15,19 +15,19 @@ type Builtin = Date | Error | Function | Primitive | RegExp;
 export type Immutable<T> = T extends Builtin
 	? T
 	: T extends Map<infer K, infer V>
-	? ReadonlyMap<Immutable<K>, Immutable<V>>
-	: T extends ReadonlyMap<infer K, infer V>
-	? ReadonlyMap<Immutable<K>, Immutable<V>>
-	: T extends WeakMap<infer K, infer V>
-	? WeakMap<Immutable<K>, Immutable<V>>
-	: T extends Set<infer U>
-	? ReadonlySet<Immutable<U>>
-	: T extends ReadonlySet<infer U>
-	? ReadonlySet<Immutable<U>>
-	: T extends WeakSet<infer U>
-	? WeakSet<Immutable<U>>
-	: T extends Promise<infer U>
-	? Promise<Immutable<U>>
-	: T extends {}
-	? {readonly [K in keyof T]: Immutable<T[K]>}
-	: Readonly<T>;
+		? ReadonlyMap<Immutable<K>, Immutable<V>>
+		: T extends ReadonlyMap<infer K, infer V>
+			? ReadonlyMap<Immutable<K>, Immutable<V>>
+			: T extends WeakMap<infer K, infer V>
+				? WeakMap<Immutable<K>, Immutable<V>>
+				: T extends Set<infer U>
+					? ReadonlySet<Immutable<U>>
+					: T extends ReadonlySet<infer U>
+						? ReadonlySet<Immutable<U>>
+						: T extends WeakSet<infer U>
+							? WeakSet<Immutable<U>>
+							: T extends Promise<infer U>
+								? Promise<Immutable<U>>
+								: T extends {}
+									? {readonly [K in keyof T]: Immutable<T[K]>}
+									: Readonly<T>;

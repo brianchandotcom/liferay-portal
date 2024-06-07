@@ -390,8 +390,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 				selectEventName: '<portlet:namespace />selectFileEntryType',
 				selectedData: searchContainerData,
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-				url:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>',
 			});
 		});
 	}

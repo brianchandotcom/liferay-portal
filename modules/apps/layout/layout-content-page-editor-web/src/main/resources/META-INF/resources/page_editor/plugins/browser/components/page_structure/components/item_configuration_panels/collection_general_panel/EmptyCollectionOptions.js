@@ -32,16 +32,14 @@ export function EmptyCollectionOptions({
 
 	const languageId = useSelector(selectLanguageId);
 
-	const [
-		messageForSelectedLanguage,
-		setMessageForSelectedLanguage,
-	] = useControlledState(
-		getEditableLocalizedValue(
-			emptyCollectionOptions?.message,
-			languageId,
-			Liferay.Language.get('no-results-found')
-		)
-	);
+	const [messageForSelectedLanguage, setMessageForSelectedLanguage] =
+		useControlledState(
+			getEditableLocalizedValue(
+				emptyCollectionOptions?.message,
+				languageId,
+				Liferay.Language.get('no-results-found')
+			)
+		);
 
 	return (
 		<>
@@ -77,7 +75,8 @@ export function EmptyCollectionOptions({
 											...emptyCollectionOptions,
 											message: {
 												...emptyCollectionOptions?.message,
-												[languageId]: messageForSelectedLanguage,
+												[languageId]:
+													messageForSelectedLanguage,
 											},
 										},
 									})

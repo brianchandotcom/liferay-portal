@@ -198,7 +198,8 @@ export function CollectionFilterGeneralPanelContent({
 
 								dispatch(
 									updateFragmentConfiguration({
-										configurationValues: nextConfigurationValues,
+										configurationValues:
+											nextConfigurationValues,
 										fragmentEntryLink,
 										languageId,
 									})
@@ -223,9 +224,10 @@ export function CollectionFilterGeneralPanelContent({
 												value: '',
 											},
 											...filterSupportedFilters({
-												collectionFilters: Object.values(
-													collectionFilters
-												),
+												collectionFilters:
+													Object.values(
+														collectionFilters
+													),
 												filterableCollections,
 												targetCollections,
 											}).map(({key, label}) => ({

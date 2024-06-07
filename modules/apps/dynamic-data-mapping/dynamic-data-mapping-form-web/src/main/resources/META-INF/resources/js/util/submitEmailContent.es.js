@@ -50,7 +50,7 @@ export function submitEmailContent({
 				: openNotification({
 						error: true,
 						message: response.errorMessage,
-				  });
+					});
 		})
 		.catch((error) => {
 			throw new Error(error);

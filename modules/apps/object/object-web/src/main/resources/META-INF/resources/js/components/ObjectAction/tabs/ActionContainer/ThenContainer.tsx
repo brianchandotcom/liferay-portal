@@ -73,9 +73,11 @@ export function ThenContainer({
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
 			const makeFetch = async () => {
-				const NotificationTemplatesResponse = await API.getNotificationTemplates();
+				const NotificationTemplatesResponse =
+					await API.getNotificationTemplates();
 
-				let notificationArray: NotificationTemplate[] = NotificationTemplatesResponse;
+				let notificationArray: NotificationTemplate[] =
+					NotificationTemplatesResponse;
 
 				if (systemObject) {
 					notificationArray = NotificationTemplatesResponse.filter(
@@ -115,6 +117,7 @@ export function ThenContainer({
 				setValues
 			);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		objectDefinitionId,
@@ -265,7 +268,8 @@ export function ThenContainer({
 							setValues({
 								parameters: {
 									...values.parameters,
-									notificationTemplateExternalReferenceCode: value as string,
+									notificationTemplateExternalReferenceCode:
+										value as string,
 								},
 							});
 						}}
@@ -294,7 +298,7 @@ export function ThenContainer({
 											? Liferay.Language.get('email')
 											: Liferay.Language.get(
 													'user-notification'
-											  )}
+												)}
 									</ClayLabel>
 								</div>
 							</Option>

@@ -87,9 +87,8 @@ export function getDDMFormFieldSettingsContext({
 		pages: visitor.mapFields((field: Field) => {
 			const {fieldName, localizable, type} = field;
 			const {customProperties} = dataDefinitionField;
-			const propertyName = _fromDDMFormToDataDefinitionPropertyName(
-				fieldName
-			);
+			const propertyName =
+				_fromDDMFormToDataDefinitionPropertyName(fieldName);
 
 			const propertyValue =
 				customProperties &&
@@ -97,7 +96,7 @@ export function getDDMFormFieldSettingsContext({
 					? customProperties[propertyName]
 					: // @ts-ignore
 
-					  dataDefinitionField[propertyName];
+						dataDefinitionField[propertyName];
 
 			const value = propertyValue ?? field.value;
 
@@ -122,8 +121,10 @@ export function getDDMFormFieldSettingsContext({
 			if (type === 'select' && fieldName === 'predefinedValue') {
 				newField.multiple =
 					dataDefinitionField.customProperties.multiple;
-				newField.options = (dataDefinitionField.customProperties
-					.options as LocalizedValue<unknown>)[editingLanguageId];
+				newField.options = (
+					dataDefinitionField.customProperties
+						.options as LocalizedValue<unknown>
+				)[editingLanguageId];
 			}
 
 			return newField;

@@ -25,7 +25,7 @@ const HeaderController = ({basePath}) => {
 				title: header.querySelector(
 					'.tools-control-group .control-menu-level-1-heading'
 				),
-		  }
+			}
 		: {};
 
 	useEffect(() => {

@@ -21,10 +21,12 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
 	Liferay.component('<portlet:namespace />calendarContainer', () => {
 		var calendarContainer = new Liferay.CalendarContainer({
-			groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
+			groupCalendarResourceId:
+				<%= groupCalendarResource.getCalendarResourceId() %>,
 
 			<c:if test="<%= userCalendarResource != null %>">
-				userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
+				userCalendarResourceId:
+					<%= userCalendarResource.getCalendarResourceId() %>,
 			</c:if>
 
 			namespace: '<portlet:namespace />',
@@ -214,7 +216,8 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 </c:if>
 
 <aui:script use="liferay-calendar-list,liferay-calendar-util,liferay-scheduler">
-	Liferay.CalendarUtil.USER_CLASS_NAME_ID = <%= PortalUtil.getClassNameId(User.class) %>;
+	Liferay.CalendarUtil.USER_CLASS_NAME_ID =
+		<%= PortalUtil.getClassNameId(User.class) %>;
 
 	var calendarContainer = Liferay.component(
 		'<portlet:namespace />calendarContainer'

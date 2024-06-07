@@ -40,7 +40,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 <aui:script use="aui-base,aui-io-request">
 	<liferay-portlet:resourceURL id="/mfa_email_otp_verify/send_mfa_email_otp" portletName="<%= MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY %>" var="sendEmailOTPURL" />
 
-	var configuredResendDuration = <%= mfaEmailOTPConfiguration.resendEmailTimeout() %>;
+	var configuredResendDuration =
+		<%= mfaEmailOTPConfiguration.resendEmailTimeout() %>;
 
 	var failedAttemptsRetryTimeout = <%= mfaEmailOTPFailedAttemptsRetryTimeout %>;
 
@@ -54,7 +55,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 
 	var originalButtonText = sendEmailButton.text();
 
-	var previousSetTime = <%= GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME)) %>;
+	var previousSetTime =
+		<%= GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME)) %>;
 
 	var elapsedTime = Math.floor((Date.now() - previousSetTime) / 1000);
 

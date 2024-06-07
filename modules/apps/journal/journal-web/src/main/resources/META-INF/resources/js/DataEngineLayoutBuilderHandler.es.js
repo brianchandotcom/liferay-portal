@@ -60,9 +60,8 @@ export default function DataEngineLayoutBuilderHandler({
 				.values();
 
 			translatedLanguages.forEach((languageId) => {
-				localizedValues[languageId] = inputLocalized.getValue(
-					languageId
-				);
+				localizedValues[languageId] =
+					inputLocalized.getValue(languageId);
 			});
 		}
 

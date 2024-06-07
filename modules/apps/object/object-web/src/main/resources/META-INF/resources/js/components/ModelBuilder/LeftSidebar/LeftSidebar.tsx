@@ -41,20 +41,22 @@ export default function LeftSidebar() {
 				return leftSidebarItem;
 			}
 
-			const newLeftSidebarObjectDefinitionItems = leftSidebarItem.leftSidebarObjectDefinitionItems.filter(
-				(leftSidebarObjectDefinitionItem) =>
-					stringUtils.stringIncludesQuery(
-						leftSidebarObjectDefinitionItem.label,
-						query
-					)
-			);
+			const newLeftSidebarObjectDefinitionItems =
+				leftSidebarItem.leftSidebarObjectDefinitionItems.filter(
+					(leftSidebarObjectDefinitionItem) =>
+						stringUtils.stringIncludesQuery(
+							leftSidebarObjectDefinitionItem.label,
+							query
+						)
+				);
 
 			keys.push(leftSidebarItem.name);
 
 			return {
 				...leftSidebarItem,
 				id: leftSidebarItem.name,
-				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
+				leftSidebarObjectDefinitionItems:
+					newLeftSidebarObjectDefinitionItems,
 			};
 		});
 
@@ -81,8 +83,8 @@ export default function LeftSidebar() {
 		a.objectFolderName > b.objectFolderName
 			? 1
 			: b.objectFolderName > a.objectFolderName
-			? -1
-			: 0
+				? -1
+				: 0
 	);
 
 	const leftSidebarSelectedObjectFolderItem = filteredLeftSidebarItems.find(

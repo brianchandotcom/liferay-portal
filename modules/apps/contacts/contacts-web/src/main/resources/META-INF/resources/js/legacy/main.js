@@ -306,14 +306,16 @@ AUI.add(
 						message: confirmMessageText,
 						onConfirm: (isConfirmed) => {
 							if (isConfirmed) {
-								const url = Liferay.Util.PortletURL.createActionURL(
-									config.baseActionURL,
-									{
-										'entryId': contact.entryId,
-										'javax.portlet.action': 'deleteEntry',
-										'p_p_state': 'NORMAL',
-									}
-								);
+								const url =
+									Liferay.Util.PortletURL.createActionURL(
+										config.baseActionURL,
+										{
+											'entryId': contact.entryId,
+											'javax.portlet.action':
+												'deleteEntry',
+											'p_p_state': 'NORMAL',
+										}
+									);
 
 								Liferay.Util.fetch(url)
 									.then((response) => {
@@ -571,9 +573,10 @@ AUI.add(
 											.toUpperCase();
 									}
 									else {
-										nameAnchor = Liferay.Language.get(
-											'no-last-name'
-										);
+										nameAnchor =
+											Liferay.Language.get(
+												'no-last-name'
+											);
 									}
 
 									if (nameAnchor !== lastNameAnchor) {
@@ -609,18 +612,20 @@ AUI.add(
 											lastName: result.lastName
 												? result.lastName + ','
 												: '',
-											lastNameAnchor: displayLastNameAnchor
-												? '<div class="last-name-anchor"><a>' +
-												  lastNameAnchor +
-												  '</a></div>'
-												: '',
+											lastNameAnchor:
+												displayLastNameAnchor
+													? '<div class="last-name-anchor"><a>' +
+														lastNameAnchor +
+														'</a></div>'
+													: '',
 											portraitURL: result.portraitURL
 												? result.portraitURL
 												: '',
 											userId: result.userId,
-											viewSummaryURL: result.viewSummaryURL
-												? result.viewSummaryURL
-												: '',
+											viewSummaryURL:
+												result.viewSummaryURL
+													? result.viewSummaryURL
+													: '',
 										});
 									}
 									else {
@@ -632,17 +637,19 @@ AUI.add(
 											fullName: result.fullName
 												? result.fullName
 												: '',
-											lastNameAnchor: displayLastNameAnchor
-												? '<div class="last-name-anchor"><a>' +
-												  lastNameAnchor +
-												  '</a></div>'
-												: '',
+											lastNameAnchor:
+												displayLastNameAnchor
+													? '<div class="last-name-anchor"><a>' +
+														lastNameAnchor +
+														'</a></div>'
+													: '',
 											portraitURL: result.portraitURL
 												? result.portraitURL
 												: '',
-											viewSummaryURL: result.viewSummaryURL
-												? result.viewSummaryURL
-												: '',
+											viewSummaryURL:
+												result.viewSummaryURL
+													? result.viewSummaryURL
+													: '',
 										});
 									}
 
@@ -787,9 +794,8 @@ AUI.add(
 				_updateToolbarButtonsRemove(userId) {
 					const instance = this;
 
-					const blockUserIdIndex = instance._buttonBlockUserIds.indexOf(
-						userId
-					);
+					const blockUserIdIndex =
+						instance._buttonBlockUserIds.indexOf(userId);
 
 					if (blockUserIdIndex >= 0) {
 						AArray.remove(
@@ -805,9 +811,8 @@ AUI.add(
 						}
 					}
 
-					const unblockUserIdIndex = instance._buttonUnBlockUserIds.indexOf(
-						userId
-					);
+					const unblockUserIdIndex =
+						instance._buttonUnBlockUserIds.indexOf(userId);
 
 					if (unblockUserIdIndex >= 0) {
 						AArray.remove(
@@ -823,9 +828,8 @@ AUI.add(
 						}
 					}
 
-					const addConnectionUserIdIndex = instance._buttonAddConnectionUserIds.indexOf(
-						userId
-					);
+					const addConnectionUserIdIndex =
+						instance._buttonAddConnectionUserIds.indexOf(userId);
 
 					if (addConnectionUserIdIndex >= 0) {
 						AArray.remove(
@@ -841,9 +845,8 @@ AUI.add(
 						}
 					}
 
-					const removeConnectionUserIdIndex = instance._buttonRemoveConnectionUserIds.indexOf(
-						userId
-					);
+					const removeConnectionUserIdIndex =
+						instance._buttonRemoveConnectionUserIds.indexOf(userId);
 
 					if (removeConnectionUserIdIndex >= 0) {
 						AArray.remove(
@@ -859,9 +862,8 @@ AUI.add(
 						}
 					}
 
-					const followUserIdIndex = instance._buttonFollowUserIds.indexOf(
-						userId
-					);
+					const followUserIdIndex =
+						instance._buttonFollowUserIds.indexOf(userId);
 
 					if (followUserIdIndex >= 0) {
 						AArray.remove(
@@ -877,9 +879,8 @@ AUI.add(
 						}
 					}
 
-					const unFollowUserIdIndex = instance._buttonUnFollowUserIds.indexOf(
-						userId
-					);
+					const unFollowUserIdIndex =
+						instance._buttonUnFollowUserIds.indexOf(userId);
 
 					if (unFollowUserIdIndex >= 0) {
 						AArray.remove(
@@ -895,9 +896,8 @@ AUI.add(
 						}
 					}
 
-					const exportUserIdIndex = instance._buttonExportUserIds.indexOf(
-						userId
-					);
+					const exportUserIdIndex =
+						instance._buttonExportUserIds.indexOf(userId);
 
 					if (exportUserIdIndex >= 0) {
 						AArray.remove(
@@ -1106,13 +1106,11 @@ AUI.add(
 					instance._userToolbar = instance.byId('userToolbarButtons');
 
 					instance._detailUserView = instance.byId('detailUserView');
-					instance._selectedUsersView = instance.byId(
-						'selectedUsersView'
-					);
+					instance._selectedUsersView =
+						instance.byId('selectedUsersView');
 
-					instance._messageContainer = instance.byId(
-						'messageContainer'
-					);
+					instance._messageContainer =
+						instance.byId('messageContainer');
 
 					instance._addConnectionButton = instance.byId(
 						'addConnectionButton'
@@ -1123,9 +1121,8 @@ AUI.add(
 					instance._removeConnectionButton = instance.byId(
 						'removeConnectionButton'
 					);
-					instance._sendMessageButton = instance.byId(
-						'sendMessageButton'
-					);
+					instance._sendMessageButton =
+						instance.byId('sendMessageButton');
 					instance._unblockButton = instance.byId('unblockButton');
 					instance._unfollowButton = instance.byId('unfollowButton');
 

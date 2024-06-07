@@ -308,8 +308,8 @@ if (recurrence != null) {
 			'esc'
 		);
 
-		window.<portlet:namespace />recurrenceDialog = Liferay.Util.Window.getWindow(
-			{
+		window.<portlet:namespace />recurrenceDialog =
+			Liferay.Util.Window.getWindow({
 				dialog: {
 					after: {
 						visibleChange: A.rbind(
@@ -334,8 +334,7 @@ if (recurrence != null) {
 					width: 600,
 				},
 				title: getRecurrenceDialogTitle(),
-			}
-		);
+			});
 
 		window.<portlet:namespace />recurrenceDialog.addToolbar(
 			[

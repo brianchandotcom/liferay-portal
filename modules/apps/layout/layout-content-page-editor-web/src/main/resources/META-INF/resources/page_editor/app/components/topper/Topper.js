@@ -156,18 +156,16 @@ function TopperContent({
 		);
 	};
 
-	const {
-		handlerRef: itemHandlerRef,
-		isDraggingSource: itemIsDraggingSource,
-	} = useDragItem(
-		{...item, fragmentEntryType, isWidget, name},
-		onDragEnd,
-		() => {
-			if (!isActive) {
-				selectItem(item.itemId);
+	const {handlerRef: itemHandlerRef, isDraggingSource: itemIsDraggingSource} =
+		useDragItem(
+			{...item, fragmentEntryType, isWidget, name},
+			onDragEnd,
+			() => {
+				if (!isActive) {
+					selectItem(item.itemId);
+				}
 			}
-		}
-	);
+		);
 
 	const {
 		handlerRef: topperHandlerRef,
@@ -293,7 +291,8 @@ function TopperContent({
 											dispatch(
 												switchSidebarPanel({
 													sidebarOpen: true,
-													sidebarPanelId: commentsPanelId,
+													sidebarPanelId:
+														commentsPanelId,
 												})
 											);
 										}}

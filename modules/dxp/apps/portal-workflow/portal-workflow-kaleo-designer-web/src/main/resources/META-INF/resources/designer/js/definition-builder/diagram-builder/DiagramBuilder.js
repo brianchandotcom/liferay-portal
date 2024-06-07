@@ -79,10 +79,8 @@ export default function DiagramBuilder() {
 	const [selectedItem, setSelectedItem] = useState(null);
 	const [selectedItemNewId, setSelectedItemNewId] = useState(null);
 	const [defaultPosition, setDefaultPosition] = useState(null);
-	const [
-		scriptedReassignmentTimerIndex,
-		setScriptedReassignmentTimerIndex,
-	] = useState(null);
+	const [scriptedReassignmentTimerIndex, setScriptedReassignmentTimerIndex] =
+		useState(null);
 
 	const onConnect = (params) => {
 		if (
@@ -109,9 +107,8 @@ export default function DiagramBuilder() {
 			data: {
 				defaultEdge,
 				label: {
-					[defaultLanguageId]: Liferay.Language.get(
-						'transition-label'
-					),
+					[defaultLanguageId]:
+						Liferay.Language.get('transition-label'),
 				},
 			},
 			id: uuidv4(),
@@ -131,7 +128,8 @@ export default function DiagramBuilder() {
 	};
 
 	const onDragOver = (event) => {
-		const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
+		const reactFlowBounds =
+			reactFlowWrapperRef.current.getBoundingClientRect();
 
 		const position = reactFlowInstance.project({
 			x:
@@ -155,7 +153,8 @@ export default function DiagramBuilder() {
 
 	const onDrop = useCallback(
 		(event) => {
-			const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
+			const reactFlowBounds =
+				reactFlowWrapperRef.current.getBoundingClientRect();
 
 			const position = reactFlowInstance.project({
 				x:
@@ -201,7 +200,8 @@ export default function DiagramBuilder() {
 
 	const onNodeDragStart = (event) => {
 		const elementRectangle = event.currentTarget.getBoundingClientRect();
-		const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
+		const reactFlowBounds =
+			reactFlowWrapperRef.current.getBoundingClientRect();
 
 		const position = reactFlowInstance.project({
 			x: elementRectangle.left - reactFlowBounds.left,
@@ -219,7 +219,8 @@ export default function DiagramBuilder() {
 	};
 
 	const onNodeDragStop = (event, node) => {
-		const reactFlowBounds = reactFlowWrapperRef.current.getBoundingClientRect();
+		const reactFlowBounds =
+			reactFlowWrapperRef.current.getBoundingClientRect();
 
 		const position = reactFlowInstance.project({
 			x:
@@ -370,6 +371,7 @@ export default function DiagramBuilder() {
 
 			setDeserialize(false);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditor, deserialize, version]);
 
@@ -412,10 +414,11 @@ export default function DiagramBuilder() {
 							Liferay.FeatureFlags['LPD-11179'] &&
 							!allowScriptContentToBeExecutedOrIncluded
 						) {
-							const hasGroovyOrJavaScript = detectGroovyOrJavaScript(
-								elements,
-								setHasGroovyOrJavaScript
-							);
+							const hasGroovyOrJavaScript =
+								detectGroovyOrJavaScript(
+									elements,
+									setHasGroovyOrJavaScript
+								);
 
 							if (
 								hasGroovyOrJavaScript &&

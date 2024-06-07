@@ -60,6 +60,7 @@ function ViewAccountInfoPanel({
 					type: 'danger',
 				});
 			});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [accountData.id]);
 
@@ -208,7 +209,7 @@ function ViewAccountInfoPanel({
 							: sub(
 									Liferay.Language.get('custom-x'),
 									Liferay.Language.get('image')
-							  )}
+								)}
 					</div>
 				</div>
 

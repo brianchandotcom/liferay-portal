@@ -87,6 +87,7 @@ const useReindexActions = () => {
 					});
 			}, 1000);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isReindexing]
 	);

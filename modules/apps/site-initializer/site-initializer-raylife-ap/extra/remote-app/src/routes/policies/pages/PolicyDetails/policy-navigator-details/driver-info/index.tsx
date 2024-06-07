@@ -104,7 +104,7 @@ const DriverInfo = ({
 											? calculatedAge(
 													applicationData?.contactInfo
 														?.dateOfBirth
-											  )
+												)
 											: 'No data'
 									}`}
 								</h5>

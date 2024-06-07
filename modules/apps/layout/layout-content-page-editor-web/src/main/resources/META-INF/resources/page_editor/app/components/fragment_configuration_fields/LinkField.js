@@ -86,18 +86,15 @@ export default function LinkField({field, onValueSelect, value}) {
 		if (isMapped(nextValue) && !isMappedToStructure(nextValue)) {
 			setMappedHrefPreview('');
 
-			resolveEditableValue(
-				nextValue,
-				languageId,
-				getFieldValue
-			).then((fieldValue) =>
-				setMappedHrefPreview(
-					fieldValue.url
-						? fieldValue.url
-						: typeof fieldValue === 'string'
-						? fieldValue
-						: ''
-				)
+			resolveEditableValue(nextValue, languageId, getFieldValue).then(
+				(fieldValue) =>
+					setMappedHrefPreview(
+						fieldValue.url
+							? fieldValue.url
+							: typeof fieldValue === 'string'
+								? fieldValue
+								: ''
+					)
 			);
 		}
 		else {

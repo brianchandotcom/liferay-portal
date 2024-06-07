@@ -262,11 +262,11 @@ export default function Cards(props: IDataSetSectionProps) {
 											cardsSection,
 											closeModal,
 											field: selectedField,
-									  })
+										})
 									: clearFDSCardSection({
 											cardsSection,
 											closeModal,
-									  });
+										});
 							}}
 							saveButtonDisabled={saveButtonDisabled}
 						/>

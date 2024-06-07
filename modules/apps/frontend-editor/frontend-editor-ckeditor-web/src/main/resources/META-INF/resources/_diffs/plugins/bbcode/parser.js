@@ -36,6 +36,7 @@
 		color: 1,
 		font: 1,
 		i: 1,
+
 		// eslint-disable-next-line @liferay/no-abbreviations
 		img: 1,
 		s: 1,
@@ -44,7 +45,8 @@
 		url: 1,
 	};
 
-	const REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
+	const REGEX_TAG_NAME =
+		/^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	const STR_TAG_CODE = 'code';
 

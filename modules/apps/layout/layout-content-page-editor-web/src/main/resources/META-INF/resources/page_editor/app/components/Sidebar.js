@@ -152,6 +152,7 @@ export default function Sidebar() {
 				);
 			}
 		},
+
 		/* eslint-disable react-hooks/exhaustive-deps */
 		[panel, sidebarOpen, sidebarPanelId]
 	);
@@ -393,13 +394,8 @@ export default function Sidebar() {
 
 							const active =
 								sidebarOpen && sidebarPanelId === panelId;
-							const {
-								icon,
-								isLink,
-								label,
-								pluginClass,
-								url,
-							} = panel;
+							const {icon, isLink, label, pluginClass, url} =
+								panel;
 
 							if (isLink) {
 								return (

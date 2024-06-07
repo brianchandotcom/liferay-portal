@@ -33,11 +33,11 @@ function getItemStyles(props) {
 	return !initialOffset || !currentOffset
 		? {
 				display: 'none',
-		  }
+			}
 		: {
 				WebkitTransform: transform,
 				transform,
-		  };
+			};
 }
 
 const ItemDragLayer = (props) => {

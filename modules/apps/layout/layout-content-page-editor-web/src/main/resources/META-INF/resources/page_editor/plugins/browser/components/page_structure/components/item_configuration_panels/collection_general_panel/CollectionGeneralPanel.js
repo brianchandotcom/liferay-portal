@@ -118,12 +118,11 @@ export function CollectionGeneralPanel({item}) {
 			}
 
 			try {
-				const response = await CollectionService.getCollectionWarningMessage(
-					{
+				const response =
+					await CollectionService.getCollectionWarningMessage({
 						layoutDataItemId: item.itemId,
 						segmentsExperienceId,
-					}
-				);
+					});
 
 				return response.warningMessage;
 			}

@@ -47,7 +47,7 @@
 }
 
 .menu-item-wrapper .lexicon-icon {
-	margin-top: 0px;
+	margin-top: 0;
 }
 
 .menu-item-wrapper .menu-item-icon-help-center {
@@ -56,7 +56,7 @@
 }
 
 .menu-item-wrapper .menu-item-icon-customer-portal {
-	background: var(--accent-accent-3, #E55E75);
+	background: var(--accent-accent-3, #e55e75);
 	border-radius: 4px;
 }
 

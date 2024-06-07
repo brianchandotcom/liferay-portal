@@ -44,26 +44,27 @@ const InsuranceCard: React.FC<InsuranceProps> = ({
 
 		const categories = await getCategoriesByVocabulary(vocabularyId);
 
-		const sortCategoriesByExternalReferenceCode = categories?.data?.items.sort(
-			(personal: any, business: any) =>
+		const sortCategoriesByExternalReferenceCode =
+			categories?.data?.items.sort((personal: any, business: any) =>
 				personal.externalReferenceCode > business.externalReferenceCode
 					? 1
 					: business.externalReferenceCode >
-					  personal.externalReferenceCode
-					? -1
-					: 0
-		);
+						  personal.externalReferenceCode
+						? -1
+						: 0
+			);
 
-		const payload: CategoriesCardsTypes[] = sortCategoriesByExternalReferenceCode?.map(
-			(category: CategoryType, index: number) => {
-				return {
-					active: index === 0,
-					channelName: `Raylife AP`,
-					id: category.id,
-					name: category.name,
-				};
-			}
-		);
+		const payload: CategoriesCardsTypes[] =
+			sortCategoriesByExternalReferenceCode?.map(
+				(category: CategoryType, index: number) => {
+					return {
+						active: index === 0,
+						channelName: `Raylife AP`,
+						id: category.id,
+						name: category.name,
+					};
+				}
+			);
 
 		return payload;
 	};
@@ -97,6 +98,7 @@ const InsuranceCard: React.FC<InsuranceProps> = ({
 
 	useEffect(() => {
 		loadCards();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -117,8 +119,7 @@ const InsuranceCard: React.FC<InsuranceProps> = ({
 											className={classNames(
 												'application-card card-hover border border-secondary',
 												{
-													active:
-														insuranceCard.active,
+													active: insuranceCard.active,
 												}
 											)}
 											onClick={() =>

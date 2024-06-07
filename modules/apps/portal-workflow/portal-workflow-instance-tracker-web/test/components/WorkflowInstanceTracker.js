@@ -140,10 +140,9 @@ describe('The WorkflowInstanceTracker component should', () => {
 	// Skipped flaky test. The component renders as workflow instance not found.
 
 	xit('Display the labels of transitions originated from a node while hovering it', async () => {
-		jest.spyOn(
-			EventObserver.prototype,
-			'notify'
-		).mockImplementation(() => () => jest.fn());
+		jest.spyOn(EventObserver.prototype, 'notify').mockImplementation(
+			() => () => jest.fn()
+		);
 
 		const reviewNode = queryAllByText('Review')[0];
 

@@ -97,7 +97,8 @@ const TableListComponent: React.FC<Props> = ({
 														className={classnames(
 															'd-flex w-100',
 															{
-																'font-table text-nowrap': !header.bold,
+																'font-table text-nowrap':
+																	!header.bold,
 																'font-table-bold align-items-start':
 																	header.bold,
 															}

@@ -72,30 +72,27 @@ describe('RedirectPatterns', () => {
 	});
 
 	it('removes selected element if click in remove button', async () => {
-		const {
-			getByDisplayValue,
-			queryAllByDisplayValue,
-			queryAllByLabelText,
-		} = renderComponent({
-			...defaultProps,
-			patterns: [
-				{
-					destinationURL: 'http://localhost:8080/1',
-					pattern: '/test1',
-					userAgent: 'bot',
-				},
-				{
-					destinationURL: 'http://localhost:8080/2',
-					pattern: '/test2',
-					userAgent: 'all',
-				},
-				{
-					destinationURL: 'http://localhost:8080/3',
-					pattern: '/test3',
-					userAgent: 'bot',
-				},
-			],
-		});
+		const {getByDisplayValue, queryAllByDisplayValue, queryAllByLabelText} =
+			renderComponent({
+				...defaultProps,
+				patterns: [
+					{
+						destinationURL: 'http://localhost:8080/1',
+						pattern: '/test1',
+						userAgent: 'bot',
+					},
+					{
+						destinationURL: 'http://localhost:8080/2',
+						pattern: '/test2',
+						userAgent: 'all',
+					},
+					{
+						destinationURL: 'http://localhost:8080/3',
+						pattern: '/test3',
+						userAgent: 'bot',
+					},
+				],
+			});
 
 		const removeButtons = queryAllByLabelText('remove');
 

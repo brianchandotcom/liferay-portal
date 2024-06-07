@@ -8,4 +8,4 @@ export const MODAL_TYPES = {
 	edit: 'edit',
 } as const;
 
-export type ModalType = typeof MODAL_TYPES[keyof typeof MODAL_TYPES];
+export type ModalType = (typeof MODAL_TYPES)[keyof typeof MODAL_TYPES];

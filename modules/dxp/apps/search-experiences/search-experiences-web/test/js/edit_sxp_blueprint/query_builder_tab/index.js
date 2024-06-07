@@ -15,9 +15,14 @@ import getUIConfigurationValues from '../../../../src/main/resources/META-INF/re
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/CodeMirrorEditor',
-	() => ({onChange, value}) => (
-		<textarea aria-label="text-area" onChange={onChange} value={value} />
-	)
+	() =>
+		({onChange, value}) => (
+			<textarea
+				aria-label="text-area"
+				onChange={onChange}
+				value={value}
+			/>
+		)
 );
 
 function renderBuilder(props) {

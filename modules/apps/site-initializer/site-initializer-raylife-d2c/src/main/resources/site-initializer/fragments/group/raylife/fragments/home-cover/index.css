@@ -18,7 +18,7 @@
 }
 
 .home-cover .home-cover-box p {
-	margin-bottom: calc(var(--spacer-1)*10);
+	margin-bottom: calc(var(--spacer-1) * 10);
 }
 
 .home-cover .home-cover-image {

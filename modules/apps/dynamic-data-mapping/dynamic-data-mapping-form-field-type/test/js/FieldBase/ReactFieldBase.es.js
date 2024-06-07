@@ -22,6 +22,7 @@ const FieldBaseWithProvider = (props) => (
 );
 
 describe('ReactFieldBase', () => {
+
 	// eslint-disable-next-line no-console
 	const originalWarn = console.warn;
 
@@ -41,6 +42,7 @@ describe('ReactFieldBase', () => {
 	});
 
 	afterAll(() => {
+
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
 	});
@@ -202,8 +204,7 @@ describe('ReactFieldBase', () => {
 					image: {
 						alt: 'input-mask-format',
 						height: 170,
-						src:
-							'http://localhost:8080/forms/input_mask_format.png',
+						src: 'http://localhost:8080/forms/input_mask_format.png',
 						width: 232,
 					},
 				}}

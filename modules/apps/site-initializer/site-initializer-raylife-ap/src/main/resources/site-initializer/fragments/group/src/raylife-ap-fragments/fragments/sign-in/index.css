@@ -79,7 +79,10 @@
 	display: flex;
 }
 
-.raylife-login-form .sign-in-form .form-group.input-text-wrapper .control-label {
+.raylife-login-form
+	.sign-in-form
+	.form-group.input-text-wrapper
+	.control-label {
 	color: var(--color-neutral-0);
 	opacity: 0.5;
 }

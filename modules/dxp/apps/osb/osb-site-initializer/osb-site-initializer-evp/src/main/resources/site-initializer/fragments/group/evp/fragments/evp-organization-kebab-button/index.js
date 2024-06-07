@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -10,8 +11,8 @@ const ROLE = {
 const userRoles = document.querySelector('.userRoles').value;
 
 const updateStatus = async (key, name, message) => {
-	const organizationId = fragmentElement.querySelector('.organizationId')
-		.value;
+	const organizationId =
+		fragmentElement.querySelector('.organizationId').value;
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	await fetch(`/o/c/evporganizations/${organizationId}`, {
@@ -45,8 +46,8 @@ const getMessage = () => document.querySelector('#messageDescribed').value;
 const getAttributeHidden = () => document.querySelector('#messageDanger');
 
 const openModal = () => {
-	const organizationName = fragmentElement.querySelector('.organizationName')
-		.innerHTML;
+	const organizationName =
+		fragmentElement.querySelector('.organizationName').innerHTML;
 
 	Liferay.Util.openModal({
 		bodyHTML:
@@ -87,11 +88,11 @@ const openModal = () => {
 							? {
 									key: 'awaitingFinanceApproval',
 									value: 'Awaiting Finance Approval',
-							  }
+								}
 							: {
 									key: 'verified',
 									value: 'Verified',
-							  };
+								};
 					await layerForDendingUpdateStatus(
 						getMessage(),
 						getAttributeHidden(),

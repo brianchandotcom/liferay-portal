@@ -33,9 +33,7 @@ const ClaimDetailsSummary = ({
 			data: claimData?.r_policyToClaims_c_raylifePolicyId,
 			icon: true,
 			key: 'entryID',
-			redirectTo: `${'policy-details'}?externalReferenceCode=${
-				claimData?.r_policyToClaims_c_raylifePolicyERC
-			}`,
+			redirectTo: `${'policy-details'}?externalReferenceCode=${claimData?.r_policyToClaims_c_raylifePolicyERC}`,
 			text: 'Policy Number',
 			type: 'link',
 		},

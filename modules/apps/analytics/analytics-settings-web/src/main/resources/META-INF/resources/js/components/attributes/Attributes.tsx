@@ -53,9 +53,9 @@ const Attributes: React.FC = () => {
 		open: openOrderAttributes,
 	} = useModal();
 
-	const [selectedFields, setSelectedFields] = useState<
-		{[key in EFields]: number | React.ReactNode}
-	>({
+	const [selectedFields, setSelectedFields] = useState<{
+		[key in EFields]: number | React.ReactNode;
+	}>({
 		[EFields.Account]: <Loading inline />,
 		[EFields.Order]: <Loading inline />,
 		[EFields.People]: <Loading inline />,

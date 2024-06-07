@@ -84,7 +84,7 @@ export default function PropertiesTreeView({
 							(property) =>
 								property.objectFieldId !== objectFieldId
 						),
-				  }
+					}
 				: previous;
 		});
 		openToast({

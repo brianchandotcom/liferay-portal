@@ -60,6 +60,7 @@ export default function ({
 			setActiveTabKeyValue(3);
 		}
 		setFirstRender(false);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		directReplacement,

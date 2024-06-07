@@ -101,8 +101,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 				},
 				selectEventName: 'addCPAttachmentFileEntry',
 				title: '<liferay-ui:message key="select-file" />',
-				url:
-					'<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>',
+				url: '<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>',
 			});
 		});
 	}

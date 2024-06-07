@@ -33,7 +33,7 @@ export default function QuestionRow({
 		currentSection || currentSection === '0'
 			? currentSection
 			: question.messageBoardSection &&
-			  question.messageBoardSection.title;
+				question.messageBoardSection.title;
 
 	const creatorInformation = question.creator
 		? {
@@ -46,7 +46,7 @@ export default function QuestionRow({
 						(userGroupBrief) => userGroupBrief.name
 					),
 				}),
-		  }
+			}
 		: {
 				link: `/questions/${sectionTitle}`,
 				name: '',
@@ -55,7 +55,7 @@ export default function QuestionRow({
 				...(Liferay.FeatureFlags['LPS-185892'] && {
 					userGroups: null,
 				}),
-		  };
+			};
 
 	const isContentReviewer = context?.isContentReviewer;
 	const isRowSelected = question.friendlyUrlPath === rowSelected;

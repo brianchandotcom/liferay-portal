@@ -26,11 +26,12 @@ const filterItemActions = (
 							)
 						) {
 							if (action.target === 'headless') {
-								const matchedPermissionKey = itemDataActionKeys.filter(
-									(itemAction) =>
-										itemAction.toLowerCase() ===
-										action.data?.permissionKey?.toLowerCase()
-								);
+								const matchedPermissionKey =
+									itemDataActionKeys.filter(
+										(itemAction) =>
+											itemAction.toLowerCase() ===
+											action.data?.permissionKey?.toLowerCase()
+									);
 
 								return [
 									...actions,
@@ -53,7 +54,7 @@ const filterItemActions = (
 					return [...actions, action];
 				},
 				[]
-		  )
+			)
 		: [];
 };
 

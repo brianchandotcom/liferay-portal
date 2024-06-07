@@ -19,9 +19,8 @@ const useFilter = ({
 	prefixKeys = [''],
 	withoutRouteParams,
 }) => {
-	const {dispatch, dispatchFilter, filterState, filterValues} = useContext(
-		FilterContext
-	);
+	const {dispatch, dispatchFilter, filterState, filterValues} =
+		useContext(FilterContext);
 
 	const {filters} = useRouterParams();
 	const {keys, pinnedValues, titles} = useFiltersConstants(filterKeys);
@@ -48,6 +47,7 @@ const useFilter = ({
 					filterState
 				)
 			),
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[filterState]
 	);

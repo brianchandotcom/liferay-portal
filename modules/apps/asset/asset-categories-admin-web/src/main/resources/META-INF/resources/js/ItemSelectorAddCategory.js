@@ -110,9 +110,8 @@ export default function ({currentURL, namespace, redirect}) {
 				navigate(redirect);
 			}
 			else if (action === 'saveAndAddNew') {
-				document.getElementById(
-					`${namespace}redirect`
-				).value = currentURL;
+				document.getElementById(`${namespace}redirect`).value =
+					currentURL;
 
 				submitForm(document.getElementById(`${namespace}fm`));
 			}

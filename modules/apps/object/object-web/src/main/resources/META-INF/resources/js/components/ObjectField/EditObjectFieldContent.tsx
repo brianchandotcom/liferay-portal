@@ -59,12 +59,10 @@ export function EditObjectFieldContent({
 }: EditObjectFieldContentProps) {
 	const [activeIndex, setActiveIndex] = useState(0);
 
-	const [dbObjectFieldRequired, setDbObjectFieldRequired] = useState<
-		boolean
-	>();
-	const [objectDefinition, setObjectDefinition] = useState<
-		ObjectDefinition
-	>();
+	const [dbObjectFieldRequired, setDbObjectFieldRequired] =
+		useState<boolean>();
+	const [objectDefinition, setObjectDefinition] =
+		useState<ObjectDefinition>();
 	const [objectFieldBusinessTypes, setObjectFieldBusinessTypes] = useState<
 		ObjectFieldBusinessType[]
 	>([]);
@@ -91,15 +89,17 @@ export function EditObjectFieldContent({
 			setValues(objectFieldResponse);
 
 			if (objectDefinitionExternalReferenceCode) {
-				const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode
-				);
+				const objectDefinitionResponse =
+					await API.getObjectDefinitionByExternalReferenceCode(
+						objectDefinitionExternalReferenceCode
+					);
 
 				setObjectDefinition(objectDefinitionResponse);
 			}
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -116,12 +116,13 @@ export function EditObjectFieldContent({
 					method: 'GET',
 				});
 
-				const objectFieldInfoJSON = (await objectFieldInfoResponse.json()) as {
-					objectFieldBusinessTypes: ObjectFieldBusinessType[];
-					objectRelationshipId: number;
-					readOnlySidebarElements: SidebarCategory[];
-					sidebarElements: SidebarCategory[];
-				};
+				const objectFieldInfoJSON =
+					(await objectFieldInfoResponse.json()) as {
+						objectFieldBusinessTypes: ObjectFieldBusinessType[];
+						objectRelationshipId: number;
+						readOnlySidebarElements: SidebarCategory[];
+						sidebarElements: SidebarCategory[];
+					};
 
 				if (values.businessType === 'Relationship') {
 					setObjectRelationshipId(
@@ -140,6 +141,7 @@ export function EditObjectFieldContent({
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [baseResourceURL, values.id]);
 
@@ -162,7 +164,8 @@ export function EditObjectFieldContent({
 					<ClayTabs.Content activeIndex={activeIndex} fade>
 						<ClayTabs.TabPane
 							className={classNames({
-								'lfr-objects__edit-object-field-content-panel': modelBuilder,
+								'lfr-objects__edit-object-field-content-panel':
+									modelBuilder,
 							})}
 						>
 							<BasicInfoTab
@@ -193,7 +196,8 @@ export function EditObjectFieldContent({
 
 						<ClayTabs.TabPane
 							className={classNames({
-								'lfr-objects__edit-object-field-content-panel': modelBuilder,
+								'lfr-objects__edit-object-field-content-panel':
+									modelBuilder,
 							})}
 						>
 							<AdvancedTab

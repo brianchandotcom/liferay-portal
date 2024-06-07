@@ -53,7 +53,8 @@ export function CreateAPISchemaModalContent({
 			body: JSON.stringify({
 				...localUIData,
 				applicationStatus: {key: 'unpublished'},
-				r_apiApplicationToAPISchemas_c_apiApplicationId: currentAPIApplicationId,
+				r_apiApplicationToAPISchemas_c_apiApplicationId:
+					currentAPIApplicationId,
 				version: '1.0',
 			}),
 			headers,

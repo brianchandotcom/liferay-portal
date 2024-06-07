@@ -70,7 +70,8 @@ export default function StructureTreeNodeActions({
 				className={classNames(
 					'ml-0 page-editor__page-structure__tree-node__actions-button',
 					{
-						'page-editor__page-structure__tree-node__actions-button--visible': visible,
+						'page-editor__page-structure__tree-node__actions-button--visible':
+							visible,
 					}
 				)}
 				displayType="unstyled"

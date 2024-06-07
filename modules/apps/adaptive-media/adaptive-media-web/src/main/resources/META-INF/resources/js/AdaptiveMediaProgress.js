@@ -28,9 +28,8 @@ const AdaptiveMediaProgress = ({
 	const delay = useTimeout();
 	const isMounted = useIsMounted();
 
-	const [showLoadingIndicator, setShowLoadingIndicator] = useState(
-		autoStartProgress
-	);
+	const [showLoadingIndicator, setShowLoadingIndicator] =
+		useState(autoStartProgress);
 	const [percentage, setPercentage] = useState(
 		Math.ceil((adaptedImages / totalImages) * 100) || 0
 	);
@@ -141,7 +140,7 @@ const AdaptiveMediaProgress = ({
 						: sub(
 								Liferay.Language.get('x-images-failed-process'),
 								imagesFailed
-						  )}
+							)}
 				</span>
 			</span>
 

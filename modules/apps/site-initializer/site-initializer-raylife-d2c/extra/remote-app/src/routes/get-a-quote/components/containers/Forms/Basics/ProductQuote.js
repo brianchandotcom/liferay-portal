@@ -34,6 +34,7 @@ export function FormBasicProductQuote({form}) {
 			);
 			setValue('basics.productName', productQuote.title);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [productQuoteId, productQuotes]);
 
@@ -41,6 +42,7 @@ export function FormBasicProductQuote({form}) {
 		setValue('basics.productId', productQuoteId, {
 			shouldValidate: true,
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -56,13 +58,15 @@ export function FormBasicProductQuote({form}) {
 				<div
 					className={classNames('mb-4 d-flex col-12', {
 						'd-flex justify-content-start': !isMobile,
-						'justify-content-sm-center justify-content-center': isMobile,
+						'justify-content-sm-center justify-content-center':
+							isMobile,
 					})}
 				>
 					<label
 						className={classNames('d-flex font-weight-bolder', {
 							'text-paragraph justify-content-start': !isMobile,
-							'text-paragraph-lg justify-content-sm-center justify-content-center': isMobile,
+							'text-paragraph-lg justify-content-sm-center justify-content-center':
+								isMobile,
 						})}
 					>
 						Select a product to quote.

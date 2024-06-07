@@ -57,6 +57,7 @@ const useFormActions = ({
 
 			Storage.setItem(STORAGE_KEYS.APPLICATION_ID, applicationId);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [applicationId]);
 
@@ -115,6 +116,7 @@ const useFormActions = ({
 				throw error;
 			}
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[errorMessage, form, saveData, setError]
 	);

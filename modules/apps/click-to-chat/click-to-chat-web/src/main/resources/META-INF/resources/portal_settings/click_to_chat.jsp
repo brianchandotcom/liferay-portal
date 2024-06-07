@@ -137,9 +137,8 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 			'<portlet:namespace />chatProviderId'
 		);
 
-		var clickToChatProviderIdOptions = clickToChatChatProviderIdElement.querySelectorAll(
-			'option'
-		);
+		var clickToChatProviderIdOptions =
+			clickToChatChatProviderIdElement.querySelectorAll('option');
 
 		clickToChatProviderIdOptions.forEach((option) => {
 			<portlet:namespace />toggleClickToChatChatProviderLearnMessage(

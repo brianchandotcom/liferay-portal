@@ -15,13 +15,11 @@ export default function useActiveAccountSubscriptionGroups(
 		? ` and name in ('${products.join("', '")}')`
 		: '';
 
-	const {
-		data,
-		loading: accountSubscriptionGroupsLoading,
-	} = useGetAccountSubscriptionGroups({
-		filter: `accountKey eq '${accountKey}' and activationStatus eq '${ACCOUNT_SUBSCRIPTION_GROUPS_STATUS_TYPES.active}' and hasActivation eq true and manageContactsURL ne ''${productNames}`,
-		skip: loading,
-	});
+	const {data, loading: accountSubscriptionGroupsLoading} =
+		useGetAccountSubscriptionGroups({
+			filter: `accountKey eq '${accountKey}' and activationStatus eq '${ACCOUNT_SUBSCRIPTION_GROUPS_STATUS_TYPES.active}' and hasActivation eq true and manageContactsURL ne ''${productNames}`,
+			skip: loading,
+		});
 
 	return {data, loading: loading || accountSubscriptionGroupsLoading};
 }

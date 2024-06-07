@@ -39,9 +39,9 @@ export default function Filter({
 			: Liferay.Language.get('ascending')
 	);
 
-	const items = (Object.entries(FRAGMENT_FILTERS) as Entries<
-		typeof FRAGMENT_FILTERS
-	>).map(([filterType, filterValues]) => ({
+	const items = (
+		Object.entries(FRAGMENT_FILTERS) as Entries<typeof FRAGMENT_FILTERS>
+	).map(([filterType, filterValues]) => ({
 		items: filterValues.map((filterValue) => ({
 			active: filters[filterType] === filterValue,
 			label: FILTER_NAMES[filterValue],

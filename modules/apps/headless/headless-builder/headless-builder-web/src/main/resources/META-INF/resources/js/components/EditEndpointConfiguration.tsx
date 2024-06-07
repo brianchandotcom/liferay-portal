@@ -32,13 +32,10 @@ export default function EditEndpointConfiguration({
 	setData,
 }: EditEndpointConfigurationProps) {
 	const [schemaOptions, setSchemaOptions] = useState<SelectOption[]>([]);
-	const [selectedRequestBodySchema, setSelectedRequestBodySchema] = useState<
-		SelectOption
-	>();
-	const [
-		selectedResponseBodySchema,
-		setSelectedResponseBodySchema,
-	] = useState<SelectOption>();
+	const [selectedRequestBodySchema, setSelectedRequestBodySchema] =
+		useState<SelectOption>();
+	const [selectedResponseBodySchema, setSelectedResponseBodySchema] =
+		useState<SelectOption>();
 
 	useEffect(() => {
 		getAllItems<APISchemaItem>({
@@ -49,7 +46,7 @@ export default function EditEndpointConfiguration({
 				? result.map((apiSchemas) => ({
 						label: apiSchemas.name,
 						value: apiSchemas.id.toString(),
-				  }))
+					}))
 				: [];
 
 			if (options.length) {
@@ -62,6 +59,7 @@ export default function EditEndpointConfiguration({
 				]);
 			}
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

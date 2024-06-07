@@ -17,7 +17,7 @@ export default function itemIsAncestor(parent, child, layoutDataRef) {
 					parent,
 					layoutDataRef.current.items[child.parentId],
 					layoutDataRef
-			  )
+				)
 			: true;
 	}
 

@@ -183,7 +183,7 @@ function ViewOrganizationInfoPanel({
 								: sub(
 										Liferay.Language.get('custom-x'),
 										Liferay.Language.get('image')
-								  )}
+									)}
 						</div>
 					</div>
 

@@ -362,12 +362,14 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 				);
 			}
 
-			var currentScopeOrganizationIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeOrganizationIds'
-			);
-			var selectedScopeOrganizationIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeOrganizationIds'
-			);
+			var currentScopeOrganizationIds =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />currentScopeOrganizationIds'
+				);
+			var selectedScopeOrganizationIds =
+				<portlet:namespace />form.querySelector(
+					'#<portlet:namespace />selectedScopeOrganizationIds'
+				);
 
 			if (currentScopeOrganizationIds && selectedScopeOrganizationIds) {
 				selectedScopeOrganizationIds.setAttribute(

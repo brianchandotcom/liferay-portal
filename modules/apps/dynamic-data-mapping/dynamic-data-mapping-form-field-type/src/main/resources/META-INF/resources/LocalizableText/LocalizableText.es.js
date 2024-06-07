@@ -45,13 +45,11 @@ const LocalizableText = ({
 	readOnly,
 	value,
 }) => {
-	const [currentAvailableLocales, setCurrentAvailableLocales] = useState(
-		availableLocales
-	);
+	const [currentAvailableLocales, setCurrentAvailableLocales] =
+		useState(availableLocales);
 
-	const [currentEditingLocale, setCurrentEditingLocale] = useState(
-		editingLocale
-	);
+	const [currentEditingLocale, setCurrentEditingLocale] =
+		useState(editingLocale);
 
 	const [currentValue, setCurrentValue] = useState(value);
 
@@ -110,6 +108,7 @@ const LocalizableText = ({
 				value: currentValue,
 			})
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [defaultLocale, fieldName]);
 

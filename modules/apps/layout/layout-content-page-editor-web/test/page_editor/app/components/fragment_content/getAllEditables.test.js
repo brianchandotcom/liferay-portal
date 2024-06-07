@@ -119,7 +119,8 @@ describe('getAllEditables', () => {
 			},
 			{
 				editableId: 'background-image',
-				editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				editableValueNamespace:
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLDivElement),
 				priority: Infinity,
 				processor: BackgroundImageProcessor,
@@ -162,7 +163,8 @@ describe('getAllEditables', () => {
 			},
 			{
 				editableId: 'background-image',
-				editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				editableValueNamespace:
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLDivElement),
 				priority: Infinity,
 				processor: BackgroundImageProcessor,
@@ -241,7 +243,8 @@ describe('getAllEditables', () => {
 			},
 			{
 				editableId: 'background-image',
-				editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				editableValueNamespace:
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				element: expect.any(HTMLDivElement),
 				priority: 7,
 				processor: BackgroundImageProcessor,

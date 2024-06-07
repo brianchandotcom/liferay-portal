@@ -20,9 +20,8 @@ export function AddObjectFieldsDataToProperties({
 }: AddObjectFieldsDataToProperties) {
 	const propertiesTreeViewItems = schemaProperties.map(
 		({description, id, name, objectFieldERC, objectRelationshipNames}) => {
-			const objectRelationshipNamesArray = objectRelationshipNames?.split(
-				','
-			);
+			const objectRelationshipNamesArray =
+				objectRelationshipNames?.split(',');
 
 			const objectRelationshipName =
 				objectRelationshipNamesArray?.[
@@ -56,10 +55,11 @@ export function AddObjectFieldsDataToProperties({
 			const parentObjectDefinition =
 				relatedObjectDefinition ?? mainObjectDefinition;
 
-			const currentObjectField = parentObjectDefinition?.objectFields.find(
-				(objectField) =>
-					objectField.externalReferenceCode === objectFieldERC
-			);
+			const currentObjectField =
+				parentObjectDefinition?.objectFields.find(
+					(objectField) =>
+						objectField.externalReferenceCode === objectFieldERC
+				);
 
 			if (currentObjectField && parentObjectDefinition) {
 				return {
@@ -83,9 +83,11 @@ export function AddObjectFieldsDataToProperties({
 		}
 	);
 
-	return (propertiesTreeViewItems.length
-		? propertiesTreeViewItems
-		: schemaProperties) as TreeViewItemData[];
+	return (
+		propertiesTreeViewItems.length
+			? propertiesTreeViewItems
+			: schemaProperties
+	) as TreeViewItemData[];
 }
 
 export function hasDataChanged({
@@ -121,7 +123,8 @@ export function hasEndpointDataChanged({
 	const {
 		description: uiDescription,
 		path: uiPath,
-		r_responseAPISchemaToAPIEndpoints_c_apiSchemaId: uiR_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
+		r_responseAPISchemaToAPIEndpoints_c_apiSchemaId:
+			uiR_responseAPISchemaToAPIEndpoints_c_apiSchemaId,
 		scope: uiScope,
 	} = localUIData;
 

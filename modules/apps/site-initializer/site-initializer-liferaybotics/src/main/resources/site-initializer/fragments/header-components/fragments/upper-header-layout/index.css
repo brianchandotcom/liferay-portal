@@ -21,7 +21,7 @@
 }
 
 .upper-header-bg {
-	background-color: var(--color-brand-secondary, #2b395e)
+	background-color: var(--color-brand-secondary, #2b395e);
 }
 
 .upper-header.navbar {

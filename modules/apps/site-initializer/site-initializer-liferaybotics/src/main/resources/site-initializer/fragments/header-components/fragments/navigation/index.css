@@ -20,8 +20,8 @@
 }
 
 .navbar-site .nav-item:hover {
-  border-color: var(--color-brand-primary);
-  text-decoration: none;
+	border-color: var(--color-brand-primary);
+	text-decoration: none;
 }
 
 .navbar-menu .portlet {

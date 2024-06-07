@@ -92,9 +92,8 @@ export function FormInfo() {
 							onChange={(event) =>
 								dispatch({
 									payload: event.target.value,
-									type:
-										EVENT_TYPES.FORM_INFO
-											.DESCRIPTION_CHANGE,
+									type: EVENT_TYPES.FORM_INFO
+										.DESCRIPTION_CHANGE,
 								})
 							}
 							placeholder={Liferay.Language.get(

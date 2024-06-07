@@ -91,9 +91,8 @@ describe('DownloadSpreadsheetButton', () => {
 	});
 
 	it('...with the proper restored UI state after cancel', async () => {
-		const {container, findByText, getByText, getByTitle} = render(
-			getComponent()
-		);
+		const {container, findByText, getByText, getByTitle} =
+			render(getComponent());
 		const exportButton = getByText('export-xls');
 
 		fireEvent(
@@ -134,6 +133,7 @@ describe('DownloadSpreadsheetButton', () => {
 	});
 
 	it('...that calls the proper functions on events', async () => {
+
 		/* eslint-disable no-import-assign */
 		const fileURL = 'demo-file-url';
 		const {findByText, getByText} = render(getComponent(fileURL));

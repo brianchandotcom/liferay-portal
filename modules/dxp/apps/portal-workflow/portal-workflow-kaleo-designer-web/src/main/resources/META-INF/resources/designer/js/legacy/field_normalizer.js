@@ -7,6 +7,7 @@ AUI.add(
 	'liferay-kaleo-designer-field-normalizer',
 	(A) => {
 		const AArray = A.Array;
+
 		// eslint-disable-next-line @liferay/aui/no-object
 		const AObject = A.Object;
 		const Lang = A.Lang;
@@ -240,9 +241,10 @@ AUI.add(
 									);
 								}
 
-								item2 = FieldNormalizer.normalizeToAssignments(
-									item2
-								);
+								item2 =
+									FieldNormalizer.normalizeToAssignments(
+										item2
+									);
 							}
 
 							_put(notifications, index2, item2, index1);
@@ -265,23 +267,24 @@ AUI.add(
 								return;
 							}
 							else if (index2 === 'timerNotifications') {
-								item2 = FieldNormalizer.normalizeToNotifications(
-									item2
-								);
+								item2 =
+									FieldNormalizer.normalizeToNotifications(
+										item2
+									);
 							}
 							else if (index2 === 'timerActions') {
-								item2 = FieldNormalizer.normalizeToActions(
-									item2
-								);
+								item2 =
+									FieldNormalizer.normalizeToActions(item2);
 							}
 							else if (index2 === 'reassignments') {
 								if (item2[0]?.taskAssignees === '') {
 									item2[0].taskAssignees = null;
 								}
 
-								item2 = FieldNormalizer.normalizeToAssignments(
-									item2
-								);
+								item2 =
+									FieldNormalizer.normalizeToAssignments(
+										item2
+									);
 							}
 
 							_put(taskTimers, index2, item2, index1);

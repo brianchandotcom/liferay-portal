@@ -64,9 +64,10 @@ export default function propsTransformer({
 						if (globalAction) {
 							event.preventDefault();
 
-							const callback = Liferay.Util.getPortletConfigurationIconAction(
-								action
-							);
+							const callback =
+								Liferay.Util.getPortletConfigurationIconAction(
+									action
+								);
 
 							if (callback) {
 								callback(event, item.data);

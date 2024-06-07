@@ -26,52 +26,52 @@ String runNowButton = "runNowButton" + row.getRowId();
 </c:if>
 
 <aui:script use="aui-io-request,aui-parse-content">
-	A.one('#<portlet:namespace /><%= runNowButton %>').on('click', function (
-		event
-	) {
-		var data = {
-			<portlet:namespace /><%= Constants.CMD %>: 'runProcess',
-			<portlet:namespace />dispatchTriggerId:
-				'<%= dispatchTrigger.getDispatchTriggerId() %>',
-		};
+	A.one('#<portlet:namespace /><%= runNowButton %>').on(
+		'click',
+		function (event) {
+			var data = {
+				<portlet:namespace /><%= Constants.CMD %>: 'runProcess',
+				<portlet:namespace />dispatchTriggerId:
+					'<%= dispatchTrigger.getDispatchTriggerId() %>',
+			};
 
-		this.attr('disabled', true);
+			this.attr('disabled', true);
 
-		var iconSpinnerContainer = A.one(
-			'<%= ".dispatch-check-row-icon-spinner" + row.getRowId() %>'
-		);
+			var iconSpinnerContainer = A.one(
+				'<%= ".dispatch-check-row-icon-spinner" + row.getRowId() %>'
+			);
 
-		iconSpinnerContainer.removeClass('hide');
+			iconSpinnerContainer.removeClass('hide');
 
-		A.io.request(
-			'<liferay-portlet:actionURL name="/dispatch/edit_dispatch_trigger" portletName="<%= portletDisplay.getPortletName() %>" />',
-			{
-				data: data,
-				on: {
-					success: function (event, id, obj) {
-						var response = JSON.parse(obj.response);
+			A.io.request(
+				'<liferay-portlet:actionURL name="/dispatch/edit_dispatch_trigger" portletName="<%= portletDisplay.getPortletName() %>" />',
+				{
+					data: data,
+					on: {
+						success: function (event, id, obj) {
+							var response = JSON.parse(obj.response);
 
-						if (response.success) {
-							iconSpinnerContainer.addClass('hide');
-						}
-						else {
-							A.one('#<portlet:namespace /><%= runNowButton %>').attr(
-								'disabled',
-								false
-							);
+							if (response.success) {
+								iconSpinnerContainer.addClass('hide');
+							}
+							else {
+								A.one(
+									'#<portlet:namespace /><%= runNowButton %>'
+								).attr('disabled', false);
 
-							iconSpinnerContainer.addClass('hide');
+								iconSpinnerContainer.addClass('hide');
 
-							Liferay.Util.openToast({
-								message:
-									'<liferay-ui:message key="an-unexpected-error-occurred" />',
-								title: '<liferay-ui:message key="danger" />',
-								type: 'danger',
-							});
-						}
+								Liferay.Util.openToast({
+									message:
+										'<liferay-ui:message key="an-unexpected-error-occurred" />',
+									title: '<liferay-ui:message key="danger" />',
+									type: 'danger',
+								});
+							}
+						},
 					},
-				},
-			}
-		);
-	});
+				}
+			);
+		}
+	);
 </aui:script>

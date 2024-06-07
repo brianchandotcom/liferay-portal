@@ -15,9 +15,8 @@ export default function ({
 	orderRuleId,
 	rootPortletId,
 }) {
-	const orderRuleChannelsResource = CommerceServiceProvider.AdminOrderAPI(
-		'v1'
-	);
+	const orderRuleChannelsResource =
+		CommerceServiceProvider.AdminOrderAPI('v1');
 
 	function selectItem(channel) {
 		const channelData = {

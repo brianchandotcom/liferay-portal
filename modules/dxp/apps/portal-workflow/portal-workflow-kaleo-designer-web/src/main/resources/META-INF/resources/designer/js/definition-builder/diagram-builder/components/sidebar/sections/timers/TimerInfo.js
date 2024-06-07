@@ -41,6 +41,7 @@ const TimerInfo = ({
 				return updatedSections;
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [timerDescription, timerIdentifier, timerName, timersIndex]);
 

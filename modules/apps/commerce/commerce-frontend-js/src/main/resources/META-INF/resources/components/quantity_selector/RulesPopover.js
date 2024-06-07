@@ -30,22 +30,16 @@ export default function RulesPopover({
 			return setPopoverPosition({
 				...position,
 				alignment,
-				[alignment === 'bottom'
-					? 'top'
-					: 'bottom']: 'calc(100% + 10px)',
+				[alignment === 'bottom' ? 'top' : 'bottom']:
+					'calc(100% + 10px)',
 				left: '50px',
 			});
 		}
 
-		const {
-			bottom,
-			left,
-			top,
-			width,
-		} = inputRef.current.getBoundingClientRect();
-		const {
-			height: popoverHeight,
-		} = popoverRef.current.getBoundingClientRect();
+		const {bottom, left, top, width} =
+			inputRef.current.getBoundingClientRect();
+		const {height: popoverHeight} =
+			popoverRef.current.getBoundingClientRect();
 
 		position.left = left + width / 2;
 

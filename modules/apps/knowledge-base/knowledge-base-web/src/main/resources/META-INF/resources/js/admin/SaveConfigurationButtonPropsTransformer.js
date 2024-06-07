@@ -15,9 +15,8 @@ export default function propsTransformer({
 
 			if (form) {
 				if (emailParam) {
-					const emailParamEditor = window[
-						`${portletNamespace}${emailParam}`
-					].getHTML();
+					const emailParamEditor =
+						window[`${portletNamespace}${emailParam}`].getHTML();
 
 					const emailParamBody = emailParam + 'Body';
 

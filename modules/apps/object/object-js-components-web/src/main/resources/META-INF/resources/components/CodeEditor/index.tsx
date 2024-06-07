@@ -55,9 +55,8 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, CodeEditorProps>(
 				ref(editor);
 			}
 			else {
-				(ref as React.MutableRefObject<
-					CodeMirror.Editor
-				>).current = editor;
+				(ref as React.MutableRefObject<CodeMirror.Editor>).current =
+					editor;
 			}
 		};
 

@@ -24,9 +24,8 @@ import getFieldsFromSchema from './getFieldsFromSchema';
 
 function FieldsTable({portletNamespace}) {
 	const [fields, setFields] = useState([]);
-	const [selectedExportFileFormat, setSelectedExportFileFormat] = useState(
-		''
-	);
+	const [selectedExportFileFormat, setSelectedExportFileFormat] =
+		useState('');
 	const [selectedFields, setSelectedFields] = useState([]);
 	const useTemplateMappingRef = useRef();
 

@@ -239,9 +239,10 @@ AUI.add(
 				_syncSelectedSortList() {
 					const instance = this;
 
-					instance._selectedSortList = instance._sortableContainer.all(
-						SELECTOR_MOVE_OPTION + SELECTOR_SELECTED
-					);
+					instance._selectedSortList =
+						instance._sortableContainer.all(
+							SELECTOR_MOVE_OPTION + SELECTOR_SELECTED
+						);
 				},
 
 				_toggleMoveOption(checkbox, option) {
@@ -254,9 +255,8 @@ AUI.add(
 					instance._syncSelectedSortList();
 
 					if (moveOption.hasClass(STR_SELECTED)) {
-						const index = instance._selectedSortList.indexOf(
-							moveOption
-						);
+						const index =
+							instance._selectedSortList.indexOf(moveOption);
 
 						instance._sortLeftBox(option, index);
 					}

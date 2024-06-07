@@ -43,9 +43,8 @@ export function GlobalContextFrame({children, useIframe}) {
 					pageEditorStylesLinkId
 				)
 			) {
-				const pageEditorStylesLink = iframeElement.contentDocument.createElement(
-					'link'
-				);
+				const pageEditorStylesLink =
+					iframeElement.contentDocument.createElement('link');
 
 				pageEditorStylesLink.id = pageEditorStylesLinkId;
 				pageEditorStylesLink.rel = 'stylesheet';

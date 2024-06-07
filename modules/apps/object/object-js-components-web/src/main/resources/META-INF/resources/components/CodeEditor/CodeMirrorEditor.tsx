@@ -38,9 +38,8 @@ const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
 				ref(editor);
 			}
 			else if (ref) {
-				(ref as React.MutableRefObject<
-					CodeMirror.Editor
-				>).current = editor;
+				(ref as React.MutableRefObject<CodeMirror.Editor>).current =
+					editor;
 			}
 
 			const handleChange = (editor: CodeMirror.Editor) => {
@@ -50,6 +49,7 @@ const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
 			editor.on('change', handleChange);
 
 			return () => editor.off('change', handleChange);
+
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 

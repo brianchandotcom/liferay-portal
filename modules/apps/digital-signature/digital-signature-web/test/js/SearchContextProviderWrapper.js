@@ -21,6 +21,7 @@ export default function SearchContextProviderWrapper({
 			dispatch(action);
 			setQuery(reducer(query, action));
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[query, setQuery]
 	);

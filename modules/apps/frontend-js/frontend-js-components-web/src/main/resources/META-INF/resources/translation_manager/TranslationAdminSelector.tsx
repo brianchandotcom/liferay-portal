@@ -21,7 +21,7 @@ const DISPLAY_TYPE = {
 	HORIZONTAL: 'HORIZONTAL',
 } as const;
 
-type DisplayType = typeof DISPLAY_TYPE[keyof typeof DISPLAY_TYPE];
+type DisplayType = (typeof DISPLAY_TYPE)[keyof typeof DISPLAY_TYPE];
 
 interface IProps extends Translations {
 	adminMode?: boolean;
@@ -123,14 +123,12 @@ export default function TranslationAdminSelector({
 	const [activeLanguageIds, setActiveLanguageIds] = useState<
 		Liferay.Language.Locale[]
 	>(initialActiveLanguageIds);
-	const [selectedLanguageId, setSelectedLanguageId] = useState<
-		Liferay.Language.Locale
-	>(initialSelectedLanguageId);
+	const [selectedLanguageId, setSelectedLanguageId] =
+		useState<Liferay.Language.Locale>(initialSelectedLanguageId);
 	const [selectorDropdownActive, setSelectorDropdownActive] = useState(false);
 	const selectorId = useId();
-	const [translationModalVisible, setTranslationModalVisible] = useState(
-		false
-	);
+	const [translationModalVisible, setTranslationModalVisible] =
+		useState(false);
 	const triggerRef = useRef<HTMLButtonElement | null>(null);
 
 	const handleCloseTranslationModal = (

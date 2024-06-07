@@ -99,7 +99,7 @@ export async function getTaskStatus({
 						? 0
 						: Math.round(
 								(processedItemsCount / totalItemsCount) * 100
-						  )
+							)
 				);
 		}
 	}

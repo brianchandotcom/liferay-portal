@@ -142,14 +142,14 @@ export default function AddOrganizationModal({
 										'1-account-was-added-to-x'
 									),
 									parentData.name
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-accounts-were-added-to-x'
 									),
 									nodeChildren.length,
 									parentData.name
-							  );
+								);
 
 					openToast({
 						message,

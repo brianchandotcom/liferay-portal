@@ -128,10 +128,10 @@ const ScopeSelectModal = ({
 											selected
 												? Liferay.Language.get(
 														'selected'
-												  )
+													)
 												: Liferay.Language.get(
 														'select'
-												  )}
+													)}
 										</ClayButton>
 									</ClayTable.Cell>
 								</ClayTable.Row>

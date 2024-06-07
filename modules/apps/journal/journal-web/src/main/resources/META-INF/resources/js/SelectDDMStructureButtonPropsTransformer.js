@@ -31,21 +31,24 @@ export default function propsTransformer({
 									ddmStructureId.value =
 										itemValue.ddmstructureid;
 
-									const ddmTemplateKey = document.getElementById(
-										`${portletNamespace}ddmTemplateKey`
-									);
+									const ddmTemplateKey =
+										document.getElementById(
+											`${portletNamespace}ddmTemplateKey`
+										);
 
 									ddmTemplateKey.value = '';
 
-									const ddmRendererTemplateKey = document.getElementById(
-										`${portletNamespace}ddmRendererTemplateKey`
-									);
+									const ddmRendererTemplateKey =
+										document.getElementById(
+											`${portletNamespace}ddmRendererTemplateKey`
+										);
 
 									ddmRendererTemplateKey.value = '';
 
-									const contentField = document.getElementById(
-										`${portletNamespace}contentField`
-									);
+									const contentField =
+										document.getElementById(
+											`${portletNamespace}contentField`
+										);
 
 									contentField.value = description;
 

@@ -36,9 +36,10 @@ export default function NavigationPanel({
 		() => normalizeItems(initialItems, portletNamespace),
 		[initialItems, portletNamespace]
 	);
-	const searchItems = useMemo(() => getSearchItems(initialItems), [
-		initialItems,
-	]);
+	const searchItems = useMemo(
+		() => getSearchItems(initialItems),
+		[initialItems]
+	);
 
 	const [searchActive, setSearchActive] = useState(false);
 
@@ -74,7 +75,8 @@ export default function NavigationPanel({
 				[`${portletNamespace}position`]: index?.next ?? -1,
 				[`${portletNamespace}resourceClassNameId`]: item.classNameId,
 				[`${portletNamespace}resourcePrimKey`]: item.id,
-				[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,
+				[`${portletNamespace}parentResourceClassNameId`]:
+					parentItem.classNameId,
 				[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,
 			}),
 			method: 'POST',

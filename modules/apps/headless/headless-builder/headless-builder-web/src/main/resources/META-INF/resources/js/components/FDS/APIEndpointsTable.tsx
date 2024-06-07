@@ -101,6 +101,7 @@ export default function APIEndpointsTable({
 
 	useEffect(() => {
 		setHideManagementButtons(true);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

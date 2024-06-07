@@ -63,9 +63,8 @@ const InitProvider = ({children}) => {
 			if (applicationId) {
 				const {data} = await getRaylifeApplicationById(applicationId);
 
-				initialData = LiferayAdapt.adaptToRaylifeApplicationToForm(
-					data
-				);
+				initialData =
+					LiferayAdapt.adaptToRaylifeApplicationToForm(data);
 			}
 		}
 		catch (error) {
@@ -78,6 +77,7 @@ const InitProvider = ({children}) => {
 
 	useEffect(() => {
 		getInitialData();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

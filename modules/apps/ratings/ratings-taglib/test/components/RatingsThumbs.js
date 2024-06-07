@@ -31,9 +31,8 @@ describe('RatingsThumbs', () => {
 		let thumbDownButton;
 
 		beforeEach(() => {
-			[thumbUpButton, thumbDownButton] = renderComponent().getAllByRole(
-				'button'
-			);
+			[thumbUpButton, thumbDownButton] =
+				renderComponent().getAllByRole('button');
 		});
 
 		it('is enabled', () => {
@@ -224,10 +223,8 @@ describe('RatingsThumbs', () => {
 			let thumbDownButton;
 
 			beforeEach(async () => {
-				[
-					thumbUpButton,
-					thumbDownButton,
-				] = renderComponent().getAllByRole('button');
+				[thumbUpButton, thumbDownButton] =
+					renderComponent().getAllByRole('button');
 
 				await act(async () => {
 					fireEvent.click(thumbUpButton);

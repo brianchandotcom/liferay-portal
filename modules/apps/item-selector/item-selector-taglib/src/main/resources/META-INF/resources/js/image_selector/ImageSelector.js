@@ -312,6 +312,7 @@ const ImageSelector = ({
 
 			uploaderStatusStoppedRef.current = A.Uploader.Queue.STOPPED;
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

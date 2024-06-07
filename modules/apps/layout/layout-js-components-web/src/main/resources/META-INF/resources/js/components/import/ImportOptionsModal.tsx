@@ -28,7 +28,7 @@ const OPTIONS = [
 	},
 ] as const;
 
-export type OverwriteStrategy = typeof OPTIONS[number]['value'];
+export type OverwriteStrategy = (typeof OPTIONS)[number]['value'];
 
 const DEFAULT_OPTION = OPTIONS[0];
 

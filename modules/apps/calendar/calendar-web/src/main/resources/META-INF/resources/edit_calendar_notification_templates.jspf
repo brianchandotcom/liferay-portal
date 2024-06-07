@@ -192,7 +192,8 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 		);
 
 		if (notificationTemplateContentBody) {
-			notificationTemplateContentBody.value = window.<portlet:namespace />editor.getHTML();
+			notificationTemplateContentBody.value =
+				window.<portlet:namespace />editor.getHTML();
 		}
 
 		submitForm(document.<portlet:namespace />fm);

@@ -60,7 +60,7 @@ export function ErrorMessage({
 											(objectValidationRuleSetting) =>
 												objectValidationRuleSetting.name ===
 												'compositeKeyObjectFieldExternalReferenceCode'
-									  )
+										)
 									: [],
 							outputType: value as string,
 						});
@@ -71,20 +71,21 @@ export function ErrorMessage({
 						value === 'partialValidation' &&
 						values.engine === 'compositeKey'
 					) {
-						const outputObjectFieldExternalReferenceCode = values.objectValidationRuleSettings?.map(
-							(objectValidationRuleSetting) => {
-								return {
-									name:
-										'outputObjectFieldExternalReferenceCode',
-									value: objectValidationRuleSetting.value,
-								};
-							}
-						) as ObjectValidationRuleSetting[];
+						const outputObjectFieldExternalReferenceCode =
+							values.objectValidationRuleSettings?.map(
+								(objectValidationRuleSetting) => {
+									return {
+										name: 'outputObjectFieldExternalReferenceCode',
+										value: objectValidationRuleSetting.value,
+									};
+								}
+							) as ObjectValidationRuleSetting[];
 
 						setValues({
-							objectValidationRuleSettings: values.objectValidationRuleSettings?.concat(
-								outputObjectFieldExternalReferenceCode
-							),
+							objectValidationRuleSettings:
+								values.objectValidationRuleSettings?.concat(
+									outputObjectFieldExternalReferenceCode
+								),
 							outputType: value as string,
 						});
 

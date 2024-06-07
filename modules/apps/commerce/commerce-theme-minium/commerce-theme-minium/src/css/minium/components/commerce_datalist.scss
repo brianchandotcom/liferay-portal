@@ -30,7 +30,9 @@
 		grid-template-columns: auto 24px;
 		overflow: hidden;
 		padding: 6px 10px;
-		transition: background-color 0.1s ease-in, border-radius 0.2s ease-in;
+		transition:
+			background-color 0.1s ease-in,
+			border-radius 0.2s ease-in;
 		z-index: 2;
 
 		&:focus-within {
@@ -72,7 +74,9 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+		transition:
+			transform 0.2s ease-in,
+			opacity 0.2s ease-in;
 
 		&--reset {
 			color: $color-fg-alt;
@@ -167,7 +171,9 @@
 		transform: translateY(-40px);
 		transform-origin: 50% 0%;
 		transition: all 0.1s ease-in;
-		transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+		transition:
+			opacity 0.2s ease-in,
+			transform 0.2s ease-in;
 		z-index: 1;
 
 		&.is-expanding {

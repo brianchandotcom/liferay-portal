@@ -9,7 +9,7 @@ import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
 type Writeable<T> = {-readonly [P in keyof T]: T[P]};
 
 type PopoverIconButtonProps = {
-	alignPosition?: Writeable<typeof ALIGN_POSITIONS[number]>;
+	alignPosition?: Writeable<(typeof ALIGN_POSITIONS)[number]>;
 	isSubscriptionCard?: boolean;
 	popoverLink?: {textLink: string; url: string};
 	popoverText?: string;

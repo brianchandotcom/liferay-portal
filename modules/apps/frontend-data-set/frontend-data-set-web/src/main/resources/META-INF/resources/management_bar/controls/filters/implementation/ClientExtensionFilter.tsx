@@ -179,10 +179,11 @@ ClientExtensionFilter.propTypes = {
 	setFilter: PropTypes.func.isRequired,
 };
 
-const filterImplementation: FilterImplementation<ClientExtensionFilterImplementationArgs> = {
-	Component: ClientExtensionFilter,
-	getOdataString,
-	getSelectedItemsLabel,
-};
+const filterImplementation: FilterImplementation<ClientExtensionFilterImplementationArgs> =
+	{
+		Component: ClientExtensionFilter,
+		getOdataString,
+		getSelectedItemsLabel,
+	};
 
 export default filterImplementation;

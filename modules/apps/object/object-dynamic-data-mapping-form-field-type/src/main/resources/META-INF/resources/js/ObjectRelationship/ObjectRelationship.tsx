@@ -132,10 +132,8 @@ export default function ObjectRelationship({
 }: IProps) {
 	const autocompleteRef = useRef<HTMLInputElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
-	const [
-		{active, list, loading, searchTerm, selected, url},
-		setState,
-	] = useState<State>({url: null});
+	const [{active, list, loading, searchTerm, selected, url}, setState] =
+		useState<State>({url: null});
 
 	const dispatch = useForm();
 
@@ -171,7 +169,7 @@ export default function ObjectRelationship({
 					? apiURL.replace(/{\w+}/, String(parameterObjectFieldId))
 					: `${apiURL}?pageSize=-1${
 							searchTerm ? `&search=${searchTerm}` : ''
-					  }`;
+						}`;
 			}
 
 			if (!newURL || newURL === url) {
@@ -188,7 +186,7 @@ export default function ObjectRelationship({
 						objectEntryId !== '0'
 							? items.filter(
 									(item) => item.id !== Number(objectEntryId)
-							  )
+								)
 							: items,
 					loading: false,
 					url: newURL,

@@ -122,7 +122,8 @@ const BuilderListItem: React.FC<IProps> = ({
 			className={classNames(
 				'lfr-object__object-custom-view-builder-item',
 				{
-					'lfr-object__object-custom-view-builder-item--dragging': isDragging,
+					'lfr-object__object-custom-view-builder-item--dragging':
+						isDragging,
 				}
 			)}
 			flex
@@ -177,7 +178,7 @@ const BuilderListItem: React.FC<IProps> = ({
 								return index !== thirdColumnValues.length - 1
 									? `${value.label}, `
 									: value.label;
-						  })
+							})
 						: thirdColumnValues}
 				</ClayList.ItemText>
 			</ClayList.ItemField>

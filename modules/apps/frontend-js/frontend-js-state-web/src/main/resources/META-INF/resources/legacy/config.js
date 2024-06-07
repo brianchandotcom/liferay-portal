@@ -7,6 +7,7 @@
 	AUI().applyConfig({
 		groups: {
 			state: {
+
 				// eslint-disable-next-line
 				mainModule: MODULE_MAIN,
 			},

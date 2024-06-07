@@ -78,11 +78,8 @@ describe('AddSXPElementSidebar', () => {
 	});
 
 	it('displays the add button when hovering over an element item', async () => {
-		const {
-			container,
-			findByText,
-			queryAllByText,
-		} = renderAddSXPElementSidebar();
+		const {container, findByText, queryAllByText} =
+			renderAddSXPElementSidebar();
 
 		await findByText(QUERY_SXP_ELEMENTS[0].elementDefinition.category);
 

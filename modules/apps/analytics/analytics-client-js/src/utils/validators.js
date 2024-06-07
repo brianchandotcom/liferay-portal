@@ -91,29 +91,29 @@ const validateIsString = (labelField) => (val) => {
 	return error;
 };
 
-const validateMaxLength = (
-	maxAllowed = VALIDATION_PROPERTY_NAME_MAXIMUM_LENGTH
-) => (str) => {
-	let error = '';
+const validateMaxLength =
+	(maxAllowed = VALIDATION_PROPERTY_NAME_MAXIMUM_LENGTH) =>
+	(str) => {
+		let error = '';
 
-	if (String(str).length > maxAllowed) {
-		error = `${str} exceeds maximum length of ${maxAllowed}`;
-	}
+		if (String(str).length > maxAllowed) {
+			error = `${str} exceeds maximum length of ${maxAllowed}`;
+		}
 
-	return error;
-};
+		return error;
+	};
 
-const validatePropsLength = (
-	maxAllowed = VALIDATION_PROPERTIES_MAXIMUM_LENGTH
-) => ({eventId, eventProps = {}}) => {
-	let error = '';
+const validatePropsLength =
+	(maxAllowed = VALIDATION_PROPERTIES_MAXIMUM_LENGTH) =>
+	({eventId, eventProps = {}}) => {
+		let error = '';
 
-	if (Object.keys(eventProps).length > maxAllowed) {
-		error = `The Event ${eventId} attributes list exceeds maximum length of ${maxAllowed}`;
-	}
+		if (Object.keys(eventProps).length > maxAllowed) {
+			error = `The Event ${eventId} attributes list exceeds maximum length of ${maxAllowed}`;
+		}
 
-	return error;
-};
+		return error;
+	};
 
 const _validate = (validators) => (value) =>
 	validators

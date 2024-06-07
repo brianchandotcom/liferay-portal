@@ -16,9 +16,8 @@ export default function RESTSchemaDropdownMenu({
 	onItemClick: Function;
 	restSchemas: Array<string>;
 }) {
-	const [restSchemas, setRESTSchemas] = useState<Array<string>>(
-		initialRESTSchemas
-	);
+	const [restSchemas, setRESTSchemas] =
+		useState<Array<string>>(initialRESTSchemas);
 	const [query, setQuery] = useState('');
 
 	const onSearch = (query: string) => {
@@ -30,7 +29,7 @@ export default function RESTSchemaDropdownMenu({
 			query
 				? initialRESTSchemas.filter((restSchema) => {
 						return restSchema.match(regexp);
-				  }) || []
+					}) || []
 				: initialRESTSchemas
 		);
 	};

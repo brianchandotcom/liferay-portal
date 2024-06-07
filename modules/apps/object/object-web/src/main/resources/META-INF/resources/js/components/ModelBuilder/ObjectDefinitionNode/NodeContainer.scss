@@ -15,7 +15,8 @@
 		&:hover {
 			border-color: #b3cdff;
 			border-width: 0.125rem;
-			box-shadow: rgba(17, 17, 26, 0.1) 0 4px 16px,
+			box-shadow:
+				rgba(17, 17, 26, 0.1) 0 4px 16px,
 				rgba(17, 17, 26, 0.05) 0 8px 32px;
 
 			transition: border 0.5s;
@@ -28,7 +29,8 @@
 		&--selected {
 			border-color: #0b5fff !important;
 			border-width: 0.125rem !important;
-			box-shadow: rgba(17, 17, 26, 0.1) 0 4px 16px,
+			box-shadow:
+				rgba(17, 17, 26, 0.1) 0 4px 16px,
 				rgba(17, 17, 26, 0.05) 0 8px 32px;
 
 			transition: border 0.2s;

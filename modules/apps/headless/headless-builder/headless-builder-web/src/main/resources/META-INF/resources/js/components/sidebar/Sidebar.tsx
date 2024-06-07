@@ -29,9 +29,8 @@ export default function Sidebar({
 	schemaUIData,
 	setSchemaUIData,
 }: SidebarProps) {
-	const {objectDefinitionBasePath, setFetchedSchemaData} = useContext(
-		EditSchemaContext
-	);
+	const {objectDefinitionBasePath, setFetchedSchemaData} =
+		useContext(EditSchemaContext);
 
 	const [navHistory, setNavHistory] = useState<AddedObjectDefinition[][]>([
 		[],
@@ -51,6 +50,7 @@ export default function Sidebar({
 			}));
 			setNavHistory([[mainObjectResult]]);
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

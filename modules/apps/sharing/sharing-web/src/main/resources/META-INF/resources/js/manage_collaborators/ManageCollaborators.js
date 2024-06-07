@@ -28,9 +28,8 @@ const ManageCollaborators = ({
 	collaborators,
 	portletNamespace,
 }) => {
-	const [currentCollaborators, setCurrentCollaborators] = useState(
-		collaborators
-	);
+	const [currentCollaborators, setCurrentCollaborators] =
+		useState(collaborators);
 	const [deleteSharingEntryIds, setDeleteSharingEntryIds] = useState([]);
 	const [expirationDateError, setExpirationDateError] = useState(false);
 	const [expandedCollaboratorId, setExpandedCollaboratorId] = useState(1234);
@@ -39,14 +38,10 @@ const ManageCollaborators = ({
 		sharingEntryIdsAndExpirationDate,
 		setSharingEntryIdsAndExpirationDate,
 	] = useState({});
-	const [
-		sharingEntryIdsAndPermissions,
-		setSharingEntryIdsAndPermissions,
-	] = useState({});
-	const [
-		sharingEntryIdsAndShareables,
-		setSharingEntryIdsAndShareables,
-	] = useState({});
+	const [sharingEntryIdsAndPermissions, setSharingEntryIdsAndPermissions] =
+		useState({});
+	const [sharingEntryIdsAndShareables, setSharingEntryIdsAndShareables] =
+		useState({});
 	const [tomorrowDate, setTomorrowDate] = useState();
 
 	const delay = useTimeout();
@@ -109,9 +104,8 @@ const ManageCollaborators = ({
 		if (
 			invalidElements.indexOf(eventTarget.nodeName.toLowerCase()) === -1
 		) {
-			const collaboratorContainer = eventTarget.closest(
-				'.list-group-item'
-			);
+			const collaboratorContainer =
+				eventTarget.closest('.list-group-item');
 
 			setExpandedCollaboratorId(
 				Number(collaboratorContainer.dataset.collaboratorid)
@@ -198,7 +192,8 @@ const ManageCollaborators = ({
 		collaborator.sharingEntryExpirationDateError = dateError;
 
 		if (!dateError) {
-			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
+			collaborator.sharingEntryExpirationDate =
+				sharingEntryExpirationDate;
 			collaborator.sharingEntryExpirationDateTooltip = getTooltipDate(
 				sharingEntryExpirationDate
 			);
@@ -265,7 +260,7 @@ const ManageCollaborators = ({
 								json.errorMessage || response.statusText
 							);
 							throw Object.assign(error, {response});
-					  });
+						});
 			})
 			.then((json) => {
 				parent.Liferay.fire('sharing:changed', {
@@ -472,7 +467,8 @@ const ManageCollaborators = ({
 
 							<ClayLayout.ContentCol
 								className={classNames('no-padding', {
-									'has-error': sharingEntryExpirationDateError,
+									'has-error':
+										sharingEntryExpirationDateError,
 								})}
 							>
 								<ClayInput

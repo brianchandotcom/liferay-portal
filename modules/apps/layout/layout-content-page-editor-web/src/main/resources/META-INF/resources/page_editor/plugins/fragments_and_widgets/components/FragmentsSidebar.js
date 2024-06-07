@@ -108,9 +108,8 @@ const normalizeCollection = (collection) => {
 	};
 
 	if (collection.categories?.length) {
-		normalizedElement.collections = collection.categories.map(
-			normalizeCollection
-		);
+		normalizedElement.collections =
+			collection.categories.map(normalizeCollection);
 	}
 
 	return normalizedElement;
@@ -170,7 +169,7 @@ export default function FragmentsSidebar() {
 				collections: widgets
 					? widgets.map((collection) =>
 							normalizeCollection(collection)
-					  )
+						)
 					: [],
 				id: COLLECTION_IDS.widgets,
 				label: Liferay.Language.get('widgets'),
@@ -206,7 +205,7 @@ export default function FragmentsSidebar() {
 						tab.collections.flatMap(
 							(collection) => collection.children
 						)
-				  ).length,
+					).length,
 		[filteredTabs, searchValue]
 	);
 

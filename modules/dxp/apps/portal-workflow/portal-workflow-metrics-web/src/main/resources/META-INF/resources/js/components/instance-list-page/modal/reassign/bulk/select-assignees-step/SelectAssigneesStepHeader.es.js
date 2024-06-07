@@ -63,6 +63,7 @@ export default function Header({data}) {
 				selectedAssignee: newAssignee,
 			});
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[bulkReassign, tasks, setBulkReassign]
 	);

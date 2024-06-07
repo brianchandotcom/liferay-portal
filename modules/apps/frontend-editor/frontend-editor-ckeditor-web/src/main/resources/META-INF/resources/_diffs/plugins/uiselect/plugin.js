@@ -37,8 +37,8 @@
 				const value = item.value
 					? item.value
 					: item.label
-					? item.label
-					: '';
+						? item.label
+						: '';
 
 				output.push(
 					`<option value="${String(value)}">${item.label}</option>`
@@ -56,6 +56,7 @@
 	});
 
 	CKEDITOR.ui.balloonToolbarSelect = CKEDITOR.tools.createClass({
+
 		// eslint-disable-next-line
 		$: function (definition) {
 			const items = Array.isArray(definition.items)
@@ -65,8 +66,8 @@
 			const value = items[0].value
 				? items[0].value
 				: items[0].label
-				? items[0].label
-				: '';
+					? items[0].label
+					: '';
 
 			CKEDITOR.tools.extend(this, definition, {
 				icon: definition.icon,
@@ -98,30 +99,29 @@
 					select,
 				};
 
-				const changeFn = CKEDITOR.tools.addFunction(function (
-					event,
-					element
-				) {
-					event.preventDefault();
+				const changeFn = CKEDITOR.tools.addFunction(
+					function (event, element) {
+						event.preventDefault();
 
-					const option = element.options[element.selectedIndex];
+						const option = element.options[element.selectedIndex];
 
-					const value = option.value;
+						const value = option.value;
 
-					instance.execute(value);
+						instance.execute(value);
 
-					select.fire(
-						'change',
-						{
-							value,
-						},
-						this._editor
-					);
+						select.fire(
+							'change',
+							{
+								value,
+							},
+							this._editor
+						);
 
-					if (select.onChange) {
-						select.onChange(value);
+						if (select.onChange) {
+							select.onChange(value);
+						}
 					}
-				});
+				);
 
 				instance.changeFn = changeFn;
 

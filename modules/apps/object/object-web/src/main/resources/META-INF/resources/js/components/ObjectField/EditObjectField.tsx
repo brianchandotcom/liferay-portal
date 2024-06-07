@@ -91,19 +91,14 @@ export default function EditObjectField({
 		}
 	};
 
-	const {
-		errors,
-		handleChange,
-		handleSubmit,
-		setValues,
-		values,
-	} = useObjectFieldForm({
-		forbiddenChars,
-		forbiddenLastChars,
-		forbiddenNames,
-		initialValues: objectFieldInitialValues,
-		onSubmit,
-	});
+	const {errors, handleChange, handleSubmit, setValues, values} =
+		useObjectFieldForm({
+			forbiddenChars,
+			forbiddenLastChars,
+			forbiddenNames,
+			initialValues: objectFieldInitialValues,
+			onSubmit,
+		});
 
 	useEffect(() => {
 		if (errors.defaultValue) {

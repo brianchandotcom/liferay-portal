@@ -63,8 +63,7 @@ const availableItemData = {
 			method: 'GET',
 		},
 		permissions: {
-			href:
-				'http://someurl/o/data-test-endpoint/fields/38212/permissions',
+			href: 'http://someurl/o/data-test-endpoint/fields/38212/permissions',
 			method: 'GET',
 		},
 		replace: {

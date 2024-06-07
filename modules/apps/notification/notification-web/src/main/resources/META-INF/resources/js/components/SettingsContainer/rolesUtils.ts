@@ -45,10 +45,12 @@ export async function getEmailNotificationRoles(baseResourceURL: string) {
 	const rolesResponse = (await response.json()) as RolesGroup;
 	const roles = [] as MultiSelectItem[];
 
-	(Object.entries(rolesResponse) as [
-		keyof RolesGroup,
-		LabelValueObject[]
-	][]).forEach(([roleGroupKey, roleValues]) => {
+	(
+		Object.entries(rolesResponse) as [
+			keyof RolesGroup,
+			LabelValueObject[],
+		][]
+	).forEach(([roleGroupKey, roleValues]) => {
 		roles.push({
 			children: roleValues.map(({label, value}) => {
 				return {

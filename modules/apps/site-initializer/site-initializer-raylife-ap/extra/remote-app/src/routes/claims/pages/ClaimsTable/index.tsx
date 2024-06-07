@@ -80,9 +80,8 @@ const ClaimsTable = () => {
 	const [totalCount, setTotalCount] = useState<number>(0);
 	const [page, setPage] = useState<number>(1);
 	const [firstPaginationLabel, setFirstPaginationLabel] = useState<number>(1);
-	const [secondPaginationLabel, setSecondPaginationLabel] = useState<number>(
-		1
-	);
+	const [secondPaginationLabel, setSecondPaginationLabel] =
+		useState<number>(1);
 	const [searchInput, setSearchInput] = useState('');
 	const [sortedOrder, setSortedOrder] = useState<string>(Order.Descendant);
 	const [activeFilter, setActiveFilter] = useState(true);
@@ -143,20 +142,19 @@ const ClaimsTable = () => {
 						page: pageAndPageSize?.page,
 						pageSize: pageAndPageSize?.pageSize,
 						sort: `${currentSort}:${sortedOrder}`,
-				  }
+					}
 				: {
 						filter: filtered,
 						page: pageAndPageSize?.page,
 						pageSize: pageAndPageSize?.pageSize,
 						sort: `${currentSort}:${sortedOrder}`,
-				  };
+					};
 
 		return parameters;
 	};
 
-	const [parameters, setParameters] = useState<Parameters>(
-		generateParameters()
-	);
+	const [parameters, setParameters] =
+		useState<Parameters>(generateParameters());
 	const parameterDebounce = useDebounce(parameters, 200);
 
 	parameters.pageSize = pageSize.toString();
@@ -934,13 +932,11 @@ const ClaimsTable = () => {
 							<ClayButton
 								className="btn-sm hover-button shadow-none text-neutral-9"
 								onClick={() => {
-									const updatedCheckedProduct = checkedStateProduct.fill(
-										false
-									);
+									const updatedCheckedProduct =
+										checkedStateProduct.fill(false);
 
-									const updatedCheckedStatus = checkedStateStatus.fill(
-										false
-									);
+									const updatedCheckedStatus =
+										checkedStateStatus.fill(false);
 
 									setCheckedStateProduct(
 										updatedCheckedProduct

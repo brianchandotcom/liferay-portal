@@ -109,8 +109,8 @@ const _onStartNavigate = function (event) {
 
 			const componentConfig = componentConfigs[componentId];
 
-			const cacheablePortletUri = DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS.every(
-				(param) => {
+			const cacheablePortletUri =
+				DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS.every((param) => {
 					let cacheable = false;
 
 					if (componentConfig) {
@@ -122,8 +122,7 @@ const _onStartNavigate = function (event) {
 					}
 
 					return cacheable;
-				}
-			);
+				});
 
 			const cacheableComponent =
 				typeof component.isCacheable === 'function'
@@ -275,9 +274,8 @@ const componentReady = function () {
 		let componentPromiseWrapper = componentPromiseWrappers[component];
 
 		if (!componentPromiseWrapper) {
-			componentPromiseWrappers[
-				component
-			] = componentPromiseWrapper = _createPromiseWrapper();
+			componentPromiseWrappers[component] = componentPromiseWrapper =
+				_createPromiseWrapper();
 		}
 
 		componentPromise = componentPromiseWrapper.promise;

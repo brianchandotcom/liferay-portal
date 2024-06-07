@@ -133,17 +133,17 @@ export default withRouter(
 									context.trustedUser
 										? Liferay.FeatureFlags['LPS-185892']
 											? context.updateYourQuestionButtonText !==
-											  ''
+												''
 												? context.updateYourQuestionButtonText
 												: Liferay.Language.get(
 														'update-your-question'
-												  )
+													)
 											: Liferay.Language.get(
 													'update-your-question'
-											  )
+												)
 										: Liferay.Language.get(
 												'submit-for-publication'
-										  )
+											)
 								}
 								className="c-mt-4 c-mt-sm-0"
 								disabled={
@@ -154,7 +154,8 @@ export default withRouter(
 									updateThread(
 										{
 											variables: {
-												articleBody: editorRef.current.getContent(),
+												articleBody:
+													editorRef.current.getContent(),
 												headline,
 												keywords: tags.map(
 													(tag) => tag.value
@@ -163,9 +164,10 @@ export default withRouter(
 											},
 										},
 										{
-											fetchOptionsOverrides: getContextLink(
-												`${sectionTitle}/${questionId}`
-											),
+											fetchOptionsOverrides:
+												getContextLink(
+													`${sectionTitle}/${questionId}`
+												),
 										}
 									).then(() => history.goBack());
 								}}
@@ -173,17 +175,17 @@ export default withRouter(
 								{context.trustedUser
 									? Liferay.FeatureFlags['LPS-185892']
 										? context.updateYourQuestionButtonText !==
-										  ''
+											''
 											? context.updateYourQuestionButtonText
 											: Liferay.Language.get(
 													'update-your-question'
-											  )
+												)
 										: Liferay.Language.get(
 												'update-your-question'
-										  )
+											)
 									: Liferay.Language.get(
 											'submit-for-publication'
-									  )}
+										)}
 							</ClayButton>
 
 							<Link

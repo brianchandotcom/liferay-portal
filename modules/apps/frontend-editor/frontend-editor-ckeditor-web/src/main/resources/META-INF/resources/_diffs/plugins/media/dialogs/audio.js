@@ -84,8 +84,8 @@ CKEDITOR.dialog.add('audio', (editor) => {
 								filebrowser: {
 									action: 'Browse',
 									target: 'info:url',
-									url:
-										editor.config.filebrowserAudioBrowseUrl,
+									url: editor.config
+										.filebrowserAudioBrowseUrl,
 								},
 								hidden: 'true',
 								id: 'browse',

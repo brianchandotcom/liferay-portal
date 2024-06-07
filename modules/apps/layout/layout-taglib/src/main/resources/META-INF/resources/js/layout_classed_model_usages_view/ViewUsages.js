@@ -36,6 +36,7 @@ export default function ViewUsages({getUsagesURL}) {
 
 	useEffect(() => {
 		onUsagesLoad(1);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

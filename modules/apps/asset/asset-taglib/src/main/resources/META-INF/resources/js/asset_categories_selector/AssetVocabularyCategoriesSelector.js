@@ -231,11 +231,10 @@ function AssetVocabulariesCategoriesSelector({
 								resource
 									? resource.map((category) => {
 											return {
-												label:
-													category.titleCurrentValue,
+												label: category.titleCurrentValue,
 												value: category.categoryId,
 											};
-									  })
+										})
 									: []
 							}
 							value={inputValue}

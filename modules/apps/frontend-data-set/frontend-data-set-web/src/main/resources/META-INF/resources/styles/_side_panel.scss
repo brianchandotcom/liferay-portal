@@ -6,7 +6,10 @@
 	right: 0;
 	top: 0;
 	transform: translateX(100%);
-	transition: transform ease 500ms, box-shadow ease 500ms, width ease 500ms;
+	transition:
+		transform ease 500ms,
+		box-shadow ease 500ms,
+		width ease 500ms;
 	width: 70%;
 	will-change: transform, box-shadow, opacity, width;
 	z-index: 999;
@@ -113,7 +116,9 @@
 
 	.fds-side-panel-close {
 		opacity: 1;
-		transition: top ease-in-out 0.1s, right ease-in-out 0.1s,
+		transition:
+			top ease-in-out 0.1s,
+			right ease-in-out 0.1s,
 			opacity ease-in 0.2s;
 		z-index: 1;
 
@@ -140,7 +145,10 @@
 	position: fixed;
 	right: 0;
 	transform: translateX(100%);
-	transition: opacity 0.2s ease-in, transform 0.4s ease-in, left 0.4s ease-in;
+	transition:
+		opacity 0.2s ease-in,
+		transform 0.4s ease-in,
+		left 0.4s ease-in;
 	z-index: 988;
 
 	body.open & {

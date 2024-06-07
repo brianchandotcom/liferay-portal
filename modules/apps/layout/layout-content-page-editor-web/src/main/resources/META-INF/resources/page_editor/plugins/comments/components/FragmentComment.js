@@ -106,10 +106,10 @@ export default function FragmentComment({
 					message: resolved
 						? Liferay.Language.get(
 								'the-comment-could-not-be-unresolved'
-						  )
+							)
 						: Liferay.Language.get(
 								'the-comment-could-not-be-resolved'
-						  ),
+							),
 					type: 'danger',
 				});
 

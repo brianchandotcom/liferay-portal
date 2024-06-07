@@ -305,7 +305,7 @@ function reducer(state: TreeviewState, action: TreeviewAction) {
 							? {
 									...node,
 									expanded: false,
-							  }
+								}
 							: node;
 					}),
 				};
@@ -497,7 +497,7 @@ function reducer(state: TreeviewState, action: TreeviewAction) {
 									? {
 											...node,
 											expanded: true,
-									  }
+										}
 									: node,
 							nodeMap
 						)

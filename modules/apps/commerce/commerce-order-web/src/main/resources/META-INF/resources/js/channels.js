@@ -16,9 +16,8 @@ export default function ({
 	orderTypeExternalReferenceCode,
 	rootPortletId,
 }) {
-	const CommerceOrderTypeChannelsResource = CommerceServiceProvider.AdminOrderAPI(
-		'v1'
-	);
+	const CommerceOrderTypeChannelsResource =
+		CommerceServiceProvider.AdminOrderAPI('v1');
 
 	function selectItem(channel) {
 		const channelData = {

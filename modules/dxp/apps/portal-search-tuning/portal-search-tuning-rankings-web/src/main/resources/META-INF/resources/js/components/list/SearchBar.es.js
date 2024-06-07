@@ -175,10 +175,10 @@ class SearchBar extends Component {
 													this._isAnyHidden()
 														? Liferay.Language.get(
 																'show-result'
-														  )
+															)
 														: Liferay.Language.get(
 																'hide-result'
-														  )
+															)
 												}
 												className="btn-outline-borderless component-action"
 												displayType="secondary"
@@ -187,10 +187,10 @@ class SearchBar extends Component {
 													this._isAnyHidden()
 														? Liferay.Language.get(
 																'show-result'
-														  )
+															)
 														: Liferay.Language.get(
 																'hide-result'
-														  )
+															)
 												}
 											>
 												<ClayIcon
@@ -211,10 +211,10 @@ class SearchBar extends Component {
 													this._isAnyUnpinned()
 														? Liferay.Language.get(
 																'pin-result'
-														  )
+															)
 														: Liferay.Language.get(
 																'unpin-result'
-														  )
+															)
 												}
 												className="btn-outline-borderless component-action"
 												displayType="secondary"
@@ -223,10 +223,10 @@ class SearchBar extends Component {
 													this._isAnyUnpinned()
 														? Liferay.Language.get(
 																'pin-result'
-														  )
+															)
 														: Liferay.Language.get(
 																'unpin-result'
-														  )
+															)
 												}
 											>
 												{this._isAnyUnpinned() ? (

@@ -10,6 +10,7 @@ export async function fetcher<T = any>(
 	url: string | URL,
 	options?: RequestInit
 ): Promise<T | undefined> {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(url, {
 		...options,
@@ -38,13 +39,12 @@ export async function fetcher<T = any>(
 	}
 }
 
-const baseFetcher = <T = any>(
-	baseURL: string | URL,
-	baseOptions?: RequestInit
-) => (url: string | URL, options?: RequestInit) =>
-	fetcher<T>(`${baseURL}${url}`, {
-		...baseOptions,
-		...options,
-	});
+const baseFetcher =
+	<T = any>(baseURL: string | URL, baseOptions?: RequestInit) =>
+	(url: string | URL, options?: RequestInit) =>
+		fetcher<T>(`${baseURL}${url}`, {
+			...baseOptions,
+			...options,
+		});
 
 export {baseFetcher};

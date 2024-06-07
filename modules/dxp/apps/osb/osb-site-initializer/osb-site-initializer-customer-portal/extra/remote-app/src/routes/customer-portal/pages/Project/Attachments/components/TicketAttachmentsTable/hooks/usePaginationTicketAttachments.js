@@ -40,10 +40,11 @@ export default function usePagination(sortConfig, ticketAttachments) {
 		);
 
 		if (sortedTicketAttachments) {
-			const sortedTicketAttachmentsFilteredPerPage = sortedTicketAttachments.slice(
-				itemsPerPage * activePage - itemsPerPage,
-				itemsPerPage * activePage
-			);
+			const sortedTicketAttachmentsFilteredPerPage =
+				sortedTicketAttachments.slice(
+					itemsPerPage * activePage - itemsPerPage,
+					itemsPerPage * activePage
+				);
 
 			return sortedTicketAttachmentsFilteredPerPage?.length
 				? sortedTicketAttachmentsFilteredPerPage

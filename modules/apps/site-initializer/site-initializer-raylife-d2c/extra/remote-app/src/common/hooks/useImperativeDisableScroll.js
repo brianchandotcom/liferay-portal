@@ -34,6 +34,7 @@ const useImperativeDisableScroll = ({disabled, element}) => {
 			element.style['touch-action'] = PROPERTY.overflowY.on;
 			element.style.overflowY = PROPERTY.overflowY.on;
 		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [disabled]);
 };

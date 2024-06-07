@@ -12,6 +12,7 @@ const event = Liferay.publish('okta-status-changed', {
 });
 
 export async function getCurrentSession(oktaSessionAPI: string) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${oktaSessionAPI}/me`, {
 		credentials: 'include',

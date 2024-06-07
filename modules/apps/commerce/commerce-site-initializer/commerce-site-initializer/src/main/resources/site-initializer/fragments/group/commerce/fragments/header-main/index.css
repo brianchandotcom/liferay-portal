@@ -5,7 +5,9 @@
 #commerce-header-main .cart-root .mini-cart.is-open,
 #commerce-header-main .cart-root .mini-cart.is-open .mini-cart-overlay,
 #commerce-header-main .cart-root .mini-cart .mini-cart-wrapper {
-	height: calc(100vh - var(--control-menu-height) - var(--commerce-header-user-height));
+	height: calc(
+		100vh - var(--control-menu-height) - var(--commerce-header-user-height)
+	);
 }
 
 #commerce-header-main .cart-root .mini-cart .mini-cart-overlay {
@@ -18,7 +20,7 @@
 }
 
 #commerce-header-main .cart-root .mini-cart.is-open .mini-cart-wrapper {
-	background-color: #ffffff;
+	background-color: #fff;
 	transform: translate3d(calc(100vw / 2 - 624px), 0, 0);
 	z-index: 1000;
 }
@@ -27,6 +29,9 @@
 	height: 4rem;
 }
 
-#commerce-header-main .account-selector-root .btn-account-selector .sticker-user-icon {
+#commerce-header-main
+	.account-selector-root
+	.btn-account-selector
+	.sticker-user-icon {
 	border-radius: var(--border-radius);
 }

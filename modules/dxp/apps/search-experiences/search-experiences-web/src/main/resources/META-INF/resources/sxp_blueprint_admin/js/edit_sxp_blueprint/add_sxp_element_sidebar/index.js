@@ -88,21 +88,20 @@ const SXPElementList = ({
 			{showList && (
 				<ClayList>
 					{sxpElements.map((sxpElement, index) => {
-						const [
-							title,
-							description,
-						] = getSXPElementTitleAndDescription(
-							sxpElement,
-							locale
-						);
+						const [title, description] =
+							getSXPElementTitleAndDescription(
+								sxpElement,
+								locale
+							);
 
 						return (
 							<ClayList.Item
 								className={getCN('sxp-element-item', {
-									inactive: isElementInactiveFromNonCompanyIndex(
-										isIndexCompany,
-										sxpElement
-									),
+									inactive:
+										isElementInactiveFromNonCompanyIndex(
+											isIndexCompany,
+											sxpElement
+										),
 								})}
 								flex
 								key={index}

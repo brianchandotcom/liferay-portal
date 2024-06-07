@@ -142,9 +142,8 @@ describe('PortletBase', () => {
 
 			const sampleFormData = new FormData(sampleFormElement);
 
-			const resultFormData = portletBase.getRequestBody_(
-				sampleFormElement
-			);
+			const resultFormData =
+				portletBase.getRequestBody_(sampleFormElement);
 
 			expect(resultFormData.get('field1')).toBe(
 				sampleFormData.get('field1')

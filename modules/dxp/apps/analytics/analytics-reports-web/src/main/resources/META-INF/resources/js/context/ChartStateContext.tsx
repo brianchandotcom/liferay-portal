@@ -182,9 +182,8 @@ export function ChartStateContextProvider({
 }
 
 export function useDateTitle() {
-	const {timeRange, timeSpanKey, timeSpanOffset} = useContext(
-		ChartStateContext
-	);
+	const {timeRange, timeSpanKey, timeSpanOffset} =
+		useContext(ChartStateContext);
 
 	if (!timeRange) {
 		return {firstDate: null, lastDate: null};
@@ -255,7 +254,7 @@ function setLineChartLoadingState(state: State) {
 	const histogram = state.dataSet.histogram.map((set) => {
 		const newSet: Record<string, string | null> = {};
 
-		const setArray = (Object.entries(set) as unknown) as string[];
+		const setArray = Object.entries(set) as unknown as string[];
 
 		for (const index in setArray) {
 			const [key, value] = setArray[index];
@@ -272,7 +271,7 @@ function setLineChartLoadingState(state: State) {
 	});
 
 	const arrayTotals = state.dataSet.totals
-		? ((Object.entries(state.dataSet.totals) as unknown) as Array<string>)
+		? (Object.entries(state.dataSet.totals) as unknown as Array<string>)
 		: [];
 
 	const totals: Record<string, number | null> = {};

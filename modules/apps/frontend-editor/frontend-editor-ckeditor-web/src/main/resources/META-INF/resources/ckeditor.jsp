@@ -599,13 +599,15 @@ name = HtmlUtil.escapeJS(name);
 										var currentEditor = ckeditorInstance.id;
 
 										if (currentEditor === initialEditor) {
-											var currentDialog = CKEDITOR.dialog.getCurrent();
+											var currentDialog =
+												CKEDITOR.dialog.getCurrent();
 
 											if (currentDialog) {
 												currentDialog.hide();
 											}
 
-											ckEditorContent = ckeditorInstance.getData();
+											ckEditorContent =
+												ckeditorInstance.getData();
 
 											window['<%= name %>'].dispose();
 
@@ -724,7 +726,8 @@ name = HtmlUtil.escapeJS(name);
 			toolbar: currentToolbarSet,
 		};
 
-		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
+		var editorConfig =
+			<%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
 
 		var config = A.merge(defaultConfig, editorConfig);
 

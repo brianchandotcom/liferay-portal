@@ -37,7 +37,8 @@ export function VideoStreaming({
 		: configuration.videoWidth;
 
 	function resizeVideoJs() {
-		const boundingClientRect = content.parentElement.getBoundingClientRect();
+		const boundingClientRect =
+			content.parentElement.getBoundingClientRect();
 
 		const contentWidth = width || boundingClientRect.width;
 

@@ -93,10 +93,10 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 								this.unapprovedChangesAllowed
 									? Liferay.Language.get(
 											'this-publication-contains-unapproved-changes'
-									  )
+										)
 									: Liferay.Language.get(
 											'this-publication-contains-unapproved-changes-that-must-be-approved-before-publishing'
-									  )
+										)
 							}
 						/>
 					)}
@@ -110,10 +110,10 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 								{this.unscheduleURL
 									? Liferay.Language.get(
 											'this-scheduled-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
-									  )
+										)
 									: Liferay.Language.get(
 											'this-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
-									  )}
+										)}
 							</span>
 
 							<a href={this.learnLink.url}>

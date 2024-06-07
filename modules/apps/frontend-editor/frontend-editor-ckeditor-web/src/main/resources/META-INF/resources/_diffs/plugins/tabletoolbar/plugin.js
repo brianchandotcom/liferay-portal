@@ -618,14 +618,14 @@
 						mergeDirection === 'up'
 							? startRow - rowspan
 							: mergeDirection === 'down'
-							? startRow + rowspan
-							: startRow
+								? startRow + rowspan
+								: startRow
 					][
 						mergeDirection === 'left'
 							? startColumn - colspan
 							: mergeDirection === 'right'
-							? startColumn + colspan
-							: startColumn
+								? startColumn + colspan
+								: startColumn
 					];
 			}
 			catch (er) {

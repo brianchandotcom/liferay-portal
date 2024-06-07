@@ -4,12 +4,8 @@
  */
 
 export default function itemSelectorValueToCategoryTreeNode(categoryTreeNode) {
-	const {
-		categoryTreeNodeId,
-		categoryTreeNodeType,
-		returnType,
-		title,
-	} = categoryTreeNode;
+	const {categoryTreeNodeId, categoryTreeNodeType, returnType, title} =
+		categoryTreeNode;
 
 	return {
 		categoryTreeNodeId,

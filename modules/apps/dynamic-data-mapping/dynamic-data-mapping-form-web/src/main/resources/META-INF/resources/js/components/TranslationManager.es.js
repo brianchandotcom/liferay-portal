@@ -34,9 +34,8 @@ export function TranslationManager() {
 		let handles = [];
 
 		const getComponent = async () => {
-			const translationManager = await Liferay.componentReady(
-				'translationManager'
-			);
+			const translationManager =
+				await Liferay.componentReady('translationManager');
 
 			handles = [
 				translationManager.on('editingLocale', ({newValue}) => {

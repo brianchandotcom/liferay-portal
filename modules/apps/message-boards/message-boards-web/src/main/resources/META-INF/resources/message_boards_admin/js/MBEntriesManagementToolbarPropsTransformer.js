@@ -26,10 +26,10 @@ export default function propsTransformer({
 		const message = trashEnabled
 			? Liferay.Language.get(
 					'are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin'
-			  )
+				)
 			: Liferay.Language.get(
 					'are-you-sure-you-want-to-delete-the-selected-entries'
-			  );
+				);
 
 		if (trashEnabled) {
 			postForm(form, {

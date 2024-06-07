@@ -17,7 +17,8 @@ AUI.add(
 			return Lang.toInt(value, 10, 0);
 		};
 
-		const REGEX_UNFILLED_PARAMETER = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
+		const REGEX_UNFILLED_PARAMETER =
+			/\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
 
 		const STR_DASH = '-';
 
@@ -175,16 +176,13 @@ AUI.add(
 				const oldCalendarId = schedulerEvent.get('calendarId');
 
 				if (scheduler) {
-					const calendarContainer = scheduler.get(
-						'calendarContainer'
-					);
+					const calendarContainer =
+						scheduler.get('calendarContainer');
 
-					const newCalendar = calendarContainer.getCalendar(
-						newCalendarId
-					);
-					const oldCalendar = calendarContainer.getCalendar(
-						oldCalendarId
-					);
+					const newCalendar =
+						calendarContainer.getCalendar(newCalendarId);
+					const oldCalendar =
+						calendarContainer.getCalendar(oldCalendarId);
 
 					if (oldCalendar !== newCalendar) {
 						oldCalendar.remove(schedulerEvent);

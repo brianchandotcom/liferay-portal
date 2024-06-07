@@ -105,10 +105,8 @@ const Content: React.FC<IContentProps> = ({
 							)}
 
 							{columns.map(({cellRenderer, id, value}, index) => {
-								const {
-									align = EColumnAlign.Left,
-									show = true,
-								} = headerColumns[index];
+								const {align = EColumnAlign.Left, show = true} =
+									headerColumns[index];
 
 								return (
 									show && (
@@ -124,7 +122,7 @@ const Content: React.FC<IContentProps> = ({
 											{cellRenderer
 												? cellRenderer(
 														formattedItems[rowId]
-												  )
+													)
 												: value}
 										</ClayTable.Cell>
 									)

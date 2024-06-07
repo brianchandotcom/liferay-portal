@@ -121,7 +121,7 @@ export function formatMappedProductForTable(mappedProducts, isAdmin) {
 					? 0
 					: getProductMinQuantity(
 							firstAvailableProduct.productConfiguration
-					  ),
+						),
 			selectable:
 				isAdmin || firstAvailableProduct.type !== 'sku'
 					? false
@@ -129,7 +129,7 @@ export function formatMappedProductForTable(mappedProducts, isAdmin) {
 							firstAvailableProduct.availability,
 							firstAvailableProduct.productConfiguration,
 							firstAvailableProduct.purchasable
-					  ),
+						),
 		};
 	});
 }

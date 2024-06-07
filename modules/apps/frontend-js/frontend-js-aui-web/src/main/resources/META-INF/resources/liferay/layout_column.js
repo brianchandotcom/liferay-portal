@@ -129,9 +129,8 @@ AUI.add(
 
 							if (lastActiveDrop) {
 								const activeDropNode = activeDrop.get('node');
-								const lastActiveDropNode = lastActiveDrop.get(
-									'node'
-								);
+								const lastActiveDropNode =
+									lastActiveDrop.get('node');
 
 								const isStatic = activeDropNode.isStatic;
 								const quadrant = portalLayout.quadrant;
@@ -143,10 +142,11 @@ AUI.add(
 										? 'nextSibling'
 										: 'previousSibling';
 
-									const siblingPortlet = Layout.findSiblingPortlet(
-										activeDropNode,
-										siblingPos
-									);
+									const siblingPortlet =
+										Layout.findSiblingPortlet(
+											activeDropNode,
+											siblingPos
+										);
 									const staticSibling =
 										siblingPortlet &&
 										siblingPortlet.isStatic === isStatic;
@@ -163,9 +163,8 @@ AUI.add(
 								const overColumn = !activeDropNode.drop;
 
 								if (!Layout.OVER_NESTED_PORTLET && overColumn) {
-									const activeDropNodeId = activeDropNode.get(
-										'id'
-									);
+									const activeDropNodeId =
+										activeDropNode.get('id');
 									const emptyColumn =
 										Layout.EMPTY_COLUMNS[activeDropNodeId];
 
@@ -174,9 +173,10 @@ AUI.add(
 											activeDropNode !==
 											lastActiveDropNode
 										) {
-											let referencePortlet = Layout.getLastPortletNode(
-												activeDropNode
-											);
+											let referencePortlet =
+												Layout.getLastPortletNode(
+													activeDropNode
+												);
 
 											if (
 												referencePortlet &&
@@ -184,26 +184,31 @@ AUI.add(
 											) {
 												const options = Layout.options;
 
-												const dropColumn = activeDropNode.one(
-													options.dropContainer
-												);
-												const foundReferencePortlet = Layout.findReferencePortlet(
-													dropColumn
-												);
+												const dropColumn =
+													activeDropNode.one(
+														options.dropContainer
+													);
+												const foundReferencePortlet =
+													Layout.findReferencePortlet(
+														dropColumn
+													);
 
 												if (foundReferencePortlet) {
-													referencePortlet = foundReferencePortlet;
+													referencePortlet =
+														foundReferencePortlet;
 												}
 											}
 
-											const drop = A.DD.DDM.getDrop(
-												referencePortlet
-											);
+											const drop =
+												A.DD.DDM.getDrop(
+													referencePortlet
+												);
 
 											if (drop) {
 												portalLayout.quadrant = 4;
 												portalLayout.activeDrop = drop;
-												portalLayout.lastAlignDrop = drop;
+												portalLayout.lastAlignDrop =
+													drop;
 											}
 
 											portalLayout._syncPlaceholderUI();

@@ -12,9 +12,8 @@ try {
 	).basics.businessInformation.firstName;
 
 	if (firstName) {
-		document.getElementById(
-			'quote-comparison-user-first-name'
-		).innerHTML = firstName;
+		document.getElementById('quote-comparison-user-first-name').innerHTML =
+			firstName;
 	}
 }
 catch (error) {

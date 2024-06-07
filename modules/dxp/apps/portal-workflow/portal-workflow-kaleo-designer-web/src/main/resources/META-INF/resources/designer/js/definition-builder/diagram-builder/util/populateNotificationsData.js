@@ -108,20 +108,19 @@ const populateNotificationsData = (
 					) {
 						const sectionsData = [];
 
-						let filterTypeRetrieveUsersBy = Object.keys(
-							recipient
-						)[1];
-						const keywordRetrieveUsersBy = Object.values(
-							recipient
-						)[1];
+						let filterTypeRetrieveUsersBy =
+							Object.keys(recipient)[1];
+						const keywordRetrieveUsersBy =
+							Object.values(recipient)[1];
 
 						if (filterTypeRetrieveUsersBy === 'screenName') {
 							filterTypeRetrieveUsersBy = 'alternateName';
 						}
 						else if (filterTypeRetrieveUsersBy === 'userId') {
-							filterTypeRetrieveUsersBy = filterTypeRetrieveUsersBy
-								.toLocaleLowerCase()
-								.replace('user', '');
+							filterTypeRetrieveUsersBy =
+								filterTypeRetrieveUsersBy
+									.toLocaleLowerCase()
+									.replace('user', '');
 						}
 
 						retrieveUsersBy(
@@ -252,20 +251,19 @@ const populateNotificationsData = (
 							recipient.screenName ||
 							recipient.userId)
 					) {
-						let filterTypeRetrieveUsersBy = Object.keys(
-							recipient
-						)[1];
-						const keywordRetrieveUsersBy = Object.values(
-							recipient
-						)[1];
+						let filterTypeRetrieveUsersBy =
+							Object.keys(recipient)[1];
+						const keywordRetrieveUsersBy =
+							Object.values(recipient)[1];
 
 						if (filterTypeRetrieveUsersBy === 'screenName') {
 							filterTypeRetrieveUsersBy = 'alternateName';
 						}
 						else if (filterTypeRetrieveUsersBy === 'userId') {
-							filterTypeRetrieveUsersBy = filterTypeRetrieveUsersBy
-								.toLocaleLowerCase()
-								.replace('user', '');
+							filterTypeRetrieveUsersBy =
+								filterTypeRetrieveUsersBy
+									.toLocaleLowerCase()
+									.replace('user', '');
 						}
 
 						retrieveUsersBy(

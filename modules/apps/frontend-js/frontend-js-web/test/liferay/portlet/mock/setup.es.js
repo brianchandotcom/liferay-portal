@@ -50,8 +50,7 @@ const portlet = {
 					encodedResourceURL:
 						'http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fv3.0-parameter-tests%3Fp_p_id%3DParamTestPortlet_WAR_PortletHubDemo%26p_p_lifecycle%3D2',
 					pubParms: {
-						color:
-							'p_r_p_rp_http://www.apache.org/portals/pluto/ResourcePortlet_color',
+						color: 'p_r_p_rp_http://www.apache.org/portals/pluto/ResourcePortlet_color',
 						imgName:
 							'p_r_p_rp_http://www.apache.org/portals/pluto/ResourcePortlet_imgName',
 					},

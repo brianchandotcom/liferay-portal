@@ -59,7 +59,8 @@ export function getFieldsGroupedByTypes(fields) {
 
 export async function addObjectFields(dispatch) {
 	const settingsDDMForm = await Liferay.componentReady('formSettingsAPI');
-	const objectDefinitionId = settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
+	const objectDefinitionId =
+		settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
 
 	if (objectDefinitionId) {
 		const {objectFields} = await fetchObjectFields(objectDefinitionId);
@@ -73,7 +74,8 @@ export async function addObjectFields(dispatch) {
 
 export async function updateObjectFields(dispatch) {
 	const settingsDDMForm = await Liferay.componentReady('formSettingsAPI');
-	const objectDefinitionId = settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
+	const objectDefinitionId =
+		settingsDDMForm.reactComponentRef.current.getObjectDefinitionId();
 
 	if (objectDefinitionId) {
 		const {objectFields} = await fetchObjectFields(objectDefinitionId);
@@ -104,9 +106,9 @@ export function getSelectedValue(value) {
 export function getObjectFieldName({settingsContext}) {
 	const getAdvancedColumn = ({title}) =>
 		title === Liferay.Language.get('advanced');
-	const fieldsFromAdvancedColumn = settingsContext.pages.find(
-		getAdvancedColumn
-	)?.rows[0].columns[0].fields;
+	const fieldsFromAdvancedColumn =
+		settingsContext.pages.find(getAdvancedColumn)?.rows[0].columns[0]
+			.fields;
 
 	if (settingsContext.type === 'fieldset' || !fieldsFromAdvancedColumn) {
 		return;

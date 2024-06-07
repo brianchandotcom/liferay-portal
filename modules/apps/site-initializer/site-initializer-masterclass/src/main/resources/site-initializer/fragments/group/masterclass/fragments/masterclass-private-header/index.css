@@ -33,7 +33,6 @@
 	margin-bottom: 4px;
 }
 
-
 @media (max-width: 992px) {
 	.masterclass-private-header.open .dropdown-item {
 		color: initial;
@@ -41,7 +40,6 @@
 		font-weight: var(--font-weight-bold);
 		padding: var(--spacer-2) 0;
 	}
-
 }
 
 @media (max-width: 575px) {

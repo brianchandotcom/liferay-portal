@@ -12,9 +12,8 @@ export default function ({
 	limitationType,
 	namespace,
 }) {
-	const CommerceDiscountResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommerceDiscountResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	Liferay.provide(window, `${namespace}apiSubmit`, () => {
 		const discountData = {

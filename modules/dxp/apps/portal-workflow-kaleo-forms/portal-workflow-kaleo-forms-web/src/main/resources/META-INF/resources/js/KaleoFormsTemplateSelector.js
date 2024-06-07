@@ -33,17 +33,14 @@ export default function ({
 			onSelect: (selectedItem) => {
 				const data = {};
 
-				data[
-					portletNamespace + 'kaleoProcessLinkDDMStructureId'
-				] = classPK;
+				data[portletNamespace + 'kaleoProcessLinkDDMStructureId'] =
+					classPK;
 				data[portletNamespace + 'kaleoProcessLinkDDMTemplateId'] =
 					selectedItem.ddmtemplateid;
-				data[
-					portletNamespace + 'kaleoProcessLinkWorkflowDefinition'
-				] = workflowDefinition;
-				data[
-					portletNamespace + 'kaleoProcessLinkWorkflowTaskName'
-				] = workflowTaskName;
+				data[portletNamespace + 'kaleoProcessLinkWorkflowDefinition'] =
+					workflowDefinition;
+				data[portletNamespace + 'kaleoProcessLinkWorkflowTaskName'] =
+					workflowTaskName;
 
 				fetch(saveInPortletSessionURL, {
 					body: objectToFormData(data),

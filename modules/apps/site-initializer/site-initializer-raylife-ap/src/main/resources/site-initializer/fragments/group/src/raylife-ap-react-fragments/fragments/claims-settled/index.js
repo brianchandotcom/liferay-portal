@@ -120,9 +120,11 @@ export default function () {
 			const handleBuildLegend = (arrayOfexpiringPolicies) => {
 				productQuotesResult?.value?.data?.items?.map(
 					(productQuote, index) => {
-						const countActiveClaims = arrayOfexpiringPolicies?.filter(
-							(policy) => productQuote.name === policy.productName
-						).length;
+						const countActiveClaims =
+							arrayOfexpiringPolicies?.filter(
+								(policy) =>
+									productQuote.name === policy.productName
+							).length;
 
 						const shortDescription = productQuote.shortDescription;
 						const fullName = productQuote.name;
@@ -294,6 +296,7 @@ export default function () {
 
 			setLoadData(true);
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedFilterDate]);
 

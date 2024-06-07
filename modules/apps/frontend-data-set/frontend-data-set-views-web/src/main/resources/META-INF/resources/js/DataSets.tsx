@@ -110,13 +110,10 @@ const NewDataSetModalContent = ({
 		noEnpointsRESTApplicationValidationError,
 		setNoEnpointsRESTApplicationValidationError,
 	] = useState(false);
-	const [restSchemaValidationError, setRESTSchemaValidationError] = useState(
-		false
-	);
-	const [
-		restEndpointValidationError,
-		setRESTEndpointValidationError,
-	] = useState(false);
+	const [restSchemaValidationError, setRESTSchemaValidationError] =
+		useState(false);
+	const [restEndpointValidationError, setRESTEndpointValidationError] =
+		useState(false);
 	const [restSchemaEndpoints, setRESTSchemaEndpoints] = useState<
 		Map<string, Array<string>>
 	>(new Map());

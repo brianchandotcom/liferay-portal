@@ -14,18 +14,19 @@ import CommentForm from '../../../../../../src/main/resources/META-INF/resources
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/Editor',
-	() => ({autoFocus, id, initialValue, label, onChange, placeholder}) => {
-		return (
-			<textarea
-				aria-label={label}
-				autoFocus={autoFocus}
-				defaultValue={initialValue}
-				id={id}
-				onChange={onChange}
-				placeholder={placeholder}
-			></textarea>
-		);
-	}
+	() =>
+		({autoFocus, id, initialValue, label, onChange, placeholder}) => {
+			return (
+				<textarea
+					aria-label={label}
+					autoFocus={autoFocus}
+					defaultValue={initialValue}
+					id={id}
+					onChange={onChange}
+					placeholder={placeholder}
+				></textarea>
+			);
+		}
 );
 
 const renderForm = (props) =>

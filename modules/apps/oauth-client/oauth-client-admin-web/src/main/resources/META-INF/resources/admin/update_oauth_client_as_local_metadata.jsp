@@ -97,9 +97,8 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 			return;
 		}
 
-		document.getElementById(
-			'<portlet:namespace />metadataJSON'
-		).value = metadataJSON;
+		document.getElementById('<portlet:namespace />metadataJSON').value =
+			metadataJSON;
 
 		submitForm(form);
 	}

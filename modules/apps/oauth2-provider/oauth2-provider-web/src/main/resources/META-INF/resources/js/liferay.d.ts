@@ -10,9 +10,7 @@ declare module Liferay {
 		function getAuthorizeURL(): string;
 		function getBuiltInRedirectURL(): string;
 		function getTokenURL(): string;
-		function getUserAgentApplication(
-			externalReferenceCode: string
-		): {
+		function getUserAgentApplication(externalReferenceCode: string): {
 			clientId: string;
 			homePageURL: string;
 			redirectURIs: Array<string>;

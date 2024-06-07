@@ -51,10 +51,9 @@ export default function ({
 						data: {
 							className: assetClassName,
 							displayValue: response.displayValue,
-							label:
-								fieldNameSelector.options[
-									fieldNameSelector.selectedIndex
-								].label,
+							label: fieldNameSelector.options[
+								fieldNameSelector.selectedIndex
+							].label,
 							name: fieldNameSelector.value,
 							value: response.value,
 						},

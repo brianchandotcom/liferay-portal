@@ -30,10 +30,10 @@ function PerformanceByAssigneePage({query, routeParams}) {
 		selectedFilters,
 	} = useFilter({filterKeys});
 
-	const timeRange = useMemo(() => getTimeRangeParams(dateStart, dateEnd), [
-		dateEnd,
-		dateStart,
-	]);
+	const timeRange = useMemo(
+		() => getTimeRangeParams(dateStart, dateEnd),
+		[dateEnd, dateStart]
+	);
 
 	const {data, postData} = usePost({
 		body: {

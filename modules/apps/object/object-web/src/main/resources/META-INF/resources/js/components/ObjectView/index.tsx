@@ -67,13 +67,15 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				`/o/object-admin/v1.0/object-views/${objectViewId}`
 			);
 
-			const objectFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectFields =
+				await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+					objectDefinitionExternalReferenceCode
+				);
 
-			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectDefinition =
+				await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
 
 			const objectView = {
 				defaultObjectView,
@@ -147,9 +149,8 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	};
 
 	const handleSaveObjectView = async () => {
-		const newObjectView = removeUnnecessaryPropertiesFromObjectView(
-			objectView
-		);
+		const newObjectView =
+			removeUnnecessaryPropertiesFromObjectView(objectView);
 
 		const {objectViewColumns} = newObjectView;
 

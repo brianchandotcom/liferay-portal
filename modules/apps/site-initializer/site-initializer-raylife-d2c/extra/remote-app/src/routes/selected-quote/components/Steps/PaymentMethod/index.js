@@ -152,6 +152,7 @@ const PaymentMethod = () => {
 		if (orderId) {
 			setPaymentMethods();
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderId]);
 
@@ -237,7 +238,8 @@ const PaymentMethod = () => {
 												className={classNames(
 													'align-items-center billing-options c-mb-3 c-mr-3 c-px-5 c-py-3 d-flex flex-column justify-content-center rounded-sm',
 													{
-														'border': !option.checked,
+														'border':
+															!option.checked,
 														'selected shadow-lg type-payment-card-solid':
 															option.checked,
 													}
@@ -258,7 +260,8 @@ const PaymentMethod = () => {
 															{
 																'font-weight-bold text-accent-5 text-paragraph-xs':
 																	option.checked,
-																'text-paragraph-xs': !option.checked,
+																'text-paragraph-xs':
+																	!option.checked,
 															}
 														)}
 													>

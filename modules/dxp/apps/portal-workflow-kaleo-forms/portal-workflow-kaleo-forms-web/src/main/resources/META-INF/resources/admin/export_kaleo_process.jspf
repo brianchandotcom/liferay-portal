@@ -43,8 +43,7 @@
 						footer: [
 							{
 								cssClass: 'btn-primary',
-								label:
-									'<%= UnicodeLanguageUtil.get(request, "ok") %>',
+								label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
 								on: {
 									click: () => {
 										submitForm(form, url, false);
@@ -55,8 +54,7 @@
 								primary: true,
 							},
 							{
-								label:
-									'<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+								label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
 								on: {
 									click: () => {
 										dialog.hide();

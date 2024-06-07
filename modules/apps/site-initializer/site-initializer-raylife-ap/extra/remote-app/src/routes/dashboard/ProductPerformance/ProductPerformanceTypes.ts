@@ -28,7 +28,7 @@ export type MonthTypes = [
 		label: string[];
 		period: number;
 		periodDate: string;
-	}
+	},
 ];
 
 export type MonthListType = {
@@ -44,7 +44,7 @@ export type MonthPropertiesTypes = [
 		label: string[];
 		period: number;
 		periodDate: string;
-	}
+	},
 ];
 
 export type FilterMonthType = {

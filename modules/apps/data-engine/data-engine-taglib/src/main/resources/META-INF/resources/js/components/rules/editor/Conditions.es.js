@@ -115,8 +115,8 @@ function FieldOperator({
 							right?.type === 'field'
 								? 'field'
 								: right?.type
-								? 'value'
-								: '',
+									? 'value'
+									: '',
 						]}
 					/>
 				</Timeline.FormGroupItem>
@@ -244,8 +244,8 @@ function FieldRight({fields, left, right, roles, ...otherProps}) {
 					left.type === 'user'
 						? 'select'
 						: RIGHT_OPERAND_TYPES[left.field.type] ??
-						  RIGHT_OPERAND_TYPES[right.type] ??
-						  left.field.type
+							RIGHT_OPERAND_TYPES[right.type] ??
+							left.field.type
 				}
 			/>
 		</Timeline.FormGroupItem>
@@ -276,6 +276,7 @@ export function Conditions({
 				conditions.map((condition) => condition.operator)
 			);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -394,8 +395,7 @@ export function Conditions({
 											loc: index,
 											value: event.value,
 										},
-										type:
-											ACTIONS_TYPES.CHANGE_IDENTIFIER_RIGHT,
+										type: ACTIONS_TYPES.CHANGE_IDENTIFIER_RIGHT,
 									})
 								}
 								right={right}
@@ -439,8 +439,7 @@ export function Conditions({
 															payload: {
 																loc: index,
 															},
-															type:
-																ACTIONS_TYPES.DELETE_CONDITION,
+															type: ACTIONS_TYPES.DELETE_CONDITION,
 														});
 														operatorValues.splice(
 															index,

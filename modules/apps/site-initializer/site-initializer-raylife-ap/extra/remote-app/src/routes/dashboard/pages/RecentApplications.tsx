@@ -185,6 +185,7 @@ const RecentApplications = () => {
 			);
 			setApplications(applicationsList);
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

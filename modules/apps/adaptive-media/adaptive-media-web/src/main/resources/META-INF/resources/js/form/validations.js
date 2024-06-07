@@ -8,7 +8,7 @@ const alphanumeric = (value) =>
 		? undefined
 		: Liferay.Language.get(
 				'please-enter-only-alphanumeric-characters-dashes-or-underscores'
-		  );
+			);
 
 const required = (value) => {
 	if (!value) {

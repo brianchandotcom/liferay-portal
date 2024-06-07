@@ -51,7 +51,7 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 								.height - 6,
 						width: previewWrapperRef.current.getBoundingClientRect()
 							.width,
-				  }
+					}
 				: activeSize.screenSize
 		);
 	}, [activeSize.id, activeSize.screenSize, open]);

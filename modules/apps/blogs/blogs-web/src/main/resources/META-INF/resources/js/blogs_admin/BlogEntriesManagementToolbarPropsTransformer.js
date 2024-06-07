@@ -38,9 +38,8 @@ export default function propsTransformer({
 								form,
 								`${portletNamespace}allRowIds`
 							),
-							selectAll: searchContainer.select?.get(
-								'bulkSelection'
-							),
+							selectAll:
+								searchContainer.select?.get('bulkSelection'),
 						},
 						url: deleteEntriesURL,
 					});

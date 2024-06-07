@@ -314,7 +314,7 @@ function AddResultModal({
 					Liferay.Language.get('x-item-selected'),
 					Liferay.Language.get('x-items-selected'),
 					selectedIds.length
-			  )
+				)
 			: Liferay.Language.get('select-items');
 
 		const checked =

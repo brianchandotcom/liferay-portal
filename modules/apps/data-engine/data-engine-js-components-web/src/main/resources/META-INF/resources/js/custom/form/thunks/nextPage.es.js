@@ -77,10 +77,10 @@ export default function nextPage({
 					? evaluatedPages.findIndex(
 							({enabled}, index) =>
 								enabled && index === currentPage
-					  )
+						)
 					: evaluatedPages.findIndex(
 							({enabled}, index) => enabled && index > activePage
-					  );
+						);
 
 				const activePageUpdated = Math.min(
 					nextActivePageIndex,

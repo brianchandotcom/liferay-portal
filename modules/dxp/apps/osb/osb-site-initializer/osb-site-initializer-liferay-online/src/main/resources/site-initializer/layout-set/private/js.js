@@ -96,8 +96,8 @@ function openItem(
 						id: 'selectStarterkit',
 					});
 
-					var siteDomain = document.getElementById('siteDomain')
-						.value;
+					var siteDomain =
+						document.getElementById('siteDomain').value;
 					var siteName = document.getElementById('siteName').value;
 
 					createOrder(

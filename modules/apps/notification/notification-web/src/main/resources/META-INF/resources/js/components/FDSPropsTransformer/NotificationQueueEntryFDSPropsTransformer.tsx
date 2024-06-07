@@ -10,8 +10,10 @@ export default function propsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {
-			notificationQueueEntryStatusDataRenderer: NotificationQueueEntryStatusDataRenderer,
-			notificationQueueEntryToDataRenderer: NotificationQueueEntryToDataRenderer,
+			notificationQueueEntryStatusDataRenderer:
+				NotificationQueueEntryStatusDataRenderer,
+			notificationQueueEntryToDataRenderer:
+				NotificationQueueEntryToDataRenderer,
 		},
 	};
 }

@@ -34,10 +34,8 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 	const setItems = useSetItems();
 	const setSelectedMenuItemId = useSetSelectedMenuItemId();
 	const setSidebarPanelId = useSetSidebarPanelId();
-	const {
-		editSiteNavigationMenuItemParentURL,
-		portletNamespace,
-	} = useConstants();
+	const {editSiteNavigationMenuItemParentURL, portletNamespace} =
+		useConstants();
 
 	const items = useItems();
 	const {
@@ -96,16 +94,15 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 	const setKeyboardDragLayer = useSetDragLayer();
 	const {handlerRef, isDragging} = useDragItem(item, updateMenuItemParent);
 
-	const {isOver, isOverFirstItem, nestingLevel, targetRef} = useDropTarget(
-		item
-	);
+	const {isOver, isOverFirstItem, nestingLevel, targetRef} =
+		useDropTarget(item);
 
 	const isKeyboardDragging = useMemo(
 		() =>
 			keyboardDragLayer?.siteNavigationMenuItemId
 				? getItemPath(siteNavigationMenuItemId, items).includes(
 						keyboardDragLayer.siteNavigationMenuItemId
-				  )
+					)
 				: false,
 		[
 			items,
@@ -123,14 +120,8 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 	const parentItemId =
 		itemPath.length > 1 ? itemPath[itemPath.length - 2] : '0';
 
-	const {
-		element,
-		isTarget,
-		onBlur,
-		onFocus,
-		onKeyDown,
-		setElement,
-	} = useKeyboardNavigation();
+	const {element, isTarget, onBlur, onFocus, onKeyDown, setElement} =
+		useKeyboardNavigation();
 
 	const onDragHandlerKeyDown = (event) => {
 		if (event.key === 'Enter') {
@@ -247,15 +238,15 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 									'open-x-configuration-panel'
 								),
 								`${title} (${type})`
-						  )}. ${Liferay.Language.get(
+							)}. ${Liferay.Language.get(
 								'this-item-does-not-have-a-display-page'
-						  )}`
+							)}`
 						: sub(
 								Liferay.Language.get(
 									'open-x-configuration-panel'
 								),
 								`${title} (${type})`
-						  )
+							)
 				}
 				aria-level={itemPath.length}
 				className={classNames(

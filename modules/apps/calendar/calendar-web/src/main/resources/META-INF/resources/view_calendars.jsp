@@ -153,13 +153,15 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 										}
 										catch (e) {}
 
-										const portletErrorMessage = document.getElementById(
-											'<portlet:namespace />portletErrorMessage'
-										);
+										const portletErrorMessage =
+											document.getElementById(
+												'<portlet:namespace />portletErrorMessage'
+											);
 
-										const portletSuccessMessage = document.getElementById(
-											'<portlet:namespace />portletSuccessMessage'
-										);
+										const portletSuccessMessage =
+											document.getElementById(
+												'<portlet:namespace />portletSuccessMessage'
+											);
 
 										const error =
 											responseData && responseData.error;
@@ -216,9 +218,10 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 								const portletErrorMessage = document.getElementById(
 									'<portlet:namespace />portletErrorMessage'
 								);
-								const portletSuccessMessage = document.getElementById(
-									'<portlet:namespace />portletSuccessMessage'
-								);
+								const portletSuccessMessage =
+									document.getElementById(
+										'<portlet:namespace />portletSuccessMessage'
+									);
 
 								hideMessage(portletErrorMessage);
 

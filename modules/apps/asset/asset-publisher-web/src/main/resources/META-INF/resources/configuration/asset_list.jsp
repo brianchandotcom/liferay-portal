@@ -90,8 +90,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 				selectEventName:
 					'<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
 				title: '<liferay-ui:message key="select-collection" />',
-				url:
-					'<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>',
+				url: '<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>',
 			});
 		});
 	}

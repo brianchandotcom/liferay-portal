@@ -10,4 +10,4 @@ export const LAYOUT_TYPES = {
 	pageTemplate: '0',
 } as const;
 
-export type LayoutType = typeof LAYOUT_TYPES[keyof typeof LAYOUT_TYPES];
+export type LayoutType = (typeof LAYOUT_TYPES)[keyof typeof LAYOUT_TYPES];

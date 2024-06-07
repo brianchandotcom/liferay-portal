@@ -9,6 +9,7 @@ import React, {useEffect, useMemo, useRef} from 'react';
 import FieldBase from '../FieldBase/ReactFieldBase.es';
 
 const Captcha = ({html, name, ...otherProps}) => {
+
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const contentMemoized = useMemo(() => html, []);
 	const elRef = useRef(null);

@@ -33,7 +33,7 @@ const DIRECTIONS = {
 	up: 'up',
 } as const;
 
-type Direction = typeof DIRECTIONS[keyof typeof DIRECTIONS];
+type Direction = (typeof DIRECTIONS)[keyof typeof DIRECTIONS];
 
 type Contributor = {
 	criteriaMap: Criteria;

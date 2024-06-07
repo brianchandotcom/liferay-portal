@@ -100,9 +100,8 @@ const seeAllResultsLink = fragmentElement.querySelector(
 	'.search-suggestions-see-all-results-text'
 );
 
-const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
-	'a'
-);
+const searchSuggestionItem =
+	searchSuggestionItemTemplate.content.querySelector('a');
 
 function updateSearch() {
 	searchSuggestions.innerHTML = '';
@@ -197,15 +196,14 @@ function performSearch(query) {
 							suggestion.attributes.assetSearchSummary;
 
 						if (suggestionContentTextValue) {
-							suggestionContentTextValue = suggestionContentTextValue.substring(
-								0,
-								500
-							);
+							suggestionContentTextValue =
+								suggestionContentTextValue.substring(0, 500);
 
-							suggestionContent.innerHTML = suggestionContentTextValue.replace(
-								searchTermRegExp,
-								`<b>$1</b>`
-							);
+							suggestionContent.innerHTML =
+								suggestionContentTextValue.replace(
+									searchTermRegExp,
+									`<b>$1</b>`
+								);
 						}
 
 						const suggestionURL = suggestionLink.querySelector(

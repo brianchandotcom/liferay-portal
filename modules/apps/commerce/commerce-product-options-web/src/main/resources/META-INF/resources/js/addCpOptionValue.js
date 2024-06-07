@@ -120,9 +120,8 @@ export default function ({
 			optionValueSelectDateObj.setTimezone(timeZoneInput.value);
 			optionValueSelectDateObj.setDuration(durationInput.value);
 			optionValueSelectDateObj.setDurationType(durationTypeInput.value);
-			labelInput.value = optionValueSelectDateObj.getLabel(
-				bcp47LanguageId
-			);
+			labelInput.value =
+				optionValueSelectDateObj.getLabel(bcp47LanguageId);
 		};
 
 		dateInput.addEventListener('focus', debounce(handleOnLabelInput, 200));

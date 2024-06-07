@@ -185,9 +185,8 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 		);
 
 		Liferay.Util.setFormValues(document.<portlet:namespace />fm, {
-			'ldap--<%= LDAPConstants.AUTH_SERVER_PRIORITY %>--': ldapServerIds.join(
-				','
-			),
+			'ldap--<%= LDAPConstants.AUTH_SERVER_PRIORITY %>--':
+				ldapServerIds.join(','),
 		});
 	}
 

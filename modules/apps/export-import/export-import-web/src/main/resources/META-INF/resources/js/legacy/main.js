@@ -68,9 +68,8 @@ AUI.add(
 						form.delegate(
 							STR_CLICK,
 							(event) => {
-								const portletId = event.currentTarget.attr(
-									'data-portletid'
-								);
+								const portletId =
+									event.currentTarget.attr('data-portletid');
 
 								if (!configurationNode) {
 									configurationNode = instance.byId(
@@ -110,9 +109,8 @@ AUI.add(
 						form.delegate(
 							STR_CLICK,
 							(event) => {
-								const portletId = event.currentTarget.attr(
-									'data-portletid'
-								);
+								const portletId =
+									event.currentTarget.attr('data-portletid');
 
 								const contentNode = instance.byId(
 									'content_' + portletId
@@ -157,9 +155,12 @@ AUI.add(
 									if (portletConfigurationNode.checked) {
 										const id = portletConfigurationNode.id;
 
-										const controlCheckboxes = document.querySelectorAll(
-											'[data-root-control-id=' + id + ']'
-										);
+										const controlCheckboxes =
+											document.querySelectorAll(
+												'[data-root-control-id=' +
+													id +
+													']'
+											);
 
 										if (!controlCheckboxes.length) {
 											return;
@@ -199,9 +200,10 @@ AUI.add(
 								if (portletDataNode.checked) {
 									const id = portletDataNode.id;
 
-									const controlCheckboxes = document.querySelectorAll(
-										'[data-root-control-id=' + id + ']'
-									);
+									const controlCheckboxes =
+										document.querySelectorAll(
+											'[data-root-control-id=' + id + ']'
+										);
 
 									if (!controlCheckboxes.length) {
 										return;
@@ -253,9 +255,8 @@ AUI.add(
 						});
 					}
 
-					const contentOptionsLink = instance.byId(
-						'contentOptionsLink'
-					);
+					const contentOptionsLink =
+						instance.byId('contentOptionsLink');
 
 					const downContentOptionsArrow = instance.byId(
 						'downContentOptionsArrow'
@@ -266,9 +267,8 @@ AUI.add(
 					);
 
 					if (contentOptionsLink) {
-						const contentOptionsNode = instance.byId(
-							'contentOptions'
-						);
+						const contentOptionsNode =
+							instance.byId('contentOptions');
 
 						contentOptionsLink.on(STR_CLICK, () => {
 							downContentOptionsArrow.toggle('hide');
@@ -300,7 +300,8 @@ AUI.add(
 
 					if (globalConfigurationLink) {
 						globalConfigurationLink.on(STR_CLICK, () => {
-							const globalConfigurationDialog = instance._getGlobalConfigurationDialog();
+							const globalConfigurationDialog =
+								instance._getGlobalConfigurationDialog();
 
 							globalConfigurationDialog.show();
 						});
@@ -322,7 +323,8 @@ AUI.add(
 
 					if (scheduledPublishingEventsLink) {
 						scheduledPublishingEventsLink.on(STR_CLICK, () => {
-							const scheduledPublishingEventsDialog = instance._getScheduledPublishingEventsDialog();
+							const scheduledPublishingEventsDialog =
+								instance._getScheduledPublishingEventsDialog();
 
 							scheduledPublishingEventsDialog.show();
 						});
@@ -354,8 +356,8 @@ AUI.add(
 
 						globalConfigurationNode.show();
 
-						globalConfigurationDialog = Liferay.Util.Window.getWindow(
-							{
+						globalConfigurationDialog =
+							Liferay.Util.Window.getWindow({
 								dialog: {
 									bodyContent: globalConfigurationNode,
 									centered: true,
@@ -398,10 +400,10 @@ AUI.add(
 								title: Liferay.Language.get(
 									'application-configuration'
 								),
-							}
-						);
+							});
 
-						instance._globalConfigurationDialog = globalConfigurationDialog;
+						instance._globalConfigurationDialog =
+							globalConfigurationDialog;
 					}
 
 					return globalConfigurationDialog;
@@ -442,8 +444,8 @@ AUI.add(
 
 						scheduledPublishingEventsNode.show();
 
-						scheduledPublishingEventsDialog = Liferay.Util.Window.getWindow(
-							{
+						scheduledPublishingEventsDialog =
+							Liferay.Util.Window.getWindow({
 								dialog: {
 									bodyContent: scheduledPublishingEventsNode,
 									centered: true,
@@ -469,10 +471,10 @@ AUI.add(
 									width: 400,
 								},
 								title: Liferay.Language.get('scheduled-events'),
-							}
-						);
+							});
 
-						instance._scheduledPublishingEventsDialog = scheduledPublishingEventsDialog;
+						instance._scheduledPublishingEventsDialog =
+							scheduledPublishingEventsDialog;
 					}
 
 					return scheduledPublishingEventsDialog;
@@ -684,18 +686,18 @@ AUI.add(
 							params.liveGroupId = liveGroupIdNode.val();
 						}
 
-						const privateLayoutNode = instance.byId(
-							'privateLayout'
-						);
+						const privateLayoutNode =
+							instance.byId('privateLayout');
 
 						if (privateLayoutNode) {
 							params.privateLayout = privateLayoutNode.val();
 						}
 
-						const portletURL = Liferay.Util.PortletURL.createPortletURL(
-							redirectNode.val(),
-							params
-						);
+						const portletURL =
+							Liferay.Util.PortletURL.createPortletURL(
+								redirectNode.val(),
+								params
+							);
 
 						redirectNode.val(portletURL.toString());
 					}
@@ -703,9 +705,10 @@ AUI.add(
 					if (cmdNode) {
 						const form = instance.get('form');
 
-						const renderURL = Liferay.Util.PortletURL.createRenderURL(
-							form.get('action')
-						);
+						const renderURL =
+							Liferay.Util.PortletURL.createRenderURL(
+								form.get('action')
+							);
 
 						instance._setDisabledCheckboxParameters(renderURL);
 
@@ -960,9 +963,10 @@ AUI.add(
 							if (portletDataNode.type === 'checkbox') {
 								const id = portletDataNode.id;
 
-								const controlCheckboxes = document.querySelectorAll(
-									'[data-root-control-id=' + id + ']'
-								);
+								const controlCheckboxes =
+									document.querySelectorAll(
+										'[data-root-control-id=' + id + ']'
+									);
 
 								if (!controlCheckboxes.length) {
 									return;
@@ -1066,9 +1070,8 @@ AUI.add(
 					}
 
 					inputNodes.each((inputNode) => {
-						let hiddenList = inputNode.ancestorsByClassName(
-							STR_HIDE
-						);
+						let hiddenList =
+							inputNode.ancestorsByClassName(STR_HIDE);
 
 						const id = inputNode.get('id');
 

@@ -108,10 +108,10 @@ function Fragment({item, layoutData}) {
 	const ref = useRef(null);
 	const selectItem = useSelectItem();
 
-	const hasDropzoneChild = useMemo(() => hasDropZoneChild(item, layoutData), [
-		item,
-		layoutData,
-	]);
+	const hasDropzoneChild = useMemo(
+		() => hasDropZoneChild(item, layoutData),
+		[item, layoutData]
+	);
 
 	useEffect(() => {
 		const element = ref.current;

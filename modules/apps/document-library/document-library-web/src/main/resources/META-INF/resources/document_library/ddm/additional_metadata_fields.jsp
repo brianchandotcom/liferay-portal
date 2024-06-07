@@ -90,8 +90,7 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 			},
 			selectEventName: '<portlet:namespace />selectDDMStructure',
 			title: '<%= UnicodeLanguageUtil.get(request, "select-metadata-set") %>',
-			url:
-				'<%= dlFileEntryAdditionalMetadataSetsDisplayContext.getSelectDDMStructureURL() %>',
+			url: '<%= dlFileEntryAdditionalMetadataSetsDisplayContext.getSelectDDMStructureURL() %>',
 		});
 	}
 </aui:script>

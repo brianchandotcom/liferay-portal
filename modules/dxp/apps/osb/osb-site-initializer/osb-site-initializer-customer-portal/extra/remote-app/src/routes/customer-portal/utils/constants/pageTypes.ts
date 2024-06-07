@@ -5,12 +5,12 @@
 
 import {PRODUCT_TYPES} from './productTypes';
 
-const productsFormatted = Object.entries(
-	PRODUCT_TYPES
-).map(([productKey, productName]) => [
-	productKey,
-	productName.replace(' ', '_').toLowerCase(),
-]);
+const productsFormatted = Object.entries(PRODUCT_TYPES).map(
+	([productKey, productName]) => [
+		productKey,
+		productName.replace(' ', '_').toLowerCase(),
+	]
+);
 
 export const PAGE_TYPES = {
 	attachments: 'Attachments',

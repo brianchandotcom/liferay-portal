@@ -25,10 +25,12 @@ const DocumentLibraryWithProvider = (props) => (
 );
 
 describe('Field DocumentLibrary', () => {
+
 	// eslint-disable-next-line no-console
 	const originalWarn = console.warn;
 
 	beforeAll(() => {
+
 		// eslint-disable-next-line no-console
 		console.warn = (...args) => {
 			if (/DataProvider: Trying/.test(args[0])) {
@@ -43,6 +45,7 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	afterAll(() => {
+
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
 
@@ -89,9 +92,8 @@ describe('Field DocumentLibrary', () => {
 
 		expect(uploadFieldInput.disabled).toBeTruthy();
 
-		const uploadFieldInputSelectButton = document.querySelector(
-			'.select-button'
-		);
+		const uploadFieldInputSelectButton =
+			document.querySelector('.select-button');
 
 		expect(uploadFieldInputSelectButton.disabled).toBeTruthy();
 	});
@@ -119,9 +121,8 @@ describe('Field DocumentLibrary', () => {
 
 		expect(guestUploadFieldInput.disabled).toBeTruthy();
 
-		const guestUploadFieldInputLabel = document.querySelector(
-			'.select-button'
-		);
+		const guestUploadFieldInputLabel =
+			document.querySelector('.select-button');
 
 		expect(guestUploadFieldInputLabel.classList).toContain('disabled');
 	});
@@ -315,9 +316,8 @@ describe('Field DocumentLibrary', () => {
 
 		expect(guestUploadFieldInput.disabled).toBeTruthy();
 
-		const guestUploadFieldInputLabel = document.querySelector(
-			'.select-button'
-		);
+		const guestUploadFieldInputLabel =
+			document.querySelector('.select-button');
 
 		expect(guestUploadFieldInputLabel.classList).toContain('disabled');
 	});

@@ -21,9 +21,8 @@ function SearchableTypesModal({
 	onFrameworkConfigChange,
 	searchableTypes,
 }) {
-	const [modalSelectedTypes, setModalSelectedTypes] = useState(
-		initialSelectedTypes
-	);
+	const [modalSelectedTypes, setModalSelectedTypes] =
+		useState(initialSelectedTypes);
 
 	const searchableTypesClassNames = searchableTypes.map(
 		({className}) => className
@@ -133,9 +132,10 @@ function SearchableTypesModal({
 							<ClayTable.Body>
 								{searchableTypes.map(
 									({className, displayName}) => {
-										const isSelected = modalSelectedTypes.includes(
-											className
-										);
+										const isSelected =
+											modalSelectedTypes.includes(
+												className
+											);
 
 										return (
 											<ClayTable.Row

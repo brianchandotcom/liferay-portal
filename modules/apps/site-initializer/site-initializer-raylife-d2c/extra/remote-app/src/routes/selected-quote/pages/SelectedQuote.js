@@ -36,6 +36,7 @@ const SelectedQuote = () => {
 		if (sections) {
 			setHasError(sectionsHasError(sections));
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sections]);
 

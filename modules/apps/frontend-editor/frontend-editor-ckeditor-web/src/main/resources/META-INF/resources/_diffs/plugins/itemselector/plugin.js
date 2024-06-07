@@ -208,7 +208,7 @@
 
 					itemSrc = editor.config.attachmentURLPrefix
 						? editor.config.attachmentURLPrefix +
-						  encodeURIComponent(itemValue.title)
+							encodeURIComponent(itemValue.title)
 						: itemValue.url;
 				}
 				catch (error) {}
@@ -260,8 +260,8 @@
 							`${editor.id}_contents`
 						);
 
-						const editorContentHeight = editorContent.getBoundingClientRect()
-							.height;
+						const editorContentHeight =
+							editorContent.getBoundingClientRect().height;
 
 						const imgElement = new Image();
 

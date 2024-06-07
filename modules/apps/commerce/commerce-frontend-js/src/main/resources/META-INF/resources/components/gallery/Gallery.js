@@ -59,7 +59,7 @@ export default class Gallery extends React.Component {
 				this.state.images.length > 1
 					? this.state.images.findIndex(
 							({URL}) => URL === selectedImage[0].url
-					  )
+						)
 					: 0;
 
 			const selected = selectedImageIndex >= 0 ? selectedImageIndex : 0;

@@ -96,8 +96,7 @@ export default function AssetDisplayPagePreview({
 										onSelect(selectedItem) {
 											setSelectedSite({
 												groupId: selectedItem.groupid,
-												name:
-													selectedItem.groupdescriptivename,
+												name: selectedItem.groupdescriptivename,
 											});
 										},
 										selectEventName: selectSiteEventName,

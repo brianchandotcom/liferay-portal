@@ -745,7 +745,10 @@ describe('PortletHub', () => {
 					hubB = values[1];
 					onStateChange.mockClear();
 					complete = false;
-					returnType = returnedRenderState = returnedRenderData = undefined;
+					returnType =
+						returnedRenderState =
+						returnedRenderData =
+							undefined;
 				}
 			);
 		});

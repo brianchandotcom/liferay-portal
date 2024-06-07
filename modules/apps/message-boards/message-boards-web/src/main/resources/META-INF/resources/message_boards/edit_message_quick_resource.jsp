@@ -235,12 +235,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 />
 
 <aui:script>
-	window[
-		'<portlet:namespace />replyMessageOnChange' + <%= parentMessageId %>
-	] = function (html) {
-		Liferay.Util.toggleDisabled(
-			'#<portlet:namespace />quickReplyButton<%= parentMessageId %>',
-			html === ''
-		);
-	};
+	window['<portlet:namespace />replyMessageOnChange' + <%= parentMessageId %>] =
+		function (html) {
+			Liferay.Util.toggleDisabled(
+				'#<portlet:namespace />quickReplyButton<%= parentMessageId %>',
+				html === ''
+			);
+		};
 </aui:script>

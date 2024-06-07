@@ -1,7 +1,8 @@
 $admin-panel-width: 320px;
 $admin-panel-zindex: 990 !default;
 
-$control-menu-focus-box-shadow: 0 0 0 2px $cadmin-white,
+$control-menu-focus-box-shadow:
+	0 0 0 2px $cadmin-white,
 	0 0 0 4px $cadmin-primary-l1 !default;
 
 $control-menu-css-transition: all 0.5s ease !default;

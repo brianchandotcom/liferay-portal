@@ -246,19 +246,21 @@ class EventScreen extends HtmlScreen {
 	 */
 
 	makePermanentSelectorsTemporary_(currentLanguageId, languageId) {
-		HtmlScreen.selectors.stylesTemporary = HtmlScreen.selectors.stylesTemporary
-			.split(',')
-			.concat(
-				HtmlScreen.selectors.stylesPermanent
-					.split(',')
-					.map((item) => `${item}[href*="${currentLanguageId}"]`)
-			)
-			.join();
+		HtmlScreen.selectors.stylesTemporary =
+			HtmlScreen.selectors.stylesTemporary
+				.split(',')
+				.concat(
+					HtmlScreen.selectors.stylesPermanent
+						.split(',')
+						.map((item) => `${item}[href*="${currentLanguageId}"]`)
+				)
+				.join();
 
-		HtmlScreen.selectors.stylesPermanent = HtmlScreen.selectors.stylesPermanent
-			.split(',')
-			.map((item) => `${item}[href*="${languageId}"]`)
-			.join();
+		HtmlScreen.selectors.stylesPermanent =
+			HtmlScreen.selectors.stylesPermanent
+				.split(',')
+				.map((item) => `${item}[href*="${languageId}"]`)
+				.join();
 	}
 
 	/**

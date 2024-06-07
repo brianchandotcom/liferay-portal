@@ -91,11 +91,8 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 				position: targetPosition,
 			} = state.currentTarget;
 
-			const [
-				targetPageIndex,
-				targetRowIndex = 0,
-				targetColumnIndex = 0,
-			] = targetItemPath;
+			const [targetPageIndex, targetRowIndex = 0, targetColumnIndex = 0] =
+				targetItemPath;
 
 			const targetIndexes = {
 				columnIndex: targetColumnIndex,

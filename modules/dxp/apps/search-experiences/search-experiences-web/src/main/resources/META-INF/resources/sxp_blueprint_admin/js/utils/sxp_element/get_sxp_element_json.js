@@ -36,7 +36,7 @@ export default function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 				? replaceTemplateVariable({
 						sxpElement,
 						uiConfigurationValues,
-				  })
+					})
 				: configuration,
 			icon,
 		},

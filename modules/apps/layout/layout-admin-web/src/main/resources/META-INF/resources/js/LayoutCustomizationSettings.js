@@ -28,12 +28,8 @@ function linkPosition(
 	}
 ) {
 	const updateAnchorElement = () => {
-		const {
-			height,
-			left,
-			top,
-			width,
-		} = anchorElement.getBoundingClientRect();
+		const {height, left, top, width} =
+			anchorElement.getBoundingClientRect();
 
 		overlayElement.style.left = `${left}px`;
 		overlayElement.style.top = `${top}px`;

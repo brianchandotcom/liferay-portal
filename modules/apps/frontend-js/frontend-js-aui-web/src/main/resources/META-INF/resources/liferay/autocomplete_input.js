@@ -234,9 +234,8 @@ AUI.add(
 				if (trigger !== instance._trigger) {
 					const triggers = instance._getTriggers();
 
-					const triggerConfig = instance.get(STR_TRIGGER)[
-						triggers.indexOf(trigger)
-					];
+					const triggerConfig =
+						instance.get(STR_TRIGGER)[triggers.indexOf(trigger)];
 
 					instance.setAttrs({
 						...instance._triggerConfigDefaults,

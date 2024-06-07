@@ -105,13 +105,13 @@ const Collaborators = ({
 														'x-more-collaborator'
 													),
 													moreCollaboratorsCount
-											  )
+												)
 											: sub(
 													Liferay.Language.get(
 														'x-more-collaborators'
 													),
 													moreCollaboratorsCount
-											  )
+												)
 									}
 								>
 									<ClaySticker

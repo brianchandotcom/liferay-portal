@@ -604,9 +604,8 @@ AUI.add(
 					remainingTime = instance._formatTime(remainingTime);
 
 					if (!instance._alertClosed) {
-						const alert = counterTextNode.closest(
-							'div[role="alert"]'
-						);
+						const alert =
+							counterTextNode.closest('div[role="alert"]');
 
 						// Prevent screen reader from rereading alert
 

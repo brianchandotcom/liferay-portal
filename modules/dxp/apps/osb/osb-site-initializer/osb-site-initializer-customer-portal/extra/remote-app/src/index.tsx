@@ -109,12 +109,14 @@ class CustomerPortalWebComponent extends HTMLElement {
 			articleDeployingActivationKeysURL: super.getAttribute(
 				'article-deploying-activation-keys-url'
 			),
-			articleGettingStartedWithLiferayEnterpriseSearchURL: super.getAttribute(
-				'article-getting-started-with-liferay-enterprise-search-url'
-			),
-			articleNotifiedWhenMyActivationKeyIsAboutToExpireURL: super.getAttribute(
-				'article-notified-when-my-activation-key-is-about-to-expire-url'
-			),
+			articleGettingStartedWithLiferayEnterpriseSearchURL:
+				super.getAttribute(
+					'article-getting-started-with-liferay-enterprise-search-url'
+				),
+			articleNotifiedWhenMyActivationKeyIsAboutToExpireURL:
+				super.getAttribute(
+					'article-notified-when-my-activation-key-is-about-to-expire-url'
+				),
 			articleWhatIsMyInstanceSizingValueURL: super.getAttribute(
 				'article-what-is-my-instance-sizing-value-url'
 			),

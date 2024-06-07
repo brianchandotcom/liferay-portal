@@ -81,9 +81,10 @@
 		});
 	}
 
-	var portlet = Liferay.Util.getOpener()[
-		'portlet_<%= HtmlUtil.escapeJS(portletConfigurationCSSPortletDisplayContext.getPortletResource()) %>'
-	];
+	var portlet =
+		Liferay.Util.getOpener()[
+			'portlet_<%= HtmlUtil.escapeJS(portletConfigurationCSSPortletDisplayContext.getPortletResource()) %>'
+		];
 
 	if (portlet) {
 		var portletContent = portlet.querySelector('.portlet-content');

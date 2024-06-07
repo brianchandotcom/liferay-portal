@@ -199,9 +199,8 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 		);
 
 		if (ddmStructureFieldMessageContainer) {
-			ddmStructureFieldMessageContainer.innerHTML = Liferay.Util.escape(
-				message
-			);
+			ddmStructureFieldMessageContainer.innerHTML =
+				Liferay.Util.escape(message);
 		}
 	};
 
@@ -248,13 +247,11 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 				}
 			);
 
-			mapDDMStructures[
-				`${className}_${classTypeId}_column1`
-			] = columnBuffer1;
+			mapDDMStructures[`${className}_${classTypeId}_column1`] =
+				columnBuffer1;
 
-			mapDDMStructures[
-				`${className}_${classTypeId}_column2`
-			] = columnBuffer2;
+			mapDDMStructures[`${className}_${classTypeId}_column2`] =
+				columnBuffer2;
 		});
 
 		const onChangeSubtypeSelector = () => {

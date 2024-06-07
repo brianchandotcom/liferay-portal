@@ -78,7 +78,7 @@ export function ModalDeleteObjectField({
 										open
 											? onClose()
 											: setObjectField &&
-											  setObjectField(null);
+												setObjectField(null);
 
 										onAfterSubmit();
 									}}

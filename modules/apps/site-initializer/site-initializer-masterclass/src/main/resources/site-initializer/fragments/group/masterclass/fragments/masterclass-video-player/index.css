@@ -24,10 +24,10 @@
 
 .courses .btn-play.active:before {
 	content: '▶';
-    font-size: 12px;
-    left: 24px;
-    margin-top: 2px;
-    position: absolute;
+	font-size: 12px;
+	left: 24px;
+	margin-top: 2px;
+	position: absolute;
 }
 
 .courses .fullscreen {

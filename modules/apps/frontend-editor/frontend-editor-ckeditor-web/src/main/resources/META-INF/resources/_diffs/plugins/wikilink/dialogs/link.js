@@ -79,9 +79,10 @@ CKEDITOR.dialog.add('link', (editor) => {
 								validate() {
 									const instance = this;
 
-									const func = CKEDITOR.dialog.validate.notEmpty(
-										LANG_LINK.noUrl
-									);
+									const func =
+										CKEDITOR.dialog.validate.notEmpty(
+											LANG_LINK.noUrl
+										);
 
 									return func.apply(instance);
 								},

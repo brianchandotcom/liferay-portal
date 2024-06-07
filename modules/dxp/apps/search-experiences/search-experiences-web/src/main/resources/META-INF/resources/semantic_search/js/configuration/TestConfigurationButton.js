@@ -114,7 +114,8 @@ function TestConfigurationButton({
 				}),
 				headers: new Headers({
 					'Accept': 'application/json',
-					'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+					'Accept-Language':
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
 					'Content-Type': 'application/json',
 				}),
 				method: 'POST',
@@ -301,7 +302,7 @@ function TestConfigurationButton({
 								title: Liferay.Language.get(
 									'required-fields-missing'
 								),
-						  }
+							}
 						: {})}
 				>
 					{loading && (

@@ -38,13 +38,8 @@ export function getAccounts(url, itemsLength = getRandomInt(40, 60)) {
 		generateFakeAccounts(itemsLength);
 	}
 
-	const {
-		items,
-		lastPage,
-		page,
-		pageSize,
-		totalCount,
-	} = processFakeRequestData(url, accounts, [accountTemplate]);
+	const {items, lastPage, page, pageSize, totalCount} =
+		processFakeRequestData(url, accounts, [accountTemplate]);
 
 	return {
 		actions: {},

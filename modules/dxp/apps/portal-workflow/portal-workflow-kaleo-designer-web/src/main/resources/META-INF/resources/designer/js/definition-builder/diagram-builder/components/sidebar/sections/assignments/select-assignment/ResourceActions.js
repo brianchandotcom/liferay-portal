@@ -23,7 +23,7 @@ const ResourceActions = () => {
 					? {
 							assignmentType: ['resourceActions'],
 							resourceAction: value,
-					  }
+						}
 					: null,
 			},
 		}));
@@ -33,6 +33,7 @@ const ResourceActions = () => {
 
 	useEffect(() => {
 		setResourceActions(selectedItem.data.assignments?.resourceAction || '');
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

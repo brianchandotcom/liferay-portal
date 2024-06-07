@@ -17,13 +17,8 @@ import {REMOVE_ALL_ITEMS, VIEW_DETAILS} from './util/constants';
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function CartItemsListActions() {
-	const {
-		actionURLs,
-		cartState,
-		labels,
-		setIsUpdating,
-		updateCartModel,
-	} = useContext(MiniCartContext);
+	const {actionURLs, cartState, labels, setIsUpdating, updateCartModel} =
+		useContext(MiniCartContext);
 
 	const {cartItems = [], id: orderId} = cartState;
 	const {orderDetailURL} = actionURLs;

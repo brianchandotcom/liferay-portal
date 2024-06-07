@@ -10,9 +10,8 @@ import React, {useContext, useLayoutEffect, useRef} from 'react';
 import TableContext from './TableContext';
 
 function Table({children, className}) {
-	const {draggingColumnName, isFixed, updateTableWidth} = useContext(
-		TableContext
-	);
+	const {draggingColumnName, isFixed, updateTableWidth} =
+		useContext(TableContext);
 
 	const dndTableRef = useRef(null);
 

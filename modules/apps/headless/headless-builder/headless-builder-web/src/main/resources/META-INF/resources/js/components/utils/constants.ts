@@ -23,7 +23,8 @@ export const BUSINESS_TYPES_TO_SYMBOLS = {
 	'Workflow Status': 'text',
 };
 
-export const DEFAULT_LANGUAGE_ID: string = Liferay.ThemeDisplay.getDefaultLanguageId();
+export const DEFAULT_LANGUAGE_ID: string =
+	Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export const HTTP_METHODS = {
 	GET: 'get',

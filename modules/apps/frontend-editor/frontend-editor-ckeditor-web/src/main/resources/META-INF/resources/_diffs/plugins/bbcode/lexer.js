@@ -4,8 +4,10 @@
  */
 
 (function () {
+
 	// eslint-disable-next-line no-control-regex
-	const REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/gi;
+	const REGEX_BBCODE =
+		/(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/gi;
 
 	const Lexer = function (data) {
 		const instance = this;

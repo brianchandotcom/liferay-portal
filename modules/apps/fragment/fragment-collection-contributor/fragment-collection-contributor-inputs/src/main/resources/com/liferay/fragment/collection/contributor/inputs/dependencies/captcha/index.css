@@ -34,8 +34,8 @@
 }
 
 .form-input-captcha .taglib-captcha .refresh {
-	background: #FFFFFF;
-	border: 1px solid #CDCED9;
+	background: #fff;
+	border: 1px solid #cdced9;
 	border-radius: 4px;
 	font-size: 16px;
 	height: 32px;
@@ -46,5 +46,5 @@
 }
 
 .form-input-captcha .taglib-captcha .refresh svg {
-	fill: #6B6C7E;
+	fill: #6b6c7e;
 }

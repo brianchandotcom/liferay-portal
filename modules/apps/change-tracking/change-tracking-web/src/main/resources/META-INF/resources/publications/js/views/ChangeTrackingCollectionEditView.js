@@ -44,9 +44,8 @@ export default function ChangeTrackingCollectionEditView({
 			: publicationDescription
 	);
 	const [publishTimeField, setPublishTimeField] = useState(null);
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState(
-		revertingPublication
-	);
+	const [saveButtonDisabled, setSaveButtonDisabled] =
+		useState(revertingPublication);
 	const [ctCollectionTemplateId, setCtCollectionTemplateId] = useState(
 		defaultCTCollectionTemplateId ? defaultCTCollectionTemplateId : 0
 	);
@@ -153,9 +152,8 @@ export default function ChangeTrackingCollectionEditView({
 
 		const formData = {
 			[`${namespace}ctCollectionId`]: ctCollectionId,
-			[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
-				','
-			),
+			[`${namespace}publicationsUserRoleUserIds`]:
+				publicationsUserRoleUserIds.join(','),
 			[`${namespace}roleValues`]: roleValues.join(','),
 			[`${namespace}userIds`]: userIds.join(','),
 		};

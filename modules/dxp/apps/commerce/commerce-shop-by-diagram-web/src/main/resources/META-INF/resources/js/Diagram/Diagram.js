@@ -176,7 +176,7 @@ function Diagram({
 									...pin,
 									mappedProduct: newPin.mappedProduct,
 									quantity: newPin.quantity,
-							  }
+								}
 							: pin
 					);
 
@@ -185,7 +185,7 @@ function Diagram({
 								updatedPin.id === newPin.id
 									? newPin
 									: updatedPin
-						  )
+							)
 						: [...updatedPins, newPin];
 				});
 

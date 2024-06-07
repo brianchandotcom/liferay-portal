@@ -47,9 +47,11 @@ export function App(props) {
 			<ConstantsProvider
 				constants={{
 					...props,
-					addSiteNavigationMenuItemOptions: decorateAddSiteNavigationMenuItemOptions(
-						{addSiteNavigationMenuItemOptions, portletNamespace}
-					),
+					addSiteNavigationMenuItemOptions:
+						decorateAddSiteNavigationMenuItemOptions({
+							addSiteNavigationMenuItemOptions,
+							portletNamespace,
+						}),
 					portletNamespace,
 				}}
 			>

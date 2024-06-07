@@ -157,11 +157,11 @@ AUI.add(
 
 					instance._invokeService(
 						{
-							'/calendar.calendarbooking/move-calendar-booking-to-trash': {
-								calendarBookingId: schedulerEvent.get(
-									'calendarBookingId'
-								),
-							},
+							'/calendar.calendarbooking/move-calendar-booking-to-trash':
+								{
+									calendarBookingId:
+										schedulerEvent.get('calendarBookingId'),
+								},
 						},
 						{
 							success(data) {
@@ -181,16 +181,15 @@ AUI.add(
 
 					instance._invokeService(
 						{
-							'/calendar.calendarbooking/delete-calendar-booking-instance': {
-								allFollowing,
-								calendarBookingId: schedulerEvent.get(
-									'calendarBookingId'
-								),
-								deleteRecurringCalendarBookings: true,
-								instanceIndex: schedulerEvent.get(
-									'instanceIndex'
-								),
-							},
+							'/calendar.calendarbooking/delete-calendar-booking-instance':
+								{
+									allFollowing,
+									calendarBookingId:
+										schedulerEvent.get('calendarBookingId'),
+									deleteRecurringCalendarBookings: true,
+									instanceIndex:
+										schedulerEvent.get('instanceIndex'),
+								},
 						},
 						{
 							success(data) {
@@ -280,9 +279,8 @@ AUI.add(
 
 					instance._invokeResourceURL({
 						callback(dateObj) {
-							instance.lastCurrentTime = CalendarUtil.getDateFromObject(
-								dateObj
-							);
+							instance.lastCurrentTime =
+								CalendarUtil.getDateFromObject(dateObj);
 
 							instance.lastBrowserTime = new Date();
 
@@ -395,9 +393,8 @@ AUI.add(
 						{
 							'/calendar.calendarbooking/invoke-transition': {
 								allFollowing,
-								calendarBookingId: schedulerEvent.get(
-									'calendarBookingId'
-								),
+								calendarBookingId:
+									schedulerEvent.get('calendarBookingId'),
 								instanceIndex,
 								status,
 								updateInstance,
@@ -417,9 +414,8 @@ AUI.add(
 								});
 
 								if (data && !data.exception && scheduler) {
-									const eventRecorder = scheduler.get(
-										'eventRecorder'
-									);
+									const eventRecorder =
+										scheduler.get('eventRecorder');
 
 									eventRecorder.hidePopover();
 
@@ -485,9 +481,8 @@ AUI.add(
 						payload: {
 							allDay: schedulerEvent.get('allDay'),
 							allFollowing,
-							calendarBookingId: schedulerEvent.get(
-								'calendarBookingId'
-							),
+							calendarBookingId:
+								schedulerEvent.get('calendarBookingId'),
 							calendarId: schedulerEvent.get('calendarId'),
 							endTimeDay: endDate.getDate(),
 							endTimeHour: endDate.getHours(),

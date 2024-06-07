@@ -45,7 +45,7 @@ export function TagSelector({
 			? rule.queryValues.split(',').map((tagName) => ({
 					label: tagName,
 					value: tagName,
-			  }))
+				}))
 			: [];
 
 	return (

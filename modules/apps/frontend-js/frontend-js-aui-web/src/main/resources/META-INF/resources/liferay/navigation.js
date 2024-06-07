@@ -77,18 +77,17 @@ AUI.add(
 
 						const navList = navBlock.one(navListSelector);
 
-						instance._navItemChildToggleSelector = navItemChildToggleSelector;
+						instance._navItemChildToggleSelector =
+							navItemChildToggleSelector;
 						instance._navItemSelector = navItemSelector;
 						instance._navListSelector = navListSelector;
 
 						instance._navList = navList;
 
-						instance._tempTab = instance._createTempTab(
-							TPL_TAB_LINK
-						);
-						instance._tempChildTab = instance._createTempTab(
-							TPL_LINK
-						);
+						instance._tempTab =
+							instance._createTempTab(TPL_TAB_LINK);
+						instance._tempChildTab =
+							instance._createTempTab(TPL_LINK);
 					}
 				},
 			},

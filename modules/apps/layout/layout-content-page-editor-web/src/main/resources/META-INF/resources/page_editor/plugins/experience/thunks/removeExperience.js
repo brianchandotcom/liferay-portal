@@ -14,8 +14,8 @@ export default function removeExperience({
 }) {
 	return (dispatch, getState) => {
 		if (segmentsExperienceId === selectedExperienceId) {
-			const loadedSegmentsExperiences = getState()
-				.loadedSegmentsExperiences;
+			const loadedSegmentsExperiences =
+				getState().loadedSegmentsExperiences;
 
 			return ExperienceService.selectExperience({
 				body: {

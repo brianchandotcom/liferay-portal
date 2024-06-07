@@ -56,7 +56,7 @@ export default function UserPopover({creator, statistics}) {
 						statistics
 							? dateToBriefInternationalHuman(
 									statistics.lastPostDate
-							  )
+								)
 							: ''
 					}`}
 				</p>

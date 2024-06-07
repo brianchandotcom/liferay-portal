@@ -156,9 +156,8 @@ const ApplicationsTable = () => {
 	const [totalPages, setTotalPages] = useState<number>(0);
 	const [page, setPage] = useState<number>(1);
 	const [firstPaginationLabel, setFirstPaginationLabel] = useState<number>(1);
-	const [secondPaginationLabel, setSecondPaginationLabel] = useState<number>(
-		1
-	);
+	const [secondPaginationLabel, setSecondPaginationLabel] =
+		useState<number>(1);
 
 	const [searchInput, setSearchInput] = useState('');
 	const firstNameSearched = searchInput.split(' ')[0];
@@ -197,14 +196,13 @@ const ApplicationsTable = () => {
 						page: '0',
 						pageSize: '0',
 						sort: 'applicationCreateDate:desc',
-				  };
+					};
 
 		return parameters;
 	};
 
-	const [parameters, setParameters] = useState<Parameters>(
-		generateParameters()
-	);
+	const [parameters, setParameters] =
+		useState<Parameters>(generateParameters());
 
 	const parameterDebounce = useDebounce(parameters, 200);
 
@@ -374,6 +372,7 @@ const ApplicationsTable = () => {
 
 			return;
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeFilter]);
 
@@ -774,13 +773,11 @@ const ApplicationsTable = () => {
 							<ClayButton
 								className="btn-sm hover-button shadow-none text-neutral-9"
 								onClick={() => {
-									const updatedCheckedProduct = checkedStateProduct.fill(
-										false
-									);
+									const updatedCheckedProduct =
+										checkedStateProduct.fill(false);
 
-									const updatedCheckedStatus = checkedStateStatus.fill(
-										false
-									);
+									const updatedCheckedStatus =
+										checkedStateStatus.fill(false);
 
 									setCheckedStateProduct(
 										updatedCheckedProduct

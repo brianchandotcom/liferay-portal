@@ -41,7 +41,8 @@ export function PanelHeader({
 				className={classNames(
 					'object-admin-panel__header__content-left',
 					{
-						'object-admin-panel__header__content-left--disabled': disabled,
+						'object-admin-panel__header__content-left--disabled':
+							disabled,
 					}
 				)}
 			>

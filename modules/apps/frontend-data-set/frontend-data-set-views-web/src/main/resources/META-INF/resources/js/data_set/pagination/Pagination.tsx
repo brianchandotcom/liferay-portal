@@ -204,14 +204,14 @@ function Pagination({
 								{requiredListOfItemsPerPageValidationError
 									? Liferay.Language.get(
 											'this-field-is-required'
-									  )
+										)
 									: invalidNumberInListOfItemsPerPageValidationError
-									? Liferay.Language.get(
-											'this-field-contains-an-invalid-number'
-									  )
-									: Liferay.Language.get(
-											'this-field-contains-more-than-25-elements'
-									  )}
+										? Liferay.Language.get(
+												'this-field-contains-an-invalid-number'
+											)
+										: Liferay.Language.get(
+												'this-field-contains-more-than-25-elements'
+											)}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}
@@ -259,10 +259,10 @@ function Pagination({
 								{requiredDefaultItemsPerPageValidationError
 									? Liferay.Language.get(
 											'this-field-is-required'
-									  )
+										)
 									: Liferay.Language.get(
 											'the-default-value-must-exist-in-the-list-of-items-per-page'
-									  )}
+										)}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}

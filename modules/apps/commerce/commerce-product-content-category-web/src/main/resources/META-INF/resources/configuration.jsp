@@ -68,8 +68,7 @@ if (assetCategory != null) {
 		content:
 			'#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-content',
 		expanded: <%= cpCategoryContentDisplayContext.useAssetCategory() %>,
-		header:
-			'#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-header',
+		header: '#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-header',
 		on: {
 			animatingChange: function (event) {
 				var instance = this;

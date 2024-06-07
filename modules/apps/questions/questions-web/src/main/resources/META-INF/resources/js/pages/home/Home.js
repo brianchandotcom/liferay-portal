@@ -61,7 +61,7 @@ export default withRouter(({history, isHomePath}) => {
 				: getSectionBySectionTitle().then((result) => ({
 						...result,
 						data: result.data.messageBoardSections.items[0],
-				  }));
+					}));
 
 		fn.then((result) => ({
 			...result,

@@ -56,8 +56,7 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 							webdavURLInput.focus();
 						}
 					},
-					title:
-						'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
+					title: '<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
 				});
 			}
 		}

@@ -77,7 +77,7 @@ export default function replaceTemplateVariable({
 										config.typeOptions?.format ||
 											'YYYYMMDDHHMMSS'
 									)
-						  )
+							)
 						: '';
 				}
 				else if (config.type === INPUT_TYPES.ITEM_SELECTOR) {
@@ -183,10 +183,10 @@ export default function replaceTemplateVariable({
 							? typeof initialValue === 'string'
 								? initialValue.concat(
 										config.typeOptions?.unitSuffix
-								  )
+									)
 								: JSON.stringify(initialValue).concat(
 										config.typeOptions?.unitSuffix
-								  )
+									)
 							: initialValue;
 				}
 				else if (config.type === INPUT_TYPES.SLIDER) {

@@ -56,7 +56,7 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 					resetModal();
 
 					return;
-			  }
+				}
 			: resetModal,
 	});
 
@@ -160,9 +160,11 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 										}
 										name="selectAllObjectFields"
 										onChange={() => {
-											const disabledItems = selected.filter(
-												(item) => item.disableCheckbox
-											);
+											const disabledItems =
+												selected.filter(
+													(item) =>
+														item.disableCheckbox
+												);
 											const selectedItems =
 												items.length -
 													disabledItems.length ===

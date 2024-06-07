@@ -117,7 +117,7 @@ export function initState(
 					[themeDisplay.getLanguageId()]: Liferay.Language.get(
 						'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
 					),
-			  },
+				},
 		enabled:
 			view === 'fieldSets'
 				? false
@@ -125,10 +125,9 @@ export function initState(
 		title: initialSuccessPageSettings?.title
 			? initialSuccessPageSettings?.title
 			: {
-					[themeDisplay.getLanguageId()]: Liferay.Language.get(
-						'thank-you'
-					),
-			  },
+					[themeDisplay.getLanguageId()]:
+						Liferay.Language.get('thank-you'),
+				},
 	};
 
 	return {
@@ -163,7 +162,7 @@ export function initState(
 						paginationItemRenderer: `${paginationMode}_success`,
 						rows: [],
 						successPageSettings,
-				  }
+					}
 				: false,
 		].filter(Boolean),
 		paginationMode,

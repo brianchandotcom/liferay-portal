@@ -75,9 +75,8 @@ export function BasicInfoTab({
 		AggregationFilters[]
 	>([]);
 
-	const [creationLanguageId2, setCreationLanguageId2] = useState<
-		Liferay.Language.Locale
-	>();
+	const [creationLanguageId2, setCreationLanguageId2] =
+		useState<Liferay.Language.Locale>();
 
 	const [
 		objectDefinitionExternalReferenceCode2,
@@ -227,7 +226,8 @@ export function BasicInfoTab({
 				>
 					<Input
 						className={classNames({
-							'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+							'lfr-objects__edit-object-field-model-builder-panel':
+								modelBuilder,
 						})}
 						label={Liferay.Language.get('external-reference-code')}
 						name="externalReferenceCode"

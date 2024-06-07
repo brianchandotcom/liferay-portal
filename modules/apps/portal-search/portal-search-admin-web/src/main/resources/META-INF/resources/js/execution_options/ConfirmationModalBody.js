@@ -120,10 +120,10 @@ function InfoDescription({cmd, executionMode}) {
 				cmd === 'reindexDictionaries'
 					? Liferay.Language.get(
 							'reindex-actions-search-results-available-info'
-					  )
+						)
 					: Liferay.Language.get(
 							'reindex-actions-search-results-not-available-info'
-					  )}
+						)}
 			</div>
 		</div>
 	);

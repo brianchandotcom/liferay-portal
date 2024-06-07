@@ -92,9 +92,10 @@
 
 			Liferay.Util.openSelectionModal({
 				onSelect: (selectedItem) => {
-					const termsOfUseJournalArticleResourcePrimKey = document.getElementById(
-						'<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
-					);
+					const termsOfUseJournalArticleResourcePrimKey =
+						document.getElementById(
+							'<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
+						);
 
 					const itemValue = JSON.parse(selectedItem.value);
 
@@ -109,8 +110,7 @@
 				},
 				selectEventName: 'selectJournalArticle',
 				title: '<liferay-ui:message key="select-web-content" />',
-				url:
-					'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
+				url: '<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
 			});
 		});
 

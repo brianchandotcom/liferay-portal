@@ -132,6 +132,7 @@ const ApplicationDetails = () => {
 		if (externalReferenceCode) {
 			getApplication(externalReferenceCode);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

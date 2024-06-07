@@ -187,10 +187,12 @@ while (manageableCalendarsIterator.hasNext()) {
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
 	Liferay.component('<portlet:namespace />calendarContainer', () => {
 		var calendarContainer = new Liferay.CalendarContainer({
-			groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
+			groupCalendarResourceId:
+				<%= groupCalendarResource.getCalendarResourceId() %>,
 
 			<c:if test="<%= userCalendarResource != null %>">
-				userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
+				userCalendarResourceId:
+					<%= userCalendarResource.getCalendarResourceId() %>,
 			</c:if>
 
 			namespace: '<portlet:namespace />',
@@ -847,7 +849,8 @@ while (manageableCalendarsIterator.hasNext()) {
 
 				var calendar = manageableCalendars[calendarId];
 
-				var calendarListPendingComponent = <portlet:namespace />calendarListPending;
+				var calendarListPendingComponent =
+					<portlet:namespace />calendarListPending;
 
 				var calendarListCollection = [
 					<portlet:namespace />calendarListAccepted,
@@ -1024,10 +1027,14 @@ while (manageableCalendarsIterator.hasNext()) {
 
 				endDateContainer.style.display = 'block';
 
-				startTimeHours = <%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				startTimeMinutes = <%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
-				endTimeHours = <%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				endTimeMinutes = <%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
+				startTimeHours =
+					<%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+				startTimeMinutes =
+					<%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
+				endTimeHours =
+					<%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+				endTimeMinutes =
+					<%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
 			}
 
 			updateTimePickersValues(

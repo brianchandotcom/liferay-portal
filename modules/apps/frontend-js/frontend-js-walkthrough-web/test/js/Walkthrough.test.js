@@ -196,9 +196,8 @@ describe('Walkthrough', () => {
 
 			const cleanUp = setupDocument();
 
-			const {getByLabelText, queryByLabelText} = renderWalkthrough(
-				PAGE_MOCK
-			);
+			const {getByLabelText, queryByLabelText} =
+				renderWalkthrough(PAGE_MOCK);
 
 			if (shouldRender) {
 				expect(

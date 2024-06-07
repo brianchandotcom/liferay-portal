@@ -61,11 +61,8 @@ describe('ResultRankingsForm', () => {
 	`(
 		'renders the results ranking items after loading in the $tab tab',
 		async ({expected, tab}) => {
-			const {
-				findByTestId,
-				getByTestId,
-				getByText,
-			} = renderTestResultRankingsForm();
+			const {findByTestId, getByTestId, getByText} =
+				renderTestResultRankingsForm();
 
 			fireEvent.click(getByText(tab));
 
@@ -106,9 +103,8 @@ describe('ResultRankingsForm', () => {
 
 			expect(input.getAttribute('value')).toBe(expectedValue);
 
-			const tagsElement = container.querySelectorAll(
-				'.label-item-expand'
-			);
+			const tagsElement =
+				container.querySelectorAll('.label-item-expand');
 
 			expect(tagsElement).toHaveLength(expected.length);
 
@@ -138,11 +134,8 @@ describe('ResultRankingsForm', () => {
 		${'100'} | ${HIDE_BUTTON_LABEL} | ${'#addedHiddenIds'}
 		${'200'} | ${SHOW_BUTTON_LABEL} | ${'#removedHiddenIds'}
 	`('updates the $selector', async ({button, id, selector}) => {
-		const {
-			container,
-			getByTestId,
-			getByText,
-		} = renderTestResultRankingsForm();
+		const {container, getByTestId, getByText} =
+			renderTestResultRankingsForm();
 
 		if (selector.includes('Removed')) {
 			fireEvent.click(getByText('hidden'));
@@ -162,12 +155,8 @@ describe('ResultRankingsForm', () => {
 	`(
 		'updates the $selector back',
 		async ({button, id, newButton, selector}) => {
-			const {
-				container,
-				findByTestId,
-				getByTestId,
-				getByText,
-			} = renderTestResultRankingsForm();
+			const {container, findByTestId, getByTestId, getByText} =
+				renderTestResultRankingsForm();
 
 			const order = selector.includes('Removed')
 				? ['hidden', 'visible']
@@ -192,11 +181,8 @@ describe('ResultRankingsForm', () => {
 		${'105'} | ${PIN_BUTTON_LABEL}   | ${'100,101,102,103,104,105'}
 		${'100'} | ${UNPIN_BUTTON_LABEL} | ${'101,102,103,104'}
 	`('updates the pinnedIds by $button', async ({button, expected, id}) => {
-		const {
-			container,
-			findByTestId,
-			getByTestId,
-		} = renderTestResultRankingsForm();
+		const {container, findByTestId, getByTestId} =
+			renderTestResultRankingsForm();
 
 		await findByTestId(id);
 
@@ -206,11 +192,8 @@ describe('ResultRankingsForm', () => {
 	});
 
 	it('fetches more results after clicking on load more button', async () => {
-		const {
-			container,
-			findByTestId,
-			getByTestId,
-		} = renderTestResultRankingsForm();
+		const {container, findByTestId, getByTestId} =
+			renderTestResultRankingsForm();
 
 		await findByTestId('100');
 
@@ -229,9 +212,8 @@ describe('ResultRankingsForm', () => {
 	it('has the same pinned end index if there are no additional pinned items loaded', async () => {
 		const {container, findByTestId} = renderTestResultRankingsForm();
 
-		const pinnedIdsEndIndexInput = container.querySelector(
-			'#pinnedIdsEndIndex'
-		);
+		const pinnedIdsEndIndexInput =
+			container.querySelector('#pinnedIdsEndIndex');
 
 		await findByTestId('100');
 

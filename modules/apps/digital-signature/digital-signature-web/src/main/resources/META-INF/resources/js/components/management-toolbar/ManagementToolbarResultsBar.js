@@ -64,9 +64,8 @@ export default function ManagementToolbarResultsBar({
 	isLoading,
 	totalCount,
 }) {
-	const [{filters: appliedFilters = {}, keywords}, dispatch] = useContext(
-		SearchContext
-	);
+	const [{filters: appliedFilters = {}, keywords}, dispatch] =
+		useContext(SearchContext);
 
 	const selectedFilters = getSelectedFilters(filters, appliedFilters);
 
@@ -82,7 +81,7 @@ export default function ManagementToolbarResultsBar({
 										? Liferay.Language.get('x-result-for-x')
 										: Liferay.Language.get(
 												'x-results-for-x'
-										  ),
+											),
 									totalCount,
 									keywords
 								)}

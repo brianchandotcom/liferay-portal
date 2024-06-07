@@ -18,8 +18,10 @@
 						0 === e
 							? ((this._defB = this._defB || []), this._defB.push(t))
 							: 1 === e
-							? ((this._defT = this._defT || []), this._defT.push(t))
-							: ((this._defL = this._defL || []), this._defL.push(t));
+								? ((this._defT = this._defT || []),
+									this._defT.push(t))
+								: ((this._defL = this._defL || []),
+									this._defL.push(t));
 					},
 					ev: lpTag.ev || [],
 					events: {
@@ -43,21 +45,21 @@
 						window.attachEvent
 							? window.attachEvent('onload', () => {
 									t._domReady('domReady');
-							  })
+								})
 							: (window.addEventListener(
 									'DOMContentLoaded',
 									() => {
 										t._domReady('contReady');
 									},
 									!1
-							  ),
-							  window.addEventListener(
+								),
+								window.addEventListener(
 									'load',
 									() => {
 										t._domReady('domReady');
 									},
 									!1
-							  )),
+								)),
 							'undefined' === typeof window._lptStop && this.load();
 					},
 					load: function (t, e, i) {
@@ -108,8 +110,8 @@
 					},
 					_tagCount: 1,
 					_v: '1.10.0',
-			  }),
-			  lpTag.init())
+				}),
+				lpTag.init())
 			: (window.lpTag._tagCount += 1);
 
 	lpTag.sdes = lpTag.sdes || [];

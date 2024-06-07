@@ -86,7 +86,7 @@ export function DropdownColorPicker({
 										(color) =>
 											isFoundValue(color.label) ||
 											isFoundValue(color.value)
-								  );
+									);
 
 							return {
 								...acc,
@@ -96,7 +96,7 @@ export function DropdownColorPicker({
 							};
 						},
 						{}
-				  );
+					);
 
 			return {
 				...acc,

@@ -73,7 +73,7 @@ export default function BulkReassignModal() {
 								'x-tasks-have-been-reassigned'
 							),
 							[reassignedTasks.length]
-					  )
+						)
 					: Liferay.Language.get('this-task-has-been-reassigned')
 			);
 

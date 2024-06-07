@@ -51,9 +51,8 @@ AUI.add(
 						!instance._intervalSelectorUpdated &&
 						prevDate.getTime() !== newDate.getTime()
 					) {
-						const intervalSelector = instance.get(
-							'intervalSelector'
-						);
+						const intervalSelector =
+							instance.get('intervalSelector');
 
 						const schedulerEvent = instance.get('schedulerEvent');
 
@@ -102,13 +101,11 @@ AUI.add(
 
 					const intervalSelector = instance.get('intervalSelector');
 
-					const startDatePicker = intervalSelector.get(
-						'startDatePicker'
-					);
+					const startDatePicker =
+						intervalSelector.get('startDatePicker');
 
-					const startTimePicker = intervalSelector.get(
-						'startTimePicker'
-					);
+					const startTimePicker =
+						intervalSelector.get('startTimePicker');
 
 					const startDate = startDatePicker.getDate();
 
@@ -132,13 +129,11 @@ AUI.add(
 
 					const endTimePicker = intervalSelector.get('endTimePicker');
 
-					const startDatePicker = intervalSelector.get(
-						'startDatePicker'
-					);
+					const startDatePicker =
+						intervalSelector.get('startDatePicker');
 
-					const startTimePicker = intervalSelector.get(
-						'startTimePicker'
-					);
+					const startTimePicker =
+						intervalSelector.get('startTimePicker');
 
 					instance.eventHandlers = [
 						endDatePicker.after(
@@ -192,7 +187,8 @@ AUI.add(
 			},
 		});
 
-		Liferay.IntervalSelectorSchedulerEventLink = IntervalSelectorSchedulerEventLink;
+		Liferay.IntervalSelectorSchedulerEventLink =
+			IntervalSelectorSchedulerEventLink;
 	},
 	'',
 	{

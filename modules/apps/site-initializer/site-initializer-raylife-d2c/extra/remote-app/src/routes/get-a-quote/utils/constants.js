@@ -167,8 +167,7 @@ export const AVAILABLE_STEPS = {
 				active: false,
 				hideContinueButton: false,
 				hideInputLabel: true,
-				title:
-					SUBSECTION_KEYS.WHAT_PERCENTAGE_OF_OVERALL_INVOLVE_DELIVERY,
+				title: SUBSECTION_KEYS.WHAT_PERCENTAGE_OF_OVERALL_INVOLVE_DELIVERY,
 			},
 		],
 		section: 'business',
@@ -185,8 +184,7 @@ export const AVAILABLE_STEPS = {
 				active: true,
 				hideContinueButton: true,
 				hideInputLabel: false,
-				title:
-					SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER,
+				title: SUBSECTION_KEYS.BUSINESS_FEDERAL_EMPLOYER_IDENTIFICATION_NUMBER,
 			},
 			{
 				active: false,
@@ -257,8 +255,7 @@ export const AVAILABLE_STEPS = {
 				active: false,
 				hideContinueButton: false,
 				hideInputLabel: true,
-				title:
-					SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING,
+				title: SUBSECTION_KEYS.HOW_MANY_TOTAL_SQUARE_FEET_IS_THE_BUILDING,
 			},
 			{
 				active: false,

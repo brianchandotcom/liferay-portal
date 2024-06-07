@@ -109,7 +109,7 @@ const Head = ({
 										? Liferay.Language.get('select-items')
 										: Liferay.Language.get(
 												'clear-selection'
-										  )
+											)
 								}
 							/>
 						) : null}
@@ -168,10 +168,8 @@ const ItemCells = ({
 			{fields.map((field) => {
 				const {actionDropdownItems} = item;
 
-				const localizedValue: ILocalizedItemDetails | null = getLocalizedValue(
-					item,
-					field.fieldName
-				);
+				const localizedValue: ILocalizedItemDetails | null =
+					getLocalizedValue(item, field.fieldName);
 
 				const valuePath = localizedValue?.valuePath ?? undefined;
 

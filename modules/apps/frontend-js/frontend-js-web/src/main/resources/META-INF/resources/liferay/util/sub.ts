@@ -37,9 +37,9 @@ export default function sub<Params extends Array<string | number | ReactNode>>(
 		}
 	}
 
-	return (keyArray.some((value) => value && typeof value === 'object')
-		? keyArray
-		: keyArray.join('')) as Params extends ReactNode[]
-		? ReactNode[]
-		: string;
+	return (
+		keyArray.some((value) => value && typeof value === 'object')
+			? keyArray
+			: keyArray.join('')
+	) as Params extends ReactNode[] ? ReactNode[] : string;
 }

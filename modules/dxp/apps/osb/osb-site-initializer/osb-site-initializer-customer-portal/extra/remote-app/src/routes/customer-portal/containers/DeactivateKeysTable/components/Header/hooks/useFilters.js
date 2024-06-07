@@ -98,26 +98,31 @@ export default function useFilters(setFilterTerm, productName, baseFilter) {
 		if (filters.environmentTypes.value.length) {
 			hasFilterPill = true;
 
-			const environmentTypesFilter = filters.environmentTypes.value.reduce(
-				(accumulatorEnvironmentTypesFilter, environmentType, index) => {
-					if (environmentType === COMPLIMENTARY) {
+			const environmentTypesFilter =
+				filters.environmentTypes.value.reduce(
+					(
+						accumulatorEnvironmentTypesFilter,
+						environmentType,
+						index
+					) => {
+						if (environmentType === COMPLIMENTARY) {
+							return `${accumulatorEnvironmentTypesFilter}${
+								index > 0 ? ' or ' : ''
+							}complimentary eq true`;
+						}
+
+						if (environmentType === SUBSCRIPTION) {
+							return `${accumulatorEnvironmentTypesFilter}${
+								index > 0 ? ' or ' : ''
+							}complimentary eq false`;
+						}
+
 						return `${accumulatorEnvironmentTypesFilter}${
 							index > 0 ? ' or ' : ''
-						}complimentary eq true`;
-					}
-
-					if (environmentType === SUBSCRIPTION) {
-						return `${accumulatorEnvironmentTypesFilter}${
-							index > 0 ? ' or ' : ''
-						}complimentary eq false`;
-					}
-
-					return `${accumulatorEnvironmentTypesFilter}${
-						index > 0 ? ' or ' : ''
-					}contains(productName, '${environmentType}')`;
-				},
-				''
-			);
+						}contains(productName, '${environmentType}')`;
+					},
+					''
+				);
 
 			initialFilter = initialFilter.concat(
 				` and (${environmentTypesFilter})`

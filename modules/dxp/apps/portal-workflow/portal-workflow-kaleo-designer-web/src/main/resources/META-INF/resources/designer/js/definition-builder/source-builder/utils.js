@@ -391,7 +391,7 @@ export function parseNotifications(node) {
 			const roleId = item['role-id']
 				? item['role-id'][0]
 				: item['recipients'][0]['roles']['role'] ||
-				  item['recipients'][0]['roles']['role-id'];
+					item['recipients'][0]['roles']['role-id'];
 
 			if (receptionType) {
 				notifications.recipients[index].push({
@@ -492,14 +492,14 @@ export function parseTimers(node) {
 			node.taskTimers[index]['reassignments']
 				? parseReassignments({
 						assignments: node.taskTimers[index]['reassignments'],
-				  })
+					})
 				: {}
 		);
 		taskTimers.timerActions.push(
 			node.taskTimers[index]['timer-action']
 				? parseActions({
 						actions: node.taskTimers[index]['timer-action'],
-				  })
+					})
 				: {}
 		);
 		taskTimers.timerNotifications.push(
@@ -508,7 +508,7 @@ export function parseTimers(node) {
 						nodeName: 'timer-notification',
 						notifications:
 							node.taskTimers[index]['timer-notification'],
-				  })
+					})
 				: {}
 		);
 		taskTimers.name = parseProperty(taskTimers, item, 'name');

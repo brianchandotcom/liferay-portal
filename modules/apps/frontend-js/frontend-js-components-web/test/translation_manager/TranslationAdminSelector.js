@@ -279,9 +279,8 @@ describe('TranslationAdminSelector', () => {
 
 		const dropdownMenu = document.querySelector('.dropdown-menu');
 
-		const localeElement = dropdownMenu.querySelectorAll(
-			'.dropdown-item'
-		)[1];
+		const localeElement =
+			dropdownMenu.querySelectorAll('.dropdown-item')[1];
 
 		fireEvent.click(localeElement);
 

@@ -8,4 +8,4 @@ export const TABS_IDS = {
 	widgets: 1,
 } as const;
 
-export type TabId = typeof TABS_IDS[keyof typeof TABS_IDS];
+export type TabId = (typeof TABS_IDS)[keyof typeof TABS_IDS];

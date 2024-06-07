@@ -184,9 +184,8 @@
 						selectedElement = ranges && ranges[0].startContainer;
 					}
 
-					const selectedElementClientRect = selectedElement.getClientRect(
-						true
-					);
+					const selectedElementClientRect =
+						selectedElement.getClientRect(true);
 
 					x =
 						selectedElementClientRect.x +
@@ -239,65 +238,65 @@
 				' tabindex="-1"' +
 				'></div>';
 
-			CKEDITOR.plugins.balloontoolbar.context.prototype._loadButtons = function () {
-				const buttons = this.options.buttons;
+			CKEDITOR.plugins.balloontoolbar.context.prototype._loadButtons =
+				function () {
+					const buttons = this.options.buttons;
 
-				if (!buttons) {
-					return;
-				}
+					if (!buttons) {
+						return;
+					}
 
-				CKEDITOR.tools.array.forEach(
-					buttons.split(','),
-					(name) => {
-						const newUiItem = this.editor.ui.create(name);
+					CKEDITOR.tools.array.forEach(
+						buttons.split(','),
+						(name) => {
+							const newUiItem = this.editor.ui.create(name);
 
-						if (newUiItem) {
-							this.toolbar.addItem(name, newUiItem);
+							if (newUiItem) {
+								this.toolbar.addItem(name, newUiItem);
 
-							if (
-								Object.hasOwnProperty.call(
-									newUiItem,
-									'balloonToolbar'
-								)
-							) {
-								newUiItem.balloonToolbar = this.toolbar;
+								if (
+									Object.hasOwnProperty.call(
+										newUiItem,
+										'balloonToolbar'
+									)
+								) {
+									newUiItem.balloonToolbar = this.toolbar;
+								}
 							}
-						}
-					},
-					this
-				);
-			};
+						},
+						this
+					);
+				};
 
 			const originalContextManagerCheck =
 				CKEDITOR.plugins.balloontoolbar.contextManager.prototype.check;
 
-			CKEDITOR.plugins.balloontoolbar.contextManager.prototype.check = function (
-				selection
-			) {
-				const editor = this.editor;
+			CKEDITOR.plugins.balloontoolbar.contextManager.prototype.check =
+				function (selection) {
+					const editor = this.editor;
 
-				if (!selection) {
-					selection = editor.getSelection();
-				}
+					if (!selection) {
+						selection = editor.getSelection();
+					}
 
-				if (!selection) {
-					return;
-				}
-
-				const selectedElement = selection.getSelectedElement();
-
-				if (!selectedElement) {
-					const selectedText = selection.getSelectedText();
-
-					if (!selectedText?.match(/\w/)) {
-						editor.balloonToolbars.hide();
-
+					if (!selection) {
 						return;
 					}
-				}
 
-				originalContextManagerCheck.call(this, selection);
-			};
+					const selectedElement = selection.getSelectedElement();
+
+					if (!selectedElement) {
+						const selectedText = selection.getSelectedText();
+
+						if (!selectedText?.match(/\w/)) {
+							editor.balloonToolbars.hide();
+
+							return;
+						}
+					}
+
+					originalContextManagerCheck.call(this, selection);
+				};
 
 			const ckeditorWindow = CKEDITOR.document.getWindow();
 

@@ -154,14 +154,8 @@ const EditAdaptiveMedia = ({
 		},
 	});
 
-	const {
-		errors,
-		handleBlur,
-		handleChange,
-		setFieldValue,
-		touched,
-		values,
-	} = formik;
+	const {errors, handleBlur, handleChange, setFieldValue, touched, values} =
+		formik;
 
 	const onCancel = useCallback(() => {
 		if (redirect) {

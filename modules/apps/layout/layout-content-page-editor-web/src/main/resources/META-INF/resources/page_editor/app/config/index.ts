@@ -59,12 +59,8 @@ export function initializeConfig(backendConfig: Config) {
 		return config;
 	}
 
-	const {
-		commonStyles,
-		layoutType,
-		portletNamespace,
-		sidebarPanels,
-	} = backendConfig;
+	const {commonStyles, layoutType, portletNamespace, sidebarPanels} =
+		backendConfig;
 
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
@@ -210,7 +206,7 @@ function getToolbarPlugins(layoutType: LayoutType, toolbarId: string) {
 					pluginClass: Experience,
 					toolbarPluginId: 'experience',
 				},
-		  ]
+			]
 		: [];
 }
 

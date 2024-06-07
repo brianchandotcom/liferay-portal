@@ -76,7 +76,8 @@ class MBPortlet {
 
 		if (publishButton) {
 			this._addEventListener(publishButton, 'click', () => {
-				this.workflowActionInputNode.value = this._constants.ACTION_PUBLISH;
+				this.workflowActionInputNode.value =
+					this._constants.ACTION_PUBLISH;
 				this._saveFn();
 			});
 		}
@@ -87,14 +88,14 @@ class MBPortlet {
 
 		if (saveDrafButton) {
 			this._addEventListener(saveDrafButton, 'click', () => {
-				this.workflowActionInputNode.value = this._constants.ACTION_SAVE_DRAFT;
+				this.workflowActionInputNode.value =
+					this._constants.ACTION_SAVE_DRAFT;
 				this._saveFn();
 			});
 		}
 
-		const advancedReplyLink = this.rootNode.querySelector(
-			'.advanced-reply'
-		);
+		const advancedReplyLink =
+			this.rootNode.querySelector('.advanced-reply');
 
 		if (advancedReplyLink) {
 			this._addEventListener(advancedReplyLink, 'click', () => {
@@ -142,9 +143,8 @@ class MBPortlet {
 		const replyToMessageId = this._replyToMessageId;
 
 		const bodyInput = document.getElementById(`${namespace}body`);
-		bodyInput.value = window[
-			`${namespace}replyMessageBody${replyToMessageId}`
-		].getHTML();
+		bodyInput.value =
+			window[`${namespace}replyMessageBody${replyToMessageId}`].getHTML();
 
 		const form = this.rootNode.querySelector(
 			`[name="${namespace}advancedReplyFm${replyToMessageId}"]`
@@ -222,18 +222,18 @@ class MBPortlet {
 		const namespace = this._namespace;
 		const replyToMessageId = this._replyToMessageId;
 
-		document.getElementById(
-			`${namespace}${this._constants.CMD}`
-		).value = this._currentAction;
+		document.getElementById(`${namespace}${this._constants.CMD}`).value =
+			this._currentAction;
 
 		this._updateMultipleMBMessageAttachments();
 
 		const bodyInput = document.getElementById(`${namespace}body`);
 
 		if (replyToMessageId) {
-			bodyInput.value = window[
-				`${namespace}replyMessageBody${replyToMessageId}`
-			].getHTML();
+			bodyInput.value =
+				window[
+					`${namespace}replyMessageBody${replyToMessageId}`
+				].getHTML();
 
 			submitForm(
 				document[`${namespace}addQuickReplyFm${replyToMessageId}`]
@@ -293,7 +293,8 @@ class MBPortlet {
 				if (attachments.active.length) {
 					Liferay.componentReady(this.searchContainerId).then(
 						(searchContainer) => {
-							const searchContainerData = searchContainer.getData();
+							const searchContainerData =
+								searchContainer.getData();
 
 							document
 								.getElementById(

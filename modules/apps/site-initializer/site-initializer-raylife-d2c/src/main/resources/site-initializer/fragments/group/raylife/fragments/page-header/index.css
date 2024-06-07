@@ -22,7 +22,7 @@
 	padding: var(--spacer-4);
 }
 
- .page-header .container {
+.page-header .container {
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
@@ -33,4 +33,3 @@
 	font-size: var(--h3-font-size);
 	font-weight: var(--font-weight-normal);
 }
-

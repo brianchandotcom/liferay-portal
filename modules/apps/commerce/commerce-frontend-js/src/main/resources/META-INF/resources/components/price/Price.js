@@ -114,7 +114,7 @@ function Price({
 												? level.slice(
 														0,
 														level.length - 3
-												  )
+													)
 												: level}
 										</span>
 									))

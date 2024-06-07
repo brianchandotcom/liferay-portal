@@ -23,10 +23,12 @@ const RadioWithProvider = (props) => (
 );
 
 describe('Field Radio', () => {
+
 	// eslint-disable-next-line no-console
 	const originalWarn = console.warn;
 
 	beforeAll(() => {
+
 		// eslint-disable-next-line no-console
 		console.warn = (...args) => {
 			if (/DataProvider: Trying/.test(args[0])) {
@@ -37,6 +39,7 @@ describe('Field Radio', () => {
 	});
 
 	afterAll(() => {
+
 		// eslint-disable-next-line no-console
 		console.warn = originalWarn;
 	});

@@ -28,9 +28,8 @@ export default function ImportTranslation({
 }) {
 	const [importFiles, setImportFiles] = useState([]);
 	const [errorMessage, setErrorMessage] = useState(initialErrorMessage);
-	const [publishButtonDisabled, setPublishButtonDisabled] = useState(
-		workflowPending
-	);
+	const [publishButtonDisabled, setPublishButtonDisabled] =
+		useState(workflowPending);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState();
 	const [workflowAction, setWorkflowAction] = useState(workflowActionPublish);
 

@@ -114,9 +114,8 @@ function getLocationValue(field, context) {
 										}
 									}
 
-									const itemChildNodesAttributes = getChildAttributes(
-										item.childNodes
-									);
+									const itemChildNodesAttributes =
+										getChildAttributes(item.childNodes);
 
 									let itemContent;
 
@@ -133,9 +132,8 @@ function getLocationValue(field, context) {
 												childContent[item.tagName] = [];
 											}
 
-											childContent[
-												item.tagName
-											] = itemContent;
+											childContent[item.tagName] =
+												itemContent;
 										}
 
 										break;
@@ -160,7 +158,8 @@ function getLocationValue(field, context) {
 												grandGrandChildren = [];
 
 												for (const grandGrand of itemGrandChild.children) {
-													const grandGrandContent = {};
+													const grandGrandContent =
+														{};
 
 													if (
 														grandGrand.children
@@ -254,18 +253,16 @@ function getLocationValue(field, context) {
 									else {
 										itemContent = itemChild.textContent;
 										if (!childContent[itemChild.tagName]) {
-											childContent[
-												itemChild.tagName
-											] = [];
+											childContent[itemChild.tagName] =
+												[];
 										}
 										childContent[itemChild.tagName].push(
 											itemContent
 										);
 									}
 
-									childContent[
-										currentTagName
-									] = grandChildren;
+									childContent[currentTagName] =
+										grandChildren;
 								}
 
 								const itemAttributes = item.attributes;

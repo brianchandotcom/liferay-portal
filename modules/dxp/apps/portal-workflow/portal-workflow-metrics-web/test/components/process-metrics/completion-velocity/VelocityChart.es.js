@@ -219,15 +219,15 @@ describe('The velocity chart should', () => {
 				},
 			];
 
-			const textHours = getContainer(payload).querySelectorAll(
-				CLASS_CHART_CONTENT
-			)[1].innerHTML;
+			const textHours =
+				getContainer(payload).querySelectorAll(CLASS_CHART_CONTENT)[1]
+					.innerHTML;
 
 			payload[0].payload.key = null;
 
-			const textDefault = getContainer(payload).querySelectorAll(
-				CLASS_CHART_CONTENT
-			)[1].innerHTML;
+			const textDefault =
+				getContainer(payload).querySelectorAll(CLASS_CHART_CONTENT)[1]
+					.innerHTML;
 
 			expect(textHours).toContain('0 Inst / Hours');
 			expect(textDefault).toContain('0 Inst / Hours');

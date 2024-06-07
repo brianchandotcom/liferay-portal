@@ -145,7 +145,7 @@ const validateConfigKeys = (
 					: [];
 
 				return [...acc, ...configKeys];
-		  }, [])
+			}, [])
 		: [];
 
 	const missingKeys = elementKeys.filter(
@@ -200,10 +200,8 @@ function EditSXPElementForm({
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [showVariablesSidebar, setShowVariablesSidebar] = useState(false);
 	const [title, setTitle] = useState(initialTitle);
-	const [
-		isTitleAndDescriptionEdited,
-		setIsTitleAndDescriptionEdited,
-	] = useState(false);
+	const [isTitleAndDescriptionEdited, setIsTitleAndDescriptionEdited] =
+		useState(false);
 	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
 		initialElementJSONEditorValueString
 	);
@@ -215,9 +213,8 @@ function EditSXPElementForm({
 	 * When set to `true`, `isSXPElementJSONInvalid` prevents saving, rendering
 	 * preview, and editing on the title/description modal.
 	 */
-	const [isSXPElementJSONInvalid, setIsSXPElementJSONInvalid] = useState(
-		false
-	);
+	const [isSXPElementJSONInvalid, setIsSXPElementJSONInvalid] =
+		useState(false);
 
 	/**
 	 * Saves the most recent valid version of sxpElement as an object.
@@ -316,10 +313,8 @@ function EditSXPElementForm({
 	const _handleJSONEditorValueChange = (value) => {
 		setElementJSONEditorValue(value);
 
-		const {
-			sxpElementJSONObjectNew,
-			sxpElementJSONObjectOld,
-		} = _validateAndUpdateSXPElementJSONObject(value);
+		const {sxpElementJSONObjectNew, sxpElementJSONObjectOld} =
+			_validateAndUpdateSXPElementJSONObject(value);
 
 		if (
 			didPropertiesChange(
@@ -372,12 +367,10 @@ function EditSXPElementForm({
 		// case where a user types in the CodeMirror editor and very quickly
 		// clicks save.
 
-		const {
-			isInvalid,
-			sxpElementJSONObjectNew,
-		} = _validateAndUpdateSXPElementJSONObject(
-			getCodeMirrorValue(elementJSONEditorRef)
-		);
+		const {isInvalid, sxpElementJSONObjectNew} =
+			_validateAndUpdateSXPElementJSONObject(
+				getCodeMirrorValue(elementJSONEditorRef)
+			);
 
 		try {
 			if (isInvalid) {
@@ -752,27 +745,27 @@ function EditSXPElementForm({
 											<dl className="sidebar-dl">
 												{Object.keys(variables)
 													.length ? (
-													Object.keys(
-														variables
-													).map((category) => (
-														<SidebarPanel
-															categoryName={
-																category
-															}
-															expand={
-																expandAllVariables
-															}
-															key={category}
-															onVariableClick={
-																_handleVariableClick
-															}
-															parameterDefinitions={
-																variables[
+													Object.keys(variables).map(
+														(category) => (
+															<SidebarPanel
+																categoryName={
 																	category
-																]
-															}
-														/>
-													))
+																}
+																expand={
+																	expandAllVariables
+																}
+																key={category}
+																onVariableClick={
+																	_handleVariableClick
+																}
+																parameterDefinitions={
+																	variables[
+																		category
+																	]
+																}
+															/>
+														)
+													)
 												) : (
 													<div className="empty-list-message">
 														<ClayEmptyState

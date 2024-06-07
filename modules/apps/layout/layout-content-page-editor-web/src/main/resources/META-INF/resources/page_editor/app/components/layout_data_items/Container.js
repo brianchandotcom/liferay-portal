@@ -79,9 +79,8 @@ const Container = React.memo(
 		const style = {};
 
 		if (backgroundImageValue.url) {
-			style[
-				`--lfr-background-image-${item.itemId}`
-			] = `url(${backgroundImageValue.url})`;
+			style[`--lfr-background-image-${item.itemId}`] =
+				`url(${backgroundImageValue.url})`;
 
 			if (backgroundImage?.fileEntryId) {
 				style['--background-image-file-entry-id'] =

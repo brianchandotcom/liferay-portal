@@ -33,30 +33,22 @@ export default function () {
 	const [sixMonthData, setSixMonthData] = useState([]);
 	const [firstUntilCurrentData, setFirstUntilCurrentData] = useState([]);
 
-	const [
-		threeMonthTotalSettlementPaid,
-		setThreeMonthTotalSettlementPaid,
-	] = useState();
-	const [
-		sixMonthTotalSettlementPaid,
-		setSixMonthTotalSettlementPaid,
-	] = useState();
+	const [threeMonthTotalSettlementPaid, setThreeMonthTotalSettlementPaid] =
+		useState();
+	const [sixMonthTotalSettlementPaid, setSixMonthTotalSettlementPaid] =
+		useState();
 	const [yoyTotalSettlementPaid, setYoyTotalSettlementPaid] = useState();
 
-	const [
-		yoyLastYearSettlementPaid,
-		setYoyLastYearSettlementPaid,
-	] = useState();
+	const [yoyLastYearSettlementPaid, setYoyLastYearSettlementPaid] =
+		useState();
 
 	const [
 		lastYearThreeMonthSettlementPaid,
 		setLastYearThreeMonthSettlementPaid,
 	] = useState();
 
-	const [
-		lastYearSixMonthSettlementPaid,
-		setLastYearSixMonthSettlementPaid,
-	] = useState();
+	const [lastYearSixMonthSettlementPaid, setLastYearSixMonthSettlementPaid] =
+		useState();
 
 	function getTime(date, months) {
 		date.setMonth(date.getMonth() + months);
@@ -200,9 +192,8 @@ export default function () {
 			}
 
 			thisMonthsFilter[CONSTANTS.MONTHS_ABREVIATIONS[baseThisMonth]] = 0;
-			thisMonthsAgoFilter[
-				CONSTANTS.MONTHS_ABREVIATIONS[baseThisMonth]
-			] = 0;
+			thisMonthsAgoFilter[CONSTANTS.MONTHS_ABREVIATIONS[baseThisMonth]] =
+				0;
 			thisMonthsAgoArray[count] = thisMonthsFilter;
 			lastThisMonthsAgoArray[count] = thisMonthsAgoFilter;
 			baseThisMonth++;
@@ -333,9 +324,8 @@ export default function () {
 					lastThreeMonthsAgoArray
 				);
 
-				const lastYearThreeMonthsSettlementPaid = sumTotalSettlementsPaid(
-					lastThreeMonthsAgo
-				);
+				const lastYearThreeMonthsSettlementPaid =
+					sumTotalSettlementsPaid(lastThreeMonthsAgo);
 
 				setLastYearThreeMonthSettlementPaid(
 					lastYearThreeMonthsSettlementPaid
@@ -353,9 +343,8 @@ export default function () {
 						response,
 						threeMonthsAgoArray
 					);
-					const totalThreeMonthsSettlementPaidValue = sumSettlementsPaidPerMonth(
-						threeMonthsSettlementPaid
-					);
+					const totalThreeMonthsSettlementPaidValue =
+						sumSettlementsPaidPerMonth(threeMonthsSettlementPaid);
 					setSettlementPaidName(threeMonthsSettlementPaid);
 					setThreeMonthData(threeMonthsSettlementPaid);
 
@@ -382,9 +371,8 @@ export default function () {
 					lastSixMonthsAgoArray
 				);
 
-				const lastYearSixMonthsSettlementPaid = sumTotalSettlementsPaid(
-					lastSixMonthsAgo
-				);
+				const lastYearSixMonthsSettlementPaid =
+					sumTotalSettlementsPaid(lastSixMonthsAgo);
 
 				setLastYearSixMonthSettlementPaid(
 					lastYearSixMonthsSettlementPaid
@@ -403,9 +391,8 @@ export default function () {
 						sixMonthsAgoArray
 					);
 
-					const totalSixMonthsSettlementPaidValue = sumSettlementsPaidPerMonth(
-						sixMonthsSettlementPaid
-					);
+					const totalSixMonthsSettlementPaidValue =
+						sumSettlementsPaidPerMonth(sixMonthsSettlementPaid);
 
 					setSettlementPaidName(sixMonthsSettlementPaid);
 					setSixMonthData(sixMonthsSettlementPaid);
@@ -454,13 +441,13 @@ export default function () {
 						firstUntilCurrentArray
 					);
 
-					const firstUntilCurrentSettlementPaid = getSettlementPaidValues(
-						firstUntilCurrent
-					);
+					const firstUntilCurrentSettlementPaid =
+						getSettlementPaidValues(firstUntilCurrent);
 
-					const totalFirstCurrentSettlementPaidValue = sumSettlementsPaidPerMonth(
-						firstUntilCurrentSettlementPaid
-					);
+					const totalFirstCurrentSettlementPaidValue =
+						sumSettlementsPaidPerMonth(
+							firstUntilCurrentSettlementPaid
+						);
 
 					sumTotalSettlementsPaid(lastYearFirstUntilCurrent);
 
@@ -575,12 +562,12 @@ export default function () {
 							claimPercentual === Infinity
 								? `NaN`
 								: claimPercentual
-					  }% YoM`
+						}% YoM`
 					: `${
 							claimPercentual === Infinity
 								? `NaN`
 								: claimPercentual
-					  }% MoM`}
+						}% MoM`}
 			</div>
 		</div>
 	);

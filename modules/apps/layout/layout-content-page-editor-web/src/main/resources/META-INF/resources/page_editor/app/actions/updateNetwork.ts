@@ -10,7 +10,7 @@ import type {
 	ServiceNetworkStatusType,
 } from '../config/constants/serviceNetworkStatusTypes';
 
-type ErrorStatusType = typeof SERVICE_NETWORK_STATUS_TYPES['error'];
+type ErrorStatusType = (typeof SERVICE_NETWORK_STATUS_TYPES)['error'];
 
 export type NetworkStatus =
 	| {error: string; status: ErrorStatusType}

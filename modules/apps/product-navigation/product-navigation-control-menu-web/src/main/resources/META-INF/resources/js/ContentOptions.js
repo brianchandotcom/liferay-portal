@@ -29,12 +29,8 @@ const OPTIONS = [
 ];
 
 const ContentOptions = ({onChangeSelect}) => {
-	const {
-		addContentsURLs,
-		displayGrid,
-		portletNamespace,
-		setDisplayGrid,
-	} = useContext(AddPanelContext);
+	const {addContentsURLs, displayGrid, portletNamespace, setDisplayGrid} =
+		useContext(AddPanelContext);
 
 	const [active, setActive] = useState(false);
 

@@ -42,9 +42,8 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 			/>
 			<Topper
 				className={classNames({
-					[getLayoutDataItemTopperUniqueClassName(
-						item.itemId
-					)]: !hasInnerCommonStyles(fragmentEntryLink),
+					[getLayoutDataItemTopperUniqueClassName(item.itemId)]:
+						!hasInnerCommonStyles(fragmentEntryLink),
 					'page-editor__topper--hovered': hovered,
 				})}
 				item={item}

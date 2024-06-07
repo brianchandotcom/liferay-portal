@@ -16,9 +16,8 @@ const initialState = {
 };
 
 export function A11yIframe() {
-	const [violations, dispatch] = useIframeClient<Omit<Violations, 'iframes'>>(
-		initialState
-	);
+	const [violations, dispatch] =
+		useIframeClient<Omit<Violations, 'iframes'>>(initialState);
 
 	return Object.keys(violations.nodes).map((target, index) => (
 		<ViolationPopover

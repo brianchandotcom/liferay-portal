@@ -64,13 +64,11 @@ export default function ObjectRelationshipEdge({
 	const [{id, label, markerEndId, markerStartId, selected}] = data!;
 
 	const [activePopover, setActivePopover] = useState(false);
-	const [
-		objectRelationshipEdgeStyle,
-		setObjectRelationshipEdgeStyle,
-	] = useState<React.CSSProperties>({
-		...style,
-		...getInitialObjectRelationshipEdgeStyle(selected),
-	});
+	const [objectRelationshipEdgeStyle, setObjectRelationshipEdgeStyle] =
+		useState<React.CSSProperties>({
+			...style,
+			...getInitialObjectRelationshipEdgeStyle(selected),
+		});
 	const [labelBgStyle, setLabelBgStyle] = useState(
 		getInitialLabelBgStyle(selected)
 	);

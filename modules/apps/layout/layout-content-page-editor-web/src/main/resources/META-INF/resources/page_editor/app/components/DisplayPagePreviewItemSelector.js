@@ -79,7 +79,8 @@ export function DisplayPagePreviewItemSelectorContent({dark = false}) {
 					className={classNames(
 						'align-items-center d-flex flex-row mb-0 page-editor__display-page-preview-item-selector-label-wrapper w-100',
 						{
-							'page-editor__display-page-preview-item-selector-label-wrapper-dark': dark,
+							'page-editor__display-page-preview-item-selector-label-wrapper-dark':
+								dark,
 						}
 					)}
 					id={selectLabelId}

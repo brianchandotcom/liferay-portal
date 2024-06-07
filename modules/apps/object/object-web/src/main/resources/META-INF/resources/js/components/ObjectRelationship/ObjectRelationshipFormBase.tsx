@@ -161,18 +161,14 @@ export function ObjectRelationshipFormBase({
 	setValues,
 	values,
 }: ObjectRelationshipFormBaseProps) {
-	const [creationLanguageId, setCreationLanguageId] = useState<
-		Liferay.Language.Locale
-	>();
-	const [currentObjectDefinition, setCurrentObjectDefinition] = useState<
-		Partial<ObjectDefinition>
-	>();
-	const [objectDefinition1, setObjectDefinition1] = useState<
-		Partial<ObjectDefinition>
-	>();
-	const [objectDefinition2, setObjectDefinition2] = useState<
-		Partial<ObjectDefinition>
-	>();
+	const [creationLanguageId, setCreationLanguageId] =
+		useState<Liferay.Language.Locale>();
+	const [currentObjectDefinition, setCurrentObjectDefinition] =
+		useState<Partial<ObjectDefinition>>();
+	const [objectDefinition1, setObjectDefinition1] =
+		useState<Partial<ObjectDefinition>>();
+	const [objectDefinition2, setObjectDefinition2] =
+		useState<Partial<ObjectDefinition>>();
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		Partial<ObjectDefinition>[]
 	>([]);
@@ -246,14 +242,16 @@ export function ObjectRelationshipFormBase({
 		if (objectDefinition1) {
 			handleObjectRelationshipTypes(objectDefinition1);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.objectDefinitionExternalReferenceCode1]);
 
 	useEffect(() => {
 		const fetchObjectDefinition = async () => {
-			const objectDefinition1 = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode1 as string
-			);
+			const objectDefinition1 =
+				await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode1 as string
+				);
 			let newObjectRelationshipValues: Partial<ObjectRelationship> = {
 				objectDefinitionExternalReferenceCode1:
 					objectDefinition1.externalReferenceCode,
@@ -261,9 +259,10 @@ export function ObjectRelationshipFormBase({
 			};
 
 			if (objectDefinitionExternalReferenceCode2) {
-				const objectDefinition2 = await API.getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode2 as string
-				);
+				const objectDefinition2 =
+					await API.getObjectDefinitionByExternalReferenceCode(
+						objectDefinitionExternalReferenceCode2 as string
+					);
 
 				setObjectDefinition2(objectDefinition2);
 
@@ -284,6 +283,7 @@ export function ObjectRelationshipFormBase({
 		};
 
 		fetchObjectDefinition();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionExternalReferenceCode1]);
 
@@ -316,7 +316,8 @@ export function ObjectRelationshipFormBase({
 		if (readonly) {
 			setObjectDefinitions([
 				{
-					externalReferenceCode: values.objectDefinitionExternalReferenceCode2 as string,
+					externalReferenceCode:
+						values.objectDefinitionExternalReferenceCode2 as string,
 					id: values.objectDefinitionId2 as number,
 					label: values.label as LocalizedValue<string>,
 					name: values.objectDefinitionName2 as string,
@@ -327,6 +328,7 @@ export function ObjectRelationshipFormBase({
 		else {
 			fetchObjectDefinitions();
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionExternalReferenceCode1, readonly]);
 

@@ -21,7 +21,7 @@ const RESULT_TYPES = {
 	label: 'label',
 } as const;
 
-type ResultType = typeof RESULT_TYPES[keyof typeof RESULT_TYPES];
+type ResultType = (typeof RESULT_TYPES)[keyof typeof RESULT_TYPES];
 
 interface Result {
 	icon?: string;

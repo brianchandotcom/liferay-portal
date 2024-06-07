@@ -93,10 +93,8 @@ export default function SpacingBox({
 
 		event.preventDefault();
 
-		const {
-			position: currentPosition,
-			type: currentType,
-		} = document.activeElement.dataset;
+		const {position: currentPosition, type: currentType} =
+			document.activeElement.dataset;
 
 		let nextPosition = ARROW_TO_POSITION[event.key];
 		let nextType = currentType;

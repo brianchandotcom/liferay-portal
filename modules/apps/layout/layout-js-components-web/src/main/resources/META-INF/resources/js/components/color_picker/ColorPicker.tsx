@@ -98,9 +98,8 @@ export default function ColorPicker({
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
 
-	const [activeDropdownColorPicker, setActiveDropdownColorPicker] = useState(
-		false
-	);
+	const [activeDropdownColorPicker, setActiveDropdownColorPicker] =
+		useState(false);
 	const [activeColorPicker, setActiveColorPicker] = useState(false);
 	const [clearedValue, setClearedValue] = useState(false);
 	const [color, setColor] = usePropsFirst(
@@ -138,8 +137,8 @@ export default function ColorPicker({
 		value
 			? tokenValues[value]?.label
 			: field.inherited
-			? defaultTokenLabel
-			: null,
+				? defaultTokenLabel
+				: null,
 		{forceProp: clearedValue}
 	);
 

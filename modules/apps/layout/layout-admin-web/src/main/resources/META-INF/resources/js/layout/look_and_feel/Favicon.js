@@ -16,7 +16,8 @@ export default function Favicon({
 	imgURL: initialImgURL,
 	isReadOnly,
 	portletNamespace,
-	themeFaviconCETExternalReferenceCode: initialThemeFaviconCETExternalReferenceCode,
+	themeFaviconCETExternalReferenceCode:
+		initialThemeFaviconCETExternalReferenceCode,
 	title: initialTitle,
 	url,
 }) {
@@ -81,7 +82,8 @@ export default function Favicon({
 		clearButtonEnabled: initialClearButtonEnabled,
 		faviconFileEntryId: initialFaviconFileEntryId,
 		imgURL: initialImgURL,
-		themeFaviconCETExternalReferenceCode: initialThemeFaviconCETExternalReferenceCode,
+		themeFaviconCETExternalReferenceCode:
+			initialThemeFaviconCETExternalReferenceCode,
 		title: initialTitle,
 	});
 

@@ -34,8 +34,8 @@ const AvailableLocaleLabel = ({
 		labelText = isDefault
 			? 'default'
 			: isTranslated
-			? 'translated'
-			: 'not-translated';
+				? 'translated'
+				: 'not-translated';
 	}
 
 	return (

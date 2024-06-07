@@ -270,9 +270,8 @@ const Translate = ({
 						payload: {
 							field: {
 								content: contentData,
-								message: Liferay.Language.get(
-									'field-translated'
-								),
+								message:
+									Liferay.Language.get('field-translated'),
 								status: FETCH_STATUS.SUCCESS,
 							},
 							id: fieldId,

@@ -98,9 +98,8 @@ if (dispatchTrigger != null) {
 	Liferay.on('<portlet:namespace />saveTrigger', (event) => {
 		var form = window.document['<portlet:namespace />fm'];
 
-		form['<portlet:namespace />dispatchTaskSettings'].value = contentEditor.get(
-			STR_VALUE
-		);
+		form['<portlet:namespace />dispatchTaskSettings'].value =
+			contentEditor.get(STR_VALUE);
 
 		submitForm(
 			form,

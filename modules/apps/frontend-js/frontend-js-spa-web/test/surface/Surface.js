@@ -155,9 +155,8 @@ describe('Surface', () => {
 		});
 
 		it('shows default surface child if screen id not found and hide when found', () => {
-			const defaultChild = enterDocumentSurfaceElement(
-				'surfaceId-default'
-			);
+			const defaultChild =
+				enterDocumentSurfaceElement('surfaceId-default');
 			enterDocumentSurfaceElement('surfaceId').appendChild(defaultChild);
 			const surface = new Surface('surfaceId');
 			surface.show('screenId');
@@ -171,9 +170,8 @@ describe('Surface', () => {
 		});
 
 		it('removes surface child content if already in document', () => {
-			const surfaceChild = enterDocumentSurfaceElement(
-				'surfaceId-screenId'
-			);
+			const surfaceChild =
+				enterDocumentSurfaceElement('surfaceId-screenId');
 			enterDocumentSurfaceElement('surfaceId').appendChild(surfaceChild);
 			surfaceChild.innerHTML = 'temp';
 			const surface = new Surface('surfaceId');

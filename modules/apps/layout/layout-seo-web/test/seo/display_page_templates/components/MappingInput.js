@@ -16,8 +16,7 @@ const baseProps = {
 		{key: 'field-2', label: 'Field 2', type: 'text'},
 		{
 			key: 'field-3',
-			label:
-				'Field 3: with }right curly brackets}}}}, line breaks by \r\nwin\r\n\r\n\r\n, \nlinux\n and \rold mac\r',
+			label: 'Field 3: with }right curly brackets}}}}, line breaks by \r\nwin\r\n\r\n\r\n, \nlinux\n and \rold mac\r',
 			type: 'image',
 		},
 		{key: 'field-4', label: 'Field 4', type: 'text'},
@@ -50,9 +49,8 @@ describe('MappingInput', () => {
 
 			inputValue = result.getByDisplayValue(baseProps.value);
 			mappingButton = result.getByTitle('map');
-			mappingPanel = result.baseElement.querySelector(
-				'.dpt-mapping-panel'
-			);
+			mappingPanel =
+				result.baseElement.querySelector('.dpt-mapping-panel');
 		});
 
 		it('has an input with the initial value', () => {
@@ -79,9 +77,8 @@ describe('MappingInput', () => {
 			beforeEach(() => {
 				fireEvent.click(mappingButton);
 
-				mappingPanel = result.baseElement.querySelector(
-					'.dpt-mapping-panel'
-				);
+				mappingPanel =
+					result.baseElement.querySelector('.dpt-mapping-panel');
 				fieldSelect = result.getByLabelText('field');
 				mappingPanelButton = getByRole(mappingPanel, 'button');
 			});

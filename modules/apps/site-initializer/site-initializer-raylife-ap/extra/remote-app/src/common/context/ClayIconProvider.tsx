@@ -13,7 +13,7 @@ const getIconSpriteMap = () => {
 	const spritemap = pathThemeImages
 		? `${pathThemeImages}/clay/icons.svg`
 		: // eslint-disable-next-line no-undef
-		  require('@clayui/css/lib/images/icons/icons.svg').default;
+			require('@clayui/css/lib/images/icons/icons.svg').default;
 
 	return spritemap;
 };

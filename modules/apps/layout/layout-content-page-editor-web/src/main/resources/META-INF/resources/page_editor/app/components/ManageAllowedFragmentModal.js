@@ -15,9 +15,8 @@ import AllowedFragmentSelectorTree from './AllowedFragmentSelectorTree';
 const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 	const dispatch = useDispatch();
 
-	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
-		true
-	);
+	const [allowNewFragmentEntries, setAllowNewFragmentEntries] =
+		useState(true);
 	const [selectedFragments, setSelectedFragments] = useState(new Set([]));
 	const [loading, setLoading] = useState();
 

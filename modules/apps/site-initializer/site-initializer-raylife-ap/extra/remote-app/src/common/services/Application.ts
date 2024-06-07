@@ -118,7 +118,7 @@ export async function createOrUpdateRaylifeApplication(
 		return createOrUpdateRaylifeApplication(
 			{
 				...state,
-				externalReferenceCode: (undefined as unknown) as string,
+				externalReferenceCode: undefined as unknown as string,
 			},
 			status
 		);

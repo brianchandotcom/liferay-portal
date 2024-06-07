@@ -278,9 +278,8 @@ String signature = ParamUtil.getString(request, "signature");
 						}
 						%>
 
-						Liferay.TPL_DATA_TYPES['<%= jsObjectType %>'][
-							'<%= methodParameterName %>'
-						] = true;
+						Liferay.TPL_DATA_TYPES['<%= jsObjectType %>']['<%= methodParameterName %>'] =
+							true;
 					</aui:script>
 
 				<%

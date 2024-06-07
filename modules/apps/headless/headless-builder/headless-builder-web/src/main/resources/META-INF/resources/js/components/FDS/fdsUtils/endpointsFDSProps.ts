@@ -46,7 +46,7 @@ export function getAPIEndpointsFDSProps(
 							id: 'copyEndpointURL',
 							label: Liferay.Language.get('copy-url'),
 						},
-				  ]
+					]
 				: []),
 			{
 				icon: 'trash',

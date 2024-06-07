@@ -239,7 +239,8 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 				}
 				%>
 
-				var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
+				var blacklistCharJSONArray =
+					<%= blacklistCharJSONArray.toJSONString() %>;
 
 				for (var i = 0; i < blacklistCharJSONArray.length; i++) {
 					if (val.indexOf(blacklistCharJSONArray[i]) !== -1) {

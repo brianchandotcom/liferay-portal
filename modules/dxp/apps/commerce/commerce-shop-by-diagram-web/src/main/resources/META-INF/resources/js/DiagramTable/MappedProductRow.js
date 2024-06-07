@@ -31,7 +31,7 @@ export default function MappedProductRow({
 					? {
 							...mappedProduct,
 							selected,
-					  }
+						}
 					: mappedProduct
 			)
 		);
@@ -73,7 +73,7 @@ export default function MappedProductRow({
 						{product.type === 'diagram'
 							? product.productName[
 									Liferay.ThemeDisplay.getLanguageId()
-							  ]
+								]
 							: product.sku}
 
 						{product.type === 'sku' && (

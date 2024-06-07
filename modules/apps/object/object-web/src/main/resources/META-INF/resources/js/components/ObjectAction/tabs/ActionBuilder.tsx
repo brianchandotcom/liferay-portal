@@ -81,10 +81,8 @@ export default function ActionBuilder({
 		requiredFields: false,
 	});
 
-	const [
-		currentObjectDefinitionFields,
-		setCurrentObjectDefinitionFields,
-	] = useState<ObjectField[]>([]);
+	const [currentObjectDefinitionFields, setCurrentObjectDefinitionFields] =
+		useState<ObjectField[]>([]);
 
 	const [errorAlert, setErrorAlert] = useState(false);
 
@@ -108,7 +106,7 @@ export default function ActionBuilder({
 		const requiredFields = predefinedValues
 			? predefinedValues.filter(
 					({name}) => objectFieldsMap.get(name)?.required
-			  )
+				)
 			: [];
 
 		const hasEmptyValues = requiredFields?.some((item) =>
@@ -138,7 +136,7 @@ export default function ActionBuilder({
 		const requiredFields = predefinedValues
 			? predefinedValues.filter(
 					({name}) => objectFieldsMap.get(name)?.required
-			  )
+				)
 			: [];
 
 		const hasEmptyValues = requiredFields?.some((item) =>
@@ -197,6 +195,7 @@ export default function ActionBuilder({
 
 			setNewObjectActionExecutors(newObjectActionExecutors);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.objectActionTriggerKey]);
 

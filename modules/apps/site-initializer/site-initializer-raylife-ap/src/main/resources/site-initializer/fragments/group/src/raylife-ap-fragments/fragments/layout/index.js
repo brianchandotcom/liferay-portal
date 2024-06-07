@@ -16,9 +16,8 @@ const redirectUrl = (routeName) => {
 };
 
 const userName = Liferay.ThemeDisplay.getUserName();
-fragmentElement.querySelector(
-	'.footer-bar .avatar-user-name'
-).innerHTML = userName;
+fragmentElement.querySelector('.footer-bar .avatar-user-name').innerHTML =
+	userName;
 
 const btnDashboard = fragmentElement.querySelector('.dashboard-menu');
 const btnApplications = fragmentElement.querySelector('.applications-menu');

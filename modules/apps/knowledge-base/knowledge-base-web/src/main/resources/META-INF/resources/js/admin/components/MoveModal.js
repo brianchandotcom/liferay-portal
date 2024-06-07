@@ -24,9 +24,10 @@ const SELECT_EVENT_NAME = 'selectKBMoveFolder';
 export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
 
-	const searchItems = useMemo(() => getSearchItems(initialItems), [
-		initialItems,
-	]);
+	const searchItems = useMemo(
+		() => getSearchItems(initialItems),
+		[initialItems]
+	);
 
 	const [searchActive, setSearchActive] = useState(false);
 

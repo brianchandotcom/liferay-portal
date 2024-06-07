@@ -94,14 +94,15 @@ const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 											onItemsChange={(newItems) => {
 												setItems((items) =>
 													items.map((item) => {
-														const newItem = newItems.find(
-															(newItem) => {
-																return (
-																	newItem.key ===
-																	item.key
-																);
-															}
-														);
+														const newItem =
+															newItems.find(
+																(newItem) => {
+																	return (
+																		newItem.key ===
+																		item.key
+																	);
+																}
+															);
 
 														if (newItem) {
 															return {

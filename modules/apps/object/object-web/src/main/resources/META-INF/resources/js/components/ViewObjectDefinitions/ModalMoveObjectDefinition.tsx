@@ -38,17 +38,15 @@ export function ModalMoveObjectDefinition({
 	onAfterMoveObjectDefinition,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps) {
-	const [objectDefinition, setObjectDefinition] = useState<
-		ObjectDefinition
-	>();
+	const [objectDefinition, setObjectDefinition] =
+		useState<ObjectDefinition>();
 	const [query, setQuery] = useState('');
 	const [
 		selectedObjectFolderExternalReferenceCode,
 		setSelectedObjectFolderExternalReferenceCode,
 	] = useState<string>('');
-	const [selectedObjectFolder, setSelectedObjectFolder] = useState<
-		ObjectFolder
-	>();
+	const [selectedObjectFolder, setSelectedObjectFolder] =
+		useState<ObjectFolder>();
 	const [error, setError] = useState<string>('');
 
 	const {observer, onClose} = useModal({
@@ -77,7 +75,8 @@ export function ModalMoveObjectDefinition({
 	const handleMoveObject = async () => {
 		const movedObjectDefinition: ObjectDefinition = {
 			...(objectDefinition as ObjectDefinition),
-			objectFolderExternalReferenceCode: selectedObjectFolderExternalReferenceCode,
+			objectFolderExternalReferenceCode:
+				selectedObjectFolderExternalReferenceCode,
 		};
 
 		try {
@@ -113,13 +112,13 @@ export function ModalMoveObjectDefinition({
 	useEffect(() => {
 		const makeFetch = async () => {
 			if (objectDefinitionId) {
-				const objectDefinitionResponse = await API.getObjectDefinitionById(
-					objectDefinitionId
-				);
+				const objectDefinitionResponse =
+					await API.getObjectDefinitionById(objectDefinitionId);
 
-				const objectFolderResponse = await API.getObjectFolderByExternalReferenceCode(
-					objectDefinitionResponse.objectFolderExternalReferenceCode
-				);
+				const objectFolderResponse =
+					await API.getObjectFolderByExternalReferenceCode(
+						objectDefinitionResponse.objectFolderExternalReferenceCode
+					);
 
 				setSelectedObjectFolder(objectFolderResponse);
 				setObjectDefinition(objectDefinitionResponse);

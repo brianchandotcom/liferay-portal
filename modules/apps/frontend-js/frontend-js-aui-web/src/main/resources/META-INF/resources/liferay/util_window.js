@@ -84,8 +84,10 @@ AUI.add(
 					},
 				},
 			},
+
 			// eslint-disable-next-line @liferay/aui/no-modal
 			EXTENDS: A.Modal,
+
 			// eslint-disable-next-line @liferay/aui/no-modal
 			NAME: A.Modal.NAME,
 
@@ -274,9 +276,8 @@ AUI.add(
 
 				const modalConfig = instance._getWindowConfig(config);
 
-				const dialogIframeConfig = instance._getDialogIframeConfig(
-					config
-				);
+				const dialogIframeConfig =
+					instance._getDialogIframeConfig(config);
 
 				let modal = instance.getById(id);
 

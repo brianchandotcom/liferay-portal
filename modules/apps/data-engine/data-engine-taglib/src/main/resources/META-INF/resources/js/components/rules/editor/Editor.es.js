@@ -303,7 +303,7 @@ const reducer = (state, action) => {
 					? {
 							type: 'list',
 							value: '',
-					  }
+						}
 					: right;
 
 			const operands = [left];

@@ -3,7 +3,7 @@ body {
 }
 
 .navbar-nav li {
-	color: #6B6C7E;
+	color: #6b6c7e;
 	font-size: 20px;
 	line-height: 150%;
 	padding-left: 30px;
@@ -19,7 +19,7 @@ h4 span {
 }
 
 .swagger-ui .scheme-container {
-	border: 1px solid #E7E7ED;
+	border: 1px solid #e7e7ed;
 	border-radius: 5px;
 	margin-left: 32px;
 	margin-right: 32px;
@@ -30,7 +30,7 @@ h4 span {
 }
 
 .swagger-ui .info a {
-	color: #0B5FFF;
+	color: #0b5fff;
 	font-weight: 600;
 }
 
@@ -55,10 +55,10 @@ h4 span {
 	line-height: 2.5rem;
 }
 
-.swagger-ui .servers>label select {
+.swagger-ui .servers > label select {
 	background-color: #f1f2f5;
-	border: .0625rem solid #e7e7ed;
-	border-radius: .25rem;
+	border: 0.0625rem solid #e7e7ed;
+	border-radius: 0.25rem;
 	box-shadow: 0 0 transparent;
 	color: #272833;
 	cursor: pointer;

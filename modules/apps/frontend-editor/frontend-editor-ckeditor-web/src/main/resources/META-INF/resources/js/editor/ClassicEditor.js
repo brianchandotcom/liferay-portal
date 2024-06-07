@@ -50,17 +50,15 @@ const ClassicEditor = forwardRef(
 						};
 					}}
 					onDrop={(event) => {
-						const data = event.data.dataTransfer.getData(
-							'text/html'
-						);
+						const data =
+							event.data.dataTransfer.getData('text/html');
 
 						if (!data) {
 							return;
 						}
 
-						const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
-							data
-						);
+						const fragment =
+							CKEDITOR.htmlParser.fragment.fromHtml(data);
 
 						let element = fragment.children[0];
 
@@ -86,9 +84,10 @@ const ClassicEditor = forwardRef(
 
 						iframe.onload = function () {
 							const iframeDocument = iframe.contentDocument;
-							const iframeBody = iframeDocument.querySelector(
-								'body.cke_editable'
-							);
+							const iframeBody =
+								iframeDocument.querySelector(
+									'body.cke_editable'
+								);
 
 							if (iframeBody) {
 								iframeBody.setAttribute(

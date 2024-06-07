@@ -31,9 +31,8 @@ export function TopperLabel({children, itemElement, style}) {
 
 	useEffect(() => {
 		if (itemElement) {
-			const pageEditorWrapper = globalContext.document.getElementById(
-				'page-editor'
-			);
+			const pageEditorWrapper =
+				globalContext.document.getElementById('page-editor');
 
 			let itemElementLeft = 0;
 			let itemElementRight = 0;
@@ -82,9 +81,8 @@ export function TopperLabel({children, itemElement, style}) {
 
 			const updateItemElementSize = (itemElement) => {
 				const boundingClientRect = itemElement.getBoundingClientRect();
-				const computedStyle = globalContext.window.getComputedStyle(
-					itemElement
-				);
+				const computedStyle =
+					globalContext.window.getComputedStyle(itemElement);
 
 				itemElementMarginRight =
 					parseInt(computedStyle.marginRight, 10) || 0;
@@ -122,7 +120,7 @@ export function TopperLabel({children, itemElement, style}) {
 						});
 
 						updatePosition();
-				  })
+					})
 				: null;
 
 			let resizeIntervalId = null;

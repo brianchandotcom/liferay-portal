@@ -14,8 +14,7 @@ export default function main({initialLabel, initialValue, namespace, skuURL}) {
 	}
 
 	Autocomplete('autocomplete', 'autocomplete-root', {
-		apiUrl:
-			'/o/headless-commerce-admin-catalog/v1.0/unit-of-measure-skus?filter=(hasChildCPDefinitions eq false)',
+		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/unit-of-measure-skus?filter=(hasChildCPDefinitions eq false)',
 		initialLabel,
 		initialValue,
 		inputId: 'skuId',

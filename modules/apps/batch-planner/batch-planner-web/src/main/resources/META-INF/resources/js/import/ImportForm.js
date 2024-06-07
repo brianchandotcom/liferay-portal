@@ -55,9 +55,8 @@ function ImportForm({
 	const [fileFields, setFileFields] = useState();
 	const [fileContent, setFileContent] = useState();
 	const [fieldsSelections, setFieldsSelections] = useState({});
-	const [mappingsToBeEvaluated, setMappingsToBeEvaluated] = useState(
-		mappedFields
-	);
+	const [mappingsToBeEvaluated, setMappingsToBeEvaluated] =
+		useState(mappedFields);
 	const useTemplateMappingRef = useRef();
 
 	const formIsValid = useMemo(() => {

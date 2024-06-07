@@ -37,6 +37,7 @@ const loadScript = (readOnly, elementId, googlePlacesAPIKey, callback) => {
 	}
 
 	const element = document.getElementById(elementId);
+
 	/* eslint-disable-next-line no-unused-expressions */
 	element && !readOnly ? element.appendChild(script) : null;
 };
@@ -120,6 +121,7 @@ const usePlaces = ({
 				window.google.maps.event.removeListener(listener);
 			};
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -127,6 +129,7 @@ const usePlaces = ({
 		if (viewMode && value) {
 			onChange(value);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
 
@@ -150,6 +153,7 @@ const usePlaces = ({
 		document.addEventListener('scroll', onScroll, true);
 
 		return () => document.removeEventListener('scroll', onScroll, true);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 };

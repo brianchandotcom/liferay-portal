@@ -82,9 +82,8 @@ const PoliciesTable = () => {
 	const [totalPages, setTotalPages] = useState<number>(0);
 	const [page, setPage] = useState<number>(1);
 	const [firstPaginationLabel, setFirstPaginationLabel] = useState<number>(1);
-	const [secondPaginationLabel, setSecondPaginationLabel] = useState<number>(
-		1
-	);
+	const [secondPaginationLabel, setSecondPaginationLabel] =
+		useState<number>(1);
 	const [hasRedLine, setHasRedLine] = useState<boolean>(false);
 
 	const [searchInput, setSearchInput] = useState('');
@@ -131,20 +130,19 @@ const PoliciesTable = () => {
 						page: '0',
 						pageSize: '0',
 						sort: `endDate:${sortPolicyByEndDate}`,
-				  }
+					}
 				: {
 						filter: filtered,
 						page: '0',
 						pageSize: '0',
 						sort: `endDate:${sortPolicyByEndDate}`,
-				  };
+					};
 
 		return parameters;
 	};
 
-	const [parameters, setParameters] = useState<Parameters>(
-		generateParameters()
-	);
+	const [parameters, setParameters] =
+		useState<Parameters>(generateParameters());
 
 	const parameterDebounce = useDebounce(parameters, 200);
 
@@ -593,6 +591,7 @@ const PoliciesTable = () => {
 				totalCount > page * pageSize ? page * pageSize : totalCount;
 			setSecondPaginationLabel(secondPaginationLabel);
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pageSize, page, searchInput, filterCheckedLabel, parameterDebounce]);
 
@@ -810,13 +809,11 @@ const PoliciesTable = () => {
 							<ClayButton
 								className="btn-sm hover-button shadow-none text-neutral-9"
 								onClick={() => {
-									const updatedCheckedProduct = checkedStateProduct.fill(
-										false
-									);
+									const updatedCheckedProduct =
+										checkedStateProduct.fill(false);
 
-									const updatedCheckedStatus = checkedStateStatus.fill(
-										false
-									);
+									const updatedCheckedStatus =
+										checkedStateStatus.fill(false);
 
 									setCheckedStateProduct(
 										updatedCheckedProduct

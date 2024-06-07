@@ -136,10 +136,9 @@ export function getFieldIndexes(pages, fieldName) {
 }
 
 export function isEmptyRow(pages, pageIndex, rowIndex) {
-	return pages[pageIndex].rows[
-		rowIndex
-	].columns.every((column, columnIndex) =>
-		isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)
+	return pages[pageIndex].rows[rowIndex].columns.every(
+		(column, columnIndex) =>
+			isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)
 	);
 }
 
@@ -311,7 +310,7 @@ export function getColumnPosition(pages, pageIndex, rowIndex, columnIndex) {
 				}
 
 				return result;
-		  }, 0)
+			}, 0)
 		: 0;
 }
 

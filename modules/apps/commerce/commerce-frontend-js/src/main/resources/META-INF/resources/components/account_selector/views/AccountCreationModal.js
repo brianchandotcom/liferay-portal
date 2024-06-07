@@ -12,9 +12,8 @@ import React, {useCallback, useMemo, useState} from 'react';
 import ServiceProvider from '../../../ServiceProvider/index';
 import AccountCreationModalBody from './AccountCreationModalBody';
 
-const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
-	'v1'
-);
+const DeliveryCatalogAPIServiceProvider =
+	ServiceProvider.DeliveryCatalogAPI('v1');
 
 export default function AccountCreationModal({
 	accountTypes,
@@ -65,6 +64,7 @@ export default function AccountCreationModal({
 				closeModal();
 			})
 			.catch((error) => console.error(error));
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		accountData.description,

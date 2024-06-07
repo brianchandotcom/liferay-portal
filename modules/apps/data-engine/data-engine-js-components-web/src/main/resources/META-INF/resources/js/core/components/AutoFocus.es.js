@@ -31,9 +31,10 @@ export function AutoFocus({children}) {
 						'.ddm-form-builder--sidebar-open'
 					);
 
-					const userViewContent = containerElement.current.querySelector(
-						'.ddm-user-view-content'
-					);
+					const userViewContent =
+						containerElement.current.querySelector(
+							'.ddm-user-view-content'
+						);
 
 					if (
 						firstInput &&

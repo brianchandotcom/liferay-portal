@@ -32,7 +32,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					'<%= UnicodeLanguageUtil.get(portletConfig.getResourceBundle(locale), "are-you-sure-you-want-to-delete-the-selected-messages") %>',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						document.<portlet:namespace />fm.<portlet:namespace />deleteMBMessageIds.value = deleteMBMessageIds;
+						document.<portlet:namespace />fm.<portlet:namespace />deleteMBMessageIds.value =
+							deleteMBMessageIds;
 
 						if (dicussion) {
 							submitForm(
@@ -64,7 +65,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					'<%= UnicodeLanguageUtil.get(portletConfig.getResourceBundle(locale), "are-you-sure-you-want-to-mark-the-selected-messages-as-not-spam") %>',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						document.<portlet:namespace />fm.<portlet:namespace />notSpamMBMessageIds.value = notSpamMBMessageIds;
+						document.<portlet:namespace />fm.<portlet:namespace />notSpamMBMessageIds.value =
+							notSpamMBMessageIds;
 
 						submitForm(
 							document.<portlet:namespace />fm,

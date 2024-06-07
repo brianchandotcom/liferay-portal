@@ -34,9 +34,8 @@ const CurrentAssignments = ({assignments, setContentName}) => {
 
 	useEffect(() => {
 		if (assignmentType === 'resourceActions') {
-			const resourceActionsArray = assignments.resourceAction.split(
-				/(?:,| )+/
-			);
+			const resourceActionsArray =
+				assignments.resourceAction.split(/(?:,| )+/);
 
 			setAssignmentsDetails({
 				assignmentsCount: resourceActionsArray.length,

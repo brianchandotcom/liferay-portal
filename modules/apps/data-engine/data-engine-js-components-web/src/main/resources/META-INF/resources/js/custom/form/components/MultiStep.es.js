@@ -70,8 +70,8 @@ export function MultiStep({activePage, editable, pages}) {
 								'wizard_success'
 									? Liferay.Language.get('success-page')
 									: page.title
-									? page.title
-									: Liferay.Language.get('untitled-page')}
+										? page.title
+										: Liferay.Language.get('untitled-page')}
 							</div>
 
 							{editable ? (

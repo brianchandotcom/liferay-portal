@@ -2,8 +2,14 @@ body.has-edit-mode-menu .mini-cart-fragment {
 	min-height: 64px;
 }
 
-body.has-edit-mode-menu .mini-cart-fragment .mini-cart.is-open .mini-cart-overlay,
-body.has-edit-mode-menu .mini-cart-fragment .mini-cart.is-open .mini-cart-wrapper {
+body.has-edit-mode-menu
+	.mini-cart-fragment
+	.mini-cart.is-open
+	.mini-cart-overlay,
+body.has-edit-mode-menu
+	.mini-cart-fragment
+	.mini-cart.is-open
+	.mini-cart-wrapper {
 	display: none;
 }
 
@@ -20,7 +26,3 @@ body.has-edit-mode-menu .mini-cart-fragment .mini-cart.is-open .mini-cart-wrappe
 .mini-cart-fragment .mini-cart:not(.is-open) .mini-cart-wrapper {
 	display: none;
 }
-
-
-
-

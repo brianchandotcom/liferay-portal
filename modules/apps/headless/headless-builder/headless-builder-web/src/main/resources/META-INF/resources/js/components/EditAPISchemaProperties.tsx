@@ -88,9 +88,8 @@ export default function EditAPISchemaProperties({
 	const handleSearch = (searchKeyword: string) => {
 		if (searchKeyword && schemaUIData.schemaProperties) {
 			setSearchState({
-				filteredSchemaProperties: getFilteredSchemaProperties(
-					searchKeyword
-				)!,
+				filteredSchemaProperties:
+					getFilteredSchemaProperties(searchKeyword)!,
 				searchKeyword,
 			});
 		}
@@ -101,6 +100,7 @@ export default function EditAPISchemaProperties({
 
 	useEffect(() => {
 		fetchAPISchemaProperties();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

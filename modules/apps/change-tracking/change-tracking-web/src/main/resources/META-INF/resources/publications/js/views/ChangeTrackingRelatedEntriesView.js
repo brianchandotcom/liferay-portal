@@ -180,7 +180,7 @@ export default function ChangeTrackingRelatedEntriesView({
 									viewEntry.portraitURL
 										? ''
 										: 'user-icon-color-' +
-										  (viewEntry.userId % 10)
+											(viewEntry.userId % 10)
 								}`}
 								data-tooltip-align="top"
 								title={viewEntry.userName}

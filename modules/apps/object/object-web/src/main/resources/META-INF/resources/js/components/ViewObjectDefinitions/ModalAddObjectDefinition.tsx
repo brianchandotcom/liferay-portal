@@ -97,7 +97,8 @@ export function ModalAddObjectDefinition({
 		};
 
 		if (objectFolderExternalReferenceCode) {
-			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
+			objectDefinition.objectFolderExternalReferenceCode =
+				objectFolderExternalReferenceCode;
 		}
 
 		if (Liferay.FeatureFlags['LPS-135430']) {

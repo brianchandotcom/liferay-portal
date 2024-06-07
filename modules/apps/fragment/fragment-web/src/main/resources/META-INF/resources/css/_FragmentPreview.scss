@@ -28,7 +28,9 @@
 			margin-top: calc((#{$toolbarHeight} + #{$toolbarBorderWidth}) / 2);
 			top: 50%;
 			transform: translateX(-50%) translateY(-50%);
-			transition: height ease 0.3s, width ease 0.2s;
+			transition:
+				height ease 0.3s,
+				width ease 0.2s;
 		}
 
 		&--loading {

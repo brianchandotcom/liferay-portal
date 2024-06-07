@@ -85,11 +85,11 @@ function Dropdown(props) {
 												url: item.href,
 											});
 										},
-								  }
+									}
 								: {
 										'data-senna-off': true,
 										'href': item.href,
-								  };
+									};
 
 						return (
 							<ClayDropDown.Item key={i} {...dropdownProps}>

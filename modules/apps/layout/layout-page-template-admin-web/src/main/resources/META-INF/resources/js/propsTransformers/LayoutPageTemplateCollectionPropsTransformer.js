@@ -45,7 +45,8 @@ const ACTIONS = {
 				);
 
 				setFormValues(form, {
-					layoutPageTemplateCollectionsIds: layoutPageTemplateCollectionId,
+					layoutPageTemplateCollectionsIds:
+						layoutPageTemplateCollectionId,
 					targetLayoutPageTemplateCollectionId:
 						selectedItem.resourceid,
 				});

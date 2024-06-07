@@ -52,8 +52,9 @@ function MappingInput({
 
 		setTimeout(() => {
 			if (isMounted()) {
-				inputElRef.current.selectionStart = inputElRef.current.selectionEnd =
-					selectionStart + fieldVariable.length;
+				inputElRef.current.selectionStart =
+					inputElRef.current.selectionEnd =
+						selectionStart + fieldVariable.length;
 				inputElRef.current.focus();
 			}
 		}, 100);

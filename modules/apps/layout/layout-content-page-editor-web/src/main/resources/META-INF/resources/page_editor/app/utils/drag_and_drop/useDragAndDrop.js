@@ -96,9 +96,8 @@ export const initialDragDrop = {
 const DragAndDropContext = React.createContext(initialDragDrop);
 
 export function useDropTargetData() {
-	const {dropTargetItem, targetPositionWithMiddle} = useContext(
-		DragAndDropContext
-	).state;
+	const {dropTargetItem, targetPositionWithMiddle} =
+		useContext(DragAndDropContext).state;
 
 	return {
 		item: dropTargetItem,
@@ -129,9 +128,8 @@ export function NotDraggableArea({children}) {
 }
 
 export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
-	const {canDrag, dispatch, layoutDataRef, state} = useContext(
-		DragAndDropContext
-	);
+	const {canDrag, dispatch, layoutDataRef, state} =
+		useContext(DragAndDropContext);
 	const sourceRef = useRef(null);
 
 	const item = {
@@ -232,9 +230,8 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const toControlsId = useToControlsId();
 	const parentToControlsId = useParentToControlsId();
 
-	const {dispatch, layoutDataRef, state, targetRefs} = useContext(
-		DragAndDropContext
-	);
+	const {dispatch, layoutDataRef, state, targetRefs} =
+		useContext(DragAndDropContext);
 	const targetRef = useRef(null);
 
 	const targetItem = useMemo(

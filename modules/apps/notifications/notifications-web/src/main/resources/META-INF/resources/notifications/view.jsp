@@ -163,9 +163,8 @@ if (Validator.isNotNull(backURL)) {
 				})
 				.then((response) => {
 					if (response.success) {
-						var notificationContainer = currentTarget.ancestor(
-							'li.list-group-item'
-						);
+						var notificationContainer =
+							currentTarget.ancestor('li.list-group-item');
 
 						if (notificationContainer) {
 							var markAsReadURL = notificationContainer

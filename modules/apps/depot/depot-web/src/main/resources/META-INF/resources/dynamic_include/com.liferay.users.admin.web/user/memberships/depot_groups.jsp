@@ -170,18 +170,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 						AArray.removeItem(deleteDepotGroupIds, itemValue.classPK);
 
-						document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value = addDepotGroupIds.join(
-							','
-						);
-						document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value = deleteDepotGroupIds.join(
-							','
-						);
+						document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value =
+							addDepotGroupIds.join(',');
+						document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value =
+							deleteDepotGroupIds.join(',');
 					}
 				},
 				selectEventName:
 					'<%= depotAdminMembershipsDisplayContext.getItemSelectorEventName() %>',
-				title:
-					'<liferay-ui:message arguments="asset-library" key="select-x" />',
+				title: '<liferay-ui:message arguments="asset-library" key="select-x" />',
 				url: '<%= depotAdminMembershipsDisplayContext.getItemSelectorURL() %>',
 			});
 		});
@@ -212,12 +209,10 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				deleteDepotGroupIds.push(rowId);
 
-				document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value = addDepotGroupIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value = deleteDepotGroupIds.join(
-					','
-				);
+				document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupIds.value =
+					addDepotGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteDepotGroupIds.value =
+					deleteDepotGroupIds.join(',');
 			},
 			'.modify-link'
 		);

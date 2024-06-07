@@ -115,11 +115,8 @@ function buildQueryString(
 				);
 			}
 			else {
-				const {
-					operatorName,
-					propertyName,
-					value,
-				} = criteriaOrCriteriaItem;
+				const {operatorName, propertyName, value} =
+					criteriaOrCriteriaItem;
 
 				const type =
 					criteriaOrCriteriaItem.type ||

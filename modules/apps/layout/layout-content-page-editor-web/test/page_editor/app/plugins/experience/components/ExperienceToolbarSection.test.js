@@ -168,11 +168,8 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('shows a list of Experiences ordered by priority', async () => {
-		const {
-			findByRole,
-			getAllByRole,
-			getByLabelText,
-		} = renderExperienceToolbarSection(mockState, mockConfig);
+		const {findByRole, getAllByRole, getByLabelText} =
+			renderExperienceToolbarSection(mockState, mockConfig);
 
 		const dropDownButton = getByLabelText('experience', {exact: false});
 
@@ -199,12 +196,8 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('shows active/inactive label close to the experiences name', async () => {
-		const {
-			container,
-			findByRole,
-			getAllByRole,
-			getByLabelText,
-		} = renderExperienceToolbarSection(mockState, mockConfig);
+		const {container, findByRole, getAllByRole, getByLabelText} =
+			renderExperienceToolbarSection(mockState, mockConfig);
 
 		const dropDownButtonLabel = getByLabelText('experience', {
 			exact: false,
@@ -271,16 +264,12 @@ describe('ExperienceToolbarSection', () => {
 			}
 		});
 
-		const {
-			findByRole,
-			getAllByRole,
-			getByLabelText,
-			getByText,
-		} = renderExperienceToolbarSection(
-			mockStateWithLockedExperience,
-			mockConfig,
-			mockDispatch
-		);
+		const {findByRole, getAllByRole, getByLabelText, getByText} =
+			renderExperienceToolbarSection(
+				mockStateWithLockedExperience,
+				mockConfig,
+				mockDispatch
+			);
 
 		const dropDownButton = getByLabelText('experience', {exact: false});
 
@@ -324,11 +313,8 @@ describe('ExperienceToolbarSection', () => {
 			}
 		});
 
-		const {
-			findByRole,
-			getAllByRole,
-			getByLabelText,
-		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
+		const {findByRole, getAllByRole, getByLabelText} =
+			renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
 		const dropDownButton = getByLabelText('experience', {exact: false});
 
@@ -401,11 +387,8 @@ describe('ExperienceToolbarSection', () => {
 			}
 		});
 
-		const {
-			findByRole,
-			getAllByRole,
-			getByLabelText,
-		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
+		const {findByRole, getAllByRole, getByLabelText} =
+			renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
 		const dropDownButton = getByLabelText('experience', {exact: false});
 
@@ -746,15 +729,12 @@ describe('ExperienceToolbarSection', () => {
 			],
 		};
 
-		const {
-			findByRole,
-			getAllByRole,
-			getByLabelText,
-		} = renderExperienceToolbarSection(
-			mockStateForDelete,
-			mockConfig,
-			mockDispatch
-		);
+		const {findByRole, getAllByRole, getByLabelText} =
+			renderExperienceToolbarSection(
+				mockStateForDelete,
+				mockConfig,
+				mockDispatch
+			);
 
 		const dropDownButton = getByLabelText('experience', {exact: false});
 
@@ -821,11 +801,8 @@ describe('ExperienceToolbarSection', () => {
 			}
 		});
 
-		const {
-			findByRole,
-			getAllByRole,
-			getByLabelText,
-		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
+		const {findByRole, getAllByRole, getByLabelText} =
+			renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
 		const dropDownButton = getByLabelText('experience', {exact: false});
 

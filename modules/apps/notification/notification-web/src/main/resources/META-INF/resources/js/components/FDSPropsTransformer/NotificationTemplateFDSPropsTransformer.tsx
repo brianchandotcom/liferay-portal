@@ -9,7 +9,8 @@ export default function propsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {
-			notificationTemplateSourceDataRenderer: NotificationTemplateSourceDataRenderer,
+			notificationTemplateSourceDataRenderer:
+				NotificationTemplateSourceDataRenderer,
 		},
 	};
 }

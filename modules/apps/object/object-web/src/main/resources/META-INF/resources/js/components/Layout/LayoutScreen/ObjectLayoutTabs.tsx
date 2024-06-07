@@ -23,10 +23,8 @@ import {ObjectLayoutBox} from './ObjectLayoutBox';
 import {ObjectLayoutRelationship} from './ObjectLayoutRelationship';
 
 const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [
-		{creationLanguageId, isViewOnly, objectLayout},
-		dispatch,
-	] = useLayoutContext();
+	const [{creationLanguageId, isViewOnly, objectLayout}, dispatch] =
+		useLayoutContext();
 	const [visibleModal, setVisibleModal] = useState(false);
 	const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 	const {observer, onClose} = useModal({
@@ -54,7 +52,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 										{isRelationshipType
 											? Liferay.Language.get(
 													'relationships'
-											  )
+												)
 											: Liferay.Language.get('fields')}
 									</ClayLabel>
 								}
@@ -87,15 +85,15 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 												dispatch({
 													payload: {
 														name: {
-															[defaultLanguageId]: Liferay.Language.get(
-																'categorization'
-															),
+															[defaultLanguageId]:
+																Liferay.Language.get(
+																	'categorization'
+																),
 														},
 														tabIndex,
 														type: 'categorization',
 													},
-													type:
-														TYPES.ADD_OBJECT_LAYOUT_BOX,
+													type: TYPES.ADD_OBJECT_LAYOUT_BOX,
 												});
 											}}
 											deleteElement={() => {
@@ -103,8 +101,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 													payload: {
 														tabIndex,
 													},
-													type:
-														TYPES.DELETE_OBJECT_LAYOUT_TAB,
+													type: TYPES.DELETE_OBJECT_LAYOUT_TAB,
 												});
 											}}
 										/>

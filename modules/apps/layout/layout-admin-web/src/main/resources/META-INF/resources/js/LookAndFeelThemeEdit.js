@@ -49,9 +49,8 @@ export default function ({
 						.then((response) => response.text())
 						.then((response) => {
 							const range = document.createRange();
-							const fragment = range.createContextualFragment(
-								response
-							);
+							const fragment =
+								range.createContextualFragment(response);
 
 							themeContainer.removeChild(loadingIndicator);
 							themeContainer.appendChild(fragment);

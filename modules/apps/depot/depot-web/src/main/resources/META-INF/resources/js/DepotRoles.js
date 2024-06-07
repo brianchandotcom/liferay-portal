@@ -36,21 +36,17 @@ export default function ({
 			return;
 		}
 
-		form[
-			`${portletNamespace}addDepotGroupRolesGroupIds`
-		].value = addGroupIds.join(',');
+		form[`${portletNamespace}addDepotGroupRolesGroupIds`].value =
+			addGroupIds.join(',');
 
-		form[
-			`${portletNamespace}addDepotGroupRolesRoleIds`
-		].value = addRoleIds.join(',');
+		form[`${portletNamespace}addDepotGroupRolesRoleIds`].value =
+			addRoleIds.join(',');
 
-		form[
-			`${portletNamespace}deleteDepotGroupRolesGroupIds`
-		].value = deleteGroupIds.join(',');
+		form[`${portletNamespace}deleteDepotGroupRolesGroupIds`].value =
+			deleteGroupIds.join(',');
 
-		form[
-			`${portletNamespace}deleteDepotGroupRolesRoleIds`
-		].value = deleteRoleIds.join(',');
+		form[`${portletNamespace}deleteDepotGroupRolesRoleIds`].value =
+			deleteRoleIds.join(',');
 	};
 
 	Liferay.componentReady(`${portletNamespace}${searchContainerId}`).then(
@@ -101,10 +97,8 @@ export default function ({
 
 							searchContainer.updateDataStore();
 
-							const [
-								groupId,
-								roleId,
-							] = selectedItem.entityid.split('-');
+							const [groupId, roleId] =
+								selectedItem.entityid.split('-');
 
 							for (let i = 0; i < deleteRoleIds.length; i++) {
 								if (

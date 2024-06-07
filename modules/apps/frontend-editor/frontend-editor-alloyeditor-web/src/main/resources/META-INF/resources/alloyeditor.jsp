@@ -230,9 +230,11 @@ name = HtmlUtil.escapeJS(name);
 
 				plugins: plugins,
 				portletId: '<%= portletId %>',
-				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>,
+				textMode:
+					<%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>,
 
-				useCustomDataProcessor: <%= (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor")) %>,
+				useCustomDataProcessor:
+					<%= (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor")) %>,
 			}).render();
 
 			CKEDITOR.dom.selection.prototype.selectElement = function (element) {

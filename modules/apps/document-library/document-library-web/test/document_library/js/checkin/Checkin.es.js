@@ -90,13 +90,11 @@ describe('Checkin', () => {
 					beforeEach(async () => {
 						const saveButton = await result.findByText('save');
 
-						const changeLogField = await result.findByLabelText(
-							'version-notes'
-						);
+						const changeLogField =
+							await result.findByLabelText('version-notes');
 
-						const minorVersionRadio = await result.findByLabelText(
-							'minor-version'
-						);
+						const minorVersionRadio =
+							await result.findByLabelText('minor-version');
 
 						act(() => {
 							fireEvent.change(changeLogField, {
@@ -134,9 +132,9 @@ describe('Checkin', () => {
 					callback = jest.fn();
 
 					return act(() =>
-						Liferay.componentReady(
-							bridgeComponentId
-						).then(({open}) => open(callback))
+						Liferay.componentReady(bridgeComponentId).then(
+							({open}) => open(callback)
+						)
 					);
 				});
 

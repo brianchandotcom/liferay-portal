@@ -38,6 +38,7 @@ const fetcher = async <T = any>(
 	resource: RequestInfo,
 	options?: RequestInit
 ): Promise<T | undefined> => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(changeResource(resource), {
 		...options,

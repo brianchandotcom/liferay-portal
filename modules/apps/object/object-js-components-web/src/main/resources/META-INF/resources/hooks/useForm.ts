@@ -57,7 +57,7 @@ export function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 		else {
 			setErrors({});
 
-			onSubmit((values as unknown) as T);
+			onSubmit(values as unknown as T);
 		}
 	};
 

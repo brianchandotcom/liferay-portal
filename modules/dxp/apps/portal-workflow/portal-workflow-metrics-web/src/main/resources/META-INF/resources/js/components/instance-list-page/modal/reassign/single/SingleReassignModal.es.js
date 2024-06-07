@@ -27,9 +27,8 @@ function SingleReassignModal() {
 	const toaster = useToaster();
 
 	const {closeModal, visibleModal} = useContext(ModalContext);
-	const {selectedInstance, setSelectedItems} = useContext(
-		InstanceListContext
-	);
+	const {selectedInstance, setSelectedItems} =
+		useContext(InstanceListContext);
 
 	const onCloseModal = (refetch) => {
 		closeModal(refetch);

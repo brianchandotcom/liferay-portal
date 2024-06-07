@@ -46,9 +46,8 @@ describe('MappingSelector', () => {
 			inputFeedback = result.getAllByRole('textbox')[0];
 			inputValue = result.getByDisplayValue(baseProps.selectedFieldKey);
 			mappingButton = result.getByTitle('map');
-			mappingPanel = result.baseElement.querySelector(
-				'.dpt-mapping-panel'
-			);
+			mappingPanel =
+				result.baseElement.querySelector('.dpt-mapping-panel');
 		});
 
 		it('has a hidden input with the selected field key', () => {
@@ -80,9 +79,8 @@ describe('MappingSelector', () => {
 			beforeEach(() => {
 				fireEvent.click(mappingButton);
 
-				mappingPanel = result.baseElement.querySelector(
-					'.dpt-mapping-panel'
-				);
+				mappingPanel =
+					result.baseElement.querySelector('.dpt-mapping-panel');
 				fieldSelect = result.getByLabelText('field');
 				mappingPanelButton = getByRole(mappingPanel, 'button');
 			});

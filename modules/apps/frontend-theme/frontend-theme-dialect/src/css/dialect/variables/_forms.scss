@@ -19,7 +19,9 @@ $input-height: var(--form-input-height);
 $input-line-height: var(--form-input-line-height);
 $input-padding-x: var(--form-input-padding-x);
 $input-padding-y: var(--form-input-padding-y);
-$input-transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+$input-transition:
+	background-color 0.15s ease-in-out,
+	color 0.15s ease-in-out;
 
 $input-focus-bg: $form-white-color;
 $input-focus-border-color: $form-input-focus-color;

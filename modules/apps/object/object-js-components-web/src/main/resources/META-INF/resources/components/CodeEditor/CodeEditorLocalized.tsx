@@ -162,16 +162,16 @@ export function CodeEditorLocalized({
 													defaultLanguage.label
 														? 'info'
 														: value
-														? 'success'
-														: 'warning'
+															? 'success'
+															: 'warning'
 												}
 											>
 												{locale.label ===
 												defaultLanguage.label
 													? ariaLabels.default
 													: value
-													? ariaLabels.translated
-													: ariaLabels.untranslated}
+														? ariaLabels.translated
+														: ariaLabels.untranslated}
 											</ClayLabel>
 										</ClayLayout.ContentSection>
 									</ClayLayout.ContentCol>

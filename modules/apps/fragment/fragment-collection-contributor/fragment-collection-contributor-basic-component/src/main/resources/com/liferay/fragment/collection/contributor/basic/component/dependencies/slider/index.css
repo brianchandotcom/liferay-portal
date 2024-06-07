@@ -93,11 +93,11 @@
 }
 
 .component-slider .carousel-control {
-    bottom: auto;
-    height: auto;
-    padding: 8px;
-    top: 50%;
-    transform: translateY(-50%);
+	bottom: auto;
+	height: auto;
+	padding: 8px;
+	top: 50%;
+	transform: translateY(-50%);
 	width: auto;
 }
 
@@ -111,7 +111,9 @@
 
 .component-slider .carousel-control:focus-visible {
 	border-radius: 4px;
-	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
+	box-shadow:
+		0 0 0 2px #fff,
+		0 0 0 4px #528eff;
 	outline: none;
 }
 
@@ -142,13 +144,16 @@
 	border: 0;
 	display: block;
 	outline: 0;
-	padding: calc((var(--toggle-button-width) - var(--item-button-height)) / 2) 0;
+	padding: calc((var(--toggle-button-width) - var(--item-button-height)) / 2)
+		0;
 	text-decoration: none;
 }
 
 .component-slider .carousel-item-button:focus-visible {
 	border-radius: 4px;
-	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
+	box-shadow:
+		0 0 0 2px #fff,
+		0 0 0 4px #528eff;
 	outline: none;
 }
 
@@ -184,7 +189,9 @@
 
 .component-slider .carousel-toggle-button:focus-visible {
 	border-radius: 4px;
-	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #528eff;
+	box-shadow:
+		0 0 0 2px #fff,
+		0 0 0 4px #528eff;
 	opacity: 1;
 	outline: none;
 }

@@ -20,10 +20,8 @@ const useQuestionsSections = ({
 	setError,
 	setLoading,
 }) => {
-	const [
-		allowCreateTopicInRootTopic,
-		setAllowCreateTopicInRootTopic,
-	] = useState(false);
+	const [allowCreateTopicInRootTopic, setAllowCreateTopicInRootTopic] =
+		useState(false);
 	const [section, setSection] = useState({});
 	const [sectionQuery, setSectionQuery] = useState('');
 	const [sectionQueryVariables, setSectionQueryVariables] = useState({});
@@ -107,7 +105,7 @@ const useQuestionsSections = ({
 					? getSections()
 					: getSectionBySectionTitle().then(
 							({data}) => data.messageBoardSections.items[0]
-					  );
+						);
 
 			fn.then((result) => ({
 				...result,

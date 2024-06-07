@@ -52,6 +52,7 @@ const QuoteApp = () => {
 
 	useEffect(() => {
 		updateState('');
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedStep.section, selectedStep.subsection]);
 

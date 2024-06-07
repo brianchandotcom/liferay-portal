@@ -67,9 +67,8 @@ describe('TranslationOptions', () => {
 				/>
 			);
 
-			const resetTranslationsButton = screen.getByText(
-				'reset-translation'
-			);
+			const resetTranslationsButton =
+				screen.getByText('reset-translation');
 
 			expect(resetTranslationsButton).toBeDisabled();
 		});

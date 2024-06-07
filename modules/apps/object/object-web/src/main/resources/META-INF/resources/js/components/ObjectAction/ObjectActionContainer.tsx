@@ -144,13 +144,8 @@ export function ObjectActionContainer({
 		}
 	};
 
-	const {
-		errors,
-		handleChange,
-		handleSubmit,
-		setValues,
-		values,
-	} = useObjectActionForm({initialValues, onSubmit});
+	const {errors, handleChange, handleSubmit, setValues, values} =
+		useObjectActionForm({initialValues, onSubmit});
 
 	const disableGroovyAction =
 		Liferay.FeatureFlags['LPD-11179'] &&

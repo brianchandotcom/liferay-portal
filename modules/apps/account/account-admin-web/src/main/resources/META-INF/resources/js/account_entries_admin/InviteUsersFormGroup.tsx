@@ -105,9 +105,8 @@ const InviteUserFormGroup = ({
 	onRemove,
 	portletNamespace,
 }: IProps) => {
-	const [showRequiredMessage, setShowRequiredMessage] = useState<boolean>(
-		false
-	);
+	const [showRequiredMessage, setShowRequiredMessage] =
+		useState<boolean>(false);
 
 	const emailAddressErrorMessages = [];
 

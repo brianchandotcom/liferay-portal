@@ -49,16 +49,14 @@ export default function useSubmitLXCEnvironment(
 		customerPortalContext?.[0].sessionId ||
 		onboardingContext?.[0].sessionId;
 
-	const [
-		createLiferayExperienceCloudEnvironment,
-	] = useCreateLiferayExperienceCloudEnvironments();
+	const [createLiferayExperienceCloudEnvironment] =
+		useCreateLiferayExperienceCloudEnvironments();
 
 	const [updateAccountSubscriptionGroupsInfo] = useMutation(
 		updateAccountSubscriptionGroups
 	);
-	const [
-		createAdminLiferayExperienceCloud,
-	] = useCreateAdminLiferayExperienceCloud();
+	const [createAdminLiferayExperienceCloud] =
+		useCreateAdminLiferayExperienceCloud();
 
 	const handleSubmitLxcEnvironment = async () => {
 		const lxcActivationFields = values?.lxc;
@@ -71,8 +69,9 @@ export default function useSubmitLXCEnvironment(
 				},
 			});
 			if (data) {
-				const status = !!data?.c?.liferayExperienceCloudEnvironments
-					?.items?.length;
+				const status =
+					!!data?.c?.liferayExperienceCloudEnvironments?.items
+						?.length;
 
 				return status;
 			}
@@ -173,10 +172,8 @@ export default function useSubmitLXCEnvironment(
 					if (featureFlags.includes('LPS-181031')) {
 						const adminInfo = lxcActivationFields?.admins?.map(
 							({email, fullName}) => {
-								const [
-									firstName,
-									...lastNames
-								] = fullName.split(' ');
+								const [firstName, ...lastNames] =
+									fullName.split(' ');
 								const lastName = lastNames.join(' ');
 								const projectAdminEmailBody = `
 							<strong>First Name -</strong> ${firstName}<br>
@@ -187,14 +184,14 @@ export default function useSubmitLXCEnvironment(
 								return projectAdminEmailBody;
 							}
 						);
-						const notificationTemplateService = new NotificationQueueService(
-							client
-						);
+						const notificationTemplateService =
+							new NotificationQueueService(client);
 
 						await notificationTemplateService.send(
 							'SETUP-LXC-ENVIRONMENT-NOTIFICATION-TEMPLATE',
 							{
-								'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
+								'[%DATE_AND_TIME_SUBMITTED%]':
+									new Date().toUTCString(),
 								'[%PROJECT_ADMIN%]': adminInfo.join(''),
 								'[%PROJECT_CODE%]': project.code,
 								'[%PROJECT_DATA_CENTER_REGION%]':

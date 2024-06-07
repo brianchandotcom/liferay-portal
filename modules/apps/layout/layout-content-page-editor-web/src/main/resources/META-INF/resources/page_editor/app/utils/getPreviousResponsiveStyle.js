@@ -29,9 +29,8 @@ export default function getPreviousResponsiveStyle(
 			return VIEWPORT_SIZES.desktop;
 		}
 
-		const viewportSizePosition = ORDERED_VIEWPORT_SIZES.indexOf(
-			viewportSize
-		);
+		const viewportSizePosition =
+			ORDERED_VIEWPORT_SIZES.indexOf(viewportSize);
 
 		const previousViewportSize =
 			ORDERED_VIEWPORT_SIZES[viewportSizePosition - 1];

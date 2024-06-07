@@ -21,9 +21,8 @@ function OrderButton({disabled = false}) {
 	const {checkoutURL, orderDetailURL} = actionURLs;
 	const {cartItems = [], workflowStatusInfo = {}} = cartState;
 
-	const {
-		code: workflowStatus = WORKFLOW_STATUS_APPROVED,
-	} = workflowStatusInfo;
+	const {code: workflowStatus = WORKFLOW_STATUS_APPROVED} =
+		workflowStatusInfo;
 
 	const canSubmit =
 		!hasErrors(cartItems) && workflowStatus === WORKFLOW_STATUS_APPROVED;

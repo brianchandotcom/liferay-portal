@@ -29,13 +29,16 @@ export default function useStatusCountNavigation(activationKeys) {
 				const isExpired = FILTER_TYPES.expired(activationKey);
 
 				if (isNotActivate) {
-					statusCountMap.notActiveTotalCount = ++statusCountMap.notActiveTotalCount;
+					statusCountMap.notActiveTotalCount =
+						++statusCountMap.notActiveTotalCount;
 				}
 				else if (isActivate) {
-					statusCountMap.activatedTotalCount = ++statusCountMap.activatedTotalCount;
+					statusCountMap.activatedTotalCount =
+						++statusCountMap.activatedTotalCount;
 				}
 				else if (isExpired) {
-					statusCountMap.expiredTotalCount = ++statusCountMap.expiredTotalCount;
+					statusCountMap.expiredTotalCount =
+						++statusCountMap.expiredTotalCount;
 				}
 			}
 

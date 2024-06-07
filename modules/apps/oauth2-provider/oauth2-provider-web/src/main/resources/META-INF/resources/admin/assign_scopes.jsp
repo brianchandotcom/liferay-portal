@@ -176,9 +176,8 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 						'#<portlet:namespace />globalAccordion .panel[data-master]'
 					)
 					.forEach((globalAccordionPanel) => {
-						var masterScopeAliases = globalAccordionPanel.getAttribute(
-							'data-master'
-						);
+						var masterScopeAliases =
+							globalAccordionPanel.getAttribute('data-master');
 
 						var array = masterScopeAliases.split(' ');
 
@@ -294,9 +293,8 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 			}
 		}
 		else {
-			var index = <portlet:namespace />getArrayIndexOfStickyScopeAlias(
-				scopeAlias
-			);
+			var index =
+				<portlet:namespace />getArrayIndexOfStickyScopeAlias(scopeAlias);
 
 			if (index > -1) {
 				<portlet:namespace />stickyScopeAliases.splice(index, 1);

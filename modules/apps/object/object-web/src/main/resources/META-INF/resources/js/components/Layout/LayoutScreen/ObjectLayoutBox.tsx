@@ -65,8 +65,7 @@ export function ObjectLayoutBox({
 											boxIndex,
 											tabIndex,
 										},
-										type:
-											TYPES.CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE,
+										type: TYPES.CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE,
 									});
 								}}
 								toggled={collapsable}

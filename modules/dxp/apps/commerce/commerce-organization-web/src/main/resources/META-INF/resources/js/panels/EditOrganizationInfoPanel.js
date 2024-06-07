@@ -233,8 +233,8 @@ function EditOrganizationInfoPanel({
 
 					<ClayForm.Group
 						className={classnames({
-							'has-error': !!organizationData.errors
-								.addressCountryCode,
+							'has-error':
+								!!organizationData.errors.addressCountryCode,
 						})}
 					>
 						<label htmlFor={`${namespace}addressCountryCode`}>
@@ -266,8 +266,8 @@ function EditOrganizationInfoPanel({
 
 					<ClayForm.Group
 						className={classnames({
-							'has-error': !!organizationData.errors
-								.addressRegionCode,
+							'has-error':
+								!!organizationData.errors.addressRegionCode,
 						})}
 					>
 						<label htmlFor={`${namespace}addressRegionCode`}>

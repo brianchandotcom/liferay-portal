@@ -60,10 +60,8 @@ const ManageCollaborators = ({
 	const [networkStatus, setNetworkStatus] = useState(4);
 	const [selectedItems, setSelectedItems] = useState({});
 	const [selectedUserData, setSelectedUserData] = useState({});
-	const [
-		sharePublicationLinkVisible,
-		setSharePublicationLinkVisible,
-	] = useState(!!sharePublicationLink);
+	const [sharePublicationLinkVisible, setSharePublicationLinkVisible] =
+		useState(!!sharePublicationLink);
 	const [tab, setTab] = useState(TABS.collaborators);
 	const [updatedRoles, setUpdatedRoles] = useState({});
 
@@ -89,23 +87,21 @@ const ManageCollaborators = ({
 		},
 	});
 
-	const {
-		refetch: collaboratorsRefetch,
-		resource: collaboratorsResource,
-	} = useResource({
-		fetchOptions: {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		},
-		fetchRetry: {
-			attempts: 0,
-		},
-		link:
-			isPublicationTemplate && !!getTemplateCollaboratorsURL
-				? getTemplateCollaboratorsURL
-				: getCollaboratorsURL,
-	});
+	const {refetch: collaboratorsRefetch, resource: collaboratorsResource} =
+		useResource({
+			fetchOptions: {
+				credentials: 'include',
+				headers: new Headers({'x-csrf-token': Liferay.authToken}),
+				method: 'GET',
+			},
+			fetchRetry: {
+				attempts: 0,
+			},
+			link:
+				isPublicationTemplate && !!getTemplateCollaboratorsURL
+					? getTemplateCollaboratorsURL
+					: getCollaboratorsURL,
+		});
 
 	const {resource: autocompleteResource} = useResource({
 		fetchOptions: {
@@ -249,9 +245,8 @@ const ManageCollaborators = ({
 									item.emailAddress
 							)
 						) {
-							newUpdatedRoles[
-								item.userId.toString()
-							] = selectedRole;
+							newUpdatedRoles[item.userId.toString()] =
+								selectedRole;
 
 							return;
 						}
@@ -330,10 +325,10 @@ const ManageCollaborators = ({
 			publicationsUserRoleUserIds.length > 1
 				? Liferay.Language.get(
 						'you-are-inviting-users-x-who-do-not-have-access-to-publications'
-				  )
+					)
 				: Liferay.Language.get(
 						'you-are-inviting-user-x-who-does-not-have-access-to-publications'
-				  );
+					);
 
 		if (publicationsUserRoleUserIds.length) {
 			openConfirmModal({
@@ -711,8 +706,8 @@ const ManageCollaborators = ({
 					{showShareLinkTab
 						? Liferay.Language.get('share-access')
 						: readOnly
-						? Liferay.Language.get('view-collaborators')
-						: Liferay.Language.get('invite-users')}
+							? Liferay.Language.get('view-collaborators')
+							: Liferay.Language.get('invite-users')}
 				</div>
 			</div>
 		);
@@ -792,10 +787,9 @@ const ManageCollaborators = ({
 														portraitURL:
 															user.portraitURL,
 														userId: user.userId,
-														value:
-															user.emailAddress,
+														value: user.emailAddress,
 													};
-											  })
+												})
 											: []
 									}
 									spritemap={spritemap}
@@ -811,7 +805,7 @@ const ManageCollaborators = ({
 												item.isOwner
 													? Liferay.Language.get(
 															'cannot-update-permissions-for-an-owner'
-													  )
+														)
 													: ''
 											}
 										>
@@ -822,7 +816,7 @@ const ManageCollaborators = ({
 															item.portraitURL
 																? ''
 																: 'user-icon-color-' +
-																  (item.userId %
+																	(item.userId %
 																		10)
 														}`}
 														size="lg"
@@ -1064,9 +1058,8 @@ const ManageCollaborators = ({
 			}
 
 			setCollaboratorData({
-				[`publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
-					','
-				),
+				[`publicationsUserRoleUserIds`]:
+					publicationsUserRoleUserIds.join(','),
 				[`roleValues`]: roleValues.join(','),
 				[`userIds`]: userIds.join(','),
 			});
@@ -1086,9 +1079,8 @@ const ManageCollaborators = ({
 			}
 
 			const formData = {
-				[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
-					','
-				),
+				[`${namespace}publicationsUserRoleUserIds`]:
+					publicationsUserRoleUserIds.join(','),
 				[`${namespace}roleValues`]: roleValues.join(','),
 				[`${namespace}userIds`]: userIds.join(','),
 			};

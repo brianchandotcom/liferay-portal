@@ -146,9 +146,8 @@ function ContentTypesModal({
 				<ClayTable>
 					<ClayTable.Body>
 						{CONTENT_TYPES.map(({className, displayName}) => {
-							const isSelected = selectedTypes.includes(
-								className
-							);
+							const isSelected =
+								selectedTypes.includes(className);
 
 							return (
 								<ClayTable.Row
@@ -259,12 +258,12 @@ export default function ContentTypesInput({onBlur, onChange, value}) {
 							? Liferay.Util.sub(
 									Liferay.Language.get('all-x-selected'),
 									CONTENT_TYPES.length
-							  )
+								)
 							: Liferay.Util.sub(
 									Liferay.Language.get('x-of-x-selected'),
 									_getSelectedTypes(value).length,
 									CONTENT_TYPES.length
-							  )}
+								)}
 					</ClayButton>
 				</ClayInput.Group>
 			</ClayInput.GroupItem>

@@ -28,6 +28,7 @@ export default function useLoad() {
 
 			return Promise.resolve(modulesRef.current.get(key));
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isMounted]
 	);

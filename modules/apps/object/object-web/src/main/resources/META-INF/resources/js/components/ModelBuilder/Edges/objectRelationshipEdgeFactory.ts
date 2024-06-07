@@ -21,10 +21,11 @@ function getObjectRelationships({
 	objectDefinitionExternalReferenceCode2,
 	objectRelationshipMap,
 }: GetObjectRelationships) {
-	const objectRelationships = objectRelationshipMap.getValueByExternalReferenceCodes(
-		objectDefinitionExternalReferenceCode1,
-		objectDefinitionExternalReferenceCode2
-	);
+	const objectRelationships =
+		objectRelationshipMap.getValueByExternalReferenceCodes(
+			objectDefinitionExternalReferenceCode1,
+			objectDefinitionExternalReferenceCode2
+		);
 
 	if (!objectRelationships) {
 		return [];

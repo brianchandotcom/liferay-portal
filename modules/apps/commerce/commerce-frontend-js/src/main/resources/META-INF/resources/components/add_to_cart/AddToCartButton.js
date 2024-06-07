@@ -92,10 +92,10 @@ function AddToCartButton({
 							cpInstances.length > 1
 								? Liferay.Language.get(
 										'unable-to-add-products-to-the-cart'
-								  )
+									)
 								: Liferay.Language.get(
 										'unable-to-add-product-to-the-cart'
-								  );
+									);
 					}
 
 					showErrorNotification(errorMessage);
@@ -110,6 +110,7 @@ function AddToCartButton({
 					}
 				});
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[
 			accountId,
@@ -159,10 +160,11 @@ function AddToCartButton({
 			onClick={async (event) => {
 				if (accountId > 0) {
 					const CartResource = ServiceProvider.DeliveryCartAPI('v1');
-					const order = await CartResource.getCartsByAccountIdAndChannelId(
-						accountId,
-						channel.id
-					);
+					const order =
+						await CartResource.getCartsByAccountIdAndChannelId(
+							accountId,
+							channel.id
+						);
 
 					if (showOrderTypeModal && !order.items.length) {
 						setEvent(event);

@@ -199,9 +199,10 @@ const Calculator = forwardRef(
 			showOnlyRepeatableFields,
 		} = useMemo(() => getStateBasedOnExpression(expression), [expression]);
 
-		const repeatableFields = useMemo(() => getRepeatableFields(options), [
-			options,
-		]);
+		const repeatableFields = useMemo(
+			() => getRepeatableFields(options),
+			[options]
+		);
 
 		const value = useMemo(() => {
 			const newMaskedExpression = expression.replace(/[[\]]/g, '');

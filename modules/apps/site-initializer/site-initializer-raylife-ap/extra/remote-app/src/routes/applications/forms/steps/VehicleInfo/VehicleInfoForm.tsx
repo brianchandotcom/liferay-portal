@@ -133,12 +133,14 @@ const FormVehicleInfo = ({
 	useEffect(() => {
 		setMakeOptions(makeOptions);
 		setYearsOptions(yearOptionsAddClick());
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		setYearSearch('');
 		setYearsOptions(yearOptionsAddClick());
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [year]);
 
@@ -158,6 +160,7 @@ const FormVehicleInfo = ({
 				};
 			})
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form]);
 

@@ -189,10 +189,10 @@ const OptionList = ({options = [], icon, type}) => {
 				{config.isPrivateLayoutsEnabled
 					? Liferay.Language.get(
 							'this-page-is-using-a-different-theme-than-the-one-set-for-public-pages'
-					  )
+						)
 					: Liferay.Language.get(
 							'this-page-is-using-a-different-theme-than-the-one-set-for-all-pages'
-					  )}
+						)}
 			</ClayAlert>
 		);
 	}
@@ -208,7 +208,8 @@ const OptionList = ({options = [], icon, type}) => {
 						<ClayCard
 							aria-label={name}
 							className={classNames({
-								'page-editor__sidebar__design-options__tab-card--active': isActive,
+								'page-editor__sidebar__design-options__tab-card--active':
+									isActive,
 							})}
 							displayType="file"
 							onClick={() => {

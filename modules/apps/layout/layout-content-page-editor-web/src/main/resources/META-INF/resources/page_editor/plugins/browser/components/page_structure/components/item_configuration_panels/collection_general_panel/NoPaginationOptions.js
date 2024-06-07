@@ -27,9 +27,8 @@ export function NoPaginationOptions({
 	const collectionNumberOfItemsId = useId();
 	const isMounted = useIsMounted();
 
-	const [numberOfItems, setNumberOfItems] = useControlledState(
-		initialNumberOfItems
-	);
+	const [numberOfItems, setNumberOfItems] =
+		useControlledState(initialNumberOfItems);
 	const [numberOfItemsError, setNumberOfItemsError] = useState(null);
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
 

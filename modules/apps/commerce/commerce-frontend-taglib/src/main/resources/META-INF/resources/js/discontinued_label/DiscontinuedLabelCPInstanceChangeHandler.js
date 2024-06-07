@@ -18,9 +18,8 @@ export default function ({namespace}) {
 			);
 
 			if (componentElement) {
-				componentElement.querySelector(
-					'.label-item'
-				).innerHTML = Liferay.Language.get('discontinued');
+				componentElement.querySelector('.label-item').innerHTML =
+					Liferay.Language.get('discontinued');
 
 				componentElement.className = `label ${
 					cpInstance.discontinued ? 'label-danger' : 'invisible'

@@ -49,8 +49,7 @@ int type = commerceChannelAccountEntryRelDisplayContext.getType();
 					var callbackList = [
 						{
 							commerceChannelId: '0',
-							name:
-								'<%= LanguageUtil.get(request, commerceChannelAccountEntryRelDisplayContext.getCommerceChannelsEmptyOptionKey()) %>',
+							name: '<%= LanguageUtil.get(request, commerceChannelAccountEntryRelDisplayContext.getCommerceChannelsEmptyOptionKey()) %>',
 						},
 					];
 

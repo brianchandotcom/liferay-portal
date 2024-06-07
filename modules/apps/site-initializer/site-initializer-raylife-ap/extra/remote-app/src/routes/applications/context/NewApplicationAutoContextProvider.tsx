@@ -251,9 +251,8 @@ type ActionsPayload = {
 	};
 };
 
-type ApplicationActions = ActionMap<ActionsPayload>[keyof ActionMap<
-	ActionsPayload
->];
+type ApplicationActions =
+	ActionMap<ActionsPayload>[keyof ActionMap<ActionsPayload>];
 
 export const NewApplicationAutoContext = createContext<
 	[InitialStateTypes, (param: ApplicationActions) => void]

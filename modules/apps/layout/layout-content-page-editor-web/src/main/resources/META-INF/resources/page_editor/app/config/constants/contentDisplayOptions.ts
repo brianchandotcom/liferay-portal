@@ -9,4 +9,5 @@ export const CONTENT_DISPLAY_OPTIONS = {
 	flexRow: 'flex-row',
 } as const;
 
-export type ContentDisplayOption = typeof CONTENT_DISPLAY_OPTIONS[keyof typeof CONTENT_DISPLAY_OPTIONS];
+export type ContentDisplayOption =
+	(typeof CONTENT_DISPLAY_OPTIONS)[keyof typeof CONTENT_DISPLAY_OPTIONS];

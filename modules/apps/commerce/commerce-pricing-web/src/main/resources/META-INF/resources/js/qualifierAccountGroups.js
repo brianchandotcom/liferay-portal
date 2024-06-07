@@ -16,9 +16,8 @@ export default function ({
 	pricingFDSName,
 	spritemap,
 }) {
-	const CommercePriceListAccountGroupsResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommercePriceListAccountGroupsResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	const id = commercePriceListId;
 

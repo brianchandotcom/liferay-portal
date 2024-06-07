@@ -77,11 +77,12 @@ String fieldsJSONArrayString = String.valueOf(_getFormTemplateFieldsJSONArray(st
 
 		formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-		var setFieldsHiddenAttributes = <portlet:namespace />setFieldsHiddenAttributes.bind(
-			this,
-			formBuilder,
-			mode
-		);
+		var setFieldsHiddenAttributes =
+			<portlet:namespace />setFieldsHiddenAttributes.bind(
+				this,
+				formBuilder,
+				mode
+			);
 		formBuilder.get('fields')._items.forEach(setFieldsHiddenAttributes);
 		formBuilder.get('availableFields').forEach(setFieldsHiddenAttributes);
 

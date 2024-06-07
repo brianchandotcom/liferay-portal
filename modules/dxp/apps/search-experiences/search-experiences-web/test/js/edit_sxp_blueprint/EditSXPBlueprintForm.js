@@ -19,9 +19,14 @@ import {TEST_IDS} from '../../../src/main/resources/META-INF/resources/sxp_bluep
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/CodeMirrorEditor',
-	() => ({onChange, value}) => (
-		<textarea aria-label="text-area" onChange={onChange} value={value} />
-	)
+	() =>
+		({onChange, value}) => (
+			<textarea
+				aria-label="text-area"
+				onChange={onChange}
+				value={value}
+			/>
+		)
 );
 
 jest.mock(
@@ -106,16 +111,13 @@ describe('EditSXPBlueprintForm', () => {
 	});
 
 	it('adds additional query element from sidebar', async () => {
-		const {
-			container,
-			findByText,
-			queryAllByLabelText,
-		} = renderEditSXPBlueprintForm();
+		const {container, findByText, queryAllByLabelText} =
+			renderEditSXPBlueprintForm();
 
 		await findByText('query-settings');
 
-		const sxpElementCountBefore = container.querySelectorAll('.sxp-element')
-			.length;
+		const sxpElementCountBefore =
+			container.querySelectorAll('.sxp-element').length;
 
 		container
 			.querySelectorAll('.lexicon-icon-angle-right')
@@ -127,50 +129,44 @@ describe('EditSXPBlueprintForm', () => {
 
 		fireEvent.click(queryAllByLabelText('add')[0]);
 
-		const sxpElementCountAfter = container.querySelectorAll('.sxp-element')
-			.length;
+		const sxpElementCountAfter =
+			container.querySelectorAll('.sxp-element').length;
 
 		expect(sxpElementCountAfter).toBe(sxpElementCountBefore + 1);
 	});
 
 	it('enables removal of additional query elements', async () => {
-		const {
-			container,
-			findByText,
-			getAllByLabelText,
-			getAllByText,
-		} = renderEditSXPBlueprintForm({
-			initialSXPElementInstances: QUERY_SXP_ELEMENTS.map(
-				(sxpElement) => ({
-					sxpElement,
-					type: 10,
-					uiConfigurationValues: getUIConfigurationValues(sxpElement),
-				})
-			),
-		});
+		const {container, findByText, getAllByLabelText, getAllByText} =
+			renderEditSXPBlueprintForm({
+				initialSXPElementInstances: QUERY_SXP_ELEMENTS.map(
+					(sxpElement) => ({
+						sxpElement,
+						type: 10,
+						uiConfigurationValues:
+							getUIConfigurationValues(sxpElement),
+					})
+				),
+			});
 
 		await findByText('query-settings');
 
-		const sxpElementCountBefore = container.querySelectorAll('.sxp-element')
-			.length;
+		const sxpElementCountBefore =
+			container.querySelectorAll('.sxp-element').length;
 
 		fireEvent.click(getAllByLabelText('dropdown')[0]);
 
 		fireEvent.click(getAllByText('remove')[0]);
 
-		const sxpElementCountAfter = container.querySelectorAll('.sxp-element')
-			.length;
+		const sxpElementCountAfter =
+			container.querySelectorAll('.sxp-element').length;
 
 		expect(sxpElementCountAfter).toBe(sxpElementCountBefore - 1);
 	});
 
 	describe('fetchPreviewSearch responses', () => {
 		async function setupAndGetErrorItems() {
-			const {
-				findAllByTestId,
-				findByTestId,
-				getByTestId,
-			} = renderEditSXPBlueprintForm();
+			const {findAllByTestId, findByTestId, getByTestId} =
+				renderEditSXPBlueprintForm();
 
 			await findByTestId(TEST_IDS.PREVIEW_SIDEBAR_BUTTON);
 
@@ -213,8 +209,7 @@ describe('EditSXPBlueprintForm', () => {
 				return {
 					json: async () => ({
 						status: 'BAD_REQUEST',
-						title:
-							'The property "elementInstances" is not defined in SXPBlueprint. The property "null" is not defined in Object[]. The property "sxpElement" is not defined in ElementInstance. The property "elementDefinitionn" is not defined in SXPElement.',
+						title: 'The property "elementInstances" is not defined in SXPBlueprint. The property "null" is not defined in Object[]. The property "sxpElement" is not defined in ElementInstance. The property "elementDefinitionn" is not defined in SXPElement.',
 					}),
 					ok: false,
 					status: 400,
@@ -289,8 +284,7 @@ describe('EditSXPBlueprintForm', () => {
 								exceptionTrace:
 									'java.lang.RuntimeException: ...',
 								localizedMessage: 'Error',
-								msg:
-									'com.liferay.portal.kernel.search.SearchException: java.lang.RuntimeException: org.elasticsearch.ElasticsearchStatusException: ElasticsearchStatusException[Elasticsearch exception [type=parsing_exception, reason=unknown query [termmm] did you mean any of [term, terms]?]]; nested: ElasticsearchException[Elasticsearch exception [type=named_object_not_found_exception, reason=[2:12] unknown field [termmm]]];',
+								msg: 'com.liferay.portal.kernel.search.SearchException: java.lang.RuntimeException: org.elasticsearch.ElasticsearchStatusException: ElasticsearchStatusException[Elasticsearch exception [type=parsing_exception, reason=unknown query [termmm] did you mean any of [term, terms]?]]; nested: ElasticsearchException[Elasticsearch exception [type=named_object_not_found_exception, reason=[2:12] unknown field [termmm]]];',
 								severity: 'ERROR',
 							},
 						],
@@ -352,8 +346,7 @@ describe('EditSXPBlueprintForm', () => {
 								exceptionTrace:
 									'com.liferay.search.experiences.blueprint.exception.InvalidParameterException: ...',
 								localizedMessage: 'Error',
-								msg:
-									'Invalid parameter name: openweathermap.temp',
+								msg: 'Invalid parameter name: openweathermap.temp',
 								severity: 'ERROR',
 								sxpElementId: 'querySXPElement-0',
 							},

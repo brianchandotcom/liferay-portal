@@ -11,9 +11,9 @@ export default function getTargetPositions(orientation) {
 		? {
 				end: TARGET_POSITIONS.RIGHT,
 				start: TARGET_POSITIONS.LEFT,
-		  }
+			}
 		: {
 				end: TARGET_POSITIONS.BOTTOM,
 				start: TARGET_POSITIONS.TOP,
-		  };
+			};
 }

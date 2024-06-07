@@ -33,8 +33,8 @@ const FormActionProvider = ({children, form}) => {
 		},
 	} = useContext(AppContext);
 
-	const emailHasError = !!errors?.basics?.businessInformation?.business
-		?.email;
+	const emailHasError =
+		!!errors?.basics?.businessInformation?.business?.email;
 
 	const email = getValues('basics.businessInformation.business.email');
 	const productQuote = getValues('basics.productName');

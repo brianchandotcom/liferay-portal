@@ -24,10 +24,10 @@ const Search: React.FC<SearchProps> = ({setSearchTerm}) => {
 
 	useEffect(() => setIsClear(!!value), [value]);
 
-	useEffect(() => setSearchTerm(debouncedValue), [
-		debouncedValue,
-		setSearchTerm,
-	]);
+	useEffect(
+		() => setSearchTerm(debouncedValue),
+		[debouncedValue, setSearchTerm]
+	);
 
 	return (
 		<ClayInput.Group className="m-0" small>

@@ -6,7 +6,9 @@ $white: #fff;
 
 @mixin treeview-box-shadow {
 	border-radius: 0.25rem;
-	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #80acff;
+	box-shadow:
+		0 0 0 2px #fff,
+		0 0 0 4px #80acff;
 	transition: box-shadow ease 0.3s;
 }
 

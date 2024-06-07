@@ -269,7 +269,8 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 		recordSetId,
 		recordSetName
 	) {
-		document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;
+		document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value =
+			recordSetId;
 
 		var displayingRecordSetIdHolder = document.querySelector(
 			'.displaying-record-set-id-holder'

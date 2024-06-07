@@ -36,9 +36,8 @@ export default function loadEditorClientExtensions({
 							editorTransformer?.editorConfigTransformer;
 
 						if (editorConfigTransformer) {
-							transformedConfig = editorConfigTransformer(
-								transformedConfig
-							);
+							transformedConfig =
+								editorConfigTransformer(transformedConfig);
 						}
 					}
 				);

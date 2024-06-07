@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -114,9 +115,8 @@ const NotificationSidebar: React.FC = () => {
 
 				if (isMatchingApplication) {
 					const referenceCode = extractNumber(post.message as string);
-					const externalReferenceCodeUpdated = await getExternalReferenceCode(
-						referenceCode
-					);
+					const externalReferenceCodeUpdated =
+						await getExternalReferenceCode(referenceCode);
 					const route = createUrlByERC(
 						externalReferenceCodeUpdated,
 						'app-details'
@@ -139,11 +139,13 @@ const NotificationSidebar: React.FC = () => {
 
 	useEffect(() => {
 		getNotifications();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pageSize]);
 
 	useEffect(() => {
 		generateLinks();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [posts]);
 
@@ -160,9 +162,8 @@ const NotificationSidebar: React.FC = () => {
 					{postsWithLinks.map((item: PostType, index: number) => (
 						<div
 							className={classNames({
-								'post-container-unread align-items-center justify-content-center position-relative bubble-unread': !isRead[
-									index
-								],
+								'post-container-unread align-items-center justify-content-center position-relative bubble-unread':
+									!isRead[index],
 							})}
 							key={index}
 						>

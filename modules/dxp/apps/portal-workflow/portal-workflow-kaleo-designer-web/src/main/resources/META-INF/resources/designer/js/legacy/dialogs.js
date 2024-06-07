@@ -194,9 +194,11 @@ AUI.add(
 
 		KaleoDesignerDialogs.openConfirmDeleteDialog = openConfirmDeleteDialog;
 
-		KaleoDesignerDialogs.showActionUndoneSuccessMessage = showActionUndoneSuccessMessage;
+		KaleoDesignerDialogs.showActionUndoneSuccessMessage =
+			showActionUndoneSuccessMessage;
 
-		KaleoDesignerDialogs.showDefinitionImportSuccessMessage = showDefinitionImportSuccessMessage;
+		KaleoDesignerDialogs.showDefinitionImportSuccessMessage =
+			showDefinitionImportSuccessMessage;
 
 		Liferay.KaleoDesignerDialogs = KaleoDesignerDialogs;
 	},

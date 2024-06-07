@@ -5,10 +5,8 @@
 
 export const BOOST_ALL_KEYWORDS_MATCH = {
 	description_i18n: {
-		en_US:
-			'Boost contents if the search keywords match in the given fields.',
-		ja_JP:
-			'検索キーワードが指定されたフィールドに一致する場合、コンテンツをブーストする',
+		en_US: 'Boost contents if the search keywords match in the given fields.',
+		ja_JP: '検索キーワードが指定されたフィールドに一致する場合、コンテンツをブーストする',
 	},
 	elementDefinition: {
 		category: 'boost',
@@ -145,8 +143,7 @@ export const BOOST_ASSET_TYPE = {
 									term: {
 										entryClassName: {
 											boost: '${configuration.boost}',
-											value:
-												'${configuration.entry_class_name}',
+											value: '${configuration.entry_class_name}',
 										},
 									},
 								},
@@ -400,8 +397,7 @@ export const USER_CREATED_ELEMENT = {
 									term: {
 										entryClassName: {
 											boost: '${configuration.boost}',
-											value:
-												'${configuration.entry_class_name}',
+											value: '${configuration.entry_class_name}',
 										},
 									},
 								},

@@ -50,15 +50,17 @@ AUI.add(
 			STRINGS: KaleoDesignerStrings,
 
 			prototype: {
-				SERIALIZABLE_ATTRS: A.Connector.prototype.SERIALIZABLE_ATTRS.concat(
-					['default']
-				),
+				SERIALIZABLE_ATTRS:
+					A.Connector.prototype.SERIALIZABLE_ATTRS.concat([
+						'default',
+					]),
 
 				getPropertyModel() {
-					const parentModel = A.Connector.superclass.getPropertyModel.apply(
-						this,
-						arguments
-					);
+					const parentModel =
+						A.Connector.superclass.getPropertyModel.apply(
+							this,
+							arguments
+						);
 
 					return AArray(parentModel).concat([
 						{
@@ -177,15 +179,16 @@ AUI.add(
 				},
 
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeState.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeState.prototype._valueShapeBoundary();
 
 					shape.radius = 17;
 
 					return shape;
 				},
 
-				SERIALIZABLE_ATTRS: A.DiagramNode.prototype.SERIALIZABLE_ATTRS.concat(
-					[
+				SERIALIZABLE_ATTRS:
+					A.DiagramNode.prototype.SERIALIZABLE_ATTRS.concat([
 						'actions',
 						'notifications',
 						'initial',
@@ -195,8 +198,7 @@ AUI.add(
 						'scriptLanguage',
 						'taskTimers',
 						'xmlType',
-					]
-				),
+					]),
 
 				getConnectionNode() {
 					const node = new Liferay.KaleoDesignerNodes.DiagramNodeTask(
@@ -243,10 +245,11 @@ AUI.add(
 
 					const typeModel = availablePropertyModels[type];
 
-					const parentModel = DiagramNodeState.superclass.getPropertyModel.apply(
-						this,
-						arguments
-					);
+					const parentModel =
+						DiagramNodeState.superclass.getPropertyModel.apply(
+							this,
+							arguments
+						);
 
 					let returnValue;
 
@@ -328,7 +331,8 @@ AUI.add(
 
 			prototype: {
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeCondition.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeCondition.prototype._valueShapeBoundary();
 
 					shape.width = 41;
 					shape.height = 41;
@@ -367,10 +371,11 @@ AUI.add(
 
 					const typeModel = availablePropertyModels[type];
 
-					const parentModel = DiagramNodeCondition.superclass.getPropertyModel.apply(
-						this,
-						arguments
-					);
+					const parentModel =
+						DiagramNodeCondition.superclass.getPropertyModel.apply(
+							this,
+							arguments
+						);
 
 					let returnValue;
 
@@ -458,7 +463,8 @@ AUI.add(
 
 			prototype: {
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
 					shape.width = 41;
 					shape.height = 41;
@@ -497,7 +503,8 @@ AUI.add(
 
 			prototype: {
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
 					shape.width = 41;
 					shape.height = 41;
@@ -542,7 +549,8 @@ AUI.add(
 
 			prototype: {
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeFork.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeFork.prototype._valueShapeBoundary();
 
 					shape.width = 41;
 					shape.height = 41;
@@ -593,7 +601,8 @@ AUI.add(
 
 			prototype: {
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeStart.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeStart.prototype._valueShapeBoundary();
 
 					shape.radius = 17;
 
@@ -661,7 +670,8 @@ AUI.add(
 				},
 
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeEnd.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeEnd.prototype._valueShapeBoundary();
 
 					shape.radius = 17;
 
@@ -717,7 +727,8 @@ AUI.add(
 
 			prototype: {
 				_valueShapeBoundary() {
-					const shape = A.DiagramNodeTask.prototype._valueShapeBoundary();
+					const shape =
+						A.DiagramNodeTask.prototype._valueShapeBoundary();
 
 					shape.width = 55;
 					shape.height = 55;
@@ -725,9 +736,10 @@ AUI.add(
 					return shape;
 				},
 
-				SERIALIZABLE_ATTRS: DiagramNodeState.prototype.SERIALIZABLE_ATTRS.concat(
-					['assignments']
-				),
+				SERIALIZABLE_ATTRS:
+					DiagramNodeState.prototype.SERIALIZABLE_ATTRS.concat([
+						'assignments',
+					]),
 
 				getPropertyModel() {
 					const instance = this;
@@ -772,10 +784,11 @@ AUI.add(
 
 					const typeModel = availablePropertyModels[type];
 
-					const parentModel = DiagramNodeState.superclass.getPropertyModel.apply(
-						this,
-						arguments
-					);
+					const parentModel =
+						DiagramNodeState.superclass.getPropertyModel.apply(
+							this,
+							arguments
+						);
 
 					let returnValue;
 

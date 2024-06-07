@@ -30,9 +30,8 @@ export default withRouter(
 
 		const [data, setData] = useState();
 		const editorRef = useRef('');
-		const [isUpdateButtonDisabled, setIsUpdateButtonDisabled] = useState(
-			false
-		);
+		const [isUpdateButtonDisabled, setIsUpdateButtonDisabled] =
+			useState(false);
 
 		useEffect(() => {
 			editorRef.current.setContent(
@@ -98,13 +97,13 @@ export default withRouter(
 										? isAReplyMessage
 											? Liferay.Language.get(
 													'update-your-comment'
-											  )
+												)
 											: Liferay.Language.get(
 													'update-your-answer'
-											  )
+												)
 										: Liferay.Language.get(
 												'submit-for-publication'
-										  )
+											)
 								}
 								className="c-mt-4 c-mt-sm-0"
 								disabled={isUpdateButtonDisabled}
@@ -115,13 +114,13 @@ export default withRouter(
 									? isAReplyMessage
 										? Liferay.Language.get(
 												'update-your-comment'
-										  )
+											)
 										: Liferay.Language.get(
 												'update-your-answer'
-										  )
+											)
 									: Liferay.Language.get(
 											'submit-for-workflow'
-									  )}
+										)}
 							</ClayButton>
 
 							<ClayButton

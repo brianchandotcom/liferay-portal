@@ -121,6 +121,7 @@ const TreeFilter = ({
 			setSelectedItemsCount(data.length);
 			setSelectedKeys(selectedNodes);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[selectedNodesRefCount]
 	);
@@ -169,6 +170,7 @@ const TreeFilter = ({
 
 	useEffect(() => {
 		handleSelectionChange(selectedKeys);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

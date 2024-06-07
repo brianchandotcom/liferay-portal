@@ -388,9 +388,8 @@ AUI.add(
 				_updateXMLNamespace(definition) {
 					const instance = this;
 
-					const workflowDefinition = /(<workflow-definition)[^>]*(>)/.exec(
-						definition
-					);
+					const workflowDefinition =
+						/(<workflow-definition)[^>]*(>)/.exec(definition);
 
 					if (workflowDefinition) {
 						const xmlns = /xmlns="([^"]*)"/.exec(
@@ -399,9 +398,10 @@ AUI.add(
 						const xmlnsXsi = /xmlns:xsi="([^"]*)"/.exec(
 							workflowDefinition
 						);
-						const xsiSchemaLocation = /xsi:schemaLocation="([^"]*)"/.exec(
-							workflowDefinition
-						);
+						const xsiSchemaLocation =
+							/xsi:schemaLocation="([^"]*)"/.exec(
+								workflowDefinition
+							);
 
 						if (xmlns && xmlnsXsi && xsiSchemaLocation) {
 							instance.set('xmlNamespace', {

@@ -18,12 +18,12 @@ export default function CollectionAppliedFilters({
 	const toggleExpandFiltersButton = document.getElementById(
 		`${fragmentEntryLinkNamespace}_toggleExpand`
 	);
-	const toggleExpandFiltersButtonIconCollapse = toggleExpandFiltersButton.querySelector(
-		'.lexicon-icon-angle-up-small'
-	);
-	const toggleExpandFiltersButtonIconExpand = toggleExpandFiltersButton.querySelector(
-		'.lexicon-icon-angle-down-small'
-	);
+	const toggleExpandFiltersButtonIconCollapse =
+		toggleExpandFiltersButton.querySelector('.lexicon-icon-angle-up-small');
+	const toggleExpandFiltersButtonIconExpand =
+		toggleExpandFiltersButton.querySelector(
+			'.lexicon-icon-angle-down-small'
+		);
 	const toggleExpandFiltersButtonLabel =
 		toggleExpandFiltersButton.firstElementChild;
 
@@ -84,11 +84,8 @@ export default function CollectionAppliedFilters({
 		'click',
 		`#${fragmentEntryLinkNamespace} .remove-filter-button`,
 		(event) => {
-			const {
-				filterFragmentEntryLinkId,
-				filterType,
-				filterValue,
-			} = event.delegateTarget.dataset;
+			const {filterFragmentEntryLinkId, filterType, filterValue} =
+				event.delegateTarget.dataset;
 
 			const paramName = `${filterPrefix}${filterType}_${filterFragmentEntryLinkId}`;
 			const searchParams = [];

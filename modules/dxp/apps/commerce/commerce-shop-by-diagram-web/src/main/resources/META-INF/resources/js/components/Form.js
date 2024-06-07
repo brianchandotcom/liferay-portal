@@ -63,7 +63,7 @@ export function LinkedToDiagramFormGroup({updateValue, value}) {
 					initialValue
 						? initialValue.name[
 								Liferay.ThemeDisplay.getLanguageId()
-						  ]
+							]
 						: ''
 				}
 				initialValue={initialValue?.productId || ''}

@@ -43,10 +43,12 @@ export default function () {
 
 				productQuotesResult?.value?.data?.items?.map(
 					(productQuote, index) => {
-						const countActivePolicies = activePolicies?.items.filter(
-							(application) =>
-								productQuote.name === application.productName
-						).length;
+						const countActivePolicies =
+							activePolicies?.items.filter(
+								(application) =>
+									productQuote.name ===
+									application.productName
+							).length;
 
 						const shortDescription = productQuote.shortDescription;
 						const fullName = productQuote.name;
@@ -82,6 +84,7 @@ export default function () {
 				setLoadData(true);
 			}
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -10,7 +10,8 @@ export default function propsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {
-			commerceReturnItemPicklistDataRenderer: CommerceReturnItemPicklistDataRenderer,
+			commerceReturnItemPicklistDataRenderer:
+				CommerceReturnItemPicklistDataRenderer,
 			commerceStatusDataRenderer: CommerceStatusDataRenderer,
 		},
 	};

@@ -124,13 +124,13 @@ describe.skip('Global Search', () => {
 				});
 
 				it('must show a product list', () => {
-					const products = renderedComponent.baseElement.querySelectorAll(
-						'.product-item'
-					);
+					const products =
+						renderedComponent.baseElement.querySelectorAll(
+							'.product-item'
+						);
 					const firstProduct = products[0];
-					const firstProductThumbnail = firstProduct.querySelector(
-						'img'
-					);
+					const firstProductThumbnail =
+						firstProduct.querySelector('img');
 
 					expect(products.length).toBe(4);
 
@@ -150,9 +150,10 @@ describe.skip('Global Search', () => {
 				});
 
 				it('must show a orders list', () => {
-					const carts = renderedComponent.baseElement.querySelectorAll(
-						'.order-item'
-					);
+					const carts =
+						renderedComponent.baseElement.querySelectorAll(
+							'.order-item'
+						);
 					const firstCart = carts[0];
 
 					expect(carts.length).toBe(4);
@@ -165,13 +166,13 @@ describe.skip('Global Search', () => {
 				});
 
 				it('must show an account list', () => {
-					const accounts = renderedComponent.baseElement.querySelectorAll(
-						'.account-item'
-					);
+					const accounts =
+						renderedComponent.baseElement.querySelectorAll(
+							'.account-item'
+						);
 					const firstAccount = accounts[0];
-					const firstAccountThumbnail = firstAccount.querySelector(
-						'img'
-					);
+					const firstAccountThumbnail =
+						firstAccount.querySelector('img');
 
 					expect(accounts.length).toBe(4);
 

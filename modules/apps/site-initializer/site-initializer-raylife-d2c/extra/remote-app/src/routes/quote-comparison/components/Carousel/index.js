@@ -90,6 +90,7 @@ const Carousel = ({
 				);
 			}
 		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isFirstLoad, scrollableContainer]);
 

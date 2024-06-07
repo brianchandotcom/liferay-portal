@@ -355,13 +355,8 @@ class Item extends PureComponent {
 	};
 
 	_handlePin = () => {
-		const {
-			addedResult,
-			id,
-			onClickPin,
-			onRemoveSelect,
-			pinned,
-		} = this.props;
+		const {addedResult, id, onClickPin, onRemoveSelect, pinned} =
+			this.props;
 
 		if (addedResult) {
 			onRemoveSelect([id]);
@@ -530,10 +525,10 @@ class Item extends PureComponent {
 										hidden
 											? Liferay.Language.get(
 													'show-result'
-											  )
+												)
 											: Liferay.Language.get(
 													'hide-result'
-											  )
+												)
 									}
 									className="btn-outline-borderless component-action quick-action-item"
 									displayType="secondary"
@@ -543,10 +538,10 @@ class Item extends PureComponent {
 										hidden
 											? Liferay.Language.get(
 													'show-result'
-											  )
+												)
 											: Liferay.Language.get(
 													'hide-result'
-											  )
+												)
 									}
 								>
 									<ClayIcon
@@ -561,7 +556,7 @@ class Item extends PureComponent {
 										pinned
 											? Liferay.Language.get(
 													'unpin-result'
-											  )
+												)
 											: Liferay.Language.get('pin-result')
 									}
 									className="btn-outline-borderless component-action quick-action-item"
@@ -572,7 +567,7 @@ class Item extends PureComponent {
 										pinned
 											? Liferay.Language.get(
 													'unpin-result'
-											  )
+												)
 											: Liferay.Language.get('pin-result')
 									}
 								>

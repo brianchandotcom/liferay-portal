@@ -63,7 +63,8 @@ const UNDO_ACTIONS = {
 	[TOGGLE_FRAGMENT_HIGHLIGHTED]: undoToggleFragmentHighlighted,
 	[TOGGLE_WIDGET_HIGHLIGHTED]: undoToggleWidgetHighlighted,
 	[UPDATE_COL_SIZE]: undoUpdateColSize,
-	[UPDATE_COLLECTION_DISPLAY_COLLECTION]: undoUpdateCollectionDisplayCollection,
+	[UPDATE_COLLECTION_DISPLAY_COLLECTION]:
+		undoUpdateCollectionDisplayCollection,
 	[UPDATE_EDITABLE_VALUES]: undoUpdateEditableValuesAction,
 	[UPDATE_FORM_ITEM_CONFIG]: undoUpdateFormItemConfig,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoUpdateFragmentConfiguration,

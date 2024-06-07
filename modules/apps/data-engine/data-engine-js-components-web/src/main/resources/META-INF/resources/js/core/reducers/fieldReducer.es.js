@@ -232,17 +232,19 @@ export default function fieldReducer(state, action) {
 									const name = generateName(
 										currentField.name,
 										{
-											repeatedIndex: currentRepeatedIndex++,
+											repeatedIndex:
+												currentRepeatedIndex++,
 										}
 									);
 
 									return {
 										...currentField,
 										...(currentField.editorConfig && {
-											editorConfig: updateEditorConfigFieldName(
-												currentField.editorConfig,
-												name
-											),
+											editorConfig:
+												updateEditorConfigFieldName(
+													currentField.editorConfig,
+													name
+												),
 										}),
 										name,
 										nestedFields: updateNestedFieldNames(

@@ -70,7 +70,8 @@ export default function getAllEditables(fragmentElement) {
 
 			return {
 				editableId,
-				editableValueNamespace: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				editableValueNamespace:
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 				element: fragmentElement.querySelector(
 					`[data-lfr-background-image-id="${editableId}"]`
 				),

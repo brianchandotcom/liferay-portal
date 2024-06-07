@@ -118,8 +118,8 @@ export default function DocumentLibrary({
 
 	function _plugUpload() {
 		AUI().use('document-library-upload-component', () => {
-			documentLibraryUploadComponent = new Liferay.DocumentLibraryUploadComponent(
-				{
+			documentLibraryUploadComponent =
+				new Liferay.DocumentLibraryUploadComponent({
 					appViewEntryTemplates: config.appViewEntryTemplates,
 					columnNames: config.columnNames,
 					displayStyle: config.displayStyle,
@@ -131,8 +131,7 @@ export default function DocumentLibrary({
 					scopeGroupId: config.scopeGroupId,
 					uploadURL: config.uploadURL,
 					viewFileEntryURL: config.viewFileEntryURL,
-				}
-			);
+				});
 		});
 	}
 

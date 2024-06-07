@@ -25,7 +25,7 @@ export function ColorPickerInput({color, label, name}) {
 								HEX_COLOR_REGEX.test(noHashColorValue)
 									? '#'
 									: ''
-						  }${noHashColorValue}`
+							}${noHashColorValue}`
 						: ''
 				}
 			/>

@@ -142,6 +142,7 @@ AUI.add(
 		const DocumentLibraryUpload = A.Component.create({
 			ATTRS: {
 				appViewEntryTemplates: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					validator: A.one,
 					value: {},
@@ -169,6 +170,7 @@ AUI.add(
 				},
 
 				entriesContainer: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					validator: A.one,
 					value: {},
@@ -184,9 +186,8 @@ AUI.add(
 					validator(val) {
 						return isNumber(val) && val > 0;
 					},
-					value:
-						Liferay.PropsValues
-							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
+					value: Liferay.PropsValues
+						.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 				},
 
 				redirect: {
@@ -290,6 +291,7 @@ AUI.add(
 
 				_bindDragDropUI() {
 					const instance = this;
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					const docElement = A.one(DOC.documentElement);
 
@@ -521,9 +523,10 @@ AUI.add(
 
 						instance._hideEmptyResultsMessage(searchContainer);
 
-						const searchContainerWrapper = instance._entriesContainer
-							.one('div.lfr-search-container-wrapper')
-							.getDOMNode();
+						const searchContainerWrapper =
+							instance._entriesContainer
+								.one('div.lfr-search-container-wrapper')
+								.getDOMNode();
 
 						if (searchContainerWrapper) {
 							searchContainerWrapper.style.display = 'block';
@@ -756,9 +759,8 @@ AUI.add(
 				_getFolderEntryNode(target) {
 					let folderEntry;
 
-					const overlayContentBox = target.hasClass(
-						'overlay-content'
-					);
+					const overlayContentBox =
+						target.hasClass('overlay-content');
 
 					if (overlayContentBox) {
 						const overlay = A.Widget.getByNode(target);
@@ -959,7 +961,8 @@ AUI.add(
 							simLimit: 1,
 						});
 
-						const navigationOverlays = instance._getNavigationOverlays();
+						const navigationOverlays =
+							instance._getNavigationOverlays();
 
 						uploader.on('uploadstart', () => {
 							AArray.invoke(navigationOverlays, 'show');
@@ -1017,6 +1020,7 @@ AUI.add(
 						!!queue &&
 						(!!queue.queuedFiles.length ||
 							queue.numberOfUploads > 0 ||
+
 							// eslint-disable-next-line @liferay/aui/no-object
 							!A.Object.isEmpty(queue.currentFiles)) &&
 						queue._currentState === UploaderQueue.UPLOADING
@@ -1025,7 +1029,8 @@ AUI.add(
 
 				_onAllUploadsComplete() {
 					const instance = this;
-					const navigationOverlays = instance._getNavigationOverlays();
+					const navigationOverlays =
+						instance._getNavigationOverlays();
 
 					AArray.invoke(navigationOverlays, 'hide');
 
@@ -1193,9 +1198,8 @@ AUI.add(
 				},
 
 				_positionProgressBar(overlay, progressBar) {
-					const progressBarBoundingBox = progressBar.get(
-						STR_BOUNDING_BOX
-					);
+					const progressBarBoundingBox =
+						progressBar.get(STR_BOUNDING_BOX);
 
 					progressBar.render(overlay.get(STR_BOUNDING_BOX));
 
@@ -1285,8 +1289,9 @@ AUI.add(
 							instance._detectUploadError(event, null, response);
 						}
 						else {
-							const fileEntryId = JSON.parse(event.data)
-								.fileEntryId;
+							const fileEntryId = JSON.parse(
+								event.data
+							).fileEntryId;
 
 							instance._updateEntryUI(
 								fileNode,
@@ -1473,9 +1478,8 @@ AUI.add(
 					const folder = folderId !== instance.get(STR_FOLDER_ID);
 
 					if (folder) {
-						const folderEntryNode = instance._getFolderEntryNode(
-							target
-						);
+						const folderEntryNode =
+							instance._getFolderEntryNode(target);
 
 						const folderEntryNodeOverlay = folderEntryNode.overlay;
 
@@ -1610,10 +1614,11 @@ AUI.add(
 
 					instance._handles = [];
 
-					instance._invisibleDescriptiveEntry = appViewEntryTemplates.one(
-						SELECTOR_ENTRY_DISPLAY_STYLE +
-							SELECTOR_DISPLAY_DESCRIPTIVE
-					);
+					instance._invisibleDescriptiveEntry =
+						appViewEntryTemplates.one(
+							SELECTOR_ENTRY_DISPLAY_STYLE +
+								SELECTOR_DISPLAY_DESCRIPTIVE
+						);
 					instance._invisibleIconEntry = appViewEntryTemplates.one(
 						SELECTOR_ENTRY_DISPLAY_STYLE + SELECTOR_DISPLAY_ICON
 					);
@@ -1629,9 +1634,8 @@ AUI.add(
 							'page-refresh-needed'
 						),
 						reloadButton: Liferay.Language.get('reload'),
-						singleFileUploaded: Liferay.Language.get(
-							'x-was-uploaded'
-						),
+						singleFileUploaded:
+							Liferay.Language.get('x-was-uploaded'),
 						xInvalidFilesUploaded: Liferay.Language.get(
 							'x-files-could-not-be-uploaded'
 						),

@@ -26,7 +26,7 @@ export default function PageContents({pageContents}) {
 				...contentTypes.filter(
 					(type) => type !== CONTENT_TYPE_LABELS.collection
 				),
-		  ]
+			]
 		: [CONTENT_TYPE_LABELS.allContent, ...contentTypes];
 
 	const filteredContents = useMemo(
@@ -47,7 +47,7 @@ export default function PageContents({pageContents}) {
 								: acc;
 						},
 						{}
-				  )
+					)
 				: pageContents,
 		[pageContents, searchValue]
 	);
@@ -60,7 +60,7 @@ export default function PageContents({pageContents}) {
 						Object.values(filteredContents).flatMap(
 							(content) => content
 						)
-				  ).length
+					).length
 				: null,
 		[filteredContents, selectedType, pageContents]
 	);

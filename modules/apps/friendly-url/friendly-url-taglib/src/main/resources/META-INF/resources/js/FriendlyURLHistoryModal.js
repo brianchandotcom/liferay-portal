@@ -36,10 +36,8 @@ const FriendlyURLHistoryModal = ({
 }) => {
 	const [languageId, setLanguageId] = useState();
 	const [loading, setLoading] = useState(true);
-	const [
-		friendlyURLEntryLocalizations,
-		setFriendlyURLEntryLocalizations,
-	] = useState({});
+	const [friendlyURLEntryLocalizations, setFriendlyURLEntryLocalizations] =
+		useState({});
 	const [availableLanguages, setAvailableLanguages] = useState([]);
 	const isMounted = useIsMounted();
 
@@ -172,9 +170,8 @@ const FriendlyURLHistoryModal = ({
 					getFriendlyUrlLocalizations();
 
 					if (localizable) {
-						const inputLocalizableComponent = Liferay.component(
-							elementId
-						);
+						const inputLocalizableComponent =
+							Liferay.component(elementId);
 
 						if (
 							inputLocalizableComponent.getSelectedLanguageId() ===
@@ -190,9 +187,8 @@ const FriendlyURLHistoryModal = ({
 						}
 					}
 					else {
-						const urlTitleInput = document.getElementById(
-							elementId
-						);
+						const urlTitleInput =
+							document.getElementById(elementId);
 
 						if (urlTitleInput) {
 							urlTitleInput.value = urlTitle;

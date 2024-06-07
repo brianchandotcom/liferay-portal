@@ -35,8 +35,8 @@ describe('Tooltip', () => {
 			/>
 		);
 
-		const tooltipLabel = container.querySelector('#tooltip-label')
-			.innerHTML;
+		const tooltipLabel =
+			container.querySelector('#tooltip-label').innerHTML;
 
 		expect(tooltipLabel).toBe('label1: 2 entries <b>(100%)</b>');
 	});
@@ -112,8 +112,8 @@ describe('Tooltip', () => {
 			/>
 		);
 
-		const tooltipLabel = container.querySelector('#tooltip-label')
-			.innerHTML;
+		const tooltipLabel =
+			container.querySelector('#tooltip-label').innerHTML;
 
 		expect(tooltipLabel).toBe('Option 1: 1 entry <b>(100%)</b>');
 	});

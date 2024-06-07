@@ -37,13 +37,8 @@ export function getProducts(url, itemsLength = getRandomInt(40, 60)) {
 		generateFakeProducts(itemsLength);
 	}
 
-	const {
-		items,
-		lastPage,
-		page,
-		pageSize,
-		totalCount,
-	} = processFakeRequestData(url, products, [productTemplate]);
+	const {items, lastPage, page, pageSize, totalCount} =
+		processFakeRequestData(url, products, [productTemplate]);
 
 	return {
 		actions: {},

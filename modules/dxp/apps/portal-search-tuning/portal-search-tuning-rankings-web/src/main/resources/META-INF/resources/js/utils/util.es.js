@@ -109,7 +109,7 @@ export function resultsDataToMap(resultsData, initialMap = {}) {
 			: {
 					...acc,
 					[cur.id]: cur,
-			  };
+				};
 	}, initialMap);
 }
 

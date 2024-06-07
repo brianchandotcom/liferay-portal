@@ -21,9 +21,8 @@ export default function ({resourceURL, searchContainerId, targetNodeId}) {
 		})
 			.then((response) => response.text())
 			.then((response) => {
-				const searchContainerSidebar = document.getElementById(
-					targetNodeId
-				);
+				const searchContainerSidebar =
+					document.getElementById(targetNodeId);
 				searchContainerSidebar.innerHTML = response;
 
 				runScriptsInElement(searchContainerSidebar);

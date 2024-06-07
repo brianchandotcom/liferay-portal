@@ -55,13 +55,13 @@
 }
 
 @media (max-width: 1045px) {
-	.hero{
+	.hero {
 		background-color: var(--brand-color-1);
 	}
 	.hero-image {
 		margin-top: 0;
 	}
-	
+
 	.hero .row {
 		align-items: end;
 	}
@@ -74,11 +74,11 @@
 		font-size: var(--display3-size);
 		width: 100%;
 	}
-	
+
 	.hero-subtitle {
 		width: 100%;
 	}
-	
+
 	.hero:after {
 		display: none;
 	}
@@ -88,7 +88,7 @@
 	.hero-image {
 		height: 600px;
 		margin-top: 72px;
-		object-fit: cover ;
+		object-fit: cover;
 		object-position: top;
 		width: 100%;
 	}
@@ -98,7 +98,7 @@
 	}
 }
 
-@media (max-width: 576px) {	
+@media (max-width: 576px) {
 	.hero-image {
 		height: 320px;
 	}

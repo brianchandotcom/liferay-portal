@@ -20,10 +20,8 @@ export default function ArticleBodyAnwser({
 	signature,
 	type,
 }) {
-	const [
-		articleBodyContainsParagraph,
-		setArticleBodyContainsParagraph,
-	] = useState(true);
+	const [articleBodyContainsParagraph, setArticleBodyContainsParagraph] =
+		useState(true);
 
 	useEffect(() => {
 		setArticleBodyContainsParagraph(articleBody.includes('<p>'));

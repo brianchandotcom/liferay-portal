@@ -72,10 +72,8 @@ export function useValidateFormWithObjects() {
 			) {
 				const formFields = getFields(pages);
 				const unmappedFormFields = getUnmappedFormFields(formFields);
-				const unmappedRequiredObjectFields = getUnmappedRequiredObjectFields(
-					formFields,
-					objectFields
-				);
+				const unmappedRequiredObjectFields =
+					getUnmappedRequiredObjectFields(formFields, objectFields);
 
 				if (
 					unmappedFormFields.length ||

@@ -57,6 +57,7 @@ export function EntryDisplayContainer({
 
 			setValues({titleObjectFieldName: idField?.name});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

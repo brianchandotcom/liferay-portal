@@ -24,6 +24,7 @@ export function BusinessInformationAddress() {
 		if (ref.current) {
 			setAutoComplete(ref.current, updateFormWithGoogleAddress);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ref]);
 

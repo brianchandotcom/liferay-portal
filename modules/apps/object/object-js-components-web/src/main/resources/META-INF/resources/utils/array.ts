@@ -28,9 +28,9 @@ export function filterArrayByQuery<T>({
 }: FilterArrayByQueryProps<T>) {
 	return array.filter((item) => {
 		if (str === 'label') {
-			const localizedValue = ((item as unknown) as LocalizedObject<
-				LocalizedValue<string>
-			>)[str];
+			const localizedValue = (
+				item as unknown as LocalizedObject<LocalizedValue<string>>
+			)[str];
 
 			const localizedLabels = localizedValue as LocalizedValue<string>;
 
@@ -41,16 +41,16 @@ export function filterArrayByQuery<T>({
 
 			if (!label) {
 				label = localizedLabels[
-					((item as unknown) as LocalizedObject<
-						Liferay.Language.Locale
-					>).defaultLanguageId as Liferay.Language.Locale
+					(
+						item as unknown as LocalizedObject<Liferay.Language.Locale>
+					).defaultLanguageId as Liferay.Language.Locale
 				] as string;
 			}
 
 			return stringIncludesQuery(label, query);
 		}
 
-		const comparisonString = ((item as unknown) as LocalizedObject<string>)[
+		const comparisonString = (item as unknown as LocalizedObject<string>)[
 			str
 		];
 

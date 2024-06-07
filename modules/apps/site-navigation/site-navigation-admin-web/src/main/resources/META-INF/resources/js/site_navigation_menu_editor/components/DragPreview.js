@@ -27,13 +27,13 @@ const getItemStyles = (wrapperElement, currentOffset, element, rtl) => {
 
 	const x = rtl
 		? currentOffset.x -
-		  elementRect.width +
-		  wrapperElement.scrollLeft -
-		  HANDLER_OFFSET
+			elementRect.width +
+			wrapperElement.scrollLeft -
+			HANDLER_OFFSET
 		: currentOffset.x +
-		  wrapperElement.scrollLeft -
-		  wrapperRect.left -
-		  HANDLER_OFFSET;
+			wrapperElement.scrollLeft -
+			wrapperRect.left -
+			HANDLER_OFFSET;
 
 	const y =
 		currentOffset.y +

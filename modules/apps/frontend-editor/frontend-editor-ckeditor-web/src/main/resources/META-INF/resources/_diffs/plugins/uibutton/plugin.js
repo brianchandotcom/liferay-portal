@@ -11,6 +11,7 @@
 	}
 
 	CKEDITOR.ui.balloonToolbarButton = CKEDITOR.tools.createClass({
+
 		// eslint-disable-next-line
 		$: function (definition) {
 			CKEDITOR.tools.extend(this, definition, {

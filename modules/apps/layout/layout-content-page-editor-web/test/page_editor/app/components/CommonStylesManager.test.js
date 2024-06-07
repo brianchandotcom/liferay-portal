@@ -279,9 +279,10 @@ describe('CommonStylesManager', () => {
 	it('does not add styles to the topper if the fragment has inner common styles', () => {
 		renderCommonStylesManager({
 			editableValues: {
-				['com.liferay.fragment.entry.processor.styles.StylesFragmentEntryProcessor']: {
-					hasCommonStyles: true,
-				},
+				['com.liferay.fragment.entry.processor.styles.StylesFragmentEntryProcessor']:
+					{
+						hasCommonStyles: true,
+					},
 			},
 			selectedViewportSize: VIEWPORT_SIZES.tablet,
 		});

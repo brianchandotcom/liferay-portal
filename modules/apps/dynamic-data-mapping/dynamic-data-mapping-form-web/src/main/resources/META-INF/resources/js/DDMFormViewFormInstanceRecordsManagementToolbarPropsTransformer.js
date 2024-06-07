@@ -36,9 +36,10 @@ export default function propsTransformer({
 								`${portletNamespace}ddmFormInstanceRecord`
 							);
 
-							const managementBarSelection = document.querySelector(
-								'.management-bar'
-							)?.textContent;
+							const managementBarSelection =
+								document.querySelector(
+									'.management-bar'
+								)?.textContent;
 
 							if (form && searchContainer) {
 								if (
@@ -49,7 +50,8 @@ export default function propsTransformer({
 								) {
 									postForm(form, {
 										data: {
-											deleteFormInstanceRecordIds: ddmFormInstanceRecordIds,
+											deleteFormInstanceRecordIds:
+												ddmFormInstanceRecordIds,
 										},
 										url: deleteFormInstanceRecordURL,
 									});
@@ -57,10 +59,11 @@ export default function propsTransformer({
 								else {
 									postForm(form, {
 										data: {
-											deleteFormInstanceRecordIds: getCheckedCheckboxes(
-												searchContainer,
-												`${portletNamespace}allRowIds`
-											),
+											deleteFormInstanceRecordIds:
+												getCheckedCheckboxes(
+													searchContainer,
+													`${portletNamespace}allRowIds`
+												),
 										},
 										url: deleteFormInstanceRecordURL,
 									});

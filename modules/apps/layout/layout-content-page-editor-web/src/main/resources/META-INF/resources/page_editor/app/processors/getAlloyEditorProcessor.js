@@ -65,9 +65,8 @@ export default function getAlloyEditorProcessor(
 				return;
 			}
 
-			const {editorConfig} = config.defaultEditorConfigurations[
-				editorConfigurationName
-			];
+			const {editorConfig} =
+				config.defaultEditorConfigurations[editorConfigurationName];
 
 			_element = element;
 
@@ -96,20 +95,23 @@ export default function getAlloyEditorProcessor(
 					});
 				},
 
-				documentBrowseLinkUrl: editorConfig.documentBrowseLinkUrl.replace(
-					'_EDITOR_NAME_',
-					editorName
-				),
+				documentBrowseLinkUrl:
+					editorConfig.documentBrowseLinkUrl.replace(
+						'_EDITOR_NAME_',
+						editorName
+					),
 
-				filebrowserImageBrowseLinkUrl: editorConfig.filebrowserImageBrowseLinkUrl.replace(
-					'_EDITOR_NAME_',
-					editorName
-				),
+				filebrowserImageBrowseLinkUrl:
+					editorConfig.filebrowserImageBrowseLinkUrl.replace(
+						'_EDITOR_NAME_',
+						editorName
+					),
 
-				filebrowserImageBrowseUrl: editorConfig.filebrowserImageBrowseUrl.replace(
-					'_EDITOR_NAME_',
-					editorName
-				),
+				filebrowserImageBrowseUrl:
+					editorConfig.filebrowserImageBrowseUrl.replace(
+						'_EDITOR_NAME_',
+						editorName
+					),
 
 				title: '',
 			});

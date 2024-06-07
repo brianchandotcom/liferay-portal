@@ -54,8 +54,8 @@ export function SavedContentEntry({
 
 				const mySavedContentLink = `
 					<a href="${mySavedContentURL}" class="alert-link">${Liferay.Language.get(
-					'my-saved-content'
-				)}</a>
+						'my-saved-content'
+					)}</a>
 				`.trim();
 
 				showNotification(
@@ -63,7 +63,7 @@ export function SavedContentEntry({
 						saved
 							? Liferay.Language.get(
 									'x-has-been-successfully-removed-from-x'
-							  )
+								)
 							: Liferay.Language.get('x-has-been-saved-in-x'),
 						contentTitle,
 						mySavedContentLink

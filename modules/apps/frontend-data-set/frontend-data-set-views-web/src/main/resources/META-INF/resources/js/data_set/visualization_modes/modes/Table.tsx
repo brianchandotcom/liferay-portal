@@ -144,9 +144,8 @@ const EditFDSFieldModalContent = ({
 
 	const fdsFieldTranslations = fdsField.label_i18n;
 
-	const [i18nFieldLabels, setI18nFieldLabels] = useState(
-		fdsFieldTranslations
-	);
+	const [i18nFieldLabels, setI18nFieldLabels] =
+		useState(fdsFieldTranslations);
 
 	const editFDSField = async () => {
 		const body = {
@@ -217,9 +216,10 @@ const EditFDSFieldModalContent = ({
 		namespace: string;
 		onItemClick: Function;
 	}) => {
-		const fdsClientExtensionCellRenderersERCs = fdsClientExtensionCellRenderers.map(
-			(cellRendererCET) => cellRendererCET.externalReferenceCode
-		);
+		const fdsClientExtensionCellRenderersERCs =
+			fdsClientExtensionCellRenderers.map(
+				(cellRendererCET) => cellRendererCET.externalReferenceCode
+			);
 
 		return (
 			<ClayDropDown
@@ -235,9 +235,10 @@ const EditFDSFieldModalContent = ({
 					>
 						{selectedFDSFieldRenderer
 							? getRendererLabel({
-									cetRenderers: fdsClientExtensionCellRenderers,
+									cetRenderers:
+										fdsClientExtensionCellRenderers,
 									rendererName: selectedFDSFieldRenderer,
-							  })
+								})
 							: Liferay.Language.get('choose-an-option')}
 					</ClayButton>
 				}
@@ -600,7 +601,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 							? fdsFields.map((fdsField) => ({
 									id: String(fdsField.id),
 									name: fdsField.name,
-							  }))
+								}))
 							: []
 					}
 					selectionMode="multiple"
@@ -699,7 +700,8 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 							),
 							textMatch: (item: IFDSField) =>
 								getRendererLabel({
-									cetRenderers: fdsClientExtensionCellRenderers,
+									cetRenderers:
+										fdsClientExtensionCellRenderers,
 									rendererName: item.renderer,
 								}),
 						},

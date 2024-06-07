@@ -57,9 +57,8 @@ export default function useKeyboardNavigation({type}: Props) {
 	useEventListener(
 		'blur',
 		(event) => {
-			const keyboardEvent = (event as unknown) as React.FocusEvent<
-				HTMLElement
-			>;
+			const keyboardEvent =
+				event as unknown as React.FocusEvent<HTMLElement>;
 
 			const list = keyboardEvent.target?.closest('.panel-group');
 
@@ -116,9 +115,8 @@ function onHeaderKeyDown(element: HTMLElement, keyCode: KeyboardKey) {
 			lastItem.focus();
 		}
 		else {
-			const previousHeader = previousCollapse.querySelector<HTMLElement>(
-				'button'
-			);
+			const previousHeader =
+				previousCollapse.querySelector<HTMLElement>('button');
 
 			previousHeader?.focus();
 		}

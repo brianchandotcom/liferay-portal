@@ -177,9 +177,8 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 										onChange={() =>
 											setCheckbox({
 												...checkboxes,
-												[entry.dataKey]: !checkboxes[
-													entry.dataKey
-												],
+												[entry.dataKey]:
+													!checkboxes[entry.dataKey],
 											})
 										}
 									>
@@ -369,11 +368,11 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 													!tooltip
 														? 1
 														: tooltip.dataKey ===
-																bar.dataKey &&
-														  entry.name ===
-																tooltip.name
-														? 1
-														: 0.4
+																	bar.dataKey &&
+															  entry.name ===
+																	tooltip.name
+															? 1
+															: 0.4
 												}
 											/>
 										))}
@@ -407,9 +406,10 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 											!tooltip
 												? 1
 												: tooltip.dataKey === 'value' &&
-												  entry.name === tooltip.name
-												? 1
-												: 0.4
+													  entry.name ===
+															tooltip.name
+													? 1
+													: 0.4
 										}
 									/>
 								))}

@@ -255,9 +255,8 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 						var signatureNode = raw.signatureNode;
 
 						if (!signatureNode) {
-							signatureNode = node.ancestorsByClassName(
-								'lfr-api-signature'
-							);
+							signatureNode =
+								node.ancestorsByClassName('lfr-api-signature');
 
 							raw.signatureNode = signatureNode;
 						}

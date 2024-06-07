@@ -16,9 +16,8 @@ export default function ({
 	rootPortletId,
 	warehouseExternalReferenceCode,
 }) {
-	const CommerceInventoryWarehouseResource = CommerceServiceProvider.AdminInventoryAPI(
-		'v1'
-	);
+	const CommerceInventoryWarehouseResource =
+		CommerceServiceProvider.AdminInventoryAPI('v1');
 
 	function selectItem(channel) {
 		const channelData = {

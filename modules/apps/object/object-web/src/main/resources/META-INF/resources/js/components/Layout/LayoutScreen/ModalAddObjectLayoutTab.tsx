@@ -139,9 +139,8 @@ export function ModalAddObjectLayoutTab({
 		dispatch,
 	] = useLayoutContext();
 	const [selectedType, setSelectedType] = useState(TYPES.FIELDS);
-	const [selectedRelationship, setSelectedRelationship] = useState<
-		TObjectRelationship
-	>();
+	const [selectedRelationship, setSelectedRelationship] =
+		useState<TObjectRelationship>();
 
 	const objectRelationshipItems = useMemo(() => {
 		const availableObjectRelationships: ObjectRelationshipItem[] = [];
@@ -261,9 +260,10 @@ export function ModalAddObjectLayoutTab({
 							items={objectRelationshipItems}
 							label={Liferay.Language.get('relationship')}
 							onSelectionChange={(value) => {
-								const selectedObjectRelationship = objectRelationships.find(
-									({id}) => id.toString() === value
-								);
+								const selectedObjectRelationship =
+									objectRelationships.find(
+										({id}) => id.toString() === value
+									);
 
 								setSelectedRelationship(
 									selectedObjectRelationship
@@ -277,9 +277,8 @@ export function ModalAddObjectLayoutTab({
 							selectedKey={selectedRelationship?.id.toString()}
 						>
 							{({label, reverse, value}) => {
-								const relationshipInfo = getRelationshipInfo(
-									reverse
-								);
+								const relationshipInfo =
+									getRelationshipInfo(reverse);
 
 								return (
 									<Option key={value} textValue={label}>

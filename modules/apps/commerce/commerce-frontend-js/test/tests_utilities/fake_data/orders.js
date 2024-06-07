@@ -50,13 +50,8 @@ export function getOrders(url, itemsLength = getRandomInt(40, 60)) {
 		generateFakeOrders(itemsLength);
 	}
 
-	const {
-		items,
-		lastPage,
-		page,
-		pageSize,
-		totalCount,
-	} = processFakeRequestData(url, orders, [orderTemplate]);
+	const {items, lastPage, page, pageSize, totalCount} =
+		processFakeRequestData(url, orders, [orderTemplate]);
 
 	return {
 		actions: {},

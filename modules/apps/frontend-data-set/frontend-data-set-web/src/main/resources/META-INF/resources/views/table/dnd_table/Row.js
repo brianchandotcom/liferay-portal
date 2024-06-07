@@ -32,7 +32,7 @@ function Row({children, className, paddingLeftCells}) {
 		? {
 				marginLeft,
 				minWidth: `calc(100% - ${marginLeft}px)`,
-		  }
+			}
 		: {};
 
 	const placeholderPaddingCells = [];

@@ -90,19 +90,22 @@ const Email = ({
 									}}
 									onItemsChange={(newItems) => {
 										if (!newItems.length) {
-											emailContent.current.addresses = newItems;
+											emailContent.current.addresses =
+												newItems;
 
 											return onMultiSelectItemsChanged(
 												newItems
 											);
 										}
 
-										const validItens = newItems.filter(
-											isEmailAddressValid
-										);
+										const validItens =
+											newItems.filter(
+												isEmailAddressValid
+											);
 
 										if (validItens.length) {
-											emailContent.current.addresses = validItens;
+											emailContent.current.addresses =
+												validItens;
 
 											return onMultiSelectItemsChanged(
 												validItens
@@ -116,13 +119,12 @@ const Email = ({
 										resource
 											? resource.map((data) => {
 													return {
-														label:
-															data.emailAddress,
+														label: data.emailAddress,
 														value: formatAutocompleteValue(
 															data
 														),
 													};
-											  })
+												})
 											: []
 									}
 									value={multiSelectValue}

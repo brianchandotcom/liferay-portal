@@ -214,10 +214,9 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			itemId: activeItemId,
 			parentId: getFragmentItem(state.layoutData, fragmentEntryLinkId)
 				.itemId,
-			type:
-				state.fragmentEntryLinks[fragmentEntryLinkId].editableTypes[
-					editableId
-				],
+			type: state.fragmentEntryLinks[fragmentEntryLinkId].editableTypes[
+				editableId
+			],
 		};
 	}
 
@@ -226,12 +225,10 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 
 	const canUpdateEditables = selectCanUpdateEditables(state);
-	const canUpdateItemAdvancedConfiguration = selectCanUpdateItemAdvancedConfiguration(
-		state
-	);
-	const canUpdateCSSAdvancedOptions = selectCanUpdateCSSAdvancedOptions(
-		state
-	);
+	const canUpdateItemAdvancedConfiguration =
+		selectCanUpdateItemAdvancedConfiguration(state);
+	const canUpdateCSSAdvancedOptions =
+		selectCanUpdateCSSAdvancedOptions(state);
 
 	const canUpdateItemConfiguration = selectCanUpdateItemConfiguration(state);
 
@@ -282,7 +279,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			? {
 					[PANEL_IDS.formGeneral]:
 						state.selectedViewportSize === VIEWPORT_SIZES.desktop,
-			  }
+				}
 			: {
 					[PANEL_IDS.formAdvancedPanel]:
 						(canUpdateItemAdvancedConfiguration &&
@@ -292,12 +289,11 @@ export function selectPanels(activeItemId, activeItemType, state) {
 					[PANEL_IDS.formGeneral]:
 						state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 					[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
-			  };
+				};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		const {fragmentEntryKey, fragmentEntryType} = state.fragmentEntryLinks[
-			activeItem.config.fragmentEntryLinkId
-		];
+		const {fragmentEntryKey, fragmentEntryType} =
+			state.fragmentEntryLinks[activeItem.config.fragmentEntryLinkId];
 
 		panelsIds = {
 			[PANEL_IDS.fragmentAdvanced]:

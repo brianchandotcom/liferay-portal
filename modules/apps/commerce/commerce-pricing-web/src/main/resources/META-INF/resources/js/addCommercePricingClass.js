@@ -11,9 +11,8 @@ export default function ({
 	editPricingClassPortletURL = '',
 	namespace,
 }) {
-	const CommerceProductGroupsResource = CommerceServiceProvider.AdminCatalogAPI(
-		'v1'
-	);
+	const CommerceProductGroupsResource =
+		CommerceServiceProvider.AdminCatalogAPI('v1');
 
 	Liferay.provide(window, `${namespace}apiSubmit`, () => {
 		const description = document.getElementById('description').value;

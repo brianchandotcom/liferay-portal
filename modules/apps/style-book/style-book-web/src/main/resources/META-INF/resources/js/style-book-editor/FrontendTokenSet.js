@@ -60,9 +60,8 @@ export default function FrontendTokenSet({
 		>
 			<ClayPanel.Body>
 				{frontendTokens.map((frontendToken) => {
-					const FrontendTokenComponent = getFrontendTokenComponent(
-						frontendToken
-					);
+					const FrontendTokenComponent =
+						getFrontendTokenComponent(frontendToken);
 
 					const props = {
 						frontendToken,

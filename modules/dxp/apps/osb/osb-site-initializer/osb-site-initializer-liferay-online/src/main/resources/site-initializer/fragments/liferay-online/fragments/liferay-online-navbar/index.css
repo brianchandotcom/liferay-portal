@@ -80,7 +80,8 @@
 @media (max-width: 992px) {
 	.has-control-menu .navbar-collapse.show {
 		height: calc(
-			100vh - var(--management-bar-height-sm) - var(--liferay-online-navbar-height-sm)
+			100vh - var(--management-bar-height-sm) -
+				var(--liferay-online-navbar-height-sm)
 		);
 	}
 
@@ -145,7 +146,8 @@
 
 	.has-control-menu .navbar-collapse.show {
 		height: calc(
-			100vh - var(--management-bar-height-xs) - var(--liferay-online-navbar-height-sm)
+			100vh - var(--management-bar-height-xs) -
+				var(--liferay-online-navbar-height-sm)
 		);
 	}
 }

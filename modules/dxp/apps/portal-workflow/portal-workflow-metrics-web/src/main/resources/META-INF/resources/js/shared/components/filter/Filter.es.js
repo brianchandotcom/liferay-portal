@@ -59,6 +59,7 @@ const Filter = ({
 		else {
 			dispatchFilter(prefixedFilterKey, getSelectedItems(items));
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items, routerProps]);
 
@@ -91,6 +92,7 @@ const Filter = ({
 				}
 			}
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[applyFilterChanges, items]
 	);
@@ -114,11 +116,13 @@ const Filter = ({
 				}
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [applyFilterChanges, defaultItem, items]);
 
 	useEffect(() => {
 		selectDefaultItem();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [defaultItem, getSelectedItems(items).length]);
 
@@ -129,7 +133,7 @@ const Filter = ({
 						item[labelPropertyName]
 							.toLowerCase()
 							.includes(searchTerm.toLowerCase())
-				  )
+					)
 				: items
 		);
 	}, [items, labelPropertyName, searchTerm]);
@@ -142,6 +146,7 @@ const Filter = ({
 		else if (!expanded && !multiple && childrenVisibility) {
 			setExpanded(true);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [expanded]);
 

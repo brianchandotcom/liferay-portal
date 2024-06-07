@@ -100,8 +100,10 @@ export function ObjectDefinitionNode({
 				className={classNames(
 					'lfr-objects__model-builder-node-container',
 					{
-						'lfr-objects__model-builder-node-container--link': linkedObjectDefinition,
-						'lfr-objects__model-builder-node-container--selected': selected,
+						'lfr-objects__model-builder-node-container--link':
+							linkedObjectDefinition,
+						'lfr-objects__model-builder-node-container--selected':
+							selected,
 					}
 				)}
 				onMouseEnter={() => {

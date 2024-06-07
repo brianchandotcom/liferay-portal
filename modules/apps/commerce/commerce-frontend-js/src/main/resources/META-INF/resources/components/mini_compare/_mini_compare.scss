@@ -9,7 +9,9 @@
 	padding: $spacer;
 	position: fixed;
 	transform: translateX(-50%) translateY(100%);
-	transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+	transition:
+		transform 0.2s ease-in,
+		opacity 0.2s ease-in;
 
 	&.active {
 		opacity: 1;

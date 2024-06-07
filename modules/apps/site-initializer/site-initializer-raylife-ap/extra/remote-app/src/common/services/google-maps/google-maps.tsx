@@ -10,9 +10,7 @@ import {Loader} from '@googlemaps/js-api-loader';
  * @returns {void} Google Maps Autocomplete Instance
  */
 
-type _adaptGoogleMapsAddressIntoAddress = (
-	addressComponents: any
-) => {
+type _adaptGoogleMapsAddressIntoAddress = (addressComponents: any) => {
 	city: string;
 	country: string;
 	state: string;

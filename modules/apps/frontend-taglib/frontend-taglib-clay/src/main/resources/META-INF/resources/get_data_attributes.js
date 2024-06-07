@@ -9,6 +9,6 @@ export default function getDataAttributes(data) {
 				acc[`data-${key.toLowerCase()}`] = value;
 
 				return acc;
-		  }, {})
+			}, {})
 		: {};
 }

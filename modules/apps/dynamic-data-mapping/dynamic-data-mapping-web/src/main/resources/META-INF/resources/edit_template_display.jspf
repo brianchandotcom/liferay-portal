@@ -312,7 +312,8 @@ if (Validator.isNotNull(scriptContent)) {
 
 		if (AutoComplete) {
 			var processor = new AutoComplete({
-				variables: <%= ddmDisplayContext.getAutocompleteJSON(request, language) %>,
+				variables:
+					<%= ddmDisplayContext.getAutocompleteJSON(request, language) %>,
 			});
 
 			if (processor) {

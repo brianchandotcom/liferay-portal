@@ -66,8 +66,8 @@ function transformFileEntryProperties({fileEntryTitle, value}) {
 	return value && fileEntryTitle !== ''
 		? [fileEntryTitle]
 		: fileEntryTitle === ''
-		? [value.title]
-		: [];
+			? [value.title]
+			: [];
 }
 
 const DocumentLibrary = ({
@@ -343,9 +343,8 @@ const Main = ({
 	}, [allowGuestUsers, isSignedIn, showUploadPermissionMessage]);
 
 	useEffect(() => {
-		const objectFieldInvalidExtension = isObjectFieldInvalidExtension(
-			value
-		);
+		const objectFieldInvalidExtension =
+			isObjectFieldInvalidExtension(value);
 
 		setCurrentValue(objectFieldInvalidExtension ? null : value);
 		setDisplayErrors(
@@ -464,9 +463,8 @@ const Main = ({
 			return false;
 		}
 
-		const supportedExtensions = objectFieldAcceptedFileExtensions.split(
-			', '
-		);
+		const supportedExtensions =
+			objectFieldAcceptedFileExtensions.split(', ');
 
 		if (supportedExtensions.includes(fileExtension)) {
 			return false;

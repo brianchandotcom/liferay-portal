@@ -46,9 +46,8 @@ export default function BaseAPISchemaProperty({
 				objectDefinition.externalReferenceCode
 			));
 
-	const localizedPropertyName = objectField.label[
-		Liferay.ThemeDisplay.getDefaultLanguageId()
-	]!;
+	const localizedPropertyName =
+		objectField.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
 
 	const handleClick = () => {
 		setSchemaUIData((previous) => {

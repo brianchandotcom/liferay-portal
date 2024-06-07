@@ -37,7 +37,9 @@
 			content: '';
 			position: absolute;
 			right: 24px;
-			transition: max-height 0.2s ease-in, opacity 0.2s ease-in;
+			transition:
+				max-height 0.2s ease-in,
+				opacity 0.2s ease-in;
 			z-index: 999;
 
 			@media screen and (max-width: $bp-small) {

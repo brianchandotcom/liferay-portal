@@ -55,7 +55,7 @@ export function deleteField({
 					? FormSupport.removeEmptyRows(
 							pagesWithFieldRemoved,
 							pageIndex
-					  )
+						)
 					: pagesWithFieldRemoved[pageIndex].rows,
 			};
 		}
@@ -333,12 +333,13 @@ export default function fieldEditableReducer(state, action, config) {
 								if (field.displayErrors) {
 									focusedField.displayErrors = false;
 
-									focusedField.settingsContext = setFieldErrorMessage(
-										focusedField.settingsContext,
-										'name',
-										false,
-										false
-									);
+									focusedField.settingsContext =
+										setFieldErrorMessage(
+											focusedField.settingsContext,
+											'name',
+											false,
+											false
+										);
 
 									focusedField.errorMessage = '';
 								}
@@ -408,10 +409,8 @@ export default function fieldEditableReducer(state, action, config) {
 				pages,
 				rules,
 			} = state;
-			const {
-				generateFieldNameUsingFieldLabel,
-				getFieldNameGenerator,
-			} = config;
+			const {generateFieldNameUsingFieldLabel, getFieldNameGenerator} =
+				config;
 
 			const fieldNameGenerator = getFieldNameGenerator(
 				pages,
@@ -489,10 +488,8 @@ export default function fieldEditableReducer(state, action, config) {
 				removeEmptyRows = true,
 			} = action.payload;
 			const {defaultLanguageId, editingLanguageId, pages, rules} = state;
-			const {
-				generateFieldNameUsingFieldLabel,
-				getFieldNameGenerator,
-			} = config;
+			const {generateFieldNameUsingFieldLabel, getFieldNameGenerator} =
+				config;
 
 			const fieldNameGenerator = getFieldNameGenerator(
 				pages,
@@ -524,10 +521,8 @@ export default function fieldEditableReducer(state, action, config) {
 				editingLanguageId,
 				pages,
 			} = state;
-			const {
-				generateFieldNameUsingFieldLabel,
-				getFieldNameGenerator,
-			} = config;
+			const {generateFieldNameUsingFieldLabel, getFieldNameGenerator} =
+				config;
 
 			const fieldNameGenerator = getFieldNameGenerator(
 				pages,
@@ -574,13 +569,11 @@ export default function fieldEditableReducer(state, action, config) {
 
 							let pages = [{rows: field.rows}];
 
-							const {
-								pageIndex,
-								rowIndex,
-							} = FormSupport.getFieldIndexes(
-								pages,
-								originalField.fieldName
-							);
+							const {pageIndex, rowIndex} =
+								FormSupport.getFieldIndexes(
+									pages,
+									originalField.fieldName
+								);
 
 							const newRow = FormSupport.implAddRow(12, [
 								newField.fieldName,

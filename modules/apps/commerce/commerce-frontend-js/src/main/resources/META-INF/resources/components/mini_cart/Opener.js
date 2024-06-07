@@ -13,12 +13,8 @@ import MiniCartContext from './MiniCartContext';
 import {hasOptions} from './util/index';
 
 function Opener() {
-	const {
-		cartState,
-		displayTotalItemsQuantity,
-		openCart,
-		setEditedItem,
-	} = useContext(MiniCartContext);
+	const {cartState, displayTotalItemsQuantity, openCart, setEditedItem} =
+		useContext(MiniCartContext);
 
 	const {cartItems = [], summary = {}} = cartState;
 	const {itemsQuantity: initialItemsQuantity} = summary;

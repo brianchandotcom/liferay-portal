@@ -210,15 +210,15 @@ export default function TranslationAdminContent({
 												isDefaultLocale
 													? 'info'
 													: localeValue
-													? 'success'
-													: 'warning'
+														? 'success'
+														: 'warning'
 											}
 										>
 											{isDefaultLocale
 												? ariaLabels.default
 												: localeValue
-												? ariaLabels.translated
-												: ariaLabels.notTranslated}
+													? ariaLabels.translated
+													: ariaLabels.notTranslated}
 										</ClayLabel>
 									</ClayTable.Cell>
 

@@ -31,7 +31,7 @@ export default function dropInRow(
 					operatorName: operators[0].name,
 					propertyName: source.propertyName,
 					value: source.defaultValue,
-			  };
+				};
 
 	let newGroup;
 

@@ -67,16 +67,16 @@ function QueryBuilderTab({
 	 * @param {string} type A `SIDEBAR_TYPES` value.
 	 * @param {visible} boolean Defaults to false if sidebar is open.
 	 */
-	const _handleChangeSidebarVisibility = (type) => (
-		visible = openSidebar !== type
-	) => {
-		if (visible) {
-			setOpenSidebar(type);
-		}
-		else if (openSidebar === type) {
-			setOpenSidebar('');
-		}
-	};
+	const _handleChangeSidebarVisibility =
+		(type) =>
+		(visible = openSidebar !== type) => {
+			if (visible) {
+				setOpenSidebar(type);
+			}
+			else if (openSidebar === type) {
+				setOpenSidebar('');
+			}
+		};
 
 	/**
 	 * Handles navigating to a different vertical nav tab. Certain sidebars

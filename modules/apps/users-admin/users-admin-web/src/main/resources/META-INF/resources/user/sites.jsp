@@ -192,12 +192,10 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 							return deleteGroupId !== entityId;
 						});
 
-						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(
-							','
-						);
-						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(
-							','
-						);
+						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value =
+							addGroupIds.join(',');
+						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value =
+							deleteGroupIds.join(',');
 					}
 				},
 				selectEventName:
@@ -234,12 +232,10 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				deleteGroupIds.push(rowId);
 
-				document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(
-					','
-				);
+				document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value =
+					addGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value =
+					deleteGroupIds.join(',');
 			},
 			'.modify-link'
 		);

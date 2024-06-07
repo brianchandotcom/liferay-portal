@@ -63,9 +63,8 @@ describe('The performance by assignee body component with data should', () => {
 	});
 
 	it('Be rendered with user avatar or lexicon user icon', () => {
-		const assigneeProfileInfo = container.querySelectorAll(
-			'.assignee-name'
-		);
+		const assigneeProfileInfo =
+			container.querySelectorAll('.assignee-name');
 
 		expect(assigneeProfileInfo[0].children[0].innerHTML).toContain(
 			'path/to/image'

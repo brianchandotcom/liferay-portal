@@ -62,7 +62,7 @@ export function initialContributorsToContributors(
 						[initialContributor.initialQuery],
 						initialContributor.conjunctionId || initialConjunction,
 						propertyGroup?.properties || []
-				  )
+					)
 				: '',
 		};
 	});
@@ -91,7 +91,7 @@ export function applyCriteriaChangeToContributors(
 						conjunctionId,
 						properties
 					),
-			  }
+				}
 			: contributor;
 	});
 }

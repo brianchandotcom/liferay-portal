@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const RGB_REGEXP = /^rgb\((?<red>\d{1,3}),\s*(?<green>\d{1,3}),\s*(?<blue>\d{1,3})\)/;
-const RGBA_REGEXP = /^rgba\((?<red>\d{1,3}),\s*(?<green>\d{1,3}),\s*(?<blue>\d{1,3}),\s*(?<alpha>(1|0(\.\d+)?))\)/;
+const RGB_REGEXP =
+	/^rgb\((?<red>\d{1,3}),\s*(?<green>\d{1,3}),\s*(?<blue>\d{1,3})\)/;
+const RGBA_REGEXP =
+	/^rgba\((?<red>\d{1,3}),\s*(?<green>\d{1,3}),\s*(?<blue>\d{1,3}),\s*(?<alpha>(1|0(\.\d+)?))\)/;
 
 export default function convertRGBtoHex(rgbColor: string) {
 	const groups =

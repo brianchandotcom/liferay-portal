@@ -8,4 +8,5 @@ export const FRAGMENT_ENTRY_TYPES = {
 	input: 'input',
 } as const;
 
-export type FragmentEntryType = typeof FRAGMENT_ENTRY_TYPES[keyof typeof FRAGMENT_ENTRY_TYPES];
+export type FragmentEntryType =
+	(typeof FRAGMENT_ENTRY_TYPES)[keyof typeof FRAGMENT_ENTRY_TYPES];

@@ -33,9 +33,8 @@ export default function Navigation({
 	timeSpanOptions,
 	viewURLs,
 }) {
-	const {endpoints, namespace, page, publishedToday, warning} = useContext(
-		StoreStateContext
-	);
+	const {endpoints, namespace, page, publishedToday, warning} =
+		useContext(StoreStateContext);
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -141,6 +140,7 @@ export default function Navigation({
 				}
 			});
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[namespace, page.plid, timeSpanKey, timeSpanOffset]
 	);

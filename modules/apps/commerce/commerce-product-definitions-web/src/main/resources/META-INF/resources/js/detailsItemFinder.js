@@ -31,7 +31,7 @@ export default function main({
 						? {
 								optionCategoryId:
 									specification.optionCategory.id,
-						  }
+							}
 						: {}),
 				}),
 				headers,

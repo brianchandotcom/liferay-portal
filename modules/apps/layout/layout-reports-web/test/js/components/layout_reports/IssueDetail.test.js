@@ -41,8 +41,7 @@ const MOCK_ISSUES = {
 			},
 		],
 		key: 'invalid-canonical-url',
-		tips:
-			'In a Liferay site, canonical URLs are automatically generated...',
+		tips: 'In a Liferay site, canonical URLs are automatically generated...',
 		title: 'Invalid Canonical URL',
 		total: '1',
 	},

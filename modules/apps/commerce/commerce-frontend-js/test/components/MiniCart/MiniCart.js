@@ -98,9 +98,8 @@ describe('MiniCart', () => {
 					container.querySelector(COMPONENT_SELECTOR)
 				);
 
-				const MiniCartElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const MiniCartElement =
+					container.querySelector(COMPONENT_SELECTOR);
 				const MiniCartOverlayElement = MiniCartElement.querySelector(
 					`${COMPONENT_SELECTOR}-overlay`
 				);
@@ -165,9 +164,8 @@ describe('MiniCart', () => {
 				});
 
 				await wait(() => {
-					const MiniCartElement = container.querySelector(
-						COMPONENT_SELECTOR
-					);
+					const MiniCartElement =
+						container.querySelector(COMPONENT_SELECTOR);
 
 					expect(MiniCartElement.classList.contains('is-open')).toBe(
 						true
@@ -191,9 +189,8 @@ describe('MiniCart', () => {
 				});
 
 				await wait(() => {
-					const MiniCartElement = container.querySelector(
-						COMPONENT_SELECTOR
-					);
+					const MiniCartElement =
+						container.querySelector(COMPONENT_SELECTOR);
 
 					expect(MiniCartElement.classList.contains('is-open')).toBe(
 						false
@@ -215,9 +212,8 @@ describe('MiniCart', () => {
 					container.querySelector(COMPONENT_SELECTOR)
 				);
 
-				const MiniCartElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const MiniCartElement =
+					container.querySelector(COMPONENT_SELECTOR);
 				const MiniCartOverlayElement = MiniCartElement.querySelector(
 					`${COMPONENT_SELECTOR}-overlay`
 				);

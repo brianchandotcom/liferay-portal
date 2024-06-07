@@ -113,12 +113,11 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 					if (isConfirmed) {
 						var form = window.document['<portlet:namespace />fm'];
 
-						form[
-							'<portlet:namespace />deleteCPMeasurementUnitIds'
-						].value = Liferay.Util.getCheckedCheckboxes(
-							form,
-							'<portlet:namespace />allRowIds'
-						);
+						form['<portlet:namespace />deleteCPMeasurementUnitIds'].value =
+							Liferay.Util.getCheckedCheckboxes(
+								form,
+								'<portlet:namespace />allRowIds'
+							);
 
 						submitForm(form);
 					}

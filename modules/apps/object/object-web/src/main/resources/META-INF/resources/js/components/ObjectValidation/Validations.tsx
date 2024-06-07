@@ -49,10 +49,8 @@ export default function Validations({
 	style,
 	url,
 }: ValidationsProps) {
-	const [
-		showAddObjectRelationshipModal,
-		setShowAddObjectRelationshipModal,
-	] = useState(false);
+	const [showAddObjectRelationshipModal, setShowAddObjectRelationshipModal] =
+		useState(false);
 
 	const objectValidationRuleEnginesItems = useMemo(() => {
 		return objectValidationRuleEngines.map(({key, label}) => ({

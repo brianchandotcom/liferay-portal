@@ -69,10 +69,10 @@ const PartialResults: React.FC<IProps> = ({
 								{totalItems === 1
 									? sub(Liferay.Language.get('x-entry'), [
 											totalItems,
-									  ])
+										])
 									: sub(Liferay.Language.get('x-entries'), [
 											totalItems,
-									  ])}
+										])}
 							</span>
 						</div>
 
@@ -82,7 +82,7 @@ const PartialResults: React.FC<IProps> = ({
 									? lastModifiedDate
 									: Liferay.Language.get(
 											'there-are-no-entries'
-									  )}
+										)}
 							</span>
 						</div>
 					</div>

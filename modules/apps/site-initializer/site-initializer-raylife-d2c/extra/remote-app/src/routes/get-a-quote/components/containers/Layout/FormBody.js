@@ -19,6 +19,7 @@ export function Forms({form, formActionContext: {isMobileDevice}}) {
 		if (!loaded && form) {
 			setLoaded(true);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form]);
 
@@ -28,6 +29,7 @@ export function Forms({form, formActionContext: {isMobileDevice}}) {
 		}
 
 		setLoadedSections(true);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loaded]);
 
@@ -37,9 +39,8 @@ export function Forms({form, formActionContext: {isMobileDevice}}) {
 			(section) => section !== 'raylife-form-input'
 		);
 
-		const stepName = sectionFormKeys[
-			sectionFormKeys.length - 1
-		]?.toLowerCase();
+		const stepName =
+			sectionFormKeys[sectionFormKeys.length - 1]?.toLowerCase();
 
 		switch (stepName) {
 			case 'basics':

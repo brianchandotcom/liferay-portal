@@ -50,13 +50,12 @@ export function DataEngineTaglibCompatibilityLayer() {
 	const dataEngineCompatibilityLayerRef = useRef(null);
 
 	useEffect(() => {
-		dataEngineCompatibilityLayerRef.current = new DataEngineCompatibilityLayer(
-			{
+		dataEngineCompatibilityLayerRef.current =
+			new DataEngineCompatibilityLayer({
 				dataDefinition,
 				dataLayout,
 				dispatch,
-			}
-		);
+			});
 	}, [dataDefinition, dataLayout, dispatch]);
 
 	useEffect(() => {

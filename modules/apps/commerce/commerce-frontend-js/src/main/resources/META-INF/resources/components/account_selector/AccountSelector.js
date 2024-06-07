@@ -20,9 +20,8 @@ import {selectAccount} from './util/index';
 import AccountsListView from './views/AccountsListView';
 import OrdersListView from './views/OrdersListView';
 
-const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
-	'v1'
-);
+const DeliveryCatalogAPIServiceProvider =
+	ServiceProvider.DeliveryCatalogAPI('v1');
 
 function AccountSelector({
 	accountEntryAllowedTypes,

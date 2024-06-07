@@ -65,11 +65,13 @@ import PreviewSidebar from './preview_sidebar/index';
 import QueryBuilderTab from './query_builder_tab/index';
 
 // Tabs in display order
+
 /* eslint-disable sort-keys */
 const TABS = {
 	'query-builder': Liferay.Language.get('query-builder'),
 	'configuration': Liferay.Language.get('configuration'),
 };
+
 /* eslint-enable sort-keys */
 
 function EditSXPBlueprintForm({
@@ -93,10 +95,8 @@ function EditSXPBlueprintForm({
 	const controllerRef = useRef();
 
 	const [errors, setErrors] = useState([]);
-	const [
-		isTitleAndDescriptionEdited,
-		setIsTitleAndDescriptionEdited,
-	] = useState(false);
+	const [isTitleAndDescriptionEdited, setIsTitleAndDescriptionEdited] =
+		useState(false);
 	const [previewInfo, setPreviewInfo] = useState(() => ({
 		loading: false,
 		results: {},
@@ -110,12 +110,10 @@ function EditSXPBlueprintForm({
 	const [indexFields, setIndexFields] = useState(null);
 	const [searchIndexes, setSearchIndexes] = useState(null);
 
-	const {
-		data: searchableTypes,
-		refetch: refetchSearchableTypes,
-	} = useFetchData({
-		resource: `/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
-	});
+	const {data: searchableTypes, refetch: refetchSearchableTypes} =
+		useFetchData({
+			resource: `/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
+		});
 
 	const {
 		data: keywordQueryContributors,
@@ -284,8 +282,8 @@ function EditSXPBlueprintForm({
 				}
 
 				const configErrors = {};
-				const fieldSets = cleanUIConfiguration(uiConfiguration)
-					.fieldSets;
+				const fieldSets =
+					cleanUIConfiguration(uiConfiguration).fieldSets;
 
 				if (
 					!!fieldSets.length &&
@@ -724,9 +722,8 @@ function EditSXPBlueprintForm({
 
 			let msg;
 
-			const errorObjectIndex = responseContent.responseString.indexOf(
-				'{"error":{'
-			);
+			const errorObjectIndex =
+				responseContent.responseString.indexOf('{"error":{');
 
 			if (errorObjectIndex > 0) {
 				const errorJSONObject = JSON.parse(
@@ -760,9 +757,8 @@ function EditSXPBlueprintForm({
 							includeResponseString: true,
 							languageId: Liferay.ThemeDisplay.getLanguageId(),
 						},
-						searchContextAttributes: transformToSearchContextAttributes(
-							attributes
-						),
+						searchContextAttributes:
+							transformToSearchContextAttributes(attributes),
 					},
 					elementInstances,
 				}),
@@ -783,7 +779,7 @@ function EditSXPBlueprintForm({
 							? responseContent
 							: getResultsError({
 									msg: responseContent?.title,
-							  })
+								})
 					),
 				});
 			})

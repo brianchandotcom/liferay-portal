@@ -253,7 +253,7 @@ export function RowGeneralPanel({item}) {
 													option
 												),
 												option
-										  ),
+											),
 								value: option,
 							}))}
 							value={

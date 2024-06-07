@@ -34,9 +34,8 @@ export function reportParameters({namespace, parameters}) {
 		'.parameters-input-type'
 	);
 
-	const reportParametersElement = document.querySelector(
-		'.report-parameters'
-	);
+	const reportParametersElement =
+		document.querySelector('.report-parameters');
 
 	const addParameterElement = document.querySelector('.add-parameter');
 
@@ -199,15 +198,13 @@ export function reportParameters({namespace, parameters}) {
 			(event) => {
 				const delegateTarget = event.delegateTarget;
 
-				const parameterKey = delegateTarget.getAttribute(
-					'data-parameterKey'
-				);
+				const parameterKey =
+					delegateTarget.getAttribute('data-parameterKey');
 				const parameterValue = delegateTarget.getAttribute(
 					'data-parameterValue'
 				);
-				const parameterType = delegateTarget.getAttribute(
-					'data-parameterType'
-				);
+				const parameterType =
+					delegateTarget.getAttribute('data-parameterType');
 
 				deleteParameter(parameterKey, parameterValue, parameterType);
 			}
@@ -237,9 +234,8 @@ export function reportParameters({namespace, parameters}) {
 						}
 					}
 
-					reportParametersElement.value = JSON.stringify(
-						reportParameters
-					);
+					reportParametersElement.value =
+						JSON.stringify(reportParameters);
 
 					const key = ('.report-tag-' + parameterKey).replace(
 						/ /g,

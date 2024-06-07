@@ -51,7 +51,7 @@ function LayoutFinder({
 						: {
 								layouts: [],
 								totalCount: 0,
-						  };
+							};
 				})
 				.then((response) => {
 					setLoading(false);

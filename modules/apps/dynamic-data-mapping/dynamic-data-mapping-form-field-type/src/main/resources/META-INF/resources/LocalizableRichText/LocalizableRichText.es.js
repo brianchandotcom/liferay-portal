@@ -44,12 +44,10 @@ const LocalizableRichText = ({
 	...otherProps
 }) => {
 	const editorRef = useRef();
-	const [currentAvailableLocales, setCurrentAvailableLocales] = useState(
-		availableLocales
-	);
-	const [currentEditingLocale, setCurrentEditingLocale] = useState(
-		editingLocale
-	);
+	const [currentAvailableLocales, setCurrentAvailableLocales] =
+		useState(availableLocales);
+	const [currentEditingLocale, setCurrentEditingLocale] =
+		useState(editingLocale);
 	const [currentValue, setCurrentValue] = useState(
 		editable ? predefinedValue : value ?? predefinedValue
 	);
@@ -76,6 +74,7 @@ const LocalizableRichText = ({
 		};
 
 		setCurrentAvailableLocales(availableLocales);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditingLocale]);
 
@@ -111,7 +110,8 @@ const LocalizableRichText = ({
 
 								const {availableLocales} = {
 									...transformAvailableLocalesAndValue({
-										availableLocales: currentAvailableLocales,
+										availableLocales:
+											currentAvailableLocales,
 										defaultLocale,
 										value: newValue,
 									}),
@@ -152,10 +152,11 @@ const LocalizableRichText = ({
 						editingLocale={currentEditingLocale}
 						fieldName={fieldName}
 						onLanguageClicked={(localeId) => {
-							const newEditingLocale = currentAvailableLocales.find(
-								(availableLocale) =>
-									availableLocale.localeId === localeId
-							);
+							const newEditingLocale =
+								currentAvailableLocales.find(
+									(availableLocale) =>
+										availableLocale.localeId === localeId
+								);
 
 							setCurrentEditingLocale({
 								...newEditingLocale,

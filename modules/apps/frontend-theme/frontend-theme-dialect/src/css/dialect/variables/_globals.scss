@@ -128,8 +128,10 @@ $transition-base: all var(--transition-base);
 $transition-fade: opacity var(--transition-fade);
 $transition-collapse: height var(--transition-collapse);
 
-$btn-transition: color var(--transition-base),
-	background-color var(--transition-base), border-color var(--transition-base),
+$btn-transition:
+	color var(--transition-base),
+	background-color var(--transition-base),
+	border-color var(--transition-base),
 	box-shadow var(--transition-base);
 
 // Other

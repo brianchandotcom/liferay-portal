@@ -447,7 +447,8 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 								className={classNames(
 									'btn-primary page-editor__col__resizer',
 									{
-										'page-editor__col__resizer-first': isFirstColumnOfRow,
+										'page-editor__col__resizer-first':
+											isFirstColumnOfRow,
 									}
 								)}
 								onMouseDown={handleMouseDown}

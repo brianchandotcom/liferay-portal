@@ -46,9 +46,8 @@ function UnitOfMeasureSelector({
 	const [skuId, setSkuId] = useState(cpInstanceId);
 	const [skuOptionsAtomState] = useLiferayState(skuOptionsAtom);
 
-	const DeliveryCatalogAPIServiceProvider = ServiceProvider.DeliveryCatalogAPI(
-		'v1'
-	);
+	const DeliveryCatalogAPIServiceProvider =
+		ServiceProvider.DeliveryCatalogAPI('v1');
 
 	const postChannelProductSkuBySkuOption = useCallback(
 		(skuUnitOfMeasureKey) => {
@@ -75,6 +74,7 @@ function UnitOfMeasureSelector({
 				);
 			});
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[accountId, channelId, options, productId, skuOptionsAtomState]
 	);
@@ -120,6 +120,7 @@ function UnitOfMeasureSelector({
 				}
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [accountId, channelId, cpInstanceId, resetQuantity, productId]);
 
@@ -196,6 +197,7 @@ function UnitOfMeasureSelector({
 		if (inputProperties.fireEvent) {
 			fireSelectorChangedEvent();
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inputProperties.fireEvent]);
 

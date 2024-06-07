@@ -130,9 +130,8 @@ describe('Field Numeric Input Mask', () => {
 		const divWithThousandsSeparator = document.querySelector(
 			'div[data-field-name="thousandsSeparator"]'
 		);
-		const buttonInsideDiv = divWithThousandsSeparator.querySelector(
-			'button'
-		);
+		const buttonInsideDiv =
+			divWithThousandsSeparator.querySelector('button');
 
 		userEvent.click(buttonInsideDiv);
 		const disabledOption = document.querySelector(

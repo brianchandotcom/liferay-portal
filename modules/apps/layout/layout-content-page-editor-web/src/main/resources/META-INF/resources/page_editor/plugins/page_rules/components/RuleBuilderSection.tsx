@@ -224,10 +224,10 @@ export function RuleBuilderConditionSection({
 						conditionType === 'all'
 							? Liferay.Language.get(
 									'if-all-of-the-following-conditions-are-met'
-							  )
+								)
 							: Liferay.Language.get(
 									'if-any-of-the-following-conditions-are-met'
-							  )
+								)
 					}
 					className="p-3 page-editor__rule-builder-section-title text-3"
 				>

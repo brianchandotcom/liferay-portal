@@ -89,9 +89,8 @@ class UserNameFields extends PortletBase {
 				this._formDataCache[name] = value;
 
 				if (field.hasAttribute('maxLength')) {
-					this._maxLengthsCache[name] = field.getAttribute(
-						'maxLength'
-					);
+					this._maxLengthsCache[name] =
+						field.getAttribute('maxLength');
 				}
 			}
 		});

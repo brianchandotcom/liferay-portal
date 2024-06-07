@@ -506,7 +506,8 @@ describe('CollectionGeneralPanel', () => {
 									targetCollections: ['collection-display-a'],
 								},
 							},
-							fragmentEntryKey: COLLECTION_FILTER_FRAGMENT_ENTRY_KEY,
+							fragmentEntryKey:
+								COLLECTION_FILTER_FRAGMENT_ENTRY_KEY,
 						},
 					},
 

@@ -140,7 +140,7 @@ export default function repeatableDNDReducer(state, action) {
 									? updateNestedFieldNames(
 											newName,
 											field.nestedFields
-									  )
+										)
 									: [],
 							};
 						});

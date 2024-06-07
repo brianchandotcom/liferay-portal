@@ -44,9 +44,10 @@ const ObjectField = ({
 		},
 	} = useFormState();
 
-	const normalizedDataType = useMemo(() => normalizeDataType(dataType), [
-		dataType,
-	]);
+	const normalizedDataType = useMemo(
+		() => normalizeDataType(dataType),
+		[dataType]
+	);
 
 	const options = useMemo(() => {
 		const filteredObjectFields = objectFields.filter(

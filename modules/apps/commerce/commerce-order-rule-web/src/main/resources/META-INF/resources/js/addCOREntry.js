@@ -14,8 +14,9 @@ export default function ({editCOREntryPortletURL, namespace}) {
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 
-		const description = form.querySelector(`#${namespace}description`)
-			.value;
+		const description = form.querySelector(
+			`#${namespace}description`
+		).value;
 		const name = form.querySelector(`#${namespace}name`).value;
 		const type = form.querySelector(`#${namespace}type`).value;
 

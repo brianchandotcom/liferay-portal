@@ -132,7 +132,7 @@ const PublicationTimeline = ({namespace, timelineItemsURL}) => {
 												!!timelineItem.actions.update
 													? getEditURL(
 															timelineItem.id
-													  )
+														)
 													: undefined
 											}
 											revertURL={
@@ -140,7 +140,7 @@ const PublicationTimeline = ({namespace, timelineItemsURL}) => {
 												WORKFLOW_STATUS_APPROVED
 													? getRevertURL(
 															timelineItem.id
-													  )
+														)
 													: undefined
 											}
 											reviewURL={
@@ -149,7 +149,7 @@ const PublicationTimeline = ({namespace, timelineItemsURL}) => {
 												!!timelineItem.actions.get
 													? getReviewURL(
 															timelineItem.id
-													  )
+														)
 													: undefined
 											}
 										/>

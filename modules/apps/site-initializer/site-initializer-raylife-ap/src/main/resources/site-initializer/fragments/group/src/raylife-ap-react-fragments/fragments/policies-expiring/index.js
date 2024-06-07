@@ -30,13 +30,10 @@ export default function () {
 	const [loadData, setLoadData] = useState(false);
 
 	const [totalOfPolicies, setTotalOfPolicies] = useState(0);
-	const [thisMonthExpiringPolicies, setThisMonthExpiringPolicies] = useState(
-		0
-	);
-	const [
-		threeMonthsExpiringPolicies,
-		setThreeMonthsExpiringPolicies,
-	] = useState(0);
+	const [thisMonthExpiringPolicies, setThisMonthExpiringPolicies] =
+		useState(0);
+	const [threeMonthsExpiringPolicies, setThreeMonthsExpiringPolicies] =
+		useState(0);
 
 	const [columnsLegend, setColumnsLegend] = useState([]);
 	const [colors, setColors] = useState({});
@@ -85,9 +82,11 @@ export default function () {
 			const handleBuildLegend = (arrayOfexpiringPolicies) => {
 				productQuotesResult?.value?.data?.items?.map(
 					(productQuote, index) => {
-						const countExpiredPolicies = arrayOfexpiringPolicies?.filter(
-							(policy) => productQuote.name === policy.productName
-						).length;
+						const countExpiredPolicies =
+							arrayOfexpiringPolicies?.filter(
+								(policy) =>
+									productQuote.name === policy.productName
+							).length;
 
 						const shortDescription = productQuote.shortDescription;
 						const fullName = productQuote.name;
@@ -187,6 +186,7 @@ export default function () {
 
 			setLoadData(true);
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedFilterDate]);
 

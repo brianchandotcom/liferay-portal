@@ -75,7 +75,8 @@ const Sharing = ({
 			[`${portletNamespace}classNameId`]: classNameId,
 			[`${portletNamespace}classPK`]: classPK,
 			[`${portletNamespace}shareable`]: allowSharingChecked,
-			[`${portletNamespace}sharingEntryPermissionDisplayActionId`]: sharingPermission,
+			[`${portletNamespace}sharingEntryPermissionDisplayActionId`]:
+				sharingPermission,
 			[`${portletNamespace}userEmailAddress`]: selectedItems
 				.map(({value}) => value)
 				.join(','),
@@ -97,7 +98,7 @@ const Sharing = ({
 								json.errorMessage || response.statusText
 							);
 							throw Object.assign(error, {response});
-					  });
+						});
 			})
 			.then((response) => {
 				parent.Liferay.fire('sharing:changed', {
@@ -156,7 +157,7 @@ const Sharing = ({
 											'user-x-does-not-exist'
 										),
 										item.value
-								  )
+									)
 								: undefined,
 							item,
 						}));
@@ -255,7 +256,7 @@ const Sharing = ({
 														user.portraitURL,
 													value: user.emailAddress,
 												};
-										  })
+											})
 										: []
 								}
 								value={multiSelectValue}

@@ -69,9 +69,8 @@ export default function ({
 						'c-ml-2 text-secondary text-4'
 					);
 
-					const removeIcon = Liferay.Util.getLexiconIconTpl(
-						'times-circle'
-					);
+					const removeIcon =
+						Liferay.Util.getLexiconIconTpl('times-circle');
 
 					let siteName;
 

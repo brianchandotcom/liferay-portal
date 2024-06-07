@@ -57,10 +57,8 @@ export function KeyboardDragAndDropContextProvider({
 	children,
 	itemList,
 }: PropsWithChildren<{itemList: Item[]}>) {
-	const [
-		dragOverPosition,
-		setDragOverPosition,
-	] = useState<DragOverPosition | null>(null);
+	const [dragOverPosition, setDragOverPosition] =
+		useState<DragOverPosition | null>(null);
 	const itemElementMap: Context['itemElementMap'] = useMemo(
 		() => new Map(),
 		[]

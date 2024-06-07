@@ -84,8 +84,7 @@ describe('HighlightedDDMStructuresConfiguration', () => {
 		renderComponent();
 
 		const itemSelectorValue = {
-			value:
-				'{"ddmstructurekey":"1","scope":"My scope","name":"Structure 1","ddmstructureid":"1"}',
+			value: '{"ddmstructurekey":"1","scope":"My scope","name":"Structure 1","ddmstructureid":"1"}',
 		};
 
 		expect(

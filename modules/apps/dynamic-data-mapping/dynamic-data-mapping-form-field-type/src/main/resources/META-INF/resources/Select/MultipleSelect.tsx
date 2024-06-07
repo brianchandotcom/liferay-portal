@@ -47,6 +47,7 @@ const MultipleSelection = ({
 		});
 
 		setItems(newItems);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values]);
 
@@ -107,7 +108,8 @@ const MultipleSelection = ({
 										const {
 											target: {checked},
 										} = event;
-										let newValue: string[] = values as string[];
+										let newValue: string[] =
+											values as string[];
 										if (checked) {
 											options.forEach((option) => {
 												if (
@@ -122,7 +124,9 @@ const MultipleSelection = ({
 												if (
 													option.value === item.value
 												) {
-													newValue = (values as string[]).filter(
+													newValue = (
+														values as string[]
+													).filter(
 														(value) =>
 															value !== item.value
 													);

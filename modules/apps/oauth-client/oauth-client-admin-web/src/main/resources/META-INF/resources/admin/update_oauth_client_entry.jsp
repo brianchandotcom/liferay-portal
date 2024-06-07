@@ -133,8 +133,9 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 	<portlet:namespace />init();
 
 	function <portlet:namespace />doSubmit() {
-		var infoJSON = document.getElementById('<portlet:namespace />infoJSON')
-			.value;
+		var infoJSON = document.getElementById(
+			'<portlet:namespace />infoJSON'
+		).value;
 
 		try {
 			infoJSON = JSON.stringify(JSON.parse(infoJSON), null, 0);

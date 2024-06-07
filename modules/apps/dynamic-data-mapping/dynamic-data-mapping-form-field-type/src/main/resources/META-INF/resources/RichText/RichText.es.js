@@ -31,7 +31,8 @@ const INNER_HTML_REGEX = /innerHTML\s*=\s*.*?/;
 const PHP_CODE_REGEX = /<\?[\s\S]*?\?>/g;
 const ASP_CODE_REGEX = /<%[\s\S]*?%>/g;
 const ASP_NET_CODE_REGEX = /(<asp:[^]+>[\s|\S]*?<\/asp:[^]+>)|(<asp:[^]+\/>)/gi;
-const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX = /<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
+const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX =
+	/<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
 const ON_ATTRIBUTE_REGEX = /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi;
 
 const RichText = ({
@@ -62,12 +63,10 @@ const RichText = ({
 		[editable, predefinedValue, value]
 	);
 
-	const [currentAvailableLocales, setCurrentAvailableLocales] = useState(
-		availableLocales
-	);
-	const [currentEditingLocale, setCurrentEditingLocale] = useState(
-		editingLocale
-	);
+	const [currentAvailableLocales, setCurrentAvailableLocales] =
+		useState(availableLocales);
+	const [currentEditingLocale, setCurrentEditingLocale] =
+		useState(editingLocale);
 	const [currentValue, setCurrentValue] = useState(
 		convertStringToObject(
 			contents,
@@ -99,11 +98,13 @@ const RichText = ({
 		};
 
 		setCurrentAvailableLocales(availableLocales);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentEditingLocale]);
 
 	useEffect(() => {
 		changeLanguage(editingLanguageId ?? locale ?? defaultLocale?.localeId);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editingLanguageId, locale, predefinedValue]);
 
@@ -258,8 +259,8 @@ const RichText = ({
 						localizedObjectField
 							? currentValue || ''
 							: currentValue
-							? currentValue[currentEditingLocale?.localeId]
-							: ''
+								? currentValue[currentEditingLocale?.localeId]
+								: ''
 					}
 				/>
 

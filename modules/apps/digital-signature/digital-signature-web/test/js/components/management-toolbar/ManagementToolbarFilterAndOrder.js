@@ -95,22 +95,18 @@ describe('ManagementToolbarFilterAndOrder', () => {
 			keywords: '',
 		};
 
-		const {
-			container,
-			queryAllByLabelText,
-			queryByLabelText,
-			queryByText,
-		} = render(
-			<SearchContextProviderWrapper
-				defaultQuery={query}
-				dispatch={dispatch}
-			>
-				<ManagementToolbarFilterAndOrder
-					columns={columns}
-					filters={FILTERS}
-				/>
-			</SearchContextProviderWrapper>
-		);
+		const {container, queryAllByLabelText, queryByLabelText, queryByText} =
+			render(
+				<SearchContextProviderWrapper
+					defaultQuery={query}
+					dispatch={dispatch}
+				>
+					<ManagementToolbarFilterAndOrder
+						columns={columns}
+						filters={FILTERS}
+					/>
+				</SearchContextProviderWrapper>
+			);
 
 		const anyOption = queryByLabelText('any');
 		const doneButton = queryByText('done');

@@ -261,10 +261,11 @@ AUI.add(
 				},
 
 				_createViewTriggerNode(view) {
-					const node = Scheduler.superclass._createViewTriggerNode.apply(
-						this,
-						arguments
-					);
+					const node =
+						Scheduler.superclass._createViewTriggerNode.apply(
+							this,
+							arguments
+						);
 
 					let schedulerViewText = '';
 
@@ -387,9 +388,8 @@ AUI.add(
 
 					const calendarContainer = instance.get('calendarContainer');
 
-					const defaultCalendar = calendarContainer.get(
-						'defaultCalendar'
-					);
+					const defaultCalendar =
+						calendarContainer.get('defaultCalendar');
 
 					const calendarId = defaultCalendar.get('calendarId');
 
@@ -589,9 +589,10 @@ AUI.add(
 
 					Liferay.CalendarMessageUtil.promptSchedulerEventUpdate({
 						calendarName: calendar.get('name'),
-						duration: instance._getCalendarBookingDuration(
-							schedulerEvent
-						),
+						duration:
+							instance._getCalendarBookingDuration(
+								schedulerEvent
+							),
 						hasChild: schedulerEvent.get(
 							'hasChildCalendarBookings'
 						),
@@ -688,9 +689,8 @@ AUI.add(
 							calendarEvents[calendarId] = [];
 						}
 
-						const schedulerEvent = CalendarUtil.createSchedulerEvent(
-							item
-						);
+						const schedulerEvent =
+							CalendarUtil.createSchedulerEvent(item);
 
 						schedulerEvent.set('scheduler', instance, {
 							silent: true,
@@ -759,9 +759,8 @@ AUI.add(
 					const showAddEventBtn = instance.get('showAddEventBtn');
 
 					if (showAddEventBtn) {
-						instance[ICON_ADD_EVENT_NODE] = instance.get(
-							ICON_ADD_EVENT_NODE
-						);
+						instance[ICON_ADD_EVENT_NODE] =
+							instance.get(ICON_ADD_EVENT_NODE);
 
 						instance[CONTROLS_NODE].prepend(
 							instance[ICON_ADD_EVENT_NODE]

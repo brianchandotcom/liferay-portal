@@ -49,6 +49,7 @@ const PaginationBar = ({
 				setPageSize(newPageSize);
 			}
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[params, path, search]
 	);
@@ -67,6 +68,7 @@ const PaginationBar = ({
 				setPage(newPage);
 			}
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[params, path, search]
 	);

@@ -286,7 +286,7 @@ function Diagram({
 										mappedProduct:
 											newMappedProduct.mappedProduct,
 										quantity: newMappedProduct.quantity,
-								  }
+									}
 								: mappedProduct
 					);
 
@@ -295,7 +295,7 @@ function Diagram({
 								updatedMappedProduct.id === newMappedProduct.id
 									? newMappedProduct
 									: updatedMappedProduct
-						  )
+							)
 						: [...updatedMappedProducts, newMappedProduct];
 				});
 

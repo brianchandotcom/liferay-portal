@@ -17,10 +17,8 @@ import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [
-		{creationLanguageId, isViewOnly, objectLayout},
-		dispatch,
-	] = useLayoutContext();
+	const [{creationLanguageId, isViewOnly, objectLayout}, dispatch] =
+		useLayoutContext();
 
 	let error: string | undefined;
 

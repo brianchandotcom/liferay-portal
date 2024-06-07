@@ -194,10 +194,8 @@ export default function dragAndDropReducer(state, action, config) {
 		case EVENT_TYPES.DND.RESIZE: {
 			const {column, direction, loc} = action.payload;
 			const {defaultLanguageId, editingLanguageId, pages} = state;
-			const {
-				generateFieldNameUsingFieldLabel,
-				getFieldNameGenerator,
-			} = config;
+			const {generateFieldNameUsingFieldLabel, getFieldNameGenerator} =
+				config;
 
 			const fieldNameGenerator = getFieldNameGenerator(
 				pages,

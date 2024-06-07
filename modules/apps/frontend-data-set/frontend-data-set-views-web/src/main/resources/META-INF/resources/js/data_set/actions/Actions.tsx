@@ -73,9 +73,8 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	const [activeSection, setActiveSection] = useState(SECTIONS.ITEM_ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
 	const [loading, setLoading] = useState(true);
-	const [initialActionFormValues, setInitialActionFormValues] = useState<
-		IAction
-	>();
+	const [initialActionFormValues, setInitialActionFormValues] =
+		useState<IAction>();
 
 	const getBreadcrumbItems = () => {
 		const breadcrumbItems: React.ComponentProps<

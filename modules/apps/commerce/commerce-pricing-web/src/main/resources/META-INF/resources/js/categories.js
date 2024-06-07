@@ -16,9 +16,8 @@ export default function ({
 	pricingFDSName,
 	spritemap,
 }) {
-	const CommerceDiscountCategoriesResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommerceDiscountCategoriesResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	const id = commerceDiscountId;
 
@@ -49,8 +48,7 @@ export default function ({
 	}
 
 	ItemFinder('itemFinder', 'item-finder-root', {
-		apiUrl:
-			'/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0/taxonomy-categories',
+		apiUrl: '/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0/taxonomy-categories',
 		getSelectedItems,
 		inputPlaceholder: Liferay.Language.get('find-a-category'),
 		itemCreation: false,

@@ -385,7 +385,9 @@ describe('FieldSets', () => {
 				fieldSet: {name},
 				indexes,
 			},
-		] = dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider.dispatch.mock.calls[0];
+		] =
+			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider
+				.dispatch.mock.calls[0];
 
 		expect(action).toBe('fieldSetAdded');
 		expect(name).toStrictEqual('Field53354166');

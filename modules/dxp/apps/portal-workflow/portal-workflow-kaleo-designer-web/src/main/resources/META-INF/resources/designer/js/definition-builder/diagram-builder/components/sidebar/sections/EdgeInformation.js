@@ -100,7 +100,7 @@ export default function EdgeInformation({errors, setErrors}) {
 								? selectedItem?.data.label[selectedLanguageId]
 								: selectedItem?.data.label[
 										defaultLanguageId
-								  ]) || ''
+									]) || ''
 						}
 					/>
 
@@ -161,10 +161,10 @@ export default function EdgeInformation({errors, setErrors}) {
 								{errors.id.duplicated
 									? Liferay.Language.get(
 											'a-transition-with-that-name-already-exists'
-									  )
+										)
 									: Liferay.Language.get(
 											'this-field-is-required'
-									  )}
+										)}
 							</>
 						)}
 					</ClayForm.FeedbackItem>

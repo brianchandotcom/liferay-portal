@@ -44,7 +44,8 @@ export function ReadOnlyContainer({
 		<div
 			className={classNames({
 				'lfr-objects__edit-object-field-card-content': !modelBuilder,
-				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+				'lfr-objects__edit-object-field-model-builder-panel':
+					modelBuilder,
 			})}
 		>
 			{values.readOnly && (
@@ -105,19 +106,22 @@ export function ReadOnlyContainer({
 								parentWindow.Liferay.fire(
 									'openExpressionBuilderModal',
 									{
-										eventSidebarElements: readOnlySidebarElements,
+										eventSidebarElements:
+											readOnlySidebarElements,
 										header: Liferay.Language.get(
 											'expression-builder'
 										),
 										onSave: (script: string) => {
 											setValues({
-												readOnlyConditionExpression: script,
+												readOnlyConditionExpression:
+													script,
 											});
 
 											if (onSubmit) {
 												onSubmit({
 													...values,
-													readOnlyConditionExpression: script,
+													readOnlyConditionExpression:
+														script,
 												});
 											}
 										},

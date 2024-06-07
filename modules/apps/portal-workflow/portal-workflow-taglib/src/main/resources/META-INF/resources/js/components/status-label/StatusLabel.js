@@ -16,9 +16,8 @@ export default function StatusLabel({
 	statusMessage,
 	statusStyle,
 }) {
-	const [showInstanceTrackerModal, setShowInstanceTrackerModal] = useState(
-		false
-	);
+	const [showInstanceTrackerModal, setShowInstanceTrackerModal] =
+		useState(false);
 
 	const {observer} = useModal({
 		onClose: () => {

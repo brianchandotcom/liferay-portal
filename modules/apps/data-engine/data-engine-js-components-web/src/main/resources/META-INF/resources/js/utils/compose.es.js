@@ -4,5 +4,9 @@
  */
 
 export default function compose(...functions) {
-	return functions.reduce((a, c) => (...args) => a(c(...args)));
+	return functions.reduce(
+		(a, c) =>
+			(...args) =>
+				a(c(...args))
+	);
 }

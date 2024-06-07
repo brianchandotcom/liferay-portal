@@ -98,6 +98,7 @@ export function PrimaryRecipient({
 
 			return;
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [emailNotificationRoles, recipient.to]);
 

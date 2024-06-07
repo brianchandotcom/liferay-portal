@@ -33,10 +33,8 @@ function sourceTagTemplate({media, srcset}) {
 
 					event.cancel();
 
-					const onSelectedImageChangeFn = instance._onSelectedImageChange.bind(
-						instance,
-						editor
-					);
+					const onSelectedImageChangeFn =
+						instance._onSelectedImageChange.bind(instance, editor);
 
 					editor.execCommand(
 						'imageselector',

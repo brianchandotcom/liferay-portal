@@ -39,12 +39,10 @@ export function AccountRestrictionContainer({
 		LabelValueObject[]
 	>([]);
 
-	const [disableAccountToggle, setDisableAccountToggle] = useState<boolean>(
-		false
-	);
-	const [disableAccountSelect, setDisableAccountSelect] = useState<boolean>(
-		false
-	);
+	const [disableAccountToggle, setDisableAccountToggle] =
+		useState<boolean>(false);
+	const [disableAccountSelect, setDisableAccountSelect] =
+		useState<boolean>(false);
 
 	useEffect(() => {
 		const accountRelationshipFieldsResponse = objectFields.filter(
@@ -88,6 +86,7 @@ export function AccountRestrictionContainer({
 				setDisableAccountSelect(true);
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFields]);
 
@@ -115,7 +114,8 @@ export function AccountRestrictionContainer({
 					}}
 					onToggle={() =>
 						setValues({
-							accountEntryRestricted: !values.accountEntryRestricted,
+							accountEntryRestricted:
+								!values.accountEntryRestricted,
 							accountEntryRestrictedObjectFieldName:
 								!values.accountEntryRestricted === false
 									? ''
@@ -147,7 +147,8 @@ export function AccountRestrictionContainer({
 					if (onSubmit) {
 						onSubmit({
 							...values,
-							accountEntryRestrictedObjectFieldName: value as string,
+							accountEntryRestrictedObjectFieldName:
+								value as string,
 						});
 					}
 				}}

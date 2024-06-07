@@ -169,9 +169,8 @@ export default function propsTransformer({
 
 		Liferay.componentReady(`${portletNamespace}EditTagsComponent`).then(
 			(editTagsComponent) => {
-				const bulkSelection = searchContainer.select?.get(
-					'bulkSelection'
-				);
+				const bulkSelection =
+					searchContainer.select?.get('bulkSelection');
 
 				const selectedFileEntries = searchContainer.select
 					.getAllSelectedElements()
@@ -381,10 +380,9 @@ export default function propsTransformer({
 			return;
 		}
 
-		const [
-			selectedModelClassName,
-			selectedFileEntries,
-		] = map.entries()?.next().value;
+		const [selectedModelClassName, selectedFileEntries] = map
+			.entries()
+			?.next().value;
 
 		const permissionsURL = permissionsURLs[selectedModelClassName];
 
@@ -394,9 +392,8 @@ export default function propsTransformer({
 			title: Liferay.Language.get('permissions'),
 			url: addParams(
 				{
-					[`_${url.searchParams.get(
-						'p_p_id'
-					)}_resourcePrimKey`]: selectedFileEntries.join(','),
+					[`_${url.searchParams.get('p_p_id')}_resourcePrimKey`]:
+						selectedFileEntries.join(','),
 				},
 				permissionsURL
 			),

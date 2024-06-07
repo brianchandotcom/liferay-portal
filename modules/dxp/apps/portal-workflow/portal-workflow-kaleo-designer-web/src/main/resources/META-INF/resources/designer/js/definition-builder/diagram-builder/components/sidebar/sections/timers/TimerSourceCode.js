@@ -10,11 +10,8 @@ import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import BaseSourceCode from '../shared-components/BaseSourceCode';
 
 const TimerSourceCode = () => {
-	const {
-		scriptedReassignmentTimerIndex,
-		selectedItem,
-		setSelectedItem,
-	} = useContext(DiagramBuilderContext);
+	const {scriptedReassignmentTimerIndex, selectedItem, setSelectedItem} =
+		useContext(DiagramBuilderContext);
 
 	const scriptSourceCode =
 		selectedItem.data.taskTimers?.reassignments?.[
@@ -29,20 +26,25 @@ const TimerSourceCode = () => {
 					...previousValue.data,
 					taskTimers: {
 						...previousValue.data.taskTimers,
-						reassignments: previousValue.data.taskTimers.reassignments.map(
-							(reassignment, index) => {
-								if (index === scriptedReassignmentTimerIndex) {
-									return {
-										assignmentType: ['scriptedAssignment'],
-										script: [editor.getData()],
-										scriptLanguage: [DEFAULT_LANGUAGE],
-									};
+						reassignments:
+							previousValue.data.taskTimers.reassignments.map(
+								(reassignment, index) => {
+									if (
+										index === scriptedReassignmentTimerIndex
+									) {
+										return {
+											assignmentType: [
+												'scriptedAssignment',
+											],
+											script: [editor.getData()],
+											scriptLanguage: [DEFAULT_LANGUAGE],
+										};
+									}
+									else {
+										return reassignment;
+									}
 								}
-								else {
-									return reassignment;
-								}
-							}
-						),
+							),
 					},
 				},
 			}));

@@ -60,9 +60,8 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 		const formElement = document.getElementById('<portlet:namespace />fm');
 
 		if (formElement) {
-			const submitButtonGroupElement = formElement.querySelector(
-				'.button-holder'
-			);
+			const submitButtonGroupElement =
+				formElement.querySelector('.button-holder');
 
 			if (submitButtonGroupElement) {
 				submitButtonGroupElement.remove();

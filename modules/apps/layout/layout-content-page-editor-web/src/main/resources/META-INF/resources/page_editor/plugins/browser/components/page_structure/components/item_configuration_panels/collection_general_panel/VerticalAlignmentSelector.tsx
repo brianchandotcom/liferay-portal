@@ -14,7 +14,8 @@ const VERTICAL_ALIGNMENT_OPTIONS = [
 	{label: Liferay.Language.get('bottom'), value: 'end'},
 ] as const;
 
-export type VerticalAlignmentOption = typeof VERTICAL_ALIGNMENT_OPTIONS[number]['value'];
+export type VerticalAlignmentOption =
+	(typeof VERTICAL_ALIGNMENT_OPTIONS)[number]['value'];
 
 interface Props {
 	collectionVerticalAlignmentId: string;

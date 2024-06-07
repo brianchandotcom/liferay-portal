@@ -39,13 +39,8 @@ class ClayEmptyState extends Component {
 	};
 
 	render() {
-		const {
-			actionLabel,
-			description,
-			displayState,
-			onClickAction,
-			title,
-		} = this.props;
+		const {actionLabel, description, displayState, onClickAction, title} =
+			this.props;
 
 		return (
 			<div className="empty-state-root">

@@ -52,10 +52,8 @@ export default function PageContent({
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
 	const layoutData = useSelector((state) => state.layoutData);
-	const [
-		nextEditableProcessorUniqueId,
-		setNextEditableProcessorUniqueId,
-	] = useState(null);
+	const [nextEditableProcessorUniqueId, setNextEditableProcessorUniqueId] =
+		useState(null);
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const [imageEditorParams, setImageEditorParams] = useState(null);
@@ -114,10 +112,8 @@ export default function PageContent({
 				setIsHovered(editableId === hoveredItemId);
 			}
 			else {
-				const [
-					fragmentEntryLinkId,
-					...editableId
-				] = hoveredItemId.split('-');
+				const [fragmentEntryLinkId, ...editableId] =
+					hoveredItemId.split('-');
 
 				if (fragmentEntryLinks[fragmentEntryLinkId]) {
 					const fragmentEntryLink =
@@ -226,10 +222,10 @@ export default function PageContent({
 				},
 				'role': 'button',
 				'tabIndex': '0',
-		  }
+			}
 		: {
 				'aria-label': title,
-		  };
+			};
 
 	return (
 		<li

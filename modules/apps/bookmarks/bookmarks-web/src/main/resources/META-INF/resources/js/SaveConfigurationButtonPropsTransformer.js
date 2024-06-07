@@ -20,9 +20,8 @@ export default function propsTransformer({portletNamespace, ...props}) {
 				);
 
 				if (currentFolderColumns && folderColumns) {
-					folderColumns.value = getSelectedOptionValues(
-						currentFolderColumns
-					);
+					folderColumns.value =
+						getSelectedOptionValues(currentFolderColumns);
 				}
 
 				const currentEntryColumns = document.getElementById(
@@ -33,9 +32,8 @@ export default function propsTransformer({portletNamespace, ...props}) {
 				);
 
 				if (currentEntryColumns && entryColumns) {
-					entryColumns.value = getSelectedOptionValues(
-						currentEntryColumns
-					);
+					entryColumns.value =
+						getSelectedOptionValues(currentEntryColumns);
 				}
 
 				submitForm(form);

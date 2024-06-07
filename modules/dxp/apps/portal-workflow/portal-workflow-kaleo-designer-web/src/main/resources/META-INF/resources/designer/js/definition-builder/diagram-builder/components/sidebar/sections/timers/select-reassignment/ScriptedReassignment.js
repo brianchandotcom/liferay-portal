@@ -12,11 +12,8 @@ import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
 const ScriptedReassignment = ({actionData, setContentName, timersIndex}) => {
-	const {
-		selectedItem,
-		setScriptedReassignmentTimerIndex,
-		setSelectedItem,
-	} = useContext(DiagramBuilderContext);
+	const {selectedItem, setScriptedReassignmentTimerIndex, setSelectedItem} =
+		useContext(DiagramBuilderContext);
 
 	const [showScriptData, setShowScriptData] = useState(
 		selectedItem?.data.taskTimers?.reassignments?.script

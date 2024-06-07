@@ -53,9 +53,8 @@ const EditTagsModal = ({
 	// Current selected items.
 
 	const [selectedItems, setSelectedItems] = useState([]);
-	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
-		'add'
-	);
+	const [selectedRadioGroupValue, setSelectedRadioGroupValue] =
+		useState('add');
 
 	const fileEntriesLength = fileEntries && fileEntries.length;
 
@@ -153,7 +152,7 @@ const EditTagsModal = ({
 							(initialSelectedItem) =>
 								initialSelectedItem.value === selectedItem.value
 						)
-			  );
+				);
 
 		const removedLabels = initialSelectedItems.filter(
 			(initialSelectedItem) =>

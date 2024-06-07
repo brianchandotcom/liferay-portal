@@ -47,13 +47,13 @@ AUI.add(
 					value: [
 						{
 							interval: 10,
-							type:
-								Liferay.CalendarUtil.NOTIFICATION_DEFAULT_TYPE,
+							type: Liferay.CalendarUtil
+								.NOTIFICATION_DEFAULT_TYPE,
 						},
 						{
 							interval: 60,
-							type:
-								Liferay.CalendarUtil.NOTIFICATION_DEFAULT_TYPE,
+							type: Liferay.CalendarUtil
+								.NOTIFICATION_DEFAULT_TYPE,
 						},
 					],
 				},

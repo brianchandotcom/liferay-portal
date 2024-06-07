@@ -33,10 +33,11 @@ export default function usePagination(teamMembers) {
 	const teamMembersByStatusPaginated = useMemo(() => {
 		const teamMembersFilteredByStatus = teamMembers;
 		if (teamMembersFilteredByStatus) {
-			const teamMembersFilteredByStatusPerPage = teamMembersFilteredByStatus.slice(
-				itemsPerPage * activePage - itemsPerPage,
-				itemsPerPage * activePage
-			);
+			const teamMembersFilteredByStatusPerPage =
+				teamMembersFilteredByStatus.slice(
+					itemsPerPage * activePage - itemsPerPage,
+					itemsPerPage * activePage
+				);
 
 			return teamMembersFilteredByStatusPerPage?.length
 				? teamMembersFilteredByStatusPerPage

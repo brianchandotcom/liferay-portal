@@ -34,7 +34,7 @@ type featureIndicatorProps = (
 	| featureIndicatorInteractiveProps
 ) & {
 	dark?: boolean;
-	tooltipAlign?: typeof ALIGN_POSITIONS[number];
+	tooltipAlign?: (typeof ALIGN_POSITIONS)[number];
 	type?: Type;
 };
 

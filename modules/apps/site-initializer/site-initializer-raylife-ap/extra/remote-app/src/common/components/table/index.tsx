@@ -73,6 +73,7 @@ const Table: React.FC<TableProps> = ({
 
 		headers.forEach((item) => {
 			if (item.requestLabel === colunn) {
+
 				// eslint-disable-next-line no-return-assign
 				return (newSort[item.key] = true);
 			}

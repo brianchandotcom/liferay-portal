@@ -71,11 +71,13 @@ export function Table<TRawItem>({
 				type: Events.FormatData,
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
 	useEffect(() => {
 		onItemsChange && onItemsChange(formattedItems);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formattedItems]);
 

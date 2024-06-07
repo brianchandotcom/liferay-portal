@@ -134,18 +134,19 @@ function Body({history, id, processId, query}) {
 				})
 				.catch(handleErrors);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id, processId, saveSLA, sla]);
 
-	const onChangeHandler = (validateFunction) => ({
-		target: {name, value = ''},
-	}) => {
-		changeValue(name, value);
+	const onChangeHandler =
+		(validateFunction) =>
+		({target: {name, value = ''}}) => {
+			changeValue(name, value);
 
-		if (typeof validateFunction === 'function') {
-			validateFunction(value);
-		}
-	};
+			if (typeof validateFunction === 'function') {
+				validateFunction(value);
+			}
+		};
 
 	const onNameChanged = (newName) => {
 		setErrors({

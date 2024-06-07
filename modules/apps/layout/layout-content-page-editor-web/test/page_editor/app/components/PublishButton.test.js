@@ -51,8 +51,8 @@ describe('PublishButton', () => {
 	});
 
 	it('renders PublishButton component', () => {
-		useCheckFormsValidity.mockImplementation(() => () =>
-			Promise.resolve(true)
+		useCheckFormsValidity.mockImplementation(
+			() => () => Promise.resolve(true)
 		);
 
 		renderComponent();
@@ -89,8 +89,8 @@ describe('PublishButton', () => {
 	});
 
 	it('does not call onPublish when some form is invalid', async () => {
-		useCheckFormsValidity.mockImplementation(() => () =>
-			Promise.resolve(false)
+		useCheckFormsValidity.mockImplementation(
+			() => () => Promise.resolve(false)
 		);
 
 		const onPublish = jest.fn(() => {});

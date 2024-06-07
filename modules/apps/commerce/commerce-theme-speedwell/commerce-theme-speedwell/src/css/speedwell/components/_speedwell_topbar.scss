@@ -8,7 +8,9 @@
 	position: fixed;
 	right: 0;
 	top: var(--control-menu-container-height);
-	transition: background-color 0.2s $easeOutQuart, margin 500ms ease;
+	transition:
+		background-color 0.2s $easeOutQuart,
+		margin 500ms ease;
 	z-index: 988;
 
 	body.product-menu-open & {

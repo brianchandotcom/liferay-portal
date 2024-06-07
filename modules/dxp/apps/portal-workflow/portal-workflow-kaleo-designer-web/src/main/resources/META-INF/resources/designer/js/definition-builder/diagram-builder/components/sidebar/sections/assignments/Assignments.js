@@ -95,6 +95,7 @@ const Assignments = (props) => {
 		else if (assignmentType === 'user') {
 			setSections(assignments.sectionsData);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

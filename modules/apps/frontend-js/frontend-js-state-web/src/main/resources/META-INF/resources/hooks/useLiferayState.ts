@@ -37,8 +37,9 @@ export default function useLiferayState<T>(
 
 	return [
 		currentValue,
-		useCallback((newValue) => State.write(atomOrSelector, newValue), [
-			atomOrSelector,
-		]),
+		useCallback(
+			(newValue) => State.write(atomOrSelector, newValue),
+			[atomOrSelector]
+		),
 	];
 }

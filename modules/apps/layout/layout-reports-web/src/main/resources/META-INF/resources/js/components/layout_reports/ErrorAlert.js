@@ -37,8 +37,8 @@ const ErrorAlert = () => {
 	const title = apiKeyError
 		? Liferay.Language.get('the-api-key-is-invalid')
 		: pageCanNotBeAudited
-		? Liferay.Language.get('this-page-cannot-be-audited')
-		: Liferay.Language.get('an-unexpected-error-occurred');
+			? Liferay.Language.get('this-page-cannot-be-audited')
+			: Liferay.Language.get('an-unexpected-error-occurred');
 
 	const actionTitle = showErrorInfo
 		? Liferay.Language.get('hide-details')

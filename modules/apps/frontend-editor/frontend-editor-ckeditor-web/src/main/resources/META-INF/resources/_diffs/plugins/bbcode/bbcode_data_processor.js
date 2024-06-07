@@ -25,6 +25,7 @@
 		em: '_handleEm',
 		font: '_handleFont',
 		i: '_handleEm',
+
 		// eslint-disable-next-line @liferay/no-abbreviations
 		img: '_handleImage',
 		li: '_handleListItem',
@@ -61,7 +62,8 @@
 
 	const NEW_LINE = '\n';
 
-	const REGEX_COLOR_RGB = /^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
+	const REGEX_COLOR_RGB =
+		/^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
 
 	const REGEX_EM = /em$/i;
 

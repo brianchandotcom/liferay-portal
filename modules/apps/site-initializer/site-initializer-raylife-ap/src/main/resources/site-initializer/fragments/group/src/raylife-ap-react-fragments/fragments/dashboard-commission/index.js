@@ -32,10 +32,8 @@ export default function () {
 	const [sixMonthTotalCommission, setSixMonthTotalCommission] = useState();
 	const [yoyTotalCommission, setYoyTotalCommission] = useState();
 	const [yoyLastYearCommission, setYoyLastYearCommission] = useState();
-	const [
-		lastYearSixMonthCommission,
-		setLastYearSixMonthCommission,
-	] = useState();
+	const [lastYearSixMonthCommission, setLastYearSixMonthCommission] =
+		useState();
 
 	function getTime(date, months) {
 		date.setMonth(date.getMonth() + months);
@@ -222,9 +220,8 @@ export default function () {
 					lastSixMonthsAgoArray
 				);
 
-				const lastYearSixMonthsCommission = sumTotalCommissions(
-					lastSixMonthsAgo
-				);
+				const lastYearSixMonthsCommission =
+					sumTotalCommissions(lastSixMonthsAgo);
 
 				setLastYearSixMonthCommission(lastYearSixMonthsCommission);
 
@@ -236,9 +233,10 @@ export default function () {
 					sixMonthsAgoDate[1],
 					sixMonthsAgoDate[2]
 				).then((response) => {
-					const totalSixMonthsCommissionValue = sumCommissionsPerMonth(
-						getSixMonthsCommission(response, sixMonthsAgoArray)
-					);
+					const totalSixMonthsCommissionValue =
+						sumCommissionsPerMonth(
+							getSixMonthsCommission(response, sixMonthsAgoArray)
+						);
 
 					setSixMonthTotalCommission(totalSixMonthsCommissionValue);
 				});
@@ -261,9 +259,8 @@ export default function () {
 					firstUntilCurrentArray
 				);
 
-				const firstUntilCurrentCommission = getCommissionValues(
-					firstUntilCurrent
-				);
+				const firstUntilCurrentCommission =
+					getCommissionValues(firstUntilCurrent);
 
 				const totalFirstCurrentCommissionValue = sumCommissionsPerMonth(
 					firstUntilCurrentCommission
@@ -407,12 +404,12 @@ export default function () {
 							commissionPercentual === Infinity
 								? `NaN`
 								: commissionPercentual
-					  }% MoM`
+						}% MoM`
 					: `${
 							commissionPercentual === Infinity
 								? `NaN`
 								: commissionPercentual
-					  }% YoY`}
+						}% YoY`}
 			</div>
 		</div>
 	);

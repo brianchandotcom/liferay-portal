@@ -11,9 +11,8 @@ export default function propsTransformer({
 	return {
 		...props,
 		onClick() {
-			document.querySelector(
-				`#${portletNamespace}redirect`
-			).value = redirect;
+			document.querySelector(`#${portletNamespace}redirect`).value =
+				redirect;
 
 			submitForm(document.getElementById(`${portletNamespace}fm`));
 		},

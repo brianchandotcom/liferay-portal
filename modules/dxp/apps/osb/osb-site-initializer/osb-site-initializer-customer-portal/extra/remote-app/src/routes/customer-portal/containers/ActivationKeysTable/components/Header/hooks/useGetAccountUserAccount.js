@@ -28,26 +28,28 @@ export default function useGetAccountUserAccount(project) {
 			});
 
 			if (data) {
-				const accountUserAccounts = data.accountUserAccountsByExternalReferenceCode?.items?.reduce(
-					(userAccountsAccumulator, userAccount) => {
-						const currentAccountBrief = userAccount.accountBriefs?.find(
-							(accountBrief) =>
-								accountBrief.externalReferenceCode ===
-								project?.accountKey
-						);
-						if (currentAccountBrief) {
-							userAccountsAccumulator.push({
-								...userAccount,
-								roles: currentAccountBrief.roleBriefs?.map(
-									({name}) => name
-								),
-							});
-						}
+				const accountUserAccounts =
+					data.accountUserAccountsByExternalReferenceCode?.items?.reduce(
+						(userAccountsAccumulator, userAccount) => {
+							const currentAccountBrief =
+								userAccount.accountBriefs?.find(
+									(accountBrief) =>
+										accountBrief.externalReferenceCode ===
+										project?.accountKey
+								);
+							if (currentAccountBrief) {
+								userAccountsAccumulator.push({
+									...userAccount,
+									roles: currentAccountBrief.roleBriefs?.map(
+										({name}) => name
+									),
+								});
+							}
 
-						return userAccountsAccumulator;
-					},
-					[]
-				);
+							return userAccountsAccumulator;
+						},
+						[]
+					);
 
 				setUserAccounts(accountUserAccounts);
 			}

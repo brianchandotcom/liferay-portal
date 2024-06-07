@@ -37,7 +37,7 @@ export default function updateConfigurationValue({
 						? currentValue
 						: {[config.defaultLanguageId]: currentValue}),
 					[languageId]: value,
-			  }
+				}
 			: value,
 	};
 

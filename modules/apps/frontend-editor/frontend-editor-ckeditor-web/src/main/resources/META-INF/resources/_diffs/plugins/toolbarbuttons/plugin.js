@@ -419,9 +419,9 @@
 									if (
 										this._checkActive({
 											elementPath: event.data.path,
-											styleConfig: this._stylesFactory[
-												spacingKey
-											].style,
+											styleConfig:
+												this._stylesFactory[spacingKey]
+													.style,
 										})
 									) {
 										const element = document.getElementById(
@@ -429,9 +429,10 @@
 										);
 
 										if (element) {
-											element.selectedIndex = this._getSelectedIndex(
-												spacingKey
-											);
+											element.selectedIndex =
+												this._getSelectedIndex(
+													spacingKey
+												);
 										}
 									}
 								}

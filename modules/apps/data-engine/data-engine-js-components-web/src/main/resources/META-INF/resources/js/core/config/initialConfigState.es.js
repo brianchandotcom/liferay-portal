@@ -9,18 +9,16 @@ import {generateFieldName} from '../utils/fields';
  * This is a literary copy of the logic of the old LayoutProvider,
  * check the documentation for more details.
  */
-const getFieldNameGenerator = (pages, generateFieldNameUsingFieldLabel) => (
-	preferredName,
-	currentName,
-	blacklist = []
-) =>
-	generateFieldName(
-		pages,
-		preferredName,
-		currentName,
-		blacklist,
-		generateFieldNameUsingFieldLabel
-	);
+const getFieldNameGenerator =
+	(pages, generateFieldNameUsingFieldLabel) =>
+	(preferredName, currentName, blacklist = []) =>
+		generateFieldName(
+			pages,
+			preferredName,
+			currentName,
+			blacklist,
+			generateFieldNameUsingFieldLabel
+		);
 
 export const INITIAL_CONFIG_STATE = {
 	cache: {},

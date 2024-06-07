@@ -3,7 +3,7 @@
 }
 
 .quote-site-navbar .background-icon-close {
-	background: url('[resources:close_menu.svg]');
+	background: url([resources:close_menu.svg]);
 	background-repeat: no-repeat;
 	background-size: contain;
 	height: 16px;
@@ -12,7 +12,7 @@
 }
 
 .quote-site-navbar .background-icon-grid {
-	background: url('[resources:grid_icon_blue.svg]');
+	background: url([resources:grid_icon_blue.svg]);
 	background-repeat: no-repeat;
 	background-size: contain;
 	height: 16px;
@@ -49,7 +49,7 @@
 }
 
 .quote-site-navbar .logo-desktop {
-	background: url('[resources:raylife_logo.svg]');
+	background: url([resources:raylife_logo.svg]);
 	background-repeat: no-repeat;
 	height: 36px;
 	width: 120px;
@@ -93,7 +93,7 @@
 	}
 
 	.quote-site-navbar .background-icon-close:not(.menu-button-style) {
-		background: url('[resources:close_menu_white.svg]');
+		background: url([resources:close_menu_white.svg]);
 		background-repeat: no-repeat;
 		background-size: contain;
 		height: 16px;
@@ -102,7 +102,7 @@
 	}
 
 	.quote-site-navbar .background-icon-grid:not(.menu-button-style) {
-		background: url('[resources:grid_icon_white.svg]');
+		background: url([resources:grid_icon_white.svg]);
 		background-repeat: no-repeat;
 		background-size: contain;
 		height: 16px;
@@ -119,7 +119,7 @@
 	}
 
 	.quote-site-navbar .logo-desktop:not(.white-background) {
-		background: url('[resources:raylife_logo_mobile.svg]');
+		background: url([resources:raylife_logo_mobile.svg]);
 		background-repeat: no-repeat;
 		height: 36px;
 		width: 120px;

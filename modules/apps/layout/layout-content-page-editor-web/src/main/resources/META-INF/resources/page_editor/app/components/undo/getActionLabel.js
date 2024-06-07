@@ -51,7 +51,7 @@ export default function getActionLabel(
 								masterLayout.masterLayoutPlid ===
 								action.nextMasterLayoutPlid
 						).name
-				  )
+					)
 				: sub(
 						Liferay.Language.get('select-x-master-layout'),
 						config.masterLayouts.find(
@@ -59,7 +59,7 @@ export default function getActionLabel(
 								masterLayout.masterLayoutPlid ===
 								action.masterLayoutPlid
 						).name
-				  );
+					);
 
 		case DELETE_ITEM:
 		case DELETE_RULE:
@@ -76,24 +76,24 @@ export default function getActionLabel(
 							action.nextSegmentsExperienceId,
 							availableSegmentsExperiences
 						)
-				  )
+					)
 				: sub(
 						Liferay.Language.get('select-x-experience'),
 						getSegmentsExperienceName(
 							action.segmentsExperienceId,
 							availableSegmentsExperiences
 						)
-				  );
+					);
 		case SWITCH_VIEWPORT_SIZE:
 			return type === UNDO_TYPES.undo
 				? sub(
 						Liferay.Language.get('select-x-viewport'),
 						config.availableViewportSizes[action.nextSize].label
-				  )
+					)
 				: sub(
 						Liferay.Language.get('select-x-viewport'),
 						config.availableViewportSizes[action.size].label
-				  );
+					);
 
 		case TOGGLE_FRAGMENT_HIGHLIGHTED:
 			return action.initiallyHighlighted
@@ -126,11 +126,11 @@ export default function getActionLabel(
 				? sub(
 						Liferay.Language.get('select-x-language'),
 						action.nextLanguageId
-				  )
+					)
 				: sub(
 						Liferay.Language.get('select-x-language'),
 						action.languageId
-				  );
+					);
 		case UPDATE_RULE:
 			return sub(Liferay.Language.get('update-x'), action.itemName);
 		default:

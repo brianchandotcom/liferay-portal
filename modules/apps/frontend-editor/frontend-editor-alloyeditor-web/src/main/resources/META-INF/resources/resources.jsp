@@ -32,7 +32,8 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 	<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#additionalResources" %>' />
 
 	<aui:script senna="temporary" type="text/javascript">
-		AlloyEditor.regexBasePath = /(^|.*[\\\/])(?:liferay-alloy-editor[^/]+|liferay-alloy-editor)\.js(?:\?.*|;.*)?$/i;
+		AlloyEditor.regexBasePath =
+			/(^|.*[\\\/])(?:liferay-alloy-editor[^/]+|liferay-alloy-editor)\.js(?:\?.*|;.*)?$/i;
 
 		var alloyEditorDisposeResources = false;
 		var alloyEditorInstances = 0;

@@ -140,7 +140,7 @@ export function printDescription(d, element, spritemap) {
 					MODEL_TYPE_MAP.organization,
 					MODEL_TYPE_MAP.account,
 					MODEL_TYPE_MAP.user,
-			  ]
+				]
 			: [MODEL_TYPE_MAP.user];
 
 	entities.reduce((x, nodeType) => {

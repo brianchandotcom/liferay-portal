@@ -90,6 +90,7 @@ getOrganizationsLabelControl();
 
 if (window.location.pathname.includes('edit-request-form')) {
 	selectBtn.removeEventListener('click', handleDropDown);
+
 	// eslint-disable-next-line no-undef
 	const organizationInputBtn = fragmentElement.querySelector(
 		'button.svg-caret-double'

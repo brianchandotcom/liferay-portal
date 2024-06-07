@@ -47,7 +47,7 @@ export function ListTypeEntryBaseField({
 							? getLocalizableLabel(
 									creationLanguageId,
 									item.name_i18n
-							  )
+								)
 							: item.name,
 						value: item.key,
 					}))}

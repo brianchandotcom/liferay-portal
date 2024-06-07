@@ -16,12 +16,10 @@ export default function NavigationMenuItemsTree({
 	selectedSiteNavigationMenuItemId,
 	siteNavigationMenuItems,
 }) {
-	const [
-		expandedKeys,
-		setExpandedKeys,
-	] = useSessionState(`${portletNamespace}_navigationMenusExpandedKeys`, [
-		selectedSiteNavigationMenuItemId,
-	]);
+	const [expandedKeys, setExpandedKeys] = useSessionState(
+		`${portletNamespace}_navigationMenusExpandedKeys`,
+		[selectedSiteNavigationMenuItemId]
+	);
 
 	return (
 		<ClayTreeView

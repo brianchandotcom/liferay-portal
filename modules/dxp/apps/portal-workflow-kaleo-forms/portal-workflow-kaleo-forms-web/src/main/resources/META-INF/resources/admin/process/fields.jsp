@@ -117,12 +117,10 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 				'<portlet:namespace />ddmStructureDisplay'
 			).innerHTML = Liferay.Util.escapeHTML(ddmStructureName);
 
-			document.getElementById(
-				'<portlet:namespace />ddmStructureId'
-			).value = ddmStructureId;
-			document.getElementById(
-				'<portlet:namespace />ddmStructureName'
-			).value = ddmStructureName;
+			document.getElementById('<portlet:namespace />ddmStructureId').value =
+				ddmStructureId;
+			document.getElementById('<portlet:namespace />ddmStructureName').value =
+				ddmStructureName;
 
 			const kaleoFormsAdmin = Liferay.component(
 				'<portlet:namespace />KaleoFormsAdmin'
@@ -162,9 +160,8 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 					closeRedirectURL = closeRedirectElement.value;
 				}
 
-				const saveButton = iframeWindow.document.querySelector(
-					'.btn-primary'
-				);
+				const saveButton =
+					iframeWindow.document.querySelector('.btn-primary');
 
 				if (saveButton) {
 					const onClick = () => {

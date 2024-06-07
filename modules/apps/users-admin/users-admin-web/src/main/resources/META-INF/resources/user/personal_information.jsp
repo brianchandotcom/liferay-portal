@@ -103,7 +103,8 @@ if (Validator.isNull(organizationIdsString)) {
 
 <aui:script>
 	function <portlet:namespace />saveUser(cmd) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
+			cmd;
 
 		submitForm(document.<portlet:namespace />fm);
 	}

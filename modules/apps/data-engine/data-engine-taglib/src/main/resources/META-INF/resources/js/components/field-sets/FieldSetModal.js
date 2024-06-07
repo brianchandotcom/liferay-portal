@@ -45,11 +45,8 @@ const ModalContent = ({
 }) => {
 	const dispatch = useForm();
 	const {contentType} = useConfig();
-	const {
-		dataDefinitionId,
-		defaultLanguageId,
-		editingLanguageId,
-	} = useFormState();
+	const {dataDefinitionId, defaultLanguageId, editingLanguageId} =
+		useFormState();
 	const {dataDefinition, dataLayout} = useFormState({
 		schema: ['dataDefinition', 'dataLayout'],
 	});
@@ -68,10 +65,8 @@ const ModalContent = ({
 	};
 
 	const onSave = async () => {
-		const {
-			availableLanguageIds,
-			dataDefinitionFields,
-		} = dataDefinition.serialize();
+		const {availableLanguageIds, dataDefinitionFields} =
+			dataDefinition.serialize();
 
 		const {dataLayoutPages, paginationMode} = dataLayout.serialize();
 
@@ -233,11 +228,8 @@ const ModalContent = ({
 const FieldSetModal = ({fieldSet, onClose: onCloseProp}) => {
 	const {observer, onClose} = useModal({onClose: onCloseProp});
 	const config = useConfig();
-	const {
-		allowInvalidAvailableLocalesForProperty,
-		fieldSets,
-		sidebarPanels,
-	} = useFormState();
+	const {allowInvalidAvailableLocalesForProperty, fieldSets, sidebarPanels} =
+		useFormState();
 	const dispatch = useForm();
 
 	const updateFieldSetList = useCallback(
@@ -299,12 +291,8 @@ const FieldSetModal = ({fieldSet, onClose: onCloseProp}) => {
 			fieldTypes: config.fieldTypes,
 		});
 
-		const {
-			defaultDataLayout,
-			defaultLanguageId,
-			name,
-			...dataDefinition
-		} = fieldSet;
+		const {defaultDataLayout, defaultLanguageId, name, ...dataDefinition} =
+			fieldSet;
 		const {paginationMode, ...dataLayout} = defaultDataLayout;
 
 		delete dataLayout.dataLayoutPages;

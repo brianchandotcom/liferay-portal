@@ -139,9 +139,8 @@
 									deflate() {},
 									element: imageWidget.element,
 									inflate() {
-										const link = imageWidget.wrapper.findOne(
-											'a'
-										);
+										const link =
+											imageWidget.wrapper.findOne('a');
 
 										link.setAttributes(attributes);
 									},
@@ -173,7 +172,8 @@
 								toolbar.hide();
 							}
 							else if (selection.getSelectedText()) {
-								const selectedText = selection.getSelectedText();
+								const selectedText =
+									selection.getSelectedText();
 
 								const [firstRange] = selection.getRanges();
 

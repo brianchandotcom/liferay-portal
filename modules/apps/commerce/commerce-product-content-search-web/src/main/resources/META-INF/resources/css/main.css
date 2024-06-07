@@ -20,11 +20,11 @@ input.price-range-input {
 	margin: 0;
 }
 
-.price-range-input[type=number] {
-	-moz-appearance:textfield;
+.price-range-input[type='number'] {
+	-moz-appearance: textfield;
 }
 
 .price-range-separator {
 	margin-bottom: 2rem;
-	width: 4%
+	width: 4%;
 }

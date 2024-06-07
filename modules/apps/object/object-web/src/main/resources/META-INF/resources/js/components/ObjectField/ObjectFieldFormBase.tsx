@@ -161,9 +161,10 @@ async function getObjectFieldSettingsByBusinessType(
 	}
 
 	if (businessType === 'Relationship' && objectRelationshipId !== 0) {
-		const relationshipData = await API.getObjectRelationship<
-			TObjectRelationship
-		>(objectRelationshipId!);
+		const relationshipData =
+			await API.getObjectRelationship<TObjectRelationship>(
+				objectRelationshipId!
+			);
 
 		if (relationshipData.id) {
 			setOneToManyObjectRelationship(relationshipData);
@@ -196,18 +197,13 @@ export default function ObjectFieldFormBase({
 		Partial<ListTypeDefinition>[]
 	>([]);
 
-	const [listTypeDefinitionsURL, setListTypeDefinitionsURL] = useState<
-		string
-	>('');
+	const [listTypeDefinitionsURL, setListTypeDefinitionsURL] =
+		useState<string>('');
 
-	const [
-		oneToManyObjectRelationship,
-		setOneToManyObjectRelationship,
-	] = useState<TObjectRelationship>();
-	const [
-		reloadPicklistSingleSelect,
-		setReloadPicklistSingleSelect,
-	] = useState(false);
+	const [oneToManyObjectRelationship, setOneToManyObjectRelationship] =
+		useState<TObjectRelationship>();
+	const [reloadPicklistSingleSelect, setReloadPicklistSingleSelect] =
+		useState(false);
 	const [selectedOutputValue, setSelectedOutputValue] = useState<string>();
 	const validListTypeDefinitionId =
 		values.listTypeDefinitionId !== undefined &&
@@ -229,11 +225,12 @@ export default function ObjectFieldFormBase({
 	}, [listTypeDefinitions, values.listTypeDefinitionExternalReferenceCode]);
 
 	const handleTypeChange = async (selectedBusinessType: string) => {
-		const selectedObjectFieldBusinessTypeInfo = objectFieldBusinessTypesInfo.find(
-			(objectFieldBusinessTypeInfo) =>
-				objectFieldBusinessTypeInfo.businessType ===
-				selectedBusinessType
-		);
+		const selectedObjectFieldBusinessTypeInfo =
+			objectFieldBusinessTypesInfo.find(
+				(objectFieldBusinessTypeInfo) =>
+					objectFieldBusinessTypeInfo.businessType ===
+					selectedBusinessType
+			);
 
 		const objectFieldSettings: ObjectFieldSetting[] =
 			fieldSettingsMap.get(selectedBusinessType) || [];
@@ -323,9 +320,8 @@ export default function ObjectFieldFormBase({
 		let defaultValueType;
 
 		if (values.id) {
-			const currentDefaultValueSettings = getDefaultValueFieldSettings(
-				values
-			);
+			const currentDefaultValueSettings =
+				getDefaultValueFieldSettings(values);
 			defaultValue = currentDefaultValueSettings.defaultValue;
 			defaultValueType = currentDefaultValueSettings.defaultValueType;
 		}
@@ -413,6 +409,7 @@ export default function ObjectFieldFormBase({
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectRelationshipId, values.businessType]);
 
@@ -530,10 +527,11 @@ export default function ObjectFieldFormBase({
 						let newObjectFieldSettings: ObjectFieldSetting[] = [];
 
 						if (values.objectFieldSettings) {
-							newObjectFieldSettings = values.objectFieldSettings?.filter(
-								(objectFieldSetting) =>
-									objectFieldSetting.name !== 'output'
-							) as ObjectFieldSetting[];
+							newObjectFieldSettings =
+								values.objectFieldSettings?.filter(
+									(objectFieldSetting) =>
+										objectFieldSetting.name !== 'output'
+								) as ObjectFieldSetting[];
 						}
 
 						setValues({
@@ -597,20 +595,25 @@ export default function ObjectFieldFormBase({
 								items={listTypeDefinitionsItems}
 								label={Liferay.Language.get('picklist')}
 								onSelectionChange={(value) => {
-									const selectedListTypeDefinition = listTypeDefinitions.find(
-										({externalReferenceCode}) =>
-											externalReferenceCode === value
-									);
+									const selectedListTypeDefinition =
+										listTypeDefinitions.find(
+											({externalReferenceCode}) =>
+												externalReferenceCode === value
+										);
 									if (selectedListTypeDefinition) {
 										setValues({
 											listTypeDefinitionExternalReferenceCode:
 												selectedListTypeDefinition.externalReferenceCode,
 											listTypeDefinitionId:
 												selectedListTypeDefinition.id,
-											objectFieldSettings: removeFieldSettings(
-												['defaultValue', 'stateFlow'],
-												values
-											),
+											objectFieldSettings:
+												removeFieldSettings(
+													[
+														'defaultValue',
+														'stateFlow',
+													],
+													values
+												),
 										});
 
 										if (onSubmit) {
@@ -620,13 +623,14 @@ export default function ObjectFieldFormBase({
 													selectedListTypeDefinition.externalReferenceCode,
 												listTypeDefinitionId:
 													selectedListTypeDefinition.id,
-												objectFieldSettings: removeFieldSettings(
-													[
-														'defaultValue',
-														'stateFlow',
-													],
-													values
-												),
+												objectFieldSettings:
+													removeFieldSettings(
+														[
+															'defaultValue',
+															'stateFlow',
+														],
+														values
+													),
 											});
 										}
 									}
@@ -721,19 +725,20 @@ export default function ObjectFieldFormBase({
 					)}
 			</ClayForm.Group>
 
-			{values.businessType === 'Picklist' && validListTypeDefinitionId && (
-				<ClayForm.Group>
-					<Toggle
-						disabled={disabled || !objectDefinition?.modifiable}
-						label={Liferay.Language.get('mark-as-state')}
-						name="state"
-						onToggle={(state) => {
-							handleStateToggleChange(state);
-						}}
-						toggled={values.state}
-					/>
-				</ClayForm.Group>
-			)}
+			{values.businessType === 'Picklist' &&
+				validListTypeDefinitionId && (
+					<ClayForm.Group>
+						<Toggle
+							disabled={disabled || !objectDefinition?.modifiable}
+							label={Liferay.Language.get('mark-as-state')}
+							name="state"
+							onToggle={(state) => {
+								handleStateToggleChange(state);
+							}}
+							toggled={values.state}
+						/>
+					</ClayForm.Group>
+				)}
 
 			{(values.businessType === 'Text' ||
 				values.businessType === 'Integer') && (

@@ -86,7 +86,7 @@ const refreshFields = (
 						editingLanguageId,
 						options,
 						option
-				  )
+					)
 				: false,
 			...option,
 			value: option.value
@@ -94,7 +94,7 @@ const refreshFields = (
 				: getDefaultOptionValue(
 						generateOptionValueUsingOptionLabel,
 						option.label
-				  ),
+					),
 		})),
 	].filter((field) => field && !!Object.keys(field).length);
 
@@ -327,9 +327,8 @@ const Options = ({
 	const getSynchronizedValue = (fields) => {
 		const _fields = [...fields];
 
-		const availableLanguageIds = Object.getOwnPropertyNames(
-			normalizedValue
-		);
+		const availableLanguageIds =
+			Object.getOwnPropertyNames(normalizedValue);
 
 		return availableLanguageIds.reduce(
 			(value, languageId) => ({
@@ -443,9 +442,8 @@ const Options = ({
 
 		setFields(fields);
 
-		const synchronizedNormalizedValue = getSynchronizedValue(
-			normalizedField
-		);
+		const synchronizedNormalizedValue =
+			getSynchronizedValue(normalizedField);
 
 		onChange(synchronizedNormalizedValue);
 	};

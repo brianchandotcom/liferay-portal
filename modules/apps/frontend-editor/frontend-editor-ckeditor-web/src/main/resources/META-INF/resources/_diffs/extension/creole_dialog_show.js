@@ -30,6 +30,7 @@ ckEditor.on('dialogShow', (event) => {
 		}
 	}
 	else if (dialog.getName() === 'cellProperties') {
+
 		// eslint-disable-next-line @liferay/aui/no-one
 		const containerNode = A.one('#' + dialog.getElement('cellType').$.id);
 

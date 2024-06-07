@@ -21,10 +21,8 @@ type UseKoroneikiAccountsProps = {
 export default function useKoroneikiAccounts({
 	selectedFilterCategory,
 }: UseKoroneikiAccountsProps) {
-	const [
-		firstKoroneikiAccountsTotal,
-		setFirstKoroneikiAccountsTotal,
-	] = useState<any>({[selectedFilterCategory.key]: null});
+	const [firstKoroneikiAccountsTotal, setFirstKoroneikiAccountsTotal] =
+		useState<any>({[selectedFilterCategory.key]: null});
 
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
 		notifyOnNetworkStatusChange: true,
@@ -49,9 +47,10 @@ export default function useKoroneikiAccounts({
 		[selectedFilterCategory?.filter]
 	);
 
-	const filter = useMemo(() => getFilter(new SearchBuilder()).build(), [
-		getFilter,
-	]);
+	const filter = useMemo(
+		() => getFilter(new SearchBuilder()).build(),
+		[getFilter]
+	);
 
 	useEffect(() => {
 		refetch({
@@ -70,7 +69,7 @@ export default function useKoroneikiAccounts({
 							.contains('code', searchTerm)
 							.group('CLOSE')
 							.and()
-				  ).build()
+					).build()
 				: filter,
 			page: 1,
 		})

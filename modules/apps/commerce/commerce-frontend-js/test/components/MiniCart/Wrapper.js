@@ -81,9 +81,8 @@ describe('MiniCart Wrapper', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const WrapperElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const WrapperElement =
+					container.querySelector(COMPONENT_SELECTOR);
 				const ItemsWrapperElement = WrapperElement.querySelector(
 					`${COMPONENT_SELECTOR}-items`
 				);

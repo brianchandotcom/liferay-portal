@@ -51,7 +51,7 @@ export default function RenderTimes({
 			? fragmentsByFilterValue.filter(
 					(fragment) =>
 						fragment.name.toLowerCase().indexOf(searchValue) !== -1
-			  )
+				)
 			: fragmentsByFilterValue;
 
 		return fragmentsBySearchValue;

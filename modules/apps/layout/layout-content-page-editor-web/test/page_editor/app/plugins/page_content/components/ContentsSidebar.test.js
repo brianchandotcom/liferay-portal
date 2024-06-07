@@ -244,8 +244,7 @@ describe('ContentsSidebar', () => {
 						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 							'element-text': {
 								defaultValue: '\n\tParagraph example\n',
-								en_US:
-									'<span style="background: black;">This is a paragraph&nbsp&nbsp&nbsp<span>',
+								en_US: '<span style="background: black;">This is a paragraph&nbsp&nbsp&nbsp<span>',
 							},
 						},
 					},
@@ -269,8 +268,7 @@ describe('ContentsSidebar', () => {
 						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 							'element-text': {
 								defaultValue: '\n\tParagraph example\n',
-								en_US:
-									'<img src="first-image"><img src="second-image">',
+								en_US: '<img src="first-image"><img src="second-image">',
 							},
 						},
 					},

@@ -96,9 +96,8 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 								onClick={async () => {
 									setSubmitting(true);
 
-									const {ok} = await createProperty(
-										propertyName
-									);
+									const {ok} =
+										await createProperty(propertyName);
 
 									setSubmitting(false);
 

@@ -48,6 +48,7 @@ export default function BaseRole({
 				return updatedValues;
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [defaultFieldValue]);
 

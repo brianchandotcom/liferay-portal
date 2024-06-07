@@ -48,14 +48,11 @@ export function ModalAddDefaultSortColumn({
 		dispatch,
 	] = useViewContext();
 
-	const [availableViewColumns, setAvailableViewColumns] = useState<
-		TObjectViewColumn[]
-	>(objectViewColumns);
+	const [availableViewColumns, setAvailableViewColumns] =
+		useState<TObjectViewColumn[]>(objectViewColumns);
 
-	const [
-		selectedObjectSortColumnName,
-		setSelectedObjectSortColumnValueName,
-	] = useState<string>();
+	const [selectedObjectSortColumnName, setSelectedObjectSortColumnValueName] =
+		useState<string>();
 	const [selectedObjetSortValue, setSelectedObjetSortValue] = useState('asc');
 
 	const objectSortColumnItems = useMemo(() => {

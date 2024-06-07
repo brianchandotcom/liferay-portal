@@ -438,9 +438,10 @@ AUI.add(
 					const availableTranslationsLinksNode =
 						instance._availableTranslationsLinksNode;
 
-					const availableTranslationsLinksItems = availableTranslationsLinksNode.all(
-						STR_DOT + CSS_TRANSLATION
-					);
+					const availableTranslationsLinksItems =
+						availableTranslationsLinksNode.all(
+							STR_DOT + CSS_TRANSLATION
+						);
 
 					const defaultLocaleTextNode =
 						instance._defaultLocaleTextNode;
@@ -656,7 +657,8 @@ AUI.add(
 							'changeDefaultLocaleNode'
 						);
 
-						instance._changeDefaultLocaleNode = changeDefaultLocaleNode;
+						instance._changeDefaultLocaleNode =
+							changeDefaultLocaleNode;
 
 						nodes.push(changeDefaultLocaleNode);
 					}
@@ -670,9 +672,12 @@ AUI.add(
 
 					contentBox.append(nodeList);
 
-					instance._availableTranslationsNode = availableTranslationsNode;
-					instance._availableTranslationsLinksNode = availableTranslationsLinksNode;
-					instance._changeableDefaultLanguage = changeableDefaultLanguage;
+					instance._availableTranslationsNode =
+						availableTranslationsNode;
+					instance._availableTranslationsLinksNode =
+						availableTranslationsLinksNode;
+					instance._changeableDefaultLanguage =
+						changeableDefaultLanguage;
 					instance._defaultLocaleNode = defaultLocaleNode;
 					instance._defaultLocaleTextNode = defaultLocaleTextNode;
 					instance._iconMenuNode = iconMenuNode;

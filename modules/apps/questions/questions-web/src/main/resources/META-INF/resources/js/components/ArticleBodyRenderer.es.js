@@ -18,10 +18,8 @@ export default function ArticleBodyRenderer({
 	showSignature = true,
 	signature,
 }) {
-	const [
-		articleBodyContainsParagraph,
-		setArticleBodyContainsParagraph,
-	] = useState(true);
+	const [articleBodyContainsParagraph, setArticleBodyContainsParagraph] =
+		useState(true);
 
 	useEffect(() => {
 		setArticleBodyContainsParagraph(articleBody.includes('<p>'));

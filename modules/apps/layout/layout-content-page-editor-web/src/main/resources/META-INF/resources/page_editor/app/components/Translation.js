@@ -71,9 +71,8 @@ const TRANSLATION_STATUS_LANGUAGE = {
 	[TRANSLATION_STATUS_TYPE.default]: Liferay.Language.get('default'),
 	[TRANSLATION_STATUS_TYPE.translated]: Liferay.Language.get('translated'),
 	[TRANSLATION_STATUS_TYPE.translating]: Liferay.Language.get('translating'),
-	[TRANSLATION_STATUS_TYPE.untranslated]: Liferay.Language.get(
-		'not-translated'
-	),
+	[TRANSLATION_STATUS_TYPE.untranslated]:
+		Liferay.Language.get('not-translated'),
 };
 
 const TRANSLATION_STATUS_DISPLAY_TYPE = {
@@ -104,7 +103,7 @@ const TranslationItem = ({
 					Liferay.Language.get('x-of-x'),
 					translatedValuesLength,
 					editableValuesLength
-			  )}`
+				)}`
 			: `${TRANSLATION_STATUS_LANGUAGE[status]}`;
 
 	return (

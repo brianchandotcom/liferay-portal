@@ -168,7 +168,8 @@ const ListItem = ({
 					disabled,
 					'ml-3 page-editor__fragments-widgets__tab-portlet-item':
 						item.data.portletItemId,
-					'page-editor__fragments-widgets__tab-list-item--active': isActive,
+					'page-editor__fragments-widgets__tab-list-item--active':
+						isActive,
 				}
 			)}
 			onKeyDown={onMovementSource}
@@ -231,7 +232,8 @@ const CardItem = ({
 				'page-editor__fragments-widgets__tab-card-item',
 				{
 					disabled,
-					'page-editor__fragments-widgets__tab-list-item--active': isActive,
+					'page-editor__fragments-widgets__tab-list-item--active':
+						isActive,
 				}
 			)}
 			onKeyDown={onMovementSource}

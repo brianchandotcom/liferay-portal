@@ -17,9 +17,8 @@ AUI.add(
 
 				maxFileSize: {
 					validator: Lang.isNumber,
-					value:
-						Liferay.PropsValues
-							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
+					value: Liferay.PropsValues
+						.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 				},
 
 				preserveRatio: {
@@ -182,8 +181,10 @@ AUI.add(
 					) {
 						const aspectRatio = instance.get('aspectRatio');
 
-						const portraitPreviewImgHeight = portraitPreviewImg.height();
-						const portraitPreviewImgWidth = portraitPreviewImg.width();
+						const portraitPreviewImgHeight =
+							portraitPreviewImg.height();
+						const portraitPreviewImgWidth =
+							portraitPreviewImg.width();
 
 						let cropHeight = portraitPreviewImgHeight;
 						let cropWidth = portraitPreviewImgWidth;

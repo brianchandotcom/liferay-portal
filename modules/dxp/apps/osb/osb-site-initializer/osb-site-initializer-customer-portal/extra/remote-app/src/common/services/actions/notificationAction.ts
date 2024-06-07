@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -60,9 +61,10 @@ export default class NotificationQueueService {
 		externalReferenceCode: ExternalReferenceCodeOptions,
 		dataToReplace: DataToReplaceType
 	) {
-		const notificationTemplate = await this.getNotificationTemplateByExternalReferenceCode(
-			externalReferenceCode
-		);
+		const notificationTemplate =
+			await this.getNotificationTemplateByExternalReferenceCode(
+				externalReferenceCode
+			);
 
 		let {
 			body: {en_US: body},

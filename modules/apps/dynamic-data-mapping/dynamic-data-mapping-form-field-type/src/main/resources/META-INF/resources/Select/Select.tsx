@@ -212,6 +212,7 @@ const Main = ({
 				showEmptyOption,
 				valueArray,
 			}),
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[fixedOptions, multiple, options, showEmptyOption, valueArray]
 	);
@@ -317,8 +318,8 @@ const Main = ({
 					multiple
 						? JSON.stringify(newValue)
 						: newValue?.[0] === 'chooseAnOption'
-						? undefined
-						: JSON.stringify(newValue)
+							? undefined
+							: JSON.stringify(newValue)
 				}
 			/>
 		</FieldBase>

@@ -17,9 +17,11 @@ export default function useGetPrimaryRegionList() {
 
 	const primaryRegionList = useMemo(
 		() =>
-			((data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
-				name: string;
-			}[]).map(({name}) => ({label: name, value: name})),
+			(
+				(data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
+					name: string;
+				}[]
+			).map(({name}) => ({label: name, value: name})),
 		[data?.listTypeDefinitions?.items]
 	);
 

@@ -27,10 +27,8 @@ const ORDERED_DEFAULT_VISUALIZATION_MODES = [
 ].reverse();
 
 export default function VisualizationModes(props: IDataSetSectionProps) {
-	const [
-		activeVisualizationModeIndex,
-		setActiveVisualizationModeIndex,
-	] = useState(0);
+	const [activeVisualizationModeIndex, setActiveVisualizationModeIndex] =
+		useState(0);
 
 	return (
 		<ClayLayout.ContainerFluid className="mt-3 visualization-modes">

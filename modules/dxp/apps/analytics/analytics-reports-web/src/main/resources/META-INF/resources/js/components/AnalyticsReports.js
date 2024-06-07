@@ -58,6 +58,7 @@ export default function AnalyticsReports({
 		if (hoverOrFocusEventTriggered && !state.data) {
 			getData(analyticsReportsDataURL);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [hoverOrFocusEventTriggered]);
 
@@ -65,6 +66,7 @@ export default function AnalyticsReports({
 		if (isPanelStateOpen && !state.data && !state.loading) {
 			getData(analyticsReportsDataURL);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isPanelStateOpen]);
 
@@ -72,6 +74,7 @@ export default function AnalyticsReports({
 		(url, timeSpanKey, timeSpanOffset) => {
 			getData(url, timeSpanKey, timeSpanOffset);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);

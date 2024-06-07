@@ -21,7 +21,7 @@ const ShowPartialResultsAlert: React.FC<IProps> = ({
 	const showPartialResultsMessage = dismissible
 		? Liferay.Language.get(
 				'your-responses-will-be-visible-to-all-form-respondents'
-		  )
+			)
 		: Liferay.Language.get('respondents-can-see-all-submitted-form-data');
 
 	return (

@@ -75,18 +75,14 @@ export function ModalPublishObjectDefinitions({
 	const [modalHeaderMessage, setModalHeaderMessage] = useState<string>(
 		Liferay.Language.get('confirm-publishing')
 	);
-	const [
-		publishObjectDefinitionsStatus,
-		setPublishObjectDefinitionsStatus,
-	] = useState<number>(STATUS.DRAFT);
+	const [publishObjectDefinitionsStatus, setPublishObjectDefinitionsStatus] =
+		useState<number>(STATUS.DRAFT);
 	const [
 		selectAllDraftObjectDefinitions,
 		setSelectAllDraftObjectDefinitions,
 	] = useState<boolean>(false);
-	const [
-		selectedDraftObjectDefinitions,
-		setSelectedDraftObjectDefinitions,
-	] = useState<SelectedDraftObjectDefinition[]>([]);
+	const [selectedDraftObjectDefinitions, setSelectedDraftObjectDefinitions] =
+		useState<SelectedDraftObjectDefinition[]>([]);
 
 	const updateObjectDefinitionStatus = (
 		selectedDraftObjectDefinitions: SelectedDraftObjectDefinition[],
@@ -115,14 +111,15 @@ export function ModalPublishObjectDefinitions({
 	const publishObjectDefinition = (
 		objectDefinitionId: number
 	): Promise<ObjectDefinition | number> => {
+
 		// eslint-disable-next-line no-async-promise-executor
 		return new Promise<ObjectDefinition | number>(async (resolve) => {
 			try {
-				const objectDefinitionResponse = await API.postObjectDefinitionPublish(
-					objectDefinitionId
-				);
+				const objectDefinitionResponse =
+					await API.postObjectDefinitionPublish(objectDefinitionId);
 
-				const objectDefinitionResponseJSON = await objectDefinitionResponse.json();
+				const objectDefinitionResponseJSON =
+					await objectDefinitionResponse.json();
 
 				if (!objectDefinitionResponse.ok) {
 					throw new Error(objectDefinitionResponseJSON.title);
@@ -171,24 +168,27 @@ export function ModalPublishObjectDefinitions({
 					)
 				);
 
-				const publishObjectDefinitionResponse = await publishObjectDefinition(
-					selectedDraftObjectDefinition.id
-				);
+				const publishObjectDefinitionResponse =
+					await publishObjectDefinition(
+						selectedDraftObjectDefinition.id
+					);
 
 				publishObjectDefinitionResponses.push(
 					publishObjectDefinitionResponse
 				);
 			}
 
-			const hasRejectedPublishObjectDefinitionResponses = publishObjectDefinitionResponses.some(
-				(publishObjectDefinitionResponse) =>
-					typeof publishObjectDefinitionResponse === 'number' &&
-					publishObjectDefinitionResponse === STATUS.REJECTED
-			);
-			const acceptedPublishObjectDefinitionResponses = publishObjectDefinitionResponses.filter(
-				(publishObjectDefinitionResponse) =>
-					typeof publishObjectDefinitionResponse === 'object'
-			);
+			const hasRejectedPublishObjectDefinitionResponses =
+				publishObjectDefinitionResponses.some(
+					(publishObjectDefinitionResponse) =>
+						typeof publishObjectDefinitionResponse === 'number' &&
+						publishObjectDefinitionResponse === STATUS.REJECTED
+				);
+			const acceptedPublishObjectDefinitionResponses =
+				publishObjectDefinitionResponses.filter(
+					(publishObjectDefinitionResponse) =>
+						typeof publishObjectDefinitionResponse === 'object'
+				);
 
 			setModalHeaderMessage(
 				!hasRejectedPublishObjectDefinitionResponses
@@ -207,7 +207,9 @@ export function ModalPublishObjectDefinitions({
 						(element as FlowElement<ObjectDefinitionNodeData>).data
 							?.id || 0;
 
-					const currentObjectDefinitionPublishedResponse = (acceptedPublishObjectDefinitionResponses as ObjectDefinition[]).find(
+					const currentObjectDefinitionPublishedResponse = (
+						acceptedPublishObjectDefinitionResponses as ObjectDefinition[]
+					).find(
 						(acceptedPublishObjectDefinitionResponse) =>
 							acceptedPublishObjectDefinitionResponse.id ===
 							elementId
@@ -218,8 +220,7 @@ export function ModalPublishObjectDefinitions({
 							...element,
 							data: {
 								...element.data,
-								status:
-									currentObjectDefinitionPublishedResponse.status,
+								status: currentObjectDefinitionPublishedResponse.status,
 							},
 						};
 					}
@@ -259,13 +260,14 @@ export function ModalPublishObjectDefinitions({
 				setSelectedDraftObjectDefinitions([]);
 			}
 			else {
-				const newSelectedDraftObjectDefinitions = draftObjectDefinitionNodes.map(
-					(draftObjectDefinitionNode) => {
-						const {data} = draftObjectDefinitionNode;
+				const newSelectedDraftObjectDefinitions =
+					draftObjectDefinitionNodes.map(
+						(draftObjectDefinitionNode) => {
+							const {data} = draftObjectDefinitionNode;
 
-						return {id: data?.id!, status: data?.status!};
-					}
-				);
+							return {id: data?.id!, status: data?.status!};
+						}
+					);
 
 				setSelectAllDraftObjectDefinitions(true);
 				setSelectedDraftObjectDefinitions(
@@ -290,10 +292,11 @@ export function ModalPublishObjectDefinitions({
 			);
 		}
 		else {
-			const selectedDraftObjectDefinitionNode = objectDefinitionNodes.find(
-				(objectDefinitionNode) =>
-					objectDefinitionNode.data?.id === objectDefinitionId
-			)!;
+			const selectedDraftObjectDefinitionNode =
+				objectDefinitionNodes.find(
+					(objectDefinitionNode) =>
+						objectDefinitionNode.data?.id === objectDefinitionId
+				)!;
 
 			setSelectedDraftObjectDefinitions([
 				...selectedDraftObjectDefinitions,
@@ -409,10 +412,11 @@ export function ModalPublishObjectDefinitions({
 						(draftObjectDefinitionNode) => {
 							const {data, id} = draftObjectDefinitionNode;
 
-							const selectedDraftObjectDefinition = selectedDraftObjectDefinitions.find(
-								(draftObjectDefinition) =>
-									draftObjectDefinition.id === data?.id!
-							);
+							const selectedDraftObjectDefinition =
+								selectedDraftObjectDefinitions.find(
+									(draftObjectDefinition) =>
+										draftObjectDefinition.id === data?.id!
+								);
 
 							const isDraftObjectDefinitionSelected =
 								selectedDraftObjectDefinition?.id === data?.id!;
@@ -547,10 +551,10 @@ export function ModalPublishObjectDefinitions({
 										STATUS.PENDING
 											? Liferay.Language.get(
 													'please-wait'
-											  ) + '...'
+												) + '...'
 											: Liferay.Language.get(
 													'publish-objects'
-											  )
+												)
 									}
 									disabled={
 										!selectedDraftObjectDefinitions.length ||
@@ -564,10 +568,10 @@ export function ModalPublishObjectDefinitions({
 									{publishObjectDefinitionsStatus ===
 									STATUS.PENDING
 										? Liferay.Language.get('please-wait') +
-										  '...'
+											'...'
 										: Liferay.Language.get(
 												'publish-objects'
-										  )}
+											)}
 								</ClayButton>
 							</>
 						</ClayButton.Group>

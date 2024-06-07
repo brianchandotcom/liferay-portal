@@ -80,7 +80,7 @@ export default function NodeInformation({errors, setErrors}) {
 								? selectedItem?.data.label[selectedLanguageId]
 								: selectedItem?.data.label[
 										defaultLanguageId
-								  ]) || ''
+									]) || ''
 						}
 					/>
 
@@ -152,10 +152,10 @@ export default function NodeInformation({errors, setErrors}) {
 								{errors.id.duplicated
 									? Liferay.Language.get(
 											'a-node-with-that-name-already-exists'
-									  )
+										)
 									: Liferay.Language.get(
 											'this-field-is-required'
-									  )}
+										)}
 							</>
 						)}
 					</ClayForm.FeedbackItem>

@@ -37,9 +37,8 @@ const SaveFragmentCompositionModal = ({itemId, onCloseModal}) => {
 	);
 
 	const [saveInlineContent, setSaveInlineContent] = useState(false);
-	const [saveMappingConfiguration, setSaveMappingConfiguration] = useState(
-		false
-	);
+	const [saveMappingConfiguration, setSaveMappingConfiguration] =
+		useState(false);
 
 	const {observer, onClose} = useModal({
 		onClose: () => {

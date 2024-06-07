@@ -57,9 +57,11 @@ function segmentViolationsByRulesAndNodes(
 				let element: Element | undefined | null;
 
 				if (targets.length > 1) {
-					element = (document.querySelector(targets[0]) as
-						| HTMLIFrameElement
-						| undefined)?.contentDocument?.querySelector(target);
+					element = (
+						document.querySelector(targets[0]) as
+							| HTMLIFrameElement
+							| undefined
+					)?.contentDocument?.querySelector(target);
 				}
 				else {
 					element = document.querySelector(target);

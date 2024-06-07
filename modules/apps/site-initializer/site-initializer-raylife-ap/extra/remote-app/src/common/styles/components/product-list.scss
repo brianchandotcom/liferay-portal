@@ -28,7 +28,9 @@
 
 		@media screen and (min-width: $breakpoint-phone) {
 			&.product-selected {
-				box-shadow: 0 5px 20px rgb(0 0 0 / 10%), inset 7px 0 0 #4c84ff,
+				box-shadow:
+					0 5px 20px rgb(0 0 0 / 10%),
+					inset 7px 0 0 #4c84ff,
 					inset 0 1px 0 #fff;
 			}
 		}

@@ -113,9 +113,9 @@ export default function EditAPIPropertyModalContent({
 										: {
 												...property,
 												...localUIData,
-										  }
+											}
 							),
-					  }
+						}
 					: previous
 			);
 			closeModal();

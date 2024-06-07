@@ -261,11 +261,11 @@ export default function List(props: IDataSetSectionProps) {
 											closeModal,
 											field: selectedField,
 											listSection,
-									  })
+										})
 									: clearFDSListSection({
 											closeModal,
 											listSection,
-									  });
+										});
 							}}
 							saveButtonDisabled={saveButtonDisabled}
 						/>

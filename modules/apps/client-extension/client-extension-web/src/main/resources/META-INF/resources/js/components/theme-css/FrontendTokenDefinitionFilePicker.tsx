@@ -62,14 +62,12 @@ const FrontendTokenDefinitionFilePicker = ({
 	const [feedback, setFeedback] = useState(EMPTY_FEEDBACK);
 	const [alertRole, setAlertRole] = useState<'alert' | null>(null);
 	const [isValidatingJSON, setIsValidatingJSON] = useState(false);
-	const [
-		frontendTokenDefinitionJSON,
-		setFrontendTokenDefinitionJSON,
-	] = useState<string | undefined>(
-		initialFrontendTokenDefinitionJSON !== ''
-			? initialFrontendTokenDefinitionJSON
-			: undefined
-	);
+	const [frontendTokenDefinitionJSON, setFrontendTokenDefinitionJSON] =
+		useState<string | undefined>(
+			initialFrontendTokenDefinitionJSON !== ''
+				? initialFrontendTokenDefinitionJSON
+				: undefined
+		);
 
 	const fileInputRef = useRef<HTMLInputElement>();
 	const selectFileButtonRef = useRef<HTMLButtonElement>();
@@ -119,7 +117,7 @@ const FrontendTokenDefinitionFilePicker = ({
 							? error
 							: Liferay.Language.get(
 									'your-upload-failed-to-complete'
-							  ),
+								),
 				});
 			});
 	};

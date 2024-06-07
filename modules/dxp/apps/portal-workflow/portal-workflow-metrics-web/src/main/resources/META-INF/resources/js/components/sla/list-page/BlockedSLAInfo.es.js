@@ -17,6 +17,7 @@ export default function BlockedSLAInfo({processId}) {
 
 	useEffect(() => {
 		fetchData();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -103,6 +103,7 @@ const AutocompleteMultiSelect = ({
 
 			handleChange(newSelectedItems);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[fieldId, selectedItems]
 	);

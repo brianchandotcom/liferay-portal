@@ -71,6 +71,7 @@ function EditAccountInfoPanel({
 					type: 'danger',
 				});
 			});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [accountData.id]);
 

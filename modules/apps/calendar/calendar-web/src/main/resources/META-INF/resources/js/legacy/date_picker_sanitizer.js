@@ -26,32 +26,31 @@ AUI.add(
 			NAME: 'date-picker-sanitizer',
 
 			prototype: {
-				_onDatePickerSelectionChange: function _onDatePickerSelectionChange(
-					event
-				) {
-					const instance = this;
+				_onDatePickerSelectionChange:
+					function _onDatePickerSelectionChange(event) {
+						const instance = this;
 
-					const date = event.newSelection[0];
+						const date = event.newSelection[0];
 
-					const datePicker = event.currentTarget;
+						const datePicker = event.currentTarget;
 
-					const defaultDate = instance.get('defaultDate');
+						const defaultDate = instance.get('defaultDate');
 
-					const maximumDate = instance.get('maximumDate');
+						const maximumDate = instance.get('maximumDate');
 
-					const minimumDate = instance.get('minimumDate');
+						const minimumDate = instance.get('minimumDate');
 
-					if (
-						date &&
-						!DateMath.between(date, minimumDate, maximumDate)
-					) {
-						event.halt();
-						event.newSelection.pop();
+						if (
+							date &&
+							!DateMath.between(date, minimumDate, maximumDate)
+						) {
+							event.halt();
+							event.newSelection.pop();
 
-						datePicker.deselectDates();
-						datePicker.selectDates([defaultDate]);
-					}
-				},
+							datePicker.deselectDates();
+							datePicker.selectDates([defaultDate]);
+						}
+					},
 
 				bindUI() {
 					const instance = this;

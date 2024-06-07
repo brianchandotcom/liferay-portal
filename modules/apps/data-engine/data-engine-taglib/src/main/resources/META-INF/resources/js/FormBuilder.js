@@ -71,7 +71,7 @@ export function FormBuilder() {
 					? Promise.resolve({})
 					: getItem(
 							`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}?page=1&pageSize=250`
-					  );
+						);
 
 			const fetchFieldSets = async () => {
 				try {
@@ -155,9 +155,8 @@ export function FormBuilder() {
 									action: (payload) =>
 										dispatch({
 											payload,
-											type:
-												CORE_EVENT_TYPES.FIELD
-													.DUPLICATE,
+											type: CORE_EVENT_TYPES.FIELD
+												.DUPLICATE,
 										}),
 									label: Liferay.Language.get('duplicate'),
 								},
@@ -167,9 +166,8 @@ export function FormBuilder() {
 											fieldDelete({
 												action: {
 													payload,
-													type:
-														CORE_EVENT_TYPES.FIELD
-															.DELETE,
+													type: CORE_EVENT_TYPES.FIELD
+														.DELETE,
 												},
 												modalDispatch,
 												onClose,

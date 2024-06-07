@@ -19,19 +19,17 @@ function ImportEntityType({
 	internalClassNameKeyName,
 	portletNamespace,
 }) {
-	const [
-		internalClassNameKeyOptions,
-		dispatchInternalClassNameKeyOptions,
-	] = useReducer((state, fileExtension) => {
-		if (fileExtension === CSV_FORMAT) {
-			return internalClassNameKeyInitialOptions.filter(
-				(item) => !DISALLOWED_CSV_ENTITY_TYPES.includes(item.value)
-			);
-		}
-		else {
-			return internalClassNameKeyInitialOptions;
-		}
-	}, internalClassNameKeyInitialOptions);
+	const [internalClassNameKeyOptions, dispatchInternalClassNameKeyOptions] =
+		useReducer((state, fileExtension) => {
+			if (fileExtension === CSV_FORMAT) {
+				return internalClassNameKeyInitialOptions.filter(
+					(item) => !DISALLOWED_CSV_ENTITY_TYPES.includes(item.value)
+				);
+			}
+			else {
+				return internalClassNameKeyInitialOptions;
+			}
+		}, internalClassNameKeyInitialOptions);
 
 	useEffect(() => {
 		function handleFileExtensionUpdate({fileExtension}) {

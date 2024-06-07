@@ -6,7 +6,9 @@
 		height: 4rem;
 		left: 0;
 		position: fixed;
-		transition: left ease 0.5s, width ease 0.5s;
+		transition:
+			left ease 0.5s,
+			width ease 0.5s;
 		width: 100%;
 		z-index: 971;
 	}

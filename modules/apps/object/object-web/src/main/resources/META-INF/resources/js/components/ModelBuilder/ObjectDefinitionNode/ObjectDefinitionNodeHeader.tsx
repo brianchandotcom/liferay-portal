@@ -102,16 +102,16 @@ export default function ObjectDefinitionNodeHeader({
 							status?.label === 'approved'
 								? 'success'
 								: status?.label === 'pending'
-								? 'info'
-								: 'secondary'
+									? 'info'
+									: 'secondary'
 						}
 					>
 						{Liferay.Language.get(
 							status?.label === 'approved'
 								? 'approved'
 								: status?.label === 'pending'
-								? 'pending'
-								: 'draft'
+									? 'pending'
+									: 'draft'
 						)}
 					</ClayLabel>
 				</div>

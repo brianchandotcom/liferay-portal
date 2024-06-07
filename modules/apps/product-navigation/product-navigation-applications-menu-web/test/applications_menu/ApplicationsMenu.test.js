@@ -165,11 +165,8 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('renders Applications Menu modal with a close button when trigger button is clicked', async () => {
-		const {
-			getByTestId,
-			getByTitle,
-			queryByTitle,
-		} = renderApplicationsMenu();
+		const {getByTestId, getByTitle, queryByTitle} =
+			renderApplicationsMenu();
 
 		const trigger = getByTestId('applicationsMenu');
 

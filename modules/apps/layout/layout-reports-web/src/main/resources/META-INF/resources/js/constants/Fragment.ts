@@ -21,7 +21,7 @@ export type Fragment = {
 };
 
 export const FILTER_NAMES: Record<
-	typeof FRAGMENT_FILTERS[keyof typeof FRAGMENT_FILTERS][number],
+	(typeof FRAGMENT_FILTERS)[keyof typeof FRAGMENT_FILTERS][number],
 	string
 > = {
 	all: Liferay.Language.get('all'),
@@ -32,14 +32,12 @@ export const FILTER_NAMES: Record<
 	widget: Liferay.Language.get('widget'),
 };
 
-export const FILTER_TYPE_NAMES: Record<
-	keyof typeof FRAGMENT_FILTERS,
-	string
-> = {
-	origin: `${Liferay.Language.get('filter-by')}...`,
-	status: Liferay.Language.get('filter-by-status'),
-	type: Liferay.Language.get('filter-by-type'),
-};
+export const FILTER_TYPE_NAMES: Record<keyof typeof FRAGMENT_FILTERS, string> =
+	{
+		origin: `${Liferay.Language.get('filter-by')}...`,
+		status: Liferay.Language.get('filter-by-status'),
+		type: Liferay.Language.get('filter-by-type'),
+	};
 
 export const FRAGMENT_FILTERS = {
 	origin: ['all', 'fromMaster'],
@@ -49,6 +47,6 @@ export const FRAGMENT_FILTERS = {
 
 export type FragmentFilter = {
 	[key in keyof typeof FRAGMENT_FILTERS]:
-		| typeof FRAGMENT_FILTERS[key][number]
+		| (typeof FRAGMENT_FILTERS)[key][number]
 		| null;
 };

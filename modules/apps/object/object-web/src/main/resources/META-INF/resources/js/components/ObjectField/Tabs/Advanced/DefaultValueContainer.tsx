@@ -53,9 +53,7 @@ export interface InputAsValueFieldComponentProps {
 }
 
 type InputAsValueFieldComponents = {
-	[key in ObjectFieldBusinessTypeName]: React.FC<
-		InputAsValueFieldComponentProps
-	>;
+	[key in ObjectFieldBusinessTypeName]: React.FC<InputAsValueFieldComponentProps>;
 };
 
 const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
@@ -72,9 +70,8 @@ export function DefaultValueContainer({
 	sidebarElements,
 	values,
 }: DefaultValueContainerProps) {
-	const {defaultValue, defaultValueType} = getDefaultValueFieldSettings(
-		values
-	);
+	const {defaultValue, defaultValueType} =
+		getDefaultValueFieldSettings(values);
 
 	const [defaultValueToggleEnabled, setDefaultValueToggleEnabled] = useState(
 		!!defaultValueType && !!defaultValue
@@ -132,7 +129,8 @@ export function DefaultValueContainer({
 		<div
 			className={classNames({
 				'lfr-objects__edit-object-field-card-content': !modelBuilder,
-				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+				'lfr-objects__edit-object-field-model-builder-panel':
+					modelBuilder,
 			})}
 		>
 			{!values.state && (
@@ -246,11 +244,12 @@ export function DefaultValueContainer({
 						}}
 						onChange={({target: {value}}) => {
 							setValues({
-								objectFieldSettings: getUpdatedDefaultValueFieldSettings(
-									values,
-									value,
-									'expressionBuilder'
-								),
+								objectFieldSettings:
+									getUpdatedDefaultValueFieldSettings(
+										values,
+										value,
+										'expressionBuilder'
+									),
 							});
 						}}
 						onOpenModal={() => {
@@ -262,21 +261,23 @@ export function DefaultValueContainer({
 									eventSidebarElements: sidebarElements,
 									onSave: (script: string) => {
 										setValues({
-											objectFieldSettings: getUpdatedDefaultValueFieldSettings(
-												values,
-												script,
-												'expressionBuilder'
-											),
+											objectFieldSettings:
+												getUpdatedDefaultValueFieldSettings(
+													values,
+													script,
+													'expressionBuilder'
+												),
 										});
 
 										if (onSubmit) {
 											onSubmit({
 												...values,
-												objectFieldSettings: getUpdatedDefaultValueFieldSettings(
-													values,
-													script,
-													'expressionBuilder'
-												),
+												objectFieldSettings:
+													getUpdatedDefaultValueFieldSettings(
+														values,
+														script,
+														'expressionBuilder'
+													),
 											});
 										}
 									},

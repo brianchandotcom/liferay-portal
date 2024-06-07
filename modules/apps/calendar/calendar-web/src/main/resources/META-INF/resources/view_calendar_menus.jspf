@@ -87,12 +87,13 @@
 							<portlet:param name="calendarResourceId" value="{calendarResourceId}" />
 						</portlet:renderURL>
 
-						window.location.href = Liferay.CalendarUtil.fillURLParameters(
-							decodeURIComponent('<%= calendarsURL %>'),
-							{
-								calendarResourceId: calendarResourceId,
-							}
-						);
+						window.location.href =
+							Liferay.CalendarUtil.fillURLParameters(
+								decodeURIComponent('<%= calendarsURL %>'),
+								{
+									calendarResourceId: calendarResourceId,
+								}
+							);
 					}
 				},
 				id: 'manage',
@@ -221,9 +222,8 @@
 									remoteServices.getCalendar(
 										activeCalendar.get('calendarId'),
 										(calendar) => {
-											var activeCalendarId = activeCalendar.get(
-												'calendarId'
-											);
+											var activeCalendarId =
+												activeCalendar.get('calendarId');
 
 											var calendars = calendarList
 												.get('calendars')
@@ -265,9 +265,8 @@
 							decodeURIComponent('<%= editCalendarURL %>'),
 							{
 								calendarId: activeCalendar.get('calendarId'),
-								calendarResourceId: activeCalendar.get(
-									'calendarResourceId'
-								),
+								calendarResourceId:
+									activeCalendar.get('calendarResourceId'),
 							}
 						),
 					});
@@ -311,9 +310,8 @@
 						uri: Liferay.CalendarUtil.fillURLParameters(
 							decodeURIComponent('<%= permissionsURL %>'),
 							{
-								modelResourceDescription: activeCalendar.get(
-									'name'
-								),
+								modelResourceDescription:
+									activeCalendar.get('name'),
 								resourceGroupId: activeCalendar.get('groupId'),
 								resourcePrimKey: activeCalendar.get('calendarId'),
 							}
@@ -527,9 +525,8 @@
 	) {
 		var currentTarget = event.currentTarget;
 
-		window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute(
-			'data-calendarResourceId'
-		);
+		window.<portlet:namespace />calendarListsMenu.calendarResourceId =
+			currentTarget.getAttribute('data-calendarResourceId');
 
 		window.<portlet:namespace />calendarListsMenu.setAttrs({
 			alignNode: currentTarget,
@@ -674,7 +671,8 @@
 			Liferay.CalendarUtil.toUTC(miniCalendarEndDate),
 			'busy',
 			(rulesDefinition) => {
-				var selectedDates = <portlet:namespace />miniCalendar._getSelectedDatesList();
+				var selectedDates =
+					<portlet:namespace />miniCalendar._getSelectedDatesList();
 
 				window.<portlet:namespace />miniCalendar.set('customRenderer', {
 					filterFunction: function (date, node, rules) {

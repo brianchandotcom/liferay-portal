@@ -85,9 +85,8 @@
 
 			const caretContainer = instance._getCaretContainer();
 
-			const containerAscendantElement = instance._getContainerAscendant(
-				caretContainer
-			);
+			const containerAscendantElement =
+				instance._getContainerAscendant(caretContainer);
 
 			const containerAscendantNode = A.one(containerAscendantElement.$);
 

@@ -168,7 +168,7 @@ export default function propsTransformer({items, portletNamespace, ...props}) {
 								}
 							},
 						})),
-				  }
+					}
 				: {
 						...item,
 						onClick(event) {
@@ -180,7 +180,7 @@ export default function propsTransformer({items, portletNamespace, ...props}) {
 								ACTIONS[action](item.data, portletNamespace);
 							}
 						},
-				  }
+					}
 		),
 	};
 }

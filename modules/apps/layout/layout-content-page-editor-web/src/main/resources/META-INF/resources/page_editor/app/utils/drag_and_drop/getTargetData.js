@@ -11,10 +11,10 @@ export default function getTargetData(targetRect, orientation) {
 				end: targetRect.right,
 				length: targetRect.width,
 				start: targetRect.left,
-		  }
+			}
 		: {
 				end: targetRect.bottom,
 				length: targetRect.height,
 				start: targetRect.top,
-		  };
+			};
 }

@@ -126,8 +126,7 @@
 			selectEventName:
 				'<%= selectAssetDisplayPageDisplayContext.getEventName() %>',
 			title: '<liferay-ui:message key="select-page" />',
-			url:
-				'<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageItemSelectorURL() %>',
+			url: '<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageItemSelectorURL() %>',
 		});
 	});
 
@@ -139,8 +138,7 @@
 		previewDefaultDisplayPageButton.addEventListener('click', (event) => {
 			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
-				url:
-					'<%= HtmlUtil.escapeJS(selectAssetDisplayPageDisplayContext.getURLViewInContext()) %>',
+				url: '<%= HtmlUtil.escapeJS(selectAssetDisplayPageDisplayContext.getURLViewInContext()) %>',
 			});
 		});
 	}
@@ -149,8 +147,7 @@
 		previewSpecificDisplayPageButton.addEventListener('click', (event) => {
 			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
-				url:
-					'<%= HtmlUtil.escapeJS(selectAssetDisplayPageDisplayContext.getURLViewInContext()) %>',
+				url: '<%= HtmlUtil.escapeJS(selectAssetDisplayPageDisplayContext.getURLViewInContext()) %>',
 			});
 		});
 	}

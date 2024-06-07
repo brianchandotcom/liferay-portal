@@ -48,6 +48,7 @@ export function SearchableContainer({
 				indexedLanguageId: defaultLanguageId,
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -56,7 +57,8 @@ export function SearchableContainer({
 			className={classNames({
 				'lfr-objects__edit-object-field-card-content':
 					modelBuilder === false,
-				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+				'lfr-objects__edit-object-field-model-builder-panel':
+					modelBuilder,
 			})}
 		>
 			{isApproved && (

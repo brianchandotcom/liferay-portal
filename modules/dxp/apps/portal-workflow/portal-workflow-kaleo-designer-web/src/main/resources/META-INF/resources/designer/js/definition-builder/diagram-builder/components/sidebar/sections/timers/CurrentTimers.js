@@ -30,6 +30,7 @@ const CurrentTimers = ({setContentName, taskTimers}) => {
 			});
 		});
 		setSections(currentSections);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

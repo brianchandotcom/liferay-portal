@@ -107,14 +107,9 @@ describe('ToolbarActionsDropdown', () => {
 	it('renders ToolbarActionsDropdown component', () => {
 		renderComponent();
 
-		[
-			'undo',
-			'redo',
-			'history',
-			'show-sidebars',
-			'discard-draft',
-		].forEach((dropdownItem) =>
-			expect(screen.getByText(dropdownItem)).toBeInTheDocument()
+		['undo', 'redo', 'history', 'show-sidebars', 'discard-draft'].forEach(
+			(dropdownItem) =>
+				expect(screen.getByText(dropdownItem)).toBeInTheDocument()
 		);
 	});
 

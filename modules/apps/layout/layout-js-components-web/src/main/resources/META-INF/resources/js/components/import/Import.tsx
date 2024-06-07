@@ -42,9 +42,8 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	const [fileName, setFileName] = useState<string | null>(null);
 	const [fileText, setFileText] = useState<string>(FILE_TEXTS.initial);
 	const [importResults, setImportResults] = useState<Results | null>(null);
-	const [importOptionsModalVisible, setImportOptionsModalVisible] = useState<
-		boolean
-	>(false);
+	const [importOptionsModalVisible, setImportOptionsModalVisible] =
+		useState<boolean>(false);
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
 

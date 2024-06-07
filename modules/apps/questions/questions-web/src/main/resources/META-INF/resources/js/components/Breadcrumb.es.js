@@ -130,7 +130,7 @@ export default withRouter(
 
 									return acc.reverse();
 								})
-					  ).then(acc)
+						).then(acc)
 					: Promise.resolve(acc.reverse());
 			},
 			[context.siteKey, findParent, getSectionByRootSection]

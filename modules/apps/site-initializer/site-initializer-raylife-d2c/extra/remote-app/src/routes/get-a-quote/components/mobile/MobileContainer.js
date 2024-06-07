@@ -22,6 +22,7 @@ const MobileContainer = ({
 		if (isMobile && visible) {
 			forceValidation();
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMobile, visible]);
 

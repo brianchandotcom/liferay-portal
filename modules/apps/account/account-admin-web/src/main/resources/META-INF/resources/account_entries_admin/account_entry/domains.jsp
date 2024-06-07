@@ -143,8 +143,7 @@ boolean allowUpdateDomains = AccountEntryPermission.contains(permissionChecker, 
 					},
 					customEvents: [
 						{
-							name:
-								'<%= liferayPortletResponse.getNamespace() %>addDomains',
+							name: '<%= liferayPortletResponse.getNamespace() %>addDomains',
 							onEvent: function (event) {
 								var newDomains = event.data.split(',');
 
@@ -176,15 +175,14 @@ boolean allowUpdateDomains = AccountEntryPermission.contains(permissionChecker, 
 					id: '<%= liferayPortletResponse.getNamespace() %>addDomains',
 					iframeBodyCssClass: '',
 					title: '<liferay-ui:message key="add-domain" />',
-					url:
-						'<%=
-							PortletURLBuilder.createRenderURL(
-								renderResponse
-							).setMVCPath(
-								"/account_entries_admin/account_entry/add_domains.jsp"
-							).setWindowState(
-								LiferayWindowState.POP_UP
-							).buildPortletURL()
+					url: '<%=
+						PortletURLBuilder.createRenderURL(
+							renderResponse
+						).setMVCPath(
+							"/account_entries_admin/account_entry/add_domains.jsp"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildPortletURL()
 					%>',
 				});
 			});

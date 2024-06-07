@@ -59,9 +59,8 @@ AUI.add(
 			'label'
 		);
 
-		const CSS_ICON_CARET_DOWN = Liferay.Util.getLexiconIconTpl(
-			'caret-bottom'
-		);
+		const CSS_ICON_CARET_DOWN =
+			Liferay.Util.getLexiconIconTpl('caret-bottom');
 
 		const TPL_CALENDAR_LIST_ITEM = new A.Template(
 			'<tpl for="calendars">',
@@ -185,9 +184,8 @@ AUI.add(
 
 							activeNode = event.currentTarget;
 
-							instance.activeItem = instance.getCalendarByNode(
-								activeNode
-							);
+							instance.activeItem =
+								instance.getCalendarByNode(activeNode);
 
 							activeNode.addClass(CSS_CALENDAR_LIST_ITEM_ACTIVE);
 

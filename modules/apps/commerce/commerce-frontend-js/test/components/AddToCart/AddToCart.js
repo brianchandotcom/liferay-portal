@@ -95,6 +95,7 @@ describe('Add to Cart', () => {
 	});
 
 	// FIXME with COMMERCE-12057
+
 	/* it('must add a product to the cart', async () => {
 		await act(async () => {
 			await fireEvent.change(input, {target: {value: 3}});

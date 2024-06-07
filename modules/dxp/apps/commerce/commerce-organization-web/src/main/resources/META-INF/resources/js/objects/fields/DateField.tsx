@@ -75,6 +75,7 @@ const DateField = ({
 		if (!readOnly && mode === 'edit') {
 			onChangeHandler(value || '');
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -121,7 +122,7 @@ const DateField = ({
 								(specificProps && specificProps.time
 									? ' HH:mm'
 									: '')
-					  )
+						)
 					: '-'}
 			</div>
 		</div>

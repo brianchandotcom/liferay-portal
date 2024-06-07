@@ -328,7 +328,8 @@ const ButtonGuide = () => {
 								{button.icon === 'before' && (
 									<span
 										className={classNames('inline-item', {
-											['inline-item-before']: !button.monospaced,
+											['inline-item-before']:
+												!button.monospaced,
 										})}
 									>
 										<ClayIcon symbol="angle-left" />
@@ -340,7 +341,8 @@ const ButtonGuide = () => {
 								{button.icon === 'after' && (
 									<span
 										className={classNames('inline-item', {
-											['inline-item-after']: !button.monospaced,
+											['inline-item-after']:
+												!button.monospaced,
 										})}
 									>
 										<ClayIcon symbol="angle-right" />

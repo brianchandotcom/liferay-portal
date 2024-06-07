@@ -15,9 +15,8 @@ export default function ({
 	orderRuleId,
 	rootPortletId,
 }) {
-	const orderRuleAccountGroupsResource = CommerceServiceProvider.AdminOrderAPI(
-		'v1'
-	);
+	const orderRuleAccountGroupsResource =
+		CommerceServiceProvider.AdminOrderAPI('v1');
 
 	function selectItem(accountGroup) {
 		const accountGroupData = {

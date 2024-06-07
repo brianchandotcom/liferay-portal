@@ -60,6 +60,7 @@ const BaseRoleType = ({
 		if (selectedRoleName !== null) {
 			setErrors(checkRoleTypeErrors(errors, selectedRoleName));
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedRoleName]);
 
@@ -124,7 +125,7 @@ const BaseRoleType = ({
 						: item?.roleName
 								.toLowerCase()
 								.match(selectedRoleName?.toLowerCase())
-			  )
+				)
 			: [];
 	};
 
@@ -301,7 +302,8 @@ const BaseRoleType = ({
 												autoCreate: checked,
 												roleKey: item.roleKey,
 												roleName: item.roleName,
-												roleType: item.roleType.toLowerCase(),
+												roleType:
+													item.roleType.toLowerCase(),
 											})
 										}
 										value={item.roleName}
@@ -338,7 +340,8 @@ const BaseRoleType = ({
 											...newSections[index],
 											autoCreate: !value,
 											roleName: selectedRoleName,
-											roleType: selectedRoleType.toLowerCase(),
+											roleType:
+												selectedRoleType.toLowerCase(),
 										};
 
 										updateSelectedItem(newSections);

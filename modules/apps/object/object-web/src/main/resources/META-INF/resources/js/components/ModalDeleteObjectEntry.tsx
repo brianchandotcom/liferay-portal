@@ -21,14 +21,12 @@ interface ModalDeleteObjectEntryState {
 export default function ModalDeleteObjectEntry({
 	byExternalReferenceCodePath,
 }: ModalDeleteObjectEntryProps) {
-	const [
-		modalDeleteObjectEntryState,
-		setModalDeleteObjectEntryState,
-	] = useState<ModalDeleteObjectEntryState>({
-		deletionErrorMessage: null,
-		objectEntry: null,
-		visible: false,
-	});
+	const [modalDeleteObjectEntryState, setModalDeleteObjectEntryState] =
+		useState<ModalDeleteObjectEntryState>({
+			deletionErrorMessage: null,
+			objectEntry: null,
+			visible: false,
+		});
 
 	const {observer, onClose} = useModal({
 		onClose: () => {

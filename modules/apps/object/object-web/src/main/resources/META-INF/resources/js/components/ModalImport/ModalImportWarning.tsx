@@ -127,7 +127,8 @@ export function ModalImportWarning({
 
 						<ClayButton
 							className={classNames({
-								'lfr-object__modal-import-warning-loading-button': importLoading,
+								'lfr-object__modal-import-warning-loading-button':
+									importLoading,
 							})}
 							disabled={errorMessage !== '' || importLoading}
 							displayType="warning"

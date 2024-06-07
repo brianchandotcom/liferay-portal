@@ -211,11 +211,10 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 		});
 	};
 
-	const saveSLA = useCallback(() => (id ? updateSLA() : createSLA()), [
-		createSLA,
-		id,
-		updateSLA,
-	]);
+	const saveSLA = useCallback(
+		() => (id ? updateSLA() : createSLA()),
+		[createSLA, id, updateSLA]
+	);
 
 	return {
 		changeNodesKeys,

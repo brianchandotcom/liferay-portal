@@ -250,9 +250,8 @@ AUI.add(
 
 					if (schedulerEvent) {
 						data.allDay = schedulerEvent.get('allDay');
-						data.calendarBookingId = schedulerEvent.get(
-							'calendarBookingId'
-						);
+						data.calendarBookingId =
+							schedulerEvent.get('calendarBookingId');
 					}
 
 					Liferay.Util.openWindow({
@@ -350,9 +349,8 @@ AUI.add(
 
 					const schedulerEvent = instance.get('event');
 
-					data.calendarBookingId = schedulerEvent.get(
-						'calendarBookingId'
-					);
+					data.calendarBookingId =
+						schedulerEvent.get('calendarBookingId');
 
 					Liferay.Util.openWindow({
 						dialog: {
@@ -397,13 +395,11 @@ AUI.add(
 					if (schedulerEvent) {
 						const calendarId = schedulerEvent.get('calendarId');
 
-						const calendarContainer = instance.get(
-							'calendarContainer'
-						);
+						const calendarContainer =
+							instance.get('calendarContainer');
 
-						const calendar = calendarContainer.getCalendar(
-							calendarId
-						);
+						const calendar =
+							calendarContainer.getCalendar(calendarId);
 
 						const permissions = calendar.get('permissions');
 
@@ -436,13 +432,11 @@ AUI.add(
 
 							const calendarId = toInt(event.currentTarget.val());
 
-							const calendarContainer = instance.get(
-								'calendarContainer'
-							);
+							const calendarContainer =
+								instance.get('calendarContainer');
 
-							const selectedCalendar = calendarContainer.getCalendar(
-								calendarId
-							);
+							const selectedCalendar =
+								calendarContainer.getCalendar(calendarId);
 
 							if (selectedCalendar) {
 								schedulerEvent.set(
@@ -546,9 +540,8 @@ AUI.add(
 
 					const calendarContainer = instance.get('calendarContainer');
 
-					const defaultCalendar = calendarContainer.get(
-						'defaultCalendar'
-					);
+					const defaultCalendar =
+						calendarContainer.get('defaultCalendar');
 
 					let calendarId = defaultCalendar.get('calendarId');
 					let color = defaultCalendar.get('color');
@@ -558,9 +551,8 @@ AUI.add(
 					if (schedulerEvent) {
 						calendarId = schedulerEvent.get('calendarId');
 
-						const calendar = calendarContainer.getCalendar(
-							calendarId
-						);
+						const calendar =
+							calendarContainer.getCalendar(calendarId);
 
 						if (calendar) {
 							color = calendar.get('color');
@@ -592,9 +584,8 @@ AUI.add(
 					const schedulerEvent = instance.get('event');
 
 					if (schedulerEvent) {
-						const calendarContainer = instance.get(
-							'calendarContainer'
-						);
+						const calendarContainer =
+							instance.get('calendarContainer');
 
 						const calendar = calendarContainer.getCalendar(
 							schedulerEvent.get('calendarId')
@@ -604,17 +595,16 @@ AUI.add(
 							const permissions = calendar.get('permissions');
 
 							if (permissions.VIEW_BOOKING_DETAILS) {
-								const parentCalendarBookingId = schedulerEvent.get(
-									'parentCalendarBookingId'
-								);
+								const parentCalendarBookingId =
+									schedulerEvent.get(
+										'parentCalendarBookingId'
+									);
 
-								const portletNamespace = instance.get(
-									'portletNamespace'
-								);
+								const portletNamespace =
+									instance.get('portletNamespace');
 
-								const remoteServices = instance.get(
-									'remoteServices'
-								);
+								const remoteServices =
+									instance.get('remoteServices');
 
 								remoteServices.getCalendarBookingInvitees(
 									parentCalendarBookingId,
@@ -691,29 +681,31 @@ AUI.add(
 
 					const permissions = calendar.get('permissions');
 
-					const templateData = SchedulerEventRecorder.superclass.getTemplateData.apply(
-						this,
-						arguments
-					);
+					const templateData =
+						SchedulerEventRecorder.superclass.getTemplateData.apply(
+							this,
+							arguments
+						);
 
 					return {
 						...templateData,
-						acceptLinkEnabled: instance._hasWorkflowStatusPermission(
-							schedulerEvent,
-							CalendarWorkflow.STATUS_APPROVED
-						),
+						acceptLinkEnabled:
+							instance._hasWorkflowStatusPermission(
+								schedulerEvent,
+								CalendarWorkflow.STATUS_APPROVED
+							),
 						allDay: schedulerEvent.get('allDay'),
-						availableCalendars: calendarContainer.get(
-							'availableCalendars'
-						),
+						availableCalendars:
+							calendarContainer.get('availableCalendars'),
 						calendar,
 						calendarIds: Object.keys(
 							calendarContainer.get('availableCalendars')
 						),
-						declineLinkEnabled: instance._hasWorkflowStatusPermission(
-							schedulerEvent,
-							CalendarWorkflow.STATUS_DENIED
-						),
+						declineLinkEnabled:
+							instance._hasWorkflowStatusPermission(
+								schedulerEvent,
+								CalendarWorkflow.STATUS_DENIED
+							),
 						editing,
 						endTime: templateData.endDate,
 						hasWorkflowInstanceLink: schedulerEvent.get(
@@ -741,9 +733,8 @@ AUI.add(
 					const event = instance.get('event');
 
 					if (event) {
-						const calendarContainer = instance.get(
-							'calendarContainer'
-						);
+						const calendarContainer =
+							instance.get('calendarContainer');
 
 						const calendar = calendarContainer.getCalendar(
 							event.get('calendarId')

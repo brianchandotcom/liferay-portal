@@ -50,7 +50,6 @@
 		font-weight: var(--font-weight-bold);
 		padding: var(--spacer-2) 0;
 	}
-
 }
 
 @media (max-width: 575px) {

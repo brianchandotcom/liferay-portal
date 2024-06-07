@@ -43,13 +43,10 @@ export default function PublicationTemplateEditView({
 	] = useState(defaultSandboxCTCollectionTemplate);
 	const [descriptionField, setDescriptionField] = useState(description);
 	const [nameField, setNameField] = useState(name);
-	const [
-		publicationDescriptionField,
-		setPublicationDescriptionField,
-	] = useState(publicationDescription);
-	const [publicationNameField, setPublicationNameField] = useState(
-		publicationName
-	);
+	const [publicationDescriptionField, setPublicationDescriptionField] =
+		useState(publicationDescription);
+	const [publicationNameField, setPublicationNameField] =
+		useState(publicationName);
 
 	const [showModal, setShowModal] = useState(false);
 
@@ -74,8 +71,10 @@ export default function PublicationTemplateEditView({
 			[`${namespace}userIds`]: collaboratorData
 				? collaboratorData['userIds']
 				: null,
-			[`${namespace}defaultCTCollectionTemplate`]: defaultCTCollectionTemplateField,
-			[`${namespace}defaultSandboxCTCollectionTemplate`]: defaultSandboxCTCollectionTemplateField,
+			[`${namespace}defaultCTCollectionTemplate`]:
+				defaultCTCollectionTemplateField,
+			[`${namespace}defaultSandboxCTCollectionTemplate`]:
+				defaultSandboxCTCollectionTemplateField,
 		});
 
 		fetch(actionUrl, {
@@ -88,10 +87,10 @@ export default function PublicationTemplateEditView({
 						ctCollectionTemplateId > 0
 							? Liferay.Language.get(
 									'successfully-edited-the-template'
-							  )
+								)
 							: Liferay.Language.get(
 									'successfully-added-the-template'
-							  );
+								);
 
 					showNotification(
 						successMessage,

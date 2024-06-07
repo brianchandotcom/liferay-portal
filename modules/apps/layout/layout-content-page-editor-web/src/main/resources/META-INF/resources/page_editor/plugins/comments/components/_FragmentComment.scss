@@ -37,7 +37,8 @@ html#{$cadmin-selector} {
 			will-change: min-height;
 
 			&--hidden {
-				animation: FragmentCommentDecrease ease 0.4s,
+				animation:
+					FragmentCommentDecrease ease 0.4s,
 					FragmentCommentFadeOut ease 0.3s;
 				animation-fill-mode: forwards;
 				overflow: hidden;
@@ -93,7 +94,9 @@ html#{$cadmin-selector} {
 				margin-left: 5.6px;
 			}
 
-			+ .page-editor__fragment-comment:not(.page-editor__fragment-comment--reply) {
+			+ .page-editor__fragment-comment:not(
+					.page-editor__fragment-comment--reply
+				) {
 				border-top: solid thin $cadmin-gray-300;
 			}
 

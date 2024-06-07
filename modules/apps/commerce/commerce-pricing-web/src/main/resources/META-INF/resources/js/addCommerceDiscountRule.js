@@ -6,9 +6,8 @@
 import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
 
 export default function ({commerceDiscountId, namespace}) {
-	const CommerceDiscountRuleResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommerceDiscountRuleResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	Liferay.provide(window, `${namespace}apiSubmit`, () => {
 		const discountRuleData = {

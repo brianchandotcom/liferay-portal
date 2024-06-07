@@ -9,7 +9,8 @@ html#{$cadmin-selector} {
 		height: $layoutBreadcrumbHeight;
 		left: $sidebarButtonWidth;
 		right: $defaultSidebarContentWidth;
-		transition: left ease $defaultTransitionDuration,
+		transition:
+			left ease $defaultTransitionDuration,
 			right ease $defaultTransitionDuration;
 		z-index: $sidebarZIndex;
 	}

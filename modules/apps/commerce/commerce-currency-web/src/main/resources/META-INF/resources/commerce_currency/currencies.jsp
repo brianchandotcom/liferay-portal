@@ -120,12 +120,11 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 
 						form['<portlet:namespace /><%= Constants.CMD %>'].value =
 							'<%= Constants.DELETE %>';
-						form[
-							'<portlet:namespace />deleteCommerceCurrencyIds'
-						].value = Liferay.Util.getCheckedCheckboxes(
-							form,
-							'<portlet:namespace />allRowIds'
-						);
+						form['<portlet:namespace />deleteCommerceCurrencyIds'].value =
+							Liferay.Util.getCheckedCheckboxes(
+								form,
+								'<portlet:namespace />allRowIds'
+							);
 
 						submitForm(form);
 					}

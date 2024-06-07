@@ -30,9 +30,8 @@ export default function propsTransformer({
 									data: {
 										assetEntryIds: Array.from(selectedItems)
 											.map((selectedItem) => {
-												const assetEntry = JSON.parse(
-													selectedItem
-												);
+												const assetEntry =
+													JSON.parse(selectedItem);
 
 												return assetEntry.assetEntryId;
 											})

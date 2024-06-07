@@ -70,10 +70,13 @@ const ACTIONS = {
 					body: objectToFormData({
 						[`${portletNamespace}dragAndDrop`]: true,
 						[`${portletNamespace}position`]: index?.next ?? -1,
-						[`${portletNamespace}resourceClassNameId`]: kbObjectClassNameId,
+						[`${portletNamespace}resourceClassNameId`]:
+							kbObjectClassNameId,
 						[`${portletNamespace}resourcePrimKey`]: kbObjectId,
-						[`${portletNamespace}parentResourceClassNameId`]: destinationItem.classNameId,
-						[`${portletNamespace}parentResourcePrimKey`]: destinationItem.id,
+						[`${portletNamespace}parentResourceClassNameId`]:
+							destinationItem.classNameId,
+						[`${portletNamespace}parentResourcePrimKey`]:
+							destinationItem.id,
 					}),
 					method: 'POST',
 				})

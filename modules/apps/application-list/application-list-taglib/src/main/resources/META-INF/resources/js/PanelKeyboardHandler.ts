@@ -58,9 +58,8 @@ export default function PanelKeyboardHandler({categoryKey, namespace}) {
 				focusElement(getFocusableSibling(activeElement, 'up'));
 			}
 			else if (event.key === 'ArrowRight') {
-				const expandedAttribute = activeElement.getAttribute(
-					'aria-expanded'
-				);
+				const expandedAttribute =
+					activeElement.getAttribute('aria-expanded');
 
 				if (expandedAttribute === 'false') {
 					activeElement.click();
@@ -70,9 +69,8 @@ export default function PanelKeyboardHandler({categoryKey, namespace}) {
 				}
 			}
 			else if (event.key === 'ArrowLeft') {
-				const expandedAttribute = activeElement.getAttribute(
-					'aria-expanded'
-				);
+				const expandedAttribute =
+					activeElement.getAttribute('aria-expanded');
 
 				if (expandedAttribute === 'true') {
 					activeElement.click();

@@ -32,6 +32,7 @@ export default function useIntersectionObserver() {
 
 		return () => {
 			if (trackedRefCurrent.current) {
+
 				// eslint-disable-next-line react-hooks/exhaustive-deps
 				observer.unobserve(trackedRefCurrent.current);
 			}

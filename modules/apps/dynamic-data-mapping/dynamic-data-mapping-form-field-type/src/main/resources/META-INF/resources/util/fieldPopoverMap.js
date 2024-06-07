@@ -9,9 +9,8 @@ const HTML_AUTOCOMPLETE_ATTRIBUTE_TITLE = Liferay.Language.get(
 	'html-autocomplete-attribute'
 );
 
-const LOCALIZED_INPUT_MASK_FORMAT_STRING = Liferay.Language.get(
-	'input-mask-format'
-);
+const LOCALIZED_INPUT_MASK_FORMAT_STRING =
+	Liferay.Language.get('input-mask-format');
 
 const fieldPopoverMap = {
 	htmlAutocompleteAttribute: {

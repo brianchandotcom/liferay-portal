@@ -14,9 +14,14 @@ import '@testing-library/jest-dom/extend-expect';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/shared/CodeMirrorEditor',
-	() => ({onChange, value}) => (
-		<textarea aria-label="text-area" onChange={onChange} value={value} />
-	)
+	() =>
+		({onChange, value}) => (
+			<textarea
+				aria-label="text-area"
+				onChange={onChange}
+				value={value}
+			/>
+		)
 );
 
 Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';

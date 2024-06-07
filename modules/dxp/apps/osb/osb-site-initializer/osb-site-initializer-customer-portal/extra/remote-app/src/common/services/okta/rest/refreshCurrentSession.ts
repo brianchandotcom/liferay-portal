@@ -6,6 +6,7 @@
 import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
 
 export async function refreshCurrentSession(oktaSessionAPI: string) {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${oktaSessionAPI}/me/lifecycle/refresh`, {
 		credentials: 'include',

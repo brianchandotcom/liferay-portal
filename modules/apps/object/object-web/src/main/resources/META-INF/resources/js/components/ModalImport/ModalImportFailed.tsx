@@ -72,17 +72,18 @@ export function ModalImportFailed({
 				);
 			});
 
-			const newImportedObjectDefinitionsStatus = importedObjectDefinitions.map(
-				(importedObjectDefinition) => {
-					const failedObjectDefinition = failedObjectDefinitionsMap.has(
-						importedObjectDefinition.name
-					);
+			const newImportedObjectDefinitionsStatus =
+				importedObjectDefinitions.map((importedObjectDefinition) => {
+					const failedObjectDefinition =
+						failedObjectDefinitionsMap.has(
+							importedObjectDefinition.name
+						);
 
 					return {
 						errorType: failedObjectDefinition
 							? failedObjectDefinitionsMap.get(
 									importedObjectDefinition.name
-							  )
+								)
 							: undefined,
 						label: stringUtils.getLocalizableLabel(
 							importedObjectDefinition.defaultLanguageId,
@@ -91,8 +92,7 @@ export function ModalImportFailed({
 						),
 						success: !failedObjectDefinition,
 					} as ImportedObjectDefinitionsStatus;
-				}
-			);
+				});
 
 			setImportedObjectDefinitionsStatus(
 				newImportedObjectDefinitionsStatus
@@ -161,14 +161,14 @@ export function ModalImportFailed({
 												{success
 													? Liferay.Language.get(
 															'import-succeeded'
-													  )
+														)
 													: errorType
-													? errorsUtils.ERRORS[
-															errorType
-													  ]
-													: Liferay.Language.get(
-															'failed-to-import'
-													  )}
+														? errorsUtils.ERRORS[
+																errorType
+															]
+														: Liferay.Language.get(
+																'failed-to-import'
+															)}
 											</Text>
 										</div>
 									</Cell>

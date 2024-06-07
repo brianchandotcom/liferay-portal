@@ -16,9 +16,8 @@ export default function ({
 	paymentMethodGroupRelId,
 	rootPortletId,
 }) {
-	const paymentMethodGroupRelTermsResource = CommerceServiceProvider.AdminChannelAPI(
-		'v1'
-	);
+	const paymentMethodGroupRelTermsResource =
+		CommerceServiceProvider.AdminChannelAPI('v1');
 
 	function selectItem(term) {
 		const termData = {

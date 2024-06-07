@@ -30,9 +30,10 @@ const FilterContextProvider = ({children}) => {
 		return dispatch({error: true, filterKey, removeError});
 	};
 
-	const filterValues = useMemo(() => getFilterValues(filterState), [
-		filterState,
-	]);
+	const filterValues = useMemo(
+		() => getFilterValues(filterState),
+		[filterState]
+	);
 
 	return (
 		<FilterContext.Provider

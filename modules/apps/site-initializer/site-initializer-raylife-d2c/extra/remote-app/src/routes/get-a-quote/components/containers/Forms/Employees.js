@@ -23,11 +23,8 @@ const hasFein = (value) => value === 'true';
 export function FormEmployees({form}) {
 	const {control, getValues, setValue} = useFormContext();
 
-	const {
-		getMobileSubSection,
-		mobileContainerProps,
-		nextStep,
-	} = useMobileContainer();
+	const {getMobileSubSection, mobileContainerProps, nextStep} =
+		useMobileContainer();
 
 	const forceValidation = () => {
 		setValue(
@@ -39,6 +36,7 @@ export function FormEmployees({form}) {
 
 	useEffect(() => {
 		forceValidation();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

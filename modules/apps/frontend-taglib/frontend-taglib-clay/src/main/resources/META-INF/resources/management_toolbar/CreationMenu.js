@@ -128,16 +128,16 @@ const CreationMenu = ({
 				? maxPrimaryItems
 				: primaryItemsCount
 			: primaryItemsCount > 8
-			? 8
-			: primaryItemsCount;
+				? 8
+				: primaryItemsCount;
 
 		const tempDefaultMaxSecondaryItems = maxSecondaryItems
 			? secondaryItemsCount > maxSecondaryItems
 				? maxSecondaryItems
 				: secondaryItemsCount
 			: secondaryItemsCount > 7
-			? 7
-			: secondaryItemsCount;
+				? 7
+				: secondaryItemsCount;
 
 		const defaultMaxSecondaryItems =
 			tempDefaultMaxSecondaryItems >
@@ -150,12 +150,12 @@ const CreationMenu = ({
 				? maxTotalItems
 				: primaryItemsCount
 			: primaryItemsCount > defaultMaxPrimaryItems
-			? secondaryItemsCount > defaultMaxSecondaryItems
-				? defaultMaxPrimaryItems + defaultMaxSecondaryItems
-				: defaultMaxPrimaryItems + secondaryItemsCount
-			: secondaryItemsCount > defaultMaxSecondaryItems
-			? primaryItemsCount + defaultMaxSecondaryItems
-			: primaryItemsCount + secondaryItemsCount;
+				? secondaryItemsCount > defaultMaxSecondaryItems
+					? defaultMaxPrimaryItems + defaultMaxSecondaryItems
+					: defaultMaxPrimaryItems + secondaryItemsCount
+				: secondaryItemsCount > defaultMaxSecondaryItems
+					? primaryItemsCount + defaultMaxSecondaryItems
+					: primaryItemsCount + secondaryItemsCount;
 	};
 
 	const [visibleItemsCount, setVisibleItemsCount] = useState(

@@ -143,13 +143,12 @@ const People: React.FC = () => {
 										[EPeople.UserGroupIds]: [],
 									};
 								}
-								const {
-									ok,
-								} = await updateAttributesConfiguration({
-									syncAllAccounts,
-									syncAllContacts: !syncAllContacts,
-									...newSyncedIds,
-								});
+								const {ok} =
+									await updateAttributesConfiguration({
+										syncAllAccounts,
+										syncAllContacts: !syncAllContacts,
+										...newSyncedIds,
+									});
 
 								if (ok) {
 									setSyncAll(

@@ -53,7 +53,7 @@ export function CategorySelector({
 			? rule.queryValues.split(',').map((categoryId, index) => ({
 					label: rule.categoryIdsTitles?.[index],
 					value: categoryId,
-			  }))
+				}))
 			: [];
 
 	const sourceItemsVocabularyIds = vocabularyIds.length

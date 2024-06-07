@@ -248,7 +248,8 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		availableFields: availableFields,
 		boundingBox: '#<portlet:namespace />formBuilder',
 		enableEditing: false,
-		fieldNameEditionDisabled: <%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(structure.getStructureId()) > 0) %>,
+		fieldNameEditionDisabled:
+			<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(structure.getStructureId()) > 0) %>,
 
 		<c:if test="<%= Validator.isNotNull(fieldsJSONArrayString) %>">
 			fields: <%= fieldsJSONArrayString %>,
@@ -314,13 +315,11 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
-	window[
-		'<%= HtmlUtil.escapeJS(portletResourceNamespace) %>formBuilder'
-	] = formBuilder;
+	window['<%= HtmlUtil.escapeJS(portletResourceNamespace) %>formBuilder'] =
+		formBuilder;
 
-	window[
-		'<%= HtmlUtil.escapeJS(portletResourceNamespace) %>getContentValue'
-	] = getContentValue;
+	window['<%= HtmlUtil.escapeJS(portletResourceNamespace) %>getContentValue'] =
+		getContentValue;
 
 	Liferay.on('<portlet:namespace />saveTemplate', (event) => {
 		A.one('#<portlet:namespace />scriptContent').val(getContentValue());

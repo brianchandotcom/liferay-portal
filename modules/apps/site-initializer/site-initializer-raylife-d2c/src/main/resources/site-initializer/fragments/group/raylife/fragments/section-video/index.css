@@ -16,7 +16,7 @@
 .section-video .section-video-text p {
 	color: var(--secondary);
 	font-size: var(--font-size-lg);
-	margin-bottom: calc(var(--spacer-1)*6);
+	margin-bottom: calc(var(--spacer-1) * 6);
 }
 
 .section-video .video-player {

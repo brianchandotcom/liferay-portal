@@ -25,7 +25,7 @@ export default function LogoSelector({
 			initialLogoURL === defaultLogoURL
 				? Liferay.Language.get('default')
 				: initialLogoName ||
-				  sub(Liferay.Language.get('custom-x'), label),
+					sub(Liferay.Language.get('custom-x'), label),
 		logoURL: initialLogoURL,
 	});
 

@@ -134,19 +134,15 @@ export default function Chart({dataProviders = [], publishDate}) {
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const {
-		dataSet,
-		lineChartLoading,
-		timeRange,
-		timeSpanKey,
-		timeSpanOffset,
-	} = useContext(ChartStateContext);
+	const {dataSet, lineChartLoading, timeRange, timeSpanKey, timeSpanOffset} =
+		useContext(ChartStateContext);
 
 	const isPreviousPeriodButtonDisabled = useIsPreviousPeriodButtonDisabled();
 
-	const dateFormatters = useMemo(() => dateFormat(languageTag), [
-		languageTag,
-	]);
+	const dateFormatters = useMemo(
+		() => dateFormat(languageTag),
+		[languageTag]
+	);
 
 	const isMounted = useIsMounted();
 
@@ -213,6 +209,7 @@ export default function Chart({dataProviders = [], publishDate}) {
 		return () => {
 			gone = true;
 		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [timeSpanKey, timeSpanOffset]);
 
@@ -296,7 +293,7 @@ export default function Chart({dataProviders = [], publishDate}) {
 												new Date(
 													timeRange.endDate
 												).getDate(),
-										  ]
+											]
 										: []
 								}
 								interval="preserveStartEnd"

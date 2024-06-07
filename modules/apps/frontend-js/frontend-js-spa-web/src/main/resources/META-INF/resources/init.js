@@ -102,9 +102,8 @@ const initSPA = function (config) {
 						document.activeElement;
 				}
 				else {
-					Liferay.SPA.__capturedFormButtonElement__ = formElement.querySelector(
-						buttonSelector
-					);
+					Liferay.SPA.__capturedFormButtonElement__ =
+						formElement.querySelector(buttonSelector);
 				}
 
 				app.navigate(getUrlPath(url));

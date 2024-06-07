@@ -26,11 +26,8 @@ export function FormProperty({form}) {
 	const {dispatch} = useContext(AppContext);
 
 	const properties = form?.basics?.properties;
-	const {
-		getMobileSubSection,
-		mobileContainerProps,
-		nextStep,
-	} = useMobileContainer();
+	const {getMobileSubSection, mobileContainerProps, nextStep} =
+		useMobileContainer();
 
 	const forceValidation = () => {
 		setValue(
@@ -54,6 +51,7 @@ export function FormProperty({form}) {
 				}
 			);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -131,9 +131,8 @@ describe('Field Support Utilities', () => {
 
 			expect(firstOption.label).toBe('English Option');
 
-			const [firstLocalizedOption] = localizedField.localizedValue[
-				'pt-BR'
-			]['pt-BR'];
+			const [firstLocalizedOption] =
+				localizedField.localizedValue['pt-BR']['pt-BR'];
 
 			expect(firstLocalizedOption.label).toBe('English Option');
 		});
@@ -190,9 +189,8 @@ describe('Field Support Utilities', () => {
 
 			expect(firstOption.label).toBe('Portuguese Option');
 
-			const [firstLocalizedOption] = localizedField.localizedValue[
-				'pt-BR'
-			]['pt-BR'];
+			const [firstLocalizedOption] =
+				localizedField.localizedValue['pt-BR']['pt-BR'];
 
 			expect(firstLocalizedOption.label).toBe('Portuguese Option');
 		});

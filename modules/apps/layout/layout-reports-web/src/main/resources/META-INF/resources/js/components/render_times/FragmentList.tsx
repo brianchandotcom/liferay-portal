@@ -40,10 +40,8 @@ export default function FragmentList({
 	ascendingSort: boolean;
 	fragments: Fragment[];
 }) {
-	const [
-		highlightedFragment,
-		setHighlightedFragment,
-	] = useState<HighlightedFragment | null>(null);
+	const [highlightedFragment, setHighlightedFragment] =
+		useState<HighlightedFragment | null>(null);
 
 	const dispatch = useContext(StoreDispatchContext);
 

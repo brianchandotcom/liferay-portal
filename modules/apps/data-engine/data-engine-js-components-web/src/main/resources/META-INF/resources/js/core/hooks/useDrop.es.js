@@ -228,9 +228,10 @@ export function useDrop({
 				case DRAG_DATA_DEFINITION_FIELD_ADD: {
 					const {dataDefinition, name} = data;
 
-					const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-						(field) => field.name === name
-					);
+					const dataDefinitionField =
+						dataDefinition.dataDefinitionFields.find(
+							(field) => field.name === name
+						);
 
 					const settingsContext = getDDMFormFieldSettingsContext({
 						dataDefinitionField,
@@ -251,11 +252,10 @@ export function useDrop({
 									return name === fieldType;
 								}),
 								editable: true,
-								label:
-									label[
-										editingLanguageId ??
-											themeDisplay.getLanguageId()
-									],
+								label: label[
+									editingLanguageId ??
+										themeDisplay.getLanguageId()
+								],
 								settingsContext,
 							},
 							indexes,

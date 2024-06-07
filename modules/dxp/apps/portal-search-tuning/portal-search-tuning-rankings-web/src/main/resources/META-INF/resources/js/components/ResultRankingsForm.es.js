@@ -320,7 +320,8 @@ class ResultRankingsForm extends Component {
 			};
 
 			fetchResponse(scopeInfo.fetchItemByIdUrl, {
-				[`${this.context.namespace}externalReferenceCode`]: scopeInfo.value,
+				[`${this.context.namespace}externalReferenceCode`]:
+					scopeInfo.value,
 			})
 				.then((response) => {
 					this.setState(() => ({
@@ -355,10 +356,10 @@ class ResultRankingsForm extends Component {
 			[`${namespace}from`]: DELTA * this.state.visibleCur,
 			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}size`]: DELTA,
-			[`${namespace}groupExternalReferenceCode`]: this.props
-				.initialGroupExternalReferenceCode,
-			[`${namespace}sxpBlueprintExternalReferenceCode`]: this.props
-				.initialSXPBlueprintExternalReferenceCode,
+			[`${namespace}groupExternalReferenceCode`]:
+				this.props.initialGroupExternalReferenceCode,
+			[`${namespace}sxpBlueprintExternalReferenceCode`]:
+				this.props.initialSXPBlueprintExternalReferenceCode,
 		})
 			.then(({items, total}) => {
 				const fetchedItems = items || {};
@@ -461,10 +462,10 @@ class ResultRankingsForm extends Component {
 			[`${namespace}from`]: DELTA * this.state.hiddenCur,
 			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}size`]: DELTA,
-			[`${namespace}groupExternalReferenceCode`]: this.props
-				.initialGroupExternalReferenceCode,
-			[`${namespace}sxpBlueprintExternalReferenceCode`]: this.props
-				.initialSXPBlueprintExternalReferenceCode,
+			[`${namespace}groupExternalReferenceCode`]:
+				this.props.initialGroupExternalReferenceCode,
+			[`${namespace}sxpBlueprintExternalReferenceCode`]:
+				this.props.initialSXPBlueprintExternalReferenceCode,
 		})
 			.then(({items, total}) => {
 				const fetchedItems = items || {};
@@ -561,10 +562,10 @@ class ResultRankingsForm extends Component {
 			[`${namespace}aliases`]: this.state.aliases,
 			[`${namespace}status`]: this.state.status,
 			[`${namespace}keywords`]: this.props.searchQuery,
-			[`${namespace}groupExternalReferenceCode`]: this.props
-				.initialGroupExternalReferenceCode,
-			[`${namespace}sxpBlueprintExternalReferenceCode`]: this.props
-				.initialSXPBlueprintExternalReferenceCode,
+			[`${namespace}groupExternalReferenceCode`]:
+				this.props.initialGroupExternalReferenceCode,
+			[`${namespace}sxpBlueprintExternalReferenceCode`]:
+				this.props.initialSXPBlueprintExternalReferenceCode,
 		}).then((response) => {
 			if (response.errors.length) {
 				response.errors.forEach((message) => {
@@ -577,8 +578,8 @@ class ResultRankingsForm extends Component {
 			else {
 				this.setState(
 					{
-						workflowAction: this.context.constants
-							.WORKFLOW_ACTION_PUBLISH,
+						workflowAction:
+							this.context.constants.WORKFLOW_ACTION_PUBLISH,
 					},
 					() => {
 						submitForm(document[this.props.formName]);
@@ -774,13 +775,15 @@ class ResultRankingsForm extends Component {
 					valueMap={{
 						addedHiddenIds: this._getHiddenAdded(),
 						aliases,
-						groupExternalReferenceCode: initialGroupExternalReferenceCode,
+						groupExternalReferenceCode:
+							initialGroupExternalReferenceCode,
 						pinnedIds: resultIdsPinned,
 						pinnedIdsEndIndex: dataLoadIndex.pinned.end,
 						pinnedIdsStartIndex: dataLoadIndex.pinned.start,
 						removedHiddenIds: this._getHiddenRemoved(),
 						status,
-						sxpBlueprintExternalReferenceCode: initialSXPBlueprintExternalReferenceCode,
+						sxpBlueprintExternalReferenceCode:
+							initialSXPBlueprintExternalReferenceCode,
 						workflowAction,
 					}}
 				/>
@@ -808,10 +811,10 @@ class ResultRankingsForm extends Component {
 							{initialSXPBlueprintExternalReferenceCode
 								? Liferay.Language.get(
 										'this-ranking-is-no-longer-applicable-to-searches-because-the-blueprint-it-was-associated-with-was-deleted'
-								  )
+									)
 								: Liferay.Language.get(
 										'this-ranking-is-no-longer-applicable-to-searches-because-the-site-it-was-associated-with-was-deleted'
-								  )}
+									)}
 						</ClayAlert>
 					)}
 
@@ -828,9 +831,13 @@ class ResultRankingsForm extends Component {
 											.initialGroupExternalReferenceCode
 											? Liferay.Language.get('site')
 											: this.props
-													.initialSXPBlueprintExternalReferenceCode
-											? Liferay.Language.get('blueprint')
-											: Liferay.Language.get('everything')
+														.initialSXPBlueprintExternalReferenceCode
+												? Liferay.Language.get(
+														'blueprint'
+													)
+												: Liferay.Language.get(
+														'everything'
+													)
 									}`}
 
 									{!!scopeDisplayName &&

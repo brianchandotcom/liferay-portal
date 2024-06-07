@@ -187,14 +187,12 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 		<aui:script>
 			var allowedPriceContributorTypeNames =
 				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_PRICE_CONTRIBUTOR_FIELD_TYPES, StringPool.COMMA) %>';
-			var allowedPriceContributorFieldTypeSelectOptions = allowedPriceContributorTypeNames.split(
-				'<%= StringPool.COMMA %>'
-			);
+			var allowedPriceContributorFieldTypeSelectOptions =
+				allowedPriceContributorTypeNames.split('<%= StringPool.COMMA %>');
 			var allowedSkuContributorTypeNames =
 				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES, StringPool.COMMA) %>';
-			var allowedSkuContributorFieldTypeSelectOptions = allowedSkuContributorTypeNames.split(
-				'<%= StringPool.COMMA %>'
-			);
+			var allowedSkuContributorFieldTypeSelectOptions =
+				allowedSkuContributorTypeNames.split('<%= StringPool.COMMA %>');
 			var availableTypeNames =
 				'<%= cpDefinitionOptionRelDisplayContext.getCommerceOptionTypeKeys() %>';
 			var availableFieldTypeSelectOptions = availableTypeNames.split(

@@ -97,9 +97,8 @@ const AddFDSSortModalContent = ({
 }) => {
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [selectedField, setSelectedField] = useState<string>();
-	const [selectedSortingDirection, setSelectedSortingDirection] = useState<
-		string
-	>(SORTING_DIRECTION.ASCENDING.value);
+	const [selectedSortingDirection, setSelectedSortingDirection] =
+		useState<string>(SORTING_DIRECTION.ASCENDING.value);
 
 	const handleSave = async () => {
 		setSaveButtonDisabled(true);

@@ -47,7 +47,7 @@ const ToolbarWithSelection = ({
 												'x-of-x-selected'
 											),
 											[selectedCount, totalCount]
-									  )}
+										)}
 							</span>
 						</ManagementToolbar.Item>
 

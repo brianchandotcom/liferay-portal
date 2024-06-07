@@ -188,7 +188,7 @@ const Question = ({
 		sectionTitle || sectionTitle === ALL_SECTIONS_ID
 			? sectionTitle
 			: question.messageBoardSection &&
-			  question.messageBoardSection.title;
+				question.messageBoardSection.title;
 
 	useEffect(() => {
 		document.title = (question && question.title) || questionId;
@@ -448,13 +448,15 @@ const Question = ({
 								className={classNames({
 									'align-items-top flex-column-reverse flex-md-row justify-content-between':
 										display.styled,
-									'align-items-top flex-column-reverse flex-md-row row': !display.styled,
+									'align-items-top flex-column-reverse flex-md-row row':
+										!display.styled,
 								})}
 							>
 								<div
 									className={classNames({
 										'c-mt-2 c-mt-md-0': display.styled,
-										'c-mt-4 c-mt-md-0 w-100': !display.styled,
+										'c-mt-4 c-mt-md-0 w-100':
+											!display.styled,
 									})}
 								>
 									{!!question.messageBoardSection &&
@@ -577,10 +579,10 @@ const Question = ({
 								{loadingAnswer
 									? `${Liferay.Language.get(
 											'loading-answers'
-									  )}`
+										)}`
 									: `${
 											answers.totalCount
-									  } ${Liferay.Language.get('answers')}`}
+										} ${Liferay.Language.get('answers')}`}
 							</h3>
 
 							<ClayTabs
@@ -699,10 +701,10 @@ const Question = ({
 														{context.trustedUser
 															? Liferay.Language.get(
 																	'post-answer'
-															  )
+																)
 															: Liferay.Language.get(
 																	'submit-for-workflow'
-															  )}
+																)}
 													</ClayButton>
 												)}
 										</div>

@@ -16,9 +16,12 @@
 				];
 
 				CKEDITOR.scriptLoader.load(dependencies, () => {
-					const liferayAutoCompleteCKEditor = new Liferay.AutoCompleteCKEditor(
-						{...editor.config.autocomplete, editor, width: 300}
-					);
+					const liferayAutoCompleteCKEditor =
+						new Liferay.AutoCompleteCKEditor({
+							...editor.config.autocomplete,
+							editor,
+							width: 300,
+						});
 
 					liferayAutoCompleteCKEditor.render();
 

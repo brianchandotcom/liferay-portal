@@ -265,9 +265,8 @@ AUI.add(
 							const value = data[name];
 
 							if (value !== STR_EMPTY) {
-								const fileData = FormBuilder.Util.parseJSON(
-									value
-								);
+								const fileData =
+									FormBuilder.Util.parseJSON(value);
 
 								if (fileData.title) {
 									label = fileData.title;
@@ -285,9 +284,8 @@ AUI.add(
 							const value = data[name];
 
 							if (value !== STR_EMPTY) {
-								const linkToPageData = FormBuilder.Util.parseJSON(
-									value
-								);
+								const linkToPageData =
+									FormBuilder.Util.parseJSON(value);
 
 								if (linkToPageData.name) {
 									label = linkToPageData.name;
@@ -458,13 +456,11 @@ AUI.add(
 					const activeCell = instance.get('activeCell');
 					const boundingBox = instance.get('boundingBox');
 
-					const scrollableElement = boundingBox.one(
-						'.table-x-scroller'
-					);
+					const scrollableElement =
+						boundingBox.one('.table-x-scroller');
 
-					const tableHighlightBorder = instance.highlight.get(
-						'activeBorderWidth'
-					)[0];
+					const tableHighlightBorder =
+						instance.highlight.get('activeBorderWidth')[0];
 
 					const activeCellWidth =
 						activeCell.outerWidth() + tableHighlightBorder;

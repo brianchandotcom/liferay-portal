@@ -37,7 +37,7 @@ const Details = ({definitionInfo}) => {
 		totalModifications > 1
 			? lang.sub(Liferay.Language.get('x-revisions'), [
 					totalModifications,
-			  ])
+				])
 			: `${totalModifications} ${Liferay.Language.get('revision')}`;
 
 	return (

@@ -28,14 +28,11 @@ function AssetVocabularyContextualSidebar({
 }) {
 	const [translations, setTranslations] = useState(localizedNames);
 	const [customNameEnabled, setCustomNameEnabled] = useState(useCustomName);
-	const [
-		assetVocabularyLevelEnabled,
-		setAssetVocabularyLevelEnabled,
-	] = useState(showAssetVocabularyLevel);
+	const [assetVocabularyLevelEnabled, setAssetVocabularyLevelEnabled] =
+		useState(showAssetVocabularyLevel);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
-	const [selectedVocabulary, setSelectedVocabulary] = useState(
-		assetVocabulary
-	);
+	const [selectedVocabulary, setSelectedVocabulary] =
+		useState(assetVocabulary);
 	const [numberOfCategories, setNumberOfCategories] = useState(
 		initialNumberOfCategories
 	);

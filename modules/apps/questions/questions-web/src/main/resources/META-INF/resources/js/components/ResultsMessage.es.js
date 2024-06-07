@@ -41,7 +41,7 @@ export default function ResultsMessage({
 										? Liferay.Language.get('x-result-for-x')
 										: Liferay.Language.get(
 												'x-results-for-x'
-										  ),
+											),
 									[
 										totalCount,
 										`<strong>"${slugToText(

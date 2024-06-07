@@ -32,10 +32,11 @@ export default function ({
 					return;
 				}
 
-				const updateAccountEntryDefaultCommercePaymentMethodURL = createPortletURL(
-					baseUpdateAccountEntryDefaultCommercePaymentMethodURL,
-					{commercePaymentMethodKey: selectedItem.entityid}
-				);
+				const updateAccountEntryDefaultCommercePaymentMethodURL =
+					createPortletURL(
+						baseUpdateAccountEntryDefaultCommercePaymentMethodURL,
+						{commercePaymentMethodKey: selectedItem.entityid}
+					);
 
 				submitForm(
 					document.hrefFm,

@@ -19,9 +19,8 @@ export default function ItemSelectorRepositoryEntryBrowser({
 	uploaderEnabled = true,
 	...uploaderProps
 }) {
-	const [itemSelectorPreviewOpen, setItemSelectorPreviewOpen] = useState(
-		false
-	);
+	const [itemSelectorPreviewOpen, setItemSelectorPreviewOpen] =
+		useState(false);
 	const [itemSelectorPreviewIndex, setItemSelectorPreviewIndex] = useState(0);
 
 	const itemSelectorPreviewItemsRef = useRef();

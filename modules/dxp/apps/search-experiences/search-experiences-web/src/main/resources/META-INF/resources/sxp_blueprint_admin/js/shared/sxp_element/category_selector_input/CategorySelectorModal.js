@@ -46,12 +46,12 @@ const getTreeLevelInfo = (depth) =>
 				getURL: FETCH_URLS.getSubCategories,
 				icon: 'categories',
 				showSelect: true,
-		  }
+			}
 		: {
 				getURL: FETCH_URLS.getCategories,
 				icon: 'vocabulary',
 				showSelect: false,
-		  };
+			};
 
 /**
  * Returns a copy of the tree with properties added/updated to the object at index.

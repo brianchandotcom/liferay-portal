@@ -1,9 +1,13 @@
 .f-blogs-breadcrumb .color-neutral-3 {
-  color: var(--neutral-3); }
+	color: var(--neutral-3);
+}
 
 .f-blogs-breadcrumb a:hover {
-  text-decoration: none; }
+	text-decoration: none;
+}
 
 @media (max-width: 599px) {
-  .f-blogs-breadcrumb {
-    flex-wrap: wrap; } }
+	.f-blogs-breadcrumb {
+		flex-wrap: wrap;
+	}
+}

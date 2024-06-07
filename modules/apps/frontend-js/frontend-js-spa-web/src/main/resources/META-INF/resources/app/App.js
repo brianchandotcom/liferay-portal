@@ -403,6 +403,7 @@ class App extends EventEmitter {
 		if (!this.pendingNavigate && path === this.activePath) {
 			return this.activeScreen;
 		}
+
 		/* jshint newcap: false */
 		let screen = this.screens[path];
 		if (!screen) {
@@ -501,7 +502,8 @@ class App extends EventEmitter {
 				this.navigationStrategy = NavigationStrategy.IMMEDIATE;
 
 				if (this.scheduledNavigationQueue.length) {
-					const scheduledNavigation = this.scheduledNavigationQueue.shift();
+					const scheduledNavigation =
+						this.scheduledNavigationQueue.shift();
 					this.maybeNavigate_(
 						scheduledNavigation.href,
 						scheduledNavigation
@@ -1061,9 +1063,8 @@ class App extends EventEmitter {
 			event.capturedFormButtonElement = document.activeElement;
 		}
 		else {
-			event.capturedFormButtonElement = form.querySelector(
-				buttonSelector
-			);
+			event.capturedFormButtonElement =
+				form.querySelector(buttonSelector);
 		}
 		this.maybeNavigate_(form.action, event);
 	}

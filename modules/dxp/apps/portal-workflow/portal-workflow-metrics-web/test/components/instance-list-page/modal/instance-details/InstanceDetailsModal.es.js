@@ -182,12 +182,10 @@ describe('The InstanceDetailsModal component should', () => {
 		});
 
 		it('Render details with slaStatus Untracked', () => {
-			const untrackedIcons = document.querySelectorAll(
-				'.lexicon-icon-hr'
-			);
-			const slaNotStartedElement = renderResult.getByText(
-				'NOT-STARTED (1)'
-			);
+			const untrackedIcons =
+				document.querySelectorAll('.lexicon-icon-hr');
+			const slaNotStartedElement =
+				renderResult.getByText('NOT-STARTED (1)');
 			const slaResultLabelElement = renderResult.getByText('(untracked)');
 
 			expect(untrackedIcons.length).toBe(2);

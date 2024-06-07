@@ -234,9 +234,8 @@ AUI.add(
 						.one(STR_DOT + instance.getClassName('content'))
 						.addClass(instance.get(STR_LAYOUT));
 
-					instance._editorSwitchTheme = boundingBox.one(
-						'#switchTheme'
-					);
+					instance._editorSwitchTheme =
+						boundingBox.one('#switchTheme');
 
 					instance._editor = new A.LiferaySourceEditor({
 						aceOptions: instance.get('aceOptions'),

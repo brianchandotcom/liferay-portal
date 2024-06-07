@@ -77,13 +77,12 @@ export function useObjectValidationForm({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm<
-		ObjectValidation
-	>({
-		initialValues,
-		onSubmit,
-		validate,
-	});
+	const {errors, handleChange, handleSubmit, setValues, values} =
+		useForm<ObjectValidation>({
+			initialValues,
+			onSubmit,
+			validate,
+		});
 
 	return {errors, handleChange, handleSubmit, setValues, values};
 }

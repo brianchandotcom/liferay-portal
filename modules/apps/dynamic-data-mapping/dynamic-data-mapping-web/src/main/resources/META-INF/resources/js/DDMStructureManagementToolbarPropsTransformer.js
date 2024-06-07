@@ -35,10 +35,11 @@ export default function propsTransformer({
 							if (form && searchContainer) {
 								postForm(form, {
 									data: {
-										deleteStructureIds: getCheckedCheckboxes(
-											searchContainer,
-											`${portletNamespace}allRowIds`
-										),
+										deleteStructureIds:
+											getCheckedCheckboxes(
+												searchContainer,
+												`${portletNamespace}allRowIds`
+											),
 									},
 									url: deleteStructuresURL,
 								});

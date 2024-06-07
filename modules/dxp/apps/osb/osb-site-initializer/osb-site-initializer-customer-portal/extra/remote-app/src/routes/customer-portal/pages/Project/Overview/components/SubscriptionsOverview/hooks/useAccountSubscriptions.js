@@ -10,14 +10,11 @@ export default function useAccountSubscriptions(
 	accountSubcriptionGroup,
 	accountSubscriptionGroupsLoading
 ) {
-	const [lastSubscriptionStatus, setLastSubscriptionStatus] = useState(
-		'Active'
-	);
+	const [lastSubscriptionStatus, setLastSubscriptionStatus] =
+		useState('Active');
 
-	const [
-		handleGetAccountSubscriptions,
-		{called, data, loading},
-	] = useLazyGetAccountSubscriptions();
+	const [handleGetAccountSubscriptions, {called, data, loading}] =
+		useLazyGetAccountSubscriptions();
 
 	const getSubscriptionStatusFilter = (subscriptionStatus) => {
 		if (subscriptionStatus) {

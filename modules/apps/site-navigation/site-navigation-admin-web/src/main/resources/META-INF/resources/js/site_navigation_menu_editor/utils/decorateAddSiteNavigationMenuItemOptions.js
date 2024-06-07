@@ -47,12 +47,12 @@ export default function decorateAddSiteNavigationMenuItemOptions({
 										portletNamespace,
 										selection,
 										data.siteNavigationMenuId
-								  )
+									)
 								: getNamespacedInfoItem(
 										portletNamespace,
 										selection,
 										data.siteNavigationMenuId
-								  )
+									)
 						),
 						method: 'POST',
 					}).then(() => {

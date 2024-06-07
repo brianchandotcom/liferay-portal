@@ -9,7 +9,9 @@
 	$marginRight
 ) {
 	display: #{$displayType};
-	gap: #{$gapRowValue}, #{$gapColumnValue};
+	gap:
+		#{$gapRowValue},
+		#{$gapColumnValue};
 
 	&-download {
 		display: none;

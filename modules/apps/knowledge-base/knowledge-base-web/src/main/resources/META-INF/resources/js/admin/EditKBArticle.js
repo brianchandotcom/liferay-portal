@@ -109,9 +109,8 @@ export default function EditKBArticle({
 	};
 
 	const beforeSubmit = function () {
-		document.getElementById(`${namespace}content`).value = window[
-			`${namespace}contentEditor`
-		].getHTML();
+		document.getElementById(`${namespace}content`).value =
+			window[`${namespace}contentEditor`].getHTML();
 
 		updateMultipleKBArticleAttachments();
 	};

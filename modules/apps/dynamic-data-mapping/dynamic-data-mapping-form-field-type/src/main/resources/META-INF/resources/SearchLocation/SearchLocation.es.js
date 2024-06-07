@@ -55,6 +55,7 @@ const Field = ({
 		if (pageValidationFailed) {
 			setValid(initialValid);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialValid, pageValidationFailed]);
 
@@ -100,7 +101,7 @@ const Field = ({
 						? {
 								...parsedValue,
 								[visibleField]: event.target.value,
-						  }
+							}
 						: {[visibleField]: event.target.value};
 					onChange({
 						target: {
@@ -188,6 +189,7 @@ const Main = ({
 			setAvailableLabels(labels ?? {});
 			setAvailableVisibleFields(currentVisibleFields);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

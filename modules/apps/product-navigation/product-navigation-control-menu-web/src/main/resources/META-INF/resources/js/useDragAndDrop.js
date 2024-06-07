@@ -99,9 +99,8 @@ export function useDragSymbol({data, icon, label, portletId, type}) {
 }
 
 export function useDropClear(targetItem) {
-	const {dropTargetColumn, setDropTargetColumn} = useContext(
-		DragAndDropContext
-	);
+	const {dropTargetColumn, setDropTargetColumn} =
+		useContext(DragAndDropContext);
 
 	const [, setDropClearRef] = useDrop({
 		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
@@ -144,11 +143,8 @@ const getDropIndicatorPosition = ({
 	targetItem,
 	windowScrollPosition,
 }) => {
-	const {
-		hoverClientY,
-		hoverTopLimit,
-		targetItemBoundingRect,
-	} = getHoverPosition(monitor, targetItem);
+	const {hoverClientY, hoverTopLimit, targetItemBoundingRect} =
+		getHoverPosition(monitor, targetItem);
 
 	const positionY =
 		hoverClientY < hoverTopLimit

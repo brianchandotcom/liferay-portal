@@ -101,9 +101,10 @@ AUI.add(
 							confirmationDescription: Liferay.Language.get(
 								'this-event-and-any-future-events-in-the-series-will-be-modified'
 							),
-							confirmationDescriptionComplement: Liferay.Language.get(
-								'any-previous-edits-to-future-events-will-be-overwritten'
-							),
+							confirmationDescriptionComplement:
+								Liferay.Language.get(
+									'any-previous-edits-to-future-events-will-be-overwritten'
+								),
 						},
 						{
 							button: getButtonConfig(
@@ -114,9 +115,10 @@ AUI.add(
 							confirmationDescription: Liferay.Language.get(
 								'the-modification-will-change-the-entire-series-of-events'
 							),
-							confirmationDescriptionComplement: Liferay.Language.get(
-								'any-events-edited-previously-will-not-be-affected-by-this-modification'
-							),
+							confirmationDescriptionComplement:
+								Liferay.Language.get(
+									'any-events-edited-previously-will-not-be-affected-by-this-modification'
+								),
 						},
 					],
 					dismiss: getButtonConfig(

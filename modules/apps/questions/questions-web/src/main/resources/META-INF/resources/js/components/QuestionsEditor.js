@@ -139,10 +139,11 @@ const QuestionsEditor = ({
 
 						CKEDITOR.on('instanceCreated', ({editor}) => {
 							if (context.imageBrowseURL) {
-								editor.config.filebrowserImageBrowseUrl = context.imageBrowseURL.replace(
-									'EDITOR_NAME_',
-									editor.name
-								);
+								editor.config.filebrowserImageBrowseUrl =
+									context.imageBrowseURL.replace(
+										'EDITOR_NAME_',
+										editor.name
+									);
 							}
 
 							editor.on('dialogShow', ({data}) => {

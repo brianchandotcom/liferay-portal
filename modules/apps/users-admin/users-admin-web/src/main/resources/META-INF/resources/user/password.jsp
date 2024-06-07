@@ -279,8 +279,7 @@ else {
 							webdavPasswordInput.focus();
 						}
 					},
-					title:
-						'<%= UnicodeLanguageUtil.get(request, "webdav-password-generated") %>',
+					title: '<%= UnicodeLanguageUtil.get(request, "webdav-password-generated") %>',
 				});
 			})
 			.catch((error) => {

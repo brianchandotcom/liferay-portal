@@ -44,12 +44,8 @@ function DisplayPageItemContextualSidebar({
 	);
 	const [customNameInvalid, setCustomNameInvalid] = useState(false);
 
-	const {
-		eventName,
-		getItemDetailsURL,
-		itemSelectorURL,
-		modalTitle,
-	} = chooseItemProps;
+	const {eventName, getItemDetailsURL, itemSelectorURL, modalTitle} =
+		chooseItemProps;
 
 	useEffect(() => {
 		const onFormSubmit = (event) => {

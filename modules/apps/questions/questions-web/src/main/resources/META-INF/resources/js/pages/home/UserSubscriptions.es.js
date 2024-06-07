@@ -63,9 +63,10 @@ export default withRouter(
 		);
 
 		if (threads && threads.myUserAccountSubscriptions.items) {
-			threads.myUserAccountSubscriptions.items = threads.myUserAccountSubscriptions.items.filter(
-				(thread) => thread.graphQLNode.showAsQuestion
-			);
+			threads.myUserAccountSubscriptions.items =
+				threads.myUserAccountSubscriptions.items.filter(
+					(thread) => thread.graphQLNode.showAsQuestion
+				);
 		}
 
 		const {data: topics, refetch: refetchTopics} = useQuery(
@@ -101,8 +102,7 @@ export default withRouter(
 								refetchThread();
 								refetchTopics();
 								setInfo({
-									title:
-										'You have unsubscribed from this asset successfully.',
+									title: 'You have unsubscribed from this asset successfully.',
 								});
 							});
 						},
@@ -322,7 +322,7 @@ export default withRouter(
 													context.useTopicNamesInURL
 														? data.graphQLNode
 																.messageBoardSection &&
-														  data.graphQLNode
+															data.graphQLNode
 																.messageBoardSection
 																.title
 														: (data.graphQLNode
@@ -330,7 +330,7 @@ export default withRouter(
 																data.graphQLNode
 																	.messageBoardSection
 																	.id) ||
-														  context.rootTopicId
+															context.rootTopicId
 												}
 												items={actions(data)}
 												question={data.graphQLNode}

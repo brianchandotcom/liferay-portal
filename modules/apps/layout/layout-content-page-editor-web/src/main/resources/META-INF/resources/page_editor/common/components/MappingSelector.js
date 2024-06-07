@@ -203,7 +203,7 @@ export default function MappingSelectorWrapper({
 			collectionKey
 				? content.classPK === collectionKey
 				: content.classNameId === classNameId &&
-				  content.classPK === classPK
+					content.classPK === classPK
 		);
 
 		if (collection) {
@@ -364,10 +364,13 @@ function MappingSelector({
 			fieldValue === UNMAPPED_OPTION.value
 				? {}
 				: selectedSourceType === MAPPING_SOURCE_TYPES.content
-				? {...selectedItem, fieldId: fieldValue}
-				: selectedSourceType === MAPPING_SOURCE_TYPES.relationship
-				? {classNameId: selectedRelationship, mappedField: fieldValue}
-				: {mappedField: fieldValue};
+					? {...selectedItem, fieldId: fieldValue}
+					: selectedSourceType === MAPPING_SOURCE_TYPES.relationship
+						? {
+								classNameId: selectedRelationship,
+								mappedField: fieldValue,
+							}
+						: {mappedField: fieldValue};
 
 		if (selectedSourceType === MAPPING_SOURCE_TYPES.content) {
 			setSelectedItem((selectedItem) => ({
@@ -425,11 +428,11 @@ function MappingSelector({
 			selectedSourceType === MAPPING_SOURCE_TYPES.content
 				? getMappingFieldsKey(infoItem)
 				: selectedSourceType === MAPPING_SOURCE_TYPES.relationship
-				? getMappingFieldsKey({
-						classNameId: selectedRelationship,
-						classTypeId: '0',
-				  })
-				: getMappingFieldsKey(selectedMappingTypes);
+					? getMappingFieldsKey({
+							classNameId: selectedRelationship,
+							classTypeId: '0',
+						})
+					: getMappingFieldsKey(selectedMappingTypes);
 
 		const fields = mappingFields[key];
 

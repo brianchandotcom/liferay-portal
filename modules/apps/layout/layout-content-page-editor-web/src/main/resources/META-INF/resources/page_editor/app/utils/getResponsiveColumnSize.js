@@ -14,9 +14,8 @@ const ORDERED_VIEWPORT_SIZES = [
 
 export function getResponsiveColumnSize(config, viewportSize) {
 	const getViewportSize = (config, viewportSize) => {
-		const viewportSizePosition = ORDERED_VIEWPORT_SIZES.indexOf(
-			viewportSize
-		);
+		const viewportSizePosition =
+			ORDERED_VIEWPORT_SIZES.indexOf(viewportSize);
 
 		if (
 			viewportSize === VIEWPORT_SIZES.desktop ||
@@ -30,7 +29,7 @@ export function getResponsiveColumnSize(config, viewportSize) {
 			: getViewportSize(
 					config,
 					ORDERED_VIEWPORT_SIZES[viewportSizePosition - 1]
-			  );
+				);
 	};
 
 	const newViewportSize = getViewportSize(config, viewportSize);

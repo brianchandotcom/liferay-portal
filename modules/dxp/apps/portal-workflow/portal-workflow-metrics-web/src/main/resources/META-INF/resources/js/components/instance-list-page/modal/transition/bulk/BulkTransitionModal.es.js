@@ -72,10 +72,10 @@ export default function BulkTransitionModal() {
 				transitionTasks.length > 1
 					? Liferay.Language.get(
 							'the-selected-steps-have-transitioned-successfully'
-					  )
+						)
 					: Liferay.Language.get(
 							'the-selected-step-has-transitioned-successfully'
-					  )
+						)
 			);
 
 			onCloseModal(true);

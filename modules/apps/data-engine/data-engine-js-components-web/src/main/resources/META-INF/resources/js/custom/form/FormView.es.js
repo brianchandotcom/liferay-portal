@@ -145,10 +145,10 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 			bodyHTML: Liferay.ThemeDisplay.isSignedIn()
 				? Liferay.Language.get(
 						'you-need-to-be-signed-in-to-submit-this-form'
-				  )
+					)
 				: Liferay.Language.get(
 						'you-need-to-reload-the-page-to-submit-this-form'
-				  ),
+					),
 			buttons: [
 				{
 					displayType: 'secondary',
@@ -184,6 +184,7 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 				title,
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

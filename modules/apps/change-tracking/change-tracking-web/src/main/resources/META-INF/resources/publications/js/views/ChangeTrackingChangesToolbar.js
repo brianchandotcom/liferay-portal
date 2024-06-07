@@ -229,7 +229,7 @@ export default function ChangeTrackingChangesToolbar({
 									'height': '85vh',
 									'min-height': '485px',
 									'width': '320px',
-							  }
+								}
 							: {}
 					}
 				>
@@ -241,7 +241,7 @@ export default function ChangeTrackingChangesToolbar({
 										'height': '100%',
 										'min-height': '485px',
 										'width': '320px',
-								  }
+									}
 								: {}
 						}
 					>

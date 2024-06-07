@@ -87,7 +87,7 @@ export default function ImportResults({fileName, importResults}: ResultsProps) {
 }
 
 interface SectionProps {
-	data: typeof RESULTS_DATA[keyof typeof RESULTS_DATA];
+	data: (typeof RESULTS_DATA)[keyof typeof RESULTS_DATA];
 	defaultMessage?: string;
 	fileName: string | null;
 	panelProps?: object;
@@ -136,8 +136,8 @@ function ImportResultsSection({
 							const messages = result.messages
 								? result.messages
 								: defaultMessage
-								? [defaultMessage]
-								: null;
+									? [defaultMessage]
+									: null;
 
 							return (
 								<li

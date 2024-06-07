@@ -65,9 +65,10 @@ portletDisplay.setURLBack(backURL);
 					onSelect: (selectedItem) => {
 						const objectEntry = JSON.parse(selectedItem.value);
 
-						const objectRelationshipPrimaryKey2Input = document.getElementById(
-							'<portlet:namespace />objectRelationshipPrimaryKey2'
-						);
+						const objectRelationshipPrimaryKey2Input =
+							document.getElementById(
+								'<portlet:namespace />objectRelationshipPrimaryKey2'
+							);
 
 						objectRelationshipPrimaryKey2Input.value = objectEntry.classPK;
 
@@ -79,8 +80,7 @@ portletDisplay.setURLBack(backURL);
 					},
 					selectEventName: '<portlet:namespace />selectRelatedModalEntry',
 					title: '<liferay-ui:message key="select" />',
-					url:
-						'<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorURL(objectRelationship) %>',
+					url: '<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorURL(objectRelationship) %>',
 				});
 			}
 		);

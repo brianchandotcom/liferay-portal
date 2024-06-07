@@ -380,8 +380,9 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	document
 		.getElementById('<portlet:namespace />neverEnds')
 		.addEventListener('change', (event) => {
-			const formValidator = Liferay.Form.get('<portlet:namespace />fm')
-				.formValidator;
+			const formValidator = Liferay.Form.get(
+				'<portlet:namespace />fm'
+			).formValidator;
 
 			formValidator.validateField(
 				'<portlet:namespace />maxSubscriptionCycles'
@@ -391,8 +392,9 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	document
 		.getElementById('<portlet:namespace />deliveryNeverEnds')
 		.addEventListener('change', (event) => {
-			const formValidator = Liferay.Form.get('<portlet:namespace />fm')
-				.formValidator;
+			const formValidator = Liferay.Form.get(
+				'<portlet:namespace />fm'
+			).formValidator;
 
 			formValidator.validateField(
 				'<portlet:namespace />deliveryMaxSubscriptionCycles'

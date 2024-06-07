@@ -26,9 +26,8 @@ export default function ({
 					shippingTaxData.id;
 			}
 			else {
-				window.document.querySelector(
-					'#shippingTaxCategoryId'
-				).value = 0;
+				window.document.querySelector('#shippingTaxCategoryId').value =
+					0;
 			}
 		},
 	});

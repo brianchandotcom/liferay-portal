@@ -662,15 +662,14 @@ const getUrl = function (
 									mapKey
 								)
 							) {
-								publicRenderParameters[
-									mapKey
-								] = generateParameterString(
-									pageRenderState,
-									parts[0],
-									parts[1],
-									PUBLIC_RENDER_PARAM_KEY,
-									mapKey
-								);
+								publicRenderParameters[mapKey] =
+									generateParameterString(
+										pageRenderState,
+										parts[0],
+										parts[1],
+										PUBLIC_RENDER_PARAM_KEY,
+										mapKey
+									);
 
 								str += publicRenderParameters[mapKey];
 							}

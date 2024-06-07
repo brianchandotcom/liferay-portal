@@ -26,11 +26,8 @@ import {clearPageContents} from '../utils/usePageContents';
 
 export default function deleteItem({itemId, selectItem = () => {}}) {
 	return (dispatch, getState) => {
-		const {
-			fragmentEntryLinks,
-			layoutData,
-			segmentsExperienceId,
-		} = getState();
+		const {fragmentEntryLinks, layoutData, segmentsExperienceId} =
+			getState();
 
 		return markItemForDeletion({
 			fragmentEntryLinks,
@@ -39,9 +36,8 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		}).then(({portletIds = [], layoutData: nextLayoutData}) => {
-			const [firstChild] = nextLayoutData.items[
-				nextLayoutData.rootItems.main
-			].children;
+			const [firstChild] =
+				nextLayoutData.items[nextLayoutData.rootItems.main].children;
 
 			selectItem(firstChild, {
 				origin: ITEM_ACTIVATION_ORIGINS.itemActions,
@@ -96,9 +92,8 @@ function findPortletIds(itemId, layoutData, fragmentEntryLinks) {
 		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
 		config.fragmentEntryLinkId
 	) {
-		const {editableValues = {}} = fragmentEntryLinks[
-			config.fragmentEntryLinkId
-		];
+		const {editableValues = {}} =
+			fragmentEntryLinks[config.fragmentEntryLinkId];
 
 		if (editableValues.portletId) {
 			return [getPortletId(editableValues)];
@@ -145,7 +140,7 @@ function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
 		: FormService.getFormFields({
 				classNameId,
 				classTypeId,
-		  });
+			});
 
 	promise.then((formFields) => {
 		if (

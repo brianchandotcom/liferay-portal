@@ -84,13 +84,8 @@ function _isVisible(element) {
  * Used here to get measurements for the "root" ("#content") element.
  */
 export function getRootElementGeometry(rootElement) {
-	const {
-		height,
-		left,
-		right,
-		top,
-		width,
-	} = rootElement.getBoundingClientRect();
+	const {height, left, right, top, width} =
+		rootElement.getBoundingClientRect();
 
 	return {
 		height: height + TARGET_OFFSET,
@@ -107,14 +102,8 @@ export function getRootElementGeometry(rootElement) {
  * Used here to get measurements for the "target" element.
  */
 export function getElementGeometry(element) {
-	const {
-		bottom,
-		height,
-		left,
-		right,
-		top,
-		width,
-	} = element.getBoundingClientRect();
+	const {bottom, height, left, right, top, width} =
+		element.getBoundingClientRect();
 
 	return {
 		bottom,

@@ -30,16 +30,14 @@ export default function ({
 			typeSettingsInput.value = product.productId;
 		}
 
-		document.getElementById(
-			`${namespace}workflowAction`
-		).value = workflowAction;
+		document.getElementById(`${namespace}workflowAction`).value =
+			workflowAction;
 
 		return submitForm(document.getElementById(`${namespace}fm`));
 	}
 
 	ItemFinder('itemFinder', 'item-finder-root', {
-		apiUrl:
-			'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
+		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-a-product'),
 		itemCreation: false,

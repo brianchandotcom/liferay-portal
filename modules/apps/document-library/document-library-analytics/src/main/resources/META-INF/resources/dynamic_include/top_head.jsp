@@ -39,7 +39,8 @@
 			Analytics.send('documentDownloaded', 'Document', {
 				groupId: themeDisplay.getScopeGroupId(),
 				fileEntryId,
-				preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+				preview:
+					!!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 				title,
 				version,
 			});

@@ -108,9 +108,10 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 					if (isConfirmed) {
 						Liferay.Util.postForm(document.<portlet:namespace />fm4, {
 							data: {
-								mergeLayoutSetBranchId: layoutSetBranch.getAttribute(
-									'data-layoutSetBranchId'
-								),
+								mergeLayoutSetBranchId:
+									layoutSetBranch.getAttribute(
+										'data-layoutSetBranchId'
+									),
 							},
 						});
 					}

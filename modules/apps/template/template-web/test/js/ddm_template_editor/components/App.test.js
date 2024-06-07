@@ -65,9 +65,8 @@ describe('', () => {
 			const saveButton = global.document.createElement('button');
 			saveButton.classList.add('save-button');
 
-			const saveAndContinueButton = global.document.createElement(
-				'button'
-			);
+			const saveAndContinueButton =
+				global.document.createElement('button');
 			saveAndContinueButton.classList.add('save-and-continue-button');
 
 			global.document.body.appendChild(saveButton);

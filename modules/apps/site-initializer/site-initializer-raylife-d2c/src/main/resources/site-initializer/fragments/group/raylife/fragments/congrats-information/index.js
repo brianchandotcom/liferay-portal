@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -25,6 +26,7 @@ const orderId = Liferay.Util.LocalStorage.getItem('orderId', consentType);
 const nowDate = new Date().toISOString().split('T')[0];
 
 const fetchHeadless = async (url, options) => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${

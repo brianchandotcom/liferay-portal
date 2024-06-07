@@ -43,12 +43,12 @@ export default function fragmentsReducer(
 							...existingCollection.fragmentEntries,
 							composition,
 						],
-				  }
+					}
 				: {
 						fragmentCollectionId: composition.fragmentCollectionId,
 						fragmentEntries: [composition],
 						name: composition.fragmentCollectionName,
-				  };
+					};
 
 			return [
 				...fragments.filter(

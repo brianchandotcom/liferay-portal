@@ -9,13 +9,8 @@ import MiniCartContext from './MiniCartContext';
 import {hasPriceOnApplication} from './util/index';
 
 function Wrapper() {
-	const {
-		CartViews,
-		cartState,
-		editedItem,
-		isOpen,
-		requestQuoteEnabled,
-	} = useContext(MiniCartContext);
+	const {CartViews, cartState, editedItem, isOpen, requestQuoteEnabled} =
+		useContext(MiniCartContext);
 	const {cartItems = []} = cartState;
 	const cartHasPriceOnApplicationItems = hasPriceOnApplication(cartItems);
 

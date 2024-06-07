@@ -10,25 +10,23 @@ import {Route, Router} from 'react-router-dom';
 import {AppContext} from '../../src/main/resources/META-INF/resources/js/components/AppContext.es';
 import {FilterContextProvider} from '../../src/main/resources/META-INF/resources/js/shared/components/filter/FilterContext.es';
 
-const withParamsMock = (...components) => ({
-	history,
-	location: {search: query},
-	match: {params: routeParams},
-}) => {
-	return components.map((component, key) => {
-		if (routeParams.sort) {
-			routeParams.sort = decodeURIComponent(routeParams.sort);
-		}
+const withParamsMock =
+	(...components) =>
+	({history, location: {search: query}, match: {params: routeParams}}) => {
+		return components.map((component, key) => {
+			if (routeParams.sort) {
+				routeParams.sort = decodeURIComponent(routeParams.sort);
+			}
 
-		return cloneElement(component, {
-			...routeParams,
-			history,
-			key,
-			query,
-			routeParams,
+			return cloneElement(component, {
+				...routeParams,
+				history,
+				key,
+				query,
+				routeParams,
+			});
 		});
-	});
-};
+	};
 
 const MockRouter = ({
 	children,
@@ -63,6 +61,7 @@ const MockRouter = ({
 			userId,
 			userName,
 		}),
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[reindexStatuses, title]
 	);

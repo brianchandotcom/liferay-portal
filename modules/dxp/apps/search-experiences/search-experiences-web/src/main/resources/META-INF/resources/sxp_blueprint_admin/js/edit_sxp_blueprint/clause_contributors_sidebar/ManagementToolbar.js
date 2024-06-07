@@ -236,7 +236,7 @@ function ManagementToolbar({
 										? Liferay.Language.get('x-result-for-x')
 										: Liferay.Language.get(
 												'x-results-for-x'
-										  ),
+											),
 									[allItems.length, keyword]
 								)}
 							</span>

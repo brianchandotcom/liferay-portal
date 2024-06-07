@@ -17,9 +17,8 @@ export default function ({
 	pricingFDSName,
 	spritemap,
 }) {
-	const CommercePriceModifierProductsResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommercePriceModifierProductsResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	const id = commercePriceModifierId;
 

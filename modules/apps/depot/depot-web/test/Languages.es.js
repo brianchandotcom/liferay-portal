@@ -47,9 +47,8 @@ describe('Languages', () => {
 	});
 
 	it('renders a list with the availableLocales', () => {
-		const {container, getAllByRole} = renderLanguagesComponent(
-			defaultProps
-		);
+		const {container, getAllByRole} =
+			renderLanguagesComponent(defaultProps);
 
 		expect(getAllByRole('table').length).toBe(1);
 
@@ -90,14 +89,11 @@ describe('Languages', () => {
 	});
 
 	it('changes the default language', () => {
-		const {
-			container,
-			getAllByText,
-			getByDisplayValue,
-		} = renderLanguagesComponent({
-			...defaultProps,
-			inheritLocales: false,
-		});
+		const {container, getAllByText, getByDisplayValue} =
+			renderLanguagesComponent({
+				...defaultProps,
+				inheritLocales: false,
+			});
 
 		const actions = getAllByText('make-default');
 
@@ -150,9 +146,8 @@ describe('Languages', () => {
 			siteAvailableLocales: availableLocales,
 		});
 
-		const dropdownMenuSecond = result.baseElement.querySelectorAll(
-			'.dropdown-menu'
-		)[1];
+		const dropdownMenuSecond =
+			result.baseElement.querySelectorAll('.dropdown-menu')[1];
 		const Buttons = queryAllByRole(dropdownMenuSecond, 'menuitem', {
 			hidden: true,
 		});
@@ -171,9 +166,8 @@ describe('Languages', () => {
 
 		const dropdownTriggers = result.container.querySelectorAll('.dropdown');
 		const moveDownButtons = result.getAllByText('move-up');
-		const dropdownMenus = result.baseElement.querySelectorAll(
-			'.dropdown-menu'
-		);
+		const dropdownMenus =
+			result.baseElement.querySelectorAll('.dropdown-menu');
 		const dropdownMenuFirst = dropdownMenus[0];
 
 		expect(dropdownTriggers).toHaveLength(4);
@@ -190,9 +184,8 @@ describe('Languages', () => {
 
 		const dropdownTriggers = result.container.querySelectorAll('.dropdown');
 		const moveDownButtons = result.getAllByText('move-down');
-		const dropdownMenus = result.baseElement.querySelectorAll(
-			'.dropdown-menu'
-		);
+		const dropdownMenus =
+			result.baseElement.querySelectorAll('.dropdown-menu');
 		const dropdownMenuLast = dropdownMenus[dropdownMenus.length - 1];
 
 		expect(dropdownTriggers).toHaveLength(4);

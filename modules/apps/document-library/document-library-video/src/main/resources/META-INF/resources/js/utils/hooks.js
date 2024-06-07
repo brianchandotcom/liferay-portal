@@ -29,7 +29,8 @@ export function useDLVideoExternalShortcutFields({
 		fetch(
 			addParams(
 				{
-					[`${namespace}dlVideoExternalShortcutURL`]: dlVideoExternalShortcutURL,
+					[`${namespace}dlVideoExternalShortcutURL`]:
+						dlVideoExternalShortcutURL,
 				},
 				getDLVideoExternalShortcutFieldsURL
 			)

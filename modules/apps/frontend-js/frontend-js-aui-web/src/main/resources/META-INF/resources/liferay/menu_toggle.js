@@ -74,9 +74,8 @@ AUI.add(
 									menuItems
 								);
 
-								instance._inputFilterNode = menuFilter.get(
-									'inputNode'
-								);
+								instance._inputFilterNode =
+									menuFilter.get('inputNode');
 							}
 						}
 					}
@@ -200,9 +199,8 @@ AUI.add(
 								instance._getEventOutside(event),
 								(event) => {
 									if (toggleTouch) {
-										toggleTouch = instance._isTouchEvent(
-											event
-										);
+										toggleTouch =
+											instance._isTouchEvent(event);
 									}
 
 									if (

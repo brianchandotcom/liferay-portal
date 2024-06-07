@@ -44,7 +44,7 @@
 	.dashboard-sales-space-legend {
 		flex-direction: row !important;
 		justify-content: space-evenly !important;
-		margin-left: 0px !important;
+		margin-left: 0 !important;
 		width: 100%;
 	}
 

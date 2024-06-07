@@ -109,7 +109,7 @@ export function modal({
 		onClose: refreshPageOnClose
 			? function () {
 					window.location.reload();
-			  }
+				}
 			: null,
 		portletId,
 		size,

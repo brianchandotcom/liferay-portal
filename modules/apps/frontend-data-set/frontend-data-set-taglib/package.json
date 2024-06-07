@@ -1,5 +1,6 @@
 {
-	"dependencies": {},
+	"dependencies": {
+	},
 	"name": "@liferay/frontend-data-set-taglib",
 	"private": true,
 	"scripts": {

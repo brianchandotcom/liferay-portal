@@ -82,17 +82,18 @@ class PageToolbar extends Component {
 						</ClayLink>
 					</ManagementToolbar.Item>
 
-					{onSaveAsDraft && status !== STATUS_TYPES.NOT_APPLICABLE && (
-						<ManagementToolbar.Item>
-							<ClayButton
-								displayType="secondary"
-								onClick={onSaveAsDraft}
-								small
-							>
-								{Liferay.Language.get('save-as-draft')}
-							</ClayButton>
-						</ManagementToolbar.Item>
-					)}
+					{onSaveAsDraft &&
+						status !== STATUS_TYPES.NOT_APPLICABLE && (
+							<ManagementToolbar.Item>
+								<ClayButton
+									displayType="secondary"
+									onClick={onSaveAsDraft}
+									small
+								>
+									{Liferay.Language.get('save-as-draft')}
+								</ClayButton>
+							</ManagementToolbar.Item>
+						)}
 
 					{status === STATUS_TYPES.NOT_APPLICABLE ? (
 						<ManagementToolbar.Item>

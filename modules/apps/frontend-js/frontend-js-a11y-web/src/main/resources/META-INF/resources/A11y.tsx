@@ -184,9 +184,8 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 									'the-occurrence-was-not-found-it-is-common-when-the-element-no-longer-exists-in-the-dom'
 								)}
 								onClick={() => {
-									const {ruleId, target} = params as Required<
-										Params
-									>;
+									const {ruleId, target} =
+										params as Required<Params>;
 
 									dispatch({
 										payload: {

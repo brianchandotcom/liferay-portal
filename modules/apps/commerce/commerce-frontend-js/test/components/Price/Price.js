@@ -250,9 +250,8 @@ describe('Price', () => {
 				'net-price'
 			);
 
-			const [listPrice, promoPrice, discount, finalPrice] = Array.from(
-				values
-			);
+			const [listPrice, promoPrice, discount, finalPrice] =
+				Array.from(values);
 
 			expect(listPrice.classList.length).toEqual(2);
 			expect(listPrice.classList.contains('price-value')).toBe(true);

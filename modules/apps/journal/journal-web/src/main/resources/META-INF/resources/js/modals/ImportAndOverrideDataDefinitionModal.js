@@ -12,10 +12,8 @@ import React, {useEffect, useRef, useState} from 'react';
 
 const ImportAndOverrideDataDefinitionModal = ({portletNamespace}) => {
 	const [visible, setVisible] = useState(false);
-	const [
-		importAndOverrideStructureURL,
-		setImportAndOverrideStructureURL,
-	] = useState('');
+	const [importAndOverrideStructureURL, setImportAndOverrideStructureURL] =
+		useState('');
 	const inputFileRef = useRef();
 	const importAndOverrideDataDefinitionModalComponentId = `${portletNamespace}importAndOverrideDataDefinitionModal`;
 	const importAndOverrideDataDefinitionFormId = `${portletNamespace}importAndOverrideDataDefinitionForm`;

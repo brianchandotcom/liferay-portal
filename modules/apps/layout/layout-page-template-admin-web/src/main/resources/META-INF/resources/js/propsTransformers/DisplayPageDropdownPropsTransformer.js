@@ -39,7 +39,7 @@ const ACTIONS = {
 				description: hasMissingType
 					? Liferay.Language.get(
 							'this-display-page-template-does-not-have-any-content-type-assigned-you-must-select-one-to-edit-it'
-					  )
+						)
 					: '',
 				disableWarning: Boolean(hasMissingType) || !assetType,
 				formSubmitURL: changeContentTypeURL,

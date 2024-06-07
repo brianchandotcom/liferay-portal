@@ -14,10 +14,8 @@ import '../css/main.scss';
 
 export function AnalyticsReportsApp({context, portletNamespace}) {
 	const {analyticsReportsDataURL, isPanelStateOpen} = context;
-	const [
-		hoverOrFocusEventTriggered,
-		setHoverOrFocusEventTriggered,
-	] = useState(false);
+	const [hoverOrFocusEventTriggered, setHoverOrFocusEventTriggered] =
+		useState(false);
 
 	const analyticsReportsPanelToggle = document.getElementById(
 		`${portletNamespace}analyticsReportsPanelToggleId`

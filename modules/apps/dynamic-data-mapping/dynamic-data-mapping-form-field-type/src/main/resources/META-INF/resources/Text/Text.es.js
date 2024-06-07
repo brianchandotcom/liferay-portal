@@ -329,9 +329,8 @@ const Autocomplete = ({
 
 	const handleFocus = (event, direction) => {
 		const target = event.target;
-		const focusabledElements = event.currentTarget.querySelectorAll(
-			'button'
-		);
+		const focusabledElements =
+			event.currentTarget.querySelectorAll('button');
 		const targetIndex = [...focusabledElements].findIndex(
 			(current) => current === target
 		);
@@ -393,9 +392,8 @@ const Autocomplete = ({
 						event.preventDefault();
 						event.stopPropagation();
 
-						const firstElement = itemListRef.current.querySelector(
-							'button'
-						);
+						const firstElement =
+							itemListRef.current.querySelector('button');
 						firstElement.focus();
 					}
 				}}
@@ -491,9 +489,10 @@ const Main = ({
 	value,
 	...otherProps
 }) => {
-	const optionsMemo = useMemo(() => options.map((option) => option.label), [
-		options,
-	]);
+	const optionsMemo = useMemo(
+		() => options.map((option) => option.label),
+		[options]
+	);
 
 	const [error, setError] = useState({});
 

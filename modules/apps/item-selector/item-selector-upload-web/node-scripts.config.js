@@ -4,7 +4,6 @@
  */
 
 module.exports = {
-	main:
-		'src/main/resources/META-INF/resources/js/ItemSelectorRepositoryEntryBrowser.js',
+	main: 'src/main/resources/META-INF/resources/js/ItemSelectorRepositoryEntryBrowser.js',
 	npmscripts: {},
 };

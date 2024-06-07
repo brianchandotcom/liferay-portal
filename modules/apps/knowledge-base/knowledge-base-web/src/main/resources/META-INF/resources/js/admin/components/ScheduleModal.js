@@ -17,7 +17,8 @@ export function isValidDate(dateString, userTimeZone) {
 
 	// Regular expression for the 'yyyy-MM-dd HH:mm' format
 
-	const dateRegex = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
+	const dateRegex =
+		/^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
 
 	if (!dateRegex.test(dateString.trim())) {
 		return false;
@@ -92,10 +93,10 @@ export default function ScheduleModal({
 					{scheduled
 						? Liferay.Language.get(
 								'this-article-is-set-to-publish-later'
-						  )
+							)
 						: Liferay.Language.get(
 								'set-date-and-time-for-publication'
-						  )}
+							)}
 				</p>
 
 				<div className={classnames({'has-error': invalidDate})}>

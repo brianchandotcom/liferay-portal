@@ -91,23 +91,18 @@ export default function EditObjectDetails({
 }: EditObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 
-	const {
-		errors,
-		handleChange,
-		handleValidate,
-		setValues,
-		values,
-	} = useObjectDetailsForm({
-		initialValues: {
-			defaultLanguageId: 'en_US',
-			externalReferenceCode: objectDefinitionExternalReferenceCode,
-			id: objectDefinitionId,
-			label,
-			name: shortName,
-			pluralLabel,
-		},
-		onSubmit: () => {},
-	});
+	const {errors, handleChange, handleValidate, setValues, values} =
+		useObjectDetailsForm({
+			initialValues: {
+				defaultLanguageId: 'en_US',
+				externalReferenceCode: objectDefinitionExternalReferenceCode,
+				id: objectDefinitionId,
+				label,
+				name: shortName,
+				pluralLabel,
+			},
+			onSubmit: () => {},
+		});
 
 	const onSubmit = async (draft: boolean) => {
 		const validationErrors = handleValidate();
@@ -119,9 +114,10 @@ export default function EditObjectDetails({
 				objectDefinition = setAccountRelationshipFieldMandatory(values);
 			}
 
-			const saveResponse = await API.putObjectDefinitionByExternalReferenceCode(
-				objectDefinition
-			);
+			const saveResponse =
+				await API.putObjectDefinitionByExternalReferenceCode(
+					objectDefinition
+				);
 
 			if (!saveResponse.ok) {
 				const {title} = (await saveResponse.json()) as {
@@ -181,18 +177,21 @@ export default function EditObjectDetails({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectFieldsResponse = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-				objectDefinitionExternalReferenceCode
-			);
-			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectFieldsResponse =
+				await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+					objectDefinitionExternalReferenceCode
+				);
+			const objectDefinitionResponse =
+				await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
 
 			setValues(objectDefinitionResponse);
 			setObjectFields(objectFieldsResponse);
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId]);
 

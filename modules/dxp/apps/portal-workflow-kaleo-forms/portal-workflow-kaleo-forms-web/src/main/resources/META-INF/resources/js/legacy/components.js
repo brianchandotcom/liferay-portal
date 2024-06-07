@@ -299,9 +299,8 @@ AUI.add(
 
 					const definition = instance.getDefinition();
 
-					const selectedIndex = availableDefinitions.indexOf(
-						definition
-					);
+					const selectedIndex =
+						availableDefinitions.indexOf(definition);
 
 					const keyCode = event.domEvent.keyCode;
 

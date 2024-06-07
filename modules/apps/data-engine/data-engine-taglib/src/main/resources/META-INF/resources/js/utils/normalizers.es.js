@@ -70,7 +70,7 @@ function normalizeField(
 						nestedField,
 						defaultLanguageId
 					),
-			  }))
+				}))
 			: [],
 	};
 }

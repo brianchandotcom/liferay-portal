@@ -37,15 +37,10 @@ const parseDataLayout = (dataLayout) => {
 };
 
 const parseDataDefinition = (originalDataDefinition) => {
-	const {
-		availableLanguageIds,
-		description,
-		name,
-		...dataDefinition
-	} = omit(originalDataDefinition, [
-		'defaultLanguageId',
-		'defaultDataLayout',
-	]);
+	const {availableLanguageIds, description, name, ...dataDefinition} = omit(
+		originalDataDefinition,
+		['defaultLanguageId', 'defaultDataLayout']
+	);
 
 	return {
 		availableLanguageIds,
@@ -58,23 +53,25 @@ const parseDataDefinition = (originalDataDefinition) => {
 const DEFAULT_ID = '0';
 const NOT_FOUND = 404;
 
-const customFetch = ({defaultData, id, parse}) => async (url, init) => {
-	if (id === DEFAULT_ID) {
-		return defaultData;
-	}
+const customFetch =
+	({defaultData, id, parse}) =>
+	async (url, init) => {
+		if (id === DEFAULT_ID) {
+			return defaultData;
+		}
 
-	const response = await fetch(url, init);
+		const response = await fetch(url, init);
 
-	if (response.ok) {
-		return parse(await response.json());
-	}
+		if (response.ok) {
+			return parse(await response.json());
+		}
 
-	if (response.status === NOT_FOUND) {
-		return defaultData;
-	}
+		if (response.status === NOT_FOUND) {
+			return defaultData;
+		}
 
-	throw response;
-};
+		throw response;
+	};
 
 const DEFAULT_DATA_DEFINITION = {
 	dataDefinition: {

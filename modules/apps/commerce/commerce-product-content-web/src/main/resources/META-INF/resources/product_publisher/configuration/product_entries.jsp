@@ -152,8 +152,7 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 					submitForm(form);
 				},
 				title: 'add-new-product-to-x',
-				url:
-					'<%= cpPublisherConfigurationDisplayContext.getItemSelectorUrl() %>',
+				url: '<%= cpPublisherConfigurationDisplayContext.getItemSelectorUrl() %>',
 			});
 		});
 	}

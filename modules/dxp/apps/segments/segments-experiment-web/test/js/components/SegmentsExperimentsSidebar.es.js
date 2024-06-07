@@ -215,17 +215,13 @@ describe('Variants', () => {
 	});
 
 	it('Create variant button', async () => {
-		const {
-			APIServiceMocks,
-			findByText,
-			getByLabelText,
-			getByText,
-		} = renderApp({
-			initialSegmentsExperiment: segmentsExperiment,
-			initialSegmentsVariants: [controlVariant],
-			selectedSegmentsExperienceId:
-				segmentsExperiment.segmentsExperimentId,
-		});
+		const {APIServiceMocks, findByText, getByLabelText, getByText} =
+			renderApp({
+				initialSegmentsExperiment: segmentsExperiment,
+				initialSegmentsVariants: [controlVariant],
+				selectedSegmentsExperienceId:
+					segmentsExperiment.segmentsExperimentId,
+			});
 		const {createVariant} = APIServiceMocks;
 
 		const button = getByText('create-variant');
@@ -366,15 +362,11 @@ describe('Review and Run test', () => {
 	});
 
 	it("Can run test that won't be editable", async () => {
-		const {
-			APIServiceMocks,
-			findByText,
-			getByText,
-			queryAllByLabelText,
-		} = renderApp({
-			initialSegmentsExperiment: segmentsExperiment,
-			initialSegmentsVariants: segmentsVariants,
-		});
+		const {APIServiceMocks, findByText, getByText, queryAllByLabelText} =
+			renderApp({
+				initialSegmentsExperiment: segmentsExperiment,
+				initialSegmentsVariants: segmentsVariants,
+			});
 		const {runExperiment} = APIServiceMocks;
 
 		const actionButtons = queryAllByLabelText('show-actions');

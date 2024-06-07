@@ -56,17 +56,13 @@ function ObjectFieldsPanel({
 	searchKeyword,
 	setSchemaUIData,
 }: ObjectFieldsPanelProps) {
-	const {
-		fetchedSchemaData,
-		objectDefinitionBasePath,
-		setFetchedSchemaData,
-	} = useContext(EditSchemaContext);
+	const {fetchedSchemaData, objectDefinitionBasePath, setFetchedSchemaData} =
+		useContext(EditSchemaContext);
 
 	const [showOnClick, setShowOnClick] = useState<undefined | {id: number}>();
 	const [expanded, setExpanded] = useState(defaultExpanded);
-	const [localUIData, setLocalUIData] = useState<
-		ObjectDefinitionWithAddedField
-	>(objectDefinition);
+	const [localUIData, setLocalUIData] =
+		useState<ObjectDefinitionWithAddedField>(objectDefinition);
 
 	const getFilteredObjectFields = (): AddedObjectField[] => {
 		return localUIData.objectFields.filter((field) =>
@@ -88,11 +84,12 @@ function ObjectFieldsPanel({
 							'objectDefinitionExternalReferenceCode2'
 						],
 				}).then((addedObjectDefinition) => {
-					addedObjectDefinition.aggregatedObjectRelationshipNames = !objectDefinition.aggregatedObjectRelationshipNames
-						? objectRelationship.name
-						: objectDefinition.aggregatedObjectRelationshipNames +
-						  ',' +
-						  objectRelationship.name;
+					addedObjectDefinition.aggregatedObjectRelationshipNames =
+						!objectDefinition.aggregatedObjectRelationshipNames
+							? objectRelationship.name
+							: objectDefinition.aggregatedObjectRelationshipNames +
+								',' +
+								objectRelationship.name;
 
 					return addedObjectDefinition;
 				})
@@ -104,9 +101,8 @@ function ObjectFieldsPanel({
 		objectDefinitions: ObjectDefinitionsRelationshipTree,
 		objectRelationships: ObjectRelationship[]
 	) => {
-		const newObjectRelationShips = await getRelatedObjectDefinitions(
-			objectRelationships
-		);
+		const newObjectRelationShips =
+			await getRelatedObjectDefinitions(objectRelationships);
 
 		const newObjectDefinitions = {...objectDefinitions};
 
@@ -115,17 +111,18 @@ function ObjectFieldsPanel({
 		) {
 			if (objectDefinitions) {
 				if (objectDefinitions.definition.id === objectDefinition.id) {
-					objectDefinitions.relatedDefinitions = newObjectRelationShips.reduce(
-						(accumulator, currentElement) => {
-							accumulator.push({definition: currentElement});
-							setShowOnClick({
-								id: objectDefinitions.definition.id,
-							});
+					objectDefinitions.relatedDefinitions =
+						newObjectRelationShips.reduce(
+							(accumulator, currentElement) => {
+								accumulator.push({definition: currentElement});
+								setShowOnClick({
+									id: objectDefinitions.definition.id,
+								});
 
-							return accumulator;
-						},
-						[] as ObjectDefinitionsRelationshipTree[]
-					);
+								return accumulator;
+							},
+							[] as ObjectDefinitionsRelationshipTree[]
+						);
 
 					return;
 				}
@@ -269,6 +266,7 @@ export default function SidebarBody({
 
 			findAndSetCurrentNav(fectchedObjectDefinitions);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[fectchedObjectDefinitions]
 	);

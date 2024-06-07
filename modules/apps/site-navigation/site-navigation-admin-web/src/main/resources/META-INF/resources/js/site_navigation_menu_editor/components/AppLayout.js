@@ -83,7 +83,8 @@ export function AppLayout({
 
 			<div
 				className={classNames(APP_LAYOUT_CONTENT_CLASS_NAME, {
-					[`${APP_LAYOUT_CONTENT_CLASS_NAME}--with-sidebar`]: !!SidebarPanel,
+					[`${APP_LAYOUT_CONTENT_CLASS_NAME}--with-sidebar`]:
+						!!SidebarPanel,
 				})}
 				ref={appLayoutContentRef}
 			>
@@ -96,7 +97,8 @@ export function AppLayout({
 					className={classNames(
 						'site_navigation_menu_editor_AppLayout-sidebar',
 						{
-							'site_navigation_menu_editor_AppLayout-sidebar--visible': !!SidebarPanel,
+							'site_navigation_menu_editor_AppLayout-sidebar--visible':
+								!!SidebarPanel,
 						}
 					)}
 					ref={sidebarPanelRef}

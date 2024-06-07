@@ -102,10 +102,12 @@ export function getLocalizedValue(
 				else if (
 					navigatedValue[Liferay.ThemeDisplay.getBCP47LanguageId()]
 				) {
-					formattedProperty = Liferay.ThemeDisplay.getBCP47LanguageId();
+					formattedProperty =
+						Liferay.ThemeDisplay.getBCP47LanguageId();
 				}
 				else {
-					formattedProperty = Liferay.ThemeDisplay.getDefaultLanguageId();
+					formattedProperty =
+						Liferay.ThemeDisplay.getDefaultLanguageId();
 				}
 			}
 

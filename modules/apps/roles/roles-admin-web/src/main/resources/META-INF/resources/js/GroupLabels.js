@@ -94,7 +94,7 @@ export default function GroupLabels({
 										? [
 												...groupNames,
 												event.groupdescriptivename,
-										  ]
+											]
 										: groupNames
 								);
 							}

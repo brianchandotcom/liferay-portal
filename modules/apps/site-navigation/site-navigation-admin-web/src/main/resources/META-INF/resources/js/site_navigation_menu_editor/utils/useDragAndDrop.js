@@ -104,12 +104,8 @@ export function useDropTarget(item) {
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 	const {languageId} = useConstants();
-	const {
-		nestingLevel,
-		setNestingLevel,
-		setTargetItemId,
-		targetItemId,
-	} = useContext(DragDropContext);
+	const {nestingLevel, setNestingLevel, setTargetItemId, targetItemId} =
+		useContext(DragDropContext);
 	const previousItemPathRef = useRef(null);
 	const targetRef = useRef();
 	const targetRectRef = useRef(null);

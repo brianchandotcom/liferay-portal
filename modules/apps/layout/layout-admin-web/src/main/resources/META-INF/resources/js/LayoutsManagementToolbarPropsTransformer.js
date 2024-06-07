@@ -50,9 +50,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				fetch(
 					addParams(
 						{
-							[`_${url.searchParams.get(
-								'p_p_id'
-							)}_rowIds`]: keys.join(','),
+							[`_${url.searchParams.get('p_p_id')}_rowIds`]:
+								keys.join(','),
 						},
 						itemData?.deleteLayoutURL
 					),
@@ -132,9 +131,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			title: Liferay.Language.get('permissions'),
 			url: addParams(
 				{
-					[`_${url.searchParams.get(
-						'p_p_id'
-					)}_resourcePrimKey`]: keys.join(','),
+					[`_${url.searchParams.get('p_p_id')}_resourcePrimKey`]:
+						keys.join(','),
 				},
 				itemData?.changePermissionsURL
 			),
@@ -149,9 +147,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		navigate(
 			addParams(
 				{
-					[`_${url.searchParams.get('p_p_id')}_classPK`]: keys.join(
-						','
-					),
+					[`_${url.searchParams.get('p_p_id')}_classPK`]:
+						keys.join(','),
 				},
 				exportTranslationURL
 			)

@@ -1,9 +1,9 @@
 @media screen and (max-width: 767.98px) {
-	.congrats-actions {		
+	.congrats-actions {
 		align-items: center;
 		flex-direction: column;
 	}
-	
+
 	.congrats-actions button {
 		max-width: 203px;
 	}

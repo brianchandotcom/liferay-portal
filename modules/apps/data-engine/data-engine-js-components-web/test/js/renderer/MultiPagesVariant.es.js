@@ -61,9 +61,8 @@ describe('MultiPagesVariant.PageHeader', () => {
 	});
 
 	it('renders', () => {
-		const {localizedDescription, localizedTitle} = mockPages[
-			defaultProps.page.pageIndex
-		];
+		const {localizedDescription, localizedTitle} =
+			mockPages[defaultProps.page.pageIndex];
 
 		const {container} = render(
 			<WithProvider {...defaultProps}>

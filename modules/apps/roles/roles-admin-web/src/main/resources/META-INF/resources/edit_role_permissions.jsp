@@ -214,9 +214,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 					var value = checkbox.val();
 
 					if (checkbox.get('checked')) {
-						var unselectedTargetIndex = unselectedTargets.indexOf(
-							value
-						);
+						var unselectedTargetIndex =
+							unselectedTargets.indexOf(value);
 
 						if (unselectedTargetIndex != -1) {
 							unselectedTargets.splice(unselectedTargetIndex, 1);

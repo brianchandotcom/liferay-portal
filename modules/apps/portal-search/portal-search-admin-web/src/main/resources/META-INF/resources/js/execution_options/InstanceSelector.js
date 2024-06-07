@@ -20,9 +20,8 @@ const DEFAULT_DELTA = 10;
  */
 function InstanceSelector({onSelectedChange, selected, virtualInstances}) {
 	const [activePage, setActivePage] = useState(1);
-	const [currentVirtualInstances, setCurrentVirtualInstances] = useState(
-		virtualInstances
-	); // The virtual instances currently in view.
+	const [currentVirtualInstances, setCurrentVirtualInstances] =
+		useState(virtualInstances); // The virtual instances currently in view.
 	const [delta, setDelta] = useState(DEFAULT_DELTA);
 	const [searchValue, setSearchValue] = useState('');
 
@@ -243,9 +242,8 @@ function InstanceSelector({onSelectedChange, selected, virtualInstances}) {
 								'showing-x-to-x-of-x-entries'
 							),
 							perPageItems: Liferay.Language.get('x-entries'),
-							selectPerPageItems: Liferay.Language.get(
-								'x-entries'
-							),
+							selectPerPageItems:
+								Liferay.Language.get('x-entries'),
 						}}
 						onDeltaChange={setDelta}
 						onPageChange={setActivePage}

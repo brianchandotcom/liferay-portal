@@ -86,6 +86,7 @@ AUI.add(
 				},
 
 				toggler: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,

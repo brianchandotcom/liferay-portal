@@ -39,9 +39,8 @@ describe('Quantity Selector', () => {
 			<InputQuantitySelector {...defaultProps} />
 		);
 
-		formGroup = inputQuantitySelector.container.querySelector(
-			'.form-group'
-		);
+		formGroup =
+			inputQuantitySelector.container.querySelector('.form-group');
 		input = inputQuantitySelector.container.querySelector('input');
 	});
 
@@ -120,9 +119,8 @@ describe('Quantity Selector', () => {
 			<InputQuantitySelector min={4} quantity={1} />
 		);
 
-		formGroup = inputQuantitySelector.container.querySelector(
-			'.form-group'
-		);
+		formGroup =
+			inputQuantitySelector.container.querySelector('.form-group');
 
 		expect(formGroup.classList).toContain('has-error');
 	});
@@ -158,9 +156,8 @@ describe('Quantity Selector', () => {
 			<InputQuantitySelector max={4} quantity={7} />
 		);
 
-		formGroup = inputQuantitySelector.container.querySelector(
-			'.form-group'
-		);
+		formGroup =
+			inputQuantitySelector.container.querySelector('.form-group');
 
 		expect(formGroup.classList).toContain('has-error');
 	});
@@ -196,9 +193,8 @@ describe('Quantity Selector', () => {
 			<InputQuantitySelector quantity={7} step={4} />
 		);
 
-		formGroup = inputQuantitySelector.container.querySelector(
-			'.form-group'
-		);
+		formGroup =
+			inputQuantitySelector.container.querySelector('.form-group');
 
 		expect(formGroup.classList).toContain('has-error');
 	});

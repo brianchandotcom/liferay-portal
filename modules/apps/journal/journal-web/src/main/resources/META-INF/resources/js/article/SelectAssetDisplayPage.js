@@ -39,9 +39,8 @@ export default function SelectAssetDisplayPage({
 	selectAssetDisplayPageURL,
 	specificAssetDisplayPageName,
 }) {
-	const [selectedDisplayPageType, setSelectedDisplayPageType] = useState(
-		assetDisplayPageType
-	);
+	const [selectedDisplayPageType, setSelectedDisplayPageType] =
+		useState(assetDisplayPageType);
 
 	const [assetDisplayPageSelected, setAssetDisplayPageSelected] = useState(
 		() => {

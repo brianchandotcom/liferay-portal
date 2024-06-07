@@ -26,9 +26,10 @@ export default function VelocityUnitFilter({
 		withoutRouteParams: false,
 		...options,
 	};
-	const velocityUnits = useMemo(() => getVelocityUnits(timeRange), [
-		timeRange,
-	]);
+	const velocityUnits = useMemo(
+		() => getVelocityUnits(timeRange),
+		[timeRange]
+	);
 
 	const {items, selectedItems} = useFilterStatic({
 		filterKey,

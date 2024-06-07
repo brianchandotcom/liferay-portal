@@ -189,10 +189,10 @@ function TreeItem({
 	const warningMessage = isSiteTemplate
 		? Liferay.Language.get(
 				'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
-		  )
+			)
 		: Liferay.Language.get(
 				'there-is-a-page-with-the-same-friendly-url-in-the-site-template'
-		  );
+			);
 
 	return (
 		<ClayTreeView.Item
@@ -469,9 +469,10 @@ function normalizeActions(actions, namespace) {
 													}
 													else {
 														openToast({
-															message: Liferay.Language.get(
-																'your-request-processed-successfully'
-															),
+															message:
+																Liferay.Language.get(
+																	'your-request-processed-successfully'
+																),
 															toastProps: {
 																autoClose: 5000,
 															},

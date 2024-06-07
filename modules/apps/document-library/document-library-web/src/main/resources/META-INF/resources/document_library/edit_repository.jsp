@@ -176,9 +176,8 @@ renderResponse.setTitle(headerTitle);
 
 	function showConfiguration(select) {
 		if (settingsParametersContainer && settingsSupported) {
-			var settingsParametersElement = settingsParametersContainer.querySelector(
-				'.settings-parameters'
-			);
+			var settingsParametersElement =
+				settingsParametersContainer.querySelector('.settings-parameters');
 
 			if (settingsParametersElement) {
 				settingsSupported.append(settingsParametersElement);

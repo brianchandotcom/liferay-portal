@@ -103,9 +103,8 @@ AUI.add(
 				getCalendar(calendarId) {
 					const instance = this;
 
-					const availableCalendars = instance.get(
-						'availableCalendars'
-					);
+					const availableCalendars =
+						instance.get('availableCalendars');
 
 					return availableCalendars[calendarId];
 				},
@@ -113,17 +112,15 @@ AUI.add(
 				getCalendarsMenu(config) {
 					const instance = this;
 
-					const availableCalendars = instance.get(
-						'availableCalendars'
-					);
+					const availableCalendars =
+						instance.get('availableCalendars');
 
 					const toggler = new A.Toggler({
 						after: {
 							expandedChange(event) {
 								if (event.newVal) {
-									const activeView = config.scheduler.get(
-										'activeView'
-									);
+									const activeView =
+										config.scheduler.get('activeView');
 
 									activeView._fillHeight();
 								}
@@ -225,9 +222,8 @@ AUI.add(
 								visibleCalendars[calendarId] = item;
 							}
 
-							const calendarResourceId = item.get(
-								'calendarResourceId'
-							);
+							const calendarResourceId =
+								item.get('calendarResourceId');
 
 							if (item.get('defaultCalendar')) {
 								if (

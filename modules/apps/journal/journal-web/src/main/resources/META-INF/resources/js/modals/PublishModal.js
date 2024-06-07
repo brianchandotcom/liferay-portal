@@ -138,7 +138,7 @@ function getLabels({actionButton, articleId, workflowEnabled}) {
 					? Liferay.Language.get('submit-for-workflow')
 					: Liferay.Language.get(
 							'submit-for-workflow-with-permissions'
-					  )
+						)
 				: Liferay.Language.get('publish-with-permissions'),
 		};
 	}
@@ -151,21 +151,21 @@ function getLabels({actionButton, articleId, workflowEnabled}) {
 				? workflowEnabled
 					? Liferay.Language.get(
 							'set-the-date-and-time-for-publishing-the-web-content-and-submit-it-for-workflow'
-					  )
+						)
 					: Liferay.Language.get(
 							'set-the-date-and-time-for-publishing-the-web-content'
-					  )
+						)
 				: workflowEnabled
-				? Liferay.Language.get(
-						'set-the-publishing-date-and-time-for-the-web-content-confirm-the-visibility-and-submit-it-for-workflow'
-				  )
-				: Liferay.Language.get(
-						'set-the-date-and-time-for-publishing-the-web-content-and-confirm-the-visibility-before-scheduling'
-				  ),
+					? Liferay.Language.get(
+							'set-the-publishing-date-and-time-for-the-web-content-confirm-the-visibility-and-submit-it-for-workflow'
+						)
+					: Liferay.Language.get(
+							'set-the-date-and-time-for-publishing-the-web-content-and-confirm-the-visibility-before-scheduling'
+						),
 			heading: workflowEnabled
 				? Liferay.Language.get(
 						'schedule-publication-and-submit-for-workflow'
-				  )
+					)
 				: Liferay.Language.get('schedule-publication'),
 		};
 	}

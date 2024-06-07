@@ -142,7 +142,7 @@ export function mockClassNames(prefix, isObject = true, itemCount = 10) {
 				? {
 						className: `${prefix}_${i}`,
 						displayName: `${prefix} ${i}`,
-				  }
+					}
 				: `${prefix}_${i}`
 		);
 	}

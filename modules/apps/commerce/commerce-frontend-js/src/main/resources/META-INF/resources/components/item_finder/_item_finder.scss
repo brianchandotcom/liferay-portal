@@ -36,7 +36,8 @@
 		--transition-delay: var(--transition-time);
 
 		position: relative;
-		transition: box-shadow var(--transition-time) ease,
+		transition:
+			box-shadow var(--transition-time) ease,
 			z-index 0s ease var(--transition-delay);
 		z-index: 0;
 

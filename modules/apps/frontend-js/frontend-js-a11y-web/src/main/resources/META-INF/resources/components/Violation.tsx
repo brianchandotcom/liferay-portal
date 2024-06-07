@@ -34,9 +34,8 @@ function Violation({next, params, previous, violations}: ViolationProps) {
 
 	const {ruleId} = params;
 
-	const {description, helpUrl, id, impact, nodes, tags} = violations.rules[
-		ruleId
-	];
+	const {description, helpUrl, id, impact, nodes, tags} =
+		violations.rules[ruleId];
 
 	return (
 		<>

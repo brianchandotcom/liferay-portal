@@ -84,8 +84,7 @@ export function ManyObjectRelationshipEdge({
 										selectedObjectRelationshipId:
 											objectRelationshipEdgeData.id,
 									},
-									type:
-										TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
+									type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
 								});
 							}}
 						>

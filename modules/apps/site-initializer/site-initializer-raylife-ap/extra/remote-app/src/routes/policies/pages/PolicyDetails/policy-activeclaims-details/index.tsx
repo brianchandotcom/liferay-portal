@@ -113,6 +113,7 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 				setClaimsTable(claimsList);
 			}
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [policyId]);
 

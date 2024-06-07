@@ -163,7 +163,9 @@ Liferay.Portlet.minimize = minimizePortlet;
 
 Liferay.Portlet.openModal = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openPortletModal}) => openPortletModal(...args));
@@ -171,7 +173,9 @@ Liferay.Portlet.openModal = (...args) => {
 
 Liferay.Portlet.openWindow = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openPortletWindow}) => openPortletWindow(...args));
@@ -190,7 +194,9 @@ Liferay.Util.addParams = addParams;
 
 Liferay.Util.openAlertModal = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openAlertModal}) => openAlertModal(...args));
@@ -198,7 +204,9 @@ Liferay.Util.openAlertModal = (...args) => {
 
 Liferay.Util.openSimpleInputModal = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openSimpleInputModal}) => openSimpleInputModal(...args));
@@ -267,7 +275,8 @@ Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getLexiconIcon = getLexiconIcon;
 Liferay.Util.getLexiconIconTpl = getLexiconIconTpl;
 Liferay.Util.getOpener = getOpener;
-Liferay.Util.getPortletConfigurationIconAction = getPortletConfigurationIconAction;
+Liferay.Util.getPortletConfigurationIconAction =
+	getPortletConfigurationIconAction;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {getPortletId} from 'frontend-js-web'`
@@ -328,7 +337,9 @@ Liferay.Util.toggleDisabled = toggleDisabled;
 
 Liferay.Util.openConfirmModal = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openConfirmModal}) => openConfirmModal(...args));
@@ -336,7 +347,9 @@ Liferay.Util.openConfirmModal = (...args) => {
 
 Liferay.Util.openModal = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openModal}) => openModal(...args));
@@ -344,7 +357,9 @@ Liferay.Util.openModal = (...args) => {
 
 Liferay.Util.openSelectionModal = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openSelectionModal}) => openSelectionModal(...args));
@@ -352,7 +367,9 @@ Liferay.Util.openSelectionModal = (...args) => {
 
 Liferay.Util.openToast = (...args) => {
 	import(
+
 		// eslint-disable-next-line lines-around-comment
+
 		/* webpackIgnore: true */
 		PATH_CONTEXT + '/o/frontend-js-web/__liferay__/index.js'
 	).then(({openToast}) => openToast(...args));
@@ -361,7 +378,8 @@ Liferay.Util.openToast = (...args) => {
 Liferay.Util.openWindow = openWindow;
 Liferay.Util.removeEntitySelection = removeEntitySelection;
 Liferay.Util.selectFolder = selectFolder;
-Liferay.Util.setPortletConfigurationIconAction = setPortletConfigurationIconAction;
+Liferay.Util.setPortletConfigurationIconAction =
+	setPortletConfigurationIconAction;
 Liferay.Util.showCapsLock = showCapsLock;
 Liferay.Util.sub = sub;
 
@@ -391,7 +409,7 @@ Liferay.Util.unescape = (string) => {
 		? string.replace(
 				reEscapedHtml,
 				(entity) => htmlUnescapes[entity] || "'"
-		  )
+			)
 		: string || '';
 };
 

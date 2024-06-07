@@ -98,6 +98,7 @@ const Applications = () => {
 		Liferay.on('openModalEvent', handler);
 
 		return () => Liferay.detach('openModalEvent', handler);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [visible]);
 

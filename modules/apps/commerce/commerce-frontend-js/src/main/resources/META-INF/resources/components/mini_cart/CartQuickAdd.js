@@ -334,9 +334,8 @@ export default function CartQuickAdd() {
 							setSelectedSKUs(newSKUs);
 						}}
 						onPaste={(event) => {
-							const pastedText = event.clipboardData.getData(
-								'Text'
-							);
+							const pastedText =
+								event.clipboardData.getData('Text');
 
 							event.preventDefault();
 
@@ -360,7 +359,7 @@ export default function CartQuickAdd() {
 								{quantityError
 									? Liferay.Language.get(
 											'please-enter-a-valid-quantity'
-									  )
+										)
 									: Liferay.Language.get('select-from-list')}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>

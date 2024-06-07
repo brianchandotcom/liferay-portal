@@ -16,16 +16,16 @@ export default function ({
 	pricingFDSName,
 	spritemap,
 }) {
-	const CommerceDiscountRuleResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommerceDiscountRuleResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	const form = document.getElementById(`${namespace}fm`);
 
 	const name = form.querySelector(`#${namespace}name`).value;
 
-	const commerceDiscountRuleType = form.querySelector(`#${namespace}type`)
-		.value;
+	const commerceDiscountRuleType = form.querySelector(
+		`#${namespace}type`
+	).value;
 	let typeSettings = form.querySelector(`#${namespace}typeSettings`).value;
 
 	function addProductDefinition(productId) {
@@ -56,9 +56,8 @@ export default function ({
 					.replace(/(\r\n|\n|\r)/gm, '')
 					.split('=')[1];
 
-				document.getElementById(
-					`${namespace}typeSettings`
-				).value = typeSettings;
+				document.getElementById(`${namespace}typeSettings`).value =
+					typeSettings;
 			})
 			.catch((error) => {
 				return Promise.reject(error);
@@ -70,8 +69,7 @@ export default function ({
 	}
 
 	ItemFinder('itemFinder', 'item-finder-root', {
-		apiUrl:
-			'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
+		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
 		getSelectedItems,
 		inputPlaceholder: Liferay.Language.get('find-a-product'),
 		itemCreation: false,

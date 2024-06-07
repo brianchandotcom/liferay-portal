@@ -67,14 +67,14 @@ export default function AddOrganizationModal({
 										'1-organization-was-added-to-x'
 									),
 									parentData.name
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-organizations-were-added-to-x'
 									),
 									newOrganizationsDetails.length,
 									parentData.name
-							  );
+								);
 
 					openToast({
 						message,

@@ -33,11 +33,8 @@ const defaultRecipient = {
 };
 
 const DigitalSignatureForm = ({fileEntries = [], history}) => {
-	const {
-		allowedFileExtensions,
-		baseResourceURL,
-		portletNamespace,
-	} = useContext(AppContext);
+	const {allowedFileExtensions, baseResourceURL, portletNamespace} =
+		useContext(AppContext);
 	const urlParams = new URLSearchParams(window.location.href);
 	const backURL = urlParams.get(`${portletNamespace}backURL`);
 

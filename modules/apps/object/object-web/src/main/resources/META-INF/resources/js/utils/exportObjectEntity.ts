@@ -20,9 +20,8 @@ export async function exportObjectEntity({
 			const responseBlob = await response.blob();
 			const downloadElement = document.createElement('a');
 
-			downloadElement.download = responseHeaders.match(
-				/filename="([^"]+)"/
-			)![1];
+			downloadElement.download =
+				responseHeaders.match(/filename="([^"]+)"/)![1];
 
 			downloadElement.href = URL.createObjectURL(responseBlob);
 

@@ -92,44 +92,35 @@ export default function ViewObjectDefinitions({
 		items: [],
 	};
 
-	const [
-		deletedObjectDefinition,
-		setDeletedObjectDefinition,
-	] = useState<DeletedObjectDefinition | null>();
+	const [deletedObjectDefinition, setDeletedObjectDefinition] =
+		useState<DeletedObjectDefinition | null>();
 
 	const [loading, setLoading] = useState(true);
 
-	const [modalImportProperties, setModalImportProperties] = useState<
-		ModalImportProperties
-	>({
-		JSONInputId: '',
-		apiURL: '',
-		importURL: '',
-		modalImportKey: 'objectDefinition',
-	});
+	const [modalImportProperties, setModalImportProperties] =
+		useState<ModalImportProperties>({
+			JSONInputId: '',
+			apiURL: '',
+			importURL: '',
+			modalImportKey: 'objectDefinition',
+		});
 
-	const [
-		moveObjectDefinition,
-		setMoveObjectDefinition,
-	] = useState<ObjectDefinition | null>();
+	const [moveObjectDefinition, setMoveObjectDefinition] =
+		useState<ObjectDefinition | null>();
 
-	const [objectDefinitionsActions, setObjectDefinitionActions] = useState<
-		Actions
-	>();
+	const [objectDefinitionsActions, setObjectDefinitionActions] =
+		useState<Actions>();
 
-	const [objectFoldersRequestInfo, setObjectFoldersRequestInfo] = useState<
-		ObjectFoldersRequestInfo
-	>(initialValues);
+	const [objectFoldersRequestInfo, setObjectFoldersRequestInfo] =
+		useState<ObjectFoldersRequestInfo>(initialValues);
 
 	const [reloadFDS, setReloadFDS] = useState(false);
 
-	const [selectedObjectDefinition, setSelectedObjectDefinition] = useState<
-		ObjectDefinition
-	>();
+	const [selectedObjectDefinition, setSelectedObjectDefinition] =
+		useState<ObjectDefinition>();
 
-	const [selectedObjectFolder, setSelectedObjectFolder] = useState<
-		Partial<ObjectFolder>
-	>(initialValues);
+	const [selectedObjectFolder, setSelectedObjectFolder] =
+		useState<Partial<ObjectFolder>>(initialValues);
 
 	const [showModal, setShowModal] = useState<ViewObjectDefinitionsModals>({
 		addObjectDefinition: false,
@@ -196,6 +187,7 @@ export default function ViewObjectDefinitions({
 			});
 			setUpdatedFDSItemsActions(itemsActions);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFoldersRequestInfo?.items.length]);
 
@@ -354,9 +346,8 @@ export default function ViewObjectDefinitions({
 
 			const currentURL = new URL(window.location.href);
 
-			const objectFolderNameSearchParam = currentURL.searchParams.get(
-				'objectFolderName'
-			);
+			const objectFolderNameSearchParam =
+				currentURL.searchParams.get('objectFolderName');
 
 			const newSelectedObjectFolder = allObjectFolders.items.find(
 				(objectFolder) =>
@@ -425,13 +416,17 @@ export default function ViewObjectDefinitions({
 									items={
 										getObjectFolderActions({
 											actions: {
-												objectDefinitionActions: objectDefinitionsActions as Actions,
-												objectFolderActions: selectedObjectFolder.actions as Actions,
+												objectDefinitionActions:
+													objectDefinitionsActions as Actions,
+												objectFolderActions:
+													selectedObjectFolder.actions as Actions,
 											},
 											baseResourceURL,
 											importObjectDefinitionURL,
-											objectFolderExternalReferenceCode: selectedObjectFolder.externalReferenceCode as string,
-											objectFolderId: selectedObjectFolder.id as number,
+											objectFolderExternalReferenceCode:
+												selectedObjectFolder.externalReferenceCode as string,
+											objectFolderId:
+												selectedObjectFolder.id as number,
 											objectFolderPermissionsURL,
 											portletNamespace,
 											setModalImportProperties,

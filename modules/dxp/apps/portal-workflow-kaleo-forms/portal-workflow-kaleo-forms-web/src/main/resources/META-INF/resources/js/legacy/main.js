@@ -98,7 +98,8 @@ AUI.add(
 
 					const activeTabIndex = tabViewTabs.indexOf(activeTab);
 
-					const tabViewPanels = instance.formWizard.getTabViewPanels();
+					const tabViewPanels =
+						instance.formWizard.getTabViewPanels();
 
 					const activePanel = tabViewPanels.item(activeTabIndex);
 
@@ -122,9 +123,8 @@ AUI.add(
 					] = translatedLanguages.join();
 
 					translatedLanguages.forEach((item) => {
-						localizedValuesMap[
-							name + item
-						] = inputLocalized.getValue(item);
+						localizedValuesMap[name + item] =
+							inputLocalized.getValue(item);
 					});
 
 					return localizedValuesMap;
@@ -205,25 +205,27 @@ AUI.add(
 
 					const resultsContainer = instance.one('#resultsContainer');
 
-					const backURL = new Liferay.Util.PortletURL.createPortletURL(
-						currentURL,
-						{
-							historyKey: 'forms',
-						}
-					);
+					const backURL =
+						new Liferay.Util.PortletURL.createPortletURL(
+							currentURL,
+							{
+								historyKey: 'forms',
+							}
+						);
 
-					const formsURL = new Liferay.Util.PortletURL.createPortletURL(
-						currentURL,
-						{
-							backURL: backURL.toString(),
-							kaleoProcessId: instance.get('kaleoProcessId'),
-							mvcPath:
-								'/admin/process/task_template_search_container.jsp',
-							workflowDefinition: instance
-								.one('#workflowDefinition')
-								.val(),
-						}
-					);
+					const formsURL =
+						new Liferay.Util.PortletURL.createPortletURL(
+							currentURL,
+							{
+								backURL: backURL.toString(),
+								kaleoProcessId: instance.get('kaleoProcessId'),
+								mvcPath:
+									'/admin/process/task_template_search_container.jsp',
+								workflowDefinition: instance
+									.one('#workflowDefinition')
+									.val(),
+							}
+						);
 
 					resultsContainer.plug(A.LoadingMask).loadingmask.show();
 

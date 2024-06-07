@@ -175,9 +175,10 @@ export function SecondaryRecipient({
 										'type-email-address'
 									)}
 									value={
-										(values
-											.recipients[0] as EmailRecipients)
-											.cc as string
+										(
+											values
+												.recipients[0] as EmailRecipients
+										).cc as string
 									}
 								/>
 							)}
@@ -198,9 +199,10 @@ export function SecondaryRecipient({
 										)}
 										selectAllOption
 										setOptions={(items) => {
-											const newRecipients = handleMultiSelectItemsChange(
-												items
-											);
+											const newRecipients =
+												handleMultiSelectItemsChange(
+													items
+												);
 											setValues({
 												...values,
 												recipients: [
@@ -291,9 +293,10 @@ export function SecondaryRecipient({
 										'type-email-address'
 									)}
 									value={
-										(values
-											.recipients[0] as EmailRecipients)
-											.bcc as string
+										(
+											values
+												.recipients[0] as EmailRecipients
+										).bcc as string
 									}
 								/>
 							)}
@@ -314,9 +317,10 @@ export function SecondaryRecipient({
 										)}
 										selectAllOption
 										setOptions={(items) => {
-											const newRecipients = handleMultiSelectItemsChange(
-												items
-											);
+											const newRecipients =
+												handleMultiSelectItemsChange(
+													items
+												);
 											setValues({
 												...values,
 												recipients: [

@@ -44,6 +44,7 @@ export function viewsReducer(state, {type, value}) {
 		};
 	}
 	else if (type === VIEWS_ACTION_TYPES.DELETE_CUSTOM_VIEW) {
+
 		/* eslint-disable-next-line no-unused-vars */
 		const {[value.id]: unusedVar, ...remainingCustomViews} = customViews;
 
@@ -157,14 +158,14 @@ export function viewsReducer(state, {type, value}) {
 					? {
 							...activeView,
 							component,
-					  }
+						}
 					: activeView,
 			views: views.map((view) =>
 				view.name === name
 					? {
 							...view,
 							component,
-					  }
+						}
 					: view
 			),
 		};

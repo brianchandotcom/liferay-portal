@@ -24,17 +24,17 @@ AUI.add(
 
 		// Updates icons to produce lexicon SVG markup instead of default glyphicon
 
-		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE = A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
-			/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
-			Liferay.Util.getLexiconIconTpl(
-				'{iconClass}',
-				'property-builder-field-icon'
-			)
-		);
+		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE =
+			A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
+				/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
+				Liferay.Util.getLexiconIconTpl(
+					'{iconClass}',
+					'property-builder-field-icon'
+				)
+			);
 
-		A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
-			'{cssClass}'
-		);
+		A.ToolbarRenderer.prototype.TEMPLATES.icon =
+			Liferay.Util.getLexiconIconTpl('{cssClass}');
 
 		const KaleoDesigner = A.Component.create({
 			ATTRS: {
@@ -227,9 +227,8 @@ AUI.add(
 				_onDestroyPortlet() {
 					const instance = this;
 
-					const baseCellEditor = document.querySelector(
-						'.basecelleditor'
-					);
+					const baseCellEditor =
+						document.querySelector('.basecelleditor');
 
 					if (baseCellEditor) {
 						while (baseCellEditor.hasChildNodes()) {
@@ -330,10 +329,11 @@ AUI.add(
 				_setDefinition(val) {
 					const instance = this;
 
-					instance.definitionController = new DefinitionDiagramController(
-						encodeURIComponent(val),
-						instance.canvas
-					);
+					instance.definitionController =
+						new DefinitionDiagramController(
+							encodeURIComponent(val),
+							instance.canvas
+						);
 
 					return val;
 				},
@@ -379,7 +379,8 @@ AUI.add(
 				connectDefinitionFields() {
 					const instance = this;
 
-					const connectors = instance.definitionController.getConnectors();
+					const connectors =
+						instance.definitionController.getConnectors();
 
 					instance.connectAll(connectors);
 				},
@@ -459,10 +460,11 @@ AUI.add(
 				initializer(config) {
 					const instance = this;
 
-					instance.definitionController = new DefinitionDiagramController(
-						encodeURIComponent(config.definition),
-						instance.canvas
-					);
+					instance.definitionController =
+						new DefinitionDiagramController(
+							encodeURIComponent(config.definition),
+							instance.canvas
+						);
 
 					instance.after(
 						'render',
@@ -487,9 +489,8 @@ AUI.add(
 					);
 
 					document.addEventListener('keydown', (event) => {
-						const baseCellEditorPopup = document.querySelector(
-							'.basecelleditor'
-						);
+						const baseCellEditorPopup =
+							document.querySelector('.basecelleditor');
 
 						if (
 							baseCellEditorPopup &&

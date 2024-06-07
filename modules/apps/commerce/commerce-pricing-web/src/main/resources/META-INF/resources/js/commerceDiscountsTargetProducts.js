@@ -16,9 +16,8 @@ export default function ({
 	pricingFDSName,
 	spritemap,
 }) {
-	const CommerceDiscountProductsResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommerceDiscountProductsResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	const id = commerceDiscountId;
 
@@ -49,8 +48,7 @@ export default function ({
 	}
 
 	ItemFinder('itemFinder', 'item-finder-root', {
-		apiUrl:
-			'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
+		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
 		getSelectedItems,
 		inputPlaceholder: Liferay.Language.get('find-a-product'),
 		itemCreation: false,

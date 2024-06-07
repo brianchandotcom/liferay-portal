@@ -47,6 +47,7 @@ export default function useResource({customFetch, endpoint, method, params}) {
 		if (!isEqualObjects(params, previousParams)) {
 			refetch();
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params]);
 

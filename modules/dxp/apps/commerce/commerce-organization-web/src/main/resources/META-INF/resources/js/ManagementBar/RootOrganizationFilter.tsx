@@ -26,14 +26,14 @@ const _toDropDownItems = (
 ): IItem[] =>
 	items.map(
 		({id: value, name: label}) =>
-			(({
+			({
 				checked: isRootOrgFromConfig,
 				disabled: isRootOrgFromConfig,
 				label,
 				onChange: () => onChange(Number(value)),
 				type: 'checkbox',
 				value: Number(value),
-			} as unknown) as IItem)
+			}) as unknown as IItem
 	);
 
 const MAX_ROOT_ORGANIZATIONS = 10;
@@ -100,6 +100,7 @@ const RootOrganizationFilter = () => {
 		if (!rootOrganizations.length) {
 			setRootOrganizations(organizations);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [organizations]);
 

@@ -77,9 +77,8 @@ export default function PreviewSXPElementModal({
 			.catch(() => {
 				setPreview({
 					sxpElementJSONObject,
-					uiConfigurationValues: getUIConfigurationValues(
-						sxpElementJSONObject
-					),
+					uiConfigurationValues:
+						getUIConfigurationValues(sxpElementJSONObject),
 				});
 			})
 			.finally(() => {

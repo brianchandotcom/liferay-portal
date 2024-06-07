@@ -46,7 +46,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 <%@ include file="/custom_spreadsheet_editors.jspf" %>
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
-	var structure = <%= DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, ddmStructure.getDefinition()) %>;
+	var structure =
+		<%= DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, ddmStructure.getDefinition()) %>;
 
 	var columns = Liferay.SpreadSheet.buildDataTableColumns(
 		<%= ddlDisplayContext.getRecordSetJSONArray(recordSet, locale) %>,
@@ -114,7 +115,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), status, 0, 1000, null);
 	%>
 
-	var records = <%= ddlDisplayContext.getRecordsJSONArray(records, !editable, locale) %>;
+	var records =
+		<%= ddlDisplayContext.getRecordsJSONArray(records, !editable, locale) %>;
 
 	records.sort((a, b) => {
 		return a.displayIndex - b.displayIndex;

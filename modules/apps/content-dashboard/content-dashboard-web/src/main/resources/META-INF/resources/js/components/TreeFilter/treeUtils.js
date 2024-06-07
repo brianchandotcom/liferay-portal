@@ -36,7 +36,7 @@ export function nodeTreeArrayMapper({
 						childrenPropertyKey,
 						namePropertyKey,
 						nodeArray: node[childrenPropertyKey],
-				  })
+					})
 				: null,
 			id: _getNodeId({index, node}),
 			name: node[namePropertyKey] || node.label,

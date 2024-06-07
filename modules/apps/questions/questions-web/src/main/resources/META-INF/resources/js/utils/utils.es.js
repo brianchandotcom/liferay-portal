@@ -116,7 +116,7 @@ export function getErrorObject(statusCode, message, title) {
 		: {
 				code: statusCode,
 				message: Liferay.Language.get('error'),
-		  };
+			};
 }
 
 export function useDebounceCallback(callback, milliseconds) {

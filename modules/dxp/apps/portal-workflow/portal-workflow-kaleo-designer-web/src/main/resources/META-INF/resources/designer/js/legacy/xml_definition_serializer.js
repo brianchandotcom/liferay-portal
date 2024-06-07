@@ -7,6 +7,7 @@ AUI.add(
 	'liferay-kaleo-designer-xml-definition-serializer',
 	(A) => {
 		const AArray = A.Array;
+
 		// eslint-disable-next-line @liferay/aui/no-object
 		const AObject = A.Object;
 		const Lang = A.Lang;
@@ -277,9 +278,8 @@ AUI.add(
 					buffer.push(xmlRoles.close);
 				}
 				else if (assignmentType === 'scriptedAssignment') {
-					const xmlScriptedAssignment = XMLUtil.createObj(
-						'scriptedAssignment'
-					);
+					const xmlScriptedAssignment =
+						XMLUtil.createObj('scriptedAssignment');
 
 					dataAssignments.script.forEach((item, index) => {
 						buffer.push(
@@ -294,9 +294,8 @@ AUI.add(
 					});
 				}
 				else if (assignmentType === 'scriptedRecipient') {
-					const xmlScriptedRecipient = XMLUtil.createObj(
-						'scriptedRecipient'
-					);
+					const xmlScriptedRecipient =
+						XMLUtil.createObj('scriptedRecipient');
 
 					dataAssignments.script.forEach((item, index) => {
 						buffer.push(

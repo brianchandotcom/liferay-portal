@@ -16,17 +16,21 @@ AUI.add(
 
 		const TABS_SECTION_STR = 'TabsSection';
 
-		const REGEX_CUSTOM_ELEMENT_NAME = /^[a-z]([a-z]|[0-9]|-|\.|_)*-([a-z]|[0-9]|-|\.|_)*/;
+		const REGEX_CUSTOM_ELEMENT_NAME =
+			/^[a-z]([a-z]|[0-9]|-|\.|_)*-([a-z]|[0-9]|-|\.|_)*/;
 
-		const REGEX_EMAIL = /^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:\w(?:[\w-]*\w)?\.)+(\w(?:[\w-]*\w))$/;
+		const REGEX_EMAIL =
+			/^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:\w(?:[\w-]*\w)?\.)+(\w(?:[\w-]*\w))$/;
 
 		const REGEX_FRIENDLY_URL_MAPPING = /[A-Za-z0-9-_]*/;
 
 		const REGEX_NUMBER = /^[+-]?(\d+)([.|,]\d+)*([eE][+-]?\d+)?$/;
 
-		const REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
+		const REGEX_URL =
+			/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
-		const REGEX_URL_ALLOW_RELATIVE = /((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
+		const REGEX_URL_ALLOW_RELATIVE =
+			/((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
 		const RESERVED_CUSTOM_ELEMENT_NAMES = new Set([
 			'annotation-xml',
@@ -357,9 +361,8 @@ AUI.add(
 				_onSubmitError() {
 					const instance = this;
 
-					const collapsiblePanels = instance.formNode.all(
-						'.panel-collapse'
-					);
+					const collapsiblePanels =
+						instance.formNode.all('.panel-collapse');
 
 					collapsiblePanels.each((panel) => {
 						const errorFields = panel

@@ -27,9 +27,8 @@ export default function ({
 			card.classList.remove('active');
 		});
 
-		const newSelectedCard = event.delegateTarget.closest(
-			'.form-check-card'
-		);
+		const newSelectedCard =
+			event.delegateTarget.closest('.form-check-card');
 
 		if (newSelectedCard) {
 			newSelectedCard.classList.add('active');

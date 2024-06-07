@@ -64,6 +64,7 @@ function Card({cardIndex, nextTransitions = [], tasks}) {
 				})),
 			],
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [comment, selectedTransition, tasks]);
 

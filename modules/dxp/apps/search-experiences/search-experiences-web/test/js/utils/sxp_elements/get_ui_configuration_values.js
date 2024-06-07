@@ -447,8 +447,7 @@ describe('getUIConfigurationValues', () => {
 											occur: 'must',
 											query: {
 												multi_match: {
-													boost:
-														'${configuration.boost}',
+													boost: '${configuration.boost}',
 													language:
 														'${configuration.language}',
 												},

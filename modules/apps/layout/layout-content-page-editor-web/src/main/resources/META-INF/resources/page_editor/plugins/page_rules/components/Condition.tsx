@@ -66,7 +66,7 @@ export const CONDITION_ITEMS = {
 } as const;
 
 const VALUE_SELECTOR_COMPONENTS: Record<
-	typeof CONDITION_VALUES[keyof typeof CONDITION_VALUES],
+	(typeof CONDITION_VALUES)[keyof typeof CONDITION_VALUES],
 	FC<SelectorProps> | null
 > = {
 	[CONDITION_VALUES.user]: UserSelector,

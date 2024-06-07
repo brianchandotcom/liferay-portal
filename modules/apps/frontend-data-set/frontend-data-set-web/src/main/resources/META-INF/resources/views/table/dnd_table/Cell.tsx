@@ -45,7 +45,7 @@ const Cell = ({
 
 	const [{modifiedFields}, viewsDispatch]: [
 		IViewsContext,
-		TViewsContextDispatch
+		TViewsContextDispatch,
 	] = useContext(ViewsContext);
 
 	const cellRef = useRef<HTMLTableCellElement>(null);

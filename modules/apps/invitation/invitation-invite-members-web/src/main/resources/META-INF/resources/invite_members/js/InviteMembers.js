@@ -443,67 +443,69 @@ export function InviteMembers({
 									{!!invitedEmails && <InvitedEmails />}
 								</div>
 
-								{roles.length !== 0 && assignRolesPermission && (
-									<ClayForm.Group>
-										<label
-											htmlFor="roleSelector"
-											id="roleSelectorLabel"
-										>
-											{Liferay.Language.get(
-												'invite-to-role'
-											)}
-										</label>
+								{roles.length !== 0 &&
+									assignRolesPermission && (
+										<ClayForm.Group>
+											<label
+												htmlFor="roleSelector"
+												id="roleSelectorLabel"
+											>
+												{Liferay.Language.get(
+													'invite-to-role'
+												)}
+											</label>
 
-										<Picker
-											aria-labelledby="roleSelectorLabel"
-											id="roleSelector"
-											items={roles}
-											onSelectionChange={(roleId) =>
-												setRoleId(roleId)
-											}
-										>
-											{({label, value}) => (
-												<Option
-													key={value}
-													textValue={label}
-												>
-													{label}
-												</Option>
-											)}
-										</Picker>
-									</ClayForm.Group>
-								)}
+											<Picker
+												aria-labelledby="roleSelectorLabel"
+												id="roleSelector"
+												items={roles}
+												onSelectionChange={(roleId) =>
+													setRoleId(roleId)
+												}
+											>
+												{({label, value}) => (
+													<Option
+														key={value}
+														textValue={label}
+													>
+														{label}
+													</Option>
+												)}
+											</Picker>
+										</ClayForm.Group>
+									)}
 
-								{teams.length !== 0 && manageTeamsPermission && (
-									<ClayForm.Group>
-										<label
-											htmlFor="teamSelector"
-											id="teamSelectorLabel"
-										>
-											{Liferay.Language.get(
-												'invite-to-team'
-											)}
-										</label>
+								{teams.length !== 0 &&
+									manageTeamsPermission && (
+										<ClayForm.Group>
+											<label
+												htmlFor="teamSelector"
+												id="teamSelectorLabel"
+											>
+												{Liferay.Language.get(
+													'invite-to-team'
+												)}
+											</label>
 
-										<Picker
-											aria-labelledby="teamSelectorLabel"
-											id="teamSelector"
-											items={teams}
-											onSelectionChange={(teamId) =>
-												setTeamId(teamId)
-											}
-										>
-											{({label, value}) => (
-												<Option
-													key={value}
-													textValue={label}
-												>
-													{label}
-												</Option>
-											)}
-										</Picker>
-									</ClayForm.Group>
-								)}
+											<Picker
+												aria-labelledby="teamSelectorLabel"
+												id="teamSelector"
+												items={teams}
+												onSelectionChange={(teamId) =>
+													setTeamId(teamId)
+												}
+											>
+												{({label, value}) => (
+													<Option
+														key={value}
+														textValue={label}
+													>
+														{label}
+													</Option>
+												)}
+											</Picker>
+										</ClayForm.Group>
+									)}
 							</div>
 						</ClayForm>
 					</ClayModal.Body>

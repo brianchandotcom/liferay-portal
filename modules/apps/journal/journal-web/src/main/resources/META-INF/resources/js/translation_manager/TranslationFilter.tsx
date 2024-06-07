@@ -165,6 +165,7 @@ export default function TranslationFilter({
 
 	useEffect(() => {
 		handleSelection('all-fields');
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedLanguageId]);
 

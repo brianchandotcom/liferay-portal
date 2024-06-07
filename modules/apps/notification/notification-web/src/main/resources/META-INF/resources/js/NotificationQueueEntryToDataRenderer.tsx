@@ -13,7 +13,7 @@ const getToTooltipText = (value: string) => {
 	return toArray.length > 1
 		? `${toArray.join(',')} ${Liferay.Language.get(
 				'and'
-		  ).toLocaleLowerCase()} ${lastItem}.`
+			).toLocaleLowerCase()} ${lastItem}.`
 		: value;
 };
 

@@ -30,7 +30,8 @@ export default function NewTopicModal({
 	const [createNewTopic] = useMutation(createTopicQuery);
 
 	const isValidTopic = (topic) => {
-		const invalidCharacters = /.*[-|&|'|@|\\\\|\]|}|:|,|=|>|/|<|\n|[|{|||+|#|`|?|\\"|\r|;|/|*|~|%]/g;
+		const invalidCharacters =
+			/.*[-|&|'|@|\\\\|\]|}|:|,|=|>|/|<|\n|[|{|||+|#|`|?|\\"|\r|;|/|*|~|%]/g;
 		if (invalidCharacters.test(topic)) {
 			const error = {
 				message: lang.sub(
@@ -65,7 +66,8 @@ export default function NewTopicModal({
 				}).then(
 					({
 						data: {
-							createMessageBoardSectionMessageBoardSection: section,
+							createMessageBoardSectionMessageBoardSection:
+								section,
 						},
 					}) =>
 						onCreateNavigateTo(

@@ -19,7 +19,7 @@ async function _doFindRoot(id = 0, type = '') {
 				? _doFindRoot(
 						parentOrganization.id,
 						MODEL_TYPE_MAP.organization
-				  )
+					)
 				: Promise.resolve(Number(id))
 		);
 	}

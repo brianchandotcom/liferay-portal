@@ -59,25 +59,26 @@ export default function usePagination(
 
 		if (activationKeysFilteredByStatus) {
 			if (isRenewTable) {
-				const activationKeysFilteredbyRenewable = activationKeysFilteredByStatus?.filter(
-					(activationKey) => {
-						const isPermanentLicenseKey = getLicenseKeyPermanentStatus(
-							activationKey?.startDate,
-							activationKey?.expirationDate
-						);
+				const activationKeysFilteredbyRenewable =
+					activationKeysFilteredByStatus?.filter((activationKey) => {
+						const isPermanentLicenseKey =
+							getLicenseKeyPermanentStatus(
+								activationKey?.startDate,
+								activationKey?.expirationDate
+							);
 
 						if (!isPermanentLicenseKey) {
 							return activationKey;
 						}
-					}
-				);
+					});
 
 				setCurrentTotalCount(activationKeysFilteredbyRenewable.length);
 
-				const activationKeysFilteredByRenewablePerPage = activationKeysFilteredbyRenewable.slice(
-					itemsPerPage * activePage - itemsPerPage,
-					itemsPerPage * activePage
-				);
+				const activationKeysFilteredByRenewablePerPage =
+					activationKeysFilteredbyRenewable.slice(
+						itemsPerPage * activePage - itemsPerPage,
+						itemsPerPage * activePage
+					);
 
 				return activationKeysFilteredByRenewablePerPage?.length
 					? activationKeysFilteredByRenewablePerPage
@@ -86,10 +87,11 @@ export default function usePagination(
 
 			setCurrentTotalCount(activationKeysFilteredByStatus.length);
 
-			const activationKeysFilteredByStatusPerPage = activationKeysFilteredByStatus.slice(
-				itemsPerPage * activePage - itemsPerPage,
-				itemsPerPage * activePage
-			);
+			const activationKeysFilteredByStatusPerPage =
+				activationKeysFilteredByStatus.slice(
+					itemsPerPage * activePage - itemsPerPage,
+					itemsPerPage * activePage
+				);
 
 			return activationKeysFilteredByStatusPerPage?.length
 				? activationKeysFilteredByStatusPerPage

@@ -8,7 +8,9 @@
 	pointer-events: none;
 	position: fixed;
 	right: 0;
-	transition: transform ease 200ms, left ease 500ms;
+	transition:
+		transform ease 200ms,
+		left ease 500ms;
 	z-index: 100;
 
 	@media screen and (hover: none) {

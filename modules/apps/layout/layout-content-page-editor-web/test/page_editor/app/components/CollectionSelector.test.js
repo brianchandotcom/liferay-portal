@@ -42,7 +42,8 @@ describe('CollectionSelector', () => {
 			<StoreAPIContextProvider dispatch={() => {}} getState={() => ({})}>
 				<CollectionItemContextProvider
 					value={{
-						customCollectionSelectorURL: CUSTOM_COLLECTION_SELECTOR_URL,
+						customCollectionSelectorURL:
+							CUSTOM_COLLECTION_SELECTOR_URL,
 					}}
 				>
 					<CollectionSelector

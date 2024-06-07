@@ -78,12 +78,11 @@ function AddFDSFilterModalContent({
 						clientExtensionRenderer.externalReferenceCode ===
 						(filter as IClientExtensionFilter)
 							.fdsFilterClientExtensionERC
-			  )
+				)
 			: undefined
 	);
-	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
-		boolean
-	>();
+	const [fieldInUseValidationError, setFieldInUseValidationError] =
+		useState<boolean>();
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [from, setFrom] = useState<string>(
 		(filter as IDateFilter)?.from ?? ''
@@ -121,21 +120,21 @@ function AddFDSFilterModalContent({
 			const picklist = items.find((item) =>
 				Liferay.FeatureFlags['LPD-10754']
 					? String(item.externalReferenceCode) ===
-					  (filter as any)?.source
+						(filter as any)?.source
 					: String(item.externalReferenceCode) ===
-					  (filter as any)?.listTypeDefinitionERC
+						(filter as any)?.listTypeDefinitionERC
 			);
 
 			if (picklist) {
 				setSelectedPicklist(picklist);
 
-				const validSavedPreselectedValues = picklist.listTypeEntries.filter(
-					(item) =>
+				const validSavedPreselectedValues =
+					picklist.listTypeEntries.filter((item) =>
 						JSON.parse(
 							(filter as ISelectionFilter).preselectedValues ||
 								'[]'
 						).includes(item.externalReferenceCode)
-				);
+					);
 
 				setPreselectedValues(validSavedPreselectedValues);
 
@@ -553,7 +552,7 @@ function AddFDSFilterModalContent({
 									setIncludeMode(
 										values.length
 											? filter &&
-											  (filter as ISelectionFilter)
+												(filter as ISelectionFilter)
 													.include
 												? 'include'
 												: 'exclude'
@@ -858,9 +857,9 @@ function Filters({
 							item.filterType === EFilterType.DATE_RANGE
 								? API_URL.DATE_FILTERS
 								: item.filterType ===
-								  EFilterType.CLIENT_EXTENSION
-								? API_URL.CLIENT_EXTENSION_FILTERS
-								: API_URL.SELECTION_FILTERS
+									  EFilterType.CLIENT_EXTENSION
+									? API_URL.CLIENT_EXTENSION_FILTERS
+									: API_URL.SELECTION_FILTERS
 						}/${item.id}`;
 
 						fetch(url, {

@@ -82,7 +82,7 @@ const TabsContent = ({tab, tabIndex}) => {
 								searchValue
 							),
 						},
-				  ]
+					]
 				: tab,
 		[searchValue, tab]
 	);
@@ -108,10 +108,9 @@ const TabsContent = ({tab, tabIndex}) => {
 						collections: items.contents.length
 							? tab.collections.map((collection) => ({
 									...collection,
-									children: items.contents.map(
-										normalizeContent
-									),
-							  }))
+									children:
+										items.contents.map(normalizeContent),
+								}))
 							: items.contents,
 					};
 
@@ -140,10 +139,10 @@ const TabsContent = ({tab, tabIndex}) => {
 						isContentTab
 							? Liferay.Language.get(
 									'there-is-no-content-on-this-page'
-							  )
+								)
 							: Liferay.Language.get(
 									'there-are-no-widgets-on-this-page'
-							  )
+								)
 					}
 					filteredTabs={
 						isContentTab ? [filteredContent] : filteredWidgets

@@ -151,6 +151,7 @@ const VocabulariesSelectionBox = ({
 	useEffect(() => {
 		enableAllOptions();
 		disableNonSelectableOptions();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
 
@@ -158,6 +159,7 @@ const VocabulariesSelectionBox = ({
 		enableAllOptions();
 		disableNonSelectableOptions();
 		handleLeftSelectionChange();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [leftSelected]);
 

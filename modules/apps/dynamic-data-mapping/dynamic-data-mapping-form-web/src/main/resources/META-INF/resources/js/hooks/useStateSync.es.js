@@ -112,12 +112,10 @@ export function useStateSync() {
 			);
 		});
 
-		document.querySelector(
-			`#${portletNamespace}name`
-		).value = JSON.stringify(localizedName);
-		document.querySelector(
-			`#${portletNamespace}description`
-		).value = JSON.stringify(localizedDescription);
+		document.querySelector(`#${portletNamespace}name`).value =
+			JSON.stringify(localizedName);
+		document.querySelector(`#${portletNamespace}description`).value =
+			JSON.stringify(localizedDescription);
 		document.querySelector(
 			`#${portletNamespace}serializedFormBuilderContext`
 		).value = getSerializedFormBuilderContext(state, defaultLanguageId);

@@ -20,13 +20,11 @@ const Categorization = ({tags, vocabularies}: IProps): JSX.Element | null => {
 		value: true,
 	});
 
-	const internalCategoriesCount = getCategoriesCountFromVocabularies(
-		internalVocabularies
-	);
+	const internalCategoriesCount =
+		getCategoriesCountFromVocabularies(internalVocabularies);
 
-	const publicCategoriesCount = getCategoriesCountFromVocabularies(
-		publicVocabularies
-	);
+	const publicCategoriesCount =
+		getCategoriesCountFromVocabularies(publicVocabularies);
 
 	const showTaxonomies =
 		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;

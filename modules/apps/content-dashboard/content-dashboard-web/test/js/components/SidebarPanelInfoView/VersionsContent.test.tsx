@@ -182,18 +182,16 @@ describe('Versions actions', () => {
 		await waitFor(() => {
 			const expireActionButtons: HTMLElement[] = getAllByText('Expire');
 			const viewActionButtons: HTMLElement[] = getAllByText('View');
-			const compareActionButtons: HTMLElement[] = getAllByText(
-				'Compare to...'
-			);
+			const compareActionButtons: HTMLElement[] =
+				getAllByText('Compare to...');
 
 			expect(getAllByTitle('actions').length).toBe(3);
 			expect(expireActionButtons.length).toBe(2);
 			expect(viewActionButtons.length).toBe(1);
 			expect(compareActionButtons.length).toBe(1);
 
-			const firstExpireButton: HTMLButtonElement = expireActionButtons[0].closest(
-				'button'
-			)!;
+			const firstExpireButton: HTMLButtonElement =
+				expireActionButtons[0].closest('button')!;
 
 			fireEvent(
 				firstExpireButton,
@@ -208,9 +206,8 @@ describe('Versions actions', () => {
 				'http://localhost:8080/expire-url'
 			);
 
-			const viewButton: HTMLButtonElement = viewActionButtons[0].closest(
-				'button'
-			)!;
+			const viewButton: HTMLButtonElement =
+				viewActionButtons[0].closest('button')!;
 
 			fireEvent(
 				viewButton,
@@ -226,9 +223,8 @@ describe('Versions actions', () => {
 				'noopener'
 			);
 
-			const compareButton: HTMLButtonElement = compareActionButtons[0].closest(
-				'button'
-			)!;
+			const compareButton: HTMLButtonElement =
+				compareActionButtons[0].closest('button')!;
 
 			fireEvent(
 				compareButton,

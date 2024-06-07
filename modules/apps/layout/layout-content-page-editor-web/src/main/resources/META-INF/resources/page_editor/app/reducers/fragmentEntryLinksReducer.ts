@@ -87,9 +87,8 @@ export default function fragmentEntryLinksReducer(
 			const newFragmentEntryLinks: FragmentEntryLinkMap = {};
 
 			action.fragmentEntryLinks.forEach((fragmentEntryLink) => {
-				newFragmentEntryLinks[
-					fragmentEntryLink.fragmentEntryLinkId
-				] = fragmentEntryLink;
+				newFragmentEntryLinks[fragmentEntryLink.fragmentEntryLinkId] =
+					fragmentEntryLink;
 			});
 
 			return {
@@ -115,7 +114,7 @@ export default function fragmentEntryLinksReducer(
 									...(comment.children || []),
 									action.fragmentEntryLinkComment,
 								],
-						  }
+							}
 						: comment
 				);
 			}
@@ -139,9 +138,8 @@ export default function fragmentEntryLinksReducer(
 			Object.entries(fragmentEntryLinks).forEach(
 				([fragmentEntryLinkId, fragmentEntryLink]) => {
 					if (!fragmentEntryLink.masterLayout) {
-						nextFragmentEntryLinks[
-							fragmentEntryLinkId
-						] = fragmentEntryLink;
+						nextFragmentEntryLinks[fragmentEntryLinkId] =
+							fragmentEntryLink;
 					}
 				}
 			);
@@ -213,9 +211,8 @@ export default function fragmentEntryLinksReducer(
 			};
 
 			action.addedFragmentEntryLinks.forEach((fragmentEntryLink) => {
-				nextFragmentEntryLinks[
-					fragmentEntryLink.fragmentEntryLinkId
-				] = fragmentEntryLink;
+				nextFragmentEntryLinks[fragmentEntryLink.fragmentEntryLinkId] =
+					fragmentEntryLink;
 			});
 
 			return nextFragmentEntryLinks;
@@ -291,9 +288,10 @@ export default function fragmentEntryLinksReducer(
 			};
 
 		case UPDATE_FORM_ITEM_CONFIG: {
-			const newFragmentEntryLinks: FragmentEntryLinkMap = action.addedFragmentEntryLinks
-				? {...action.addedFragmentEntryLinks}
-				: {};
+			const newFragmentEntryLinks: FragmentEntryLinkMap =
+				action.addedFragmentEntryLinks
+					? {...action.addedFragmentEntryLinks}
+					: {};
 
 			if (action.removedFragmentEntryLinkIds) {
 				action.removedFragmentEntryLinkIds.forEach(
@@ -410,17 +408,15 @@ export default function fragmentEntryLinksReducer(
 
 			const newFragmentEntryLinks = action.contents.map(
 				({fragmentEntryLinkId}) => {
-					const {editableValues} = fragmentEntryLinks[
-						fragmentEntryLinkId
-					];
+					const {editableValues} =
+						fragmentEntryLinks[fragmentEntryLinkId];
 
 					return [
 						fragmentEntryLinkId,
 						{
 							...fragmentEntryLinks[fragmentEntryLinkId],
-							editableValues: updateFileEntryPreviewURL(
-								editableValues
-							),
+							editableValues:
+								updateFileEntryPreviewURL(editableValues),
 						},
 					];
 				}

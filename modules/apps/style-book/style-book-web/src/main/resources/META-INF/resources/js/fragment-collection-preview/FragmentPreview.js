@@ -9,9 +9,10 @@ import {VariationPreview} from './VariationPreview';
 import {combine} from './combine';
 
 export function FragmentPreview({fragment, namespace}) {
-	const variations = useMemo(() => getFragmentVariations(fragment), [
-		fragment,
-	]);
+	const variations = useMemo(
+		() => getFragmentVariations(fragment),
+		[fragment]
+	);
 
 	return (
 		<section className="fragment-preview p-5">

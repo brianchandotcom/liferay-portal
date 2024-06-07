@@ -108,14 +108,12 @@ class LocaleChangedHandler {
 		const inputComponent = Liferay.component(this.namespace + name);
 
 		if (inputComponent) {
-			const inputSelectedValue = inputComponent.getValue(
-				selectedLanguageId
-			);
+			const inputSelectedValue =
+				inputComponent.getValue(selectedLanguageId);
 
 			if (inputSelectedValue === '') {
-				const inputDefaultValue = inputComponent.getValue(
-					defaultLanguageId
-				);
+				const inputDefaultValue =
+					inputComponent.getValue(defaultLanguageId);
 
 				// LPS-92493
 

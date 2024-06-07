@@ -88,10 +88,10 @@ export default function RatingsSelectStars({
 								index === 0
 									? Liferay.Language.get(
 											'rate-this-x-star-out-of-x'
-									  )
+										)
 									: Liferay.Language.get(
 											'rate-this-x-stars-out-of-x'
-									  );
+										);
 
 							return (
 								<ClayDropDown.Item

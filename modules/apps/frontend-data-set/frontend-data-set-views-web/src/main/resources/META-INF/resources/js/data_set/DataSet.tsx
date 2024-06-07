@@ -42,11 +42,11 @@ const NAVIGATION_BAR_ITEMS = [
 		? {
 				Component: Sorting,
 				label: Liferay.Language.get('sorting'),
-		  }
+			}
 		: {
 				Component: SortingDeprecated,
 				label: Liferay.Language.get('sorting'),
-		  },
+			},
 	{
 		Component: Actions,
 		label: Liferay.Language.get('actions'),

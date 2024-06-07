@@ -77,9 +77,9 @@ export function UserNotificationSettings({
 
 		const users = {
 			children: items.map(({alternateName, givenName}) => {
-				const selectedUser = !!(values.recipients as Partial<
-					UserNotificationRecipients
-				>[]).find(
+				const selectedUser = !!(
+					values.recipients as Partial<UserNotificationRecipients>[]
+				).find(
 					(recipient) => recipient['userScreenName'] === alternateName
 				);
 
@@ -141,6 +141,7 @@ export function UserNotificationSettings({
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.recipientType]);
 
@@ -165,6 +166,7 @@ export function UserNotificationSettings({
 				recipients: toRecipients,
 			});
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [toTerms]);
 

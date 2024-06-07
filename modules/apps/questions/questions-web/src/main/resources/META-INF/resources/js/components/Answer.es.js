@@ -47,9 +47,8 @@ export default withRouter(
 		);
 		const [showAsAnswer, setShowAsAnswer] = useState(answer.showAsAnswer);
 		const [showNewComment, setShowNewComment] = useState(false);
-		const [showDeleteAnswerModal, setShowDeleteAnswerModal] = useState(
-			false
-		);
+		const [showDeleteAnswerModal, setShowDeleteAnswerModal] =
+			useState(false);
 
 		const [deleteMessage] = useMutation(deleteMessageQuery);
 
@@ -174,7 +173,8 @@ export default withRouter(
 											className={classnames(
 												'font-weight-bold text-secondary',
 												{
-													'font-weight-bold text-secondary d-flex': styledItems,
+													'font-weight-bold text-secondary d-flex':
+														styledItems,
 												}
 											)}
 										>
@@ -190,7 +190,8 @@ export default withRouter(
 														className={classnames(
 															'btn-sm c-mr-2 c-px-2 c-py-1',
 															{
-																'text-2': styledItems,
+																'text-2':
+																	styledItems,
 															}
 														)}
 														onClick={() =>
@@ -214,7 +215,8 @@ export default withRouter(
 														className={classnames(
 															'btn-sm c-mr-2 c-px-2 c-py-1',
 															{
-																'text-2': styledItems,
+																'text-2':
+																	styledItems,
 															}
 														)}
 														displayType="secondary"
@@ -249,9 +251,11 @@ export default withRouter(
 																			}) =>
 																				deleteMessage(
 																					{
-																						variables: {
-																							messageBoardMessageId: id,
-																						},
+																						variables:
+																							{
+																								messageBoardMessageId:
+																									id,
+																							},
 																					}
 																				)
 																		)
@@ -295,15 +299,16 @@ export default withRouter(
 														showAsAnswer
 															? Liferay.Language.get(
 																	'unmark-as-answer'
-															  )
+																)
 															: Liferay.Language.get(
 																	'mark-as-answer'
-															  )
+																)
 													}
 													className={classnames(
 														'btn-sm c-mr-2 c-px-2 c-py-1',
 														{
-															'text-2': styledItems,
+															'text-2':
+																styledItems,
 														}
 													)}
 													data-testid="mark-as-answer-button"
@@ -329,10 +334,10 @@ export default withRouter(
 													{showAsAnswer
 														? Liferay.Language.get(
 																'unmark-as-answer'
-														  )
+															)
 														: Liferay.Language.get(
 																'mark-as-answer'
-														  )}
+															)}
 												</ClayButton>
 											)}
 

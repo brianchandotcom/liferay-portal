@@ -95,17 +95,12 @@ export function ModalAddObjectRelationship({
 		}
 	};
 
-	const {
-		errors,
-		handleChange,
-		handleSubmit,
-		setValues,
-		values,
-	} = useObjectRelationshipForm({
-		initialValues,
-		onSubmit,
-		parameterRequired: objectRelationshipParameterRequired,
-	});
+	const {errors, handleChange, handleSubmit, setValues, values} =
+		useObjectRelationshipForm({
+			initialValues,
+			onSubmit,
+			parameterRequired: objectRelationshipParameterRequired,
+		});
 
 	return (
 		<ClayModalProvider>

@@ -42,9 +42,8 @@ export default function ScriptManagementContainer({
 		isScriptManagementConfigurationDefined,
 		setIsScriptManagementConfigurationDefined,
 	] = useState(scriptManagementConfigurationDefined);
-	const [showGroovyScriptUsesModal, setShowGroovyScriptUsesModal] = useState<
-		boolean
-	>(false);
+	const [showGroovyScriptUsesModal, setShowGroovyScriptUsesModal] =
+		useState<boolean>(false);
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -93,7 +92,8 @@ export default function ScriptManagementContainer({
 			}).toString()
 		);
 
-		const groovyScriptUsesResponse = (await getGroovyScriptUsesResponse.json()) as GroovyScriptUseItem[];
+		const groovyScriptUsesResponse =
+			(await getGroovyScriptUsesResponse.json()) as GroovyScriptUseItem[];
 
 		if (!groovyScriptUsesResponse.length) {
 			saveScriptManagementSystemConfiguration();

@@ -11,17 +11,17 @@ export default function ({
 	editCommerceOrderTypePortletURL,
 	namespace,
 }) {
-	const CommerceOrderTypeResource = CommerceServiceProvider.AdminOrderAPI(
-		'v1'
-	);
+	const CommerceOrderTypeResource =
+		CommerceServiceProvider.AdminOrderAPI('v1');
 
 	const form = document.getElementById(`${namespace}fm`);
 
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 
-		const description = form.querySelector(`#${namespace}description`)
-			.value;
+		const description = form.querySelector(
+			`#${namespace}description`
+		).value;
 		const name = form.querySelector(`#${namespace}name`).value;
 
 		if (!name) {

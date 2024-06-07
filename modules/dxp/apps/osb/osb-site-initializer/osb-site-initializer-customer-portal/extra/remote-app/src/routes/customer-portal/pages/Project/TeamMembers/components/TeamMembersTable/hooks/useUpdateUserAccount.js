@@ -7,15 +7,11 @@ import {useReplaceAccountRoleByUserAccountEmailAddress} from '../../../../../../
 import {useUpdateRolesByContactEmailAddress} from '../../../../../../../../common/services/raysource/graphql/roles';
 
 export default function useUpdateUserAccount() {
-	const [
-		replaceAccountRole,
-		{loading: replaceAccountRoleLoading},
-	] = useReplaceAccountRoleByUserAccountEmailAddress();
+	const [replaceAccountRole, {loading: replaceAccountRoleLoading}] =
+		useReplaceAccountRoleByUserAccountEmailAddress();
 
-	const [
-		updateContactRoles,
-		{loading: updateContactRolesLoading},
-	] = useUpdateRolesByContactEmailAddress();
+	const [updateContactRoles, {loading: updateContactRolesLoading}] =
+		useUpdateRolesByContactEmailAddress();
 
 	const loading = replaceAccountRoleLoading || updateContactRolesLoading;
 

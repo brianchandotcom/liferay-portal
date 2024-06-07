@@ -14,9 +14,8 @@ import {FormValidationModal} from './FormValidationModal';
 export default function PublishButton({canPublish, formRef, label, onPublish}) {
 	const checkFormsValidity = useCheckFormsValidity();
 
-	const [openFormValidationModal, setOpenFormValidationModal] = useState(
-		false
-	);
+	const [openFormValidationModal, setOpenFormValidationModal] =
+		useState(false);
 
 	const submitURL =
 		config.singleSegmentsExperienceMode &&

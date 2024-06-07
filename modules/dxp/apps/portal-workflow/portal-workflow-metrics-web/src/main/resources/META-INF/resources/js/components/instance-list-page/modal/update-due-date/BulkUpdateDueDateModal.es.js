@@ -63,7 +63,7 @@ export default function BulkUpdateDueDateModal() {
 				comment,
 				dueDate,
 				workflowTaskId,
-		  }))
+			}))
 		: [];
 
 	const {patchData} = usePatch({
@@ -76,10 +76,10 @@ export default function BulkUpdateDueDateModal() {
 				tasks.length > 1
 					? Liferay.Language.get(
 							'the-due-dates-for-these-tasks-have-been-updated'
-					  )
+						)
 					: Liferay.Language.get(
 							'the-due-date-for-this-task-has-been-updated'
-					  )
+						)
 			);
 
 			onCloseModal(true);

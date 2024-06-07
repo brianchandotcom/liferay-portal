@@ -236,7 +236,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				: {
 						...interactionConfig,
 						...config,
-				  };
+					};
 
 			onValueSelect({successMessage: nextConfig});
 		},

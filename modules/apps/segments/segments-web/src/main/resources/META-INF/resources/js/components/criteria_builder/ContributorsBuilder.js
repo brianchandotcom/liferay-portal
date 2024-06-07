@@ -69,7 +69,8 @@ export default function ContributorsBuilder({
 					className={classNames(
 						'criteria-builder-section-sidebar overflow-hidden',
 						{
-							'criteria-builder-section-sidebar--with-warning': showDisabledSegmentationAlert,
+							'criteria-builder-section-sidebar--with-warning':
+								showDisabledSegmentationAlert,
 						}
 					)}
 				>

@@ -35,9 +35,10 @@ const PolicyDetails = () => {
 	const getApplicationThroughPoliciesERC = async (
 		externalReferenceCode: string
 	) => {
-		const policyElement = await getPolicyByExternalReferenceCode<
-			PolicySummary
-		>(externalReferenceCode);
+		const policyElement =
+			await getPolicyByExternalReferenceCode<PolicySummary>(
+				externalReferenceCode
+			);
 
 		setPolicy(policyElement);
 
@@ -49,9 +50,8 @@ const PolicyDetails = () => {
 			getQuoteThroughPolicy?.data?.items[0]
 				?.r_applicationToQuotes_c_raylifeApplicationId;
 
-		const getApplicationThroughQuote = await getApplicationsById(
-			applicationId
-		);
+		const getApplicationThroughQuote =
+			await getApplicationsById(applicationId);
 
 		const applicationElement = getApplicationThroughQuote?.data?.items[0];
 

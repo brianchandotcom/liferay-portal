@@ -67,10 +67,8 @@ export function DefinitionOfTerms({
 			}).toString()
 		);
 
-		const {
-			relationshipSections,
-			terms,
-		} = (await response.json()) as TermsResponse;
+		const {relationshipSections, terms} =
+			(await response.json()) as TermsResponse;
 
 		setObjectFieldTerms(terms);
 		setRelationshipSections(relationshipSections);

@@ -39,10 +39,8 @@ const Picklist = ({
 	value: keyAsValue,
 }: TGenericFieldProps) => {
 	const [key] = useState<string | null>(keyAsValue);
-	const [
-		selectedOption,
-		setSelectedOption,
-	] = useState<TPicklistOption | null>(null);
+	const [selectedOption, setSelectedOption] =
+		useState<TPicklistOption | null>(null);
 	const [options, setOptions] = useState<TPicklistOption[]>([]);
 	const [error, setError] = useState<string | null>(null);
 
@@ -102,6 +100,7 @@ const Picklist = ({
 				hasError ? Liferay.Language.get('this-field-is-required') : null
 			);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedOption]);
 

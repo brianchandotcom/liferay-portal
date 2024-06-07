@@ -120,14 +120,14 @@ export default function Countries({currentPage}) {
 												? numberFormat(
 														languageTag,
 														views
-												  )
+													)
 												: countryValueType.name ===
-												  'views-percentage'
-												? `${numberFormat(
-														languageTag,
-														viewsP
-												  )}%`
-												: views}
+													  'views-percentage'
+													? `${numberFormat(
+															languageTag,
+															viewsP
+														)}%`
+													: views}
 										</span>
 									</ClayList.ItemField>
 								</ClayList.Item>

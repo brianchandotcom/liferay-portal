@@ -91,15 +91,15 @@ export function getDefaultValue(item) {
 			return typeof itemValue === 'number'
 				? itemValue
 				: moment(itemValue, ['MM-DD-YYYY', 'YYYY-MM-DD']).isValid()
-				? moment(itemValue, ['MM-DD-YYYY', 'YYYY-MM-DD']).unix()
-				: '';
+					? moment(itemValue, ['MM-DD-YYYY', 'YYYY-MM-DD']).unix()
+					: '';
 		case INPUT_TYPES.FIELD_MAPPING:
 			return typeof itemValue === 'object' && itemValue.field
 				? itemValue
 				: {
 						field: '',
 						locale: '',
-				  };
+					};
 		case INPUT_TYPES.FIELD_MAPPING_LIST:
 			return Array.isArray(item.fieldMappings)
 				? item.fieldMappings.filter(({field}) => !!field) // Remove empty fields
@@ -120,20 +120,20 @@ export function getDefaultValue(item) {
 			return typeof itemValue === 'number'
 				? itemValue
 				: typeof toNumber(itemValue) === 'number'
-				? toNumber(itemValue)
-				: '';
+					? toNumber(itemValue)
+					: '';
 		case INPUT_TYPES.SELECT:
 			return typeof itemValue === 'string'
 				? itemValue
 				: typeof item.typeOptions?.options?.[0]?.value === 'string'
-				? item.typeOptions.options[0].value
-				: '';
+					? item.typeOptions.options[0].value
+					: '';
 		case INPUT_TYPES.SLIDER:
 			return typeof itemValue === 'number'
 				? itemValue
 				: typeof toNumber(itemValue) === 'number'
-				? toNumber(itemValue)
-				: '';
+					? toNumber(itemValue)
+					: '';
 		default:
 			return typeof itemValue === 'string' ? itemValue : '';
 	}

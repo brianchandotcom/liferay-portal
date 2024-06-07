@@ -48,9 +48,8 @@ export function ModalEditObjectFolder({
 }: ModalEditObjectFolderProps) {
 	const [error, setError] = useState<string>('');
 
-	const [selectedLocale, setSelectedLocale] = useState<
-		Liferay.Language.Locale
-	>(defaultLanguageId);
+	const [selectedLocale, setSelectedLocale] =
+		useState<Liferay.Language.Locale>(defaultLanguageId);
 
 	const {observer, onClose} = useModal({
 		onClose: () => handleOnClose(),

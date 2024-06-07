@@ -65,6 +65,7 @@ export default function MultiPanelSidebar({
 				setPanelComponents(result);
 			}
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMounted, load]);
 

@@ -89,7 +89,7 @@ function FragmentContentInteractionsFilter({
 						...fragmentEntryLink.editableValues[
 							BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 						],
-				  }
+					}
 				: {};
 		},
 		[fragmentEntryLinkId],

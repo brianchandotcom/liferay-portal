@@ -31,10 +31,8 @@ export default function SaveButtons({
 
 	const [articleId, setArticleId] = useState(initialArticleId);
 
-	const [
-		{publishModalAction, publishModalVisible},
-		setPublishModalState,
-	] = useState({publishModalAction: '', publishModalVisible: false});
+	const [{publishModalAction, publishModalVisible}, setPublishModalState] =
+		useState({publishModalAction: '', publishModalVisible: false});
 
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
@@ -186,7 +184,7 @@ export default function SaveButtons({
 							? null
 							: Liferay.Language.get(
 									'save-as-draft-with-permissions'
-							  )
+								)
 					}
 					type={articleId ? 'submit' : 'button'}
 				>
@@ -202,20 +200,20 @@ export default function SaveButtons({
 							workflowEnabled
 								? Liferay.Language.get(
 										'select-and-confirm-submit-for-workflow-settings'
-								  )
+									)
 								: Liferay.Language.get(
 										'select-and-confirm-publish-settings'
-								  )
+									)
 						}
 						disabled={saveButtonDisabled}
 						title={
 							workflowEnabled
 								? Liferay.Language.get(
 										'select-and-confirm-submit-for-workflow-settings'
-								  )
+									)
 								: Liferay.Language.get(
 										'select-and-confirm-publish-settings'
-								  )
+									)
 						}
 					>
 						{publishButtonLabel}
@@ -238,10 +236,12 @@ export default function SaveButtons({
 								? Liferay.Language.get('submit-for-workflow')
 								: Liferay.Language.get('publish')
 							: workflowEnabled
-							? Liferay.Language.get(
-									'submit-for-workflow-with-permissions'
-							  )
-							: Liferay.Language.get('publish-with-permissions')}
+								? Liferay.Language.get(
+										'submit-for-workflow-with-permissions'
+									)
+								: Liferay.Language.get(
+										'publish-with-permissions'
+									)}
 					</ClayDropDown.Item>
 
 					<ClayDropDown.Item
@@ -273,7 +273,7 @@ export default function SaveButtons({
 						{workflowEnabled
 							? Liferay.Language.get(
 									'schedule-publication-and-submit-for-workflow'
-							  )
+								)
 							: Liferay.Language.get('schedule-publication')}
 					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>

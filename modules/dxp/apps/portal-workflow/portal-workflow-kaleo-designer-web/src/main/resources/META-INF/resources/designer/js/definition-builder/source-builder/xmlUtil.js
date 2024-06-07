@@ -26,7 +26,8 @@ const XMLUtil = {
 	REGEX_INNER_HTML: /innerHTML\s*=\s*.*?/,
 	REGEX_ON_ATTRIBUTE: /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi,
 	REGEX_PHP_CODE: /<\?(?!xml)[\s\S]*?\?>/g,
-	REGEX_SCRIPT_TAG_INSIDE_CDATA: /<!\[CDATA\[(.*?<script>.*|.*<\/script>.*)\]\]>/gi,
+	REGEX_SCRIPT_TAG_INSIDE_CDATA:
+		/<!\[CDATA\[(.*?<script>.*|.*<\/script>.*)\]\]>/gi,
 	REGEX_TOKEN_1: /.+<\/\w[^>]*>$/,
 	REGEX_TOKEN_2: /^<\/\w/,
 	REGEX_TOKEN_3: /^<\w[^>]*[^/]>.*$/,

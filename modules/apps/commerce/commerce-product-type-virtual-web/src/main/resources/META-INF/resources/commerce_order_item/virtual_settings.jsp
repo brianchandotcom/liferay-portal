@@ -150,8 +150,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 				},
 				selectEventName: 'uploadCommerceVirtualOrderItem',
 				title: '<liferay-ui:message key="select-file" />',
-				url:
-					'<%= commerceVirtualOrderItemEditDisplayContext.getFileEntryItemSelectorURL() %>',
+				url: '<%= commerceVirtualOrderItemEditDisplayContext.getFileEntryItemSelectorURL() %>',
 			});
 		});
 

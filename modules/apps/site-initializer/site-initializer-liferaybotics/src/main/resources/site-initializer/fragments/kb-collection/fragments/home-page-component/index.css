@@ -1,12 +1,10 @@
 .KB_Home {
 }
-.KB_Home lfr-drop-zone
-{
-	width:100%!important;
+.KB_Home lfr-drop-zone {
+	width: 100% !important;
 }
-.KB_Home .card-items div
-{
-	width:100%!important;
+.KB_Home .card-items div {
+	width: 100% !important;
 }
 
 .KB_Home .pt-100 {
@@ -18,7 +16,7 @@
 }
 
 .ptb-100 {
-	padding: 100px 0px;
+	padding: 100px 0;
 }
 
 .KB_Home .pt-70 {
@@ -30,19 +28,17 @@
 }
 
 .KB_Home .ptb-70 {
-	padding: 70px 0px;
+	padding: 70px 0;
 }
 
 .KB_Home p {
 	font-size: 15px;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 }
 
-
-
 .KB_Home .services .title {
-	color: #000000;
+	color: #000;
 	font-size: 46px;
 	font-weight: 600;
 }
@@ -82,7 +78,7 @@
 	background-clip: border-box;
 	background-color: var(--white);
 	border: none;
-	border-radius: .25rem;
+	border-radius: 0.25rem;
 	box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
 	flex-direction: column;
 	margin-bottom: 30px;
@@ -103,7 +99,7 @@
 }
 
 .KB_Home .card-items .card .card-body .card-title {
-	margin-bottom: .75rem;
+	margin-bottom: 0.75rem;
 	margin-bottom: 15px;
 	margin-top: 26px;
 }

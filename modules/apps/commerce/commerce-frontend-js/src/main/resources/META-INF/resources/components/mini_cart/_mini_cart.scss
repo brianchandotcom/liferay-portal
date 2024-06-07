@@ -16,7 +16,9 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		transition: height 0ms ease-out, width 0ms ease-out;
+		transition:
+			height 0ms ease-out,
+			width 0ms ease-out;
 		transition-delay: 200ms;
 		width: 64px;
 		z-index: 0;

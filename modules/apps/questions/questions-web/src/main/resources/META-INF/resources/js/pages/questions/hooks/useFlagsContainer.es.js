@@ -28,7 +28,8 @@ const useFlagsContainer = ({
 	const props = {
 		...flagsProps,
 		baseData: {
-			[`${namespace}className`]: 'com.liferay.message.boards.model.MBMessage',
+			[`${namespace}className`]:
+				'com.liferay.message.boards.model.MBMessage',
 			[`${namespace}classPK`]:
 				content.messageBoardRootMessageId ?? content.id,
 			[`${namespace}contentTitle`]:

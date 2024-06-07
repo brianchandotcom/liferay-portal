@@ -32,13 +32,14 @@ export const orderItemsTypePolicy = {
 						return customFields.reduce(
 							(customFieldsAccumulator, currentCustomField) => ({
 								...customFieldsAccumulator,
-								[readField(
-									'name',
-									currentCustomField
-								)]: readField(
-									'data',
-									readField('customValue', currentCustomField)
-								),
+								[readField('name', currentCustomField)]:
+									readField(
+										'data',
+										readField(
+											'customValue',
+											currentCustomField
+										)
+									),
 							}),
 							{}
 						);

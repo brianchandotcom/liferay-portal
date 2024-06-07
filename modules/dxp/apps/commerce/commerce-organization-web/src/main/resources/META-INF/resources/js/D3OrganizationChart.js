@@ -488,14 +488,14 @@ class D3OrganizationChart {
 									),
 									nodesToBeMoved[0].data.name,
 									target.data.name
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-items-will-be-moved-into-x'
 									),
 									nodesToBeMoved.length,
 									target.data.name
-							  );
+								);
 
 					openConfirmModal({
 						message,
@@ -753,8 +753,8 @@ class D3OrganizationChart {
 			type === MODEL_TYPE_MAP.organization
 				? getOrganization
 				: type === MODEL_TYPE_MAP.account
-				? getAccount
-				: getUser;
+					? getAccount
+					: getUser;
 
 		return getData(id)
 			.then((rawData) => formatItem(rawData, type))

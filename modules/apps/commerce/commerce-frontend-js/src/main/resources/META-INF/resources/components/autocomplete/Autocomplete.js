@@ -376,7 +376,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 												selectedItem,
 												props.itemsLabel,
 												props.secondaryItemsLabel
-										  )
+											)
 										: query
 								}
 							/>
@@ -430,7 +430,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 							>
 								{wrappedResults}
 							</ReactPortal>
-					  )
+						)
 					: wrappedResults)}
 		</>
 	);

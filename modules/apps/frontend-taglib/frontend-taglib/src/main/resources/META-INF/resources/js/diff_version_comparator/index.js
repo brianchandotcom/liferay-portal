@@ -207,20 +207,21 @@ function Comparator({
 								/>
 							)}
 
-							{availableLocales && availableLocales.length > 1 && (
-								<LocaleSelector
-									locales={availableLocales}
-									onChange={(event) => {
-										setSelectedLanguageId(
-											event.target.value
-										);
+							{availableLocales &&
+								availableLocales.length > 1 && (
+									<LocaleSelector
+										locales={availableLocales}
+										onChange={(event) => {
+											setSelectedLanguageId(
+												event.target.value
+											);
 
-										submitForm(formRef.current);
-									}}
-									portletNamespace={portletNamespace}
-									selectedLanguageId={selectedLanguageId}
-								/>
-							)}
+											submitForm(formRef.current);
+										}}
+										portletNamespace={portletNamespace}
+										selectedLanguageId={selectedLanguageId}
+									/>
+								)}
 
 							<List
 								onChange={handleTargetChange}

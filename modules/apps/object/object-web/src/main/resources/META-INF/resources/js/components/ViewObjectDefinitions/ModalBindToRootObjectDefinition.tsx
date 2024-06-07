@@ -68,10 +68,8 @@ export function ModalBindToRootObjectDefinition({
 		onClose: () => onVisibilityChange(),
 	});
 	const [currentDepth, setCurrentDepth] = useState(0);
-	const [
-		currentObjectRelationshipId,
-		setCurrentObjectRelationshipId,
-	] = useState(0);
+	const [currentObjectRelationshipId, setCurrentObjectRelationshipId] =
+		useState(0);
 
 	const [allTreeEdgeOptions, setAllTreeEdgeOptions] = useState<
 		TreeEdgeOption[][]
@@ -115,9 +113,8 @@ export function ModalBindToRootObjectDefinition({
 		newTreeEdgeOptions: TreeEdgeOption[][],
 		newSelectedTreeEdgeOptions: TreeEdgeOption[]
 	) => {
-		const filteredSelectedTreeEdgeOptions = newSelectedTreeEdgeOptions.filter(
-			(_, index) => index <= depth
-		);
+		const filteredSelectedTreeEdgeOptions =
+			newSelectedTreeEdgeOptions.filter((_, index) => index <= depth);
 
 		setAllTreeEdgeOptions(
 			newTreeEdgeOptions.filter((_, index) => index <= depth)
@@ -211,21 +208,23 @@ export function ModalBindToRootObjectDefinition({
 					}).toString()
 				);
 
-				const treeEdgeOptionsResponseJSON = (await response.json()) as TreeEdgeOption[];
+				const treeEdgeOptionsResponseJSON =
+					(await response.json()) as TreeEdgeOption[];
 
 				if (
 					!!treeEdgeOptionsResponseJSON.length &&
 					allTreeEdgeOptions.length <= 4
 				) {
-					const newTreeEdgeOptionsResponseJSON = treeEdgeOptionsResponseJSON.map(
-						(treeEdgeOption) => {
+					const newTreeEdgeOptionsResponseJSON =
+						treeEdgeOptionsResponseJSON.map((treeEdgeOption) => {
 							if (treeEdgeOption.ancestors) {
-								const newAncestors = treeEdgeOption.ancestors.map(
-									(ancestor) => ({
-										...ancestor,
-										value: ancestor.objectRelationshipId,
-									})
-								);
+								const newAncestors =
+									treeEdgeOption.ancestors.map(
+										(ancestor) => ({
+											...ancestor,
+											value: ancestor.objectRelationshipId,
+										})
+									);
 
 								return {
 									...treeEdgeOption,
@@ -238,14 +237,12 @@ export function ModalBindToRootObjectDefinition({
 								...treeEdgeOption,
 								value: treeEdgeOption.objectRelationshipId,
 							};
-						}
-					) as TreeEdgeOption[];
+						}) as TreeEdgeOption[];
 
 					const newTreeEdgeOptions = allTreeEdgeOptions;
 
-					newTreeEdgeOptions[
-						currentDepth
-					] = newTreeEdgeOptionsResponseJSON;
+					newTreeEdgeOptions[currentDepth] =
+						newTreeEdgeOptionsResponseJSON;
 
 					setAllTreeEdgeOptions(newTreeEdgeOptions);
 				}
@@ -255,6 +252,7 @@ export function ModalBindToRootObjectDefinition({
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [baseResourceURL, currentDepth, currentObjectRelationshipId]);
 
@@ -304,19 +302,21 @@ export function ModalBindToRootObjectDefinition({
 								index === 0
 									? Liferay.Language.get(
 											'select-the-root-object-path'
-									  )
+										)
 									: ''
 							}
 							onSelectionChange={(value) => {
-								const isOptionAlreadySelected = selectedTreeEdgeOptions.some(
-									({objectRelationshipId}) =>
-										objectRelationshipId === value
-								);
+								const isOptionAlreadySelected =
+									selectedTreeEdgeOptions.some(
+										({objectRelationshipId}) =>
+											objectRelationshipId === value
+									);
 
-								const selectedTreeEdgeOption = treeEdgeOptions.find(
-									(treeEdgeOption) =>
-										treeEdgeOption.value === value
-								);
+								const selectedTreeEdgeOption =
+									treeEdgeOptions.find(
+										(treeEdgeOption) =>
+											treeEdgeOption.value === value
+									);
 
 								if (
 									!isOptionAlreadySelected &&

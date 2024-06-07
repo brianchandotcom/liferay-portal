@@ -42,29 +42,24 @@ export default function Fields({
 	style,
 	url,
 }: FieldsProps) {
-	const [creationLanguageId, setCreationLanguageId] = useState<
-		Liferay.Language.Locale
-	>();
+	const [creationLanguageId, setCreationLanguageId] =
+		useState<Liferay.Language.Locale>();
 
-	const [
-		deletedObjectField,
-		setDeletedObjectField,
-	] = useState<ObjectField | null>(null);
+	const [deletedObjectField, setDeletedObjectField] =
+		useState<ObjectField | null>(null);
 
 	const [loadingFDS, setLoadingFDS] = useState<boolean>(false);
 
-	const [objectFieldBusinessTypes, setObjectFieldBusinessTypes] = useState<
-		Map<string, ObjectFieldBusinessType>
-	>();
+	const [objectFieldBusinessTypes, setObjectFieldBusinessTypes] =
+		useState<Map<string, ObjectFieldBusinessType>>();
 
-	const [objectFieldDeleteInfo, setObjectFieldDeleteInfo] = useState<
-		ObjectFieldDeleteInfoProps
-	>({
-		deleteLastPublishedObjectDefinitionObjectField: false,
-		deleteObjectFieldObjectValidationRuleSetting: false,
-		showObjectFieldDeletionConfirmationModal: false,
-		showObjectFieldDeletionNotAllowedModal: false,
-	});
+	const [objectFieldDeleteInfo, setObjectFieldDeleteInfo] =
+		useState<ObjectFieldDeleteInfoProps>({
+			deleteLastPublishedObjectDefinitionObjectField: false,
+			deleteObjectFieldObjectValidationRuleSetting: false,
+			showObjectFieldDeletionConfirmationModal: false,
+			showObjectFieldDeletionNotAllowedModal: false,
+		});
 
 	const [showAddFieldModal, setShowAddFieldModal] = useState(false);
 
@@ -78,9 +73,10 @@ export default function Fields({
 		const makeFetch = async () => {
 			setLoadingFDS(true);
 
-			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectDefinitionResponse =
+				await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
 
 			const url = createResourceURL(baseResourceURL, {
 				objectDefinitionId: objectDefinitionResponse.id,
@@ -92,11 +88,10 @@ export default function Fields({
 				method: 'GET',
 			});
 
-			const {
-				objectFieldBusinessTypes: newObjectFieldBusinessTypes,
-			} = (await objectFieldBusinessTypesResponse.json()) as {
-				objectFieldBusinessTypes: ObjectFieldBusinessType[];
-			};
+			const {objectFieldBusinessTypes: newObjectFieldBusinessTypes} =
+				(await objectFieldBusinessTypesResponse.json()) as {
+					objectFieldBusinessTypes: ObjectFieldBusinessType[];
+				};
 
 			const objectFieldBusinessTypesMap = new Map<
 				string,

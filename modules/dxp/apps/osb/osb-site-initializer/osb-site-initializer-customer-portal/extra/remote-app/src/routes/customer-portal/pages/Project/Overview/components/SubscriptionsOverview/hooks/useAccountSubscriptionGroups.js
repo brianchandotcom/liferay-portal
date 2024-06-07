@@ -10,10 +10,8 @@ export default function useAccountSubscriptionGroups(
 	accountKey,
 	koroneikiAccountLoading
 ) {
-	const [
-		lastAccountSubcriptionGroup,
-		setLastAccountSubscriptionGroup,
-	] = useState();
+	const [lastAccountSubcriptionGroup, setLastAccountSubscriptionGroup] =
+		useState();
 
 	const {data, loading} = useGetAccountSubscriptionGroups({
 		filter: `accountKey eq '${accountKey}'`,

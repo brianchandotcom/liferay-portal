@@ -70,9 +70,10 @@ export default function ({
 
 			const selectedClassNameValue = template.internalClassNameKey;
 
-			const internalClassTemplateOption = internalClassNameKeySelect.querySelector(
-				`option[value='${selectedClassNameValue}']`
-			);
+			const internalClassTemplateOption =
+				internalClassNameKeySelect.querySelector(
+					`option[value='${selectedClassNameValue}']`
+				);
 			internalClassTemplateOption.selected = true;
 
 			await handleClassNameSelectChange();

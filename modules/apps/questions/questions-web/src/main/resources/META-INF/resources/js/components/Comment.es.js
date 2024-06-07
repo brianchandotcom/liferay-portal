@@ -30,9 +30,8 @@ export default withRouter(
 		styledItems = false,
 	}) => {
 		const context = useContext(AppContext);
-		const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(
-			false
-		);
+		const [showDeleteCommentModal, setShowDeleteCommentModal] =
+			useState(false);
 
 		const [deleteMessage] = useMutation(deleteMessageQuery);
 
@@ -42,8 +41,10 @@ export default withRouter(
 			<div className="c-my-3 pl-3 questions-reply row">
 				<div
 					className={classnames({
-						'align-items-md-center col-2 col-md-1 d-flex justify-content-end justify-content-md-center': !styledItems,
-						'pt-1 d-flex justify-content-end justify-content-md-center': styledItems,
+						'align-items-md-center col-2 col-md-1 d-flex justify-content-end justify-content-md-center':
+							!styledItems,
+						'pt-1 d-flex justify-content-end justify-content-md-center':
+							styledItems,
 					})}
 				>
 					<ClayIcon

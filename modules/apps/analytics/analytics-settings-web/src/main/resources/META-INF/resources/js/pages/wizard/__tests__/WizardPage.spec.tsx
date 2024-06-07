@@ -59,9 +59,8 @@ describe('Wizard Page', () => {
 
 		const wizardSheet = container.getElementsByClassName('sheet-lg');
 
-		const wizardMultiStep = container.getElementsByClassName(
-			'multi-step-nav'
-		);
+		const wizardMultiStep =
+			container.getElementsByClassName('multi-step-nav');
 
 		expect(wizardSheet).toBeTruthy();
 

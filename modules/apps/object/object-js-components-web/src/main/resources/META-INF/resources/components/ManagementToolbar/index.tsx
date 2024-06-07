@@ -52,7 +52,8 @@ export function ManagementToolbar({
 	isApproved,
 	isRootDescendantNode,
 	label,
-	objectDefinitionExternalReferenceCode: initialObjectDefinitionExternalReferenceCode,
+	objectDefinitionExternalReferenceCode:
+		initialObjectDefinitionExternalReferenceCode,
 	objectDefinitionExternalReferenceCodeSaveURL,
 	onExternalReferenceCodeChange,
 	onGetEntity,

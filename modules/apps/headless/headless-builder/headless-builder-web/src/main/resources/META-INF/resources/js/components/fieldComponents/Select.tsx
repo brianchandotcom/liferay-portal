@@ -36,15 +36,12 @@ export function Select({
 	selectedOption,
 	triggerAriaLabel,
 }: SelectProps) {
-	const [displayPlaceholder, setDisplayPlaceholder] = useState<boolean>(
-		!!placeholder
-	);
+	const [displayPlaceholder, setDisplayPlaceholder] =
+		useState<boolean>(!!placeholder);
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 	const [dropdownWidth, setDropdownWidth] = useState<string | null>();
-	const [
-		selectTriggerElement,
-		setSelectTriggerElement,
-	] = useState<HTMLElement | null>();
+	const [selectTriggerElement, setSelectTriggerElement] =
+		useState<HTMLElement | null>();
 	const [triggerLabel, setTriggerLabel] = useState<string>(placeholder ?? '');
 
 	const handleBlur = () => {

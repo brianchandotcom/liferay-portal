@@ -134,10 +134,8 @@ export default function () {
 				lastDateCurrentMonth[2]
 			),
 		]).then((results) => {
-			const [
-				productPoliciesResult,
-				expiringPoliciesResultThisMonth,
-			] = results;
+			const [productPoliciesResult, expiringPoliciesResultThisMonth] =
+				results;
 			let policiesObjectList = {};
 			const productList = productPoliciesResult?.value?.data?.items;
 
@@ -170,12 +168,10 @@ export default function () {
 					policiesObjectList
 				);
 
-				const dataColumnsFormatted = createDataPolicyToBarChartFormat(
-					policiesObject
-				);
-				const labelColumnsFormatted = createLabelPolicyToBarChartFormat(
-					policiesObject
-				);
+				const dataColumnsFormatted =
+					createDataPolicyToBarChartFormat(policiesObject);
+				const labelColumnsFormatted =
+					createLabelPolicyToBarChartFormat(policiesObject);
 
 				setDataChart(dataColumnsFormatted);
 
@@ -215,12 +211,10 @@ export default function () {
 						expirationPoliciesList
 					);
 
-					const dataColumnsFormatted = createDataPolicyToBarChartFormat(
-						policiesObject
-					);
-					const labelColumnsFormatted = createLabelPolicyToBarChartFormat(
-						policiesObject
-					);
+					const dataColumnsFormatted =
+						createDataPolicyToBarChartFormat(policiesObject);
+					const labelColumnsFormatted =
+						createLabelPolicyToBarChartFormat(policiesObject);
 
 					setDataChart(dataColumnsFormatted);
 
@@ -265,6 +259,7 @@ export default function () {
 				});
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [width]);
 

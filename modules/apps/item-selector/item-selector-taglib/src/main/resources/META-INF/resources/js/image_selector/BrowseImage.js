@@ -44,7 +44,7 @@ const BrowseImage = ({
 											'drag-and-drop-to-upload-or-x'
 										),
 										SELECT_FILE_BUTTON
-								  ),
+									),
 						}}
 					></span>
 				) : (

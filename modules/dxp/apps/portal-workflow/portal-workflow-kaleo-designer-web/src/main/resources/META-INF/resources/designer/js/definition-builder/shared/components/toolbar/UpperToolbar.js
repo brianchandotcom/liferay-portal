@@ -70,10 +70,8 @@ export default function UpperToolbar({
 		version,
 	} = useContext(DefinitionBuilderContext);
 
-	const [
-		showGroovyScriptWarningModal,
-		setShowGroovyScriptWarningModal,
-	] = useState(false);
+	const [showGroovyScriptWarningModal, setShowGroovyScriptWarningModal] =
+		useState(false);
 
 	const [translations, setTranslations] = useState(
 		definitionTitleTranslations
@@ -266,10 +264,10 @@ export default function UpperToolbar({
 							definitionNotPublished
 								? Liferay.Language.get(
 										'workflow-published-successfully'
-								  )
+									)
 								: Liferay.Language.get(
 										'workflow-updated-successfully'
-								  ),
+									),
 							'success',
 							true
 						);
@@ -399,6 +397,7 @@ export default function UpperToolbar({
 				}));
 			}
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [definitionTitle, elements]);
 
@@ -420,6 +419,7 @@ export default function UpperToolbar({
 			);
 			localStorage.removeItem('firstPublished');
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -430,6 +430,7 @@ export default function UpperToolbar({
 		else if (blockingError.errorType === 'invalidXML') {
 			setAlert(blockingError.errorMessage, 'danger', true);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [blockingError]);
 

@@ -60,9 +60,8 @@ AUI.add(
 
 		const STR_UNDERSCORE = '_';
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get(
-			'please-enter-only-alphanumeric-characters'
-		);
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName =
+			Liferay.Language.get('please-enter-only-alphanumeric-characters');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function (value) {
 			return /^[\w-]+$/.test(value);
@@ -70,14 +69,14 @@ AUI.add(
 
 		// Updates icons to produce lexicon SVG markup instead of default glyphicon
 
-		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE = A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
-			/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
-			Liferay.Util.getLexiconIconTpl('{iconClass}')
-		);
+		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE =
+			A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
+				/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
+				Liferay.Util.getLexiconIconTpl('{iconClass}')
+			);
 
-		A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
-			'{cssClass}'
-		);
+		A.ToolbarRenderer.prototype.TEMPLATES.icon =
+			Liferay.Util.getLexiconIconTpl('{cssClass}');
 
 		const LiferayAvailableField = A.Component.create({
 			ATTRS: {
@@ -188,6 +187,7 @@ AUI.add(
 					value: {
 						strings: {
 							asc: Liferay.Language.get('ascending'),
+
 							// eslint-disable-next-line @liferay/no-abbreviations
 							desc: Liferay.Language.get('descending'),
 							propertyName: Liferay.Language.get('property-name'),
@@ -223,9 +223,8 @@ AUI.add(
 						name: Liferay.Language.get('name'),
 						no: Liferay.Language.get('no'),
 						options: Liferay.Language.get('options'),
-						predefinedValue: Liferay.Language.get(
-							'predefined-value'
-						),
+						predefinedValue:
+							Liferay.Language.get('predefined-value'),
 						propertyName: Liferay.Language.get('property-name'),
 						required: Liferay.Language.get('required'),
 						requiredDescription: Liferay.Language.get(
@@ -388,12 +387,10 @@ AUI.add(
 				_deserializeFieldLocalizableAttributes(fieldJSON) {
 					const instance = this;
 
-					const defaultLocale = instance.translationManager.get(
-						'defaultLocale'
-					);
-					const editingLocale = instance.translationManager.get(
-						'editingLocale'
-					);
+					const defaultLocale =
+						instance.translationManager.get('defaultLocale');
+					const editingLocale =
+						instance.translationManager.get('editingLocale');
 
 					LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(
 						(item) => {
@@ -448,12 +445,10 @@ AUI.add(
 
 					let labels;
 
-					const defaultLocale = instance.translationManager.get(
-						'defaultLocale'
-					);
-					const editingLocale = instance.translationManager.get(
-						'editingLocale'
-					);
+					const defaultLocale =
+						instance.translationManager.get('defaultLocale');
+					const editingLocale =
+						instance.translationManager.get('editingLocale');
 
 					fieldJSON.options.forEach((item) => {
 						labels = item.label;
@@ -472,9 +467,8 @@ AUI.add(
 				},
 
 				_getGeneratedFieldName(label) {
-					const normalizedLabel = LiferayFormBuilder.Util.normalizeKey(
-						label
-					);
+					const normalizedLabel =
+						LiferayFormBuilder.Util.normalizeKey(label);
 
 					let generatedName = normalizedLabel;
 
@@ -515,9 +509,8 @@ AUI.add(
 						'.ddm-documents-and-media-field'
 					);
 					if (documentsAndMediaField !== null) {
-						const isHidden = documentsAndMediaField.classList.contains(
-							'hide'
-						);
+						const isHidden =
+							documentsAndMediaField.classList.contains('hide');
 						if (hasDocumentLibrary && isHidden) {
 							documentsAndMediaField.classList.remove('hide');
 						}
@@ -547,9 +540,8 @@ AUI.add(
 
 					const translationManager = instance.translationManager;
 
-					const availableLanguageIds = translationManager.get(
-						'availableLocales'
-					);
+					const availableLanguageIds =
+						translationManager.get('availableLocales');
 
 					if (availableLanguageIds.indexOf(newVal) < 0) {
 						const config = {
@@ -603,9 +595,8 @@ AUI.add(
 
 					const editingField = instance.editingField;
 
-					const readOnlyAttributes = editingField.get(
-						'readOnlyAttributes'
-					);
+					const readOnlyAttributes =
+						editingField.get('readOnlyAttributes');
 
 					if (
 						Object.prototype.hasOwnProperty.call(
@@ -632,9 +623,10 @@ AUI.add(
 								translationManager.get('editingLocale') ===
 								translationManager.get('defaultLocale')
 							) {
-								const generatedName = instance._getGeneratedFieldName(
-									changed.value.newVal
-								);
+								const generatedName =
+									instance._getGeneratedFieldName(
+										changed.value.newVal
+									);
 
 								if (
 									LiferayFormBuilder.Util.validateFieldName(
@@ -775,10 +767,11 @@ AUI.add(
 				_setFieldsSortableListConfig() {
 					const instance = this;
 
-					const config = LiferayFormBuilder.superclass._setFieldsSortableListConfig.apply(
-						instance,
-						arguments
-					);
+					const config =
+						LiferayFormBuilder.superclass._setFieldsSortableListConfig.apply(
+							instance,
+							arguments
+						);
 
 					config.dd.plugins = [
 						{
@@ -834,12 +827,10 @@ AUI.add(
 					const boundingBox = editor.get('boundingBox');
 
 					if (boundingBox.hasClass('radiocelleditor')) {
-						const defaultLocale = instance.translationManager.get(
-							'defaultLocale'
-						);
-						const editingLocale = instance.translationManager.get(
-							'editingLocale'
-						);
+						const defaultLocale =
+							instance.translationManager.get('defaultLocale');
+						const editingLocale =
+							instance.translationManager.get('editingLocale');
 
 						const inputs = boundingBox.all(
 							'.celleditor-edit-input-value'
@@ -939,10 +930,11 @@ AUI.add(
 				createField() {
 					const instance = this;
 
-					const field = LiferayFormBuilder.superclass.createField.apply(
-						instance,
-						arguments
-					);
+					const field =
+						LiferayFormBuilder.superclass.createField.apply(
+							instance,
+							arguments
+						);
 
 					if (field.name === 'ddm-image') {
 						if (!field.get('required')) {
@@ -1053,12 +1045,10 @@ AUI.add(
 
 					const translationManager = instance.translationManager;
 
-					definition.availableLanguageIds = translationManager.get(
-						'availableLocales'
-					);
-					definition.defaultLanguageId = translationManager.get(
-						'defaultLocale'
-					);
+					definition.availableLanguageIds =
+						translationManager.get('availableLocales');
+					definition.defaultLanguageId =
+						translationManager.get('defaultLocale');
 
 					definition.fields = instance._getSerializedFields();
 
@@ -1081,9 +1071,10 @@ AUI.add(
 						MAP_HIDDEN_FIELD_ATTRS
 					);
 
-					const translationManager = (instance.translationManager = new Liferay.TranslationManager(
-						instance.get('translationManager')
-					));
+					const translationManager = (instance.translationManager =
+						new Liferay.TranslationManager(
+							instance.get('translationManager')
+						));
 
 					instance.after('render', () => {
 						translationManager.render();

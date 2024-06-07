@@ -299,9 +299,8 @@ int index = 0;
 			var data = {};
 
 			data['<%= HtmlUtil.escapeJS(facet.getFieldId()) %>'] = range;
-			data[
-				'<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection'
-			] = selection;
+			data['<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection'] =
+				selection;
 
 			Liferay.Util.postForm(form, {data: data});
 		}

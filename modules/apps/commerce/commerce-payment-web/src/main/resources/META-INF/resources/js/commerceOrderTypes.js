@@ -11,9 +11,8 @@ import {
 import {openToast} from 'frontend-js-web';
 
 export default function ({dataSetId, paymentMethodGroupRelId, rootPortletId}) {
-	const paymentMethodGroupRelOrderTypesResource = CommerceServiceProvider.AdminChannelAPI(
-		'v1'
-	);
+	const paymentMethodGroupRelOrderTypesResource =
+		CommerceServiceProvider.AdminChannelAPI('v1');
 
 	function selectItem(orderType) {
 		const orderTypeData = {

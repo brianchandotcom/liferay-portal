@@ -115,7 +115,7 @@ function MiniCart({
 							? regenerateOrderDetailURL(
 									updatedCart.orderUUID,
 									currentURLs.siteDefaultURL
-							  )
+								)
 							: new URL(orderDetailURL),
 					};
 
@@ -144,7 +144,7 @@ function MiniCart({
 						cartState.cartItems.filter(
 							({replacedSku: replacedSKU}) => Boolean(replacedSKU)
 						)
-				  )
+					)
 				: null,
 		[cartState.cartItems]
 	);

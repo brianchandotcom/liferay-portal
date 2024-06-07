@@ -28,6 +28,7 @@ const PopoverComponent = ({anchor, children, ...rest}) => {
 
 	React.useLayoutEffect(() => {
 		align(popRef.current, anchor, ALIGN_POSITIONS.Right, false);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

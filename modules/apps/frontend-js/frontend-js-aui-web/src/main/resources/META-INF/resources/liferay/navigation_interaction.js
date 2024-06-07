@@ -146,9 +146,8 @@ AUI.add(
 						if (menuOld) {
 							let exitDirection;
 
-							const descendants = instance._focusManager.get(
-								'descendants'
-							);
+							const descendants =
+								instance._focusManager.get('descendants');
 
 							const first = descendants.first();
 
@@ -282,9 +281,8 @@ AUI.add(
 					if (handleMenuToggle) {
 						const focusManager = instance._focusManager;
 
-						const activeDescendant = focusManager.get(
-							ACTIVE_DESCENDANT
-						);
+						const activeDescendant =
+							focusManager.get(ACTIVE_DESCENDANT);
 						const descendants = focusManager.get('descendants');
 
 						const menuLink = descendants.item(activeDescendant);

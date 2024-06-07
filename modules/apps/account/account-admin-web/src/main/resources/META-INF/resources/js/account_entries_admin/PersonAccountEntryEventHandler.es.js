@@ -38,9 +38,8 @@ class PersonAccountEntryEventHandler extends PortletBase {
 		this.userIdInput = this._setElement(props.userIdInput);
 
 		this._handleOnSelect = this._handleOnSelect.bind(this);
-		this._handleSelectUserButtonClicked = this._handleSelectUserButtonClicked.bind(
-			this
-		);
+		this._handleSelectUserButtonClicked =
+			this._handleSelectUserButtonClicked.bind(this);
 	}
 
 	/**

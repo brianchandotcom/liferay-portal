@@ -171,10 +171,8 @@ function FragmentSetSelector({
 	portletNamespace,
 	setErrors,
 }) {
-	const [
-		selectedFragmentCollection,
-		setSelectedFragmentCollection,
-	] = useState('');
+	const [selectedFragmentCollection, setSelectedFragmentCollection] =
+		useState('');
 
 	const items = useMemo(
 		() => [

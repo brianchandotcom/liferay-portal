@@ -148,9 +148,8 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 		window,
 		'<portlet:namespace />selectFormInstance',
 		(formInstanceId, formInstanceName) => {
-			document.getElementById(
-				'<portlet:namespace />formInstanceId'
-			).value = formInstanceId;
+			document.getElementById('<portlet:namespace />formInstanceId').value =
+				formInstanceId;
 
 			const formInstanceHolder = document.querySelector(
 				'.displaying-form-instance-id-holder'

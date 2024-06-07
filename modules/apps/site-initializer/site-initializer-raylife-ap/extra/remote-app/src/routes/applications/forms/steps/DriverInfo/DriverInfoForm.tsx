@@ -50,10 +50,8 @@ const DriverInfoForm = ({
 
 	const [newAccidentCitations, setNewAccidentCitations] = useState<any[]>([]);
 
-	const [
-		_millitaryAffiliationOptions,
-		setMillitaryAffiliationOptions,
-	] = useState<any[]>([]);
+	const [_millitaryAffiliationOptions, setMillitaryAffiliationOptions] =
+		useState<any[]>([]);
 
 	const [millitaryAffiliation, setMillitaryAffiliation] = useState<any>('');
 
@@ -221,10 +219,8 @@ const DriverInfoForm = ({
 		dispatch({payload, type: ACTIONS.SET_REMOVE_ACCIDENT_CITATION});
 	};
 
-	const [
-		millitaryAffiliationSearch,
-		setMillitaryAffiliationSearch,
-	] = useState<any>('');
+	const [millitaryAffiliationSearch, setMillitaryAffiliationSearch] =
+		useState<any>('');
 
 	const millitaryAffiliationOptionsAddClick = () => {
 		return millitaryAffiliationOptions.map((millitaryAffiliationOption) => {
@@ -248,12 +244,14 @@ const DriverInfoForm = ({
 
 	useEffect(() => {
 		setMillitaryAffiliationOptions(millitaryAffiliationOptionsAddClick());
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		setMillitaryAffiliationSearch('');
 		setMillitaryAffiliationOptions(millitaryAffiliationOptionsAddClick());
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [millitaryAffiliation]);
 
@@ -789,17 +787,18 @@ const DriverInfoForm = ({
 							alignmentPosition={dropdownAlign.bottomCenter}
 							items={_millitaryAffiliationOptions}
 							onSearchValueChange={(value: string) => {
-								const filterOptions = millitaryAffiliationOptionsAddClick().filter(
-									(millitaryAffiliationOption) => {
-										if (
-											millitaryAffiliationOption.label
-												.toLowerCase()
-												.includes(value)
-										) {
-											return millitaryAffiliationOption;
+								const filterOptions =
+									millitaryAffiliationOptionsAddClick().filter(
+										(millitaryAffiliationOption) => {
+											if (
+												millitaryAffiliationOption.label
+													.toLowerCase()
+													.includes(value)
+											) {
+												return millitaryAffiliationOption;
+											}
 										}
-									}
-								);
+									);
 
 								setMillitaryAffiliationOptions(filterOptions);
 								setMillitaryAffiliationSearch(value);

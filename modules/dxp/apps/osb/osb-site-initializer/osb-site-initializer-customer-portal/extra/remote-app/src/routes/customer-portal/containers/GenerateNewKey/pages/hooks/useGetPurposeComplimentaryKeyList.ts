@@ -16,9 +16,11 @@ export default function useGetPurposeComplimentaryKeyList() {
 
 	const purposeComplimentaryKeyList = useMemo(
 		() =>
-			((data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
-				name: string;
-			}[]).map(({name}) => ({label: name, value: name})),
+			(
+				(data?.listTypeDefinitions?.items[0].listTypeEntries ?? []) as {
+					name: string;
+				}[]
+			).map(({name}) => ({label: name, value: name})),
 		[data?.listTypeDefinitions?.items]
 	);
 

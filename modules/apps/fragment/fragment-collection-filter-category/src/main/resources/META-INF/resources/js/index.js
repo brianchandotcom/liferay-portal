@@ -34,9 +34,8 @@ export function SelectCategory({
 		return [];
 	});
 
-	const [filteredCategories, setFilteredCategories] = useState(
-		assetCategories
-	);
+	const [filteredCategories, setFilteredCategories] =
+		useState(assetCategories);
 
 	const [searchValue, setSearchValue] = useState('');
 
@@ -50,7 +49,7 @@ export function SelectCategory({
 							category.label
 								.toLowerCase()
 								.indexOf(searchValue.toLowerCase()) !== -1
-				  )
+					)
 				: assetCategories
 		);
 	}, [searchValue, assetCategories]);
@@ -88,13 +87,13 @@ export function SelectCategory({
 					type: 'radiogroup',
 					value: selectedCategoryIds?.[0],
 				},
-		  ]
+			]
 		: filteredCategories.map((category) => ({
 				checked: selectedCategoryIds.includes(category.id),
 				label: category.label,
 				onChange: (selected) => onSelectedClick(selected, category.id),
 				type: 'checkbox',
-		  }));
+			}));
 
 	let label = Liferay.Language.get('select');
 

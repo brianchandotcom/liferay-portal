@@ -79,6 +79,7 @@ const CodeMirrorEditor = ({
 
 			codeMirror.on('blur', () => setIsFocused(false));
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

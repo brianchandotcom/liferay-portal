@@ -113,10 +113,10 @@ const LocalizationDropdown = ({
 													defaultLocale.label
 														? Liferay.Language.get(
 																'default'
-														  )
+															)
 														: Liferay.Language.get(
 																'translated'
-														  )}
+															)}
 												</ClayLabel>
 											</ClayLayout.ContentSection>
 										</ClayLayout.ContentCol>
@@ -164,14 +164,10 @@ export default function ChangeTrackingRenderView({
 	const [loading, setLoading] = useState(false);
 	const [refresh, setRefresh] = useState({});
 	const [selectedLocale, setSelectedLocale] = useState(defaultLocale);
-	const [
-		selectedSegmentsExperienceId,
-		setSelectedSegmentsExperienceId,
-	] = useState(null);
-	const [
-		showWorkflowSuccessMessage,
-		setShowWorkflowSuccessMessage,
-	] = useState(false);
+	const [selectedSegmentsExperienceId, setSelectedSegmentsExperienceId] =
+		useState(null);
+	const [showWorkflowSuccessMessage, setShowWorkflowSuccessMessage] =
+		useState(false);
 	const [state, setState] = useState({
 		contentType: CONTENT_TYPE_PREVIEW,
 		renderData: null,
@@ -375,10 +371,9 @@ export default function ChangeTrackingRenderView({
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html:
-								state.renderData.leftLocalizedRender[
-									currentLocale.label
-								],
+							__html: state.renderData.leftLocalizedRender[
+								currentLocale.label
+							],
 						}}
 					/>
 				);
@@ -424,10 +419,9 @@ export default function ChangeTrackingRenderView({
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html:
-								state.renderData.leftLocalizedPreview[
-									currentLocale.label
-								],
+							__html: state.renderData.leftLocalizedPreview[
+								currentLocale.label
+							],
 						}}
 					/>
 				);
@@ -496,10 +490,9 @@ export default function ChangeTrackingRenderView({
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html:
-								state.renderData.rightLocalizedRender[
-									currentLocale.label
-								],
+							__html: state.renderData.rightLocalizedRender[
+								currentLocale.label
+							],
 						}}
 					/>
 				);
@@ -545,10 +538,9 @@ export default function ChangeTrackingRenderView({
 				return (
 					<div
 						dangerouslySetInnerHTML={{
-							__html:
-								state.renderData.rightLocalizedPreview[
-									currentLocale.label
-								],
+							__html: state.renderData.rightLocalizedPreview[
+								currentLocale.label
+							],
 						}}
 					/>
 				);
@@ -603,10 +595,9 @@ export default function ChangeTrackingRenderView({
 					<div className="taglib-diff-html">
 						<div
 							dangerouslySetInnerHTML={{
-								__html:
-									state.renderData.unifiedLocalizedRender[
-										currentLocale.label
-									],
+								__html: state.renderData.unifiedLocalizedRender[
+									currentLocale.label
+								],
 							}}
 						/>
 					</div>
@@ -656,10 +647,10 @@ export default function ChangeTrackingRenderView({
 					<div className="taglib-diff-html">
 						<div
 							dangerouslySetInnerHTML={{
-								__html:
-									state.renderData.unifiedLocalizedPreview[
-										currentLocale.label
-									],
+								__html: state.renderData
+									.unifiedLocalizedPreview[
+									currentLocale.label
+								],
 							}}
 						/>
 					</div>
@@ -1347,7 +1338,7 @@ export default function ChangeTrackingRenderView({
 						)
 							? Liferay.Language.get(
 									'item-does-not-have-a-content-display'
-							  )
+								)
 							: ''
 					}
 				>
@@ -1395,7 +1386,7 @@ export default function ChangeTrackingRenderView({
 								? ''
 								: Liferay.Language.get(
 										'item-does-not-have-any-parents'
-								  )
+									)
 						}
 					>
 						{Liferay.Language.get('parents')}
@@ -1421,7 +1412,7 @@ export default function ChangeTrackingRenderView({
 								? ''
 								: Liferay.Language.get(
 										'item-does-not-have-any-children'
-								  )
+									)
 						}
 					>
 						{Liferay.Language.get('children')}

@@ -16,9 +16,8 @@ export default function ({
 	rootPortletId,
 	shippingFixedOptionId,
 }) {
-	const shippingFixedOptionTermsResource = CommerceServiceProvider.AdminChannelAPI(
-		'v1'
-	);
+	const shippingFixedOptionTermsResource =
+		CommerceServiceProvider.AdminChannelAPI('v1');
 
 	function selectItem(term) {
 		const termData = {

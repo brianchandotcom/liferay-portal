@@ -131,12 +131,8 @@ export function reducer(state, action) {
 
 function _createExperimentStart(state, experimentModalState = {}) {
 	const {selectedExperienceId} = state;
-	const {
-		description,
-		error,
-		name,
-		segmentsExperienceId,
-	} = experimentModalState;
+	const {description, error, name, segmentsExperienceId} =
+		experimentModalState;
 
 	return {
 		...state,

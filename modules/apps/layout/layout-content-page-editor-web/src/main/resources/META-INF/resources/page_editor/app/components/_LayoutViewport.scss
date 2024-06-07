@@ -22,7 +22,8 @@ html#{$cadmin-selector} #{$selector} {
 			left: 0;
 			position: absolute;
 			top: 0;
-			transition: margin-left ease $defaultTransitionDuration,
+			transition:
+				margin-left ease $defaultTransitionDuration,
 				margin-right ease $defaultTransitionDuration;
 			width: 100%;
 			will-change: margin-left, margin-right;

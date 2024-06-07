@@ -32,8 +32,9 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 
 		<aui:script>
 			<c:if test="<%= fileEntry != null %>">
-				const onChangeLogo = Liferay.Util.getOpener()
-					.<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo;
+				const onChangeLogo =
+					Liferay.Util.getOpener()
+						.<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo;
 
 				if (onChangeLogo) {
 					Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo(

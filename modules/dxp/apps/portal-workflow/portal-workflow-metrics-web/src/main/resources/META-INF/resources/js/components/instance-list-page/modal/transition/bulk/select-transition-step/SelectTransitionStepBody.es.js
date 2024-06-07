@@ -102,7 +102,7 @@ function Body({data, setRetry, tasks}) {
 									nextTransitions[versionIndex]
 										? nextTransitions[versionIndex][
 												taskLabel
-										  ]
+											]
 										: []
 								}
 								tasks={tasks}

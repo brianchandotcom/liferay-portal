@@ -30,7 +30,7 @@ export default function RESTEndpointDropdownMenu({
 			query
 				? initialRESTEndpoints.filter((restEndpoint) => {
 						return restEndpoint.match(regexp);
-				  }) || []
+					}) || []
 				: initialRESTEndpoints
 		);
 	};

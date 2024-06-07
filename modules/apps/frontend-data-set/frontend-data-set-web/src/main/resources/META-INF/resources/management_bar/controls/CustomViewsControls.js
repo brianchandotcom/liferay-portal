@@ -41,9 +41,12 @@ const CustomViewsControlsTrigger = React.forwardRef(
 );
 
 const CustomViewsControls = () => {
-	const {appURL, id: fdsName, namespace, portletId} = useContext(
-		FrontendDataSetContext
-	);
+	const {
+		appURL,
+		id: fdsName,
+		namespace,
+		portletId,
+	} = useContext(FrontendDataSetContext);
 	const [
 		{
 			activeCustomViewId,

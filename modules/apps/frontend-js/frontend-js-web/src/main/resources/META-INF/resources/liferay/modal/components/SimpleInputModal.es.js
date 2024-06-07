@@ -182,7 +182,7 @@ const SimpleInputModal = ({
 												? ''
 												: Liferay.Language.get(
 														'this-field-is-required'
-												  )
+													)
 										);
 									}
 

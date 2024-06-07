@@ -13,12 +13,8 @@ import {getInputRendererById} from '../../utils/renderer';
 import DndTable from './dnd_table/index';
 
 function TableInlineAddingRow({fields, selectable}) {
-	const {
-		createInlineItem,
-		itemsChanges,
-		toggleItemInlineEdit,
-		updateItem,
-	} = useContext(FrontendDataSetContext);
+	const {createInlineItem, itemsChanges, toggleItemInlineEdit, updateItem} =
+		useContext(FrontendDataSetContext);
 
 	const isMounted = useIsMounted();
 	const [loading, setLoading] = useState(false);
@@ -48,7 +44,7 @@ function TableInlineAddingRow({fields, selectable}) {
 							property === 'LANG'
 								? Liferay.ThemeDisplay.getDefaultLanguageId()
 								: property
-					  )
+						)
 					: [field.fieldName];
 
 				const rootPropertyName = valuePath[0];

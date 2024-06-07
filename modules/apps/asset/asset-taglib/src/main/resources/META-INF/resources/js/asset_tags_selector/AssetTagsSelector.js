@@ -264,7 +264,7 @@ function AssetTagsSelector({
 												label: tag.text,
 												value: tag.value,
 											};
-									  })
+										})
 									: []
 							}
 							value={inputValue}

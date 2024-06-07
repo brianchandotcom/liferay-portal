@@ -70,6 +70,7 @@ const Timer = ({
 		setActionSections([
 			{actionType: 'timerActions', identifier: `${Date.now()}-0`},
 		]);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		allowScriptContentToBeExecutedOrIncluded,
@@ -105,6 +106,7 @@ const Timer = ({
 				});
 			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [actionSections]);
 

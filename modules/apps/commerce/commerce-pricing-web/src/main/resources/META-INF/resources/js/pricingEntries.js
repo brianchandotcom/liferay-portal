@@ -17,9 +17,8 @@ export default function ({
 	priceListExternalReferenceCode,
 	spritemap,
 }) {
-	const CommercePriceEntriesResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommercePriceEntriesResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 
 	const id = commercePriceListId;
 

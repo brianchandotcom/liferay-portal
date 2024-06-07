@@ -83,6 +83,7 @@ export default function APISchemasTable({
 
 	useEffect(() => {
 		setHideManagementButtons(true);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

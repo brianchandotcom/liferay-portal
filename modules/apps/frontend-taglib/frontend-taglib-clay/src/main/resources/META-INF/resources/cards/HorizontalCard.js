@@ -65,7 +65,7 @@ export default function HorizontalCard({
 				selectable
 					? (selected) => {
 							setSelected(selected);
-					  }
+						}
 					: null
 			}
 			selectable={selectable}

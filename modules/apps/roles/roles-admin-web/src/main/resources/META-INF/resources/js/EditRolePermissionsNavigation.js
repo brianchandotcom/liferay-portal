@@ -119,6 +119,7 @@ export default function EditRolePermissionsNavigation({
 
 	useEffect(
 		() => setExpandedKeys(processedExpandedKeys),
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[debouncedFilterQuery]
 	);

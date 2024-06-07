@@ -60,23 +60,21 @@ const WebContentProvider = ({children}) => {
 	const isMobileDevice = deviceSize !== DEVICES.DESKTOP;
 
 	const getInitialData = async () => {
-		const [
-			{value: tipFolderId},
-			{value: tipTemplateId},
-		] = await Promise.allSettled([
-			getHeadlessFirstItemId(() =>
-				getStructuredContentFolders(
-					siteGroupId,
-					`?filter=name eq '${WEB_CONTENT_NAME}'`
-				)
-			),
-			getHeadlessFirstItemId(() =>
-				getContentTemplates(
-					siteGroupId,
-					`?filter=contains(name, '${WEB_CONTENT_NAME}')`
-				)
-			),
-		]);
+		const [{value: tipFolderId}, {value: tipTemplateId}] =
+			await Promise.allSettled([
+				getHeadlessFirstItemId(() =>
+					getStructuredContentFolders(
+						siteGroupId,
+						`?filter=name eq '${WEB_CONTENT_NAME}'`
+					)
+				),
+				getHeadlessFirstItemId(() =>
+					getContentTemplates(
+						siteGroupId,
+						`?filter=contains(name, '${WEB_CONTENT_NAME}')`
+					)
+				),
+			]);
 
 		if (!tipFolderId) {
 			return console.warn('Raylife TIP Folder not found');
@@ -86,9 +84,8 @@ const WebContentProvider = ({children}) => {
 			return console.warn('Raylife TIP Template not found');
 		}
 
-		const {data: structuredContents} = await getStructuredContents(
-			tipFolderId
-		);
+		const {data: structuredContents} =
+			await getStructuredContents(tipFolderId);
 
 		setContext({
 			structuredContents: structuredContents.items,
@@ -125,6 +122,7 @@ const WebContentProvider = ({children}) => {
 
 			dispatchEvent(data, event);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isMobileDevice, context]
 	);

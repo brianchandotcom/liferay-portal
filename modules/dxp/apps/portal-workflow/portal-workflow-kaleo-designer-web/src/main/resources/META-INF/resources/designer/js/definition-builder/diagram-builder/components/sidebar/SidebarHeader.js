@@ -22,10 +22,8 @@ export default function SidebarHeader({
 }) {
 	const {setElements} = useContext(DefinitionBuilderContext);
 	const {selectedItem} = useContext(DiagramBuilderContext);
-	const [
-		showDeleteConfirmationModal,
-		setShowDeleteConfirmationModal,
-	] = useState(false);
+	const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
+		useState(false);
 	const [modalInfo, setModalInfo] = useState({});
 
 	const {observer} = useModal({
@@ -74,6 +72,7 @@ export default function SidebarHeader({
 				window.removeEventListener('keydown', handleKeyDown);
 			};
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [contentName]);
 

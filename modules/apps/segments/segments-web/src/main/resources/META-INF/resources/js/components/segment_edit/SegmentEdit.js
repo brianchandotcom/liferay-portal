@@ -367,7 +367,8 @@ function SegmentEdit({
 			<div
 				className={classNames('segment-edit-page-root', {
 					'segment-edit-page-root--has-alert': data.hasEmptyValues,
-					'segment-edit-page-root--with-warning': showDisabledSegmentationAlert,
+					'segment-edit-page-root--with-warning':
+						showDisabledSegmentationAlert,
 				})}
 			>
 				<input

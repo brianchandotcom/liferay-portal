@@ -10,6 +10,7 @@ const HEADLESS_DELIVERY_BASE_URL_ = `${window.location.origin}/o/headless-delive
 const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
 
 const fetchHeadless = async ({resolveAsJson = true, url}) => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${HEADLESS_DELIVERY_BASE_URL_}${url}`, {
 		headers: {
@@ -27,6 +28,7 @@ const fetchHeadless = async ({resolveAsJson = true, url}) => {
 };
 
 const getHighPriorityContacts = async (filter) => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
 		`${HEADLESS_BASE_URL}${`c/highprioritycontactses/?nestedFields=user&filter=${filter}`}`,

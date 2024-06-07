@@ -29,21 +29,17 @@ function Variants({selectedSegmentsExperienceId}) {
 	const {APIService, page} = useContext(SegmentsExperimentsContext);
 	const [creatingVariant, setCreatingVariant] = useState(false);
 
-	const {
-		observer: creatingVariantObserver,
-		onClose: creatingVariantOnClose,
-	} = useModal({
-		onClose: () => setCreatingVariant(false),
-	});
+	const {observer: creatingVariantObserver, onClose: creatingVariantOnClose} =
+		useModal({
+			onClose: () => setCreatingVariant(false),
+		});
 
 	const [editingVariant, setEditingVariant] = useState({active: false});
 
-	const {
-		observer: editingVariantObserver,
-		onClose: editingVariantOnClose,
-	} = useModal({
-		onClose: () => setEditingVariant({active: false}),
-	});
+	const {observer: editingVariantObserver, onClose: editingVariantOnClose} =
+		useModal({
+			onClose: () => setEditingVariant({active: false}),
+		});
 
 	return (
 		<>

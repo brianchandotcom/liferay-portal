@@ -108,9 +108,8 @@ export function minimizePortlet(portletSelector, trigger, options) {
 
 								portlet.innerHTML = '';
 
-								const fragment = range.createContextualFragment(
-									response
-								);
+								const fragment =
+									range.createContextualFragment(response);
 
 								portlet.appendChild(fragment);
 							})

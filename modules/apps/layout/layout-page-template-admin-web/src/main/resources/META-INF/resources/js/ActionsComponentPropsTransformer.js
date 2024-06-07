@@ -13,9 +13,8 @@ const ACTIONS = {
 		portletNamespace,
 		viewLayoutPageTemplateCollectionURL,
 	}) {
-		const layoutPageTemplateCollectionsForm = document.createElement(
-			'form'
-		);
+		const layoutPageTemplateCollectionsForm =
+			document.createElement('form');
 
 		layoutPageTemplateCollectionsForm.setAttribute('method', 'post');
 

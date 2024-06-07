@@ -86,10 +86,10 @@ const getSkuOptionsErrors = (
 					hasErrors: true,
 					id: productOption.id,
 				},
-		  ]
+			]
 		: skuOptionsAtomState[errorsKey]?.filter(
 				(error) => error.id !== productOption.id
-		  );
+			);
 };
 
 const initialSkuOptionsAtomState = {
@@ -105,8 +105,8 @@ const isRequired = (forceRequired, isAdmin, productOption) =>
 	isAdmin
 		? forceRequired
 		: forceRequired ||
-		  productOption.required ||
-		  productOption.skuContributor;
+			productOption.required ||
+			productOption.skuContributor;
 
 export {
 	getInitialProductOptionValue,

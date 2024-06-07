@@ -271,14 +271,11 @@ describe('ColorPicker', () => {
 			});
 
 			it('clears an error when the clear selection button is clicked', () => {
-				const {
-					baseElement,
-					getByTitle,
-					queryByText,
-				} = renderColorPicker({
-					field: {...FIELD, name: 'orange'},
-					value: '#fff',
-				});
+				const {baseElement, getByTitle, queryByText} =
+					renderColorPicker({
+						field: {...FIELD, name: 'orange'},
+						value: '#fff',
+					});
 
 				onTypeValue(baseElement.querySelector('input')!, 'orange');
 

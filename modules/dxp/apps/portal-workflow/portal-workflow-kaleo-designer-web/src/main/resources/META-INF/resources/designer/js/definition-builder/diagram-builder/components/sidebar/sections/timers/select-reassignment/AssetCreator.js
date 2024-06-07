@@ -19,6 +19,7 @@ const AssetCreator = ({actionSectionsIndex, setActionSections}) => {
 
 			return updatedSections;
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

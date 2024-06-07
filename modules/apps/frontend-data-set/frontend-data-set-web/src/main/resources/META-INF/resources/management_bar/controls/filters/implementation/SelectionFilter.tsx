@@ -255,7 +255,7 @@ function SelectionFilter({
 							label
 								.toLowerCase()
 								.match(searchOptions.search.toLowerCase())
-					  )
+						)
 					: localItems
 			);
 		}
@@ -442,10 +442,13 @@ function SelectionFilter({
 														(element) =>
 															element.value !==
 															value
-												  )
+													)
 												: multiple
-												? [...selectedItems, newValue]
-												: [newValue]
+													? [
+															...selectedItems,
+															newValue,
+														]
+													: [newValue]
 										);
 									}}
 									value={value}
@@ -535,10 +538,11 @@ SelectionFilter.propTypes = {
 	setFilter: PropTypes.func.isRequired,
 };
 
-const filterImplementation: FilterImplementation<SelectionFilterImplementationArgs> = {
-	Component: SelectionFilter,
-	getOdataString,
-	getSelectedItemsLabel,
-};
+const filterImplementation: FilterImplementation<SelectionFilterImplementationArgs> =
+	{
+		Component: SelectionFilter,
+		getOdataString,
+		getSelectedItemsLabel,
+	};
 
 export default filterImplementation;

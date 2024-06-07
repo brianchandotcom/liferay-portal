@@ -33,7 +33,8 @@ html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
 	background: $cadmin-white;
 	border-left: 1px solid $cadmin-secondary-l3;
 	right: 0;
-	transition: transform ease $defaultTransitionDuration,
+	transition:
+		transform ease $defaultTransitionDuration,
 		width ease $defaultTransitionDuration;
 	transform: translateX(100%);
 	visibility: hidden;
@@ -102,7 +103,8 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	@include sidebar;
 	left: 0;
 
-	transition: left ease $defaultTransitionDuration,
+	transition:
+		left ease $defaultTransitionDuration,
 		right ease $defaultTransitionDuration;
 
 	&__buttons {
@@ -140,8 +142,10 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 			}
 
 			&:focus {
-				box-shadow: 0 0 0 2px $cadmin-white,
-					0 0 0 4px $cadmin-primary-l1, inset 0 0 rgba(0, 0, 0, 0);
+				box-shadow:
+					0 0 0 2px $cadmin-white,
+					0 0 0 4px $cadmin-primary-l1,
+					inset 0 0 rgba(0, 0, 0, 0);
 				outline: none;
 			}
 		}
@@ -180,7 +184,8 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		left: $sidebarButtonWidth;
 		position: fixed;
 		transform: translateX(-100%);
-		transition: transform ease $defaultTransitionDuration,
+		transition:
+			transform ease $defaultTransitionDuration,
 			left ease $defaultTransitionDuration;
 
 		visibility: hidden;
@@ -208,8 +213,8 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		&:hover,
 		&:focus-visible,
 		&--resizing {
-			box-shadow: inset ($resizerWidth / 2 - $resizerBorderWidth) 0 0
-					$white,
+			box-shadow:
+				inset ($resizerWidth / 2 - $resizerBorderWidth) 0 0 $white,
 				inset ($resizerWidth / 2) 0 0 $primary-l1;
 			outline: none;
 		}
@@ -250,7 +255,8 @@ html#{$cadmin-selector} .page-editor__wrapper {
 
 	padding-left: $sidebarButtonWidth;
 	position: relative;
-	transition: padding-left ease $defaultTransitionDuration,
+	transition:
+		padding-left ease $defaultTransitionDuration,
 		margin-right ease $defaultTransitionDuration;
 	will-change: padding-left, margin-right;
 	max-height: calc(

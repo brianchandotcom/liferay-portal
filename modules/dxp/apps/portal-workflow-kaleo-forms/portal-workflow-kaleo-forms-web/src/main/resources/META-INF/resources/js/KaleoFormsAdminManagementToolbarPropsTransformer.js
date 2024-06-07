@@ -28,9 +28,10 @@ export default function propsTransformer({
 								otherProps.searchContainerId
 							);
 
-							const kaleoProcessIdsElement = document.getElementById(
-								`${portletNamespace}kaleoProcessIds`
-							);
+							const kaleoProcessIdsElement =
+								document.getElementById(
+									`${portletNamespace}kaleoProcessIds`
+								);
 
 							if (
 								!form ||

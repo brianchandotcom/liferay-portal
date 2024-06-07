@@ -87,32 +87,26 @@ export default function Relationships({
 	style,
 	url,
 }: RelationshipsProps) {
-	const [creationLanguageId, setCreationLanguageId] = useState<
-		Liferay.Language.Locale
-	>();
+	const [creationLanguageId, setCreationLanguageId] =
+		useState<Liferay.Language.Locale>();
 
-	const [
-		objectRelationship,
-		setObjectRelationship,
-	] = useState<ObjectRelationship | null>();
+	const [objectRelationship, setObjectRelationship] =
+		useState<ObjectRelationship | null>();
 	const [showAddModal, setShowAddModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	const [
-		selectedObjectRelationship,
-		setSelectedObjectRelationship,
-	] = useState<ObjectRelationship>();
+	const [selectedObjectRelationship, setSelectedObjectRelationship] =
+		useState<ObjectRelationship>();
 
-	const [
-		showDeletionNotAllowedModal,
-		setShowDeletionNotAllowedModal,
-	] = useState(false);
+	const [showDeletionNotAllowedModal, setShowDeletionNotAllowedModal] =
+		useState(false);
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectDefinition =
+				await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
 
 			setCreationLanguageId(objectDefinition.defaultLanguageId);
 		};
@@ -264,29 +258,30 @@ export default function Relationships({
 				/>
 			)}
 
-			{showDeletionNotAllowedModal && Liferay.FeatureFlags['LPS-187142'] && (
-				<ModalObjectFieldDeletionNotAllowed
-					content={
-						<span
-							dangerouslySetInnerHTML={{
-								__html: sub(
-									Liferay.Language.get(
-										'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
+			{showDeletionNotAllowedModal &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<ModalObjectFieldDeletionNotAllowed
+						content={
+							<span
+								dangerouslySetInnerHTML={{
+									__html: sub(
+										Liferay.Language.get(
+											'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
+										),
+										`<strong>"${stringUtils.getLocalizableLabel(
+											creationLanguageId as Liferay.Language.Locale,
+											selectedObjectRelationship?.label,
+											selectedObjectRelationship?.name
+										)}"</strong>`
 									),
-									`<strong>"${stringUtils.getLocalizableLabel(
-										creationLanguageId as Liferay.Language.Locale,
-										selectedObjectRelationship?.label,
-										selectedObjectRelationship?.name
-									)}"</strong>`
-								),
-							}}
-						/>
-					}
-					onVisibilityChange={() =>
-						setShowDeletionNotAllowedModal(false)
-					}
-				/>
-			)}
+								}}
+							/>
+						}
+						onVisibilityChange={() =>
+							setShowDeletionNotAllowedModal(false)
+						}
+					/>
+				)}
 		</>
 	);
 }

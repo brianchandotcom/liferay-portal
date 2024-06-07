@@ -27,11 +27,9 @@ CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (Colle
 
 	viewCollectionItems.addEventListener('click', (event) => {
 		Liferay.Util.openModal({
-			id:
-				'<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItemsDialog',
+			id: '<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItemsDialog',
 			title: '<liferay-ui:message key="collection-items" />',
-			url:
-				'<%= collectionItemsDetailDisplayContext.getViewCollectionItemsURL() %>',
+			url: '<%= collectionItemsDetailDisplayContext.getViewCollectionItemsURL() %>',
 		});
 	});
 

@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
+
 /* eslint-disable @liferay/portal/no-global-fetch */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -87,8 +89,8 @@ const getMessage = () => document.querySelector('#messageDescribed').value;
 const getAttributeHidden = () => document.querySelector('#messageDanger');
 
 const openModal = (optionBtn) => {
-	const grantRequestType = fragmentElement.querySelector('.grantRequestType')
-		.value;
+	const grantRequestType =
+		fragmentElement.querySelector('.grantRequestType').value;
 	const requestName = fragmentElement.querySelector('.requestName').value;
 
 	let modalConfigs = {};
@@ -132,34 +134,28 @@ const openModal = (optionBtn) => {
 								grantRequestType === REQUEST_STATUS.SPONSORSHIP
 							) {
 								status = {
-									key:
-										REQUEST_STATUS
-											.AWAITING_EMPLOYEE_PROOF_OF_EXPENSES
-											.key,
-									value:
-										REQUEST_STATUS
-											.AWAITING_EMPLOYEE_PROOF_OF_EXPENSES
-											.value,
+									key: REQUEST_STATUS
+										.AWAITING_EMPLOYEE_PROOF_OF_EXPENSES
+										.key,
+									value: REQUEST_STATUS
+										.AWAITING_EMPLOYEE_PROOF_OF_EXPENSES
+										.value,
 								};
 							}
 							else {
 								status = {
-									key:
-										REQUEST_STATUS
-											.AWAITING_PAYMENT_CONFIRMATION.key,
-									value:
-										REQUEST_STATUS
-											.AWAITING_PAYMENT_CONFIRMATION
-											.value,
+									key: REQUEST_STATUS
+										.AWAITING_PAYMENT_CONFIRMATION.key,
+									value: REQUEST_STATUS
+										.AWAITING_PAYMENT_CONFIRMATION.value,
 								};
 							}
 						}
 						else {
 							status = {
 								key: REQUEST_STATUS.AWAITING_FINANCE_REVIEW.key,
-								value:
-									REQUEST_STATUS.AWAITING_FINANCE_REVIEW
-										.value,
+								value: REQUEST_STATUS.AWAITING_FINANCE_REVIEW
+									.value,
 							};
 						}
 
@@ -203,7 +199,7 @@ const openModal = (optionBtn) => {
 							},
 						],
 						headerHTML: `<p class="request-modal-header">Approve Request: <span>${requestName}</span></p>`,
-				  }
+					}
 				: {
 						buttons: [
 							{
@@ -226,7 +222,7 @@ const openModal = (optionBtn) => {
 							},
 						],
 						headerHTML: `<p class="request-modal-header">Reject Request: <span>${requestName}</span></p>`,
-				  };
+					};
 	}
 
 	Liferay.Util.openModal({

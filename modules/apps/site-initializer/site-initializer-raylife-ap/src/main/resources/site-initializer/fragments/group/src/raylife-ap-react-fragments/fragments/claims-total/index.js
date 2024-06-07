@@ -32,11 +32,8 @@ export default function () {
 	useEffect(() => {
 		Promise.allSettled([getProducts(), getClaims(), getPolicies()]).then(
 			(results) => {
-				const [
-					productQuotesResult,
-					claimsResult,
-					policiesResult,
-				] = results;
+				const [productQuotesResult, claimsResult, policiesResult] =
+					results;
 
 				const columnsArr = [];
 				const colorsObj = {};
@@ -97,6 +94,7 @@ export default function () {
 				setLoadData(true);
 			}
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

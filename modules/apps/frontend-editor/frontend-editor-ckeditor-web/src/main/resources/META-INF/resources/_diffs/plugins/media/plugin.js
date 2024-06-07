@@ -102,7 +102,8 @@
 											poster +
 											');';
 
-										fakeElement.attributes.style = fakeStyle;
+										fakeElement.attributes.style =
+											fakeStyle;
 									}
 
 									if (typeof height !== 'undefined') {
@@ -111,7 +112,8 @@
 											CKEDITOR.tools.cssLength(height) +
 											';';
 
-										fakeElement.attributes.style = fakeStyle;
+										fakeElement.attributes.style =
+											fakeStyle;
 									}
 
 									if (typeof width !== 'undefined') {
@@ -120,7 +122,8 @@
 											CKEDITOR.tools.cssLength(width) +
 											';';
 
-										fakeElement.attributes.style = fakeStyle;
+										fakeElement.attributes.style =
+											fakeStyle;
 									}
 								}
 							}

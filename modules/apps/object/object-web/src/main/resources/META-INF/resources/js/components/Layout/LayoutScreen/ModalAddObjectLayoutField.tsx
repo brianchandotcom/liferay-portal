@@ -93,9 +93,8 @@ export default function ModalAddObjectLayoutField({
 	tabIndex,
 }: IProps) {
 	const [{objectFields}, dispatch] = useLayoutContext();
-	const [selectedObjectFieldId, setSelectedObjectFieldId] = useState<
-		string
-	>();
+	const [selectedObjectFieldId, setSelectedObjectFieldId] =
+		useState<string>();
 
 	const objectFieldItems = useMemo(() => {
 		const availableObjectFields: ObjectFieldItem[] = [];
@@ -200,10 +199,10 @@ export default function ModalAddObjectLayoutField({
 											{required
 												? Liferay.Language.get(
 														'mandatory'
-												  )
+													)
 												: Liferay.Language.get(
 														'optional'
-												  )}
+													)}
 										</ClayLabel>
 
 										{(businessType === 'AutoIncrement' ||

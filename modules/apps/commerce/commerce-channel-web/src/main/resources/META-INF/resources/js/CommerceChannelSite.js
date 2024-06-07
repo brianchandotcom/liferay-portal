@@ -27,7 +27,8 @@ export default function ({
 								return;
 							}
 
-							const searchContainerData = searchContainer.getData();
+							const searchContainerData =
+								searchContainer.getData();
 
 							const link = document.querySelector(
 								`a[data-rowid="${searchContainerData}"]`

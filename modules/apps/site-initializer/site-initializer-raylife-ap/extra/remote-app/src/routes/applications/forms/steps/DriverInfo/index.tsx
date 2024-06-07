@@ -87,6 +87,7 @@ const DriverInfo = () => {
 
 	useEffect(() => {
 		handleSaveChanges(form);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state.steps.driverInfo]);
 

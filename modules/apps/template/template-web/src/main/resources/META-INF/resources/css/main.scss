@@ -12,7 +12,8 @@ $productMenuWidth: 320px;
 		left: 0;
 		min-height: 3.5rem;
 		position: fixed;
-		transition: left ease $productMenuTransitionDuration,
+		transition:
+			left ease $productMenuTransitionDuration,
 			width ease $productMenuTransitionDuration;
 		width: 100%;
 		z-index: $toolbarZIndex;

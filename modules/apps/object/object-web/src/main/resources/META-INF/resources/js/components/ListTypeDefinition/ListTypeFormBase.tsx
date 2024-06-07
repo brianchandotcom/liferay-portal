@@ -27,13 +27,12 @@ export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm<
-		ListTypeDefinition
-	>({
-		initialValues,
-		onSubmit,
-		validate,
-	});
+	const {errors, handleChange, handleSubmit, setValues, values} =
+		useForm<ListTypeDefinition>({
+			initialValues,
+			onSubmit,
+			validate,
+		});
 
 	return {errors, handleChange, handleSubmit, setValues, values};
 }

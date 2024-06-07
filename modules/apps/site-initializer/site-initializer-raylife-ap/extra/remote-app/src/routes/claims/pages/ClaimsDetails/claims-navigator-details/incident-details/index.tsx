@@ -16,9 +16,8 @@ type ClaimTypeJSON = {[keys: string]: string};
 const IncidentDetail = (claimData: ClaimComponentsType) => {
 	const [claimIncidentDetails, setClaimDetails] = useState<ClaimTypeJSON>();
 
-	const [claimVehicleRepair, setClaimVehicleRepair] = useState<
-		ClaimTypeJSON
-	>();
+	const [claimVehicleRepair, setClaimVehicleRepair] =
+		useState<ClaimTypeJSON>();
 
 	const incidentDate = claimData?.claimData.incidentDate;
 

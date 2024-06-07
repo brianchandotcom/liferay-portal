@@ -159,9 +159,10 @@ export default function ({
 
 	const _handleEnableClauseContributors = (classNames) => {
 		onFrameworkConfigChange({
-			clauseContributorsExcludes: frameworkConfig.clauseContributorsExcludes.filter(
-				(clause) => !classNames.includes(clause)
-			),
+			clauseContributorsExcludes:
+				frameworkConfig.clauseContributorsExcludes.filter(
+					(clause) => !classNames.includes(clause)
+				),
 			clauseContributorsIncludes: removeDuplicates([
 				...frameworkConfig.clauseContributorsIncludes,
 				...classNames,
@@ -175,9 +176,10 @@ export default function ({
 				...frameworkConfig.clauseContributorsExcludes,
 				...classNames,
 			]),
-			clauseContributorsIncludes: frameworkConfig.clauseContributorsIncludes.filter(
-				(clause) => !classNames.includes(clause)
-			),
+			clauseContributorsIncludes:
+				frameworkConfig.clauseContributorsIncludes.filter(
+					(clause) => !classNames.includes(clause)
+				),
 		});
 	};
 
@@ -187,7 +189,7 @@ export default function ({
 				? selected.filter(
 						(preselectedClassName) =>
 							preselectedClassName !== className
-				  )
+					)
 				: [...selected, className]
 		);
 	};
@@ -321,7 +323,7 @@ export default function ({
 													? Liferay.Language.get('on')
 													: Liferay.Language.get(
 															'off'
-													  )
+														)
 											}
 											onToggle={_handleToggleClauseContributor(
 												className

@@ -42,8 +42,7 @@ export const mockedContentWithPreview = {
 		'web-dav-url': {
 			title: 'WebDAV URL',
 			type: 'URL',
-			value:
-				'http://localhost:8080/webdav/guest/document_library/tree.png',
+			value: 'http://localhost:8080/webdav/guest/document_library/tree.png',
 		},
 	},
 	subType: 'Basic Document (Image)',
@@ -79,8 +78,7 @@ export const mockedContentWithPreviewWithoutLink = {
 		'web-dav-url': {
 			title: 'WebDAV URL',
 			type: 'URL',
-			value:
-				'http://localhost:8080/webdav/guest/document_library/tree.png',
+			value: 'http://localhost:8080/webdav/guest/document_library/tree.png',
 		},
 	},
 	subType: 'Basic Document',

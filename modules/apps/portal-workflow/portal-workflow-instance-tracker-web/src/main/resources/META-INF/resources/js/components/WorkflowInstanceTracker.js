@@ -89,10 +89,8 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 	useEffect(() => {
 		if (definitionElements && visitedNodes) {
 			const position = {x: 0, y: 0};
-			const {
-				nodes: nodeElements,
-				transitions: transitionElements,
-			} = definitionElements;
+			const {nodes: nodeElements, transitions: transitionElements} =
+				definitionElements;
 
 			if (nodeElements?.length && transitionElements?.length) {
 				const nodes = nodeElements.map((node) => {

@@ -94,6 +94,7 @@ export function BusinessTypeSearch({
 
 	useEffect(() => {
 		getTaxonomyCategoriesBySearchName(businessSearchDebounced);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [businessSearchDebounced]);
 

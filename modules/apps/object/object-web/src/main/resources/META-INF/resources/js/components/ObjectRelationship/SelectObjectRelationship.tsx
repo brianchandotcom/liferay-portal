@@ -24,9 +24,8 @@ export default function SelectRelationship({
 	value,
 	...otherProps
 }: IProps) {
-	const [creationLanguageId, setCreationLanguageId] = useState<
-		Liferay.Language.Locale
-	>();
+	const [creationLanguageId, setCreationLanguageId] =
+		useState<Liferay.Language.Locale>();
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 	const objectFieldItems = useMemo(
 		() =>
@@ -50,21 +49,25 @@ export default function SelectRelationship({
 	useEffect(() => {
 		if (objectDefinitionExternalReferenceCode1) {
 			const makeFetch = async () => {
-				const objectFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-					objectDefinitionExternalReferenceCode1
-				);
+				const objectFields =
+					await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+						objectDefinitionExternalReferenceCode1
+					);
 
-				const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode1
-				);
+				const objectDefinition =
+					await API.getObjectDefinitionByExternalReferenceCode(
+						objectDefinitionExternalReferenceCode1
+					);
 
 				setCreationLanguageId(objectDefinition.defaultLanguageId);
 
 				const objectFieldOptions = objectFields.filter(
 					({objectFieldSettings}) => {
-						const objectDefinition1ShortName = objectFieldSettings?.find(
-							({name}) => name === 'objectDefinition1ShortName'
-						);
+						const objectDefinition1ShortName =
+							objectFieldSettings?.find(
+								({name}) =>
+									name === 'objectDefinition1ShortName'
+							);
 
 						return (
 							objectDefinition1ShortName &&

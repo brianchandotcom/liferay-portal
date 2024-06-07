@@ -95,10 +95,8 @@ function CategorySelectorInput({
 		multiple ? '' : value.label || value.toString() || ''
 	);
 	const [matchingCategories, setMatchingCategories] = useState([]);
-	const [
-		autocompleteDropdownActive,
-		setAutocompleteDropdownActive,
-	] = useState(false);
+	const [autocompleteDropdownActive, setAutocompleteDropdownActive] =
+		useState(false);
 
 	const _handleSetMatchingCategories = (inputValue, categoryTree) => {
 		const categories = [];
@@ -355,7 +353,7 @@ function CategorySelectorInput({
 								),
 							},
 							...items,
-					  ];
+						];
 
 				const tree = [];
 

@@ -32,7 +32,6 @@
 	width: 162px;
 }
 
-
 @media (max-width: 1340px) {
 	.form-box {
 		width: 60%;
@@ -58,7 +57,7 @@
 		font-size: 36px;
 		margin-bottom: var(--spacer-4);
 	}
-	
+
 	.sign-in-form button {
 		margin-bottom: var(--spacer-4);
 	}

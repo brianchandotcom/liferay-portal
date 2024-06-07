@@ -66,8 +66,7 @@ export default function ObjectDefinitionNodeFooter({
 												addObjectField: true,
 											},
 										},
-										type:
-											TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+										type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 									})
 								}
 							>
@@ -87,8 +86,7 @@ export default function ObjectDefinitionNodeFooter({
 												addObjectRelationship: true,
 											},
 										},
-										type:
-											TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+										type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 									});
 								}}
 							>
@@ -114,18 +112,19 @@ export default function ObjectDefinitionNodeFooter({
 							? sub(
 									Liferay.Language.get('hide-x'),
 									Liferay.Language.get('fields')
-							  )
+								)
 							: sub(
 									Liferay.Language.get('show-all-x'),
 									Liferay.Language.get('fields')
-							  )
+								)
 					}
 					className="lfr-objects__model-builder-node-show-all-fields-button"
 					displayType="unstyled"
 					onClick={() => {
 						dispatch({
 							payload: {
-								objectDefinitionExternalReferenceCode: externalReferenceCode,
+								objectDefinitionExternalReferenceCode:
+									externalReferenceCode,
 								showAllObjectFields,
 							},
 							type: TYPES.SET_SHOW_ALL_OBJECT_FIELDS,
@@ -137,11 +136,11 @@ export default function ObjectDefinitionNodeFooter({
 						? sub(
 								Liferay.Language.get('hide-x'),
 								Liferay.Language.get('fields')
-						  )
+							)
 						: sub(
 								Liferay.Language.get('show-all-x'),
 								Liferay.Language.get('fields')
-						  )}
+							)}
 
 					<ClayIcon
 						className="c-pt-1 text-4"

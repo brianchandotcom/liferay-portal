@@ -47,12 +47,8 @@ export default function PreviewButton({
 				})
 					.then((response) => response.json())
 					.then((response) => {
-						const {
-							articleId,
-							error,
-							friendlyUrlMap,
-							version,
-						} = response;
+						const {articleId, error, friendlyUrlMap, version} =
+							response;
 
 						if (error) {
 							openToast({

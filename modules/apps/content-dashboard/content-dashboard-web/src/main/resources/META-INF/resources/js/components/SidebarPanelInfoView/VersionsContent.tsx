@@ -107,7 +107,7 @@ const VersionsContent = ({
 												? changeLog
 												: Liferay.Language.get(
 														'no-change-log'
-												  )}
+													)}
 										</div>
 									</ClayLayout.ContentCol>
 

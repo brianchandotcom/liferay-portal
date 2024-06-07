@@ -67,7 +67,8 @@ class D3Handler extends DiagramZoomHandler {
 	}
 
 	_printImage() {
-		const wrapperBoundingClientRect = this._diagramWrapper.getBoundingClientRect();
+		const wrapperBoundingClientRect =
+			this._diagramWrapper.getBoundingClientRect();
 
 		this._image = this._d3zoomWrapper
 			.append('image')

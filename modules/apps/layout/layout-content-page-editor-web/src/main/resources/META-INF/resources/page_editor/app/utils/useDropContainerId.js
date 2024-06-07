@@ -10,10 +10,8 @@ import {useDropTargetData} from './drag_and_drop/useDragAndDrop';
 
 export default function useDropContainerId() {
 	const {item: dropItem, position: dropPosition} = useDropTargetData();
-	const {
-		itemId: keyboardMovementItemId,
-		position: keyboardMovementPosition,
-	} = useMovementTarget();
+	const {itemId: keyboardMovementItemId, position: keyboardMovementPosition} =
+		useMovementTarget();
 
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const keyboardMovementItem =

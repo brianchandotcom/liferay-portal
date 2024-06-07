@@ -15,6 +15,7 @@ jest.mock('react-dnd', () => ({
 	DragSource: (element) => (element) => element,
 	DropTarget: (element) => (element) => element,
 }));
+
 /* eslint-enable no-unused-vars */
 
 const HIDE_BUTTON_LABEL = 'hide-result';

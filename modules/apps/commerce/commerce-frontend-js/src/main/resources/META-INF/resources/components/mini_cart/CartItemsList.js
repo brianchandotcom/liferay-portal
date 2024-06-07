@@ -64,9 +64,8 @@ export default function CartItemsList({showPriceOnApplicationInfo = false}) {
 					<div className="mini-cart-cart-items">
 						{cartItems.map((currentCartItem, index) => {
 							const updateCartItem = (callback) => {
-								const updatedCartItem = callback(
-									currentCartItem
-								);
+								const updatedCartItem =
+									callback(currentCartItem);
 
 								setCartState((cartState) => ({
 									...cartState,

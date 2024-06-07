@@ -32,8 +32,8 @@ const ScheduleUpdates = () => {
 	const [periodButtons, setPeriodButtons] = useState(periodOfTheDay);
 
 	const selectPeriodCard = (currentIndex: number) => {
-		periodOfTheDay[currentIndex].active = !periodOfTheDay[currentIndex]
-			.active;
+		periodOfTheDay[currentIndex].active =
+			!periodOfTheDay[currentIndex].active;
 
 		setPeriodButtons(periodOfTheDay);
 	};

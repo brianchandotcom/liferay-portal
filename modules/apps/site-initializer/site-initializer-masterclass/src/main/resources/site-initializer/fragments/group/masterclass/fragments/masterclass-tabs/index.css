@@ -39,7 +39,10 @@
 	color: var(--gray-900);
 }
 
-.masterclass-tabs .navbar-underline.navbar-expand-md .navbar-nav .nav-link.active:after {
+.masterclass-tabs
+	.navbar-underline.navbar-expand-md
+	.navbar-nav
+	.nav-link.active:after {
 	background-color: var(--primary);
 }
 
@@ -52,5 +55,4 @@
 .masterclass-tabs .navbar-collapse.show {
 	padding-left: 0;
 	padding-right: 0;
-	
 }

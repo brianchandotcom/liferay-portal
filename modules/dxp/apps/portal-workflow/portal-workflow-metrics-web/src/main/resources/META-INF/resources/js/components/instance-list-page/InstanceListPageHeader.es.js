@@ -40,12 +40,8 @@ export default function Header({
 	});
 
 	const {userId} = useContext(AppContext);
-	const {
-		selectAll,
-		selectedItems,
-		setSelectAll,
-		setSelectedItems,
-	} = useContext(InstanceListContext);
+	const {selectAll, selectedItems, setSelectAll, setSelectedItems} =
+		useContext(InstanceListContext);
 	const {openModal} = useContext(ModalContext);
 	const previousCount = usePrevious(totalCount);
 
@@ -72,7 +68,10 @@ export default function Header({
 		[openModal, selectedItems]
 	);
 
-	const compareId = (itemId) => ({id}) => id === itemId;
+	const compareId =
+		(itemId) =>
+		({id}) =>
+			id === itemId;
 
 	const kebabItems = [
 		{
@@ -107,16 +106,18 @@ export default function Header({
 			!!selectedOnPage.length && !allPageSelected && !selectAll,
 	};
 
-	const isRemainingItem = (clear) => ({assignees = [], id, status}) => {
-		const assignedToUser = !!assignees.find(
-			({id}) => id === Number(userId)
-		);
-		const completed = status === processStatusConstants.completed;
-		const selected = clear && selectedItems.find(compareId(id));
-		const {reviewer} = assignees.find(({id}) => id === -1) || {};
+	const isRemainingItem =
+		(clear) =>
+		({assignees = [], id, status}) => {
+			const assignedToUser = !!assignees.find(
+				({id}) => id === Number(userId)
+			);
+			const completed = status === processStatusConstants.completed;
+			const selected = clear && selectedItems.find(compareId(id));
+			const {reviewer} = assignees.find(({id}) => id === -1) || {};
 
-		return (reviewer || assignedToUser) && !completed && !selected;
-	};
+			return (reviewer || assignedToUser) && !completed && !selected;
+		};
 
 	const remainingItems = items.filter(isRemainingItem(true));
 	const toolbarActive = !!selectedItems.length;

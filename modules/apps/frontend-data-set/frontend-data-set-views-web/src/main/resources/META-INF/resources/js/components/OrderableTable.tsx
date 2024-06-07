@@ -395,7 +395,7 @@ const OrderableTable = ({
 
 							return String(item[field.name]).match(regexp);
 						})
-				  ) || []
+					) || []
 				: initialItems
 		);
 	};

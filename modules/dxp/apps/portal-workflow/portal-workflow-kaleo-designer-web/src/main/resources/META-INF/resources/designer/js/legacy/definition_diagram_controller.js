@@ -100,9 +100,10 @@ AUI.add(
 							initial: item.initial,
 							metadata,
 							name: item.name,
-							notifications: FieldNormalizer.normalizeToNotifications(
-								item.notifications
-							),
+							notifications:
+								FieldNormalizer.normalizeToNotifications(
+									item.notifications
+								),
 							script: item.script,
 							scriptLanguage:
 								item.scriptLanguage || DEFAULT_LANGUAGE,
@@ -137,7 +138,8 @@ AUI.add(
 			},
 		};
 
-		Liferay.KaleoDesignerDefinitionDiagramController = DefinitionDiagramController;
+		Liferay.KaleoDesignerDefinitionDiagramController =
+			DefinitionDiagramController;
 	},
 	'',
 	{

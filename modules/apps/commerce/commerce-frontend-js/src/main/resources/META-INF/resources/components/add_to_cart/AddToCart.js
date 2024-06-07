@@ -226,7 +226,8 @@ function AddToCart({
 			<div
 				className={classnames({
 					'd-flex': true,
-					'justify-content-center': !settings.showUnitOfMeasureSelector,
+					'justify-content-center':
+						!settings.showUnitOfMeasureSelector,
 					'mb-3': true,
 				})}
 			>
@@ -290,7 +291,7 @@ function AddToCart({
 								event.preventDefault();
 
 								inputRef.current?.focus();
-						  }
+							}
 				}
 				settings={settings}
 				showOrderTypeModal={showOrderTypeModal}

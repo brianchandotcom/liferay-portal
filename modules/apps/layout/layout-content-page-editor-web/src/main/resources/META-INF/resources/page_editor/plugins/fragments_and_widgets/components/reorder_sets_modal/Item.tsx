@@ -38,10 +38,8 @@ export function Item({index, item, onDropItem}: ItemProps) {
 	const itemDescriptionId = useId();
 	const {name} = item;
 
-	const {
-		handlerRef: mouseDragHandlerRef,
-		isDragging: isMouseDragging,
-	} = useMouseDragItem(item);
+	const {handlerRef: mouseDragHandlerRef, isDragging: isMouseDragging} =
+		useMouseDragItem(item);
 
 	const {
 		dragOverPosition: keyboardDragOverPosition,
@@ -88,9 +86,7 @@ export function Item({index, item, onDropItem}: ItemProps) {
 									displayType="unstyled"
 									monospaced
 									ref={
-										(keyboardDragHandlerRef as unknown) as RefObject<
-											HTMLButtonElement
-										>
+										keyboardDragHandlerRef as unknown as RefObject<HTMLButtonElement>
 									}
 									size="xs"
 									tabIndex={-1}

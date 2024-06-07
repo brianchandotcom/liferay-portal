@@ -14,10 +14,8 @@ describe('Conjunction', () => {
 	afterEach(cleanup);
 
 	it('renders with value in editable mode', () => {
-		const {
-			label: initialConjunctionLabel,
-			name: initialConjunctionName,
-		} = SUPPORTED_CONJUNCTIONS[0];
+		const {label: initialConjunctionLabel, name: initialConjunctionName} =
+			SUPPORTED_CONJUNCTIONS[0];
 
 		const {getAllByText} = render(
 			<Conjunction
@@ -36,10 +34,8 @@ describe('Conjunction', () => {
 	});
 
 	it('renders with value in non-editable mode', () => {
-		const {
-			label: initialConjunctionLabel,
-			name: initialConjunctionName,
-		} = SUPPORTED_CONJUNCTIONS[0];
+		const {label: initialConjunctionLabel, name: initialConjunctionName} =
+			SUPPORTED_CONJUNCTIONS[0];
 
 		const {getByText} = render(
 			<Conjunction
@@ -58,10 +54,8 @@ describe('Conjunction', () => {
 	});
 
 	it('dropdown opens on click in editable mode', () => {
-		const {
-			label: initialConjunctionLabel,
-			name: initialConjunctionName,
-		} = SUPPORTED_CONJUNCTIONS[0];
+		const {label: initialConjunctionLabel, name: initialConjunctionName} =
+			SUPPORTED_CONJUNCTIONS[0];
 
 		const {getAllByText} = render(
 			<Conjunction
@@ -86,10 +80,8 @@ describe('Conjunction', () => {
 
 	it('onSelect prop is triggered on selection with conjuntionName param in editable mode', () => {
 		const onSelectMock = jest.fn(() => {});
-		const {
-			label: initialConjunctionLabel,
-			name: initialConjunctionName,
-		} = SUPPORTED_CONJUNCTIONS[0];
+		const {label: initialConjunctionLabel, name: initialConjunctionName} =
+			SUPPORTED_CONJUNCTIONS[0];
 
 		const {getAllByText, getByText} = render(
 			<Conjunction

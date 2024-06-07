@@ -45,7 +45,7 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
 					LAYOUT_DATA_ITEM_TYPES.dropZone,
 					LAYOUT_DATA_ITEM_TYPES.row,
 					LAYOUT_DATA_ITEM_TYPES.fragment,
-			  ].includes(child.type)
+				].includes(child.type)
 			: false,
 	[LAYOUT_DATA_ITEM_TYPES.row]: (child) =>
 		[LAYOUT_DATA_ITEM_TYPES.column].includes(child.type),

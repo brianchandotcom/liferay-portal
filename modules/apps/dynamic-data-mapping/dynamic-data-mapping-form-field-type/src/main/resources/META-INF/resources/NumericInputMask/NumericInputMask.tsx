@@ -85,9 +85,8 @@ const NumericInputMask: React.FC<IProps> = ({
 	const [thousandsSeparator, setThousandsSeparator] = useState(
 		thousandsSeparatorInitial
 	);
-	const [currentDecimalPlaces, setCurrentDecimalPlaces] = useState(
-		decimalPlacesInitial
-	);
+	const [currentDecimalPlaces, setCurrentDecimalPlaces] =
+		useState(decimalPlacesInitial);
 	const [decimalPlaces, setDecimalPlaces] = useState(decimalPlacesInitial);
 	const [decimalSymbol, setDecimalSymbol] = useState(decimalSymbolInitial);
 	const [append, setAppend] = useState(appendInitial);
@@ -152,6 +151,7 @@ const NumericInputMask: React.FC<IProps> = ({
 						decimalSymbol,
 						thousandsSeparator,
 					},
+
 					// eslint-disable-next-line sort-keys
 					[key]: value,
 				},
@@ -168,7 +168,9 @@ const NumericInputMask: React.FC<IProps> = ({
 						name="thousandsSeparator"
 						onChange={(_: any, value: ThousandsSeparator[]) => {
 							handleChange('symbols', {
-								decimalSymbol: (decimalSymbol as DecimalSymbol[])?.[0],
+								decimalSymbol: (
+									decimalSymbol as DecimalSymbol[]
+								)?.[0],
 								thousandsSeparator: value[0],
 							});
 
@@ -194,11 +196,10 @@ const NumericInputMask: React.FC<IProps> = ({
 						onChange={(_: any, value: DecimalSymbol[]) => {
 							handleChange('symbols', {
 								decimalSymbol: value[0],
-								thousandsSeparator: (thousandsSeparator?.includes(
-									'none'
-								)
-									? 'none'
-									: thousandsSeparator[0]) as ThousandsSeparator,
+								thousandsSeparator:
+									(thousandsSeparator?.includes('none')
+										? 'none'
+										: thousandsSeparator[0]) as ThousandsSeparator,
 							});
 
 							setDecimalSymbol(value[0]);

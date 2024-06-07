@@ -210,6 +210,7 @@ const State = {
 			);
 
 			if (process.env.NODE_ENV === 'development') {
+
 				/* eslint-disable-next-line no-console */
 				console.info(
 					`Callback name: ${callback.name || 'undefined'}\n` +

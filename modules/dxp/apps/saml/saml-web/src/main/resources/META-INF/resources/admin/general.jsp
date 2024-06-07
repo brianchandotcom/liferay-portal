@@ -116,8 +116,7 @@ if (samlRoleIdpOptionDisabled) {
 		Liferay.Util.openModal({
 			id: '<portlet:namespace />certificateDialog',
 			iframeBodyCssClass: 'dialog-with-footer',
-			title:
-				'<%= UnicodeLanguageUtil.get(request, "certificate-and-private-key") %>',
+			title: '<%= UnicodeLanguageUtil.get(request, "certificate-and-private-key") %>',
 			url: uri,
 		});
 	};

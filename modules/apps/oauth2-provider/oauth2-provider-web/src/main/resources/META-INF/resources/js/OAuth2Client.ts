@@ -103,6 +103,7 @@ class OAuth2Client {
 		return new Promise((resolve, reject) => {
 			const eventHandler = (event: any) => {
 				if (oauth2Client.debug) {
+
 					// eslint-disable-next-line no-console
 					console.debug('OAuth2Client._createIframe.event', event);
 				}
@@ -234,6 +235,7 @@ class OAuth2Client {
 			);
 
 			if (oauth2Client.debug && cachedTokenData) {
+
 				// eslint-disable-next-line no-console
 				console.debug(
 					'OAuth2Client._getOrRequestToken.cachedTokenData',

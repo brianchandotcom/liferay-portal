@@ -47,6 +47,7 @@
 		object.rv = {};
 
 		object.before = function (method, f) {
+
 			/* eslint-disable-next-line no-eval */
 			const original = eval('this.' + method);
 
@@ -58,6 +59,7 @@
 		};
 
 		object.after = function (method, f) {
+
 			/* eslint-disable-next-line no-eval */
 			const original = eval('this.' + method);
 
@@ -69,6 +71,7 @@
 		};
 
 		object.around = function (method, f) {
+
 			/* eslint-disable-next-line no-eval */
 			const original = eval('this.' + method);
 
@@ -374,6 +377,7 @@
 			}
 
 			if (element) {
+
 				// eslint-disable-next-line @liferay/aui/no-get-body
 				const pageBody = A.getBody();
 

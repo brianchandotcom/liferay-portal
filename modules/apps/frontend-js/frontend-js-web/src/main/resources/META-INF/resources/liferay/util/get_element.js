@@ -14,6 +14,6 @@ export default function getElement(element) {
 	return typeof currentElement === 'string'
 		? document.querySelector(currentElement)
 		: currentElement.jquery
-		? currentElement[0]
-		: currentElement;
+			? currentElement[0]
+			: currentElement;
 }

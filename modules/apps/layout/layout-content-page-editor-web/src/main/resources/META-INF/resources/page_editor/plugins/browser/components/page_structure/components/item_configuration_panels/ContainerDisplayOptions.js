@@ -65,7 +65,7 @@ export default function ContainerDisplayOptions({item}) {
 									flexWrap: '',
 									justify: '',
 									[name]: '',
-							  }
+								}
 							: {[name]: value};
 
 					dispatch(

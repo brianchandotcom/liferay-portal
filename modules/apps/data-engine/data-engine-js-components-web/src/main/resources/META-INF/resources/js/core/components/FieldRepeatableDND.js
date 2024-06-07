@@ -45,7 +45,8 @@ const FieldRepeatableDND = ({children, field, index, nestedFieldIndex}) => {
 			className={
 				(field.hidden ? 'hide ' : '') +
 				classNames('lfr-forms__form-view-field-repeatable-dnd', {
-					'lfr-forms__form-view-field-repeatable-dnd--dragging': isDragging,
+					'lfr-forms__form-view-field-repeatable-dnd--dragging':
+						isDragging,
 				})
 			}
 			ref={(element) => {

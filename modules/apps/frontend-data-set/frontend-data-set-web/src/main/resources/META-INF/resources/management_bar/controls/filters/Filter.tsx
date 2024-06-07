@@ -17,7 +17,7 @@ import dateRangeFilterImplementation from './implementation/DateRangeFilter';
 import selectionFilterImplementation from './implementation/SelectionFilter';
 
 export interface FilterImplementation<
-	T extends FilterImplementationArgs<unknown>
+	T extends FilterImplementationArgs<unknown>,
 > {
 	Component: (args: T) => ReactElement;
 	getOdataString: (args: T) => string;
@@ -109,12 +109,10 @@ const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
 			...otherProps,
 		};
 
-		newFilter.odataFilterString = filterImplementation.getOdataString(
-			newFilter
-		);
-		newFilter.selectedItemsLabel = filterImplementation.getSelectedItemsLabel(
-			newFilter
-		);
+		newFilter.odataFilterString =
+			filterImplementation.getOdataString(newFilter);
+		newFilter.selectedItemsLabel =
+			filterImplementation.getSelectedItemsLabel(newFilter);
 
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,

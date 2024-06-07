@@ -477,7 +477,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			'ldap--<%= LDAPConstants.SECURITY_PRINCIPAL %>--': principal,
 			'ldap--<%= LDAPConstants.SECURITY_CREDENTIAL %>--': credentials,
 			'ldap--<%= LDAPConstants.AUTH_SEARCH_FILTER %>--': searchFilter,
-			'ldap--<%= LDAPConstants.USER_SEARCH_FILTER %>--': importUserSearchFilter,
+			'ldap--<%= LDAPConstants.USER_SEARCH_FILTER %>--':
+				importUserSearchFilter,
 			'userMappingEmailAddress': userMappingEmailAddress,
 			'userMappingFirstName': userMappingFirstName,
 			'userMappingFullName': userMappingFullName,
@@ -490,14 +491,17 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			'userMappingScreenName': userMappingScreenName,
 			'userMappingStatus': userMappingStatus,
 			'userMappingUuid': userMappingUuid,
-			'ldap--<%= LDAPConstants.GROUP_SEARCH_FILTER %>--': importGroupSearchFilter,
+			'ldap--<%= LDAPConstants.GROUP_SEARCH_FILTER %>--':
+				importGroupSearchFilter,
 			'groupMappingDescription': groupMappingDescription,
 			'groupMappingGroupName': groupMappingGroupName,
 			'groupMappingUser': groupMappingUser,
 			'ldap--<%= LDAPConstants.USERS_DN %>--': baseDN,
-			'ldap--<%= LDAPConstants.USER_DEFAULT_OBJECT_CLASSES %>--': exportMappingUserDefaultObjectClass,
+			'ldap--<%= LDAPConstants.USER_DEFAULT_OBJECT_CLASSES %>--':
+				exportMappingUserDefaultObjectClass,
 			'ldap--<%= LDAPConstants.GROUPS_DN %>--': baseDN,
-			'ldap--<%= LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES %>--': exportMappingGroupDefaultObjectClass,
+			'ldap--<%= LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES %>--':
+				exportMappingGroupDefaultObjectClass,
 		});
 	}
 

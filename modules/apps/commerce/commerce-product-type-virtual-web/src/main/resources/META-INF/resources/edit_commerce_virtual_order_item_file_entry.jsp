@@ -130,8 +130,7 @@ FileEntry fileEntry = cpDefinitionVirtualSettingDisplayContext.getFileEntry(file
 				},
 				selectEventName: 'uploadCPDefinitionVirtualSetting',
 				title: '<liferay-ui:message key="select-file" />',
-				url:
-					'<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>',
+				url: '<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>',
 			});
 		});
 

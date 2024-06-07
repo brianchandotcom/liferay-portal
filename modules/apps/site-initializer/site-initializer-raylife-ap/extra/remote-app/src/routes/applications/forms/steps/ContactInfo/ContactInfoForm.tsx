@@ -72,6 +72,7 @@ const ContactInfo = () => {
 		if (addressElement) {
 			setAutoComplete(addressElement, updateFormWithGoogleAddress);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addressElement]);
 
@@ -180,6 +181,7 @@ const ContactInfo = () => {
 				/>
 			</ClayRadioGroup>
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	};
 

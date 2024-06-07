@@ -24,31 +24,28 @@ function ExportSettings({
 	internalClassNameKeyLabel,
 	internalClassNameKeyName,
 }) {
-	const [
-		selectedExternalTypeOption,
-		setSelectedExternalTypeOption,
-	] = useState(externalTypeInitialOptions[0].value);
+	const [selectedExternalTypeOption, setSelectedExternalTypeOption] =
+		useState(externalTypeInitialOptions[0].value);
 	const [
 		selectedInternalClassNameKeyName,
 		setSelectedInternalClassNameKeyName,
 	] = useState();
 	const templateRef = useRef(false);
 
-	const [
-		internalClassNameKeyOptions,
-		dispatchInternalClassNameKeyOptions,
-	] = useReducer((state, action) => {
-		if (action === 'update') {
-			if (selectedExternalTypeOption === CSV_FORMAT.toUpperCase()) {
-				return internalClassNameKeyInitialOptions.filter(
-					(item) => !DISALLOWED_CSV_ENTITY_TYPES.includes(item.value)
-				);
+	const [internalClassNameKeyOptions, dispatchInternalClassNameKeyOptions] =
+		useReducer((state, action) => {
+			if (action === 'update') {
+				if (selectedExternalTypeOption === CSV_FORMAT.toUpperCase()) {
+					return internalClassNameKeyInitialOptions.filter(
+						(item) =>
+							!DISALLOWED_CSV_ENTITY_TYPES.includes(item.value)
+					);
+				}
+				else {
+					return internalClassNameKeyInitialOptions;
+				}
 			}
-			else {
-				return internalClassNameKeyInitialOptions;
-			}
-		}
-	}, internalClassNameKeyInitialOptions);
+		}, internalClassNameKeyInitialOptions);
 
 	useEffect(() => {
 		dispatchInternalClassNameKeyOptions('update');

@@ -39,9 +39,8 @@ export default function PathParameterConfiguration({
 		SelectOption[]
 	>([]);
 
-	const [selectedPathParameter, setSelectedPathParameter] = useState<
-		SelectOption
-	>();
+	const [selectedPathParameter, setSelectedPathParameter] =
+		useState<SelectOption>();
 
 	useEffect(() => {
 		setSelectedPathParameter(
@@ -94,7 +93,7 @@ export default function PathParameterConfiguration({
 					? response.map((objectField) => ({
 							label: getObjectFieldLabel(objectField),
 							value: objectField.name,
-					  }))
+						}))
 					: [];
 
 				if (options.length) {

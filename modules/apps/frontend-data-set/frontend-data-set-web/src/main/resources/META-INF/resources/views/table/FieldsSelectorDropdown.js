@@ -29,7 +29,7 @@ const FieldsSelectorDropdown = ({fields}) => {
 					[field.fieldName]: true,
 				}),
 				{}
-		  );
+			);
 
 	useEffect(() => {
 		setFilteredFields(
@@ -94,9 +94,10 @@ const FieldsSelectorDropdown = ({fields}) => {
 											portletId,
 											visibleFieldNames: {
 												...selectedFieldNames,
-												[fieldName]: !selectedFieldNames[
-													fieldName
-												],
+												[fieldName]:
+													!selectedFieldNames[
+														fieldName
+													],
 											},
 										})
 									);

@@ -111,9 +111,8 @@ export default function CriteriaRowEditable({
 
 		const propertyType = selectedProperty ? selectedProperty.type : '';
 
-		const filteredSupportedOperators = getSupportedOperatorsFromType(
-			propertyType
-		);
+		const filteredSupportedOperators =
+			getSupportedOperatorsFromType(propertyType);
 
 		return (
 			<>

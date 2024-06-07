@@ -177,9 +177,8 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				event.validator.field === formField &&
 				event.validator.errors[0] === validatorName
 			) {
-				const fieldContainer = formValidator.findFieldContainer(
-					formField
-				);
+				const fieldContainer =
+					formValidator.findFieldContainer(formField);
 
 				if (fieldContainer) {
 					fieldContainer.replaceClass('has-error', 'has-warning');

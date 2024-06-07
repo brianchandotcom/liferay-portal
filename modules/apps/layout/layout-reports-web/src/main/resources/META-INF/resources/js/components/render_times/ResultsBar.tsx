@@ -126,9 +126,9 @@ export default function ResultsBar({
 							</span>
 						</ResultsBarItem>
 
-						{(Object.entries(filters) as Entries<
-							FragmentFilter
-						>).map(([key, value]) =>
+						{(
+							Object.entries(filters) as Entries<FragmentFilter>
+						).map(([key, value]) =>
 							value ? (
 								<ResultsBarItemLabel
 									filterKey={key}

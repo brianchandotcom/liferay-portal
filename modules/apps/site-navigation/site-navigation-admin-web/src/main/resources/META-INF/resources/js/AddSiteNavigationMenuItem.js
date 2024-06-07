@@ -10,8 +10,9 @@ export default function ({namespace, order, parentSiteNavigationMenuItemId}) {
 
 	if (addButton) {
 		const onClick = () => {
-			const formValidator = Liferay.Form.get(`${namespace}fm`)
-				.formValidator;
+			const formValidator = Liferay.Form.get(
+				`${namespace}fm`
+			).formValidator;
 
 			formValidator.validate();
 

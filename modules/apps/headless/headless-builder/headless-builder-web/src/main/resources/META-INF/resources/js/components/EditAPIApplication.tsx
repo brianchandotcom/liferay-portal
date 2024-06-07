@@ -57,9 +57,8 @@ export default function EditAPIApplication({
 
 	const [fetchedData, setFetchedData] = useState<FetchedData>({});
 
-	const [hideManagementButtons, setHideManagementButtons] = useState<boolean>(
-		false
-	);
+	const [hideManagementButtons, setHideManagementButtons] =
+		useState<boolean>(false);
 
 	const [isDataUnsaved, setIsDataUnsaved] = useState<boolean>(false);
 
@@ -70,13 +69,12 @@ export default function EditAPIApplication({
 	});
 
 	const defaultButtonProps = {onClick: () => {}, visible: true};
-	const [managementButtonsProps, setManagementButtonsProps] = useState<
-		ManagementButtonsProps
-	>({
-		cancel: defaultButtonProps,
-		publish: defaultButtonProps,
-		save: defaultButtonProps,
-	});
+	const [managementButtonsProps, setManagementButtonsProps] =
+		useState<ManagementButtonsProps>({
+			cancel: defaultButtonProps,
+			publish: defaultButtonProps,
+			save: defaultButtonProps,
+		});
 
 	const [title, setTitle] = useState<string>('');
 	const [status, setStatus] = useState<ApplicationStatusKeys>('unpublished');
@@ -168,6 +166,7 @@ export default function EditAPIApplication({
 				});
 			}
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[localUIData]
 	);

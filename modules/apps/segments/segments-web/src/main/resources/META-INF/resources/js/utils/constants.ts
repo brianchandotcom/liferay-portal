@@ -12,7 +12,7 @@ export const CONJUNCTIONS = {
 	OR: 'or',
 } as const;
 
-export type Conjunction = typeof CONJUNCTIONS[keyof typeof CONJUNCTIONS];
+export type Conjunction = (typeof CONJUNCTIONS)[keyof typeof CONJUNCTIONS];
 
 export const FUNCTIONAL_OPERATORS = {
 	CONTAINS: 'contains',
@@ -46,7 +46,7 @@ export const PROPERTY_TYPES = {
 	STRING: 'string',
 } as const;
 
-export type PropertyType = typeof PROPERTY_TYPES[keyof typeof PROPERTY_TYPES];
+export type PropertyType = (typeof PROPERTY_TYPES)[keyof typeof PROPERTY_TYPES];
 
 /**
  * Constants for CriteriaBuilder component.
@@ -56,16 +56,8 @@ const {AND, OR} = CONJUNCTIONS;
 const {EQ, GE, GT, LE, LT} = RELATIONAL_OPERATORS;
 const {NOT_CONTAINS, NOT_EQ} = NOT_OPERATORS;
 const {CONTAINS} = FUNCTIONAL_OPERATORS;
-const {
-	BOOLEAN,
-	COLLECTION,
-	DATE,
-	DATE_TIME,
-	DOUBLE,
-	ID,
-	INTEGER,
-	STRING,
-} = PROPERTY_TYPES;
+const {BOOLEAN, COLLECTION, DATE, DATE_TIME, DOUBLE, ID, INTEGER, STRING} =
+	PROPERTY_TYPES;
 
 export const SUPPORTED_CONJUNCTIONS = [
 	{

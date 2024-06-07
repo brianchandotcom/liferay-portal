@@ -224,9 +224,8 @@ export function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 					Array.isArray(item.type) ? item.type.join('|') : item.type
 				}`,
 				render: (element, cm, data) => {
-					const [propertyName, propertyType] = data.displayText.split(
-						'#'
-					);
+					const [propertyName, propertyType] =
+						data.displayText.split('#');
 
 					const name = document.createElement('span');
 					name.className = CSS_CLASS_HINT_NAME;

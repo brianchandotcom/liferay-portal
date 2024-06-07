@@ -64,6 +64,7 @@ export default function EditListTypeDefinition({
 				setValues(response);
 			}
 		);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

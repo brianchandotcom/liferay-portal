@@ -31,11 +31,15 @@
 	@keyframes focusOutline {
 		0% {
 			background-color: $primaryL4;
-			box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primaryL2;
+			box-shadow:
+				0 0 0 0.125rem $white,
+				0 0 0 0.25rem $primaryL2;
 		}
 		25% {
 			background-color: $primaryL4;
-			box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primaryL2;
+			box-shadow:
+				0 0 0 0.125rem $white,
+				0 0 0 0.25rem $primaryL2;
 		}
 		100% {
 			background-color: $white;

@@ -16,10 +16,8 @@ export function ImageSelectorDescription({
 	imageDescription,
 	onImageDescriptionChanged,
 }) {
-	const [
-		imageDescriptionInputElement,
-		setImageDescriptionInputElement,
-	] = useState();
+	const [imageDescriptionInputElement, setImageDescriptionInputElement] =
+		useState();
 
 	const imageDescriptionInputId = useId();
 	const tooltipId = useId();

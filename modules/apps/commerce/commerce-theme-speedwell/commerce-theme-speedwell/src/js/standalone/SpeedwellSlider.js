@@ -222,9 +222,10 @@ SpeedwellSlider.prototype = {
 	setupData() {
 		return new Promise((resolve, reject) => {
 			try {
-				const ldJson = this.sliderWrapper.querySelector(
-					'.slider-dataset'
-				).innerText;
+				const ldJson =
+					this.sliderWrapper.querySelector(
+						'.slider-dataset'
+					).innerText;
 				this.dataset = this.validateDataset(JSON.parse(ldJson));
 
 				this.dataset.forEach((object, index) => {
@@ -326,9 +327,8 @@ Liferay.component(
 	(function () {
 		return {
 			initialize(setupDOMSlideFn, renderSlideContentFn, interval) {
-				const sliderContainer = window.document.querySelector(
-					'[data-will-load]'
-				);
+				const sliderContainer =
+					window.document.querySelector('[data-will-load]');
 
 				sliderContainer.removeAttribute('data-will-load');
 

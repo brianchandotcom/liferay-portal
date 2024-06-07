@@ -16,9 +16,8 @@ export default function ({
 	pricingName,
 	spritemap,
 }) {
-	const CommerceDiscountAccountGroupsResource = CommerceServiceProvider.AdminPricingAPI(
-		'v2'
-	);
+	const CommerceDiscountAccountGroupsResource =
+		CommerceServiceProvider.AdminPricingAPI('v2');
 	const id = commerceDiscountId;
 
 	function selectItem(accountGroup) {

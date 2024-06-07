@@ -173,9 +173,8 @@ function setNextItemIndex(index) {
 
 	indicators.forEach(function (indicator, index) {
 		indicator.addEventListener('click', function () {
-			const indexActiveIndicator = indicators.indexOf(
-				getActiveIndicator()
-			);
+			const indexActiveIndicator =
+				indicators.indexOf(getActiveIndicator());
 
 			if (index !== indexActiveIndicator) {
 				stopCarousel();

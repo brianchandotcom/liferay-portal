@@ -97,10 +97,8 @@ long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
 								submitForm(form);
 							}
 						},
-						title:
-							'<liferay-ui:message arguments="<%= cpDefinition.getName(languageId) %>" key="add-new-product-to-x" />',
-						url:
-							'<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl(type) %>',
+						title: '<liferay-ui:message arguments="<%= cpDefinition.getName(languageId) %>" key="add-new-product-to-x" />',
+						url: '<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl(type) %>',
 					});
 				}
 			);

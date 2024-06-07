@@ -150,12 +150,10 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				deleteUserGroupIds.push(rowId);
 
-				document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = addUserGroupIds.join(
-					','
-				);
-				document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = deleteUserGroupIds.join(
-					','
-				);
+				document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value =
+					addUserGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value =
+					deleteUserGroupIds.join(',');
 			},
 			'.modify-link'
 		);
@@ -196,12 +194,10 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 					addUserGroupIds.push(itemValue.userGroupId);
 
-					document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = addUserGroupIds.join(
-						','
-					);
-					document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = deleteUserGroupIds.join(
-						','
-					);
+					document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value =
+						addUserGroupIds.join(',');
+					document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value =
+						deleteUserGroupIds.join(',');
 				},
 				selectedData: searchContainer.getData(true),
 				selectEventName: '<portlet:namespace />selectUserGroup',

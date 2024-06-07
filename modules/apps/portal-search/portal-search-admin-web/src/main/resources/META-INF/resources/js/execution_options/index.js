@@ -35,10 +35,8 @@ function ExecutionOptions({
 	selectedCompanyIds = [],
 	virtualInstances = [],
 }) {
-	const [
-		executionModeDropdownActive,
-		setExecutionModeDropdownActive,
-	] = useState(false);
+	const [executionModeDropdownActive, setExecutionModeDropdownActive] =
+		useState(false);
 
 	const alignElementRef = useRef();
 

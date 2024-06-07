@@ -20,8 +20,10 @@
 	BBCodeUtil.unescape = A.rbind('unescapeHTML', Liferay.Util, entities);
 })();
 (function () {
+
 	// eslint-disable-next-line no-control-regex
-	const REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/gi;
+	const REGEX_BBCODE =
+		/(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/gi;
 
 	const Lexer = function (data) {
 		const instance = this;
@@ -78,6 +80,7 @@
 		color: 1,
 		font: 1,
 		i: 1,
+
 		// eslint-disable-next-line @liferay/no-abbreviations
 		img: 1,
 		s: 1,
@@ -86,7 +89,8 @@
 		url: 1,
 	};
 
-	const REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
+	const REGEX_TAG_NAME =
+		/^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	const STR_TAG_CODE = 'code';
 
@@ -335,6 +339,7 @@
 		'email': '_handleEmail',
 		'font': '_handleFont',
 		'i': '_handleEm',
+
 		// eslint-disable-next-line @liferay/no-abbreviations
 		'img': '_handleImage',
 		'justify': '_handleTextAlign',
@@ -392,11 +397,13 @@
 
 	const REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]*)"\s*/g;
 
-	const REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
+	const REGEX_COLOR =
+		/^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
 	const REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
-	const REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$/i;
+	const REGEX_IMAGE_SRC =
+		/^(?:https?:\/\/|\/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$/i;
 
 	const REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
 

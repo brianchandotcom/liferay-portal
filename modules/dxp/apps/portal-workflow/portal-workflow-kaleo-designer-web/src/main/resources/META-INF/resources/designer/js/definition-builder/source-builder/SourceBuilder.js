@@ -33,9 +33,8 @@ export default function SourceBuilder() {
 	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
 	const [loading, setLoading] = useState(true);
-	const [showImportSuccessMessage, setShowImportSuccessMessage] = useState(
-		false
-	);
+	const [showImportSuccessMessage, setShowImportSuccessMessage] =
+		useState(false);
 
 	useEffect(() => {
 		function loadXmlContent() {
@@ -112,9 +111,8 @@ export default function SourceBuilder() {
 		'write-your-definition-or-x'
 	).substring(0, 25);
 
-	const importFileMessage = Liferay.Language.get(
-		'import-a-file'
-	).toLowerCase();
+	const importFileMessage =
+		Liferay.Language.get('import-a-file').toLowerCase();
 
 	function handleInvalidXMLBlockingError() {
 		setBlockingError(() => ({

@@ -22,11 +22,8 @@ const CollapsablePanel = ({
 	const panelRef = React.useRef(null);
 	const [expanded, setExpanded] = React.useState(false);
 
-	const [
-		transitioning,
-		handleTransitionEnd,
-		startTransition,
-	] = useHeightTransition(expanded, setExpanded, panelRef);
+	const [transitioning, handleTransitionEnd, startTransition] =
+		useHeightTransition(expanded, setExpanded, panelRef);
 
 	const showIconCollapsed = !(
 		(!expanded && transitioning) ||

@@ -326,9 +326,8 @@ AUI.add(
 					const emptyColumnClass = options.emptyColumnClass;
 					const originalParent = curPortletInfo.originalParent;
 
-					const originalColumnHasPortlets = Layout.hasPortlets(
-						originalParent
-					);
+					const originalColumnHasPortlets =
+						Layout.hasPortlets(originalParent);
 
 					const currentColumn = columnNode.ancestor(
 						options.dropNodes
@@ -346,9 +345,8 @@ AUI.add(
 					if (originalColumn) {
 						const originalDropZoneId = originalColumn.get('id');
 
-						Layout.EMPTY_COLUMNS[
-							originalDropZoneId
-						] = !originalColumnHasPortlets;
+						Layout.EMPTY_COLUMNS[originalDropZoneId] =
+							!originalColumnHasPortlets;
 					}
 
 					columnNode.toggleClass(

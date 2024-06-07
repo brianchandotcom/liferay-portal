@@ -6,7 +6,8 @@
 const ALERT_REGEX = /alert\((.*?)\)/;
 const ASP_CODE_REGEX = /<%[\s\S]*?%>/g;
 const ASP_NET_CODE_REGEX = /(<asp:[^]+>[\s|\S]*?<\/asp:[^]+>)|(<asp:[^]+\/>)/gi;
-const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX = /<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
+const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX =
+	/<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
 const INNER_HTML_REGEX = /innerHTML\s*=\s*.*?/;
 const ON_ATTRIBUTE_REGEX = /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi;
 const PHP_CODE_REGEX = /<\?[\s\S]*?\?>/g;

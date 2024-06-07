@@ -146,13 +146,13 @@ AUI.add(
 									'drop:hit'(event) {
 										item.removeClass(target.activeCssClass);
 
-										const selectedItems = instance._ddHandler.dd.get(
-											STR_DATA
-										).selectedItems;
+										const selectedItems =
+											instance._ddHandler.dd.get(
+												STR_DATA
+											).selectedItems;
 
-										const dropTarget = event.drop.get(
-											STR_NODE
-										);
+										const dropTarget =
+											event.drop.get(STR_NODE);
 
 										host.executeAction(target.action, {
 											selectedItems,
@@ -199,8 +199,8 @@ AUI.add(
 
 						const dd = instance._ddHandler.dd;
 
-						const selectedItemsCount = dd.get(STR_DATA)
-							.selectedItemsCount;
+						const selectedItemsCount =
+							dd.get(STR_DATA).selectedItemsCount;
 
 						const moveText = instance._getMoveText(
 							selectedItemsCount,
@@ -223,9 +223,8 @@ AUI.add(
 
 					const proxyNode = event.target.get(STR_DRAG_NODE);
 
-					const selectedItemsCount = instance._ddHandler.dd.get(
-						STR_DATA
-					).selectedItemsCount;
+					const selectedItemsCount =
+						instance._ddHandler.dd.get(STR_DATA).selectedItemsCount;
 
 					const moveText = instance._getMoveText(selectedItemsCount);
 
@@ -258,7 +257,8 @@ AUI.add(
 							);
 						}
 						else {
-							selectedItems = searchContainerSelect.getCurrentPageSelectedElements();
+							selectedItems =
+								searchContainerSelect.getCurrentPageSelectedElements();
 						}
 					}
 

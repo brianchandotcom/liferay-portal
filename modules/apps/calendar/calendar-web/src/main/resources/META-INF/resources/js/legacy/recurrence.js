@@ -25,6 +25,7 @@ AUI.add(
 		const RecurrenceDialogController = A.Component.create({
 			ATTRS: {
 				container: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -35,6 +36,7 @@ AUI.add(
 				},
 
 				dayOfWeekInput: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -55,6 +57,7 @@ AUI.add(
 				},
 
 				frequencySelect: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -66,12 +69,14 @@ AUI.add(
 				},
 
 				intervalSelect: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
 				},
 
 				lastPositionCheckbox: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -83,12 +88,14 @@ AUI.add(
 				},
 
 				limitCountInput: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
 				},
 
 				limitCountRadioButton: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -105,6 +112,7 @@ AUI.add(
 				},
 
 				limitDateRadioButton: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -120,12 +128,14 @@ AUI.add(
 				},
 
 				monthlyRecurrenceOptions: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
 				},
 
 				noLimitRadioButton: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -136,12 +146,14 @@ AUI.add(
 				},
 
 				positionInput: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
 				},
 
 				positionSelect: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -153,6 +165,7 @@ AUI.add(
 				},
 
 				positionalDayOfWeekOptions: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -164,18 +177,21 @@ AUI.add(
 				},
 
 				repeatCheckbox: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
 				},
 
 				repeatOnDayOfMonthRadioButton: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
 				},
 
 				repeatOnDayOfWeekRadioButton: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -202,12 +218,14 @@ AUI.add(
 				},
 
 				summaryNode: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
 				},
 
 				weeklyRecurrenceOptions: {
+
 					// eslint-disable-next-line @liferay/aui/no-one
 					setter: A.one,
 					value: null,
@@ -227,9 +245,8 @@ AUI.add(
 						instance.saveState();
 					}
 					else {
-						const currentRecurrence = instance.get(
-							'currentSavedState'
-						);
+						const currentRecurrence =
+							instance.get('currentSavedState');
 
 						instance.set('recurrence', currentRecurrence);
 
@@ -464,9 +481,8 @@ AUI.add(
 
 					const startDate = instance.get('startDate');
 
-					const lastDate = A.DataType.DateMath.findMonthEnd(
-						startDate
-					);
+					const lastDate =
+						A.DataType.DateMath.findMonthEnd(startDate);
 
 					return (
 						lastDate.getDate() - startDate.getDate() < WEEK_LENGTH

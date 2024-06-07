@@ -47,9 +47,8 @@ function Item({isAdmin, totalCount, ...instance}) {
 		taskNames = [Liferay.Language.get('not-available')],
 	} = instance;
 
-	const [showInstanceTrackerModal, setShowInstanceTrackerModal] = useState(
-		false
-	);
+	const [showInstanceTrackerModal, setShowInstanceTrackerModal] =
+		useState(false);
 
 	const {observer} = useModal({
 		onClose: () => {

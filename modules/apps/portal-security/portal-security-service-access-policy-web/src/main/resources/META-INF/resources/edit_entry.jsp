@@ -158,7 +158,8 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getActionMethodNames" />
 	</liferay-portlet:resourceURL>
 
-	var serviceClassNamesToContextNames = <%= request.getAttribute(SAPWebKeys.SERVICE_CLASS_NAMES_TO_CONTEXT_NAMES) %>;
+	var serviceClassNamesToContextNames =
+		<%= request.getAttribute(SAPWebKeys.SERVICE_CLASS_NAMES_TO_CONTEXT_NAMES) %>;
 
 	var getActionMethodNames = function (contextName, serviceClassName, callback) {
 		if (contextName && serviceClassName && callback) {
@@ -176,13 +177,14 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 					contextName = '';
 				}
 
-				const getActionMethodNamesURL = Liferay.Util.PortletURL.createPortletURL(
-					'<%= getActionMethodNamesURL %>',
-					{
-						contextName,
-						serviceClassName,
-					}
-				);
+				const getActionMethodNamesURL =
+					Liferay.Util.PortletURL.createPortletURL(
+						'<%= getActionMethodNamesURL %>',
+						{
+							contextName,
+							serviceClassName,
+						}
+					);
 
 				Liferay.Util.fetch(getActionMethodNamesURL.toString())
 					.then((response) => {

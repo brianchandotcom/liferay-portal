@@ -89,9 +89,8 @@ export default function ItemSelector({
 		});
 
 		if (quickMappedInfoItems.length) {
-			transformedMappedItems = quickMappedInfoItems.map(
-				transformMappedItem
-			);
+			transformedMappedItems =
+				quickMappedInfoItems.map(transformMappedItem);
 		}
 		else if (pageContents.length) {
 			transformedMappedItems = pageContents.map(transformMappedItem);
@@ -190,7 +189,8 @@ export default function ItemSelector({
 					<ClayInput
 						aria-describedby={helpText ? helpTextId : null}
 						className={classNames({
-							'page-editor__item-selector__content-input': showEditControls,
+							'page-editor__item-selector__content-input':
+								showEditControls,
 						})}
 						id={itemSelectorInputId}
 						placeholder={sub(

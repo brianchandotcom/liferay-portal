@@ -26,9 +26,8 @@ export default function traverseAndEncodeJSONStrings(item) {
 			const encodedObject = {};
 
 			for (const [key, value] of Object.entries(item)) {
-				encodedObject[
-					traverseAndEncodeJSONStrings(key)
-				] = traverseAndEncodeJSONStrings(value);
+				encodedObject[traverseAndEncodeJSONStrings(key)] =
+					traverseAndEncodeJSONStrings(value);
 			}
 
 			return encodedObject;

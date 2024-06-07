@@ -202,10 +202,10 @@ export default function ViolationsPanel({
 				{!hasViolations
 					? Liferay.Language.get(
 							'there-are-no-accessibility-violations-in-this-page'
-					  )
+						)
 					: Liferay.Language.get(
 							'check-the-list-of-violated-rules-highlighted-on-the-page'
-					  )}
+						)}
 			</div>
 
 			{hasViolations && (

@@ -43,17 +43,19 @@ export default [
 																	fieldName:
 																		'label',
 																	localizable: true,
-																	settingsContext: {
-																		pages: [
-																			{
-																				rows: [
-																					{
-																						columns: [],
-																					},
-																				],
-																			},
-																		],
-																	},
+																	settingsContext:
+																		{
+																			pages: [
+																				{
+																					rows: [
+																						{
+																							columns:
+																								[],
+																						},
+																					],
+																				},
+																			],
+																		},
 																},
 																{
 																	fieldName:

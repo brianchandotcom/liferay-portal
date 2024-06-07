@@ -2,7 +2,7 @@
 	--masterclass-navbar-height-sm: 72px;
 	--management-bar-height-sm: 72px;
 	--management-bar-height-xs: 48px;
-	
+
 	font-family: var(--font-family-sans-serif);
 	font-size: var(--font-size-base);
 	padding: 0;
@@ -77,7 +77,6 @@
 	top: 0;
 }
 
-
 @media (min-width: 992px) {
 	.masterclass-navbar .nav-item.active a {
 		border-bottom-color: inherit;
@@ -142,7 +141,8 @@
 
 	.has-control-menu .navbar-collapse.show {
 		height: calc(
-			100vh - var(--management-bar-height-sm) - var(--masterclass-navbar-height-sm)
+			100vh - var(--management-bar-height-sm) -
+				var(--masterclass-navbar-height-sm)
 		);
 	}
 
@@ -160,10 +160,10 @@
 }
 
 @media (max-width: 575px) {
-
 	.has-control-menu .navbar-collapse.show {
 		height: calc(
-			100vh - var(--management-bar-height-xs) - var(--masterclass-navbar-height-sm)
+			100vh - var(--management-bar-height-xs) -
+				var(--masterclass-navbar-height-sm)
 		);
 	}
 }

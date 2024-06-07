@@ -12,7 +12,7 @@
 }
 
 .home-header .arrow-down:hover {
-	transform: translatey(4px);
+	transform: translateY(4px);
 	transition: 0.15s;
 }
 

@@ -65,7 +65,7 @@ function ConfigurationTab({
 				: {
 						external: searchIndexes[0].external,
 						indexName: searchIndexes[0].name,
-				  }
+					}
 		);
 	};
 

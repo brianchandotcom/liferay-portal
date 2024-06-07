@@ -24,9 +24,10 @@ export default function UserCard({
 	symbol,
 	...otherProps
 }) {
-	const normalizedActions = useMemo(() => normalizeDropdownItems(actions), [
-		actions,
-	]);
+	const normalizedActions = useMemo(
+		() => normalizeDropdownItems(actions),
+		[actions]
+	);
 
 	const [selected, setSelected] = useState(initialSelected);
 
@@ -63,7 +64,7 @@ export default function UserCard({
 				selectable
 					? () => {
 							setSelected(!selected);
-					  }
+						}
 					: null
 			}
 			selected={selected}

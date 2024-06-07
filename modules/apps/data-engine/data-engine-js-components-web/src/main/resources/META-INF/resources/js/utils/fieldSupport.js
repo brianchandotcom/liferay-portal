@@ -105,8 +105,8 @@ export function getDefaultFieldName(isOptionField = false, fieldType = '') {
 				.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 				.join('')
 		: isOptionField
-		? Liferay.Language.get('option')
-		: Liferay.Language.get('field');
+			? Liferay.Language.get('option')
+			: Liferay.Language.get('field');
 
 	return defaultFieldName + generateInstanceId(true);
 }
@@ -403,13 +403,8 @@ export function createField({
 		},
 	};
 
-	const {
-		editorConfig,
-		fieldName,
-		fieldReference,
-		name,
-		settingsContext,
-	} = newField;
+	const {editorConfig, fieldName, fieldReference, name, settingsContext} =
+		newField;
 
 	return {
 		...getFieldProperties(

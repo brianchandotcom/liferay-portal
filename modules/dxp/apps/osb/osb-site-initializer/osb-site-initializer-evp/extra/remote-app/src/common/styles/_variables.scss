@@ -136,7 +136,9 @@ $border-radius: 0;
 
 // ---------- Shadows ----------
 
-$box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.04), 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+$box-shadow:
+	0 2px 15px 0 rgba(0, 0, 0, 0.04),
+	0 4px 14px 0 rgba(0, 0, 0, 0.1);
 $box-shadow-deep: 0 8px 22px 0 rgba(0, 0, 0, 0.18);
 $box-shadow-light: 0 2px 4px 0 rgba(38, 47, 87, 0.05);
 

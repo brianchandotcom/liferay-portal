@@ -39,7 +39,7 @@ function FragmentDetail({fragment}) {
 				label: warnings.length >= 100 ? '+100' : warnings.length,
 				title: sub(Liferay.Language.get('x-issues'), warnings.length),
 				type: 'warning',
-		  }
+			}
 		: null;
 
 	return (

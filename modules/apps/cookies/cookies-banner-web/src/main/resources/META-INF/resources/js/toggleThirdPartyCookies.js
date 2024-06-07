@@ -108,6 +108,7 @@ function flipThirdPartyCookie(type) {
 					break;
 				}
 				default:
+
 					// eslint-disable-next-line no-console
 					console.warn(
 						'3rd Party Cookies: ',

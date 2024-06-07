@@ -52,14 +52,15 @@ export default function main({
 						...order,
 					});
 
-					const redirectURL = new Liferay.Util.PortletURL.createPortletURL(
-						editCommerceOrderRenderURL,
-						{
-							commerceOrderId: order.id,
-							p_auth: Liferay.authToken,
-							p_p_state: ppState,
-						}
-					);
+					const redirectURL =
+						new Liferay.Util.PortletURL.createPortletURL(
+							editCommerceOrderRenderURL,
+							{
+								commerceOrderId: order.id,
+								p_auth: Liferay.authToken,
+								p_p_state: ppState,
+							}
+						);
 					window.parent.Liferay.fire(commerceEvents.CLOSE_MODAL, {
 						redirectURL: redirectURL.toString(),
 						successNotification: {

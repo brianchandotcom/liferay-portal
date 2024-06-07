@@ -12,11 +12,8 @@ import React from 'react';
 import './Report.scss';
 
 export default function Report() {
-	const {
-		dataEngineModule,
-		displayChartAsTable,
-		formReportDataURL,
-	} = useConfig();
+	const {dataEngineModule, displayChartAsTable, formReportDataURL} =
+		useConfig();
 	const {resource} = useResource({link: formReportDataURL});
 	const {
 		data,

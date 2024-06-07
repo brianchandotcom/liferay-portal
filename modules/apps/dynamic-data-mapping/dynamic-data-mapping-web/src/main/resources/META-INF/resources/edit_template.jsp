@@ -341,8 +341,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				content:
 					'#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-content',
 				expanded: <%= smallImage %>,
-				header:
-					'#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-header',
+				header: '#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-header',
 				on: {
 					animatingChange: function (event) {
 						var instance = this;

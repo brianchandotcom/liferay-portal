@@ -58,6 +58,7 @@ const TableListMobileComponent: React.FC<Props> = ({headers, rows}) => {
 
 	useEffect(() => {
 		setIsPanelExpanded(resetExpandedPanel);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -177,9 +177,8 @@ const FieldSelectModalContent = ({
 	selectedFields: Array<IField>;
 	selectionMode?: ComponentProps<typeof TreeView>['selectionMode'];
 }) => {
-	const [initialFields, setInitialFields] = useState<Array<
-		IFieldTreeItem
-	> | null>(fieldTreeItems);
+	const [initialFields, setInitialFields] =
+		useState<Array<IFieldTreeItem> | null>(fieldTreeItems);
 	const [selectedKeys, setSelectedKeys] = useState<Set<React.Key>>(
 		new Set<React.Key>()
 	);
@@ -248,10 +247,10 @@ const FieldSelectModalContent = ({
 											{selectedKeys.size === 1
 												? Liferay.Language.get(
 														'item-selected'
-												  )
+													)
 												: Liferay.Language.get(
 														'items-selected'
-												  )}
+													)}
 										</span>
 									</span>
 								</ClayResultsBar.Item>
@@ -361,7 +360,8 @@ const FieldSelectModalContent = ({
 						<ClayButton
 							disabled={saveButtonDisabled}
 							onClick={() => {
-								const selectedFields: Array<IFieldTreeItem> = [];
+								const selectedFields: Array<IFieldTreeItem> =
+									[];
 
 								visit(
 									initialFields || [],

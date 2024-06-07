@@ -27,13 +27,11 @@ import NotConfigured from './NotConfigured';
 export default function LayoutReports({eventTriggered, url}) {
 	const isMounted = useIsMounted();
 
-	const {data, error, languageId, loading, selectedItem} = useContext(
-		StoreStateContext
-	);
+	const {data, error, languageId, loading, selectedItem} =
+		useContext(StoreStateContext);
 
-	const {isPanelStateOpen, layoutReportsDataURL} = useContext(
-		ConstantsContext
-	);
+	const {isPanelStateOpen, layoutReportsDataURL} =
+		useContext(ConstantsContext);
 
 	const dispatch = useContext(StoreDispatchContext);
 

@@ -21,9 +21,8 @@ export const MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
 export const MINIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
 	'the-minimum-quantity-is-x'
 );
-export const PRODUCT_MULTIPLE_OF_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
-	'quantity-must-be-a-multiple-of-x'
-);
+export const PRODUCT_MULTIPLE_OF_QUANTITY_NOT_VALID_ERROR =
+	Liferay.Language.get('quantity-must-be-a-multiple-of-x');
 export const MAXIMUM_ALLOWED_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
 	'the-maximum-allowed-quantity-for-x-is-x'
 );

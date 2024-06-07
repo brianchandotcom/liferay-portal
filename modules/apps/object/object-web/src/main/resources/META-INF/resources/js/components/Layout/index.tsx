@@ -86,13 +86,11 @@ const normalizeObjectRelationships: TNormalizeObjectRelationships = ({
 
 	objectLayoutTabs.forEach(({objectRelationshipId}) => {
 		if (objectRelationshipId) {
-			const objectRelationshipIndex = objectRelationshipIds.indexOf(
-				objectRelationshipId
-			);
+			const objectRelationshipIndex =
+				objectRelationshipIds.indexOf(objectRelationshipId);
 
-			normalizedObjectRelationships[
-				objectRelationshipIndex
-			].inLayout = true;
+			normalizedObjectRelationships[objectRelationshipIndex].inLayout =
+				true;
 		}
 	});
 
@@ -100,10 +98,8 @@ const normalizeObjectRelationships: TNormalizeObjectRelationships = ({
 };
 
 const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [
-		{isViewOnly, objectFields, objectLayout, objectLayoutId},
-		dispatch,
-	] = useLayoutContext();
+	const [{isViewOnly, objectFields, objectLayout, objectLayoutId}, dispatch] =
+		useLayoutContext();
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -118,17 +114,20 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				`/o/object-admin/v1.0/object-layouts/${objectLayoutId}`
 			);
 
-			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectDefinition =
+				await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
 
-			const objectFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectFields =
+				await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+					objectDefinitionExternalReferenceCode
+				);
 
-			const objectRelationships = await API.getObjectDefinitionByExternalReferenceCodeObjectRelationships(
-				objectDefinitionExternalReferenceCode
-			);
+			const objectRelationships =
+				await API.getObjectDefinitionByExternalReferenceCodeObjectRelationships(
+					objectDefinitionExternalReferenceCode
+				);
 
 			const objectLayout = {
 				defaultObjectLayout,

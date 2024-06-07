@@ -87,8 +87,8 @@ describe('QuestionRow', () => {
 		});
 
 		const hasValidAnswerBadge = getByTestId('has-valid-answer-badge');
-		const checkSymbolDivElement = hasValidAnswerBadge.querySelector('div')
-			.className;
+		const checkSymbolDivElement =
+			hasValidAnswerBadge.querySelector('div').className;
 
 		expect(
 			checkSymbolDivElement.includes('alert-success border-0')

@@ -48,9 +48,8 @@ const ValidationTextAndNumeric = ({
 				onChange={(event, value) => {
 					dispatch({
 						payload: {
-							selectedValidation: transformSelectedValidation(
-								value
-							),
+							selectedValidation:
+								transformSelectedValidation(value),
 						},
 						type: EVENT_TYPES.CHANGE_SELECTED_VALIDATION,
 					});

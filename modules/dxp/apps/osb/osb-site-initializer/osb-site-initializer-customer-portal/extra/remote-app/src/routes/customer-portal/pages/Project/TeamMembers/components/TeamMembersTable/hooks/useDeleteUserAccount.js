@@ -7,15 +7,11 @@ import {useDeleteUserAccountByEmailAddress} from '../../../../../../../../common
 import {useDeleteRolesByContactEmailAddress} from '../../../../../../../../common/services/raysource/graphql/roles';
 
 export default function useDeleteUserAccount() {
-	const [
-		deleteUserAccount,
-		{loading: deleteUserAccountLoading},
-	] = useDeleteUserAccountByEmailAddress();
+	const [deleteUserAccount, {loading: deleteUserAccountLoading}] =
+		useDeleteUserAccountByEmailAddress();
 
-	const [
-		deleteContactRoles,
-		{loading: deleteContactRolesLoading},
-	] = useDeleteRolesByContactEmailAddress();
+	const [deleteContactRoles, {loading: deleteContactRolesLoading}] =
+		useDeleteRolesByContactEmailAddress();
 
 	const loading = deleteUserAccountLoading || deleteContactRolesLoading;
 

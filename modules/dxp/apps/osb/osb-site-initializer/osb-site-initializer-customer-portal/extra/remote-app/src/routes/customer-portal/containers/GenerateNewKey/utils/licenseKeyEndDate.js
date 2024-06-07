@@ -11,9 +11,8 @@ const getLicenseKeyEndDateSelected = (selectedKeyData) => (licenseEntryType) =>
 const getLicenseKeyEndDatesByLicenseType = (selectedKeyData) => {
 	const licenseEntryType = selectedKeyData?.licenseEntryType;
 
-	const _getLicenseKeyEndDateSelected = getLicenseKeyEndDateSelected(
-		selectedKeyData
-	);
+	const _getLicenseKeyEndDateSelected =
+		getLicenseKeyEndDateSelected(selectedKeyData);
 
 	if (licenseEntryType?.includes('Virtual Cluster')) {
 		return _getLicenseKeyEndDateSelected('virtual-cluster');

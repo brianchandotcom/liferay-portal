@@ -53,7 +53,7 @@ const ClaimDetailsActivities = ({claimData}: ClaimComponentsType) => {
 					message:
 						'The insured called me this morning at 10am after getting into an accident. I submitted a claim on behalf of the insured, and the claim is currently waiting for investigation process to begin.',
 				},
-		  ]
+			]
 		: [];
 
 	const BodyElement = () => (

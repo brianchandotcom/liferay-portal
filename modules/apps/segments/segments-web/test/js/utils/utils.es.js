@@ -37,9 +37,8 @@ describe('utils', () => {
 
 	describe('getSupportedOperatorsFromType', () => {
 		it('returns an array of supported operators', () => {
-			const supportedOperators = Utils.getSupportedOperatorsFromType(
-				'boolean'
-			);
+			const supportedOperators =
+				Utils.getSupportedOperatorsFromType('boolean');
 
 			expect(supportedOperators).toEqual([
 				{

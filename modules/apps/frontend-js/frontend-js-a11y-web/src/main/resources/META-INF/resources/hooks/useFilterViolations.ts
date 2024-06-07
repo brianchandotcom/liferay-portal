@@ -67,37 +67,40 @@ export function useFilterViolations(value: Violations) {
 			return value.rules;
 		}
 
-		return Object.values(value.rules).reduce((prev, props) => {
-			const isVisible = (Object.keys(filters) as Array<
-				keyof RuleRaw
-			>).some((key) => {
-				switch (typeof props[key]) {
-					case 'string':
-						return filters[key].includes(props[key] as string);
-					case 'object':
-						return (props[key] as Array<string>).some((value) =>
-							filters[key].includes(value)
-						);
-					default:
-						return false;
+		return Object.values(value.rules).reduce(
+			(prev, props) => {
+				const isVisible = (
+					Object.keys(filters) as Array<keyof RuleRaw>
+				).some((key) => {
+					switch (typeof props[key]) {
+						case 'string':
+							return filters[key].includes(props[key] as string);
+						case 'object':
+							return (props[key] as Array<string>).some((value) =>
+								filters[key].includes(value)
+							);
+						default:
+							return false;
+					}
+				});
+
+				if (isVisible) {
+					const nodes = filters.nodes
+						? props.nodes.filter((node) =>
+								filters.nodes?.includes(node)
+							)
+						: props.nodes;
+
+					prev[props.id] = {
+						...props,
+						nodes,
+					};
 				}
-			});
 
-			if (isVisible) {
-				const nodes = filters.nodes
-					? props.nodes.filter((node) =>
-							filters.nodes?.includes(node)
-					  )
-					: props.nodes;
-
-				prev[props.id] = {
-					...props,
-					nodes,
-				};
-			}
-
-			return prev;
-		}, {} as Violations['rules']);
+				return prev;
+			},
+			{} as Violations['rules']
+		);
 	}, [filters, value]);
 
 	const nodes = useMemo(() => {

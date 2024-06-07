@@ -317,7 +317,7 @@ const MillerColumnsItem = ({
 							...items.get(itemId),
 							itemIndex: getItemIndex(items.get(itemId), items),
 						},
-				  ],
+					],
 			type: ACCEPTING_TYPES.ITEM,
 		},
 	});
@@ -396,10 +396,10 @@ const MillerColumnsItem = ({
 	const warningMessage = isLayoutSetPrototype
 		? Liferay.Language.get(
 				'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
-		  )
+			)
 		: Liferay.Language.get(
 				'there-is-a-page-with-the-same-friendly-url-in-the-site-template'
-		  );
+			);
 
 	return (
 		<ClayLayout.ContentRow

@@ -219,7 +219,7 @@ export default function AttributeFields({
 												Liferay.Language.get(
 													'attribute-field-is-required'
 												)
-										  )
+											)
 								}
 								symbol="plus"
 								title={Liferay.Language.get('add')}

@@ -38,7 +38,7 @@ class ErrorBoundary extends Component {
 						imgSrc="/o/admin-theme/images/states/empty_state.svg"
 						title={Liferay.Language.get('unable-to-load-content')}
 					/>
-			  )
+				)
 			: this.props.children;
 	}
 }

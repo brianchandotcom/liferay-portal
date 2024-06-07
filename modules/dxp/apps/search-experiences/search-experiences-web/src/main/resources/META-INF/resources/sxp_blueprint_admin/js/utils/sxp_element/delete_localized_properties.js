@@ -33,9 +33,9 @@ export default function deleteLocalizedProperties(elementDefinition) {
 
 					// Find property names that end with `Localized`.
 
-					const localizedPropertyNames = Object.keys(
-						field
-					).filter((key) => key.endsWith('Localized'));
+					const localizedPropertyNames = Object.keys(field).filter(
+						(key) => key.endsWith('Localized')
+					);
 
 					// Remove the found property names.
 

@@ -166,9 +166,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		function doSubmit() {
 			if (forceDisable) {
 				form.elements['<portlet:namespace />forceDisable'].value = true;
-				form.elements[
-					'<portlet:namespace />stagingType'
-				].value = <%= StagingConstants.TYPE_NOT_STAGED %>;
+				form.elements['<portlet:namespace />stagingType'].value =
+					<%= StagingConstants.TYPE_NOT_STAGED %>;
 			}
 
 			submitForm(form);

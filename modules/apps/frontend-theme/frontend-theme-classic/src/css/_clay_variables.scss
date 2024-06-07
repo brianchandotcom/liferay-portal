@@ -280,9 +280,21 @@ $font-import-url: null !default;
 
 $font-family-monospace: sfmono-regular, menlo, monaco, consolas,
 	'Liberation Mono', 'Courier New', monospace !default;
-$font-family-sans-serif: system-ui, -apple-system, blinkmacsystemfont,
-	'Segoe UI', roboto, oxygen-sans, ubuntu, cantarell, 'Helvetica Neue', arial,
-	sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
+$font-family-sans-serif:
+	system-ui,
+	-apple-system,
+	blinkmacsystemfont,
+	'Segoe UI',
+	roboto,
+	oxygen-sans,
+	ubuntu,
+	cantarell,
+	'Helvetica Neue',
+	arial,
+	sans-serif,
+	'Apple Color Emoji',
+	'Segoe UI Emoji',
+	'Segoe UI Symbol' !default;
 $font-family-serif: georgia, 'Times New Roman', times, serif !default;
 
 $font-family-base: var(--font-family-base, $font-family-sans-serif) !default;

@@ -41,8 +41,7 @@ export function EditClientOAuth2ModalContent({
 	const valueChanged = modalValue !== initialValue;
 
 	const resourceURL = createResourceURL(baseResourceURL, {
-		p_p_id:
-			'com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet',
+		p_p_id: 'com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet',
 		p_p_resource_id: '/oauth2_provider/generate_random_secret',
 	}).href;
 

@@ -37,7 +37,9 @@ $sidebarWidth: 320px;
 		right: 0;
 		top: calc(var(--control-menu-container-height) + #{$toolbarHeight});
 		transform: translateX($sidebarWidth);
-		transition: transform ease 0.5s, box-shadow ease 0.5s;
+		transition:
+			transform ease 0.5s,
+			box-shadow ease 0.5s;
 		width: $sidebarWidth;
 		will-change: transform, box-shadow;
 

@@ -11,9 +11,8 @@ import {
 import {openToast} from 'frontend-js-web';
 
 export default function ({dataSetId, rootPortletId, shippingFixedOptionId}) {
-	const shippingFixedOptionOrderTypesResource = CommerceServiceProvider.AdminChannelAPI(
-		'v1'
-	);
+	const shippingFixedOptionOrderTypesResource =
+		CommerceServiceProvider.AdminChannelAPI('v1');
 
 	function selectItem(orderType) {
 		const orderTypeData = {

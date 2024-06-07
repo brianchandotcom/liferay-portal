@@ -131,9 +131,8 @@
 					hiddenNodes: Liferay.Util.getSelectedOptionValues(
 						availableVisibleNodes
 					),
-					visibleNodes: Liferay.Util.getSelectedOptionValues(
-						currentVisibleNodes
-					),
+					visibleNodes:
+						Liferay.Util.getSelectedOptionValues(currentVisibleNodes),
 				},
 			});
 		}

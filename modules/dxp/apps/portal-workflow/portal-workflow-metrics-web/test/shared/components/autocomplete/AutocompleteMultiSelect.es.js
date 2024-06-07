@@ -59,9 +59,8 @@ describe('The AutocompleteMultiSelect component should', () => {
 
 		fireEvent.mouseDown(dropDownListItems[0]);
 
-		const multiSelectItems = container.querySelectorAll(
-			'.label-dismissible'
-		);
+		const multiSelectItems =
+			container.querySelectorAll('.label-dismissible');
 
 		expect(multiSelectItems[0]).toHaveTextContent('1test test1');
 		expect(multiSelectItems[1]).toHaveTextContent('2test test2');
@@ -70,9 +69,8 @@ describe('The AutocompleteMultiSelect component should', () => {
 
 		expect(dropDownEmpty).toBeTruthy();
 
-		const multiSelectItemsRemove = container.querySelectorAll(
-			'button.close'
-		);
+		const multiSelectItemsRemove =
+			container.querySelectorAll('button.close');
 
 		fireEvent.click(multiSelectItemsRemove[1]);
 
@@ -119,9 +117,8 @@ describe('The AutocompleteMultiSelect component should', () => {
 
 		fireEvent.keyDown(multiSelectInput, {keyCode: 13});
 
-		const multiSelectItems = container.querySelectorAll(
-			'.label-dismissible'
-		);
+		const multiSelectItems =
+			container.querySelectorAll('.label-dismissible');
 
 		expect(multiSelectItems[0]).toHaveTextContent('2test test2');
 	});

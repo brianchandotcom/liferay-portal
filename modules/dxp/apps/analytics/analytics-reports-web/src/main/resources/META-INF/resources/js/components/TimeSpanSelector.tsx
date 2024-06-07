@@ -42,7 +42,7 @@ export default function TimeSpanSelector({
 					const {value} = event.target;
 
 					dispatch({
-						payload: {key: (value as unknown) as TimeSpan},
+						payload: {key: value as unknown as TimeSpan},
 						type: 'CHANGE_TIME_SPAN_KEY',
 					});
 				}}
@@ -76,7 +76,7 @@ export default function TimeSpanSelector({
 						disabledPreviousPeriodButton
 							? Liferay.Language.get(
 									'you-cannot-choose-a-date-prior-to-the-publication-date'
-							  )
+								)
 							: undefined
 					}
 				/>

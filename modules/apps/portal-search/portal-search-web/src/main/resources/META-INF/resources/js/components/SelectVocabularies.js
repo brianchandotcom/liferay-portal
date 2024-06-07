@@ -38,11 +38,13 @@ const convertToIDArray = (idsString) =>
 	idsString.split(',').filter((id) => id !== '');
 
 function SiteRow({name, onSelect, vocabularies}) {
-	const _handleSelect = (select = true) => (event) => {
-		event.preventDefault();
+	const _handleSelect =
+		(select = true) =>
+		(event) => {
+			event.preventDefault();
 
-		onSelect(vocabularies, select);
-	};
+			onSelect(vocabularies, select);
+		};
 
 	return (
 		<div
@@ -250,7 +252,7 @@ function SelectVocabularies({
 								id: Liferay.ThemeDisplay.getCompanyGroupId(),
 							},
 							...items,
-					  ];
+						];
 
 				Promise.all(
 					itemsWithGlobalSite.map((site) =>

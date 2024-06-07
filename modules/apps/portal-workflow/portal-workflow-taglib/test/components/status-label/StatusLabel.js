@@ -50,9 +50,8 @@ describe('The WorkflowStatus should', () => {
 			fireEvent.click(link);
 		});
 
-		const instanceTrackerModal = document.querySelector(
-			'.modal-full-screen'
-		);
+		const instanceTrackerModal =
+			document.querySelector('.modal-full-screen');
 
 		expect(instanceTrackerModal).toBeInTheDocument();
 	});

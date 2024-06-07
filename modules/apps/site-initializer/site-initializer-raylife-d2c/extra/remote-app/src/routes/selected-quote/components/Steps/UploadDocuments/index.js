@@ -108,9 +108,7 @@ const UploadDocuments = () => {
 				}
 
 				try {
-					const {
-						data,
-					} = await createDocumentInFolder(
+					const {data} = await createDocumentInFolder(
 						sectionFolder.id,
 						fileEntry,
 						(progress) =>

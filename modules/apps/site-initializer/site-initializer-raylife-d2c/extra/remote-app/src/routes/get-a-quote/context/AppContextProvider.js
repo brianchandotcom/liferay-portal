@@ -110,9 +110,9 @@ function AppContextReducer(state, action) {
 									!(Array.isArray(disableSections)
 										? disableSections.includes(
 												mobileSubSection.title
-										  )
+											)
 										: disableSections ===
-										  mobileSubSection.title)
+											mobileSubSection.title)
 							),
 						};
 					}
@@ -187,9 +187,10 @@ export function AppContextProvider({children}) {
 				dispatch,
 				state: {
 					...state,
-					activeMobileSubSection: selectedStep.mobileSubSections?.find(
-						({active, blocked = false}) => active && !blocked
-					),
+					activeMobileSubSection:
+						selectedStep.mobileSubSections?.find(
+							({active, blocked = false}) => active && !blocked
+						),
 					selectedStep,
 				},
 			}}

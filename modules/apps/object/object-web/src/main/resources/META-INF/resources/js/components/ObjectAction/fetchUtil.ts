@@ -101,9 +101,10 @@ export async function fetchObjectDefinitionFields(
 	}
 
 	if (externalReferenceCode) {
-		const items = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
-			externalReferenceCode
-		);
+		const items =
+			await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
+				externalReferenceCode
+			);
 
 		items.forEach((field) => {
 			if (isValidField(field, isSystemObject)) {

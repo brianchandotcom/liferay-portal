@@ -27,7 +27,7 @@ export function Container({children, empty, pageIndex, pages}) {
 					className: 'ddm-btn-disabled',
 					disabled: true,
 					label: Liferay.Language.get('reset-page'),
-			  }
+				}
 			: {
 					label: Liferay.Language.get('reset-page'),
 					onClick: () =>
@@ -43,7 +43,7 @@ export function Container({children, empty, pageIndex, pages}) {
 								rules,
 							})
 						),
-			  },
+				},
 		pageIndex > 0
 			? {
 					label: Liferay.Language.get('remove-page'),
@@ -52,7 +52,7 @@ export function Container({children, empty, pageIndex, pages}) {
 							payload: {pageIndex},
 							type: EVENT_TYPES.PAGE.DELETE,
 						}),
-			  }
+				}
 			: false,
 	].filter(Boolean);
 

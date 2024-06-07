@@ -23,7 +23,7 @@ export const POSITIONS = {
 	top: 'top',
 } as const;
 
-export type Position = typeof POSITIONS[keyof typeof POSITIONS];
+export type Position = (typeof POSITIONS)[keyof typeof POSITIONS];
 
 export type Source = {
 	defaultValue: string;

@@ -137,7 +137,7 @@ function getSelectedItem(list, idSelected) {
 				name: idSelected,
 				notFound: true,
 				type: PROPERTY_TYPES.STRING,
-		  };
+			};
 }
 
 function CriteriaRow({
@@ -288,12 +288,13 @@ function CriteriaRow({
 		selectedProperty.options === undefined
 			? false
 			: !selectedProperty.options?.length
-			? false
-			: selectedProperty.options.find((option) => {
-					return (
-						option.value === value && option.disabled === undefined
-					);
-			  });
+				? false
+				: selectedProperty.options.find((option) => {
+						return (
+							option.value === value &&
+							option.disabled === undefined
+						);
+					});
 	const warning = !(warningOnProperty || warningOnProperty === false);
 
 	if (

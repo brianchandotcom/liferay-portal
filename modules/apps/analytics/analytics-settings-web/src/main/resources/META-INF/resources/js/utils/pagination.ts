@@ -8,7 +8,7 @@ export const DELTAS = [5, 10, 20, 30, 50] as const;
 export type TPagination = {
 	maxCount: number;
 	page: number;
-	pageSize: typeof DELTAS[number];
+	pageSize: (typeof DELTAS)[number];
 	totalCount: number;
 };
 

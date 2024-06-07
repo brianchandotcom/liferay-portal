@@ -132,9 +132,10 @@ export default function propsTransformer({
 						);
 					}
 
-					const fragmentCompositionIdsElement = document.getElementById(
-						`${portletNamespace}fragmentCompositionIds`
-					);
+					const fragmentCompositionIdsElement =
+						document.getElementById(
+							`${portletNamespace}fragmentCompositionIds`
+						);
 
 					if (fragmentCompositionIdsElement) {
 						fragmentCompositionIdsElement.setAttribute(

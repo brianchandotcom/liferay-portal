@@ -34,21 +34,16 @@ export default function () {
 	const [currentMonthData, setCurrentMonthData] = useState([]);
 	const [sixMonthData, setSixMonthData] = useState([]);
 	const [yearToDateData, setYearToDateData] = useState([]);
-	const [sixMonthsTotalSubmissions, setSixMonthsTotalSubmissions] = useState(
-		0
-	);
+	const [sixMonthsTotalSubmissions, setSixMonthsTotalSubmissions] =
+		useState(0);
 	const [
 		lastYearSixMonthsTotalSubmissions,
 		setLastYearSixMonthsTotalSubmissions,
 	] = useState(0);
-	const [
-		yearToDateTotalOfSubmissions,
-		setYearToDateTotalOfSubmissions,
-	] = useState(0);
-	const [
-		lastYearToDateTotalSubmissions,
-		setLastYearToDateTotalSubmissions,
-	] = useState(0);
+	const [yearToDateTotalOfSubmissions, setYearToDateTotalOfSubmissions] =
+		useState(0);
+	const [lastYearToDateTotalSubmissions, setLastYearToDateTotalSubmissions] =
+		useState(0);
 
 	function populateSubmissions(applicationResult, applicationsArray) {
 		applicationResult.forEach((application) => {
@@ -118,9 +113,8 @@ export default function () {
 
 		const monthsSubmission = await sumTotalOfValuesOfArray(monthsAgoValues);
 
-		const dataMonthsArrayOfSubmissions = await getArrayOfValuesFromArrayOfObjects(
-			monthsAgoValues
-		);
+		const dataMonthsArrayOfSubmissions =
+			await getArrayOfValuesFromArrayOfObjects(monthsAgoValues);
 
 		return [monthsSubmission, dataMonthsArrayOfSubmissions];
 	};
@@ -147,9 +141,8 @@ export default function () {
 			dataArrayOfMonths
 		);
 
-		const lastYearSubmissions = await sumTotalOfValuesOfArray(
-			lastYearMonthsAgo
-		);
+		const lastYearSubmissions =
+			await sumTotalOfValuesOfArray(lastYearMonthsAgo);
 
 		return lastYearSubmissions;
 	};
@@ -188,16 +181,14 @@ export default function () {
 		sixMonthsArray,
 		lastYearSixMonthsArray
 	) => {
-		const [
-			sixMonthsSubmission,
-			sixMonthsArrayOfSubmissions,
-		] = await getCurrentYearData(
-			sixMonthsArray,
-			currentDateString[0],
-			currentDateString[1],
-			sixMonthsAgoDate[0],
-			sixMonthsAgoDate[1]
-		);
+		const [sixMonthsSubmission, sixMonthsArrayOfSubmissions] =
+			await getCurrentYearData(
+				sixMonthsArray,
+				currentDateString[0],
+				currentDateString[1],
+				sixMonthsAgoDate[0],
+				sixMonthsAgoDate[1]
+			);
 
 		const lastYearSixMonthsSubmissions = await getLastYearData(
 			lastYearSixMonthsArray,
@@ -218,16 +209,14 @@ export default function () {
 		yearToDateArrayOfMonths,
 		lastYearToDateMonthsArray
 	) => {
-		const [
-			yearToDateTotalSubmissions,
-			yearToDateArrayOfSubmissions,
-		] = await getCurrentYearData(
-			yearToDateArrayOfMonths,
-			currentDateString[0],
-			currentDateString[1],
-			currentDateString[0],
-			january
-		);
+		const [yearToDateTotalSubmissions, yearToDateArrayOfSubmissions] =
+			await getCurrentYearData(
+				yearToDateArrayOfMonths,
+				currentDateString[0],
+				currentDateString[1],
+				currentDateString[0],
+				january
+			);
 
 		const lastYearToDateSubmissions = await getLastYearData(
 			lastYearToDateMonthsArray,
@@ -280,9 +269,8 @@ export default function () {
 
 			currentAndLastMonthFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
 			sixMonthsAgoFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
-			lastYearSixMonthsAgoFilter[
-				CONSTANTS.MONTHS_ABREVIATIONS[month]
-			] = 0;
+			lastYearSixMonthsAgoFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] =
+				0;
 
 			currentAndLastMonthArray[count] = currentAndLastMonthFilter;
 			sixMonthsArray[count] = sixMonthsAgoFilter;
@@ -321,6 +309,7 @@ export default function () {
 				lastYearFirstUntilCurrentMonthArray
 			);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedFilterDate]);
 
@@ -415,12 +404,12 @@ export default function () {
 							newSubmissionsPercentual === Infinity
 								? `NaN`
 								: newSubmissionsPercentual
-					  }% MoM`
+						}% MoM`
 					: `${
 							newSubmissionsPercentual === Infinity
 								? `NaN`
 								: newSubmissionsPercentual
-					  }% YoY`}
+						}% YoY`}
 			</div>
 		</div>
 	);

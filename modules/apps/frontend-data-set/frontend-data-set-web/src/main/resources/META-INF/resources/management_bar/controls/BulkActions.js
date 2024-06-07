@@ -40,10 +40,8 @@ function BulkActions({
 		FrontendDataSetContext
 	);
 
-	const [
-		currentSidePanelActionPayload,
-		setCurrentSidePanelActionPayload,
-	] = useState(null);
+	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
+		useState(null);
 
 	function handleActionClick(
 		actionDefinition,
@@ -93,9 +91,8 @@ function BulkActions({
 				postForm(form, {
 					data: {
 						...data,
-						[`${
-							actionParameterName || selectedItemsKey
-						}`]: selectedItemsValue.join(','),
+						[`${actionParameterName || selectedItemsKey}`]:
+							selectedItemsValue.join(','),
 					},
 					url: href || form.action,
 				});
@@ -127,6 +124,7 @@ function BulkActions({
 				);
 			}
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[selectedItemsValue]
 	);

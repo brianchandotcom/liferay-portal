@@ -76,15 +76,13 @@ describe('MiniCart Items List Actions', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const ActionsWrapperElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const ActionsWrapperElement =
+					container.querySelector(COMPONENT_SELECTOR);
 				const ActionsElement = ActionsWrapperElement.querySelector(
 					`${COMPONENT_SELECTOR}-actions`
 				);
-				const ActionButtonsElements = ActionsElement.querySelectorAll(
-					'.action'
-				);
+				const ActionButtonsElements =
+					ActionsElement.querySelectorAll('.action');
 
 				expect(ActionsWrapperElement).toBeInTheDocument();
 				expect(ActionsElement).toBeInTheDocument();
@@ -125,15 +123,13 @@ describe('MiniCart Items List Actions', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const ActionsWrapperElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
+				const ActionsWrapperElement =
+					container.querySelector(COMPONENT_SELECTOR);
 				const ActionsElement = ActionsWrapperElement.querySelector(
 					`${COMPONENT_SELECTOR}-actions`
 				);
-				const ActionButtonsElements = ActionsElement.querySelectorAll(
-					'.action'
-				);
+				const ActionButtonsElements =
+					ActionsElement.querySelectorAll('.action');
 
 				expect(ActionsElement).toBeInTheDocument();
 				expect(ActionButtonsElements.length).toEqual(2);
@@ -152,12 +148,12 @@ describe('MiniCart Items List Actions', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const ActionsWrapperElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
-				const ItemsCountTextElement = ActionsWrapperElement.querySelector(
-					`${COMPONENT_SELECTOR}-resume`
-				);
+				const ActionsWrapperElement =
+					container.querySelector(COMPONENT_SELECTOR);
+				const ItemsCountTextElement =
+					ActionsWrapperElement.querySelector(
+						`${COMPONENT_SELECTOR}-resume`
+					);
 
 				expect(ItemsCountTextElement).toBeInTheDocument();
 
@@ -182,12 +178,12 @@ describe('MiniCart Items List Actions', () => {
 					</MiniCartContext.Provider>
 				);
 
-				const ActionsWrapperElement = container.querySelector(
-					COMPONENT_SELECTOR
-				);
-				const ItemsCountTextElement = ActionsWrapperElement.querySelector(
-					`${COMPONENT_SELECTOR}-resume`
-				);
+				const ActionsWrapperElement =
+					container.querySelector(COMPONENT_SELECTOR);
+				const ItemsCountTextElement =
+					ActionsWrapperElement.querySelector(
+						`${COMPONENT_SELECTOR}-resume`
+					);
 
 				expect(ItemsCountTextElement).toBeInTheDocument();
 
@@ -207,15 +203,13 @@ describe('MiniCart Items List Actions', () => {
 						</MiniCartContext.Provider>
 					);
 
-					const ActionsWrapperElement = container.querySelector(
-						COMPONENT_SELECTOR
-					);
+					const ActionsWrapperElement =
+						container.querySelector(COMPONENT_SELECTOR);
 					const ActionsElement = ActionsWrapperElement.querySelector(
 						`${COMPONENT_SELECTOR}-actions`
 					);
-					const [viewDetailsButton] = ActionsElement.querySelectorAll(
-						'.action'
-					);
+					const [viewDetailsButton] =
+						ActionsElement.querySelectorAll('.action');
 
 					await act(async () => {
 						fireEvent.click(viewDetailsButton);
@@ -242,25 +236,22 @@ describe('MiniCart Items List Actions', () => {
 							</MiniCartContext.Provider>
 						);
 
-						const ActionsWrapperElement = container.querySelector(
-							COMPONENT_SELECTOR
-						);
-						const ActionsElement = ActionsWrapperElement.querySelector(
-							`${COMPONENT_SELECTOR}-actions`
-						);
-						const [
-							,
-							removeAllItemsButton,
-						] = ActionsElement.querySelectorAll('.action');
+						const ActionsWrapperElement =
+							container.querySelector(COMPONENT_SELECTOR);
+						const ActionsElement =
+							ActionsWrapperElement.querySelector(
+								`${COMPONENT_SELECTOR}-actions`
+							);
+						const [, removeAllItemsButton] =
+							ActionsElement.querySelectorAll('.action');
 
 						await act(async () => {
 							fireEvent.click(removeAllItemsButton);
 						});
 
 						await wait(() => {
-							const ConfirmationPromptElement = container.querySelector(
-								'.confirmation-prompt'
-							);
+							const ConfirmationPromptElement =
+								container.querySelector('.confirmation-prompt');
 
 							expect(
 								ConfirmationPromptElement
@@ -288,16 +279,14 @@ describe('MiniCart Items List Actions', () => {
 							</MiniCartContext.Provider>
 						);
 
-						const ActionsWrapperElement = container.querySelector(
-							COMPONENT_SELECTOR
-						);
-						const ActionsElement = ActionsWrapperElement.querySelector(
-							`${COMPONENT_SELECTOR}-actions`
-						);
-						const [
-							,
-							removeAllItemsButton,
-						] = ActionsElement.querySelectorAll('.action');
+						const ActionsWrapperElement =
+							container.querySelector(COMPONENT_SELECTOR);
+						const ActionsElement =
+							ActionsWrapperElement.querySelector(
+								`${COMPONENT_SELECTOR}-actions`
+							);
+						const [, removeAllItemsButton] =
+							ActionsElement.querySelectorAll('.action');
 
 						await act(async () => {
 							fireEvent.click(removeAllItemsButton);
@@ -308,9 +297,8 @@ describe('MiniCart Items List Actions', () => {
 						});
 
 						await wait(() => {
-							const ConfirmationPromptElement = container.querySelector(
-								'.confirmation-prompt'
-							);
+							const ConfirmationPromptElement =
+								container.querySelector('.confirmation-prompt');
 
 							expect(
 								ConfirmationPromptElement.classList.contains(
@@ -334,16 +322,14 @@ describe('MiniCart Items List Actions', () => {
 							</MiniCartContext.Provider>
 						);
 
-						const ActionsWrapperElement = container.querySelector(
-							COMPONENT_SELECTOR
-						);
-						const ActionsElement = ActionsWrapperElement.querySelector(
-							`${COMPONENT_SELECTOR}-actions`
-						);
-						const [
-							,
-							removeAllItemsButton,
-						] = ActionsElement.querySelectorAll('.action');
+						const ActionsWrapperElement =
+							container.querySelector(COMPONENT_SELECTOR);
+						const ActionsElement =
+							ActionsWrapperElement.querySelector(
+								`${COMPONENT_SELECTOR}-actions`
+							);
+						const [, removeAllItemsButton] =
+							ActionsElement.querySelectorAll('.action');
 
 						await act(async () => {
 							fireEvent.click(removeAllItemsButton);
@@ -359,9 +345,8 @@ describe('MiniCart Items List Actions', () => {
 								setIsUpdating,
 								updateCartModel,
 							} = WITH_ITEMS_CONTEXT_MOCK;
-							const {
-								id: orderId,
-							} = WITH_ITEMS_CONTEXT_MOCK.cartState;
+							const {id: orderId} =
+								WITH_ITEMS_CONTEXT_MOCK.cartState;
 
 							expect(
 								CartResource.updateCartById

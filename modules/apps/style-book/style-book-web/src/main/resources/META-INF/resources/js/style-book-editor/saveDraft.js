@@ -9,9 +9,8 @@ import {config} from './config';
 
 export default function saveDraft(frontendTokensValues) {
 	const body = objectToFormData({
-		[`${config.namespace}frontendTokensValues`]: JSON.stringify(
-			frontendTokensValues
-		),
+		[`${config.namespace}frontendTokensValues`]:
+			JSON.stringify(frontendTokensValues),
 		[`${config.namespace}styleBookEntryId`]: config.styleBookEntryId,
 	});
 

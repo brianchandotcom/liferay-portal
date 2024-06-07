@@ -339,7 +339,9 @@ textarea.script {
 	margin-bottom: 0.25rem;
 }
 
-.lfr-ddm-link-to-page-modal.modal-dialog:not(.dialog-iframe-modal):not(.modal-full-screen) {
+.lfr-ddm-link-to-page-modal.modal-dialog:not(.dialog-iframe-modal):not(
+		.modal-full-screen
+	) {
 	position: fixed;
 }
 

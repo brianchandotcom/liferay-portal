@@ -1,7 +1,7 @@
 .congrats-information {
 	background-color: var(--color-neutral-0);
 	border: 1px solid var(--color-brand-primary-lighten-3);
-	box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
+	box-shadow: 0 10px 30px rgba(77, 133, 255, 0.09);
 	height: fit-content;
 	padding: 40px 45px;
 	width: 749px;
@@ -29,8 +29,8 @@
 	position: static;
 }
 
-.congrats-information .congrats-discount{
-	color: #39C38D;
+.congrats-information .congrats-discount {
+	color: #39c38d;
 	font-size: 13px;
 	font-weight: var(--font-weight-bold);
 	height: 70px;
@@ -106,12 +106,12 @@
 		display: none;
 	}
 
-	.congrats-information .right-column .congrats-price  {
+	.congrats-information .right-column .congrats-price {
 		padding-top: 2rem;
 		text-align: left !important;
 	}
-	
-	.congrats-discount{
+
+	.congrats-discount {
 		text-align: left !important;
 	}
 

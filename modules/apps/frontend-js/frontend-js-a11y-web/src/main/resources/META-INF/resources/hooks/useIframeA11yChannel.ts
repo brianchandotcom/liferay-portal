@@ -24,11 +24,14 @@ function segmentViolationsByIframe(
 
 			const ruleIds = Object.keys(violations.nodes[target]);
 
-			const rules = ruleIds.reduce((previousRules, ruleId) => {
-				previousRules[ruleId] = violations.rules[ruleId];
+			const rules = ruleIds.reduce(
+				(previousRules, ruleId) => {
+					previousRules[ruleId] = violations.rules[ruleId];
 
-				return previousRules;
-			}, {} as FilteredViolations['rules']);
+					return previousRules;
+				},
+				{} as FilteredViolations['rules']
+			);
 
 			previousViolations.rules = {...previousViolations.rules, ...rules};
 			previousViolations.nodes[target] = violations.nodes[target];
@@ -48,9 +51,9 @@ export default function useIframeA11yChannel<T, K>(
 
 	useEffect(() => {
 		for (const iframe in iframes) {
-			const iframeWindow = (document.querySelector(
-				iframe
-			) as HTMLIFrameElement)?.contentWindow;
+			const iframeWindow = (
+				document.querySelector(iframe) as HTMLIFrameElement
+			)?.contentWindow;
 
 			if (!iframeWindow) {
 				continue;

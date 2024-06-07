@@ -49,8 +49,9 @@ describe('The HeaderKebab component should', () => {
 			</MockRouter>
 		);
 
-		const button = document.getElementById('headerKebab').children[0]
-			.children[0].children[0];
+		const button =
+			document.getElementById('headerKebab').children[0].children[0]
+				.children[0];
 
 		fireEvent.click(button);
 

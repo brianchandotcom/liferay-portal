@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -8,8 +9,8 @@ const applicationIdKey = 'raylife-application-id';
 const btnBack = fragmentElement.querySelector('#contact-agent-btn-back');
 const btnCall = fragmentElement.querySelector('#contact-agent-btn-call');
 const contextualMessageIdKey = 'raylife-contextual-message';
-const valueCall = fragmentElement.querySelector('#value-number-call')
-	.textContent;
+const valueCall =
+	fragmentElement.querySelector('#value-number-call').textContent;
 const baseURL = window.location.origin + Liferay.ThemeDisplay.getPathContext();
 
 const consentType = Liferay.Util.LocalStorage.TYPES.NECESSARY;
@@ -44,12 +45,12 @@ const contextualMessage = Liferay.Util.LocalStorage.getItem(
 );
 
 if (contextualMessage) {
-	document.getElementById(
-		'contact-agent-contextual-message'
-	).textContent = contextualMessage;
+	document.getElementById('contact-agent-contextual-message').textContent =
+		contextualMessage;
 }
 
 const fetchHeadless = async (url, options) => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${baseURL}/${url}`, {
 		...options,

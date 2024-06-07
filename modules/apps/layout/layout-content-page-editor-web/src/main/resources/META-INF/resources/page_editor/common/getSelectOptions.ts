@@ -11,5 +11,5 @@
  * it as mutable.
  */
 export function getSelectOptions<T>(options: Readonly<Array<T>>) {
-	return (options as unknown) as Array<T>;
+	return options as unknown as Array<T>;
 }

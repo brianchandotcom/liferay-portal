@@ -71,7 +71,8 @@ const ListItems = ({
 									className={classNames(
 										'align-items-center d-flex icon justify-content-center',
 										{
-											'border border-primary rounded-circle': !!value,
+											'border border-primary rounded-circle':
+												!!value,
 										}
 									)}
 								>

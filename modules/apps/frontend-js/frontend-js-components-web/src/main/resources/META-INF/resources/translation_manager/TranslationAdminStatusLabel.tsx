@@ -76,7 +76,7 @@ export default function TranslationAdminStatusLabel({
 							translatedItems[languageId],
 							totalItems,
 						]),
-				  };
+					};
 	}
 
 	return (

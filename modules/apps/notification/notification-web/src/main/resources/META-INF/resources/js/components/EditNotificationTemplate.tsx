@@ -310,6 +310,7 @@ export default function EditNotificationTemplate({
 		};
 
 		makeFetch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [notificationTemplateId]);
 

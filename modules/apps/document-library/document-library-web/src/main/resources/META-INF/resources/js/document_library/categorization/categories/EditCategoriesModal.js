@@ -47,9 +47,8 @@ const EditCategoriesModal = ({
 
 	const [vocabularies, setVocabularies] = useState([]);
 
-	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
-		'add'
-	);
+	const [selectedRadioGroupValue, setSelectedRadioGroupValue] =
+		useState('add');
 
 	const bulkStatusComponent = Liferay.component(`${namespace}BulkStatus`);
 
@@ -94,7 +93,7 @@ const EditCategoriesModal = ({
 		const isInvalid = requiredVocabularies.length
 			? requiredVocabularies.some(
 					(item) => item.required && !item.selectedItems.length
-			  )
+				)
 			: false;
 
 		setIsValid(!isInvalid);

@@ -29,7 +29,7 @@ export default function FragmentCollectionPreview({
 		return blocklist
 			? fragments.filter(
 					(fragment) => !blocklist.includes(fragment.fragmentEntryKey)
-			  )
+				)
 			: fragments;
 	}, [fragmentCollectionKey, fragments]);
 

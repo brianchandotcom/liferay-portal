@@ -139,7 +139,8 @@ const SidebarPanelInfoView = ({
 										className={classNames(
 											'sticker-user-icon',
 											{
-												[`user-icon-color-${stickerColor}`]: !user.url,
+												[`user-icon-color-${stickerColor}`]:
+													!user.url,
 											}
 										)}
 										shape="circle"

@@ -61,7 +61,7 @@ test.describe('Management Toolbar With Results', () => {
 
 		await test.step('Select Management Toolbar with results section', async () => {
 			const clearButton = page
-				.locator('#management_toolbar_with_results_bar')
+				.locator('#managementToolbarWithResultsBar')
 				.getByLabel('Clear');
 
 			await expect(clearButton).toBeVisible();

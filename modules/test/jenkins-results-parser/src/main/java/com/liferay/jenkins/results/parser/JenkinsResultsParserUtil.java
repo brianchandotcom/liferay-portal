@@ -4729,7 +4729,8 @@ public class JenkinsResultsParserUtil {
 
 				Matcher testray2URLMatcher = _testray2URLPattern.matcher(url);
 
-				if (testray2URLMatcher.find() &&
+				if ((httpAuthorizationHeader == null) &&
+					testray2URLMatcher.find() &&
 					!url.contains("/o/oauth2/token")) {
 
 					Properties buildProperties = getBuildProperties();

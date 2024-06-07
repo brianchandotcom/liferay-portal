@@ -104,7 +104,7 @@ public class RoleImpl extends RoleBaseImpl {
 
 	@Override
 	public boolean isTeam() {
-		if (getClassNameId() == ClassNameIds._TEAM_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(Team.class)) {
 			return true;
 		}
 
@@ -112,15 +112,5 @@ public class RoleImpl extends RoleBaseImpl {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RoleImpl.class);
-
-	private static class ClassNameIds {
-
-		private ClassNameIds() {
-		}
-
-		private static final long _TEAM_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(Team.class);
-
-	}
 
 }

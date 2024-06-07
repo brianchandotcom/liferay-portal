@@ -62,32 +62,34 @@ public class UpgradeWorkflow extends UpgradeProcess {
 	}
 
 	protected String[][] getOrphanedAttachedModels() {
-		return _ORPHANED_ATTACHED_MODELS;
+		return new String[][] {
+			{
+				"KaleoInstance", "className",
+				"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'",
+				"DDLRecord", "recordId"
+			},
+			{
+				"KaleoInstanceToken", "className",
+				"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'",
+				"DDLRecord", "recordId"
+			},
+			{
+				"WorkflowDefinitionLink", "classNameId",
+				String.valueOf(
+					PortalUtil.getClassNameId(
+						"com.liferay.portal.workflow.kaleo.forms.model." +
+							"KaleoProcess")),
+				"KaleoProcess", "kaleoProcessId"
+			},
+			{
+				"WorkflowInstanceLink", "classNameId",
+				String.valueOf(
+					PortalUtil.getClassNameId(
+						"com.liferay.portal.workflow.kaleo.forms.model." +
+							"KaleoProcess")),
+				"DDLRecord", "recordId"
+			}
+		};
 	}
-
-	private static final String _CLASS_NAME_ID = String.valueOf(
-		PortalUtil.getClassNameId(
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"));
-
-	private static final String[][] _ORPHANED_ATTACHED_MODELS = {
-		{
-			"KaleoInstance", "className",
-			"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'",
-			"DDLRecord", "recordId"
-		},
-		{
-			"KaleoInstanceToken", "className",
-			"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'",
-			"DDLRecord", "recordId"
-		},
-		{
-			"WorkflowDefinitionLink", "classNameId", _CLASS_NAME_ID,
-			"KaleoProcess", "kaleoProcessId"
-		},
-		{
-			"WorkflowInstanceLink", "classNameId", _CLASS_NAME_ID, "DDLRecord",
-			"recordId"
-		}
-	};
 
 }

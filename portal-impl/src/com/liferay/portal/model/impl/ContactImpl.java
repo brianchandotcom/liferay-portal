@@ -26,21 +26,11 @@ public class ContactImpl extends ContactBaseImpl {
 
 	@Override
 	public boolean isUser() {
-		if (getClassNameId() == ClassNameIds._USER_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(User.class)) {
 			return true;
 		}
 
 		return false;
-	}
-
-	private static class ClassNameIds {
-
-		private ClassNameIds() {
-		}
-
-		private static final long _USER_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(User.class);
-
 	}
 
 }

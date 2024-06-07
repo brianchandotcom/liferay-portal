@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -32,7 +33,8 @@ public class UpgradeGroup extends UpgradeProcess {
 				"update Group_ set friendlyURL= ? where classNameId = ?")) {
 
 			preparedStatement.setString(1, GroupConstants.GLOBAL_FRIENDLY_URL);
-			preparedStatement.setLong(2, _CLASS_NAME_ID);
+			preparedStatement.setLong(
+				2, PortalUtil.getClassNameId(Company.class));
 
 			preparedStatement.execute();
 		}
@@ -42,11 +44,8 @@ public class UpgradeGroup extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"update Group_ set site = [$TRUE$] where classNameId = " +
-					_CLASS_NAME_ID);
+					PortalUtil.getClassNameId(Company.class));
 		}
 	}
-
-	private static final Long _CLASS_NAME_ID = PortalUtil.getClassNameId(
-		"com.liferay.portal.model.Company");
 
 }

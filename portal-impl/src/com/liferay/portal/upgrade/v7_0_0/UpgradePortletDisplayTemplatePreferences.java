@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
@@ -38,7 +39,8 @@ public class UpgradePortletDisplayTemplatePreferences
 				"select groupId from Group_ where classNameId = ? and " +
 					"classPK = ?")) {
 
-			preparedStatement.setLong(1, _COMPANY_CLASS_NAME_ID);
+			preparedStatement.setLong(
+				1, PortalUtil.getClassNameId(Company.class));
 			preparedStatement.setLong(2, companyId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -144,9 +146,6 @@ public class UpgradePortletDisplayTemplatePreferences
 
 	protected static final String UPDATE_PORTLET_PREFERENCES_WHERE_CLAUSE =
 		"(preferences like '%" + DISPLAY_STYLE_PREFIX_6_2 + "%')";
-
-	private static final Long _COMPANY_CLASS_NAME_ID =
-		PortalUtil.getClassNameId("com.liferay.portal.kernel.model.Company");
 
 	private long _companyGroupId = 0L;
 	private final Map<Long, Long> _companyGroupIds = new HashMap<>();

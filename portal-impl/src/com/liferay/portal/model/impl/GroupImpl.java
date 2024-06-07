@@ -859,7 +859,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isCompany() {
-		if ((getClassNameId() == ClassNameIds._COMPANY_CLASS_NAME_ID) ||
+		if ((getClassNameId() == PortalUtil.getClassNameId(Company.class)) ||
 			isCompanyStagingGroup()) {
 
 			return true;
@@ -956,7 +956,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isLayout() {
-		if (getClassNameId() == ClassNameIds._LAYOUT_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(Layout.class)) {
 			return true;
 		}
 
@@ -965,7 +965,9 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isLayoutPrototype() {
-		if (getClassNameId() == ClassNameIds._LAYOUT_PROTOTYPE_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(
+				LayoutPrototype.class)) {
+
 			return true;
 		}
 
@@ -974,8 +976,8 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isLayoutSetPrototype() {
-		if (getClassNameId() ==
-				ClassNameIds._LAYOUT_SET_PROTOTYPE_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(
+				LayoutSetPrototype.class)) {
 
 			return true;
 		}
@@ -997,7 +999,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isOrganization() {
-		if (getClassNameId() == ClassNameIds._ORGANIZATION_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(Organization.class)) {
 			return true;
 		}
 
@@ -1014,7 +1016,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isRegularSite() {
-		if (getClassNameId() == ClassNameIds._GROUP_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(Group.class)) {
 			return true;
 		}
 
@@ -1208,7 +1210,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isUser() {
-		if (getClassNameId() == ClassNameIds._USER_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(User.class)) {
 			return true;
 		}
 
@@ -1217,7 +1219,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isUserGroup() {
-		if (getClassNameId() == ClassNameIds._USER_GROUP_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(UserGroup.class)) {
 			return true;
 		}
 
@@ -1226,8 +1228,8 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isUserPersonalSite() {
-		if (getClassNameId() ==
-				ClassNameIds._USER_PERSONAL_SITE_CLASS_NAME_ID) {
+		if (getClassNameId() == PortalUtil.getClassNameId(
+				UserPersonalSite.class)) {
 
 			return true;
 		}
@@ -1295,39 +1297,5 @@ public class GroupImpl extends GroupBaseImpl {
 	private Group _liveGroup;
 	private Group _stagingGroup;
 	private UnicodeProperties _typeSettingsUnicodeProperties;
-
-	private static class ClassNameIds {
-
-		private ClassNameIds() {
-		}
-
-		private static final long _COMPANY_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(Company.class);
-
-		private static final long _GROUP_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(Group.class);
-
-		private static final long _LAYOUT_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(Layout.class);
-
-		private static final long _LAYOUT_PROTOTYPE_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(LayoutPrototype.class);
-
-		private static final long _LAYOUT_SET_PROTOTYPE_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(LayoutSetPrototype.class);
-
-		private static final long _ORGANIZATION_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(Organization.class);
-
-		private static final long _USER_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(User.class);
-
-		private static final long _USER_GROUP_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(UserGroup.class);
-
-		private static final long _USER_PERSONAL_SITE_CLASS_NAME_ID =
-			PortalUtil.getClassNameId(UserPersonalSite.class);
-
-	}
 
 }

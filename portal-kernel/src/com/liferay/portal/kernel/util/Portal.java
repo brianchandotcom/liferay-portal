@@ -990,8 +990,6 @@ public interface Portal {
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException;
 
-	public void initCustomSQL();
-
 	public User initUser(HttpServletRequest httpServletRequest)
 		throws Exception;
 

@@ -425,6 +425,9 @@
 									},
 									{
 										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"allowEmptySearches": "true",
@@ -435,6 +438,22 @@
 											}
 										},
 										"id": "9abed075-eecb-2a43-78e8-a7ba17c421e7",
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"federatedSearchKey": "",
+													"sxpBlueprintExternalReferenceCode": "LIFERAY_LEARN"
+												},
+												"widgetName": "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet"
+											}
+										},
+										"id": "3ee652df-f315-eaab-f0e9-117e9a7f80b5",
 										"type": "Widget"
 									}
 								],

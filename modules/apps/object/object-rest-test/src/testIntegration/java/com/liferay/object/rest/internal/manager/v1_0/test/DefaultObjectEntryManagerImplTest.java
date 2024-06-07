@@ -3892,6 +3892,116 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
+	@Test
+	public void testUpdateObjectEntryWithAccountEntryRestrictedAsAccountRoleWithPermissions()
+		throws Exception {
+
+			ObjectDefinition customObjectDefinition = _createObjectDefinition(
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName"
+					).build()));
+
+			ObjectRelationship objectRelationship1 =
+				_objectRelationshipLocalService.addObjectRelationship(
+					null, adminUser.getUserId(),
+					_objectDefinition3.getObjectDefinitionId(),
+					customObjectDefinition.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+					StringUtil.randomId(), false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+			ObjectDefinition accountEntryObjectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					companyId, "AccountEntry");
+
+			ObjectRelationship objectRelationship2 =
+				_objectRelationshipLocalService.addObjectRelationship(
+					null, adminUser.getUserId(),
+					accountEntryObjectDefinition.getObjectDefinitionId(),
+					customObjectDefinition.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+					StringUtil.randomId(), false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+
+			customObjectDefinition.setAccountEntryRestrictedObjectFieldId(
+				objectRelationship2.getObjectFieldId2());
+
+			customObjectDefinition.setAccountEntryRestricted(true);
+
+			customObjectDefinition =
+				objectDefinitionLocalService.updateObjectDefinition(
+					customObjectDefinition);
+
+			AccountEntry accountEntry1 = _addAccountEntry();
+			AccountEntry accountEntry2 = _addAccountEntry();
+
+			ObjectEntry objectEntry1 = _addObjectEntry(accountEntry1);
+
+			ObjectEntry objectEntry2 = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, customObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"r_oneToManyRelationshipName1_accountEntryId",
+							accountEntry2.getAccountEntryId()
+						).put(
+							"textObjectFieldName", "English"
+						).put(
+							() -> {
+								ObjectField objectField = _objectFieldLocalService.getObjectField(objectRelationship1.getObjectFieldId2());
+								return objectField.getName();
+							},
+							objectEntry1.getId()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			_user = _addUser();
+
+			_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
+			_addResourcePermission(ActionKeys.UPDATE, _accountAdministratorRole);
+			_addResourcePermission(ObjectActionKeys.ADD_OBJECT_ENTRY, _accountAdministratorRole);
+
+			_addResourcePermission(ActionKeys.VIEW, customObjectDefinition, _accountAdministratorRole);
+			_addResourcePermission(ActionKeys.UPDATE, customObjectDefinition, _accountAdministratorRole);
+			_addResourcePermission(ObjectActionKeys.ADD_OBJECT_ENTRY, customObjectDefinition, _accountAdministratorRole);
+
+			_assignAccountEntryRole(accountEntry1, _accountAdministratorRole, _user);
+			_assignAccountEntryRole(accountEntry2, _accountAdministratorRole, _user);
+
+		Map<String, Object> customObjectEntryProperties =
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", "Able-update"
+			).build();
+
+		assertEquals(
+			_defaultObjectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, customObjectDefinition,
+				objectEntry2.getId(),
+				new ObjectEntry() {
+					{
+						properties = customObjectEntryProperties;
+					}
+				}),
+			new ObjectEntry() {
+				{
+
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", "Able-update"
+					).build();
+				}
+			});
+	}
+
 	@Override
 	protected void assertObjectEntryProperties(
 			ObjectEntry actualObjectEntry,
@@ -4126,6 +4236,8 @@ public class DefaultObjectEntryManagerImplTest
 					properties = HashMapBuilder.<String, Object>put(
 						"r_oneToManyRelationshipName1_accountEntryId",
 						accountEntry.getAccountEntryId()
+					).put(
+						"textObjectFieldName1", RandomTestUtil.randomString()
 					).build();
 				}
 			},

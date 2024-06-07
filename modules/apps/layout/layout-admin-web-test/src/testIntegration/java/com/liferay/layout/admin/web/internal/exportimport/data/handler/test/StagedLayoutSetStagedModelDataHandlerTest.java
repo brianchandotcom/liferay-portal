@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -87,8 +86,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, LayoutSet.class,
 			ModelAdapterUtil.adapt(
-				_layoutSetLocalService.getLayoutSet(group.getGroupId(), false),
-				LayoutSet.class, StagedLayoutSet.class));
+				group.getPublicLayoutSet(), LayoutSet.class,
+				StagedLayoutSet.class));
 
 		return dependentStagedModelsMap;
 	}
@@ -99,15 +98,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			LayoutSet.class.getSimpleName());
-
-		LayoutSet parentLayoutSet = (LayoutSet)dependentStagedModels.get(0);
-
 		return ModelAdapterUtil.adapt(
-			_layoutSetLocalService.getLayoutSet(
-				group.getGroupId(), parentLayoutSet.isPrivateLayout()),
-			LayoutSet.class, StagedLayoutSet.class);
+			group.getPublicLayoutSet(), LayoutSet.class, StagedLayoutSet.class);
 	}
 
 	@Override
@@ -115,8 +107,7 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		throws PortalException {
 
 		return ModelAdapterUtil.adapt(
-			_layoutSetLocalService.getLayoutSet(group.getGroupId(), false),
-			LayoutSet.class, StagedLayoutSet.class);
+			group.getPublicLayoutSet(), LayoutSet.class, StagedLayoutSet.class);
 	}
 
 	@Override
@@ -143,9 +134,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 				).buildString());
 
 		StagedLayoutSet stagedLayoutSet = ModelAdapterUtil.adapt(
-			_layoutSetLocalService.getLayoutSet(
-				stagingGroup.getGroupId(), false),
-			LayoutSet.class, StagedLayoutSet.class);
+			stagingGroup.getPublicLayoutSet(), LayoutSet.class,
+			StagedLayoutSet.class);
 
 		LayoutSet stagingLayoutSet = stagedLayoutSet.getLayoutSet();
 
@@ -186,8 +176,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 				portletDataContext));
 
 		StagedLayoutSet importedStagedLayoutSet = ModelAdapterUtil.adapt(
-			_layoutSetLocalService.getLayoutSet(liveGroup.getGroupId(), false),
-			LayoutSet.class, StagedLayoutSet.class);
+			liveGroup.getPublicLayoutSet(), LayoutSet.class,
+			StagedLayoutSet.class);
 
 		LayoutSet importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
 
@@ -241,8 +231,8 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 				portletDataContext));
 
 		importedStagedLayoutSet = ModelAdapterUtil.adapt(
-			_layoutSetLocalService.getLayoutSet(liveGroup.getGroupId(), false),
-			LayoutSet.class, StagedLayoutSet.class);
+			liveGroup.getPublicLayoutSet(), LayoutSet.class,
+			StagedLayoutSet.class);
 
 		importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
 
@@ -260,9 +250,6 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	@Inject
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
-
-	@Inject
-	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private Portal _portal;

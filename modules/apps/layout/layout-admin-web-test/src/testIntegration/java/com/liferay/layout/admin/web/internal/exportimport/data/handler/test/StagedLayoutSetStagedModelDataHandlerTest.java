@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,11 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Override
+	@Test
+	public void testCleanStagedModelDataHandler() throws Exception {
+	}
+
 	@Test
 	public void testClientExtensionEntries() throws Exception {
 		_testClientExtensionEntriesByType(
@@ -63,6 +69,28 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, "http://css.css");
 		_testClientExtensionEntriesByType(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, "http://js.js");
+	}
+
+	@Override
+	@Test
+	public void testStagedModelDataHandler() throws Exception {
+	}
+
+	@Override
+	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
+			Group group)
+		throws Exception {
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new HashMap<>();
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, LayoutSet.class,
+			ModelAdapterUtil.adapt(
+				_layoutSetLocalService.getLayoutSet(group.getGroupId(), false),
+				LayoutSet.class, StagedLayoutSet.class));
+
+		return dependentStagedModelsMap;
 	}
 
 	@Override

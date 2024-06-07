@@ -36,6 +36,9 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		// TODO
+
 		try {
 			_countMessageBoardThreads(
 				"liferay-sample-etc-cron-oauth-application-headless-server",
@@ -45,6 +48,8 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 			_log.error(exception);
 		}
 
+		// TODO
+
 		try {
 			_countMessageBoardThreads(
 				"external-liferay", _externalLiferayHomePageURL);
@@ -52,6 +57,8 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+
+		// TODO
 
 		try {
 			String dadJoke = _getDadJoke();

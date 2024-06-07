@@ -144,6 +144,8 @@ public class GogoShellPortlet extends MVCPortlet {
 
 			SessionMessages.add(
 				actionRequest, "requestProcessed", successMessage);
+
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception exception) {
 			hideDefaultErrorMessage(actionRequest);

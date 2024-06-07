@@ -47,10 +47,10 @@ export type InitialState = {
 	customFilterFields: {[key: string]: string};
 	filters: ListViewFilter;
 	id: string;
-	keywords: string;
 	page: number;
 	pageSize: number;
 	pin: boolean;
+	search: string;
 	selectedRows: number[];
 	sort: Sort | Sort[];
 };
@@ -66,10 +66,10 @@ const initialState: InitialState = {
 		filter: {},
 	},
 	id: '',
-	keywords: '',
 	page: 1,
 	pageSize: PAGINATION_DELTA[0],
 	pin: false,
+	search: '',
 	selectedRows: [],
 	sort: {direction: SortOption.ASC, key: ''},
 };
@@ -172,7 +172,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 			return {
 				...state,
 				filters: initialState.filters,
-				keywords: '',
+				search: '',
 			};
 
 		case ListViewTypes.SET_CLEAR_CHECKED_ROW:
@@ -271,13 +271,13 @@ const reducer = (state: InitialState, action: AppActions) => {
 			};
 		}
 
-		case ListViewTypes.SET_SEARCH:
+		case ListViewTypes.SET_SEARCH: {
 			return {
 				...state,
-				keywords: action.payload,
 				page: 1,
+				search: action.payload,
 			};
-
+		}
 		case ListViewTypes.SET_SORT:
 			return {
 				...state,

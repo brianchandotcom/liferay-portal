@@ -7,6 +7,7 @@ import {ClayInput} from '@clayui/form';
 import React from 'react';
 
 const InputComponent = ({
+	dir,
 	displayStyle,
 	fieldName,
 	inputValue,
@@ -22,6 +23,7 @@ const InputComponent = ({
 			<ClayInput.GroupItem>
 				<textarea
 					className="ddm-field-text form-control"
+					dir={dir}
 					disabled={readOnly}
 					id={`${name}inputValue`}
 					onBlur={onFieldBlurred}
@@ -43,6 +45,7 @@ const InputComponent = ({
 				{...(fieldName === 'submitLabel' && {maxLength: 25})}
 				className="ddm-field-text form-control"
 				data-testid="visibleChangeInput"
+				dir={dir}
 				disabled={readOnly}
 				id={`${name}inputValue`}
 				onBlur={onFieldBlurred}

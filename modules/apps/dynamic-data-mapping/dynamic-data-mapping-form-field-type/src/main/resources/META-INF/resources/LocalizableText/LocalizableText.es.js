@@ -115,6 +115,7 @@ const LocalizableText = ({
 	return (
 		<ClayInput.Group>
 			<InputComponent
+				dir={Liferay.Language.direction[currentEditingLocale.localeId]}
 				displayStyle={displayStyle}
 				fieldName={fieldName}
 				id={id}

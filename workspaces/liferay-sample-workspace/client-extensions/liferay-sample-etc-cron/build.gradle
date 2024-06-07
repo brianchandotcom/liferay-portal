@@ -20,10 +20,10 @@ apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
 bootRun {
-	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_ID", "<client-id>"
-	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "<client-secret>"
-	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "https://external-liferay.com/"
-	environment "EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI", "https://external-liferay.com/o/oauth2/token"
+	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_ID", "myclientid"
+	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET", "myclientsecret"
+	environment "EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI", "https://myhomepageuri.com"
+	environment "EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI", "https://myhomepageuri.com/o/oauth2/token"
 }
 
 dependencies {

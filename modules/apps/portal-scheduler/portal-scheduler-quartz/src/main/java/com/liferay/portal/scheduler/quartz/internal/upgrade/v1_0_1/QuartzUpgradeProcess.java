@@ -33,9 +33,9 @@ import org.quartz.JobDataMap;
 /**
  * @author Kevin Lee
  */
-public class QuartzDBPartitionUpgradeProcess extends UpgradeProcess {
+public class QuartzUpgradeProcess extends UpgradeProcess {
 
-	public QuartzDBPartitionUpgradeProcess(
+	public QuartzUpgradeProcess(
 		CompanyLocalService companyLocalService, JSONFactory jsonFactory) {
 
 		_companyLocalService = companyLocalService;
@@ -44,8 +44,9 @@ public class QuartzDBPartitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (PortalUtil.getDefaultCompanyId() !=
-				CompanyThreadLocal.getCompanyId()) {
+		if (DBPartition.isPartitionEnabled() &&
+			(PortalUtil.getDefaultCompanyId() !=
+				CompanyThreadLocal.getCompanyId())) {
 
 			return;
 		}
@@ -81,15 +82,6 @@ public class QuartzDBPartitionUpgradeProcess extends UpgradeProcess {
 			});
 	}
 
-	@Override
-	protected boolean isSkipUpgradeProcess() {
-		if (!DBPartition.isPartitionEnabled()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private JobDataMap _deserializeJobDataMap(InputStream inputStream)
 		throws Exception {
 
@@ -97,8 +89,7 @@ public class QuartzDBPartitionUpgradeProcess extends UpgradeProcess {
 				protectedClassLoaderObjectInputStream =
 					new ProtectedClassLoaderObjectInputStream(
 						inputStream,
-						QuartzDBPartitionUpgradeProcess.class.
-							getClassLoader())) {
+						QuartzUpgradeProcess.class.getClassLoader())) {
 
 			return (JobDataMap)
 				protectedClassLoaderObjectInputStream.readObject();

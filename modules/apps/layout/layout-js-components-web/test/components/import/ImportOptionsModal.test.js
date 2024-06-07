@@ -7,7 +7,11 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import {ImportOptionsModal} from '../../../src/main/resources/META-INF/resources/js';
+import {
+	ImportOptionsModal,
+	checkAccessibility,
+} from '../../../src/main/resources/META-INF/resources/js';
+import {ModalContent} from '../../../src/main/resources/META-INF/resources/js/components/import/ImportOptionsModal';
 
 const renderComponent = async ({
 	onCloseModal = () => null,
@@ -78,5 +82,19 @@ describe('ImportOptionsModal', () => {
 
 		expect(onCloseModal).toHaveBeenCalled();
 		expect(onImport).toHaveBeenCalled();
+	});
+});
+
+describe('ImportOptionsModal Accessibility', () => {
+	it('checks accesibility of modal content', async () => {
+		const {container} = render(
+			<ModalContent
+				onClickImport={jest.fn()}
+				onClose={jest.fn()}
+				onRadioChange={jest.fn()}
+			/>
+		);
+
+		await checkAccessibility({context: container});
 	});
 });

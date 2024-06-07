@@ -33,10 +33,6 @@ public class CommercePriceEntryUOMCreateDateComparator
 		return _INSTANCE_DESCENDING;
 	}
 
-	public CommercePriceEntryUOMCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
-	}
-
 	@Override
 	public int compare(
 		CommercePriceEntry commercePriceEntry1,
@@ -77,6 +73,10 @@ public class CommercePriceEntryUOMCreateDateComparator
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	private CommercePriceEntryUOMCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
 	}
 
 	private static final CommercePriceEntryUOMCreateDateComparator

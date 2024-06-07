@@ -986,7 +986,7 @@ public class CommercePriceEntryLocalServiceTest {
 			_commercePriceEntryLocalService.getInstanceCommercePriceEntries(
 				cpInstance.getCPInstanceUuid(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new CommercePriceEntryUOMCreateDateComparator(true));
+				CommercePriceEntryUOMCreateDateComparator.getInstance(true));
 
 		CommercePriceEntry commercePriceEntry1 = commercePriceEntries.get(0);
 

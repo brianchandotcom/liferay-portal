@@ -747,6 +747,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder=""
           type="text"
@@ -2943,6 +2944,7 @@ exports[`Field LocalizableText has a label 1`] = `
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder=""
           type="text"
@@ -3678,6 +3680,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder="Placeholder"
           type="text"
@@ -4407,6 +4410,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder=""
           type="text"
@@ -5136,6 +5140,7 @@ exports[`Field LocalizableText is not required 1`] = `
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder=""
           type="text"
@@ -6596,6 +6601,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder=""
           type="text"
@@ -7325,6 +7331,7 @@ exports[`Field LocalizableText renders values 1`] = `
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder=""
           type="text"
@@ -8054,6 +8061,7 @@ exports[`Field LocalizableText shows default language value when no other langua
         <input
           class="ddm-field-text form-control"
           data-testid="visibleChangeInput"
+          dir="ltr"
           id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_USinputValue"
           placeholder=""
           type="text"

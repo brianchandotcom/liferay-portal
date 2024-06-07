@@ -47,7 +47,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 
 		try {
 			_countMessageBoardThreads(
-				"external-liferay", _externalLiferayHomePageURI);
+				"external-liferay", _externalLiferayHomePageURL);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -136,8 +136,8 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 	private static final Log _log = LogFactory.getLog(
 		SampleCommandLineRunner.class);
 
-	@Value("${external.liferay.oauth2.headless.server.home.page.uri}")
-	private URL _externalLiferayHomePageURI;
+	@Value("${external.liferay.oauth2.headless.server.home.page.url}")
+	private URL _externalLiferayHomePageURL;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

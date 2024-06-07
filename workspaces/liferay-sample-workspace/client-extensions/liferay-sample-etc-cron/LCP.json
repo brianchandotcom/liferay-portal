@@ -4,8 +4,8 @@
 	"env": {
 		"EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-liferay-client-id",
 		"EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-liferay-client-secret",
-		"EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "https://myhomepageuri.com",
-		"EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI": "https://myhomepageuri.com/o/oauth2/token",
+		"EXTERNAL_LIFERAY_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URL": "https://myhomepage.com",
+		"EXTERNAL_LIFERAY_OAUTH2_TOKEN_URI": "https://myhomepage.com/o/oauth2/token",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
 	},

@@ -201,25 +201,20 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	private void _initResourceBuilders() throws Exception {
-		URL liferayMarketplaceKoroneikiAuthURL = new URL(_koroneikiAuthURL);
-
-		URL liferayMarketplaceProvisioningAuthURL = new URL(
-			_provisioningAuthURL);
-
 		_appLicenseKeyResource = AppLicenseKeyResource.builder(
 		).header(
 			"Authorization",
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"external-provisioning")
 		).endpoint(
-			liferayMarketplaceProvisioningAuthURL
+			_externalProvisioningHomePageURL
 		).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
-			liferayMarketplaceKoroneikiAuthURL
+			_koroneikiAuthURL
 		).build();
 	}
 
@@ -232,14 +227,14 @@ public class ProvisioningRestController extends BaseRestController {
 	private String _koroneikiAuthToken;
 
 	@Value("${liferay.marketplace.koroneiki.auth.url}")
-	private String _koroneikiAuthURL;
+	private URL _koroneikiAuthURL;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 	private ProductPurchaseResource _productPurchaseResource;
 
-	@Value("${external.provisioning.oauth2.headless.server.home.page.uri}")
-	private String _provisioningAuthURL;
+	@Value("${external.provisioning.oauth2.headless.server.home.page.url}")
+	private URL _externalProvisioningHomePageURL;
 
 }

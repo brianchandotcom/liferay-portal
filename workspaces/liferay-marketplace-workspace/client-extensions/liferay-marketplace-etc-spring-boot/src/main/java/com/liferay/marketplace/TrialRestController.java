@@ -249,7 +249,7 @@ public class TrialRestController extends BaseRestController {
 
 		return PortalInstanceResource.builder(
 		).endpoint(
-			_externalLiferayTrialURI
+			_externalTrialHomePageURL
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization("external-trial")
@@ -441,8 +441,8 @@ public class TrialRestController extends BaseRestController {
 	@Autowired
 	private ConsoleService _consoleService;
 
-	@Value("${external.trial.oauth2.headless.server.home.page.uri}")
-	private URL _externalLiferayTrialURI;
+	@Value("${external.trial.oauth2.headless.server.home.page.url}")
+	private URL _externalTrialHomePageURL;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

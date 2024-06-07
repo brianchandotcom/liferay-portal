@@ -3,11 +3,11 @@
 	"env": {
 		"EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-provisioning-oauth2-headless-server-client-id",
 		"EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-provisioning-oauth2-headless-server-client-secret",
-		"EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "@external-provisioning-oauth2-headless-server-home-page-uri",
+		"EXTERNAL_PROVISIONING_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URL": "@external-provisioning-oauth2-headless-server-home-page-uri",
 		"EXTERNAL_PROVISIONING_OAUTH2_TOKEN_URI": "@external-provisioning-oauth2-token-uri",
 		"EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_ID": "@external-trial-oauth2-headless-server-client-id",
 		"EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET": "@external-trial-oauth2-headless-server-client-secret",
-		"EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URI": "@external-trial-oauth2-headless-server-home-page-uri",
+		"EXTERNAL_TRIAL_OAUTH2_HEADLESS_SERVER_HOME_PAGE_URL": "@external-trial-oauth2-headless-server-home-page-uri",
 		"EXTERNAL_TRIAL_OAUTH2_TOKEN_URI": "@external-trial-oauth2-token-uri",
 		"LIFERAY_MARKETPLACE_ETC_SPRING_BOOT_TRIAL_MAX_INSTANCES": "@liferay-marketplace-etc-spring-boot-trial-max-instances",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",

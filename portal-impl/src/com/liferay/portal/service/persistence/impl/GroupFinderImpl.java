@@ -5,8 +5,11 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -14,14 +17,18 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -31,20 +38,26 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
 import com.liferay.portal.kernel.service.persistence.GroupUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -52,6 +65,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,6 +117,9 @@ public class GroupFinderImpl
 		"GroupFinderImpl_findByC_A",
 		new String[] {Long.class.getName(), Boolean.class.getName()},
 		new String[] {"companyId", "active_"}, false);
+
+	public static final String FIND_STAGING_MAPPINGS =
+		GroupFinder.class.getName() + ".findStagingMappings";
 
 	public static final String JOIN_BY_ACTION_ID =
 		GroupFinder.class.getName() + ".joinByActionId";
@@ -382,6 +401,31 @@ public class GroupFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	public Group fetchStagingGroup(long liveGroupId) {
+		if (_stagingGroupInMemoryFilterLimit <= 0) {
+			return GroupUtil.fetchByLiveGroupId(liveGroupId);
+		}
+
+		Map<Long, Long> liveToStagingGroups =
+			_liveToStagingGroupsDCLSingleton.getSingleton(
+				this::_getLiveToStagingGroups);
+
+		if (liveToStagingGroups.size() > _stagingGroupInMemoryFilterLimit) {
+			_stagingGroupInMemoryFilterLimit = 0;
+
+			_liveToStagingGroupsDCLSingleton.destroy(null);
+		}
+
+		Long stagingGroupId = liveToStagingGroups.get(liveGroupId);
+
+		if (stagingGroupId == null) {
+			return null;
+		}
+
+		return GroupUtil.fetchByPrimaryKey(stagingGroupId);
 	}
 
 	@Override
@@ -929,6 +973,13 @@ public class GroupFinderImpl
 		}
 	}
 
+	protected void afterPropertiesSet() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			ModelListener.class, new GroupModelListener(), null);
+	}
+
 	protected int countByGroupId(
 			Session session, long groupId, Map<String, Object> params)
 		throws Exception {
@@ -1001,6 +1052,10 @@ public class GroupFinderImpl
 		queryPos.add(descriptions, 2);
 
 		return sqlQuery.list(true);
+	}
+
+	protected void destroy() {
+		_serviceRegistration.unregister();
 	}
 
 	protected String getJoin(Map<String, Object> params) {
@@ -1310,6 +1365,25 @@ public class GroupFinderImpl
 		}
 	}
 
+	private static void _clearLiveToStagingGroupsCache() {
+		_liveToStagingGroupsDCLSingleton.destroy(null);
+
+		if (ClusterExecutorUtil.isEnabled()) {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					ClusterRequest clusterRequest =
+						ClusterRequest.createMulticastRequest(
+							_clearLiveToStagingGroupsCacheMethodHandler, true);
+
+					clusterRequest.setFireAndForget(true);
+
+					ClusterExecutorUtil.execute(clusterRequest);
+
+					return null;
+				});
+		}
+	}
+
 	@SafeVarargs
 	private final String _buildSQLCacheKey(
 		OrderByComparator<Group> orderByComparator,
@@ -1445,6 +1519,42 @@ public class GroupFinderImpl
 		_joinMap = joinMap;
 
 		return _joinMap;
+	}
+
+	private Map<Long, Long> _getLiveToStagingGroups() {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_STAGING_MAPPINGS);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar("liveGroupId", Type.LONG);
+			sqlQuery.addScalar("groupId", Type.LONG);
+
+			List<Object[]> results = sqlQuery.list(false, false);
+
+			if (results.isEmpty()) {
+				return Collections.emptyMap();
+			}
+
+			Map<Long, Long> liveToStagingGroups = new HashMap<>();
+
+			for (Object[] liveToStagingGroup : results) {
+				liveToStagingGroups.put(
+					(Long)liveToStagingGroup[0], (Long)liveToStagingGroup[1]);
+			}
+
+			return liveToStagingGroups;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private Map<String, String> _getWhereMap() {
@@ -1584,6 +1694,15 @@ public class GroupFinderImpl
 		return join;
 	}
 
+	private static final MethodHandler
+		_clearLiveToStagingGroupsCacheMethodHandler = new MethodHandler(
+			new MethodKey(
+				GroupFinderImpl.class, "_clearLiveToStagingGroupsCache"));
+	private static final DCLSingleton<Map<Long, Long>>
+		_liveToStagingGroupsDCLSingleton = new DCLSingleton<>();
+	private static volatile int _stagingGroupInMemoryFilterLimit =
+		PropsValues.STAGING_GROUP_IN_MEMORY_FILTER_LIMIT;
+
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<>();
 	private final Map<String, String> _findByCompanyIdSQLCache =
@@ -1594,6 +1713,37 @@ public class GroupFinderImpl
 	private volatile Map<String, String> _joinMap;
 	private final Map<String, String> _replaceJoinAndWhereSQLCache =
 		new ConcurrentHashMap<>();
+	private ServiceRegistration<?> _serviceRegistration;
 	private volatile Map<String, String> _whereMap;
+
+	private static class GroupModelListener extends BaseModelListener<Group> {
+
+		@Override
+		public Class<?> getModelClass() {
+			return Group.class;
+		}
+
+		@Override
+		public void onBeforeCreate(Group group) throws ModelListenerException {
+			if (group.getLiveGroupId() != 0) {
+				_clearLiveToStagingGroupsCache();
+			}
+		}
+
+		@Override
+		public void onBeforeRemove(Group group) throws ModelListenerException {
+			if (group.getLiveGroupId() != 0) {
+				_clearLiveToStagingGroupsCache();
+			}
+		}
+
+		@Override
+		public void onBeforeUpdate(Group originalGroup, Group group) {
+			if (originalGroup.getLiveGroupId() != group.getLiveGroupId()) {
+				_clearLiveToStagingGroupsCache();
+			}
+		}
+
+	}
 
 }

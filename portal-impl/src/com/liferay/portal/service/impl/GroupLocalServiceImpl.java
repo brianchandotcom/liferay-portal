@@ -1482,7 +1482,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
-		return groupPersistence.fetchByLiveGroupId(liveGroupId);
+		return groupFinder.fetchStagingGroup(liveGroupId);
 	}
 
 	@Override

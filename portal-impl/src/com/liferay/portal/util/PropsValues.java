@@ -2237,6 +2237,10 @@ public class PropsValues {
 				PropsKeys.
 					STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT));
 
+	public static final int STAGING_GROUP_IN_MEMORY_FILTER_LIMIT =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.STAGING_GROUP_IN_MEMORY_FILTER_LIMIT));
+
 	public static final boolean STAGING_LIVE_GROUP_LOCKING_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.STAGING_LIVE_GROUP_LOCKING_ENABLED));

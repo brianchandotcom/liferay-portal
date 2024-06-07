@@ -6093,6 +6093,27 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntryWithEmptyField() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			_objectDefinition1.getRESTContextPath() +
+				"/by-external-reference-code/" + externalReferenceCode,
+			Http.Method.GET);
+
+		Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
+	}
+
+	@Test
 	public void testGetObjectEntryWithKeywords() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

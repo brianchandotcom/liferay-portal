@@ -86,7 +86,7 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 
 	private static final int _ROUNDS = 720000;
 
-	private static final int _SALT_BYTES_LENGTH = 8;
+	private static final int _SALT_BYTES_LENGTH = 16;
 
 	private static final Pattern _pattern = Pattern.compile(
 		"^.*/?([0-9]+)?/([0-9]+)$");
@@ -97,6 +97,8 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 			throws PwdEncryptorException {
 
 			if (Validator.isNull(encryptedPassword)) {
+				_saltBytes = new byte[_SALT_BYTES_LENGTH];
+
 				Matcher matcher = _pattern.matcher(algorithm);
 
 				if (matcher.matches()) {
@@ -114,8 +116,12 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 					Base64.decode(encryptedPassword));
 
 				try {
+					int length = byteBuffer.remaining();
+
 					_keySize = byteBuffer.getInt();
 					_rounds = byteBuffer.getInt();
+
+					_saltBytes = new byte[length - (2 * 4) - (_keySize / 8)];
 
 					byteBuffer.get(_saltBytes);
 				}
@@ -141,7 +147,7 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 
 		private int _keySize = _KEY_SIZE;
 		private int _rounds = _ROUNDS;
-		private final byte[] _saltBytes = new byte[_SALT_BYTES_LENGTH];
+		private byte[] _saltBytes;
 
 	}
 

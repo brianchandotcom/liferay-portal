@@ -44,13 +44,6 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (DBPartition.isPartitionEnabled() &&
-			(PortalUtil.getDefaultCompanyId() !=
-				CompanyThreadLocal.getCompanyId())) {
-
-			return;
-		}
-
 		Map<String, Long> companyIds = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

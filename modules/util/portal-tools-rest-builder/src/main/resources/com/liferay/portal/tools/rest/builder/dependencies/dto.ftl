@@ -198,23 +198,29 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
 
 			public ${propertyType} get${capitalizedPropertyName}() {
-				${propertyName}.replaceAll(
-					(key, value) -> {
-						if (!(value instanceof UnsafeSupplier<?, ?>)) {
-							return value;
-						}
 
-						UnsafeSupplier<?, ?> unsafeSupplier =
-							(UnsafeSupplier<?, ?>)value;
+				Set<Map.Entry<String, Object>> entrySet = ${propertyName}.entrySet();
+				Iterator<Map.Entry<String, Object>> iterator = entrySet.iterator();
 
+				while (iterator.hasNext()) {
+					Map.Entry<String, Object> entry = iterator.next();
+					Object value = entry.getValue();
+
+					if (value instanceof UnsafeSupplier<?, ?>) {
 						try {
-							return unsafeSupplier.get();
-						}
-						catch (Throwable throwable) {
+							UnsafeSupplier unsafeSupplier = (UnsafeSupplier<?, ?>) value;
+							value = unsafeSupplier.get();
+						} catch (Throwable throwable) {
 							throw new RuntimeException(throwable);
 						}
 					}
-				);
+
+					if (value == null) {
+						iterator.remove();
+					} else {
+						${propertyName}.put(entry.getKey(), value);
+					}
+				}
 
 				return ${propertyName};
 			}
@@ -376,7 +382,11 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 						try {
 							value = unsafeSupplier.get();
 
-							${propertyName}.put(propertyName, value);
+							if (value == null){
+								${propertyName}.remove(propertyName);
+							} else {
+								${propertyName}.put(propertyName, value);
+							}
 						}
 						catch (Throwable e) {
 							throw new RuntimeException(e);

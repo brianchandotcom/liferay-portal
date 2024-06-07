@@ -8,6 +8,7 @@ package com.liferay.change.tracking.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.service.CTMessageLocalService;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -42,9 +43,10 @@ public class CTMessageLocalServiceTest {
 		Assert.assertEquals(
 			TestPropsValues.getCompanyId(), ctMessage.getCompanyId());
 
-		String messageContent = ctMessage.getMessageContent();
+		Message message = (Message)_jsonFactory.deserialize(
+			ctMessage.getMessageContent());
 
-		Assert.assertFalse(messageContent.contains("\"companyId\""));
+		Assert.assertNull(message.get("companyId"));
 	}
 
 	@Test
@@ -54,14 +56,15 @@ public class CTMessageLocalServiceTest {
 		CTMessage ctMessage = _addCTMessage(
 			TestPropsValues.getCompanyId(), ctCollectionId);
 
-		String messageContent = ctMessage.getMessageContent();
+		Message message = (Message)_jsonFactory.deserialize(
+			ctMessage.getMessageContent());
 
-		Assert.assertFalse(messageContent.contains("\"companyId\""));
+		Assert.assertNull(message.get("companyId"));
 
 		List<Message> messages = _ctMessageLocalService.getMessages(
 			ctCollectionId);
 
-		Message message = messages.get(0);
+		message = messages.get(0);
 
 		Assert.assertEquals(
 			TestPropsValues.getCompanyId(), message.get("companyId"));
@@ -77,5 +80,8 @@ public class CTMessageLocalServiceTest {
 
 	@Inject
 	private static CTMessageLocalService _ctMessageLocalService;
+
+	@Inject
+	private static JSONFactory _jsonFactory;
 
 }

@@ -56,7 +56,7 @@ public abstract class BaseAddComponentAnnotationCheck extends BaseUpgradeCheck {
 	protected abstract boolean isValidClassName(String className);
 
 	protected String joinLines(String... lines) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler((lines.length * 2) - 1);
 
 		for (String line : lines) {
 			if (sb.index() > 0) {

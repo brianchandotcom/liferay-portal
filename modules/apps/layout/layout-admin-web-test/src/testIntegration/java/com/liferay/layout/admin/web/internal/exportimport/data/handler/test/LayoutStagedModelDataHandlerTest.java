@@ -102,9 +102,9 @@ public class LayoutStagedModelDataHandlerTest
 		_testClientExtensionByType(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, "http://css.css");
 		_testClientExtensionByType(
-			ClientExtensionEntryConstants.TYPE_THEME_CSS, "http://css.css");
-		_testClientExtensionByType(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, "http://js.js");
+		_testClientExtensionByType(
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, "http://css.css");
 	}
 
 	@Test

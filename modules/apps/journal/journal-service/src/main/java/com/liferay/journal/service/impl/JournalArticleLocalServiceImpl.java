@@ -6078,54 +6078,23 @@ public class JournalArticleLocalServiceImpl
 									"Expiring article " + article.getId());
 							}
 
-							if (isExpireAllArticleVersions(companyId)) {
-								List<JournalArticle> currentArticles =
-									journalArticleLocalService.getArticles(
-										article.getGroupId(),
-										article.getArticleId(),
-										QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-										new ArticleVersionComparator(true));
+							ServiceContext serviceContext =
+								new ServiceContext();
 
-								for (JournalArticle currentArticle :
-										currentArticles) {
+							serviceContext.setCommand(Constants.UPDATE);
+							serviceContext.setScopeGroupId(
+								article.getGroupId());
 
-									if (currentArticle.getVersion() >=
-											article.getVersion()) {
-
-										continue;
-									}
-
-									currentArticle.setExpirationDate(
-										article.getExpirationDate());
-									currentArticle.setStatus(
-										WorkflowConstants.STATUS_EXPIRED);
-
-									currentArticle =
-										journalArticlePersistence.update(
-											currentArticle);
-
-									notifySubscribers(
-										0, currentArticle, "expired",
-										new ServiceContext());
-								}
-							}
-
-							article.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-							JournalArticle updatedJournalArticle =
-								journalArticleLocalService.updateJournalArticle(
-									article);
-
-							notifySubscribers(
-								0, updatedJournalArticle, "expired",
-								new ServiceContext());
-
-							updatePreviousApprovedArticle(
-								updatedJournalArticle);
+							journalArticleLocalService.expireArticle(
+								_portal.getValidUserId(
+									article.getCompanyId(),
+									article.getStatusByUserId()),
+								article.getGroupId(), article.getArticleId(),
+								null, serviceContext);
 
 							if (indexer != null) {
 								indexableActionableDynamicQuery.addDocuments(
-									indexer.getDocument(updatedJournalArticle));
+									indexer.getDocument(article));
 							}
 
 							return null;

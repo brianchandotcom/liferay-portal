@@ -297,6 +297,14 @@ public class ImageEditableElementParser extends BaseEditableElementParser {
 		try {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
+			String mimeType = fileEntry.getMimeType();
+
+			if (mimeType.startsWith("image")) {
+				return _dlURLHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK);
+			}
+
 			return _dlURLHelper.getImagePreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
 				StringPool.BLANK, false, false);

@@ -36,7 +36,7 @@ const UserListView: React.FC<UserListViewProps> = ({
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
 				applyFilters: false,
-				filterSchema: 'user',
+				hasSearch: true,
 				title: i18n.translate('users'),
 			}}
 			resource="/user-accounts"

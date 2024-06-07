@@ -128,6 +128,7 @@ const ListView: React.FC<ListViewProps> = ({
 	const {
 		columns: columnsContext,
 		filters,
+		search,
 		selectedRows,
 		sort,
 	} = listViewContext;
@@ -218,6 +219,7 @@ const ListView: React.FC<ListViewProps> = ({
 				managementToolbarProps.applyFilters && currentPageSize
 					? Number(currentPageSize)
 					: listViewContext.pageSize,
+			search,
 			sort: buildSort(sort),
 		}),
 		[
@@ -228,6 +230,7 @@ const ListView: React.FC<ListViewProps> = ({
 			listViewContext.page,
 			listViewContext.pageSize,
 			managementToolbarProps.applyFilters,
+			search,
 			sort,
 		]
 	);

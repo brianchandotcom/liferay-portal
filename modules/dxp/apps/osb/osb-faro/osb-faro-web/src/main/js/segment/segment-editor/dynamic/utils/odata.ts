@@ -20,6 +20,7 @@ import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
 import {generateGroupId, generateRowId, isCriterionGroup} from './utils';
 import {get, invert, isFinite, isNull, isString, isUndefined} from 'lodash';
+import {getPropertyValue, setPropertyValue} from './custom-inputs';
 import {filter as oDataFilterFn} from 'odata-v4-parser';
 
 const OPERATORS = {
@@ -342,6 +343,12 @@ const decodeQuotesToOdataQuotes = (encodedText: string): string =>
 	encodedText.replace(/%27/g, "''");
 
 /**
+ * Encode all %22 decoded quotes.
+ */
+const encodeDoubleQuotesToOdataQuotes = (decodedText: string): string =>
+	decodedText.replaceAll('"', '%22');
+
+/**
  * Gets the internal name of a child expression from the oDataV4Parser name
  */
 const getChildExpressionName = (oDataASTNode: ODataASTNode): string =>
@@ -523,9 +530,51 @@ const skipGroup = ({oDataASTNode, prevConjunction}: Context): Context => ({
  * oDataV4Parser can't handle between.
  */
 export const convertBetweenToSubstring = (queryString: string): string =>
-	queryString
-		.replace(/between(?=\([\w-:]+,('[\w-:]+',?){2}\))/g, 'substring')
-		.replaceAll('"', '');
+	queryString.replace(
+		/between(?=\([\w-:]+,('[\w-:]+',?){2}\))/g,
+		'substring'
+	);
+
+export const decodeValueFromCriteria = (criteria: Criteria) => {
+	const decodeValue = (value: string) => {
+		let decodedValue = value;
+
+		try {
+			decodedValue = decodeURIComponent(value);
+		} catch (e) {}
+
+		return decodedValue;
+	};
+
+	const formatCriteria = criteria => {
+		const newCriteria = {...criteria};
+
+		if (newCriteria.value) {
+			if (typeof newCriteria.value === 'string') {
+				newCriteria.value = decodeValue(newCriteria.value);
+			} else if (newCriteria.value?._map) {
+				newCriteria.value = setPropertyValue(
+					newCriteria.value,
+					'value',
+					0,
+					decodeValue(getPropertyValue(newCriteria.value, 'value', 0))
+				);
+			}
+		}
+
+		if (newCriteria.items) {
+			newCriteria.items = newCriteria.items.map(formatCriteria);
+		}
+
+		if (newCriteria.propertyName) {
+			newCriteria.propertyName = decodeValue(newCriteria.propertyName);
+		}
+
+		return newCriteria;
+	};
+
+	return formatCriteria(criteria);
+};
 
 /**
  * Converts an OData filter query string to an object that can be used by the
@@ -539,24 +588,22 @@ const translateQueryToCriteria = (queryString: string): Criteria => {
 			throw new Error('queryString is ()');
 		}
 
-		const oDataASTNode = JSON.parse(
-			decodeSpecialCharacters(
-				JSON.stringify(
-					oDataFilterFn(
-						convertBetweenToSubstring(
-							encodeSpecialCharacters(
-								trimSpacesBeforeParams(queryString)
-							)
-						)
-					)
-				)
-			)
-		);
+		const encodedQuotes = encodeDoubleQuotesToOdataQuotes(queryString);
+		const trimSpaces = trimSpacesBeforeParams(encodedQuotes);
+		const encodedSpecialCharacters = encodeSpecialCharacters(trimSpaces);
+		const substrings = convertBetweenToSubstring(encodedSpecialCharacters);
+		const token = oDataFilterFn(substrings);
+		const stringfied = JSON.stringify(token);
+		const decodedSpecialCharacters = decodeSpecialCharacters(stringfied);
+
+		const oDataASTNode = JSON.parse(decodedSpecialCharacters);
 		const criteriaArray = toCriteria({oDataASTNode});
 
 		criteria = isCriterionGroup(criteriaArray[0])
 			? criteriaArray[0]
 			: wrapInCriteriaGroup(criteriaArray);
+
+		criteria = decodeValueFromCriteria(criteria);
 	} catch (e) {
 		criteria = null;
 	}

@@ -1,4 +1,4 @@
-@component-name = "portal-gradle-tools"
+@component-name = "portal-developer-tools"
 definition {
 
 	property ci.retries.disabled = "true";

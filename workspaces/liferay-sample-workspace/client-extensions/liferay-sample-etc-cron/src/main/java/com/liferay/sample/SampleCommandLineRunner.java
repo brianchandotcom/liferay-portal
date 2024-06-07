@@ -66,7 +66,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 	}
 
 	private void _countMessageBoardThreads(
-			String externalReferenceCode, URL endpoint)
+			String externalReferenceCode, URL url)
 		throws Exception {
 
 		String authorization =
@@ -77,7 +77,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		).header(
 			"Authorization", authorization
 		).endpoint(
-			endpoint
+			url
 		).build();
 
 		Site site = siteResource.getSiteByFriendlyUrlPath("guest");
@@ -87,7 +87,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 			).header(
 				"Authorization", authorization
 			).endpoint(
-				endpoint
+				url
 			).build();
 
 		Page<MessageBoardThread> messageBoardThreadPage =
@@ -102,7 +102,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 			_log.info(
 				StringBundler.concat(
 					"There are ", messageBoardThreads.size(),
-					" message board threads in Guest site on ", endpoint));
+					" message board threads in Guest site on ", url));
 		}
 
 		for (MessageBoardThread messageBoardThread : messageBoardThreads) {

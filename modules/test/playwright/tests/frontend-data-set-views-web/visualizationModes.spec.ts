@@ -49,20 +49,17 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		page,
 		visualizationModesPage,
 	}) => {
-		await test.step(
-			'Navigate to cards visualization mode page',
-			async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel,
-				});
+		await test.step('Navigate to cards visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
 
-				await visualizationModesPage.selectTab('Cards');
+			await visualizationModesPage.selectTab('Cards');
 
-				await expect(
-					visualizationModesPage.cardsVisualizationModeContainer
-				).toBeVisible();
-			}
-		);
+			await expect(
+				visualizationModesPage.cardsVisualizationModeContainer
+			).toBeVisible();
+		});
 
 		await test.step('Check if cards sections are correct', async () => {
 			await expect(
@@ -96,12 +93,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				page,
 			});
 
-			const assignedFieldLocator = await visualizationModesPage.getAssignedFieldLocator(
-				{
+			const assignedFieldLocator =
+				await visualizationModesPage.getAssignedFieldLocator({
 					container,
 					sectionLabel,
-				}
-			);
+				});
 
 			expect(assignedFieldLocator).toHaveText(fieldName);
 		});
@@ -119,9 +115,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			const oldCheckbox = visualizationModesPage.getFieldCheckboxByLabel(
-				oldFieldName
-			);
+			const oldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(oldFieldName);
 
 			await expect(oldCheckbox).toBeChecked();
 
@@ -133,12 +128,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				page,
 			});
 
-			const assignedFieldLocator = await visualizationModesPage.getAssignedFieldLocator(
-				{
+			const assignedFieldLocator =
+				await visualizationModesPage.getAssignedFieldLocator({
 					container,
 					sectionLabel,
-				}
-			);
+				});
 
 			expect(assignedFieldLocator).toHaveText(newFieldName);
 		});
@@ -148,20 +142,17 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		page,
 		visualizationModesPage,
 	}) => {
-		await test.step(
-			'Navigate to list visualization mode page',
-			async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel,
-				});
+		await test.step('Navigate to list visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
 
-				await visualizationModesPage.selectTab('List');
+			await visualizationModesPage.selectTab('List');
 
-				await expect(
-					visualizationModesPage.listVisualizationModeContainer
-				).toBeVisible();
-			}
-		);
+			await expect(
+				visualizationModesPage.listVisualizationModeContainer
+			).toBeVisible();
+		});
 
 		await test.step('Check if list sections are correct', async () => {
 			await expect(
@@ -195,12 +186,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				page,
 			});
 
-			const assignedFieldLocator = await visualizationModesPage.getAssignedFieldLocator(
-				{
+			const assignedFieldLocator =
+				await visualizationModesPage.getAssignedFieldLocator({
 					container,
 					sectionLabel,
-				}
-			);
+				});
 
 			expect(assignedFieldLocator).toHaveText(fieldName);
 		});
@@ -218,9 +208,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				sectionLabel,
 			});
 
-			const oldCheckbox = visualizationModesPage.getFieldCheckboxByLabel(
-				oldFieldName
-			);
+			const oldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(oldFieldName);
 
 			await expect(oldCheckbox).toBeChecked();
 
@@ -232,12 +221,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				page,
 			});
 
-			const assignedFieldLocator = await visualizationModesPage.getAssignedFieldLocator(
-				{
+			const assignedFieldLocator =
+				await visualizationModesPage.getAssignedFieldLocator({
 					container,
 					sectionLabel,
-				}
-			);
+				});
 
 			expect(assignedFieldLocator).toHaveText(newFieldName);
 		});
@@ -252,20 +240,17 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		const SAMPLE_OBJECT_CHILD_FIELD = 'id';
 		const SORTABLE_COLUMN_INDEX = 5;
 
-		await test.step(
-			'Navigate to table visualization mode page',
-			async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel,
-				});
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
 
-				await visualizationModesPage.selectTab('Table');
+			await visualizationModesPage.selectTab('Table');
 
-				await expect(
-					visualizationModesPage.page.getByPlaceholder('Search')
-				).toBeVisible();
-			}
-		);
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
 
 		await test.step('Add fields', async () => {
 			await visualizationModesPage.openAddFieldsModal();
@@ -331,9 +316,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 			await editButton.click();
 
-			const sortableInput = visualizationModesPage.page.getByLabel(
-				'Sortable'
-			);
+			const sortableInput =
+				visualizationModesPage.page.getByLabel('Sortable');
 
 			await expect(sortableInput).toBeInViewport();
 			await expect(sortableInput).toBeEnabled();
@@ -355,36 +339,32 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			).toHaveText('false');
 		});
 
-		await test.step(
-			'Check if object field has disabled sortable option',
-			async () => {
-				await visualizationModesPage
-					.getRowByText(`${SAMPLE_OBJECT_FIELD}.*`)
-					.locator('.actions-cell button')
-					.click();
+		await test.step('Check if object field has disabled sortable option', async () => {
+			await visualizationModesPage
+				.getRowByText(`${SAMPLE_OBJECT_FIELD}.*`)
+				.locator('.actions-cell button')
+				.click();
 
-				const editButton = visualizationModesPage.page.getByRole(
-					'menuitem',
-					{
-						name: 'Edit',
-					}
-				);
+			const editButton = visualizationModesPage.page.getByRole(
+				'menuitem',
+				{
+					name: 'Edit',
+				}
+			);
 
-				await expect(editButton).toBeInViewport();
+			await expect(editButton).toBeInViewport();
 
-				await editButton.click();
+			await editButton.click();
 
-				const sortableLabel = visualizationModesPage.page.getByLabel(
-					'Sortable'
-				);
+			const sortableLabel =
+				visualizationModesPage.page.getByLabel('Sortable');
 
-				await expect(sortableLabel).toBeInViewport();
+			await expect(sortableLabel).toBeInViewport();
 
-				await expect(sortableLabel).toBeDisabled();
+			await expect(sortableLabel).toBeDisabled();
 
-				await visualizationModesPage.cancelAddFieldsModal();
-			}
-		);
+			await visualizationModesPage.cancelAddFieldsModal();
+		});
 	});
 
 	test('Add a field and assert its added to the last position in the table and assert fields can be reordered using a keyboard', async ({
@@ -396,20 +376,17 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
 		const SAMPLE_OBJECT_CHILD_FIELD = 'id';
 
-		await test.step(
-			'Navigate to table visualization mode page',
-			async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel,
-				});
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
 
-				await visualizationModesPage.selectTab('Table');
+			await visualizationModesPage.selectTab('Table');
 
-				await expect(
-					visualizationModesPage.page.getByPlaceholder('Search')
-				).toBeVisible();
-			}
-		);
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
 
 		await test.step('Add fields', async () => {
 			await visualizationModesPage.openAddFieldsModal();
@@ -445,20 +422,17 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 		});
 
-		await test.step(
-			'Check if field is added to the last position',
-			async () => {
-				const lastTableRow = visualizationModesPage.page.locator(
-					'table.orderable-table > tbody tr:last-child'
-				);
+		await test.step('Check if field is added to the last position', async () => {
+			const lastTableRow = visualizationModesPage.page.locator(
+				'table.orderable-table > tbody tr:last-child'
+			);
 
-				await expect(lastTableRow.locator('td').nth(1)).toHaveText(
-					SAMPLE_FIELD
-				);
+			await expect(lastTableRow.locator('td').nth(1)).toHaveText(
+				SAMPLE_FIELD
+			);
 
-				await visualizationModesPage.assertTableFieldRowCount(4);
-			}
-		);
+			await visualizationModesPage.assertTableFieldRowCount(4);
+		});
 
 		await test.step('Focus the last field', async () => {
 			const lastTableRow = visualizationModesPage.page.locator(
@@ -484,20 +458,36 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await page.keyboard.press('Enter');
 		});
 
-		await test.step(
-			'Assert that the field has moved one place up',
-			async () => {
-				const tableRows = visualizationModesPage.page.locator(
-					'table.orderable-table > tbody tr'
-				);
+		await test.step('Assert that the field has moved one place up', async () => {
+			const tableRows = visualizationModesPage.page.locator(
+				'table.orderable-table > tbody tr'
+			);
 
-				await expect(tableRows).toHaveCount(4);
+			const tableRowsCount = await tableRows.count();
 
-				const movedTableRow = tableRows.nth(2).locator('td').nth(1);
+			expect(tableRowsCount).toEqual(4);
 
-				await expect(movedTableRow).toHaveText(SAMPLE_FIELD);
+			const expectedTexts = [
+				SAMPLE_SCALAR_FIELD,
+				`${SAMPLE_OBJECT_FIELD}.*`,
+				SAMPLE_FIELD,
+				`${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
+			];
+
+			for (let i = 0; i < expectedTexts.length; i++) {
+				const row = tableRows.nth(i);
+
+				await expect(row).toBeVisible();
+
+				const secondColumn = row.locator('td').nth(1);
+
+				await expect(secondColumn).toBeVisible();
+
+				const text = await secondColumn.innerText();
+
+				expect(text).toBe(expectedTexts[i]);
 			}
-		);
+		});
 	});
 
 	test('Configure table visualization mode with array fields @LPD-11769', async ({
@@ -512,20 +502,17 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		const SORTABLE_COLUMN_INDEX = 5;
 		const TYPE_COLUMN_INDEX = 3;
 
-		await test.step(
-			'Navigate to table visualization mode page',
-			async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel,
-				});
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
 
-				await visualizationModesPage.selectTab('Table');
+			await visualizationModesPage.selectTab('Table');
 
-				await expect(
-					visualizationModesPage.page.getByPlaceholder('Search')
-				).toBeVisible();
-			}
-		);
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
 
 		await test.step('Add scalar array field', async () => {
 			await visualizationModesPage.openAddFieldsModal();
@@ -604,35 +591,29 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
 		const LABEL_COLUMN_INDEX = 2;
 
-		await test.step(
-			'Navigate to table visualization mode page',
-			async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel,
-				});
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
 
-				await visualizationModesPage.selectTab('Table');
+			await visualizationModesPage.selectTab('Table');
 
-				await expect(
-					visualizationModesPage.page.getByPlaceholder('Search')
-				).toBeVisible();
-			}
-		);
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
 
-		await test.step(
-			'Add one field, but cancel the operation @LPS-185230',
-			async () => {
-				await visualizationModesPage.openAddFieldsModal();
+		await test.step('Add one field, but cancel the operation @LPS-185230', async () => {
+			await visualizationModesPage.openAddFieldsModal();
 
-				await visualizationModesPage.selectField({
-					fieldName: SAMPLE_SCALAR_FIELD,
-				});
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
 
-				await visualizationModesPage.cancelAddFieldsModal();
+			await visualizationModesPage.cancelAddFieldsModal();
 
-				await visualizationModesPage.assertTableFieldRowCount(0);
-			}
-		);
+			await visualizationModesPage.assertTableFieldRowCount(0);
+		});
 
 		await test.step('Add one field, save', async () => {
 			await visualizationModesPage.openAddFieldsModal();
@@ -646,84 +627,70 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 		});
 
-		await test.step(
-			'Unselect selected field. Select another. Cancel @LPS-185230',
-			async () => {
-				await visualizationModesPage.openAddFieldsModal();
+		await test.step('Unselect selected field. Select another. Cancel @LPS-185230', async () => {
+			await visualizationModesPage.openAddFieldsModal();
 
-				await visualizationModesPage.unSelectField({
-					fieldName: SAMPLE_SCALAR_FIELD,
-				});
+			await visualizationModesPage.unSelectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
 
-				await visualizationModesPage.selectField({
-					dataId: `${SAMPLE_OBJECT_FIELD}.*`,
-					fieldName: SAMPLE_OBJECT_FIELD,
-				});
+			await visualizationModesPage.selectField({
+				dataId: `${SAMPLE_OBJECT_FIELD}.*`,
+				fieldName: SAMPLE_OBJECT_FIELD,
+			});
 
-				await visualizationModesPage.cancelAddFieldsModal();
-			}
-		);
+			await visualizationModesPage.cancelAddFieldsModal();
+		});
 
-		await test.step(
-			'Check there is one field and is the one just added',
-			async () => {
-				await expect(
-					visualizationModesPage
-						.getRowByText(SAMPLE_SCALAR_FIELD)
-						.locator('td')
-						.nth(LABEL_COLUMN_INDEX)
-				).toHaveText(SAMPLE_SCALAR_FIELD);
-
-				await visualizationModesPage.assertTableFieldRowCount(1);
-			}
-		);
-
-		await test.step(
-			'Edit a field, change its label, cancel @LPS-176051 @LPS-178736 @LPS-179151',
-			async () => {
-				await visualizationModesPage
+		await test.step('Check there is one field and is the one just added', async () => {
+			await expect(
+				visualizationModesPage
 					.getRowByText(SAMPLE_SCALAR_FIELD)
-					.locator('.actions-cell button')
-					.click();
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
 
-				const editButton = visualizationModesPage.page.getByRole(
-					'menuitem',
-					{
-						name: 'Edit',
-					}
-				);
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
 
-				await expect(editButton).toBeInViewport();
+		await test.step('Edit a field, change its label, cancel @LPS-176051 @LPS-178736 @LPS-179151', async () => {
+			await visualizationModesPage
+				.getRowByText(SAMPLE_SCALAR_FIELD)
+				.locator('.actions-cell button')
+				.click();
 
-				await editButton.click();
+			const editButton = visualizationModesPage.page.getByRole(
+				'menuitem',
+				{
+					name: 'Edit',
+				}
+			);
 
-				const labelInput = visualizationModesPage.page.getByLabel(
-					'Label'
-				);
+			await expect(editButton).toBeInViewport();
 
-				await expect(labelInput).toBeInViewport();
+			await editButton.click();
 
-				await expect(labelInput).toBeEnabled();
+			const labelInput = visualizationModesPage.page.getByLabel('Label');
 
-				await labelInput.fill('New label for field');
+			await expect(labelInput).toBeInViewport();
 
-				await visualizationModesPage.cancelAddFieldsModal();
-			}
-		);
+			await expect(labelInput).toBeEnabled();
 
-		await test.step(
-			'Check there is one field and is the one just added',
-			async () => {
-				await expect(
-					visualizationModesPage
-						.getRowByText(SAMPLE_SCALAR_FIELD)
-						.locator('td')
-						.nth(LABEL_COLUMN_INDEX)
-				).toHaveText(SAMPLE_SCALAR_FIELD);
+			await labelInput.fill('New label for field');
 
-				await visualizationModesPage.assertTableFieldRowCount(1);
-			}
-		);
+			await visualizationModesPage.cancelAddFieldsModal();
+		});
+
+		await test.step('Check there is one field and is the one just added', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
+
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
 
 		await test.step('Delete a field, cancel @LPS-185500', async () => {
 			await visualizationModesPage
@@ -745,19 +712,16 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.cancelAddFieldsModal();
 		});
 
-		await test.step(
-			'Check there is one field and is the one just added',
-			async () => {
-				await expect(
-					visualizationModesPage
-						.getRowByText(SAMPLE_SCALAR_FIELD)
-						.locator('td')
-						.nth(LABEL_COLUMN_INDEX)
-				).toHaveText(SAMPLE_SCALAR_FIELD);
+		await test.step('Check there is one field and is the one just added', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
 
-				await visualizationModesPage.assertTableFieldRowCount(1);
-			}
-		);
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
 	});
 });
 
@@ -799,12 +763,14 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
 					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 					name: 'title',
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC: dataSetERC,
+					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+						dataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
 					fieldName: `${SAMPLE_SCALAR_FIELD}`,
 					name: 'description',
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC: dataSetERC,
+					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+						dataSetERC,
 				});
 			});
 
@@ -812,12 +778,14 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetListSection({
 					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 					name: 'title',
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC: dataSetERC,
+					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+						dataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetListSection({
 					fieldName: `${SAMPLE_SCALAR_FIELD}`,
 					name: 'description',
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC: dataSetERC,
+					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+						dataSetERC,
 				});
 			});
 

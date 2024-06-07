@@ -3916,6 +3916,128 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
+	@Test
+	public void testUpdateObjectEntryWithAccountEntryRestricted3()
+		throws Exception {
+
+		// Account roles' permissions should not be restricted by
+		// Account entry
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()));
+
+		ObjectDefinition accountEntryObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, "AccountEntry");
+
+		ObjectRelationship objectRelationship1 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, adminUser.getUserId(),
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oneToManyRelationship", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship1.getObjectFieldId2());
+
+		objectDefinition.setAccountEntryRestricted(true);
+
+		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		_addResourcePermission(ActionKeys.UPDATE, _accountAdministratorRole);
+		_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _accountAdministratorRole);
+
+		_addResourcePermission(
+			ActionKeys.UPDATE, objectDefinition, _accountAdministratorRole);
+		_addResourcePermission(
+			ActionKeys.VIEW, objectDefinition, _accountAdministratorRole);
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition,
+			_accountAdministratorRole);
+
+		AccountEntry accountEntry1 = _addAccountEntry();
+		AccountEntry accountEntry2 = _addAccountEntry();
+
+		_user = _addUser();
+
+		_assignAccountEntryRole(
+			accountEntry1, _accountAdministratorRole, _user);
+		_assignAccountEntryRole(
+			accountEntry2, _accountAdministratorRole, _user);
+
+		ObjectRelationship objectRelationship2 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, adminUser.getUserId(),
+				_objectDefinition3.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		ObjectEntry objectEntry1 = _addObjectEntry(accountEntry1);
+
+		ObjectEntry objectEntry2 = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationship_accountEntryId",
+						accountEntry2.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).put(
+						() -> {
+							ObjectField objectField =
+								_objectFieldLocalService.getObjectField(
+									objectRelationship2.getObjectFieldId2());
+
+							return objectField.getName();
+						},
+						objectEntry1.getId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		String textObjectFieldName = RandomTestUtil.randomString();
+
+		Map<String, Object> customObjectEntryProperties =
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", textObjectFieldName
+			).build();
+
+		assertEquals(
+			_defaultObjectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				objectEntry2.getId(),
+				new ObjectEntry() {
+					{
+						properties = customObjectEntryProperties;
+					}
+				}),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", textObjectFieldName
+					).build();
+				}
+			});
+	}
+
 	@Override
 	protected void assertObjectEntryProperties(
 			ObjectEntry actualObjectEntry,

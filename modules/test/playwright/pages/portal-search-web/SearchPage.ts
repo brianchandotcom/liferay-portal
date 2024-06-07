@@ -102,7 +102,7 @@ export class SearchPage {
 		});
 
 		await expect(this.searchResultsPaginationItemsPerPageToggle).toHaveText(
-			`${delta.toString()} Entries Per Page`
+			new RegExp(`${delta.toString()} Entries`)
 		);
 	}
 

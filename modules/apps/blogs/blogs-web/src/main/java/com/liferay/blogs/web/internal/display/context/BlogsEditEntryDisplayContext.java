@@ -593,6 +593,10 @@ public class BlogsEditEntryDisplayContext {
 			PortalUtil.getClassNameId(FriendlyURLEntry.class),
 			friendlyURLEntry.getFriendlyURLEntryId());
 
+		if (assetEntry == null) {
+			return new long[0];
+		}
+
 		_assetCategoryIds = assetEntry.getCategoryIds();
 
 		return _assetCategoryIds;

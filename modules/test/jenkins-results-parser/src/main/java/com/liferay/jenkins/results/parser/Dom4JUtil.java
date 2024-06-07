@@ -415,9 +415,18 @@ public class Dom4JUtil {
 	}
 
 	private static String _getEntities() throws IOException, TimeoutException {
-		URL url = new URL(
-			"http://mirrors.lax.liferay.com/www.w3.org/TR/html5-author" +
-				"/entities.json");
+		StringBuilder sb = new StringBuilder();
+
+		if (JenkinsResultsParserUtil.isCINode()) {
+			sb.append("http://mirrors.lax.liferay.com/");
+		}
+		else {
+			sb.append("https://");
+		}
+
+		sb.append("www.w3.org/TR/html5-author/entities.json");
+
+		URL url = new URL(sb.toString());
 
 		File entitiesFile = new File("entities.html");
 

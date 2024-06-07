@@ -26,15 +26,6 @@ public class ObjectEntryThreadLocal {
 		_executedObjectValidationRuleIds.set(executedObjectValidationRuleIds);
 	}
 
-	public static void clearExecutedObjectValidationIds() {
-		Set<Long> executedObjectValidationRuleIds =
-			_executedObjectValidationRuleIds.get();
-
-		executedObjectValidationRuleIds.clear();
-
-		_executedObjectValidationRuleIds.set(executedObjectValidationRuleIds);
-	}
-
 	public static boolean isDisassociateRelatedModels() {
 		return _disassociateRelatedModelsThreadLocal.get();
 	}

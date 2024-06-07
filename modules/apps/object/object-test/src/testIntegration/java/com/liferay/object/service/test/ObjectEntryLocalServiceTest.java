@@ -182,11 +182,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -3485,7 +3487,7 @@ public class ObjectEntryLocalServiceTest {
 		try {
 			user.setEmailAddress(RandomTestUtil.randomString());
 
-			ObjectEntryThreadLocal.clearExecutedObjectValidationIds();
+			_clearExecutedObjectValidationIds();
 
 			_userLocalService.updateUser(user);
 
@@ -3631,7 +3633,7 @@ public class ObjectEntryLocalServiceTest {
 			Map<String, Serializable> values)
 		throws Exception {
 
-		ObjectEntryThreadLocal.clearExecutedObjectValidationIds();
+		_clearExecutedObjectValidationIds();
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
@@ -3758,6 +3760,13 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			expectedObjectFieldName,
 			objectValidationRuleResult.getObjectFieldName());
+	}
+
+	private void _clearExecutedObjectValidationIds() throws Exception {
+		ThreadLocal<Set<Long>> threadLocal = ReflectionTestUtil.getFieldValue(
+			ObjectEntryThreadLocal.class, "_executedObjectValidationRuleIds");
+
+		threadLocal.set(new HashSet<>());
 	}
 
 	private boolean _containsObjectEntryValuesSQLQuery(LogCapture logCapture) {

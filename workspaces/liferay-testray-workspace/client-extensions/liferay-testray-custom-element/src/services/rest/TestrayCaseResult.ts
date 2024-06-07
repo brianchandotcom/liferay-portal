@@ -43,6 +43,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			}),
 			nestedFields:
 				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user',
+			nestedFieldsDepth: 2,
 			transformData: (caseResult) => ({
 				...caseResult,
 				...this.normalizeCaseResultAggregation(caseResult),
@@ -63,18 +64,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 							caseType:
 								caseResult?.r_caseToCaseResult_c_case
 									?.r_caseTypeToCases_c_caseType,
-							component: caseResult?.r_caseToCaseResult_c_case
-								?.r_componentToCases_c_component
-								? {
-										...caseResult?.r_caseToCaseResult_c_case
-											?.r_componentToCases_c_component,
-										team:
-											caseResult
-												?.r_caseToCaseResult_c_case
-												.r_componentToCases_c_component
-												.r_teamToComponents_c_team,
-								  }
-								: undefined,
 					  }
 					: undefined,
 				component: caseResult?.r_componentToCaseResult_c_component

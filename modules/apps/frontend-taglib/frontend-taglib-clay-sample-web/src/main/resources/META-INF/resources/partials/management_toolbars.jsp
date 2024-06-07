@@ -15,7 +15,7 @@ ClaySampleManagementToolbarsDisplayContext managementToolbarsDisplayContext = ne
 	<p>Management toolbar is an extension of Toolbar. A combination of different components as filters, orders, search, visualization select and other actions, that allow to manage dataset.</p>
 </blockquote>
 
-<section id="management_toolbar_default_state">
+<section id="managementToolbarDefaultState">
 	<h3>DEFAULT STATE</h3>
 
 	<clay:management-toolbar
@@ -32,7 +32,7 @@ ClaySampleManagementToolbarsDisplayContext managementToolbarsDisplayContext = ne
 	/>
 </section>
 
-<section id="management_toolbar_active_state">
+<section id="managementToolbarActiveState">
 	<h3>ACTIVE STATE</h3>
 
 	<clay:management-toolbar
@@ -45,7 +45,7 @@ ClaySampleManagementToolbarsDisplayContext managementToolbarsDisplayContext = ne
 	/>
 </section>
 
-<section id="management_toolbar_with_results_bar">
+<section id="managementToolbarWithResultsBar">
 	<h3>WITH RESULTS BAR</h3>
 
 	<clay:management-toolbar
@@ -65,7 +65,7 @@ ClaySampleManagementToolbarsDisplayContext managementToolbarsDisplayContext = ne
 	/>
 </section>
 
-<section id="management_toolbar_using_display_context">
+<section id="managementToolbarUsingDisplayContext">
 	<h3>USING DISPLAY CONTEXT</h3>
 
 	<clay:management-toolbar

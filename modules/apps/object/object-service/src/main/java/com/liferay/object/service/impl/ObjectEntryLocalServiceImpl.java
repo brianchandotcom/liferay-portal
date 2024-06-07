@@ -3949,12 +3949,14 @@ public class ObjectEntryLocalServiceImpl
 			preparedStatement.setBoolean(index, GetterUtil.getBoolean(value));
 		}
 		else if (sqlType == Types.CLOB) {
-			if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
-				preparedStatement.setString(index, String.valueOf(value));
+			String valueString = String.valueOf(value);
+
+			if (valueString.isEmpty() ||
+				(DBManagerUtil.getDBType() == DBType.POSTGRESQL)) {
+
+				preparedStatement.setString(index, valueString);
 			}
 			else {
-				String valueString = String.valueOf(value);
-
 				preparedStatement.setClob(
 					index, new StringReader(valueString), valueString.length());
 			}

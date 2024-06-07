@@ -95,7 +95,6 @@ class CriteriaCard extends React.Component<
 				<Card.Body className={getCN({truncate: hideOverflow})}>
 					<CriteriaView
 						criteria={translateQueryToCriteria(criteriaString)}
-						criteriaString={criteriaString}
 						ref={this._criteriaViewRef}
 						timeZoneId={timeZoneId}
 					/>

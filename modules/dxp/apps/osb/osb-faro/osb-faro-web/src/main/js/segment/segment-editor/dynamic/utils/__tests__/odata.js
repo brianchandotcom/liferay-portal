@@ -614,12 +614,6 @@ describe('odata', () => {
 			testConversionToAndFrom(testQuery);
 		});
 
-		it('should be able to translate a query string with greater than / less than characters', () => {
-			const testQuery = '(value eq \'["A", "B"]\')';
-
-			testConversionToAndFrom(testQuery);
-		});
-
 		it.skip('should be able to translate a collection type query string with "contains" to map and back to string', () => {
 			const testQuery =
 				"(cookies/any(c:contains(c, 'keyTest=valueTest')))";

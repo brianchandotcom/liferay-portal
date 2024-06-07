@@ -1,4 +1,4 @@
-@component-name = "portal-bundle-blacklist"
+@component-name = "portal-core-infra"
 definition {
 
 	property ci.retries.disabled = "true";

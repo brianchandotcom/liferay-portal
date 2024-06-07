@@ -1,4 +1,4 @@
-@component-name = "portal-module-framework-servlet"
+@component-name = "portal-core-infra"
 definition {
 
 	property portal.release = "true";

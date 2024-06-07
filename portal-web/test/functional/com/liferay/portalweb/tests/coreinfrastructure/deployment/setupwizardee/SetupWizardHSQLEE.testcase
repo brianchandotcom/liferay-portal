@@ -1,4 +1,4 @@
-@component-name = "portal-deployment-hypersonic-ee"
+@component-name = "portal-core-infra-ee"
 definition {
 
 	property ci.retries.disabled = "true";

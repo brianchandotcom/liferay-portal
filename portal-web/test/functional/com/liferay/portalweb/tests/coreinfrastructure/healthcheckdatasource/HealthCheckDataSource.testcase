@@ -1,4 +1,4 @@
-@component-name = "portal-data-source"
+@component-name = "portal-core-infra"
 definition {
 
 	property custom.properties = "health.check.data.source.enabled=true";

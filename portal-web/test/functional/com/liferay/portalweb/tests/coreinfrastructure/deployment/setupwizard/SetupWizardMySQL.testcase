@@ -1,4 +1,4 @@
-@component-name = "portal-deployment-mysql"
+@component-name = "portal-core-infra"
 definition {
 
 	property ci.retries.disabled = "true";

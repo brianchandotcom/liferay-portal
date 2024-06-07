@@ -1,4 +1,4 @@
-@component-name = "portal-user-tracker"
+@component-name = "portal-core-infra"
 definition {
 
 	property ci.retries.disabled = "true";

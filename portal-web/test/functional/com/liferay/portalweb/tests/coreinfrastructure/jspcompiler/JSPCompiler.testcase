@@ -1,4 +1,4 @@
-@component-name = "portal-jsp-compiler"
+@component-name = "portal-core-infra"
 definition {
 
 	property ci.retries.disabled = "true";

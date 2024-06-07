@@ -1,4 +1,4 @@
-@component-name = "portal-document-library-store"
+@component-name = "portal-core-infra"
 definition {
 
 	property azure.store.enabled = "true";

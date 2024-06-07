@@ -1,4 +1,4 @@
-@component-name = "portal-gogo-shell"
+@component-name = "portal-core-infra"
 definition {
 
 	property ci.retries.disabled = "true";

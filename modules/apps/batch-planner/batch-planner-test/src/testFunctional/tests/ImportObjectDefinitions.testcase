@@ -1,4 +1,4 @@
-@component-name = "portal-batch-planner"
+@component-name = "portal-headless"
 definition {
 
 	property custom.properties = "feature.flag.COMMERCE-8087=true";

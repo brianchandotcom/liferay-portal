@@ -21,6 +21,9 @@ import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycle
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -59,6 +62,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -193,6 +197,75 @@ public class LayoutStagedModelDataHandlerTest
 		finally {
 			serviceRegistration.unregister();
 		}
+	}
+
+	@Test
+	public void testLayoutPageTemplateEntry() throws Exception {
+		initExport();
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				"Test Master Page",
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId()));
+
+		Layout masterPageTemplateLayout = _layoutLocalService.getLayout(
+			masterLayoutPageTemplateEntry.getPlid());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+
+		layout.setMasterLayoutPlid(masterPageTemplateLayout.getPlid());
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layout);
+
+		initImport();
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
+			portletDataContext.getExportImportProcessId(),
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
+
+		Layout exportedLayout = (Layout)readExportedStagedModel(layout);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedLayout);
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
+			portletDataContext.getExportImportProcessId(),
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
+
+		LayoutPageTemplateEntry importedMasterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByUuidAndGroupId(
+					masterLayoutPageTemplateEntry.getUuid(),
+					liveGroup.getGroupId());
+
+		Assert.assertNotEquals(
+			masterLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			importedMasterLayoutPageTemplateEntry.
+				getLayoutPageTemplateEntryId());
+		Assert.assertNotEquals(
+			masterLayoutPageTemplateEntry.getPlid(),
+			importedMasterLayoutPageTemplateEntry.getPlid());
+
+		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
+
+		Assert.assertNotEquals(
+			layout.getMasterLayoutPlid(), importedLayout.getMasterLayoutPlid());
 	}
 
 	@Test
@@ -848,6 +921,10 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private Portal _portal;

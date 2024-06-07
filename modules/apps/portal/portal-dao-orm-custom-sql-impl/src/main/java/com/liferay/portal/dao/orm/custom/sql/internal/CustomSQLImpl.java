@@ -694,8 +694,6 @@ public class CustomSQLImpl implements CustomSQL {
 	protected void activate(BundleContext bundleContext) throws SQLException {
 		_bundleContext = bundleContext;
 
-		_portal.initCustomSQL();
-
 		String functionIsNull = _portal.getCustomSQLFunctionIsNull();
 		String functionIsNotNull = _portal.getCustomSQLFunctionIsNotNull();
 

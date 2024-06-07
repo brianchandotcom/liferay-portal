@@ -352,8 +352,6 @@ public class CustomSQL {
 	}
 
 	public void reloadCustomSQL() throws SQLException {
-		PortalUtil.initCustomSQL();
-
 		String functionIsNull = PortalUtil.getCustomSQLFunctionIsNull();
 		String functionIsNotNull = PortalUtil.getCustomSQLFunctionIsNotNull();
 

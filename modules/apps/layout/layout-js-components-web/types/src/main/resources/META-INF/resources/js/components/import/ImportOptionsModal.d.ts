@@ -3,11 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
+import {ReactText} from 'react';
 interface Props {
 	onCloseModal: () => void;
 	onImport: (overwriteStrategy?: OverwriteStrategy) => void;
+}
+interface ModalProps {
+	onClickImport: () => void;
+	onClose: () => void;
+	onRadioChange: (value: ReactText) => void;
 }
 declare const OPTIONS: readonly [
 	{
@@ -24,6 +28,11 @@ declare const OPTIONS: readonly [
 	}
 ];
 export declare type OverwriteStrategy = typeof OPTIONS[number]['value'];
+export declare function ModalContent({
+	onClickImport,
+	onClose,
+	onRadioChange,
+}: ModalProps): JSX.Element;
 declare function ImportOptionsModal({
 	onCloseModal,
 	onImport,

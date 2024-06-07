@@ -30,6 +30,9 @@ public interface GroupFinder {
 			long companyId, String groupKey)
 		throws com.liferay.portal.kernel.exception.NoSuchGroupException;
 
+	public com.liferay.portal.kernel.model.Group fetchStagingGroup(
+		long liveGroupId);
+
 	public java.util.List<Long> findByActiveGroupIds(long userId);
 
 	public java.util.List<com.liferay.portal.kernel.model.Group>

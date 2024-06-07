@@ -175,6 +175,16 @@
 				(LOWER(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findStagingMappings">
+		<![CDATA[
+			SELECT
+				liveGroupId, groupId
+			FROM
+				Group_
+			WHERE
+				liveGroupId != 0
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByActionId">
 		<![CDATA[
 			LEFT JOIN

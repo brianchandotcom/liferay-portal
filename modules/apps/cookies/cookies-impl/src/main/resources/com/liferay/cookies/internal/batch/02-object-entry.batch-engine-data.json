@@ -171,7 +171,7 @@
 			"externalReferenceCode": "a07a3dc7-4763-4289-8e7b-1012ca2e98cc",
 			"host": "Liferay",
 			"name": "userTokenName",
-			"purpose": "",
+			"purpose": "Stores a unique token to maintain the user session while using token based SSO (Single Sign-On).",
 			"type": "First Party"
 		}
 	]

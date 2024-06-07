@@ -1,0 +1,17 @@
+<ehcache
+	dynamicConfig="true"
+	monitoring="off"
+	name="module-single-vm"
+	updateCheck="false"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+>
+	<cache
+		eternal="false"
+		maxElementsInMemory="100000"
+		name="com.liferay.ip.geocoder.internal.IPGeocoderImpl"
+		overflowToDisk="false"
+		timeToIdleSeconds="3600"
+	>
+	</cache>
+</ehcache>

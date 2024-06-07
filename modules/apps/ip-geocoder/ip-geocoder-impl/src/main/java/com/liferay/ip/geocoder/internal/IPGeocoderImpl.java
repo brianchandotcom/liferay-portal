@@ -5,15 +5,14 @@
 
 package com.liferay.ip.geocoder.internal;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.ip.geocoder.internal.configuration.IPGeocoderConfiguration;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -32,8 +31,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,12 +55,12 @@ public class IPGeocoderImpl implements IPGeocoder {
 			return new IPInfo(StringPool.BLANK, ipAddress);
 		}
 
-		String countryCode = _countryCodes.get(ipAddress);
+		String countryCode = _portalCache.get(ipAddress);
 
 		if (countryCode == null) {
 			countryCode = _getCountryCode(ipAddress);
 
-			_countryCodes.put(ipAddress, countryCode);
+			_portalCache.put(ipAddress, countryCode);
 		}
 
 		return new IPInfo(countryCode, ipAddress);
@@ -71,19 +68,10 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	@Activate
 	protected void activate(Map<String, String> properties) {
+		_portalCache =
+			(PortalCache<String, String>)_singleVMPool.getPortalCache(
+				IPGeocoderImpl.class.getName());
 		_properties = properties;
-
-		CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
-
-		cacheBuilder.expireAfterAccess(
-			1, TimeUnit.HOURS
-		).maximumSize(
-			100000
-		);
-
-		Cache<String, String> cache = cacheBuilder.build();
-
-		_countryCodes = cache.asMap();
 	}
 
 	private DatabaseReader _createDatabaseReader() {
@@ -191,13 +179,16 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	private static final Log _log = LogFactoryUtil.getLog(IPGeocoderImpl.class);
 
-	private ConcurrentMap<String, String> _countryCodes;
 	private final DCLSingleton<DatabaseReader> _databaseReaderDCLSingleton =
 		new DCLSingleton<>();
 
 	@Reference
 	private Portal _portal;
 
+	private PortalCache<String, String> _portalCache;
 	private volatile Map<String, String> _properties;
+
+	@Reference
+	private SingleVMPool _singleVMPool;
 
 }

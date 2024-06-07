@@ -537,7 +537,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return commerceTierPriceEntryPersistence.fetchByC_LteM_S_First(
 			commercePriceEntryId, minQuantity,
 			WorkflowConstants.STATUS_APPROVED,
-			new CommerceTierPriceEntryMinQuantityComparator(false));
+			CommerceTierPriceEntryMinQuantityComparator.getInstance(false));
 	}
 
 	@Override
@@ -548,7 +548,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			commercePriceEntryId, minQuantity,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
-			new CommerceTierPriceEntryMinQuantityComparator(true));
+			CommerceTierPriceEntryMinQuantityComparator.getInstance(true));
 	}
 
 	@Override
@@ -557,7 +557,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		return commerceTierPriceEntryPersistence.findByC_S(
 			commercePriceEntryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new CommerceTierPriceEntryMinQuantityComparator(true));
+			CommerceTierPriceEntryMinQuantityComparator.getInstance(true));
 	}
 
 	@Override

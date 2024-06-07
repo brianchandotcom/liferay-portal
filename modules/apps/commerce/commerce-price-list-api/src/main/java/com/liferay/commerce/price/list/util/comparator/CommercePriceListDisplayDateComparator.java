@@ -21,8 +21,14 @@ public class CommercePriceListDisplayDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate"};
 
-	public CommercePriceListDisplayDateComparator() {
-		this(false);
+	public static CommercePriceListDisplayDateComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	public CommercePriceListDisplayDateComparator(boolean ascending) {
@@ -63,6 +69,13 @@ public class CommercePriceListDisplayDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private static final CommercePriceListDisplayDateComparator
+		_INSTANCE_ASCENDING = new CommercePriceListDisplayDateComparator(true);
+
+	private static final CommercePriceListDisplayDateComparator
+		_INSTANCE_DESCENDING = new CommercePriceListDisplayDateComparator(
+			false);
 
 	private final boolean _ascending;
 

@@ -274,7 +274,7 @@ public class CommercePriceEntryServiceImpl
 		List<CommercePriceEntry> commercePriceEntries =
 			commercePriceEntryLocalService.getInstanceCommercePriceEntries(
 				cpInstance.getCPInstanceUuid(), start, end,
-				new CommercePriceEntryUOMCreateDateComparator(true));
+				CommercePriceEntryUOMCreateDateComparator.getInstance(true));
 
 		Iterator<CommercePriceEntry> iterator = commercePriceEntries.iterator();
 
@@ -312,7 +312,7 @@ public class CommercePriceEntryServiceImpl
 			commercePriceEntryLocalService.getInstanceCommercePriceEntries(
 				cpInstance.getCPInstanceUuid(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new CommercePriceEntryUOMCreateDateComparator(true));
+				CommercePriceEntryUOMCreateDateComparator.getInstance(true));
 
 		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
 			if (_commercePriceListModelResourcePermission.contains(

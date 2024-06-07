@@ -666,8 +666,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 									commercePriceEntry.
 										getCommercePriceEntryId(),
 									QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-									new CommerceTierPriceEntryMinQuantityComparator(
-										true)),
+									CommerceTierPriceEntryMinQuantityComparator.
+										getInstance(true)),
 							commerceTierPriceEntry -> _toTierPrice(
 								commerceCurrency, commerceTierPriceEntry,
 								cpInstanceUnitOfMeasure, locale),

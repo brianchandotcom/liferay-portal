@@ -22,12 +22,14 @@ public class CommerceTierPriceEntryMinQuantityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"minQuantity"};
 
-	public CommerceTierPriceEntryMinQuantityComparator() {
-		this(false);
-	}
+	public static CommerceTierPriceEntryMinQuantityComparator getInstance(
+		boolean ascending) {
 
-	public CommerceTierPriceEntryMinQuantityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +67,18 @@ public class CommerceTierPriceEntryMinQuantityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceTierPriceEntryMinQuantityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceTierPriceEntryMinQuantityComparator
+		_INSTANCE_ASCENDING = new CommerceTierPriceEntryMinQuantityComparator(
+			true);
+
+	private static final CommerceTierPriceEntryMinQuantityComparator
+		_INSTANCE_DESCENDING = new CommerceTierPriceEntryMinQuantityComparator(
+			false);
 
 	private final boolean _ascending;
 

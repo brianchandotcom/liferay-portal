@@ -23,8 +23,14 @@ public class CommercePriceEntryUOMCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommercePriceEntryUOMCreateDateComparator() {
-		this(false);
+	public static CommercePriceEntryUOMCreateDateComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	public CommercePriceEntryUOMCreateDateComparator(boolean ascending) {
@@ -72,6 +78,14 @@ public class CommercePriceEntryUOMCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private static final CommercePriceEntryUOMCreateDateComparator
+		_INSTANCE_ASCENDING = new CommercePriceEntryUOMCreateDateComparator(
+			true);
+
+	private static final CommercePriceEntryUOMCreateDateComparator
+		_INSTANCE_DESCENDING = new CommercePriceEntryUOMCreateDateComparator(
+			false);
 
 	private final boolean _ascending;
 

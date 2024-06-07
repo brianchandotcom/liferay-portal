@@ -65,8 +65,8 @@ public class TierPriceTag extends IncludeTag {
 							getCommerceTierPriceEntries(
 								commercePriceEntry.getCommercePriceEntryId(),
 								QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-								new CommerceTierPriceEntryMinQuantityComparator(
-									true));
+								CommerceTierPriceEntryMinQuantityComparator.
+									getInstance(true));
 				}
 			}
 

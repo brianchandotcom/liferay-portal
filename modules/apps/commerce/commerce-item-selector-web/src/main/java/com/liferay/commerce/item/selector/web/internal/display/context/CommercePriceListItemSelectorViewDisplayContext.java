@@ -112,13 +112,15 @@ public class CommercePriceListItemSelectorViewDisplayContext
 		}
 
 		if (orderByCol.equals("create-date")) {
-			return new CommercePriceListCreateDateComparator(orderByAsc);
+			return CommercePriceListCreateDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {
-			return new CommercePriceListDisplayDateComparator(orderByAsc);
+			return CommercePriceListDisplayDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("priority")) {
-			return new CommercePriceListPriorityComparator(orderByAsc);
+			return CommercePriceListPriorityComparator.getInstance(orderByAsc);
 		}
 
 		return null;

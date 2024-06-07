@@ -1,4 +1,4 @@
-@component-name = "portal-workflow-ee"
+@component-name = "portal-bpm-ee"
 definition {
 
 	property portal.acceptance = "true";

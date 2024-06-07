@@ -7,6 +7,7 @@ package com.liferay.commerce.internal.object.deployer;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
+import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderAccountNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderAddressNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.evaluator.SalesAgentNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.provider.SalesAgentNotificationTermProvider;
@@ -57,6 +58,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				"CommerceOrder", objectDefinition.getShortName())) {
 
 			return Arrays.asList(
+				_bundleContext.registerService(
+					NotificationTermEvaluator.class,
+					new CommerceOrderAccountNotificationTermEvaluator(
+						_accountEntryModelResourcePermission,
+						_commerceOrderLocalService, objectDefinition,
+						_permissionCheckerFactory, _roleLocalService,
+						_userLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"class.name", objectDefinition.getClassName()
+					).build()),
 				_bundleContext.registerService(
 					NotificationTermEvaluator.class,
 					new CommerceOrderAddressNotificationTermEvaluator(

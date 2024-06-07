@@ -168,7 +168,6 @@ public class JournalManagementToolbarDisplayContext
 					dropdownGroupItem.setSeparator(true);
 				}
 			).addGroup(
-				() -> FeatureFlagManagerUtil.isEnabled("LPD-16469"),
 				dropdownGroupItem -> {
 					dropdownGroupItem.setDropdownItems(
 						DropdownItemListBuilder.add(

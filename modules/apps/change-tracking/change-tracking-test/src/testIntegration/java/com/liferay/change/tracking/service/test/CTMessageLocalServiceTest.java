@@ -37,13 +37,11 @@ public class CTMessageLocalServiceTest {
 
 	@Test
 	public void testAddCTMessage() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
+		CTMessage ctMessage = _addCTMessage(
+			TestPropsValues.getCompanyId(), RandomTestUtil.nextLong());
 
-		long ctCollectionId = RandomTestUtil.nextLong();
-
-		CTMessage ctMessage = _addCTMessage(companyId, ctCollectionId);
-
-		Assert.assertEquals(companyId, ctMessage.getCompanyId());
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(), ctMessage.getCompanyId());
 
 		String messageContent = ctMessage.getMessageContent();
 
@@ -52,11 +50,10 @@ public class CTMessageLocalServiceTest {
 
 	@Test
 	public void testGetMessages() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
 		long ctCollectionId = RandomTestUtil.nextLong();
 
-		CTMessage ctMessage = _addCTMessage(companyId, ctCollectionId);
+		CTMessage ctMessage = _addCTMessage(
+			TestPropsValues.getCompanyId(), ctCollectionId);
 
 		String messageContent = ctMessage.getMessageContent();
 
@@ -67,7 +64,8 @@ public class CTMessageLocalServiceTest {
 
 		Message message = messages.get(0);
 
-		Assert.assertEquals(companyId, message.get("companyId"));
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(), message.get("companyId"));
 	}
 
 	private CTMessage _addCTMessage(long companyId, long ctCollectionId) {

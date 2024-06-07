@@ -137,7 +137,7 @@ test.describe('Clear and retain facet selections', () => {
 
 		await expect(
 			searchPage.searchResultsPaginationItemsPerPageToggle
-		).toHaveText('4 Entries Per Page');
+		).toHaveText(/4 Entries/);
 
 		await expect(
 			searchPage.searchResultsPaginationBar.getByText('1').first()

@@ -21,8 +21,6 @@ interface NewFilterModal {
 
 interface NewSelectionFilterModal extends NewFilterModal {
 	filterModeRadioButtons: Locator;
-	nameInput: Locator;
-	newFilterModalheading: Locator;
 	picklistDropdown: Locator;
 	preselectedValuesMultiSelect: Locator;
 	selectionRadioButtons: Locator;
@@ -90,9 +88,6 @@ export class FiltersPage {
 		this.newSelectionFilterModal = {
 			...this.newFilterModal,
 			filterModeRadioButtons: page.getByText('Filter ModeIncludeExclude'),
-			newFilterModalheading: page.getByRole('heading', {
-				name: 'New Selection Filter',
-			}),
 			picklistDropdown: page.getByLabel('Picklist'),
 			preselectedValuesMultiSelect: page.getByPlaceholder(
 				'Select a default value for your filter.'

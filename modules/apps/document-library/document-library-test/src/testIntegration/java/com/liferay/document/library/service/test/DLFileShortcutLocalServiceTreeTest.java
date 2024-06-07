@@ -75,7 +75,7 @@ public class DLFileShortcutLocalServiceTreeTest {
 		FileEntry fileEntry = addFileEntry(folderA.getFolderId(), "Entry.txt");
 
 		FileShortcut fileShortcut = addFileShortcut(
-			fileEntry, TestPropsValues.getGroupId(), folderAA.getFolderId());
+			fileEntry, folderAA.getGroupId(), folderAA.getFolderId());
 
 		DLAppLocalServiceUtil.moveFolder(
 			TestPropsValues.getUserId(), folderAA.getFolderId(),
@@ -158,7 +158,7 @@ public class DLFileShortcutLocalServiceTreeTest {
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FileShortcut fileShortcutAA = addFileShortcut(
-			_fileEntry, TestPropsValues.getGroupId(), _folder.getFolderId());
+			_fileEntry, _folder.getGroupId(), _folder.getFolderId());
 
 		_fileShortcuts.add(fileShortcutAA);
 	}

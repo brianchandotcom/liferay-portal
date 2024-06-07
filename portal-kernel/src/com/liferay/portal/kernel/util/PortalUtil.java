@@ -1596,10 +1596,6 @@ public class PortalUtil {
 		return _portal.getWidgetURL(portlet, themeDisplay);
 	}
 
-	public static void initCustomSQL() {
-		_portal.initCustomSQL();
-	}
-
 	public static User initUser(HttpServletRequest httpServletRequest)
 		throws Exception {
 

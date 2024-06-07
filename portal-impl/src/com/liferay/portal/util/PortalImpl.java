@@ -5459,64 +5459,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public void initCustomSQL() {
-		_customSqlKeys = new String[] {
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.GROUP$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ORGANIZATION$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USERGROUP$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL." +
-				"DLFILEENTRY$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL." +
-				"DLFOLDER$]",
-			"[$RESOURCE_SCOPE_COMPANY$]", "[$RESOURCE_SCOPE_GROUP$]",
-			"[$RESOURCE_SCOPE_GROUP_TEMPLATE$]",
-			"[$RESOURCE_SCOPE_INDIVIDUAL$]",
-			"[$SOCIAL_RELATION_TYPE_BI_COWORKER$]",
-			"[$SOCIAL_RELATION_TYPE_BI_FRIEND$]",
-			"[$SOCIAL_RELATION_TYPE_BI_ROMANTIC_PARTNER$]",
-			"[$SOCIAL_RELATION_TYPE_BI_SIBLING$]",
-			"[$SOCIAL_RELATION_TYPE_BI_SPOUSE$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_CHILD$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_ENEMY$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_FOLLOWER$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_PARENT$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_SUBORDINATE$]",
-			"[$SOCIAL_RELATION_TYPE_UNI_SUPERVISOR$]", "[$FALSE$]", "[$TRUE$]"
-		};
-
-		DB db = DBManagerUtil.getDB();
-
-		_customSqlValues = ArrayUtil.toStringArray(
-			new Object[] {
-				getClassNameId(Group.class), getClassNameId(Layout.class),
-				getClassNameId(Organization.class), getClassNameId(Role.class),
-				getClassNameId(Team.class), getClassNameId(User.class),
-				getClassNameId(UserGroup.class),
-				getClassNameId(DLFileEntry.class),
-				getClassNameId(DLFolder.class), ResourceConstants.SCOPE_COMPANY,
-				ResourceConstants.SCOPE_GROUP,
-				ResourceConstants.SCOPE_GROUP_TEMPLATE,
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				SocialRelationConstants.TYPE_BI_COWORKER,
-				SocialRelationConstants.TYPE_BI_FRIEND,
-				SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER,
-				SocialRelationConstants.TYPE_BI_SIBLING,
-				SocialRelationConstants.TYPE_BI_SPOUSE,
-				SocialRelationConstants.TYPE_UNI_CHILD,
-				SocialRelationConstants.TYPE_UNI_ENEMY,
-				SocialRelationConstants.TYPE_UNI_FOLLOWER,
-				SocialRelationConstants.TYPE_UNI_PARENT,
-				SocialRelationConstants.TYPE_UNI_SUBORDINATE,
-				SocialRelationConstants.TYPE_UNI_SUPERVISOR,
-				db.getTemplateFalse(), db.getTemplateTrue()
-			});
-	}
-
-	@Override
 	public User initUser(HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -6283,11 +6225,62 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String transformCustomSQL(String sql) {
-		if ((_customSqlKeys == null) || (_customSqlValues == null)) {
-			initCustomSQL();
-		}
+		String[] customSqlKeys = {
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.GROUP$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ORGANIZATION$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.ROLE$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USER$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.USERGROUP$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL." +
+				"DLFILEENTRY$]",
+			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL." +
+				"DLFOLDER$]",
+			"[$RESOURCE_SCOPE_COMPANY$]", "[$RESOURCE_SCOPE_GROUP$]",
+			"[$RESOURCE_SCOPE_GROUP_TEMPLATE$]",
+			"[$RESOURCE_SCOPE_INDIVIDUAL$]",
+			"[$SOCIAL_RELATION_TYPE_BI_COWORKER$]",
+			"[$SOCIAL_RELATION_TYPE_BI_FRIEND$]",
+			"[$SOCIAL_RELATION_TYPE_BI_ROMANTIC_PARTNER$]",
+			"[$SOCIAL_RELATION_TYPE_BI_SIBLING$]",
+			"[$SOCIAL_RELATION_TYPE_BI_SPOUSE$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_CHILD$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_ENEMY$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_FOLLOWER$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_PARENT$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_SUBORDINATE$]",
+			"[$SOCIAL_RELATION_TYPE_UNI_SUPERVISOR$]", "[$FALSE$]", "[$TRUE$]"
+		};
 
-		return StringUtil.replace(sql, _customSqlKeys, _customSqlValues);
+		DB db = DBManagerUtil.getDB();
+
+		String[] customSqlValues = ArrayUtil.toStringArray(
+			new Object[] {
+				getClassNameId(Group.class), getClassNameId(Layout.class),
+				getClassNameId(Organization.class), getClassNameId(Role.class),
+				getClassNameId(Team.class), getClassNameId(User.class),
+				getClassNameId(UserGroup.class),
+				getClassNameId(DLFileEntry.class),
+				getClassNameId(DLFolder.class), ResourceConstants.SCOPE_COMPANY,
+				ResourceConstants.SCOPE_GROUP,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				SocialRelationConstants.TYPE_BI_COWORKER,
+				SocialRelationConstants.TYPE_BI_FRIEND,
+				SocialRelationConstants.TYPE_BI_ROMANTIC_PARTNER,
+				SocialRelationConstants.TYPE_BI_SIBLING,
+				SocialRelationConstants.TYPE_BI_SPOUSE,
+				SocialRelationConstants.TYPE_UNI_CHILD,
+				SocialRelationConstants.TYPE_UNI_ENEMY,
+				SocialRelationConstants.TYPE_UNI_FOLLOWER,
+				SocialRelationConstants.TYPE_UNI_PARENT,
+				SocialRelationConstants.TYPE_UNI_SUBORDINATE,
+				SocialRelationConstants.TYPE_UNI_SUPERVISOR,
+				db.getTemplateFalse(), db.getTemplateTrue()
+			});
+
+		return StringUtil.replace(sql, customSqlKeys, customSqlValues);
 	}
 
 	@Override
@@ -8126,8 +8119,6 @@ public class PortalImpl implements Portal {
 		SystemBundleUtil.getBundleContext();
 	private final Set<String> _computerAddresses = new HashSet<>();
 	private final String _computerName;
-	private String[] _customSqlKeys;
-	private String[] _customSqlValues;
 	private final String _pathContext;
 	private final String _pathFriendlyURLPrivateGroup;
 	private final String _pathFriendlyURLPrivateUser;

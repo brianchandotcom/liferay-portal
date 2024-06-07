@@ -54,9 +54,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		}
 
 		try {
-			String dadJoke = _getLiferaySampleEtcSpringBootDadJoke(
-				"liferay-sample-etc-cron-oauth-application-headless-server",
-				_liferaySampleEtcSpringBootURI + "/dad/joke");
+			String dadJoke = _getDadJoke();
 
 			if ((dadJoke != null) && _log.isInfoEnabled()) {
 				_log.info("Dad joke: " + dadJoke);
@@ -118,17 +116,15 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		}
 	}
 
-	private String _getLiferaySampleEtcSpringBootDadJoke(
-		String externalReferenceCode, String endpoint) {
-
+	private String _getDadJoke() {
 		return WebClient.create(
 		).get(
 		).uri(
-			endpoint
+			_liferaySampleEtcSpringBootURI + "/dad/joke"
 		).header(
 			"Authorization",
 			_liferayOAuth2AccessTokenManager.getAuthorization(
-				externalReferenceCode)
+				"liferay-sample-etc-cron-oauth-application-headless-server")
 		).accept(
 			MediaType.TEXT_PLAIN
 		).retrieve(

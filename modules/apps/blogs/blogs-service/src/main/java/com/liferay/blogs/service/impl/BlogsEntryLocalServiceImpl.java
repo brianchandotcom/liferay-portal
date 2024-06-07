@@ -1886,10 +1886,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			_portal.getClassNameId(FriendlyURLEntry.class),
 			mainFriendlyURLEntry.getFriendlyURLEntryId());
 
-		List<AssetCategory> assetCategories = assetEntry.getCategories();
-
 		long[] friendlyURLAssetCategoryIds = GetterUtil.getLongValues(
 			serviceContext.getAttribute("friendlyURLAssetCategoryIds"));
+
+		if (assetEntry == null) {
+			if (ArrayUtil.isEmpty(friendlyURLAssetCategoryIds)) {
+				return false;
+			}
+
+			return true;
+		}
+
+		List<AssetCategory> assetCategories = assetEntry.getCategories();
 
 		if (assetCategories.containsAll(
 				ListUtil.toList(friendlyURLAssetCategoryIds))) {

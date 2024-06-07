@@ -16,13 +16,15 @@ import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 import {picklistApiHelpersTest} from './fixtures/picklistApiHelpersTest';
 
-const SELECTION_FILTER_NAME = 'Selection filter';
+const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
+const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
 const PICKLIST_VALUE_KEY = 'sampleValue';
 const PICKLIST_VALUE_NAME = 'Sample Value';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
+		'LPD-10754': true,
 		'LPS-178052': true,
 	}),
 	filtersPageTest,
@@ -70,15 +72,15 @@ test.describe('Filters in Data Set Manager', () => {
 			});
 		});
 
-		await test.step('Create a selection filter', async () => {
-			await filtersPage.createSelectionFilter({
+		await test.step('Create a selection filter from picklist source', async () => {
+			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',
 				filterMode: 'Include',
-				name: SELECTION_FILTER_NAME,
-				picklist: picklistName,
+				name: SELECTION_PICKLIST_FILTER_NAME,
 				preselectedValues: [PICKLIST_VALUE_NAME],
 				selectionType: 'Single',
-				source: 'Object Picklist',
+				source: picklistName,
+				sourceType: 'Object Picklist',
 			});
 		});
 
@@ -86,7 +88,43 @@ test.describe('Filters in Data Set Manager', () => {
 			await expect(
 				page.getByRole('cell', {
 					exact: true,
-					name: SELECTION_FILTER_NAME,
+					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
+	});
+
+	test('Can create a selection filter with API Headless source', async ({
+		filtersPage,
+		page,
+	}) => {
+		await test.step('Navigate to the Filters tab', async () => {
+			await filtersPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Create a selection filter from API Headless source', async () => {
+			await filtersPage.createSelectionFilterApiHeadless({
+				filterBy: 'externalReferenceCode',
+				filterMode: 'Include',
+				itemKey: 'id',
+				itemLabel: 'label',
+				name: SELECTION_API_HEADLESS_FILTER_NAME,
+				preselectedValues: [dataSetLabel],
+				restApplication: '/data-set-manager/data-sets',
+				restEndpoint: '/',
+				restSchema: 'FDSView',
+				selectionType: 'Single',
+				sourceType: 'API REST Application',
+			});
+		});
+
+		await test.step('Check that the selection filter is in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_API_HEADLESS_FILTER_NAME,
 				})
 			).toBeVisible();
 		});

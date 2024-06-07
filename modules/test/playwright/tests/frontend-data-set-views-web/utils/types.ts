@@ -43,10 +43,22 @@ export interface IDateRangeFilter extends IBaseFilter {
 
 export interface ISelectionFilter extends IBaseFilter {
 	filterMode: 'Include' | 'Exclude';
-	picklist?: string;
 	preselectedValues: string[];
 	selectionType: 'Multiple' | 'Single';
-	source: 'Object Picklist';
+}
+
+export interface ISelectionFilterPicklist extends ISelectionFilter {
+	source: string;
+	sourceType: 'Object Picklist';
+}
+
+export interface ISelectionFilterApiHeadless extends ISelectionFilter {
+	itemKey: string;
+	itemLabel: string;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
+	sourceType: 'API REST Application';
 }
 
 export interface IDateRangeFilter extends IBaseFilter {

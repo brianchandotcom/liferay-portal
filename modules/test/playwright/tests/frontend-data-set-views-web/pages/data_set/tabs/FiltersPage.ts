@@ -5,7 +5,11 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {IDateRangeFilter, ISelectionFilter} from '../../../utils/types';
+import {
+	IDateRangeFilter,
+	ISelectionFilterApiHeadless,
+	ISelectionFilterPicklist,
+} from '../../../utils/types';
 import {DataSetPage} from '../DataSetPage';
 
 interface NewFilterModal {
@@ -21,10 +25,18 @@ interface NewFilterModal {
 
 interface NewSelectionFilterModal extends NewFilterModal {
 	filterModeRadioButtons: Locator;
+	itemKey: Locator;
+	itemLabel: Locator;
 	picklistDropdown: Locator;
 	preselectedValuesMultiSelect: Locator;
+	restApplicationField: Locator;
+	restApplicationOptions: Locator;
+	restEndpointField: Locator;
+	restEndpointOptions: Locator;
+	restSchemaField: Locator;
+	restSchemaOptions: Locator;
 	selectionRadioButtons: Locator;
-	sourceDropdown: Locator;
+	sourceTypeDropdown: Locator;
 }
 
 interface NewDateRangeFilterModal extends NewFilterModal {
@@ -88,12 +100,22 @@ export class FiltersPage {
 		this.newSelectionFilterModal = {
 			...this.newFilterModal,
 			filterModeRadioButtons: page.getByText('Filter ModeIncludeExclude'),
+			itemKey: page.locator('.fds-filter-item-key'),
+			itemLabel: page.locator('.fds-filter-item-label'),
 			picklistDropdown: page.getByLabel('Picklist'),
 			preselectedValuesMultiSelect: page.getByPlaceholder(
 				'Select a default value for your filter.'
 			),
+			restApplicationField: page.getByLabel('REST ApplicationRequired'),
+			restApplicationOptions: page.locator(
+				'.fds-filter-rest-application-menu'
+			),
+			restEndpointField: page.getByLabel('REST EndpointRequired'),
+			restEndpointOptions: page.locator('.fds-filter-rest-endpoint-menu'),
+			restSchemaField: page.getByLabel('REST SchemaRequired'),
+			restSchemaOptions: page.locator('.fds-filter-rest-schema-menu'),
 			selectionRadioButtons: page.getByText('SelectionMultipleSingle'),
-			sourceDropdown: page.getByLabel('Choose an Option'),
+			sourceTypeDropdown: page.getByLabel('Choose an Option'),
 		};
 		this.page = page;
 	}
@@ -153,15 +175,85 @@ export class FiltersPage {
 		await this.saveAddFilterModal();
 	}
 
-	async createSelectionFilter({
+	async createSelectionFilterApiHeadless({
+		filterBy,
+		filterMode,
+		itemKey,
+		itemLabel,
+		name,
+		preselectedValues,
+		restApplication,
+		restEndpoint,
+		restSchema,
+		selectionType,
+		sourceType,
+	}: ISelectionFilterApiHeadless) {
+		await this.openNewFilterModal({
+			dropdownItemLabel: 'Selection',
+		});
+
+		await this.newSelectionFilterModal.nameInput.click();
+		await this.newSelectionFilterModal.nameInput.fill(name);
+
+		await this.newSelectionFilterModal.filterBySelect.click();
+		await this.page.getByRole('option', {name: filterBy}).click();
+
+		await this.newSelectionFilterModal.sourceTypeDropdown.selectOption(
+			sourceType
+		);
+
+		await this.newSelectionFilterModal.restApplicationField.click();
+		await this.newSelectionFilterModal.restApplicationOptions.waitFor();
+		await this.newSelectionFilterModal.restApplicationOptions
+			.getByRole('option', {name: restApplication})
+			.click();
+
+		await this.newSelectionFilterModal.restSchemaField.waitFor();
+		await this.newSelectionFilterModal.restSchemaField.click();
+
+		await this.newSelectionFilterModal.restSchemaOptions.waitFor();
+		await this.newSelectionFilterModal.restSchemaOptions
+			.getByRole('option', {exact: true, name: restSchema})
+			.click();
+
+		await this.newSelectionFilterModal.restEndpointField.click();
+		await this.newSelectionFilterModal.restEndpointOptions.waitFor();
+		await this.page
+			.getByRole('option', {exact: true, name: restEndpoint})
+			.click();
+		await this.newSelectionFilterModal.restEndpointField.click();
+
+		await this.newSelectionFilterModal.itemKey.click();
+		await this.page
+			.getByRole('option', {exact: true, name: itemKey})
+			.click();
+		await this.newSelectionFilterModal.itemKey.click();
+
+		await this.newSelectionFilterModal.itemLabel.click();
+		await this.page
+			.getByRole('option', {exact: true, name: itemLabel})
+			.click();
+		await this.newSelectionFilterModal.itemLabel.click();
+
+		await this.newSelectionFilterModal.preselectedValuesMultiSelect.click();
+		await this.page
+			.getByRole('option', {name: preselectedValues[0]})
+			.click();
+
+		await this.page.getByText(selectionType).click();
+		await this.page.locator('label').filter({hasText: filterMode}).click();
+		await this.saveAddFilterModal();
+	}
+
+	async createSelectionFilterPicklist({
 		filterBy,
 		filterMode,
 		name,
-		picklist,
 		preselectedValues,
 		selectionType,
 		source,
-	}: ISelectionFilter) {
+		sourceType,
+	}: ISelectionFilterPicklist) {
 		await this.openNewFilterModal({
 			dropdownItemLabel: 'Selection',
 		});
@@ -170,9 +262,11 @@ export class FiltersPage {
 		await this.newSelectionFilterModal.nameInput.fill(name);
 		await this.newSelectionFilterModal.filterBySelect.click();
 		await this.page.getByRole('option', {name: filterBy}).click();
-		await this.newSelectionFilterModal.sourceDropdown.selectOption(source);
+		await this.newSelectionFilterModal.sourceTypeDropdown.selectOption(
+			sourceType
+		);
 		await this.newSelectionFilterModal.picklistDropdown.selectOption(
-			picklist
+			source
 		);
 		await this.newSelectionFilterModal.preselectedValuesMultiSelect.click();
 		await this.page

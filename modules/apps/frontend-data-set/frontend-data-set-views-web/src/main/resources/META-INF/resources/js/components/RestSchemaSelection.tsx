@@ -216,7 +216,7 @@ function RestSchemaSelection({
 	const RestApplicationDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'fds-entries-dropdown-menu fds-filter-rest-application-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -281,6 +281,7 @@ function RestSchemaSelection({
 		return (
 			<>
 				<ClayDropDown.Search
+					className='fds-filter-rest-schemas-search'
 					aria-label={Liferay.Language.get('search')}
 					onChange={onSearch}
 					value={query}
@@ -320,7 +321,7 @@ function RestSchemaSelection({
 	const RestSchemaDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'fds-entries-dropdown-menu fds-filter-rest-schema-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -431,7 +432,7 @@ function RestSchemaSelection({
 	const RestEndpointDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'fds-entries-dropdown-menu fds-filter-rest-endpoint-menu',
 			}}
 			trigger={
 				<ClayButton

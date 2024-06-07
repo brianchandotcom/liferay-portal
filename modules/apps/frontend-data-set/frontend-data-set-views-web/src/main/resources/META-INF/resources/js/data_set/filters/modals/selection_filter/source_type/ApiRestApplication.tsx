@@ -264,6 +264,7 @@ function ApiRestApplication({
 							</label>
 
 							<ClayDropDown
+								className='fds-filter-item-key'
 								menuElementAttrs={{
 									className: 'fds-entries-dropdown-menu',
 								}}
@@ -314,6 +315,7 @@ function ApiRestApplication({
 							</label>
 
 							<ClayDropDown
+								className='fds-filter-item-label'
 								menuElementAttrs={{
 									className: 'fds-entries-dropdown-menu',
 								}}

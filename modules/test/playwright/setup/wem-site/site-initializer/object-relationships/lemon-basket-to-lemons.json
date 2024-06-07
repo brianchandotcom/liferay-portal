@@ -1,0 +1,10 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Lemon Basket to Lemons"
+	},
+	"name": "lemonBasketToLemons",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:LemonBasket$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Lemon$]",
+	"type": "oneToMany"
+}

@@ -1,0 +1,51 @@
+{
+	"externalReferenceCode": "lemon-object-erc",
+	"label": {
+		"en_US": "Lemon"
+	},
+	"name": "Lemon",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Lemon Size"
+			},
+			"name": "lemonSize",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+		{
+			"defaultObjectLayout": true,
+			"name": {
+				"en_US": "Layout"
+			},
+			"objectLayoutTabs": [
+				{
+					"name": {
+						"en_US": "Tab"
+					},
+					"objectLayoutBoxes": [
+						{
+							"collapsable": false,
+							"name": {
+								"en_US": "Categorization"
+							},
+							"priority": 0,
+							"type": "categorization"
+						}
+					],
+					"priority": 0
+				}
+			]
+		}
+	],
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Lemons"
+	},
+	"scope": "site"
+}

@@ -1,0 +1,25 @@
+{
+	"externalReferenceCode": "lemon-basket-object-erc",
+	"label": {
+		"en_US": "Lemon Basket"
+	},
+	"name": "LemonBasket",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Lemon Basket Color"
+			},
+			"name": "lemonBasketColor",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "site_administration.content",
+	"pluralLabel": {
+		"en_US": "Lemon Baskets"
+	},
+	"scope": "site"
+}

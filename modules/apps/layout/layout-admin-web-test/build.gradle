@@ -15,6 +15,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:site-navigation:site-navigation-api")
 	testIntegrationImplementation project(":apps:site-navigation:site-navigation-menu-item-api")
+	testIntegrationImplementation project(":apps:style-book:style-book-api")
 	testIntegrationImplementation project(":apps:translation:translation-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -404,12 +404,11 @@ public class TestrayFactory {
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayVersion)) {
 				return testrayVersion;
 			}
-
-			return _TESTRAY_SERVER_VERSION_DEFAULT;
 		}
 		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
 		}
+
+		return _TESTRAY_SERVER_VERSION_DEFAULT;
 	}
 
 	private static final String _TESTRAY_SERVER_VERSION_DEFAULT = "testray-2";

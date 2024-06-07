@@ -1,4 +1,4 @@
-@component-name = "portal-database-upgrade-framework"
+@component-name = "portal-upgrades"
 definition {
 
 	property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore";

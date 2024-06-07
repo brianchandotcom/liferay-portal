@@ -1,4 +1,4 @@
-@component-name = "portal-database-upgrade-tool"
+@component-name = "portal-upgrades"
 definition {
 
 	property app.server.types = "tomcat";

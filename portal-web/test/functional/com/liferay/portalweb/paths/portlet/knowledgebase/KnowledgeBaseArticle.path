@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_TITLE_VISIBLE</td>
+	<td>//div[@class='sidebar-header']//div[contains(@class,'component-title') and contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_VERSION_SUBTITLE</td>
 	<td>//li[contains(.,'${key_entryVersion}')]//div[@class='list-group-subtitle']</td>
 	<td></td>

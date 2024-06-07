@@ -1469,7 +1469,7 @@ definition {
 
 		AssertVisible(
 			key_title = ${title},
-			locator1 = "Header#H4_TITLE");
+			locator1 = "KnowledgeBaseArticle#INFO_TITLE_VISIBLE");
 	}
 
 	@summary = "Default summary"

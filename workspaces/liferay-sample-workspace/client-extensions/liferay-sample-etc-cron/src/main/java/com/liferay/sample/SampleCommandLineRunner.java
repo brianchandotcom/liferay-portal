@@ -102,7 +102,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 			_log.info(
 				StringBundler.concat(
 					"There are ", messageBoardThreads.size(),
-					" message board threads in Guest site on ", url));
+					" message board threads in the Guest site at ", url));
 		}
 
 		for (MessageBoardThread messageBoardThread : messageBoardThreads) {

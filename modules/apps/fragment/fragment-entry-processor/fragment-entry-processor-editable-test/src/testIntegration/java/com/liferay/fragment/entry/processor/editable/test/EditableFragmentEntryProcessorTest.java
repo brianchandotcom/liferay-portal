@@ -8,6 +8,7 @@ package com.liferay.fragment.entry.processor.editable.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -880,6 +881,30 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableMappedDLPreview()
+		throws Exception {
+
+		FileEntry fileEntry = _addImageFileEntry();
+
+		String editableValues = _getEditableFieldValues(
+			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
+			"fileURL", "fragment_entry_link_mapped_asset_field_image.json");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "image-square", editableValues,
+			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.EDIT);
+
+		String src = element.attr("src");
+
+		Assert.assertFalse(src.contains("imagePreview=1"));
+		Assert.assertEquals(
+			_dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK),
+			src);
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableMappedJournalArticleBackgroundImageFileEntryId()
 		throws Exception {
 
@@ -1540,6 +1565,9 @@ public class EditableFragmentEntryProcessorTest {
 
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;

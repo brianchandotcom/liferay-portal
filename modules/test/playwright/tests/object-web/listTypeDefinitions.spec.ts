@@ -30,6 +30,8 @@ test.afterEach(async ({apiHelpers, page, siteSettingsLocalizationPage}) => {
 		await siteSettingsLocalizationPage.selectDefaultLanguageOption();
 
 		await siteSettingsLocalizationPage.saveConfiguration();
+
+		customDefaultSiteLanguage = '';
 	}
 
 	if (createdListTypeDefinitionName) {
@@ -44,6 +46,8 @@ test.afterEach(async ({apiHelpers, page, siteSettingsLocalizationPage}) => {
 		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
 			createdListTypeDefinition.id
 		);
+
+		createdListTypeDefinitionName = '';
 	}
 });
 
@@ -88,5 +92,72 @@ test.describe('manage picklists inside the picklists portlet', () => {
 		await expect(
 			page.getByRole('link', {name: listTypeDefinitionName})
 		).toBeVisible();
+	});
+
+	test('ensure picklist entry keys starting with upper case are correctly rendered in the entries', async ({
+		apiHelpers,
+		listTypeDefinitionPage,
+		page,
+	}) => {
+		await listTypeDefinitionPage.goto();
+
+		const listTypeDefinitionName = 'ListTypeDefinition' + getRandomInt();
+
+		await listTypeDefinitionPage.createPicklist(listTypeDefinitionName);
+
+		const listTypeDefinitionEntryName = 'ListTypeDefinitionEntryName';
+
+		const listTypeDefinitionEntryKey = 'ListTypeDefinitionEntryKey';
+
+		await listTypeDefinitionPage.addPicklistItem(
+			listTypeDefinitionName,
+			listTypeDefinitionEntryName,
+			listTypeDefinitionEntryKey
+		);
+
+		createdListTypeDefinitionName = listTypeDefinitionName;
+
+		const [response] =
+			await apiHelpers.listTypeAdmin.getFilteredListTypeDefinition(
+				'name',
+				listTypeDefinitionName
+			);
+
+		const [responseEntries]: ListTypeEntry[] = response.listTypeEntries;
+
+		const frameElement = await page.$('iframe');
+		const frame = await frameElement.contentFrame();
+		await frame.waitForLoadState('load');
+
+		const [listTypeDefinitionHeader, listTypeDefinitionContent] =
+			await Promise.all([
+				listTypeDefinitionPage.frameLocator
+					.locator('div.dnd-th')
+					.allInnerTexts(),
+				listTypeDefinitionPage.frameLocator
+					.locator('div.dnd-td')
+					.allInnerTexts(),
+			]);
+
+		const listTypeDefinitionHeaderTemplate = [
+			'Name',
+			'Key',
+			'External Reference Code',
+		];
+
+		const listTypeDefinitionContentTemplate = [
+			listTypeDefinitionEntryName,
+			listTypeDefinitionEntryKey,
+			responseEntries.externalReferenceCode,
+		];
+
+		for (let i = 0; i < 3; i++) {
+			expect(listTypeDefinitionHeaderTemplate[i]).toBe(
+				listTypeDefinitionHeader[i]
+			);
+			expect(listTypeDefinitionContentTemplate[i]).toBe(
+				listTypeDefinitionContent[i]
+			);
+		}
 	});
 });

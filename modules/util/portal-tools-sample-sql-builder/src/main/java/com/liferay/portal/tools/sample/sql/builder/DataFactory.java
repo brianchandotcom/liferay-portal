@@ -249,6 +249,7 @@ import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -370,6 +371,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.UUID;
 
 import javax.portlet.PortletPreferences;
 
@@ -2389,13 +2391,17 @@ public class DataFactory {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
 		LayoutModel publicLayoutModel = _newContentPageLayoutModel(
-			groupId, 0, 0, name);
+			groupId, 0, 0, name, name);
 
 		layoutModels.add(publicLayoutModel);
 		layoutModels.add(
 			_newContentPageLayoutModel(
 				groupId, getClassNameId(Layout.class),
-				publicLayoutModel.getPlid(), name + "1"));
+				publicLayoutModel.getPlid(), name + "1",
+				String.valueOf(
+					new UUID(
+						SecureRandomUtil.nextLong(),
+						SecureRandomUtil.nextLong()))));
 
 		return layoutModels;
 	}
@@ -7579,7 +7585,8 @@ public class DataFactory {
 	}
 
 	private LayoutModel _newContentPageLayoutModel(
-		long groupId, long classNameId, long classPK, String name) {
+		long groupId, long classNameId, long classPK, String name,
+		String friendlyURL) {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, false),
@@ -7630,7 +7637,7 @@ public class DataFactory {
 			priority = Integer.MAX_VALUE;
 		}
 
-		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + name);
+		layoutModel.setFriendlyURL(StringPool.FORWARD_SLASH + friendlyURL);
 		layoutModel.setPriority(priority);
 		layoutModel.setPublishDate(new Date());
 		layoutModel.setStatusByUserId(_sampleUserId);

@@ -13,6 +13,12 @@ interface Props {
 	onImport: (overwriteStrategy?: OverwriteStrategy) => void;
 }
 
+interface ModalProps {
+	onClickImport: () => void;
+	onClose: () => void;
+	onRadioChange: (value: ReactText) => void;
+}
+
 const OPTIONS = [
 	{
 		label: Liferay.Language.get('do-not-import-existing-items'),
@@ -32,17 +38,13 @@ export type OverwriteStrategy = (typeof OPTIONS)[number]['value'];
 
 const DEFAULT_OPTION = OPTIONS[0];
 
-function ImportOptionsModal({onCloseModal, onImport}: Props) {
-	const [selectedOption, setSelectedOption] = useState<OverwriteStrategy>(
-		DEFAULT_OPTION.value
-	);
-
-	const {observer, onClose} = useModal({
-		onClose: onCloseModal,
-	});
-
+export function ModalContent({
+	onClickImport,
+	onClose,
+	onRadioChange,
+}: ModalProps) {
 	return (
-		<ClayModal observer={observer}>
+		<>
 			<ClayModal.Header>
 				{Liferay.Language.get('import-options')}
 			</ClayModal.Header>
@@ -56,9 +58,7 @@ function ImportOptionsModal({onCloseModal, onImport}: Props) {
 
 				<ClayRadioGroup
 					defaultValue={DEFAULT_OPTION.value}
-					onChange={(value: ReactText) =>
-						setSelectedOption(value as OverwriteStrategy)
-					}
+					onChange={onRadioChange}
 				>
 					{OPTIONS.map((option) => (
 						<ClayRadio
@@ -77,16 +77,36 @@ function ImportOptionsModal({onCloseModal, onImport}: Props) {
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton
-							onClick={() => {
-								onImport(selectedOption);
-
-								onClose();
-							}}
-						>
+						<ClayButton onClick={onClickImport}>
 							{Liferay.Language.get('import')}
 						</ClayButton>
 					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+}
+
+function ImportOptionsModal({onCloseModal, onImport}: Props) {
+	const [selectedOption, setSelectedOption] = useState<OverwriteStrategy>(
+		DEFAULT_OPTION.value
+	);
+
+	const {observer, onClose} = useModal({
+		onClose: onCloseModal,
+	});
+
+	return (
+		<ClayModal observer={observer}>
+			<ModalContent
+				onClickImport={() => {
+					onImport(selectedOption);
+
+					onClose();
+				}}
+				onClose={onClose}
+				onRadioChange={(value) =>
+					setSelectedOption(value as OverwriteStrategy)
 				}
 			/>
 		</ClayModal>

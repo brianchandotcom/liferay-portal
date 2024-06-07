@@ -120,7 +120,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		return WebClient.create(
 		).get(
 		).uri(
-			_liferaySampleEtcSpringBootURI + "/dad/joke"
+			_liferaySampleEtcSpringBootHomePageURL + "/dad/joke"
 		).header(
 			"Authorization",
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -142,8 +142,8 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
-	@Value("${liferay.sample.etc.spring.boot.uri}")
-	private URL _liferaySampleEtcSpringBootURI;
+	@Value("${liferay.sample.etc.spring.boot.home.page.url}")
+	private URL _liferaySampleEtcSpringBootHomePageURL;
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;

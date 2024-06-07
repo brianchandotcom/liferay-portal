@@ -1760,7 +1760,7 @@
 		</check>
 		<check name="UpgradeJavaFinderImplCheck">
 			<category name="Upgrade" />
-			<description name="Add Component annotation to `*FinderImpl.java` class" />
+			<description name="Add Component annotation to `*FinderImpl.java` file." />
 		</check>
 		<check name="UpgradeJavaGetFDSTableSchemaParameterCheck">
 			<category name="Upgrade" />
@@ -1783,7 +1783,7 @@
 		</check>
 		<check name="UpgradeJavaLocalServiceImplCheck">
 			<category name="Upgrade" />
-			<description name="Add Component annotation to `*LocalServiceImpl.java` class" />
+			<description name="Add Component annotation to `*LocalServiceImpl.java` file." />
 		</check>
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />
@@ -1807,7 +1807,7 @@
 		</check>
 		<check name="UpgradeJavaServiceImplCheck">
 			<category name="Upgrade" />
-			<description name="Add Component annotation to `*ServiceImpl.java` class" />
+			<description name="Add Component annotation to `*ServiceImpl.java` file." />
 		</check>
 		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
 			<category name="Upgrade" />

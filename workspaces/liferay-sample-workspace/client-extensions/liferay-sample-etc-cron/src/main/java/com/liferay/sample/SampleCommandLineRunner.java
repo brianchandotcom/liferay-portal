@@ -12,6 +12,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.petra.string.StringBundler;
 
 import java.net.URL;
 
@@ -101,8 +102,9 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"There are " + messageBoardThreads.size() +
-					" message board threads in Guest site on " + endpoint);
+				StringBundler.concat(
+					"There are ", messageBoardThreads.size(),
+					" message board threads in Guest site on ", endpoint));
 		}
 
 		for (MessageBoardThread messageBoardThread : messageBoardThreads) {

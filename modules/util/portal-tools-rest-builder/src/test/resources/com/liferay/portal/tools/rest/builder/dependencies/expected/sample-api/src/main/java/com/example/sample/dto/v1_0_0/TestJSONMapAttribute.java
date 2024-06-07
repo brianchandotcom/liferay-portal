@@ -140,22 +140,30 @@ public class TestJSONMapAttribute implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties1() {
-		properties1.replaceAll(
-			(key, value) -> {
-				if (!(value instanceof UnsafeSupplier<?, ?>)) {
-					return value;
-				}
+		Set<Map.Entry<String, Object>> entrySet = properties1.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = entrySet.iterator();
 
-				UnsafeSupplier<?, ?> unsafeSupplier =
-					(UnsafeSupplier<?, ?>)value;
+		while (iterator.hasNext()) {
+			Map.Entry<String, Object> entry = iterator.next();
+			Object value = entry.getValue();
 
+			if (value instanceof UnsafeSupplier<?, ?>) {
 				try {
-					return unsafeSupplier.get();
+					UnsafeSupplier unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+					value = unsafeSupplier.get();
 				}
 				catch (Throwable throwable) {
 					throw new RuntimeException(throwable);
 				}
-			});
+			}
+
+			if (value == null) {
+				iterator.remove();
+			}
+			else {
+				properties1.put(entry.getKey(), value);
+			}
+		}
 
 		return properties1;
 	}
@@ -189,22 +197,30 @@ public class TestJSONMapAttribute implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties2() {
-		properties2.replaceAll(
-			(key, value) -> {
-				if (!(value instanceof UnsafeSupplier<?, ?>)) {
-					return value;
-				}
+		Set<Map.Entry<String, Object>> entrySet = properties2.entrySet();
+		Iterator<Map.Entry<String, Object>> iterator = entrySet.iterator();
 
-				UnsafeSupplier<?, ?> unsafeSupplier =
-					(UnsafeSupplier<?, ?>)value;
+		while (iterator.hasNext()) {
+			Map.Entry<String, Object> entry = iterator.next();
+			Object value = entry.getValue();
 
+			if (value instanceof UnsafeSupplier<?, ?>) {
 				try {
-					return unsafeSupplier.get();
+					UnsafeSupplier unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+					value = unsafeSupplier.get();
 				}
 				catch (Throwable throwable) {
 					throw new RuntimeException(throwable);
 				}
-			});
+			}
+
+			if (value == null) {
+				iterator.remove();
+			}
+			else {
+				properties2.put(entry.getKey(), value);
+			}
+		}
 
 		return properties2;
 	}
@@ -272,7 +288,12 @@ public class TestJSONMapAttribute implements Serializable {
 				try {
 					value = unsafeSupplier.get();
 
-					properties1.put(propertyName, value);
+					if (value == null) {
+						properties1.remove(propertyName);
+					}
+					else {
+						properties1.put(propertyName, value);
+					}
 				}
 				catch (Throwable e) {
 					throw new RuntimeException(e);
@@ -294,7 +315,12 @@ public class TestJSONMapAttribute implements Serializable {
 				try {
 					value = unsafeSupplier.get();
 
-					properties2.put(propertyName, value);
+					if (value == null) {
+						properties2.remove(propertyName);
+					}
+					else {
+						properties2.put(propertyName, value);
+					}
 				}
 				catch (Throwable e) {
 					throw new RuntimeException(e);

@@ -150,21 +150,13 @@ public class FirebasePushNotificationsSender
 			));
 	}
 
-	private JSONObject _buildMessagePayload(JSONObject payloadJSONObject) {
+	private String _buildMessagePayload(JSONObject payloadJSONObject) {
 		Iterator<String> keys = payloadJSONObject.keys();
 		List<String> notificationKeys = Arrays.asList(
-			"badge", "notification_count", "body", "bodyLocalizedKey",
-			"bodyLocalizedArguments", "sound", "title", "titleLocalizedKey",
-			"titleLocalizedArguments");
+			"badge", "body", "bodyLocalizedKey", "bodyLocalizedArguments",
+			"sound", "silent");
 
-		JSONObject jsonObject = JSONUtil.put(
-			"title", payloadJSONObject.getString("title")
-		).put(
-			"title_loc_args",
-			payloadJSONObject.getString("titleLocalizedArguments")
-		).put(
-			"title_loc_key", payloadJSONObject.getString("titleLocalizedKey")
-		);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		while (keys.hasNext()) {
 			String key = keys.next();
@@ -174,8 +166,9 @@ public class FirebasePushNotificationsSender
 			}
 		}
 
-		//return JSONUtil.put("payload", jsonObject);
-		return jsonObject;
+		return JSONUtil.put(
+			"payload", jsonObject
+		).toString();
 	}
 
 	private String _createNotificationGroup(

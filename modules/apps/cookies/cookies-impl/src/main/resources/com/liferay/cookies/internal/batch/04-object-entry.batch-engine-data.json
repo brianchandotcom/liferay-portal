@@ -49,7 +49,7 @@
 			"externalReferenceCode": "a5e9578a-1307-4d89-998f-cc91609dc189",
 			"host": "Liferay",
 			"name": "_hjAbsoluteSessionInProgress",
-			"purpose": "Stores a true or false value for Hotjar to distinguish the user's first page view. Statistics.",
+			"purpose": "Stores a true/false value for Hotjar to identify the user's first page view. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -57,7 +57,7 @@
 			"externalReferenceCode": "59d7f57b-fc51-4e37-8177-4fcaf62a01c7",
 			"host": "Liferay",
 			"name": "_hjFirstSeen",
-			"purpose": "Stores a true or false value for Hotjar to determine whether it's seeing the user for the first time. Statistics.",
+			"purpose": "Stores a true/false value for Hotjar to determine whether it's seeing the user for the first time. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -65,7 +65,7 @@
 			"externalReferenceCode": "f5c92d83-57bd-4f83-8e92-70427bffd002",
 			"host": "Liferay",
 			"name": "_hjIncludedInPageviewSample",
-			"purpose": "Stores a true or false value for Hotjar to determine whether to include the user's data in the data sampling defined by the site's daily page view limit. Statistics.",
+			"purpose": "Stores a true/false value for Hotjar to determine whether to include the user's data in the data sampling defined by the site's daily page view limit. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -73,7 +73,7 @@
 			"externalReferenceCode": "e9f2eb7c-9c73-45ce-94ec-c54f0b199428",
 			"host": "Liferay",
 			"name": "_hjIncludedInSessionSample",
-			"purpose": "Stores a true or false value for Hotjar to determine whether to include the user's data in the data sampling defined by the site's daily session limit. Statistics.",
+			"purpose": "Stores a true/false value for Hotjar to determine whether to include the user's data in the data sampling defined by the site's daily session limit. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -81,7 +81,7 @@
 			"externalReferenceCode": "b81c84db-1469-4581-9e81-849d9470d090",
 			"host": "Liferay",
 			"name": "_hjSession",
-			"purpose": "Stores session data so requests in the session window are attributes to the same session. Statistics.",
+			"purpose": "Stores session data for Hotjar so requests in the session window are attributes to the same session. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -89,7 +89,7 @@
 			"externalReferenceCode": "3ce10a77-8d95-41b6-b9f2-e7674314df17",
 			"host": "Liferay",
 			"name": "_hjSessionUser",
-			"purpose": "Stores the current user's Hotjar user ID so Hotjar can track user's behavior. Statistics.",
+			"purpose": "Stores the user's Hotjar user ID so Hotjar can track the user's behavior. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -105,7 +105,7 @@
 			"externalReferenceCode": "100522f5-949f-410e-a983-ed156cec2775",
 			"host": "Liferay",
 			"name": "ac_client_channel_id",
-			"purpose": "Stores the Channel ID of the current website the user is accessing to send to Analytics Cloud. Statistics.",
+			"purpose": "Stores the current site's Channel ID to send to Analytics Cloud. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -121,7 +121,7 @@
 			"externalReferenceCode": "192a7263-1d3f-4ab8-aa6b-449a69ec470d",
 			"host": "Liferay",
 			"name": "ac_client_identity",
-			"purpose": "Stores the current user's Analytics Cloud user ID (SHA-256 hash generated with the user's email and userId) so users with accounts can be tracked by Analytics Cloud as known individuals. Statistics.",
+			"purpose": "Stores the current user's Analytics Cloud SHA-256 hashed user ID combined with email so users with accounts can be tracked by Analytics Cloud as known individuals. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -129,7 +129,7 @@
 			"externalReferenceCode": "50913b94-dd64-4812-b311-9c428cd40590",
 			"host": "Liferay",
 			"name": "ac_client_previous_email_address_hash",
-			"purpose": "Stores the email ID of the last user to log in (SHA-256 hash) to identify whether the last user to log in is the same as the previous user and assign events from current session's anonymous browsing to this user. Statistics.",
+			"purpose": "Stores the last known user's SHA-256 hashed email ID to match with the current user to assign events from current session's anonymous browsing to this user. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -137,7 +137,7 @@
 			"externalReferenceCode": "c2a8f09e-6f95-4fc8-84f7-d50165a2c385",
 			"host": "Liferay",
 			"name": "ac_client_storage_version",
-			"purpose": "Stores the current version of internal storage settings so the locally stores data structure can be compatible with the current version of the browser. Statistics.",
+			"purpose": "Stores the current version of internal storage settings so the locally stored data structure can be compatible with the current version of the browser. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -145,7 +145,7 @@
 			"externalReferenceCode": "c86f9553-cb17-4ea7-94f6-caa207f2ac1c",
 			"host": "Liferay",
 			"name": "ac_client_user_id",
-			"purpose": "Stores the current user's Analytics Cloud user ID so guest users can be tracked by Analytics Cloud as anonymous individuals and properly segmented. Statistics.",
+			"purpose": "Stores the current user's Analytics Cloud user ID to track and segment guest users as anonymous individuals. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -153,7 +153,7 @@
 			"externalReferenceCode": "8e1fd120-ae3c-4af2-9ce8-573c3ded34e8",
 			"host": "Liferay",
 			"name": "ac_message_queue",
-			"purpose": "Stores an array of events that haven't yet been sent to Analytics Cloud so they can be sent when possible. Statistics.",
+			"purpose": "Stores an array of events to send to Analytics Cloud when possible. Statistics.",
 			"type": "First Party"
 		},
 		{
@@ -161,7 +161,7 @@
 			"externalReferenceCode": "2d43f854-d24f-4c07-854c-2c3f975fecdd",
 			"host": "Liferay",
 			"name": "ac_message_queue_identity",
-			"purpose": "Stores an array of identities that haven't yet been sent to Analytics Cloud so they can be sent when possible. Statistics.",
+			"purpose": "Stores an array of identities to send to Analytics Cloud when possible. Statistics.",
 			"type": "First Party"
 		}
 	]

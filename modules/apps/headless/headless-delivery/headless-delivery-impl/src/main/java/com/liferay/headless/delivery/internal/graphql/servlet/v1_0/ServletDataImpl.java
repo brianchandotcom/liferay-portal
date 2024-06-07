@@ -713,6 +713,21 @@ public class ServletDataImpl implements ServletData {
 							DocumentShortcutResourceImpl.class,
 							"postAssetLibraryDocumentShortcutBatch"));
 					put(
+						"mutation#patchDocumentShortcut",
+						new ObjectValuePair<>(
+							DocumentShortcutResourceImpl.class,
+							"patchDocumentShortcut"));
+					put(
+						"mutation#updateDocumentShortcut",
+						new ObjectValuePair<>(
+							DocumentShortcutResourceImpl.class,
+							"putDocumentShortcut"));
+					put(
+						"mutation#updateDocumentShortcutBatch",
+						new ObjectValuePair<>(
+							DocumentShortcutResourceImpl.class,
+							"putDocumentShortcutBatch"));
+					put(
 						"mutation#createSiteDocumentShortcutsPageExportBatch",
 						new ObjectValuePair<>(
 							DocumentShortcutResourceImpl.class,

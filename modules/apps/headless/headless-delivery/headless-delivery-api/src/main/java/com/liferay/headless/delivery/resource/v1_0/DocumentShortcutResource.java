@@ -70,6 +70,17 @@ public interface DocumentShortcutResource {
 	public DocumentShortcut getDocumentShortcut(Long documentShortcutId)
 		throws Exception;
 
+	public DocumentShortcut patchDocumentShortcut(
+			Long documentShortcutId, DocumentShortcut documentShortcut)
+		throws Exception;
+
+	public DocumentShortcut putDocumentShortcut(
+			Long documentShortcutId, DocumentShortcut documentShortcut)
+		throws Exception;
+
+	public Response putDocumentShortcutBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<DocumentShortcut> getSiteDocumentShortcutsPage(
 			Long siteId, Pagination pagination)
 		throws Exception;

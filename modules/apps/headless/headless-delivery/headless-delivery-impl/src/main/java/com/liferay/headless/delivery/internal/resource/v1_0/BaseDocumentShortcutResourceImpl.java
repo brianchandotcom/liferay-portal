@@ -332,6 +332,147 @@ public abstract class BaseDocumentShortcutResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/document-shortcuts/{documentShortcutId}' -d $'{"folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "documentShortcutId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentShortcut")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/document-shortcuts/{documentShortcutId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public DocumentShortcut patchDocumentShortcut(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("documentShortcutId")
+			Long documentShortcutId,
+			DocumentShortcut documentShortcut)
+		throws Exception {
+
+		DocumentShortcut existingDocumentShortcut = getDocumentShortcut(
+			documentShortcutId);
+
+		if (documentShortcut.getFolderId() != null) {
+			existingDocumentShortcut.setFolderId(
+				documentShortcut.getFolderId());
+		}
+
+		if (documentShortcut.getTargetDocumentId() != null) {
+			existingDocumentShortcut.setTargetDocumentId(
+				documentShortcut.getTargetDocumentId());
+		}
+
+		if (documentShortcut.getViewableBy() != null) {
+			existingDocumentShortcut.setViewableBy(
+				documentShortcut.getViewableBy());
+		}
+
+		preparePatch(documentShortcut, existingDocumentShortcut);
+
+		return putDocumentShortcut(
+			documentShortcutId, existingDocumentShortcut);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/document-shortcuts/{documentShortcutId}' -d $'{"folderId": ___, "targetDocumentId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Replaces the document shortcut with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "documentShortcutId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentShortcut")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/document-shortcuts/{documentShortcutId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public DocumentShortcut putDocumentShortcut(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("documentShortcutId")
+			Long documentShortcutId,
+			DocumentShortcut documentShortcut)
+		throws Exception {
+
+		return new DocumentShortcut();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/document-shortcuts/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentShortcut")
+		}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/document-shortcuts/batch")
+	@javax.ws.rs.Produces("application/json")
+	@javax.ws.rs.PUT
+	@Override
+	public Response putDocumentShortcutBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				DocumentShortcut.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/document-shortcuts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -604,7 +745,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -678,8 +819,59 @@ public abstract class BaseDocumentShortcutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<DocumentShortcut, DocumentShortcut, Exception>
+			documentShortcutUnsafeFunction = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			documentShortcutUnsafeFunction =
+				documentShortcut -> patchDocumentShortcut(
+					documentShortcut.getId() != null ?
+						documentShortcut.getId() :
+							_parseLong(
+								(String)parameters.get("documentShortcutId")),
+					documentShortcut);
+		}
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			documentShortcutUnsafeFunction =
+				documentShortcut -> putDocumentShortcut(
+					documentShortcut.getId() != null ?
+						documentShortcut.getId() :
+							_parseLong(
+								(String)parameters.get("documentShortcutId")),
+					documentShortcut);
+		}
+
+		if (documentShortcutUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for DocumentShortcut");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documentShortcuts, documentShortcutUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documentShortcuts, documentShortcutUnsafeFunction::apply);
+		}
+		else {
+			for (DocumentShortcut documentShortcut : documentShortcuts) {
+				documentShortcutUnsafeFunction.apply(documentShortcut);
+			}
+		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -883,6 +1075,11 @@ public abstract class BaseDocumentShortcutResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		DocumentShortcut documentShortcut,
+		DocumentShortcut existingDocumentShortcut) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

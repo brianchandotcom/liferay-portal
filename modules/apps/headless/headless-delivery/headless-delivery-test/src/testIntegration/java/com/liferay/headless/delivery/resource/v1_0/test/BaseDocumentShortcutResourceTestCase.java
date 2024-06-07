@@ -545,6 +545,69 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 	}
 
 	@Test
+	public void testPatchDocumentShortcut() throws Exception {
+		DocumentShortcut postDocumentShortcut =
+			testPatchDocumentShortcut_addDocumentShortcut();
+
+		DocumentShortcut randomPatchDocumentShortcut =
+			randomPatchDocumentShortcut();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentShortcut patchDocumentShortcut =
+			documentShortcutResource.patchDocumentShortcut(
+				postDocumentShortcut.getId(), randomPatchDocumentShortcut);
+
+		DocumentShortcut expectedPatchDocumentShortcut =
+			postDocumentShortcut.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchDocumentShortcut, expectedPatchDocumentShortcut);
+
+		DocumentShortcut getDocumentShortcut =
+			documentShortcutResource.getDocumentShortcut(
+				patchDocumentShortcut.getId());
+
+		assertEquals(expectedPatchDocumentShortcut, getDocumentShortcut);
+		assertValid(getDocumentShortcut);
+	}
+
+	protected DocumentShortcut testPatchDocumentShortcut_addDocumentShortcut()
+		throws Exception {
+
+		return documentShortcutResource.postSiteDocumentShortcut(
+			testGroup.getGroupId(), randomDocumentShortcut());
+	}
+
+	@Test
+	public void testPutDocumentShortcut() throws Exception {
+		DocumentShortcut postDocumentShortcut =
+			testPutDocumentShortcut_addDocumentShortcut();
+
+		DocumentShortcut randomDocumentShortcut = randomDocumentShortcut();
+
+		DocumentShortcut putDocumentShortcut =
+			documentShortcutResource.putDocumentShortcut(
+				postDocumentShortcut.getId(), randomDocumentShortcut);
+
+		assertEquals(randomDocumentShortcut, putDocumentShortcut);
+		assertValid(putDocumentShortcut);
+
+		DocumentShortcut getDocumentShortcut =
+			documentShortcutResource.getDocumentShortcut(
+				putDocumentShortcut.getId());
+
+		assertEquals(randomDocumentShortcut, getDocumentShortcut);
+		assertValid(getDocumentShortcut);
+	}
+
+	protected DocumentShortcut testPutDocumentShortcut_addDocumentShortcut()
+		throws Exception {
+
+		return documentShortcutResource.postSiteDocumentShortcut(
+			testGroup.getGroupId(), randomDocumentShortcut());
+	}
+
+	@Test
 	public void testGetSiteDocumentShortcutsPage() throws Exception {
 		Long siteId = testGetSiteDocumentShortcutsPage_getSiteId();
 		Long irrelevantSiteId =

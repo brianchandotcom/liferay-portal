@@ -5,7 +5,10 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.test.util.TestPortalCache;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -124,8 +127,15 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			_singleLogoutProfileImpl, "samlSpSessionLocalService",
 			_samlSpSessionLocalService);
 
-		ReflectionTestUtil.invoke(
-			_relayStateHelperImpl, "activate", new Class<?>[0]);
+		PortalCache<String, String> portalCache = new TestPortalCache<>(
+			StringPool.BLANK);
+
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
+			portalCache);
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
+			portalCache);
 
 		_singleLogoutProfileImpl.activate(SystemBundleUtil.getBundleContext());
 

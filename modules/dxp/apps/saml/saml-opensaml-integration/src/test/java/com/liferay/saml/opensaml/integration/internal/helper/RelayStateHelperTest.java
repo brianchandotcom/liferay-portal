@@ -5,6 +5,9 @@
 
 package com.liferay.saml.opensaml.integration.internal.helper;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.test.util.TestPortalCache;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
@@ -30,8 +33,15 @@ public class RelayStateHelperTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ReflectionTestUtil.invoke(
-			_relayStateHelperImpl, "activate", new Class<?>[0]);
+		PortalCache<String, String> portalCache = new TestPortalCache<>(
+			StringPool.BLANK);
+
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_redirectsToRelayStateTokensPortalCache",
+			portalCache);
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_relayStateTokensToRedirectsPortalCache",
+			portalCache);
 	}
 
 	@Test

@@ -3969,7 +3969,7 @@ public class DefaultObjectEntryManagerImplTest
 
 			Assert.assertEquals(
 				expectedEntry.getKey(),
-				expectedEntry.getValue() + " 00:00:00.0",
+				expectedEntry.getValue() + "T00:00:00.000Z",
 				String.valueOf(
 					actualObjectEntryProperties.get(expectedEntry.getKey())));
 		}

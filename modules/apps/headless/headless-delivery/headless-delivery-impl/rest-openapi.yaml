@@ -8593,6 +8593,65 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/DocumentShortcut"
             tags: ["DocumentShortcut"]
+        patch:
+            description:
+                Updates only the fields received in the request body, leaving any other fields untouched.
+            operationId: patchDocumentShortcut
+            parameters:
+                - in: path
+                  name: documentShortcutId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentShortcut"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentShortcut"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+            tags: ["DocumentShortcut"]
+        put:
+            description:
+                Replaces the document shortcut with the information sent in the request body. Any missing fields are
+                deleted, unless they are required.
+            operationId: putDocumentShortcut
+            parameters:
+                - in: path
+                  name: documentShortcutId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentShortcut"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentShortcut"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+            tags: ["DocumentShortcut"]
     "/documents/{documentId}":
         delete:
             description:

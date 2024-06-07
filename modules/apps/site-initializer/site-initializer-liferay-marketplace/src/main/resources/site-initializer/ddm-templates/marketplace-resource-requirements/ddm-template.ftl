@@ -38,6 +38,14 @@
 		/>
 
 		<#if specificationCPUs?has_content>
+			<script>
+			    var resourceRequirements = document.querySelector(".resource-requirements")
+					
+				if (resourceRequirements) {
+					resourceRequirements.classList.remove("d-none")
+				}
+			</script>
+			
 		 	<#list specificationCPUs as cpu>
 				<#assign cpuQuantity = cpu.value />
 

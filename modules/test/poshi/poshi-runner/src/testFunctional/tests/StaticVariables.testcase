@@ -1,4 +1,4 @@
-@component-name = "portal-tools"
+@component-name = "portal-ci-infrastructure"
 definition {
 
 	property poshi.runner.acceptance = "true";

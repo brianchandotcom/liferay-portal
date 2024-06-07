@@ -43,8 +43,8 @@ export class WorkflowPage {
 		await waitForSuccessAlert(
 			this.page,
 			disable
-				? `Success:Workflow unassigned from Web Content Article.`
-				: `Success:Workflow assigned to Web Content Article.`
+				? `Success:Workflow unassigned from ${asset}.`
+				: `Success:Workflow assigned to ${asset}.`
 		);
 	}
 }

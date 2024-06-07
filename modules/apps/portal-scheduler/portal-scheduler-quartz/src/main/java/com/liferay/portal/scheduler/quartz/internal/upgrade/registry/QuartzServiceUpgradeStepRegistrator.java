@@ -45,6 +45,10 @@ public class QuartzServiceUpgradeStepRegistrator
 			"1.0.2", "1.0.3",
 			new com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_3.
 				QuartzDBPartitionUpgradeProcess());
+
+		registry.register(
+			"1.0.3", "1.0.4",
+			new QuartzUpgradeProcess(_companyLocalService, _jsonFactory));
 	}
 
 	@Reference

@@ -10,6 +10,7 @@ import com.liferay.notification.term.provider.NotificationTermProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -28,7 +29,14 @@ public class NotificationTermProviderRegistryImpl
 	public List<NotificationTermProvider> getNotificationTermProviders(
 		String className) {
 
-		return _serviceTrackerMap.getService(className);
+		List<NotificationTermProvider> notificationTermProviders =
+			_serviceTrackerMap.getService(className);
+
+		if (notificationTermProviders == null) {
+			return Collections.emptyList();
+		}
+
+		return notificationTermProviders;
 	}
 
 	@Activate

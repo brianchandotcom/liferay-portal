@@ -6071,47 +6071,23 @@ public class JournalArticleLocalServiceImpl
 					_log.debug("Expiring article " + article.getId());
 				}
 
-				if (isExpireAllArticleVersions(companyId)) {
-					List<JournalArticle> currentArticles =
-						journalArticleLocalService.getArticles(
-							article.getGroupId(), article.getArticleId(),
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-							new ArticleVersionComparator(true));
+				ServiceContext serviceContext = new ServiceContext();
 
-					for (JournalArticle currentArticle : currentArticles) {
-						if (currentArticle.getVersion() >=
-								article.getVersion()) {
+				serviceContext.setCommand(Constants.UPDATE);
+				serviceContext.setScopeGroupId(article.getGroupId());
 
-							continue;
-						}
-
-						currentArticle.setExpirationDate(
-							article.getExpirationDate());
-						currentArticle.setStatus(
-							WorkflowConstants.STATUS_EXPIRED);
-
-						currentArticle = journalArticlePersistence.update(
-							currentArticle);
-
-						notifySubscribers(
-							0, currentArticle, "expired", new ServiceContext());
-					}
-				}
-
-				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
-
-				article = journalArticleLocalService.updateJournalArticle(
-					article);
-
-				notifySubscribers(0, article, "expired", new ServiceContext());
-
-				updatePreviousApprovedArticle(article);
+				journalArticleLocalService.expireArticle(
+					_portal.getValidUserId(
+						article.getCompanyId(), article.getStatusByUserId()),
+					article.getGroupId(), article.getArticleId(), null,
+					serviceContext);
 
 				if (indexer != null) {
 					indexableActionableDynamicQuery.addDocuments(
 						indexer.getDocument(article));
 				}
 			});
+
 		indexableActionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 

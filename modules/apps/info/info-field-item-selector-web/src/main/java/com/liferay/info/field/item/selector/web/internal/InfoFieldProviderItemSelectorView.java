@@ -68,6 +68,7 @@ public class InfoFieldProviderItemSelectorView
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
+
 		RenderResponse renderResponse =
 			(RenderResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);

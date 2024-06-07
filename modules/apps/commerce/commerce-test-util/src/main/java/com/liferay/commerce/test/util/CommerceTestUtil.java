@@ -40,6 +40,10 @@ import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalServiceUtil;
+import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
+import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalServiceUtil;
+import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.commerce.tax.service.CommerceTaxMethodLocalServiceUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -167,9 +171,8 @@ public class CommerceTestUtil {
 
 		long groupId = commerceOrder.getGroupId();
 
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(groupId);
-
-		cpInstance.setPrice(BigDecimal.valueOf(cpInstancePrice));
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			groupId, BigDecimal.valueOf(cpInstancePrice));
 
 		if (paymentSubscription) {
 			cpInstance.setOverrideSubscriptionInfo(true);
@@ -243,6 +246,12 @@ public class CommerceTestUtil {
 			commerceShippingFixedOption.getAmount());
 		commerceOrder.setShippingOptionName(
 			commerceShippingFixedOption.getName());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		addCommerceTaxFixedRate(
+			userId, commerceOrder.getGroupId(),
+			cpDefinition.getCPTaxCategoryId(), false, true);
 
 		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
 	}
@@ -482,6 +491,23 @@ public class CommerceTestUtil {
 		return CommerceShippingMethodLocalServiceUtil.addCommerceShippingMethod(
 			userId, groupId, shippingMethodName, shippingMethodDescription,
 			active, engineKey, null, 1, RandomTestUtil.randomString());
+	}
+
+	public static CommerceTaxFixedRate addCommerceTaxFixedRate(
+			long userId, long groupId, long cpTaxCategoryId, boolean percentage,
+			boolean active)
+		throws PortalException {
+
+		CommerceTaxMethod commerceTaxMethod =
+			CommerceTaxMethodLocalServiceUtil.addCommerceTaxMethod(
+				userId, groupId, RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), "fixed-tax", percentage,
+				active);
+
+		return CommerceTaxFixedRateLocalServiceUtil.addCommerceTaxFixedRate(
+			userId, commerceTaxMethod.getGroupId(),
+			commerceTaxMethod.getCommerceTaxMethodId(), cpTaxCategoryId,
+			RandomTestUtil.randomDouble());
 	}
 
 	public static CommerceShippingMethod addFixedRateCommerceShippingMethod(

@@ -8,7 +8,6 @@ package com.liferay.change.tracking.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.service.CTMessageLocalService;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -72,11 +71,6 @@ public class CTMessageLocalServiceTest {
 		Message message = new Message();
 
 		message.put("companyId", companyId);
-
-		message.setPayload(
-			JSONUtil.put(
-				"testKey", "testValue"
-			).toString());
 
 		return _ctMessageLocalService.addCTMessage(ctCollectionId, message);
 	}

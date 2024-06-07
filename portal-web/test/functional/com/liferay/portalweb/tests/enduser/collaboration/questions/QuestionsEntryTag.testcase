@@ -523,9 +523,9 @@ definition {
 				searchKey = "tag1",
 				searchTag = "true");
 
-			// Pausing 1 second for giving the time to perform the search LPD-27732
-
-			Pause(locator1 = 1000);
+			WaitForElementNotPresent(
+				key_tagName = "tag2",
+				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
 		}
 
 		task ("Then only the matching tag is displayed") {

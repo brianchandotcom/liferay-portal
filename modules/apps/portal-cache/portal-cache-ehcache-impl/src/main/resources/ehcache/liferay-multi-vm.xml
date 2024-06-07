@@ -40,14 +40,6 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.GroupImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
 		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.PortletPreferencesImpl"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
@@ -96,30 +88,6 @@
 
 	<!-- FinderCache -->
 
-	<cache
-		eternal="false"
-		maxElementsInMemory="50000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.GroupImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="50000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.GroupImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="50000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.GroupImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
 	<cache
 		eternal="false"
 		maxElementsInMemory="100000"

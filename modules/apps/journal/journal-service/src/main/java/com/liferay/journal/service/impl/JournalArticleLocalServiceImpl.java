@@ -6038,9 +6038,6 @@ public class JournalArticleLocalServiceImpl
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			getIndexableActionableDynamicQuery();
 
-		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
-			JournalArticle.class);
-
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
@@ -6091,11 +6088,6 @@ public class JournalArticleLocalServiceImpl
 									article.getStatusByUserId()),
 								article.getGroupId(), article.getArticleId(),
 								null, serviceContext);
-
-							if (indexer != null) {
-								indexableActionableDynamicQuery.addDocuments(
-									indexer.getDocument(article));
-							}
 
 							return null;
 						});

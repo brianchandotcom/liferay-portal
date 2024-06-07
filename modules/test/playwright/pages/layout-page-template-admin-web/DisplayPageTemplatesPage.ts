@@ -32,7 +32,7 @@ export class DisplayPageTemplatesPage {
 		contentType,
 		name,
 	}: {
-		contentSubtype?: 'Basic Web Content';
+		contentSubtype?: string;
 		contentType: string;
 		name: string;
 	}) {

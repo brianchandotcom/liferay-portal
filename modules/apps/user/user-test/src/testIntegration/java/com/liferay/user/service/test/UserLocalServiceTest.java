@@ -856,24 +856,24 @@ public class UserLocalServiceTest {
 		long userId = user.getUserId();
 
 		user = _assertFailedLoginAttempts(
-			user,
+			1,
 			() -> _userLocalService.authenticateByEmailAddress(
 				companyId, emailAddress, RandomTestUtil.randomString(), null,
 				null, null),
-			1);
+			user);
 		user = _assertFailedLoginAttempts(
-			user,
+			1,
 			() -> _userLocalService.authenticateByScreenName(
 				companyId, screenName, RandomTestUtil.randomString(), null,
 				null, null),
-			1);
+			user);
 
 		_assertFailedLoginAttempts(
-			user,
+			1,
 			() -> _userLocalService.authenticateByUserId(
 				companyId, userId, RandomTestUtil.randomString(), null, null,
 				null),
-			1);
+			user);
 	}
 
 	@Test
@@ -894,21 +894,21 @@ public class UserLocalServiceTest {
 		long userId = user.getUserId();
 
 		user = _assertUnlockout(
-			user,
 			() -> _userLocalService.authenticateByEmailAddress(
 				companyId, emailAddress, RandomTestUtil.randomString(), null,
-				null, null));
+				null, null),
+			user);
 		user = _assertUnlockout(
-			user,
 			() -> _userLocalService.authenticateByScreenName(
 				companyId, screenName, RandomTestUtil.randomString(), null,
-				null, null));
+				null, null),
+			user);
 
 		_assertUnlockout(
-			user,
 			() -> _userLocalService.authenticateByUserId(
 				companyId, userId, RandomTestUtil.randomString(), null, null,
-				null));
+				null),
+			user);
 	}
 
 	@Test
@@ -1088,8 +1088,8 @@ public class UserLocalServiceTest {
 	}
 
 	private User _assertFailedLoginAttempts(
-			User user, UnsafeRunnable<PortalException> unsafeRunnable,
-			int expected)
+			int expectedFailedLoginAttempts,
+			UnsafeRunnable<PortalException> unsafeRunnable, User user)
 		throws Exception {
 
 		user.setLastFailedLoginDate(
@@ -1102,13 +1102,14 @@ public class UserLocalServiceTest {
 
 		user = _userLocalService.fetchUser(user.getUserId());
 
-		Assert.assertEquals(expected, user.getFailedLoginAttempts());
+		Assert.assertEquals(
+			expectedFailedLoginAttempts, user.getFailedLoginAttempts());
 
 		return user;
 	}
 
 	private User _assertUnlockout(
-			User user, UnsafeRunnable<PortalException> unsafeRunnable)
+			UnsafeRunnable<PortalException> unsafeRunnable, User user)
 		throws Exception {
 
 		user.setLockout(true);

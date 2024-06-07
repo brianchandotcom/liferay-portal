@@ -74,7 +74,7 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			LayoutSet.class.getSimpleName());
 
-		LayoutSet parentLayoutSet = (LayoutSet)dependentStagedModels.get(0); //check this
+		LayoutSet parentLayoutSet = (LayoutSet)dependentStagedModels.get(0);
 
 		return ModelAdapterUtil.adapt(
 			_layoutSetLocalService.getLayoutSet(

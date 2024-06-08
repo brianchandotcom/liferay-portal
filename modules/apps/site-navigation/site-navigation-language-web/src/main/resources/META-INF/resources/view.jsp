@@ -7,8 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:language
-	ddmTemplateGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
+<liferay-site-navigation:language
+	ddmTemplateGroupKey="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupKey() %>"
 	ddmTemplateKey="<%= siteNavigationLanguageDisplayContext.getDDMTemplateKey() %>"
 	displayCurrentLocale="<%= siteNavigationLanguagePortletInstanceConfiguration.displayCurrentLocale() %>"
 	languageIds="<%= siteNavigationLanguageDisplayContext.getLanguageIds() %>"

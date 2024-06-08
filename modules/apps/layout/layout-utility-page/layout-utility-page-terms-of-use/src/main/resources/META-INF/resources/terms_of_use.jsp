@@ -41,7 +41,7 @@
 						updateLanguageFormAction = HttpComponentsUtil.addParameter(updateLanguageFormAction, "redirect", updateLanguageRedirect);
 						%>
 
-						<liferay-ui:language
+						<liferay-site-navigation:language
 							formAction="<%= updateLanguageFormAction %>"
 							languageId="<%= themeDisplay.getLanguageId() %>"
 							languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getCompanyGroupId())) %>"

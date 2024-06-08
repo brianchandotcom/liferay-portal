@@ -7,7 +7,9 @@ package com.liferay.site.navigation.language.web.internal.display.context;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -16,6 +18,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.language.web.internal.configuration.SiteNavigationLanguagePortletInstanceConfiguration;
@@ -119,20 +122,26 @@ public class SiteNavigationLanguageDisplayContext {
 		return _ddmTemplateKey;
 	}
 
-	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
+	public String getDisplayStyleGroupKey() {
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
 		}
 
-		_displayStyleGroupId =
+		long displayStyleGroupId =
 			_siteNavigationLanguagePortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		if (_displayStyleGroupId <= 0) {
-			_displayStyleGroupId = _themeDisplay.getSiteGroupId();
+		if (displayStyleGroupId <= 0) {
+			displayStyleGroupId = _themeDisplay.getSiteGroupId();
 		}
 
-		return _displayStyleGroupId;
+		Group group = GroupLocalServiceUtil.fetchGroup(displayStyleGroupId);
+
+		if (group != null) {
+			_displayStyleGroupKey = group.getGroupKey();
+		}
+
+		return _displayStyleGroupKey;
 	}
 
 	public String[] getLanguageIds() {
@@ -169,7 +178,7 @@ public class SiteNavigationLanguageDisplayContext {
 
 	private String[] _availableLanguageIds;
 	private String _ddmTemplateKey;
-	private long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
 	private String[] _languageIds;
 	private final PortletDisplayTemplate _portletDisplayTemplate;
 	private final SiteNavigationLanguagePortletInstanceConfiguration

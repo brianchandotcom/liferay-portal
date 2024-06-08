@@ -39,7 +39,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 		<clay:content-col
 			cssClass="locale-actions p-1 user-tool-asset-addon-entry"
 		>
-			<liferay-ui:language
+			<liferay-site-navigation:language
 				formAction="<%= currentURL %>"
 				languageId="<%= languageId %>"
 				languageIds="<%= availableLocales %>"

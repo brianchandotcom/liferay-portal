@@ -150,7 +150,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 						<div class="panel-body">
 							<c:if test="<%= assetRenderer.isLocalizable() %>">
 								<div class="locale-actions">
-									<liferay-ui:language
+									<liferay-site-navigation:language
 										formAction="<%= currentURL %>"
 										languageId="<%= languageId %>"
 										languageIds="<%= assetRenderer.getAvailableLanguageIds() %>"

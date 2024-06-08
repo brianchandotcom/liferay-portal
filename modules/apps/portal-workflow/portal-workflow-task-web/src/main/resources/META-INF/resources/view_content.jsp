@@ -44,7 +44,7 @@ renderResponse.setTitle(assetRenderer.getTitle(workflowTaskDisplayContext.getTas
 				<c:if test="<%= assetEntry != null %>">
 					<c:if test="<%= assetRenderer.isLocalizable() %>">
 						<div class="locale-actions">
-							<liferay-ui:language
+							<liferay-site-navigation:language
 								formAction="<%= currentURL %>"
 								languageId="<%= languageId %>"
 								languageIds="<%= availableLanguageIds %>"

@@ -341,7 +341,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 							<clay:content-col
 								cssClass="locale-actions mr-3"
 							>
-								<liferay-ui:language
+								<liferay-site-navigation:language
 									formAction="<%= currentURL %>"
 									languageId="<%= languageId %>"
 									languageIds="<%= availableLanguageIds %>"

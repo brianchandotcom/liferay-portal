@@ -109,7 +109,7 @@ else {
 			<div class="sidebar sidebar-light sidenav-menu">
 				<div class="sidebar-header">
 					<clay:button
-						aria-label="<%= LanguageUtil.get(request, "close") %>"
+						aria-label='<%= LanguageUtil.get(request, "close") %>'
 						cssClass="d-sm-none icon-monospaced lfr-portal-tooltip sidenav-close"
 						displayType="unstyled"
 						icon="times"

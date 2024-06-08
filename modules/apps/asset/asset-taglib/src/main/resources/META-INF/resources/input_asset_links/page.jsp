@@ -25,8 +25,8 @@ List<DropdownItem> dropdownItems = inputAssetLinksDisplayContext.getActionDropdo
 			"removeIcon", removeLinkIcon
 		).build()
 	%>'
-	alignmentByViewport='<%= true %>'
-	alignmentPosition='<%= 6 %>'
+	alignmentByViewport="<%= true %>"
+	alignmentPosition="<%= 6 %>"
 	aria-label='<%= LanguageUtil.get(request, "select-items") %>'
 	cssClass="btn btn-secondary"
 	dropdownItems="<%= dropdownItems %>"

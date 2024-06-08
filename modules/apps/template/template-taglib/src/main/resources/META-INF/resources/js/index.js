@@ -9,18 +9,21 @@ import Form, {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
 
 export function DisplayTemplateSelector({namespace, props}) {
-	const {displayStyle, displayStyleGroupId, items} = props;
+	const {displayStyle, displayStyleGroupId, displayStyleGroupKey, items} =
+		props;
 
 	const [selectedDisplayStyle, setSelectedDisplayStyle] = useState({
 		groupId: displayStyleGroupId,
+		groupKey: displayStyleGroupKey,
 		name: displayStyle,
 	});
 
 	const onSelectionChangeHandlder = (option) => {
-		const [groupId, ...value] = option.split('-');
+		const [groupId, groupKey, ...value] = option.split('-');
 
 		setSelectedDisplayStyle({
 			groupId,
+			groupKey,
 			name: value.join('-'),
 		});
 
@@ -45,6 +48,13 @@ export function DisplayTemplateSelector({namespace, props}) {
 				value={selectedDisplayStyle.groupId}
 			/>
 
+			<ClayInput
+				id={`${namespace}displayStyleGroupKey`}
+				name={`${namespace}preferences--displayStyleGroupKey--`}
+				type="hidden"
+				value={selectedDisplayStyle.groupKey}
+			/>
+
 			<Form.Group>
 				<label htmlFor={`${namespace}displayStyle`}>
 					{Liferay.Language.get('display-template')}
@@ -56,7 +66,7 @@ export function DisplayTemplateSelector({namespace, props}) {
 					id={`${namespace}displayStyle`}
 					items={items}
 					onSelectionChange={(key) => onSelectionChangeHandlder(key)}
-					selectedKey={`${selectedDisplayStyle.groupId}-${selectedDisplayStyle.name}`}
+					selectedKey={`${selectedDisplayStyle.groupId}-${selectedDisplayStyle.groupKey}-${selectedDisplayStyle.name}`}
 				>
 					{(group) => (
 						<DropDown.Group
@@ -69,6 +79,10 @@ export function DisplayTemplateSelector({namespace, props}) {
 										item.groupId
 											? item.groupId
 											: displayStyleGroupId
+									}-${
+										item.groupKey
+											? item.groupKey
+											: displayStyleGroupKey
 									}-${item.value}`}
 								>
 									{item.label}

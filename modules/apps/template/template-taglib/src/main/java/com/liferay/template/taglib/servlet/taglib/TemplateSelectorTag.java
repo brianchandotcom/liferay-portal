@@ -91,7 +91,7 @@ public class TemplateSelectorTag extends IncludeTag {
 			Group group = GroupLocalServiceUtil.fetchGroup(
 				themeDisplay.getCompanyId(), _displayStyleGroupKey);
 
-		    if (group != null) {
+			if (group != null) {
 				return group.getGroupId();
 			}
 		}
@@ -235,6 +235,23 @@ public class TemplateSelectorTag extends IncludeTag {
 					return getDisplayStyleGroupId();
 				}
 			).put(
+				"displayStyleGroupKey",
+				() -> {
+					DDMTemplate portletDisplayDDMTemplate =
+						getPortletDisplayDDMTemplate();
+
+					if (portletDisplayDDMTemplate != null) {
+						Group group = GroupLocalServiceUtil.fetchGroup(
+							portletDisplayDDMTemplate.getGroupId());
+
+						if (group != null) {
+							return group.getGroupKey();
+						}
+					}
+
+					return getDisplayStyleGroupKey();
+				}
+			).put(
 				"items", _getItemsJSONArray(httpServletRequest)
 			).build());
 	}
@@ -273,6 +290,18 @@ public class TemplateSelectorTag extends IncludeTag {
 			ddmTemplatesJSONArray.put(
 				JSONUtil.put(
 					"groupId", ddmTemplate.getGroupId()
+				).put(
+					"groupKey",
+					() -> {
+						Group group = GroupLocalServiceUtil.fetchGroup(
+							ddmTemplate.getGroupId());
+
+						if (group != null) {
+							return group.getGroupKey();
+						}
+
+						return null;
+					}
 				).put(
 					"label", ddmTemplate.getName(locale)
 				).put(

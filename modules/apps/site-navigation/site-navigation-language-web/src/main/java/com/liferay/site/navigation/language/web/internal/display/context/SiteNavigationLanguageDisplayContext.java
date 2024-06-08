@@ -127,6 +127,16 @@ public class SiteNavigationLanguageDisplayContext {
 			return _displayStyleGroupKey;
 		}
 
+		String displayStyleGroupKey =
+			_siteNavigationLanguagePortletInstanceConfiguration.
+				displayStyleGroupKey();
+
+		if (Validator.isNotNull(displayStyleGroupKey)) {
+			_displayStyleGroupKey = displayStyleGroupKey;
+
+			return _displayStyleGroupKey;
+		}
+
 		long displayStyleGroupId =
 			_siteNavigationLanguagePortletInstanceConfiguration.
 				displayStyleGroupId();

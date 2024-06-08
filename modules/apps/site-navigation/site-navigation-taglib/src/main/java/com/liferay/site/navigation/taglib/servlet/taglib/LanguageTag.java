@@ -6,8 +6,10 @@
 package com.liferay.site.navigation.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -44,8 +46,8 @@ import javax.servlet.jsp.JspWriter;
  */
 public class LanguageTag extends IncludeTag {
 
-	public long getDdmTemplateGroupId() {
-		return _ddmTemplateGroupId;
+	public String getDdmTemplateGroupKey() {
+		return _ddmTemplateGroupKey;
 	}
 
 	public String getDdmTemplateKey() {
@@ -76,8 +78,8 @@ public class LanguageTag extends IncludeTag {
 		return _useNamespace;
 	}
 
-	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
-		_ddmTemplateGroupId = ddmTemplateGroupId;
+	public void setDdmTemplateGroupKey(String ddmTemplateGroupKey) {
+		_ddmTemplateGroupKey = ddmTemplateGroupKey;
 	}
 
 	public void setDdmTemplateKey(String ddmTemplateKey) {
@@ -116,7 +118,7 @@ public class LanguageTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_ddmTemplateGroupId = 0;
+		_ddmTemplateGroupKey = null;
 		_ddmTemplateKey = null;
 		_displayCurrentLocale = true;
 		_formAction = null;
@@ -128,15 +130,20 @@ public class LanguageTag extends IncludeTag {
 	}
 
 	protected long getDisplayStyleGroupId() {
-		if (_ddmTemplateGroupId > 0) {
-			return _ddmTemplateGroupId;
-		}
-
 		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNotNull(_ddmTemplateGroupKey)) {
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				themeDisplay.getCompanyId(), _ddmTemplateGroupKey);
+
+			if (group != null) {
+				return group.getGroupId();
+			}
+		}
 
 		return themeDisplay.getScopeGroupId();
 	}
@@ -328,9 +335,9 @@ public class LanguageTag extends IncludeTag {
 		return SKIP_BODY;
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/language/page.jsp";
+	private static final String _PAGE = "/language/page.jsp";
 
-	private long _ddmTemplateGroupId;
+	private String _ddmTemplateGroupKey;
 	private String _ddmTemplateKey;
 	private boolean _displayCurrentLocale = true;
 	private String _formAction;

@@ -197,9 +197,9 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 							<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
 								<clay:button
 									borderless="<%= false %>"
+									data-href="<%= selectStructureFieldURL.toString() %>"
 									disabled="<%= !editAssetListDisplayContext.isSubtypeFieldsFilterEnabled() %>"
 									displayType="secondary"
-									data-href="<%= selectStructureFieldURL.toString() %>"
 									label="select"
 									type="button"
 								/>

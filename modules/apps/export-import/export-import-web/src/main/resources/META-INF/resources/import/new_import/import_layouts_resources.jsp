@@ -260,10 +260,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																<clay:button
 																	cssClass="content-link modify-link pr-1"
-																	id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getRootPortletId() %>'
 																	data-portletid="<%= portlet.getRootPortletId() %>"
 																	data-portlettitle="<%= portletTitle %>"
 																	displayType="link"
+																	id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getRootPortletId() %>'
 																	label="change"
 																/>
 

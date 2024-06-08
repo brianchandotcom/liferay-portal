@@ -41,7 +41,10 @@ import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.site.navigation.taglib.servlet.taglib.LanguageTag}
  */
+@Deprecated
 public class LanguageTag extends IncludeTag {
 
 	public long getDdmTemplateGroupId() {

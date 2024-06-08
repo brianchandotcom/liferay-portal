@@ -1587,6 +1587,7 @@
 	</tag>
 	<tag>
 		<name>language</name>
+		<description>Deprecated as of 7.4.0, replaced by the <![CDATA[<code>liferay-site-navigation:language</code>]]> tag.</description>
 		<tag-class>com.liferay.taglib.ui.LanguageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

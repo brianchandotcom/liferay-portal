@@ -9,11 +9,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.schema.info.internal.test.helper.ConfigurationTestHelper;
 import com.liferay.portal.db.schema.info.internal.test.util.ConfigurationValidationTestUtil;
 import com.liferay.portal.db.schema.info.internal.test.util.DatabaseValidationTestUtil;
+import com.liferay.portal.db.schema.info.internal.test.util.LoggingValidationTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -71,14 +73,20 @@ public class DBSchemaDumpTest {
 
 	@Test
 	public void testCopyDatabaseConfiguration() throws Exception {
-		_configurationTestHelper.deployConfiguration(
-			_PID, _databaseType, _dumpPath);
+		try (LogCapture logCapture =
+				LoggingValidationTestUtil.getLogCapture()) {
 
-		DatabaseValidationTestUtil.assertDatabaseDumpMirrorsCurrentDatabase(
-			_dumpPath);
+			_configurationTestHelper.deployConfiguration(
+				_PID, _databaseType, _dumpPath);
 
-		ConfigurationValidationTestUtil.assertConfigurationIsDeletedAfterDeploy(
-			_configurationTestHelper, _PID);
+			DatabaseValidationTestUtil.assertDatabaseDumpMirrorsCurrentDatabase(
+				_dumpPath);
+
+			ConfigurationValidationTestUtil.
+				assertConfigurationIsDeletedAfterDeploy(
+					_configurationTestHelper, _PID);
+			LoggingValidationTestUtil.assertStartEndIsLogged(logCapture);
+		}
 	}
 
 	private static final String _PID =

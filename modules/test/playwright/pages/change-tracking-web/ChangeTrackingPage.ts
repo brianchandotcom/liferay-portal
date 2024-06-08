@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class ChangeTrackingPage {
@@ -18,6 +19,22 @@ export class ChangeTrackingPage {
 			name: 'Review Changes',
 		});
 		this.tabsContainer = page.locator('nav.navbar');
+	}
+
+	async addComment() {
+		await this.openComments();
+
+		const commentTextBox = this.page.getByRole('textbox', {
+			name: 'Comment',
+		});
+
+		await commentTextBox.fill(getRandomString());
+
+		await this.page.getByRole('button', {name: 'Reply'}).waitFor();
+
+		await this.page.getByRole('button', {name: 'Reply'}).click();
+
+		await expect(this.page.getByText('1 Comment')).toBeVisible();
 	}
 
 	async goto() {
@@ -82,6 +99,12 @@ export class ChangeTrackingPage {
 		await tabLink.click();
 
 		await tabLink.and(this.page.locator('.active')).waitFor();
+	}
+
+	async openComments() {
+		const commentsIcon = this.page.getByLabel('Comments');
+
+		await commentsIcon.click();
 	}
 
 	async viewDisplayTab(tabLabel: string, {isHidden} = {isHidden: false}) {

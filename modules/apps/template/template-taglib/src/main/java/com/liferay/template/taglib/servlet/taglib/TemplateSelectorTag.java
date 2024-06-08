@@ -87,7 +87,42 @@ public class TemplateSelectorTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				themeDisplay.getCompanyId(), _displayStyleGroupKey);
+
+		    if (group != null) {
+				return group.getGroupId();
+			}
+		}
+
 		return themeDisplay.getScopeGroupId();
+	}
+
+	public String getDisplayStyleGroupKey() {
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
+		}
+
+		long groupId = _displayStyleGroupId;
+
+		if (groupId <= 0) {
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			groupId = themeDisplay.getScopeGroupId();
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group != null) {
+			return group.getGroupKey();
+		}
+
+		return null;
 	}
 
 	public List<String> getDisplayStyles() {
@@ -118,6 +153,10 @@ public class TemplateSelectorTag extends IncludeTag {
 		_displayStyleGroupId = displayStyleGroupId;
 	}
 
+	public void setDisplayStyleGroupKey(String displayStyleGroupKey) {
+		_displayStyleGroupKey = displayStyleGroupKey;
+	}
+
 	public void setDisplayStyles(List<String> displayStyles) {
 		_displayStyles = displayStyles;
 	}
@@ -145,6 +184,7 @@ public class TemplateSelectorTag extends IncludeTag {
 		_defaultDisplayStyle = StringPool.BLANK;
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
+		_displayStyleGroupKey = null;
 		_displayStyles = null;
 		_refreshURL = null;
 		_showEmptyOption = false;
@@ -356,6 +396,7 @@ public class TemplateSelectorTag extends IncludeTag {
 	private String _defaultDisplayStyle = StringPool.BLANK;
 	private String _displayStyle;
 	private long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
 	private List<String> _displayStyles;
 	private String _refreshURL;
 	private boolean _showEmptyOption;

@@ -6,7 +6,6 @@
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
-import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
@@ -51,7 +50,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		if (!_hasManageOrganizationsPermission()) {
+		if (!_hasEditOrManageOrganizationsPermission()) {
 			return null;
 		}
 
@@ -145,12 +144,12 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isSelectable() {
-		return _hasManageOrganizationsPermission();
+		return _hasEditOrManageOrganizationsPermission();
 	}
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		return _hasManageOrganizationsPermission();
+		return _hasEditOrManageOrganizationsPermission();
 	}
 
 	@Override
@@ -168,14 +167,18 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 		return ParamUtil.getLong(liferayPortletRequest, "accountEntryId");
 	}
 
-	private boolean _hasManageOrganizationsPermission() {
+	private boolean _hasEditOrManageOrganizationsPermission() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return AccountEntryPermission.contains(
-			themeDisplay.getPermissionChecker(), _getAccountEntryId(),
-			AccountActionKeys.MANAGE_ORGANIZATIONS);
+		if (AccountEntryPermission.hasEditOrManageOrganizationPermission(
+				themeDisplay.getPermissionChecker(), _getAccountEntryId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

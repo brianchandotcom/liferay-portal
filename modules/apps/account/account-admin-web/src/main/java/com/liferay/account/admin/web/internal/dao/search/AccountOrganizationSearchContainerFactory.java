@@ -6,7 +6,6 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
-import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.retriever.AccountOrganizationRetriever;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
@@ -84,10 +83,10 @@ public class AccountOrganizationSearchContainerFactory {
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),
 				Objects.equals(searchContainer.getOrderByType(), "desc")));
 
-		if (AccountEntryPermission.contains(
+		if (AccountEntryPermission.hasEditOrManageOrganizationPermission(
 				PermissionCheckerFactoryUtil.create(
 					PortalUtil.getUser(liferayPortletRequest)),
-				accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS)) {
+				accountEntryId)) {
 
 			searchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(liferayPortletResponse));

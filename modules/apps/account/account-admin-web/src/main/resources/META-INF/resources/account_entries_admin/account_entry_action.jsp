@@ -62,7 +62,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 		/>
 	</c:if>
 
-	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS) %>">
+	<c:if test="<%= AccountEntryPermission.hasEditOrManageOrganizationPermission(permissionChecker, accountEntryId) %>">
 		<portlet:renderURL var="manageOrganizationsURL">
 			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry" />
 			<portlet:param name="screenNavigationCategoryKey" value="<%= AccountScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS %>" />

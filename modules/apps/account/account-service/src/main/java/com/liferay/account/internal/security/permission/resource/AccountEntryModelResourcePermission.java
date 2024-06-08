@@ -112,8 +112,10 @@ public class AccountEntryModelResourcePermission
 				boolean organizationMember = ArrayUtil.contains(
 					userOrganizationIds, organization.getOrganizationId());
 
-				if (!Objects.equals(
-						actionId, AccountActionKeys.MANAGE_ORGANIZATIONS) &&
+				if ((!Objects.equals(
+						actionId, AccountActionKeys.MANAGE_ORGANIZATIONS) ||
+					 !Objects.equals(
+						 actionId, AccountActionKeys.EDIT_ORGANIZATIONS)) &&
 					organizationMember &&
 					OrganizationPermissionUtil.contains(
 						permissionChecker, organization.getOrganizationId(),
@@ -140,6 +142,15 @@ public class AccountEntryModelResourcePermission
 						 organization.getGroupId(),
 						 AccountEntry.class.getName(), accountEntryId,
 						 actionId))) {
+
+					return true;
+				}
+
+				if (Objects.equals(
+						actionId, AccountActionKeys.EDIT_ORGANIZATIONS) &&
+					permissionChecker.hasPermission(
+						organization.getGroupId(), AccountEntry.class.getName(),
+						accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS)) {
 
 					return true;
 				}

@@ -5,6 +5,7 @@
 
 package com.liferay.account.admin.web.internal.security.permission.resource;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -53,6 +54,22 @@ public class AccountEntryPermission {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
+		}
+
+		return false;
+	}
+
+	public static boolean hasEditOrManageOrganizationPermission(
+		PermissionChecker permissionChecker, long accountEntryId) {
+
+		if (contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.EDIT_ORGANIZATIONS) ||
+			contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.MANAGE_ORGANIZATIONS)) {
+
+			return true;
 		}
 
 		return false;

@@ -30,7 +30,7 @@
 				<liferay-template:template-selector
 					className="<%= LanguageEntry.class.getName() %>"
 					displayStyle="<%= siteNavigationLanguagePortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
+					displayStyleGroupKey="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupKey() %>"
 					refreshURL="<%= configurationRenderURL %>"
 				/>
 			</div>

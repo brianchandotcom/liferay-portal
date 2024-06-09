@@ -399,6 +399,12 @@ public class DBPartitionUtil {
 							_dbPartitionDB.getCreateViewSQL(
 								_defaultPartitionName,
 								_getPartitionName(toCompanyId), tableName));
+
+						if (_isCopyableQuartzTable(tableName)) {
+							_copyQuartzTableEntry(
+								_defaultPartitionName, fromCompanyId, tableName,
+								toCompanyId, statement);
+						}
 					}
 					else {
 						statement.executeUpdate(
@@ -433,24 +439,6 @@ public class DBPartitionUtil {
 										String.valueOf(fromCompanyId),
 										String.valueOf(toCompanyId))));
 						}
-					}
-				}
-			}
-
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					_dbPartitionDB.getCatalog(
-						connection, _defaultPartitionName),
-					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
-					null, new String[] {"TABLE"});
-				Statement statement = connection.createStatement()) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (_isCopyableQuartzTable(tableName)) {
-						_copyQuartzTableEntry(
-							_defaultPartitionName, fromCompanyId, tableName,
-							toCompanyId, statement);
 					}
 				}
 			}

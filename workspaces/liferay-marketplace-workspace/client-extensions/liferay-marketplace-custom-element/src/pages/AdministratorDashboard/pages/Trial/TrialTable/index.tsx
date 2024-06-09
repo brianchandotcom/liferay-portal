@@ -43,7 +43,8 @@ const CONSOLE_CLOUD_URL = 'https://console.liferay.cloud';
 const safeRunner = async (promise: any) => {
 	try {
 		await promise;
-	} catch (error) {}
+	}
+	catch (error) {}
 };
 
 const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {

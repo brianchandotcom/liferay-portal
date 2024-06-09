@@ -9,11 +9,11 @@ definition {
 				-H 'Content-Type: application/json' \
 				-u 'test@liferay.com:test' \
 				-d '{
+					"articleBody": "${bodyField}",
+					"headline": "${titleField}",
 					"keywords": [
 						"${tagField}"
-					],
-					"headline": "${titleField}",
-					"articleBody": "${bodyField}"
+					]
 				}'
 		''';
 

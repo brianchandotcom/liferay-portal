@@ -202,21 +202,21 @@ public class DBPartitionUtil {
 			return;
 		}
 
+		String partitionName = _getPartitionName(companyId);
+
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(
-				_dbPartitionDB.getDropViewSQL(
-					_getPartitionName(companyId), viewName));
+				_dbPartitionDB.getDropViewSQL(partitionName, viewName));
 
 			statement.execute(
 				_dbPartitionDB.getCreateTableSQL(
-					_defaultPartitionName, _getPartitionName(companyId),
-					viewName));
+					_defaultPartitionName, partitionName, viewName));
 
 			if (copyData) {
 				statement.executeUpdate(
 					_getCopyDataSQL(
-						_defaultPartitionName, _getPartitionName(companyId),
-						viewName, _getColumnNames(connection, viewName),
+						_defaultPartitionName, partitionName, viewName,
+						_getColumnNames(connection, viewName),
 						StringPool.BLANK));
 			}
 		}
@@ -294,10 +294,12 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
+		String partitionName = _getPartitionName(companyId);
+
 		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
-					connection, _getPartitionName(companyId)))) {
+					connection, partitionName))) {
 
 			preparedStatement.executeUpdate();
 
@@ -322,20 +324,20 @@ public class DBPartitionUtil {
 					if (dbInspector.isControlTable(tableName)) {
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateViewSQL(
-								_defaultPartitionName,
-								_getPartitionName(companyId), tableName));
+								_defaultPartitionName, partitionName,
+								tableName));
 					}
 					else {
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateTableSQL(
-								_defaultPartitionName,
-								_getPartitionName(companyId), tableName));
+								_defaultPartitionName, partitionName,
+								tableName));
 
 						if (dbInspector.isPartitionedControlTable(tableName)) {
 							statement.executeUpdate(
 								_getCopyDataSQL(
-									_defaultPartitionName,
-									_getPartitionName(companyId), tableName,
+									_defaultPartitionName, partitionName,
+									tableName,
 									_getColumnNames(connection, tableName),
 									StringPool.BLANK));
 						}
@@ -349,8 +351,7 @@ public class DBPartitionUtil {
 			if (!_dbPartitionDB.isDDLTransactional()) {
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
-						_dbPartitionDB.getDropPartitionSQL(
-							_getPartitionName(companyId)));
+						_dbPartitionDB.getDropPartitionSQL(partitionName));
 				}
 				catch (SQLException sqlException) {
 					throw new PortalException(
@@ -370,14 +371,15 @@ public class DBPartitionUtil {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
+		String fromPartitionName = _getPartitionName(fromCompanyId);
+		String toPartitionName = _getPartitionName(toCompanyId);
+
 		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
-					connection, _getPartitionName(toCompanyId)))) {
+					connection, toPartitionName))) {
 
 			preparedStatement.executeUpdate();
-
-			String fromPartitionName = _getPartitionName(fromCompanyId);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -397,8 +399,8 @@ public class DBPartitionUtil {
 
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateViewSQL(
-								_defaultPartitionName,
-								_getPartitionName(toCompanyId), tableName));
+								_defaultPartitionName, toPartitionName,
+								tableName));
 
 						if (_isCopyableQuartzTable(tableName)) {
 							_copyQuartzTableEntry(
@@ -409,20 +411,18 @@ public class DBPartitionUtil {
 					else {
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateTableSQL(
-								fromPartitionName,
-								_getPartitionName(toCompanyId), tableName));
+								fromPartitionName, toPartitionName, tableName));
 
 						statement.executeUpdate(
 							_getCopyDataSQL(
-								fromPartitionName,
-								_getPartitionName(toCompanyId), tableName,
+								fromPartitionName, toPartitionName, tableName,
 								_getColumnNames(connection, tableName),
 								StringPool.BLANK));
 
 						if (dbInspector.hasColumn(tableName, "companyId")) {
 							statement.executeUpdate(
 								StringBundler.concat(
-									"update ", _getPartitionName(toCompanyId),
+									"update ", toPartitionName,
 									StringPool.PERIOD, tableName,
 									" set companyId = ", toCompanyId,
 									" where companyId = ", fromCompanyId));
@@ -433,7 +433,7 @@ public class DBPartitionUtil {
 
 							statement.executeUpdate(
 								_dbPartitionDB.getRenameTableSQL(
-									tableName, _getPartitionName(toCompanyId),
+									tableName, toPartitionName,
 									StringUtil.replace(
 										tableName,
 										String.valueOf(fromCompanyId),
@@ -453,8 +453,7 @@ public class DBPartitionUtil {
 			if (!_dbPartitionDB.isDDLTransactional()) {
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
-						_dbPartitionDB.getDropPartitionSQL(
-							_getPartitionName(toCompanyId)));
+						_dbPartitionDB.getDropPartitionSQL(toPartitionName));
 				}
 				catch (Exception exception2) {
 					throw new PortalException(
@@ -652,31 +651,30 @@ public class DBPartitionUtil {
 			DBInspector dbInspector)
 		throws Exception {
 
+		String partitionName = _getPartitionName(companyId);
+
 		statement.executeUpdate(
-			_dbPartitionDB.getDropViewSQL(
-				_getPartitionName(companyId), tableName));
+			_dbPartitionDB.getDropViewSQL(partitionName, tableName));
 
 		statement.executeUpdate(
 			_dbPartitionDB.getCreateTableSQL(
-				_defaultPartitionName, _getPartitionName(companyId),
-				tableName));
+				_defaultPartitionName, partitionName, tableName));
 
 		if (dbInspector.hasColumn(tableName, "companyId")) {
 			_moveCompanyData(
-				companyId, _defaultPartitionName, _getPartitionName(companyId),
-				tableName, statement);
+				companyId, _defaultPartitionName, partitionName, tableName,
+				statement);
 		}
 		else if (_isCopyableQuartzTable(tableName)) {
 			_moveData(
-				_defaultPartitionName, _getPartitionName(companyId), tableName,
+				_defaultPartitionName, partitionName, tableName,
 				_getColumnNames(statement.getConnection(), tableName),
 				statement, _getQuartzWhereClauseSQL(companyId, tableName));
 		}
 		else {
 			statement.executeUpdate(
 				_getCopyDataSQL(
-					_defaultPartitionName, _getPartitionName(companyId),
-					tableName,
+					_defaultPartitionName, partitionName, tableName,
 					_getColumnNames(statement.getConnection(), tableName),
 					StringPool.BLANK));
 		}
@@ -951,6 +949,8 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
+		String partitionName = _getPartitionName(companyId);
+
 		try (Statement statement = connection.createStatement()) {
 			autoCloseable = _disableAutoCommit(connection);
 
@@ -974,8 +974,7 @@ public class DBPartitionUtil {
 					if (dbInspector.hasColumn(tableName, "companyId")) {
 						statement.executeUpdate(
 							_getCopyDataSQL(
-								_getPartitionName(companyId),
-								_defaultPartitionName, tableName,
+								partitionName, _defaultPartitionName, tableName,
 								_getColumnNames(connection, tableName),
 								" where companyId = " + companyId));
 
@@ -984,8 +983,7 @@ public class DBPartitionUtil {
 					else if (_isCopyableQuartzTable(tableName)) {
 						statement.executeUpdate(
 							_getCopyDataSQL(
-								_getPartitionName(companyId),
-								_defaultPartitionName, tableName,
+								partitionName, _defaultPartitionName, tableName,
 								_getColumnNames(connection, tableName),
 								_getQuartzWhereClauseSQL(
 									companyId, tableName)));
@@ -995,12 +993,11 @@ public class DBPartitionUtil {
 
 					statement.executeUpdate(
 						_dbPartitionDB.getDropTableSQL(
-							_getPartitionName(companyId), tableName));
+							partitionName, tableName));
 
 					statement.executeUpdate(
 						_dbPartitionDB.getCreateViewSQL(
-							_defaultPartitionName, _getPartitionName(companyId),
-							tableName));
+							_defaultPartitionName, partitionName, tableName));
 				}
 
 				connection.commit();
@@ -1033,8 +1030,8 @@ public class DBPartitionUtil {
 			throw new PortalException(
 				StringBundler.concat(
 					"Unable to roll back the insertion of database partition. ",
-					"Recover a backup of the database schema ",
-					_getPartitionName(companyId), "."),
+					"Recover a backup of the database schema ", partitionName,
+					"."),
 				exception1);
 		}
 		finally {
@@ -1112,26 +1109,26 @@ public class DBPartitionUtil {
 			DBInspector dbInspector)
 		throws Exception {
 
+		String partitionName = _getPartitionName(companyId);
+
 		if (dbInspector.hasColumn(tableName, "companyId")) {
 			_moveCompanyData(
-				companyId, _getPartitionName(companyId), _defaultPartitionName,
-				tableName, statement);
+				companyId, partitionName, _defaultPartitionName, tableName,
+				statement);
 		}
 		else if (_isCopyableQuartzTable(tableName)) {
 			_moveData(
-				_getPartitionName(companyId), _defaultPartitionName, tableName,
+				partitionName, _defaultPartitionName, tableName,
 				_getColumnNames(statement.getConnection(), tableName),
 				statement, _getQuartzWhereClauseSQL(companyId, tableName));
 		}
 
 		statement.executeUpdate(
-			_dbPartitionDB.getDropTableSQL(
-				_getPartitionName(companyId), tableName));
+			_dbPartitionDB.getDropTableSQL(partitionName, tableName));
 
 		statement.executeUpdate(
 			_dbPartitionDB.getCreateViewSQL(
-				_defaultPartitionName, _getPartitionName(companyId),
-				tableName));
+				_defaultPartitionName, partitionName, tableName));
 	}
 
 	private static Statement _wrapStatement(Statement statement) {

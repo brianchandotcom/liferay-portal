@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {pagesAdminPageTest} from '../../fixtures/PagesAdminPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
@@ -22,6 +23,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pagesAdminPageTest,
 	pagesPagesTest
 );
 
@@ -94,8 +96,8 @@ test('Navigating to the URL of an uncreated page does not throw errors.', async 
 test('Canonical URL doesnt change with localized Friendly URL.', async ({
 	apiHelpers,
 	browser,
-	layoutPage,
 	pageConfigurationPage,
+	pagesAdminPage,
 	site,
 }) => {
 	await apiHelpers.headlessDelivery.createSitePage({
@@ -112,7 +114,7 @@ test('Canonical URL doesnt change with localized Friendly URL.', async ({
 	// The configuration action must be available from the card
 	// The configuration view should only allow setting the canonicalURL SEO field
 
-	await layoutPage.goto(site.friendlyUrlPath);
+	await pagesAdminPage.goto(site.friendlyUrlPath);
 	await pageConfigurationPage.goToSection('Test Page Name', 'SEO');
 	await pageConfigurationPage.setCanonicalURL(
 		liferayConfig.environment.baseUrl + '/' + site.name + '/test-page-name'
@@ -136,11 +138,11 @@ test('Canonical URL doesnt change with localized Friendly URL.', async ({
 });
 
 test('Friendly URLs Only Display Locale Once.', async ({
-   apiHelpers,
-   layoutPage,
-   page,
-   pageConfigurationPage,
-   site,
+	apiHelpers,
+	page,
+	pageConfigurationPage,
+	pagesAdminPage,
+	site,
 }) => {
 	await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
@@ -156,12 +158,9 @@ test('Friendly URLs Only Display Locale Once.', async ({
 	// The configuration action must be available from the card
 	// The configuration view should only allow setting the FriendlyURL and the associated language
 
-	await layoutPage.goto(site.friendlyUrlPath);
+	await pagesAdminPage.goto(site.friendlyUrlPath);
 	await pageConfigurationPage.goToSection('Test Page Name', 'General');
-	await pageConfigurationPage.setFriendlyURL(
-		'/test-pagina',
-		'spanish'
-	);
+	await pageConfigurationPage.setFriendlyURL('/test-pagina', 'spanish');
 
 	await page.goto('/es/web/' + site.name + '/test-page-name');
 

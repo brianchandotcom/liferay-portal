@@ -5,9 +5,9 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
-import {LayoutPage} from '../../layout-admin-web/pages/LayoutPage';
 
 export class PageConfigurationPage {
 	readonly page: Page;
@@ -15,8 +15,8 @@ export class PageConfigurationPage {
 	readonly canonicalURLCheckbox: Locator;
 	readonly customCanonicalURLSettings: Locator;
 	readonly friendlyURL: Locator;
+	readonly pagesAdminPage: PagesAdminPage;
 	readonly saveButton: Locator;
-	readonly layoutPage: LayoutPage;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -27,11 +27,11 @@ export class PageConfigurationPage {
 		this.customCanonicalURLSettings = page.getByLabel('Canonical URL', {
 			exact: true,
 		});
-		this.layoutPage = new LayoutPage(page);
+		this.pagesAdminPage = new PagesAdminPage(page);
 	}
 
 	async goToSection(pageTitle: string, section: string) {
-		await this.layoutPage.clickOnAction('Configure', pageTitle);
+		await this.pagesAdminPage.clickOnAction('Configure', pageTitle);
 
 		await this.page
 			.locator('li', {has: this.page.getByText(section)})
@@ -66,7 +66,9 @@ export class PageConfigurationPage {
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.getByRole('menuitem').filter({hasText: 'default'}),
+			target: this.page
+				.getByRole('menuitem')
+				.filter({hasText: 'default'}),
 			trigger: this.page
 				.getByLabel('Current translation')
 				.nth(1)

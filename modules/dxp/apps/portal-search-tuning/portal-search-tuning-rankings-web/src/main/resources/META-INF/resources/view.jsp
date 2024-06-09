@@ -176,7 +176,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 							Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(rankingEntryDisplayContext.getGroupExternalReferenceCode(), themeDisplay.getCompanyId());
 							%>
 
-							<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(group) ? HtmlUtil.escape(group.getDescriptiveName(locale)) : LanguageUtil.get(request, "the-site-associated-with-this-ranking-was-deleted") %>'>
+							<span class="lfr-portal-tooltip" data-title="<%= Validator.isNotNull(group) ? HtmlUtil.escape(group.getDescriptiveName(locale)) : LanguageUtil.get(request, "the-site-associated-with-this-ranking-was-deleted") %>">
 								<liferay-ui:message key="site" />
 							</span>
 						</c:when>
@@ -186,7 +186,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 							String sxpBlueprintTitle = rankingEntryDisplayContext.getSXPBlueprintTitle();
 							%>
 
-							<span class="lfr-portal-tooltip" data-title='<%= Validator.isNotNull(sxpBlueprintTitle) ? HtmlUtil.escape(sxpBlueprintTitle) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>'>
+							<span class="lfr-portal-tooltip" data-title="<%= Validator.isNotNull(sxpBlueprintTitle) ? HtmlUtil.escape(sxpBlueprintTitle) : LanguageUtil.get(request, "the-blueprint-associated-with-this-ranking-was-deleted") %>">
 								<liferay-ui:message key="blueprint" />
 							</span>
 						</c:when>

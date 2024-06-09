@@ -106,10 +106,10 @@
 					<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
 						<clay:button
 							cssClass="content-link modify-link pr-1"
-							id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getPortletId() %>'
 							data-portletid="<%= portletId %>"
 							data-portlettitle="<%= portletTitle %>"
 							displayType="link"
+							id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getPortletId() %>'
 							label="change"
 						/>
 

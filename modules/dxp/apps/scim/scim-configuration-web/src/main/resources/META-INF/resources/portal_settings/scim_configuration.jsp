@@ -41,7 +41,7 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 
 				<span class="input-group-append input-group-item input-group-item-shrink">
 					<clay:button
-						cssClass="scim-infopanel-copy-clipboard lfr-portal-tooltip"
+						cssClass="lfr-portal-tooltip scim-infopanel-copy-clipboard"
 						data-clipboard-target='<%= "#" + oAuth2AccessTokenInputId %>'
 						displayType="secondary"
 						icon="paste"

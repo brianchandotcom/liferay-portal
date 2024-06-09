@@ -82,12 +82,12 @@ String lastElementBreadcrumbTitle = StringUtil.upperCaseFirstLetter(trashDisplay
 			>
 				<clay:button
 					cssClass="selector-button"
-					data-classname='<%= trashContainerModelDisplayContext.getClassName() %>'
-					data-classpk='<%= trashContainerModelDisplayContext.getClassPK() %>'
-					data-containermodelid='<%= curContainerModelId %>'
-					data-redirect='<%= trashContainerModelDisplayContext.getRedirect() %>'
+					data-classname="<%= trashContainerModelDisplayContext.getClassName() %>"
+					data-classpk="<%= trashContainerModelDisplayContext.getClassPK() %>"
+					data-containermodelid="<%= curContainerModelId %>"
+					data-redirect="<%= trashContainerModelDisplayContext.getRedirect() %>"
 					displayType="secondary"
-					label= "select"
+					label="select"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -99,10 +99,10 @@ String lastElementBreadcrumbTitle = StringUtil.upperCaseFirstLetter(trashDisplay
 		<aui:button-row cssClass="position-fixed">
 			<clay:button
 				cssClass="selector-button"
-				data-classname='<%= trashContainerModelDisplayContext.getClassName() %>'
-				data-classpk='<%= trashContainerModelDisplayContext.getClassPK() %>'
-				data-containermodelid='<%= trashContainerModelDisplayContext.getContainerModelId() %>'
-				data-redirect='<%= trashContainerModelDisplayContext.getRedirect() %>'
+				data-classname="<%= trashContainerModelDisplayContext.getClassName() %>"
+				data-classpk="<%= trashContainerModelDisplayContext.getClassPK() %>"
+				data-containermodelid="<%= trashContainerModelDisplayContext.getContainerModelId() %>"
+				data-redirect="<%= trashContainerModelDisplayContext.getRedirect() %>"
 				displayType="secondary"
 				label='<%= LanguageUtil.format(request, "select-x", lastElementBreadcrumbTitle) %>'
 			/>

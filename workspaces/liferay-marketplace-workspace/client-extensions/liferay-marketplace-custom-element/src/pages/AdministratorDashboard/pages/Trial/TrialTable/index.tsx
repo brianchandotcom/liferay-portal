@@ -7,11 +7,14 @@ import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import {useModal} from '@clayui/modal';
 import {Status} from '@clayui/modal/lib/types';
 import {formatDistance} from 'date-fns';
+import {useState} from 'react';
 
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
 import Loading from '../../../../../components/Loading';
+import Modal from '../../../../../components/Modal';
 import Table from '../../../../../components/Table/Table';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
@@ -37,8 +40,33 @@ const ORDER_STATUS_LABEL = {
 
 const CONSOLE_CLOUD_URL = 'https://console.liferay.cloud';
 
+const safeRunner = async (promise: any) => {
+	try {
+		await promise;
+	} catch (error) {}
+};
+
 const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
+	const [processing, setProcessing] = useState(false);
+	const [selectedTrial, setSelectedTrial] = useState<Order>();
+	const modal = useModal();
+
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
+
+	const onDeleteTrial = async (order: Order) => {
+		setProcessing(true);
+
+		const orderId = String(order.id);
+
+		await safeRunner(HeadlessCommerceAdminOrderImpl.deleteOrder(orderId));
+		await safeRunner(marketplaceSpringBootOAuth2.deleteTrial(orderId));
+
+		await revalidate();
+
+		setProcessing(false);
+
+		modal.onClose();
+	};
 
 	if (!items.length) {
 		return (
@@ -73,22 +101,9 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 			id: 3,
 			name: i18n.translate('delete'),
 			onClick: async (order: Order) => {
-				if (
-					!confirm(
-						i18n.sub(
-							'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it',
-							'order'
-						)
-					)
-				) {
-					return;
-				}
+				modal.onOpenChange(true);
 
-				const orderId = String(order.id);
-
-				await HeadlessCommerceAdminOrderImpl.deleteOrder(orderId);
-				await marketplaceSpringBootOAuth2.deleteTrial(orderId);
-				await revalidate();
+				setSelectedTrial(order);
 			},
 		},
 	];
@@ -237,6 +252,42 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 				]}
 				rows={items}
 			/>
+
+			<Modal
+				last={
+					<>
+						<ClayButton
+							displayType="secondary"
+							onClick={modal.onClose}
+							size="sm"
+						>
+							{i18n.translate('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							className="ml-2"
+							disabled={processing}
+							displayType="danger"
+							onClick={() =>
+								onDeleteTrial(selectedTrial as Order)
+							}
+							size="sm"
+						>
+							{i18n.translate('delete')}
+						</ClayButton>
+					</>
+				}
+				observer={modal.observer}
+				size={'md' as any}
+				status="danger"
+				title={`Are you sure you want to delete trial ${selectedTrial?.id}`}
+				visible={modal.open}
+			>
+				{i18n.sub(
+					'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it',
+					'Order'
+				)}
+			</Modal>
 		</>
 	);
 };

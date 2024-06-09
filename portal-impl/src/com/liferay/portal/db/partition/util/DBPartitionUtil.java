@@ -508,26 +508,6 @@ public class DBPartitionUtil {
 			" where companyId = " + companyId);
 	}
 
-	private static void _deleteControlTableData(
-			long companyId, DBInspector dbInspector, Statement statement,
-			String tableName)
-		throws Exception {
-
-		if (!dbInspector.isControlTable(tableName)) {
-			return;
-		}
-
-		if (dbInspector.hasColumn(tableName, "companyId")) {
-			_deleteCompanyData(
-				companyId, tableName, _defaultPartitionName, statement);
-		}
-		else if (_isCopyableQuartzTable(tableName)) {
-			_deleteData(
-				tableName, _defaultPartitionName, statement,
-				_getQuartzWhereClauseSQL(companyId, tableName));
-		}
-	}
-
 	private static void _deleteData(
 			String tableName, String fromPartitionName, Statement statement,
 			String whereClause)
@@ -568,9 +548,22 @@ public class DBPartitionUtil {
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {
-					_deleteControlTableData(
-						companyId, dbInspector, statement,
-						resultSet.getString("TABLE_NAME"));
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (!dbInspector.isControlTable(tableName)) {
+						continue;
+					}
+
+					if (dbInspector.hasColumn(tableName, "companyId")) {
+						_deleteCompanyData(
+							companyId, tableName, _defaultPartitionName,
+							statement);
+					}
+					else if (_isCopyableQuartzTable(tableName)) {
+						_deleteData(
+							tableName, _defaultPartitionName, statement,
+							_getQuartzWhereClauseSQL(companyId, tableName));
+					}
 				}
 
 				statement.executeUpdate(

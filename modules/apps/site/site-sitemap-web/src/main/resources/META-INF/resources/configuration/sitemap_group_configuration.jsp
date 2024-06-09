@@ -28,7 +28,10 @@ SitemapGroupConfigurationDisplayContext sitemapGroupConfigurationDisplayContext 
 	</clay:content-col>
 </clay:content-row>
 
-<clay:sheet-section role="group" aria-labelledby='<%= liferayPortletResponse.getNamespace() + "pagesTitle" %>'>
+<clay:sheet-section
+	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "pagesTitle" %>'
+	role="group"
+>
 	<clay:content-row
 		containerElement="h3"
 		cssClass="c-mb-3 sheet-subtitle"
@@ -65,7 +68,10 @@ SitemapGroupConfigurationDisplayContext sitemapGroupConfigurationDisplayContext 
 	</clay:content-row>
 </clay:sheet-section>
 
-<clay:sheet-section role="group" aria-labelledby='<%= liferayPortletResponse.getNamespace() + "webContentTitle" %>'>
+<clay:sheet-section
+	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "webContentTitle" %>'
+	role="group"
+>
 	<clay:content-row
 		containerElement="h3"
 		cssClass="c-mb-3 sheet-subtitle"
@@ -102,7 +108,10 @@ SitemapGroupConfigurationDisplayContext sitemapGroupConfigurationDisplayContext 
 	</clay:content-row>
 </clay:sheet-section>
 
-<clay:sheet-section role="group" aria-labelledby='<%= liferayPortletResponse.getNamespace() + "categoriesTitle" %>'>
+<clay:sheet-section
+	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "categoriesTitle" %>'
+	role="group"
+>
 	<clay:content-row
 		containerElement="h3"
 		cssClass="c-mb-3 sheet-subtitle"

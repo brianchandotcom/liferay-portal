@@ -14,11 +14,10 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 
 const GetSolutionAccount = () => {
-	const {accountSelected, accounts, setSelectedAccount} = useOutletContext<{
+	const {accounts, selectedAccount, setSelectedAccount} = useOutletContext<{
 		accountForm: any;
-		accountSelected?: Account;
 		accounts: Account[];
-		setAccounts: Dispatch<Account[]>;
+		selectedAccount?: Account;
 		setSelectedAccount: Dispatch<Account>;
 	}>();
 	const {myUserAccount} = useMarketplaceContext();
@@ -40,7 +39,7 @@ const GetSolutionAccount = () => {
 
 			<AccountSelection
 				onSelectAccount={setSelectedAccount}
-				selectedAccount={accountSelected}
+				selectedAccount={selectedAccount}
 				userAccount={myUserAccount}
 			/>
 
@@ -58,7 +57,7 @@ const GetSolutionAccount = () => {
 				</ClayButton>
 
 				<ClayButton
-					disabled={!accountSelected}
+					disabled={!selectedAccount}
 					onClick={handleNextStep}
 				>
 					{i18n.translate('continue')}

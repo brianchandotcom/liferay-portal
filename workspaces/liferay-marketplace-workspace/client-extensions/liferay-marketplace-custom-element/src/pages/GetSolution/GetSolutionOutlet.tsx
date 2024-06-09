@@ -3,20 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useForm} from 'react-hook-form';
+import {useMemo, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
+import useSWR from 'swr';
 import {z} from 'zod';
 
-import Loading from '../../components/Loading';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {Analytics} from '../../core/Analytics';
 import {ORDER_TYPES} from '../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../hooks/useMarketplaceSpringBootOAuth2';
-import zodSchema, {zodResolver} from '../../schema/zod';
+import zodSchema from '../../schema/zod';
 import fetcher from '../../services/fetcher';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import headlessCommerceDeliveryCart from '../../services/rest/HeadlessCommerceDeliveryCart';
+import {scrollToTop} from '../../utils/browser';
 import AccountEmailInfo from '../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/AccountInfo';
 import {ProductCardRevamp} from '../GetApp/components/ProductCard/ProductCard';
 import {StepWizardRevamp} from '../GetApp/components/StepWizard/StepWizard';
@@ -51,8 +51,7 @@ const getIcon = (image = '') => {
 };
 
 const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
-	const [account, setSelectedAccount] = useState<any>(null);
-	const [accounts, setAccounts] = useState<any[]>([]);
+	const [selectedAccount, setSelectedAccount] = useState<any>(null);
 	const location = useLocation();
 	const marketplaceContext = useMarketplaceContext();
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
@@ -66,53 +65,26 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 
 	const sku = product?.skus?.[0]?.id;
 
-	const accountForm = useForm<UserForm>({
-		defaultValues: {
-			companyName: '',
-			country: '',
-			emailAddress: myUserAccount.emailAddress,
-			extension: '',
-			familyName: myUserAccount.familyName,
-			givenName: myUserAccount.givenName,
-			phone: {code: '+1', flag: 'en-us'},
-			phoneNumber: undefined,
-		},
-		mode: 'all',
-		resolver: zodResolver(zodSchema.accountCreator),
-	});
-
-	const {setValue} = accountForm;
-
-	const fetchAccount = useCallback(async () => {
-		const fetchedAccounts = [];
-
-		for (const accountBrief of accountBriefs) {
-			const accountInfo = await fetcher(
-				`o/headless-admin-user/v1.0/accounts/${Number(
-					accountBrief.id
-				)}?nestedFields=accountUserAccounts`
+	const {data: accounts = []} = useSWR(
+		{accountBriefs, key: '/accounts-briefs/'},
+		() => {
+			return Promise.all(
+				accountBriefs.map((accountBrief) =>
+					fetcher(
+						`o/headless-admin-user/v1.0/accounts/${Number(
+							accountBrief.id
+						)}?nestedFields=accountUserAccounts`
+					)
+				)
 			);
-
-			fetchedAccounts.push(accountInfo);
 		}
+	);
 
-		return fetchedAccounts;
-	}, [accountBriefs]);
-
-	useEffect(() => {
-		(async () => {
-			const userAccounts = await fetchAccount();
-
-			if (userAccounts.length === 1) {
-				setSelectedAccount(userAccounts[0]);
-			}
-
-			setAccounts(userAccounts);
-		})();
-	}, [fetchAccount, myUserAccount, setValue]);
+	const currentAccount = selectedAccount || accounts[0];
 
 	const onSubmit = async () => {
-		const accountId = Number(account?.id);
+		const accountId = Number(currentAccount?.id);
+
 		const cart = await headlessCommerceDeliveryCart.createCart(channel.id, {
 			accountId,
 			cartItems: [
@@ -148,6 +120,8 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 			productName: product.name,
 		});
 
+		scrollToTop();
+
 		navigate(`/finish${maxTrialsReached ? '?state=hold' : ''}`, {
 			replace: true,
 		});
@@ -159,18 +133,12 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 
 	return (
 		<div>
-			{accountForm.formState.isSubmitting && (
-				<Loading.FullScreen>
-					Hang Tight, the trial submission of {product.name} is being
-					sent to Liferay
-				</Loading.FullScreen>
-			)}
 			<ProductCardRevamp
 				icon={getIcon(product?.urlImage)}
 				subtitle="7 Days Trial"
 				title={product.name}
 			>
-				{account && (
+				{selectedAccount && (
 					<>
 						<hr />
 
@@ -182,8 +150,8 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 							<AccountEmailInfo
 								userAccount={{
 									...myUserAccount,
-									...account,
-									image: account.logoURL,
+									...selectedAccount,
+									image: selectedAccount.logoURL,
 								}}
 							/>
 						</div>
@@ -192,33 +160,29 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 			</ProductCardRevamp>
 
 			<div className="border d-flex flex-column mt-7 p-5 rounded">
-				<main>
-					<div className="d-flex flex-column">
-						{accounts.length > 1 && (
-							<div className="d-flex justify-content-center mb-6">
-								<StepWizardRevamp
-									className="col-8"
-									currentStep={steps[stepIndex]}
-									stepIndex={stepIndex}
-									steps={steps}
-								/>
-							</div>
-						)}
+				<div className="d-flex flex-column">
+					{accounts.length > 1 && (
+						<div className="d-flex justify-content-center mb-6">
+							<StepWizardRevamp
+								className="col-8"
+								currentStep={steps[stepIndex]}
+								stepIndex={stepIndex}
+								steps={steps}
+							/>
+						</div>
+					)}
 
-						<Outlet
-							context={{
-								accountForm,
-								accountSelected: account,
-								accounts,
-								navigate,
-								onSubmit: accountForm.handleSubmit(onSubmit),
-								product,
-								setAccounts,
-								setSelectedAccount,
-							}}
-						/>
-					</div>
-				</main>
+					<Outlet
+						context={{
+							accounts,
+							navigate,
+							onSubmit,
+							product,
+							selectedAccount: currentAccount,
+							setSelectedAccount,
+						}}
+					/>
+				</div>
 			</div>
 		</div>
 	);

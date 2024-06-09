@@ -395,7 +395,7 @@ public class DBPartitionUtil {
 
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateViewSQL(
-								fromPartitionName,
+								_defaultPartitionName,
 								_getPartitionName(toCompanyId), elementName));
 					}
 					else {

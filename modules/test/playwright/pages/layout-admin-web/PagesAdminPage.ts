@@ -26,6 +26,19 @@ export class PagesAdminPage {
 		this.page = page;
 	}
 
+	async clickOnAction(action: string, title: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: action,
+			}),
+			trigger: this.page
+				.locator('li', {has: this.page.getByText(title)})
+				.getByRole('button', {name: 'Open Page Options Menu'}),
+		});
+	}
+
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`

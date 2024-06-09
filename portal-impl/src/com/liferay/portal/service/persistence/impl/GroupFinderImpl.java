@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -977,7 +978,9 @@ public class GroupFinderImpl
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
-			ModelListener.class, new GroupModelListener(), null);
+			ModelListener.class, new GroupModelListener(),
+			MapUtil.singletonDictionary(
+				"persistence.test.rule.aware", Boolean.TRUE));
 	}
 
 	protected int countByGroupId(

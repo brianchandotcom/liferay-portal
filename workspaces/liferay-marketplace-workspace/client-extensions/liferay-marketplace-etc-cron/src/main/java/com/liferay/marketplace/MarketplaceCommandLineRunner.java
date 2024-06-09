@@ -15,6 +15,8 @@ import java.net.URL;
 
 import java.time.ZonedDateTime;
 
+import java.util.Objects;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -36,7 +38,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
-		_processExpiredTrials();
+		_processExpiringTrials();
 		_processOnHoldTrials();
 	}
 
@@ -83,7 +85,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 	private WebClient _getWebClient() throws Exception {
 		return WebClient.builder(
 		).baseUrl(
-			_marketplaceSpringBootUrl
+			_liferayMarketplaceEtcSpringBootURI.toString()
 		).defaultHeader(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -91,7 +93,18 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		).build();
 	}
 
-	private void _postTrial(Order order) throws Exception {
+	private void _postTrialNotifyEnd(long orderId) throws Exception {
+		_getWebClient(
+		).post(
+		).uri(
+			"/trial/notify-end/" + orderId
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
+	}
+
+	private void _postTrialProvisioning(Order order) throws Exception {
 		_getWebClient(
 		).post(
 		).uri(
@@ -117,29 +130,45 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		).block();
 	}
 
-	private void _processExpiredTrials() throws Exception {
+	private void _processExpiringTrials() throws Exception {
 		Page<Order> page = _getOrdersPage(_ORDER_STATUS_COMPLETED);
 
 		for (Order order : page.getItems()) {
-			if (ZonedDateTime.parse(
+			try {
+				ZonedDateTime now = ZonedDateTime.now();
+				ZonedDateTime zonedDateTime = ZonedDateTime.parse(
 					order.getCustomFields(
 					).get(
 						"trial-end-date"
-					).toString()
-				).isAfter(
-					ZonedDateTime.now()
-				)) {
+					).toString());
 
-				try {
+				if (zonedDateTime.isAfter(now)) {
 					_deleteTrial(order.getId());
 
 					if (_log.isInfoEnabled()) {
 						_log.info("Processed expired order " + order.getId());
 					}
+
+					continue;
 				}
-				catch (Exception exception) {
-					_log.error(exception);
+
+				if (Objects.equals(
+						now.getDayOfMonth(),
+						zonedDateTime.minusDays(
+							1
+						).getDayOfMonth())) {
+
+					_postTrialNotifyEnd(order.getId());
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Processed notify end of trial for order " +
+								order.getId());
+					}
 				}
+			}
+			catch (Exception exception) {
+				_log.error(exception);
 			}
 		}
 	}
@@ -155,7 +184,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 		for (Order order : page.getItems()) {
 			try {
-				_postTrial(order);
+				_postTrialProvisioning(order);
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Processed on hold order " + order.getId());
@@ -174,6 +203,9 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceCommandLineRunner.class);
 
+	@Value("${liferay.marketplace.etc.spring.boot.uri}")
+	private URL _liferayMarketplaceEtcSpringBootURI;
+
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
@@ -185,8 +217,5 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
-
-	@Value("${com.liferay.marketplace.spring.boot.url}")
-	private String _marketplaceSpringBootUrl;
 
 }

@@ -6,6 +6,8 @@
 package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
@@ -21,6 +23,7 @@ import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateRe
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
@@ -204,6 +207,37 @@ public class TrialRestController extends BaseRestController {
 			).build());
 	}
 
+	@PostMapping("notify-end/{orderId}")
+	public void postTrialNotifyEnd(@PathVariable long orderId)
+		throws Exception {
+
+		OrderResource orderResource = _getOrderResource();
+		UserAccountResource userAccountResource = _getUserAccountResource();
+
+		Order order = orderResource.getOrder(orderId);
+
+		UserAccount userAccount =
+			userAccountResource.getUserAccountByEmailAddress(
+				order.getCreatorEmailAddress());
+
+		_postNotificationQueueEntry(
+			order.getCreatorEmailAddress(), "TRY-IT-NOW-EXPIRING-ORDER",
+			new HashMapBuilder<String, Object>().put(
+				"%TRIAL_CREATOR_FIRST_NAME%", userAccount.getGivenName()
+			).put(
+				"%TRIAL_END_DATE%",
+				ZonedDateTime.parse(
+					order.getCustomFields(
+					).get(
+						"trial-end-date"
+					).toString()
+				).format(
+					DateTimeFormatter.ofPattern(
+						"MMMM d, yyyy", LocaleUtil.ENGLISH)
+				)
+			).build());
+	}
+
 	private void _deletePortalInstance(String orderId) throws Exception {
 		PortalInstanceResource portalInstanceResource =
 			_getPortalInstanceResource();
@@ -265,6 +299,21 @@ public class TrialRestController extends BaseRestController {
 		return portalInstanceResource.getPortalInstancesPage(true);
 	}
 
+	private UserAccountResource _getUserAccountResource() throws Exception {
+		URL liferayDXPURL = new URL(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+		return UserAccountResource.builder(
+		).endpoint(
+			liferayDXPURL
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server")
+		).build();
+	}
+
 	private void _postNotificationQueueEntry(
 			String emailAddress, String externalReferenceCode,
 			Map<String, String> map)
@@ -310,11 +359,20 @@ public class TrialRestController extends BaseRestController {
 			"en_US"
 		);
 
+		String subject = notificationTemplate.getSubject(
+		).get(
+			"en_US"
+		);
+
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			body = StringUtil.replace(body, entry.getKey(), entry.getValue());
+
+			subject = StringUtil.replace(
+				subject, entry.getKey(), entry.getValue());
 		}
 
 		String finalBody = body;
+		String finalSubject = subject;
 
 		notificationQueueEntry.setBody(() -> finalBody);
 
@@ -342,11 +400,7 @@ public class TrialRestController extends BaseRestController {
 				).build()
 			});
 
-		notificationQueueEntry.setSubject(
-			() -> notificationTemplate.getSubject(
-			).get(
-				"en_US"
-			));
+		notificationQueueEntry.setSubject(() -> finalSubject);
 		notificationQueueEntry.setType(notificationTemplate::getType);
 
 		notificationQueueEntryResource.postNotificationQueueEntry(

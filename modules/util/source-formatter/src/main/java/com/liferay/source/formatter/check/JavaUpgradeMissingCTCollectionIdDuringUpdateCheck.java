@@ -7,7 +7,9 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.poshi.core.util.ListUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -45,9 +47,30 @@ public class JavaUpgradeMissingCTCollectionIdDuringUpdateCheck
 			return content;
 		}
 
-		for (String methodName : _METHOD_NAMES) {
-			_checkMissingCTCollectionIdDuringUpdate(
-				fileName, content, methodName);
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		for (String currentBranchRenamedFileName :
+				sourceFormatterArgs.getCurrentBranchRenamedFileNames()) {
+
+			if (absolutePath.endsWith(currentBranchRenamedFileName)) {
+				return content;
+			}
+		}
+
+		for (String currentBranchAddedFileNames :
+				sourceFormatterArgs.getCurrentBranchAddedFileNames()) {
+
+			if (absolutePath.endsWith(currentBranchAddedFileNames)) {
+				for (String methodName : _METHOD_NAMES) {
+					_checkMissingCTCollectionIdDuringUpdate(
+						fileName, content, methodName);
+				}
+
+				return content;
+			}
 		}
 
 		return content;

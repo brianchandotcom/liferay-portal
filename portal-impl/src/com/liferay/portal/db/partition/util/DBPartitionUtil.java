@@ -439,12 +439,16 @@ public class DBPartitionUtil {
 										String.valueOf(fromCompanyId),
 										String.valueOf(toCompanyId))));
 						}
+
+						if (tableName.equals("Group_")) {
+							statement.executeUpdate(
+								StringBundler.concat(
+									"update ", toPartitionName,
+									".Group_ set classPK = ", toCompanyId,
+									" where classPK = ", fromCompanyId));
+						}
 					}
 				}
-			}
-
-			try (Statement statement = connection.createStatement()) {
-				_handleSpecialCases(fromCompanyId, statement, toCompanyId);
 			}
 
 			connection.commit();
@@ -919,17 +923,6 @@ public class DBPartitionUtil {
 		}
 
 		return " where trigger_name like '%@" + companyId + "'";
-	}
-
-	private static void _handleSpecialCases(
-			long fromCompanyId, Statement statement, long toCompanyId)
-		throws SQLException {
-
-		statement.executeUpdate(
-			StringBundler.concat(
-				"update ", _getPartitionName(toCompanyId),
-				".Group_ set classPK = ", toCompanyId, " where classPK = ",
-				fromCompanyId));
 	}
 
 	private static void _insertDBPartition(long companyId)

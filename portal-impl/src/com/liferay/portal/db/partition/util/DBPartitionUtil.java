@@ -390,7 +390,7 @@ public class DBPartitionUtil {
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {
-					String elementName = resultSet.getString("TABLE_NAME");
+					String tableName = resultSet.getString("TABLE_NAME");
 
 					if (Objects.equals(
 							resultSet.getString("TABLE_TYPE"), "VIEW")) {
@@ -398,38 +398,38 @@ public class DBPartitionUtil {
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateViewSQL(
 								_defaultPartitionName,
-								_getPartitionName(toCompanyId), elementName));
+								_getPartitionName(toCompanyId), tableName));
 					}
 					else {
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateTableSQL(
 								fromPartitionName,
-								_getPartitionName(toCompanyId), elementName));
+								_getPartitionName(toCompanyId), tableName));
 
 						statement.executeUpdate(
 							_getCopyDataSQL(
 								fromPartitionName,
-								_getPartitionName(toCompanyId), elementName,
-								_getColumnNames(connection, elementName),
+								_getPartitionName(toCompanyId), tableName,
+								_getColumnNames(connection, tableName),
 								StringPool.BLANK));
 
-						if (dbInspector.hasColumn(elementName, "companyId")) {
+						if (dbInspector.hasColumn(tableName, "companyId")) {
 							statement.executeUpdate(
 								StringBundler.concat(
 									"update ", _getPartitionName(toCompanyId),
-									StringPool.PERIOD, elementName,
+									StringPool.PERIOD, tableName,
 									" set companyId = ", toCompanyId,
 									" where companyId = ", fromCompanyId));
 						}
 
 						if (dbInspector.isObjectTable(
-								_getCompanyIds(), elementName)) {
+								_getCompanyIds(), tableName)) {
 
 							statement.executeUpdate(
 								_dbPartitionDB.getRenameTableSQL(
-									elementName, _getPartitionName(toCompanyId),
+									tableName, _getPartitionName(toCompanyId),
 									StringUtil.replace(
-										elementName,
+										tableName,
 										String.valueOf(fromCompanyId),
 										String.valueOf(toCompanyId))));
 						}
@@ -482,10 +482,6 @@ public class DBPartitionUtil {
 			String partitionName, long fromCompanyId, String tableName,
 			long toCompanyId, Statement statement)
 		throws Exception {
-
-		if (!_isCopyableQuartzTable(tableName)) {
-			return;
-		}
 
 		List<String> columnNames = _getColumnNames(
 			statement.getConnection(), tableName);

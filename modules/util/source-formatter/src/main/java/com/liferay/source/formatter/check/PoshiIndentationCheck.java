@@ -83,9 +83,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 		sb.append(CharPool.NEW_LINE);
 		sb.append(indent);
 
-		tripleQuotesContent = sb.toString();
-
-		return _formatJsonInCurl(tripleQuotesContent);
+		return _formatJsonInCurl(sb.toString());
 	}
 
 	private String _fixTableIndentation(

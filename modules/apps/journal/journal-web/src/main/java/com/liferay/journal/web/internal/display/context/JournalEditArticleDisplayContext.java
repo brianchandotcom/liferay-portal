@@ -1025,7 +1025,7 @@ public class JournalEditArticleDisplayContext {
 		return "save";
 	}
 
-	public Map<String, Object> getSaveButtonsContext() {
+	public Map<String, Object> getSaveButtonsContext() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"articleId", getArticleId()
 		).put(
@@ -1059,6 +1059,8 @@ public class JournalEditArticleDisplayContext {
 			() -> LanguageUtil.get(_httpServletRequest, getSaveButtonLabel())
 		).put(
 			"selectedLanguageId", getSelectedLanguageId()
+		).put(
+			"showPublishModal", _isShowPublishModal()
 		).put(
 			"timeZone", getTimeZoneName()
 		).put(
@@ -1657,6 +1659,35 @@ public class JournalEditArticleDisplayContext {
 			_httpServletRequest, "showHeader", true);
 
 		return _showHeader;
+	}
+
+	private boolean _isShowPublishModal() throws PortalException {
+		if (_article == null) {
+			return true;
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-11228")) {
+
+			if (Validator.isNotNull(_article.getArticleId())) {
+				return false;
+			}
+
+			return true;
+		}
+
+		JournalArticle oldestArticle =
+			JournalArticleLocalServiceUtil.getOldestArticle(
+				_article.getGroupId(), _article.getArticleId());
+
+		if ((oldestArticle == null) ||
+			((oldestArticle.getVersion() == _article.getVersion()) &&
+			 (oldestArticle.getStatus() == WorkflowConstants.STATUS_DRAFT))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isWorkflowEnabled() throws PortalException {

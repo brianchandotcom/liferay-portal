@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -29,10 +28,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -126,17 +123,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCopyDBPartition() throws Exception {
-		addDBPartitions();
-		insertPartitionRequiredData();
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
-
-			createAndPopulateTable(
-				RandomTestUtil.randomString() + "_x_" +
-					CompanyThreadLocal.getCompanyId());
-		}
-
 		long newCompanyId = RandomTestUtil.randomLong();
 
 		CurrentConnection defaultCurrentConnection =
@@ -149,58 +135,57 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
 
+			addDBPartitions();
+			insertPartitionRequiredData();
+
+			String objectsTableNamePrefix =
+				RandomTestUtil.randomString() + "_x_";
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
+
+				createAndPopulateTable(objectsTableNamePrefix + COMPANY_IDS[0]);
+			}
+
 			Assert.assertTrue(
 				DBPartitionUtil.copyDBPartition(COMPANY_IDS[0], newCompanyId));
 
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
+			List<String> fromTableNames = _getObjectNames(
+				"TABLE", COMPANY_IDS[0]);
 
-			try (ResultSet resultSet1 = databaseMetaData.getTables(
-					dbPartitionDB.getCatalog(
-						connection, getPartitionName(COMPANY_IDS[0])),
-					dbPartitionDB.getSchema(
-						connection, getPartitionName(COMPANY_IDS[0])),
-					null, new String[] {"TABLE", "VIEW"});
-				SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(newCompanyId)) {
+			Assert.assertTrue(
+				fromTableNames.remove(objectsTableNamePrefix + COMPANY_IDS[0]));
+			Assert.assertTrue(
+				fromTableNames.add(objectsTableNamePrefix + newCompanyId));
 
-				while (resultSet1.next()) {
-					String elementName = resultSet1.getString("TABLE_NAME");
+			List<String> toTableNames = _getObjectNames("TABLE", newCompanyId);
 
-					if (dbInspector.isObjectTable(
-							Collections.singletonList(COMPANY_IDS[0]),
-							elementName)) {
+			Assert.assertEquals(
+				toTableNames.toString(), fromTableNames.size(),
+				toTableNames.size());
+			Assert.assertTrue(fromTableNames.containsAll(toTableNames));
 
-						elementName = StringUtil.replace(
-							elementName, String.valueOf(COMPANY_IDS[0]),
-							String.valueOf(newCompanyId));
-					}
+			Assert.assertEquals(
+				_getObjectNames("VIEW", COMPANY_IDS[0]),
+				_getObjectNames("VIEW", newCompanyId));
 
-					if (Objects.equals(
-							resultSet1.getString("TABLE_TYPE"), "VIEW")) {
+			for (String fromTableName : fromTableNames) {
+				String toTableName = fromTableName;
 
-						Assert.assertTrue(dbInspector.hasView(elementName));
-					}
-					else {
-						Assert.assertTrue(dbInspector.hasTable(elementName));
+				if (fromTableName.equals(
+						objectsTableNamePrefix + newCompanyId)) {
 
-						if (dbInspector.hasColumn(elementName, "companyId")) {
-							try (PreparedStatement preparedStatement =
-									connection.prepareStatement(
-										StringBundler.concat(
-											"select count(1) from ",
-											elementName, " where companyId != ",
-											newCompanyId));
-								ResultSet resultSet2 =
-									preparedStatement.executeQuery()) {
-
-								if (resultSet2.next()) {
-									Assert.assertEquals(
-										0, resultSet2.getInt(1));
-								}
-							}
-						}
-					}
+					fromTableName = objectsTableNamePrefix + COMPANY_IDS[0];
 				}
+
+				Assert.assertEquals(
+					toTableName,
+					_getCount(
+						getPartitionName(COMPANY_IDS[0]), fromTableName,
+						COMPANY_IDS[0]),
+					_getCount(
+						getPartitionName(newCompanyId), toTableName,
+						newCompanyId));
 			}
 		}
 		finally {
@@ -296,13 +281,18 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					if (!isCopyableQuartzTable(viewName)) {
 						Assert.assertEquals(
 							viewName + " count",
-							_getCount(viewName, true, companyId),
-							_getCount(viewName, false, companyId));
+							_getCount(
+								defaultPartitionName, viewName, companyId),
+							_getCount(
+								getPartitionName(companyId), viewName,
+								companyId));
 					}
 					else {
 						Assert.assertEquals(
 							viewName + " count", 0,
-							_getCount(viewName, false, companyId));
+							_getCount(
+								getPartitionName(companyId), viewName,
+								companyId));
 					}
 				}
 			}
@@ -373,7 +363,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	private int _getCount(
-			String tableName, boolean defaultSchema, long companyId)
+			String partitionName, String tableName, long companyId)
 		throws Exception {
 
 		String whereClause = StringPool.BLANK;
@@ -382,15 +372,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			whereClause = " where companyId = " + companyId;
 		}
 
-		String fullTableName = tableName;
-
-		if (!defaultSchema) {
-			fullTableName =
-				getPartitionName(companyId) + StringPool.PERIOD + tableName;
-		}
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(1) from " + fullTableName + whereClause);
+				StringBundler.concat(
+					"select count(1) from ", partitionName, StringPool.PERIOD,
+					tableName, whereClause));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

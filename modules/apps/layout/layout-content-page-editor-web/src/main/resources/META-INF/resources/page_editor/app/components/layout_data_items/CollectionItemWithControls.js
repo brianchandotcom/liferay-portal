@@ -11,11 +11,14 @@ import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataIte
 import TopperEmpty from '../topper/TopperEmpty';
 
 const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
-	const {collectionItem} = useContext(CollectionItemContext);
+	const {collectionConfig, collectionItem} = useContext(
+		CollectionItemContext
+	);
 	const title =
 		collectionItem.title ||
 		collectionItem.name ||
-		collectionItem.defaultTitle;
+		collectionItem.defaultTitle ||
+		collectionConfig?.collection?.title;
 
 	return (
 		<div

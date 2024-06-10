@@ -5,13 +5,11 @@
 
 import ClayTabs from '@clayui/tabs';
 import {useAtom} from 'jotai';
-import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {headerAtom} from '~/atoms';
 
 const HeaderTabs = () => {
 	const [tabs] = useAtom(headerAtom.tabs);
-
-	const navigate = useNavigate();
 
 	return (
 		<ClayTabs className="tr-header-container__tabs">
@@ -22,9 +20,10 @@ const HeaderTabs = () => {
 						'aria-controls': `tabpanel-${index}`,
 					}}
 					key={index}
-					onClick={() => navigate(tab.path)}
 				>
-					{tab.title}
+					<Link className="inherit-color-link" to={tab.path}>
+						{tab.title}
+					</Link>
 				</ClayTabs.Item>
 			))}
 		</ClayTabs>

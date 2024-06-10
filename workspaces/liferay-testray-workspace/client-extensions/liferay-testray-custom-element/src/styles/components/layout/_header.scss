@@ -16,6 +16,12 @@
 
 	&__tabs {
 		margin-left: 16px;
+
+		.inherit-color-link {
+			color: inherit !important;
+			text-decoration: none !important;
+		}
+
 		.nav-item button {
 			color: $color-gray;
 			font-size: 16px;

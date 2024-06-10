@@ -845,7 +845,6 @@ definition {
 	test DeactivateCommerceAccount {
 		property portal.acceptance = "false";
 		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 
 		// Quarantined because of COMMERCE-9825
 
@@ -1151,7 +1150,6 @@ definition {
 	test MiniumSiteFullFlow {
 		property portal.acceptance = "false";
 		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 
 		// Quarantined because of COMMERCE-9825
 

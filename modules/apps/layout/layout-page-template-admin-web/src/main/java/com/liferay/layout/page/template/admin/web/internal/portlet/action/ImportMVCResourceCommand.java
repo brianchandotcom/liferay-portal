@@ -181,6 +181,8 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 						}
 					).put(
 						"name", layoutsImporterResultEntry.getName()
+					).put(
+						"type", layoutsImporterResultEntry.getType()
 					));
 
 				importResultsJSONObject.put(key, jsonArray);

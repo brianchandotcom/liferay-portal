@@ -40,6 +40,7 @@ const RESULTS_DATA = {
 interface Result {
 	messages: string[];
 	name: string;
+	type: string;
 }
 
 export interface Results {
@@ -49,16 +50,14 @@ export interface Results {
 }
 
 interface ResultsProps {
-	fileName: string | null;
 	importResults: Results;
 }
 
-export default function ImportResults({fileName, importResults}: ResultsProps) {
+export default function ImportResults({importResults}: ResultsProps) {
 	return (
 		<>
 			<ImportResultsSection
 				data={RESULTS_DATA.success}
-				fileName={fileName}
 				panelProps={{
 					collapsable: true,
 					collapseHeaderClassNames: 'c-p-0',
@@ -70,7 +69,6 @@ export default function ImportResults({fileName, importResults}: ResultsProps) {
 
 			<ImportResultsSection
 				data={RESULTS_DATA.warning}
-				fileName={fileName}
 				results={importResults.warning}
 			/>
 
@@ -79,7 +77,6 @@ export default function ImportResults({fileName, importResults}: ResultsProps) {
 				defaultMessage={Liferay.Language.get(
 					'the-definition-of-the-item-is-invalid'
 				)}
-				fileName={fileName}
 				results={importResults.error}
 			/>
 		</>
@@ -89,7 +86,6 @@ export default function ImportResults({fileName, importResults}: ResultsProps) {
 interface SectionProps {
 	data: (typeof RESULTS_DATA)[keyof typeof RESULTS_DATA];
 	defaultMessage?: string;
-	fileName: string | null;
 	panelProps?: object;
 	results: Result[];
 }
@@ -97,7 +93,6 @@ interface SectionProps {
 function ImportResultsSection({
 	data,
 	defaultMessage,
-	fileName,
 	panelProps,
 	results,
 }: SectionProps) {
@@ -138,6 +133,7 @@ function ImportResultsSection({
 								: defaultMessage
 									? [defaultMessage]
 									: null;
+							const [type] = result.type.split('-').reverse();
 
 							return (
 								<li
@@ -146,7 +142,18 @@ function ImportResultsSection({
 								>
 									<ClayLayout.ContentCol expand>
 										<div className="list-group-title">
-											{result.name}
+											<span className="inline-item inline-item-after">
+												<ClayIcon
+													className="c-mr-2 text-secondary"
+													symbol={
+														type === 'collection'
+															? 'folder'
+															: 'page-template'
+													}
+												/>
+
+												{result.name}
+											</span>
 										</div>
 
 										{messages &&
@@ -161,12 +168,6 @@ function ImportResultsSection({
 													{message}
 												</div>
 											))}
-									</ClayLayout.ContentCol>
-
-									<ClayLayout.ContentCol>
-										<div className="list-group-subtitle">
-											{fileName}
-										</div>
 									</ClayLayout.ContentCol>
 								</li>
 							);

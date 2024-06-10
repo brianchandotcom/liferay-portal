@@ -76,6 +76,7 @@ export class HeadlessCommerceAdminOrderApiHelper {
 				data: {currencyCode: 'USD', ...order},
 			}
 		);
+
 		if (this.apiHelpers instanceof DataApiHelpers) {
 			this.apiHelpers.data.push({
 				id: postOrder.id,
@@ -86,11 +87,12 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		return postOrder;
 	}
 
-	async patchOrder({id, order}: {id: number; order: TOrder}) {
+	async patchOrder(id: number, order: TOrder) {
 		const postOrder = await this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}orders/${id}?nestedFields=orderItems`,
 			order
 		);
+
 		if (this.apiHelpers instanceof DataApiHelpers) {
 			this.apiHelpers.data.push({
 				id: postOrder.id,

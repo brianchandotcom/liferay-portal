@@ -14,11 +14,11 @@ type TCatalog = {
 	name?: string;
 };
 
-type TChanel = {
+type TChannel = {
 	channelId: number;
 	currencyCode: string;
-	externalReferenceCode: string;
-	id: number;
+	externalReferenceCode?: string;
+	id?: number;
 	name: string;
 	type: string;
 };
@@ -46,7 +46,7 @@ type TProduct = {
 		[key: string]: string;
 	};
 	productChannelFilter?: boolean;
-	productChannels?: TChanel[];
+	productChannels?: TChannel[];
 	productConfiguration?: {
 		allowBackOrder?: boolean;
 	};
@@ -173,18 +173,6 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async getCatalog(catalogId: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalogs/${catalogId}`
-		);
-	}
-
-	async getCatalogByErc(catalogErc: string) {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/catalog/by-externalReferenceCode/${catalogErc}`
-		);
-	}
-
-	async getCatalogByName(catalogName: string) {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/catalogs?filter=name eq '${catalogName}'`
 		);
 	}
 

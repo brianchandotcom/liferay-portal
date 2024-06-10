@@ -12,7 +12,13 @@ import {getRandomInt} from '../../../utils/getRandomInt';
 import {getTempDir} from '../../../utils/temp';
 import {marketplacePagesTest} from './fixtures/marketplacePages';
 import {marketplaceSiteFixture} from './fixtures/marketplaceSite';
-import {PRODUCT_WORKFLOW_STATUS_CODE} from './utils/constants';
+import {
+	MARKETPLACE_CHANNEL,
+	ORDER_TYPES,
+	ORDER_WORKFLOW_STATUS_CODE,
+	PAYMENT_STATUS,
+	PRODUCT_WORKFLOW_STATUS_CODE,
+} from './utils/constants';
 
 export const test = mergeTests(
 	backendPageTest,
@@ -21,11 +27,16 @@ export const test = mergeTests(
 	marketplaceSiteFixture
 );
 
-const customerAccountName = `Customer${getRandomInt()}`;
-const productName = `Product${getRandomInt()}`;
+const ORDER_ITEM_DECIMAL_QUANTITY = 1;
+const ORDER_ITEM_QUANTITY = 1;
+const ORDER_ITEM_UNIT_PRICE = 1;
 
-test.describe('Customer Dashboard', () => {
-	let _customer;
+const CUSTOMER_ACCOUNT_NAME = `Customer${getRandomInt()}`;
+const PRODUCT_NAME = `Product${getRandomInt()}`;
+
+test.describe('Can Purchase and Manage Apps', () => {
+	let _catalog;
+	let _customerAccount;
 	let _product;
 	let _order;
 
@@ -36,11 +47,16 @@ test.describe('Customer Dashboard', () => {
 			);
 
 		const customer = await apiHelpers.headlessAdminUser.postAccount({
-			name: customerAccountName,
+			name: CUSTOMER_ACCOUNT_NAME,
 			type: 'person',
 		});
 
-		_customer = customer;
+		_customerAccount = customer;
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		_catalog = catalog;
 
 		const rolesResponse =
 			await apiHelpers.headlessAdminUser.getAccountRoles(customer.id);
@@ -50,9 +66,9 @@ test.describe('Customer Dashboard', () => {
 			['test@liferay.com']
 		);
 
-		const customerAccountRole = rolesResponse?.items?.filter((role) => {
-			return role.name === 'Account Buyer';
-		});
+		const customerAccountRole = rolesResponse?.items?.filter(
+			(role) => role.name === 'Account Buyer'
+		);
 
 		await apiHelpers.headlessAdminUser.assingUserToAccountRole(
 			customer.id,
@@ -60,14 +76,9 @@ test.describe('Customer Dashboard', () => {
 			user.id
 		);
 
-		const catalog =
-			await apiHelpers.headlessCommerceAdminCatalog.getCatalogByErc(
-				'MKT-CATALOG-1'
-			);
-
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
-				"name eq 'Marketplace Channel'"
+				`name eq ${MARKETPLACE_CHANNEL}`
 			);
 
 		const product =
@@ -75,16 +86,14 @@ test.describe('Customer Dashboard', () => {
 				active: true,
 				catalogId: catalog.id,
 				name: {
-					en_US: productName,
+					en_US: PRODUCT_NAME,
 				},
 				productChannels: [
 					{
 						channelId: channel.items[0].id,
 						currencyCode: 'USD',
-						externalReferenceCode:
-							'fa803fad-6d86-32dd-aa04-7e59dff9d0cb',
 						id: channel.items[0].id,
-						name: 'Marketplace Channel',
+						name: MARKETPLACE_CHANNEL,
 						type: 'site',
 					},
 				],
@@ -113,8 +122,7 @@ test.describe('Customer Dashboard', () => {
 				productVirtualSettings: {
 					productVirtualSettingsFileEntries: [
 						{
-							attachment:
-								'YXV0aG9yOiB3ZWxsaW5ndG9uIGRvcyBzYW50b3MgYmFyYm9zYQ0KZW1haWw6IHdlbGl0b25wZUBnbWFpbC5jb20=',
+							attachment: btoa('liferay'),
 							version: 'Liferay Portal 7.4 GA110',
 						},
 					],
@@ -123,42 +131,32 @@ test.describe('Customer Dashboard', () => {
 
 		_product = product;
 
-		const odrder = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
 			accountId: customer.id,
 			channelId: channel.items[0].id,
 			orderItems: [
 				{
-					decimalQuantity: 10,
-					quantity: 2,
-
+					decimalQuantity: ORDER_ITEM_DECIMAL_QUANTITY,
+					quantity: ORDER_ITEM_QUANTITY,
 					skuId: product.skus[0].id as unknown as string,
-					unitPrice: 1,
+					unitPrice: ORDER_ITEM_UNIT_PRICE,
 				},
 			],
-			orderTypeExternalReferenceCode: 'DXPAPP',
+			orderTypeExternalReferenceCode: ORDER_TYPES.DXPAPP,
 		});
 
-		_order = odrder;
+		_order = order;
 
-		await apiHelpers.headlessCommerceAdminOrder.patchOrder({
-			id: odrder.id,
-			order: {
-				paymentStatus: '0',
-			},
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+			paymentStatus: PAYMENT_STATUS.COMPLETED,
 		});
 
-		await apiHelpers.headlessCommerceAdminOrder.patchOrder({
-			id: odrder.id,
-			order: {
-				orderStatus: '10',
-			},
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+			orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
 		});
 
-		await apiHelpers.headlessCommerceAdminOrder.patchOrder({
-			id: odrder.id,
-			order: {
-				orderStatus: '0',
-			},
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+			orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
 		});
 	});
 
@@ -166,53 +164,57 @@ test.describe('Customer Dashboard', () => {
 		await apiHelpers.headlessCommerceAdminOrder.deleteOrder(_order.id);
 
 		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-			_product.id + 1
+			_product.productId
 		);
 
-		await apiHelpers.headlessAdminUser.deleteAccount(_customer.id);
+		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
+			_catalog.id
+		);
+
+		await apiHelpers.headlessAdminUser.deleteAccount(_customerAccount.id);
 	});
 
 	test('LPD-21740 The customer can download by using the kebab', async ({
-		customerDashboardpage,
+		customerDashboardPage,
 		marketplace,
 	}) => {
-		await customerDashboardpage.goto(
+		await customerDashboardPage.goto(
 			`web${marketplace.friendlyUrlPath}/customer-dashboard`
 		);
 
-		await customerDashboardpage.selectAccount(customerAccountName);
+		await customerDashboardPage.selectAccount(CUSTOMER_ACCOUNT_NAME);
 
 		await expect(
-			customerDashboardpage.purchasedApp(productName)
+			customerDashboardPage.purchasedApp(PRODUCT_NAME)
 		).toBeVisible();
 
 		await expect(
-			customerDashboardpage.tableKebabButton(productName)
+			customerDashboardPage.tableKebabButton(PRODUCT_NAME)
 		).toBeVisible();
 
-		customerDashboardpage
-			.tableKebabButton(productName)
+		await customerDashboardPage
+			.tableKebabButton(PRODUCT_NAME)
 			.waitFor({state: 'visible'});
 
 		await clickAndExpectToBeVisible({
-			target: customerDashboardpage.page.getByText('Download App'),
-			trigger: customerDashboardpage.tableKebabButton(productName),
+			target: customerDashboardPage.page.getByText('Download App'),
+			trigger: customerDashboardPage.tableKebabButton(PRODUCT_NAME),
 		});
 
-		await customerDashboardpage.dropDownDownloadbutton.click();
+		await customerDashboardPage.dropdownDownloadButton.click();
 
-		await expect(customerDashboardpage.downloadDashboardTab).toBeVisible();
+		await expect(customerDashboardPage.downloadDashboardTab).toBeVisible();
 
-		await expect(customerDashboardpage.downloadDashboardTab).toHaveClass(
+		await expect(customerDashboardPage.downloadDashboardTab).toHaveClass(
 			'nav-link active'
 		);
 
-		await expect(customerDashboardpage.downloadButton).toBeVisible();
+		await expect(customerDashboardPage.downloadButton).toBeVisible();
 
 		const downloadPromise =
-			customerDashboardpage.page.waitForEvent('download');
+			customerDashboardPage.page.waitForEvent('download');
 
-		customerDashboardpage.downloadButton.click();
+		await customerDashboardPage.downloadButton.click();
 
 		const download = await downloadPromise;
 
@@ -220,43 +222,43 @@ test.describe('Customer Dashboard', () => {
 
 		await download.saveAs(filePath);
 
-		expect(filePath).toBeTruthy();
+		await expect(filePath).toBeTruthy();
 	});
 
-	test('LPD-21740 The customer would go to the download page and download the application through the table', async ({
-		customerDashboardpage,
+	test('LPD-21740 Customer can download the app through the table', async ({
+		customerDashboardPage,
 		marketplace,
 	}) => {
-		await customerDashboardpage.goto(
+		await customerDashboardPage.goto(
 			`web${marketplace.friendlyUrlPath}/customer-dashboard`
 		);
 
-		await customerDashboardpage.selectAccount(customerAccountName);
+		await customerDashboardPage.selectAccount(CUSTOMER_ACCOUNT_NAME);
 
 		await expect(
-			customerDashboardpage.purchasedApp(productName)
+			customerDashboardPage.purchasedApp(PRODUCT_NAME)
 		).toBeVisible();
-		await customerDashboardpage.purchasedApp(productName).click();
+		await customerDashboardPage.purchasedApp(PRODUCT_NAME).click();
 
-		await expect(customerDashboardpage.detailDashboardTab).toBeVisible();
+		await expect(customerDashboardPage.detailDashboardTab).toBeVisible();
 
-		await expect(customerDashboardpage.detailDashboardTab).toHaveClass(
+		await expect(customerDashboardPage.detailDashboardTab).toHaveClass(
 			'nav-link active'
 		);
 
-		await expect(customerDashboardpage.downloadDashboardTab).toBeVisible();
-		await customerDashboardpage.downloadDashboardTab.click();
+		await expect(customerDashboardPage.downloadDashboardTab).toBeVisible();
+		await customerDashboardPage.downloadDashboardTab.click();
 
-		await expect(customerDashboardpage.downloadDashboardTab).toHaveClass(
+		await expect(customerDashboardPage.downloadDashboardTab).toHaveClass(
 			'nav-link active'
 		);
 
-		await expect(customerDashboardpage.downloadButton).toBeVisible();
+		await expect(customerDashboardPage.downloadButton).toBeVisible();
 
 		const downloadPromise =
-			customerDashboardpage.page.waitForEvent('download');
+			customerDashboardPage.page.waitForEvent('download');
 
-		customerDashboardpage.downloadButton.click();
+		await customerDashboardPage.downloadButton.click();
 
 		const download = await downloadPromise;
 
@@ -264,6 +266,6 @@ test.describe('Customer Dashboard', () => {
 
 		await download.saveAs(filePath);
 
-		expect(filePath).toBeTruthy();
+		await expect(filePath).toBeTruthy();
 	});
 });

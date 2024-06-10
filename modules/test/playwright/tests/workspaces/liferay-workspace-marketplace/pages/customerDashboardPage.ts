@@ -5,12 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class CustomerDashBoardPage {
+export class CustomerDashboardPage {
 	readonly accountSearchDropdown: Locator;
 	readonly detailDashboardTab: Locator;
 	readonly downloadButton: Locator;
 	readonly downloadDashboardTab: Locator;
-	readonly dropDownDownloadbutton: Locator;
+	readonly dropdownDownloadButton: Locator;
 	readonly page: Page;
 	readonly purchasedApp: (productName: string) => Locator;
 	readonly tableKebabButton: (productName: string) => Locator;
@@ -20,7 +20,7 @@ export class CustomerDashBoardPage {
 		this.detailDashboardTab = page.getByRole('link', {name: 'Details'});
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
 		this.downloadDashboardTab = page.getByRole('link', {name: 'Download'});
-		this.dropDownDownloadbutton = page.getByRole('menuitem', {
+		this.dropdownDownloadButton = page.getByRole('menuitem', {
 			name: 'Download App',
 		});
 		this.page = page;

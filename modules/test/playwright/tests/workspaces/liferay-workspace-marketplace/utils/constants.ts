@@ -9,6 +9,8 @@ import {PublishSolution} from '../types';
 
 const dependenciesFolder = path.join(__dirname, '..', 'dependencies');
 
+export const MARKETPLACE_CHANNEL = 'Marketplace Channel';
+
 export const products = {
 	cloud_free: {
 		categories: ['Analytics and Optimization'],
@@ -104,8 +106,31 @@ export const solutions: {
 	},
 };
 
+export enum PAYMENT_STATUS {
+	AUTHORIZED = '2',
+	CANCELLED = '8',
+	COMPLETED = '0',
+	FAILED = '4',
+	PENDING = '1',
+}
+
 export enum PRODUCT_WORKFLOW_STATUS_CODE {
 	APPROVED = 0,
 	PENDING = 1,
 	DRAFT = 2,
+}
+
+export enum ORDER_WORKFLOW_STATUS_CODE {
+	CANCELLED = '8',
+	COMPLETED = '0',
+	ON_HOLD = '20',
+	PENDING = '1',
+	PROCESSING = '10',
+}
+
+export enum ORDER_TYPES {
+	DXPAPP = 'DXPAPP',
+	CLOUDAPP = 'CLOUDAPP',
+	SOLUTIONS7 = 'SOLUTIONS7',
+	SOLUTIONS30 = 'SOLUTIONS30',
 }

@@ -179,13 +179,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				}
 
 				Assert.assertEquals(
-					toTableName,
-					_getCount(
-						getPartitionName(COMPANY_IDS[0]), fromTableName,
-						COMPANY_IDS[0]),
-					_getCount(
-						getPartitionName(newCompanyId), toTableName,
-						newCompanyId));
+					toTableName, _getCount(COMPANY_IDS[0], fromTableName),
+					_getCount(newCompanyId, toTableName));
 			}
 		}
 		finally {
@@ -280,19 +275,13 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				for (String viewName : viewNames.get(companyId)) {
 					if (!isCopyableQuartzTable(viewName)) {
 						Assert.assertEquals(
-							viewName + " count",
-							_getCount(
-								defaultPartitionName, viewName, companyId),
-							_getCount(
-								getPartitionName(companyId), viewName,
-								companyId));
+							viewName + " count", _getCount(companyId, viewName),
+							_getCount(companyId, viewName));
 					}
 					else {
 						Assert.assertEquals(
 							viewName + " count", 0,
-							_getCount(
-								getPartitionName(companyId), viewName,
-								companyId));
+							_getCount(companyId, viewName));
 					}
 				}
 			}
@@ -362,10 +351,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 	}
 
-	private int _getCount(
-			String partitionName, String tableName, long companyId)
-		throws Exception {
-
+	private int _getCount(long companyId, String tableName) throws Exception {
 		String whereClause = StringPool.BLANK;
 
 		if (dbInspector.hasColumn(tableName, "companyId")) {
@@ -374,8 +360,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(1) from ", partitionName, StringPool.PERIOD,
-					tableName, whereClause));
+					"select count(1) from ", getPartitionName(companyId),
+					StringPool.PERIOD, tableName, whereClause));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

@@ -409,15 +409,9 @@ public class DBPartitionUtil {
 						}
 					}
 					else {
-						String toTableName = fromTableName;
-
-						if (dbInspector.isObjectTable(
-								_getCompanyIds(), fromTableName)) {
-
-							toTableName = StringUtil.replace(
-								fromTableName, String.valueOf(fromCompanyId),
-								String.valueOf(toCompanyId));
-						}
+						String toTableName = StringUtil.replace(
+							fromTableName, String.valueOf(fromCompanyId),
+							String.valueOf(toCompanyId));
 
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateTableSQL(

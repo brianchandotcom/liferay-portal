@@ -38,6 +38,7 @@ Export-Package:\
 	com.liferay.object.relationship.util,\
 	com.liferay.object.rest.context.path,\
 	com.liferay.object.scope,\
+	com.liferay.object.scope.util,\
 	com.liferay.object.service,\
 	com.liferay.object.service.persistence,\
 	com.liferay.object.system,\

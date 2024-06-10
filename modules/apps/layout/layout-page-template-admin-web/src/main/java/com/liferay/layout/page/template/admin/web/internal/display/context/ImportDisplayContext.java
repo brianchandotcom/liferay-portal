@@ -46,7 +46,7 @@ public class ImportDisplayContext {
 			"some-page-templates-could-not-be-imported-but-other-page-" +
 				"templates-were-imported-correctly-or-with-warnings";
 
-		Map<Integer, List<LayoutsImporterResultEntry>>
+		Map<String, List<LayoutsImporterResultEntry>>
 			importedLayoutsImporterResultEntriesMap =
 				getImportedLayoutsImporterResultEntriesMap();
 
@@ -99,7 +99,7 @@ public class ImportDisplayContext {
 		return "warning";
 	}
 
-	public Map<Integer, List<LayoutsImporterResultEntry>>
+	public Map<String, List<LayoutsImporterResultEntry>>
 		getImportedLayoutsImporterResultEntriesMap() {
 
 		if (_importedLayoutsImporterResultEntriesMap != null) {
@@ -121,7 +121,7 @@ public class ImportDisplayContext {
 			return null;
 		}
 
-		Map<Integer, List<LayoutsImporterResultEntry>>
+		Map<String, List<LayoutsImporterResultEntry>>
 			typeLayoutsImporterResultEntryMap = new HashMap<>();
 
 		for (LayoutsImporterResultEntry layoutsImporterResultEntry :
@@ -136,7 +136,7 @@ public class ImportDisplayContext {
 			List<LayoutsImporterResultEntry> typeLayoutsImporterResultEntries =
 				new ArrayList<>();
 
-			int type = layoutsImporterResultEntry.getType();
+			String type = layoutsImporterResultEntry.getType();
 
 			if (typeLayoutsImporterResultEntryMap.get(type) != null) {
 				typeLayoutsImporterResultEntries =
@@ -312,7 +312,7 @@ public class ImportDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private Map<Integer, List<LayoutsImporterResultEntry>>
+	private Map<String, List<LayoutsImporterResultEntry>>
 		_importedLayoutsImporterResultEntriesMap;
 	private List<LayoutsImporterResultEntry>
 		_layoutsImporterResultEntriesWithWarnings;

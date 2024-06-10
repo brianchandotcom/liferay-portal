@@ -6,9 +6,11 @@
 /// <reference types="react" />
 
 export default function RESTEndpointDropdownMenu({
+	className,
 	onItemClick,
 	restEndpoints: initialRESTEndpoints,
 }: {
+	className?: string;
 	onItemClick: Function;
 	restEndpoints: Array<string>;
 }): JSX.Element;

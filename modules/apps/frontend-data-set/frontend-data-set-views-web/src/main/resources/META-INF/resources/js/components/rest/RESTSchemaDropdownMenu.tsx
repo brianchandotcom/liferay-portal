@@ -10,9 +10,11 @@ import React, {useState} from 'react';
 import {FUZZY_OPTIONS} from '../../utils/constants';
 
 export default function RESTSchemaDropdownMenu({
+	className,
 	onItemClick,
 	restSchemas: initialRESTSchemas,
 }: {
+	className?: string;
 	onItemClick: Function;
 	restSchemas: Array<string>;
 }) {
@@ -38,6 +40,7 @@ export default function RESTSchemaDropdownMenu({
 		<>
 			<ClayDropDown.Search
 				aria-label={Liferay.Language.get('search')}
+				className={className}
 				onChange={onSearch}
 				value={query}
 			/>

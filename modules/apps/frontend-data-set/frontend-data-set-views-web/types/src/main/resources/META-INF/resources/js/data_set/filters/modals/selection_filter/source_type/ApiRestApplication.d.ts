@@ -20,9 +20,9 @@ interface IApiRestApplicationModalContentProps {
 	}: {
 		selectedItemKey: string;
 		selectedItemLabel: string;
-		selectedRESTApplication: string | undefined;
-		selectedRESTEndpoint: string | undefined;
-		selectedRESTSchema: string | undefined;
+		selectedRESTApplication: string | null;
+		selectedRESTEndpoint: string | null;
+		selectedRESTSchema: string | null;
 	}) => void;
 	requiredRESTApplicationValidationError: boolean;
 	restApplications: string[];

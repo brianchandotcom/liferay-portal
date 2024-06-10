@@ -6,17 +6,21 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
+import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import RequiredMark from '../../../../../components/RequiredMark';
-import RESTApplicationItem from '../../../../../components/RestApplicationItem';
-import RestSchemaSelection from '../../../../../components/RestSchemaSelection';
-import {FUZZY_OPTIONS} from '../../../../../utils/constants';
+import RESTApplicationDropdownItem from '../../../../../components/rest/RESTApplicationDropdownItem';
+import RESTApplicationDropdownMenu from '../../../../../components/rest/RESTApplicationDropdownMenu';
+import RESTEndpointDropdownMenu from '../../../../../components/rest/RESTEndpointDropdownMenu';
+import RESTSchemaDropdownMenu from '../../../../../components/rest/RESTSchemaDropdownMenu';
+import {ALLOWED_ENDPOINTS_PARAMETERS, FUZZY_OPTIONS} from '../../../../../utils/constants';
 import getFields from '../../../../../utils/getFields';
 import {IField, ISelectionFilter} from '../../../../../utils/types';
 import classNames from 'classnames';
 import ValidationFeedback from '../../../../../components/ValidationFeedback';
+import openDefaultFailureToast from '../../../../../utils/openDefaultFailureToast';
 
 interface IApiRestApplicationModalContentProps {
 	filter?: ISelectionFilter;
@@ -32,9 +36,9 @@ interface IApiRestApplicationModalContentProps {
 	}: {
 		selectedItemKey: string;
 		selectedItemLabel: string;
-		selectedRESTApplication: string | undefined;
-		selectedRESTEndpoint: string | undefined;
-		selectedRESTSchema: string | undefined;
+		selectedRESTApplication: string | null;
+		selectedRESTEndpoint: string | null;
+		selectedRESTSchema: string | null;
 	}) => void;
 	requiredRESTApplicationValidationError: boolean;
 	restApplications: string[];
@@ -54,21 +58,267 @@ function ApiRestApplication({
 	restSchemaValidationError,
 }: IApiRestApplicationModalContentProps) {
 	const [fields, setFields] = useState<IField[]>([]);
-	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
-		string | undefined
-	>(filter?.restApplication ? filter.restApplication : undefined);
-	const [selectedRESTSchema, setSelectedRESTSchema] = useState<
-		string | undefined
-	>(filter?.restSchema ? filter.restSchema : undefined);
-	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
-		string | undefined
-	>(filter?.restEndpoint ? filter.restEndpoint : undefined);
 	const [selectedItemKey, setSelectedItemKey] = useState<string>(
 		filter?.itemKey ? filter.itemKey : ''
 	);
 	const [selectedItemLabel, setSelectedItemLabel] = useState<string>(
 		filter?.itemLabel ? filter.itemLabel : ''
 	);
+	const [
+		noEnpointsRESTApplicationValidationError,
+		setNoEnpointsRESTApplicationValidationError,
+	] = useState(false);
+	const [restSchemaEndpoints, setRESTSchemaEndpoints] = useState<
+		Map<string, Array<string>>
+	>(new Map());
+	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
+		string | null
+	>(filter?.restApplication ? filter.restApplication : null);
+	const [selectedRESTSchema, setSelectedRESTSchema] = useState<string | null>(
+		filter?.restSchema ? filter.restSchema : null
+	);
+	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
+		string | null
+	>(filter?.restEndpoint ? filter.restEndpoint : null);
+
+	const isPathValid = (
+		path: string,
+		allowedParameters: string[]
+	): boolean => {
+		const paramsMatcher = RegExp('{(.*?)}', 'g');
+		let matches;
+
+		while ((matches = paramsMatcher.exec(path)) !== null) {
+			if (!allowedParameters.includes(matches[1])) {
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+	const getRESTSchemas = async (restApplication: string) => {
+		if (!restApplication) {
+			return;
+		}
+
+		const response = await fetch(`/o${restApplication}/openapi.json`);
+
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
+		const responseJson = await response.json();
+
+		const paths = Object.keys(responseJson.paths ?? []);
+		const schemaNames = Object.keys(responseJson.components?.schemas ?? []);
+
+		const schemaEndpoints: Map<string, Array<string>> = new Map();
+
+		schemaNames.forEach((schemaName) => {
+			paths.forEach((path: string) => {
+				if (!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)) {
+					return;
+				}
+
+				if (
+					responseJson.paths[path]?.get?.responses.default.content[
+						'application/json'
+					]?.schema?.$ref?.endsWith(`/Page${schemaName}`)
+				) {
+					const endpoints = schemaEndpoints.get(schemaName) ?? [];
+
+					endpoints.push(path);
+
+					if (endpoints.length === 1) {
+						schemaEndpoints.set(schemaName, endpoints);
+					}
+				}
+			});
+		});
+
+		if (schemaEndpoints.size === 0) {
+			setSelectedRESTSchema(null);
+			setSelectedRESTEndpoint(null);
+
+			setNoEnpointsRESTApplicationValidationError(true);
+
+			onChange({
+				selectedItemKey,
+				selectedItemLabel,
+				selectedRESTApplication: restApplication,
+				selectedRESTEndpoint: null,
+				selectedRESTSchema: null,
+			});
+		}
+		else if (schemaEndpoints.size === 1) {
+			const schema = schemaEndpoints.keys().next().value;
+
+			setSelectedRESTSchema(schema);
+
+			const paths = schemaEndpoints.get(schema);
+
+			if (paths?.length === 1) {
+				setSelectedRESTEndpoint(paths[0]);
+			}
+
+			setNoEnpointsRESTApplicationValidationError(false);
+
+			onChange({
+				selectedItemKey,
+				selectedItemLabel,
+				selectedRESTApplication: restApplication,
+				selectedRESTEndpoint:
+					paths?.length === 1 ? paths[0] : selectedRESTEndpoint,
+				selectedRESTSchema: schema,
+			});
+		}
+		else {
+			setSelectedRESTSchema(null);
+			setSelectedRESTEndpoint(null);
+
+			setNoEnpointsRESTApplicationValidationError(false);
+
+			onChange({
+				selectedItemKey,
+				selectedItemLabel,
+				selectedRESTApplication: restApplication,
+				selectedRESTEndpoint: null,
+				selectedRESTSchema: null,
+			});
+		}
+
+		setRESTSchemaEndpoints(schemaEndpoints);
+	};
+
+	const RestApplicationDropdown = () => (
+		<ClayDropDown
+			menuElementAttrs={{
+				className: 'fds-entries-dropdown-menu fds-filter-rest-application-menu',
+			}}
+			trigger={
+				<ClayButton
+					aria-labelledby={`${namespace}restApplicationsLabel`}
+					className="form-control form-control-select form-control-select-secondary"
+					displayType="secondary"
+					id={`${namespace}restApplicationsSelect`}
+				>
+					{selectedRESTApplication ? (
+						<RESTApplicationDropdownItem
+							query=""
+							restApplication={selectedRESTApplication}
+						/>
+					) : (
+						Liferay.Language.get('choose-an-option')
+					)}
+				</ClayButton>
+			}
+		>
+			<RESTApplicationDropdownMenu
+				onItemClick={(item: string) => {
+					setSelectedRESTApplication(item);
+					getRESTSchemas(item);
+
+					onChange({
+						selectedItemKey,
+						selectedItemLabel,
+						selectedRESTApplication: item,
+						selectedRESTEndpoint,
+						selectedRESTSchema,
+					});
+				}}
+				restApplications={restApplications}
+			/>
+		</ClayDropDown>
+	);
+
+	const RestSchemaDropdown = () => (
+		<ClayDropDown
+			menuElementAttrs={{
+				className: 'fds-entries-dropdown-menu fds-filter-rest-schema-menu',
+			}}
+			trigger={
+				<ClayButton
+					aria-labelledby={`${namespace}restSchema`}
+					className="form-control form-control-select form-control-select-secondary"
+					displayType="secondary"
+					id={`${namespace}restSchemaSelect`}
+				>
+					{selectedRESTSchema ||
+						Liferay.Language.get('choose-an-option')}
+				</ClayButton>
+			}
+		>
+			<RESTSchemaDropdownMenu
+				className={'fds-filter-rest-schemas-search'}
+				onItemClick={(item: string) => {
+					setSelectedRESTSchema(item);
+
+					const endpoints = restSchemaEndpoints.get(item);
+					let endpoint;
+
+					if (endpoints?.length === 1) {
+						endpoint = endpoints[0];
+						setSelectedRESTEndpoint(endpoint);
+					}
+					else {
+						endpoint = null;
+					}
+
+					onChange({
+						selectedItemKey,
+						selectedItemLabel,
+						selectedRESTApplication,
+						selectedRESTEndpoint:
+							endpoints?.length === 1
+								? endpoint
+								: selectedRESTEndpoint,
+						selectedRESTSchema: item,
+					});
+				}}
+				restSchemas={Array.from(restSchemaEndpoints.keys())}
+			/>
+		</ClayDropDown>
+	);
+
+	const RestEndpointDropdown = () => (
+		<ClayDropDown
+			menuElementAttrs={{
+				className: 'fds-entries-dropdown-menu fds-filter-rest-endpoint-menu',
+			}}
+			trigger={
+				<ClayButton
+					aria-labelledby={`${namespace}restEndpoint`}
+					className="form-control form-control-select form-control-select-secondary"
+					displayType="secondary"
+					id={`${namespace}restEndpointSelect`}
+				>
+					{selectedRESTEndpoint ||
+						Liferay.Language.get('choose-an-option')}
+				</ClayButton>
+			}
+		>
+			<RESTEndpointDropdownMenu
+				onItemClick={(item: string) => {
+					setSelectedRESTEndpoint(item);
+
+					onChange({
+						selectedItemKey,
+						selectedItemLabel,
+						selectedRESTApplication,
+						selectedRESTEndpoint: item,
+						selectedRESTSchema,
+					});
+				}}
+				restEndpoints={
+					restSchemaEndpoints.get(selectedRESTSchema ?? '') ?? []
+				}
+			/>
+		</ClayDropDown>
+	);
+
 
 	useEffect(() => {
 		if (selectedRESTApplication && selectedRESTSchema) {
@@ -219,37 +469,80 @@ function ApiRestApplication({
 
 	return (
 		<>
-			<RestSchemaSelection
-				filter={filter}
-				namespace={namespace}
-				onChange={({
-					selectedRESTApplication: selectedRESTApplication,
-					selectedRESTEndpoint: selectedRESTEndpoint,
-					selectedRESTSchema: selectedRESTSchema,
-				}: {
-					selectedRESTApplication: string;
-					selectedRESTEndpoint: string;
-					selectedRESTSchema: string;
-				}) => {
-					setSelectedRESTApplication(selectedRESTApplication);
-					setSelectedRESTEndpoint(selectedRESTEndpoint);
-					setSelectedRESTSchema(selectedRESTSchema);
+			{restApplications && (
+				<ClayForm.Group
+					className={classNames({
+						'has-error':
+							requiredRESTApplicationValidationError ||
+							noEnpointsRESTApplicationValidationError,
+					})}
+				>
+					<label
+						htmlFor={`${namespace}restApplicationsSelect`}
+						id={`${namespace}restApplicationsLabel`}
+					>
+						{Liferay.Language.get('rest-application')}
 
-					onChange({
-						selectedItemKey,
-						selectedItemLabel,
-						selectedRESTApplication,
-						selectedRESTEndpoint,
-						selectedRESTSchema,
-					});
-				}}
-				requiredRESTApplicationValidationError={
-					requiredRESTApplicationValidationError
-				}
-				restApplications={restApplications}
-				restEndpointValidationError={restEndpointValidationError}
-				restSchemaValidationError={restSchemaValidationError}
-			/>
+						<RequiredMark />
+					</label>
+
+					<RestApplicationDropdown />
+
+					{requiredRESTApplicationValidationError && (
+						<ValidationFeedback />
+					)}
+
+					{noEnpointsRESTApplicationValidationError && (
+						<ValidationFeedback
+							message={Liferay.Language.get(
+								'there-are-no-usable-endpoints'
+							)}
+						/>
+					)}
+				</ClayForm.Group>
+			)}
+
+			{restSchemaEndpoints.size > 0 && (
+				<ClayForm.Group
+					className={classNames({
+						'has-error': restSchemaValidationError,
+					})}
+				>
+					<label
+						htmlFor={`${namespace}restSchemaSelect`}
+						id={`${namespace}restSchema`}
+					>
+						{Liferay.Language.get('rest-schema')}
+
+						<RequiredMark />
+					</label>
+
+					<RestSchemaDropdown />
+
+					{restSchemaValidationError && <ValidationFeedback />}
+				</ClayForm.Group>
+			)}
+
+			{selectedRESTSchema && (
+				<ClayForm.Group
+					className={classNames({
+						'has-error': restEndpointValidationError,
+					})}
+				>
+					<label
+						htmlFor={`${namespace}restEndpointSelect`}
+						id={`${namespace}restEndpoint`}
+					>
+						{Liferay.Language.get('rest-endpoint')}
+
+						<RequiredMark />
+					</label>
+
+					<RestEndpointDropdown />
+
+					{restEndpointValidationError && <ValidationFeedback />}
+				</ClayForm.Group>
+			)}
 
 			{selectedRESTSchema && (
 				<>
@@ -274,7 +567,7 @@ function ApiRestApplication({
 										displayType="secondary"
 									>
 										{selectedItemKey ? (
-											<RESTApplicationItem
+											<RESTApplicationDropdownItem
 												query=""
 												restApplication={
 													selectedItemKey
@@ -325,7 +618,7 @@ function ApiRestApplication({
 										displayType="secondary"
 									>
 										{selectedItemLabel ? (
-											<RESTApplicationItem
+											<RESTApplicationDropdownItem
 												query=""
 												restApplication={
 													selectedItemLabel

@@ -111,13 +111,13 @@ function Body({
 		fdsFilterLabelTranslations
 	);
 	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
-		string | undefined
+		string | null
 	>('');
 	const [selectedRESTSchema, setSelectedRESTSchema] = useState<
-		string | undefined
+		string | null
 	>('');
 	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
-		string | undefined
+		string | null
 	>('');
 	const [selectedItemKey, setSelectedItemKey] = useState<string>('');
 	const [selectedItemLabel, setSelectedItemLabel] = useState<string>('');

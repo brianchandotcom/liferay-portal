@@ -6,9 +6,11 @@
 /// <reference types="react" />
 
 export default function RESTSchemaDropdownMenu({
+	className,
 	onItemClick,
 	restSchemas: initialRESTSchemas,
 }: {
+	className?: string;
 	onItemClick: Function;
 	restSchemas: Array<string>;
 }): JSX.Element;

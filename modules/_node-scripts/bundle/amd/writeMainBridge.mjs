@@ -9,7 +9,10 @@ import path from 'path';
 import {BUILD_RESOURCES_PATH} from '../../util/constants.mjs';
 import hashPathForVariable from './util/hashPathForVariable.mjs';
 
-export default async function writeMainBridge(projectDescription, projectWebContextPath) {
+export default async function writeMainBridge(
+	projectDescription,
+	projectWebContextPath
+) {
 	const {name, version} = projectDescription;
 
 	//
@@ -23,7 +26,8 @@ export default async function writeMainBridge(projectDescription, projectWebCont
 	// level appears under `/o/js/resolved-module/...`.
 	//
 
-	const importPath = getPathToRoot(name) + projectWebContextPath + '/__liferay__/index.js';
+	const importPath =
+		getPathToRoot(name) + projectWebContextPath + '/__liferay__/index.js';
 
 	const hashedImportPath = hashPathForVariable(importPath);
 

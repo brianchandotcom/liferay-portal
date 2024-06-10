@@ -47,5 +47,3 @@ export default function splitProjectExport(projectExport) {
 
 	return ret;
 }
-
-

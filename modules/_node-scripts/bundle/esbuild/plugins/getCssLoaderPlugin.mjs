@@ -23,14 +23,12 @@ export default function getCssLoaderPlugin(globalImports, type) {
 				{
 					filter: /\.css$/,
 				},
-				(args) => (
-					{
-						path:
-							path.sep === '/'
-								? `/$/css/${args.path}`
-								: `C:\\$\\css\\${args.path}`
-					}
-				)
+				(args) => ({
+					path:
+						path.sep === '/'
+							? `/$/css/${args.path}`
+							: `C:\\$\\css\\${args.path}`,
+				})
 			);
 
 			build.onLoad(
@@ -38,18 +36,18 @@ export default function getCssLoaderPlugin(globalImports, type) {
 					filter:
 						path.sep === '/'
 							? /\/\$\/css\/.*$/
-							: /.?.?\\\$\\css\\.*$/
+							: /.?.?\\\$\\css\\.*$/,
 				},
 				async (args) => {
 					const loadPath = args.path.replace(
-						path.sep === '/'
-							? '/$/css/'
-							: /.?.?\\\$\\css\\/,
+						path.sep === '/' ? '/$/css/' : /.?.?\\\$\\css\\/,
 						''
 					);
 
 					if (!globalImports[loadPath]) {
-						throw new Error(`Cannot rewrite CSS import: ${loadPath}`);
+						throw new Error(
+							`Cannot rewrite CSS import: ${loadPath}`
+						);
 					}
 
 					const {webContextPath} = globalImports[loadPath];

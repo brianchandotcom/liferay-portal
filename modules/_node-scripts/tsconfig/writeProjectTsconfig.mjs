@@ -6,11 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import {
-	SRC_PATH,
-	SRC_TSCONFIG_PATH,
-	getRootDir,
-} from '../util/constants.mjs';
+import {SRC_PATH, SRC_TSCONFIG_PATH, getRootDir} from '../util/constants.mjs';
 import sortObjectKeys from '../util/sortObjectKeys.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 

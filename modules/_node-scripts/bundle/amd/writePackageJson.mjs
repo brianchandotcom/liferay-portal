@@ -14,9 +14,9 @@ export default async function writePackageJson(projectDescription) {
 	const {name, version} = projectDescription;
 
 	const json = {
+		main: 'index.js',
 		name,
 		version,
-		main: 'index.js',
 	};
 
 	await fs.mkdir(path.dirname(filePath), {recursive: true});

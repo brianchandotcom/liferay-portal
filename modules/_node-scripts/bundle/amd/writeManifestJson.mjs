@@ -11,7 +11,10 @@ import projectScopeRequire from '../../util/projectScopeRequire.mjs';
 import getNamespacedPackageName from './util/getNamespacedPackageName.mjs';
 import splitProjectExport from './util/splitProjectExport.mjs';
 
-export default async function writeManifestJson(projectDescription, projectExports) {
+export default async function writeManifestJson(
+	projectDescription,
+	projectExports
+) {
 	const filePath = path.join(BUILD_RESOURCES_PATH, 'manifest.json');
 
 	const manifest = {
@@ -40,52 +43,57 @@ export default async function writeManifestJson(projectDescription, projectExpor
 		},
 	};
 
-	const groupedProjectExports =
-		projectExports
-			.reduce(
-				(groupedProjectExports, projectExport) => {
-					const {scope, name} = splitProjectExport(projectExport);
-					const packageName = `${scope ? `${scope}/` : ''}${name}`;
+	const groupedProjectExports = projectExports.reduce(
+		(groupedProjectExports, projectExport) => {
+			const {name, scope} = splitProjectExport(projectExport);
+			const packageName = `${scope ? `${scope}/` : ''}${name}`;
 
-					if (!groupedProjectExports[packageName]) {
-						groupedProjectExports[packageName] = [];
-					}
+			if (!groupedProjectExports[packageName]) {
+				groupedProjectExports[packageName] = [];
+			}
 
-					groupedProjectExports[packageName].push(projectExport);
+			groupedProjectExports[packageName].push(projectExport);
 
-					return groupedProjectExports;
-				},
-				{}
-			);
+			return groupedProjectExports;
+		},
+		{}
+	);
 
-	for (const [packageName, projectExports] of Object.entries(groupedProjectExports)) {
+	for (const [packageName, projectExports] of Object.entries(
+		groupedProjectExports
+	)) {
 		const {version} = projectScopeRequire(`${packageName}/package.json`);
-		const namespacedPackageName = getNamespacedPackageName(packageName, projectDescription.name);
-		const namespacedPackageId =`${namespacedPackageName}@${version}`;
+		const namespacedPackageName = getNamespacedPackageName(
+			packageName,
+			projectDescription.name
+		);
+		const namespacedPackageId = `${namespacedPackageName}@${version}`;
 
 		manifest.packages[namespacedPackageId] = {
 			dest: {
 				dir: '.',
 				id: namespacedPackageId,
 				name: namespacedPackageName,
-				version: version,
+				version,
 			},
 			modules: {},
-			'src': {
+			src: {
 				id: `${packageName}@${version}`,
 				name: packageName,
-				version: version,
-			}
+				version,
+			},
 		};
 
 		for (const projectExport of projectExports) {
-			const {name, scope, modulePath} = splitProjectExport(projectExport);
+			const {modulePath} = splitProjectExport(projectExport);
 
-			manifest.packages[namespacedPackageId].modules[`${modulePath.substring(1)}.js`] = {
+			manifest.packages[namespacedPackageId].modules[
+				`${modulePath.substring(1)}.js`
+			] = {
 				flags: {
 					esModule: true,
-					useESM: true
-				}
+					useESM: true,
+				},
 			};
 		}
 	}

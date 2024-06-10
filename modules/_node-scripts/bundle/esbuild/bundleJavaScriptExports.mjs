@@ -29,12 +29,22 @@ export default async function bundleJavaScriptExports(
 		projectExports
 			.filter((moduleName) => !moduleName.endsWith('.css'))
 			.map((moduleName) =>
-				bundle(globalImports, overridenPackageSymbols, projectWebContextPath, moduleName)
+				bundle(
+					globalImports,
+					overridenPackageSymbols,
+					projectWebContextPath,
+					moduleName
+				)
 			)
 	);
 }
 
-async function bundle(globalImports, overridenPackageSymbols, projectWebContextPath, moduleName) {
+async function bundle(
+	globalImports,
+	overridenPackageSymbols,
+	projectWebContextPath,
+	moduleName
+) {
 	const esbuildConfig = {
 		bundle: true,
 		entryPoints: [getEntryPoint(moduleName)],
@@ -56,7 +66,11 @@ async function bundle(globalImports, overridenPackageSymbols, projectWebContextP
 	await runEsbuild(esbuildConfig, flatModuleName);
 
 	await relocateSourcemap(
-		path.join(BUILD_MAIN_EXPORTS_PATH, 'exports', `${flatModuleName}.js.map`),
+		path.join(
+			BUILD_MAIN_EXPORTS_PATH,
+			'exports',
+			`${flatModuleName}.js.map`
+		),
 		projectWebContextPath
 	);
 }

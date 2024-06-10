@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import splitProjectExport from "./splitProjectExport.mjs";
+import splitProjectExport from './splitProjectExport.mjs';
 
-export default function getNamespacedPackageName(projectExport, namespacePackageName) {
+export default function getNamespacedPackageName(
+	projectExport,
+	namespacePackageName
+) {
 	let namespace;
 
 	if (namespacePackageName.startsWith('@')) {

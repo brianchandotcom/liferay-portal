@@ -8,9 +8,7 @@ import path from 'path';
 const VALID_TYPES = ['main', 'exports'];
 
 export const IMPORT_BRIDGE_FILTER =
-	path.sep === '/'
-		? /\/\$\/bridge\/.*$/
-		: /.?.?\\\$\\bridge\\.*$/;
+	path.sep === '/' ? /\/\$\/bridge\/.*$/ : /.?.?\\\$\\bridge\\.*$/;
 
 /**
  * Get a virtual import bridge path.

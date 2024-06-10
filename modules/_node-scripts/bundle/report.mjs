@@ -71,7 +71,7 @@ export default async function main() {
 		}
 	}
 
-	let report = {data: ''};
+	const report = {data: ''};
 
 	// Print global statistics.
 
@@ -120,10 +120,11 @@ export default async function main() {
 }
 
 function append(report, ...messages) {
-	messages.forEach((message) => report.data = report.data + `${message}\n`);
+	messages.forEach((message) => {
+		report.data = report.data + `${message}\n`;
+	});
 }
 
 function toSeconds(ms) {
 	return (ms / 1000).toFixed(3);
 }
-

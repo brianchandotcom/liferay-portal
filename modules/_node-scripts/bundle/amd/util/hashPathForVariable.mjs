@@ -16,4 +16,3 @@ export default function hashPathForVariable(filePath) {
 		crypto.createHash('sha256').update(normalizedFilePath).digest('hex')
 	);
 }
-

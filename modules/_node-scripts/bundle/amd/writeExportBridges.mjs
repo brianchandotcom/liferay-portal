@@ -13,12 +13,19 @@ import getNamespacedPackageName from './util/getNamespacedPackageName.mjs';
 import hashPathForVariable from './util/hashPathForVariable.mjs';
 import splitProjectExport from './util/splitProjectExport.mjs';
 
-export default async function writeExportBridges(projectDescription, projectExports, projectWebContextPath) {
+export default async function writeExportBridges(
+	projectDescription,
+	projectExports,
+	projectWebContextPath
+) {
 	await Promise.all([
 		writePackageJsons(projectDescription, projectExports),
-		...projectExports.map(
-			projectExport =>
-				writeExportBridge(projectDescription, projectExport, projectWebContextPath)
+		...projectExports.map((projectExport) =>
+			writeExportBridge(
+				projectDescription,
+				projectExport,
+				projectWebContextPath
+			)
 		),
 	]);
 }
@@ -28,53 +35,65 @@ async function writePackageJsons(projectDescription, projectExports) {
 	// Sometimes we export more than one path for a single package but we only need to write one
 	// package.json for those.
 
-	const uniquePackageNames =
-		projectExports
-			.map(splitProjectExport)
-			.reduce(
-				(uniquePackageNames, {name, scope}) => {
-					const packageName = `${scope ? `${scope}/` : ''}${name}`;
+	const uniquePackageNames = projectExports
+		.map(splitProjectExport)
+		.reduce((uniquePackageNames, {name, scope}) => {
+			const packageName = `${scope ? `${scope}/` : ''}${name}`;
 
-					uniquePackageNames[packageName] =  true;
+			uniquePackageNames[packageName] = true;
 
-					return uniquePackageNames;
-				},
-				{}
-			);
+			return uniquePackageNames;
+		}, {});
 
 	for (const packageName of Object.keys(uniquePackageNames)) {
 		const {version} = projectScopeRequire(`${packageName}/package.json`);
-		const namespacedPackageName = getNamespacedPackageName(packageName, projectDescription.name);
-		const namespacedPackageId = `${namespacedPackageName}@${version}`
+		const namespacedPackageName = getNamespacedPackageName(
+			packageName,
+			projectDescription.name
+		);
+		const namespacedPackageId = `${namespacedPackageName}@${version}`;
 
 		const json = {
 			dependencies: {},
+			main: './index.js',
 			name: namespacedPackageName,
 			version,
-			main: './index.js',
 		};
 
-		const filePath =
-			path.join(
-				BUILD_RESOURCES_PATH, 'node_modules', namespacedPackageId.replaceAll('/', '%2F'),
-				'package.json');
+		const filePath = path.join(
+			BUILD_RESOURCES_PATH,
+			'node_modules',
+			namespacedPackageId.replaceAll('/', '%2F'),
+			'package.json'
+		);
 
 		await fs.mkdir(path.dirname(filePath), {recursive: true});
 		await fs.writeFile(filePath, JSON.stringify(json, null, '\t'), 'utf-8');
 	}
 }
 
-async function writeExportBridge(projectDescription, projectExport, projectWebContextPath) {
+async function writeExportBridge(
+	projectDescription,
+	projectExport,
+	projectWebContextPath
+) {
 	const {modulePath, name, scope} = splitProjectExport(projectExport);
-	const {version} = projectScopeRequire(`${scope ? `${scope}/` : ''}${name}/package.json`);
-	const namespacedPackageName = getNamespacedPackageName(projectExport, projectDescription.name);
-	const namespacedPackageId = `${namespacedPackageName}@${version}`
+	const {version} = projectScopeRequire(
+		`${scope ? `${scope}/` : ''}${name}/package.json`
+	);
+	const namespacedPackageName = getNamespacedPackageName(
+		projectExport,
+		projectDescription.name
+	);
+	const namespacedPackageId = `${namespacedPackageName}@${version}`;
 
 	// Compose bridge code
 
 	const importPath =
-		getPathToRoot(projectExport, modulePath) + projectWebContextPath + '/__liferay__/exports/' +
-			`${getFlatName(projectExport)}.js`;
+		getPathToRoot(projectExport, modulePath) +
+		projectWebContextPath +
+		'/__liferay__/exports/' +
+		`${getFlatName(projectExport)}.js`;
 
 	const hashedImportPath = hashPathForVariable(importPath);
 
@@ -97,7 +116,9 @@ Liferay.Loader.define(
 	// Write file
 
 	const filePath = path.join(
-		BUILD_RESOURCES_PATH, 'node_modules', namespacedPackageId.replaceAll('/', '%2F'),
+		BUILD_RESOURCES_PATH,
+		'node_modules',
+		namespacedPackageId.replaceAll('/', '%2F'),
 		`${modulePath}.js`
 	);
 
@@ -106,6 +127,7 @@ Liferay.Loader.define(
 }
 
 function getPathToRoot(projectExport, modulePath) {
+
 	//
 	// Compute the relative position of the bridge related to the real ES
 	// module.

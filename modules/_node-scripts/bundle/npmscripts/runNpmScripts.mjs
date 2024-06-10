@@ -26,13 +26,9 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 		{basedir: '.'}
 	);
 
-	await forkModule(
-		npmScriptsPath,
-		['build'],
-		{
-			stdio: 'inherit',
-		}
-	);
+	await forkModule(npmScriptsPath, ['build'], {
+		stdio: 'inherit',
+	});
 }
 
 async function writeNpmScriptsConfig(projectNpmScriptsConfig) {

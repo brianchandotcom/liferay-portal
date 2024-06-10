@@ -145,8 +145,9 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 	protected boolean isDescendant(KBArticle kbArticle, KBFolder kbFolder)
 		throws PortalException {
 
-		if (kbFolder.getKbFolderId() ==
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if ((kbFolder.getKbFolderId() ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
+			(kbFolder.getKbFolderId() == kbArticle.getKbFolderId())) {
 
 			return true;
 		}

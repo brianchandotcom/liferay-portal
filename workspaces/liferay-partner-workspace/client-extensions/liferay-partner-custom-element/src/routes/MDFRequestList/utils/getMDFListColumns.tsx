@@ -247,8 +247,13 @@ export default function getMDFListColumns(
 			size: 'sm',
 		},
 		{
-			columnKey: MDFColumnKey.ACTIVITY_PERIOD,
-			label: 'Activity Period',
+			columnKey: MDFColumnKey.START_ACT_PERIOD,
+			label: 'Start Act. Period',
+			wrap: true,
+		},
+		{
+			columnKey: MDFColumnKey.END_ACT_PERIOD,
+			label: 'End Act. Period',
 			wrap: true,
 		},
 		{
@@ -259,9 +264,9 @@ export default function getMDFListColumns(
 			columnKey: MDFColumnKey.AMOUNT_CLAIMED,
 			label: (
 				<div>
-					<p className="mb-0 mt-4 text-neutral-10">Amount Claimed</p>
+					<p className="mb-0 mt-4 text-neutral-10">Claimed</p>
 					<p className="mt-0 text-neutral-5 text-paragraph-sm">
-						Amount Paid
+						Paid
 					</p>
 				</div>
 			),
@@ -275,19 +280,13 @@ export default function getMDFListColumns(
 					</p>
 				</div>
 			),
-		},
-		{
-			columnKey: MDFColumnKey.BALANCE,
-			label: 'Balance',
+			size: 'md',
 		},
 		{
 			columnKey: MDFColumnKey.DATE_SUBMITTTED,
 			label: (
 				<div>
 					<p className="mb-0 mt-4 text-neutral-10">Submit Date</p>
-					<p className="mt-0 text-neutral-5 text-paragraph-sm">
-						Last Modified Date
-					</p>
 				</div>
 			),
 			render: (_, row) => (

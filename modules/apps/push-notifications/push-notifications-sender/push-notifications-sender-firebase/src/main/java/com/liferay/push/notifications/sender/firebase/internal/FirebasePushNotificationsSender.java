@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -54,8 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FirebasePushNotificationsSender
 	implements PushNotificationsSender {
-
-	public static final String AUTHORIZATION = "Authorization";
 
 	public static final String BASE_GOOGLE_NOTIFICATIONS_API =
 		"https://fcm.googleapis.com/fcm/notification";
@@ -188,10 +187,12 @@ public class FirebasePushNotificationsSender
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.addHeader("access_token_auth", "true");
 		options.addHeader("project_id", _projectNumber);
-		options.addHeader(AUTHORIZATION, "Bearer " + authorizationToken);
+		options.addHeader(
+			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
 		options.setPost(true);
 
@@ -204,7 +205,7 @@ public class FirebasePushNotificationsSender
 		);
 
 		options.setBody(
-			data.toString(), ContentTypes.APPLICATION_JSON, "UTF-8");
+			data.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String responseString = _httpUtil.URLtoString(options);
 
@@ -232,10 +233,12 @@ public class FirebasePushNotificationsSender
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.addHeader("access_token_auth", "true");
 		options.addHeader("project_id", _projectNumber);
-		options.addHeader(AUTHORIZATION, "Bearer " + authorizationToken);
+		options.addHeader(
+			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.setPost(false);
 		options.setLocation(
 			StringBundler.concat(
@@ -293,11 +296,12 @@ public class FirebasePushNotificationsSender
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.addHeader("access_token_auth", "true");
-
 		options.addHeader("project_id", _projectNumber);
-		options.addHeader(AUTHORIZATION, "Bearer " + authorizationToken);
+		options.addHeader(
+			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
 		JSONObject data = JSONUtil.put(
 			"notification_key", notificationKey
@@ -310,7 +314,7 @@ public class FirebasePushNotificationsSender
 		);
 
 		options.setBody(
-			data.toString(), ContentTypes.APPLICATION_JSON, "UTF-8");
+			data.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
 		options.setPost(true);
@@ -330,9 +334,9 @@ public class FirebasePushNotificationsSender
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-
-		options.addHeader(AUTHORIZATION, "Bearer " + accessToken);
+		options.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
 		options.setBody(
 			message.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);

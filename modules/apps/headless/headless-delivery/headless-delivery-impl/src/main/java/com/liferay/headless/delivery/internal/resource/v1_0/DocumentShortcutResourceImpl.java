@@ -122,16 +122,20 @@ public class DocumentShortcutResourceImpl
 			_dlAppService.addFileShortcut(
 				siteId, documentFolderId,
 				documentShortcut.getTargetDocumentId(),
-				_createServiceContext(documentShortcut, siteId)));
+				_createServiceContext(
+					siteId, documentShortcut.getViewableByAsString())));
 	}
 
 	private ServiceContext _createServiceContext(
-		DocumentShortcut documentShortcut, long groupId) {
+		long groupId, String viewableBy) {
 
-		return ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest,
-			documentShortcut.getViewableByAsString()
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
 		).build();
+
+		serviceContext.setUserId(contextUser.getUserId());
+
+		return serviceContext;
 	}
 
 	private Page<DocumentShortcut> _getPage(

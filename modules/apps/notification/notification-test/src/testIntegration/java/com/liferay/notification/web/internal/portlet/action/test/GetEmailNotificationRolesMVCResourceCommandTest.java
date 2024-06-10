@@ -114,6 +114,14 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 						"name",
 						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER),
 					JSONUtil.put(
+						"name", AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER),
+					JSONUtil.put(
+						"name",
+						AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER),
+					JSONUtil.put(
+						"name",
+						AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER),
+					JSONUtil.put(
 						"label", accountRole1.getTitle(LocaleUtil.getDefault())
 					).put(
 						"name", accountRole1.getName()
@@ -156,6 +164,8 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 			).put(
 				"regularRoles",
 				JSONUtil.putAll(
+					JSONUtil.put(
+						"name", AccountRoleConstants.ROLE_NAME_SUPPLIER),
 					JSONUtil.put("name", RoleConstants.ADMINISTRATOR),
 					JSONUtil.put("name", RoleConstants.ANALYTICS_ADMINISTRATOR),
 					JSONUtil.put("name", RoleConstants.OWNER),

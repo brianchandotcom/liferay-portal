@@ -286,6 +286,13 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 			assetListEntryAssetEntryRelId);
 	}
 
+	public static List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRelByAssetEntryId(long assetEntryId) {
+
+		return getService().getAssetListEntryAssetEntryRelByAssetEntryId(
+			assetEntryId);
+	}
+
 	/**
 	 * Returns the asset list entry asset entry rel matching the UUID and group.
 	 *

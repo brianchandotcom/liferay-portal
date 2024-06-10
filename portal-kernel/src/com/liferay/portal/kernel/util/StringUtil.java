@@ -2825,6 +2825,22 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String replace(String s, String[] oldSubs, Object[] newSubs) {
+		if ((s == null) || (oldSubs == null) || (newSubs == null)) {
+			return null;
+		}
+
+		if (oldSubs.length != newSubs.length) {
+			return s;
+		}
+
+		for (int i = 0; i < oldSubs.length; i++) {
+			s = replace(s, oldSubs[i], String.valueOf(newSubs[i]));
+		}
+
+		return s;
+	}
+
 	/**
 	 * Replaces all occurrences of the elements of the string array with the
 	 * corresponding elements of the new string array.

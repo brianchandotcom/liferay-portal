@@ -6,7 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import expandGlobs from '../../util/expandGlobs.mjs';
+import expandGlobs from '../util/expandGlobs.mjs';
 
 const HEADER = 'label,start,end,delta';
 

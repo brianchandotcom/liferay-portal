@@ -31,13 +31,13 @@
 		<attribute>
 			<description>Deprecated as of 7.4.0, replaced by the attribute <![CDATA[<code>displayStyleGroupKey</code>]]>.</description>
 			<name>displayStyleGroupId</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
 			<name>displayStyleGroupKey</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>

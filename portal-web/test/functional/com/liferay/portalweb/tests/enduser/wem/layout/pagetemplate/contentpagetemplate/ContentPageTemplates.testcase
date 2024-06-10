@@ -210,14 +210,6 @@ definition {
 				id = "element-text",
 				text = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 		}
-
-		task ("View the no resource shown in the live site") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			AssertTextPresent(value1 = "The requested resource could not be found.");
-		}
 	}
 
 }

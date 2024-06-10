@@ -693,7 +693,6 @@ definition {
 	test UseZoomAndDragBackground {
 		property portal.acceptance = "false";
 		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 
 		// TODO COMMERCE-8269 Test needs refactoring due to a failure locating the Reset Zoom button.
 

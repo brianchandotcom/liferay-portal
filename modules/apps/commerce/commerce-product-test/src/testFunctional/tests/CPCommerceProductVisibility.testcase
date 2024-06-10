@@ -188,7 +188,6 @@ definition {
 	@priority = 3
 	test RemoveAccountGroupFilter {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
 
 		// TODO Review
 

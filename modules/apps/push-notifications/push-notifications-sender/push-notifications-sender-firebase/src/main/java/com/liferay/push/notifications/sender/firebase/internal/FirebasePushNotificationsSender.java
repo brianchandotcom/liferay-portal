@@ -238,7 +238,6 @@ public class FirebasePushNotificationsSender
 			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.setPost(false);
 		options.setLocation(
 			StringBundler.concat(
 				BASE_GOOGLE_NOTIFICATIONS_API, "?notification_key_name=",

@@ -193,19 +193,18 @@ public class FirebasePushNotificationsSender
 			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
-		options.setPost(true);
-
-		JSONObject data = JSONUtil.put(
-			"notification_key_name", GOOGLE_GROUP_ID
-		).put(
-			"operation", "create"
-		).put(
-			"registration_ids", tokens
-		);
 
 		options.setBody(
-			data.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+			JSONUtil.put(
+				"notification_key_name", GOOGLE_GROUP_ID
+			).put(
+				"operation", "create"
+			).put(
+				"registration_ids", tokens
+			).toString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
+		options.setPost(true);
 
 		String responseString = _httpUtil.URLtoString(options);
 
@@ -303,18 +302,17 @@ public class FirebasePushNotificationsSender
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
-		JSONObject data = JSONUtil.put(
-			"notification_key", notificationKey
-		).put(
-			"notification_key_name", GOOGLE_GROUP_ID
-		).put(
-			"operation", "remove"
-		).put(
-			"registration_ids", tokens
-		);
-
 		options.setBody(
-			data.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+			JSONUtil.put(
+				"notification_key", notificationKey
+			).put(
+				"notification_key_name", GOOGLE_GROUP_ID
+			).put(
+				"operation", "remove"
+			).put(
+				"registration_ids", tokens
+			).toString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
 		options.setPost(true);
@@ -340,11 +338,9 @@ public class FirebasePushNotificationsSender
 
 		options.setBody(
 			message.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
 		options.setLocation(
 			"https://fcm.googleapis.com/v1/projects/" + _getProjectId() +
 				"/messages:send");
-
 		options.setPost(true);
 
 		_httpUtil.URLtoString(options);

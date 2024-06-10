@@ -17,6 +17,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
+import com.liferay.info.collection.provider.item.selector.criterion.RepeatableFieldInfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -37,6 +38,7 @@ import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
@@ -353,7 +355,8 @@ public class GetCollectionFieldMVCResourceCommand
 		).put(
 			"customCollectionSelectorURL",
 			_getCustomCollectionSelectorURL(
-				httpServletRequest, itemType, namespace)
+				httpServletRequest, itemType, layoutObjectReferenceJSONObject,
+				namespace)
 		).put(
 			"isRestricted", false
 		).put(
@@ -395,7 +398,9 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private String _getCustomCollectionSelectorURL(
 		HttpServletRequest httpServletRequest, String itemType,
-		String namespace) {
+		JSONObject layoutObjectReferenceJSONObject, String namespace) {
+
+		List<ItemSelectorCriterion> itemSelectorCriterions = new ArrayList<>();
 
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion =
@@ -409,37 +414,64 @@ public class GetCollectionFieldMVCResourceCommand
 			InfoCollectionProviderItemSelectorCriterion.Type.
 				SUPPORTED_INFO_FRAMEWORK_COLLECTIONS);
 
-		RelatedInfoItemCollectionProviderItemSelectorCriterion
-			relatedInfoItemCollectionProviderItemSelectorCriterion =
-				new RelatedInfoItemCollectionProviderItemSelectorCriterion();
+		itemSelectorCriterions.add(infoCollectionProviderItemSelectorCriterion);
 
-		relatedInfoItemCollectionProviderItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(
-				new InfoListProviderItemSelectorReturnType());
+		if (!Objects.equals(
+				layoutObjectReferenceJSONObject.getString("key"),
+				RepeatableFieldInfoItemCollectionProvider.class.getName())) {
 
-		List<String> sourceItemTypes = new ArrayList<>();
+			RelatedInfoItemCollectionProviderItemSelectorCriterion
+				relatedInfoItemCollectionProviderItemSelectorCriterion =
+					new RelatedInfoItemCollectionProviderItemSelectorCriterion();
 
-		sourceItemTypes.add(itemType);
+			relatedInfoItemCollectionProviderItemSelectorCriterion.
+				setDesiredItemSelectorReturnTypes(
+					new InfoListProviderItemSelectorReturnType());
 
-		String className = _infoSearchClassMapperRegistry.getSearchClassName(
-			itemType);
+			List<String> sourceItemTypes = new ArrayList<>();
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
+			sourceItemTypes.add(itemType);
 
-		if (assetRendererFactory != null) {
-			sourceItemTypes.add(AssetEntry.class.getName());
+			String className =
+				_infoSearchClassMapperRegistry.getSearchClassName(itemType);
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			if (assetRendererFactory != null) {
+				sourceItemTypes.add(AssetEntry.class.getName());
+			}
+
+			relatedInfoItemCollectionProviderItemSelectorCriterion.
+				setSourceItemTypes(sourceItemTypes);
+
+			itemSelectorCriterions.add(
+				relatedInfoItemCollectionProviderItemSelectorCriterion);
+
+			RepeatableFieldInfoCollectionProviderItemSelectorCriterion
+				repeatableFieldInfoCollectionProviderItemSelectorCriterion =
+					new RepeatableFieldInfoCollectionProviderItemSelectorCriterion();
+
+			repeatableFieldInfoCollectionProviderItemSelectorCriterion.
+				setDesiredItemSelectorReturnTypes(
+					new InfoListProviderItemSelectorReturnType());
+
+			repeatableFieldInfoCollectionProviderItemSelectorCriterion.
+				setItemType(itemType);
+
+			repeatableFieldInfoCollectionProviderItemSelectorCriterion.
+				setItemSubtype(
+					layoutObjectReferenceJSONObject.getString("itemSubtype"));
+
+			itemSelectorCriterions.add(
+				repeatableFieldInfoCollectionProviderItemSelectorCriterion);
 		}
-
-		relatedInfoItemCollectionProviderItemSelectorCriterion.
-			setSourceItemTypes(sourceItemTypes);
 
 		PortletURL infoListSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			namespace + "selectInfoList",
-			infoCollectionProviderItemSelectorCriterion,
-			relatedInfoItemCollectionProviderItemSelectorCriterion);
+			itemSelectorCriterions.toArray(new ItemSelectorCriterion[0]));
 
 		if (infoListSelectorURL == null) {
 			return StringPool.BLANK;

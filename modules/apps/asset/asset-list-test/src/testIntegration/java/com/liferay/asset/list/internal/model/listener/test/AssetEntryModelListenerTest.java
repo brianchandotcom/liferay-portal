@@ -74,6 +74,25 @@ public class AssetEntryModelListenerTest {
 		_assertAssetListEntryAssetEntryRels(journalArticle1, journalArticle3);
 	}
 
+	@Test
+	public void testUpdateSelectionAfterDeleteAssetEntry() throws Exception {
+		JournalArticle journalArticle1 = _addJournalArticle();
+		JournalArticle journalArticle2 = _addJournalArticle();
+		JournalArticle journalArticle3 = _addJournalArticle();
+
+		_assertAssetListEntryAssetEntryRels(
+			journalArticle1, journalArticle2, journalArticle3);
+
+		_journalArticleLocalService.deleteArticle(
+			_group.getGroupId(), journalArticle2.getArticleId(),
+			_serviceContext);
+
+		JournalArticle journalArticle4 = _addJournalArticle();
+
+		_assertAssetListEntryAssetEntryRels(
+			journalArticle1, journalArticle3, journalArticle4);
+	}
+
 	private JournalArticle _addJournalArticle() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),

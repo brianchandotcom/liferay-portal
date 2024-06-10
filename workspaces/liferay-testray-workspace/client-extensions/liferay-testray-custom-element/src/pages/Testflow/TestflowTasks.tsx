@@ -68,9 +68,9 @@ const TestFlowTasks = () => {
 	} = useOutletContext<OutletContext>();
 	const {actions, completeModal, forceRefetch} = useSubtasksActions();
 	const {taskId} = useParams();
-	const navigate = useNavigate();
 	const {updateItemFromList} = useMutate();
 	const [isLoading, setIsLoading] = useState(false);
+	const navigate = useNavigate();
 
 	const [{myUserAccount}] = useContext(TestrayContext);
 

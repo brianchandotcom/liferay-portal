@@ -283,7 +283,7 @@ public class FirebasePushNotificationsSender
 		}
 		catch (IOException ioException) {
 			throw new PortalException(
-				"Unable to authenticate with GCS", ioException);
+				"Unable to authenticate with Firebase", ioException);
 		}
 	}
 

@@ -95,6 +95,76 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 		_assertAssetListEntryAssetEntryRels(journalArticle);
 	}
 
+	@Test
+	public void testUpgradeUpdatingPosition() throws Exception {
+		JournalArticle journalArticle1 = _addJournalArticle();
+		JournalArticle journalArticle2 = _addJournalArticle();
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			_assetListEntryAssetEntryRelLocalService.
+				addAssetListEntryAssetEntryRel(
+					_assetListEntry.getAssetListEntryId(),
+					RandomTestUtil.randomLong(), 0L, _serviceContext);
+
+		Assert.assertEquals(2, assetListEntryAssetEntryRel.getPosition());
+
+		_assertAssetListEntryAssetEntryRelsSize(3);
+
+		JournalArticle journalArticle3 = _addJournalArticle();
+		JournalArticle journalArticle4 = _addJournalArticle();
+
+		_assertAssetListEntryAssetEntryRelsSize(5);
+
+		_runUpgrade();
+
+		_assertAssetListEntryAssetEntryRels(
+			journalArticle1, journalArticle2, journalArticle3, journalArticle4);
+	}
+
+	@Test
+	public void testUpgradeWithOrphanAssetEntryIdAtFirstPosition()
+		throws Exception {
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			_assetListEntryAssetEntryRelLocalService.
+				addAssetListEntryAssetEntryRel(
+					_assetListEntry.getAssetListEntryId(),
+					RandomTestUtil.randomLong(), 0L, _serviceContext);
+
+		Assert.assertEquals(0, assetListEntryAssetEntryRel.getPosition());
+
+		JournalArticle journalArticle1 = _addJournalArticle();
+		JournalArticle journalArticle2 = _addJournalArticle();
+
+		_assertAssetListEntryAssetEntryRelsSize(3);
+
+		_runUpgrade();
+
+		_assertAssetListEntryAssetEntryRels(journalArticle1, journalArticle2);
+	}
+
+	@Test
+	public void testUpgradeWithOrphanAssetEntryIdAtLastPosition()
+		throws Exception {
+
+		JournalArticle journalArticle1 = _addJournalArticle();
+		JournalArticle journalArticle2 = _addJournalArticle();
+
+		_assertAssetListEntryAssetEntryRelsSize(2);
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			_assetListEntryAssetEntryRelLocalService.
+				addAssetListEntryAssetEntryRel(
+					_assetListEntry.getAssetListEntryId(),
+					RandomTestUtil.randomLong(), 0L, _serviceContext);
+
+		Assert.assertEquals(2, assetListEntryAssetEntryRel.getPosition());
+
+		_runUpgrade();
+
+		_assertAssetListEntryAssetEntryRels(journalArticle1, journalArticle2);
+	}
+
 	private JournalArticle _addJournalArticle() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -143,6 +213,18 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 			Assert.assertEquals(
 				journalArticle.getResourcePrimKey(), assetEntry.getClassPK());
 		}
+	}
+
+	private void _assertAssetListEntryAssetEntryRelsSize(int expected) {
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					_assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryAssetEntryRels.toString(), expected,
+			assetListEntryAssetEntryRels.size());
 	}
 
 	private void _runUpgrade() throws Exception {

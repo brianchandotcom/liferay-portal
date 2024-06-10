@@ -156,7 +156,7 @@ public class LoginAction implements Action {
 			).setPortletMode(
 				PortletMode.VIEW
 			).setWindowState(
-				getWindowState(httpServletRequest)
+				getWindowState(httpServletRequest, layout.isTypeUtility())
 			).buildString();
 		}
 
@@ -179,7 +179,11 @@ public class LoginAction implements Action {
 	}
 
 	protected WindowState getWindowState(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, boolean utility) {
+
+		if (utility) {
+			return WindowState.NORMAL;
+		}
 
 		WindowState windowState = WindowState.MAXIMIZED;
 

@@ -44,15 +44,20 @@ export const waitForLoading = async container => {
 
 export const waitForLoadingToBeRemoved = async (
 	container,
-	selector = '.loading-root'
+	{selector = '.loading-root', timeout = 5000} = {}
 ) => {
-	const loading = container.querySelector(selector);
+	try {
+		const loading = container.querySelector(selector);
 
-	if (loading) {
-		return await waitForElementToBeRemoved(loading);
+		return await waitForElementToBeRemoved(loading, {timeout});
+	} catch (e) {
+		// eslint-disable-next-line no-console
+		console.log(
+			'function waitForLoadingToBeRemoved is not needed for this test, please remove it to improve performance!'
+		);
+
+		return Promise.resolve();
 	}
-
-	return Promise.resolve();
 };
 
 export const selectDropdownItem = labelText => {

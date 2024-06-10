@@ -3,6 +3,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
+import Loading from 'shared/components/Loading';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -353,7 +354,9 @@ const UserList: React.FC<IUserListProps> = ({
 			total: get(data, 'total')
 		};
 
-		if (error) {
+		if (loading) {
+			return <Loading />;
+		} else if (error) {
 			return <ErrorDisplay onReload={refetch} spacer />;
 		} else if (authorized) {
 			return (

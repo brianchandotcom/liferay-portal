@@ -12,6 +12,7 @@ exports[`CriteriaSidebarCollapse should render 1`] = `
       >
         <li
           class="criteria-sidebar-item-root color--"
+          data-testid="criteria-item-Page Views"
           draggable="true"
         >
           <span
@@ -57,6 +58,7 @@ exports[`CriteriaSidebarCollapse should render 1`] = `
       >
         <li
           class="criteria-sidebar-item-root color--"
+          data-testid="criteria-item-Page Actions"
           draggable="true"
         >
           <span

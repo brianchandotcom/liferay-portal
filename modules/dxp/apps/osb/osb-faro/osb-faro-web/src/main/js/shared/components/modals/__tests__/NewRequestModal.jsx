@@ -21,19 +21,25 @@ describe('NewRequestModal', () => {
 			</Provider>
 		);
 
-		await waitForLoadingToBeRemoved(container);
+		await waitForLoadingToBeRemoved(container, {
+			selector: '.loading-animation'
+		});
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it.skip('checks both Delete & Suppress checkbox when Delete is clicked', () => {
-		const {getByLabelText} = render(
+	it('checks both Delete & Suppress checkbox when Delete is clicked', async () => {
+		const {container, getByLabelText} = render(
 			<Provider store={mockStore()}>
 				<DndProvider backend={HTML5Backend}>
 					<NewRequestModal />
 				</DndProvider>
 			</Provider>
 		);
+
+		await waitForLoadingToBeRemoved(container, {
+			selector: '.loading-animation'
+		});
 
 		const deleteCheckbox = getByLabelText(/Delete/);
 		const suppressCheckbox = getByLabelText(/Suppress/);

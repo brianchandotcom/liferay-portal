@@ -289,16 +289,127 @@ exports[`InterestDetails should render 1`] = `
                 </th>
               </tr>
             </thead>
+            <tbody>
+              <tr
+                class=""
+              >
+                <td
+                  class="name-cell-root"
+                >
+                  <div
+                    class="content-container"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      <div
+                        class="table-title text-truncate"
+                      >
+                        Foo Bar
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  -
+                </td>
+                <td
+                  class="name-cell-root"
+                >
+                  <div
+                    class="text-truncate"
+                  >
+                    -
+                  </div>
+                </td>
+              </tr>
+            </tbody>
           </table>
-          <div
-            class="loading-root overlay"
-          >
-            <span
-              aria-hidden="true"
-              class="loading-root center loading-animation"
-            />
-          </div>
         </div>
+        <nav
+          class="navbar navbar-root pagination-bar-root"
+        >
+          <div
+            class="container-fluid"
+          >
+            <div
+              class="dropdown dropdown-root pagination-items-per-page"
+            >
+              <button
+                aria-controls="clay-dropdown-menu-2"
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle button-root btn btn-sm btn-secondary"
+                type="button"
+              >
+                2 Items
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                  role="presentation"
+                >
+                  <use
+                    href="#caret-bottom"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="pagination-results"
+            >
+              Showing 1 to 1 of 1 entry.
+            </div>
+            <ul
+              class="pagination pagination-root"
+            >
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link"
+                  disabled=""
+                  href="/?page=0"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-angle-left-small icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#angle-left-small"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li
+                class="page-item active"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link"
+                  href="/?page=1"
+                >
+                  1
+                </a>
+              </li>
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  class="button-root btn btn-unstyled page-link"
+                  disabled=""
+                  href="/?page=2"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-angle-right-small icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#angle-right-small"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
       </div>
     </div>
   </div>

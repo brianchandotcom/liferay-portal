@@ -377,6 +377,7 @@ exports[`Edit should render 1`] = `
                         >
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Downloaded Document & Media"
                             draggable="true"
                           >
                             <span
@@ -411,6 +412,7 @@ exports[`Edit should render 1`] = `
                           </li>
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Submitted Form"
                             draggable="true"
                           >
                             <span
@@ -445,6 +447,7 @@ exports[`Edit should render 1`] = `
                           </li>
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Viewed Form"
                             draggable="true"
                           >
                             <span
@@ -479,6 +482,7 @@ exports[`Edit should render 1`] = `
                           </li>
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Viewed Page"
                             draggable="true"
                           >
                             <span
@@ -513,6 +517,7 @@ exports[`Edit should render 1`] = `
                           </li>
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Commented on Blog"
                             draggable="true"
                           >
                             <span
@@ -547,6 +552,7 @@ exports[`Edit should render 1`] = `
                           </li>
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Viewed Blog"
                             draggable="true"
                           >
                             <span
@@ -581,6 +587,7 @@ exports[`Edit should render 1`] = `
                           </li>
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Viewed Document & Media"
                             draggable="true"
                           >
                             <span
@@ -615,6 +622,7 @@ exports[`Edit should render 1`] = `
                           </li>
                           <li
                             class="criteria-sidebar-item-root color--web"
+                            data-testid="criteria-item-Viewed Web Content"
                             draggable="true"
                           >
                             <span
@@ -660,6 +668,7 @@ exports[`Edit should render 1`] = `
                         >
                           <li
                             class="criteria-sidebar-item-root color--event"
+                            data-testid="criteria-item-displayName-1"
                             draggable="true"
                           >
                             <span

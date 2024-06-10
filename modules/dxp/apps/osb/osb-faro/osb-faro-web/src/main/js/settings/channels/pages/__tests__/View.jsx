@@ -48,8 +48,6 @@ describe('View Channel', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
@@ -61,8 +59,6 @@ describe('View Channel', () => {
 		);
 
 		const {container} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -77,8 +73,6 @@ describe('View Channel', () => {
 
 		const {queryByLabelText, queryByText} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		expect(queryByText('Delete')).toBeNull();
 		expect(queryByLabelText('Edit')).toBeNull();
 	});
@@ -89,8 +83,6 @@ describe('View Channel', () => {
 		);
 
 		const {container, queryByText} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -113,8 +105,6 @@ describe('View Channel', () => {
 		);
 
 		const {container} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -182,8 +172,6 @@ describe('View Channel', () => {
 
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
@@ -236,8 +224,6 @@ describe('View Channel', () => {
 
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
@@ -272,17 +258,11 @@ describe('View Channel', () => {
 		const modalContainer = container.querySelector('.modal-renderer-root');
 		const customMatcher = content => content === 'Permissions Change';
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText(modalContainer, customMatcher)).toBeNull();
 
 		fireEvent.click(screen.getByLabelText('Select Users'));
-
-		jest.runAllTimers();
-
-		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText(modalContainer, customMatcher)).toBeTruthy();
 	});

@@ -33,7 +33,7 @@ exports[`BaseDropdownSearchableList should render 1`] = `
                 role="presentation"
               >
                 <use
-                  href="/o/osb-faro-web/dist/sprite.svg#search"
+                  href="#search"
                 />
               </svg>
             </button>

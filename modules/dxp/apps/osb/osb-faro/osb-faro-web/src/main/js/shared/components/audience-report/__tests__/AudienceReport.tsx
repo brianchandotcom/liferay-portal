@@ -108,7 +108,7 @@ describe('CommerceMetricCard', () => {
 	});
 
 	it('should render a tooltip when donuts mouse over', async () => {
-		const {container, debug} = render(
+		const {container} = render(
 			<WrappedComponent
 				queryProps={{
 					metricName: MetricName.Views,
@@ -126,7 +126,5 @@ describe('CommerceMetricCard', () => {
 		fireEvent.mouseEnter(donut);
 
 		expect(tooltipEnabled).toHaveBeenCalledTimes(1);
-
-		debug();
 	});
 });

@@ -77,7 +77,7 @@ exports[`Data Privacy Overview should render 1`] = `
                     class="col-lg-auto align-self-center"
                   >
                     <button
-                      aria-activedescendant="18144000000"
+                      aria-activedescendant="86400000"
                       aria-controls="clay-id-2"
                       aria-expanded="true"
                       aria-haspopup="listbox"

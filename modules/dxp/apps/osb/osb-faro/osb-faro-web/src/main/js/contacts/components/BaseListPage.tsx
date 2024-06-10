@@ -160,6 +160,8 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 				<Card pageDisplay>
 					<Card.Body noPadding>
 						<StatesRenderer {...dataSourceStates}>
+							<StatesRenderer.Loading />
+
 							<StatesRenderer.Empty
 								description={
 									authorized ? (

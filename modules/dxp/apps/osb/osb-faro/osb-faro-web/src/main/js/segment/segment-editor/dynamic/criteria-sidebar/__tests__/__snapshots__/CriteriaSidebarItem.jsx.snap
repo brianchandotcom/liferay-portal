@@ -4,6 +4,7 @@ exports[`CriteriaSidebarItem should render 1`] = `
 <div>
   <li
     class="criteria-sidebar-item-root"
+    data-testid="criteria-item-Page Views"
   >
     <span
       class="inline-item"

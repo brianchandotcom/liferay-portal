@@ -36,8 +36,6 @@ describe('AccessTokenList', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
@@ -47,8 +45,6 @@ describe('AccessTokenList', () => {
 		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
 
 		const {container, queryByTestId} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -63,16 +59,12 @@ describe('AccessTokenList', () => {
 			<DefaultComponent />
 		);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.table-root')).toBeNull();
 		expect(queryByTestId('generate-token-button')).toBeTruthy();
 
 		fireEvent.click(getByTestId('generate-token-button'));
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -83,18 +75,13 @@ describe('AccessTokenList', () => {
 	it('should open a modal to confirm revoking a token', async () => {
 		const {container, getByText} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(getByText('Revoke'));
 
-		jest.runAllTimers();
-
-		await waitForLoadingToBeRemoved(container);
-
 		expect(open).toBeCalled();
 	});
+
 	it('should display the "Generate Token" card  above the table if the token is expired', async () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
@@ -105,8 +92,6 @@ describe('AccessTokenList', () => {
 		);
 
 		const {container} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -127,8 +112,6 @@ describe('AccessTokenList', () => {
 		);
 
 		const {container} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -152,8 +135,6 @@ describe('AccessTokenList', () => {
 
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
@@ -176,8 +157,6 @@ describe('AccessTokenList', () => {
 
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(
@@ -199,8 +178,6 @@ describe('AccessTokenList', () => {
 		);
 
 		const {container} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 

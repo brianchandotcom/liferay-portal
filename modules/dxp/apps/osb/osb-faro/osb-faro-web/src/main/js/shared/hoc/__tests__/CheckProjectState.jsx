@@ -6,10 +6,9 @@ import * as API from 'shared/api';
 import checkProjectState from '../CheckProjectState';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, waitFor} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
-import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -125,9 +124,9 @@ describe('SuccessDisplayIf', () => {
 			</StaticRouter>
 		);
 
-		await waitForLoadingToBeRemoved(container);
-
 		jest.runAllTimers();
+
+		await waitFor(() => {});
 
 		expect(container).toMatchSnapshot();
 	});

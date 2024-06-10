@@ -30,8 +30,6 @@ describe('ChannelUserList', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
-
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
@@ -42,26 +40,24 @@ describe('ChannelUserList', () => {
 			<DefaultComponent authorized={false} />
 		);
 
-		jest.runAllTimers();
-
 		expect(container.querySelector('input[type=checkbox]')).toBeNull();
 		expect(queryByText('Add User')).toBeNull();
 	});
 
-	it('should open a modal to add users', () => {
-		const {queryByText} = render(<DefaultComponent />);
+	it('should open a modal to add users', async () => {
+		const {container, queryByText} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(queryByText('Add User'));
 
 		expect(open).toBeCalled();
 	});
 
-	it.skip('should open a modal to remove users', async () => {
-		const {queryByTestId} = render(<DefaultComponent />);
+	it('should open a modal to remove users', async () => {
+		const {container, queryByTestId} = render(<DefaultComponent />);
 
-		jest.runAllTimers();
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(queryByTestId('delete-user'));
 

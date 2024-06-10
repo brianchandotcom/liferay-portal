@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -126,12 +127,11 @@ public class SetupAdminAutoLoginTest {
 			new MockHttpServletRequest(
 				ServletContextPool.get(StringPool.BLANK), HttpMethods.GET,
 				StringPool.SLASH);
+		String password = RandomTestUtil.randomString();
 
 		mockHttpServletRequest.addParameter(Constants.CMD, "update");
-		mockHttpServletRequest.addParameter(
-			"password1", PropsValues.DEFAULT_ADMIN_PASSWORD);
-		mockHttpServletRequest.addParameter(
-			"password2", PropsValues.DEFAULT_ADMIN_PASSWORD);
+		mockHttpServletRequest.addParameter("password1", password);
+		mockHttpServletRequest.addParameter("password2", password);
 		mockHttpServletRequest.addParameter("p_auth", "test");
 
 		HttpSession httpSession = mockHttpServletRequest.getSession();

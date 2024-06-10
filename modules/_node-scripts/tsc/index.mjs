@@ -14,17 +14,43 @@ import {
 } from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
 import forkModule from '../util/forkModule.mjs';
+import getFileProjectDir from '../util/getFileProjectDir.mjs';
+import getGitModifiedFiles from '../util/getGitModifiedFiles.mjs';
+import getNamedArguments from '../util/getNamedArguments.mjs';
 
 export default async function main() {
+	const {modifiedSince} = getNamedArguments({
+		modifiedSince: '--modified-since',
+	});
+
 	const cwd = path.resolve('.');
 	const rootDir = await getRootDir();
 
 	if (cwd === rootDir) {
-		const projectGroups = [[]];
-
 		const cpuCount = os.cpus().length;
 
-		for (const projectDir of await getProjectDirs()) {
+		console.log(
+			`ℹ️ A total of ${cpuCount} CPUs were detected: launching tsc in groups of ${cpuCount} projects`
+		);
+
+		let projectDirs;
+
+		if (modifiedSince) {
+			projectDirs = await getGitModifiedProjectDirs(modifiedSince);
+
+			console.log(
+				`ℹ️ Going to check ${projectDirs.length} modified projects`
+			);
+		}
+		else {
+			projectDirs = await getProjectDirs();
+
+			console.log(`ℹ️ Going to check ${projectDirs.length} projects`);
+		}
+
+		const projectGroups = [[]];
+
+		for (const projectDir of projectDirs) {
 			if (!(await fileExists(path.join(projectDir, SRC_TSCONFIG_PATH)))) {
 				continue;
 			}
@@ -40,10 +66,6 @@ export default async function main() {
 			group.push(projectDir);
 		}
 
-		console.log(
-			`ℹ️ ${cpuCount} CPUs detected: launching tsc in groups of ${cpuCount} projects`
-		);
-
 		for (const projectGroup of projectGroups) {
 			await Promise.all(
 				projectGroup.map((projectDir) => {
@@ -57,8 +79,38 @@ export default async function main() {
 		}
 	}
 	else {
+		if (modifiedSince) {
+			console.error(`
+❌ Argument --modified-since can only be given when checking the whole liferay-portal from modules
+   directory.
+`);
+
+			process.exit(2);
+		}
+
 		await runTsc(cwd);
 	}
+}
+
+async function getGitModifiedProjectDirs(commit) {
+	let files = await getGitModifiedFiles(commit);
+
+	files = files.filter(
+		(file) => file.endsWith('.ts') || file.endsWith('.tsx')
+	);
+	files = files.filter((file) => file.startsWith('modules/'));
+	files = files.map((file) => file.substring(8));
+	files = files.filter(
+		(file) => file.startsWith('apps/') || file.startsWith('dxp/')
+	);
+
+	const projectDirs = new Set();
+
+	for (const file of files) {
+		projectDirs.add(await getFileProjectDir(file));
+	}
+
+	return [...projectDirs];
 }
 
 async function runTsc(cwd) {
@@ -76,7 +128,6 @@ async function runTsc(cwd) {
 				'resources',
 				'tsconfig.json'
 			),
-			...process.argv.slice(3),
 		],
 		{
 			cwd,

@@ -26,7 +26,7 @@ const COMMANDS = {
 	'check:tsc': {
 		description:
 			'runs TypeScript checks in the current project or globally (if run from modules)',
-		parameters: '[<tsc arguments>]',
+		parameters: '[--modified-since=<git commit>]',
 		script: './tsc/index.mjs',
 	},
 	'format': {

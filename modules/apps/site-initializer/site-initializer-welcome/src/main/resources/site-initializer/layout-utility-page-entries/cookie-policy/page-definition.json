@@ -4,6 +4,7 @@
 		"pageElements": [
 			{
 				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] .fds .data-set .default-renderer__text-truncate {\n max-width: none !important;\n}",
 					"indexed": true,
 					"layout": {
 						"widthType": "Fixed"

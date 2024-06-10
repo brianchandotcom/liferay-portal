@@ -132,6 +132,14 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRelByAssetEntryId(long assetEntryId) {
+
+		return assetListEntryAssetEntryRelPersistence.findByAssetEntryId(
+			assetEntryId);
+	}
+
+	@Override
 	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
 		long assetListEntryId, int start, int end) {
 

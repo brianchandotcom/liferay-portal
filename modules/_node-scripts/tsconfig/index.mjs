@@ -5,11 +5,11 @@
 
 import path from 'path';
 
-import getProjectDependencies from '../../configuration/getProjectDependencies.mjs';
-import getProjectDescription from '../../configuration/getProjectDescription.mjs';
-import getProjectEntryPoints from '../../configuration/getProjectEntryPoints.mjs';
-import {SRC_PATH, getProjectDirs, getRootDir} from '../../util/constants.mjs';
-import fileExists from '../../util/fileExists.mjs';
+import getProjectDependencies from '../configuration/getProjectDependencies.mjs';
+import getProjectDescription from '../configuration/getProjectDescription.mjs';
+import getProjectEntryPoints from '../configuration/getProjectEntryPoints.mjs';
+import {SRC_PATH, getProjectDirs, getRootDir} from '../util/constants.mjs';
+import fileExists from '../util/fileExists.mjs';
 import writeProjectTsconfig from './writeProjectTsconfig.mjs';
 
 export default async function main() {

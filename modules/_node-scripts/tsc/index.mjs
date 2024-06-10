@@ -11,9 +11,9 @@ import {
 	SRC_TSCONFIG_PATH,
 	getProjectDirs,
 	getRootDir,
-} from '../../util/constants.mjs';
-import fileExists from '../../util/fileExists.mjs';
-import forkModule from '../../util/forkModule.mjs';
+} from '../util/constants.mjs';
+import fileExists from '../util/fileExists.mjs';
+import forkModule from '../util/forkModule.mjs';
 
 export default async function main() {
 	const cwd = path.resolve('.');

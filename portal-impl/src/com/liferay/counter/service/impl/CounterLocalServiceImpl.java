@@ -7,6 +7,7 @@ package com.liferay.counter.service.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.service.base.CounterLocalServiceBaseImpl;
+import com.liferay.portal.kernel.aop.SkipAop;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Edward Han
  */
+@SkipAop
 public class CounterLocalServiceImpl
 	extends CounterLocalServiceBaseImpl implements CounterLocalService {
 

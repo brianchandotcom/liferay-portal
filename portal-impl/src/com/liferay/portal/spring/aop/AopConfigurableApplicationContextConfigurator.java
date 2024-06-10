@@ -8,6 +8,7 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
+import com.liferay.portal.kernel.aop.SkipAop;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -57,17 +58,14 @@ public class AopConfigurableApplicationContextConfigurator
 
 		@Override
 		public boolean match(Class<?> beanClass, String beanName) {
-			if (!beanName.equals(_COUNTER_SERVICE_BEAN_NAME) &&
-				beanName.endsWith(_SERVICE_SUFFIX)) {
+			if (beanName.endsWith(_SERVICE_SUFFIX) &&
+				(beanClass.getAnnotation(SkipAop.class) == null)) {
 
 				return true;
 			}
 
 			return false;
 		}
-
-		private static final String _COUNTER_SERVICE_BEAN_NAME =
-			"com.liferay.counter.kernel.service.CounterLocalService";
 
 		private static final String _SERVICE_SUFFIX = "Service";
 

@@ -500,6 +500,7 @@ module.exports = {
 	},
 	setupFilesAfterEnv: ['<rootDir>/src/main/js/test/setup.js'],
 	testEnvironment: 'jest-environment-jsdom-fifteen',
+	testResultsProcessor: '@liferay/jest-junit-reporter',
 	testURL: 'http://liferay.com',
 	timers: 'fake',
 	transform: {

@@ -294,7 +294,7 @@ element.textContent = 'Fragment Example';''';
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "document_2-jpg");
+				imageFileName = "document_2");
 
 			PageEditor.publish();
 		}
@@ -307,7 +307,7 @@ element.textContent = 'Fragment Example';''';
 			ContentPages.viewFragmentImage(
 				fragmentName = "fragment-name",
 				id = "image-square",
-				image = "document_2-jpg");
+				image = "document_2");
 		}
 	}
 

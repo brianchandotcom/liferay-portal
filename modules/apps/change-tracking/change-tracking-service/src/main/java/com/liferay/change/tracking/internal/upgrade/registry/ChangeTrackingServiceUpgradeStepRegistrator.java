@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.internal.upgrade.registry;
 
 import com.liferay.change.tracking.internal.upgrade.v2_10_0.CTCollectionUpgradeProcess;
+import com.liferay.change.tracking.internal.upgrade.v2_12_3.CTMessageCompanyIdUpgradeProcess;
 import com.liferay.change.tracking.internal.upgrade.v2_3_0.UpgradeCompanyId;
 import com.liferay.change.tracking.internal.upgrade.v2_4_0.CTSchemaVersionUpgradeProcess;
 import com.liferay.change.tracking.internal.upgrade.v2_7_0.CTProcessUpgradeProcess;
@@ -127,6 +128,9 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 			"2.12.1", "2.12.2",
 			UpgradeProcessFactory.alterColumnType(
 				"CTCollectionTemplate", "description", "VARCHAR(200) null"));
+
+		registry.register(
+			"2.12.2", "2.12.3", new CTMessageCompanyIdUpgradeProcess());
 	}
 
 }

@@ -12,6 +12,7 @@ import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -62,6 +63,13 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		if (infoCollectionProvider == null) {
+			infoCollectionProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					RepeatableFieldInfoItemCollectionProvider.class,
+					keyListObjectReference.getItemType());
+		}
+
+		if (infoCollectionProvider == null) {
 			return InfoPage.of(
 				Collections.emptyList(),
 				layoutListRetrieverContext.getPagination(), 0);
@@ -107,6 +115,22 @@ public class InfoCollectionProviderLayoutListRetriever
 				relatedItem = _getAssetEntryOptional(relatedItem);
 			}
 
+			collectionQuery.setRelatedItemObject(relatedItem);
+		}
+
+		if (infoCollectionProvider instanceof
+				RepeatableFieldInfoItemCollectionProvider) {
+
+			Object relatedItem = layoutListRetrieverContext.getContextObject();
+
+			if (relatedItem == null) {
+				return InfoPage.of(
+					Collections.emptyList(),
+					layoutListRetrieverContext.getPagination(), 0);
+			}
+
+			collectionQuery.setConfiguration(
+				layoutListRetrieverContext.getConfiguration());
 			collectionQuery.setRelatedItemObject(relatedItem);
 		}
 

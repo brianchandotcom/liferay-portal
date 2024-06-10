@@ -14,11 +14,13 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.RepeatableInfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -42,6 +44,7 @@ import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
+import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
@@ -77,6 +80,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -281,9 +285,7 @@ public class GetCollectionFieldMVCResourceCommand
 			originalItemType);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			(InfoItemFieldValuesProvider<Object>)
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class, itemType);
+			_getInfoFieldValuesProvider(itemType, listObjectReference);
 
 		if (infoItemFieldValuesProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -521,6 +523,27 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		return displayObjectJSONObject;
+	}
+
+	private InfoItemFieldValuesProvider<Object> _getInfoFieldValuesProvider(
+		String itemType, ListObjectReference listObjectReference) {
+
+		if (listObjectReference instanceof KeyListObjectReference) {
+			KeyListObjectReference keyListObjectReference =
+				(KeyListObjectReference)listObjectReference;
+
+			if (Objects.equals(
+					keyListObjectReference.getKey(),
+					RepeatableFieldInfoItemCollectionProvider.class.
+						getName())) {
+
+				itemType = RepeatableInfoFieldValue.class.getName();
+			}
+		}
+
+		return (InfoItemFieldValuesProvider<Object>)
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, itemType);
 	}
 
 	private Object _getInfoItem(HttpServletRequest httpServletRequest) {

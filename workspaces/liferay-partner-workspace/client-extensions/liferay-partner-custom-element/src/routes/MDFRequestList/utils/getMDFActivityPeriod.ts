@@ -23,8 +23,8 @@ export default function getMDFActivityPeriod(
 		);
 
 		return {
-			[MDFColumnKey.START_ACT_PERIOD]: `${startDate}`,
 			[MDFColumnKey.END_ACT_PERIOD]: `${endDate}`,
+			[MDFColumnKey.START_ACT_PERIOD]: `${startDate}`,
 		};
 	}
 }

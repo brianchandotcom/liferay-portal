@@ -95,6 +95,9 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		super.testGetChannelProductSku();
 
 		_testGetChannelProductSkuAllowMultiplePriceEntriesInTheSamePriceList();
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
 		_testGetChannelProductSkuAllowMultiplePriceEntriesInTheSamePromotion();
 	}
 

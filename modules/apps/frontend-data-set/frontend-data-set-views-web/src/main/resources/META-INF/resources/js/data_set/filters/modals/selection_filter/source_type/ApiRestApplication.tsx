@@ -6,21 +6,24 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
+import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import RequiredMark from '../../../../../components/RequiredMark';
+import ValidationFeedback from '../../../../../components/ValidationFeedback';
 import RESTApplicationDropdownItem from '../../../../../components/rest/RESTApplicationDropdownItem';
 import RESTApplicationDropdownMenu from '../../../../../components/rest/RESTApplicationDropdownMenu';
 import RESTEndpointDropdownMenu from '../../../../../components/rest/RESTEndpointDropdownMenu';
 import RESTSchemaDropdownMenu from '../../../../../components/rest/RESTSchemaDropdownMenu';
-import {ALLOWED_ENDPOINTS_PARAMETERS, FUZZY_OPTIONS} from '../../../../../utils/constants';
+import {
+	ALLOWED_ENDPOINTS_PARAMETERS,
+	FUZZY_OPTIONS,
+} from '../../../../../utils/constants';
 import getFields from '../../../../../utils/getFields';
-import {IField, ISelectionFilter} from '../../../../../utils/types';
-import classNames from 'classnames';
-import ValidationFeedback from '../../../../../components/ValidationFeedback';
 import openDefaultFailureToast from '../../../../../utils/openDefaultFailureToast';
+import {IField, ISelectionFilter} from '../../../../../utils/types';
 
 interface IApiRestApplicationModalContentProps {
 	filter?: ISelectionFilter;
@@ -196,7 +199,8 @@ function ApiRestApplication({
 	const RestApplicationDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu fds-filter-rest-application-menu',
+				className:
+					'fds-entries-dropdown-menu fds-filter-rest-application-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -237,7 +241,8 @@ function ApiRestApplication({
 	const RestSchemaDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu fds-filter-rest-schema-menu',
+				className:
+					'fds-entries-dropdown-menu fds-filter-rest-schema-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -252,7 +257,7 @@ function ApiRestApplication({
 			}
 		>
 			<RESTSchemaDropdownMenu
-				className={'fds-filter-rest-schemas-search'}
+				className="fds-filter-rest-schemas-search"
 				onItemClick={(item: string) => {
 					setSelectedRESTSchema(item);
 
@@ -286,7 +291,8 @@ function ApiRestApplication({
 	const RestEndpointDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu fds-filter-rest-endpoint-menu',
+				className:
+					'fds-entries-dropdown-menu fds-filter-rest-endpoint-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -319,7 +325,6 @@ function ApiRestApplication({
 		</ClayDropDown>
 	);
 
-
 	useEffect(() => {
 		if (selectedRESTApplication && selectedRESTSchema) {
 			getFields({
@@ -346,9 +351,8 @@ function ApiRestApplication({
 		itemKeys: (string | undefined)[];
 		onItemClick: Function;
 	}) => {
-		const [itemKeys, setItemKeys] = useState<(string | undefined)[]>(
-			initialItemKeys
-		);
+		const [itemKeys, setItemKeys] =
+			useState<(string | undefined)[]>(initialItemKeys);
 		const [query, setQuery] = useState('');
 
 		const onSearch = (query: string) => {
@@ -359,7 +363,7 @@ function ApiRestApplication({
 				query
 					? initialItemKeys.filter((itemKey) => {
 							return itemKey?.match(regexp);
-					  }) || []
+						}) || []
 					: initialItemKeys
 			);
 		};
@@ -410,9 +414,8 @@ function ApiRestApplication({
 		itemLabels: (string | undefined)[];
 		onItemClick: Function;
 	}) => {
-		const [itemLabels, setItemLabels] = useState<(string | undefined)[]>(
-			initialItemLabels
-		);
+		const [itemLabels, setItemLabels] =
+			useState<(string | undefined)[]>(initialItemLabels);
 		const [query, setQuery] = useState('');
 
 		const onSearch = (query: string) => {
@@ -423,7 +426,7 @@ function ApiRestApplication({
 				query
 					? initialItemLabels.filter((itemLabel) => {
 							return itemLabel?.match(regexp);
-					  }) || []
+						}) || []
 					: initialItemLabels
 			);
 		};
@@ -546,9 +549,13 @@ function ApiRestApplication({
 
 			{selectedRESTSchema && (
 				<>
-					<ClayForm.Group className={classNames("form-group-autofit", {
-							"has-error": itemKeyValidationError || itemLabelValidationError,
-					})}>
+					<ClayForm.Group
+						className={classNames('form-group-autofit', {
+							'has-error':
+								itemKeyValidationError ||
+								itemLabelValidationError,
+						})}
+					>
 						<div className="form-group-item">
 							<label>
 								{Liferay.Language.get('item-key')}
@@ -557,7 +564,7 @@ function ApiRestApplication({
 							</label>
 
 							<ClayDropDown
-								className='fds-filter-item-key'
+								className="fds-filter-item-key"
 								menuElementAttrs={{
 									className: 'fds-entries-dropdown-menu',
 								}}
@@ -608,7 +615,7 @@ function ApiRestApplication({
 							</label>
 
 							<ClayDropDown
-								className='fds-filter-item-label'
+								className="fds-filter-item-label"
 								menuElementAttrs={{
 									className: 'fds-entries-dropdown-menu',
 								}}

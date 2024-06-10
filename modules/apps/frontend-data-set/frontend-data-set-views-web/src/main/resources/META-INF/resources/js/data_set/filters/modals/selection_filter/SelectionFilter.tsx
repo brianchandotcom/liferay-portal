@@ -19,8 +19,6 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import CheckboxMultiSelect from '../../../../components/CheckboxMultiSelect';
-import Configuration from '../Configuration';
-import Footer from '../Footer';
 import RequiredMark from '../../../../components/RequiredMark';
 import getAllPicklists from '../../../../utils/getAllPicklists';
 import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
@@ -31,6 +29,8 @@ import {
 	IPickList,
 	ISelectionFilter,
 } from '../../../../utils/types';
+import Configuration from '../Configuration';
+import Footer from '../Footer';
 import ApiRestApplication from './source_type/ApiRestApplication';
 import ObjectPicklist from './source_type/ObjectPicklist';
 
@@ -57,39 +57,30 @@ function Body({
 	onSave,
 	restApplications,
 }: IBodyProps) {
-	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
-		boolean
-	>(false);
-	const [fieldValidationError, setFieldValidationError] = useState<boolean>(
-		false
-	);
-	const [labelValidationError, setLabelValidationError] = useState<boolean>(
-		false
-	);
-	const [sourceValidationError, setSourceValidationError] = useState<boolean>(
-		false
-	);
-	const [sourceTypeValidationError, setSourceTypeValidationError] = useState<
-		boolean
-	>(false);
+	const [fieldInUseValidationError, setFieldInUseValidationError] =
+		useState<boolean>(false);
+	const [fieldValidationError, setFieldValidationError] =
+		useState<boolean>(false);
+	const [labelValidationError, setLabelValidationError] =
+		useState<boolean>(false);
+	const [sourceValidationError, setSourceValidationError] =
+		useState<boolean>(false);
+	const [sourceTypeValidationError, setSourceTypeValidationError] =
+		useState<boolean>(false);
 
 	const [
 		requiredRESTApplicationValidationError,
 		setRequiredRESTApplicationValidationError,
 	] = useState(false);
-	const [restSchemaValidationError, setRESTSchemaValidationError] = useState(
-		false
-	);
-	const [
-		restEndpointValidationError,
-		setRESTEndpointValidationError,
-	] = useState(false);
+	const [restSchemaValidationError, setRESTSchemaValidationError] =
+		useState(false);
+	const [restEndpointValidationError, setRESTEndpointValidationError] =
+		useState(false);
 
 	const [filteredSourceItems, setFilteredSourceItems] = useState<TItem[]>([]);
 	const [preselectedValueInput, setPreselectedValueInput] = useState('');
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		false
-	);
+	const [saveButtonDisabled, setSaveButtonDisabled] =
+		useState<boolean>(false);
 	const [includeMode, setIncludeMode] = useState<string>('include');
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
 		fieldNames?.includes(item.name) ? item.name : undefined
@@ -113,17 +104,19 @@ function Body({
 	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
 		string | null
 	>('');
-	const [selectedRESTSchema, setSelectedRESTSchema] = useState<
-		string | null
-	>('');
+	const [selectedRESTSchema, setSelectedRESTSchema] = useState<string | null>(
+		''
+	);
 	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
 		string | null
 	>('');
 	const [selectedItemKey, setSelectedItemKey] = useState<string>('');
 	const [selectedItemLabel, setSelectedItemLabel] = useState<string>('');
-	const [itemKeyValidationError, setItemKeyValidationError] = useState<boolean>(false);
-	const [itemLabelValidationError, setItemLabelValidationError] = useState<boolean>(false);
-	
+	const [itemKeyValidationError, setItemKeyValidationError] =
+		useState<boolean>(false);
+	const [itemLabelValidationError, setItemLabelValidationError] =
+		useState<boolean>(false);
+
 	const includeModeFormElementId = `${namespace}IncludeMode`;
 	const multipleFormElementId = `${namespace}Multiple`;
 	const sourceOptionFormElementId = `${namespace}SourceOption`;
@@ -342,9 +335,9 @@ function Body({
 				const picklist = items.find((item) =>
 					Liferay.FeatureFlags['LPD-10754']
 						? String(item.externalReferenceCode) ===
-						  (filter as any)?.source
+							(filter as any)?.source
 						: String(item.externalReferenceCode) ===
-						  (filter as any)?.listTypeDefinitionERC
+							(filter as any)?.listTypeDefinitionERC
 				);
 
 				if (picklist) {
@@ -395,12 +388,12 @@ function Body({
 			}
 
 			if (source && sourceType === ESelectionFilterSourceType.PICKLIST) {
-				validSavedPreselectedValues = (source as IPickList).listTypeEntries.filter(
-					(item) =>
-						JSON.parse(
-							(filter as ISelectionFilter).preselectedValues ||
-								'[]'
-						).includes(item.externalReferenceCode)
+				validSavedPreselectedValues = (
+					source as IPickList
+				).listTypeEntries.filter((item) =>
+					JSON.parse(
+						(filter as ISelectionFilter).preselectedValues || '[]'
+					).includes(item.externalReferenceCode)
 				);
 			}
 
@@ -533,16 +526,14 @@ function Body({
 												label: Liferay.Language.get(
 													'api-rest-application'
 												),
-												value:
-													ESelectionFilterSourceType.API_HEADLESS,
+												value: ESelectionFilterSourceType.API_HEADLESS,
 											},
 											{
 												disabled: false,
 												label: Liferay.Language.get(
 													'object-picklist'
 												),
-												value:
-													ESelectionFilterSourceType.PICKLIST,
+												value: ESelectionFilterSourceType.PICKLIST,
 											},
 										]}
 										required
@@ -587,9 +578,13 @@ function Body({
 									sourceType ===
 										ESelectionFilterSourceType.API_HEADLESS && (
 										<ApiRestApplication
-											itemKeyValidationError={itemKeyValidationError}
-											itemLabelValidationError={itemLabelValidationError}
 											filter={filter as ISelectionFilter}
+											itemKeyValidationError={
+												itemKeyValidationError
+											}
+											itemLabelValidationError={
+												itemLabelValidationError
+											}
 											namespace={namespace}
 											onChange={({
 												selectedItemKey,
@@ -635,12 +630,16 @@ function Body({
 												setSelectedItemKey(
 													selectedItemKey
 												);
-												setItemKeyValidationError(false);
+												setItemKeyValidationError(
+													false
+												);
 
 												setSelectedItemLabel(
 													selectedItemLabel
 												);
-												setItemLabelValidationError(false);
+												setItemLabelValidationError(
+													false
+												);
 											}}
 											requiredRESTApplicationValidationError={
 												requiredRESTApplicationValidationError
@@ -705,8 +704,7 @@ function Body({
 															ESelectionFilterSourceType.PICKLIST
 														) {
 															valueItem = {
-																label:
-																	item.name,
+																label: item.name,
 																value: String(
 																	item.externalReferenceCode
 																),
@@ -718,14 +716,12 @@ function Body({
 															ESelectionFilterSourceType.API_HEADLESS
 														) {
 															valueItem = {
-																label:
-																	item[
-																		selectedItemLabel
-																	],
-																value:
-																	item[
-																		selectedItemKey
-																	],
+																label: item[
+																	selectedItemLabel
+																],
+																value: item[
+																	selectedItemKey
+																],
 															};
 														}
 
@@ -745,38 +741,50 @@ function Body({
 														sourceType ===
 														ESelectionFilterSourceType.API_HEADLESS
 													) {
-														preselectedValues = selectedItems.map(
-															({value}: any) => {
-																return filteredSourceItems.find(
-																	(item) =>
-																		String(
-																			item.value
-																		) ===
-																		String(
-																			value
-																		)
-																);
-															}
-														);
+														preselectedValues =
+															selectedItems.map(
+																({
+																	value,
+																}: any) => {
+																	return filteredSourceItems.find(
+																		(
+																			item
+																		) =>
+																			String(
+																				item.value
+																			) ===
+																			String(
+																				value
+																			)
+																	);
+																}
+															);
 													}
 
 													if (
 														sourceType ===
 														ESelectionFilterSourceType.PICKLIST
 													) {
-														preselectedValues = selectedItems.map(
-															({value}: any) => {
-																return (source as IPickList).listTypeEntries.find(
-																	(item) =>
-																		String(
-																			item.externalReferenceCode
-																		) ===
-																		String(
-																			value
-																		)
-																);
-															}
-														);
+														preselectedValues =
+															selectedItems.map(
+																({
+																	value,
+																}: any) => {
+																	return (
+																		source as IPickList
+																	).listTypeEntries.find(
+																		(
+																			item
+																		) =>
+																			String(
+																				item.externalReferenceCode
+																			) ===
+																			String(
+																				value
+																			)
+																	);
+																}
+															);
 													}
 
 													setPreselectedValues(
@@ -786,8 +794,9 @@ function Body({
 													setIncludeMode(
 														preselectedValues.length
 															? filter &&
-															  (filter as ISelectionFilter)
-																	.include
+																(
+																	filter as ISelectionFilter
+																).include
 																? 'include'
 																: 'exclude'
 															: 'include'
@@ -973,8 +982,7 @@ function Body({
 											},
 											...picklists.map((item) => ({
 												label: item.name,
-												value:
-													item.externalReferenceCode,
+												value: item.externalReferenceCode,
 											})),
 										]}
 										title={Liferay.Language.get(
@@ -1080,19 +1088,22 @@ function Body({
 												onItemsChange={(
 													selectedItems: any
 												) => {
-													const preselectedValues = selectedItems.map(
-														({value}: any) => {
-															return (source as IPickList).listTypeEntries.find(
-																(item) =>
-																	String(
-																		item.externalReferenceCode
-																	) ===
-																	String(
-																		value
-																	)
-															);
-														}
-													);
+													const preselectedValues =
+														selectedItems.map(
+															({value}: any) => {
+																return (
+																	source as IPickList
+																).listTypeEntries.find(
+																	(item) =>
+																		String(
+																			item.externalReferenceCode
+																		) ===
+																		String(
+																			value
+																		)
+																);
+															}
+														);
 
 													setPreselectedValues(
 														preselectedValues
@@ -1101,8 +1112,9 @@ function Body({
 													setIncludeMode(
 														preselectedValues.length
 															? filter &&
-															  (filter as ISelectionFilter)
-																	.include
+																(
+																	filter as ISelectionFilter
+																).include
 																? 'include'
 																: 'exclude'
 															: 'include'

@@ -13,11 +13,7 @@ export interface IFooterProps {
 	saveButtonDisabled: boolean;
 }
 
-function Footer({
-	closeModal,
-	onSave,
-	saveButtonDisabled,
-}: IFooterProps) {
+function Footer({closeModal, onSave, saveButtonDisabled}: IFooterProps) {
 	return (
 		<ClayModal.Footer
 			last={

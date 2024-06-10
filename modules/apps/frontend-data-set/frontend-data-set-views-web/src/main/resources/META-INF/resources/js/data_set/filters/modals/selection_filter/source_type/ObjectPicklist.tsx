@@ -42,7 +42,7 @@ function ObjectPicklist({
 			Liferay.FeatureFlags['LPD-10754']
 				? String(item.externalReferenceCode) === (filter as any)?.source
 				: String(item.externalReferenceCode) ===
-				  (filter as any)?.listTypeDefinitionERC
+					(filter as any)?.listTypeDefinitionERC
 		);
 
 		if (picklist) {

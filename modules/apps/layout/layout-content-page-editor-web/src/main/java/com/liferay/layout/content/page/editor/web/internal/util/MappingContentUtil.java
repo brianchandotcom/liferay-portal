@@ -40,18 +40,7 @@ public class MappingContentUtil {
 			itemClassName, locale);
 	}
 
-	public static JSONArray getMappingFieldsJSONArray(
-			String formVariationKey, long groupId,
-			InfoItemServiceRegistry infoItemServiceRegistry,
-			String itemClassName, Locale locale)
-		throws Exception {
-
-		return _getMappingFieldsJSONArray(
-			formVariationKey, groupId, false, infoItemServiceRegistry,
-			itemClassName, locale);
-	}
-
-	private static JSONObject _getInfoFieldJSONObject(
+	public static JSONObject getInfoFieldJSONObject(
 		InfoField<?> infoField, Locale locale) {
 
 		return JSONUtil.put(
@@ -90,6 +79,17 @@ public class MappingContentUtil {
 				return infoFieldType.getLabel(locale);
 			}
 		);
+	}
+
+	public static JSONArray getMappingFieldsJSONArray(
+			String formVariationKey, long groupId,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			String itemClassName, Locale locale)
+		throws Exception {
+
+		return _getMappingFieldsJSONArray(
+			formVariationKey, groupId, false, infoItemServiceRegistry,
+			itemClassName, locale);
 	}
 
 	private static JSONArray _getMappingFieldsJSONArray(
@@ -133,7 +133,7 @@ public class MappingContentUtil {
 
 				if (!includeEditableInfoFields || infoField.isEditable()) {
 					defaultFieldSetFieldsJSONArray.put(
-						_getInfoFieldJSONObject(infoField, locale));
+						getInfoFieldJSONObject(infoField, locale));
 				}
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
@@ -145,7 +145,7 @@ public class MappingContentUtil {
 				for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
 					if (!includeEditableInfoFields || infoField.isEditable()) {
 						fieldSetFieldsJSONArray.put(
-							_getInfoFieldJSONObject(infoField, locale));
+							getInfoFieldJSONObject(infoField, locale));
 					}
 				}
 

@@ -100,6 +100,11 @@ public class AssetListServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.1.0", "2.1.1",
+			new com.liferay.asset.list.internal.upgrade.v2_1_1.
+				AssetListEntryAssetEntryRelUpgradeProcess());
 	}
 
 	@Reference

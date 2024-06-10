@@ -36,9 +36,7 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 			try {
 				_assetListEntryAssetEntryRelLocalService.
 					deleteAssetListEntryAssetEntryRel(
-						assetListEntryAssetEntryRel.getAssetListEntryId(),
-						assetListEntryAssetEntryRel.getSegmentsEntryId(),
-						assetListEntryAssetEntryRel.getPosition());
+						assetListEntryAssetEntryRel);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {

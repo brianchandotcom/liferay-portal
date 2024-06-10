@@ -248,6 +248,15 @@ export function ProvideAppBuildPage({
 			const items = [];
 			const liferayVersionSpecifications = [];
 
+			const dataProductSpecifications = await getProductSpecifications({
+				appProductId,
+			});
+
+			const filteredProductSpecifications = dataProductSpecifications.filter(
+				(specification) =>
+					specification.specificationKey !== 'liferay-version'
+			);
+
 			for (const versionKey in buildAppPackages) {
 				const appPackagesByVersion = buildAppPackages[versionKey];
 
@@ -270,7 +279,10 @@ export function ProvideAppBuildPage({
 			await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
 				appERC,
 				{
-					productSpecifications: liferayVersionSpecifications,
+					productSpecifications: [
+						...filteredProductSpecifications,
+						...liferayVersionSpecifications,
+					],
 					productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
 					productVirtualSettings: {
 						productVirtualSettingsFileEntries: items,
@@ -718,8 +730,8 @@ export function ProvideAppBuildPage({
 
 					try {
 						await submitAppBuildCategories();
-						await submitAppBuildTypeSpecification();
 						await submitAppBuildPackages();
+						await submitAppBuildTypeSpecification();
 
 						if (isCloud) {
 							await submitAppBuildCloudResourceRequirements(

@@ -9,11 +9,13 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.pricing.constants.CommercePriceModifierConstants;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
 import com.liferay.commerce.pricing.type.CommercePriceModifierType;
 import com.liferay.commerce.pricing.type.CommercePriceModifierTypeRegistry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -59,13 +61,11 @@ public class CommercePriceModifierHelperImpl
 		if (commercePriceList.getCommerceCurrencyId() !=
 				originalCommerceCurrency.getCommerceCurrencyId()) {
 
-			originalPrice = originalPrice.divide(
-				priceListCurrency.getRate(),
-				RoundingMode.valueOf(priceListCurrency.getRoundingMode()));
-
-			originalPrice = originalPrice.multiply(
-				originalCommerceCurrency.getRate());
+			originalPrice = _getPrice(
+				originalPrice, priceListCurrency, originalCommerceCurrency);
 		}
+
+		String priceModifierKey = StringPool.BLANK;
 
 		if ((commercePriceModifiers != null) &&
 			!commercePriceModifiers.isEmpty()) {
@@ -81,10 +81,21 @@ public class CommercePriceModifierHelperImpl
 				BigDecimal actualPrice = commercePriceModifierType.evaluate(
 					originalPrice, commercePriceModifier);
 
+				if (CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE.equals(
+						commercePriceModifierType.getKey()) &&
+					(commercePriceList.getCommerceCurrencyId() !=
+						originalCommerceCurrency.getCommerceCurrencyId())) {
+
+					actualPrice = _getPrice(
+						actualPrice, priceListCurrency,
+						originalCommerceCurrency);
+				}
+
 				if ((lowestPrice == null) ||
 					(actualPrice.compareTo(lowestPrice) < 0)) {
 
 					lowestPrice = actualPrice;
+					priceModifierKey = commercePriceModifierType.getKey();
 				}
 			}
 		}
@@ -93,15 +104,13 @@ public class CommercePriceModifierHelperImpl
 			return originalCommerceMoney.getPrice();
 		}
 
-		if (commercePriceList.getCommerceCurrencyId() !=
-				originalCommerceCurrency.getCommerceCurrencyId()) {
+		if (!CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE.equals(
+				priceModifierKey) &&
+			(commercePriceList.getCommerceCurrencyId() !=
+				originalCommerceCurrency.getCommerceCurrencyId())) {
 
-			lowestPrice = lowestPrice.divide(
-				originalCommerceCurrency.getRate(),
-				RoundingMode.valueOf(
-					originalCommerceCurrency.getRoundingMode()));
-
-			lowestPrice = lowestPrice.multiply(priceListCurrency.getRate());
+			lowestPrice = _getPrice(
+				lowestPrice, originalCommerceCurrency, priceListCurrency);
 		}
 
 		RoundingMode roundingMode = RoundingMode.valueOf(
@@ -121,6 +130,19 @@ public class CommercePriceModifierHelperImpl
 					commercePriceListId, cpDefinitionId);
 
 		return !commercePriceModifiers.isEmpty();
+	}
+
+	private BigDecimal _getPrice(
+		BigDecimal price, CommerceCurrency commerceCurrency1,
+		CommerceCurrency commerceCurrency2) {
+
+		price = price.divide(
+			commerceCurrency1.getRate(),
+			RoundingMode.valueOf(commerceCurrency1.getRoundingMode()));
+
+		price = price.multiply(commerceCurrency2.getRate());
+
+		return price;
 	}
 
 	private static final int _SCALE = 10;

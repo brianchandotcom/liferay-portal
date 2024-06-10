@@ -32,12 +32,6 @@ export default function useGetListItemsFromMDFRequests(
 	const listItems = useMemo(() => {
 		return swrResponse.data?.items?.map((item) => {
 			const baseItem: MDFRequestListItem = {
-				[MDFColumnKey.BALANCE]: Number(item.totalPaidAmount)
-					? getIntlNumberFormat(item.currency).format(
-							Number(item.totalClaimedRequest) -
-								Number(item.totalPaidAmount)
-						)
-					: '-',
 				[MDFColumnKey.ID]: String(item.id),
 				[MDFColumnKey.CAMPAIGN_NAME]: item.overallCampaignName,
 				...getMDFActivityPeriod(

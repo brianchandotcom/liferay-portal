@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.sender.firebase.internal.configuration.FirebasePushNotificationsSenderConfiguration;
@@ -129,32 +130,47 @@ public class FirebasePushNotificationsSender
 		return JSONUtil.put(
 			"notification",
 			JSONUtil.put(
-				"body", payloadJSONObject.getString("body")
+				"body",
+				payloadJSONObject.getString(PushNotificationsConstants.KEY_BODY)
 			).put(
 				"body_loc_args",
-				payloadJSONObject.getJSONArray("bodyLocalizedArguments")
+				payloadJSONObject.getJSONArray(
+					PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS)
 			).put(
-				"body_loc_key", payloadJSONObject.getString("bodyLocalizedKey")
+				"body_loc_key",
+				payloadJSONObject.getString(
+					PushNotificationsConstants.KEY_BODY_LOCALIZED)
 			).put(
-				"notification_count", payloadJSONObject.getInt("badge")
+				"notification_count",
+				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE)
 			).put(
-				"sound", payloadJSONObject.getString("sound")
+				"sound",
+				payloadJSONObject.getString(
+					PushNotificationsConstants.KEY_SOUND)
 			).put(
-				"title", payloadJSONObject.getString("title")
+				"title",
+				payloadJSONObject.getString(
+					PushNotificationsConstants.KEY_TITLE)
 			).put(
 				"title_loc_args",
-				payloadJSONObject.getJSONArray("titleLocalizedArguments")
+				payloadJSONObject.getJSONArray(
+					PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS)
 			).put(
 				"title_loc_key",
-				payloadJSONObject.getString("titleLocalizedKey")
+				payloadJSONObject.getString(
+					PushNotificationsConstants.KEY_TITLE_LOCALIZED)
 			));
 	}
 
 	private String _buildMessagePayload(JSONObject payloadJSONObject) {
 		Iterator<String> keys = payloadJSONObject.keys();
 		List<String> notificationKeys = Arrays.asList(
-			"badge", "body", "bodyLocalizedKey", "bodyLocalizedArguments",
-			"sound", "silent");
+			PushNotificationsConstants.KEY_BADGE,
+			PushNotificationsConstants.KEY_BODY,
+			PushNotificationsConstants.KEY_BODY_LOCALIZED,
+			PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS,
+			PushNotificationsConstants.KEY_SOUND,
+			PushNotificationsConstants.KEY_SILENT);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

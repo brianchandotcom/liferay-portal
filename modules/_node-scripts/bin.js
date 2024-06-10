@@ -6,34 +6,40 @@
 
 /* eslint-disable no-undef */
 
-const fs = require('fs');
-const path = require('path');
-
 const COMMANDS = {
 	'build': {
 		description: 'builds frontend stuff of current project',
 		parameters: '',
+		script: './bundle/index.mjs',
 	},
 	'build:report': {
 		description: 'generates an aggregated report of build timings',
 		parameters:
 			'[<timings directory> (falls back to LIFERAY_NPM_SCRIPTS_TIMING env var)]',
+		script: './bundle/report.mjs',
+	},
+	'check:preflight': {
+		description: 'runs several other infra-type checks',
+		parameters: '',
+		script: './preflight/index.mjs',
 	},
 	'check:tsc': {
 		description:
 			'runs TypeScript checks in the current project or globally (if run from modules)',
 		parameters: '[<tsc arguments>]',
+		script: './tsc/index.mjs',
 	},
 	'format': {
 		description:
 			'formats source files or optionally only checks with "--check" flag.',
 		parameters: '[--check]',
+		script: './format/index.mjs',
 	},
 	'generate:tsconfig': {
 		description: 'generates tsconfig.json files for all projects',
 		parameters: '',
+		script: './tsconfig/index.mjs',
 	},
-	'preflight': {description: 'runs several other infra-type checks'},
 };
 
 const command = process.argv[2];
@@ -42,20 +48,9 @@ if (COMMANDS[command] === undefined) {
 	showHelpAndExit();
 }
 
-const commandPath = command.split(':');
+const {script} = COMMANDS[command];
 
-let modulePath = path.join(__dirname, ...commandPath, 'index.mjs');
-
-if (!fs.existsSync(modulePath)) {
-	showHelpAndExit();
-}
-
-// Node.js wants "file://" in front of absolute paths because otherwise it thinks "C:" is a URL
-// protocol and refuses to load the module.
-
-modulePath = `file://${modulePath}`;
-
-const mainPromise = import(modulePath);
+const mainPromise = import(script);
 
 mainPromise
 	.then(({default: main}) => main())

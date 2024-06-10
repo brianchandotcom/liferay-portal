@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
@@ -35,6 +36,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -164,20 +166,13 @@ public class FirebasePushNotificationsSender
 
 	private String _buildMessagePayload(JSONObject payloadJSONObject) {
 		Iterator<String> keys = payloadJSONObject.keys();
-		List<String> notificationKeys = Arrays.asList(
-			PushNotificationsConstants.KEY_BADGE,
-			PushNotificationsConstants.KEY_BODY,
-			PushNotificationsConstants.KEY_BODY_LOCALIZED,
-			PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS,
-			PushNotificationsConstants.KEY_SOUND,
-			PushNotificationsConstants.KEY_SILENT);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			if (!notificationKeys.contains(key)) {
+			if (!_notificationKeys.contains(key)) {
 				jsonObject.put(key, payloadJSONObject.get(key));
 			}
 		}
@@ -360,6 +355,14 @@ public class FirebasePushNotificationsSender
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FirebasePushNotificationsSender.class);
+
+	private static final Set<String> _notificationKeys = SetUtil.fromArray(
+		PushNotificationsConstants.KEY_BADGE,
+		PushNotificationsConstants.KEY_BODY,
+		PushNotificationsConstants.KEY_BODY_LOCALIZED,
+		PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS,
+		PushNotificationsConstants.KEY_SOUND,
+		PushNotificationsConstants.KEY_SILENT);
 
 	private volatile FirebasePushNotificationsSenderConfiguration
 		_firebasePushNotificationsSenderConfiguration;

@@ -8,11 +8,13 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -47,7 +49,9 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 
 		sb.setIndex(sb.index() - 1);
 
-		return _sortPathParameters(sb.toString());
+		content = _sortFeatureFlags(sb.toString());
+
+		return _sortPathParameters(content);
 	}
 
 	private List<String> _combineComments(
@@ -268,6 +272,41 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private String _sortFeatureFlags(String content) {
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf("featureFlags: ", x + 1);
+
+			if (x == -1) {
+				return content;
+			}
+
+			String featureFlags = content.substring(x + 14);
+
+			int y = featureFlags.indexOf("\n");
+
+			if (y != -1) {
+				featureFlags = featureFlags.substring(0, y);
+			}
+
+			String[] array = featureFlags.split(",");
+
+			if (array.length < 2) {
+				return content;
+			}
+
+			Arrays.sort(array, new NaturalOrderStringComparator());
+
+			String newFeatureFlags = StringUtil.merge(array);
+
+			if (!featureFlags.equals(newFeatureFlags)) {
+				return StringUtil.replaceFirst(
+					content, featureFlags, newFeatureFlags, x);
+			}
+		}
 	}
 
 	private String _sortPathParameters(String content) {

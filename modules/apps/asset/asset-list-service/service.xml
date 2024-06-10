@@ -109,6 +109,9 @@
 		<finder name="AssetListEntryId" return-type="Collection">
 			<finder-column name="assetListEntryId" />
 		</finder>
+		<finder name="AssetEntryId" return-type="Collection">
+			<finder-column name="assetEntryId" />
+		</finder>
 		<finder name="A_S" return-type="Collection">
 			<finder-column name="assetListEntryId" />
 			<finder-column arrayable-operator="OR" name="segmentsEntryId" />

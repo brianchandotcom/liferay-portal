@@ -344,6 +344,11 @@ test('LPD-22771 Assign button added to workflow view', async ({
 
 	await assignButton.click();
 
+	await page
+		.frameLocator('iframe[title="Assign to\\.\\.\\."]')
+		.getByLabel('Assign to')
+		.selectOption('test (Test Test)');
+
 	const doneButton = page
 		.frameLocator('iframe[title="Assign to..."]')
 		.getByRole('button', {exact: true, name: 'Done'});

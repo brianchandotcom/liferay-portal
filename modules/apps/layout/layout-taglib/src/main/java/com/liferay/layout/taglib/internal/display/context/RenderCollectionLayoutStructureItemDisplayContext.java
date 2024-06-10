@@ -10,8 +10,10 @@ import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.field.RepeatableInfoFieldValue;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -64,6 +66,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -129,6 +132,13 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			collectionJSONObject.has("itemType")) {
 
 			collectionItemType = collectionJSONObject.getString("itemType");
+		}
+
+		if (Objects.equals(
+				collectionJSONObject.getString("key"),
+				RepeatableFieldInfoItemCollectionProvider.class.getName())) {
+
+			collectionItemType = RepeatableInfoFieldValue.class.getName();
 		}
 
 		_collectionItemType = collectionItemType;
@@ -381,17 +391,23 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _configuration;
 		}
 
+		Map<String, String[]> configuration = new HashMap<>();
+
 		JSONObject collectionJSONObject =
 			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		String fieldName = collectionJSONObject.getString("fieldName");
+
+		if (Validator.isNotNull(fieldName)) {
+			configuration.put("fieldNames", new String[] {fieldName});
+		}
 
 		JSONObject configurationJSONObject = collectionJSONObject.getJSONObject(
 			"config");
 
 		if (configurationJSONObject == null) {
-			return null;
+			return configuration;
 		}
-
-		Map<String, String[]> configuration = new HashMap<>();
 
 		for (String key : configurationJSONObject.keySet()) {
 			List<String> values = new ArrayList<>();

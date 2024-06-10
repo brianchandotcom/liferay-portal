@@ -6227,7 +6227,8 @@ public class PortalImpl implements Portal {
 	public String transformCustomSQL(String sql) {
 		DB db = DBManagerUtil.getDB();
 
-		String[] customSqlValues = ArrayUtil.toStringArray(
+		return StringUtil.replace(
+			sql, _CUSTOM_SQL_KEYS,
 			new Object[] {
 				getClassNameId(Group.class), getClassNameId(Layout.class),
 				getClassNameId(Organization.class), getClassNameId(Role.class),
@@ -6251,8 +6252,6 @@ public class PortalImpl implements Portal {
 				SocialRelationConstants.TYPE_UNI_SUPERVISOR,
 				db.getTemplateFalse(), db.getTemplateTrue()
 			});
-
-		return StringUtil.replace(sql, _CUSTOM_SQL_KEYS, customSqlValues);
 	}
 
 	@Override

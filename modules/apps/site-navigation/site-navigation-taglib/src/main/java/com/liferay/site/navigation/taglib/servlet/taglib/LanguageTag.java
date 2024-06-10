@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -40,6 +41,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -108,6 +110,13 @@ public class LanguageTag extends IncludeTag {
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setUseNamespace(boolean useNamespace) {

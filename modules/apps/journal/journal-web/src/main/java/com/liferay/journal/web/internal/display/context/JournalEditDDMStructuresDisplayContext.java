@@ -53,8 +53,9 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalEditDDMStructuresDisplayContext {
 
 	public JournalEditDDMStructuresDisplayContext(
-		Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+			Portal portal, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws ConfigurationException {
 
 		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
 		_liferayPortletResponse = portal.getLiferayPortletResponse(
@@ -63,23 +64,10 @@ public class JournalEditDDMStructuresDisplayContext {
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JournalServiceConfiguration journalServiceConfiguration;
-
-		try {
-			journalServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					JournalServiceConfiguration.class,
-					_themeDisplay.getCompanyId());
-		}
-		catch (ConfigurationException configurationException) {
-			journalServiceConfiguration = null;
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException);
-			}
-		}
-
-		_journalServiceConfiguration = journalServiceConfiguration;
+		_journalServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				JournalServiceConfiguration.class,
+				_themeDisplay.getCompanyId());
 
 		_journalWebConfiguration =
 			(JournalWebConfiguration)renderRequest.getAttribute(

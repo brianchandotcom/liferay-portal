@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -60,9 +58,10 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalEditDDMTemplateDisplayContext {
 
 	public JournalEditDDMTemplateDisplayContext(
-		DDMTemplateHelper ddmTemplateHelper,
-		JournalDDMTemplateHelper journalDDMTemplateHelper, Portal portal,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			DDMTemplateHelper ddmTemplateHelper,
+			JournalDDMTemplateHelper journalDDMTemplateHelper, Portal portal,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws ConfigurationException {
 
 		_ddmTemplateHelper = ddmTemplateHelper;
 		_journalDDMTemplateHelper = journalDDMTemplateHelper;
@@ -78,23 +77,10 @@ public class JournalEditDDMTemplateDisplayContext {
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JournalServiceConfiguration journalServiceConfiguration;
-
-		try {
-			journalServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					JournalServiceConfiguration.class,
-					_themeDisplay.getCompanyId());
-		}
-		catch (ConfigurationException configurationException) {
-			journalServiceConfiguration = null;
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException);
-			}
-		}
-
-		_journalServiceConfiguration = journalServiceConfiguration;
+		_journalServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				JournalServiceConfiguration.class,
+				_themeDisplay.getCompanyId());
 
 		_journalWebConfiguration =
 			(JournalWebConfiguration)renderRequest.getAttribute(
@@ -454,9 +440,6 @@ public class JournalEditDDMTemplateDisplayContext {
 	public long smallImageMaxSize() {
 		return _journalFileUploadsConfiguration.smallImageMaxSize();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalEditDDMTemplateDisplayContext.class);
 
 	private Boolean _cacheable;
 	private Long _classPK;

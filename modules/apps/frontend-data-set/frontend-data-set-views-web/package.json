@@ -39,7 +39,8 @@
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format"
+		"format": "node-scripts format",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "1.0.24"
 }

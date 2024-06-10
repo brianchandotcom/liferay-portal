@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
-import com.liferay.portal.search.elasticsearch7.internal.util.TermsUtil;
+import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.query.TermsQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
@@ -20,7 +20,7 @@ public class TermsQueryTranslatorImpl implements TermsQueryTranslator {
 
 	@Override
 	public QueryBuilder translate(TermsQuery termsQuery) {
-		return TermsUtil.translateTerms(
+		return QueryUtil.translateTerms(
 			termsQuery.getField(), termsQuery.getValues());
 	}
 

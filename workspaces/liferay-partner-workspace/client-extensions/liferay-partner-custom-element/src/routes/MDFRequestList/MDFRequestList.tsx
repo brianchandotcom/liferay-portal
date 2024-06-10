@@ -137,8 +137,10 @@ const MDFRequestList = () => {
 						rows={items}
 						setTableSort={setRequestTableSort}
 						sortable={[
+							SortableTable.END_ACT_PERIOD,
 							SortableTable.DATE_SUBMITTED,
 							SortableTable.PARTNER,
+							SortableTable.START_ACT_PERIOD,
 							SortableTable.STATUS,
 						]}
 						tableLayoutAuto

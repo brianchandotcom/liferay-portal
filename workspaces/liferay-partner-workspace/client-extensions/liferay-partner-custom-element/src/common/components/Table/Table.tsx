@@ -122,12 +122,13 @@ const Table = <T extends BasicRow>({
 			CLOSE_DATE: 'closeDate',
 			DATE_SUBMITTED: 'submitDate',
 			DEAL_DATE_SUBMITTED: 'dateCreated',
+			END_ACT_PERIOD: 'maxDateActivity',
 			OPPORTUNITY_ACCOUNT_NAME: 'accountName',
 			PARTNER: 'companyName',
 			PARTNER_ACCOUNT_NAME: 'partnerAccountName',
 			PARTNER_NAME: 'partnerFirstName',
 			REQUEST_STATUS: 'mdfRequestStatus',
-			STAGE: 'stage',
+			START_ACT_PERIOD: 'minDateActivity',
 			TYPE: 'partial',
 		};
 

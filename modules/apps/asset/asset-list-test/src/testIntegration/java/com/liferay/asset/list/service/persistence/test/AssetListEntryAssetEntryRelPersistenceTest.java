@@ -252,6 +252,13 @@ public class AssetListEntryAssetEntryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByAssetEntryId() throws Exception {
+		_persistence.countByAssetEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByAssetEntryId(0L);
+	}
+
+	@Test
 	public void testCountByA_S() throws Exception {
 		_persistence.countByA_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

@@ -325,6 +325,14 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 			getAssetListEntryAssetEntryRel(assetListEntryAssetEntryRelId);
 	}
 
+	@Override
+	public java.util.List<AssetListEntryAssetEntryRel>
+		getAssetListEntryAssetEntryRelByAssetEntryId(long assetEntryId) {
+
+		return _assetListEntryAssetEntryRelLocalService.
+			getAssetListEntryAssetEntryRelByAssetEntryId(assetEntryId);
+	}
+
 	/**
 	 * Returns the asset list entry asset entry rel matching the UUID and group.
 	 *

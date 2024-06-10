@@ -111,7 +111,11 @@ export default {
 		);
 	},
 
-	getCollectionMappingFields(body: {itemSubtype: string; itemType: string}) {
+	getCollectionMappingFields(body: {
+		fieldName: string | undefined;
+		itemSubtype: string;
+		itemType: string;
+	}) {
 		return serviceFetch<{mappingFields: MappingFieldFieldSet}>(
 			config.getCollectionMappingFieldsURL,
 			{body}

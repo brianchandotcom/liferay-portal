@@ -14,6 +14,7 @@ export default function itemSelectorValueToCollection(collection) {
 	const {
 		classNameId,
 		classPK,
+		fieldName,
 		itemSubtype,
 		itemType,
 		key,
@@ -34,6 +35,7 @@ export default function itemSelectorValueToCollection(collection) {
 			};
 		case RETURN_TYPES.infoList:
 			return {
+				fieldName,
 				itemSubtype,
 				itemType,
 				key,

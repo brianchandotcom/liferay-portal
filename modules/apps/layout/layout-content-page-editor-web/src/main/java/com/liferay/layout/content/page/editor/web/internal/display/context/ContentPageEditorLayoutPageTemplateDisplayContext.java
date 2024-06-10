@@ -13,6 +13,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
+import com.liferay.info.collection.provider.item.selector.criterion.RepeatableFieldInfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -60,6 +61,7 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -205,10 +207,26 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		relatedInfoItemCollectionProviderItemSelectorCriterion.
 			setSourceItemTypes(sourceItemTypes);
 
+		RepeatableFieldInfoCollectionProviderItemSelectorCriterion
+			repeatableFieldInfoCollectionProviderItemSelectorCriterion =
+				new RepeatableFieldInfoCollectionProviderItemSelectorCriterion();
+
+		repeatableFieldInfoCollectionProviderItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				new InfoListProviderItemSelectorReturnType());
+
+		repeatableFieldInfoCollectionProviderItemSelectorCriterion.setItemType(
+			layoutPageTemplateEntry.getClassName());
+
+		repeatableFieldInfoCollectionProviderItemSelectorCriterion.
+			setItemSubtype(
+				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+
 		return ListUtil.concat(
 			collectionItemSelectorCriterions,
-			Collections.singletonList(
-				relatedInfoItemCollectionProviderItemSelectorCriterion));
+			Arrays.asList(
+				relatedInfoItemCollectionProviderItemSelectorCriterion,
+				repeatableFieldInfoCollectionProviderItemSelectorCriterion));
 	}
 
 	private JSONObject _addDisplayPageMappingFields(

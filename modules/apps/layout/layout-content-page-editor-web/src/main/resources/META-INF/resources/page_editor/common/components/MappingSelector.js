@@ -177,7 +177,9 @@ export default function MappingSelectorWrapper({
 
 		const key = collectionConfig.collection.classNameId
 			? getMappingFieldsKey(collectionConfig.collection)
-			: collectionConfig.collection.key;
+			: collectionConfig.collection.fieldName
+				? `${collectionConfig.collection.key}-${collectionConfig.collection.fieldName}`
+				: collectionConfig.collection.key;
 
 		const fields = mappingFields[key];
 

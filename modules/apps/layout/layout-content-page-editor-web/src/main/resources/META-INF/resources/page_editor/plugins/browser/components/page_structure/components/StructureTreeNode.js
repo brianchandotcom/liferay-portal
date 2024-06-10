@@ -74,11 +74,13 @@ const HOVER_EXPAND_DELAY = 1000;
 
 const loadCollectionFields = (
 	dispatch,
+	fieldName,
 	itemType,
 	itemSubtype,
 	mappingFieldsKey
 ) => {
 	CollectionService.getCollectionMappingFields({
+		fieldName: fieldName || '',
 		itemSubtype: itemSubtype || '',
 		itemType,
 	})
@@ -121,6 +123,7 @@ export default function StructureTreeNode({node, setEditingNodeId}) {
 
 			const {
 				classNameId,
+				fieldName,
 				itemSubtype,
 				itemType,
 				key: collectionKey,
@@ -128,10 +131,18 @@ export default function StructureTreeNode({node, setEditingNodeId}) {
 
 			const key = classNameId
 				? getMappingFieldsKey(item.config.collection)
-				: collectionKey;
+				: fieldName
+					? `${collectionKey}-${fieldName}`
+					: collectionKey;
 
 			if (!mappingFields[key]) {
-				loadCollectionFields(dispatch, itemType, itemSubtype, key);
+				loadCollectionFields(
+					dispatch,
+					fieldName,
+					itemType,
+					itemSubtype,
+					key
+				);
 			}
 		}
 	}, [

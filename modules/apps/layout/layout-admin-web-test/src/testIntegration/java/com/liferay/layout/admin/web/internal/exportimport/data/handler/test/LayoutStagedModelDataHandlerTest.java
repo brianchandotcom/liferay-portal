@@ -212,14 +212,11 @@ public class LayoutStagedModelDataHandlerTest
 				ServiceContextTestUtil.getServiceContext(
 					stagingGroup.getGroupId()));
 
-		Layout masterPageTemplateLayout = _layoutLocalService.getLayout(
-			masterLayoutPageTemplateEntry.getPlid());
-
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
 		layout = _layoutLocalService.updateMasterLayoutPlid(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			masterPageTemplateLayout.getPlid());
+			masterLayoutPageTemplateEntry.getPlid());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);

@@ -1,3 +1,9 @@
+import com.liferay.gradle.plugins.node.task.YarnInstallTask
+
+task osbFaroWebYarnInstall(type: YarnInstallTask)
+task osbFaroWebYarnTest(type: Exec)
+task osbFaroWebYarnWebpack(type: Exec)
+
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-base", version: "2.11.4"
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.11.4"
@@ -57,6 +63,30 @@ node {
 	nodeVersion = "18.18.0"
 	useNpm = false
 	yarnVersion = "1.22.19"
+}
+
+osbFaroWebYarnInstall {
+	doLast {
+		delete ".yarnrc"
+	}
+
+	workingDir = projectDir
+}
+
+osbFaroWebYarnTest {
+	dependsOn osbFaroWebYarnWebpack
+
+	args = [osbFaroWebYarnInstall.scriptFile, "test"]
+	executable = new File(osbFaroWebYarnInstall.nodeDir, "bin/node")
+	workingDir = projectDir
+}
+
+osbFaroWebYarnWebpack {
+	dependsOn osbFaroWebYarnInstall
+
+	args = [osbFaroWebYarnInstall.scriptFile, "webpack"]
+	executable = new File(osbFaroWebYarnInstall.nodeDir, "bin/node")
+	workingDir = projectDir
 }
 
 packageRunWebpack {

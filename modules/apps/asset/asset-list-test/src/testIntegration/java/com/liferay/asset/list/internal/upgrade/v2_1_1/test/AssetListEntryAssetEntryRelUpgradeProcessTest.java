@@ -67,19 +67,7 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		_assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
-			_assetListEntry.getAssetListEntryId(), RandomTestUtil.randomLong(),
-			0L, _serviceContext);
-
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_assetListEntryAssetEntryRelLocalService.
-				getAssetListEntryAssetEntryRels(
-					_assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			assetListEntryAssetEntryRels.toString(), 1,
-			assetListEntryAssetEntryRels.size());
+		_addAssetListEntryAssetEntryRel(0);
 
 		_runUpgrade();
 
@@ -100,15 +88,7 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 		JournalArticle journalArticle1 = _addJournalArticle();
 		JournalArticle journalArticle2 = _addJournalArticle();
 
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
-			_assetListEntryAssetEntryRelLocalService.
-				addAssetListEntryAssetEntryRel(
-					_assetListEntry.getAssetListEntryId(),
-					RandomTestUtil.randomLong(), 0L, _serviceContext);
-
-		Assert.assertEquals(2, assetListEntryAssetEntryRel.getPosition());
-
-		_assertAssetListEntryAssetEntryRelsSize(3);
+		_addAssetListEntryAssetEntryRel(2);
 
 		JournalArticle journalArticle3 = _addJournalArticle();
 		JournalArticle journalArticle4 = _addJournalArticle();
@@ -128,30 +108,12 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 		JournalArticle journalArticle1 = _addJournalArticle();
 		JournalArticle journalArticle2 = _addJournalArticle();
 
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel1 =
-			_assetListEntryAssetEntryRelLocalService.
-				addAssetListEntryAssetEntryRel(
-					_assetListEntry.getAssetListEntryId(),
-					RandomTestUtil.randomLong(), 0L, _serviceContext);
-
-		Assert.assertEquals(2, assetListEntryAssetEntryRel1.getPosition());
-
-		_assertAssetListEntryAssetEntryRelsSize(3);
+		_addAssetListEntryAssetEntryRel(2);
 
 		JournalArticle journalArticle3 = _addJournalArticle();
 		JournalArticle journalArticle4 = _addJournalArticle();
 
-		_assertAssetListEntryAssetEntryRelsSize(5);
-
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel2 =
-			_assetListEntryAssetEntryRelLocalService.
-				addAssetListEntryAssetEntryRel(
-					_assetListEntry.getAssetListEntryId(),
-					RandomTestUtil.randomLong(), 0L, _serviceContext);
-
-		Assert.assertEquals(5, assetListEntryAssetEntryRel2.getPosition());
-
-		_assertAssetListEntryAssetEntryRelsSize(6);
+		_addAssetListEntryAssetEntryRel(5);
 
 		JournalArticle journalArticle5 = _addJournalArticle();
 		JournalArticle journalArticle6 = _addJournalArticle();
@@ -169,13 +131,7 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 	public void testUpgradeWithOrphanAssetEntryIdAtFirstPosition()
 		throws Exception {
 
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
-			_assetListEntryAssetEntryRelLocalService.
-				addAssetListEntryAssetEntryRel(
-					_assetListEntry.getAssetListEntryId(),
-					RandomTestUtil.randomLong(), 0L, _serviceContext);
-
-		Assert.assertEquals(0, assetListEntryAssetEntryRel.getPosition());
+		_addAssetListEntryAssetEntryRel(0);
 
 		JournalArticle journalArticle1 = _addJournalArticle();
 		JournalArticle journalArticle2 = _addJournalArticle();
@@ -194,33 +150,61 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 		JournalArticle journalArticle1 = _addJournalArticle();
 		JournalArticle journalArticle2 = _addJournalArticle();
 
-		_assertAssetListEntryAssetEntryRelsSize(2);
-
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
-			_assetListEntryAssetEntryRelLocalService.
-				addAssetListEntryAssetEntryRel(
-					_assetListEntry.getAssetListEntryId(),
-					RandomTestUtil.randomLong(), 0L, _serviceContext);
-
-		Assert.assertEquals(2, assetListEntryAssetEntryRel.getPosition());
+		_addAssetListEntryAssetEntryRel(2);
 
 		_runUpgrade();
 
 		_assertAssetListEntryAssetEntryRels(journalArticle1, journalArticle2);
 	}
 
-	private JournalArticle _addJournalArticle() throws Exception {
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	private void _addAssetListEntryAssetEntryRel(int expected)
+		throws Exception {
+
+		_addAssetListEntryAssetEntryRel(expected, 0L);
+	}
+
+	private void _addAssetListEntryAssetEntryRel(
+			int expected, long segmentsEntryId)
+		throws Exception {
+
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
+			_assetListEntryAssetEntryRelLocalService.
+				addAssetListEntryAssetEntryRel(
+					_assetListEntry.getAssetListEntryId(),
+					RandomTestUtil.randomLong(), segmentsEntryId,
+					_serviceContext);
+
+		Assert.assertEquals(
+			expected, assetListEntryAssetEntryRel.getPosition());
+
+		_assertAssetListEntryAssetEntryRelsSize(expected + 1, segmentsEntryId);
+	}
+
+	private void _addAssetListEntryAssetEntryRel(
+			long segmentsEntryId, JournalArticle journalArticle)
+		throws Exception {
 
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
 		_assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(
-			_assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(), 0L,
-			_serviceContext);
+			_assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+			segmentsEntryId, _serviceContext);
+	}
+
+	private JournalArticle _addJournalArticle() throws Exception {
+		return _addJournalArticle(0L);
+	}
+
+	private JournalArticle _addJournalArticle(long segmentsEntryId)
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_addAssetListEntryAssetEntryRel(segmentsEntryId, journalArticle);
 
 		return journalArticle;
 	}
@@ -229,11 +213,18 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 			JournalArticle... journalArticles)
 		throws Exception {
 
+		_assertAssetListEntryAssetEntryRels(0L, journalArticles);
+	}
+
+	private void _assertAssetListEntryAssetEntryRels(
+			long segmentsEntryId, JournalArticle... journalArticles)
+		throws Exception {
+
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRels(
-					_assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+					_assetListEntry.getAssetListEntryId(), segmentsEntryId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			assetListEntryAssetEntryRels.toString(), journalArticles.length,
@@ -260,11 +251,17 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 	}
 
 	private void _assertAssetListEntryAssetEntryRelsSize(int expected) {
+		_assertAssetListEntryAssetEntryRelsSize(expected, 0L);
+	}
+
+	private void _assertAssetListEntryAssetEntryRelsSize(
+		int expected, long segmentsEntryId) {
+
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRels(
-					_assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+					_assetListEntry.getAssetListEntryId(), segmentsEntryId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			assetListEntryAssetEntryRels.toString(), expected,

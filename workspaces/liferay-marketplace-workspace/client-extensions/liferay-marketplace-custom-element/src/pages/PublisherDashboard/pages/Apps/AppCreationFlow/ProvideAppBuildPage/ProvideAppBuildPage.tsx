@@ -246,6 +246,7 @@ export function ProvideAppBuildPage({
 	const submitAppBuildPackages = async () => {
 		if (properties.featureFlags?.includes('LPD-21582')) {
 			const items = [];
+			const liferayVersionSpecifications = [];
 
 			for (const versionKey in buildAppPackages) {
 				const appPackagesByVersion = buildAppPackages[versionKey];
@@ -257,12 +258,19 @@ export function ProvideAppBuildPage({
 						),
 						version: versionKey,
 					});
+					liferayVersionSpecifications.push({
+						specificationKey: 'liferay-version',
+						value: {
+							en_US: versionKey,
+						},
+					});
 				}
 			}
 
 			await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
 				appERC,
 				{
+					productSpecifications: liferayVersionSpecifications,
 					productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
 					productVirtualSettings: {
 						productVirtualSettingsFileEntries: items,

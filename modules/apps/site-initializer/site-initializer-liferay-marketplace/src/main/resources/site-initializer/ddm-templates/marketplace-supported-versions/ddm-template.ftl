@@ -1,7 +1,3 @@
-<#assign
-	VOCABULARY_PRODUCT_CATEGORY = "MARKETPLACE LIFERAY VERSION"
-/>
-
 <#if themeDisplay?has_content>
 	<#assign scopeGroupId = themeDisplay.getScopeGroupId() />
 </#if>
@@ -27,18 +23,24 @@
 </#if>
 
 <#assign
-	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=categories")
-	categories = product.categories![]
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications")
+	specifications = product.productSpecifications![]
 />
 
-<div class="app-container color-neutral-3 d-flex flex-wrap font-size-paragraph-small justify-content-between w-100">
-	<div class="d-flex">
-		<#if categories?has_content>
-			<#function getVersions(version)>
-				<#return version.vocabulary?upper_case == "MARKETPLACE LIFERAY VERSION">
-			</#function>
+<div>
+	<#if specifications?has_content>
+		<#assign
+			liferayVersionSpecification = specifications?filter(item -> stringUtil.equals(item.specificationKey, "liferay-version"))
+		/>
 
-			${categories?sort_by("name")?reverse?filter(getVersions)?map(version -> version.name)?join(", ")}
+		<#if liferayVersionSpecification?has_content>
+		 	<#list liferayVersionSpecification as liferayVersion>
+				<#assign liferayVersionValue = liferayVersion.value />
+
+				<#if liferayVersionValue?has_content>
+					${liferayVersionValue}<#if liferayVersion?has_next>,</#if>
+				</#if>
+		  </#list>
 		</#if>
-	</div>
+	</#if>
 </div>

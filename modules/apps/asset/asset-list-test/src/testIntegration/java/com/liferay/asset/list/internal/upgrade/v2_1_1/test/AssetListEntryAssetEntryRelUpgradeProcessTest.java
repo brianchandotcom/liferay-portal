@@ -33,6 +33,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
 
@@ -125,6 +127,47 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 		_assertAssetListEntryAssetEntryRels(
 			journalArticle1, journalArticle2, journalArticle3, journalArticle4,
 			journalArticle5, journalArticle6);
+	}
+
+	@Test
+	public void testUpgradeUpdatingPositionWithMultipleOrphanAssetEntryIdAndSegmentsEntryVariation()
+		throws Exception {
+
+		_addAssetListEntryAssetEntryRel(0);
+
+		JournalArticle journalArticle1 = _addJournalArticle();
+		JournalArticle journalArticle2 = _addJournalArticle();
+		JournalArticle journalArticle3 = _addJournalArticle();
+		JournalArticle journalArticle4 = _addJournalArticle();
+
+		_addAssetListEntryAssetEntryRel(5);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+			_group.getGroupId(), _assetListEntry,
+			segmentsEntry.getSegmentsEntryId());
+
+		_addAssetListEntryAssetEntryRel(
+			segmentsEntry.getSegmentsEntryId(), journalArticle4);
+		_addAssetListEntryAssetEntryRel(1, segmentsEntry.getSegmentsEntryId());
+		_addAssetListEntryAssetEntryRel(
+			segmentsEntry.getSegmentsEntryId(), journalArticle3);
+		_addAssetListEntryAssetEntryRel(3, segmentsEntry.getSegmentsEntryId());
+		_addAssetListEntryAssetEntryRel(
+			segmentsEntry.getSegmentsEntryId(), journalArticle2);
+		_addAssetListEntryAssetEntryRel(
+			segmentsEntry.getSegmentsEntryId(), journalArticle1);
+		_addAssetListEntryAssetEntryRel(6, segmentsEntry.getSegmentsEntryId());
+
+		_runUpgrade();
+
+		_assertAssetListEntryAssetEntryRels(
+			journalArticle1, journalArticle2, journalArticle3, journalArticle4);
+		_assertAssetListEntryAssetEntryRels(
+			segmentsEntry.getSegmentsEntryId(), journalArticle4,
+			journalArticle3, journalArticle2, journalArticle1);
 	}
 
 	@Test

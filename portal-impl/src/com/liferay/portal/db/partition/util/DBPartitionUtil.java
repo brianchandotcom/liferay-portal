@@ -419,13 +419,15 @@ public class DBPartitionUtil {
 								_getColumnNames(connection, tableName),
 								StringPool.BLANK));
 
+						String partitionTableName =
+							toPartitionName + StringPool.PERIOD + tableName;
+
 						if (dbInspector.hasColumn(tableName, "companyId")) {
 							statement.executeUpdate(
 								StringBundler.concat(
-									"update ", toPartitionName,
-									StringPool.PERIOD, tableName,
-									" set companyId = ", toCompanyId,
-									" where companyId = ", fromCompanyId));
+									"update ", partitionTableName, " set ",
+									"companyId = ", toCompanyId, " where ",
+									"companyId = ", fromCompanyId));
 						}
 
 						if (dbInspector.isObjectTable(
@@ -435,7 +437,7 @@ public class DBPartitionUtil {
 								_dbPartitionDB.getRenameTableSQL(
 									tableName, toPartitionName,
 									StringUtil.replace(
-										tableName,
+										partitionTableName,
 										String.valueOf(fromCompanyId),
 										String.valueOf(toCompanyId))));
 						}
@@ -443,9 +445,9 @@ public class DBPartitionUtil {
 						if (tableName.equals("Group_")) {
 							statement.executeUpdate(
 								StringBundler.concat(
-									"update ", toPartitionName,
-									".Group_ set classPK = ", toCompanyId,
-									" where classPK = ", fromCompanyId));
+									"update ", partitionTableName, " set ",
+									"classPK = ", toCompanyId, " where ",
+									"classPK = ", fromCompanyId));
 						}
 					}
 				}

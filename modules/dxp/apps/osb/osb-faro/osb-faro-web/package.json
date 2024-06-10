@@ -30,6 +30,7 @@
 		"@clayui/popover": "^3.113.0",
 		"@clayui/table": "^3.111.0",
 		"@clayui/tooltip": "^3.113.0",
+		"@liferay/jest-junit-reporter": "^1.2.0",
 		"apollo-boost": "^0.1.28",
 		"apollo-cache-inmemory": "^1.6.5",
 		"apollo-client": "^2.6.8",

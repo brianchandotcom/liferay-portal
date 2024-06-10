@@ -217,9 +217,9 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
-		layout.setMasterLayoutPlid(masterPageTemplateLayout.getPlid());
-
-		layout = _layoutLocalService.updateLayout(layout);
+		layout = _layoutLocalService.updateMasterLayoutPlid(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			masterPageTemplateLayout.getPlid());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);
@@ -282,9 +282,9 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
-		layout.setStyleBookEntryId(styleBookEntry.getStyleBookEntryId());
-
-		layout = _layoutLocalService.updateLayout(layout);
+		layout = _layoutLocalService.updateStyleBookEntryId(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			styleBookEntry.getStyleBookEntryId());
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);

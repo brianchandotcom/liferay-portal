@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,14 +22,21 @@ public class LayoutObjectReferenceUtil {
 	public static Map<String, String[]> getConfiguration(
 		JSONObject layoutObjectReferenceJSONObject) {
 
+		Map<String, String[]> configuration = new HashMap<>();
+
+		String fieldName = layoutObjectReferenceJSONObject.getString(
+			"fieldName");
+
+		if (Validator.isNotNull(fieldName)) {
+			configuration.put("fieldNames", new String[] {fieldName});
+		}
+
 		JSONObject configurationJSONObject =
 			layoutObjectReferenceJSONObject.getJSONObject("config");
 
 		if (configurationJSONObject == null) {
-			return null;
+			return configuration;
 		}
-
-		Map<String, String[]> configuration = new HashMap<>();
 
 		for (String key : configurationJSONObject.keySet()) {
 			List<String> values = new ArrayList<>();

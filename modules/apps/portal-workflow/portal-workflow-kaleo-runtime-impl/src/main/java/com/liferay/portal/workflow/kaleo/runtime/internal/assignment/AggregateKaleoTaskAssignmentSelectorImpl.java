@@ -40,6 +40,8 @@ public class AggregateKaleoTaskAssignmentSelectorImpl
 		comparator = comparator.thenComparing(
 			KaleoTaskAssignment::getAssigneeClassName);
 
+		comparator = comparator.thenComparing(KaleoTaskAssignment::getGroupId);
+
 		Set<KaleoTaskAssignment> kaleoTaskAssignmentsSet = new TreeSet<>(
 			comparator);
 

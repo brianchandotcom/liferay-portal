@@ -4,16 +4,16 @@
 
 <#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticlePageCount) as publicationJournalArticlePageCount>
 	<#assign
-	portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + publicationJournalArticlePageCount + "_"
+		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + publicationJournalArticlePageCount + "_"
 
-	ctCollectionLayoutModel = dataFactory.newCTCollectionLayoutModel(ctCollectionId, publicationGroupId, publicationGroupId + "_ct_journal_article_" + publicationJournalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
+		ctCollectionLayoutModel = dataFactory.newCTCollectionLayoutModel(ctCollectionId, publicationGroupId, publicationGroupId + "_ct_journal_article_" + publicationJournalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
 	${csvFileWriter.write("layout", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + ctCollectionLayoutModel.friendlyURL + "\n")}
 
 	<@insertLayout
 		_ctCollectionId = ctCollectionIdString
-		_layoutModel=ctCollectionLayoutModel
+		_layoutModel = ctCollectionLayoutModel
 	/>
 
 	<#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticleCount) as publicationJournalArticleCount>
@@ -23,25 +23,25 @@
 
 		<#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticleVersionCount) as publicationVersionCount>
 			<#assign
-			ctCollectionJournalArticleModel = dataFactory.newCTCollectionJournalArticleModel(ctCollectionId, ctCollectionJournalArticleResourceModel, publicationJournalArticleCount, publicationVersionCount)
+				ctCollectionJournalArticleModel = dataFactory.newCTCollectionJournalArticleModel(ctCollectionId, ctCollectionJournalArticleResourceModel, publicationJournalArticleCount, publicationVersionCount)
 			/>
 
 			<@insertJournalArticle
-				_ctCollectionId=ctCollectionIdString
-				_insertAssetEntry=(publicationVersionCount==dataFactory.maxPublicationJournalArticleVersionCount)
-				_journalArticleModel=ctCollectionJournalArticleModel
-				_journalDDMStructureModel=defaultCTJournalDDMStructureModel
-				_journalDDMTemplateModel=defaultCTJournalDDMTemplateModel
+				_ctCollectionId = ctCollectionIdString
+				_insertAssetEntry = (publicationVersionCount==dataFactory.maxPublicationJournalArticleVersionCount)
+				_journalArticleModel = ctCollectionJournalArticleModel
+				_journalDDMStructureModel = defaultCTJournalDDMStructureModel
+				_journalDDMTemplateModel = defaultCTJournalDDMTemplateModel
 			/>
 		</#list>
 
 		<@insertMBDiscussion
-			_classNameId=dataFactory.journalArticleClassNameId
-			_classPK=ctCollectionJournalArticleResourceModel.resourcePrimKey
-			_groupId=publicationGroupId
-			_maxCommentCount=0
-			_mbRootMessageId=dataFactory.getCounterNext()
-			_mbThreadId=dataFactory.getCounterNext()
+			_classNameId = dataFactory.journalArticleClassNameId
+			_classPK = ctCollectionJournalArticleResourceModel.resourcePrimKey
+			_groupId = publicationGroupId
+			_maxCommentCount = 0
+			_mbRootMessageId = dataFactory.getCounterNext()
+			_mbThreadId = dataFactory.getCounterNext()
 		/>
 
 		${dataFactory.toCTCollectionInsertSQL(dataFactory.newLayoutClassedModelUsageModel(publicationGroupId, ctCollectionLayoutModel.plid, portletIdPrefix + publicationJournalArticleCount, ctCollectionJournalArticleResourceModel), ctCollectionId)}

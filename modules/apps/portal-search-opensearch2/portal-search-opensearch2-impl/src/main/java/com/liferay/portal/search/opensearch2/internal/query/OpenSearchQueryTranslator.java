@@ -65,7 +65,6 @@ import com.liferay.portal.search.query.function.CombineFunction;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
@@ -990,38 +989,9 @@ public class OpenSearchQueryTranslator
 
 	@Override
 	public QueryVariant visit(TermsQuery termsQuery) {
-		String field = termsQuery.getField();
-		String[] terms = termsQuery.getValues();
-
-		if (terms.length <= _MAX_TERMS_COUNT) {
-			return _translateTermsQuery(termsQuery, field, terms);
-		}
-
-		BoolQuery.Builder builder = QueryBuilders.bool();
-
-		List<String> termsList = new ArrayList<>();
-
-		for (String term : terms) {
-			termsList.add(term);
-
-			if (termsList.size() == _MAX_TERMS_COUNT) {
-				builder.should(
-					_translateTermsQuery(
-						termsQuery, field, termsList.toArray(new String[0])
-					)._toQuery());
-
-				termsList.clear();
-			}
-		}
-
-		if (!termsList.isEmpty()) {
-			builder.should(
-				_translateTermsQuery(
-					termsQuery, field, termsList.toArray(new String[0])
-				)._toQuery());
-		}
-
-		return builder.build();
+		return QueryUtil.translateTerms(
+			termsQuery.getBoost(), termsQuery.getField(),
+			termsQuery.getValues());
 	}
 
 	@Override
@@ -1396,33 +1366,6 @@ public class OpenSearchQueryTranslator
 		throw new IllegalArgumentException(
 			"Invalid shape relation " + shapeRelation);
 	}
-
-	private org.opensearch.client.opensearch._types.query_dsl.TermsQuery
-		_translateTermsQuery(
-			TermsQuery termsQuery, String field, String[] values) {
-
-		org.opensearch.client.opensearch._types.query_dsl.TermsQuery.Builder
-			builder = QueryBuilders.terms();
-
-		SetterUtil.setNotNullFloat(builder::boost, termsQuery.getBoost());
-
-		builder.field(field);
-
-		builder.terms(
-			termsQueryField -> {
-				List<FieldValue> fieldValues = new ArrayList<>();
-
-				ListUtil.isNotEmptyForEach(
-					Arrays.asList(values),
-					value -> fieldValues.add(FieldValue.of(value)));
-
-				return termsQueryField.value(fieldValues);
-			});
-
-		return builder.build();
-	}
-
-	private static final Integer _MAX_TERMS_COUNT = 65536;
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
 	private final OpenSearchScoreFunctionTranslator

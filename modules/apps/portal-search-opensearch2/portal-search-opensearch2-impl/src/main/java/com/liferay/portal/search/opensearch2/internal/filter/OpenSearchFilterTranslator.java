@@ -32,7 +32,6 @@ import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.opensearch2.internal.geolocation.GeoTranslator;
-import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
 import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 
@@ -54,8 +53,6 @@ import org.opensearch.client.opensearch._types.query_dsl.QueryBuilders;
 import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch._types.query_dsl.RangeQuery;
 import org.opensearch.client.opensearch._types.query_dsl.TermQuery;
-import org.opensearch.client.opensearch._types.query_dsl.TermsQuery;
-import org.opensearch.client.opensearch._types.query_dsl.TermsQueryField;
 import org.opensearch.client.opensearch._types.query_dsl.TermsSetQuery;
 
 import org.osgi.service.component.annotations.Component;
@@ -294,14 +291,8 @@ public class OpenSearchFilterTranslator
 
 	@Override
 	public QueryVariant visit(TermsFilter termsFilter) {
-		return TermsQuery.of(
-			termsQuery -> termsQuery.field(
-				termsFilter.getField()
-			).terms(
-				TermsQueryField.of(
-					termsQueryField -> termsQueryField.value(
-						ConversionUtil.toFieldValues(termsFilter.getValues())))
-			));
+		return QueryUtil.translateTerms(
+			null, termsFilter.getField(), termsFilter.getValues());
 	}
 
 	@Override

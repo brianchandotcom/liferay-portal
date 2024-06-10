@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
@@ -11,12 +12,11 @@ import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
-import Configuration from './Configuration';
-import Footer from './Footer';
 import RequiredMark from '../../../components/RequiredMark';
 import ValidationFeedback from '../../../components/ValidationFeedback';
 import {IClientExtensionFilter, IField, IFilter} from '../../../utils/types';
-import ClayAlert from '@clayui/alert';
+import Configuration from './Configuration';
+import Footer from './Footer';
 
 function Header() {
 	return <>{Liferay.Language.get('new-client-extension-filter')}</>;
@@ -41,23 +41,17 @@ function Body({
 	namespace,
 	onSave,
 }: IBodyProps) {
-	const [
-		clientExtensionValidationError,
-		setClientExtensionValidationError,
-	] = useState<boolean>(false);
-	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
-		boolean
-	>(false);
-	const [fieldValidationError, setFieldValidationError] = useState<boolean>(
-		false
-	);
-	const [labelValidationError, setLabelValidationError] = useState<boolean>(
-		false
-	);
+	const [clientExtensionValidationError, setClientExtensionValidationError] =
+		useState<boolean>(false);
+	const [fieldInUseValidationError, setFieldInUseValidationError] =
+		useState<boolean>(false);
+	const [fieldValidationError, setFieldValidationError] =
+		useState<boolean>(false);
+	const [labelValidationError, setLabelValidationError] =
+		useState<boolean>(false);
 
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		false
-	);
+	const [saveButtonDisabled, setSaveButtonDisabled] =
+		useState<boolean>(false);
 	const [selectedClientExtension, setSelectedClientExtension] = useState<
 		IClientExtensionRenderer | undefined
 	>(
@@ -67,7 +61,7 @@ function Body({
 						clientExtensionRenderer.externalReferenceCode ===
 						(filter as IClientExtensionFilter)
 							.fdsFilterClientExtensionERC
-			  )
+				)
 			: undefined
 	);
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
@@ -162,7 +156,7 @@ function Body({
 			</ClayAlert>
 		);
 	}
-	
+
 	return (
 		<>
 			<ClayModal.Body>

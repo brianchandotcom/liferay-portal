@@ -10,9 +10,9 @@ import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
 import React, {useState} from 'react';
 
+import {IDateFilter, IField, IFilter} from '../../../utils/types';
 import Configuration from './Configuration';
 import Footer from './Footer';
-import {IDateFilter, IField, IFilter} from '../../../utils/types';
 
 function Header() {
 	return <>{Liferay.Language.get('new-date-range-filter')}</>;
@@ -35,17 +35,14 @@ function Body({
 	namespace,
 	onSave,
 }: IBodyProps) {
-	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
-		boolean
-	>(false);
-	const [fieldValidationError, setFieldValidationError] = useState<boolean>(
-		false
-	);
+	const [fieldInUseValidationError, setFieldInUseValidationError] =
+		useState<boolean>(false);
+	const [fieldValidationError, setFieldValidationError] =
+		useState<boolean>(false);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
-		false
-	);
+	const [saveButtonDisabled, setSaveButtonDisabled] =
+		useState<boolean>(false);
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations

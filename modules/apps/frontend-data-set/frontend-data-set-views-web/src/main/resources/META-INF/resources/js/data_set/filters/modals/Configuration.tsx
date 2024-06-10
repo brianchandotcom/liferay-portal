@@ -12,9 +12,9 @@ import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import {IField, IFilter} from '../../../utils/types';
 import RequiredMark from '../../../components/RequiredMark';
 import ValidationFeedback from '../../../components/ValidationFeedback';
+import {IField, IFilter} from '../../../utils/types';
 
 interface IConfigurationProps {
 	fieldInUseValidationError: boolean;

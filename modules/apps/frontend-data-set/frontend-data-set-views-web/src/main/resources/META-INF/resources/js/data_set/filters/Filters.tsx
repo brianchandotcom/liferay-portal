@@ -93,9 +93,8 @@ function AddFDSFilterModalContent({
 	onSave,
 	restApplications,
 }: IPropsAddFDSFilterModalContent) {
-	const {Component, displayType, fdsViewRelationshipId} = FILTER_TYPES[
-		filterType as EFilterType
-	];
+	const {Component, displayType, fdsViewRelationshipId} =
+		FILTER_TYPES[filterType as EFilterType];
 
 	const saveFDSFilter = async (formData: any) => {
 		formData = {

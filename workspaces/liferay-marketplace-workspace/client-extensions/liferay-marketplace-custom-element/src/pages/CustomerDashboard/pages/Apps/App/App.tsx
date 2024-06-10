@@ -115,7 +115,7 @@ const App = () => {
 														{isCloud
 															? 'Standard'
 															: optionName[0]
-																	.value ||
+																	?.value ||
 															  ''}
 													</p>
 													<p className="col-3">

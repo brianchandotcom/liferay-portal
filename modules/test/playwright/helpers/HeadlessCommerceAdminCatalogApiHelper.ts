@@ -14,15 +14,39 @@ type TCatalog = {
 	name?: string;
 };
 
+type TChanel = {
+	channelId: number;
+	currencyCode: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	type: string;
+};
+
+type TCategory = {
+	checked?: boolean;
+	externalReferenceCode: string;
+	id: number;
+	label?: string;
+	name: string;
+	value?: string;
+	vocabulary: string;
+};
+
 type TProduct = {
 	active?: boolean;
 	catalogId: number;
+	categories?: TCategory[];
 	description?: {
 		[key: string]: string;
 	};
+	externalReferenceCode?: string;
+	id?: number;
 	name?: {
 		[key: string]: string;
 	};
+	productChannelFilter?: boolean;
+	productChannels?: TChanel[];
 	productConfiguration?: {
 		allowBackOrder?: boolean;
 	};
@@ -43,12 +67,18 @@ type TProductVirtualSettings = {
 	activationStatus?: number;
 	duration?: number;
 	maxUsages?: number;
+	productVirtualSettingsFileEntries?: TProductVirtualSettingsFileEntry[];
 	sampleURL?: string;
 	termsOfUseContent?: {
 		[key: string]: string;
 	};
 	url?: string;
 	useSample?: boolean;
+};
+
+type TProductVirtualSettingsFileEntry = {
+	attachment: string;
+	version: string;
 };
 
 type TRelatedProduct = {
@@ -146,6 +176,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async getCatalogByErc(catalogErc: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/catalog/by-externalReferenceCode/${catalogErc}`
+		);
+	}
+
+	async getCatalogByName(catalogName: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/catalogs?filter=name eq '${catalogName}'`
+		);
+	}
+
 	async getCatalogsPage(search: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalogs?search=${search}`
@@ -220,6 +262,21 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 			{
 				name: {
 					en_US: 'Product' + getRandomInt(),
+				},
+				...(product || {}),
+			}
+		);
+	}
+
+	async patchProductByErc(
+		externalReferenceCode: string,
+		product?: DataObject
+	) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/by-externalReferenceCode/${externalReferenceCode}`,
+			{
+				name: {
+					en_US: `Product${getRandomInt()}`,
 				},
 				...(product || {}),
 			}

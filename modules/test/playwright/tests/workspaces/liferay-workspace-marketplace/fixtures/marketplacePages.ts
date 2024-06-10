@@ -5,15 +5,20 @@
 
 import {test} from '@playwright/test';
 
+import {CustomerDashBoardPage} from '../pages/customerDashboardPage';
 import {PublisherAppPage} from '../pages/publisherAppPage';
 import {PublisherDashboardPage} from '../pages/publisherDashboardPage';
 import {PublisherSolutionPage} from '../pages/publisherSolutionPage';
 
 const marketplacePagesTest = test.extend<{
+	customerDashboardpage: CustomerDashBoardPage;
 	publisherAppPage: PublisherAppPage;
 	publisherDashboardPage: PublisherDashboardPage;
 	publisherSolutionPage: PublisherSolutionPage;
 }>({
+	customerDashboardpage: async ({page}, use) => {
+		await use(new CustomerDashBoardPage(page));
+	},
 	publisherAppPage: async ({page}, use) => {
 		await use(new PublisherAppPage(page));
 	},

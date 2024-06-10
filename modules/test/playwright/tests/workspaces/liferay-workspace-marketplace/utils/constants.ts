@@ -103,3 +103,9 @@ export const solutions: {
 		},
 	},
 };
+
+export enum PRODUCT_WORKFLOW_STATUS_CODE {
+	APPROVED = 0,
+	PENDING = 1,
+	DRAFT = 2,
+}

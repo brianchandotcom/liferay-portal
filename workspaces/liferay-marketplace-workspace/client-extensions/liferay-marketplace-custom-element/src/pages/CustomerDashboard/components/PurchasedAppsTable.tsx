@@ -17,7 +17,6 @@ import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {Analytics} from '../../../core/Analytics';
 import {OrderType} from '../../../enums/OrderType';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../liferay/liferay';
 import {safeJSONParse} from '../../../utils/util';
 
 type AppsTableProps = {
@@ -241,17 +240,12 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 														if (
 															properties.featureFlags?.includes(
 																'LPD-21582'
-															) &&
-															!isFreeApp
+															)
 														) {
-															const downloadURL = `order/${id}/download`;
-															Liferay.Util.navigate(
-																downloadURL
+															navigate(
+																`order/${id}/download`
 															);
-
-															return;
 														}
-
 														if (!virtualURL) {
 															Analytics.track(
 																'VIRTUAL_URL_NOT_FOUND',

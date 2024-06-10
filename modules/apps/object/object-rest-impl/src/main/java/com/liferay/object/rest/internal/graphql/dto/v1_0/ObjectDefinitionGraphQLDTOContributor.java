@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -527,7 +528,23 @@ public class ObjectDefinitionGraphQLDTOContributor
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			if (Objects.equals(entry.getKey(), "statusCode")) {
+				continue;
+			}
+
 			properties.put(entry.getKey(), entry.getValue());
+		}
+
+		if (map.get("statusCode") != null) {
+			objectEntry.setStatus(
+				() -> new Status() {
+					{
+						setCode(() -> (int)map.get("statusCode"));
+						setLabel(
+							() -> WorkflowConstants.getStatusLabel(
+								(int)map.get("statusCode")));
+					}
+				});
 		}
 
 		return objectEntry;

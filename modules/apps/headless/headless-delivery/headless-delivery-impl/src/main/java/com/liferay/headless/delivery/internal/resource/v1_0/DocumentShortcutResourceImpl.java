@@ -126,6 +126,23 @@ public class DocumentShortcutResourceImpl
 					siteId, documentShortcut.getViewableByAsString())));
 	}
 
+	@Override
+	public DocumentShortcut putDocumentShortcut(
+			Long documentShortcutId, DocumentShortcut documentShortcut)
+		throws Exception {
+
+		FileShortcut fileShortcut = _dlAppService.getFileShortcut(
+			documentShortcutId);
+
+		return _toDocumentShortcut(
+			_dlAppService.updateFileShortcut(
+				documentShortcutId, documentShortcut.getFolderId(),
+				documentShortcut.getTargetDocumentId(),
+				_createServiceContext(
+					fileShortcut.getGroupId(),
+					documentShortcut.getViewableByAsString())));
+	}
+
 	private ServiceContext _createServiceContext(
 		long groupId, String viewableBy) {
 

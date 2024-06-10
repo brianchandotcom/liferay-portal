@@ -14,7 +14,7 @@ export default function getMDFActivityPeriod(
 	if (minDateActivity && maxDateActivity) {
 		const startDate = getDateCustomFormat(
 			minDateActivity,
-			customFormatDateOptions.SHORT_MONTH_YEAR
+			customFormatDateOptions.SHORT_MONTH
 		);
 
 		const endDate = getDateCustomFormat(
@@ -23,7 +23,8 @@ export default function getMDFActivityPeriod(
 		);
 
 		return {
-			[MDFColumnKey.ACTIVITY_PERIOD]: `${startDate} - ${endDate}`,
+			[MDFColumnKey.START_ACT_PERIOD]: `${startDate}`,
+			[MDFColumnKey.END_ACT_PERIOD]: `${endDate}`,
 		};
 	}
 }

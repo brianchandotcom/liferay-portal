@@ -6,11 +6,15 @@
 import {Locator, Page} from '@playwright/test';
 
 export class AccountAccountGroupsPage {
+	readonly accountGroupName: (accountGroupName: string) => Promise<Locator>;
 	readonly page: Page;
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
 
 	constructor(page: Page) {
+		this.accountGroupName = async (accountGroupName: string) => {
+			return this.page.getByText(accountGroupName, {exact: true});
+		};
 		this.page = page;
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});
 		this.searchInput = this.page.getByPlaceholder('Search for');

@@ -312,7 +312,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					companyIds.add(companyId);
 				});
 
-			Assert.assertEquals(companyIds.toString(), 3, companyIds.size());
+			Assert.assertEquals(
+				companyIds.toString(), _getDefaultSchemaCount("Company"),
+				companyIds.size());
 		}
 		finally {
 			deletePartitionRequiredData();

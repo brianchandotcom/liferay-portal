@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Given Custom Object Definition University with text field 'name' created and one-to-many relationship UniversityAddresses created and published") {
+		task ("Given Custom Object Definition University with text field 'name' created and one-to-many relationship UniversityAPISorts created and published") {
 			var universityId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "University",
 				en_US_plural_label = "Universities",
@@ -19,14 +19,14 @@ definition {
 				objectDefinitionExternalReferenceCode = "university",
 				requiredStringFieldName = "name",
 				requiredStringFieldNameExternalReferenceCode = "universityName");
-			var addressId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Address");
+			var apiSortId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "APISort");
 
 			ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
-				en_US_label = "UniversityAddresses",
-				name = "universityAddresses",
+				en_US_label = "UniversityAPISorts",
+				name = "universityAPISorts",
 				objectDefinitionId1 = ${universityId},
-				objectDefinitionId2 = ${addressId},
+				objectDefinitionId2 = ${apiSortId},
 				type = "oneToMany");
 		}
 
@@ -166,17 +166,17 @@ definition {
 
 	@priority = 3
 	test DroppedIntoPropertiesListObjectFieldIsDisabledInPropertiesSidebar {
-		task ("And Given fields of Address object definition present through View Related Objects'") {
+		task ("And Given fields of APISort object definition present through View Related Objects'") {
 			APIBuilderUI.goToEditRelatedEntryInEditApplication(
 				entity = "Schemas",
 				name = "University",
 				tabEntity = "Properties",
 				title = "My-app");
 
-			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "Postal Address");
+			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "API Sort");
 		}
 
-		task ("When adding 'ID' of Address to properties box") {
+		task ("When adding 'ID' of APISort to properties box") {
 			Click(
 				key_text = "ID",
 				locator1 = "APIBuilder#PROPERTY_CONTAINER");
@@ -186,7 +186,7 @@ definition {
 				locator1 = "PublicationsChanges#COMMENT_VALUE");
 		}
 
-		task ("Then 'ID' of Address disabled in Properties sidebar") {
+		task ("Then 'ID' of APISort disabled in Properties sidebar") {
 			AssertElementPresent(
 				key_text = "ID",
 				locator1 = "APIBuilder#DISABLED_PROPERTY_CONTAINER");
@@ -207,17 +207,17 @@ definition {
 	test DroppedIntoPropertiesListRelatedObjectFieldIsDisabledInPropertiesSidebar {
 		property portal.acceptance = "true";
 
-		task ("And Given fields of Address object definition present through View Related Objects'") {
+		task ("And Given fields of APISort object definition present through View Related Objects'") {
 			APIBuilderUI.goToEditRelatedEntryInEditApplication(
 				entity = "Schemas",
 				name = "University",
 				tabEntity = "Properties",
 				title = "My-app");
 
-			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "Postal Address");
+			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "API Sort");
 		}
 
-		task ("When adding 'External Reference Code' of Address to 'Drop properties' box") {
+		task ("When adding 'External Reference Code' of APISort to 'Drop properties' box") {
 			Click(
 				key_text = "External Reference Code",
 				locator1 = "APIBuilder#PROPERTY_CONTAINER");
@@ -241,11 +241,11 @@ definition {
 				tabEntity = "Properties",
 				title = "My-app");
 
-			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "Postal Address");
+			APIBuilderUI.gotoRelatedObjectsProperties(relatedObjectName = "API Sort");
 		}
 
-		task ("Then all fields of Address object definition are present") {
-			var fieldNameList = "Author,Create Date,External Reference Code,ID,Modified Date,Status,Name,Street 1,UniversityAddresses";
+		task ("Then all fields of APISort object definition are present") {
+			var fieldNameList = "Author,Create Date,External Reference Code,ID,Modified Date,Status,OData Sort,UniversityAPISorts";
 
 			for (var fieldName : list ${fieldNameList}) {
 				AssertElementPresent(

@@ -56,7 +56,7 @@ const webContentName2: string = getRandomString();
 const webContentText1: string = getRandomString();
 const webContentText2: string = getRandomString();
 
-test('can switch template with web content on widget page', async ({
+test('Can switch template with web content on widget page.', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	journalPage,
@@ -150,7 +150,7 @@ test('can switch template with web content on widget page', async ({
 	);
 });
 
-test('can switch template with web content on content page', async ({
+test('Can switch template with web content on content page.', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	contentPage,
@@ -250,7 +250,7 @@ test('can switch template with web content on content page', async ({
 	);
 });
 
-test('can switch template with web content on home page', async ({
+test('Can switch template with web content on home page.', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	contentPage,

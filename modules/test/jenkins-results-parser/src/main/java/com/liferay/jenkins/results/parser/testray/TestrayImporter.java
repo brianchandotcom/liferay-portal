@@ -1227,8 +1227,15 @@ public class TestrayImporter {
 				continue;
 			}
 
-			String testray1ImportEnabled = System.getenv(
-				"TESTRAY_1_IMPORT_ENABLED");
+			String testray1ImportEnabled = "false";
+
+			try {
+				testray1ImportEnabled =
+					JenkinsResultsParserUtil.getBuildProperty(
+						"testray.import.enabled[testray-1]");
+			}
+			catch (IOException ioException) {
+			}
 
 			if (!(testrayBuild instanceof Testray1TestrayBuild) &&
 				(testray1ImportEnabled != null)) {

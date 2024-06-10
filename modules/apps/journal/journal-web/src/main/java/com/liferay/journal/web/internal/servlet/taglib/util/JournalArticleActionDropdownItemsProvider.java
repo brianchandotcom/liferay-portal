@@ -138,7 +138,7 @@ public class JournalArticleActionDropdownItemsProvider {
 						_getEditArticleActionUnsafeConsumer()
 					).add(
 						() ->
-							FeatureFlagManagerUtil.isEnabled("LPS-141392") &&
+							FeatureFlagManagerUtil.isEnabled("LPD-11228") &&
 							hasUpdatePermission && _article.isDraft() &&
 							_article.hasApprovedVersion(),
 						_getDiscardDraftActionUnsafeConsumer()

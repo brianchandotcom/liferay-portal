@@ -735,7 +735,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		).setParameter(
 			"friendlyURL",
 			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-141392") ||
+				if (!FeatureFlagManagerUtil.isEnabled("LPD-11228") ||
 					!Objects.equals(actionName, "/journal/add_article")) {
 
 					return null;

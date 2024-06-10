@@ -395,7 +395,7 @@ public class JournalEditArticleDisplayContext {
 			"articleId", getArticleId()
 		).put(
 			"autoSaveDraftEnabled",
-			FeatureFlagManagerUtil.isEnabled("LPS-141392")
+			FeatureFlagManagerUtil.isEnabled("LPD-11228")
 		).put(
 			"availableLocales", _getAvailableLanguageIds()
 		).put(

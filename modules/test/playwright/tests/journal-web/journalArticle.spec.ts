@@ -64,8 +64,8 @@ const expect = baseExpect.extend({
 const autoSaveAsDraftTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
+		'LPD-11228': true,
 		'LPD-15596': true,
-		'LPS-141392': true,
 	})
 );
 

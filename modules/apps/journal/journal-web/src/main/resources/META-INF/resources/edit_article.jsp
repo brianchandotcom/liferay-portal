@@ -144,7 +144,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 				<li class="tbar-item">
 					<div class="c-gap-3 form-group-sm journal-article-button-row mb-0 tbar-section text-right">
 						<c:choose>
-							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-141392") %>'>
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
 								<div class="align-items-center d-none mx-3 small text-danger" id="<portlet:namespace />lockErrorIndicator">
 									<liferay-ui:message key="alert-helper-error" />
 
@@ -199,7 +199,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 
 						<c:if test="<%= journalEditArticleDisplayContext.hasSavePermission() %>">
 							<div>
-								<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-141392") && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>'>
+								<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-11228") && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>'>
 									<clay:button
 										cssClass="mr-3"
 										data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "/journal/add_article" : "/journal/update_article" %>'

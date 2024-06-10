@@ -106,9 +106,11 @@ public class AssetListEntryAssetEntryRelLocalServiceUtil {
 	 *
 	 * @param assetListEntryAssetEntryRel the asset list entry asset entry rel
 	 * @return the asset list entry asset entry rel that was removed
+	 * @throws PortalException
 	 */
 	public static AssetListEntryAssetEntryRel deleteAssetListEntryAssetEntryRel(
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
+			AssetListEntryAssetEntryRel assetListEntryAssetEntryRel)
+		throws PortalException {
 
 		return getService().deleteAssetListEntryAssetEntryRel(
 			assetListEntryAssetEntryRel);

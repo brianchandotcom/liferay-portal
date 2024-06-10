@@ -4,12 +4,15 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import path from 'node:path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {mockedObjectFields} from './dependencies/objectMockedFields';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -19,10 +22,12 @@ export const test = mergeTests(
 );
 
 const createdEntities = {
+	notificationQueueEntriesId: [],
 	notificationTemplatesId: [],
 	objectActionsId: [],
 	objectDefinition: {},
 } as {
+	notificationQueueEntriesId: number[];
 	notificationTemplatesId: number[];
 	objectActionsId: number[];
 	objectDefinition: ObjectDefinition;
@@ -43,17 +48,25 @@ test.afterEach(async ({apiHelpers}) => {
 		createdEntities.objectDefinition.id
 	);
 
+	for (const queueEntryId of createdEntities.notificationQueueEntriesId) {
+		await apiHelpers.notification.deleteNotificationQueueEntry(
+			queueEntryId
+		);
+	}
+
+	createdEntities.notificationQueueEntriesId = [];
+
 	for (const templateId of createdEntities.notificationTemplatesId) {
 		await apiHelpers.notification.deleteNotificationTemplate(templateId);
-
-		createdEntities.notificationTemplatesId = [];
 	}
+
+	createdEntities.notificationTemplatesId = [];
 
 	for (const actionId of createdEntities.objectActionsId) {
 		await apiHelpers.objectAdmin.deleteObjectAction(actionId);
-
-		createdEntities.objectActionsId = [];
 	}
+
+	createdEntities.objectActionsId = [];
 });
 
 test.describe('Manage object actions through object actions tab', () => {
@@ -139,4 +152,99 @@ test.describe('Manage object actions through object actions tab', () => {
 			await expect(page.getByText(objectAction)).toBeVisible();
 		}
 	});
+});
+
+test('can send notification email via download action', async ({
+	apiHelpers,
+	page,
+	viewObjectEntriesPage,
+}) => {
+
+	// Create email notification template
+
+	const senderEmail: string = 'test' + getRandomInt() + '@liferay.com';
+
+	const notificationTemplate =
+		await apiHelpers.notification.postRandomNotificationTemplate(
+			'notification template test ' + getRandomInt(),
+			senderEmail
+		);
+
+	createdEntities.notificationTemplatesId = [notificationTemplate.id];
+
+	// Create object definition with an attachment field
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields: [mockedObjectFields.attachmentFieldUserComputer],
+			objectFolderExternalReferenceCode: 'default',
+			status: {code: 0},
+		});
+
+	createdEntities.objectDefinition = objectDefinition;
+
+	// Create an action to send notification after attachment download
+
+	await apiHelpers.objectAdmin.postObjectActionByExternalReferenceCode(
+		objectDefinition.externalReferenceCode,
+		{
+			active: true,
+			label: {
+				en_US: 'downloadAttachmentArchive',
+			},
+			name: 'downloadAttachmentArchive',
+			objectActionExecutorKey: 'notification',
+			objectActionTriggerKey: 'onAfterAttachmentDownload',
+			parameters: {
+				notificationTemplateId: notificationTemplate.id,
+				type: 'email',
+			},
+		}
+	);
+
+	// Create an object entry
+
+	await viewObjectEntriesPage.goto(objectDefinition.id);
+
+	await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.name);
+
+	const fileChooserPromise = page.waitForEvent('filechooser');
+
+	await viewObjectEntriesPage.selectFileButton.click();
+
+	const fileChooser = await fileChooserPromise;
+
+	await fileChooser.setFiles(
+		path.join(__dirname, 'dependencies', 'sampleFile.txt')
+	);
+
+	await viewObjectEntriesPage.page
+		.getByText('sampleFile.txt')
+		.waitFor({state: 'visible'});
+
+	await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+	await waitForSuccessAlert(page);
+
+	// Download attachment from object entry
+
+	await viewObjectEntriesPage.goto(objectDefinition.id);
+
+	await page
+		.getByRole('button', {name: 'Search'})
+		.waitFor({state: 'visible'});
+
+	await viewObjectEntriesPage.page.getByText('sampleFile.txt').click();
+
+	// Verify if the email was sent
+
+	const notificationQueueEntries =
+		await apiHelpers.notification.getNotificationQueueEntriesPage(
+			senderEmail
+		);
+
+	createdEntities.notificationQueueEntriesId =
+		notificationQueueEntries.items.map((item: any) => item.id);
+
+	expect(notificationQueueEntries.items.length).toBeTruthy();
 });

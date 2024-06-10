@@ -65,9 +65,9 @@ export class NotificationApiHelper {
 	}
 
 	async postRandomNotificationTemplate(
-		name?: string,
-		fromEmail?: string,
-		toEmail?: string
+		name: string = 'test ' + getRandomInt(),
+		fromEmail: string = 'do-not-replay@liferay.com',
+		toEmail: string = 'to' + getRandomInt() + '@liferay.com'
 	): Promise<TNotificationTemplate> {
 		const requestBody = {
 			editorType: 'richText',
@@ -75,13 +75,12 @@ export class NotificationApiHelper {
 			recipientType: 'email',
 			recipients: [
 				{
-					from: fromEmail ?? 'do-not-replay@liferay.com',
+					from: fromEmail,
 					fromName: {
-						en_US: fromEmail ?? 'do-not-replay@liferay.com',
+						en_US: fromEmail,
 					},
 					to: {
-						en_US:
-							toEmail ?? 'to' + getRandomInt() + '@liferay.com',
+						en_US: toEmail,
 					},
 				},
 			],

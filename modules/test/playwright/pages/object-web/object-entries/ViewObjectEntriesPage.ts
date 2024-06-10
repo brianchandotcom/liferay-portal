@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class ViewObjectEntriesPage {
+	readonly addObjectEntryButton: Locator;
 	readonly backButton: Locator;
 	readonly duplicateEntryErrorMessage: Locator;
 	readonly editObjectEntryForm: Locator;
@@ -20,6 +21,9 @@ export class ViewObjectEntriesPage {
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
+		this.addObjectEntryButton = page
+			.getByTestId('fdsCreationActionButton')
+			.first();
 		this.backButton = page.getByTitle('Back');
 		this.duplicateEntryErrorMessage = page.getByText(
 			'Error:The field values are already in use. Please choose unique values.'
@@ -47,8 +51,11 @@ export class ViewObjectEntriesPage {
 		await expect(this.duplicateEntryErrorMessage).toBeVisible();
 	}
 
-	async clickAddObjectEntry(objectDefinitionLabel: string) {
-		await this.page.getByLabel(objectDefinitionLabel).click();
+	async clickAddObjectEntry(objectName?: string) {
+		objectName
+			? await this.page.getByLabel('Add ' + objectName).click()
+			: await this.addObjectEntryButton.click();
+
 		await this.editObjectEntryForm.waitFor({state: 'visible'});
 	}
 

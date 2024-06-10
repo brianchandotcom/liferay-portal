@@ -17,6 +17,7 @@ import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -922,6 +923,102 @@ public class CommerceGrossPricingTest {
 		BigDecimal finalPrice = finalPriceWithTaxAmountCommerceMoney.getPrice();
 
 		BigDecimal expectedPrice = BigDecimal.valueOf(100);
+
+		finalPrice = finalPrice.setScale(
+			expectedPrice.scale(),
+			RoundingMode.valueOf(_commerceCurrency.getRoundingMode()));
+
+		Assert.assertEquals(
+			expectedPrice.stripTrailingZeros(),
+			finalPrice.stripTrailingZeros());
+
+		CPDefinitionLocalServiceUtil.deleteCPDefinition(cpDefinition);
+	}
+
+	@Test
+	public void testReplacePriceModifierOnDifferentCurrenciesPriceLists()
+		throws Exception {
+
+		frutillaRule.scenario(
+			StringBundler.concat(
+				"If a price modifier of type replace is applied to a base ",
+				"price entry of different currency then the modifier value is ",
+				"applied to the final converted value")
+		).given(
+			"A price list not containing the current product price entry and " +
+				"a price modifier of type replace targeting the product " +
+					"defined for the price list using a different currency"
+		).when(
+			"The price of a product is calculated"
+		).then(
+			"The price modifier is applied to the final converted base price"
+		);
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(), null,
+				ServiceContextTestUtil.getServiceContext());
+
+		CommercePriceList baseCommercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), true, 0.0);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), 0.0);
+
+		CommerceCurrency commerceCurrency =
+			commercePriceList.getCommerceCurrency();
+
+		commerceCurrency.setRate(BigDecimal.valueOf(0.92));
+
+		commerceCurrency =
+			CommerceCurrencyLocalServiceUtil.updateCommerceCurrency(
+				commerceCurrency);
+
+		_commerceCurrency = commerceCurrency;
+
+		CPInstance cpInstance =
+			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
+				commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		BigDecimal price = BigDecimal.valueOf(50);
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			baseCommercePriceList.getCommercePriceListId(), price);
+
+		double modifierAmount = 40;
+
+		CommercePriceModifier commercePriceModifier = _addCommercePriceModifier(
+			commercePriceList.getGroupId(),
+			CommercePriceModifierConstants.TARGET_PRODUCTS,
+			commercePriceList.getCommercePriceListId(),
+			CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE,
+			BigDecimal.valueOf(modifierAmount), true);
+
+		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
+			commercePriceModifier.getCommercePriceModifierId(),
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+			ServiceContextTestUtil.getServiceContext());
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
+			null);
+
+		CommerceProductPrice commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, false,
+				StringPool.BLANK, commerceContext);
+
+		CommerceMoney unitPrice = commerceProductPrice.getUnitPrice();
+
+		BigDecimal finalPrice = unitPrice.getPrice();
+
+		BigDecimal expectedPrice = BigDecimal.valueOf(40);
 
 		finalPrice = finalPrice.setScale(
 			expectedPrice.scale(),

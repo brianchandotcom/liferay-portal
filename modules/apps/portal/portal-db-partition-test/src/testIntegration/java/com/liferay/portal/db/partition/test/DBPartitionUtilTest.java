@@ -138,13 +138,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			addDBPartitions();
 			insertPartitionRequiredData();
 
-			String objectsTableNamePrefix =
-				RandomTestUtil.randomString() + "_x_";
+			String testObjectsTableNamePrefix = dbInspector.normalizeName(
+				"TestObjectTable_x_");
 
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
 
-				createAndPopulateTable(objectsTableNamePrefix + COMPANY_IDS[0]);
+				createAndPopulateTable(
+					testObjectsTableNamePrefix + COMPANY_IDS[0]);
 			}
 
 			Assert.assertTrue(
@@ -154,9 +155,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				"TABLE", COMPANY_IDS[0]);
 
 			Assert.assertTrue(
-				fromTableNames.remove(objectsTableNamePrefix + COMPANY_IDS[0]));
+				fromTableNames.remove(
+					testObjectsTableNamePrefix + COMPANY_IDS[0]));
 			Assert.assertTrue(
-				fromTableNames.add(objectsTableNamePrefix + newCompanyId));
+				fromTableNames.add(testObjectsTableNamePrefix + newCompanyId));
 
 			List<String> toTableNames = _getObjectNames("TABLE", newCompanyId);
 
@@ -173,9 +175,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				String toTableName = fromTableName;
 
 				if (fromTableName.equals(
-						objectsTableNamePrefix + newCompanyId)) {
+						testObjectsTableNamePrefix + newCompanyId)) {
 
-					fromTableName = objectsTableNamePrefix + COMPANY_IDS[0];
+					fromTableName = testObjectsTableNamePrefix + COMPANY_IDS[0];
 				}
 
 				Assert.assertEquals(

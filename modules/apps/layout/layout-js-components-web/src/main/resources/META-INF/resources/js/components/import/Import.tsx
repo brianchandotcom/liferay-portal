@@ -197,10 +197,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 				</span>
 
 				{importResults ? (
-					<ImportResults
-						fileName={fileName}
-						importResults={importResults}
-					/>
+					<ImportResults importResults={importResults} />
 				) : (
 					<ClayLayout.Sheet
 						className="c-gap-4 d-flex flex-column"

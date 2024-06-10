@@ -18,6 +18,7 @@ import com.liferay.portal.search.internal.query.TermsQueryImpl;
 import com.liferay.portal.search.internal.query.WildcardQueryImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
+import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
@@ -157,7 +158,7 @@ public class OpenSearchQueryTranslatorTest {
 
 	private void _setMaxTermsCount(int maxTermsCount) {
 		ReflectionTestUtil.setFieldValue(
-			_openSearchQueryTranslator, "_MAX_TERMS_COUNT", maxTermsCount);
+			QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount);
 	}
 
 	private String _toJSONP(Query query) {

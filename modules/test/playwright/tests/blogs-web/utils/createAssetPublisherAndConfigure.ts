@@ -57,20 +57,23 @@ export async function createAssetPublisherAndConfigure({
 	);
 	await configurationModal.locator('.portlet-body').waitFor();
 
-	const configurationDynamicLabel = await configurationModal.getByText(
+	const configurationDynamicInput = await configurationModal.getByLabel(
 		'Dynamic',
 		{exact: true}
 	);
-	if (await configurationDynamicLabel.isHidden()) {
+	if (await configurationDynamicInput.isHidden()) {
 		await configurationModal
 			.getByRole('link', {name: 'Asset Selection'})
 			.click();
 	}
-	await configurationDynamicLabel.click();
-	await waitForSuccessAlert(
-		configurationModal,
-		'Success:You have successfully updated the setup.'
-	);
+	if (!(await configurationDynamicInput.isChecked())) {
+		await configurationDynamicInput.click();
+
+		await waitForSuccessAlert(
+			configurationModal,
+			'Success:You have successfully updated the setup.'
+		);
+	}
 
 	const configurationSourceAssetTypeSelect =
 		await configurationModal.getByLabel('Asset Type');

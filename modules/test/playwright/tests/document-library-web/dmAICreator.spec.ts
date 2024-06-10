@@ -54,6 +54,10 @@ test('LPD-6677 Can add images to DM when API Key is provided', async ({
 
 	await aiCreatorInstanceSettingsPage.addApiKey();
 
+	await expect(
+		page.getByText('Success:Your request completed successfully.')
+	).toBeVisible();
+
 	await documentLibraryPage.goto();
 
 	await documentLibraryPage.openCreateAIImage();

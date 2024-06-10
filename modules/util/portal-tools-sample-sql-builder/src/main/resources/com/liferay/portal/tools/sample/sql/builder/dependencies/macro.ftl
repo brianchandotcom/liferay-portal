@@ -266,9 +266,9 @@
 
 		<#if _insertAssetEntry>
 			<@insertAssetEntry
-				_categoryAndTag=true
-				_ctCollectionId=_ctCollectionId
-				_entry=dataFactory.newObjectValuePair(_journalArticleModel, journalArticleLocalizationModel)
+				_categoryAndTag = true
+				_ctCollectionId = _ctCollectionId
+				_entry = dataFactory.newObjectValuePair(_journalArticleModel, journalArticleLocalizationModel)
 			/>
 		</#if>
 
@@ -342,16 +342,16 @@
 		<#local mbRootMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
 
 		<@insertMBMessage
-			_ctCollectionId=_ctCollectionId
-			_mbMessageModel=mbRootMessageModel
+			_ctCollectionId = _ctCollectionId
+			_mbMessageModel = mbRootMessageModel
 		/>
 
 		<#local mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel, _classNameId, _classPK, _maxCommentCount)>
 
 		<#list mbMessageModels as mbMessageModel>
 			<@insertMBMessage
-				_ctCollectionId=_ctCollectionId
-				_mbMessageModel=mbMessageModel
+				_ctCollectionId = _ctCollectionId
+				_mbMessageModel = mbMessageModel
 			/>
 
 			${dataFactory.toCTCollectionInsertSQL(dataFactory.newSocialActivityModel(mbMessageModel), _ctCollectionId)}
@@ -390,8 +390,8 @@
 		${dataFactory.toCTCollectionInsertSQL(_mbMessageModel, _ctCollectionId)}
 
 		<@insertAssetEntry
-			_ctCollectionId=_ctCollectionId
-			_entry=_mbMessageModel
+			_ctCollectionId = _ctCollectionId
+			_entry = _mbMessageModel
 		/>
 	<#else>
 		${dataFactory.toInsertSQL(_mbMessageModel)}

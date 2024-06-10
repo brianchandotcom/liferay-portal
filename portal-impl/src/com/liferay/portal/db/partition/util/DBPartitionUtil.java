@@ -392,7 +392,7 @@ public class DBPartitionUtil {
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
+					String fromTableName = resultSet.getString("TABLE_NAME");
 
 					if (Objects.equals(
 							resultSet.getString("TABLE_TYPE"), "VIEW")) {
@@ -400,29 +400,41 @@ public class DBPartitionUtil {
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateViewSQL(
 								_defaultPartitionName, toPartitionName,
-								tableName));
+								fromTableName));
 
-						if (_isCopyableQuartzTable(tableName)) {
+						if (_isCopyableQuartzTable(fromTableName)) {
 							_copyQuartzTableEntry(
-								_defaultPartitionName, fromCompanyId, tableName,
-								toCompanyId, statement);
+								_defaultPartitionName, fromCompanyId,
+								fromTableName, toCompanyId, statement);
 						}
 					}
 					else {
+						String toTableName = fromTableName;
+
+						if (dbInspector.isObjectTable(
+								_getCompanyIds(), fromTableName)) {
+
+							toTableName = StringUtil.replace(
+								fromTableName, String.valueOf(fromCompanyId),
+								String.valueOf(toCompanyId));
+						}
+
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateTableSQL(
-								fromPartitionName, toPartitionName, tableName));
+								fromPartitionName, toPartitionName,
+								fromTableName, toTableName));
 
 						statement.executeUpdate(
 							_getCopyDataSQL(
-								fromPartitionName, toPartitionName, tableName,
-								_getColumnNames(connection, tableName),
+								fromPartitionName, toPartitionName,
+								fromTableName, toTableName,
+								_getColumnNames(connection, fromTableName),
 								StringPool.BLANK));
 
 						String partitionTableName =
-							toPartitionName + StringPool.PERIOD + tableName;
+							toPartitionName + StringPool.PERIOD + toTableName;
 
-						if (dbInspector.hasColumn(tableName, "companyId")) {
+						if (dbInspector.hasColumn(fromTableName, "companyId")) {
 							statement.executeUpdate(
 								StringBundler.concat(
 									"update ", partitionTableName, " set ",
@@ -430,19 +442,7 @@ public class DBPartitionUtil {
 									"companyId = ", fromCompanyId));
 						}
 
-						if (dbInspector.isObjectTable(
-								_getCompanyIds(), tableName)) {
-
-							statement.executeUpdate(
-								_dbPartitionDB.getRenameTableSQL(
-									tableName, toPartitionName,
-									StringUtil.replace(
-										partitionTableName,
-										String.valueOf(fromCompanyId),
-										String.valueOf(toCompanyId))));
-						}
-
-						if (tableName.equals("Group_")) {
+						if (fromTableName.equals("Group_")) {
 							statement.executeUpdate(
 								StringBundler.concat(
 									"update ", partitionTableName, " set ",
@@ -900,11 +900,20 @@ public class DBPartitionUtil {
 		String fromPartitionName, String toPartitionName, String tableName,
 		List<String> columnNames, String whereClause) {
 
+		return _getCopyDataSQL(
+			fromPartitionName, toPartitionName, tableName, tableName,
+			columnNames, whereClause);
+	}
+
+	private static String _getCopyDataSQL(
+		String fromPartitionName, String toPartitionName, String fromTableName,
+		String toTableName, List<String> columnNames, String whereClause) {
+
 		return StringBundler.concat(
-			"insert into ", toPartitionName, StringPool.PERIOD, tableName,
+			"insert into ", toPartitionName, StringPool.PERIOD, toTableName,
 			StringPool.OPEN_PARENTHESIS, StringUtil.merge(columnNames),
 			") select ", StringUtil.merge(columnNames), " from ",
-			fromPartitionName, StringPool.PERIOD, tableName, whereClause);
+			fromPartitionName, StringPool.PERIOD, fromTableName, whereClause);
 	}
 
 	private static String _getPartitionName(long companyId) {

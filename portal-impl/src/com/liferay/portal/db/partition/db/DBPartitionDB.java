@@ -30,8 +30,16 @@ public interface DBPartitionDB {
 			Connection connection, String partitionName)
 		throws SQLException;
 
+	public default String getCreateTableSQL(
+		String fromPartitionName, String toPartitionName, String tableName) {
+
+		return getCreateTableSQL(
+			fromPartitionName, toPartitionName, tableName, tableName);
+	}
+
 	public String getCreateTableSQL(
-		String fromPartitionName, String toPartitionName, String tableName);
+		String fromPartitionName, String toPartitionName, String toTableName,
+		String fromTableName);
 
 	public default String getCreateViewSQL(
 		String fromPartitionName, String toPartitionName, String viewName) {

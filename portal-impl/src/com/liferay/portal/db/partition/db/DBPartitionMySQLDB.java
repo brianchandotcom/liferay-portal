@@ -37,12 +37,13 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 
 	@Override
 	public String getCreateTableSQL(
-		String fromPartitionName, String toPartitionName, String tableName) {
+		String fromPartitionName, String toPartitionName, String fromTableName,
+		String toTableName) {
 
 		return StringBundler.concat(
 			"create table if not exists ", toPartitionName, StringPool.PERIOD,
-			tableName, " like ", fromPartitionName, StringPool.PERIOD,
-			tableName);
+			toTableName, " like ", fromPartitionName, StringPool.PERIOD,
+			fromTableName);
 	}
 
 	@Override

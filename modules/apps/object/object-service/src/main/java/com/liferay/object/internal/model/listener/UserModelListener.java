@@ -39,9 +39,6 @@ public class UserModelListener extends BaseModelListener<User> {
 				_userLocalService.fetchUserByScreenName(
 					user.getCompanyId(), "default-service-account");
 
-			// Adding conditional to check default user existence
-			// If removed, deleting virtual instances will no longer work
-
 			if (defaultServiceAccountUser == null) {
 				return;
 			}

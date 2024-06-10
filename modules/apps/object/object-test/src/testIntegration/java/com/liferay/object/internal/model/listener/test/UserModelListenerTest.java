@@ -140,7 +140,6 @@ public class UserModelListenerTest {
 			TestPropsValues.getCompanyId(), "default-service-account");
 
 		Assert.assertEquals(defaultUserId, objectDefinition.getUserId());
-
 		Assert.assertEquals(defaultUserId, objectField.getUserId());
 	}
 

@@ -68,6 +68,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -1855,6 +1856,10 @@ public class LayoutTypePortletImpl
 	}
 
 	protected String[] getStaticPortletIds(String position) {
+		if (!_HAS_STATIC_PORTLETS) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
 		Layout layout = getLayout();
 
 		Group group = _getGroup();
@@ -2247,6 +2252,8 @@ public class LayoutTypePortletImpl
 			StringUtil.merge(nestedColumnIdsArray));
 	}
 
+	private static final boolean _HAS_STATIC_PORTLETS;
+
 	private static final String _MODIFIED_DATE = "modifiedDate";
 
 	private static final String _NESTED_PORTLETS_NAMESPACE =
@@ -2258,6 +2265,13 @@ public class LayoutTypePortletImpl
 		LayoutTypePortletImpl.class);
 
 	private static final Layout _nullLayout = new LayoutImpl();
+
+	static {
+		Properties properties = PropsUtil.getProperties(
+			PropsKeys.LAYOUT_STATIC_PORTLETS, false);
+
+		_HAS_STATIC_PORTLETS = !properties.isEmpty();
+	}
 
 	private String _addedCustomPortletMode;
 	private boolean _customizedView;

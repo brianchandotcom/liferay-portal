@@ -77,6 +77,8 @@ public class LiferayOSGiExtension {
 		_bundleDefaultInstructions.put(
 			Constants.PROVIDER_POLICY,
 			"${replacestring;${range;[==,==]};.*,(.*)];$1}");
+		_bundleDefaultInstructions.put(
+			Constants.REMOVEHEADERS, Constants.BND_LASTMODIFIED);
 
 		_bundleDefaultInstructions.put(
 			"Javac-Debug",

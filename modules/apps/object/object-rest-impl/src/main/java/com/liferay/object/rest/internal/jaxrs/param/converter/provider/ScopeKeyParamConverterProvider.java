@@ -7,10 +7,10 @@ package com.liferay.object.rest.internal.jaxrs.param.converter.provider;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.scope.util.GroupUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

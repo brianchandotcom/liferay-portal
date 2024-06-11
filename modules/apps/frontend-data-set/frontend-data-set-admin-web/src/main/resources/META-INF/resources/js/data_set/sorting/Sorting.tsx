@@ -450,7 +450,14 @@ const Sorting = ({
 	useEffect(() => {
 		const getFDSSort = async () => {
 			const response = await fetch(
-				`${API_URL.SORTS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_SORT_ID} eq '${dataSet.id}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_SORT}&sort=dateCreated:asc`
+				`${API_URL.SORTS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_SORT_ID} eq '${dataSet.id}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_SORT}&sort=dateCreated:asc`,
+				{
+					headers: {
+						'Accept': 'application/json',
+						'Accept-Language':
+							Liferay.ThemeDisplay.getBCP47LanguageId(),
+					},
+				}
 			);
 
 			const responseJSON = await response.json();

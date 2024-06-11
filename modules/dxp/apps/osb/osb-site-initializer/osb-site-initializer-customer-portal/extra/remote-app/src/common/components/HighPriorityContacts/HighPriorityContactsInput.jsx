@@ -66,12 +66,18 @@ const HighPriorityContactsInput = ({
 		setSourceItems(teamMembers);
 	}, [userAccountsData]);
 
+	const filteredSourceItems = sourceItems.filter(
+		(sourceItem) => !items.some((item) => item.id === sourceItem.id)
+	);
+
 	return loaded ? (
 		<ClayForm>
 			<MultiSelect
+				filteredSourceItems={filteredSourceItems}
 				groupStyle="pb-1"
 				helper={i18n.translate('please-enter-name-or-email-address')}
 				items={items}
+				key={`${inputName}-${filteredSourceItems.length}`}
 				label={
 					isCriticalIncidentCard
 						? i18n.translate('contacts')

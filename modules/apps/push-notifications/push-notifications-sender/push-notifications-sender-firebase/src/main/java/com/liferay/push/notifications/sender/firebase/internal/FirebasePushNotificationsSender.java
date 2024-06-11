@@ -8,7 +8,6 @@ package com.liferay.push.notifications.sender.firebase.internal;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
@@ -59,8 +59,6 @@ public class FirebasePushNotificationsSender
 	public static final String BASE_GOOGLE_NOTIFICATIONS_API =
 		"https://fcm.googleapis.com/fcm/notification";
 
-	public static final String GOOGLE_GROUP_ID = StringUtil.randomString();
-
 	public static final int OK_CODE = 200;
 
 	public static final String PLATFORM = "firebase";
@@ -75,21 +73,26 @@ public class FirebasePushNotificationsSender
 					"properly");
 		}
 
-		String notificationKey = tokens.get(0);
 		String accessToken = _getAccessToken();
 
 		if (tokens.size() > 1) {
-			notificationKey = _getNotificationKey(accessToken);
+			DeviceGroup deviceGroup = _createDeviceGroup(accessToken, tokens);
 
-			if (Validator.isNull(notificationKey)) {
-				notificationKey = _createNotificationGroup(accessToken, tokens);
+			boolean success = false;
+
+			try {
+				_send(
+					accessToken,
+					buildMessage(payloadJSONObject, deviceGroup.getId()));
+
+				success = true;
+			}
+			finally {
+				_removeDeviceGroup(accessToken, deviceGroup, success, tokens);
 			}
 		}
-
-		_send(accessToken, buildMessage(payloadJSONObject, notificationKey));
-
-		if (tokens.size() > 1) {
-			_removeNotificationGroup(accessToken, tokens, notificationKey);
+		else {
+			_send(accessToken, buildMessage(payloadJSONObject, tokens.get(0)));
 		}
 	}
 
@@ -182,9 +185,11 @@ public class FirebasePushNotificationsSender
 		return JSONUtil.put("payload", jsonObject);
 	}
 
-	private String _createNotificationGroup(
+	private DeviceGroup _createDeviceGroup(
 			String authorizationToken, List<String> tokens)
 		throws IOException, JSONException, PushNotificationsException {
+
+		String name = StringUtil.randomString();
 
 		Http.Options options = new Http.Options();
 
@@ -197,7 +202,7 @@ public class FirebasePushNotificationsSender
 
 		options.setBody(
 			JSONUtil.put(
-				"notification_key_name", GOOGLE_GROUP_ID
+				"notification_key_name", name
 			).put(
 				"operation", "create"
 			).put(
@@ -218,7 +223,7 @@ public class FirebasePushNotificationsSender
 
 		JSONObject response = JSONFactoryUtil.createJSONObject(responseString);
 
-		return response.getString("notification_key");
+		return new DeviceGroup(response.getString("notification_key"), name);
 	}
 
 	private String _getAccessToken() throws IOException {
@@ -226,29 +231,6 @@ public class FirebasePushNotificationsSender
 
 		return _googleCredentials.getAccessToken(
 		).getTokenValue();
-	}
-
-	private String _getNotificationKey(String authorizationToken)
-		throws IOException, JSONException {
-
-		Http.Options options = new Http.Options();
-
-		options.addHeader("access_token_auth", "true");
-		options.addHeader("project_id", _projectNumber);
-		options.addHeader(
-			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.setLocation(
-			StringBundler.concat(
-				BASE_GOOGLE_NOTIFICATIONS_API, "?notification_key_name=",
-				GOOGLE_GROUP_ID));
-
-		String responseString = _httpUtil.URLtoString(options);
-
-		JSONObject response = JSONFactoryUtil.createJSONObject(responseString);
-
-		return response.getString("notification_key");
 	}
 
 	private String _getProjectId() {
@@ -288,9 +270,9 @@ public class FirebasePushNotificationsSender
 		}
 	}
 
-	private void _removeNotificationGroup(
-			String authorizationToken, List<String> tokens,
-			String notificationKey)
+	private void _removeDeviceGroup(
+			String authorizationToken, DeviceGroup deviceGroup,
+			boolean throwException, List<String> tokens)
 		throws IOException, PushNotificationsException {
 
 		Http.Options options = new Http.Options();
@@ -304,9 +286,9 @@ public class FirebasePushNotificationsSender
 
 		options.setBody(
 			JSONUtil.put(
-				"notification_key", notificationKey
+				"notification_key", deviceGroup.getId()
 			).put(
-				"notification_key_name", GOOGLE_GROUP_ID
+				"notification_key_name", deviceGroup.getName()
 			).put(
 				"operation", "remove"
 			).put(
@@ -322,8 +304,16 @@ public class FirebasePushNotificationsSender
 		Http.Response optionsResponse = options.getResponse();
 
 		if (optionsResponse.getResponseCode() != OK_CODE) {
-			throw new PushNotificationsException(
-				"Unable to remove notification group");
+			String errorMessage = StringBundler.concat(
+				"Unable to remove notification group with notification_key: ",
+				deviceGroup.getId(), " and notification_key_name: ",
+				deviceGroup.getName());
+
+			if (throwException) {
+				throw new PushNotificationsException(errorMessage);
+			}
+
+			_log.error(errorMessage);
 		}
 	}
 
@@ -372,5 +362,25 @@ public class FirebasePushNotificationsSender
 	private HttpUtil _httpUtil;
 
 	private String _projectNumber;
+
+	private class DeviceGroup {
+
+		public DeviceGroup(String id, String name) {
+			_id = id;
+			_name = name;
+		}
+
+		public String getId() {
+			return _id;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		private final String _id;
+		private final String _name;
+
+	}
 
 }

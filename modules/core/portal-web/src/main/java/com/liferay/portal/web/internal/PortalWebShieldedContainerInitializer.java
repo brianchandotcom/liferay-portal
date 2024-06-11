@@ -6,9 +6,13 @@
 package com.liferay.portal.web.internal;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.io.AnnotatedObjectInputStream;
+import com.liferay.petra.io.AnnotatedObjectOutputStream;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.servlet.filters.healthcheckdatasource.HealthCheckDataSourceFilter;
@@ -17,7 +21,13 @@ import com.liferay.portal.web.internal.session.replication.SessionReplicationFil
 import com.liferay.shielded.container.Ordered;
 import com.liferay.shielded.container.ShieldedContainerInitializer;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +37,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -55,14 +66,65 @@ public class PortalWebShieldedContainerInitializer
 		throws ServletException {
 
 		if (PropsValues.PORTLET_SESSION_REPLICATE_ENABLED) {
-			FilterRegistration.Dynamic dynamic = servletContext.addFilter(
-				SessionReplicationFilter.class.getName(),
-				new SessionReplicationFilter());
+			if (ServerDetector.isTomcat()) {
+				DependencyManagerSyncUtil.registerSyncCallable(
+					() -> {
+						Class<?> clazz = Class.forName(
+							"com.liferay.support.tomcat.session." +
+								"LiferayDeltaManager",
+							true, ServletContext.class.getClassLoader());
 
-			dynamic.setAsyncSupported(true);
+						Method initMethod = clazz.getMethod(
+							"init", Function.class, Function.class);
 
-			dynamic.addMappingForUrlPatterns(
-				EnumSet.of(DispatcherType.REQUEST), false, "/*");
+						initMethod.invoke(
+							null,
+							new Function<InputStream, ObjectInputStream>() {
+
+								@Override
+								public ObjectInputStream apply(
+									InputStream inputStream) {
+
+									try {
+										return new AnnotatedObjectInputStream(
+											inputStream);
+									}
+									catch (IOException ioException) {
+										throw new RuntimeException(ioException);
+									}
+								}
+
+							},
+							new Function<OutputStream, ObjectOutputStream>() {
+
+								@Override
+								public ObjectOutputStream apply(
+									OutputStream outputStream) {
+
+									try {
+										return new AnnotatedObjectOutputStream(
+											outputStream);
+									}
+									catch (IOException ioException) {
+										throw new RuntimeException(ioException);
+									}
+								}
+
+							});
+
+						return null;
+					});
+			}
+			else {
+				FilterRegistration.Dynamic dynamic = servletContext.addFilter(
+					SessionReplicationFilter.class.getName(),
+					new SessionReplicationFilter());
+
+				dynamic.setAsyncSupported(true);
+
+				dynamic.addMappingForUrlPatterns(
+					EnumSet.of(DispatcherType.REQUEST), false, "/*");
+			}
 		}
 
 		if (PropsValues.HEALTH_CHECK_DATA_SOURCE_ENABLED) {

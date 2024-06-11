@@ -1,6 +1,5 @@
 {
 	"pageElement": {
-		"id": "9c26c401-0591-47ad-fb60-31b0b2104486",
 		"pageElements": [
 			{
 				"definition": {
@@ -27,7 +26,6 @@
 					},
 					"name": "Header Container"
 				},
-				"id": "0e780a34-f7eb-e287-ba77-43217e8796b6",
 				"pageElements": [
 					{
 						"definition": {
@@ -49,7 +47,6 @@
 							},
 							"name": "Header Banner"
 						},
-						"id": "8c6fbda6-a446-155e-d01d-5e4ce0a7f49a",
 						"pageElements": [
 							{
 								"definition": {
@@ -80,7 +77,6 @@
 									},
 									"indexed": true
 								},
-								"id": "0bd2993b-85b0-3ae8-d280-7c56f6038b87",
 								"type": "Fragment"
 							},
 							{
@@ -112,7 +108,6 @@
 									},
 									"indexed": true
 								},
-								"id": "1e5849ed-fb7f-a0b1-5e61-86dd8f28789e",
 								"type": "Fragment"
 							}
 						],
@@ -148,7 +143,6 @@
 					},
 					"name": "Content Container"
 				},
-				"id": "1afce09a-5449-3e05-5f50-b0d1ef467f12",
 				"pageElements": [
 					{
 						"definition": {
@@ -172,7 +166,6 @@
 							},
 							"name": "Side Menu Container"
 						},
-						"id": "3b9d0382-816e-3e4b-9b2b-286a92a27bb0",
 						"pageElements": [
 							{
 								"definition": {
@@ -198,7 +191,6 @@
 									],
 									"indexed": true
 								},
-								"id": "b27e3d27-c157-2c72-f8ab-2d0b11419edb",
 								"type": "Fragment"
 							}
 						],
@@ -211,7 +203,6 @@
 							},
 							"name": "Main Content Container"
 						},
-						"id": "802017ad-d953-7817-078f-d0ac873c0af0",
 						"pageElements": [
 							{
 								"definition": {
@@ -228,7 +219,6 @@
 									},
 									"name": "Content Container"
 								},
-								"id": "5808bae7-1de6-ed8c-82f3-ac5cb7708566",
 								"pageElements": [
 									{
 										"definition": {
@@ -254,7 +244,6 @@
 											],
 											"indexed": true
 										},
-										"id": "b07ec535-0444-6310-3131-08f310c98dbc",
 										"type": "Fragment"
 									}
 								],
@@ -281,7 +270,6 @@
 									},
 									"name": "Bottom Nav Container"
 								},
-								"id": "72f744d0-9e03-5dd1-86a9-e94d203281ac",
 								"pageElements": [
 									{
 										"definition": {
@@ -289,7 +277,6 @@
 											"layout": {
 											}
 										},
-										"id": "fcb9cc5e-7757-30df-543f-99931dfcdda6",
 										"pageElements": [
 											{
 												"definition": {
@@ -317,7 +304,6 @@
 													],
 													"indexed": true
 												},
-												"id": "21993d05-c617-cd60-6150-615136a414ce",
 												"type": "Fragment"
 											}
 										],

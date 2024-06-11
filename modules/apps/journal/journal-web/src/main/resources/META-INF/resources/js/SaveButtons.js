@@ -24,6 +24,7 @@ export default function SaveButtons({
 	publishButtonLabel,
 	saveButtonLabel,
 	selectedLanguageId,
+	showPublishModal,
 	timeZone,
 	workflowEnabled,
 }) {
@@ -68,7 +69,7 @@ export default function SaveButtons({
 		);
 
 		if (titleInputComponent?.getValue(defaultLanguageId)) {
-			if (articleId) {
+			if (!showPublishModal) {
 				handleButtonClick(action);
 			}
 			else {
@@ -231,7 +232,7 @@ export default function SaveButtons({
 						symbolLeft="arrow-right-full"
 						type={articleId ? 'submit' : 'button'}
 					>
-						{articleId
+						{!showPublishModal
 							? workflowEnabled
 								? Liferay.Language.get('submit-for-workflow')
 								: Liferay.Language.get('publish')

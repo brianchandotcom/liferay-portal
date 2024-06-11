@@ -148,6 +148,8 @@ export default function EditNotificationTemplate({
 						fromName: recipients.fromName,
 						singleRecipient: recipients.singleRecipient,
 						to: recipients.to,
+						useMostRelevantLocaleForGuestUsers:
+							recipients.useMostRelevantLocaleForGuestUsers,
 					},
 				],
 			};
@@ -215,6 +217,7 @@ export default function EditNotificationTemplate({
 					[defaultLanguageId]: '',
 				},
 				toType: 'email',
+				useMostRelevantLocaleForGuestUsers: true,
 			} as EmailRecipients,
 		];
 	}

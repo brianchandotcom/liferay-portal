@@ -14,11 +14,15 @@ import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.internal.helper.DispatchTriggerHelper;
+import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.model.DispatchLogTable;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -118,8 +122,7 @@ public class DispatchTriggerLocalServiceImpl
 			return dispatchTrigger;
 		}
 
-		_dispatchLogPersistence.removeByDispatchTriggerId(
-			dispatchTrigger.getDispatchTriggerId());
+		_deleteDispatchLogs(dispatchTrigger.getDispatchTriggerId());
 
 		dispatchTriggerPersistence.remove(dispatchTrigger);
 
@@ -351,6 +354,21 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setName(name);
 
 		return dispatchTriggerPersistence.update(dispatchTrigger);
+	}
+
+	private void _deleteDispatchLogs(long dispatchTriggerId) {
+		String dbTableName = DispatchLogTable.INSTANCE.getTableName();
+		String dbColumnName =
+			DispatchLogTable.INSTANCE.dispatchTriggerId.getName();
+
+		runSQL(
+			StringBundler.concat(
+				"delete from ", dbTableName, " where ", dbColumnName, " = ",
+				dispatchTriggerId));
+
+		EntityCacheUtil.clearCache(DispatchLog.class);
+		FinderCacheUtil.clearCache(DispatchLog.class);
+		FinderCacheUtil.clearDSLQueryCache(dbTableName);
 	}
 
 	private Date _getUTCDate(Date date, String timeZoneId) {

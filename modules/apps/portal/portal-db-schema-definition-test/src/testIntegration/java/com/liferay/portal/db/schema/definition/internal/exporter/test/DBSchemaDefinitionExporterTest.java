@@ -58,7 +58,7 @@ public class DBSchemaDefinitionExporterTest {
 
 		File folder = FileUtil.createTempFolder();
 
-		_dumpPath = folder.getAbsolutePath();
+		_path = folder.getAbsolutePath();
 
 		_configurationTestHelper = new ConfigurationTestHelper(
 			_configurationAdmin, _persistenceManager);
@@ -66,7 +66,7 @@ public class DBSchemaDefinitionExporterTest {
 
 	@After
 	public void tearDown() throws Exception {
-		FileUtil.deltree(_dumpPath);
+		FileUtil.deltree(_path);
 
 		_configurationTestHelper.deleteConfiguration();
 	}
@@ -77,10 +77,10 @@ public class DBSchemaDefinitionExporterTest {
 				LoggingValidationTestUtil.getLogCapture()) {
 
 			_configurationTestHelper.deployConfiguration(
-				_PID, _databaseType, _dumpPath);
+				_PID, _databaseType, _path);
 
 			DatabaseValidationTestUtil.assertDatabaseDumpMirrorsCurrentDatabase(
-				_dumpPath);
+					_path);
 
 			Assert.assertTrue(
 				_configurationTestHelper.isConfigurationFileDeleted());
@@ -101,7 +101,7 @@ public class DBSchemaDefinitionExporterTest {
 
 	private ConfigurationTestHelper _configurationTestHelper;
 	private String _databaseType;
-	private String _dumpPath;
+	private String _path;
 
 	@Inject
 	private PersistenceManager _persistenceManager;

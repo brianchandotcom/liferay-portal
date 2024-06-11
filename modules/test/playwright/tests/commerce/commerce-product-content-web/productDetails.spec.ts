@@ -19,7 +19,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('CanViewSingleSkuVirtualProductDetailPage', async ({
+test('COMMERCE-9677 As a buyer, I want to be able to view a virtual product Detail page', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceLayoutsPage,
@@ -128,7 +128,7 @@ test('CanViewSingleSkuVirtualProductDetailPage', async ({
 	).toBeVisible();
 });
 
-test('View product details page', async ({
+test('COMMERCE-12167 User can see SKU updated on the product details page when values are selected from multiple options', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceAdminProductPage,

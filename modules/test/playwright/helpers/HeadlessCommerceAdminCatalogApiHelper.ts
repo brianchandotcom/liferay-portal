@@ -61,11 +61,11 @@ type TProduct = {
 	name?: {
 		[key: string]: string;
 	};
-    productAccountGroupFilter?: boolean;
-    productAccountGroups?: {
-        accountGroupId: number;
-        id: number;
-    }[];
+	productAccountGroupFilter?: boolean;
+	productAccountGroups?: {
+		accountGroupId: number;
+		id: number;
+	}[];
 	productChannelFilter?: boolean;
 	productChannels?: TChannel[];
 	productConfiguration?: {

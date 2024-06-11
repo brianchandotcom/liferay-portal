@@ -10,8 +10,13 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 export class SearchPage {
 	readonly page: Page;
 	readonly modalIFrame: FrameLocator;
+	readonly addPanelBody: Locator;
+	readonly configurationMenuItem: Locator;
+	readonly controlMenuAddButton: Locator;
 	readonly searchBarInputInMainContent: Locator;
 	readonly searchBarInputInNavBar: Locator;
+	readonly searchBarPortletInMainContent: Locator;
+	readonly searchBarPortletInNavBar: Locator;
 	readonly searchOptionsConfigurationLink: Locator;
 	readonly searchResults: Locator;
 	readonly searchResultsItems: Locator;
@@ -24,17 +29,35 @@ export class SearchPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.addPanelBody = page.locator('.add-content-menu');
+		this.controlMenuAddButton = page
+			.locator('.control-menu-nav-item')
+			.getByRole('button', {
+				exact: true,
+				name: 'Add',
+			});
+		this.configurationMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Configuration',
+		});
 		this.modalIFrame = page.frameLocator('iframe[id="modalIframe"]');
-		this.searchBarInputInMainContent = page
-			.locator('#main-content')
-			.getByPlaceholder('Search...');
-		this.searchBarInputInNavBar = page
-			.locator('.navbar')
-			.getByPlaceholder('Search...');
+		this.searchBarPortletInMainContent = page.locator(
+			'#main-content .portlet-search-bar'
+		);
+		this.searchBarPortletInNavBar = page.locator(
+			'.navbar .portlet-search-bar'
+		);
 		this.searchOptionsConfigurationLink = page.getByText(
 			'Configure additional search options in this page'
 		);
 		this.searchResults = page.locator('.portlet-search-results');
+
+		// Search Bar Elements
+
+		this.searchBarInputInMainContent =
+			this.searchBarPortletInMainContent.getByPlaceholder('Search...');
+		this.searchBarInputInNavBar =
+			this.searchBarPortletInNavBar.getByPlaceholder('Search...');
 
 		// Search Results Elements
 
@@ -54,6 +77,26 @@ export class SearchPage {
 		this.searchResultsTotalLabel = this.searchResults.locator(
 			'.search-total-label'
 		);
+	}
+
+	async addPortlet(portletName: string, category: string) {
+		if (!(await this.addPanelBody.isVisible())) {
+			await this.controlMenuAddButton.click();
+		}
+
+		await this.addPanelBody
+			.getByRole('textbox', {name: 'Search Form'})
+			.fill(portletName);
+
+		const categoryPanel = this.addPanelBody.locator('.panel').filter({
+			has: this.page.locator(
+				`xpath=//span[@class='panel-title' and contains(.,'${category}')]`
+			),
+		});
+
+		await categoryPanel.getByText(portletName).click();
+
+		await categoryPanel.getByRole('button', {name: 'Add Content'}).click();
 	}
 
 	async getSearchFacetCheckbox(
@@ -92,6 +135,25 @@ export class SearchPage {
 		await this.searchBarInputInNavBar.press('Enter');
 	}
 
+	async selectCheckboxPortletConfigurations(
+		options: {label: string; value: boolean}[]
+	) {
+		for (const option of options) {
+			const configurationCheckbox = this.modalIFrame.locator(
+				`xpath=//*[text()[contains(.,'${option.label}')]]//input`
+			);
+
+			await this.selectSearchFacetCheckbox(
+				configurationCheckbox,
+				option.value
+			);
+		}
+
+		await this.modalIFrame.getByRole('button', {name: 'Save'}).click();
+
+		await this.modalIFrame.getByRole('button', {name: 'Cancel'}).click();
+	}
+
 	async selectPaginationItemsPerPage(delta: number) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -117,6 +179,16 @@ export class SearchPage {
 				.getByText(pageNumber.toString())
 				.first()
 		).toHaveAttribute('aria-current', 'page');
+	}
+
+	async selectSearchBarInMainContentConfigurations(
+		options: {label: string; value: boolean}[]
+	) {
+		await this.searchBarPortletInMainContent.getByLabel('Options').click();
+
+		await this.configurationMenuItem.click();
+
+		await this.selectCheckboxPortletConfigurations(options);
 	}
 
 	async selectSearchFacetCheckbox(
@@ -158,19 +230,6 @@ export class SearchPage {
 	) {
 		await this.searchOptionsConfigurationLink.click();
 
-		for (const option of options) {
-			const configurationCheckbox = this.modalIFrame.locator(
-				`xpath=//*[text()[contains(.,'${option.label}')]]//input`
-			);
-
-			await this.selectSearchFacetCheckbox(
-				configurationCheckbox,
-				option.value
-			);
-		}
-
-		await this.modalIFrame.getByRole('button', {name: 'Save'}).click();
-
-		await this.modalIFrame.getByRole('button', {name: 'Cancel'}).click();
+		await this.selectCheckboxPortletConfigurations(options);
 	}
 }

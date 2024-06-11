@@ -18,10 +18,6 @@ public class SQLRecorder {
 		return _indexesSB.toString();
 	}
 
-	public String getSequencesSQL() {
-		return _sequencesSB.toString();
-	}
-
 	public String getTablesSQL() {
 		return _tablesSB.toString();
 	}
@@ -29,12 +25,6 @@ public class SQLRecorder {
 	public void recordIndexesSQL(String sql) {
 		if (sql != null) {
 			_indexesSB.append(sql);
-		}
-	}
-
-	public void recordSequencesSQL(String sql) {
-		if (sql != null) {
-			_sequencesSB.append(sql);
 		}
 	}
 
@@ -52,9 +42,6 @@ public class SQLRecorder {
 
 			_indexesSB.append(sql);
 		}
-		else if (lowerCaseSQL.contains("create sequence")) {
-			_sequencesSB.append(sql);
-		}
 		else {
 			_tablesSB.append(sql);
 		}
@@ -67,7 +54,6 @@ public class SQLRecorder {
 	}
 
 	private final StringBundler _indexesSB = new StringBundler();
-	private final StringBundler _sequencesSB = new StringBundler();
 	private final StringBundler _tablesSB = new StringBundler();
 
 }

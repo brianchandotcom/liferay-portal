@@ -29,9 +29,6 @@ public class DBSchemaToFilesProcessor {
 			new File(path, "indexes" + _DEFAULT_EXTENSION),
 			_sqlRecorder.getIndexesSQL());
 		FileUtil.write(
-			new File(path, "sequences" + _DEFAULT_EXTENSION),
-			_sqlRecorder.getSequencesSQL());
-		FileUtil.write(
 			new File(path, "tables" + _DEFAULT_EXTENSION),
 			_sqlRecorder.getTablesSQL());
 	}

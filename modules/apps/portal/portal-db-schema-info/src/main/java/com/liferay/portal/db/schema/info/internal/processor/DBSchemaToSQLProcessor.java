@@ -64,10 +64,6 @@ public class DBSchemaToSQLProcessor {
 				_fakeDB.buildSQL(
 					DBResourceUtil.getModuleIndexesSQL(
 						serviceReference.getBundle())));
-			_sqlRecorder.recordSequencesSQL(
-				_fakeDB.buildSQL(
-					DBResourceUtil.getModuleSequencesSQL(
-						serviceReference.getBundle())));
 			_sqlRecorder.recordTablesSQL(
 				_fakeDB.buildSQL(
 					DBResourceUtil.getModuleTablesSQL(
@@ -78,8 +74,6 @@ public class DBSchemaToSQLProcessor {
 	private void _generatePortalSQL() throws Exception {
 		_sqlRecorder.recordIndexesSQL(
 			_fakeDB.buildSQL(DBResourceUtil.getPortalIndexesSQL()));
-		_sqlRecorder.recordSequencesSQL(
-			_fakeDB.buildSQL(DBResourceUtil.getPortalSequencesSQL()));
 		_sqlRecorder.recordTablesSQL(
 			_fakeDB.buildSQL(DBResourceUtil.getPortalTablesSQL()));
 	}

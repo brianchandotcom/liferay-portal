@@ -33,8 +33,6 @@ public class DatabaseValidationTestUtil {
 				new File(dumpPath, "tables.sql"), targetDataSource);
 			DatabaseTestUtil.importFileTo(
 				new File(dumpPath, "indexes.sql"), targetDataSource);
-			DatabaseTestUtil.importFileTo(
-				new File(dumpPath, "sequences.sql"), targetDataSource);
 
 			_assertSameIndexesStructure(targetDataSource);
 			_assertSameTablesStructure(targetDataSource);

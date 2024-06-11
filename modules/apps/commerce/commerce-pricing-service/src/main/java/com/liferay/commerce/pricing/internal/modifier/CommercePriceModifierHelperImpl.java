@@ -139,7 +139,6 @@ public class CommercePriceModifierHelperImpl
 		price = price.divide(
 			commerceCurrency1.getRate(),
 			RoundingMode.valueOf(commerceCurrency1.getRoundingMode()));
-
 		price = price.multiply(commerceCurrency2.getRate());
 
 		return price;

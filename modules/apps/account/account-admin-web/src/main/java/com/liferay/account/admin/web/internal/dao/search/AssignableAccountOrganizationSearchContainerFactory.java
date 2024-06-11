@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,7 +67,10 @@ public class AssignableAccountOrganizationSearchContainerFactory {
 
 		if (!AccountEntryPermission.contains(
 				permissionChecker, accountEntryId,
-				AccountActionKeys.MANAGE_ORGANIZATIONS)) {
+				AccountActionKeys.MANAGE_ORGANIZATIONS) &&
+			!permissionChecker.hasPermission(
+				null, Organization.class.getName(),
+				Organization.class.getName(), ActionKeys.VIEW)) {
 
 			params.put(
 				"organizationsTree",

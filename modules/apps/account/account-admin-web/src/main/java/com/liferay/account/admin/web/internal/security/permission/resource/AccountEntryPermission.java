@@ -59,7 +59,7 @@ public class AccountEntryPermission {
 		return false;
 	}
 
-	public static boolean hasEditOrManageOrganizationPermission(
+	public static boolean hasEditOrManageOrganizationsPermission(
 		PermissionChecker permissionChecker, long accountEntryId) {
 
 		if (contains(

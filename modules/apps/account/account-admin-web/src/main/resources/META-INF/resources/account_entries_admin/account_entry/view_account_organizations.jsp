@@ -50,7 +50,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					value="<%= HtmlUtil.escape(accountOrganization.getParentOrganizationName()) %>"
 				/>
 
-				<c:if test="<%= AccountEntryPermission.hasEditOrManageOrganizationPermission(permissionChecker, accountEntryDisplay.getAccountEntryId()) %>">
+				<c:if test="<%= AccountEntryPermission.hasEditOrManageOrganizationsPermission(permissionChecker, accountEntryDisplay.getAccountEntryId()) %>">
 					<liferay-ui:search-container-column-text>
 						<portlet:actionURL name="/account_admin/remove_account_organizations" var="removeAccountOrganizationsURL">
 							<portlet:param name="redirect" value="<%= currentURL %>" />

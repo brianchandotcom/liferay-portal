@@ -1,14 +1,19 @@
 {
-	"dependencies": {
+	"devDependencies": {
 		"@liferay/eslint-plugin": "1.5.0",
-		"@liferay/npm-scripts": "49.2.3"
+		"@liferay/prettier-plugin": "1.1.5",
+		"@liferay/stylelint-plugin": "1.1.0",
+		"@typescript-eslint/eslint-plugin": "4.30.0",
+		"babel-eslint": "^10.0.3",
+		"eslint": "7.23.0",
+		"execa": "^9.2.0",
+		"prettier": "3.3.2",
+		"stylelint": "13.2.0",
+		"typescript": "4.4.2"
 	},
 	"private": true,
-	"resolutions": {
-		"prettier": "2.1.2"
-	},
 	"scripts": {
-		"checkFormat": "liferay-npm-scripts lint && liferay-npm-scripts format:check",
-		"format": "liferay-npm-scripts lint:fix && liferay-npm-scripts format"
+		"checkFormat": "node scripts.mjs checkFormat",
+		"format": "node scripts.mjs format"
 	}
 }

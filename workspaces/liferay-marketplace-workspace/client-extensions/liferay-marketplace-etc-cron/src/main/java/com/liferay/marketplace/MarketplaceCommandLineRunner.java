@@ -39,6 +39,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 		_processInProgressTrials();
+
 		_processOnHoldTrials();
 	}
 
@@ -74,7 +75,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 	private WebClient _getWebClient() throws Exception {
 		return WebClient.builder(
 		).baseUrl(
-			_liferayMarketplaceEtcSpringBootURI.toString()
+			_liferayMarketplaceEtcSpringBootURL.toString()
 		).defaultHeader(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -215,8 +216,8 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceCommandLineRunner.class);
 
-	@Value("${liferay.marketplace.etc.spring.boot.uri}")
-	private URL _liferayMarketplaceEtcSpringBootURI;
+	@Value("${liferay.marketplace.etc.spring.boot.url}")
+	private URL _liferayMarketplaceEtcSpringBootURL;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

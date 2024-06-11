@@ -61,14 +61,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrialRestController extends BaseRestController {
 
 	@DeleteMapping("{orderId}")
-	public void deleteTrial(@PathVariable long orderId) throws Exception {
+	public void delete(@PathVariable long orderId) throws Exception {
 		_consoleService.deleteProject(String.valueOf(orderId));
 
 		_deletePortalInstance(orderId);
 	}
 
 	@PostMapping("expire/{orderId}")
-	public void expireTrial(@PathVariable long orderId) throws Exception {
+	public void postExpire(@PathVariable long orderId) throws Exception {
 		_updateOrder(null, orderId, _ORDER_STATUS_PENDING);
 
 		_updateOrder(null, orderId, _ORDER_STATUS_PROCESSING);
@@ -223,7 +223,7 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	@PostMapping("notify-end/{orderId}")
-	public void postTrialNotifyEnd(@PathVariable long orderId)
+	public void postNotifyEnd(@PathVariable long orderId)
 		throws Exception {
 
 		OrderResource orderResource = _getOrderResource();

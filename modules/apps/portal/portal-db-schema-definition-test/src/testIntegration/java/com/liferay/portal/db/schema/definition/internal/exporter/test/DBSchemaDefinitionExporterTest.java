@@ -8,17 +8,20 @@ package com.liferay.portal.db.schema.definition.internal.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.schema.definition.internal.test.helper.ConfigurationTestHelper;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseValidationTestUtil;
-import com.liferay.portal.db.schema.definition.internal.test.util.LoggingValidationTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
+
+import java.util.List;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -73,14 +76,16 @@ public class DBSchemaDefinitionExporterTest {
 
 	@Test
 	public void testCopyDatabaseConfiguration() throws Exception {
-		try (LogCapture logCapture =
-				LoggingValidationTestUtil.getLogCapture()) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.db.schema.definition.internal." +
+					"DBSchemaDefinitionExporter",
+				LoggerTestUtil.INFO)) {
 
 			_configurationTestHelper.deployConfiguration(
 				_PID, _databaseType, _path);
 
 			DatabaseValidationTestUtil.assertDatabaseDumpMirrorsCurrentDatabase(
-					_path);
+				_path);
 
 			Assert.assertTrue(
 				_configurationTestHelper.isConfigurationFileDeleted());
@@ -88,7 +93,15 @@ public class DBSchemaDefinitionExporterTest {
 			Assert.assertTrue(
 				_configurationTestHelper.isListConfigurationsNull(_PID));
 
-			LoggingValidationTestUtil.assertStartEndIsLogged(logCapture);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+
+			Assert.assertEquals(
+				"Database schema definition export started", logEntries.get(0));
+			Assert.assertEquals(
+				"Database schema definition export finished",
+				logEntries.get(1));
 		}
 	}
 

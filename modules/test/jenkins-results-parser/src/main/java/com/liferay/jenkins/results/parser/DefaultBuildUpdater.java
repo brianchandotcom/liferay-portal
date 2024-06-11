@@ -56,6 +56,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		build.addInvocation(_invoke(jenkinsMaster));
 
 		build.reset();
+
+		build.setStatus("queued");
 	}
 
 	@Override
@@ -176,6 +178,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			Build build = getBuild();
 
 			build.setBuildURL(buildJSONObject.getString("url"));
+
+			build.saveBuildURLInBuildDatabase();
 
 			Build.Invocation buildInvocation = build.getCurrentInvocation();
 

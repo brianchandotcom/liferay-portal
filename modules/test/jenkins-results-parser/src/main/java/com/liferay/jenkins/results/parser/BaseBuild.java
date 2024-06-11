@@ -1519,7 +1519,6 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reset() {
-		consoleReadCursor = 0;
 		_duration = null;
 		_jenkinsConsoleTextLoader = null;
 		_jenkinsMaster = null;
@@ -1530,6 +1529,18 @@ public abstract class BaseBuild implements Build {
 		if (_buildUpdater != null) {
 			_buildUpdater.reset();
 		}
+	}
+
+	@Override
+	public void saveBuildURLInBuildDatabase() {
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(this);
+
+		Properties properties = buildDatabase.getProperties(
+			BUILD_URLS_PROPERTIES_KEY);
+
+		properties.put(getJobVariant(), getBuildURL());
+
+		buildDatabase.putProperties(BUILD_URLS_PROPERTIES_KEY, properties);
 	}
 
 	@Override
@@ -2942,6 +2953,9 @@ public abstract class BaseBuild implements Build {
 			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
+	protected static final String BUILD_URLS_PROPERTIES_KEY =
+		"build-urls.properties";
+
 	protected static final int PIXELS_WIDTH_INDENT = 35;
 
 	protected static final String URL_BASE_FAILURES_JOB_UPSTREAM =
@@ -2965,7 +2979,6 @@ public abstract class BaseBuild implements Build {
 	protected static final SimpleDateFormat stopWatchTimestampSimpleDateFormat =
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
-	protected int consoleReadCursor;
 	protected boolean fromArchive;
 	protected boolean fromCompletedBuild;
 	protected String gitRepositoryName;

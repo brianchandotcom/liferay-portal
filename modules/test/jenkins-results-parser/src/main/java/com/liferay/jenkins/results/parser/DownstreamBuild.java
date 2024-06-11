@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -578,6 +579,18 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		return warningMessages;
+	}
+
+	@Override
+	public void saveBuildURLInBuildDatabase() {
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(this);
+
+		Properties properties = buildDatabase.getProperties(
+			BUILD_URLS_PROPERTIES_KEY);
+
+		properties.put(getAxisName(), getBuildURL());
+
+		buildDatabase.putProperties(BUILD_URLS_PROPERTIES_KEY, properties);
 	}
 
 	protected DownstreamBuild(String url, TopLevelBuild topLevelBuild) {

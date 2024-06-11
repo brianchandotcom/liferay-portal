@@ -193,6 +193,8 @@ public interface Build {
 
 	public void reset();
 
+	public void saveBuildURLInBuildDatabase();
+
 	public void setArchiveName(String archiveName);
 
 	public void setArchiveRootDir(File archiveRootDir);

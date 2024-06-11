@@ -27,7 +27,7 @@ public class ObjectValidationRuleThreadLocal {
 		_executedObjectValidationRuleIds.set(executedObjectValidationRuleIds);
 	}
 
-	public static boolean isObjectValidationRuleExecuted(
+	public static boolean isExecutedObjectValidationRuleId(
 		long objectValidationRuleId) {
 
 		Set<Long> executedObjectValidationRuleIds =

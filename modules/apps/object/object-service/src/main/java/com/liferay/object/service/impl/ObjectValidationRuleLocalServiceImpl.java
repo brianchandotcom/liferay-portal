@@ -393,8 +393,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
 
-			if (ObjectValidationRuleThreadLocal.isObjectValidationRuleExecuted(
-					objectValidationRule.getObjectValidationRuleId())) {
+			if (ObjectValidationRuleThreadLocal.
+					isExecutedObjectValidationRuleId(
+						objectValidationRule.getObjectValidationRuleId())) {
 
 				continue;
 			}

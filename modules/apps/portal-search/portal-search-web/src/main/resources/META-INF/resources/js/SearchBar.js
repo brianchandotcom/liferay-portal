@@ -21,9 +21,27 @@ export default function ({formId, initialKeywords, retainFacetSelections}) {
 
 	const keywordsInput = form.querySelector('.search-bar-keywords-input');
 
+	const keywordsInputSearchButton = form.querySelector(
+		'.search-bar-submit-button'
+	);
+
 	const resetStartPage = form.querySelector('.search-bar-reset-start-page');
 
 	const scopeSelect = form.querySelector('.search-bar-scope-select');
+
+	function enableKeywordsInput() {
+		keywordsInput.disabled = false;
+		keywordsInput.classList.remove('disabled');
+
+		if (keywordsInputSearchButton) {
+			keywordsInputSearchButton.disabled = false;
+		}
+
+		if (scopeSelect) {
+			scopeSelect.disabled = false;
+			scopeSelect.classList.remove('disabled');
+		}
+	}
 
 	function getKeywords() {
 		if (!keywordsInput) {
@@ -94,6 +112,8 @@ export default function ({formId, initialKeywords, retainFacetSelections}) {
 	}
 
 	form.addEventListener('submit', onSubmit);
+
+	enableKeywordsInput();
 
 	return {
 		dispose() {

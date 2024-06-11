@@ -11,6 +11,8 @@
 			<div class="input-group-item input-group-item-shrink input-group-prepend">
 				<@clay["button"]
 					aria\-label="${languageUtil.get(locale, 'search')}"
+					cssClass="search-bar-submit-button"
+					disabled=true
 					displayType="secondary"
 					icon="search"
 					type="submit"
@@ -19,6 +21,7 @@
 
 			<@liferay_aui.select
 				cssClass="search-bar-scope-select"
+				disabled=true
 				label=""
 				name=htmlUtil.escape(searchBarPortletDisplayContext.getScopeParameterName())
 				title="scope"
@@ -49,6 +52,7 @@
 				autocomplete="off"
 				cssClass="search-bar-keywords-input"
 				data=data
+				disabled=true
 				label=""
 				name=htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())
 				placeholder=searchBarPortletDisplayContext.getInputPlaceholder()
@@ -64,6 +68,7 @@
 					autocomplete="off"
 					class="form-control input-group-inset input-group-inset-before search-bar-keywords-input"
 					data-qa-id="searchInput"
+					disabled=true
 					id="${namespace + stringUtil.randomId()}"
 					name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}"
 					placeholder="${searchBarPortletDisplayContext.getInputPlaceholder()}"
@@ -75,6 +80,8 @@
 				<div class="input-group-inset-item input-group-inset-item-before">
 					<@clay["button"]
 						aria\-label="${languageUtil.get(locale, 'search')}"
+						cssClass="search-bar-submit-button"
+						disabled=true
 						displayType="unstyled"
 						icon="search"
 						type="submit"

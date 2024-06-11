@@ -5,18 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
+	accountsPagesTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
@@ -338,6 +341,194 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 	finally {
 		await performLogout(page);
 
+		await performLogin(page, 'test');
+	}
+});
+
+test('LPD-28220 Can user with account manager role view and manage channel defaults', async ({
+	accountManagementWidgetPage,
+	accountsPage,
+	apiHelpers,
+	commerceChannelDefaultsPage,
+	page,
+}) => {
+	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[userAccount.alternateName] = {
+		name: userAccount.givenName,
+		password: 'test',
+		surname: userAccount.familyName,
+	};
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'Site' + getRandomInt(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetName:
+					'com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	const organization = await apiHelpers.headlessAdminUser.postOrganization();
+
+	const accounts = [];
+
+	const account1 = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	accounts.push(account1);
+
+	apiHelpers.data.push({id: account1.id, type: 'account'});
+
+	const account2 = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	accounts.push(account2);
+
+	apiHelpers.data.push({id: account2.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignAccountToOrganization(
+		account1.id,
+		organization.id
+	);
+
+	await apiHelpers.headlessAdminUser.assignAccountToOrganization(
+		account2.id,
+		organization.id
+	);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account1.id,
+		[userAccount.emailAddress]
+	);
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+		organization.id,
+		userAccount.emailAddress
+	);
+
+	await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+		site.id,
+		userAccount.id
+	);
+
+	await performLogout(page);
+	await performLogin(page, userAccount.alternateName);
+
+	try {
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		await expect(
+			accountManagementWidgetPage.accountCell(account1.name)
+		).toBeVisible();
+		await expect(
+			await accountManagementWidgetPage.accountsTableRowLink(
+				account1.name
+			)
+		).toHaveCount(0);
+		await expect(
+			accountManagementWidgetPage.accountCell(account2.name)
+		).toHaveCount(0);
+
+		await performLogout(page);
+		await performLogin(page, 'test');
+
+		const accountManagerRole =
+			await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+				'Account Manager'
+			);
+
+		await apiHelpers.jsonWebServicesUser.assignUsersToRole(
+			accountManagerRole.id,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLogin(page, userAccount.alternateName);
+
+		for (const account of accounts) {
+			await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+			await (
+				await accountManagementWidgetPage.accountsTableRowLink(
+					account.name
+				)
+			).click();
+
+			await accountsPage.channelDefaultsTab.click();
+
+			const channelEntryHeaderNames = [
+				'Billing Addresses',
+				'Channel Account Managers',
+				'Currencies',
+				'Delivery Terms and Conditions',
+				'Discounts',
+				'Payment Methods',
+				'Payment Terms and Conditions',
+				'Price Lists',
+				'Shipping Addresses',
+				'Shipping Options',
+			];
+
+			for (const channelEntryHeaderName of channelEntryHeaderNames) {
+				await expect(
+					commerceChannelDefaultsPage.channelEntryHeader(
+						channelEntryHeaderName
+					)
+				).toBeVisible();
+			}
+
+			const channelEntryNames = [
+				'Billing',
+				'Currencies',
+				'Delivery',
+				'Discounts',
+				'PaymentCommerceTerm',
+				'Price',
+				'ShippingCommerceAddress',
+				'Users',
+			];
+
+			for (const channelEntryName of channelEntryNames) {
+				await expect(
+					commerceChannelDefaultsPage.channelEntryAddButton(
+						channelEntryName
+					)
+				).toHaveCount(2);
+				await expect(
+					commerceChannelDefaultsPage.channelEntry(channelEntryName)
+				).toContainText('No Results Found');
+			}
+
+			const uneditableEntryNames = ['ShippingOption', 'PaymentMethod'];
+
+			for (const channelEntryName of uneditableEntryNames) {
+				await expect(
+					commerceChannelDefaultsPage.channelEntryAddButton(
+						channelEntryName
+					)
+				).toHaveCount(0);
+				await expect(
+					commerceChannelDefaultsPage.channelEntry(channelEntryName)
+				).toContainText('No Results Found');
+			}
+		}
+	}
+	finally {
+		await performLogout(page);
 		await performLogin(page, 'test');
 	}
 });

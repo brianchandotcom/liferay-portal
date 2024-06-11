@@ -8,11 +8,18 @@ import {Locator, Page} from '@playwright/test';
 import {AccountsPage} from './AccountsPage';
 
 export class AccountManagementWidgetPage extends AccountsPage {
+	readonly accountCell: (accountName: string) => Locator;
 	readonly page: Page;
 	readonly searchInput: Locator;
 
 	constructor(page: Page) {
 		super(page);
+		this.accountCell = (accountName: string) => {
+			return this.page.getByRole('cell', {
+				exact: true,
+				name: `${accountName}`,
+			});
+		};
 
 		// @ts-ignore
 

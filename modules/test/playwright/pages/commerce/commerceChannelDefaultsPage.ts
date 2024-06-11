@@ -33,6 +33,9 @@ export class CommerceChannelDefaultsPage {
 	readonly editFramePriceListSelect: Locator;
 	readonly editFrameSaveButton: Locator;
 	readonly editMenuItem: Locator;
+	readonly channelEntry: (channelEntryName: string) => Locator;
+	readonly channelEntryAddButton: (channelEntryName: string) => Locator;
+	readonly channelEntryHeader: (channelEntryHeaderName: string) => Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -109,5 +112,16 @@ export class CommerceChannelDefaultsPage {
 			exact: true,
 			name: 'Save',
 		});
+		this.channelEntry = (channelEntryName: string) => {
+			return page.getByTestId(new RegExp(`.*${channelEntryName}.*`, "g"));
+		};
+		this.channelEntryAddButton = (channelEntryName: string) => {
+			return this.channelEntry(channelEntryName).getByRole('button', {
+				name: 'Add',
+			});
+		};
+		this.channelEntryHeader = (channelEntryHeaderName: string) => {
+			return page.getByRole('heading', {name: channelEntryHeaderName});
+		};
 	}
 }

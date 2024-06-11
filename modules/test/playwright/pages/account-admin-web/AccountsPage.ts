@@ -44,6 +44,7 @@ export class AccountsPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly accountsTableRowLink: (name: string) => Promise<Locator>;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly channelDefaultsTab: Locator;
 	readonly newButton: Locator;
 	readonly organizationAssignmentFrame: FrameLocator;
 	readonly organizationsTab: Locator;
@@ -54,6 +55,9 @@ export class AccountsPage {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.accountGroupsTab = page.getByRole('link', {
 			name: 'Account Groups',
+		});
+		this.channelDefaultsTab = page.getByRole('link', {
+			name: 'Channel Defaults',
 		});
 		this.newButton = page
 			.getByTestId('creationMenuNewButton')

@@ -370,12 +370,12 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "analytics-cloud-hero-image-png");
+				imageFileName = "analytics-cloud-hero-image");
 		}
 
 		task ("Take down the naturalWidth and naturalHeight of image") {
-			var naturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image-png')]@naturalWidth");
-			var naturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image-png')]@naturalHeight");
+			var naturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalWidth");
+			var naturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalHeight");
 		}
 
 		task ("Edit the image via the image editor on Page Content panel") {
@@ -419,10 +419,10 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "analytics-cloud-hero-image-png");
+				imageFileName = "analytics-cloud-hero-image");
 
-			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image-png')]@naturalWidth");
-			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image-png')]@naturalHeight");
+			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalWidth");
+			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalHeight");
 		}
 
 		task ("View the naturalWidth doesn't change") {

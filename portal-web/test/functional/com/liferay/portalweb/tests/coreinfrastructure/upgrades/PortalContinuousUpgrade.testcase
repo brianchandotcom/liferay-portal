@@ -48,7 +48,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree-png");
+			image = "tree");
 
 		WebContentNavigator.openWebContentAdmin(
 			baseURL = "http://localhost:8080",
@@ -109,7 +109,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree-png");
+			image = "tree");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -170,7 +170,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree-png");
+			image = "tree");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

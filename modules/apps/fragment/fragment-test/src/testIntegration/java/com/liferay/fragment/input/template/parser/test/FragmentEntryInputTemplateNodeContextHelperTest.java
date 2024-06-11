@@ -40,9 +40,14 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -59,6 +64,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -72,6 +78,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -150,6 +157,111 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 		_assertInputTemplateNodeInputValue(
 			listTypeEntry.getKey(), "ObjectField_myPicklist");
+	}
+
+	@Test
+	public void testGetRelationshipInfoFieldTypeValue() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				"ObjectDefinition",
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "myText", "myText",
+						false)),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinition,
+				objectDefinition);
+
+		String relationshipObjectFieldName = StringBundler.concat(
+			"r_", StringUtil.toLowerCase(objectRelationship.getName()),
+			"_c_customObjectDefinitionId");
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				relationshipObjectFieldName, _objectEntry.getObjectEntryId()
+			).put(
+				"myText", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		FragmentEntryInputTemplateNodeContextHelper
+			fragmentEntryInputTemplateNodeContextHelper =
+				new FragmentEntryInputTemplateNodeContextHelper(
+					"Default", _dlAppLocalService,
+					_fragmentEntryConfigurationParser, _infoItemServiceRegistry,
+					_infoSearchClassMapperRegistry, _itemSelector);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomLong(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"inputFieldId",
+						"ObjectField_" + relationshipObjectFieldName)
+				).toString(),
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_INPUT,
+				ServiceContextTestUtil.getServiceContext());
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getClassName());
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId())));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setRequest(httpServletRequest);
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, objectDefinition.getClassName());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			InputTemplateNode inputTemplateNode =
+				fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
+					fragmentEntryLink, httpServletRequest,
+					infoItemFormProvider.getInfoForm(
+						StringPool.BLANK, _group.getGroupId()),
+					LocaleUtil.getSiteDefault());
+
+			Map<String, Object> attributes = inputTemplateNode.getAttributes();
+
+			Assert.assertEquals(
+				_objectEntry.getTitleValue(),
+				attributes.get("selectedOptionLabel"));
+			Assert.assertEquals(
+				String.valueOf(_objectEntry.getObjectEntryId()),
+				attributes.get("selectedOptionValue"));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private ObjectDefinition _addObjectDefinition() throws Exception {
@@ -242,8 +354,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, true, false, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"CustomObjectDefinition" + RandomTestUtil.randomInt(), null,
-				"control_panel.sites",
+				"CustomObjectDefinition", null, "control_panel.sites",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_SITE,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
@@ -425,6 +536,9 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

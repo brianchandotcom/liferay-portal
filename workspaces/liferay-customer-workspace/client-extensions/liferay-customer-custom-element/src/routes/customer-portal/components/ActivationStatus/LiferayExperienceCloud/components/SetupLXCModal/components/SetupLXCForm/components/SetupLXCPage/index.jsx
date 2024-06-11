@@ -39,12 +39,18 @@ const SetupLiferayExperienceCloudPage = ({
 	const {featureFlags} = useAppPropertiesContext();
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
-	const [addHighPriorityContact, setAddHighPriorityContact] = useState([]);
-	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState(
-		[]
-	);
 	const [inputErrors, setInputErrors] = useState({});
 	const [step, setStep] = useState(1);
+	const [addHighPriorityContact, setAddHighPriorityContact] = useState({
+		criticalIncident: [],
+		privacyBreach: [],
+		securityBreach: [],
+	});
+	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState({
+		criticalIncident: [],
+		privacyBreach: [],
+		securityBreach: [],
+	});
 
 	const handlePreviousStep = () => {
 		setStep(step - 1);
@@ -63,41 +69,45 @@ const SetupLiferayExperienceCloudPage = ({
 		step === 1 ? handleOnLeftButtonClick() : handlePreviousStep();
 	};
 
-	const addHighPriorityContacts = (contactList) => {
-		setAddHighPriorityContact((prevHighPriorityContacts) => {
-			const uniqueContacts = [
-				...prevHighPriorityContacts,
-				...contactList.filter(
+	const handleHighPriorityContacts = (
+		contactList,
+		highPriorityCategory,
+		handleSetState
+	) => {
+		handleSetState((previousContacts) => {
+			const updatedContacts = {...previousContacts};
+
+			if (!updatedContacts.hasOwnProperty(highPriorityCategory)) {
+				updatedContacts[highPriorityCategory] = [];
+			}
+
+			updatedContacts[highPriorityCategory] = updatedContacts[
+				highPriorityCategory
+			].filter((previousContact) =>
+				contactList.some(
 					(contact) =>
-						!prevHighPriorityContacts.some(
-							(prevContact) =>
-								prevContact.category?.role ===
-									contact.category?.role &&
-								prevContact?.id === contact?.id
-						)
-				),
+						previousContact.category?.role ===
+							contact.category?.role &&
+						previousContact?.id === contact?.id
+				)
+			);
+
+			const uniqueContacts = contactList.filter(
+				(contact) =>
+					!updatedContacts[highPriorityCategory].some(
+						(previousContact) =>
+							previousContact.category?.role ===
+								contact.category?.role &&
+							previousContact?.id === contact?.id
+					)
+			);
+
+			updatedContacts[highPriorityCategory] = [
+				...updatedContacts[highPriorityCategory],
+				...uniqueContacts,
 			];
 
-			return uniqueContacts;
-		});
-	};
-
-	const removeHighPriorityContacts = (contactList) => {
-		setRemoveHighPriorityContact((prevHighPriorityContacts) => {
-			const uniqueContacts = [
-				...prevHighPriorityContacts,
-				...contactList.filter(
-					(contact) =>
-						!prevHighPriorityContacts.some(
-							(prevContact) =>
-								prevContact.category?.role ===
-									contact.category?.role &&
-								prevContact?.id === contact?.id
-						)
-				),
-			];
-
-			return uniqueContacts;
+			return updatedContacts;
 		});
 	};
 
@@ -120,12 +130,20 @@ const SetupLiferayExperienceCloudPage = ({
 		return setIsLoadingSubmitButton(state);
 	};
 
+	const combinedHighPriorityContactsToAdd = Object.values(
+		addHighPriorityContact
+	).flatMap((array) => array);
+
+	const combinedHighPriorityContactsToRemove = Object.values(
+		removeHighPriorityContact
+	).flatMap((array) => array);
+
 	const handleSubmitLxcEnvironment = useSubmitLXCEnvironment(
 		handleChangeForm,
 		project,
 		setFormAlreadySubmitted,
-		addHighPriorityContact,
-		removeHighPriorityContact,
+		combinedHighPriorityContactsToAdd,
+		combinedHighPriorityContactsToRemove,
 		subscriptionGroupLxcId,
 		handleLoadingSubmitButton,
 		values
@@ -274,26 +292,62 @@ const SetupLiferayExperienceCloudPage = ({
 			{step === 2 && (
 				<div>
 					<SetupHighPriorityContactForm
-						addContactList={addHighPriorityContacts}
+						addContactList={(contactList) =>
+							handleHighPriorityContacts(
+								contactList,
+								'criticalIncident',
+								setAddHighPriorityContact
+							)
+						}
 						disableSubmit={updateMultiSelectEmpty}
 						filter={
 							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
 						}
-						removedContactList={removeHighPriorityContacts}
+						removedContactList={(contactList) =>
+							handleHighPriorityContacts(
+								contactList,
+								'criticalIncident',
+								setRemoveHighPriorityContact
+							)
+						}
 					/>
 
 					<SetupHighPriorityContactForm
-						addContactList={addHighPriorityContacts}
+						addContactList={(contactList) =>
+							handleHighPriorityContacts(
+								contactList,
+								'privacyBreach',
+								setAddHighPriorityContact
+							)
+						}
 						disableSubmit={updateMultiSelectEmpty}
 						filter={HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach}
-						removedContactList={removeHighPriorityContacts}
+						removedContactList={(contactList) =>
+							handleHighPriorityContacts(
+								contactList,
+								'privacyBreach',
+								setRemoveHighPriorityContact
+							)
+						}
 					/>
 
 					<SetupHighPriorityContactForm
-						addContactList={addHighPriorityContacts}
+						addContactList={(contactList) =>
+							handleHighPriorityContacts(
+								contactList,
+								'securityBreach',
+								setAddHighPriorityContact
+							)
+						}
 						disableSubmit={updateMultiSelectEmpty}
 						filter={HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach}
-						removedContactList={removeHighPriorityContacts}
+						removedContactList={(contactList) =>
+							handleHighPriorityContacts(
+								contactList,
+								'securityBreach',
+								setRemoveHighPriorityContact
+							)
+						}
 					/>
 				</div>
 			)}

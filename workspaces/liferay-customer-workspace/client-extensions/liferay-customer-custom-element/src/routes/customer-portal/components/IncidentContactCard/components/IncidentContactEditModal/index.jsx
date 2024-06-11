@@ -10,6 +10,7 @@ import SetupHighPriorityContactForm from '~/common/components/HighPriorityContac
 import Layout from '~/common/containers/setup-forms/Layout';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import openToast from '~/common/utils/getToast';
+import {STATUS_CODE} from '~/routes/customer-portal/utils/constants';
 import {Button} from '../../../../../../common/components';
 import getKebabCase from '../../../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../../../context';
@@ -50,6 +51,22 @@ const IncidentContactEditModal = ({
 	};
 
 	const handleSubmit = async () => {
+		const handleToastOpening = (contacts, actionType) => {
+			contacts?.map((item) => {
+				openToast(
+					`${item.label}`,
+					`${i18n.translate(`high-priority-contact-${actionType}`)}
+					<b>${i18n.translate(
+						`${getKebabCase(
+							actionType === 'added'
+								? item.category.name
+								: item.labelRole
+						)}-contact`
+					)}</b>`
+				);
+			});
+		};
+
 		try {
 			setIsLoadingSaveButton(true);
 			await actRaysourceContact(
@@ -79,29 +96,44 @@ const IncidentContactEditModal = ({
 				client
 			);
 
-			removeHighPriorityContacts?.map((item) => {
-				openToast(
-					`${item.label}`,
-					`${i18n.translate('high-priority-contact-removed')} 
-					<b>${i18n.translate(`${getKebabCase(item.labelRole)}-contact`)}</b>`
-				);
-			});
-
-			addHighPriorityContact?.map((item) => {
-				openToast(
-					`${item.label}`,
-					`${i18n.translate('high-priority-contact-added')} 
-					<b>${i18n.translate(`${getKebabCase(item.category.name)}-contact`)}</b>`
-				);
-			});
+			handleToastOpening(removeHighPriorityContacts, 'removed');
+			handleToastOpening(addHighPriorityContact, 'added');
 
 			setIsLoadingSaveButton(false);
 			close();
 		} catch (error) {
-			setIsLoadingSaveButton(false);
-			openToast('error', 'an-unexpected-error-occurred', {
-				type: 'danger',
-			});
+			if (error.cause === STATUS_CODE.conflict) {
+				try {
+					await actLiferayContact(
+						addHighPriorityContact,
+						associateContactRoleLiferay,
+						project,
+						client
+					);
+					await actLiferayContact(
+						removeHighPriorityContacts,
+						removeContactRoleLiferay,
+						project,
+						client
+					);
+
+					handleToastOpening(removeHighPriorityContacts, 'removed');
+					handleToastOpening(addHighPriorityContact, 'added');
+
+					setIsLoadingSaveButton(false);
+					close();
+				} catch (error) {
+					setIsLoadingSaveButton(false);
+					openToast('error', 'an-unexpected-error-occurred', {
+						type: 'danger',
+					});
+				}
+			} else {
+				setIsLoadingSaveButton(false);
+				openToast('error', 'an-unexpected-error-occurred', {
+					type: 'danger',
+				});
+			}
 		}
 	};
 

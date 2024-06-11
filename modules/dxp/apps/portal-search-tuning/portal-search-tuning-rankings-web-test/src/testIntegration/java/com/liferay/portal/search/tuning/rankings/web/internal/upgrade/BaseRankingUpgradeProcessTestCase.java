@@ -9,15 +9,26 @@ import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.json.storage.model.JSONStorageEntry;
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.BeforeClass;
 
 /**
  * @author Almir Ferreira
@@ -25,25 +36,76 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 public abstract class BaseRankingUpgradeProcessTestCase
 	extends BaseCTUpgradeProcessTestCase {
 
+	@BeforeClass
+	public static void setUp() throws PortalException {
+		_companyId = TestPropsValues.getCompanyId();
+		rankingClassNameId = classNameLocalService.getClassNameId(
+			Ranking.class);
+		_rankingIndexName = _rankingIndexNameBuilder.getRankingIndexName(
+			_companyId);
+	}
+
+	@After
+	public void tearDown() {
+		Iterator<Long> iterator = _jsonStorageEntryClassPKs.iterator();
+
+		while (iterator.hasNext()) {
+			jsonStorageEntryLocalService.deleteJSONStorageEntries(
+				rankingClassNameId, iterator.next());
+
+			iterator.remove();
+		}
+	}
+
 	@Override
 	protected CTModel<?> addCTModel() {
 		JSONStorageEntry jsonStorageEntry =
-			_jsonStorageEntryLocalService.createJSONStorageEntry(
-				_counterLocalService.increment());
+			jsonStorageEntryLocalService.createJSONStorageEntry(
+				counterLocalService.increment());
 
-		jsonStorageEntry.setClassNameId(
-			_portal.getClassNameId(Ranking.class.getName()));
+		jsonStorageEntry.setClassNameId(rankingClassNameId);
 		jsonStorageEntry.setClassPK(1);
 		jsonStorageEntry.setKey("inactive");
 		jsonStorageEntry.setValue(true);
 
-		return _jsonStorageEntryLocalService.updateJSONStorageEntry(
+		return jsonStorageEntryLocalService.updateJSONStorageEntry(
 			jsonStorageEntry);
+	}
+
+	protected void addRanking(long classNameId, long classPK) {
+		String rankingDocumentId =
+			Ranking.class.getName() + "_PORTLET_" + classPK;
+
+		jsonStorageEntryLocalService.addJSONStorageEntries(
+			_companyId, classNameId, classPK,
+			JSONUtil.put(
+				"aliases", ""
+			).put(
+				"groupExternalReferenceCode", ""
+			).put(
+				"hiddenDocumentIds", ""
+			).put(
+				"inactive", "false"
+			).put(
+				"indexName", _rankingIndexName
+			).put(
+				"name", "test"
+			).put(
+				"pins", ""
+			).put(
+				"queryString", "test"
+			).put(
+				"rankingDocumentId", rankingDocumentId
+			).put(
+				"sxpBlueprintExternalReferenceCode", ""
+			).toString());
+
+		_jsonStorageEntryClassPKs.add(classPK);
 	}
 
 	@Override
 	protected CTService<?> getCTService() {
-		return _jsonStorageEntryLocalService;
+		return jsonStorageEntryLocalService;
 	}
 
 	protected abstract String getUpgradeStepClassName();
@@ -62,25 +124,32 @@ public abstract class BaseRankingUpgradeProcessTestCase
 
 		jsonStorageEntry.setValue(false);
 
-		return _jsonStorageEntryLocalService.updateJSONStorageEntry(
+		return jsonStorageEntryLocalService.updateJSONStorageEntry(
 			jsonStorageEntry);
 	}
+
+	@Inject
+	protected static ClassNameLocalService classNameLocalService;
+
+	protected static long rankingClassNameId;
+
+	@Inject
+	protected CounterLocalService counterLocalService;
+
+	@Inject
+	protected JSONStorageEntryLocalService jsonStorageEntryLocalService;
+
+	private static long _companyId;
+	private static RankingIndexName _rankingIndexName;
+
+	@Inject
+	private static RankingIndexNameBuilder _rankingIndexNameBuilder;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.portal.search.tuning.rankings.web.internal.upgrade.registry.PortalSearchTuningRankingsWebUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
-	@Inject
-	private CounterLocalService _counterLocalService;
-
-	@Inject
-	private JSONFactory _jsonFactory;
-
-	@Inject
-	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;
-
-	@Inject
-	private Portal _portal;
+	private final List<Long> _jsonStorageEntryClassPKs = new ArrayList<>();
 
 }

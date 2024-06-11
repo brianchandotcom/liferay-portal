@@ -32,6 +32,9 @@ public class NotificationRecipientSettingConstants {
 
 	public static final String NAME_TO_TYPE = "toType";
 
+	public static final String NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS =
+		"usePreferredLocaleForGuestUsers";
+
 	public static final String NAME_USER_SCREEN_NAME = "userScreenName";
 
 	public static String getRecipientTypeName(String recipientName) {

@@ -63,7 +63,7 @@ definition {
 		if (isSet(externalReferenceCode)) {
 			var apiWithErc = "by-external-reference-code/${externalReferenceCode}";
 
-			var api = StringUtil.add(${api}, ${apiWithErc}, "/");
+			var api = '''${api}/${apiWithErc}''';
 		}
 
 		if (isSet(filterValue)) {

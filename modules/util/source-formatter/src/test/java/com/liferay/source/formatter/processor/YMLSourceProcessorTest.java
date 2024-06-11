@@ -48,6 +48,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSortFeatureFlags() throws Exception {
+		test("SortFeatureFlags.testyaml");
+	}
+
+	@Test
 	public void testSortSpecificDefinitions() throws Exception {
 		test("SortSpecificDefinitions.testyaml");
 	}

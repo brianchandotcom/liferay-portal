@@ -54,7 +54,7 @@ public class DLFileShortcutLocalServiceTest {
 	}
 
 	@Test
-	public void testAddFileShortcut() throws Exception {
+	public void testAddDLFileShortcut() throws Exception {
 		DLFileEntry dlFileEntry = _addDLFileEntry();
 
 		DLFileShortcut dlFileShortcut =
@@ -71,7 +71,7 @@ public class DLFileShortcutLocalServiceTest {
 	}
 
 	@Test
-	public void testAddFileShortcutWithFolder() throws Exception {
+	public void testAddDLFileShortcutWithDLFolder() throws Exception {
 		DLFileEntry dlFileEntry = _addDLFileEntry();
 
 		DLFileShortcut dlFileShortcut =
@@ -87,7 +87,7 @@ public class DLFileShortcutLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchFolderException.class)
-	public void testAddFileShortcutWithFolderFromOtherGroup() throws Exception {
+	public void testAddDLFileShortcutWithDLFolderFromOtherGroup() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(group.getGroupId());
@@ -101,7 +101,7 @@ public class DLFileShortcutLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void testAddFileShortcutWithInvalidFileEntry() throws Exception {
+	public void testAddDLFileShortcutWithInvalidDLFileEntry() throws Exception {
 		_dlFileShortcutLocalService.addFileShortcut(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, -1,
@@ -109,7 +109,7 @@ public class DLFileShortcutLocalServiceTest {
 	}
 
 	@Test
-	public void testAddFileShortcutWithInvalidFolder() throws Exception {
+	public void testAddDLFileShortcutWithInvalidDLFolder() throws Exception {
 		DLFileEntry dlFileEntry = _addDLFileEntry();
 
 		DLFileShortcut dlFileShortcut =

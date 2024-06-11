@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import java.util.Locale;
 
@@ -40,7 +39,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) {
-		_clearCache(layout);
 	}
 
 	@Override
@@ -79,13 +77,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					layoutLocalization);
 			}
 		}
-
-		_clearCache(layout);
 	}
 
 	@Override
 	public void onAfterUpdate(Layout originalLayout, Layout layout) {
-		_clearCache(layout);
 	}
 
 	@Override
@@ -119,16 +114,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 		catch (SystemException systemException) {
 			throw new ModelListenerException(systemException);
-		}
-	}
-
-	private void _clearCache(Layout layout) {
-		if (layout == null) {
-			return;
-		}
-
-		if (!layout.isPrivateLayout()) {
-			CacheUtil.clearCache(layout.getCompanyId());
 		}
 	}
 

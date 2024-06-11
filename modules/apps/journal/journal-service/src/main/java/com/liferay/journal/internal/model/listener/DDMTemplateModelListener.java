@@ -9,7 +9,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,10 +39,6 @@ public class DDMTemplateModelListener extends BaseModelListener<DDMTemplate> {
 		// Article cache
 
 		_journalContent.clearCache(ddmTemplate.getTemplateKey());
-
-		// Layout cache
-
-		CacheUtil.clearCache(ddmTemplate.getCompanyId());
 	}
 
 	@Reference

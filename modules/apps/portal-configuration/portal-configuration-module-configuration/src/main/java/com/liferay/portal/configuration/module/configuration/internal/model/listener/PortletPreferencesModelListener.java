@@ -13,13 +13,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import java.util.Date;
 
@@ -53,8 +50,6 @@ public class PortletPreferencesModelListener
 	public void onAfterRemove(PortletPreferences portletPreferences)
 		throws ModelListenerException {
 
-		_clearCache(portletPreferences);
-
 		_clearConfigurationOverrideInstance(portletPreferences);
 	}
 
@@ -64,50 +59,9 @@ public class PortletPreferencesModelListener
 			PortletPreferences portletPreferences)
 		throws ModelListenerException {
 
-		_clearCache(portletPreferences);
-
 		_updateLayout(portletPreferences);
 
 		_clearConfigurationOverrideInstance(portletPreferences);
-	}
-
-	private void _clearCache(PortletPreferences portletPreferences) {
-		if (portletPreferences == null) {
-			return;
-		}
-
-		try {
-			long companyId = 0;
-
-			Layout layout = _layoutLocalService.fetchLayout(
-				portletPreferences.getPlid());
-
-			if ((layout != null) && !layout.isPrivateLayout()) {
-				companyId = layout.getCompanyId();
-			}
-			else {
-				LayoutRevision layoutRevision =
-					_layoutRevisionLocalService.fetchLayoutRevision(
-						portletPreferences.getPlid());
-
-				if ((layoutRevision != null) &&
-					!layoutRevision.isPrivateLayout()) {
-
-					companyId = layoutRevision.getCompanyId();
-				}
-			}
-
-			if (companyId > 0) {
-				CacheUtil.clearCache(companyId);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			CacheUtil.clearCache();
-		}
 	}
 
 	private void _clearConfigurationOverrideInstance(
@@ -226,9 +180,6 @@ public class PortletPreferencesModelListener
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

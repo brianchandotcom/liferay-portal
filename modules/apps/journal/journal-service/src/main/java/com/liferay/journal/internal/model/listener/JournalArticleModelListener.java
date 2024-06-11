@@ -12,7 +12,6 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,10 +57,6 @@ public class JournalArticleModelListener
 		_journalContent.clearCache(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			journalArticle.getDDMTemplateKey());
-
-		// Layout cache
-
-		CacheUtil.clearCache(journalArticle.getCompanyId());
 	}
 
 	@Reference

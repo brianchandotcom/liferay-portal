@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -40,10 +39,6 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 	@Override
 	public void resetToken(long imageId) {
 		_portalCache.remove(imageId);
-
-		// Layout cache
-
-		CacheUtil.clearCache();
 	}
 
 	private String _createToken() {

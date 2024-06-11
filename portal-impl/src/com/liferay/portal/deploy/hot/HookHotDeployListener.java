@@ -91,7 +91,6 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.servlet.taglib.ui.DeprecatedFormNavigatorEntry;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.util.JavaScriptBundleUtil;
@@ -1927,8 +1926,6 @@ public class HookHotDeployListener
 			InterruptedPortletRequestWhitelistUtil.
 				resetPortletInvocationWhitelistActions();
 		}
-
-		CacheUtil.clearCache();
 
 		JavaScriptBundleUtil.clearCache();
 	}

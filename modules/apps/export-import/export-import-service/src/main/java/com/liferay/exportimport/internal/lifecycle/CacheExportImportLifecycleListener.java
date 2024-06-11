@@ -11,7 +11,6 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -201,7 +200,6 @@ public class CacheExportImportLifecycleListener
 	}
 
 	private void _clearCache() {
-		CacheUtil.clearCache();
 		PermissionCacheUtil.clearCache();
 	}
 

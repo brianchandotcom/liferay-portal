@@ -218,11 +218,27 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
-		TestrayAttachment testrayAttachment = _uploadDefaultTestrayAttachment(
+		TestrayAttachment testrayAttachment = _uploadS3TestrayAttachment(
 			name, key, file);
 
-		if (testrayAttachment == null) {
-			testrayAttachment = _uploadS3TestrayAttachment(name, key, file);
+		try {
+			String testrayServerTypes =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"testray.server.types");
+
+			TestrayAttachment defaultTestrayAttachment = null;
+
+			if (testrayServerTypes.contains("RSYNC")) {
+				defaultTestrayAttachment = _uploadDefaultTestrayAttachment(
+					name, key, file);
+			}
+
+			if (testrayAttachment == null) {
+				testrayAttachment = defaultTestrayAttachment;
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		if (testrayAttachment == null) {

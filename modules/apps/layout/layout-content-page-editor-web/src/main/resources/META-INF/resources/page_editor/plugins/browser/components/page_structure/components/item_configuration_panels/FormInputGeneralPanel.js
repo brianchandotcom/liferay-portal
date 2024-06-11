@@ -29,7 +29,7 @@ import FormService from '../../../../../../app/services/FormService';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
-import getMappingFieldsKey from '../../../../../../app/utils/getMappingFieldsKey';
+import getMappedRelationship from '../../../../../../app/utils/editable_value/getMappedRelationship';
 import {isRequiredFormField} from '../../../../../../app/utils/isRequiredFormField';
 import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
@@ -40,7 +40,6 @@ import {FragmentGeneralPanel} from './FragmentGeneralPanel';
 const DEFAULT_CONFIGURATION_VALUES = {};
 const DEFAULT_FORM_CONFIGURATION = {classNameId: null, classTypeId: null};
 
-const CLASSNAMEID_CONFIGURATION_KEY = 'classNameId';
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 const HELP_TEXT_CONFIGURATION_KEY = 'inputHelpText';
 const LABEL_CONFIGURATION_KEY = 'inputLabel';
@@ -54,7 +53,7 @@ const SOURCE_TYPES = {
 
 const NOT_SELECTED_OPTION = {
 	label: `-- ${Liferay.Language.get('not-selected')} --`,
-	value: 'not-selected',
+	value: '',
 };
 
 function getInputCommonConfiguration(configurationValues, formFields) {
@@ -201,10 +200,16 @@ export function FormInputGeneralPanel({item}) {
 	const state = useSelector((state) => state);
 
 	const filterFields = useCallback(
-		(fields) => {
-			if (!fields || !allowedInputTypes || isSpecialInput) {
+		(initialFields, relationship) => {
+			if (!initialFields || !allowedInputTypes || isSpecialInput) {
 				return [];
 			}
+
+			const fields = relationship
+				? initialFields.filter(
+						(fieldSet) => fieldSet.name === relationship
+					)
+				: initialFields;
 
 			let nextFields = fields;
 
@@ -396,8 +401,6 @@ function FormInputMappingOptions({
 	const relationshipSelectId = useId();
 	const sourceSelectId = useId();
 
-	const mappingFields = useSelector((state) => state.mappingFields);
-
 	const relationships = useCache({
 		fetcher: () =>
 			InfoItemService.getInfoItemRelationships({
@@ -409,48 +412,24 @@ function FormInputMappingOptions({
 
 	const [fields, setFields] = useState(formFields);
 
-	const [sourceType, setSourceType] = useState(
-		configurationValues.classNameId
-			? SOURCE_TYPES.relationship
-			: SOURCE_TYPES.mainObject
+	const [relationship, setRelationship] = useState(
+		getMappedRelationship(configurationValues.inputFieldId)
 	);
 
-	const [relationship, setRelationship] = useState(
-		configurationValues.classNameId || NOT_SELECTED_OPTION.value
+	const [sourceType, setSourceType] = useState(
+		relationship ? SOURCE_TYPES.relationship : SOURCE_TYPES.mainObject
 	);
 
 	useEffect(() => {
 		if (sourceType === SOURCE_TYPES.mainObject) {
 			setFields(formFields);
-
-			return;
 		}
-		else if (relationship === NOT_SELECTED_OPTION.value) {
-			setFields([]);
-
-			return;
+		else if (sourceType === SOURCE_TYPES.relationship) {
+			setFields(
+				relationship ? filterFields(formFields, relationship) : []
+			);
 		}
-
-		const key = getMappingFieldsKey({
-			classNameId: relationship,
-			classTypeId: '0',
-		});
-
-		if (mappingFields[key]) {
-			setFields(filterFields(mappingFields[key]));
-
-			return;
-		}
-
-		InfoItemService.getAvailableStructureMappingFields({
-			classNameId: relationship,
-			classTypeId: '0',
-		}).then((response) => {
-			if (Array.isArray(response)) {
-				setFields(filterFields(response));
-			}
-		});
-	}, [filterFields, formFields, mappingFields, relationship, sourceType]);
+	}, [filterFields, formFields, relationship, sourceType]);
 
 	if (!classNameId || !classTypeId) {
 		return null;
@@ -474,7 +453,7 @@ function FormInputMappingOptions({
 							id={sourceSelectId}
 							onChange={(event) => {
 								setSourceType(event.target.value);
-								setRelationship(NOT_SELECTED_OPTION.value);
+								setRelationship(null);
 								onValueSelect(FIELD_ID_CONFIGURATION_KEY, null);
 							}}
 							options={[
@@ -505,13 +484,18 @@ function FormInputMappingOptions({
 								id={relationshipSelectId}
 								onChange={(event) => {
 									setRelationship(event.target.value);
+
+									onValueSelect(
+										FIELD_ID_CONFIGURATION_KEY,
+										null
+									);
 								}}
 								options={[
 									NOT_SELECTED_OPTION,
 									...(relationships || []).map(
-										({classNameId, label}) => ({
+										({label, name}) => ({
 											label,
-											value: classNameId,
+											value: name,
 										})
 									),
 								]}
@@ -532,20 +516,14 @@ function FormInputMappingOptions({
 								event.target.value === 'unmapped'
 									? null
 									: event.target.value
-							).then(() => {
-								if (sourceType === SOURCE_TYPES.relationship) {
-									onValueSelect(
-										CLASSNAMEID_CONFIGURATION_KEY,
-										relationship
-									);
-								}
-							})
+							)
 						}
 						value={
 							configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
 							''
 						}
 					/>
+
 					{type && (
 						<p
 							className={classNames(
@@ -560,10 +538,9 @@ function FormInputMappingOptions({
 								{Liferay.Language.get('content-type')}:
 							</span>
 
-							{relationship !== NOT_SELECTED_OPTION.value
+							{relationship
 								? relationships.find(
-										({classNameId}) =>
-											`${classNameId}` === relationship
+										({name}) => name === relationship
 									).label
 								: type}
 						</p>
@@ -579,8 +556,7 @@ function FormInputMappingOptions({
 						</p>
 					)}
 				</>
-			) : sourceType === SOURCE_TYPES.mainObject ||
-			  relationship !== NOT_SELECTED_OPTION.value ? (
+			) : sourceType === SOURCE_TYPES.mainObject || relationship ? (
 				<ClayAlert displayType="info">
 					{Liferay.Language.get(
 						'there-are-no-suitable-fields-in-the-item-to-be-mapped-to-the-fragment'

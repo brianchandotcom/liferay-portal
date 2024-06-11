@@ -38,19 +38,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
-		_processExpiringTrials();
+		_processInProgressTrials();
 		_processOnHoldTrials();
-	}
-
-	private void _deleteTrial(long orderId) throws Exception {
-		_getWebClient(
-		).delete(
-		).uri(
-			"/trial/" + orderId
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).block();
 	}
 
 	private JSONObject _getAvailabilityJSONObject() throws Exception {
@@ -93,6 +82,17 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		).build();
 	}
 
+	private void _postTrialExpire(long orderId) throws Exception {
+		_getWebClient(
+		).post(
+		).uri(
+			"/trial/expire/" + orderId
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
+	}
+
 	private void _postTrialNotifyEnd(long orderId) throws Exception {
 		_getWebClient(
 		).post(
@@ -130,20 +130,20 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		).block();
 	}
 
-	private void _processExpiringTrials() throws Exception {
-		Page<Order> page = _getOrdersPage(_ORDER_STATUS_COMPLETED);
+	private void _processInProgressTrials() throws Exception {
+		Page<Order> page = _getOrdersPage(_ORDER_STATUS_IN_PROGRESS);
 
 		for (Order order : page.getItems()) {
 			try {
 				ZonedDateTime now = ZonedDateTime.now();
-				ZonedDateTime zonedDateTime = ZonedDateTime.parse(
+				ZonedDateTime trialEndDate = ZonedDateTime.parse(
 					order.getCustomFields(
 					).get(
 						"trial-end-date"
 					).toString());
 
-				if (zonedDateTime.isAfter(now)) {
-					_deleteTrial(order.getId());
+				if (now.isAfter(trialEndDate)) {
+					_postTrialExpire(order.getId());
 
 					if (_log.isInfoEnabled()) {
 						_log.info("Processed expired order " + order.getId());
@@ -154,7 +154,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 				if (Objects.equals(
 						now.getDayOfMonth(),
-						zonedDateTime.minusDays(
+						trialEndDate.minusDays(
 							1
 						).getDayOfMonth())) {
 
@@ -174,17 +174,29 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 	}
 
 	private void _processOnHoldTrials() throws Exception {
-		JSONObject availabilityJSONObject = _getAvailabilityJSONObject();
+		Page<Order> page = _getOrdersPage(_ORDER_STATUS_ON_HOLD);
 
-		if (!availabilityJSONObject.getBoolean("available")) {
+		if (page.getTotalCount() == 0) {
 			return;
 		}
 
-		Page<Order> page = _getOrdersPage(_ORDER_STATUS_ON_HOLD);
+		JSONObject availabilityJSONObject = _getAvailabilityJSONObject();
+
+		if (!availabilityJSONObject.getBoolean("active")) {
+			return;
+		}
+
+		long available = availabilityJSONObject.getLong("available");
 
 		for (Order order : page.getItems()) {
+			if (available == 0) {
+				break;
+			}
+
 			try {
 				_postTrialProvisioning(order);
+
+				available--;
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Processed on hold order " + order.getId());
@@ -196,7 +208,7 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		}
 	}
 
-	private static final int _ORDER_STATUS_COMPLETED = 0;
+	private static final int _ORDER_STATUS_IN_PROGRESS = 6;
 
 	private static final int _ORDER_STATUS_ON_HOLD = 20;
 

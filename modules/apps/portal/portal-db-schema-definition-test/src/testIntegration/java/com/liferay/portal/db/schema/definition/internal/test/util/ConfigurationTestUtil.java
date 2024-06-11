@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.schema.definition.internal.test.helper;
+package com.liferay.portal.db.schema.definition.internal.test.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -35,32 +34,15 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class ConfigurationTestHelper {
+public class ConfigurationTestUtil {
 
-	public ConfigurationTestHelper(
-		ConfigurationAdmin configurationAdmin,
-		PersistenceManager persistenceManager) {
-
-		_configurationAdmin = configurationAdmin;
-		_persistenceManager = persistenceManager;
-	}
-
-	public void deleteConfiguration() throws Exception {
-		if (_configurationPath != null) {
-			Files.deleteIfExists(_configurationPath);
-		}
-	}
-
-	public void deployConfiguration(
-			String pid, String databaseType, String path)
+	public static void deployConfiguration(
+			ConfigurationAdmin configurationAdmin, String pid,
+			String databaseType, String path)
 		throws Exception {
 
 		Assert.assertNull(
-			_configurationAdmin.listConfigurations(
-				"(service.pid=" + pid + ")"));
-
-		_configurationPath = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, pid.concat(".config"));
+			configurationAdmin.listConfigurations("(service.pid=" + pid + ")"));
 
 		try (AutoCloseable autoCloseable =
 				_registerOnAfterDeleteConfigurationModelListener(pid)) {
@@ -69,21 +51,24 @@ public class ConfigurationTestHelper {
 				pid, _getConfigurationContent(databaseType, path));
 
 			Assert.assertNotNull(
-				_configurationAdmin.listConfigurations(
+				configurationAdmin.listConfigurations(
 					"(service.pid=" + pid + ")"));
 
 			_countDownLatch.await(1000, TimeUnit.SECONDS);
 		}
 	}
 
-	public boolean isConfigurationFileDeleted() {
-		return !Files.exists(_configurationPath);
+	public static Path getConfigurationPath(String pid) {
+		return Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, pid.concat(".config"));
 	}
 
-	public boolean isDictionaryNull(String pid) {
+	public static boolean isDictionaryNull(
+		PersistenceManager persistenceManager, String pid) {
+
 		Dictionary<Object, Object> dictionary = ReflectionTestUtil.invoke(
-			_persistenceManager, "_getDictionary",
-			new Class<?>[] {String.class}, pid);
+			persistenceManager, "_getDictionary", new Class<?>[] {String.class},
+			pid);
 
 		if (dictionary == null) {
 			return true;
@@ -92,8 +77,11 @@ public class ConfigurationTestHelper {
 		return false;
 	}
 
-	public boolean isListConfigurationsNull(String pid) throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
+	public static boolean isListConfigurationsNull(
+			ConfigurationAdmin configurationAdmin, String pid)
+		throws Exception {
+
+		Configuration[] configurations = configurationAdmin.listConfigurations(
 			"(service.pid=" + pid + ")");
 
 		if (configurations == null) {
@@ -103,18 +91,19 @@ public class ConfigurationTestHelper {
 		return false;
 	}
 
-	private Configuration _createConfiguration(
-			String configurationPid, String content)
+	private static Configuration _createConfiguration(
+			String pid, String content)
 		throws Exception {
 
-		return ConfigurationTestUtil.updateConfiguration(
-			configurationPid,
-			() -> Files.write(
-				_configurationPath,
-				content.getBytes(Charset.defaultCharset())));
+		return com.liferay.portal.configuration.test.util.ConfigurationTestUtil.
+			updateConfiguration(
+				pid,
+				() -> Files.write(
+					getConfigurationPath(pid),
+					content.getBytes(Charset.defaultCharset())));
 	}
 
-	private String _getConfigurationContent(
+	private static String _getConfigurationContent(
 		String databaseType, String dumpPath) {
 
 		return StringBundler.concat(
@@ -122,8 +111,8 @@ public class ConfigurationTestHelper {
 			"path=\"", dumpPath, "\"", StringPool.NEW_LINE);
 	}
 
-	private AutoCloseable _registerOnAfterDeleteConfigurationModelListener(
-		String pid) {
+	private static AutoCloseable
+		_registerOnAfterDeleteConfigurationModelListener(String pid) {
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -147,9 +136,6 @@ public class ConfigurationTestHelper {
 		return serviceRegistration::unregister;
 	}
 
-	private final ConfigurationAdmin _configurationAdmin;
-	private Path _configurationPath;
-	private CountDownLatch _countDownLatch;
-	private final PersistenceManager _persistenceManager;
+	private static CountDownLatch _countDownLatch;
 
 }

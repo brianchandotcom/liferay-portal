@@ -6,7 +6,7 @@
 package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.db.schema.definition.internal.test.helper.ConfigurationTestHelper;
+import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -21,6 +21,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
+
+import java.nio.file.Files;
 
 import java.util.List;
 
@@ -65,16 +67,13 @@ public class DBSchemaDefinitionExporterTest {
 		File folder = FileUtil.createTempFolder();
 
 		_path = folder.getAbsolutePath();
-
-		_configurationTestHelper = new ConfigurationTestHelper(
-			_configurationAdmin, _persistenceManager);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		FileUtil.deltree(_path);
 
-		_configurationTestHelper.deleteConfiguration();
+		Files.deleteIfExists(ConfigurationTestUtil.getConfigurationPath(_PID));
 	}
 
 	@Test
@@ -84,17 +83,21 @@ public class DBSchemaDefinitionExporterTest {
 					"DBSchemaDefinitionExporter",
 				LoggerTestUtil.INFO)) {
 
-			_configurationTestHelper.deployConfiguration(
-				_PID, _databaseType, _path);
+			ConfigurationTestUtil.deployConfiguration(
+				_configurationAdmin, _PID, _databaseType, _path);
 
 			_assertImportDBSchemaDefinition(
 				new File(_path, "tables.sql"), new File(_path, "indexes.sql"));
 
 			Assert.assertTrue(
-				_configurationTestHelper.isConfigurationFileDeleted());
-			Assert.assertTrue(_configurationTestHelper.isDictionaryNull(_PID));
+				!Files.exists(
+					ConfigurationTestUtil.getConfigurationPath(_PID)));
 			Assert.assertTrue(
-				_configurationTestHelper.isListConfigurationsNull(_PID));
+				ConfigurationTestUtil.isDictionaryNull(
+					_persistenceManager, _PID));
+			Assert.assertTrue(
+				ConfigurationTestUtil.isListConfigurationsNull(
+					_configurationAdmin, _PID));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -172,7 +175,6 @@ public class DBSchemaDefinitionExporterTest {
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
-	private ConfigurationTestHelper _configurationTestHelper;
 	private String _databaseType;
 	private String _path;
 

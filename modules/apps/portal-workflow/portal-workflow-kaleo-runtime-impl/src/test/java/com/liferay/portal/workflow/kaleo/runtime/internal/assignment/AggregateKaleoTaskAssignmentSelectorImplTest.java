@@ -141,17 +141,16 @@ public class AggregateKaleoTaskAssignmentSelectorImplTest {
 	}
 
 	private KaleoTaskAssignment _createKaleoTaskAssignment(
-		String assigneeClassName, long assigneeClassPK) {
-
-		return _createKaleoTaskAssignment(
-			assigneeClassName, assigneeClassPK, 0L);
-	}
-
-	private KaleoTaskAssignment _createKaleoTaskAssignment(
-		String assigneeClassName, long assigneeClassPK, long groupId) {
+		long groupId, String assigneeClassName, long assigneeClassPK) {
 
 		KaleoTaskAssignment kaleoTaskAssignment = Mockito.mock(
 			KaleoTaskAssignment.class);
+
+		Mockito.when(
+			kaleoTaskAssignment.getGroupId()
+		).thenReturn(
+			groupId
+		);
 
 		Mockito.when(
 			kaleoTaskAssignment.getAssigneeClassName()
@@ -165,13 +164,14 @@ public class AggregateKaleoTaskAssignmentSelectorImplTest {
 			assigneeClassPK
 		);
 
-		Mockito.when(
-			kaleoTaskAssignment.getGroupId()
-		).thenReturn(
-			groupId
-		);
-
 		return kaleoTaskAssignment;
+	}
+
+	private KaleoTaskAssignment _createKaleoTaskAssignment(
+		String assigneeClassName, long assigneeClassPK) {
+
+		return _createKaleoTaskAssignment(
+			0L, assigneeClassName, assigneeClassPK);
 	}
 
 	private void _setUpAggregateKaleoTaskAssignmentSelectorImpl()
@@ -224,7 +224,7 @@ public class AggregateKaleoTaskAssignmentSelectorImplTest {
 				RandomTestUtil.randomString(),
 				Arrays.asList(
 					_createKaleoTaskAssignment(
-						"A", 1, RandomTestUtil.randomLong()))
+						RandomTestUtil.randomLong(), "A", 1))
 			).build();
 	private final List<ServiceRegistration<KaleoTaskAssignmentSelector>>
 		_serviceRegistrations = new ArrayList<>();

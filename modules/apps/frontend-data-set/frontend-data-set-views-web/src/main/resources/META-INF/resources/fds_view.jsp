@@ -22,17 +22,17 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 		HashMapBuilder.<String, Object>put(
 			"backURL", fdsViewsURL
 		).put(
-			"fdsClientExtensionCellRenderers", fdsViewsDisplayContext.getFDSCellRendererCETsJSONArray()
-		).put(
-			"fdsFilterClientExtensions", fdsViewsDisplayContext.getFDSFilterCETsJSONArray()
+			"clientExtensionCellRenderers", fdsViewsDisplayContext.getFDSCellRendererCETsJSONArray()
 		).put(
 			"fdsViewId", ParamUtil.getString(request, "fdsViewId")
+		).put(
+			"filterClientExtensions", fdsViewsDisplayContext.getFDSFilterCETsJSONArray()
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
 			"restApplications", fdsViewsDisplayContext.getRESTApplicationsJSONArray()
 		).put(
-			"saveFDSFieldsURL", fdsViewsDisplayContext.getSaveFDSFieldsURL()
+			"saveTableSectionsURL", fdsViewsDisplayContext.getSaveTableSectionsURL()
 		).put(
 			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).build()

@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.views.web.internal.display.context;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -16,9 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marko Cikos
  */
-public class FDSViewItemSelectorDisplayContext {
+public class DataSetItemSelectorDisplayContext {
 
-	public FDSViewItemSelectorDisplayContext(
+	public DataSetItemSelectorDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -28,7 +29,9 @@ public class FDSViewItemSelectorDisplayContext {
 	public String getClassName() {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				_themeDisplay.getCompanyId(), "FDSView");
+				_themeDisplay.getCompanyId(),
+				FeatureFlagManagerUtil.isEnabled("LPD-15729") ? "DSMDataSet" :
+					"FDSView");
 
 		if (objectDefinition != null) {
 			return objectDefinition.getClassName();

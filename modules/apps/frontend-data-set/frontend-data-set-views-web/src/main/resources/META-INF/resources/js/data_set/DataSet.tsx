@@ -12,7 +12,7 @@ import React, {useEffect, useState} from 'react';
 
 import {IDataSet} from '../DataSets';
 import {FDSViewType} from '../FDSViews';
-import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
+import {API_URL, OBJECT_RELATIONSHIP_LEGACY} from '../utils/constants';
 import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import {IFieldTreeItem} from '../utils/types';
@@ -63,37 +63,37 @@ const NAVIGATION_BAR_ITEMS = [
 
 export interface IDataSetSectionProps {
 	backURL: string;
+	clientExtensionCellRenderers: IClientExtensionRenderer[];
 	dataSet: IDataSet | FDSViewType;
-	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fieldTreeItems: Array<IFieldTreeItem>;
+	filterClientExtensions: IClientExtensionRenderer[];
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
 	onDataSetUpdate: (data: FDSViewType) => void;
 	restApplications: string[];
-	saveFDSFieldsURL: string;
+	saveTableSectionsURL: string;
 	spritemap: string;
 }
 
 const DataSet = ({
 	backURL,
+	clientExtensionCellRenderers,
 	dataSetERC,
-	fdsClientExtensionCellRenderers,
-	fdsFilterClientExtensions,
 	fdsViewId,
+	filterClientExtensions,
 	namespace,
 	restApplications,
-	saveFDSFieldsURL,
+	saveTableSectionsURL,
 	spritemap,
 }: {
 	backURL: string;
+	clientExtensionCellRenderers: IClientExtensionRenderer[];
 	dataSetERC: string;
-	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
+	filterClientExtensions: IClientExtensionRenderer[];
 	namespace: string;
 	restApplications: string[];
-	saveFDSFieldsURL: string;
+	saveTableSectionsURL: string;
 	spritemap: string;
 }) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -107,7 +107,7 @@ const DataSet = ({
 		const getDataSet = async () => {
 			const url = Liferay.FeatureFlags['LPD-15729']
 				? `${API_URL.DATA_SETS}/by-external-reference-code/${dataSetERC}`
-				: `${API_URL.DATA_SETS}/${fdsViewId}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`;
+				: `${API_URL.DATA_SETS}/${fdsViewId}?nestedFields=${OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW}`;
 
 			const response = await fetch(url, {
 				headers: {
@@ -124,7 +124,9 @@ const DataSet = ({
 					'LPD-15729'
 				]
 					? responseJSON
-					: responseJSON[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW];
+					: responseJSON[
+							OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW
+						];
 
 				getFields({restApplication, restSchema}).then((fields) => {
 					setFieldTreeItems(fields);
@@ -143,7 +145,7 @@ const DataSet = ({
 	const Content = NAVIGATION_BAR_ITEMS[activeIndex].Component;
 
 	return (
-		<div className="cadmin fds-view">
+		<div className="cadmin data-set">
 			<ClayNavigationBar
 				triggerLabel={NAVIGATION_BAR_ITEMS[activeIndex].label}
 			>
@@ -165,19 +167,19 @@ const DataSet = ({
 				dataSet && (
 					<Content
 						backURL={backURL}
-						dataSet={dataSet}
-						fdsClientExtensionCellRenderers={
-							fdsClientExtensionCellRenderers
+						clientExtensionCellRenderers={
+							clientExtensionCellRenderers
 						}
-						fdsFilterClientExtensions={fdsFilterClientExtensions}
+						dataSet={dataSet}
 						fieldTreeItems={fieldTreeItems}
+						filterClientExtensions={filterClientExtensions}
 						namespace={namespace}
 						onActiveSectionChange={(tab) => setActiveIndex(tab)}
 						onDataSetUpdate={(updatedDataSet) => {
 							setDataSet({...dataSet, ...updatedDataSet});
 						}}
 						restApplications={restApplications}
-						saveFDSFieldsURL={saveFDSFieldsURL}
+						saveTableSectionsURL={saveTableSectionsURL}
 						spritemap={spritemap}
 					/>
 				)

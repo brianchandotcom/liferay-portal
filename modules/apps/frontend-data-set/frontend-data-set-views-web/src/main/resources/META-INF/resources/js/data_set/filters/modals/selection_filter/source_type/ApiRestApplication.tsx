@@ -200,7 +200,7 @@ function ApiRestApplication({
 		<ClayDropDown
 			menuElementAttrs={{
 				className:
-					'fds-entries-dropdown-menu fds-filter-rest-application-menu',
+					'dsm-rest-application-dropdown-menu dsm-rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -242,7 +242,7 @@ function ApiRestApplication({
 		<ClayDropDown
 			menuElementAttrs={{
 				className:
-					'fds-entries-dropdown-menu fds-filter-rest-schema-menu',
+					'dsm-rest-selection-dropdown-menu dsm-rest-schema-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -291,7 +291,7 @@ function ApiRestApplication({
 		<ClayDropDown
 			menuElementAttrs={{
 				className:
-					'fds-entries-dropdown-menu fds-filter-rest-endpoint-menu',
+					'dsm-rest-endpoint-dropdown-menu dsm-rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -563,9 +563,10 @@ function ApiRestApplication({
 							</label>
 
 							<ClayDropDown
-								className="fds-filter-item-key"
+								className="dsm-filter-item-key"
 								menuElementAttrs={{
-									className: 'fds-entries-dropdown-menu',
+									className:
+										'dsm-rest-selection-dropdown-menu',
 								}}
 								trigger={
 									<ClayButton
@@ -614,9 +615,10 @@ function ApiRestApplication({
 							</label>
 
 							<ClayDropDown
-								className="fds-filter-item-label"
+								className="dsm-filter-item-label"
 								menuElementAttrs={{
-									className: 'fds-entries-dropdown-menu',
+									className:
+										'dsm-rest-selection-dropdown-menu',
 								}}
 								trigger={
 									<ClayButton

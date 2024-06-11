@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -55,12 +56,38 @@ public class FDSViewsDisplayContext {
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		_dsmDataSetObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				_themeDisplay.getCompanyId(), "DSMDataSet");
 		_fdsEntryObjectDefinition =
 			objectDefinitionLocalService.fetchObjectDefinition(
 				_themeDisplay.getCompanyId(), "FDSEntry");
 		_fdsViewObjectDefinition =
 			objectDefinitionLocalService.fetchObjectDefinition(
 				_themeDisplay.getCompanyId(), "FDSView");
+	}
+
+	public String getDSMDataSetPermissionsURL() {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_renderRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			PortletURLUtil.getCurrent(_renderRequest, _renderResponse)
+		).setParameter(
+			"modelResource", _dsmDataSetObjectDefinition.getClassName()
+		).setParameter(
+			"modelResourceDescription",
+			_dsmDataSetObjectDefinition.getLabel(_themeDisplay.getLocale())
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public String getEditDataSetURL() {
@@ -230,19 +257,23 @@ public class FDSViewsDisplayContext {
 		return jsonArray;
 	}
 
-	public String getSaveFDSFieldsURL() {
+	public String getSaveTableSectionsURL() {
 		ResourceURL resourceURL =
 			(ResourceURL)PortalUtil.getControlPanelPortletURL(
 				_renderRequest, _themeDisplay.getScopeGroup(),
 				FDSViewsPortletKeys.FDS_VIEWS, 0, 0,
 				RenderRequest.RESOURCE_PHASE);
 
-		resourceURL.setResourceID("/frontend_data_set_views/save_fds_fields");
+		resourceURL.setResourceID(
+			FeatureFlagManagerUtil.isEnabled("LPD-15729") ?
+				"/frontend_data_set_views/save_table_sections" :
+					"/frontend_data_set_views/save_fds_fields");
 
 		return resourceURL.toString();
 	}
 
 	private final CETManager _cetManager;
+	private final ObjectDefinition _dsmDataSetObjectDefinition;
 	private final ObjectDefinition _fdsEntryObjectDefinition;
 	private final ObjectDefinition _fdsViewObjectDefinition;
 	private final RenderRequest _renderRequest;

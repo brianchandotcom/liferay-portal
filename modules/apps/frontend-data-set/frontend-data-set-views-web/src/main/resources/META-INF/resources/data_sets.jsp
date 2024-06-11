@@ -21,7 +21,7 @@ portletDisplay.setBeta(true);
 				).put(
 					"namespace", liferayPortletResponse.getNamespace()
 				).put(
-					"permissionsURL", fdsViewsDisplayContext.getFDSViewPermissionsURL()
+					"permissionsURL", fdsViewsDisplayContext.getDSMDataSetPermissionsURL()
 				).put(
 					"restApplications", fdsViewsDisplayContext.getRESTApplicationsJSONArray()
 				).build()

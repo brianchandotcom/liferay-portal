@@ -6,7 +6,7 @@
 package com.liferay.frontend.data.set.views.web.internal.item.selector;
 
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys;
-import com.liferay.frontend.data.set.views.web.internal.display.context.FDSViewItemSelectorDisplayContext;
+import com.liferay.frontend.data.set.views.web.internal.display.context.DataSetItemSelectorDisplayContext;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -38,12 +38,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(service = ItemSelectorView.class)
-public class FDSViewItemSelectorView
+public class DataSetItemSelectorView
 	implements InfoItemSelectorView,
 			   ItemSelectorView<InfoItemItemSelectorCriterion> {
 
 	@Override
 	public String getClassName() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+			return "DSMDataSet";
+		}
+
 		return "FDSView";
 	}
 
@@ -65,7 +69,7 @@ public class FDSViewItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(locale, "data-set-views");
+		return _language.get(locale, "data-sets");
 	}
 
 	@Override
@@ -90,13 +94,13 @@ public class FDSViewItemSelectorView
 		ServletContext servletContext = getServletContext();
 
 		servletRequest.setAttribute(
-			FDSViewsWebKeys.FDS_VIEW_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			new FDSViewItemSelectorDisplayContext(
+			FDSViewsWebKeys.DATA_SET_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			new DataSetItemSelectorDisplayContext(
 				(HttpServletRequest)servletRequest));
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/item/selector/fds_view_item_selector.jsp");
+				"/item/selector/data_set_item_selector.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

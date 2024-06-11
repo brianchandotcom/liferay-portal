@@ -10,7 +10,7 @@ import React, {useState} from 'react';
 
 import {API_URL, FDS_DEFAULT_PROPS} from '../../js/utils/constants';
 
-import './FDSViewItemSelector.scss';
+import './DataSetItemSelector.scss';
 
 interface ISelectedItem {
 	externalReferenceCode: string;
@@ -29,7 +29,7 @@ const views = [
 	},
 ];
 
-const FDSViewItemSelector = ({
+const DataSetItemSelector = ({
 	className,
 	classNameId,
 	namespace,
@@ -41,12 +41,12 @@ const FDSViewItemSelector = ({
 	const [selectedItem, setSelectedItem] = useState<ISelectedItem>();
 
 	return (
-		<div className="fds-view-item-selector">
+		<div className="data-set-item-selector">
 			<ClayModal.Body>
 				<FrontendDataSet
 					{...FDS_DEFAULT_PROPS}
 					apiURL={API_URL.DATA_SETS}
-					id={`${namespace}FDSViewsItemSelector`}
+					id={`${namespace}DataSetItemSelector`}
 					onSelect={({
 						selectedItems,
 					}: {
@@ -91,4 +91,4 @@ const FDSViewItemSelector = ({
 	);
 };
 
-export default FDSViewItemSelector;
+export default DataSetItemSelector;

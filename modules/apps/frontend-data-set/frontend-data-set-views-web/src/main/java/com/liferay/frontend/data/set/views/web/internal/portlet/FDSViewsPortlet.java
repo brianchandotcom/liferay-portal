@@ -171,6 +171,582 @@ public class FDSViewsPortlet extends MVCPortlet {
 			objectField.getObjectFieldSettings());
 	}
 
+	private void _createDSMActionObjectDefintion(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMAction", userId, 0, "DSMAction", null, false, true,
+				LocalizedMapUtil.getLocalizedMap("Data Set Action"), true,
+				"DSMAction", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Set Actions"), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "type"), "type", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "icon"), "icon", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "confirmation-message-type"),
+						"confirmationMessageType", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "method"), "method", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "modal-size"), "modalSize",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "permission-key"),
+						"permissionKey", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "url"), "url", false)));
+
+		_enableLocalization(objectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "confirmation-message"),
+			"confirmationMessage", objectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "error-message"), "errorMessage",
+			objectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label", objectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "success-message"), "successMessage",
+			objectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "title"), "title", objectDefinition, userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set Creation Actions"),
+			"dsmDataSetCreationActionRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set Item Actions"),
+			"dsmDataSetItemActionRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _createDSMCardsSectionObjectDefinition(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMCardsSection", userId, 0, "DSMCardsSection", null, false,
+				true,
+				LocalizedMapUtil.getLocalizedMap("Data Set Cards Section"),
+				true, "DSMCardsSection", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Set Cards Sections"),
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "name", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "renderer-name"), "rendererName",
+						false)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set Cards Sections"),
+			"dsmDataSetCardsSectionRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _createDSMClientExtensionFilterObjectDefintion(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMClientExtensionFilter", userId, 0,
+				"DSMClientExtensionFilter", null, false, true,
+				LocalizedMapUtil.getLocalizedMap(
+					"Data Set Client Extension Filter"),
+				true, "DSMClientExtensionFilter", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap(
+					"Data Set Client Extension Filters"),
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(
+							locale, "client-extension-external-reference-code"),
+						"clientExtensionERC", true)));
+
+		_enableLocalization(objectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label", objectDefinition, userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(
+				"Data Set Client Extension Filters"),
+			"dsmDataSetClientExtensionFilter", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private ObjectDefinition _createDSMDataSetObjectDefinition(
+			Locale locale, long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMDataSet", userId, 0, "DSMDataSet", null, false, true,
+				LocalizedMapUtil.getLocalizedMap("Data Set"), true,
+				"DSMDataSet", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Sets"), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "label", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "description"), "description",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-application"),
+						"restApplication", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-endpoint"), "restEndpoint",
+						true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rest-schema"), "restSchema",
+						true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "list-of-items-per-page"),
+						"listOfItemsPerPage", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+						ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
+						_language.get(locale, "default-items-per-page"),
+						"defaultItemsPerPage", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "creation-actions-order"),
+						"creationActionsOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "table-sections-order"),
+						"tableSectionsOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "filters-order"), "filtersOrder",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "item-actions-order"),
+						"itemActionsOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "sorts-order"), "sortsOrder",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "default-visualization-mode"),
+						"defaultVisualizationMode", false)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		return objectDefinition;
+	}
+
+	private void _createDSMDateFilterObjectDefinition(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMDateFilter", userId, 0, "DSMDateFilter", null, false, true,
+				LocalizedMapUtil.getLocalizedMap("Data Set Date Filter"), true,
+				"DSMDateFilter", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Set Date Filters"),
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+						_language.get(locale, "to"), "to", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+						_language.get(locale, "from"), "from", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "type"), "type", false)));
+
+		_enableLocalization(objectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label", objectDefinition, userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set Date Filters"),
+			"dsmDataSetDateFilterRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _createDSMListSectionObjectDefinition(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMListSection", userId, 0, "DSMListSection", null, false,
+				true, LocalizedMapUtil.getLocalizedMap("Data Set List Section"),
+				true, "DSMListSection", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Set List Sections"),
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "name", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "renderer-name"), "rendererName",
+						false)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set List Sections"),
+			"dsmDataSetListSectionRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _createDSMSelectionFilterObjectDefintion(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMSelectionFilter", userId, 0, "DSMSelectionFilter", null,
+				false, true,
+				LocalizedMapUtil.getLocalizedMap("Data Set Selection Filter"),
+				true, "DSMSelectionFilter", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Set Selection Filters"),
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+						_language.get(locale, "include"), "include", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+						_language.get(locale, "multiple"), "multiple", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "preselected-values"),
+						"preselectedValues", false)));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10754")) {
+			ObjectField sourceObjectField = ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+				_language.get(locale, "source"), "source", false);
+
+			_objectFieldLocalService.addCustomObjectField(
+				sourceObjectField.getExternalReferenceCode(), userId,
+				sourceObjectField.getListTypeDefinitionId(),
+				objectDefinition.getObjectDefinitionId(),
+				sourceObjectField.getBusinessType(),
+				sourceObjectField.getDBType(), sourceObjectField.isIndexed(),
+				sourceObjectField.isIndexedAsKeyword(),
+				sourceObjectField.getIndexedLanguageId(),
+				sourceObjectField.getLabelMap(), false,
+				sourceObjectField.getName(), sourceObjectField.getReadOnly(),
+				sourceObjectField.getReadOnlyConditionExpression(),
+				sourceObjectField.isRequired(), sourceObjectField.isState(),
+				sourceObjectField.getObjectFieldSettings());
+
+			ObjectField sourceTypeObjectField =
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					_language.get(locale, "source-type"), "sourceType", false);
+
+			_objectFieldLocalService.addCustomObjectField(
+				sourceTypeObjectField.getExternalReferenceCode(), userId,
+				sourceTypeObjectField.getListTypeDefinitionId(),
+				objectDefinition.getObjectDefinitionId(),
+				sourceTypeObjectField.getBusinessType(),
+				sourceTypeObjectField.getDBType(),
+				sourceTypeObjectField.isIndexed(),
+				sourceTypeObjectField.isIndexedAsKeyword(),
+				sourceTypeObjectField.getIndexedLanguageId(),
+				sourceTypeObjectField.getLabelMap(), false,
+				sourceTypeObjectField.getName(),
+				sourceTypeObjectField.getReadOnly(),
+				sourceTypeObjectField.getReadOnlyConditionExpression(),
+				sourceTypeObjectField.isRequired(),
+				sourceTypeObjectField.isState(),
+				sourceTypeObjectField.getObjectFieldSettings());
+		}
+		else {
+			ObjectField listTypeDefinitionERCObjectField =
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					_language.get(locale, "list-type-definition-erc"),
+					"listTypeDefinitionERC", false);
+
+			_objectFieldLocalService.addCustomObjectField(
+				listTypeDefinitionERCObjectField.getExternalReferenceCode(),
+				userId,
+				listTypeDefinitionERCObjectField.getListTypeDefinitionId(),
+				objectDefinition.getObjectDefinitionId(),
+				listTypeDefinitionERCObjectField.getBusinessType(),
+				listTypeDefinitionERCObjectField.getDBType(),
+				listTypeDefinitionERCObjectField.isIndexed(),
+				listTypeDefinitionERCObjectField.isIndexedAsKeyword(),
+				listTypeDefinitionERCObjectField.getIndexedLanguageId(),
+				listTypeDefinitionERCObjectField.getLabelMap(), false,
+				listTypeDefinitionERCObjectField.getName(),
+				listTypeDefinitionERCObjectField.getReadOnly(),
+				listTypeDefinitionERCObjectField.
+					getReadOnlyConditionExpression(),
+				listTypeDefinitionERCObjectField.isRequired(),
+				listTypeDefinitionERCObjectField.isState(),
+				listTypeDefinitionERCObjectField.getObjectFieldSettings());
+		}
+
+		_enableLocalization(objectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label", objectDefinition, userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set Selection Filters"),
+			"dsmDataSetSelectionFilterRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _createDSMSortObjectDefinition(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		List<ObjectField> objectFields = Arrays.asList(
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+				_language.get(locale, "field-name"), "fieldName", true),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+				_language.get(locale, "sorting"), "sortingDirection", true));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
+			objectFields = Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+					ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+					_language.get(locale, "default"), "default", false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					_language.get(locale, "field-name"), "fieldName", true),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					_language.get(locale, "order-type"), "orderType", true));
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMSort", userId, 0, "DSMSort", null, false, true,
+				LocalizedMapUtil.getLocalizedMap("Data Set Sort"), true,
+				"DSMSort", "300", null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Set Sorts"), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT, objectFields);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
+			_enableLocalization(objectDefinition);
+
+			_addLocalizedCustomObjectField(
+				_language.get(locale, "label"), "label", objectDefinition,
+				userId);
+		}
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set Sorts"),
+			"dsmDataSetSortRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
+	private void _createDSMTableSectionObjectDefinition(
+			Locale locale, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"DSMTableSection", userId, 0, "DSMTableSection", null, false,
+				true,
+				LocalizedMapUtil.getLocalizedMap("Data Set Table Section"),
+				true, "DSMTableSection", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("Data Set Table Sections"),
+				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "name", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "type"), "type", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "renderer"), "renderer", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "rendererType"), "rendererType",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+						_language.get(locale, "sortable"), "sortable", false)));
+
+		_enableLocalization(objectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "column-label"), "label", objectDefinition,
+			userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, objectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, relatedObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("Data Set Table Sections"),
+			"dsmDataSetTableSectionRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
 	private void _createFDSActionObjectDefintion(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
 			long userId)
@@ -821,90 +1397,6 @@ public class FDSViewsPortlet extends MVCPortlet {
 	}
 
 	private ObjectDefinition _createFDSViewObjectDefinition(
-			Locale locale, long userId)
-		throws Exception {
-
-		ObjectDefinition fdsViewObjectDefinition =
-			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSView", userId, 0, "FDSView", null, false, true,
-				LocalizedMapUtil.getLocalizedMap("Data Set"), true, "FDSView",
-				null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("Data Sets"), false,
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				WorkflowConstants.STATUS_DRAFT,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "name"), "label", true),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "description"), "description",
-						false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "rest-application"),
-						"restApplication", true),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "rest-endpoint"), "restEndpoint",
-						true),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "rest-schema"), "restSchema",
-						true),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "list-of-items-per-page"),
-						"listOfItemsPerPage", true),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
-						ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
-						_language.get(locale, "default-items-per-page"),
-						"defaultItemsPerPage", true),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "creation-actions-order"),
-						"fdsCreationActionsOrder", false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "fields-order"), "fdsFieldsOrder",
-						false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "filters-order"),
-						"fdsFiltersOrder", false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "item-actions-order"),
-						"fdsItemActionsOrder", false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "sorts-order"), "fdsSortsOrder",
-						false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "default-visualization-mode"),
-						"defaultVisualizationMode", false)));
-
-		_objectDefinitionLocalService.publishSystemObjectDefinition(
-			userId, fdsViewObjectDefinition.getObjectDefinitionId());
-
-		return fdsViewObjectDefinition;
-	}
-
-	private ObjectDefinition _createFDSViewObjectDefinition(
 			ObjectDefinition fdsEntryObjectDefinition, Locale locale,
 			long userId)
 		throws Exception {
@@ -996,17 +1488,34 @@ public class FDSViewsPortlet extends MVCPortlet {
 			long companyId, Locale locale, long userId)
 		throws Exception {
 
-		ObjectDefinition fdsViewObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, "FDSView");
-
-		if (fdsViewObjectDefinition != null) {
-			return;
-		}
-
 		if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
-			fdsViewObjectDefinition = _createFDSViewObjectDefinition(
+			ObjectDefinition dsmDataSetObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					companyId, "DSMDataSet");
+
+			if (dsmDataSetObjectDefinition != null) {
+				return;
+			}
+
+			dsmDataSetObjectDefinition = _createDSMDataSetObjectDefinition(
 				locale, userId);
+
+			_createDSMActionObjectDefintion(
+				locale, dsmDataSetObjectDefinition, userId);
+			_createDSMCardsSectionObjectDefinition(
+				locale, dsmDataSetObjectDefinition, userId);
+			_createDSMClientExtensionFilterObjectDefintion(
+				locale, dsmDataSetObjectDefinition, userId);
+			_createDSMDateFilterObjectDefinition(
+				locale, dsmDataSetObjectDefinition, userId);
+			_createDSMSelectionFilterObjectDefintion(
+				locale, dsmDataSetObjectDefinition, userId);
+			_createDSMTableSectionObjectDefinition(
+				locale, dsmDataSetObjectDefinition, userId);
+			_createDSMListSectionObjectDefinition(
+				locale, dsmDataSetObjectDefinition, userId);
+			_createDSMSortObjectDefinition(
+				locale, dsmDataSetObjectDefinition, userId);
 		}
 		else {
 			ObjectDefinition fdsEntryObjectDefinition =
@@ -1020,25 +1529,27 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsEntryObjectDefinition = _createFDSEntryObjectDefinition(
 				locale, userId);
 
-			fdsViewObjectDefinition = _createFDSViewObjectDefinition(
-				fdsEntryObjectDefinition, locale, userId);
-		}
+			ObjectDefinition fdsViewObjectDefinition =
+				_createFDSViewObjectDefinition(
+					fdsEntryObjectDefinition, locale, userId);
 
-		_createFDSActionObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSCardsSectionObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSClientExtensionFilterObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSDateFilterObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSDynamicFilterObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSFieldObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSListSectionObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
+			_createFDSActionObjectDefintion(
+				fdsViewObjectDefinition, locale, userId);
+			_createFDSCardsSectionObjectDefinition(
+				fdsViewObjectDefinition, locale, userId);
+			_createFDSClientExtensionFilterObjectDefintion(
+				fdsViewObjectDefinition, locale, userId);
+			_createFDSDateFilterObjectDefinition(
+				fdsViewObjectDefinition, locale, userId);
+			_createFDSDynamicFilterObjectDefintion(
+				fdsViewObjectDefinition, locale, userId);
+			_createFDSFieldObjectDefinition(
+				fdsViewObjectDefinition, locale, userId);
+			_createFDSListSectionObjectDefinition(
+				fdsViewObjectDefinition, locale, userId);
+			_createFDSSortObjectDefinition(
+				fdsViewObjectDefinition, locale, userId);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

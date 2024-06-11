@@ -23,7 +23,36 @@ const FUZZY_OPTIONS = {
 	pre: '<strong>',
 };
 
-const OBJECT_RELATIONSHIP = {
+const OBJECT_RELATIONSHIP_NEW = {
+	DATA_SET_CARDS_SECTION: 'dsmDataSetCardsSectionRelationship',
+	DATA_SET_CARDS_SECTION_ERC:
+		'r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC',
+	DATA_SET_CLIENT_EXTENSION_FILTER: 'dsmDataSetClientExtensionFilter',
+	DATA_SET_CLIENT_EXTENSION_FILTER_ID:
+		'r_dsmDataSetClientExtensionFilter_c_dsmDataSetId',
+	DATA_SET_CREATION_ACTION: 'dsmDataSetCreationActionRelationship',
+	DATA_SET_CREATION_ACTION_ID:
+		'r_dsmDataSetCreationActionRelationship_c_dsmDataSetId',
+	DATA_SET_DATE_FILTER: 'dsmDataSetDateFilterRelationship',
+	DATA_SET_DATE_FILTER_ID:
+		'r_dsmDataSetDateFilterRelationship_c_dsmDataSetId',
+	DATA_SET_ITEM_ACTION: 'dsmDataSetItemActionRelationship',
+	DATA_SET_ITEM_ACTION_ID:
+		'r_dsmDataSetItemActionRelationship_c_dsmDataSetId',
+	DATA_SET_LIST_SECTION: 'dsmDataSetListSectionRelationship',
+	DATA_SET_LIST_SECTION_ERC:
+		'r_dsmDataSetListSectionRelationship_c_dsmDataSetERC',
+	DATA_SET_SELECTION_FILTER: 'dsmDataSetSelectionFilterRelationship',
+	DATA_SET_SELECTION_FILTER_ID:
+		'r_dsmDataSetSelectionFilterRelationship_c_dsmDataSetId',
+	DATA_SET_SORT: 'dsmDataSetSortRelationship',
+	DATA_SET_SORT_ID: 'r_dsmDataSetSortRelationship_c_dsmDataSetId',
+	DATA_SET_TABLE_SECTION: 'dsmDataSetTableSectionRelationship',
+	DATA_SET_TABLE_SECTION_ID:
+		'r_dsmDataSetTableSectionRelationship_c_dsmDataSetId',
+} as const;
+
+const OBJECT_RELATIONSHIP_LEGACY = {
 	DATA_SET_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
 	DATA_SET_CARDS_SECTION_ERC:
 		'r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC',
@@ -50,6 +79,10 @@ const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
 } as const;
+
+const OBJECT_RELATIONSHIP = Liferay.FeatureFlags['LPD-15729']
+	? OBJECT_RELATIONSHIP_NEW
+	: OBJECT_RELATIONSHIP_LEGACY;
 
 const FDS_DEFAULT_PROPS = {
 	pagination: {
@@ -88,5 +121,7 @@ export {
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
+	OBJECT_RELATIONSHIP_LEGACY,
+	OBJECT_RELATIONSHIP_NEW,
 	ALLOWED_ENDPOINTS_PARAMETERS,
 };

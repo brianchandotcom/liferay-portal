@@ -25,7 +25,7 @@ import {
 	ALLOWED_ENDPOINTS_PARAMETERS,
 	API_URL,
 	FDS_DEFAULT_PROPS,
-	OBJECT_RELATIONSHIP,
+	OBJECT_RELATIONSHIP_LEGACY,
 } from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
@@ -33,7 +33,7 @@ import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 const VIEWS_COUNT_TABLE_CELL_RENDERER_NAME = 'viewsCountTableCellRenderer';
 
 type FDSEntryType = {
-	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
+	[OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
 	actions: {
 		delete: {
 			href: string;
@@ -53,7 +53,8 @@ type FDSEntryType = {
 };
 
 const ViewsCountTableCell = ({itemData}: {itemData: FDSEntryType}) => {
-	const count = itemData[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW].length;
+	const count =
+		itemData[OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW].length;
 
 	return (
 		<ClayBadge displayType={!count ? 'warning' : 'info'} label={count} />
@@ -306,7 +307,7 @@ const AddFDSEntryModalContent = ({
 	const RestApplicationDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'dsm-rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -342,7 +343,7 @@ const AddFDSEntryModalContent = ({
 	const RestSchemaDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'dsm-rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -379,7 +380,7 @@ const AddFDSEntryModalContent = ({
 	const RestEndpointDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'dsm-rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -667,7 +668,7 @@ const FDSEntries = ({
 		<div className="fds-entries">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
-				apiURL={`${API_URL.FDS_ENTRIES}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
+				apiURL={`${API_URL.FDS_ENTRIES}?nestedFields=${OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW}`}
 				creationMenu={creationMenu}
 				customRenderers={{
 					tableCell: [

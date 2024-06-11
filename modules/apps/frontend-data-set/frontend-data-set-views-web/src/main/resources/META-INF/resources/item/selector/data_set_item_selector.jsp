@@ -8,12 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <react:component
-	module="{FDSViewItemSelector} from frontend-data-set-views-web"
+	module="{DataSetItemSelector} from frontend-data-set-views-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"className", fdsViewItemSelectorDisplayContext.getClassName()
+			"className", dataSetItemSelectorDisplayContext.getClassName()
 		).put(
-			"classNameId", fdsViewItemSelectorDisplayContext.getClassNameId()
+			"classNameId", dataSetItemSelectorDisplayContext.getClassNameId()
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()

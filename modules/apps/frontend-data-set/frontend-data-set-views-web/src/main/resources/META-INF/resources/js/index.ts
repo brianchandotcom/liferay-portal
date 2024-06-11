@@ -4,7 +4,7 @@
  */
 
 export {default as DataSet} from './data_set/DataSet';
+export {default as DataSetItemSelector} from '../item/selector/DataSetItemSelector';
 export {default as DataSets} from './DataSets';
 export {default as FDSEntries} from './FDSEntries';
 export {default as FDSViews} from './FDSViews';
-export {default as FDSViewItemSelector} from '../item/selector/FDSViewItemSelector';

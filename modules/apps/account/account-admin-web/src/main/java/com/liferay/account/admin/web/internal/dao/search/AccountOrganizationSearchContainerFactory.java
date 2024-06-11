@@ -83,7 +83,7 @@ public class AccountOrganizationSearchContainerFactory {
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),
 				Objects.equals(searchContainer.getOrderByType(), "desc")));
 
-		if (AccountEntryPermission.hasEditOrManageOrganizationPermission(
+		if (AccountEntryPermission.hasEditOrManageOrganizationsPermission(
 				PermissionCheckerFactoryUtil.create(
 					PortalUtil.getUser(liferayPortletRequest)),
 				accountEntryId)) {

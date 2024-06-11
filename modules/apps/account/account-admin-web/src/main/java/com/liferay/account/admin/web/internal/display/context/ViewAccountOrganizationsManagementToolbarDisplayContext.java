@@ -172,7 +172,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (AccountEntryPermission.hasEditOrManageOrganizationPermission(
+		if (AccountEntryPermission.hasEditOrManageOrganizationsPermission(
 				themeDisplay.getPermissionChecker(), _getAccountEntryId())) {
 
 			return true;

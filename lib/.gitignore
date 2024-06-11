@@ -11,6 +11,7 @@
 /development/bnd-repository.jar
 /development/byte-buddy.jar
 /development/byte-buddy-agent.jar
+/development/catalina-ha.jar
 /development/catalina.jar
 /development/com.liferay.ant.get.file.set.jar
 /development/com.liferay.ant.manifest.helper.jar
@@ -85,6 +86,7 @@
 /development/tlddoc.jar
 /development/tomcat-api.jar
 /development/tomcat-coyote.jar
+/development/tomcat-tribes.jar
 /development/tomcat-util-scan.jar
 /development/tomcat-util.jar
 /development/velocity-tools.jar

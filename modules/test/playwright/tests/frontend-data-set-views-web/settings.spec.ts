@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {settingsPageTest} from './fixtures/settingsPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 
@@ -87,7 +87,7 @@ test.describe('Data Set Settings', () => {
 		}) => {
 			await test.step('Assign a field to a Card title section', async () => {
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+					r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 						settingsDataSetERC,
 				});
 
@@ -118,11 +118,11 @@ test.describe('Data Set Settings', () => {
 		}) => {
 			await test.step('Assign a field to title section for Cards and List', async () => {
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+					r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 						settingsDataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetListSection({
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+					r_dsmDataSetListSectionRelationship_c_dsmDataSetERC:
 						settingsDataSetERC,
 				});
 
@@ -187,7 +187,7 @@ export const fragmentTest = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	fdsFragmentPageTest,
+	dataSetFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
@@ -195,12 +195,17 @@ export const fragmentTest = mergeTests(
 fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 	fragmentTest(
 		'When there is only one visualization mode defined, that will be the default one. Cards',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card title section',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+						r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 							settingsDataSetERC,
 					});
 				}
@@ -209,7 +214,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -221,23 +226,30 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					.getByTestId('visualization-mode-cards')
 					.waitFor({state: 'visible'});
 
-				expect(await fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
+				expect(
+					await dataSetFragmentPage.cardsVisualizationModeWrapper
+				).toBeInViewport();
 			});
 		}
 	);
 
 	fragmentTest(
 		'When there are more than one visualization mode defined (cards & list), the user could change the visualization option.',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+						r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 							settingsDataSetERC,
 					});
 					await dataSetManagerApiHelpers.createDataSetListSection({
-						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+						r_dsmDataSetListSectionRelationship_c_dsmDataSetERC:
 							settingsDataSetERC,
 					});
 				}
@@ -246,7 +258,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -258,13 +270,15 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					.getByTestId('visualization-mode-cards')
 					.waitFor({state: 'visible'});
 
-				expect(await fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
+				expect(
+					await dataSetFragmentPage.cardsVisualizationModeWrapper
+				).toBeInViewport();
 			});
 
 			await fragmentTest.step(
 				'Change Data Set Visualization option',
 				async () => {
-					await fdsFragmentPage.changeVisualizationMode('List');
+					await dataSetFragmentPage.changeVisualizationMode('List');
 				}
 			);
 
@@ -276,7 +290,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 						.waitFor({state: 'visible'});
 
 					expect(
-						await fdsFragmentPage.fdsListWrapper
+						await dataSetFragmentPage.listVisualizationModeWrapper
 					).toBeInViewport();
 				}
 			);
@@ -285,16 +299,21 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 
 	fragmentTest(
 		'When there are more than one visualization modes defined, with a default selected (List), this will be the default one in the fragment.',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+						r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 							settingsDataSetERC,
 					});
 					await dataSetManagerApiHelpers.createDataSetListSection({
-						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+						r_dsmDataSetListSectionRelationship_c_dsmDataSetERC:
 							settingsDataSetERC,
 					});
 				}
@@ -313,7 +332,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -328,7 +347,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 						.waitFor({state: 'visible'});
 
 					expect(
-						await fdsFragmentPage.fdsListWrapper
+						await dataSetFragmentPage.listVisualizationModeWrapper
 					).toBeInViewport();
 				}
 			);
@@ -336,10 +355,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Check Default Visualization Mode option',
 				async () => {
-					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+					await dataSetFragmentPage.fdsActiveViewSelector.waitFor({
 						state: 'visible',
 					});
-					await fdsFragmentPage.fdsActiveViewSelector.click();
+					await dataSetFragmentPage.fdsActiveViewSelector.click();
 
 					await page
 						.getByRole('listbox', {name: 'View Options'})
@@ -357,16 +376,21 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 
 	fragmentTest(
 		'When the default visualization mode is changed in the Data Set Manager, the change is reflected in the fragment',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			await fragmentTest.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+						r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 							settingsDataSetERC,
 					});
 					await dataSetManagerApiHelpers.createDataSetListSection({
-						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+						r_dsmDataSetListSectionRelationship_c_dsmDataSetERC:
 							settingsDataSetERC,
 					});
 				}
@@ -385,7 +409,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -400,7 +424,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 						.waitFor({state: 'visible'});
 
 					expect(
-						await fdsFragmentPage.fdsListWrapper
+						await dataSetFragmentPage.listVisualizationModeWrapper
 					).toBeInViewport();
 				}
 			);
@@ -408,10 +432,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 			await fragmentTest.step(
 				'Check default visualization mode option',
 				async () => {
-					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+					await dataSetFragmentPage.fdsActiveViewSelector.waitFor({
 						state: 'visible',
 					});
-					await fdsFragmentPage.fdsActiveViewSelector.click();
+					await dataSetFragmentPage.fdsActiveViewSelector.click();
 
 					await page
 						.getByRole('listbox', {name: 'View Options'})
@@ -444,12 +468,14 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 						.getByTestId('visualization-mode-cards')
 						.waitFor({state: 'visible'});
 
-					expect(fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
+					expect(
+						dataSetFragmentPage.cardsVisualizationModeWrapper
+					).toBeInViewport();
 
-					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+					await dataSetFragmentPage.fdsActiveViewSelector.waitFor({
 						state: 'visible',
 					});
-					await fdsFragmentPage.fdsActiveViewSelector.click();
+					await dataSetFragmentPage.fdsActiveViewSelector.click();
 
 					await page
 						.getByRole('listbox', {name: 'View Options'})

@@ -40,15 +40,15 @@ export class DataSetsPage {
 			nameInput: page.getByLabel('NameRequired'),
 			restApplicationField: page.getByLabel('REST ApplicationRequired'),
 			restApplicationOptions: page
-				.locator('.fds-entries-dropdown-menu')
+				.locator('.dsm-rest-selection-dropdown-menu')
 				.first(),
 			restEndpointField: page.getByLabel('REST EndpointRequired'),
 			restEndpointOptions: page
-				.locator('.fds-entries-dropdown-menu')
+				.locator('.dsm-rest-selection-dropdown-menu')
 				.locator('nth=2'),
 			restSchemaField: page.getByLabel('REST SchemaRequired'),
 			restSchemaOptions: page
-				.locator('.fds-entries-dropdown-menu')
+				.locator('.dsm-rest-selection-dropdown-menu')
 				.locator('nth=1'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
@@ -60,7 +60,7 @@ export class DataSetsPage {
 		name = DEFAULT_LABEL.DATA_SET,
 		restApplication = '/data-set-manager/table-sections',
 		restEndpoint = '/',
-		restSchema = 'FDSField',
+		restSchema = 'DSMTableSection',
 	}: {
 		name?: string;
 		restApplication?: string;

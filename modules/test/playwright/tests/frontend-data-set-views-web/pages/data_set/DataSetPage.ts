@@ -15,7 +15,7 @@ export class DataSetPage {
 
 	constructor(page: Page) {
 		this.page = page;
-		this.pageContainer = page.locator('.fds-view');
+		this.pageContainer = page.locator('.data-set');
 		this.tabsContainer = page.locator('nav.navbar');
 		this.dataSetsPage = new DataSetsPage(page);
 	}

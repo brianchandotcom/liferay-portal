@@ -33,7 +33,7 @@ const tableSectionsDataSetConfig = {
 	name: getRandomString(),
 	restApplication: '/data-set-manager/table-sections',
 	restEndpoint: '/',
-	restSchema: 'FDSField',
+	restSchema: 'DSMTableSection',
 };
 
 async function assertTableActionLabels(page) {

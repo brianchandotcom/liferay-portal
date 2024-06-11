@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {paginationPageTest} from './fixtures/paginationPageTest';
 
 export const test = mergeTests(
@@ -235,7 +235,7 @@ export const fragmentTest = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	fdsFragmentPageTest,
+	dataSetFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
@@ -246,22 +246,24 @@ fragmentTest.describe(
 		fragmentTest(
 			'FDS uses default pagination configuration after creating a Data Set',
 			async ({
+				dataSetFragmentPage,
 				dataSetManagerApiHelpers,
-				fdsFragmentPage,
 				layout,
 				page,
 			}) => {
 				await fragmentTest.step('Create table fields', async () => {
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {en_US: 'Label'},
 						name: 'id',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 						type: 'string',
 					});
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {en_US: 'Id'},
 						name: 'label',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 						type: 'string',
 					});
 				});
@@ -269,7 +271,7 @@ fragmentTest.describe(
 				await fragmentTest.step(
 					'Configure Data Set in the page',
 					async () => {
-						await fdsFragmentPage.configureDataSetFragment({
+						await dataSetFragmentPage.configureDataSetFragment({
 							dataSetLabel,
 							layout,
 						});
@@ -279,12 +281,14 @@ fragmentTest.describe(
 				await fragmentTest.step(
 					'Frontend Data Set Table is in the page',
 					async () => {
-						await fdsFragmentPage.fdsTableWrapper.waitFor({
-							state: 'visible',
-						});
+						await dataSetFragmentPage.tableVisualizationModeWrapper.waitFor(
+							{
+								state: 'visible',
+							}
+						);
 
 						expect(
-							await fdsFragmentPage.fdsTableWrapper
+							await dataSetFragmentPage.tableVisualizationModeWrapper
 						).toBeInViewport();
 
 						expect(
@@ -301,7 +305,7 @@ fragmentTest.describe(
 					'Check that the FDS Table pagination uses default configuration values',
 					async () => {
 						const paginatorWrapper =
-							await fdsFragmentPage.fdsTableWrapper.locator(
+							await dataSetFragmentPage.tableVisualizationModeWrapper.locator(
 								'.pagination-bar'
 							);
 
@@ -322,17 +326,17 @@ fragmentTest.describe(
 							(node) => node.getAttribute('aria-controls')
 						);
 
-						await fdsFragmentPage.page
+						await dataSetFragmentPage.page
 							.locator(`#${dropdownId}`)
 							.waitFor();
 
 						await expect(
-							fdsFragmentPage.page
+							dataSetFragmentPage.page
 								.locator(`#${dropdownId}`)
 								.getByRole('option')
 						).toHaveCount(5);
 
-						const paginationOptions = await fdsFragmentPage.page
+						const paginationOptions = await dataSetFragmentPage.page
 							.locator(`#${dropdownId}`)
 							.getByRole('option')
 							.allInnerTexts();
@@ -352,8 +356,8 @@ fragmentTest.describe(
 		fragmentTest(
 			'FDS uses custom pagination configuration after creating a Data Set',
 			async ({
+				dataSetFragmentPage,
 				dataSetManagerApiHelpers,
-				fdsFragmentPage,
 				layout,
 				page,
 			}) => {
@@ -370,16 +374,18 @@ fragmentTest.describe(
 				);
 
 				await fragmentTest.step('Create table fields', async () => {
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {en_US: 'Label'},
 						name: 'id',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 						type: 'string',
 					});
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {en_US: 'Id'},
 						name: 'label',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 						type: 'string',
 					});
 				});
@@ -387,7 +393,7 @@ fragmentTest.describe(
 				await fragmentTest.step(
 					'Configure Data Set in the page',
 					async () => {
-						await fdsFragmentPage.configureDataSetFragment({
+						await dataSetFragmentPage.configureDataSetFragment({
 							dataSetLabel,
 							layout,
 						});
@@ -397,12 +403,14 @@ fragmentTest.describe(
 				await fragmentTest.step(
 					'Frontend Data Set Table is in the page',
 					async () => {
-						await fdsFragmentPage.fdsTableWrapper.waitFor({
-							state: 'visible',
-						});
+						await dataSetFragmentPage.tableVisualizationModeWrapper.waitFor(
+							{
+								state: 'visible',
+							}
+						);
 
 						expect(
-							await fdsFragmentPage.fdsTableWrapper
+							await dataSetFragmentPage.tableVisualizationModeWrapper
 						).toBeInViewport();
 
 						expect(
@@ -419,7 +427,7 @@ fragmentTest.describe(
 					'Check that the FDS Table pagination uses default configuration values',
 					async () => {
 						const paginatorWrapper =
-							await fdsFragmentPage.fdsTableWrapper.locator(
+							await dataSetFragmentPage.tableVisualizationModeWrapper.locator(
 								'.pagination-bar'
 							);
 
@@ -440,17 +448,17 @@ fragmentTest.describe(
 							(node) => node.getAttribute('aria-controls')
 						);
 
-						await fdsFragmentPage.page
+						await dataSetFragmentPage.page
 							.locator(`#${dropdownId}`)
 							.waitFor();
 
 						await expect(
-							fdsFragmentPage.page
+							dataSetFragmentPage.page
 								.locator(`#${dropdownId}`)
 								.getByRole('option')
 						).toHaveCount(3);
 
-						const paginationOptions = await fdsFragmentPage.page
+						const paginationOptions = await dataSetFragmentPage.page
 							.locator(`#${dropdownId}`)
 							.getByRole('option')
 							.allInnerTexts();

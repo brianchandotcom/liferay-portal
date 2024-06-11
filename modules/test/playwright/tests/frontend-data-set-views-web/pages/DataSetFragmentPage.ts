@@ -9,15 +9,15 @@ import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {DEFAULT_LABEL} from '../utils/constants';
 import {VisualizationMode} from '../utils/types';
 
-export class FDSFragmentPage {
+export class DataSetFragmentPage {
 	readonly apiHelpers: ApiHelpers;
 	readonly creationMenuButton: Locator;
 	readonly editPageButton: Locator;
 	readonly emptyStateTitle: Locator;
 	readonly fdsActiveViewSelector: Locator;
-	readonly fdsCardsWrapper: Locator;
-	readonly fdsListWrapper: Locator;
-	readonly fdsTableWrapper: Locator;
+	readonly cardsVisualizationModeWrapper: Locator;
+	readonly listVisualizationModeWrapper: Locator;
+	readonly tableVisualizationModeWrapper: Locator;
 	readonly fragmentWidgetSearchInput: Locator;
 	readonly loadingIndicator: Locator;
 	readonly page: Page;
@@ -28,9 +28,15 @@ export class FDSFragmentPage {
 		this.creationMenuButton = page.getByTestId('fdsCreationActionButton');
 		this.emptyStateTitle = page.getByText('No Results Found');
 		this.fdsActiveViewSelector = page.getByLabel('Show View Options');
-		this.fdsCardsWrapper = page.getByTestId('visualization-mode-cards');
-		this.fdsListWrapper = page.getByTestId('visualization-mode-list');
-		this.fdsTableWrapper = page.getByTestId('visualization-mode-table');
+		this.cardsVisualizationModeWrapper = page.getByTestId(
+			'visualization-mode-cards'
+		);
+		this.listVisualizationModeWrapper = page.getByTestId(
+			'visualization-mode-list'
+		);
+		this.tableVisualizationModeWrapper = page.getByTestId(
+			'visualization-mode-table'
+		);
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);
@@ -77,25 +83,24 @@ export class FDSFragmentPage {
 			this.page.getByText('Place fragments or widgets here')
 		);
 
-		const fragmentSelectionArea = this.page.getByText(
-			'Select a data set view'
-		);
+		const fragmentSelectionArea = this.page.getByText('Select a data set');
 
 		await expect(fragmentSelectionArea).toBeVisible();
 
 		await fragmentSelectionArea.click();
 
-		await this.page
-			.getByRole('button', {name: 'Select Data Set View'})
-			.click();
+		const dataSetSelectionTrigger = this.page.getByTitle(
+			'Select Data Set',
+			{exact: true}
+		);
 
-		await this.page.getByRole('dialog').isVisible();
+		await expect(dataSetSelectionTrigger).toBeInViewport();
 
-		await this.page.getByRole('heading', {name: 'Select'}).isVisible();
+		await dataSetSelectionTrigger.click();
 
 		await this.page
 			.frameLocator('iframe[title="Select"]')
-			.locator('.fds-view-item-selector')
+			.locator('.data-set-item-selector')
 			.waitFor({state: 'visible'});
 
 		await this.page

@@ -12,9 +12,9 @@ import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {actionsPageTest} from './fixtures/actionsPageTest';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 const LINK_CREATION_ACTION_NAME = 'Link creation action';
 const MODAL_CREATION_ACTION_NAME = 'Modal creation action';
@@ -199,7 +199,7 @@ export const fragmentTest = mergeTests(
 		'LPS-164563': true,
 		'LPS-178052': true,
 	}),
-	fdsFragmentPageTest,
+	dataSetFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
@@ -207,12 +207,13 @@ export const fragmentTest = mergeTests(
 fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 	fragmentTest(
 		'Creation Action button does not appear if no creation action is defined',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+		async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
 			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+						dataSetERC,
 					type: 'string',
 				});
 			});
@@ -220,7 +221,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -231,7 +232,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				'Check that the Creation Action button is not present',
 				async () => {
 					await expect(
-						fdsFragmentPage.creationMenuButton
+						dataSetFragmentPage.creationMenuButton
 					).not.toBeVisible();
 				}
 			);
@@ -240,12 +241,18 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 
 	fragmentTest(
 		'Show a simple button if only one Creation Action is defined',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+						dataSetERC,
 					type: 'string',
 				});
 			});
@@ -255,7 +262,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			await fragmentTest.step('Create Creation Action', async () => {
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: actionLabel},
-					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
+					r_dsmDataSetCreationActionRelationship_c_dsmDataSetERC:
 						dataSetERC,
 				});
 			});
@@ -263,7 +270,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -274,7 +281,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				'Check that the Creation Action button is present',
 				async () => {
 					await expect(
-						fdsFragmentPage.page
+						dataSetFragmentPage.page
 							.getByRole('button', {
 								name: actionLabel,
 							})
@@ -286,7 +293,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Check that the Creation Action works',
 				async () => {
-					await fdsFragmentPage.page
+					await dataSetFragmentPage.page
 						.getByRole('button', {
 							name: actionLabel,
 						})
@@ -303,12 +310,13 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 
 	fragmentTest(
 		'Show the Creation Actions menu if more than one Creation Action is defined',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+		async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
 			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+						dataSetERC,
 					type: 'string',
 				});
 			});
@@ -319,7 +327,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			await fragmentTest.step('Create Creation Actions', async () => {
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: firstActionLabel},
-					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
+					r_dsmDataSetCreationActionRelationship_c_dsmDataSetERC:
 						dataSetERC,
 					title_i18n: {en_US: 'Modal title'},
 					type: 'modal',
@@ -327,7 +335,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: secondActionLabel},
-					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
+					r_dsmDataSetCreationActionRelationship_c_dsmDataSetERC:
 						dataSetERC,
 				});
 			});
@@ -335,7 +343,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -345,12 +353,12 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			const actionDropdownMenuId = await fragmentTest.step(
 				'Check that the Creation Action menu is present',
 				async () => {
-					await fdsFragmentPage.creationMenuButton
+					await dataSetFragmentPage.creationMenuButton
 						.first()
 						.isVisible();
 
 					const button =
-						await fdsFragmentPage.creationMenuButton.first();
+						await dataSetFragmentPage.creationMenuButton.first();
 
 					const dropdownId = await button.evaluate((node) =>
 						node.getAttribute('aria-controls')
@@ -358,19 +366,21 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 
 					await button.click();
 
-					await fdsFragmentPage.page
+					await dataSetFragmentPage.page
 						.locator(`#${dropdownId}`)
-						.filter({has: fdsFragmentPage.page.getByRole('menu')})
+						.filter({
+							has: dataSetFragmentPage.page.getByRole('menu'),
+						})
 						.waitFor();
 
 					await expect(
-						fdsFragmentPage.page
+						dataSetFragmentPage.page
 							.locator(`#${dropdownId}`)
 							.getByRole('menuitem')
 					).toHaveCount(2);
 
 					await expect(
-						fdsFragmentPage.page
+						dataSetFragmentPage.page
 							.locator(`#${dropdownId}`)
 							.getByRole('menuitem', {
 								exact: true,
@@ -379,7 +389,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 					).toBeVisible();
 
 					await expect(
-						fdsFragmentPage.page
+						dataSetFragmentPage.page
 							.locator(`#${dropdownId}`)
 							.getByRole('menuitem', {
 								exact: true,
@@ -387,16 +397,16 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 							})
 					).toBeVisible();
 
-					await fdsFragmentPage.page.keyboard.press('Escape');
+					await dataSetFragmentPage.page.keyboard.press('Escape');
 
 					return dropdownId;
 				}
 			);
 
 			await test.step('Creation Action of type "modal" opens a modal', async () => {
-				await fdsFragmentPage.creationMenuButton.first().click();
+				await dataSetFragmentPage.creationMenuButton.first().click();
 
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.locator(`#${actionDropdownMenuId}`)
 					.getByRole('menuitem', {
 						exact: true,
@@ -404,9 +414,11 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 					})
 					.click();
 
-				await fdsFragmentPage.page.getByRole('dialog').waitFor();
+				await dataSetFragmentPage.page.getByRole('dialog').waitFor();
 
-				const dialog = await fdsFragmentPage.page.getByRole('dialog');
+				const dialog = await dataSetFragmentPage.page.getByRole(
+					'dialog'
+				);
 
 				await expect(dialog).toBeInViewport();
 
@@ -416,9 +428,9 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 			});
 
 			await test.step('Creation Action of type "link" is actionable', async () => {
-				await fdsFragmentPage.creationMenuButton.first().click();
+				await dataSetFragmentPage.creationMenuButton.first().click();
 
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.locator(`#${actionDropdownMenuId}`)
 					.getByRole('menuitem', {
 						exact: true,
@@ -427,7 +439,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 					.click();
 
 				await expect(
-					fdsFragmentPage.page.getByText('Welcome to Liferay')
+					dataSetFragmentPage.page.getByText('Welcome to Liferay')
 				).toBeVisible();
 			});
 		}

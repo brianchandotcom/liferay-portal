@@ -10,9 +10,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 
 export const dsmTest = mergeTests(
@@ -311,14 +311,14 @@ export const fragmentTest = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	fdsFragmentPageTest,
+	dataSetFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
 
 fragmentTest(
 	'Date-time filter is displayed in fragment, and applied to data @LPD-10754',
-	async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
 		const fieldLabel = getRandomString();
 
 		const filterLabel = getRandomString();
@@ -328,7 +328,7 @@ fragmentTest(
 				'Assert that the data entry is fetched',
 				async () => {
 					await expect(
-						fdsFragmentPage.page.getByText(fieldLabel).first()
+						dataSetFragmentPage.page.getByText(fieldLabel).first()
 					).toBeVisible();
 				}
 			);
@@ -339,7 +339,7 @@ fragmentTest(
 				fieldName: DATE_FIELD_NAME,
 				from: '2020-01-01',
 				label_i18n: {en_US: filterLabel},
-				r_fdsViewFDSDateFilterRelationship_c_fdsViewERC: dataSetERC,
+				r_dsmDataSetDateFilterRelationship_c_dsmDataSetERC: dataSetERC,
 				to: '3020-01-02',
 				type: 'date-time',
 			});
@@ -348,25 +348,29 @@ fragmentTest(
 		await fragmentTest.step(
 			'Add a field, so FDS has something to show',
 			async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					label_i18n: {en_US: fieldLabel},
 					name: 'rendererType',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+						dataSetERC,
 					type: 'string',
 				});
 			}
 		);
 
 		await fragmentTest.step('Configure Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
+			await dataSetFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
 		});
 
-		const activeFilterButton = fdsFragmentPage.page.getByRole('button', {
-			name: `${filterLabel}:`,
-		});
+		const activeFilterButton = dataSetFragmentPage.page.getByRole(
+			'button',
+			{
+				name: `${filterLabel}:`,
+			}
+		);
 
 		await fragmentTest.step(
 			'Assert that preloaded filter values are in UI @LPS-191295',
@@ -380,7 +384,7 @@ fragmentTest(
 		await fragmentTest.step('Set an impossible date range', async () => {
 			await activeFilterButton.click();
 
-			const toInput = fdsFragmentPage.page.getByLabel('To', {
+			const toInput = dataSetFragmentPage.page.getByLabel('To', {
 				exact: true,
 			});
 
@@ -390,7 +394,7 @@ fragmentTest(
 
 			await toInput.fill('2020-01-02');
 
-			const editButton = fdsFragmentPage.page.getByRole('button', {
+			const editButton = dataSetFragmentPage.page.getByRole('button', {
 				name: 'Edit Filter',
 			});
 
@@ -402,13 +406,13 @@ fragmentTest(
 		await fragmentTest.step(
 			'Assert that the data entry is not fetched',
 			async () => {
-				await expect(fdsFragmentPage.emptyStateTitle).toBeVisible();
+				await expect(dataSetFragmentPage.emptyStateTitle).toBeVisible();
 			}
 		);
 
 		await fragmentTest.step('Remove the filter @LPS-191295', async () => {
 			const removeFilterButton =
-				fdsFragmentPage.page.getByLabel('Remove Filter');
+				dataSetFragmentPage.page.getByLabel('Remove Filter');
 
 			await expect(removeFilterButton).toBeVisible();
 

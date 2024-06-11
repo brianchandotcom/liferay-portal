@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 import saveFromModal from './utils/saveFromModal';
 
@@ -236,7 +236,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		visualizationModesPage,
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
-		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const SAMPLE_OBJECT_FIELD = 'dsmDataSetTableSectionRelationship';
 		const SAMPLE_OBJECT_CHILD_FIELD = 'id';
 		const SORTABLE_COLUMN_INDEX = 5;
 
@@ -588,7 +588,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		visualizationModesPage,
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
-		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const SAMPLE_OBJECT_FIELD = 'dsmDataSetTableSectionRelationship';
 		const LABEL_COLUMN_INDEX = 2;
 
 		await test.step('Navigate to table visualization mode page', async () => {
@@ -727,7 +727,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 export const fragmentTest = mergeTests(
 	dataSetManagerApiHelpersTest,
-	fdsFragmentPageTest,
+	dataSetFragmentPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -739,22 +739,29 @@ export const fragmentTest = mergeTests(
 fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 	fragmentTest(
 		'Show mapped fields in the fragment',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			const SAMPLE_SCALAR_FIELD = 'id';
-			const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+			const SAMPLE_OBJECT_FIELD = 'dsmDataSetTableSectionRelationship';
 			const SAMPLE_OBJECT_CHILD_FIELD = 'label';
 
 			await fragmentTest.step('Create table fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					label_i18n: {en_US: 'Label'},
 					name: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+						dataSetERC,
 					type: 'string',
 				});
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					label_i18n: {en_US: 'Id'},
 					name: `${SAMPLE_SCALAR_FIELD}`,
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+						dataSetERC,
 					type: 'string',
 				});
 			});
@@ -763,13 +770,13 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
 					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 					name: 'title',
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+					r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 						dataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
 					fieldName: `${SAMPLE_SCALAR_FIELD}`,
 					name: 'description',
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+					r_dsmDataSetCardsSectionRelationship_c_dsmDataSetERC:
 						dataSetERC,
 				});
 			});
@@ -778,13 +785,13 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 				await dataSetManagerApiHelpers.createDataSetListSection({
 					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 					name: 'title',
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+					r_dsmDataSetListSectionRelationship_c_dsmDataSetERC:
 						dataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetListSection({
 					fieldName: `${SAMPLE_SCALAR_FIELD}`,
 					name: 'description',
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+					r_dsmDataSetListSectionRelationship_c_dsmDataSetERC:
 						dataSetERC,
 				});
 			});
@@ -792,7 +799,7 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -802,20 +809,22 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Check Data Set Cards are present',
 				async () => {
-					await fdsFragmentPage.fdsCardsWrapper.waitFor({
-						state: 'visible',
-					});
+					await dataSetFragmentPage.cardsVisualizationModeWrapper.waitFor(
+						{
+							state: 'visible',
+						}
+					);
 
 					expect(
-						await fdsFragmentPage.fdsCardsWrapper
+						await dataSetFragmentPage.cardsVisualizationModeWrapper
 					).toBeInViewport();
 
-					await fdsFragmentPage.page
+					await dataSetFragmentPage.page
 						.locator('.card')
 						.first()
 						.waitFor();
 
-					const firstCard = await fdsFragmentPage.page
+					const firstCard = await dataSetFragmentPage.page
 						.locator('.card')
 						.first();
 
@@ -830,27 +839,29 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Change visualization mode to List',
 				async () => {
-					await fdsFragmentPage.changeVisualizationMode('List');
+					await dataSetFragmentPage.changeVisualizationMode('List');
 				}
 			);
 
 			await fragmentTest.step(
 				'Check Data Set List is present',
 				async () => {
-					await fdsFragmentPage.fdsListWrapper.waitFor({
-						state: 'visible',
-					});
+					await dataSetFragmentPage.listVisualizationModeWrapper.waitFor(
+						{
+							state: 'visible',
+						}
+					);
 
 					expect(
-						await fdsFragmentPage.fdsListWrapper
+						await dataSetFragmentPage.listVisualizationModeWrapper
 					).toBeInViewport();
 
-					await fdsFragmentPage.page
+					await dataSetFragmentPage.page
 						.locator('.list-group-item')
 						.first()
 						.waitFor();
 
-					const firstListItem = await fdsFragmentPage.page
+					const firstListItem = await dataSetFragmentPage.page
 						.locator('.list-group-item')
 						.first();
 
@@ -867,19 +878,21 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Change visualization mode to Table',
 				async () => {
-					await fdsFragmentPage.changeVisualizationMode('Table');
+					await dataSetFragmentPage.changeVisualizationMode('Table');
 				}
 			);
 
 			await fragmentTest.step(
 				'Data Set Table is in the page',
 				async () => {
-					await fdsFragmentPage.fdsTableWrapper.waitFor({
-						state: 'visible',
-					});
+					await dataSetFragmentPage.tableVisualizationModeWrapper.waitFor(
+						{
+							state: 'visible',
+						}
+					);
 
 					expect(
-						await fdsFragmentPage.fdsTableWrapper
+						await dataSetFragmentPage.tableVisualizationModeWrapper
 					).toBeInViewport();
 
 					expect(
@@ -896,18 +909,24 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 
 	fragmentTest(
 		'Show mapped scalar array field in the fragment @LPD-11769',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
 			const SAMPLE_SCALAR_ARRAY_CONTENT = ['one', 'two', 'three'];
 
 			await fragmentTest.step('Create table fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
+				await dataSetManagerApiHelpers.createDataSetTableSection({
 					extraBodyParams: {
 						keywords: SAMPLE_SCALAR_ARRAY_CONTENT,
 					},
 					label_i18n: {en_US: SAMPLE_SCALAR_ARRAY_FIELD},
 					name: SAMPLE_SCALAR_ARRAY_FIELD,
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+						dataSetERC,
 					type: 'array',
 				});
 			});
@@ -915,7 +934,7 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Configure Data Set in the page',
 				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
+					await dataSetFragmentPage.configureDataSetFragment({
 						dataSetLabel,
 						layout,
 					});
@@ -925,12 +944,14 @@ fragmentTest.describe('Visualization Modes in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Data Set Table is in the page',
 				async () => {
-					await fdsFragmentPage.fdsTableWrapper.waitFor({
-						state: 'visible',
-					});
+					await dataSetFragmentPage.tableVisualizationModeWrapper.waitFor(
+						{
+							state: 'visible',
+						}
+					);
 
 					expect(
-						await fdsFragmentPage.fdsTableWrapper
+						await dataSetFragmentPage.tableVisualizationModeWrapper
 					).toBeInViewport();
 
 					expect(

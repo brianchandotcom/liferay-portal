@@ -10,9 +10,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 import {picklistApiHelpersTest} from './fixtures/picklistApiHelpersTest';
 
@@ -114,7 +114,7 @@ test.describe('Filters in Data Set Manager', () => {
 				preselectedValues: [dataSetLabel],
 				restApplication: '/data-set-manager/data-sets',
 				restEndpoint: '/',
-				restSchema: 'FDSView',
+				restSchema: 'DSMDataSet',
 				selectionType: 'Single',
 				sourceType: 'API REST Application',
 			});
@@ -137,7 +137,7 @@ export const fragmentTest = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	fdsFragmentPageTest,
+	dataSetFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
 	picklistApiHelpersTest
@@ -147,8 +147,8 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 	fragmentTest(
 		'Selection filter is displayed in fragment, and applied to data @LPD-10754',
 		async ({
+			dataSetFragmentPage,
 			dataSetManagerApiHelpers,
-			fdsFragmentPage,
 			layout,
 			picklistApiHelpers,
 		}) => {
@@ -173,16 +173,18 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Add a field, so FDS has something to show',
 				async () => {
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {en_US: 'Renderer'},
 						name: 'renderer',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 					});
 
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {en_US: 'Sortable'},
 						name: 'sortable',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 						renderer: 'boolean',
 					});
 				}
@@ -198,7 +200,7 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 						{
 							fieldName: 'renderer',
 							label_i18n: {en_US: filterLabel},
-							r_fdsViewFDSDynamicFilterRelationship_c_fdsViewERC:
+							r_dsmDataSetSelectionFilterRelationship_c_dsmDataSetERC:
 								dataSetERC,
 							source: picklist.externalReferenceCode,
 							sourceType: 'PICKLIST',
@@ -208,7 +210,7 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 			);
 
 			await fragmentTest.step('Configure Data Set fragment', async () => {
-				await fdsFragmentPage.configureDataSetFragment({
+				await dataSetFragmentPage.configureDataSetFragment({
 					dataSetLabel,
 					layout,
 				});
@@ -218,7 +220,7 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 				'Check current items in the Frontend Data Set',
 				async () => {
 					await expect(
-						fdsFragmentPage.page.getByText(
+						dataSetFragmentPage.page.getByText(
 							'Showing 1 to 2 of 2 entries.'
 						)
 					).toBeVisible();
@@ -229,7 +231,7 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 				'Filters are available in the fragment',
 				async () => {
 					await expect(
-						fdsFragmentPage.page.getByRole('button', {
+						dataSetFragmentPage.page.getByRole('button', {
 							name: 'Filter',
 						})
 					).toBeVisible();
@@ -237,63 +239,63 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 			);
 
 			await fragmentTest.step('Open filters component', async () => {
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.getByRole('button', {name: 'Filter'})
 					.click();
 			});
 
 			await fragmentTest.step('Select filter', async () => {
 				await expect(
-					fdsFragmentPage.page.getByRole('menuitem', {
+					dataSetFragmentPage.page.getByRole('menuitem', {
 						name: filterLabel,
 					})
 				).toBeVisible();
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.getByRole('menuitem', {name: filterLabel})
 					.click();
 				await expect(
-					fdsFragmentPage.page.getByRole('radio', {
+					dataSetFragmentPage.page.getByRole('radio', {
 						name: picklistDefaultOption,
 					})
 				).toBeVisible();
 				await expect(
-					fdsFragmentPage.page.getByRole('radio', {
+					dataSetFragmentPage.page.getByRole('radio', {
 						name: picklistBooleanOption,
 					})
 				).toBeVisible();
 
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.getByRole('radio', {name: picklistBooleanOption})
 					.check();
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.getByRole('button', {name: 'Add filter'})
 					.click();
 
 				// Close filter
 
-				await fdsFragmentPage.page.keyboard.press('Escape');
+				await dataSetFragmentPage.page.keyboard.press('Escape');
 			});
 
 			await fragmentTest.step('Check that the filter works', async () => {
-				await fdsFragmentPage.page
+				await dataSetFragmentPage.page
 					.locator('.filter-resume')
 					.waitFor({state: 'visible'});
 
 				await expect(
-					fdsFragmentPage.page.getByRole('button', {
+					dataSetFragmentPage.page.getByRole('button', {
 						name: `${filterLabel}: ${picklistBooleanOption}`,
 					})
 				).toBeVisible();
 
 				await expect(
-					fdsFragmentPage.page
+					dataSetFragmentPage.page
 						.locator('.dnd-tbody > div')
 						.first()
 						.locator('.dnd-td')
 				).toHaveText(['boolean', 'No', '']);
 
 				await expect(
-					fdsFragmentPage.page.getByText(
+					dataSetFragmentPage.page.getByText(
 						'Showing 1 to 1 of 1 entries.'
 					)
 				).toBeVisible();

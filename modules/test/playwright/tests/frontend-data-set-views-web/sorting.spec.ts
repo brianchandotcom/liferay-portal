@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
+import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {sortingPageTest} from './fixtures/sortingPageTest';
 import saveFromModal from './utils/saveFromModal';
 
@@ -186,7 +186,7 @@ applicationPageTest.describe(
 
 export const fragmentTest = mergeTests(
 	dataSetManagerApiHelpersTest,
-	fdsFragmentPageTest,
+	dataSetFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
@@ -194,41 +194,48 @@ export const fragmentTest = mergeTests(
 fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 	fragmentTest(
 		'When sorting is configured with at least 1 sort, the dropdown is displayed in the fragment @LPD-19503',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
 			await fragmentTest.step('Create sorting', async () => {
 				await dataSetManagerApiHelpers.createDataSetSort({
 					defaultValue: true,
 					fieldName: 'id',
 					label_i18n: {en_US: 'ID'},
 					orderType: 'asc',
-					r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetSortRelationship_c_dsmDataSetERC: dataSetERC,
 				});
 
 				await dataSetManagerApiHelpers.createDataSetSort({
 					defaultValue: false,
 					fieldName: 'name',
 					label_i18n: {en_US: 'Name'},
-					r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
+					r_dsmDataSetSortRelationship_c_dsmDataSetERC: dataSetERC,
 				});
 			});
 
 			await fragmentTest.step(
 				'Add fields, so data is displayed',
 				async () => {
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {
 							en_US: 'ID',
 						},
 						name: 'id',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 						sortable: true,
 						type: 'string',
 					});
 
-					await dataSetManagerApiHelpers.createDataSetField({
+					await dataSetManagerApiHelpers.createDataSetTableSection({
 						label_i18n: {en_US: 'Name'},
 						name: 'name',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+						r_dsmDataSetTableSectionRelationship_c_dsmDataSetERC:
+							dataSetERC,
 						sortable: true,
 						type: 'string',
 					});
@@ -236,7 +243,7 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 			);
 
 			await fragmentTest.step('Configure Data Set fragment', async () => {
-				await fdsFragmentPage.configureDataSetFragment({
+				await dataSetFragmentPage.configureDataSetFragment({
 					dataSetLabel,
 					layout,
 				});
@@ -254,17 +261,19 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 			await fragmentTest.step(
 				'Check that default sorting is applied',
 				async () => {
-					const firstIDText = await fdsFragmentPage.fdsTableWrapper
-						.locator(
-							'.dnd-tbody .dnd-tr:first-child .dnd-td:first-child'
-						)
-						.textContent();
+					const firstIDText =
+						await dataSetFragmentPage.tableVisualizationModeWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:first-child .dnd-td:first-child'
+							)
+							.textContent();
 
-					const lastIDText = await fdsFragmentPage.fdsTableWrapper
-						.locator(
-							'.dnd-tbody .dnd-tr:last-child .dnd-td:first-child'
-						)
-						.textContent();
+					const lastIDText =
+						await dataSetFragmentPage.tableVisualizationModeWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:last-child .dnd-td:first-child'
+							)
+							.textContent();
 
 					expect(firstIDText < lastIDText).toBeTruthy();
 				}
@@ -296,17 +305,19 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 			await fragmentTest.step(
 				'Check that the first ID is greater than the last ID in the table',
 				async () => {
-					const firstIDText = await fdsFragmentPage.fdsTableWrapper
-						.locator(
-							'.dnd-tbody .dnd-tr:first-child .dnd-td:first-child'
-						)
-						.textContent();
+					const firstIDText =
+						await dataSetFragmentPage.tableVisualizationModeWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:first-child .dnd-td:first-child'
+							)
+							.textContent();
 
-					const lastIDText = await fdsFragmentPage.fdsTableWrapper
-						.locator(
-							'.dnd-tbody .dnd-tr:last-child .dnd-td:first-child'
-						)
-						.textContent();
+					const lastIDText =
+						await dataSetFragmentPage.tableVisualizationModeWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:last-child .dnd-td:first-child'
+							)
+							.textContent();
 
 					expect(firstIDText > lastIDText).toBeTruthy();
 				}
@@ -318,17 +329,19 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 					await page.getByRole('button', {name: 'Order'}).click();
 					await page.getByRole('menuitem', {name: 'Name'}).click();
 
-					const firstNameText = await fdsFragmentPage.fdsTableWrapper
-						.locator(
-							'.dnd-tbody .dnd-tr:first-child .dnd-td:nth-child(2)'
-						)
-						.textContent();
+					const firstNameText =
+						await dataSetFragmentPage.tableVisualizationModeWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:first-child .dnd-td:nth-child(2)'
+							)
+							.textContent();
 
-					const lastNameText = await fdsFragmentPage.fdsTableWrapper
-						.locator(
-							'.dnd-tbody .dnd-tr:last-child .dnd-td:nth-child(2)'
-						)
-						.textContent();
+					const lastNameText =
+						await dataSetFragmentPage.tableVisualizationModeWrapper
+							.locator(
+								'.dnd-tbody .dnd-tr:last-child .dnd-td:nth-child(2)'
+							)
+							.textContent();
 
 					expect(firstNameText > lastNameText).toBeTruthy();
 
@@ -338,14 +351,14 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 						.click();
 
 					const firstNameTextAscending =
-						await fdsFragmentPage.fdsTableWrapper
+						await dataSetFragmentPage.tableVisualizationModeWrapper
 							.locator(
 								'.dnd-tbody .dnd-tr:first-child .dnd-td:nth-child(2)'
 							)
 							.textContent();
 
 					const lastNameTextAscending =
-						await fdsFragmentPage.fdsTableWrapper
+						await dataSetFragmentPage.tableVisualizationModeWrapper
 							.locator(
 								'.dnd-tbody .dnd-tr:last-child .dnd-td:nth-child(2)'
 							)

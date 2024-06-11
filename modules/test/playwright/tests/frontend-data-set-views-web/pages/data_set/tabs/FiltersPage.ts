@@ -70,7 +70,7 @@ export class FiltersPage {
 				exact: true,
 				name: 'Close',
 			}),
-			filterByDropdown: page.locator('.fds-field-name-dropdown-menu'),
+			filterByDropdown: page.locator('.field-name-dropdown-menu'),
 			filterBySelect: page.getByLabel('Filter By'),
 			formFeedback: page.locator('.form-feedback-item'),
 			modalBody: page.locator('.modal-body'),
@@ -100,20 +100,22 @@ export class FiltersPage {
 		this.newSelectionFilterModal = {
 			...this.newFilterModal,
 			filterModeRadioButtons: page.getByText('Filter ModeIncludeExclude'),
-			itemKey: page.locator('.fds-filter-item-key'),
-			itemLabel: page.locator('.fds-filter-item-label'),
+			itemKey: page.locator('.dsm-filter-item-key'),
+			itemLabel: page.locator('.dsm-filter-item-label'),
 			picklistDropdown: page.getByLabel('Picklist'),
 			preselectedValuesMultiSelect: page.getByPlaceholder(
 				'Select a default value for your filter.'
 			),
 			restApplicationField: page.getByLabel('REST ApplicationRequired'),
 			restApplicationOptions: page.locator(
-				'.fds-filter-rest-application-menu'
+				'.dsm-rest-application-dropdown-menu'
 			),
 			restEndpointField: page.getByLabel('REST EndpointRequired'),
-			restEndpointOptions: page.locator('.fds-filter-rest-endpoint-menu'),
+			restEndpointOptions: page.locator(
+				'.dsm-rest-endpoint-dropdown-menu'
+			),
 			restSchemaField: page.getByLabel('REST SchemaRequired'),
-			restSchemaOptions: page.locator('.fds-filter-rest-schema-menu'),
+			restSchemaOptions: page.locator('.dsm-rest-schema-dropdown-menu'),
 			selectionRadioButtons: page.getByText('SelectionMultipleSingle'),
 			sourceTypeDropdown: page.getByLabel('Choose an Option'),
 		};

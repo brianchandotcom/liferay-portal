@@ -943,13 +943,11 @@ public class DBPartitionUtil {
 		throws PortalException {
 
 		AutoCloseable autoCloseable = null;
-
 		List<String> copiedTableNames = new ArrayList<>();
+		String partitionName = _getPartitionName(companyId);
 
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
-
-		String partitionName = _getPartitionName(companyId);
 
 		try (Statement statement = connection.createStatement()) {
 			autoCloseable = _disableAutoCommit(connection);

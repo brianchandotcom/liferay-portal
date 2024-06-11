@@ -229,7 +229,7 @@ const UserForm = () => {
 
 								<Form.Input
 									{...inputProps}
-									label="Confirm Password"
+									label={i18n.translate('confirm-password')}
 									name="repassword"
 									required
 									type="password"

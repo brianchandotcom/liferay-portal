@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -322,9 +323,18 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
+
 			File playwrightBaseDir = new File(
-				portalGitWorkingDirectory.getWorkingDirectory(),
-				"modules/test/playwright");
+				workingDirectory, "modules/test/playwright");
+
+			try {
+				AntUtil.callTarget(workingDirectory, "build.xml", "setup-yarn");
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+			}
 
 			_callNPMCommand(playwrightBaseDir, "npm install");
 

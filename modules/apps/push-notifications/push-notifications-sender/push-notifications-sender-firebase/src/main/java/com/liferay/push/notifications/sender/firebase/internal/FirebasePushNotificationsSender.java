@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -67,7 +66,7 @@ public class FirebasePushNotificationsSender
 
 	@Override
 	public void send(List<String> tokens, JSONObject payloadJSONObject)
-		throws IOException, JSONException, PushNotificationsException {
+		throws Exception {
 
 		if (_googleCredentials == null) {
 			throw new PushNotificationsException(
@@ -236,7 +235,7 @@ public class FirebasePushNotificationsSender
 
 	private DeviceGroup _createDeviceGroup(
 			String authorizationToken, List<String> tokens)
-		throws IOException, JSONException, PushNotificationsException {
+		throws Exception {
 
 		String name = StringUtil.randomString();
 
@@ -275,7 +274,7 @@ public class FirebasePushNotificationsSender
 		return new DeviceGroup(response.getString("notification_key"), name);
 	}
 
-	private String _getAccessToken() throws IOException {
+	private String _getAccessToken() throws Exception {
 		_googleCredentials.refresh();
 
 		return _googleCredentials.getAccessToken(
@@ -325,7 +324,7 @@ public class FirebasePushNotificationsSender
 	private void _removeDeviceGroup(
 			String authorizationToken, DeviceGroup deviceGroup,
 			boolean throwException, List<String> tokens)
-		throws IOException, PushNotificationsException {
+		throws Exception {
 
 		Http.Options options = new Http.Options();
 
@@ -370,7 +369,7 @@ public class FirebasePushNotificationsSender
 	}
 
 	private void _send(String accessToken, JSONObject message)
-		throws IOException, PushNotificationsException {
+		throws Exception {
 
 		Http.Options options = new Http.Options();
 

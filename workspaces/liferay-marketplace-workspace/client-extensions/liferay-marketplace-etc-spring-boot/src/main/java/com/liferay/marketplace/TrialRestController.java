@@ -61,10 +61,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrialRestController extends BaseRestController {
 
 	@DeleteMapping("{orderId}")
-	public void delete(@PathVariable String orderId) throws Exception {
-		_consoleService.deleteProject(orderId);
+	public void deleteTrial(@PathVariable long orderId) throws Exception {
+		_consoleService.deleteProject(String.valueOf(orderId));
 
 		_deletePortalInstance(orderId);
+	}
+
+	@PostMapping("expire/{orderId}")
+	public void expireTrial(@PathVariable long orderId) throws Exception {
+		_updateOrder(null, orderId, _ORDER_STATUS_PENDING);
+
+		_updateOrder(null, orderId, _ORDER_STATUS_PROCESSING);
+
+		_updateOrder(null, orderId, _ORDER_STATUS_COMPLETED);
+
+		deleteTrial(orderId);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Expired trial " + orderId);
+		}
 	}
 
 	@GetMapping("availability")
@@ -152,7 +167,7 @@ public class TrialRestController extends BaseRestController {
 				"Unable to set up project for order " + orderId + ":",
 				exception);
 
-			_deletePortalInstance(String.valueOf(orderId));
+			_deletePortalInstance(orderId);
 
 			_updateOrder(
 				HashMapBuilder.put(
@@ -189,7 +204,7 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"trial-virtualhost", portalInstance.getVirtualHost()
 			).build(),
-			orderId, _ORDER_STATUS_COMPLETED);
+			orderId, _ORDER_STATUS_IN_PROGRESS);
 
 		_postNotificationQueueEntry(
 			modelDTOOrderJSONObject.getString("creatorEmailAddress"),
@@ -238,7 +253,7 @@ public class TrialRestController extends BaseRestController {
 			).build());
 	}
 
-	private void _deletePortalInstance(String orderId) throws Exception {
+	private void _deletePortalInstance(long orderId) throws Exception {
 		PortalInstanceResource portalInstanceResource =
 			_getPortalInstanceResource();
 
@@ -334,12 +349,19 @@ public class TrialRestController extends BaseRestController {
 				HttpHeaders.AUTHORIZATION, authorization
 			).build();
 
-		NotificationTemplate notificationTemplate =
-			notificationTemplateResource.
-				getNotificationTemplateByExternalReferenceCode(
-					externalReferenceCode);
+		NotificationTemplate notificationTemplate;
 
-		if (notificationTemplate == null) {
+		try {
+			notificationTemplate =
+				notificationTemplateResource.
+					getNotificationTemplateByExternalReferenceCode(
+						externalReferenceCode);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to process template " + externalReferenceCode,
+				exception);
+
 			return;
 		}
 
@@ -471,6 +493,8 @@ public class TrialRestController extends BaseRestController {
 	private static final int _ORDER_STATUS_CANCELLED = 8;
 
 	private static final int _ORDER_STATUS_COMPLETED = 0;
+
+	private static final int _ORDER_STATUS_IN_PROGRESS = 6;
 
 	private static final int _ORDER_STATUS_ON_HOLD = 20;
 

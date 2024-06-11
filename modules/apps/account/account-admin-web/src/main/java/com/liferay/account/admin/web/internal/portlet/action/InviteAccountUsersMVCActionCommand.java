@@ -95,11 +95,13 @@ public class InviteAccountUsersMVCActionCommand
 			User existingUser = _userLocalService.fetchUserByEmailAddress(
 				user.getCompanyId(), emailAddress);
 
-			if (existingUser == null) {
-				_accountEntryUserRelService.inviteUser(
-					accountEntryId, accountRoleIds, emailAddress, user,
-					serviceContext);
+			if (existingUser != null) {
+				continue;
 			}
+
+			_accountEntryUserRelService.inviteUser(
+				accountEntryId, accountRoleIds, emailAddress, user,
+				serviceContext);
 		}
 	}
 

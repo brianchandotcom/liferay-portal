@@ -17,7 +17,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.kaleo.runtime.internal.configuration.FunctionActionExecutorImplConfiguration;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -86,14 +85,12 @@ public class FunctionActionExecutorImplTest {
 		ReflectionTestUtil.setFieldValue(
 			functionActionExecutorImpl, "_portalCatapult", portalCatapult);
 
-		List<WorkflowTaskAssignee> workflowTaskAssignees =
+		functionActionExecutorImpl.launch(
+			new JSONObjectImpl(),
 			Collections.singletonList(
 				new WorkflowTaskAssignee(
 					RandomTestUtil.randomString(),
-					RandomTestUtil.randomLong()));
-
-		functionActionExecutorImpl.launch(
-			new JSONObjectImpl(), workflowTaskAssignees);
+					RandomTestUtil.randomLong())));
 
 		Mockito.verify(
 			portalCatapult, Mockito.times(1)
@@ -105,11 +102,10 @@ public class FunctionActionExecutorImplTest {
 
 		userId = RandomTestUtil.randomLong();
 
-		workflowTaskAssignees = Collections.singletonList(
-			new WorkflowTaskAssignee(User.class.getName(), userId));
-
 		functionActionExecutorImpl.launch(
-			new JSONObjectImpl(), workflowTaskAssignees);
+			new JSONObjectImpl(),
+			Collections.singletonList(
+				new WorkflowTaskAssignee(User.class.getName(), userId)));
 
 		Mockito.verify(
 			portalCatapult, Mockito.times(1)

@@ -16,7 +16,7 @@ public abstract class BaseSchemaCreationUpgradeStep implements UpgradeStep {
 	public BaseSchemaCreationUpgradeStep(String sqlTemplate) {
 		this.sqlTemplate = sqlTemplate;
 
-		DBResourceUtil.registerMiscellaneousSQLTemplate(sqlTemplate);
+		DBResourceUtil.registerSQLTemplate(sqlTemplate);
 	}
 
 	protected String sqlTemplate;

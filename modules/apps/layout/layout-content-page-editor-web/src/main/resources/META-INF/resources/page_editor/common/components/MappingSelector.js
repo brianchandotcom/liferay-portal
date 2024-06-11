@@ -18,6 +18,7 @@ import {useCollectionConfig} from '../../app/contexts/CollectionItemContext';
 import {useDispatch, useSelector} from '../../app/contexts/StoreContext';
 import InfoItemService from '../../app/services/InfoItemService';
 import {CACHE_KEYS} from '../../app/utils/cache';
+import getMappedRelationship from '../../app/utils/editable_value/getMappedRelationship';
 import isMapped from '../../app/utils/editable_value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable_value/isMappedToInfoItem';
 import isMappedToRelationship from '../../app/utils/editable_value/isMappedToRelationship';
@@ -303,7 +304,7 @@ function MappingSelector({
 	);
 
 	const [selectedRelationship, setSelectedRelationship] = useState(
-		isMappedToRelationship(mappedItem) ? mappedItem.classNameId : null
+		getMappedRelationship(mappedItem)
 	);
 
 	const relationships = useCache({
@@ -365,12 +366,7 @@ function MappingSelector({
 				? {}
 				: selectedSourceType === MAPPING_SOURCE_TYPES.content
 					? {...selectedItem, fieldId: fieldValue}
-					: selectedSourceType === MAPPING_SOURCE_TYPES.relationship
-						? {
-								classNameId: selectedRelationship,
-								mappedField: fieldValue,
-							}
-						: {mappedField: fieldValue};
+					: {mappedField: fieldValue};
 
 		if (selectedSourceType === MAPPING_SOURCE_TYPES.content) {
 			setSelectedItem((selectedItem) => ({

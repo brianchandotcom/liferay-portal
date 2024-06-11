@@ -285,13 +285,13 @@ public class ObjectRelationshipLocalServiceImpl
 		String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
 			"pkObjectFieldDBColumnName2");
 
-		runSQL(
-			StringBundler.concat(
-				"create table ", objectRelationship.getDBTableName(), " (",
-				pkObjectFieldDBColumnName1, " LONG not null,",
-				pkObjectFieldDBColumnName2, " LONG not null, primary key (",
-				pkObjectFieldDBColumnName1, ", ", pkObjectFieldDBColumnName2,
-				"))"));
+		DynamicObjectRelationshipMappingTable
+			dynamicObjectRelationshipMappingTable =
+				new DynamicObjectRelationshipMappingTable(
+					pkObjectFieldDBColumnName1, pkObjectFieldDBColumnName2,
+					objectRelationship.getDBTableName());
+
+		runSQL(dynamicObjectRelationshipMappingTable.getCreateTableSQL());
 
 		Connection connection = _currentConnection.getConnection(
 			objectRelationshipPersistence.getDataSource());

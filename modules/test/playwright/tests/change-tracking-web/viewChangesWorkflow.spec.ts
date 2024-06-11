@@ -6,14 +6,15 @@
 import {expect, mergeTests} from '@playwright/test';
 import moment from 'moment';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
 import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
+	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-10703': true,
 	}),
@@ -24,7 +25,6 @@ export const test = mergeTests(
 
 let date;
 let journalName;
-
 const displayData = [
 	'Status',
 	'Assigned to',
@@ -35,18 +35,55 @@ const displayData = [
 	'Activities',
 ];
 
-test.beforeEach(async ({journalEditArticlePage, workflowPage}) => {
+test.beforeEach(
+	async ({
+		apiHelpers,
+		ctCollection,
+		journalEditArticlePage,
+		workflowPage,
+	}) => {
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection('0');
+
+		await workflowPage.goto();
+		await workflowPage.changeWorkflow(
+			'Web Content Article',
+			'Single Approver'
+		);
+
+		await apiHelpers.headlessChangeTracking.checkoutCTCollection(
+			ctCollection.id
+		);
+
+		journalName = getRandomString();
+		await journalEditArticlePage.goto();
+		await journalEditArticlePage.submitArticleForWorkflow(journalName);
+
+		date = moment().format('M/D/YY h:mm A');
+	}
+);
+
+test.afterEach(async ({apiHelpers, page, workflowPage}) => {
+	await apiHelpers.headlessChangeTracking.checkoutCTCollection('0');
+
 	await workflowPage.goto();
 
-	await workflowPage.changeWorkflow('Web Content Article', 'Single Approver');
+	const row = await page
+		.getByRole('row')
+		.filter({hasText: 'Web Content Article'});
 
-	journalName = getRandomString();
+	const workflowEnabled = await row
+		.getByTitle('Workflow Definition')
+		.filter({hasText: 'Single Approver'});
 
-	await journalEditArticlePage.goto();
-
-	await journalEditArticlePage.submitArticleForWorkflow(journalName);
-
-	date = moment().format('M/D/YY h:mm A');
+	if (workflowEnabled) {
+		await workflowPage.changeWorkflow(
+			'Web Content Article',
+			'No Workflow',
+			{
+				disable: true,
+			}
+		);
+	}
 });
 
 test('LPD-19748 Add workflow info to the View Change screen', async ({
@@ -344,12 +381,11 @@ test('LPD-22771 Assign button added to workflow view', async ({
 });
 
 test('LPD-22771 Assign button is not visible in other publications', async ({
+	apiHelpers,
 	changeTrackingPage,
 	ctCollection,
 	page,
 }) => {
-	const apiHelpers = new ApiHelpers(page);
-
 	await apiHelpers.headlessChangeTracking.checkoutCTCollection('0');
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.name);

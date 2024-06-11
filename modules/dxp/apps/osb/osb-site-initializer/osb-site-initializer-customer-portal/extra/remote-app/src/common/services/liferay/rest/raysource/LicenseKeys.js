@@ -171,7 +171,7 @@ export async function associateContactRoleNameByEmailByProject({
 	);
 
 	if (!response.ok) {
-		throw new Error();
+		throw new Error('Error', {cause: response.status});
 	}
 
 	return response;
@@ -197,7 +197,7 @@ export async function deleteContactRoleNameByEmailByProject({
 	);
 
 	if (!response.ok) {
-		throw new Error();
+		throw new Error('Error', {cause: response.status});
 	}
 
 	return response;

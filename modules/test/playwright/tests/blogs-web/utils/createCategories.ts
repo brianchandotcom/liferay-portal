@@ -15,17 +15,25 @@ export async function createCategories({
 	friendlyUrlCategories: string[];
 	site: Site;
 	vocabularyName: string;
-}) {
+}): Promise<{id: number; name: string}[]> {
 	const {id: vocabularyId} =
 		await apiHelpers.headlessAdminTaxonomy.createVocabulary({
 			name: vocabularyName,
 			siteId: site.id,
 		});
 
-	for (const categoryName of friendlyUrlCategories) {
-		await apiHelpers.headlessAdminTaxonomy.createCategory({
-			name: categoryName,
+	const categories = [];
+	for (const name of friendlyUrlCategories) {
+		const {id} = await apiHelpers.headlessAdminTaxonomy.createCategory({
+			name,
 			vocabularyId,
 		});
+
+		categories.push({
+			id,
+			name,
+		});
 	}
+
+	return categories;
 }

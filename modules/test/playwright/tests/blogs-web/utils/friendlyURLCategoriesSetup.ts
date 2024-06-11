@@ -28,7 +28,7 @@ export async function friendlyURLCategoriesSetup({
 	site: Site;
 	vocabularyName: string;
 }) {
-	await createCategories({
+	const categories = await createCategories({
 		apiHelpers,
 		friendlyUrlCategories,
 		site,
@@ -41,4 +41,6 @@ export async function friendlyURLCategoriesSetup({
 		pageEditorPage,
 		site,
 	});
+
+	return {categories};
 }

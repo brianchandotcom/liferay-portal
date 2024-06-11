@@ -437,7 +437,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 					RelationshipInfoFieldType) {
 
 			_addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
-				infoField, inputTemplateNode, label);
+				infoField, inputTemplateNode, label, value);
 		}
 		else if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
 			_addSelectInfoFieldTypeInputTemplateNodeAttributes(
@@ -510,8 +510,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	private void _addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
-		InfoField infoField, InputTemplateNode inputTemplateNode,
-		String label) {
+		InfoField infoField, InputTemplateNode inputTemplateNode, String label,
+		String value) {
 
 		inputTemplateNode.addAttribute(
 			"relationshipLabelFieldName",
@@ -525,6 +525,10 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 		if (Validator.isNotNull(label)) {
 			inputTemplateNode.addAttribute("selectedOptionLabel", label);
+		}
+
+		if (Validator.isNotNull(value)) {
+			inputTemplateNode.addAttribute("selectedOptionValue", value);
 		}
 	}
 
@@ -554,6 +558,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				inputTemplateNode.addAttribute(
 					"selectedOptionLabel",
 					optionInfoFieldType.getLabel(locale));
+				inputTemplateNode.addAttribute("selectedOptionValue", value);
 			}
 		}
 

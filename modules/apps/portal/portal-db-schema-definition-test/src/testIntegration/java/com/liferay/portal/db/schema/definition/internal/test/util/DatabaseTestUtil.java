@@ -61,6 +61,50 @@ public class DatabaseTestUtil {
 		}
 	}
 
+	public static List<String> getColumns(DataSource dataSource)
+		throws Exception {
+
+		List<String> columns = new ArrayList<>();
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			try (ResultSet resultSet = databaseMetaData.getColumns(
+					connection.getCatalog(), connection.getSchema(), null,
+					null)) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (dbInspector.isObjectTable(
+							Collections.singletonList(
+								PortalInstancePool.getDefaultCompanyId()),
+							tableName)) {
+
+						continue;
+					}
+
+					columns.add(
+						StringBundler.concat(
+							"Table Name: ", tableName, "Column Name: ",
+							resultSet.getString("COLUMN_NAME"), "Data Type: ",
+							resultSet.getInt("DATA_TYPE"), "Column Size: ",
+							resultSet.getInt("COLUMN_SIZE"), "Decimal Digits: ",
+							resultSet.getInt("DECIMAL_DIGITS"), "Is Nullable: ",
+							resultSet.getString("IS_NULLABLE"),
+							"Is AutoIncrement: ",
+							resultSet.getString("IS_AUTOINCREMENT")));
+				}
+			}
+		}
+
+		Collections.sort(columns);
+
+		return columns;
+	}
+
 	public static List<String> getIndexes(DataSource dataSource)
 		throws Exception {
 
@@ -107,50 +151,6 @@ public class DatabaseTestUtil {
 		}
 
 		return _getPostgreSQLSchemaURL(schemaName);
-	}
-
-	public static List<String> getTableColumns(DataSource dataSource)
-		throws Exception {
-
-		List<String> columns = new ArrayList<>();
-
-		try (Connection connection = dataSource.getConnection()) {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			DBInspector dbInspector = new DBInspector(connection);
-
-			try (ResultSet resultSet = databaseMetaData.getColumns(
-					connection.getCatalog(), connection.getSchema(), null,
-					null)) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (dbInspector.isObjectTable(
-							Collections.singletonList(
-								PortalInstancePool.getDefaultCompanyId()),
-							tableName)) {
-
-						continue;
-					}
-
-					columns.add(
-						StringBundler.concat(
-							"Table Name: ", tableName, "Column Name: ",
-							resultSet.getString("COLUMN_NAME"), "Data Type: ",
-							resultSet.getInt("DATA_TYPE"), "Column Size: ",
-							resultSet.getInt("COLUMN_SIZE"), "Decimal Digits: ",
-							resultSet.getInt("DECIMAL_DIGITS"), "Is Nullable: ",
-							resultSet.getString("IS_NULLABLE"),
-							"Is AutoIncrement: ",
-							resultSet.getString("IS_AUTOINCREMENT")));
-				}
-			}
-		}
-
-		Collections.sort(columns);
-
-		return columns;
 	}
 
 	public static void importFileTo(File file, DataSource targetDataSource)
@@ -206,13 +206,13 @@ public class DatabaseTestUtil {
 			Connection connection, DB db, String tableName, boolean unique)
 		throws Exception {
 
-		List<String> indexes = new ArrayList<>();
+		List<String> tableIndexes = new ArrayList<>();
 
 		try (ResultSet resultSet = db.getIndexResultSet(
 				connection, tableName, unique)) {
 
 			while (resultSet.next()) {
-				indexes.add(
+				tableIndexes.add(
 					StringBundler.concat(
 						"Table Name: ", tableName, "Non Unique: ", unique,
 						"Index Name: ", resultSet.getString("INDEX_NAME"),
@@ -222,7 +222,7 @@ public class DatabaseTestUtil {
 			}
 		}
 
-		return indexes;
+		return tableIndexes;
 	}
 
 }

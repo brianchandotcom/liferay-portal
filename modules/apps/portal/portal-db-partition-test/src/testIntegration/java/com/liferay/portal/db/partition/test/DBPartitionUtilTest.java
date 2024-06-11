@@ -139,14 +139,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			insertPartitionRequiredData();
 
-			String testObjectsTableNamePrefix = dbInspector.normalizeName(
+			String testObjectTableNamePrefix = dbInspector.normalizeName(
 				"TestObjectTable_x_");
 
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
 
 				createAndPopulateTable(
-					testObjectsTableNamePrefix + COMPANY_IDS[0]);
+					testObjectTableNamePrefix + COMPANY_IDS[0]);
 			}
 
 			Assert.assertTrue(
@@ -157,9 +157,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			Assert.assertTrue(
 				fromTableNames.remove(
-					testObjectsTableNamePrefix + COMPANY_IDS[0]));
+					testObjectTableNamePrefix + COMPANY_IDS[0]));
 			Assert.assertTrue(
-				fromTableNames.add(testObjectsTableNamePrefix + companyId));
+				fromTableNames.add(testObjectTableNamePrefix + companyId));
 
 			List<String> toTableNames = _getObjectNames("TABLE", companyId);
 
@@ -176,9 +176,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				String toTableName = fromTableName;
 
 				if (fromTableName.equals(
-						testObjectsTableNamePrefix + companyId)) {
+						testObjectTableNamePrefix + companyId)) {
 
-					fromTableName = testObjectsTableNamePrefix + COMPANY_IDS[0];
+					fromTableName = testObjectTableNamePrefix + COMPANY_IDS[0];
 				}
 
 				Assert.assertEquals(

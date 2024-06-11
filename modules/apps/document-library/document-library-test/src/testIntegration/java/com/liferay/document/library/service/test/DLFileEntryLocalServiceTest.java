@@ -1259,7 +1259,7 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateFileEntryDynamicQueryTransactionInterval()
+	public void testUpdateFileEntryActionableDynamicQuery()
 		throws Exception {
 
 		for (int i = 0; i < 20; i++) {

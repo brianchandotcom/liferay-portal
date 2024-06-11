@@ -118,7 +118,7 @@ const TableHeadCell = ({
 					size="sm"
 				>
 					{!hideColumnLabel && label}
-		
+
 					<span className="inline-item inline-item-after sorting-icons-wrapper">
 						<ClayIcon
 							className={classNames('sorting-icon', {
@@ -129,7 +129,7 @@ const TableHeadCell = ({
 							})}
 							symbol="order-arrow-up"
 						/>
-		
+
 						<ClayIcon
 							className={classNames('sorting-icon', {
 								active: Liferay.FeatureFlags['LPD-19465']

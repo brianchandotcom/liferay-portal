@@ -19,8 +19,12 @@ import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -56,8 +60,10 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -65,6 +71,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.ByteArrayOutputStream;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -318,18 +325,27 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItem.getLatestContentDashboardItemVersions(
 				LocaleUtil.US);
 
-		ContentDashboardItemVersion contentDashboardItemVersion =
-			contentDashboardItemVersions.get(0);
-
-		JSONObject expectedJSONObject =
-			contentDashboardItemVersion.toJSONObject();
-
 		JSONArray actualJSONArray = jsonObject.getJSONArray("latestVersions");
 
-		JSONObject actualJSONObject = actualJSONArray.getJSONObject(0);
+		for (int i = 0; i < actualJSONArray.length(); i++) {
+			JSONObject actualJSONObject = actualJSONArray.getJSONObject(i);
 
-		Assert.assertEquals(
-			expectedJSONObject.toString(), actualJSONObject.toString());
+			ContentDashboardItemVersion contentDashboardItemVersion =
+				contentDashboardItemVersions.get(i);
+
+			JSONObject expectedJSONObject =
+				contentDashboardItemVersion.toJSONObject();
+
+			Assert.assertEquals(
+				expectedJSONObject.getString("statusLabel"),
+				actualJSONObject.getString("statusLabel"));
+			Assert.assertEquals(
+				expectedJSONObject.getString("statusStyle"),
+				actualJSONObject.getString("statusStyle"));
+			Assert.assertEquals(
+				expectedJSONObject.getString("version"),
+				actualJSONObject.getString("version"));
+		}
 	}
 
 	private ContentDashboardItem<?> _createContentDashboardBlogItem()
@@ -356,6 +372,25 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"application/pdf", new byte[0], new Date(150000),
 			new Date(System.currentTimeMillis() + Time.MINUTE),
 			new Date(150000), _serviceContext);
+
+		fileEntry = _dlAppLocalService.updateFileEntry(
+			fileEntry.getUserId(), fileEntry.getFileEntryId(),
+			fileEntry.getFileName(), fileEntry.getMimeType(),
+			fileEntry.getTitle(), StringUtil.randomString(),
+			fileEntry.getDescription(), RandomTestUtil.randomString(),
+			DLVersionNumberIncrease.MINOR, fileEntry.getContentStream(),
+			fileEntry.getSize(), fileEntry.getDisplayDate(),
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+			_serviceContext);
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+			fileEntry.getFileEntryId());
+
+		_dlFileEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), dlFileEntry,
+			dlFileEntry.getLatestFileVersion(true),
+			WorkflowConstants.STATUS_EXPIRED, _serviceContext,
+			Collections.emptyMap());
 
 		return _contentDashboardFileItemFactory.create(
 			fileEntry.getPrimaryKey());
@@ -475,6 +510,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		filter = "component.name=com.liferay.content.dashboard.journal.internal.item.JournalArticleContentDashboardItemFactory"
 	)
 	private ContentDashboardItemFactory<?> _contentDashboardJournalItemFactory;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -61,9 +61,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		folderId = getFolderId(user.getCompanyId(), folderId);
 
-		validate(user, toFileEntryId);
-
-		validateFolder(groupId, folderId);
+		validate(user, groupId, folderId, toFileEntryId);
 
 		long fileShortcutId = counterLocalService.increment();
 
@@ -391,9 +389,7 @@ public class DLFileShortcutLocalServiceImpl
 		DLFileShortcut fileShortcut =
 			dlFileShortcutPersistence.findByPrimaryKey(fileShortcutId);
 
-		validate(user, toFileEntryId);
-
-		validateFolder(fileShortcut.getGroupId(), folderId);
+		validate(user, fileShortcut.getGroupId(), folderId, toFileEntryId);
 
 		fileShortcut.setFolderId(folderId);
 		fileShortcut.setToFileEntryId(toFileEntryId);
@@ -499,18 +495,8 @@ public class DLFileShortcutLocalServiceImpl
 		return folderId;
 	}
 
-	protected void validate(User user, long toFileEntryId)
-		throws PortalException {
-
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(toFileEntryId);
-
-		if (user.getCompanyId() != fileEntry.getCompanyId()) {
-			throw new NoSuchFileEntryException(
-				"{fileEntryId=" + toFileEntryId + "}");
-		}
-	}
-
-	protected void validateFolder(long groupId, long folderId)
+	protected void validate(
+			User user, long groupId, long folderId, long toFileEntryId)
 		throws PortalException {
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -522,6 +508,13 @@ public class DLFileShortcutLocalServiceImpl
 
 				throw new NoSuchFolderException();
 			}
+		}
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(toFileEntryId);
+
+		if (user.getCompanyId() != fileEntry.getCompanyId()) {
+			throw new NoSuchFileEntryException(
+				"{fileEntryId=" + toFileEntryId + "}");
 		}
 	}
 

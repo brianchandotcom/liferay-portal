@@ -6,13 +6,16 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v2_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.BaseRankingUpgradeProcessTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -28,6 +31,26 @@ public class RenameRankingUpgradeProcessTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testUpgradeProcess() throws Exception {
+		long oldClassNameId = classNameLocalService.getClassNameId(
+			"com.liferay.portal.search.tuning.rankings.web.internal.index." +
+				"Ranking");
+		long classPK = counterLocalService.increment();
+
+		addRanking(oldClassNameId, classPK);
+
+		runUpgrade();
+
+		JSONObject rankingJSONObject =
+			jsonStorageEntryLocalService.getJSONObject(
+				rankingClassNameId, classPK);
+
+		Assert.assertNotNull(rankingJSONObject);
+
+		Assert.assertNull(classNameLocalService.fetchClassName(oldClassNameId));
+	}
 
 	@Override
 	protected String getUpgradeStepClassName() {

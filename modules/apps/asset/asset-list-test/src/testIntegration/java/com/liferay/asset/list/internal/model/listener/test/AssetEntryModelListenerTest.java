@@ -74,7 +74,9 @@ public class AssetEntryModelListenerTest {
 	}
 
 	@Test
-	public void testUpdateSelectionAfterDeleteAssetEntry() throws Exception {
+	public void testUpdateAssetListEntryAfterDeleteAssetEntry()
+		throws Exception {
+
 		JournalArticle journalArticle1 = _addJournalArticle();
 		JournalArticle journalArticle2 = _addJournalArticle();
 		JournalArticle journalArticle3 = _addJournalArticle();

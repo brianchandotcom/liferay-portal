@@ -82,7 +82,7 @@ public class DynamicObjectDefinitionLocalizationTable
 
 		sb.append(", primary key (");
 		sb.append(_objectDefinition.getPKObjectFieldDBColumnName());
-		sb.append(", languageId))");
+		sb.append(", languageId));");
 
 		String sql = sb.toString();
 

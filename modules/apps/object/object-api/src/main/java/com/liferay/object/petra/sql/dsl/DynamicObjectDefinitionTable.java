@@ -102,7 +102,7 @@ public class DynamicObjectDefinitionTable
 			}
 		}
 
-		sb.append(")");
+		sb.append(");");
 
 		String sql = sb.toString();
 

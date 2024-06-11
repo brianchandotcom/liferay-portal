@@ -45,6 +45,7 @@ export default function MappingFieldSelector({
 
 			<ClaySelect
 				aria-describedby={fieldTypeId}
+				className="mb-2"
 				disabled={!(fields && !!fields.length)}
 				id={mappingSelectorFieldSelectId}
 				onChange={onValueSelect}
@@ -88,7 +89,7 @@ export default function MappingFieldSelector({
 			</ClaySelect>
 
 			{selectedField && (
-				<p className="mb-0 mt-2 text-2" id={fieldTypeId}>
+				<p className="mb-0 text-2" id={fieldTypeId}>
 					<b>{Liferay.Language.get('field-type')}: </b>
 
 					{` ${selectedField.typeLabel}`}

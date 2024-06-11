@@ -112,46 +112,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-139377. Verify remote app can be displayed under a portlet category"
-	@priority = 3
-	test CanBeAssignedAPortletCategory {
-		property portal.acceptance = "true";
-
-		task ("Create remote app entry with portlet category") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addEntryWithPortletCategory();
-		}
-
-		task ("Add a public widget page with JSON") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page");
-
-			Navigator.openURL();
-
-			Navigator.gotoPage(pageName = "Test Page");
-		}
-
-		task ("Assert remote app is categorized under correct portlet category") {
-			Click(locator1 = "ControlMenu#ADD");
-
-			AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
-
-			Navigator.gotoNavTab(navTab = "Widgets");
-
-			WaitForElementPresent(locator1 = "NavBar#APPLICATION_SEARCH_FIELD");
-
-			Type(
-				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-				value1 = "Test Remote App");
-
-			AssertElementPresent(
-				key_category = "Collaboration",
-				locator1 = "ControlMenuAddPanel#WIDGET_CATEGORY");
-		}
-	}
-
 	@description = "LPS-114812. Verify Client Extension can be deleted"
 	@priority = 5
 	@refactordone

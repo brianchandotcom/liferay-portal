@@ -8,9 +8,11 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
 export const test = mergeTests(
+	clientExtensionsPageTest,
 	isolatedLayoutTest({publish: false}),
 	pageEditorPagesTest,
 	loginTest()
@@ -53,30 +55,52 @@ const SAMPLES = [
 ];
 
 for (const sample of SAMPLES) {
-	test(`${sample.name} is registered`, async ({page}) => {
-		const viewClientExtensionPage = new ViewClientExtensionPage(
-			page,
-			sample.erc
-		);
-
-		await viewClientExtensionPage.goto();
-
-		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
-		expect(
-			viewClientExtensionPage.fieldLocator('HTML Element Name')
-		).toHaveValue(sample.htmlElementName);
-	});
-
-	test(`${sample.name} can be added to a page and is rendered`, async ({
+	test(`${sample.name} is registered and can be used`, async ({
+		clientExtensionsPage,
 		layout,
 		page,
 		pageEditorPage,
 	}) => {
-		await pageEditorPage.goto(layout);
-		await pageEditorPage.addWidget('Client Extensions', sample.name);
-		await pageEditorPage.publishPage();
+		await test.step(`${sample.name} is visible and configured from Workspace`, async () => {
+			await clientExtensionsPage.goto();
 
-		expect(page.locator(sample.htmlElementName)).toBeVisible();
-		expect(sample.renderTestLocator(page)).toBeVisible();
+			await clientExtensionsPage.assertName(sample.name);
+
+			await clientExtensionsPage.assertIsConfiguredFrom(
+				sample.name,
+				'Workspace'
+			);
+		});
+
+		await test.step(`${sample.name} can be viewed and information is read-only`, async () => {
+			await clientExtensionsPage.viewClientExtension(sample.name);
+
+			const viewClientExtensionPage = new ViewClientExtensionPage(
+				page,
+				sample.erc
+			);
+
+			await viewClientExtensionPage.assertReadOnlyLocator(
+				viewClientExtensionPage.nameLocator,
+				sample.name
+			);
+
+			await viewClientExtensionPage.assertReadOnlyField(
+				'HTML Element Name',
+				sample.htmlElementName
+			);
+		});
+
+		await test.step(`${sample.name} can be added to a page and is rendered`, async () => {
+			await page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
+
+			await pageEditorPage.addWidget('Client Extensions', sample.name);
+			await pageEditorPage.publishPage();
+
+			await page.goto(`/web/guest${layout.friendlyURL}`);
+
+			await expect(page.locator(sample.htmlElementName)).toBeVisible();
+			await expect(sample.renderTestLocator(page)).toBeVisible();
+		});
 	});
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../../liferay.config';
 
@@ -21,6 +21,19 @@ export class ViewClientExtensionPage {
 
 	fieldLocator(fieldLabel: string): Locator {
 		return this.page.getByLabel(fieldLabel, {exact: true});
+	}
+
+	async assertReadOnlyLocator(locator: Locator, fieldValue: string) {
+		await expect(locator).toBeVisible();
+		await expect(locator).toBeDisabled();
+		await expect(locator).toHaveValue(fieldValue);
+	}
+
+	async assertReadOnlyField(fieldName: string, fieldValue: string) {
+		await this.assertReadOnlyLocator(
+			this.fieldLocator(fieldName),
+			fieldValue
+		);
 	}
 
 	async goto() {

@@ -58,7 +58,6 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -154,8 +153,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 						createNotificationRecipientSetting(
 							"roleName", siteRole.getName())),
 					NotificationRecipientConstants.TYPE_ROLE)),
-			childObjectDefinition, group.getGroupKey(), user,
-			Collections.emptyMap());
+			childObjectDefinition, group.getGroupKey(), user);
 
 		_assertNotificationQueueEntry(user.getFullName());
 	}
@@ -423,8 +421,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private void _executeNotificationObjectAction(
 			NotificationTemplate notificationTemplate,
-			ObjectDefinition objectDefinition, String scopeKey, User user,
-			Map<String, Object> values)
+			ObjectDefinition objectDefinition, String scopeKey, User user)
 		throws Exception {
 
 		ObjectAction objectAction = objectActionLocalService.addObjectAction(
@@ -455,7 +452,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				dtoConverterContext, objectDefinition,
 				new ObjectEntry() {
 					{
-						properties = values;
+						properties = Collections.emptyMap();
 					}
 				},
 				scopeKey);

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
+import React from 'react';
 import {ModalType} from '../constants/modalTypes';
 import {MappingType} from '../types/MappingTypes';
+import {ValidationError} from '../types/ValidationError';
 interface Props {
 	description?: string;
 	disableWarning?: boolean;
@@ -21,6 +21,24 @@ interface Props {
 	type: ModalType;
 	warningMessage: string;
 }
+interface ModalProps {
+	children: React.ReactNode;
+	disableWarning: boolean;
+	error: ValidationError;
+	onCloseAlert: () => void;
+	onCloseWarning: () => void;
+	warningMessage: string;
+	warningVisible: boolean;
+}
+export declare function ModalContent({
+	children,
+	disableWarning,
+	error,
+	onCloseAlert,
+	onCloseWarning,
+	warningMessage,
+	warningVisible,
+}: ModalProps): JSX.Element;
 export default function ContentTypeModal({
 	description,
 	disableWarning,

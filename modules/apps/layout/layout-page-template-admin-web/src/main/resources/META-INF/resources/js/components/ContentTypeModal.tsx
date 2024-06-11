@@ -30,6 +30,54 @@ interface Props {
 	warningMessage: string;
 }
 
+interface ModalProps {
+	children: React.ReactNode;
+	disableWarning: boolean;
+	error: ValidationError;
+	onCloseAlert: () => void;
+	onCloseWarning: () => void;
+	warningMessage: string;
+	warningVisible: boolean;
+}
+
+export function ModalContent({
+	children,
+	disableWarning,
+	error,
+	onCloseAlert,
+	onCloseWarning,
+	warningMessage,
+	warningVisible,
+}: ModalProps) {
+	return (
+		<>
+			{warningMessage && warningVisible && !disableWarning ? (
+				<ClayAlert
+					displayType="warning"
+					onClose={onCloseWarning}
+					title={Liferay.Language.get('warning')}
+					variant="stripe"
+				>
+					{warningMessage}
+				</ClayAlert>
+			) : null}
+
+			{error && error.other ? (
+				<ClayAlert
+					displayType="danger"
+					onClose={onCloseAlert}
+					title={Liferay.Language.get('error')}
+					variant="stripe"
+				>
+					{error.other}
+				</ClayAlert>
+			) : null}
+
+			{children}
+		</>
+	);
+}
+
 export default function ContentTypeModal({
 	description,
 	disableWarning = false,
@@ -163,45 +211,32 @@ export default function ContentTypeModal({
 		<ClayModal observer={observer}>
 			<ClayModal.Header>{title}</ClayModal.Header>
 
-			{warningMessage && warningVisible && !disableWarning ? (
-				<ClayAlert
-					displayType="warning"
-					onClose={() => setWarningVisible(false)}
-					title={Liferay.Language.get('warning')}
-					variant="stripe"
-				>
-					{warningMessage}
-				</ClayAlert>
-			) : null}
+			<ModalContent
+				disableWarning={disableWarning}
+				error={error}
+				onCloseAlert={() => setError({})}
+				onCloseWarning={() => setWarningVisible(false)}
+				warningMessage={warningMessage}
+				warningVisible={warningVisible}
+			>
+				<ClayModal.Body>
+					{description ? (
+						<p className="text-secondary">{description}</p>
+					) : null}
 
-			{error && error.other ? (
-				<ClayAlert
-					displayType="danger"
-					onClose={() => setError({})}
-					title={Liferay.Language.get('error')}
-					variant="stripe"
-				>
-					{error.other}
-				</ClayAlert>
-			) : null}
-
-			<ClayModal.Body>
-				{description ? (
-					<p className="text-secondary">{description}</p>
-				) : null}
-
-				<ContentTypeModalForm
-					displayPageName={displayPageName}
-					error={error}
-					formRef={formRef}
-					mappingTypes={mappingTypes}
-					namespace={namespace}
-					onSubmit={handleSubmit}
-					selectedSubtype={selectedSubtype}
-					selectedType={selectedType}
-					type={type}
-				/>
-			</ClayModal.Body>
+					<ContentTypeModalForm
+						displayPageName={displayPageName}
+						error={error}
+						formRef={formRef}
+						mappingTypes={mappingTypes}
+						namespace={namespace}
+						onSubmit={handleSubmit}
+						selectedSubtype={selectedSubtype}
+						selectedType={selectedType}
+						type={type}
+					/>
+				</ClayModal.Body>
+			</ModalContent>
 
 			<ClayModal.Footer
 				last={

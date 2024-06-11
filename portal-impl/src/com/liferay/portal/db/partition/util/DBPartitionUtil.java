@@ -374,6 +374,8 @@ public class DBPartitionUtil {
 		String fromPartitionName = _getPartitionName(fromCompanyId);
 		String toPartitionName = _getPartitionName(toCompanyId);
 
+		List<String> quartzTableNames = new ArrayList<>();
+
 		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
@@ -406,6 +408,8 @@ public class DBPartitionUtil {
 							_copyQuartzTableEntry(
 								_defaultPartitionName, fromCompanyId,
 								fromTableName, toCompanyId, statement);
+
+							quartzTableNames.add(fromTableName);
 						}
 					}
 					else {
@@ -454,6 +458,12 @@ public class DBPartitionUtil {
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
 						_dbPartitionDB.getDropPartitionSQL(toPartitionName));
+
+					for (String tableName : quartzTableNames) {
+						_deleteData(
+							tableName, _defaultPartitionName, statement,
+							_getQuartzWhereClauseSQL(toCompanyId, tableName));
+					}
 				}
 				catch (Exception exception2) {
 					throw new PortalException(

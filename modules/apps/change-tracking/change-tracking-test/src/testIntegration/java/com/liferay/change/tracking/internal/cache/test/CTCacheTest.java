@@ -326,7 +326,7 @@ public class CTCacheTest {
 	}
 
 	@Test
-	public void testCTUnawareDSLQueryCacheResults() throws Exception {
+	public void testWithoutCTAwareDSLQueryCacheResults() throws Exception {
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 			ContactTable.INSTANCE
 		).from(
@@ -422,7 +422,7 @@ public class CTCacheTest {
 	}
 
 	@Test
-	public void testCTUnawareEntityCacheResults() throws Exception {
+	public void testWithoutCTAwareEntityCacheResults() throws Exception {
 		Contact productionContact = _contactLocalService.addContact(
 			TestPropsValues.getUserId(), StringPool.STAR, 1,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -500,7 +500,7 @@ public class CTCacheTest {
 	}
 
 	@Test
-	public void testCTUnawareFinderCacheResults() throws Exception {
+	public void testWithoutCTAwareFinderCacheResults() throws Exception {
 		_contactLocalService.addContact(
 			TestPropsValues.getUserId(), StringPool.STAR, 1,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

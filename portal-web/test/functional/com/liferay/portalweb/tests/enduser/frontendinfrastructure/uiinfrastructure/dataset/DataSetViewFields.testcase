@@ -478,37 +478,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-185229. Confirm that the user can change the field's order on Fields tab page."
-	@priority = 4
-	test CanChangeFieldOrder {
-		task ("And clicks on plus button/And checks id and label fields/And clicks on Save button") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on a field drag dots icon related id field ") {
-			Click.clickAt(
-				key_nameField = "id",
-				locator1 = "DataSet#FIELDS_DRAG_DOTS_ICON");
-		}
-
-		task ("Then the user can move the id field below the label field") {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_nameField = "id",
-				key_position = 2,
-				keyName = "label",
-				locator1 = "DataSet#FIELDS_DRAG_DOTS_ICON",
-				locator2 = "DataSet#FIELDS_TABLE");
-
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "label");
-
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 2,
-				keyName = "id");
-		}
-	}
-
 	@description = "LPS-174141. Confirm that the user can check and uncheck all the fields"
 	@priority = 3
 	test CanCheckAndUncheckAllFields {

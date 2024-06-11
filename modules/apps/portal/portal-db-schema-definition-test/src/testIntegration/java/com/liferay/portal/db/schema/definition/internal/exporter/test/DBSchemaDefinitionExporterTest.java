@@ -111,6 +111,19 @@ public class DBSchemaDefinitionExporterTest {
 		}
 	}
 
+	private void _assertColumns(DataSource copyDataSource) throws Exception {
+		List<String> columns = DatabaseTestUtil.getColumns(
+			InfrastructureUtil.getDataSource());
+		List<String> copyColumns = DatabaseTestUtil.getColumns(copyDataSource);
+
+		Assert.assertEquals(
+			copyColumns.toString(), columns.size(), copyColumns.size());
+
+		for (int i = 0; i < columns.size(); i++) {
+			Assert.assertEquals(columns.get(i), copyColumns.get(i));
+		}
+	}
+
 	private void _assertImportDBSchemaDefinition(
 			File tablesSQLFile, File indexesSQLFile)
 		throws Exception {
@@ -126,8 +139,8 @@ public class DBSchemaDefinitionExporterTest {
 			DatabaseTestUtil.importFileTo(tablesSQLFile, copyDataSource);
 			DatabaseTestUtil.importFileTo(indexesSQLFile, copyDataSource);
 
+			_assertColumns(copyDataSource);
 			_assertIndexes(copyDataSource);
-			_assertTables(copyDataSource);
 		}
 		finally {
 			DatabaseTestUtil.dropSchema(_COPY_DB_SCHEMA_NAME);
@@ -148,21 +161,6 @@ public class DBSchemaDefinitionExporterTest {
 
 		for (int i = 0; i < indexes.size(); i++) {
 			Assert.assertEquals(indexes.get(i), copyIndexes.get(i));
-		}
-	}
-
-	private void _assertTables(DataSource copyDataSource) throws Exception {
-		List<String> tableColumns = DatabaseTestUtil.getTableColumns(
-			InfrastructureUtil.getDataSource());
-		List<String> copyTableColumns = DatabaseTestUtil.getTableColumns(
-			copyDataSource);
-
-		Assert.assertEquals(
-			copyTableColumns.toString(), tableColumns.size(),
-			copyTableColumns.size());
-
-		for (int i = 0; i < tableColumns.size(); i++) {
-			Assert.assertEquals(tableColumns.get(i), copyTableColumns.get(i));
 		}
 	}
 

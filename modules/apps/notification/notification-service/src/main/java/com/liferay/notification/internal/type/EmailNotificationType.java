@@ -149,9 +149,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			NotificationRecipientSettingConstants.NAME_FROM,
 			NotificationRecipientSettingConstants.NAME_FROM_NAME,
 			NotificationRecipientSettingConstants.NAME_SINGLE_RECIPIENT,
-			NotificationRecipientSettingConstants.NAME_TO,
-			NotificationRecipientSettingConstants.
-				NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS);
+			NotificationRecipientSettingConstants.NAME_TO);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-11165")) {
 			names.addAll(
@@ -159,6 +157,12 @@ public class EmailNotificationType extends BaseNotificationType {
 					NotificationRecipientSettingConstants.NAME_BCC_TYPE,
 					NotificationRecipientSettingConstants.NAME_CC_TYPE,
 					NotificationRecipientSettingConstants.NAME_TO_TYPE));
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21580")) {
+			names.add(
+				NotificationRecipientSettingConstants.
+					NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS);
 		}
 
 		return names;

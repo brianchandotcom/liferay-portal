@@ -21,7 +21,6 @@ import {CACHE_KEYS} from '../../app/utils/cache';
 import getMappedRelationship from '../../app/utils/editable_value/getMappedRelationship';
 import isMapped from '../../app/utils/editable_value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable_value/isMappedToInfoItem';
-import isMappedToRelationship from '../../app/utils/editable_value/isMappedToRelationship';
 import isMappedToStructure from '../../app/utils/editable_value/isMappedToStructure';
 import findPageContent from '../../app/utils/findPageContent';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
@@ -137,8 +136,8 @@ function loadMappingFields({item, sourceType}) {
 	return Promise.resolve(null);
 }
 
-function getInitialSourceType(mappedItem) {
-	if (isMappedToRelationship(mappedItem)) {
+function getInitialSourceType(mappedItem, relationship) {
+	if (relationship) {
 		return MAPPING_SOURCE_TYPES.relationship;
 	}
 	else if (
@@ -299,12 +298,12 @@ function MappingSelector({
 	const [typeLabel, setTypeLabel] = useState(null);
 	const [subtypeLabel, setSubtypeLabel] = useState(null);
 
-	const [selectedSourceType, setSelectedSourceType] = useState(
-		getInitialSourceType(mappedItem)
+	const [selectedRelationship, setSelectedRelationship] = useState(
+		getMappedRelationship(mappedItem.mappedField)
 	);
 
-	const [selectedRelationship, setSelectedRelationship] = useState(
-		getMappedRelationship(mappedItem)
+	const [selectedSourceType, setSelectedSourceType] = useState(
+		getInitialSourceType(mappedItem, selectedRelationship)
 	);
 
 	const relationships = useCache({

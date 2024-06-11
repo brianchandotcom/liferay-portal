@@ -5571,46 +5571,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return defaultThemeId;
 	}
 
-	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		long startTime = System.currentTimeMillis();
-
-		unsafeRunnable.run();
-
-		if (_log.isInfoEnabled()) {
-			Thread thread = Thread.currentThread();
-
-			StackTraceElement stackTraceElement = thread.getStackTrace()[2];
-
-			_log.info(
-				StringBundler.concat(
-					"Invoking line ", stackTraceElement.getLineNumber(),
-					" took ", System.currentTimeMillis() - startTime, " ms"));
-		}
-	}
-
-	private <T> T _invoke(UnsafeSupplier<T, Exception> unsafeSupplier)
-		throws Exception {
-
-		long startTime = System.currentTimeMillis();
-
-		T t = unsafeSupplier.get();
-
-		if (_log.isInfoEnabled()) {
-			Thread thread = Thread.currentThread();
-
-			StackTraceElement stackTraceElement = thread.getStackTrace()[2];
-
-			_log.info(
-				StringBundler.concat(
-					"Invoking line ", stackTraceElement.getLineNumber(), " in ",
-					System.currentTimeMillis() - startTime, " ms"));
-		}
-
-		return t;
-	}
-
 	private void _publishObjectDefinitions(
 			List<Long> objectDefinitinIds, ServiceContext serviceContext)
 		throws Exception {

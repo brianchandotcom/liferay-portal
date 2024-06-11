@@ -297,7 +297,7 @@ public class RenderLayoutStructureDisplayContext {
 		sb.append(_themeDisplay.getPathMain());
 		sb.append("/portal/edit_info_item");
 
-		return sb.toString();
+		return PortalUtil.addPreservedParameters(_themeDisplay, sb.toString());
 	}
 
 	public String getErrorMessage(

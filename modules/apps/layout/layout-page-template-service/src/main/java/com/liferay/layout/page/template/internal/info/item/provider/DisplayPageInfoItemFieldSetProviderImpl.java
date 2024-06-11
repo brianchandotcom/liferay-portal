@@ -124,12 +124,14 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 					groupFriendlyURL,
 					String.valueOf(
 						layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
-					infoItemReference, layout, layoutPageTemplateEntry));
+					infoItemReference, layout, layoutPageTemplateEntry,
+					themeDisplay));
 			infoFieldValues.add(
 				_getInfoFieldValue(
 					groupFriendlyURL,
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
-					infoItemReference, layout, layoutPageTemplateEntry));
+					infoItemReference, layout, layoutPageTemplateEntry,
+					themeDisplay));
 		}
 
 		return infoFieldValues;
@@ -243,7 +245,8 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
 		String groupFriendlyURL, String id, InfoItemReference infoItemReference,
-		Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry) {
+		Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		ThemeDisplay themeDisplay) {
 
 		return new InfoFieldValue<>(
 			InfoField.builder(
@@ -262,13 +265,15 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			new FunctionInfoLocalizedValue<>(
 				locale -> {
 					WebURL webURL = new WebURL(
-						StringBundler.concat(
-							groupFriendlyURL + _getURLSeparator(),
-							layout.getFriendlyURL(locale), StringPool.SLASH,
-							_portal.getClassNameId(
-								infoItemReference.getClassName()),
-							StringPool.SLASH,
-							_getInfoItemIdentifier(infoItemReference)));
+						_portal.addPreservedParameters(
+							themeDisplay,
+							StringBundler.concat(
+								groupFriendlyURL + _getURLSeparator(),
+								layout.getFriendlyURL(locale), StringPool.SLASH,
+								_portal.getClassNameId(
+									infoItemReference.getClassName()),
+								StringPool.SLASH,
+								_getInfoItemIdentifier(infoItemReference))));
 
 					webURL.setNofollow(true);
 

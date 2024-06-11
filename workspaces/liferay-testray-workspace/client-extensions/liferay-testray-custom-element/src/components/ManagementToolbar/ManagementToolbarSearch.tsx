@@ -46,7 +46,7 @@ const ManagementToolbarSearch = () => {
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayInput
-								aria-label="Search"
+								aria-label={i18n.translate('search')}
 								className="form-control input-group-inset input-group-inset-after"
 								onChange={({target: {value}}) =>
 									setSearch(value)
@@ -62,7 +62,7 @@ const ManagementToolbarSearch = () => {
 							/>
 							<ClayInput.GroupInsetItem after tag="span">
 								<ClayButtonWithIcon
-									aria-label="Close search"
+									aria-label={i18n.translate('clear')}
 									displayType="unstyled"
 									onClick={onClear}
 									symbol="times"

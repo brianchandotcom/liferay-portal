@@ -45,4 +45,5 @@ Export-Package:\
 	com.liferay.object.tree.constants,\
 	com.liferay.object.util.comparator,\
 	com.liferay.object.validation.rule,\
-	com.liferay.object.validation.rule.setting.builder
+	com.liferay.object.validation.rule.setting.builder,\
+	com.liferay.object.validation.rule.util

@@ -47,12 +47,6 @@ public class GroupFinderUtil {
 		return getFinder().fetchByC_GK(companyId, groupKey);
 	}
 
-	public static com.liferay.portal.kernel.model.Group fetchStagingGroup(
-		long liveGroupId) {
-
-		return getFinder().fetchStagingGroup(liveGroupId);
-	}
-
 	public static java.util.List<Long> findByActiveGroupIds(long userId) {
 		return getFinder().findByActiveGroupIds(userId);
 	}

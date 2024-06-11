@@ -26,6 +26,7 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.StagingURLHelperUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.CharPool;
@@ -35,7 +36,12 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
@@ -43,6 +49,7 @@ import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.LocaleException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
@@ -56,6 +63,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -65,6 +73,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -78,6 +87,7 @@ import com.liferay.portal.kernel.model.UserPersonalSite;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.reindexer.ReindexerBridge;
@@ -115,6 +125,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
+import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
@@ -182,6 +193,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -747,6 +761,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			ModelListener.class, new GroupModelListener(),
+			MapUtil.singletonDictionary(
+				"persistence.test.rule.aware", Boolean.TRUE));
 	}
 
 	/**
@@ -1363,6 +1389,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceRegistration.unregister();
+	}
+
+	@Override
 	public synchronized void disableStaging(long groupId)
 		throws PortalException {
 
@@ -1482,7 +1515,27 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
-		return groupFinder.fetchStagingGroup(liveGroupId);
+		if (_stagingGroupInMemoryFilterLimit <= 0) {
+			return GroupUtil.fetchByLiveGroupId(liveGroupId);
+		}
+
+		Map<Long, Long> liveToStagingGroups =
+			_liveToStagingGroupsDCLSingleton.getSingleton(
+				this::_getLiveToStagingGroups);
+
+		if (liveToStagingGroups.size() > _stagingGroupInMemoryFilterLimit) {
+			_stagingGroupInMemoryFilterLimit = 0;
+
+			_liveToStagingGroupsDCLSingleton.destroy(null);
+		}
+
+		Long stagingGroupId = liveToStagingGroups.get(liveGroupId);
+
+		if (stagingGroupId == null) {
+			return null;
+		}
+
+		return groupPersistence.fetchByPrimaryKey(stagingGroupId);
 	}
 
 	@Override
@@ -5309,6 +5362,25 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected File publicLARFile;
 
+	private static void _clearLiveToStagingGroupsCache() {
+		_liveToStagingGroupsDCLSingleton.destroy(null);
+
+		if (ClusterExecutorUtil.isEnabled()) {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					ClusterRequest clusterRequest =
+						ClusterRequest.createMulticastRequest(
+							_clearLiveToStagingGroupsCacheMethodHandler, true);
+
+					clusterRequest.setFireAndForget(true);
+
+					ClusterExecutorUtil.execute(clusterRequest);
+
+					return null;
+				});
+		}
+	}
+
 	private Collection<Group> _filterGroups(
 		String actionId, Collection<Group> groups) {
 
@@ -5351,6 +5423,42 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		groupKey = groupKey.concat(suffix);
 
 		return groupKey;
+	}
+
+	private Map<Long, Long> _getLiveToStagingGroups() {
+		Session session = null;
+
+		try {
+			session = groupPersistence.openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				"select liveGroupId, groupId from Group_ where liveGroupId " +
+					"!= 0");
+
+			sqlQuery.addScalar("liveGroupId", Type.LONG);
+			sqlQuery.addScalar("groupId", Type.LONG);
+
+			List<Object[]> results = sqlQuery.list(false, false);
+
+			if (results.isEmpty()) {
+				return Collections.emptyMap();
+			}
+
+			Map<Long, Long> liveToStagingGroups = new HashMap<>();
+
+			for (Object[] liveToStagingGroup : results) {
+				liveToStagingGroups.put(
+					(Long)liveToStagingGroup[0], (Long)liveToStagingGroup[1]);
+			}
+
+			return liveToStagingGroups;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			groupPersistence.closeSession(session);
+		}
 	}
 
 	private Map<Locale, String> _normalizeNameMap(Map<Locale, String> nameMap) {
@@ -5410,8 +5518,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupLocalServiceImpl.class);
 
+	private static final MethodHandler
+		_clearLiveToStagingGroupsCacheMethodHandler = new MethodHandler(
+			new MethodKey(
+				GroupLocalServiceImpl.class, "_clearLiveToStagingGroupsCache"));
+	private static final DCLSingleton<Map<Long, Long>>
+		_liveToStagingGroupsDCLSingleton = new DCLSingleton<>();
 	private static final Snapshot<ReindexerBridge> _reindexerBridgeSnapshot =
 		new Snapshot<>(GroupLocalServiceImpl.class, ReindexerBridge.class);
+	private static volatile int _stagingGroupInMemoryFilterLimit =
+		PropsValues.STAGING_GROUP_IN_MEMORY_FILTER_LIMIT;
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;
@@ -5496,6 +5612,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@BeanReference(type = RolePersistence.class)
 	private RolePersistence _rolePersistence;
 
+	private ServiceRegistration<?> _serviceRegistration;
+
 	@BeanReference(type = SocialActivityLocalService.class)
 	private SocialActivityLocalService _socialActivityLocalService;
 
@@ -5538,5 +5656,35 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@BeanReference(type = WorkflowDefinitionLinkLocalService.class)
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	private static class GroupModelListener extends BaseModelListener<Group> {
+
+		@Override
+		public Class<?> getModelClass() {
+			return Group.class;
+		}
+
+		@Override
+		public void onBeforeCreate(Group group) throws ModelListenerException {
+			if (group.getLiveGroupId() != 0) {
+				_clearLiveToStagingGroupsCache();
+			}
+		}
+
+		@Override
+		public void onBeforeRemove(Group group) throws ModelListenerException {
+			if (group.getLiveGroupId() != 0) {
+				_clearLiveToStagingGroupsCache();
+			}
+		}
+
+		@Override
+		public void onBeforeUpdate(Group originalGroup, Group group) {
+			if (originalGroup.getLiveGroupId() != group.getLiveGroupId()) {
+				_clearLiveToStagingGroupsCache();
+			}
+		}
+
+	}
 
 }

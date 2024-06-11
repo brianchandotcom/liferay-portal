@@ -402,6 +402,80 @@ test('LPD-22771 Assign button is not visible in other publications', async ({
 	await expect(assignButton).toBeVisible({visible: false});
 });
 
+test('LPD-23430 Workflow transition actions are displayed in dropdown', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	const moreActionsButton = page.getByLabel('more-actions');
+
+	await moreActionsButton.click();
+
+	const assignToMeMenuItem = page.getByRole('menuitem', {
+		name: 'Assign to me',
+	});
+
+	await assignToMeMenuItem.click();
+
+	await page
+		.frameLocator('iframe[title="Assign to Me"]')
+		.getByRole('button', {exact: true, name: 'Done'})
+		.click();
+
+	await moreActionsButton.click();
+
+	await page.getByRole('menuitem', {name: 'Reject'}).click();
+
+	await expect(page.getByRole('heading', {name: 'Reject'})).toBeVisible();
+
+	const doneButton = page.getByText('Done');
+
+	await doneButton.click();
+
+	await page.reload();
+
+	await expect(
+		page.locator('span').filter({hasText: 'Pending'}).first()
+	).toBeVisible();
+
+	await moreActionsButton.click();
+
+	await page.getByRole('menuitem', {name: 'Resubmit'}).click();
+
+	await expect(page.getByRole('heading', {name: 'Resubmit'})).toBeVisible();
+
+	await doneButton.click();
+
+	await page.reload();
+
+	await moreActionsButton.click();
+
+	await assignToMeMenuItem.click();
+
+	await page
+		.frameLocator('iframe[title="Assign to Me"]')
+		.getByRole('button', {exact: true, name: 'Done'})
+		.click();
+
+	await page.getByRole('cell', {exact: true, name: 'Test Test'});
+
+	await moreActionsButton.click();
+
+	await page.getByRole('menuitem', {name: 'Approve'}).click();
+
+	await expect(page.getByRole('heading', {name: 'Approve'})).toBeVisible();
+
+	await doneButton.click();
+
+	await expect(
+		page.locator('span').filter({hasText: 'Approved'}).first()
+	).toBeVisible();
+});
+
 test('LPD-27013 Cannot assign tasks once task is completed', async ({
 	changeTrackingPage,
 	ctCollection,

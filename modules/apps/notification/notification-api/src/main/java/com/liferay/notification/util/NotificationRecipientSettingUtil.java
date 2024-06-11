@@ -67,7 +67,11 @@ public class NotificationRecipientSettingUtil {
 			if (StringUtil.equals(
 					notificationRecipientSetting.getName(),
 					NotificationRecipientSettingConstants.
-						NAME_SINGLE_RECIPIENT)) {
+						NAME_SINGLE_RECIPIENT) ||
+				StringUtil.equals(
+					notificationRecipientSetting.getName(),
+					NotificationRecipientSettingConstants.
+						NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS)) {
 
 				value = GetterUtil.getBoolean(
 					notificationRecipientSetting.getValue());

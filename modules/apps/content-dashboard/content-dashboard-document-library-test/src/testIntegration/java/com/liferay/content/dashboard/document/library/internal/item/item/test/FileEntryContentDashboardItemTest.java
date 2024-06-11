@@ -378,7 +378,7 @@ public class FileEntryContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetLatestContentDashboardItemVersionsWithExpiredVersion()
+	public void testGetLatestContentDashboardItemVersionsWithExpiredDLFileEntry()
 		throws Exception {
 
 		FileEntry fileEntry = _getFileEntry(3);

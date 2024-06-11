@@ -6067,24 +6067,34 @@ public class JournalArticleLocalServiceImpl
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Expiring article " + article.getId());
+				try {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Expiring article " + article.getId());
+					}
+
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCommand(Constants.UPDATE);
+					serviceContext.setScopeGroupId(article.getGroupId());
+
+					journalArticleLocalService.expireArticle(
+						_portal.getValidUserId(
+							article.getCompanyId(),
+							article.getStatusByUserId()),
+						article.getGroupId(), article.getArticleId(), null,
+						serviceContext);
+
+					if (indexer != null) {
+						indexableActionableDynamicQuery.addDocuments(
+							indexer.getDocument(article));
+					}
 				}
-
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCommand(Constants.UPDATE);
-				serviceContext.setScopeGroupId(article.getGroupId());
-
-				journalArticleLocalService.expireArticle(
-					_portal.getValidUserId(
-						article.getCompanyId(), article.getStatusByUserId()),
-					article.getGroupId(), article.getArticleId(), null,
-					serviceContext);
-
-				if (indexer != null) {
-					indexableActionableDynamicQuery.addDocuments(
-						indexer.getDocument(article));
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Error expiring article " + article.getId(),
+							portalException);
+					}
 				}
 			});
 
@@ -6132,21 +6142,31 @@ public class JournalArticleLocalServiceImpl
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Publishing article " + article.getId());
+				try {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Publishing article " + article.getId());
+					}
+
+					long userId = _portal.getValidUserId(
+						article.getCompanyId(), article.getStatusByUserId());
+
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCommand(Constants.UPDATE);
+					serviceContext.setScopeGroupId(article.getGroupId());
+
+					journalArticleLocalService.updateStatus(
+						userId, article.getId(),
+						WorkflowConstants.STATUS_APPROVED, new HashMap<>(),
+						serviceContext);
 				}
-
-				long userId = _portal.getValidUserId(
-					article.getCompanyId(), article.getStatusByUserId());
-
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCommand(Constants.UPDATE);
-				serviceContext.setScopeGroupId(article.getGroupId());
-
-				journalArticleLocalService.updateStatus(
-					userId, article.getId(), WorkflowConstants.STATUS_APPROVED,
-					new HashMap<>(), serviceContext);
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Error publishing article " + article.getId(),
+							portalException);
+					}
+				}
 			});
 		actionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);

@@ -1446,7 +1446,10 @@ public class LayoutStagedModelDataHandler
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 
-		if (layoutPageTemplateEntry != null) {
+		if ((layoutPageTemplateEntry != null) &&
+			(layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
+
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, layout, layoutPageTemplateEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);

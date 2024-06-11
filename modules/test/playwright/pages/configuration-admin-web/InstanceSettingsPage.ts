@@ -35,4 +35,9 @@ export class InstanceSettingsPage {
 			})
 			.click();
 	}
+
+	async goToSSO() {
+		await this.goto();
+		await this.page.getByRole('link', {name: 'SSO'}).click();
+	}
 }

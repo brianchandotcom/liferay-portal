@@ -1199,6 +1199,7 @@
 		<!-- Other fields -->
 
 		<column name="CPOptionCategoryId" type="long" />
+		<column name="listTypeDefinitionId" type="long" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="facetable" type="boolean" />
@@ -1219,6 +1220,9 @@
 		</finder>
 		<finder name="CPOptionCategoryId" return-type="Collection">
 			<finder-column name="CPOptionCategoryId" />
+		</finder>
+		<finder name="ListTypeDefinitionId" return-type="Collection">
+			<finder-column name="listTypeDefinitionId" />
 		</finder>
 		<finder name="C_K" return-type="CPSpecificationOption" unique="true">
 			<finder-column name="companyId" />

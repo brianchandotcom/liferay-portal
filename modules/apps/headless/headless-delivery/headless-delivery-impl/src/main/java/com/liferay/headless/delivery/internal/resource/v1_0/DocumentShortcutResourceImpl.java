@@ -45,7 +45,7 @@ public class DocumentShortcutResourceImpl
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {
 
-		return _getDocumentShortcutsPage(
+		return _getPage(
 			HashMapBuilder.put(
 				"create",
 				addAction(
@@ -79,7 +79,7 @@ public class DocumentShortcutResourceImpl
 			Long siteId, Pagination pagination)
 		throws Exception {
 
-		return _getDocumentShortcutsPage(
+		return _getPage(
 			HashMapBuilder.put(
 				"create",
 				addAction(
@@ -134,7 +134,7 @@ public class DocumentShortcutResourceImpl
 		).build();
 	}
 
-	private Page<DocumentShortcut> _getDocumentShortcutsPage(
+	private Page<DocumentShortcut> _getPage(
 			Map<String, Map<String, String>> actions, Long groupId,
 			Pagination pagination)
 		throws Exception {

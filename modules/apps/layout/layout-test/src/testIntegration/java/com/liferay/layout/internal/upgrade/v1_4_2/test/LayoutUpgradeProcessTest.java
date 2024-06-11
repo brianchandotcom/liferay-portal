@@ -135,6 +135,73 @@ public class LayoutUpgradeProcessTest {
 		Assert.assertTrue(updatedLayoutFriendlyURL.isPrivateLayout());
 	}
 
+	@Test
+	public void testUpgradeProcessWithDuplicatedEntry() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_classNameLocalService.getClassNameId(Layout.class),
+			layoutPageTemplateEntry.getPlid());
+
+		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
+
+		Assert.assertTrue(layout.isPrivateLayout());
+
+		LayoutPageTemplateEntry duplicatedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout duplicatedDraftLayout = _layoutLocalService.fetchLayout(
+			_classNameLocalService.getClassNameId(Layout.class),
+			duplicatedLayoutPageTemplateEntry.getPlid());
+
+		Layout duplicatedLayout = _layoutLocalService.getLayout(
+			duplicatedDraftLayout.getClassPK());
+
+		duplicatedLayout.setUuid(layout.getUuid());
+		duplicatedLayout.setPrivateLayout(false);
+		duplicatedLayout.setFriendlyURL(layout.getFriendlyURL());
+
+		duplicatedLayout = _layoutLocalService.updateLayout(duplicatedLayout);
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+				layout.getPlid(), layout.getDefaultLanguageId());
+
+		LayoutFriendlyURL duplicatedLayoutFriendlyURL =
+			_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+				duplicatedLayout.getPlid(),
+				duplicatedDraftLayout.getDefaultLanguageId());
+
+		duplicatedLayoutFriendlyURL.setPrivateLayout(false);
+		duplicatedLayoutFriendlyURL.setFriendlyURL(
+			layoutFriendlyURL.getFriendlyURL());
+
+		_layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
+			duplicatedLayoutFriendlyURL);
+
+		_runUpgrade();
+
+		Layout updatedLayout = _layoutLocalService.getLayout(
+			duplicatedLayout.getPlid());
+
+		Assert.assertTrue(updatedLayout.isPrivateLayout());
+
+		LayoutFriendlyURL updatedLayoutFriendlyURL =
+			_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+				updatedLayout.getPlid(), updatedLayout.getDefaultLanguageId());
+
+		Assert.assertTrue(updatedLayoutFriendlyURL.isPrivateLayout());
+	}
+
 	private void _runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator, _CLASS_NAME);

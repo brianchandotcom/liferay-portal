@@ -24,10 +24,6 @@ import org.osgi.framework.Bundle;
  */
 public class DBResourceUtil {
 
-	public static List<String> getMiscellaneousSQLTemplates() {
-		return _miscellaneousSQLTemplates;
-	}
-
 	public static String getModuleIndexesSQL(Bundle bundle) {
 		return _getSQLTemplateString(bundle, "indexes.sql");
 	}
@@ -52,8 +48,12 @@ public class DBResourceUtil {
 			"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 	}
 
-	public static void registerMiscellaneousSQLTemplate(String sqlTemplate) {
-		_miscellaneousSQLTemplates.add(sqlTemplate);
+	public static List<String> getSQLTemplates() {
+		return _sqlTemplates;
+	}
+
+	public static void registerSQLTemplate(String sqlTemplate) {
+		_sqlTemplates.add(sqlTemplate);
 	}
 
 	private static String _getSQLTemplateString(
@@ -82,7 +82,6 @@ public class DBResourceUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBResourceUtil.class);
 
-	private static final List<String> _miscellaneousSQLTemplates =
-		new ArrayList<>();
+	private static final List<String> _sqlTemplates = new ArrayList<>();
 
 }

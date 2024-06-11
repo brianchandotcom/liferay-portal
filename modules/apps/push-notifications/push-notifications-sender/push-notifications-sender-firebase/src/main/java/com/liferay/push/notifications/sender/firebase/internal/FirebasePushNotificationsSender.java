@@ -84,7 +84,7 @@ public class FirebasePushNotificationsSender
 			try {
 				_send(
 					accessToken,
-					buildMessage(deviceGroup.getId(), payloadJSONObject));
+					_buildMessage(deviceGroup.getId(), payloadJSONObject));
 
 				success = true;
 			}
@@ -93,7 +93,7 @@ public class FirebasePushNotificationsSender
 			}
 		}
 		else {
-			_send(accessToken, buildMessage(tokens.get(0), payloadJSONObject));
+			_send(accessToken, _buildMessage(tokens.get(0), payloadJSONObject));
 		}
 	}
 
@@ -114,23 +114,6 @@ public class FirebasePushNotificationsSender
 		}
 
 		_initGoogleCloudServices();
-	}
-
-	protected JSONObject buildMessage(
-		String notificationKey, JSONObject payloadJSONObject) {
-
-		JSONObject messageContent = JSONUtil.put(
-			"android", _buildAndroidData(payloadJSONObject)
-		).put(
-			"data",
-			_buildMessagePayload(
-				payloadJSONObject
-			).toString()
-		).put(
-			"token", notificationKey
-		);
-
-		return JSONUtil.put("message", messageContent);
 	}
 
 	@Deactivate
@@ -215,6 +198,23 @@ public class FirebasePushNotificationsSender
 		}
 
 		return JSONUtil.put("notification", jsonObject);
+	}
+
+	private JSONObject _buildMessage(
+		String notificationKey, JSONObject payloadJSONObject) {
+
+		JSONObject messageContent = JSONUtil.put(
+			"android", _buildAndroidData(payloadJSONObject)
+		).put(
+			"data",
+			_buildMessagePayload(
+				payloadJSONObject
+			).toString()
+		).put(
+			"token", notificationKey
+		);
+
+		return JSONUtil.put("message", messageContent);
 	}
 
 	private JSONObject _buildMessagePayload(JSONObject payloadJSONObject) {

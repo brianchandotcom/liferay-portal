@@ -15,6 +15,7 @@ import {Badge} from '../..';
 import {validateEmailsArray} from '../../../utils/validations.form';
 
 const MultiSelect = ({
+	filteredSourceItems,
 	groupStyle,
 	items,
 	label,
@@ -95,7 +96,7 @@ const MultiSelect = ({
 					{...props}
 					items={items}
 					onChange={(event) => onChange(event?.target?.value)}
-					sourceItems={sourceItems}
+					sourceItems={filteredSourceItems}
 					value={items?.value}
 				>
 					{(item, index) => (

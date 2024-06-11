@@ -7,7 +7,10 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import {ImportResults} from '../../../src/main/resources/META-INF/resources/js/index';
+import {
+	ImportResults,
+	checkAccessibility,
+} from '../../../src/main/resources/META-INF/resources/js/index';
 
 const SUCCESS_RESULT = {
 	success: [
@@ -42,8 +45,8 @@ const SUCCESS_WARNING_AND_INVALID_RESULT = {
 };
 
 describe('ImportResults', () => {
-	it('renders success imported results expanded when there are not imported draft or invalid', () => {
-		const {getByRole, getByText} = render(
+	it('renders success imported results expanded when there are not imported draft or invalid', async () => {
+		const {container, getByRole, getByText} = render(
 			<ImportResults
 				fileName="example.zip"
 				importResults={SUCCESS_RESULT}
@@ -54,6 +57,8 @@ describe('ImportResults', () => {
 
 		expect(getByText('x-item-was-imported')).toBeInTheDocument();
 		expect(getByRole('button').classList.contains('collapsed')).toBe(false);
+
+		await checkAccessibility({context: container});
 	});
 
 	it('renders success imported results collapsed when there are nt imported draft or invalid', () => {
@@ -70,8 +75,8 @@ describe('ImportResults', () => {
 		expect(getByRole('button').classList.contains('collapsed')).toBe(true);
 	});
 
-	it('renders warning and invalid results', () => {
-		const {getByText} = render(
+	it('renders warning and invalid results', async () => {
+		const {container, getByText} = render(
 			<ImportResults
 				fileName="example.zip"
 				importResults={SUCCESS_WARNING_AND_INVALID_RESULT}
@@ -92,5 +97,7 @@ describe('ImportResults', () => {
 			getByText('This is another warning message')
 		).toBeInTheDocument();
 		expect(getByText('This is an invalid message')).toBeInTheDocument();
+
+		await checkAccessibility({context: container});
 	});
 });

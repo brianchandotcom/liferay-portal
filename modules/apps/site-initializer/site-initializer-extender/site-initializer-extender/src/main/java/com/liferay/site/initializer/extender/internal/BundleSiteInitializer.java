@@ -511,6 +511,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
+			Map<String, ObjectDefinition>
+				accountEntryRestrictedObjectDefinitions = new HashMap<>();
+			Map<String, Layout> layoutsMap = new HashMap<>();
+			List<Long> objectDefinitionIds = new ArrayList<>();
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder =
 					new SiteNavigationMenuItemSettingsBuilder();
@@ -3018,8 +3022,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private Map<String, Layout> _addOrUpdateLayouts(
-			ServiceContext serviceContext,
+	private void _addOrUpdateLayouts(
+			Map<String, Layout> layoutsMap, ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
@@ -3027,10 +3031,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/layouts");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return new HashMap<>();
+			return;
 		}
-
-		Map<String, Layout> layoutsMap = new HashMap<>();
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			serviceContext.getScopeGroupId(), QueryUtil.ALL_POS,
@@ -3057,8 +3059,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 						serviceContext, stringUtilReplaceValues));
 			}
 		}
-
-		return layoutsMap;
 	}
 
 	private void _addOrUpdateLayoutsContent(

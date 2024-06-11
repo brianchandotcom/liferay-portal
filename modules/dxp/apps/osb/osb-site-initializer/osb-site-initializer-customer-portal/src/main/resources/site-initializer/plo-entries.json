@@ -15,9 +15,27 @@
 		}
 	},
 	{
+		"key": "for-more-information-please-click-x",
+		"value": {
+			"en-US": "For more information, please click {0}.",
+			"es-ES": "Para más información, haz clic {0}.",
+			"ja-JP": "詳細については、{0} をクリックしてください。",
+			"pt-BR": "Para mais informações, por favor clique {0}."
+		}
+	},
+	{
 		"key": "help-center",
 		"value": {
 			"en-US": "Help Center"
+		}
+	},
+	{
+		"key": "here",
+		"value": {
+			"en-US": "here",
+			"es-ES": "aquí",
+			"ja-JP": "こちら",
+			"pt-BR": "aqui"
 		}
 	},
 	{

@@ -931,15 +931,37 @@ public class BundleSiteInitializer implements SiteInitializer {
 							ListUtil.fromArray(addOrUpdateLayouts)
 						).build();
 
-			_invoke(
-				() -> _addOrUpdateResourcePermissions(
-					serviceContext, stringUtilReplaceValues));
-			_invoke(() -> _setPLOEntries(serviceContext));
+			List<UnsafeRunnable<Exception>> visitUnsafeRunnables =
+				new ArrayList<>();
 
-			_invoke(
-				() -> _addExpandoValues(
-					serviceContext, stringUtilReplaceValues));
-			_invoke(() -> _updateGroupSiteInitializerKey(groupId));
+			while (visitUnsafeRunnables.size() != unsafeRunnableMap.size()) {
+				int prevent = visitUnsafeRunnables.size();
+
+				for (Map.Entry
+						<UnsafeRunnable<Exception>,
+						 List<UnsafeRunnable<Exception>>> entry :
+							unsafeRunnableMap.entrySet()) {
+
+					UnsafeRunnable<Exception> key = entry.getKey();
+
+					if (visitUnsafeRunnables.contains(key) ||
+						!visitUnsafeRunnables.containsAll(entry.getValue())) {
+
+						continue;
+					}
+
+					key.run();
+
+					visitUnsafeRunnables.add(key);
+				}
+
+				if (prevent == visitUnsafeRunnables.size()) {
+					throw new InitializationException(
+						"Circular dependency found");
+				}
+			}
+
+			_updateGroupSiteInitializerKey(groupId);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

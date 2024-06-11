@@ -36,11 +36,11 @@ public class AggregateKaleoTaskAssignmentSelectorImpl
 
 		Set<KaleoTaskAssignment> kaleoTaskAssignmentsSet = new TreeSet<>(
 			Comparator.comparing(
-				KaleoTaskAssignment::getAssigneeClassPK
+				KaleoTaskAssignment::getGroupId
 			).thenComparing(
 				KaleoTaskAssignment::getAssigneeClassName
 			).thenComparing(
-				KaleoTaskAssignment::getGroupId
+				KaleoTaskAssignment::getAssigneeClassPK
 			));
 
 		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {

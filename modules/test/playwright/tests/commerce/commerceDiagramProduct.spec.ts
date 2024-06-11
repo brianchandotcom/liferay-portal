@@ -37,7 +37,7 @@ test('COMMERCE-11835 Account Supplier role user can upload diagram file/image', 
 
 	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 		account.id,
-		['test@liferay.com']
+		['demo.unprivileged@liferay.com']
 	);
 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
@@ -56,7 +56,7 @@ test('COMMERCE-11835 Account Supplier role user can upload diagram file/image', 
 	await apiHelpers.headlessAdminUser.assignAccountRoles(
 		account.externalReferenceCode,
 		accountSupplierRole[0].id,
-		'test@liferay.com'
+		'demo.unprivileged@liferay.com'
 	);
 
 	await commerceAdminProductPage.gotoProduct(product.name['en_US']);

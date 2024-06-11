@@ -37,20 +37,85 @@ test('LPD-3391 Minium sidebar user navigation items are clickable in responsive 
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
 
-	const channels =
-		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
-			'Minium Portal'
-		);
-
-	apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
-
 	await applicationsMenuPage.goToSite('Minium');
 
 	await commerceThemeMiniumPage.stickerUserNav.click();
 
 	await commerceThemeMiniumPage.myProfileItemMenu.click();
 
-	await expect(
-		page.getByRole('heading', {name: 'Account Management'})
-	).toBeVisible();
+	try {
+		await expect(
+			page.getByRole('heading', {name: 'Account Management'})
+		).toBeVisible();
+	}
+	finally {
+		const channels =
+			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
+				'Minium Portal'
+			);
+
+		apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
+
+		const catalogs =
+			await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(
+				'Minium'
+			);
+
+		apiHelpers.data.push({id: catalogs.items[0].id, type: 'catalog'});
+
+		const products =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductsPage(
+				50,
+				''
+			);
+
+		for (let i = 0; i < products.totalCount; i++) {
+			if (products.items[i].catalogId === catalogs.items[0].id) {
+				apiHelpers.data.push({
+					id: products.items[i].productId,
+					type: 'product',
+				});
+			}
+		}
+
+		const options =
+			await apiHelpers.headlessCommerceAdminCatalog.getOptions();
+
+		for (let i = 0; i < options.totalCount; i++) {
+			apiHelpers.data.push({
+				id: options.items[i].id,
+				type: 'option',
+			});
+		}
+
+		const optionCategories =
+			await apiHelpers.headlessCommerceAdminCatalog.getOptionCategories();
+
+		for (let i = 0; i < optionCategories.totalCount; i++) {
+			apiHelpers.data.push({
+				id: optionCategories.items[i].id,
+				type: 'optionCategory',
+			});
+		}
+
+		const specifications =
+			await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
+
+		for (let i = 0; i < specifications.totalCount; i++) {
+			apiHelpers.data.push({
+				id: specifications.items[i].id,
+				type: 'specification',
+			});
+		}
+
+		const warehouses =
+			await apiHelpers.headlessCommerceAdminInventoryApiHelper.getWarehousesPage();
+
+		for (let i = 0; i < warehouses.totalCount; i++) {
+			apiHelpers.data.push({
+				id: warehouses.items[i].id,
+				type: 'warehouse',
+			});
+		}
+	}
 });

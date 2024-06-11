@@ -33,23 +33,8 @@ public class DBSchemaToSQLProcessor {
 
 	public void process() throws Exception {
 		_generatePortalSQL();
-		_generateMiscellaneousSQL();
+		_generateSQLTemplates();
 		_generateModulesSQL();
-	}
-
-	private void _generateMiscellaneousSQL() throws Exception {
-		for (String sqlTemplate :
-				DBResourceUtil.getMiscellaneousSQLTemplates()) {
-
-			String[] lines = StringUtil.splitLines(
-				_db.buildSQL(
-					StringUtil.removeSubstring(
-						sqlTemplate, "COMMIT_TRANSACTION;")));
-
-			for (String line : lines) {
-				_sqlRecorder.recordSQL(line);
-			}
-		}
 	}
 
 	private void _generateModulesSQL() throws Exception {
@@ -77,6 +62,19 @@ public class DBSchemaToSQLProcessor {
 			_db.buildSQL(DBResourceUtil.getPortalIndexesSQL()));
 		_sqlRecorder.recordTablesSQL(
 			_db.buildSQL(DBResourceUtil.getPortalTablesSQL()));
+	}
+
+	private void _generateSQLTemplates() throws Exception {
+		for (String sqlTemplate : DBResourceUtil.getSQLTemplates()) {
+			String[] lines = StringUtil.splitLines(
+				_db.buildSQL(
+					StringUtil.removeSubstring(
+						sqlTemplate, "COMMIT_TRANSACTION;")));
+
+			for (String line : lines) {
+				_sqlRecorder.recordSQL(line);
+			}
+		}
 	}
 
 	private DB _getDB(DBType dbType) {

@@ -7,7 +7,6 @@ package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.schema.definition.internal.test.helper.ConfigurationTestHelper;
-import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationValidationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseValidationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.LoggingValidationTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -24,6 +23,7 @@ import java.io.File;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -82,9 +82,12 @@ public class DBSchemaDefinitionExporterTest {
 			DatabaseValidationTestUtil.assertDatabaseDumpMirrorsCurrentDatabase(
 				_dumpPath);
 
-			ConfigurationValidationTestUtil.
-				assertConfigurationIsDeletedAfterDeploy(
-					_configurationTestHelper, _PID);
+			Assert.assertTrue(
+				_configurationTestHelper.isConfigurationFileDeleted());
+			Assert.assertTrue(_configurationTestHelper.isDictionaryNull(_PID));
+			Assert.assertTrue(
+				_configurationTestHelper.isListConfigurationsNull(_PID));
+
 			LoggingValidationTestUtil.assertStartEndIsLogged(logCapture);
 		}
 	}

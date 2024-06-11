@@ -9,12 +9,16 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.info.internal.configuration.DBSchemaDumpConfiguration;
-import com.liferay.portal.db.schema.info.internal.processor.DBSchemaToFilesProcessor;
+import com.liferay.portal.db.schema.info.internal.processor.DBSchemaToSQLProcessor;
+import com.liferay.portal.db.schema.info.internal.sql.SQLRecorder;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -84,13 +88,21 @@ public class DBSchemaDump {
 				ConfigurableUtil.createConfigurable(
 					DBSchemaDumpConfiguration.class, properties);
 
-			new DBSchemaToFilesProcessor(
+			SQLRecorder sqlRecorder = new SQLRecorder();
+
+			new DBSchemaToSQLProcessor(
 				DBType.valueOf(
 					StringUtil.toUpperCase(
-						dbSchemaDumpConfiguration.databaseType()))
-			).processTo(
-				dbSchemaDumpConfiguration.path()
-			);
+						dbSchemaDumpConfiguration.databaseType())),
+				sqlRecorder
+			).process();
+
+			FileUtil.write(
+				new File(dbSchemaDumpConfiguration.path(), "indexes.sql"),
+				sqlRecorder.getIndexesSQL());
+			FileUtil.write(
+				new File(dbSchemaDumpConfiguration.path(), "tables.sql"),
+				sqlRecorder.getTablesSQL());
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Schema generation finished");

@@ -41,7 +41,7 @@ const MAPPING_SOURCE_TYPES = {
 
 const NOT_SELECTED_OPTION = {
 	label: `-- ${Liferay.Language.get('not-selected')} --`,
-	value: 'not-selected',
+	value: '',
 };
 
 const UNMAPPED_OPTION = {
@@ -515,10 +515,7 @@ function MappingSelector({
 										})
 									),
 								]}
-								value={
-									selectedRelationship ||
-									NOT_SELECTED_OPTION.value
-								}
+								value={selectedRelationship}
 							/>
 						</ClayForm.Group>
 					) : null}

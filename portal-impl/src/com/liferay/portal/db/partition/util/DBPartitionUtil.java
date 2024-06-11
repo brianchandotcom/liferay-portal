@@ -372,9 +372,8 @@ public class DBPartitionUtil {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		String fromPartitionName = _getPartitionName(fromCompanyId);
-		String toPartitionName = _getPartitionName(toCompanyId);
-
 		List<String> quartzTableNames = new ArrayList<>();
+		String toPartitionName = _getPartitionName(toCompanyId);
 
 		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -405,7 +404,7 @@ public class DBPartitionUtil {
 								fromTableName));
 
 						if (_isCopyableQuartzTable(fromTableName)) {
-							_copyQuartzTableEntry(
+							_copyQuartzTableRow(
 								_defaultPartitionName, fromCompanyId,
 								fromTableName, toCompanyId, statement);
 
@@ -475,7 +474,7 @@ public class DBPartitionUtil {
 		}
 	}
 
-	private static void _copyQuartzTableEntry(
+	private static void _copyQuartzTableRow(
 			String partitionName, long fromCompanyId, String tableName,
 			long toCompanyId, Statement statement)
 		throws Exception {

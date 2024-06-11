@@ -6,13 +6,17 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v3_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.BaseRankingUpgradeProcessTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -28,6 +32,27 @@ public class RankingJSONStorageEntryUpgradeProcessTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testUpgradeProcess() throws Exception {
+		long classPK = counterLocalService.increment();
+
+		addRanking(rankingClassNameId, classPK);
+
+		runUpgrade();
+
+		JSONObject rankingJSONObject =
+			jsonStorageEntryLocalService.getJSONObject(
+				rankingClassNameId, classPK);
+
+		Assert.assertNotNull(rankingJSONObject);
+
+		Assert.assertFalse(rankingJSONObject.has("inactive"));
+		Assert.assertTrue(rankingJSONObject.has("status"));
+		Assert.assertEquals(
+			ResultRankingsConstants.STATUS_ACTIVE,
+			rankingJSONObject.getString("status"));
+	}
 
 	@Override
 	protected String getUpgradeStepClassName() {

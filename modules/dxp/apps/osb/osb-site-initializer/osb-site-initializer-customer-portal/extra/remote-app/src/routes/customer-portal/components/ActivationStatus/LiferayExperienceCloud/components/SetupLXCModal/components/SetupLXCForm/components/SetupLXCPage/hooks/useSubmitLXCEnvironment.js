@@ -25,7 +25,10 @@ import {
 	updateAccountSubscriptionGroups,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
 import {useCustomerPortal} from '../../../../../../../../../../../../routes/customer-portal/context';
-import {STATUS_TAG_TYPE_NAMES} from '../../../../../../../../../../utils/constants';
+import {
+	STATUS_CODE,
+	STATUS_TAG_TYPE_NAMES,
+} from '../../../../../../../../../../utils/constants';
 
 export default function useSubmitLXCEnvironment(
 	handleChangeForm,
@@ -86,37 +89,7 @@ export default function useSubmitLXCEnvironment(
 		}
 
 		if (!alreadySubmitted) {
-			try {
-				handleLoadingSubmitButton(true);
-
-				if (featureFlags.includes('LPS-159127')) {
-					await actRaysourceContact(
-						removeContactRoleRaysource,
-						removeHighPriorityContactList,
-						project,
-						sessionId,
-						provisioningServerAPI
-					);
-					await actRaysourceContact(
-						associateContactRoleRaysource,
-						addHighPriorityContactList,
-						project,
-						sessionId,
-						provisioningServerAPI
-					);
-					await actLiferayContact(
-						addHighPriorityContactList,
-						associateContactRoleLiferay,
-						project,
-						client
-					);
-					await actLiferayContact(
-						removeHighPriorityContactList,
-						removeContactRoleLiferay,
-						project,
-						client
-					);
-				}
+			const handleDataSubmit = async () => {
 				const {data} = await createLiferayExperienceCloudEnvironment({
 					variables: {
 						LiferayExperienceCloudEnvironment: {
@@ -201,11 +174,67 @@ export default function useSubmitLXCEnvironment(
 						);
 					}
 				}
+			};
+
+			try {
+				handleLoadingSubmitButton(true);
+				if (featureFlags.includes('LPS-159127')) {
+					await actRaysourceContact(
+						removeContactRoleRaysource,
+						removeHighPriorityContactList,
+						project,
+						sessionId,
+						provisioningServerAPI
+					);
+					await actRaysourceContact(
+						associateContactRoleRaysource,
+						addHighPriorityContactList,
+						project,
+						sessionId,
+						provisioningServerAPI
+					);
+					await actLiferayContact(
+						addHighPriorityContactList,
+						associateContactRoleLiferay,
+						project,
+						client
+					);
+					await actLiferayContact(
+						removeHighPriorityContactList,
+						removeContactRoleLiferay,
+						project,
+						client
+					);
+				}
+
+				handleDataSubmit();
 				handleLoadingSubmitButton(false);
 				handleChangeForm(true);
 			}
-			catch {
-				handleLoadingSubmitButton(false);
+			catch (error) {
+				if (error.cause === STATUS_CODE.conflict) {
+					try {
+						await actLiferayContact(
+							addHighPriorityContactList,
+							associateContactRoleLiferay,
+							project,
+							client
+						);
+						await actLiferayContact(
+							removeHighPriorityContactList,
+							removeContactRoleLiferay,
+							project,
+							client
+						);
+
+						handleDataSubmit();
+						handleLoadingSubmitButton(false);
+						handleChangeForm(true);
+					}
+					catch (error) {
+						handleLoadingSubmitButton(false);
+					}
+				}
 			}
 		}
 	};

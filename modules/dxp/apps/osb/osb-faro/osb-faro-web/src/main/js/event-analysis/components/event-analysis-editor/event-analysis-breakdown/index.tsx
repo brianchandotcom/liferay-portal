@@ -399,7 +399,7 @@ const getColumns = ({
 					>
 						<TextTruncate
 							maxCharLength={maxBreakdownLength}
-							title={dataValue.name}
+							title={decodeURIComponent(dataValue.name)}
 						/>
 					</td>
 				);

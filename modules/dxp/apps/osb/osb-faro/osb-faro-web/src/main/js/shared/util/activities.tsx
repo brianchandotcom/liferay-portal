@@ -103,14 +103,14 @@ const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
 	events.map(
 		({canonicalUrl, createDate, name, pageTitle, referrer, url}) => ({
 			attributes: {
-				canonicalUrl,
+				canonicalUrl: decodeURIComponent(canonicalUrl),
 				header: Liferay.Language.get('event-attributes'),
-				referrer,
+				referrer: decodeURIComponent(referrer),
 				title: pageTitle,
-				url
+				url: decodeURIComponent(url)
 			},
 			description: pageTitle,
-			subtitle: canonicalUrl,
+			subtitle: decodeURIComponent(canonicalUrl),
 			time: moment(createDate),
 			title: name
 		})

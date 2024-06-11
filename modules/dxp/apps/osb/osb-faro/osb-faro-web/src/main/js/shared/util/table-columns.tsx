@@ -88,7 +88,7 @@ export const activityAssetsListColumns = {
 		cellRenderer: NameCell,
 		cellRendererProps: {
 			renderSecondaryInfo: ({dataSourceAssetPK}) => (
-				<TextTruncate title={dataSourceAssetPK} />
+				<TextTruncate title={decodeURIComponent(dataSourceAssetPK)} />
 			)
 		},
 		className: 'table-cell-expand',

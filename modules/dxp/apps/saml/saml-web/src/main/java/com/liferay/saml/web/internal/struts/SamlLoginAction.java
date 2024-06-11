@@ -97,6 +97,10 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		boolean samlIdpRedirectMessageEnabled = GetterUtil.getBoolean(
 			_props.get("saml.idp.redirect.message.enabled"), true);
 
+		httpServletRequest.setAttribute(
+			SamlWebKeys.SAML_SSO_LOGIN_CONTEXT,
+			_toJSONObject(samlSpIdpConnections));
+
 		if (samlIdpRedirectMessageEnabled) {
 			httpServletRequest.setAttribute(
 				SamlWebKeys.SAML_IDP_REDIRECT_MESSAGE,
@@ -104,10 +108,13 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 					httpServletRequest,
 					"redirecting-to-your-identity-provider"));
 		}
+		else if (samlSpIdpConnections.size() == 1) {
+			JspUtil.dispatch(
+				httpServletRequest, httpServletResponse,
+				"/portal/saml/select_idp.jsp", "", true);
 
-		httpServletRequest.setAttribute(
-			SamlWebKeys.SAML_SSO_LOGIN_CONTEXT,
-			_toJSONObject(samlSpIdpConnections));
+			return null;
+		}
 
 		JspUtil.dispatch(
 			httpServletRequest, httpServletResponse,

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.schema.info.internal.test;
+package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.db.schema.info.internal.test.helper.ConfigurationTestHelper;
-import com.liferay.portal.db.schema.info.internal.test.util.ConfigurationValidationTestUtil;
-import com.liferay.portal.db.schema.info.internal.test.util.DatabaseValidationTestUtil;
-import com.liferay.portal.db.schema.info.internal.test.util.LoggingValidationTestUtil;
+import com.liferay.portal.db.schema.definition.internal.test.helper.ConfigurationTestHelper;
+import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationValidationTestUtil;
+import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseValidationTestUtil;
+import com.liferay.portal.db.schema.definition.internal.test.util.LoggingValidationTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,7 +37,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBSchemaDumpTest {
+public class DBSchemaDefinitionExporterTest {
 
 	@ClassRule
 	@Rule
@@ -90,8 +90,8 @@ public class DBSchemaDumpTest {
 	}
 
 	private static final String _PID =
-		"com.liferay.portal.db.schema.info.internal.configuration." +
-			"DBSchemaDumpConfiguration";
+		"com.liferay.portal.db.schema.definition.internal.configuration." +
+			"DBSchemaDefinitionExporterConfiguration";
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

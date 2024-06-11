@@ -24,6 +24,7 @@ import java.io.File;
 
 import java.nio.file.Files;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -77,9 +78,9 @@ public class DBSchemaDefinitionExporterTest {
 	}
 
 	@Test
-	public void testCopyDatabaseConfiguration() throws Exception {
+	public void testExportImportDBSchemaDefinition() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.schema.definition.internal." +
+				"com.liferay.portal.db.schema.definition.internal.exporter." +
 					"DBSchemaDefinitionExporter",
 				LoggerTestUtil.INFO)) {
 
@@ -103,11 +104,18 @@ public class DBSchemaDefinitionExporterTest {
 
 			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
+			List<String> logMessages = new ArrayList<>();
+
+			for (LogEntry entry : logEntries) {
+				logMessages.add(entry.getMessage());
+			}
+
 			Assert.assertEquals(
-				"Database schema definition export started", logEntries.get(0));
+				"Database schema definition export started",
+				logMessages.get(0));
 			Assert.assertEquals(
 				"Database schema definition export finished",
-				logEntries.get(1));
+				logMessages.get(1));
 		}
 	}
 

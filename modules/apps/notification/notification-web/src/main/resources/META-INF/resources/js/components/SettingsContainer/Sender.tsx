@@ -76,33 +76,35 @@ export function Sender({
 					/>
 				</div>
 			</div>
-			<>
-				<ClayForm.Group className="ml-1 row">
-					<div className="mr-2">
-						<ClayCheckbox
-							checked={
-								recipient.useMostRelevantLocaleForGuestUsers
-							}
-							disabled={values.system}
-							label={Liferay.Language.get(
-								'enable-sending-email-notifications-most-relevant-language-guest-users'
-							)}
-							onChange={({target: {checked}}) => {
-								setValues({
-									...values,
-									recipients: [
-										{
-											...recipient,
-											useMostRelevantLocaleForGuestUsers:
-												checked,
-										},
-									],
-								});
-							}}
-						/>
-					</div>
-				</ClayForm.Group>
-			</>
+			{Liferay.FeatureFlags['LPD-21580'] && (
+				<>
+					<ClayForm.Group className="ml-1 row">
+						<div className="mr-2">
+							<ClayCheckbox
+								checked={
+									recipient.useMostRelevantLocaleForGuestUsers
+								}
+								disabled={values.system}
+								label={Liferay.Language.get(
+									'enable-sending-email-notifications-most-relevant-language-guest-users'
+								)}
+								onChange={({target: {checked}}) => {
+									setValues({
+										...values,
+										recipients: [
+											{
+												...recipient,
+												useMostRelevantLocaleForGuestUsers:
+													checked,
+											},
+										],
+									});
+								}}
+							/>
+						</div>
+					</ClayForm.Group>
+				</>
+			)}
 		</>
 	);
 }

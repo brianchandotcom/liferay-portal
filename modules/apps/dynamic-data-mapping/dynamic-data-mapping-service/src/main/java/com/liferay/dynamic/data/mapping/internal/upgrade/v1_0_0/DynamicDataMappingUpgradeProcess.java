@@ -251,8 +251,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_setUpClassNameIds();
-
 		_upgradeExpandoStorageAdapter();
 
 		_upgradeStructuresAndAddStructureVersionsAndLayouts();
@@ -589,58 +587,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private String _getStructureModelResourceName(long classNameId)
-		throws Exception {
-
-		String className = PortalUtil.getClassName(classNameId);
-
-		String structureModelResourceName = _structureModelResourceNames.get(
-			className);
-
-		if (structureModelResourceName == null) {
-			throw new UpgradeException(
-				StringBundler.concat(
-					"Model ", className, " does not support DDM structure ",
-					"permission checking"));
-		}
-
-		return structureModelResourceName;
-	}
-
-	private String _getTemplateModelResourceName(long classNameId)
-		throws Exception {
-
-		String className = PortalUtil.getClassName(classNameId);
-
-		String templateModelResourceName = _templateModelResourceNames.get(
-			className);
-
-		if (templateModelResourceName == null) {
-			throw new UpgradeException(
-				StringBundler.concat(
-					"Model ", className, " does not support DDM template ",
-					"permission checking"));
-		}
-
-		return templateModelResourceName;
-	}
-
-	private Long _getTemplateResourceClassNameId(
-		long classNameId, long classPK) {
-
-		if (classNameId != PortalUtil.getClassNameId(DDMStructure.class)) {
-			return PortalUtil.getClassNameId(
-				"com.liferay.portlet.display.template.PortletDisplayTemplate");
-		}
-
-		if (classPK == 0) {
-			return PortalUtil.getClassNameId(
-				"com.liferay.journal.model.JournalArticle");
-		}
-
-		return _structureClassNameIds.get(classPK);
-	}
-
 	private boolean _hasStructureVersion(long structureId, String version)
 		throws Exception {
 
@@ -724,17 +670,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				"com.liferay.dynamic.data.lists.model.DDLRecordSet",
 				_CLASS_NAME_DDM_TEMPLATE)
 		).build();
-	}
-
-	private void _setUpClassNameIds() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_ddmContentClassNameId = PortalUtil.getClassNameId(
-				DDMContent.class);
-
-			_expandoStorageAdapterClassNameId = PortalUtil.getClassNameId(
-				"com.liferay.portlet.dynamicdatamapping.storage." +
-					"ExpandoStorageAdapter");
-		}
 	}
 
 	private void _transformFieldTypeDDMFormFields(
@@ -1166,9 +1101,13 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.addBatch();
 
-					preparedStatement3.setLong(1, _ddmContentClassNameId);
 					preparedStatement3.setLong(
-						2, _expandoStorageAdapterClassNameId);
+						1, PortalUtil.getClassNameId(DDMContent.class));
+					preparedStatement3.setLong(
+						2,
+						PortalUtil.getClassNameId(
+							"com.liferay.portlet.dynamicdatamapping.storage." +
+								"ExpandoStorageAdapter"));
 					preparedStatement3.setLong(3, expandoRowId);
 
 					preparedStatement3.addBatch();
@@ -1201,21 +1140,27 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	private void _upgradeStructurePermissions(long companyId, long structureId)
 		throws Exception {
 
-		List<ResourcePermission> resourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				companyId, DDMStructure.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(structureId));
+		for (ResourcePermission resourcePermission :
+				_resourcePermissionLocalService.getResourcePermissions(
+					companyId, DDMStructure.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(structureId))) {
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			Long classNameId = _structureClassNameIds.get(
+			String className = _structureClassNames.get(
 				Long.valueOf(resourcePermission.getPrimKey()));
 
-			if (classNameId == null) {
+			if (className == null) {
 				continue;
 			}
 
-			String resourceName = _getStructureModelResourceName(classNameId);
+			String resourceName = _structureModelResourceNames.get(className);
+
+			if (resourceName == null) {
+				throw new UpgradeException(
+					StringBundler.concat(
+						"Model ", className, " does not support DDM structure ",
+						"permission checking"));
+			}
 
 			// A permission with the correct resource name may already exist.
 			// This means that Documents and Media has already migrated the
@@ -1277,10 +1222,10 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				long structureId = resultSet.getLong("structureId");
-				long classNameId = resultSet.getLong("classNameId");
-				String version = resultSet.getString("version");
 
-				_structureClassNameIds.put(structureId, classNameId);
+				_structureClassNames.put(
+					structureId,
+					PortalUtil.getClassName(resultSet.getLong("classNameId")));
 
 				// Structure content
 
@@ -1302,7 +1247,9 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 				// Structure version
 
-				if (_hasStructureVersion(structureId, version)) {
+				if (_hasStructureVersion(
+						structureId, resultSet.getString("version"))) {
+
 					continue;
 				}
 
@@ -1385,31 +1332,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeTemplatePermissions(long companyId, long templateId)
-		throws Exception {
-
-		List<ResourcePermission> resourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				companyId, DDMTemplate.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(templateId));
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			Long classNameId = _templateResourceClassNameIds.get(
-				Long.valueOf(resourcePermission.getPrimKey()));
-
-			if (classNameId == null) {
-				continue;
-			}
-
-			String resourceName = _getTemplateModelResourceName(classNameId);
-
-			resourcePermission.setName(resourceName);
-
-			_resourcePermissionLocalService.updateResourcePermission(
-				resourcePermission);
-		}
-	}
-
 	private void _upgradeTemplatesAndAddTemplateVersions() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
@@ -1442,13 +1364,28 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				long classPK = resultSet.getLong("classPK");
 				long templateId = resultSet.getLong("templateId");
 
-				// Template resource class name ID
+				// Template resource class name
 
-				Long resourceClassNameId = _getTemplateResourceClassNameId(
-					classNameId, classPK);
+				String className;
 
-				if ((resourceClassNameId == null) && _log.isWarnEnabled()) {
-					_log.warn("Orphaned DDM template " + templateId);
+				if (classNameId != PortalUtil.getClassNameId(
+						DDMStructure.class)) {
+
+					className =
+						"com.liferay.portlet.display.template." +
+							"PortletDisplayTemplate";
+				}
+				else if (classPK == 0) {
+					className = "com.liferay.journal.model.JournalArticle";
+				}
+				else {
+					className = _structureClassNames.get(classPK);
+				}
+
+				if (className == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Orphaned DDM template " + templateId);
+					}
 
 					continue;
 				}
@@ -1457,13 +1394,13 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				String language = resultSet.getString("language");
 				String script = resultSet.getString("script");
 
-				preparedStatement2.setLong(1, resourceClassNameId);
+				preparedStatement2.setLong(
+					1, PortalUtil.getClassNameId(className));
 				preparedStatement2.setLong(2, templateId);
 
 				preparedStatement2.addBatch();
 
-				_templateResourceClassNameIds.put(
-					templateId, resourceClassNameId);
+				_templateResourceClassNames.put(templateId, className);
 
 				// Template content
 
@@ -1539,10 +1476,36 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
-				long templateId = resultSet.getLong("templateId");
+				for (ResourcePermission resourcePermission :
+						_resourcePermissionLocalService.getResourcePermissions(
+							resultSet.getLong("companyId"),
+							DDMTemplate.class.getName(),
+							ResourceConstants.SCOPE_INDIVIDUAL,
+							String.valueOf(resultSet.getLong("templateId")))) {
 
-				_upgradeTemplatePermissions(companyId, templateId);
+					String className = _templateResourceClassNames.get(
+						Long.valueOf(resourcePermission.getPrimKey()));
+
+					if (className == null) {
+						continue;
+					}
+
+					String resourceName = _templateModelResourceNames.get(
+						className);
+
+					if (resourceName == null) {
+						throw new UpgradeException(
+							StringBundler.concat(
+								"Model ", className,
+								" does not support DDM template permission ",
+								"checking"));
+					}
+
+					resourcePermission.setName(resourceName);
+
+					_resourcePermissionLocalService.updateResourcePermission(
+						resourcePermission);
+				}
 			}
 		}
 	}
@@ -1567,7 +1530,8 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 						connection,
 						"update DDMContent set data_= ? where contentId = ?")) {
 
-				preparedStatement1.setLong(1, _ddmContentClassNameId);
+				preparedStatement1.setLong(
+					1, PortalUtil.getClassNameId(DDMContent.class));
 				preparedStatement1.setString(2, "xml");
 
 				try (ResultSet resultSet = preparedStatement1.executeQuery()) {
@@ -1670,7 +1634,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final DDM _ddm;
-	private long _ddmContentClassNameId;
 	private final DDMFormDeserializer _ddmFormJSONDeserializer;
 	private final DDMFormLayoutSerializer _ddmFormLayoutSerializer;
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
@@ -1683,7 +1646,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	private final DLFolderLocalService _dlFolderLocalService;
 	private final ModelPermissions _dlFolderModelPermissions;
 	private final ExpandoRowLocalService _expandoRowLocalService;
-	private long _expandoStorageAdapterClassNameId;
 	private final ExpandoTableLocalService _expandoTableLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
 	private final Map<Long, DDMForm> _fullHierarchyDDMForms = new HashMap<>();
@@ -1691,12 +1653,12 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final Store _store;
-	private final Map<Long, Long> _structureClassNameIds = new HashMap<>();
+	private final Map<Long, String> _structureClassNames = new HashMap<>();
 	private final Map<Long, Map<String, String>>
 		_structureInvalidDDMFormFieldNamesMap = new HashMap<>();
 	private Map<String, String> _structureModelResourceNames;
 	private Map<String, String> _templateModelResourceNames;
-	private final Map<Long, Long> _templateResourceClassNameIds =
+	private final Map<Long, String> _templateResourceClassNames =
 		new HashMap<>();
 	private final ViewCountEntryLocalService _viewCountEntryLocalService;
 

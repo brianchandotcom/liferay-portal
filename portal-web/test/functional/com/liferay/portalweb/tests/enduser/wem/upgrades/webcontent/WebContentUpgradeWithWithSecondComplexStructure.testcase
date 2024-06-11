@@ -143,7 +143,9 @@ definition {
 
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-		AssertVisible(locator1 = "Sidebar#FORM_BUILDER");
+		// This pause is needed to avoid the deletion of typed text caused by a slow second data engine load. See LPD-28234
+
+		Pause(value1 = 3000);
 
 		Type(
 			key_fieldFieldLabel = "Label UF Comunicado",

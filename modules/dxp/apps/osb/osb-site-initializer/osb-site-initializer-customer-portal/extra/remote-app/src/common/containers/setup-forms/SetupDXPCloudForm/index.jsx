@@ -32,7 +32,10 @@ import {
 } from '../../../../common/services/liferay/graphql/queries';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
 import {useCustomerPortal} from '../../../../routes/customer-portal/context';
-import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
+import {
+	STATUS_CODE,
+	STATUS_TAG_TYPE_NAMES,
+} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 
@@ -187,6 +190,100 @@ const SetupDXPCloudPage = ({
 			setFormAlreadySubmitted(true);
 		}
 
+		const handleDataSubmit = async () => {
+			const {data: addDXPCloudEnvironmentResponse} = await client.mutate({
+				context: {
+					displaySuccess: false,
+					type: 'liferay-rest',
+				},
+				mutation: addDXPCloudEnvironment,
+				variables: {
+					DXPCloudEnvironment: {
+						accountKey: project.accountKey,
+						dataCenterRegion: dxp.dataCenterRegion,
+						disasterDataCenterRegion: dxp.disasterDataCenterRegion,
+						projectId: dxp.projectId,
+						r_accountEntryToDXPCloudEnvironment_accountEntryId:
+							project?.id,
+					},
+				},
+			});
+
+			if (addDXPCloudEnvironmentResponse) {
+				const dxpCloudEnvironmentId =
+					addDXPCloudEnvironmentResponse?.createDXPCloudEnvironment
+						?.id;
+
+				await Promise.all(
+					dxp.admins.map(({email, firstName, github, lastName}) =>
+						client.mutate({
+							context: {
+								displaySuccess: false,
+								type: 'liferay-rest',
+							},
+							mutation: addAdminDXPCloud,
+							variables: {
+								AdminDXPCloud: {
+									dxpCloudEnvironmentId,
+									emailAddress: email,
+									firstName,
+									githubUsername: github,
+									lastName,
+									r_accountEntryToAdminDXPCloud_accountEntryId:
+										project?.id,
+								},
+							},
+						})
+					)
+				);
+			}
+
+			await client.mutate({
+				context: {
+					type: 'liferay-rest',
+				},
+				mutation: updateAccountSubscriptionGroups,
+				variables: {
+					accountSubscriptionGroup: {
+						accountKey: project.accountKey,
+						activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+						r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+							project.id,
+					},
+					id: subscriptionGroupId,
+				},
+			});
+
+			if (featureFlags.includes('LPS-187767')) {
+				const notificationTemplateService = new NotificationQueueService(
+					client
+				);
+
+				try {
+					await notificationTemplateService.send(
+						'SETUP-DXP-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
+						{
+							'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
+							'[%PROJECT_CODE%]': project.code,
+							'[%PROJECT_DATA_CENTER_REGION%]':
+								dxp?.dataCenterRegion,
+							'[%PROJECT_DISASTER_CENTER_REGION%]': dxp?.disasterDataCenterRegion
+								? `Primary Disaster Center Region - ${dxp?.disasterDataCenterRegion}`
+								: '',
+							'[%PROJECT_ID%]': dxp?.projectId,
+							'[%PROJECT_VERSION%]': dxpVersion,
+							'[%USER_EMAIL%]': dxp?.admins[0]?.email,
+							'[%USER_FIRST_NAME%]': dxp?.admins[0]?.firstName,
+							'[%USER_GITHUB]': dxp?.admins[0]?.github,
+							'[%USER_LAST_NAME%]': dxp?.admins[0]?.lastName,
+						}
+					);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		};
+
 		if (!alreadySubmitted && dxp) {
 			try {
 				if (featureFlags.includes('LPS-159127')) {
@@ -217,107 +314,37 @@ const SetupDXPCloudPage = ({
 						client
 					);
 				}
-				const {
-					data: addDXPCloudEnvironmentResponse,
-				} = await client.mutate({
-					context: {
-						displaySuccess: false,
-						type: 'liferay-rest',
-					},
-					mutation: addDXPCloudEnvironment,
-					variables: {
-						DXPCloudEnvironment: {
-							accountKey: project.accountKey,
-							dataCenterRegion: dxp.dataCenterRegion,
-							disasterDataCenterRegion:
-								dxp.disasterDataCenterRegion,
-							projectId: dxp.projectId,
-							r_accountEntryToDXPCloudEnvironment_accountEntryId:
-								project?.id,
-						},
-					},
-				});
 
-				if (addDXPCloudEnvironmentResponse) {
-					const dxpCloudEnvironmentId =
-						addDXPCloudEnvironmentResponse
-							?.createDXPCloudEnvironment?.id;
+				handleDataSubmit();
+				setIsLoadingSubmitButton(false);
 
-					await Promise.all(
-						dxp.admins.map(({email, firstName, github, lastName}) =>
-							client.mutate({
-								context: {
-									displaySuccess: false,
-									type: 'liferay-rest',
-								},
-								mutation: addAdminDXPCloud,
-								variables: {
-									AdminDXPCloud: {
-										dxpCloudEnvironmentId,
-										emailAddress: email,
-										firstName,
-										githubUsername: github,
-										lastName,
-										r_accountEntryToAdminDXPCloud_accountEntryId:
-											project?.id,
-									},
-								},
-							})
-						)
-					);
-
-					await client.mutate({
-						context: {
-							type: 'liferay-rest',
-						},
-						mutation: updateAccountSubscriptionGroups,
-						variables: {
-							accountSubscriptionGroup: {
-								accountKey: project.accountKey,
-								activationStatus:
-									STATUS_TAG_TYPE_NAMES.inProgress,
-								r_accountEntryToAccountSubscriptionGroup_accountEntryId:
-									project.id,
-							},
-							id: subscriptionGroupId,
-						},
-					});
-
-					if (featureFlags.includes('LPS-187767')) {
-						const notificationTemplateService = new NotificationQueueService(
+				handlePage(true);
+			} catch (error) {
+				if (error.cause === STATUS_CODE.conflict) {
+					try {
+						await actLiferayContact(
+							addHighPriorityContact,
+							associateContactRoleLiferay,
+							project,
+							client
+						);
+						await actLiferayContact(
+							removeHighPriorityContact,
+							removeContactRoleLiferay,
+							project,
 							client
 						);
 
-						try {
-							await notificationTemplateService.send(
-								'SETUP-DXP-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
-								{
-									'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
-									'[%PROJECT_CODE%]': project.code,
-									'[%PROJECT_DATA_CENTER_REGION%]':
-										dxp?.dataCenterRegion,
-									'[%PROJECT_DISASTER_CENTER_REGION%]': dxp?.disasterDataCenterRegion
-										? `Primary Disaster Center Region - ${dxp?.disasterDataCenterRegion}`
-										: '',
-									'[%PROJECT_ID%]': dxp?.projectId,
-									'[%PROJECT_VERSION%]': dxpVersion,
-									'[%USER_EMAIL%]': dxp?.admins[0]?.email,
-									'[%USER_FIRST_NAME%]':
-										dxp?.admins[0]?.firstName,
-									'[%USER_GITHUB]': dxp?.admins[0]?.github,
-									'[%USER_LAST_NAME%]':
-										dxp?.admins[0]?.lastName,
-								}
-							);
-						} catch (error) {
-							console.error(error);
-						}
+						handleDataSubmit();
+						setIsLoadingSubmitButton(false);
+
+						handlePage(true);
+					} catch (error) {
+						setIsLoadingSubmitButton(false);
 					}
+				} else {
 					setIsLoadingSubmitButton(false);
-					handlePage(true);
 				}
-			} catch {
-				setIsLoadingSubmitButton(false);
 			}
 		}
 	};

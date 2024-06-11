@@ -40,15 +40,15 @@ public class FunctionActionExecutorImplTest {
 		FunctionActionExecutorImpl functionActionExecutorImpl = Mockito.spy(
 			new FunctionActionExecutorImpl());
 
-		long userId = RandomTestUtil.randomLong();
-
-		UserLocalService userLocalService = Mockito.mock(
-			UserLocalService.class);
-
 		long companyId = RandomTestUtil.randomLong();
 
 		ReflectionTestUtil.setFieldValue(
 			functionActionExecutorImpl, "_companyId", companyId);
+
+		long userId = RandomTestUtil.randomLong();
+
+		UserLocalService userLocalService = Mockito.mock(
+			UserLocalService.class);
 
 		Mockito.when(
 			userLocalService.getUserIdByScreenName(

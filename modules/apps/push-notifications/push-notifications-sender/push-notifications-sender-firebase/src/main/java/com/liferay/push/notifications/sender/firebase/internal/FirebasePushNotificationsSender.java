@@ -11,6 +11,7 @@ import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,6 +34,7 @@ import com.liferay.push.notifications.sender.firebase.internal.configuration.Fir
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -83,7 +85,7 @@ public class FirebasePushNotificationsSender
 			try {
 				_send(
 					accessToken,
-					buildMessage(payloadJSONObject, deviceGroup.getId()));
+					buildMessage(deviceGroup.getId(), payloadJSONObject));
 
 				success = true;
 			}
@@ -92,7 +94,7 @@ public class FirebasePushNotificationsSender
 			}
 		}
 		else {
-			_send(accessToken, buildMessage(payloadJSONObject, tokens.get(0)));
+			_send(accessToken, buildMessage(tokens.get(0), payloadJSONObject));
 		}
 	}
 
@@ -112,7 +114,7 @@ public class FirebasePushNotificationsSender
 	}
 
 	protected JSONObject buildMessage(
-		JSONObject payloadJSONObject, String notificationKey) {
+		String notificationKey, JSONObject payloadJSONObject) {
 
 		JSONObject messageContent = JSONUtil.put(
 			"android", _buildAndroidData(payloadJSONObject)
@@ -134,39 +136,82 @@ public class FirebasePushNotificationsSender
 	}
 
 	private JSONObject _buildAndroidData(JSONObject payloadJSONObject) {
-		return JSONUtil.put(
-			"notification",
-			JSONUtil.put(
-				"body",
-				payloadJSONObject.getString(PushNotificationsConstants.KEY_BODY)
-			).put(
-				"body_loc_args",
-				payloadJSONObject.getJSONArray(
-					PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS)
-			).put(
-				"body_loc_key",
-				payloadJSONObject.getString(
-					PushNotificationsConstants.KEY_BODY_LOCALIZED)
-			).put(
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		String body = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_BODY);
+
+		if (Validator.isNotNull(body)) {
+			jsonObject.put("body", body);
+		}
+
+		JSONArray bodyLocalizedArgumentsJSONArray =
+			payloadJSONObject.getJSONArray(
+				PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS);
+
+		if (bodyLocalizedArgumentsJSONArray != null) {
+			List<String> bodyLocalizedArguments = new ArrayList<>();
+
+			for (int i = 0; i < bodyLocalizedArgumentsJSONArray.length(); i++) {
+				bodyLocalizedArguments.add(
+					bodyLocalizedArgumentsJSONArray.getString(i));
+			}
+
+			jsonObject.put("body_loc_args", bodyLocalizedArguments);
+		}
+
+		String bodyLocalizedKey = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_BODY_LOCALIZED);
+
+		if (Validator.isNotNull(bodyLocalizedKey)) {
+			jsonObject.put("body_loc_key", bodyLocalizedKey);
+		}
+
+		if (payloadJSONObject.has(PushNotificationsConstants.KEY_BADGE)) {
+			jsonObject.put(
 				"notification_count",
-				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE)
-			).put(
-				"sound",
-				payloadJSONObject.getString(
-					PushNotificationsConstants.KEY_SOUND)
-			).put(
-				"title",
-				payloadJSONObject.getString(
-					PushNotificationsConstants.KEY_TITLE)
-			).put(
-				"title_loc_args",
-				payloadJSONObject.getJSONArray(
-					PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS)
-			).put(
-				"title_loc_key",
-				payloadJSONObject.getString(
-					PushNotificationsConstants.KEY_TITLE_LOCALIZED)
-			));
+				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE));
+		}
+
+		String sound = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_SOUND);
+
+		if (Validator.isNotNull(sound)) {
+			jsonObject.put("sound", sound);
+		}
+
+		String title = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_TITLE);
+
+		if (Validator.isNotNull(title)) {
+			jsonObject.put("title", title);
+		}
+
+		JSONArray titleLocalizedArgumentsJSONArray =
+			payloadJSONObject.getJSONArray(
+				PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS);
+
+		if (titleLocalizedArgumentsJSONArray != null) {
+			List<String> localizedArguments = new ArrayList<>();
+
+			for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
+				 i++) {
+
+				localizedArguments.add(
+					titleLocalizedArgumentsJSONArray.getString(i));
+			}
+
+			jsonObject.put("title_loc_args", localizedArguments);
+		}
+
+		String titleLocalizedKey = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_TITLE_LOCALIZED);
+
+		if (Validator.isNotNull(titleLocalizedKey)) {
+			jsonObject.put("title_loc_key", titleLocalizedKey);
+		}
+
+		return JSONUtil.put("notification", jsonObject);
 	}
 
 	private JSONObject _buildMessagePayload(JSONObject payloadJSONObject) {

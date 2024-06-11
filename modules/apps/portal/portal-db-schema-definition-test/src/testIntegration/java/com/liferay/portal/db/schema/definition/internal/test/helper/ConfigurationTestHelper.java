@@ -52,7 +52,7 @@ public class ConfigurationTestHelper {
 	}
 
 	public void deployConfiguration(
-			String pid, String databaseType, String dumpPath)
+			String pid, String databaseType, String path)
 		throws Exception {
 
 		Assert.assertNull(
@@ -66,7 +66,7 @@ public class ConfigurationTestHelper {
 				_registerOnAfterDeleteConfigurationModelListener(pid)) {
 
 			_createConfiguration(
-				pid, _getConfigurationContent(databaseType, dumpPath));
+				pid, _getConfigurationContent(databaseType, path));
 
 			Assert.assertNotNull(
 				_configurationAdmin.listConfigurations(

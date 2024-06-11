@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -86,7 +87,8 @@ public class DBSchemaDefinitionExporterTest {
 			_configurationTestHelper.deployConfiguration(
 				_PID, _databaseType, _path);
 
-			_assertDatabaseDumpMirrorsCurrentDatabase(_path);
+			_assertImportDBSchemaDefinition(
+				new File(_path, "tables.sql"), new File(_path, "indexes.sql"));
 
 			Assert.assertTrue(
 				_configurationTestHelper.isConfigurationFileDeleted());
@@ -106,67 +108,62 @@ public class DBSchemaDefinitionExporterTest {
 		}
 	}
 
-	private void _assertDatabaseDumpMirrorsCurrentDatabase(String path)
+	private void _assertImportDBSchemaDefinition(
+			File tablesSQLFile, File indexesSQLFile)
 		throws Exception {
 
-		DatabaseTestUtil.createSchema(_COPY_SCHEMA_NAME);
+		DatabaseTestUtil.createSchema(_COPY_DB_SCHEMA_NAME);
 
-		DataSource targetDataSource = null;
+		DataSource copyDataSource = null;
 
 		try {
-			targetDataSource = DatabaseTestUtil.initSchemaDataSource(
-				_COPY_SCHEMA_NAME);
+			copyDataSource = DatabaseTestUtil.initSchemaDataSource(
+				_COPY_DB_SCHEMA_NAME);
 
-			DatabaseTestUtil.importFileTo(
-				new File(path, "tables.sql"), targetDataSource);
-			DatabaseTestUtil.importFileTo(
-				new File(path, "indexes.sql"), targetDataSource);
+			DatabaseTestUtil.importFileTo(tablesSQLFile, copyDataSource);
+			DatabaseTestUtil.importFileTo(indexesSQLFile, copyDataSource);
 
-			_assertSameIndexesStructure(targetDataSource);
-			_assertSameTablesStructure(targetDataSource);
+			_assertIndexes(copyDataSource);
+			_assertTables(copyDataSource);
 		}
 		finally {
-			DatabaseTestUtil.dropSchema(_COPY_SCHEMA_NAME);
+			DatabaseTestUtil.dropSchema(_COPY_DB_SCHEMA_NAME);
 
-			if (targetDataSource != null) {
-				DatabaseTestUtil.destroyDataSource(targetDataSource);
+			if (copyDataSource != null) {
+				DatabaseTestUtil.destroyDataSource(copyDataSource);
 			}
 		}
 	}
 
-	private void _assertSameIndexesStructure(DataSource targetDataSource)
-		throws Exception {
-
-		List<String> sourceIndexes = DatabaseTestUtil.getSourceIndexes();
-		List<String> targetIndexes = DatabaseTestUtil.getTargetIndexes(
-			targetDataSource);
+	private void _assertIndexes(DataSource copyDataSource) throws Exception {
+		List<String> indexes = DatabaseTestUtil.getIndexes(
+			InfrastructureUtil.getDataSource());
+		List<String> copyIndexes = DatabaseTestUtil.getIndexes(copyDataSource);
 
 		Assert.assertEquals(
-			targetIndexes.toString(), sourceIndexes.size(),
-			targetIndexes.size());
+			copyIndexes.toString(), indexes.size(), copyIndexes.size());
 
-		for (int i = 0; i < sourceIndexes.size(); i++) {
-			Assert.assertEquals(sourceIndexes.get(i), targetIndexes.get(i));
+		for (int i = 0; i < indexes.size(); i++) {
+			Assert.assertEquals(indexes.get(i), copyIndexes.get(i));
 		}
 	}
 
-	private void _assertSameTablesStructure(DataSource targetDataSource)
-		throws Exception {
-
-		List<String> sourceColumns = DatabaseTestUtil.getSourceTables();
-		List<String> targetColumns = DatabaseTestUtil.getTargetTables(
-			targetDataSource);
+	private void _assertTables(DataSource copyDataSource) throws Exception {
+		List<String> tableColumns = DatabaseTestUtil.getTableColumns(
+			InfrastructureUtil.getDataSource());
+		List<String> copyTableColumns = DatabaseTestUtil.getTableColumns(
+			copyDataSource);
 
 		Assert.assertEquals(
-			targetColumns.toString(), sourceColumns.size(),
-			targetColumns.size());
+			copyTableColumns.toString(), tableColumns.size(),
+			copyTableColumns.size());
 
-		for (int i = 0; i < sourceColumns.size(); i++) {
-			Assert.assertEquals(sourceColumns.get(i), targetColumns.get(i));
+		for (int i = 0; i < tableColumns.size(); i++) {
+			Assert.assertEquals(tableColumns.get(i), copyTableColumns.get(i));
 		}
 	}
 
-	private static final String _COPY_SCHEMA_NAME = "copyschema";
+	private static final String _COPY_DB_SCHEMA_NAME = "testcopyschema";
 
 	private static final String _PID =
 		"com.liferay.portal.db.schema.definition.internal.configuration." +

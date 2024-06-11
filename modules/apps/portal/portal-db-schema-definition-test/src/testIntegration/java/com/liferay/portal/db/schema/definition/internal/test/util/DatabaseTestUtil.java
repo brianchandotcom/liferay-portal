@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -62,55 +61,7 @@ public class DatabaseTestUtil {
 		}
 	}
 
-	public static String getSchemaURL(String schemaName) {
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			return _getMySQLSchemaURL(schemaName);
-		}
-
-		return _getPostgreSQLSchemaURL(schemaName);
-	}
-
-	public static List<String> getSourceIndexes() throws Exception {
-		return _getIndexes(InfrastructureUtil.getDataSource());
-	}
-
-	public static List<String> getSourceTables() throws Exception {
-		return _getTables(InfrastructureUtil.getDataSource());
-	}
-
-	public static List<String> getTargetIndexes(DataSource targetDataSource)
-		throws Exception {
-
-		return _getIndexes(targetDataSource);
-	}
-
-	public static List<String> getTargetTables(DataSource targetDataSource)
-		throws Exception {
-
-		return _getTables(targetDataSource);
-	}
-
-	public static void importFileTo(File file, DataSource targetDataSource)
-		throws Exception {
-
-		DB db = DBManagerUtil.getDB(
-			DBManagerUtil.getDBType(), targetDataSource);
-
-		try (Connection connection = targetDataSource.getConnection()) {
-			db.runSQLTemplateString(connection, FileUtil.read(file), true);
-		}
-	}
-
-	public static DataSource initSchemaDataSource(String schemaName)
-		throws Exception {
-
-		return DataSourceFactoryUtil.initDataSource(
-			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
-			getSchemaURL(schemaName), PropsValues.JDBC_DEFAULT_USERNAME,
-			PropsValues.JDBC_DEFAULT_PASSWORD, StringPool.BLANK);
-	}
-
-	private static List<String> _getIndexes(DataSource dataSource)
+	public static List<String> getIndexes(DataSource dataSource)
 		throws Exception {
 
 		DB db = DBManagerUtil.getDB();
@@ -148,6 +99,78 @@ public class DatabaseTestUtil {
 		Collections.sort(indexes);
 
 		return indexes;
+	}
+
+	public static String getSchemaURL(String schemaName) {
+		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
+			return _getMySQLSchemaURL(schemaName);
+		}
+
+		return _getPostgreSQLSchemaURL(schemaName);
+	}
+
+	public static List<String> getTableColumns(DataSource dataSource)
+		throws Exception {
+
+		List<String> columns = new ArrayList<>();
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			try (ResultSet resultSet = databaseMetaData.getColumns(
+					connection.getCatalog(), connection.getSchema(), null,
+					null)) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (dbInspector.isObjectTable(
+							Collections.singletonList(
+								PortalInstancePool.getDefaultCompanyId()),
+							tableName)) {
+
+						continue;
+					}
+
+					columns.add(
+						StringBundler.concat(
+							"Table Name: ", tableName, "Column Name: ",
+							resultSet.getString("COLUMN_NAME"), "Data Type: ",
+							resultSet.getInt("DATA_TYPE"), "Column Size: ",
+							resultSet.getInt("COLUMN_SIZE"), "Decimal Digits: ",
+							resultSet.getInt("DECIMAL_DIGITS"), "Is Nullable: ",
+							resultSet.getString("IS_NULLABLE"),
+							"Is AutoIncrement: ",
+							resultSet.getString("IS_AUTOINCREMENT")));
+				}
+			}
+		}
+
+		Collections.sort(columns);
+
+		return columns;
+	}
+
+	public static void importFileTo(File file, DataSource targetDataSource)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB(
+			DBManagerUtil.getDBType(), targetDataSource);
+
+		try (Connection connection = targetDataSource.getConnection()) {
+			db.runSQLTemplateString(connection, FileUtil.read(file), true);
+		}
+	}
+
+	public static DataSource initSchemaDataSource(String schemaName)
+		throws Exception {
+
+		return DataSourceFactoryUtil.initDataSource(
+			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
+			getSchemaURL(schemaName), PropsValues.JDBC_DEFAULT_USERNAME,
+			PropsValues.JDBC_DEFAULT_PASSWORD, StringPool.BLANK);
 	}
 
 	private static String _getMySQLSchemaURL(String schemaName) {
@@ -200,50 +223,6 @@ public class DatabaseTestUtil {
 		}
 
 		return indexes;
-	}
-
-	private static List<String> _getTables(DataSource dataSource)
-		throws Exception {
-
-		List<String> columns = new ArrayList<>();
-
-		try (Connection connection = dataSource.getConnection()) {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			DBInspector dbInspector = new DBInspector(connection);
-
-			try (ResultSet resultSet = databaseMetaData.getColumns(
-					connection.getCatalog(), connection.getSchema(), null,
-					null)) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (dbInspector.isObjectTable(
-							Collections.singletonList(
-								PortalInstancePool.getDefaultCompanyId()),
-							tableName)) {
-
-						continue;
-					}
-
-					columns.add(
-						StringBundler.concat(
-							"Table Name: ", tableName, "Column Name: ",
-							resultSet.getString("COLUMN_NAME"), "Data Type: ",
-							resultSet.getInt("DATA_TYPE"), "Column Size: ",
-							resultSet.getInt("COLUMN_SIZE"), "Decimal Digits: ",
-							resultSet.getInt("DECIMAL_DIGITS"), "Is Nullable: ",
-							resultSet.getString("IS_NULLABLE"),
-							"Is AutoIncrement: ",
-							resultSet.getString("IS_AUTOINCREMENT")));
-				}
-			}
-		}
-
-		Collections.sort(columns);
-
-		return columns;
 	}
 
 }

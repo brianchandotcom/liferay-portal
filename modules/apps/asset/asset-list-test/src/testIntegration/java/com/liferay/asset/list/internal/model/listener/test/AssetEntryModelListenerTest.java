@@ -53,7 +53,6 @@ public class AssetEntryModelListenerTest {
 
 		_assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, TestPropsValues.getUserId());
 	}

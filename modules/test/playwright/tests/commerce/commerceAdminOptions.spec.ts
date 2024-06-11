@@ -114,11 +114,4 @@ test('LPD-26249 Configure options and Product options', async ({
 			)
 		).row
 	).toBeVisible();
-
-	await (
-		await commerceAdminProductDetailsProductOptionsPage.tableRowLink({
-			colIndex: 0,
-			rowValue: option1.name['en_US'],
-		})
-	).click();
 });

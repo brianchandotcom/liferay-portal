@@ -19,7 +19,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('LPD-3360 checkout with single approval', async ({
+test('LPD-3360 Checkout with single approval', async ({
 	apiHelpers,
 	applicationsMenuPage,
 	commerceCartSummaryPage,

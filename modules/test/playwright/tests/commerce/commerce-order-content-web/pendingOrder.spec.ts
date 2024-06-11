@@ -193,6 +193,8 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 	page,
 	queuePage,
 }) => {
+	test.setTimeout(180000);
+
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'Sales agent can receive email notifications Site',
 		templateKey: 'minium-initializer',

@@ -28,9 +28,9 @@ type TDiscount = {
 };
 
 class TPriceEntry {
-	id?: number;
 	skuId: number;
 	price: number;
+	priceEntryId?: number;
 	priceListId: number;
 }
 
@@ -83,7 +83,10 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 
 		if (this.apiHelpers instanceof DataApiHelpers) {
-			this.apiHelpers.data.push({id: priceEntry.id, type: 'price-entry'});
+			this.apiHelpers.data.push({
+				id: priceEntry.priceEntryId,
+				type: 'price-entry',
+			});
 		}
 
 		return priceEntry;

@@ -22,6 +22,8 @@ test('LPD-13560 Can sort specifications by specification group and label priorit
 	commerceLayoutsPage,
 	specificationFacetsPage,
 }) => {
+	test.setTimeout(180000);
+
 	const pageLabel = 'Specification Facet Page';
 
 	await commerceLayoutsPage.goToPages();

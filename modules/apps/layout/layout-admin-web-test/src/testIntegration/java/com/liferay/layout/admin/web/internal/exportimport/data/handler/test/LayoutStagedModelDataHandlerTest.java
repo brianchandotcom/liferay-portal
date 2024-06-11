@@ -314,7 +314,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		Assert.assertNotEquals(
 			layout.getStyleBookEntryId(), importedLayout.getStyleBookEntryId());
-		Assert.assertNull(
+		Assert.assertNotNull(
 			_styleBookEntryLocalService.fetchStyleBookEntry(
 				importedLayout.getStyleBookEntryId()));
 	}

@@ -340,7 +340,11 @@ function MappingSelector({
 			});
 		}
 
-		if (relationships?.length && Liferay.FeatureFlags['LPD-20213']) {
+		if (
+			relationships?.length &&
+			fieldType !== EDITABLE_TYPES.action &&
+			Liferay.FeatureFlags['LPD-20213']
+		) {
 			types.push({
 				label: Liferay.Language.get('relationship'),
 				value: MAPPING_SOURCE_TYPES.relationship,
@@ -348,7 +352,7 @@ function MappingSelector({
 		}
 
 		return types;
-	}, [relationships, selectedMappingTypes]);
+	}, [fieldType, relationships, selectedMappingTypes]);
 
 	const onInfoItemSelect = (selectedInfoItem) => {
 		setSelectedItem(selectedInfoItem);

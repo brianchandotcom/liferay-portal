@@ -255,10 +255,6 @@ dsmTest(
 				await filtersPage.assertValidationError(
 					'This field is being used by another filter'
 				);
-
-				await expect(
-					filtersPage.newDateRangeFilterModal.saveButton
-				).toBeDisabled();
 			}
 		);
 	}

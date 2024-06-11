@@ -8,7 +8,7 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {IDateFilter, IField, IFilter} from '../../../utils/types';
 import Configuration from './Configuration';
@@ -64,6 +64,20 @@ function Body({
 	const fromFormElementId = `${namespace}From`;
 	const toFormElementId = `${namespace}To`;
 
+	useEffect(() => {
+		let isValid = true;
+
+		const dateTo = new Date(to);
+
+		const dateFrom = new Date(from);
+
+		if (to && from) {
+			isValid = isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo);
+		}
+
+		setIsValidDateRange(isValid);
+	}, [from, to]);
+
 	const isi18nFilterLabelsValid = (
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
 	) => {
@@ -110,13 +124,14 @@ function Body({
 		const dateFrom = new Date(from);
 
 		if (to && from) {
-			const isInvalidRange = !(
-				isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo)
-			);
+			const isValidRange =
+				isBefore(dateFrom, dateTo) || isEqual(dateFrom, dateTo);
 
-			setIsValidDateRange(!isInvalidRange);
+			setIsValidDateRange(isValidRange);
 
-			isValid = false;
+			if (!isValidRange) {
+				isValid = false;
+			}
 		}
 
 		return isValid;

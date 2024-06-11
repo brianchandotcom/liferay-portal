@@ -257,7 +257,6 @@ function ApiRestApplication({
 			}
 		>
 			<RESTSchemaDropdownMenu
-				className="fds-filter-rest-schemas-search"
 				onItemClick={(item: string) => {
 					setSelectedRESTSchema(item);
 

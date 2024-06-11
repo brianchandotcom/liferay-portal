@@ -33,8 +33,10 @@ public class DBSchemaToSQLProcessor {
 
 	public void process() throws Exception {
 		_generatePortalSQL();
-		_generateSQLTemplates();
+
 		_generateModulesSQL();
+
+		_generateSQLTemplates();
 	}
 
 	private void _generateModulesSQL() throws Exception {

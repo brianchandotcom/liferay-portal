@@ -362,14 +362,14 @@ public class ${entity.name}PersistenceTest {
 				${entity.name} draft${entity.name} = _persistence.create(pk);
 
 				<#list entity.regularEntityColumns as entityColumn>
-
 					<#if !entityColumn.primary && (validator.isNull(parentPKColumn) || (parentPKColumn.name != entityColumn.name))>
 						draft${entity.name}.set${entityColumn.methodName}(
+
 						<#if stringUtil.equals(entityColumn.name, "headId")>
 							-
 						</#if>
-						${entity.variableName}.get${entityColumn.methodName}());
 
+						${entity.variableName}.get${entityColumn.methodName}());
 					</#if>
 				</#list>
 
@@ -385,9 +385,7 @@ public class ${entity.name}PersistenceTest {
 							Blob ${entityColumn.methodName} = ${entity.variableName}.get${entityColumn.methodName}();
 							Blob draft${entityColumn.methodName} = draft${entity.name}.get${entityColumn.methodName}();
 
-							Assert.assertTrue(
-								Arrays.equals(${entityColumn.variableName}.getBytes(1, (int)${entityColumn.variableName}.length()),
-								Arrays.equals(draft${entityColumn.name}.getBytes(1, (int)draft${entityColumn.name}.length()));
+							Assert.assertTrue(Arrays.equals(${entityColumn.variableName}.getBytes(1, (int)${entityColumn.variableName}.length()), Arrays.equals(draft${entityColumn.name}.getBytes(1, (int)draft${entityColumn.name}.length()));
 						<#elseif stringUtil.equals(entityColumn.type, "boolean")>
 							Assert.assertEquals(${entity.variableName}.is${entityColumn.methodName}(), draft${entity.name}.is${entityColumn.methodName}());
 						<#elseif stringUtil.equals(entityColumn.type, "Date")>

@@ -258,12 +258,14 @@ public class DXPCloudClientTestrayImporter {
 			return null;
 		}
 
-		Element attachmentElement = Dom4JUtil.getNewElement("attachment");
+		Element attachmentElement = Dom4JUtil.getNewElement("file");
 
 		attachmentElement.addAttribute("name", "Poshi Log");
 		attachmentElement.addAttribute(
 			"url",
-			_testrayS3Bucket.getTestrayS3BaseURL() + key + "?authuser=0");
+			JenkinsResultsParserUtil.combine(
+				_testrayS3Bucket.getTestrayS3BaseURL(), "/", key,
+				"?authuser=0"));
 		attachmentElement.addAttribute("value", key + "?authuser=0");
 
 		return attachmentElement;
@@ -411,8 +413,8 @@ public class DXPCloudClientTestrayImporter {
 			attachmentElement.addAttribute(
 				"url",
 				JenkinsResultsParserUtil.combine(
-					_testrayServerURL, "/reports/", _testrayReleaseName,
-					"/logs/", key, "?authuser=0"));
+					_testrayS3Bucket.getTestrayS3BaseURL(), "/", key,
+					"?authuser=0"));
 			attachmentElement.addAttribute("value", key + "?authuser=0");
 		}
 

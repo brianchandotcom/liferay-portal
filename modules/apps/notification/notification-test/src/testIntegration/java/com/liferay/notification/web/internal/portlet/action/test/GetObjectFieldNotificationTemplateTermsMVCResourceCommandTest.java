@@ -126,22 +126,18 @@ public class GetObjectFieldNotificationTemplateTermsMVCResourceCommandTest {
 			(ByteArrayOutputStream)
 				mockLiferayResourceResponse.getPortletOutputStream();
 
-		JSONObject byteArrayOutputStreamJSONObject =
-			_jsonFactory.createJSONObject(byteArrayOutputStream.toString());
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			byteArrayOutputStream.toString());
 
-		JSONArray jsonArray = (JSONArray)byteArrayOutputStreamJSONObject.get(
-			"terms");
+		JSONArray jsonArray = (JSONArray)jsonObject.get("terms");
 
 		Iterator<JSONObject> iterator = jsonArray.iterator();
 
 		while (iterator.hasNext()) {
-			JSONObject notificationTermJSONObject = iterator.next();
+			JSONObject termJSONObject = iterator.next();
 
-			if (Objects.equals(
-					notificationTermJSONObject.get("termLabel"), "test")) {
-
-				Assert.assertEquals(
-					"[%TEST%]", notificationTermJSONObject.get("termName"));
+			if (Objects.equals(termJSONObject.get("termLabel"), "test")) {
+				Assert.assertEquals("[%TEST%]", termJSONObject.get("termName"));
 			}
 		}
 	}

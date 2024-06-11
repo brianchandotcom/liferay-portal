@@ -10,6 +10,7 @@ import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -61,6 +62,15 @@ public class NotificationRecipientSettingUtil {
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationRecipientSettings) {
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-21580") &&
+				StringUtil.equals(
+					notificationRecipientSetting.getName(),
+					NotificationRecipientSettingConstants.
+						NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS)) {
+
+				continue;
+			}
 
 			Object value = notificationRecipientSetting.getValue();
 

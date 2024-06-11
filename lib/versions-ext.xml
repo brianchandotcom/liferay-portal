@@ -591,6 +591,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/log4j-1.2-api.jar</file-name>
+				<version>2.17.1</version>
+				<project-name>Log4j 1.x Compatibility API</project-name>
+				<project-url>http://logging.apache.org/log4j</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/mail.jar</file-name>
 				<version>1.6.6</version>
 				<project-name>JavaMail</project-name>

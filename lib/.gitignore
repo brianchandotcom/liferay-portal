@@ -50,6 +50,7 @@
 /development/jstl-api.jar
 /development/jstl-impl.jar
 /development/junit.jar
+/development/log4j-1.2-api.jar
 /development/mail.jar
 /development/mariadb.jar
 /development/maven-ant-tasks.jar

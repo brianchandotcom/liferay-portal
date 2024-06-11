@@ -4,6 +4,7 @@
  */
 
 export const STATUS_CODE = {
+	conflict: 409,
 	success: 200,
 	successNoContent: 204,
 };

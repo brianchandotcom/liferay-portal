@@ -61,20 +61,18 @@ public class DisplayPortletTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_company = _companyLocalService.fetchCompany(_group.getCompanyId());
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
-
-		_company = _companyLocalService.fetchCompany(_group.getCompanyId());
 	}
 
 	@Test
 	public void testDoRenderWithResourcePrimKey() throws Exception {
-		KBArticle kbArticle = _addKBArticle(0);
-
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
+
+		KBArticle kbArticle = _addKBArticle(0);
 
 		mockLiferayPortletRenderRequest.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
@@ -111,10 +109,10 @@ public class DisplayPortletTest {
 
 	@Test
 	public void testDoRenderWithURLTitle() throws Exception {
-		KBArticle kbArticle = _addKBArticle(0);
-
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
+
+		KBArticle kbArticle = _addKBArticle(0);
 
 		mockLiferayPortletRenderRequest.setParameter(
 			"urlTitle", kbArticle.getUrlTitle());
@@ -127,18 +125,19 @@ public class DisplayPortletTest {
 	}
 
 	@Test
-	public void testDoRenderWithURLTitleAndParentFolder() throws Exception {
-		KBFolder kbFolder = _addKBFolder();
-
-		KBArticle kbArticle = _addKBArticle(kbFolder.getKbFolderId());
-
+	public void testDoRenderWithURLTitleAndParentKBFolder() throws Exception {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest();
+
+		KBFolder kbFolder = _addKBFolder();
 
 		mockLiferayPortletRenderRequest.setParameter(
 			"kbFolderId", String.valueOf(kbFolder.getKbFolderId()));
 		mockLiferayPortletRenderRequest.setParameter(
 			"kbFolderUrlTitle", kbFolder.getUrlTitle());
+
+		KBArticle kbArticle = _addKBArticle(kbFolder.getKbFolderId());
+
 		mockLiferayPortletRenderRequest.setParameter(
 			"urlTitle", kbArticle.getUrlTitle());
 
@@ -157,7 +156,6 @@ public class DisplayPortletTest {
 			GetterUtil.getBoolean(
 				mockLiferayPortletRenderRequest.getAttribute(
 					_KNOWLEDGE_BASE_EXACT_MATCH)));
-
 		Assert.assertEquals(
 			kbArticle,
 			mockLiferayPortletRenderRequest.getAttribute(
@@ -195,17 +193,18 @@ public class DisplayPortletTest {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest();
 
-		mockLiferayPortletRenderRequest.setParameter(
-			"doAsGroupId", String.valueOf(_group.getGroupId()));
-		mockLiferayPortletRenderRequest.setParameter("mvcPath", "");
+		mockLiferayPortletRenderRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setUser(_company.getGuestUser());
 
-		mockLiferayPortletRenderRequest.setAttribute(WebKeys.LAYOUT, _layout);
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayPortletRenderRequest.setParameter(
+			"doAsGroupId", String.valueOf(_group.getGroupId()));
+		mockLiferayPortletRenderRequest.setParameter("mvcPath", "");
 
 		return mockLiferayPortletRenderRequest;
 	}

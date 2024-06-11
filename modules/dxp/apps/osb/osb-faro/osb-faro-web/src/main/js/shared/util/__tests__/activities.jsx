@@ -1,6 +1,7 @@
 import * as data from 'test/data';
 import {
 	buildLegendItems,
+	formatEvents,
 	formatGroupingTime,
 	formatSessions,
 	getActivityLabel,
@@ -24,6 +25,39 @@ describe('activities', () => {
 			const result = formatGroupingTime(data.getTimestamp());
 
 			expect(result).toMatchSnapshot();
+		});
+	});
+
+	describe('formatEvents', () => {
+		it('should decode canonicalUrl, referrer and url params', () => {
+			const result = formatEvents([
+				{
+					canonicalUrl:
+						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88',
+					name: 'eventName',
+					pageDescription: 'this is a page description',
+					pageTitle: 'this is a page title',
+					referrer:
+						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88',
+					url:
+						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88'
+				}
+			]);
+
+			expect(result).toMatchObject([
+				{
+					attributes: {
+						canonicalUrl: 'http://localhost:7400/新しいサイト',
+						header: 'Event Attributes',
+						referrer: 'http://localhost:7400/新しいサイト',
+						title: 'this is a page title',
+						url: 'http://localhost:7400/新しいサイト'
+					},
+					description: 'this is a page title',
+					subtitle: 'http://localhost:7400/新しいサイト',
+					title: 'eventName'
+				}
+			]);
 		});
 	});
 

@@ -16,6 +16,11 @@ interface createCategoryProps {
 	vocabularyId: number;
 }
 
+interface patchCategoryProps {
+	id: number;
+	name: string;
+}
+
 interface createTagProps {
 	name: string;
 	siteId: string;
@@ -63,6 +68,20 @@ export class HeadlessAdminTaxonomyApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`,
 			{data: {name}}
+		);
+	}
+
+	/**
+	 * It allows update a category name
+	 *
+	 * @param name the new name of the category
+	 * @param id the category id
+	 */
+
+	async patchCategory({id, name}: patchCategoryProps): Promise<{id: number}> {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-categories/${id}`,
+			{name}
 		);
 	}
 

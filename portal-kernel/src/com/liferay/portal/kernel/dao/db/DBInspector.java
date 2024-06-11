@@ -285,7 +285,8 @@ public class DBInspector {
 
 			if (tableName.endsWith("_x_" + companyId) ||
 				tableName.startsWith("L_" + companyId + "_") ||
-				tableName.startsWith("O_" + companyId + "_")) {
+				tableName.startsWith("O_" + companyId + "_") ||
+				tableName.startsWith("R_")) {
 
 				return true;
 			}

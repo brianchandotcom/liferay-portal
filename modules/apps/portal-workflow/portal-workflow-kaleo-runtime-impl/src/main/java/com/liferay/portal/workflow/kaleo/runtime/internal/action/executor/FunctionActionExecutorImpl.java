@@ -13,8 +13,6 @@ import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -275,9 +273,6 @@ public class FunctionActionExecutorImpl
 
 		return entryDTOJSONObject;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FunctionActionExecutorImpl.class);
 
 	private String _actionExecutorKey;
 	private long _companyId;

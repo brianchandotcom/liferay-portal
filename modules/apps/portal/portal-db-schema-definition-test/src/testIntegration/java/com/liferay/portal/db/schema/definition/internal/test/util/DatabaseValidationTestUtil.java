@@ -18,7 +18,7 @@ import org.junit.Assert;
  */
 public class DatabaseValidationTestUtil {
 
-	public static void assertDatabaseDumpMirrorsCurrentDatabase(String dumpPath)
+	public static void assertDatabaseDumpMirrorsCurrentDatabase(String path)
 		throws Exception {
 
 		DatabaseTestUtil.createSchema(_COPY_SCHEMA_NAME);
@@ -30,9 +30,9 @@ public class DatabaseValidationTestUtil {
 				_COPY_SCHEMA_NAME);
 
 			DatabaseTestUtil.importFileTo(
-				new File(dumpPath, "tables.sql"), targetDataSource);
+				new File(path, "tables.sql"), targetDataSource);
 			DatabaseTestUtil.importFileTo(
-				new File(dumpPath, "indexes.sql"), targetDataSource);
+				new File(path, "indexes.sql"), targetDataSource);
 
 			_assertSameIndexesStructure(targetDataSource);
 			_assertSameTablesStructure(targetDataSource);

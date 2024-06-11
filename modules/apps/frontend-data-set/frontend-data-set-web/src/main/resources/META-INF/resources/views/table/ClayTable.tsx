@@ -143,7 +143,9 @@ export function ClayTable({
 
 							// @ts-ignore
 
-							return <Cell key="select" width="51px" />;
+							return (
+								<Cell key="select" scope="col" width="51px" />
+							);
 						}
 
 						const title =
@@ -152,7 +154,12 @@ export function ClayTable({
 								: Liferay.Language.get('clear-selection');
 
 						return (
-							<Cell key="select" textValue={title} width="51px">
+							<Cell
+								key="select"
+								scope="col"
+								textValue={title}
+								width="51px"
+							>
 								<ClayCheckbox
 									checked={!!selectedItemsValue.length}
 									indeterminate={
@@ -471,6 +478,7 @@ function HeadCellResizer({
 		<Cell
 			{...otherProps}
 			ref={cellRef}
+			scope="col"
 			style={{width: width || 'auto'}}
 			width={width || 'auto'}
 		>

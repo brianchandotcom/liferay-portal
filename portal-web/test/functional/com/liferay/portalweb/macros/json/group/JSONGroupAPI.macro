@@ -520,6 +520,10 @@ definition {
 			token = ${token});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
+		if (${groupName} == "Global") {
+			var groupName = ${companyId};
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-group \
 				-u ${userLoginInfo} \

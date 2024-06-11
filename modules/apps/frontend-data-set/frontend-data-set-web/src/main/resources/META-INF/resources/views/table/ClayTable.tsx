@@ -290,10 +290,11 @@ export function ClayTable({
 											if (
 												field.inlineEditSettings?.type
 											) {
-												InputRenderer = getInputRendererById(
-													field.inlineEditSettings
-														.type
-												);
+												InputRenderer =
+													getInputRendererById(
+														field.inlineEditSettings
+															.type
+													);
 											}
 
 											const valuePath = Array.isArray(
@@ -304,7 +305,7 @@ export function ClayTable({
 															property === 'LANG'
 																? Liferay.ThemeDisplay.getDefaultLanguageId()
 																: property
-												  )
+													)
 												: [field.fieldName];
 
 											const rootPropertyName =
@@ -346,10 +347,11 @@ export function ClayTable({
 											);
 										}
 
-										const localizedValue: ILocalizedItemDetails | null = getLocalizedValue(
-											item,
-											cell.fieldName
-										);
+										const localizedValue: ILocalizedItemDetails | null =
+											getLocalizedValue(
+												item,
+												cell.fieldName
+											);
 
 										const valuePath =
 											localizedValue?.valuePath ??
@@ -417,7 +419,7 @@ function HeadCellResizer({
 
 	const [{modifiedFields}, viewsDispatch]: [
 		IViewsContext,
-		TViewsContextDispatch
+		TViewsContextDispatch,
 	] = useContext(ViewsContext);
 
 	const cellRef = useRef<HTMLTableCellElement>(null);
@@ -538,6 +540,7 @@ function AddActions() {
 					disabled={loading || !itemHasChanged}
 					onClick={() => {
 						setLoading(true);
+
 						createInlineItem().finally(() => {
 							if (isMounted()) {
 								setLoading(false);

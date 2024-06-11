@@ -31,7 +31,6 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
-import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -83,6 +82,7 @@ import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
+import com.liferay.object.validation.rule.util.ObjectValidationRuleThreadLocal;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
@@ -3764,7 +3764,8 @@ public class ObjectEntryLocalServiceTest {
 
 	private void _clearExecutedObjectValidationIds() throws Exception {
 		ThreadLocal<Set<Long>> threadLocal = ReflectionTestUtil.getFieldValue(
-			ObjectEntryThreadLocal.class, "_executedObjectValidationRuleIds");
+			ObjectValidationRuleThreadLocal.class,
+			"_executedObjectValidationRuleIds");
 
 		threadLocal.set(new HashSet<>());
 	}

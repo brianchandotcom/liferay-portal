@@ -45,6 +45,11 @@ const COMMANDS = {
 		parameters: '',
 		script: './tsconfig/index.mjs',
 	},
+	'setup': {
+		description: 'setups node-scripts',
+		parameters: '',
+		script: './setup.mjs',
+	},
 };
 
 const command = process.argv[2];

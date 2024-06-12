@@ -1,0 +1,44 @@
+{
+	"@generated": "82948fe9eb4e89367958f4aff3da7fe8824d445a",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"declarationDir": "../../../../../../../../.tsc/types",
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"paths": {
+			"@liferay/frontend-icons-web": [
+				"../../../../../../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"frontend-js-web": [
+				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
+		},
+		"rootDir": "../../../../../../../..",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-taglib-clay-sample-web.tsbuildinfo",
+		"typeRoots": [
+			"../../../../../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../../../../../global.d.ts"
+	],
+	"references": [
+		{
+			"path": "../../../../../../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
+	]
+}

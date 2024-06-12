@@ -1,0 +1,38 @@
+{
+	"@generated": "71a763c6391533caae7b6a134aa7ca216435df82",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"declarationDir": "../../../../../../../../.tsc/types",
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"paths": {
+			"frontend-js-web": [
+				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
+		},
+		"rootDir": "../../../../../../../..",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/dynamic-data-mapping-data-provider-web.tsbuildinfo",
+		"typeRoots": [
+			"../../../../../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../../../../../global.d.ts"
+	],
+	"references": [
+		{
+			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
+	]
+}

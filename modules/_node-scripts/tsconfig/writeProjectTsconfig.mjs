@@ -12,6 +12,8 @@ import sortObjectKeys from '../util/sortObjectKeys.mjs';
 import stringifyJson from '../util/stringifyJson.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 
+const GENERATED = '@generated';
+
 export default async function writeProjectTsconfig(
 	projectsEntryPoints,
 	projectDependencies,
@@ -92,15 +94,24 @@ export default async function writeProjectTsconfig(
 		references,
 	};
 
-	json['@generated'] = hash(json);
+	json[GENERATED] = hash(json);
 
 	sortObjectKeys(json);
 
-	await fs.writeFile(
+	const contents = await fs.readFile(
 		path.join(srcPath, 'tsconfig.json'),
-		stringifyJson(json),
-		'utf-8'
+		'utf8'
 	);
+
+	const previousConfig = JSON.parse(contents.trim() ? contents : '{}');
+
+	if (json[GENERATED] !== previousConfig[GENERATED]) {
+		const configPath = path.join(srcPath, 'tsconfig.json');
+
+		await fs.writeFile(configPath, stringifyJson(json), 'utf-8');
+
+		console.log(`Generated new tsconfig.json at ${configPath}`);
+	}
 }
 
 function hash(config) {
@@ -109,7 +120,7 @@ function hash(config) {
 	shasum.update(
 		JSON.stringify({
 			...config,
-			['@generated']: null,
+			[GENERATED]: null,
 		})
 	);
 

@@ -6,6 +6,7 @@
 import {$} from 'execa';
 
 import runTsc from '../tsc/index.mjs';
+import generateTscConfig from '../tsconfig/index.mjs';
 
 export async function checkTsc() {
 	let commitHash;
@@ -16,6 +17,9 @@ export async function checkTsc() {
 
 		commitHash = stdout;
 	}
+
+	console.log('Validating tsconfig files...');
+	await generateTscConfig();
 
 	await runTsc(commitHash);
 

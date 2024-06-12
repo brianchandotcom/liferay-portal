@@ -75,6 +75,8 @@ export default async function format(fix) {
 
 	filepaths = await filterChangedFiles(filepaths);
 
+	console.log(`Formatting ${filepaths.length} files`);
+
 	const [eslintConfig, prettierConfig, stylelintConfig] = await Promise.all([
 		getEslintConfig(rootDir),
 		getPrettierConfig(rootDir),

@@ -33,7 +33,7 @@ type DataLayouRow = {
 		{
 			columnSize: number;
 			fieldNames: string[];
-		}
+		},
 	];
 };
 
@@ -43,7 +43,7 @@ type DataLayout = {
 			dataLayoutRows: DataLayouRow[];
 			description: {[keys: string]: string};
 			title: {[keys: string]: string};
-		}
+		},
 	];
 	name: {[keys: string]: string};
 	paginationMode: 'single-page';

@@ -16,9 +16,8 @@ test('Teardown: Delete site with required data for Web Experience tests', async 
 }) => {
 	const apiHelpers = new ApiHelpers(backendPage);
 
-	const response = await apiHelpers.headlessSite.deleteSiteByERC(
-		WEM_SITE_ERC
-	);
+	const response =
+		await apiHelpers.headlessSite.deleteSiteByERC(WEM_SITE_ERC);
 
 	await expect(response).toBeOK();
 });

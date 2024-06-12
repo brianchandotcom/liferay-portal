@@ -70,7 +70,7 @@ export class JournalPage {
 		const target = structureName
 			? this.page.getByRole('menuitem', {
 					name: structureName,
-			  })
+				})
 			: this.createBasicWebContentLink;
 
 		await clickAndExpectToBeVisible({

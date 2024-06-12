@@ -37,9 +37,8 @@ test('LPD-15256 Approved and scheduled web contents should be displayed in the "
 	const scheduledWebContentTitle = 'Scheduled Web Content';
 
 	async function _addBasicWebContents(site: Site) {
-		const contentStructureId = await getBasicWebContentStructureId(
-			apiHelpers
-		);
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
 
 		await addApprovedStructuredContent({
 			apiHelpers,

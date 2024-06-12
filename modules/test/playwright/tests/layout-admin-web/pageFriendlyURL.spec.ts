@@ -25,9 +25,10 @@ test('This is a test for LPD-21554. Some page names result in 404 friendly URLs.
 	apiHelpers,
 	page,
 }) => {
-	const company = await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-		'liferay.com'
-	);
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
 
 	const group = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
 		company.companyId,

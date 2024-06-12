@@ -25,9 +25,8 @@ test('LPD-15231 Escape account name on admin order details page', async ({
 }) => {
 	await page.goto('/');
 
-	const site = await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-		'guest'
-	);
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,

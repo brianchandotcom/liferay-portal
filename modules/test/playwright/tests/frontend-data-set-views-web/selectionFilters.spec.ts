@@ -191,9 +191,8 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 			await fragmentTest.step(
 				'Create a new selection filter',
 				async () => {
-					const picklist = await picklistApiHelpers.getPicklist(
-						picklistName
-					);
+					const picklist =
+						await picklistApiHelpers.getPicklist(picklistName);
 
 					await dataSetManagerApiHelpers.createDataSetSelectionFilter(
 						{

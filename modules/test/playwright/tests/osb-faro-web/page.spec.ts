@@ -32,9 +32,10 @@ export const test = mergeTests(
 );
 
 const createSitePage = async function (apiHelpers, pageTitle) {
-	const company = await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-		'liferay.com'
-	);
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
 
 	const group = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
 		company.companyId,

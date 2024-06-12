@@ -95,9 +95,8 @@ test('allows adding a Collection Display with a manual collection into another C
 
 	// Expect second collection to display only Sample 01 content that times
 
-	const secondCollection = await pageEditorPage.getFragment(
-		secondCollectionId
-	);
+	const secondCollection =
+		await pageEditorPage.getFragment(secondCollectionId);
 
 	await expect(secondCollection.getByText('Sample 01')).toHaveCount(count);
 

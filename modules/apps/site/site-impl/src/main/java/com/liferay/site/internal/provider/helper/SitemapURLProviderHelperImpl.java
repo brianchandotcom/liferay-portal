@@ -9,7 +9,6 @@ import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,55 +46,52 @@ public class SitemapURLProviderHelperImpl implements SitemapURLProviderHelper {
 			return true;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-187793")) {
-			LayoutSEOEntry layoutSEOEntry =
-				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId());
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
 
-			if ((layoutSEOEntry != null) &&
-				layoutSEOEntry.isCanonicalURLEnabled()) {
+		if ((layoutSEOEntry != null) &&
+			layoutSEOEntry.isCanonicalURLEnabled()) {
+
+			return true;
+		}
+
+		Map<Locale, String> robotsMap = layout.getRobotsMap();
+
+		for (Map.Entry<Locale, String> entry : robotsMap.entrySet()) {
+			String value = entry.getValue();
+
+			if (StringUtil.containsIgnoreCase(
+					value, "nofollow", StringPool.BLANK) ||
+				StringUtil.containsIgnoreCase(
+					value, "noindex", StringPool.BLANK)) {
+
+				return true;
+			}
+		}
+
+		long parentPlid = layout.getParentPlid();
+
+		while (parentPlid > 0) {
+			Layout parentLayout = _layoutLocalService.fetchLayout(parentPlid);
+
+			if (parentLayout == null) {
+				break;
+			}
+
+			typeSettingsUnicodeProperties =
+				parentLayout.getTypeSettingsProperties();
+
+			if (!GetterUtil.getBoolean(
+					typeSettingsUnicodeProperties.getProperty(
+						"sitemap-include-child-layouts"),
+					true)) {
 
 				return true;
 			}
 
-			Map<Locale, String> robotsMap = layout.getRobotsMap();
-
-			for (Map.Entry<Locale, String> entry : robotsMap.entrySet()) {
-				String value = entry.getValue();
-
-				if (StringUtil.containsIgnoreCase(
-						value, "nofollow", StringPool.BLANK) ||
-					StringUtil.containsIgnoreCase(
-						value, "noindex", StringPool.BLANK)) {
-
-					return true;
-				}
-			}
-
-			long parentPlid = layout.getParentPlid();
-
-			while (parentPlid > 0) {
-				Layout parentLayout = _layoutLocalService.fetchLayout(
-					parentPlid);
-
-				if (parentLayout == null) {
-					break;
-				}
-
-				typeSettingsUnicodeProperties =
-					parentLayout.getTypeSettingsProperties();
-
-				if (!GetterUtil.getBoolean(
-						typeSettingsUnicodeProperties.getProperty(
-							"sitemap-include-child-layouts"),
-						true)) {
-
-					return true;
-				}
-
-				parentPlid = parentLayout.getParentPlid();
-			}
+			parentPlid = parentLayout.getParentPlid();
 		}
 
 		return false;

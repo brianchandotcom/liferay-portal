@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -76,7 +75,6 @@ public class LayoutSitemapURLProviderTest {
 		LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
-	@FeatureFlags("LPS-187793")
 	@Test
 	public void testLayoutSitemapURLProviderCanonicalURLEnabled()
 		throws Exception {
@@ -205,7 +203,6 @@ public class LayoutSitemapURLProviderTest {
 		}
 	}
 
-	@FeatureFlags("LPS-187793")
 	@Test
 	public void testLayoutSitemapURLProviderRobotsWithNoFollow()
 		throws Exception {
@@ -216,7 +213,6 @@ public class LayoutSitemapURLProviderTest {
 			).build());
 	}
 
-	@FeatureFlags("LPS-187793")
 	@Test
 	public void testLayoutSitemapURLProviderRobotsWithNoFollowNondefaultLanguage()
 		throws Exception {
@@ -229,7 +225,6 @@ public class LayoutSitemapURLProviderTest {
 			).build());
 	}
 
-	@FeatureFlags("LPS-187793")
 	@Test
 	public void testLayoutSitemapURLProviderRobotsWithNoIndex()
 		throws Exception {
@@ -240,7 +235,6 @@ public class LayoutSitemapURLProviderTest {
 			).build());
 	}
 
-	@FeatureFlags("LPS-187793")
 	@Test
 	public void testLayoutSitemapURLProviderRobotsWithNoIndexNondefaultLanguage()
 		throws Exception {

@@ -111,10 +111,20 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			_cpInstanceUnitOfMeasureLocalService.
 				getActiveCPInstanceUnitOfMeasures(cpInstance.getCPInstanceId());
 
-		JSONArray jsonArray = CPJSONUtil.toJSONArray(
-			_cpDefinitionOptionRelLocalService.
-				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
-					cpInstance.getCPInstanceId()));
+		JSONArray jsonArray = null;
+
+		JSONArray skuOptionsJSONArray =
+			skuDTOConverterContext.getSkuOptionsJSONArray();
+
+		if (JSONUtil.isEmpty(skuOptionsJSONArray)) {
+			jsonArray = CPJSONUtil.toJSONArray(
+				_cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+						cpInstance.getCPInstanceId()));
+		}
+		else {
+			jsonArray = skuOptionsJSONArray;
+		}
 
 		SkuOption[] skuOptionsArray = _getSkuOptions(
 			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(

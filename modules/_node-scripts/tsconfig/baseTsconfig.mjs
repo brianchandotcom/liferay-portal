@@ -4,7 +4,8 @@
  */
 
 export default {
-	compilerOptions: {
+	'@readonly': '** AUTO-GENERATED: DO NOT EDIT **',
+	'compilerOptions': {
 		allowSyntheticDefaultImports: true,
 		baseUrl: '.',
 		checkJs: false,

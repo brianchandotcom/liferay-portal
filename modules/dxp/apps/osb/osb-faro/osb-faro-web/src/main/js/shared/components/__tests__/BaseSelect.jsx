@@ -60,6 +60,8 @@ describe('BaseSelect', () => {
 			/>
 		);
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(dataSourceFn).not.toHaveBeenCalled();
 
 		fireEvent.click(container.querySelector('.input-group'));
@@ -85,6 +87,8 @@ describe('BaseSelect', () => {
 			/>
 		);
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(
 			container.querySelector('.selected-item-container').innerHTML
 		).toEqual('foo');
@@ -108,7 +112,7 @@ describe('BaseSelect', () => {
 	});
 
 	it('should render w/ menu title', async () => {
-		const {getByText} = render(
+		const {container, getByText} = render(
 			<BaseSelect
 				dataSourceFn={() => Promise.resolve([{name: 'test'}])}
 				focusOnInit
@@ -117,6 +121,8 @@ describe('BaseSelect', () => {
 				onFocus={noop}
 			/>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Test Menu Title')).toBeInTheDocument();
 	});
@@ -187,6 +193,8 @@ describe('BaseSelect', () => {
 			</ApolloProvider>
 		);
 
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
@@ -205,6 +213,8 @@ describe('BaseSelect', () => {
 				</Provider>
 			</ApolloProvider>
 		);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(
 			container.querySelector('.selected-item-container').innerHTML

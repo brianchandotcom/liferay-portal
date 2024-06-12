@@ -3,7 +3,6 @@ import mockDate from 'test/mock-date';
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {cleanup, render} from '@testing-library/react';
-import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -13,7 +12,7 @@ describe('InterestDetails', () => {
 
 	afterEach(cleanup);
 
-	it('should render', async () => {
+	it('should render', () => {
 		const {container} = render(
 			<BrowserRouter>
 				<InterestDetails
@@ -24,8 +23,6 @@ describe('InterestDetails', () => {
 				/>
 			</BrowserRouter>
 		);
-
-		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

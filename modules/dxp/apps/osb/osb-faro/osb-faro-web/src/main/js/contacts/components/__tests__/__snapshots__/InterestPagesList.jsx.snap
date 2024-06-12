@@ -50,14 +50,14 @@ exports[`InterestPagesList should render 1`] = `
             >
               <a
                 class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                href="/?field=uniqueVisitsCount&page=1&sortOrder=ASC"
+                href="/?field=url&page=1&sortOrder=DESC"
               >
                 <svg
-                  class="lexicon-icon lexicon-icon-order-arrow-descending icon-root"
+                  class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
                   role="presentation"
                 >
                   <use
-                    href="#order-arrow-descending"
+                    href="#order-arrow-ascending"
                   />
                 </svg>
               </a>
@@ -129,40 +129,31 @@ exports[`InterestPagesList should render 1`] = `
             >
               <a
                 class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                href="/?field=url&page=1&sortOrder=ASC"
+                href="/?field=url&page=1&sortOrder=DESC"
               >
                 <span
                   class="text-truncate"
                 >
                   URL
                 </span>
+                <span
+                  class="inline-item inline-item-after"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
+                    role="presentation"
+                  >
+                    <use
+                      href="#order-arrow-up"
+                    />
+                  </svg>
+                </span>
               </a>
             </th>
             <th
               class="table-head-title view-count table-column-text-end"
             >
-              <a
-                class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                href="/?field=uniqueVisitsCount&page=1&sortOrder=ASC"
-              >
-                <span
-                  class="text-truncate"
-                >
-                  Views
-                </span>
-                <span
-                  class="inline-item inline-item-after"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order-arrow-down icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order-arrow-down"
-                    />
-                  </svg>
-                </span>
-              </a>
+              Views
             </th>
           </tr>
         </thead>

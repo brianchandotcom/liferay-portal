@@ -2,7 +2,7 @@ import * as data from 'test/data';
 import EntityDetailsList from '../EntityDetailsList';
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
-import {fromJS} from 'immutable';
+import {fromJS, Map} from 'immutable';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
@@ -27,7 +27,15 @@ const DefaultComponent = props => (
 );
 
 describe('EntityDetailsList', () => {
-	it('should render', async () => {
+	it('should render', () => {
+		const {container} = render(
+			<DefaultComponent demographicsIMap={new Map()} />
+		);
+
+		expect(container).toMatchSnapshot();
+	});
+
+	it('should render with items', async () => {
 		const {container} = render(
 			<DefaultComponent
 				demographicsIMap={fromJS(data.mockAccountDetails())}

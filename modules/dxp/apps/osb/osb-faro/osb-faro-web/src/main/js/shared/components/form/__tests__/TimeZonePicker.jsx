@@ -1,8 +1,9 @@
 import Form from 'shared/components/form';
 import React from 'react';
 import TimeZonePicker from '../TimeZonePicker';
-import {render, waitFor} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {TimeZone} from 'shared/util/records';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -30,9 +31,7 @@ describe('TimeZonePicker', () => {
 		);
 
 		jest.runAllTimers();
-
-		await waitFor(() => {});
-
+		await waitForLoadingToBeRemoved(container);
 		expect(container).toMatchSnapshot();
 	});
 });

@@ -4,8 +4,9 @@ import React from 'react';
 import TimeZoneSelectionModal from '../TimeZoneSelectionModal';
 import {mockGetDateNow} from 'test/mock-date';
 import {Provider} from 'react-redux';
-import {render, waitFor} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -23,7 +24,7 @@ describe('TimeZoneSelectionModal', () => {
 
 		jest.runAllTimers();
 
-		await waitFor(() => {});
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});

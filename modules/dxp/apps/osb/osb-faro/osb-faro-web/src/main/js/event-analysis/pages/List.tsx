@@ -56,8 +56,6 @@ const List = () => {
 
 			<BasePage.Body>
 				<StatesRenderer empty={empty} error={error} loading={loading}>
-					<StatesRenderer.Loading />
-
 					<StatesRenderer.Empty
 						description={
 							<>

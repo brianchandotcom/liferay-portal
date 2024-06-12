@@ -1,10 +1,11 @@
 import * as data from 'test/data';
 import BaseResults from '../BaseResults';
 import React from 'react';
-import {cleanup, fireEvent, render, waitFor} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {noop, times} from 'lodash';
 import {SelectionProvider} from 'shared/context/selection';
 import {StaticRouter} from 'react-router';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -23,7 +24,7 @@ const DefaultComponent = props => (
 describe('BaseResults', () => {
 	afterEach(cleanup);
 
-	it('should render', async () => {
+	it('should render', () => {
 		const {container} = render(
 			<DefaultComponent
 				dataSourceFn={() =>
@@ -34,13 +35,11 @@ describe('BaseResults', () => {
 			/>
 		);
 
-		await waitFor(() => {});
-
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render w/ an error display', async () => {
-		const {getByText} = render(
+		const {container, getByText} = render(
 			<DefaultComponent
 				dataSourceFn={() => Promise.reject({})}
 				groupId='23'
@@ -48,13 +47,15 @@ describe('BaseResults', () => {
 			/>
 		);
 
-		await waitFor(() => {});
+		jest.runAllTimers();
 
-		expect(getByText('An unexpected error occurred.')).toBeInTheDocument();
+		await waitForLoadingToBeRemoved(container);
+
+		expect(getByText('An unexpected error occurred.')).toBeInTheDocument;
 	});
 
 	it('should render w/a no results display', async () => {
-		const {getByText} = render(
+		const {container, getByText} = render(
 			<DefaultComponent
 				dataSourceFn={() => Promise.resolve({items: [], total: 0})}
 				groupId='23'
@@ -63,7 +64,9 @@ describe('BaseResults', () => {
 			/>
 		);
 
-		await waitFor(() => {});
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('There are no results found.')).toBeInTheDocument();
 	});
@@ -81,13 +84,14 @@ describe('BaseResults', () => {
 			/>
 		);
 
+		jest.runAllTimers();
 		expect(container.querySelector('input.input-root').value).toHaveLength(
 			MAX_LENGTH
 		);
 	});
 
 	it('should not render a subnav if there is a datasourceFn error', async () => {
-		const {queryByText} = render(
+		const {container, queryByText} = render(
 			<DefaultComponent
 				dataSourceFn={() => Promise.reject(new Error())}
 				groupId='23'
@@ -96,7 +100,9 @@ describe('BaseResults', () => {
 			/>
 		);
 
-		await waitFor(() => {});
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('subnav content')).toBeNull();
 	});
@@ -116,13 +122,15 @@ describe('BaseResults', () => {
 			/>
 		);
 
-		await waitFor(() => {});
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container.querySelector('.search input').disabled).toBe(true);
 	});
 
 	it('should not include disabled items when calculating whether all the items are checked', async () => {
-		const {getByTestId} = render(
+		const {container, getByTestId} = render(
 			<DefaultComponent
 				checkDisabled={item => item.id === '0'}
 				dataSourceFn={() =>
@@ -136,9 +144,15 @@ describe('BaseResults', () => {
 
 		const selectAllCheckbox = getByTestId('select-all-checkbox');
 
-		await waitFor(() => {});
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(selectAllCheckbox);
+
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(selectAllCheckbox.checked).toBe(true);
 	});

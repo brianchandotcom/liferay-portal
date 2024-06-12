@@ -11,6 +11,7 @@ import {mockMemberUser} from 'test/data';
 import {OnboardingContext} from 'shared/context/onboarding';
 import {open} from 'shared/actions/modals';
 import {Provider} from 'react-redux';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -75,7 +76,9 @@ describe('WithOnboarding', () => {
 			Promise.resolve(mockMemberUser('23'))
 		);
 
-		render(<DefaultComponent />);
+		const {container} = render(<DefaultComponent />);
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(open).not.toBeCalled();
 	});

@@ -5,9 +5,8 @@ import {ACTIVITY_KEY, RelationalOperators} from '../../utils/constants';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
 import {Map} from 'immutable';
-import {Property, Segment} from 'shared/util/records';
+import {Property} from 'shared/util/records';
 import {Provider} from 'react-redux';
-import {ReferencedObjectsProvider} from '../../context/referencedObjects';
 
 jest.unmock('react-dom');
 
@@ -38,17 +37,7 @@ const defaultProps = {
 
 const DefaultComponent = props => (
 	<Provider store={mockStore()}>
-		<ReferencedObjectsProvider
-			segment={
-				new Segment({
-					referencedObjects: new Map({
-						assets: new Map({'123_title': 'test'})
-					})
-				})
-			}
-		>
-			<BehaviorInput {...defaultProps} {...props} />
-		</ReferencedObjectsProvider>
+		<BehaviorInput {...defaultProps} {...props} />
 	</Provider>
 );
 
@@ -78,11 +67,7 @@ describe('BehaviorInput', () => {
 	it('should render w/ data', () => {
 		const {container} = render(
 			<DefaultComponent
-				referencedAssetsIMap={
-					new Map({
-						assets: new Map({'123_title': 'test'})
-					})
-				}
+				referencedAssetsIMap={new Map({123123123: new Map()})}
 				valid={{asset: true, occurenceCount: true}}
 				value={mockValue.set('value', 123)}
 			/>

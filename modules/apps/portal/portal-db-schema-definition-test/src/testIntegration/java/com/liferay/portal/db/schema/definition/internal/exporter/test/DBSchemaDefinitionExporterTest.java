@@ -66,14 +66,12 @@ public class DBSchemaDefinitionExporterTest {
 	public void setUp() throws Exception {
 		_databaseType = String.valueOf(DBManagerUtil.getDBType());
 
-		File folder = FileUtil.createTempFolder();
-
-		_path = folder.getAbsolutePath();
+		_folder = FileUtil.createTempFolder();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		FileUtil.deltree(_path);
+		FileUtil.deltree(_folder);
 
 		Files.deleteIfExists(ConfigurationTestUtil.getConfigurationPath(_PID));
 	}
@@ -86,10 +84,12 @@ public class DBSchemaDefinitionExporterTest {
 				LoggerTestUtil.INFO)) {
 
 			ConfigurationTestUtil.deployConfiguration(
-				_configurationAdmin, _databaseType, _path, _PID);
+				_configurationAdmin, _databaseType, _folder.getAbsolutePath(),
+				_PID);
 
 			_assertImportDBSchemaDefinition(
-				new File(_path, "tables.sql"), new File(_path, "indexes.sql"));
+				new File(_folder, "tables.sql"),
+				new File(_folder, "indexes.sql"));
 
 			Assert.assertTrue(
 				!Files.exists(
@@ -112,10 +112,10 @@ public class DBSchemaDefinitionExporterTest {
 			}
 
 			Assert.assertEquals(
-				"Database schema definition export started",
-				logMessages.get(0));
+				"Start database schema definition export", logMessages.get(0));
 			Assert.assertEquals(
-				"Database schema definition export finished",
+				"Finished database schema definition export to " +
+					_folder.getAbsolutePath(),
 				logMessages.get(1));
 		}
 	}
@@ -189,7 +189,7 @@ public class DBSchemaDefinitionExporterTest {
 	private ConfigurationAdmin _configurationAdmin;
 
 	private String _databaseType;
-	private String _path;
+	private File _folder;
 
 	@Inject
 	private PersistenceManager _persistenceManager;

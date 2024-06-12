@@ -80,7 +80,7 @@ public class DBSchemaDefinitionExporter {
 
 	private void _exportDBSchemaDefinition(Map<String, Object> properties) {
 		if (_log.isInfoEnabled()) {
-			_log.info("Database schema definition export started");
+			_log.info("Start database schema definition export");
 		}
 
 		try {
@@ -100,19 +100,18 @@ public class DBSchemaDefinitionExporter {
 				sqlRecorder
 			).process();
 
+			File file = new File(
+				dbSchemaDefinitionExporterConfiguration.path());
+
 			FileUtil.write(
-				new File(
-					dbSchemaDefinitionExporterConfiguration.path(),
-					"indexes.sql"),
-				sqlRecorder.getIndexesSQL());
+				new File(file, "indexes.sql"), sqlRecorder.getIndexesSQL());
 			FileUtil.write(
-				new File(
-					dbSchemaDefinitionExporterConfiguration.path(),
-					"tables.sql"),
-				sqlRecorder.getTablesSQL());
+				new File(file, "tables.sql"), sqlRecorder.getTablesSQL());
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Database schema definition export finished");
+				_log.info(
+					"Finished database schema definition export to " +
+						file.getAbsolutePath());
 			}
 		}
 		catch (Exception exception) {

@@ -22,6 +22,10 @@ export class ProductDetailsPage {
 	readonly pageTitle: Locator;
 	readonly priceField: (price: string) => Promise<Locator>;
 	readonly promoPriceField: (promoPrice: string) => Promise<Locator>;
+	readonly selectOption: (
+		optionLabel: string,
+		optionName: string
+	) => Promise<string[]>;
 	readonly shortDescriptionField: (
 		shortDescription: string
 	) => Promise<Locator>;
@@ -53,11 +57,13 @@ export class ProductDetailsPage {
 		this.promoPriceField = async (promoPrice: string) => {
 			return page.getByText(promoPrice);
 		};
-		this.skuField = async (sku: string) => {
-			return page.getByText(sku);
-		};
+		this.selectOption = (optionLabel: string, optionName: string) =>
+			page.getByLabel(optionName).selectOption({label: optionLabel});
 		this.shortDescriptionField = async (shortDescription: string) => {
 			return page.getByText(shortDescription);
+		};
+		this.skuField = async (sku: string) => {
+			return page.getByText(sku);
 		};
 		this.uomTable = async (cellValue: string) => {
 			return page.getByRole('cell', {name: cellValue});

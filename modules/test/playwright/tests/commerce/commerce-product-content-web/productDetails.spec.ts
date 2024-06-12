@@ -9,6 +9,8 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -343,4 +345,126 @@ test('View product details page', async ({
 	await expect(await productDetailsPage.uomTable('Unit')).toBeVisible();
 
 	await expect(await productDetailsPage.priceField('$ 50.00')).toBeVisible();
+});
+
+test('LPD-18710 Price is correctly calculated for bundle product with options not marked as sku contributor', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceLayoutsPage,
+	page,
+	productDetailsPage,
+}) => {
+	const siteName = getRandomString();
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: siteName,
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		siteGroupId: site.id,
+	});
+
+	const option = await apiHelpers.headlessCommerceAdminCatalog.postOption(
+		'select',
+		getRandomString(),
+		'Color',
+		1
+	);
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: getRandomString()},
+		skus: [
+			{
+				cost: 0,
+				price: 10,
+				published: true,
+				purchasable: true,
+				sku: 'Sku' + getRandomInt(),
+			},
+		],
+	});
+
+	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: getRandomString()},
+		skus: [
+			{
+				cost: 0,
+				price: 20,
+				published: true,
+				purchasable: true,
+				sku: 'Sku' + getRandomInt(),
+			},
+		],
+	});
+
+	const productBundleName = getRandomString();
+
+	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: productBundleName},
+		productOptions: [
+			{
+				fieldType: 'select',
+				key: option.key,
+				name: option.name,
+				optionId: option.id,
+				priceType: 'dynamic',
+				priority: 1,
+				productOptionValues: [
+					{
+						key: 'black',
+						name: {
+							en_US: 'Black',
+						},
+						priority: 1,
+						quantity: 1,
+						skuId: product1.skus[0].id,
+					},
+					{
+						key: 'white',
+						name: {
+							en_US: 'White',
+						},
+						priority: 2,
+						quantity: 1,
+						skuId: product2.skus[0].id,
+					},
+				],
+			},
+		],
+	});
+
+	await applicationsMenuPage.goToSite(siteName);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('View product details');
+
+	await page.goto(`/web/${site.name}`);
+
+	await productDetailsPage.addProductDetailsWidget();
+
+	await page.goto(`/web/${site.name}/p/${productBundleName}`);
+
+	await expect(
+		await productDetailsPage.optionSelector('Color')
+	).toBeVisible();
+	await expect(await productDetailsPage.priceField('$ 0.00')).toBeVisible();
+
+	await productDetailsPage.selectOption('Black', 'Color');
+
+	await expect(await productDetailsPage.priceField('$ 10.00')).toBeVisible();
+
+	await productDetailsPage.selectOption('White', 'Color');
+
+	await expect(await productDetailsPage.priceField('$ 20.00')).toBeVisible();
+
+	await productDetailsPage.selectOption('Choose an Option', 'Color');
+
+	await expect(await productDetailsPage.priceField('$ 0.00')).toBeVisible();
 });

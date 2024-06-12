@@ -88,8 +88,9 @@ const RoutineArchived = () => {
 													className={classNames(
 														'label-chart symbol',
 														{
-															[task.dueStatus.key.toLowerCase()]: task
-																.dueStatus.key,
+															[task.dueStatus.key.toLowerCase()]:
+																task.dueStatus
+																	.key,
 														}
 													)}
 													symbol="circle"
@@ -189,11 +190,14 @@ const RoutineArchived = () => {
 										'incomplete',
 									]}
 									items={{
-										blocked: build.caseResultBlocked as number,
+										blocked:
+											build.caseResultBlocked as number,
 										failed: build.caseResultFailed as number,
-										incomplete: build.caseResultIncomplete as number,
+										incomplete:
+											build.caseResultIncomplete as number,
 										passed: build.caseResultPassed as number,
-										test_fix: build.caseResultTestFix as number,
+										test_fix:
+											build.caseResultTestFix as number,
 									}}
 								/>
 							),

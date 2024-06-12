@@ -105,7 +105,8 @@ const App = () => {
 									return (
 										<div
 											className={classNames('mb-2 row', {
-												'justify-content-end': !isPaidApp,
+												'justify-content-end':
+													!isPaidApp,
 											})}
 											key={order.id}
 										>
@@ -116,7 +117,7 @@ const App = () => {
 															? 'Standard'
 															: optionName[0]
 																	.value ||
-															  ''}
+																''}
 													</p>
 													<p className="col-3">
 														{order.quantity}

@@ -201,9 +201,8 @@ const solutionInitialState: SolutionInitialState = {
 	termsAndConditions: false,
 };
 
-export type AppActions = ActionMap<SolutionPayload>[keyof ActionMap<
-	SolutionPayload
->];
+export type AppActions =
+	ActionMap<SolutionPayload>[keyof ActionMap<SolutionPayload>];
 
 const filterProductVocabularies = (product: Product, vocabulary: string) =>
 	product.categories
@@ -274,9 +273,9 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 				tags?.includes(PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON)
 			);
 
-			const solutionHeaderImages = (
-				_product.images ?? []
-			).filter(({tags}) => tags?.includes(PRODUCT_TAGS.SOLUTION_HEADER));
+			const solutionHeaderImages = (_product.images ?? []).filter(
+				({tags}) => tags?.includes(PRODUCT_TAGS.SOLUTION_HEADER)
+			);
 
 			let contentType = {
 				content: {
@@ -360,7 +359,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 									const image = solutionDetailsImages.find(
 										({externalReferenceCode}) =>
 											externalReferenceCode ===
-											((file as unknown) as string)
+											(file as unknown as string)
 									);
 
 									const newFile = {
@@ -399,7 +398,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 				...newState,
 				_product,
 				company,
-				header: ({
+				header: {
 					contentType,
 					description: specificationsMap.get(
 						PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_DESCRIPTION
@@ -407,7 +406,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 					title: specificationsMap.get(
 						PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_TITLE
 					),
-				} as unknown) as SolutionInitialState['header'],
+				} as unknown as SolutionInitialState['header'],
 				profile: {
 					categories: filterProductVocabularies(
 						_product,
@@ -417,7 +416,7 @@ const reducer = (state: SolutionInitialState, action: AppActions) => {
 					file: {
 						changed: false,
 						fileName: appIcon?.title?.en_US as string,
-						id: (appIcon?.externalReferenceCode as unknown) as string,
+						id: appIcon?.externalReferenceCode as unknown as string,
 						preview: _product.thumbnail,
 						progress: 100,
 						uploaded: true,

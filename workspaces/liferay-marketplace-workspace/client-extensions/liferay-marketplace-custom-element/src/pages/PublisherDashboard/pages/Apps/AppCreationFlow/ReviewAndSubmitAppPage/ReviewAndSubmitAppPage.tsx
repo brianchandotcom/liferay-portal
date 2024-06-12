@@ -51,13 +51,14 @@ export function ReviewAndSubmitAppPage({
 		const getData = async () => {
 			setLoading(true);
 
-			const product = await HeadlessCommerceAdminCatalogImpl.getProductByExternalReferenceCode(
-				productERC as string,
-				new URLSearchParams({
-					nestedFields:
-						'attachments,images,skus,productSpecifications',
-				})
-			);
+			const product =
+				await HeadlessCommerceAdminCatalogImpl.getProductByExternalReferenceCode(
+					productERC as string,
+					new URLSearchParams({
+						nestedFields:
+							'attachments,images,skus,productSpecifications',
+					})
+				);
 
 			const {
 				categories = [],
@@ -80,7 +81,7 @@ export function ReviewAndSubmitAppPage({
 					({specificationKey, value}) =>
 						specificationKey === 'type' &&
 						(value.en_US === 'cloud' ||
-							((value as unknown) as string) === 'cloud')
+							(value as unknown as string) === 'cloud')
 				) ?? false;
 
 			let sku = skus[0];
@@ -145,9 +146,8 @@ export function ReviewAndSubmitAppPage({
 					});
 				}
 
-				(dataProduct as any)[
-					specificationKey as string
-				] = localizedValue;
+				(dataProduct as any)[specificationKey as string] =
+					localizedValue;
 			});
 
 			const attachment = product.attachments.find((attachment) => {

@@ -51,9 +51,8 @@ const TaskHeaderActions = () => {
 
 	const subtaskAllCompleted = testraySubtasks?.totalCount === 0;
 
-	const [modalType, setModalType] = useState<TestflowAssigUserType>(
-		'select-users'
-	);
+	const [modalType, setModalType] =
+		useState<TestflowAssigUserType>('select-users');
 
 	const [userIds, setUsersId] = useState<number[]>([]);
 	const {modal} = useFormModal<number[]>({
@@ -115,9 +114,10 @@ const TaskHeaderActions = () => {
 						<ClayButton
 							displayType="secondary"
 							onClick={async () => {
-								const response = await testrayTaskImpl.reanalyze(
-									testrayTask
-								);
+								const response =
+									await testrayTaskImpl.reanalyze(
+										testrayTask
+									);
 
 								mutateTaskPartial({
 									dueStatus: response.dueStatus,

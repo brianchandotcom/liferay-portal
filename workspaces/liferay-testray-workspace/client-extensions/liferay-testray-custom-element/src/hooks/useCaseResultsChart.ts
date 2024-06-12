@@ -62,12 +62,12 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 					pageSize: -1,
 					...serializedFilter,
 				},
-		  }
+			}
 		: {
 				params: {
 					pageSize: -1,
 				},
-		  };
+			};
 
 	useEffect(() => {
 		const path = pathname.split('/').at(-1) as string;
@@ -93,7 +93,7 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 				...responseItems.map(({testrayStatusMetric}) =>
 					key === 'INCOMPLETE'
 						? (testrayStatusMetric.untested || 0) +
-						  (testrayStatusMetric.inProgress || 0)
+							(testrayStatusMetric.inProgress || 0)
 						: testrayStatusMetric[value] ?? getRandom(1000)
 				),
 			];

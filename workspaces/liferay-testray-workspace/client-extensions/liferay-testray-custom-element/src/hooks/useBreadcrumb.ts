@@ -179,9 +179,8 @@ const defaultEntities: Entity[] = [
 				.build()}&nestedFields=case,r_runToCaseResult_c_runId&pageSize=20&fields=r_caseToCaseResult_c_case,id,run`,
 		name: i18n.translate('case-result'),
 		transformer: (response: APIResponse<TestrayCaseResult>) => {
-			const transformedResponse = testrayCaseResultImpl.transformDataFromList(
-				response
-			);
+			const transformedResponse =
+				testrayCaseResultImpl.transformDataFromList(response);
 
 			return {
 				...transformedResponse,

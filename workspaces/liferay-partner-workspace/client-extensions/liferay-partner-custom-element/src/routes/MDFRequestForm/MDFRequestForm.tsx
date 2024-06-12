@@ -100,7 +100,7 @@ const MDFRequestForm = () => {
 
 	const hasPermissionShowForm = mdfRequestId
 		? (hasPermissionToAccess && currentMDFRequestHasValidStatus) ||
-		  hasPermissionToByPass
+			hasPermissionToByPass
 		: hasPermissionToAccess;
 
 	const onCancel = () => history.back();
@@ -146,7 +146,7 @@ const MDFRequestForm = () => {
 									(action) =>
 										action !==
 										PermissionActionType.UPDATE_WO_CHANGE_STATUS
-							  )
+								)
 							: true
 					)
 				}
@@ -178,7 +178,7 @@ const MDFRequestForm = () => {
 									(action) =>
 										action !==
 										PermissionActionType.UPDATE_WO_CHANGE_STATUS
-							  )
+								)
 							: true
 					)
 				}
@@ -207,7 +207,7 @@ const MDFRequestForm = () => {
 									(action) =>
 										action !==
 										PermissionActionType.UPDATE_WO_CHANGE_STATUS
-							  )
+								)
 							: true
 					)
 				}
@@ -265,7 +265,7 @@ const MDFRequestForm = () => {
 								(action) =>
 									action !==
 									PermissionActionType.UPDATE_WO_CHANGE_STATUS
-						  )
+							)
 						: true
 				)
 			}

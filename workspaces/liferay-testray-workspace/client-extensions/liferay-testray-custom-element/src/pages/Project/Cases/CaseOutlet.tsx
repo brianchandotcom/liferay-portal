@@ -30,17 +30,17 @@ const CaseOutlet = () => {
 	const isFormPage = isIncludingFormPage(pathname);
 
 	const {actions} = useCaseActions({isHeaderActions: true});
-	const {
-		testrayProject,
-	}: {testrayProject: TestrayProject} = useOutletContext();
+	const {testrayProject}: {testrayProject: TestrayProject} =
+		useOutletContext();
 
-	const {data: testrayCase, error, loading, mutate} = useFetch<TestrayCase>(
-		testrayCaseImpl.getResource(caseId as string),
-		{
-			transformData: (response) =>
-				testrayCaseImpl.transformData(response),
-		}
-	);
+	const {
+		data: testrayCase,
+		error,
+		loading,
+		mutate,
+	} = useFetch<TestrayCase>(testrayCaseImpl.getResource(caseId as string), {
+		transformData: (response) => testrayCaseImpl.transformData(response),
+	});
 
 	const hasOtherParams = !!Object.values(otherParams).length;
 

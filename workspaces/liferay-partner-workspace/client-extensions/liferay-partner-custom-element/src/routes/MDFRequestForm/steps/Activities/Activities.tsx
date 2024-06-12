@@ -46,9 +46,8 @@ const Activities = ({
 	const [currentActivityIndex, setCurrentActivityIndex] = useState<
 		number | undefined
 	>();
-	const [currentActivityIndexEdit, setCurrentActivityIndexEdit] = useState<
-		number
-	>();
+	const [currentActivityIndexEdit, setCurrentActivityIndexEdit] =
+		useState<number>();
 
 	const [isDraft, setIsDraft] = useState(false);
 
@@ -173,6 +172,7 @@ const Activities = ({
 			onSaveAsDraft?.(values, formikHelpers);
 			setIsDraft(false);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isDraft]);
 

@@ -127,11 +127,11 @@ type ActionMap<M extends {[index: string]: any}> = {
 	[Key in keyof M]: M[Key] extends undefined
 		? {
 				type: Key;
-		  }
+			}
 		: {
 				payload: M[Key];
 				type: Key;
-		  };
+			};
 };
 
 type AccountBrief = {
@@ -350,7 +350,7 @@ type Order = {
 			quantity?: number;
 			skuId: number;
 			unitPriceWithTaxAmount?: number;
-		}
+		},
 	];
 	orderStatus: number;
 	orderStatusInfo?: {

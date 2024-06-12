@@ -44,9 +44,9 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 											taskUser?.r_taskToTasksUsers_c_task
 												?.r_buildToTasks_c_build
 												?.r_routineToBuilds_c_routine,
-								  }
+									}
 								: undefined,
-					  }
+						}
 					: undefined,
 				user: taskUser.r_userToTasksUsers_user,
 			}),

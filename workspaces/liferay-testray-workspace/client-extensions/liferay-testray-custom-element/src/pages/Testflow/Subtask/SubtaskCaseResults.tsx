@@ -248,9 +248,10 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 			{({items}, {dispatch, listViewContext: {selectedRows}, mutate}) => {
 				const alerts = getFloatingBoxAlerts(items, selectedRows);
 
-				const selectedCaseResults: TestraySubtaskCaseResult[] = selectedRows.map(
-					(rowId) => items.find(({id}) => rowId === id)
-				);
+				const selectedCaseResults: TestraySubtaskCaseResult[] =
+					selectedRows.map((rowId) =>
+						items.find(({id}) => rowId === id)
+					);
 
 				return (
 					<FloatingBox

@@ -36,13 +36,8 @@ const General = ({
 	onCancel,
 	onContinue,
 }: PRMFormikPageProps & DealRegistrationStepProps) => {
-	const {
-		dirty,
-		isValid,
-		setFieldValue,
-		values,
-		...formikHelpers
-	} = useFormikContext<DealRegistration>();
+	const {dirty, isValid, setFieldValue, values, ...formikHelpers} =
+		useFormikContext<DealRegistration>();
 
 	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
@@ -84,45 +79,35 @@ const General = ({
 		)
 	);
 
-	const {
-		onSelected: onCountrySelected,
-		options: countryOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.COUNTRIES],
-		(selected) => setFieldValue('prospect.country', selected)
-	);
+	const {onSelected: onCountrySelected, options: countryOptions} =
+		getPicklistOptions(
+			fieldEntries[LiferayPicklistName.COUNTRIES],
+			(selected) => setFieldValue('prospect.country', selected)
+		);
 
-	const {
-		onSelected: onIndustrySelected,
-		options: industryOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.INDUSTRIES]?.sort(sortByAsc),
-		(selected) => setFieldValue('prospect.industry', selected)
-	);
+	const {onSelected: onIndustrySelected, options: industryOptions} =
+		getPicklistOptions(
+			fieldEntries[LiferayPicklistName.INDUSTRIES]?.sort(sortByAsc),
+			(selected) => setFieldValue('prospect.industry', selected)
+		);
 
-	const {
-		onSelected: onDepartmentSelected,
-		options: departmentOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.DEPARTMENTS],
-		(selected) => setFieldValue('primaryProspect.department', selected)
-	);
+	const {onSelected: onDepartmentSelected, options: departmentOptions} =
+		getPicklistOptions(
+			fieldEntries[LiferayPicklistName.DEPARTMENTS],
+			(selected) => setFieldValue('primaryProspect.department', selected)
+		);
 
-	const {
-		onSelected: onJobRoleSelected,
-		options: jobRoleOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.JOB_ROLES],
-		(selected) => setFieldValue('primaryProspect.jobRole', selected)
-	);
+	const {onSelected: onJobRoleSelected, options: jobRoleOptions} =
+		getPicklistOptions(
+			fieldEntries[LiferayPicklistName.JOB_ROLES],
+			(selected) => setFieldValue('primaryProspect.jobRole', selected)
+		);
 
-	const {
-		onSelected: onStateSelected,
-		options: stateOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.STATES],
-		(selected) => setFieldValue('prospect.state', selected)
-	);
+	const {onSelected: onStateSelected, options: stateOptions} =
+		getPicklistOptions(
+			fieldEntries[LiferayPicklistName.STATES],
+			(selected) => setFieldValue('prospect.state', selected)
+		);
 
 	return (
 		<PRMForm name="general" title="Deal Registration">

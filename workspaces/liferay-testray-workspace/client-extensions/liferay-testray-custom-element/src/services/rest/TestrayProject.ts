@@ -49,9 +49,8 @@ class TestrayProjectImpl extends Rest<Project, TestrayProject> {
 	}
 
 	protected async beforeRemove(id: number) {
-		const hasBuildsInProjectId = await testrayBuildImpl.hasBuildsInProjectId(
-			id
-		);
+		const hasBuildsInProjectId =
+			await testrayBuildImpl.hasBuildsInProjectId(id);
 
 		if (hasBuildsInProjectId) {
 			throw new TestrayError(

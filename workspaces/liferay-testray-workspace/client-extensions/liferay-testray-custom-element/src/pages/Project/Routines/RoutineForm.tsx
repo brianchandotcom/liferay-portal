@@ -34,11 +34,8 @@ type OutletContext = {
 const RoutineForm = () => {
 	useHeader({headerActions: {actions: []}, tabs: [], timeout: 150});
 
-	const {
-		mutateTestrayRoutine,
-		testrayProject,
-		testrayRoutine,
-	} = useOutletContext<OutletContext>();
+	const {mutateTestrayRoutine, testrayProject, testrayRoutine} =
+		useOutletContext<OutletContext>();
 
 	const {
 		formState: {errors, isSubmitting},

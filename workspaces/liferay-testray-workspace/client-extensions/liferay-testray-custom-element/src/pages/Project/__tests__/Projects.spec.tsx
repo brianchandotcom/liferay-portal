@@ -57,8 +57,8 @@ describe('Projects', () => {
 			await vi.runAllTimers();
 		});
 
-		const plusButton = container.querySelector('.lexicon-icon-plus')
-			?.parentElement;
+		const plusButton =
+			container.querySelector('.lexicon-icon-plus')?.parentElement;
 
 		expect(plusButton).toBeTruthy();
 

@@ -33,32 +33,28 @@ const SECOND_POSITION_AFTER_HASH = 1;
 const FOURTH_POSITION_AFTER_HASH = 3;
 
 const MDFClaimForm = () => {
-	const {
-		data: claimParentFolder,
-		isValidating: isValidatingClaimFolder,
-	} = useGet<LiferayItems<LiferayDocumentFolder[]>>(
-		`/o/${
-			LiferayAPIs.HEADERLESS_DELIVERY
-		}/sites/${Liferay.ThemeDisplay.getScopeGroupId()}/document-folders/?filter=name eq 'claim'`
-	);
+	const {data: claimParentFolder, isValidating: isValidatingClaimFolder} =
+		useGet<LiferayItems<LiferayDocumentFolder[]>>(
+			`/o/${
+				LiferayAPIs.HEADERLESS_DELIVERY
+			}/sites/${Liferay.ThemeDisplay.getScopeGroupId()}/document-folders/?filter=name eq 'claim'`
+		);
 
 	const claimParentFolderId = claimParentFolder?.items[0].id;
 
 	const mdfRequestId = useGetMDFRequestIdByHash(SECOND_POSITION_AFTER_HASH);
 	const mdfClaimId = useGetMDFRequestIdByHash(FOURTH_POSITION_AFTER_HASH);
-	const {data: mdfRequest, isValidating: isValidatingMDFRequestById} = useGet<
-		MDFRequestDTO
-	>(
-		mdfRequestId &&
-			`/o/${LiferayAPIs.OBJECT}/mdfrequests/${mdfRequestId}?nestedFields=accountEntry,mdfReqToActs,actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId,mdfReqToMDFClms&nestedFieldsDepth=5`
-	);
+	const {data: mdfRequest, isValidating: isValidatingMDFRequestById} =
+		useGet<MDFRequestDTO>(
+			mdfRequestId &&
+				`/o/${LiferayAPIs.OBJECT}/mdfrequests/${mdfRequestId}?nestedFields=accountEntry,mdfReqToActs,actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId,mdfReqToMDFClms&nestedFieldsDepth=5`
+		);
 
-	const {data: mdfClaimDTO, isValidating: isValidatingMDFClaimById} = useGet<
-		MDFClaimDTO
-	>(
-		mdfClaimId &&
-			`/o/${LiferayAPIs.OBJECT}/mdfclaims/${mdfClaimId}?nestedFields=mdfClmToMDFClmActs,mdfClmActToMDFClmBgts,mdfClmActToMDFActDocs,mdfClmToMDFClmDocs&nestedFieldsDepth=2`
-	);
+	const {data: mdfClaimDTO, isValidating: isValidatingMDFClaimById} =
+		useGet<MDFClaimDTO>(
+			mdfClaimId &&
+				`/o/${LiferayAPIs.OBJECT}/mdfclaims/${mdfClaimId}?nestedFields=mdfClmToMDFClmActs,mdfClmActToMDFClmBgts,mdfClmActToMDFActDocs,mdfClmToMDFClmDocs&nestedFieldsDepth=2`
+		);
 
 	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);
 
@@ -87,7 +83,7 @@ const MDFClaimForm = () => {
 
 	const hasPermissionShowForm = mdfClaimId
 		? (hasPermissionToAccess && currentMDFClaimHasValidStatus) ||
-		  hasPermissionToByPass
+			hasPermissionToByPass
 		: hasPermissionToAccess;
 
 	const siteURL = useLiferayNavigate();
@@ -160,7 +156,7 @@ const MDFClaimForm = () => {
 								(action) =>
 									action !==
 									PermissionActionType.UPDATE_WO_CHANGE_STATUS
-						  )
+							)
 						: true
 				)
 			}
@@ -182,7 +178,7 @@ const MDFClaimForm = () => {
 									(action) =>
 										action !==
 										PermissionActionType.UPDATE_WO_CHANGE_STATUS
-							  )
+								)
 							: true
 					)
 				}

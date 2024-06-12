@@ -79,8 +79,7 @@ const useTrialMetrics = (param: FilterType) => {
 
 	const requestsParams = [
 		new URLSearchParams({
-			fields:
-				'id,account,orderStatusInfo,createDate,customFields,name,accountId',
+			fields: 'id,account,orderStatusInfo,createDate,customFields,name,accountId',
 			filter: trialSearchBuilder.clone().build(),
 			nestedFields: 'account,orderItems',
 			pageSize: '30',
@@ -114,9 +113,12 @@ const useTrialMetrics = (param: FilterType) => {
 		}),
 	];
 
-	const {data: trialDataResponse = [], error, isLoading, mutate} = useSWR<
-		any
-	>(
+	const {
+		data: trialDataResponse = [],
+		error,
+		isLoading,
+		mutate,
+	} = useSWR<any>(
 		'administrator-dashboard/metrics/trial',
 		() =>
 			Promise.all([
@@ -136,9 +138,10 @@ const useTrialMetrics = (param: FilterType) => {
 		ordersTrial,
 	] = trialDataResponse;
 
-	const orderItems = useMemo(() => orderTableData?.items ?? [], [
-		orderTableData?.items,
-	]);
+	const orderItems = useMemo(
+		() => orderTableData?.items ?? [],
+		[orderTableData?.items]
+	);
 
 	useEffect(() => {
 		const isProcessing = orderItems.some(({orderStatusInfo}: any) =>

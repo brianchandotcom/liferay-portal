@@ -43,7 +43,7 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 					factorCategoryId: modalState?.factorCategory?.id,
 					id: modalState.id,
 					name: modalState.name,
-			  }
+				}
 			: {},
 		resolver: yupResolver(yupSchema.factorOption),
 	});

@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 /* eslint-disable no-undef */
 const findRequestIdUrl = (paramsUrl) => {
 	const splitParamsUrl = paramsUrl.split('?');
@@ -13,6 +14,7 @@ const currentPath = Liferay.ThemeDisplay.getLayoutRelativeURL().split('/');
 const mdfRequestId = findRequestIdUrl(currentPath.at(-1));
 
 const updateMDFDetailsSummary = async () => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
 		headers: {
@@ -39,15 +41,12 @@ const updateMDFDetailsSummary = async () => {
 			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
 		);
 
-		fragmentElement.querySelector(
-			'#mdf-request-date-field'
-		).innerHTML = `${startDate} - ${endDate}`;
-		fragmentElement.querySelector(
-			'#mdf-request-total-cost'
-		).innerHTML = totalCost;
-		fragmentElement.querySelector(
-			'#mdf-request-requested-cost'
-		).innerHTML = requestedCost;
+		fragmentElement.querySelector('#mdf-request-date-field').innerHTML =
+			`${startDate} - ${endDate}`;
+		fragmentElement.querySelector('#mdf-request-total-cost').innerHTML =
+			totalCost;
+		fragmentElement.querySelector('#mdf-request-requested-cost').innerHTML =
+			requestedCost;
 
 		return;
 	}

@@ -41,10 +41,10 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 					id: modalState.id,
 					name: modalState.name,
 					teamId: modalState.team?.id,
-			  }
+				}
 			: {
 					teamId: '',
-			  },
+				},
 		resolver: yupResolver(yupSchema.component),
 	});
 

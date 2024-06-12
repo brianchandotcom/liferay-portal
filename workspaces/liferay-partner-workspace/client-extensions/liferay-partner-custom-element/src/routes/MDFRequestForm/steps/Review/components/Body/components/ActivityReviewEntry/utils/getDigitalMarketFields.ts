@@ -14,9 +14,8 @@ export default function getDigitalMarketFields(
 	const digitalMarketingFields = [
 		{
 			title: 'Overall message, content or CTA',
-			value:
-				mdfRequestActivity.activityDescription
-					?.overallMessageContentCTA,
+			value: mdfRequestActivity.activityDescription
+				?.overallMessageContentCTA,
 		},
 		{
 			title: 'How will the Liferay brand be used in the campaign?',
@@ -39,9 +38,8 @@ export default function getDigitalMarketFields(
 	) {
 		digitalMarketingFields.push({
 			title: 'Please describe including specifications and due dates',
-			value:
-				mdfRequestActivity.activityDescription
-					?.assetsLiferayDescription,
+			value: mdfRequestActivity.activityDescription
+				?.assetsLiferayDescription,
 		});
 	}
 
@@ -75,9 +73,8 @@ export default function getDigitalMarketFields(
 			},
 			{
 				title: 'Keywords for PPC campaigns',
-				value:
-					mdfRequestActivity.activityDescription
-						?.keywordsForPPCCampaigns,
+				value: mdfRequestActivity.activityDescription
+					?.keywordsForPPCCampaigns,
 			},
 			{
 				title: 'Ad (any size/type)',

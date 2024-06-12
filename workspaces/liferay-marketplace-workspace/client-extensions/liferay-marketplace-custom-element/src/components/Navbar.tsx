@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({routes}) => {
 									active:
 										index === 0
 											? isActive &&
-											  routeParams.length === 2
+												routeParams.length === 2
 											: isActive,
 								})
 							}

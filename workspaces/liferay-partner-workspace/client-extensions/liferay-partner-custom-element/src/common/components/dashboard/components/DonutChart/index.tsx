@@ -104,9 +104,11 @@ const DonutChart = ({
 								size={{height, width}}
 								tooltip={{
 									contents: (data: any) => {
-										const chartColumnsData = chartDataColumns.columns.find(
-											([key]: any) => key === data[0].id
-										);
+										const chartColumnsData =
+											chartDataColumns.columns.find(
+												([key]: any) =>
+													key === data[0].id
+											);
 
 										if (titleChart === 'Total MDF ') {
 											return `<div class="bg-neutral-0 d-flex flex-column rounded-sm">

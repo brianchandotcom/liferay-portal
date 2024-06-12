@@ -36,12 +36,8 @@ type OutletContext = {
 };
 
 const CaseResult = () => {
-	const {
-		caseResult,
-		mbMessage,
-		mutateCaseResult,
-		projectId,
-	}: OutletContext = useOutletContext();
+	const {caseResult, mbMessage, mutateCaseResult, projectId}: OutletContext =
+		useOutletContext();
 
 	const attachments = useMemo(
 		() => safeJSONParse(caseResult.attachments, []) as TestrayAttachment[],

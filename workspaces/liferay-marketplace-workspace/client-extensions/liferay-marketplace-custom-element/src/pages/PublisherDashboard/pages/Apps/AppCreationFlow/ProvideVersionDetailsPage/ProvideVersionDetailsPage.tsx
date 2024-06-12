@@ -118,15 +118,18 @@ export function ProvideVersionDetailsPage({
 		});
 
 		if (isDXP) {
-			const [
-				standardOptionId,
-				developerOptionId,
-				trialOptionId,
-			] = await Promise.all([
-				postOptionValue(getOptionStandardBody(), newProductOptionId),
-				postOptionValue(getOptionDeveloperBody(), newProductOptionId),
-				postOptionValue(getOptionTrialBody(), newProductOptionId),
-			]);
+			const [standardOptionId, developerOptionId, trialOptionId] =
+				await Promise.all([
+					postOptionValue(
+						getOptionStandardBody(),
+						newProductOptionId
+					),
+					postOptionValue(
+						getOptionDeveloperBody(),
+						newProductOptionId
+					),
+					postOptionValue(getOptionTrialBody(), newProductOptionId),
+				]);
 
 			return {
 				developerOptionId,

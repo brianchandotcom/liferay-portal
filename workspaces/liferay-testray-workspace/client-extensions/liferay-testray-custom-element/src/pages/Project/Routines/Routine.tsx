@@ -76,7 +76,8 @@ const Routine = () => {
 												className={classNames(
 													'label-chart symbol',
 													{
-														[testrayBuildTaskStatus.toLowerCase()]: testrayBuildTaskStatus,
+														[testrayBuildTaskStatus.toLowerCase()]:
+															testrayBuildTaskStatus,
 													}
 												)}
 												symbol="circle"

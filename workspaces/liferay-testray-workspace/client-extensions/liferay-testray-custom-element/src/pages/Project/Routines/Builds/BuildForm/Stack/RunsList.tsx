@@ -70,8 +70,10 @@ const RunsList: React.FC<RunsListProps> = ({
 						<ClayLayout.Col size={12}>
 							<ClayLayout.Row
 								className={classNames({
-									'align-items-center d-flex justify-content-space-between': !displayVertical,
-									'flex-column justify-content-space-between': displayVertical,
+									'align-items-center d-flex justify-content-space-between':
+										!displayVertical,
+									'flex-column justify-content-space-between':
+										displayVertical,
 								})}
 							>
 								{Object.keys(field).map(
@@ -85,12 +87,12 @@ const RunsList: React.FC<RunsListProps> = ({
 										const defaultOption =
 											field[optionItem as keyof Fields];
 
-										const isDefaultEnvironment = factorItems?.find(
-											(item) =>
+										const isDefaultEnvironment =
+											factorItems?.find((item) =>
 												item.factorCategory?.name.includes(
 													formatedCategoryName
 												)
-										);
+											);
 
 										return (
 											<>
@@ -130,9 +132,7 @@ const RunsList: React.FC<RunsListProps> = ({
 															register={register}
 															registerOptions={{
 																onBlur: (
-																	event: React.FocusEvent<
-																		HTMLSelectElement
-																	>
+																	event: React.FocusEvent<HTMLSelectElement>
 																) => {
 																	const runOptionName =
 																		event
@@ -143,10 +143,12 @@ const RunsList: React.FC<RunsListProps> = ({
 																				.selectedIndex
 																		]?.text;
 
-																	const dataToUpdate = {
-																		...field,
-																		[optionItem]: runOptionName,
-																	};
+																	const dataToUpdate =
+																		{
+																			...field,
+																			[optionItem]:
+																				runOptionName,
+																		};
 
 																	update(
 																		index,

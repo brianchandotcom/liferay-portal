@@ -96,9 +96,14 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 
 	const selectedCaseParameters = getSelectedCaseParameters();
 
-	const onSetValue = (name: string) => ([, rightSelected]: Boxes) => {
-		setState((prevState: State) => ({...prevState, [name]: rightSelected}));
-	};
+	const onSetValue =
+		(name: string) =>
+		([, rightSelected]: Boxes) => {
+			setState((prevState: State) => ({
+				...prevState,
+				[name]: rightSelected,
+			}));
+		};
 
 	return (
 		<>

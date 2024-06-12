@@ -58,15 +58,15 @@ const ProjectSelection = () => {
 		dispatch,
 	] = useGetAppContext();
 
-	const {handleGetApp, isFreeApp, loading} = useOutletContext<
-		GetAppOutletContext
-	>();
+	const {handleGetApp, isFreeApp, loading} =
+		useOutletContext<GetAppOutletContext>();
 
 	const {properties} = useContext(MarketplaceContext);
 
-	const userProjects = useMemo(() => resourceRequest?.userProjects ?? [], [
-		resourceRequest?.userProjects,
-	]);
+	const userProjects = useMemo(
+		() => resourceRequest?.userProjects ?? [],
+		[resourceRequest?.userProjects]
+	);
 
 	if (isLoading) {
 		return <ClayLoadingIndicator />;
@@ -174,7 +174,7 @@ const ProjectSelection = () => {
 				leftRadio
 				onSelect={(radioOption: RadioOption<ConsoleUserProject>) =>
 					dispatch({
-						payload: (radioOption.value as unknown) as string,
+						payload: radioOption.value as unknown as string,
 						type: 'SET_PROJECT',
 					})
 				}

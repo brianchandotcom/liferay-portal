@@ -30,39 +30,40 @@ class TestrayCaseRequirementsImpl extends Rest<
 										...caseRequirements
 											?.r_caseToRequirementsCases_c_case
 											?.r_componentToCases_c_component,
-								  }
+									}
 								: undefined,
-					  }
+						}
 					: undefined,
-				requirement: caseRequirements?.r_requiremenToRequirementsCases_c_requirement
-					? {
-							...caseRequirements?.r_requiremenToRequirementsCases_c_requirement,
-							component: caseRequirements
-								?.r_requiremenToRequirementsCases_c_requirement
-								?.r_componentToRequirements_c_component
-								? {
-										...caseRequirements
-											?.r_requiremenToRequirementsCases_c_requirement
-											?.r_componentToRequirements_c_component,
-										team: caseRequirements
-											?.r_requiremenToRequirementsCases_c_requirement
-											?.r_componentToRequirements_c_component
-											?.r_teamToComponents_c_team
-											? {
-													...caseRequirements
-														?.r_requiremenToRequirementsCases_c_requirement
-														?.r_componentToRequirements_c_component
-														?.r_teamToComponents_c_team,
-											  }
-											: undefined,
-								  }
-								: undefined,
-							linkURL:
-								caseRequirements
+				requirement:
+					caseRequirements?.r_requiremenToRequirementsCases_c_requirement
+						? {
+								...caseRequirements?.r_requiremenToRequirementsCases_c_requirement,
+								component: caseRequirements
 									?.r_requiremenToRequirementsCases_c_requirement
-									.linkURL,
-					  }
-					: undefined,
+									?.r_componentToRequirements_c_component
+									? {
+											...caseRequirements
+												?.r_requiremenToRequirementsCases_c_requirement
+												?.r_componentToRequirements_c_component,
+											team: caseRequirements
+												?.r_requiremenToRequirementsCases_c_requirement
+												?.r_componentToRequirements_c_component
+												?.r_teamToComponents_c_team
+												? {
+														...caseRequirements
+															?.r_requiremenToRequirementsCases_c_requirement
+															?.r_componentToRequirements_c_component
+															?.r_teamToComponents_c_team,
+													}
+												: undefined,
+										}
+									: undefined,
+								linkURL:
+									caseRequirements
+										?.r_requiremenToRequirementsCases_c_requirement
+										.linkURL,
+							}
+						: undefined,
 			}),
 			uri: 'requirementscaseses',
 		});

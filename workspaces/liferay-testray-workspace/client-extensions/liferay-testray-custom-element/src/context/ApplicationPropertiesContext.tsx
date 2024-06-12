@@ -18,9 +18,8 @@ type ApplicationContextProviderProps = {
 	properties: DefaultProperties;
 };
 
-export const ApplicationPropertiesContext = createContext<DefaultProperties>(
-	defaultProperties
-);
+export const ApplicationPropertiesContext =
+	createContext<DefaultProperties>(defaultProperties);
 
 const ApplicationContextProvider: React.FC<ApplicationContextProviderProps> = ({
 	children,

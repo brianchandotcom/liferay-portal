@@ -103,7 +103,7 @@ const AppOutlet = () => {
 						getProductPriceModel(product).isFreeApp ||
 						(placedOrderItems[0]?.price?.price === 0 &&
 							product?.skus?.some((sku: any) =>
-								isTrialSKU((sku as unknown) as SKU)
+								isTrialSKU(sku as unknown as SKU)
 							))
 					),
 				},

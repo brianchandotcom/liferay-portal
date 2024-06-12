@@ -23,20 +23,18 @@ import getDropdownOptions from './util/getDropdownOptions';
 import patchRequestStatus from './util/patchRequestStatus';
 
 const MDFRequestManagerStatus = () => {
-	const [displayModalStatus, setDisplayModalStatus] = useState<
-		LiferayPicklist
-	>();
+	const [displayModalStatus, setDisplayModalStatus] =
+		useState<LiferayPicklist>();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
 	const mdfRequestId = useGetObjectIdBySlash();
-	const {data: mdfRequest, isValidating: isValidatingMdfRequest} = useGet<
-		MDFRequestDTO
-	>(
-		mdfRequestId &&
-			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}`
-	);
+	const {data: mdfRequest, isValidating: isValidatingMdfRequest} =
+		useGet<MDFRequestDTO>(
+			mdfRequestId &&
+				`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}`
+		);
 	const [patchedStatus, setPatchedStatus] = useState<LiferayPicklist>();
 
 	const mdfRequestStatus = patchedStatus

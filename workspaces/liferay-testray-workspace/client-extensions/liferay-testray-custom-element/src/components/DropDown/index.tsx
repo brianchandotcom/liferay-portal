@@ -52,9 +52,8 @@ const DropDown: React.FC<DropDownProps> = ({
 													return;
 												}
 
-												const isHttpUrl = path.startsWith(
-													'http'
-												);
+												const isHttpUrl =
+													path.startsWith('http');
 
 												if (isHttpUrl) {
 													window.location.href = path;

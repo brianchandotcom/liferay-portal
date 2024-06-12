@@ -18,12 +18,15 @@ const UserOutlet = () => {
 
 	const [{myUserAccount}, , mutateMyUserAccount] = useContext(TestrayContext);
 
-	const {data: userAccount, error, isValidating, loading, mutate} = useFetch(
-		liferayUserAccountsImpl.getResource(userId as string),
-		{
-			swrConfig: {shouldFetch: !!userId},
-		}
-	);
+	const {
+		data: userAccount,
+		error,
+		isValidating,
+		loading,
+		mutate,
+	} = useFetch(liferayUserAccountsImpl.getResource(userId as string), {
+		swrConfig: {shouldFetch: !!userId},
+	});
 
 	return (
 		<PageRenderer error={error} loading={isValidating || loading}>
@@ -34,18 +37,19 @@ const UserOutlet = () => {
 								...userAccount?.actions,
 								replace:
 									userAccount?.actions['patch-user-account'],
-								update:
-									userAccount?.actions['put-user-account'],
-						  }
+								update: userAccount?.actions[
+									'put-user-account'
+								],
+							}
 						: {
 								replace: true,
-						  },
+							},
 					mutateUser: userId
 						? userId === Liferay.ThemeDisplay.getUserId()
 							? (response: KeyedMutator<UserAccount>) => {
 									(mutateMyUserAccount as any)(response);
 									mutate(response);
-							  }
+								}
 							: mutate
 						: mutateMyUserAccount,
 					userAccount: userId ? userAccount : myUserAccount,

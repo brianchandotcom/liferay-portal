@@ -59,9 +59,10 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 
 	const {channel, myUserAccount} = marketplaceContext;
 
-	const accountBriefs = useMemo(() => myUserAccount?.accountBriefs || [], [
-		myUserAccount?.accountBriefs,
-	]);
+	const accountBriefs = useMemo(
+		() => myUserAccount?.accountBriefs || [],
+		[myUserAccount?.accountBriefs]
+	);
 
 	const sku = product?.skus?.[0]?.id;
 

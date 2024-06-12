@@ -25,8 +25,8 @@ export default class Permission {
 			return typeof action.permission === 'boolean'
 				? action.permission
 				: action.permission
-				? !!(permissions as any)[action?.permission?.toLowerCase()]
-				: true;
+					? !!(permissions as any)[action?.permission?.toLowerCase()]
+					: true;
 		});
 	}
 }

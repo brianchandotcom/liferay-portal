@@ -35,11 +35,8 @@ const CaseResultOutlet = () => {
 	const {actions} = useCaseResultActions();
 	const {pathname} = useLocation();
 	const {buildId, caseResultId, projectId, routineId} = useParams();
-	const {
-		testrayBuild,
-		testrayProject,
-		testrayRoutine,
-	}: OutletContext = useOutletContext();
+	const {testrayBuild, testrayProject, testrayRoutine}: OutletContext =
+		useOutletContext();
 
 	const isEditCase = pathname.includes('edit');
 
@@ -60,7 +57,7 @@ const CaseResultOutlet = () => {
 		testrayCaseResult?.mbMessageId
 			? liferayMessageBoardImpl.getMessagesIdURL(
 					testrayCaseResult.mbMessageId
-			  )
+				)
 			: null
 	);
 
@@ -125,7 +122,7 @@ const CaseResultOutlet = () => {
 							path: `${basePath}/history`,
 							title: i18n.translate('history'),
 						},
-				  ]
+					]
 		);
 	}, [basePath, isEditCase, pathname, setTabs]);
 

@@ -276,7 +276,8 @@ function JenkinsCohortPage() {
 									onClick: () => {
 										deleteJenkinsCohortById({
 											id,
-											redirect: redirectToJenkinsCohortPage,
+											redirect:
+												redirectToJenkinsCohortPage,
 										});
 									},
 									title: 'Delete',

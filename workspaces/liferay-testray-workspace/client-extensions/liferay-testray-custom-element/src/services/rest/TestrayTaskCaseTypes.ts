@@ -49,9 +49,9 @@ class TestrayTaskCaseTypesImpl extends Rest<
 												?.r_taskToTasksCaseTypes_c_taskId
 												?.r_buildToTasks_c_build
 												?.r_routineToBuilds_c_routine,
-								  }
+									}
 								: undefined,
-					  }
+						}
 					: undefined,
 			}),
 			uri: 'taskscasetypeses',

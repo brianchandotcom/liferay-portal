@@ -9,9 +9,10 @@ import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommer
 
 const useCatalogs = () => {
 	return useSWR('/catalogs', async () => {
-		const catalogResponse = await HeadlessCommerceAdminCatalogImpl.getCatalogs(
-			new URLSearchParams({fields: 'accountId,id', pageSize: '-1'})
-		);
+		const catalogResponse =
+			await HeadlessCommerceAdminCatalogImpl.getCatalogs(
+				new URLSearchParams({fields: 'accountId,id', pageSize: '-1'})
+			);
 
 		return catalogResponse.items;
 	});

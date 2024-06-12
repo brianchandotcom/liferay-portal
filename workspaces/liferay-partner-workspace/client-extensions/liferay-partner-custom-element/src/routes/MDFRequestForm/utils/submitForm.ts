@@ -77,12 +77,12 @@ export default async function submitForm(
 									mdfRequestActivity,
 									dtoMDFRequest,
 									values
-							  )
+								)
 							: await submitMDFRequestActivityProxyAPI(
 									mdfRequestActivity,
 									dtoMDFRequest,
 									values
-							  );
+								);
 
 					mdfRequestActivity.id = dtoMDFRequestActivity?.id;
 					mdfRequestActivity.externalReferenceCode =
@@ -103,11 +103,12 @@ export default async function submitForm(
 								);
 							}
 							else {
-								const dtoMDFRequestBudget = await submitMDFRequestBudget(
-									mdfRequestBudget,
-									dtoMDFRequestActivity,
-									values
-								);
+								const dtoMDFRequestBudget =
+									await submitMDFRequestBudget(
+										mdfRequestBudget,
+										dtoMDFRequestActivity,
+										values
+									);
 
 								mdfRequestBudget.id = dtoMDFRequestBudget.id;
 								mdfRequestBudget.externalReferenceCode =

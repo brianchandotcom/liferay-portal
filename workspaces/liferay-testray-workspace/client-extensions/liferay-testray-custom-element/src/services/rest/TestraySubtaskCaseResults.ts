@@ -35,7 +35,7 @@ class TestraySubtaskCaseResultImpl extends Rest<
 							routine:
 								caseResult.r_buildToCaseResult_c_build
 									?.r_routineToBuilds_c_routine,
-					  }
+						}
 					: undefined,
 				case: caseResult?.r_caseToCaseResult_c_case
 					? {
@@ -46,22 +46,20 @@ class TestraySubtaskCaseResultImpl extends Rest<
 								? {
 										...caseResult?.r_caseToCaseResult_c_case
 											?.r_componentToCases_c_component,
-										team:
-											caseResult
-												?.r_caseToCaseResult_c_case
-												.r_componentToCases_c_component
-												.r_teamToComponents_c_team,
-								  }
+										team: caseResult
+											?.r_caseToCaseResult_c_case
+											.r_componentToCases_c_component
+											.r_teamToComponents_c_team,
+									}
 								: undefined,
-					  }
+						}
 					: undefined,
 				component: caseResult?.r_componentToCaseResult_c_component
 					? {
 							...caseResult.r_componentToCaseResult_c_component,
-							team:
-								caseResult.r_componentToCaseResult_c_component
-									.r_teamToComponents_c_team,
-					  }
+							team: caseResult.r_componentToCaseResult_c_component
+								.r_teamToComponents_c_team,
+						}
 					: undefined,
 				run: caseResult?.r_runToCaseResult_c_run,
 				subtask: caseResult?.r_subtaskToCaseResults_c_subtask,

@@ -20,9 +20,8 @@ export default function ClaimPaidModalContent({
 	currencyExchangeRate,
 	onClose,
 }: PRMFormikPageProps & IProps) {
-	const {dirty, isSubmitting, isValid, setFieldValue} = useFormikContext<
-		MDFClaim
-	>();
+	const {dirty, isSubmitting, isValid, setFieldValue} =
+		useFormikContext<MDFClaim>();
 
 	return (
 		<PRMForm name="MDF Claim" title="Status Change">

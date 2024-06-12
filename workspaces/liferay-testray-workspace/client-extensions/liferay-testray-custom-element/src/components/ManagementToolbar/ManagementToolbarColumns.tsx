@@ -35,9 +35,8 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 
 		setIsVisible((isVisible) => !isVisible);
 	};
-	const [{columns: contextColumns, columnsFixed}, dispatch] = useContext(
-		ListViewContext
-	);
+	const [{columns: contextColumns, columnsFixed}, dispatch] =
+		useContext(ListViewContext);
 
 	const columnsNotFixed = columns?.filter(
 		({key, value}) => !columnsFixed.includes(key) && value !== ''
@@ -103,9 +102,9 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 											})
 										}
 										value={
-											(selectedColumns[
+											selectedColumns[
 												column.key
-											] as unknown) as string
+											] as unknown as string
 										}
 									/>
 								)

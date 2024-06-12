@@ -72,10 +72,10 @@ export function CardSectionsBody({
 								isCloud
 									? i18n.translate(
 											'create-a-cloud-app-to-be-delivered-as-a-live-service'
-									  )
+										)
 									: i18n.translate(
 											'create-a-dxp-app-to-be-delivered-as-a-download'
-									  )
+										)
 							}
 							icon={isCloud ? 'check-circle' : 'times-circle'}
 							title={isCloud ? 'Yes' : 'No'}

@@ -21,13 +21,13 @@ const submitMDFRequestBudget = async (
 				budget,
 				activityDTO,
 				mdfRequest
-		  )
+			)
 		: await createMDFRequestActivityBudget(
 				ResourceName.BUDGET,
 				budget,
 				activityDTO,
 				mdfRequest
-		  );
+			);
 
 	return dtoMDFClaimBudget;
 };

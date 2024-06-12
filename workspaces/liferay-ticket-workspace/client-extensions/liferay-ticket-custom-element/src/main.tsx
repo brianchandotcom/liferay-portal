@@ -18,10 +18,11 @@ export type LiferayTicketWorkspaceComponentsType = {
 	[key: string]: JSX.Element;
 };
 
-const LIFERAY_TICKET_WORKSPACE_COMPONENTS: LiferayTicketWorkspaceComponentsType = {
-	dashboard: <TicketsDashboard screenType={ScreenType.STANDALONE} />,
-	overview: <TicketsOverview />,
-};
+const LIFERAY_TICKET_WORKSPACE_COMPONENTS: LiferayTicketWorkspaceComponentsType =
+	{
+		dashboard: <TicketsDashboard screenType={ScreenType.STANDALONE} />,
+		overview: <TicketsOverview />,
+	};
 
 const DirectToCustomer: React.FC<{defaultScreen: string}> = ({defaultScreen}) =>
 	LIFERAY_TICKET_WORKSPACE_COMPONENTS[defaultScreen] ?? <AllScreens />;

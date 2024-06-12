@@ -44,9 +44,10 @@ const Runs = () => {
 		}
 	);
 
-	const factorItems = useMemo(() => factorsData?.items || [], [
-		factorsData?.items,
-	]);
+	const factorItems = useMemo(
+		() => factorsData?.items || [],
+		[factorsData?.items]
+	);
 
 	const factorCategoryName = factorItems
 		.map(({factorCategory}) => ({

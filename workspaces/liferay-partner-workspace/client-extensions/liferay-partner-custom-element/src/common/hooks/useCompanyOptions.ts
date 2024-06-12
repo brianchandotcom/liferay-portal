@@ -89,7 +89,7 @@ export default function useCompanyOptions(
 					: (countryPicklist && {
 							key: countryPicklist.value as string,
 							name: countryPicklist.label as string,
-					  }) ||
+						}) ||
 							{},
 				selectedAccountBrief,
 				currentCurrency && !isObjectEmpty(currentCurrency)
@@ -97,7 +97,7 @@ export default function useCompanyOptions(
 					: (currencyPicklist && {
 							key: currencyPicklist.value as string,
 							name: currencyPicklist.label as string,
-					  }) ||
+						}) ||
 							{},
 				currentCurrencyExchangeRate
 					? currentCurrencyExchangeRate

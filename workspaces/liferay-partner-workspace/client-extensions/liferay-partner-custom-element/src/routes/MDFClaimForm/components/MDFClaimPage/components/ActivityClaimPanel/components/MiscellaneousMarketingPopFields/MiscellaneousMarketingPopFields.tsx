@@ -66,7 +66,7 @@ const MiscellaneousMarketingPopFields = ({
 						activity.proofOfPerformance?.images
 							? activity.proofOfPerformance.images.concat(
 									liferayFiles as LiferayFile[]
-							  )
+								)
 							: liferayFiles
 					)
 				}
@@ -85,7 +85,7 @@ const MiscellaneousMarketingPopFields = ({
 						activity.proofOfPerformance?.allContents
 							? activity.proofOfPerformance.allContents.concat(
 									liferayFiles as LiferayFile[]
-							  )
+								)
 							: liferayFiles
 					)
 				}

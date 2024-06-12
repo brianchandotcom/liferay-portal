@@ -18,20 +18,17 @@ export default function useFilters(
 	nestedFields?: string
 ) {
 	const [filters, setFilters] = useState(() => {
-		const initialFilter: typeof INITIAL_FILTER = structuredClone(
-			INITIAL_FILTER
-		);
+		const initialFilter: typeof INITIAL_FILTER =
+			structuredClone(INITIAL_FILTER);
 
 		if (urlParams.get('enddate')) {
-			initialFilter.activityPeriod.dates.endDate = urlParams.get(
-				'enddate'
-			)!;
+			initialFilter.activityPeriod.dates.endDate =
+				urlParams.get('enddate')!;
 		}
 
 		if (urlParams.get('startdate')) {
-			initialFilter.activityPeriod.dates.startDate = urlParams.get(
-				'startdate'
-			)!;
+			initialFilter.activityPeriod.dates.startDate =
+				urlParams.get('startdate')!;
 		}
 
 		if (urlParams.getAll('partner').length) {
@@ -54,8 +51,8 @@ export default function useFilters(
 			? Filters.MDF_REQUEST_LISTING.channelsOpen
 			: Filters.MDF_REQUEST_LISTING.channelsCompleted
 		: openRequestFilter
-		? Filters.MDF_REQUEST_LISTING.partnersOpen
-		: Filters.MDF_REQUEST_LISTING.partnersCompleted;
+			? Filters.MDF_REQUEST_LISTING.partnersOpen
+			: Filters.MDF_REQUEST_LISTING.partnersCompleted;
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) => {
 		setFilters((previousFilters) => {

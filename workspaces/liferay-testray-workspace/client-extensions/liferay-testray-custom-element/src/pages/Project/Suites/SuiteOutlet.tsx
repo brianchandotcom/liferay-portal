@@ -23,13 +23,15 @@ import useSuiteActions from './useSuiteActions';
 const SuiteOutlet = () => {
 	const {actions} = useSuiteActions({isHeaderActions: true});
 	const {suiteId} = useParams();
-	const {
-		testrayProject,
-	}: {testrayProject: TestrayProject} = useOutletContext();
+	const {testrayProject}: {testrayProject: TestrayProject} =
+		useOutletContext();
 
-	const {data: testraySuite, error, loading, mutate} = useFetch<TestraySuite>(
-		`/suites/${suiteId}`
-	);
+	const {
+		data: testraySuite,
+		error,
+		loading,
+		mutate,
+	} = useFetch<TestraySuite>(`/suites/${suiteId}`);
 
 	const suiteCaseFilter = useSearchBuilder({useURIEncode: false});
 

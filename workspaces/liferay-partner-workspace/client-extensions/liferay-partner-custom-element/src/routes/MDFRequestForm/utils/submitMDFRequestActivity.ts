@@ -21,13 +21,13 @@ const submitMDFRequestActivity = async (
 				mdfRequestActivity,
 				mdfRequest,
 				mdfRequestDTO
-		  )
+			)
 		: await createMDFRequestActivity(
 				ResourceName.ACTIVITY_DXP,
 				mdfRequestActivity,
 				mdfRequest,
 				mdfRequestDTO
-		  );
+			);
 
 	return dtoMDFClaimActivity;
 };

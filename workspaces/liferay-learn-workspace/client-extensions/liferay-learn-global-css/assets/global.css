@@ -233,7 +233,8 @@ pre[class*='language-'] {
 	padding: 1.5rem 0;
 }
 
-.learn-article, .learn-recipe-container {
+.learn-article,
+.learn-recipe-container {
 	font-family: var(--font-family-sans-serif);
 	max-width: var(--container-max-xl);
 	padding: var(--spacer-4);
@@ -259,7 +260,8 @@ pre[class*='language-'] {
 		}
 	}
 
-	.learn-article-breadcrumbs, .learn-recipe-breadcrumbs {
+	.learn-article-breadcrumbs,
+	.learn-recipe-breadcrumbs {
 		margin-bottom: var(--spacer-3, 1rem);
 		a,
 		li {
@@ -268,12 +270,15 @@ pre[class*='language-'] {
 			font-size: 0.8125rem;
 			text-decoration: none;
 			text-underline-offset: 0.23em;
-			transition: color 0.15s ease-in-out,
+			transition:
+				color 0.15s ease-in-out,
 				background-color 0.15s ease-in-out,
-				border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+				border-color 0.15s ease-in-out,
+				box-shadow 0.15s ease-in-out;
 		}
 
-		.learn-article-breadcrumb, .learn-recipe-breadcrumb {
+		.learn-article-breadcrumb,
+		.learn-recipe-breadcrumb {
 			display: inline-flex;
 			flex-wrap: wrap;
 			list-style: none;
@@ -392,7 +397,9 @@ pre[class*='language-'] {
 		table,
 		.table-striped {
 			tbody
-				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(.table-divider) {
+				tr:nth-of-type(odd):not(.table-active):not(.table-disabled):not(
+					.table-divider
+				) {
 				&,
 				td,
 				th {
@@ -629,7 +636,8 @@ pre[class*='language-'] {
 						--color-action-neutral-hover-10,
 						#eaecee
 					);
-					transition: box-shadow 0.1s linear,
+					transition:
+						box-shadow 0.1s linear,
 						background-color 0.1s linear;
 				}
 			}

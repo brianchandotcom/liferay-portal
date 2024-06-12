@@ -26,8 +26,8 @@ export default function useFilters(
 			? Filters.RENEWAL_LISTING.open
 			: Filters.RENEWAL_LISTING.closed
 		: openOpportunitiesFilter
-		? Filters.OPPORTUNITY_LISTING.open
-		: Filters.OPPORTUNITY_LISTING.closed;
+			? Filters.OPPORTUNITY_LISTING.open
+			: Filters.OPPORTUNITY_LISTING.closed;
 
 	const onFilter = useCallback(
 		(newFilters: Partial<typeof INITIAL_FILTER>) =>

@@ -96,7 +96,7 @@ const Routines = () => {
 								testrayRoutine?.testrayBuildDueDate
 									? getTimeFromNow(
 											testrayRoutine?.testrayBuildDueDate
-									  )
+										)
 									: null,
 							value: i18n.translate('execution-date'),
 						},

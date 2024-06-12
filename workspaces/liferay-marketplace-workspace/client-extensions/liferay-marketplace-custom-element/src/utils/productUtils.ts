@@ -33,10 +33,10 @@ export function isTrialSKU(sku: SKU) {
  */
 export function getNormalizedSKUOptions(sku: SKU) {
 	return sku.skuOptions.map((skuOption) => {
-		if (((skuOption as unknown) as DeliverySKUOption).skuOptionKey) {
+		if ((skuOption as unknown as DeliverySKUOption).skuOptionKey) {
 			return {
-				key: ((skuOption as unknown) as DeliverySKUOption).skuOptionKey,
-				value: ((skuOption as unknown) as DeliverySKUOption)
+				key: (skuOption as unknown as DeliverySKUOption).skuOptionKey,
+				value: (skuOption as unknown as DeliverySKUOption)
 					.skuOptionValueKey,
 			};
 		}

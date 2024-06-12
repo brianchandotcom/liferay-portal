@@ -30,7 +30,7 @@ const PublisherDashboardOutlet: React.FC<PublisherDashboardOutletProps> = ({
 				<DashboardNavigation
 					accountIcon={getAccountImage(selectedAccount?.logoURL)}
 					accountsSearch={accountsSearch}
-					currentAccount={(selectedAccount as unknown) as Account}
+					currentAccount={selectedAccount as unknown as Account}
 					dashboardNavigationItems={[
 						{
 							itemTitle: i18n.translate('apps'),

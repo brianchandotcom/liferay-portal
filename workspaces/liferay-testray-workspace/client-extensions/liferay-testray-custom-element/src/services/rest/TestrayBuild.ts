@@ -76,9 +76,9 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		let runIndex = 1;
 
 		for (const run of runs) {
-			const factorOptions = (Object.values(
-				run
-			) as CategoryOptions[]).filter(Boolean);
+			const factorOptions = (
+				Object.values(run) as CategoryOptions[]
+			).filter(Boolean);
 
 			const factorOptionsList = factorOptions
 				.filter(({factorOption}) => Boolean(factorOption))
@@ -104,7 +104,8 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 					factorOption.factorOptionId
 				) {
 					await testrayFactorRest.create({
-						factorCategoryId: factorOption.factorCategoryId?.toString(),
+						factorCategoryId:
+							factorOption.factorCategoryId?.toString(),
 						factorOptionId: factorOption.factorOptionId?.toString(),
 						name: '',
 						routineId: undefined,
@@ -241,7 +242,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			return runs[runs?.length - 1];
 		};
 
-		let runNumber = (getLastRunNumber() as unknown) as number;
+		let runNumber = getLastRunNumber() as unknown as number;
 
 		for (const run of data.runOptions) {
 			const runId = run?.runId;

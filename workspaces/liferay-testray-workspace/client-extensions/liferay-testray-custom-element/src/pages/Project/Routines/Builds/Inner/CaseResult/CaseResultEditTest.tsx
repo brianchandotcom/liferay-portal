@@ -1,4 +1,5 @@
 /* eslint-disable @liferay/portal/no-global-fetch */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -40,11 +41,8 @@ const CaseResultEditTest = () => {
 
 	const {caseResultId} = useParams();
 
-	const {
-		caseResult,
-		mbMessage,
-		mutateCaseResult,
-	}: OutletContext = useOutletContext();
+	const {caseResult, mbMessage, mutateCaseResult}: OutletContext =
+		useOutletContext();
 
 	const {
 		formState: {errors},
@@ -61,7 +59,7 @@ const CaseResultEditTest = () => {
 						? CaseResultStatuses.PASSED
 						: caseResult?.dueStatus.key,
 					issues: caseResult.issues,
-			  } as any)
+				} as any)
 			: {},
 		resolver: yupResolver(yupSchema.caseResult),
 	});

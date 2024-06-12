@@ -19,8 +19,8 @@ export default function getContentMarketFields(
 		},
 		{
 			title: 'Primary theme or message of your content',
-			value:
-				mdfRequestActivity.activityDescription?.primaryThemeOrMessage,
+			value: mdfRequestActivity.activityDescription
+				?.primaryThemeOrMessage,
 		},
 
 		{
@@ -28,8 +28,7 @@ export default function getContentMarketFields(
 			value: mdfRequestActivity.activityDescription?.goalOfContent,
 		},
 		{
-			title:
-				'Are you hiring an outside writer or agency to prepare the content?',
+			title: 'Are you hiring an outside writer or agency to prepare the content?',
 			value: getBooleanValue(
 				mdfRequestActivity.activityDescription
 					?.hiringOutsideWriterOrAgency as string

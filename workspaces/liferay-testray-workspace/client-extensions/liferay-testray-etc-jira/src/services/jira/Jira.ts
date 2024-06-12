@@ -62,6 +62,7 @@ class Jira extends JiraAuth {
 			`${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
 			{
 				headers: {
+
 					// eslint-disable-next-line quote-props
 					'Authorization': `Bearer ${token}`,
 					'Content-Type': 'application/json',
@@ -108,7 +109,7 @@ class Jira extends JiraAuth {
 							jiraComponents: _issue.fields.labels,
 							key: _issue.key,
 							summary: _issue.fields.summary,
-					  };
+						};
 		});
 
 		return jiraIssues;
@@ -126,6 +127,7 @@ class Jira extends JiraAuth {
 			{
 				body: JSON.stringify(body),
 				headers: {
+
 					// eslint-disable-next-line quote-props
 					'Authorization': `Bearer ${token}`,
 					'Content-Type': 'application/json',

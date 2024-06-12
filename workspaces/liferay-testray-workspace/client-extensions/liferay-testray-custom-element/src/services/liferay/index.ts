@@ -42,9 +42,7 @@ type FetchType = (
 ) => Promise<Response>;
 
 interface OAuth2Client {
-	FromUserAgentApplication: (
-		_userAgent: string
-	) => {
+	FromUserAgentApplication: (_userAgent: string) => {
 		authorizeURL: string;
 		clientId: string;
 		encodedRedirectURL: string;

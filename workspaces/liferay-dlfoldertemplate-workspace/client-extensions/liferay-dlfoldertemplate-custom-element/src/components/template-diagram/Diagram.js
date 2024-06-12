@@ -248,9 +248,8 @@ const Diagram = ({templateId}) => {
 
 	const loadNodes = useCallback(
 		async (templateId) => {
-			const templateNodesPage = await getAvailableTemplatesNodesPage(
-				templateId
-			);
+			const templateNodesPage =
+				await getAvailableTemplatesNodesPage(templateId);
 
 			const templateNodes = templateNodesPage.items;
 

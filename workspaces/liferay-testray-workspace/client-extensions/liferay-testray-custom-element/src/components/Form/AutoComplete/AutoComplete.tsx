@@ -31,7 +31,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 	const debouncedValue = useDebounce(value, 1000);
 
 	const {called, data, error, isValidating} = useFetch(
-		debouncedValue ? ((resource as unknown) as string) : null,
+		debouncedValue ? (resource as unknown as string) : null,
 		{
 			params: {
 				filter: onSearch(debouncedValue),

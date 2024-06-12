@@ -16,9 +16,9 @@ type ManagementToolbarResultsBarProps = {
 	totalItems: number;
 };
 
-const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = ({
-	totalItems,
-}) => {
+const ManagementToolbarResultsBar: React.FC<
+	ManagementToolbarResultsBarProps
+> = ({totalItems}) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 

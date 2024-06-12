@@ -91,9 +91,8 @@ class TestrayFactorRest extends Rest<TestrayFactorForm, TestrayFactor> {
 		testrayFactors: TestrayFactor[],
 		testrayFactorOptionIds: number[][]
 	): CategoryOptions[][] {
-		const defaultTestrayFactorOptionsMap = this.getDefaultTestrayFactorOptionsMap(
-			testrayFactors
-		);
+		const defaultTestrayFactorOptionsMap =
+			this.getDefaultTestrayFactorOptionsMap(testrayFactors);
 
 		const selectedTestrayFactorOptionsMap = new Map<number, number>();
 
@@ -127,10 +126,11 @@ class TestrayFactorRest extends Rest<TestrayFactorForm, TestrayFactor> {
 				continue;
 			}
 
-			const testrayFactors: TestrayFactor[] = this.getDefaultTestrayFactors(
-				defaultTestrayFactorOptionsMap,
-				factorCategoryId
-			);
+			const testrayFactors: TestrayFactor[] =
+				this.getDefaultTestrayFactors(
+					defaultTestrayFactorOptionsMap,
+					factorCategoryId
+				);
 
 			testrayFactors.push({
 				factorCategory: {
@@ -144,10 +144,8 @@ class TestrayFactorRest extends Rest<TestrayFactorForm, TestrayFactor> {
 			testrayFactorCombinations.push(testrayFactors);
 		}
 
-		const defaultTestrayFactors: TestrayFactor[] = this.getDefaultTestrayFactors(
-			defaultTestrayFactorOptionsMap,
-			0
-		);
+		const defaultTestrayFactors: TestrayFactor[] =
+			this.getDefaultTestrayFactors(defaultTestrayFactorOptionsMap, 0);
 
 		testrayFactorCombinations.push(defaultTestrayFactors);
 

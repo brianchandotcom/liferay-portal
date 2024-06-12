@@ -12,7 +12,7 @@ import {
 	useFormState,
 } from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Select from '../Select/Select';
 
@@ -37,107 +37,116 @@ const ObjectField = ({
 	value = {},
 	visible,
 }) => {
+	const [options, setOptions] = useState([]);
+
 	const {
-		formBuilder: {
-			focusedField: {dataType, type: focusedFieldType},
-			pages,
-		},
+		formBuilder: {focusedField, pages},
 	} = useFormState();
 
-	const normalizedDataType = useMemo(
-		() => normalizeDataType(dataType),
-		[dataType]
-	);
+	useEffect(() => {
+		if (focusedField) {
+			const normalizedDataType = normalizeDataType(focusedField.dataType);
 
-	const options = useMemo(() => {
-		const filteredObjectFields = objectFields.filter(
-			({
-				businessType,
-				listTypeDefinitionExternalReferenceCode,
-				localized,
-				relationshipType,
-				system,
-				type,
-			}) => {
-				if (businessType === 'AutoIncrement') {
-					return false;
-				}
+			const filteredObjectFields = objectFields.filter(
+				({
+					businessType,
+					listTypeDefinitionExternalReferenceCode,
+					localized,
+					relationshipType,
+					system,
+					type,
+				}) => {
+					if (businessType === 'AutoIncrement') {
+						return false;
+					}
 
-				if (
-					!listTypeDefinitionExternalReferenceCode &&
-					(focusedFieldType === 'radio' ||
-						focusedFieldType === 'select') &&
-					normalizedDataType.includes(type.toLowerCase())
-				) {
-					return false;
-				}
-				else if (
-					listTypeDefinitionExternalReferenceCode &&
-					(focusedFieldType === 'checkbox_multiple' ||
-						focusedFieldType === 'color' ||
-						focusedFieldType === 'grid' ||
-						focusedFieldType === 'rich_text' ||
-						focusedFieldType === 'text') &&
-					normalizedDataType.includes(type.toLowerCase())
-				) {
-					return false;
-				}
-				else if (localized) {
-					return false;
-				}
-				else if (
-					(focusedFieldType === 'rich_text' ||
-						focusedFieldType === 'text') &&
-					type === 'Clob'
-				) {
-					return true;
-				}
-				else if (relationshipType || system) {
-					return false;
-				}
-				else if (
-					businessType === 'Attachment' &&
-					focusedFieldType === 'document_library'
-				) {
-					return true;
-				}
+					if (
+						!listTypeDefinitionExternalReferenceCode &&
+						(focusedField.type === 'radio' ||
+							focusedField.type === 'select') &&
+						normalizedDataType.includes(type.toLowerCase())
+					) {
+						return false;
+					}
+					if (
+						listTypeDefinitionExternalReferenceCode &&
+						(focusedField.type === 'checkbox_multiple' ||
+							focusedField.type === 'color' ||
+							focusedField.type === 'grid' ||
+							focusedField.type === 'rich_text' ||
+							focusedField.type === 'text') &&
+						normalizedDataType.includes(type.toLowerCase())
+					) {
+						return false;
+					}
 
-				return normalizedDataType.includes(type.toLowerCase());
-			}
-		);
+					if (localized) {
+						return false;
+					}
 
-		if (filteredObjectFields.length) {
-			const mappedFields = getFields(pages)
-				.map((field) => {
-					const objectFieldName = getObjectFieldName(field);
+					if (
+						(focusedField.type === 'rich_text' ||
+							focusedField.type === 'text') &&
+						type === 'Clob'
+					) {
+						return true;
+					}
 
-					return (
-						objectFieldName &&
-						getSelectedValue(objectFieldName.value)
-					);
-				})
-				.filter(Boolean);
+					if (relationshipType || system) {
+						return false;
+					}
 
-			return filteredObjectFields.map(({label, name}) => ({
-				disabled: !!mappedFields.includes(name),
-				label: label[themeDisplay.getDefaultLanguageId()] ?? name,
-				value: name,
-			}));
-		}
-		else {
-			const emptyStateMessage = Liferay.Language.get(
-				'there-are-no-compatible-object-fields-to-map'
+					if (
+						businessType === 'Attachment' &&
+						focusedField.type === 'document_library'
+					) {
+						return true;
+					}
+
+					return normalizedDataType.includes(type.toLowerCase());
+				}
 			);
 
-			return [
-				{
-					disabled: true,
-					label: emptyStateMessage,
-					value: emptyStateMessage,
-				},
-			];
+			if (filteredObjectFields.length) {
+				const mappedFields = getFields(pages)
+					.map((field) => {
+						const objectFieldName = getObjectFieldName(field);
+
+						return (
+							objectFieldName &&
+							getSelectedValue(objectFieldName.value)
+						);
+					})
+					.filter(Boolean);
+
+				const newOptions = filteredObjectFields.map(
+					({label, name}) => ({
+						disabled: !!mappedFields.includes(name),
+						label:
+							label[themeDisplay.getDefaultLanguageId()] ?? name,
+						value: name,
+					})
+				);
+
+				setOptions(newOptions);
+			}
+			else {
+				const emptyStateMessage = Liferay.Language.get(
+					'there-are-no-compatible-object-fields-to-map'
+				);
+
+				setOptions([
+					{
+						disabled: true,
+						label: emptyStateMessage,
+						value: emptyStateMessage,
+					},
+				]);
+			}
 		}
-	}, [focusedFieldType, normalizedDataType, objectFields, pages]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [focusedField]);
 
 	return (
 		<Select

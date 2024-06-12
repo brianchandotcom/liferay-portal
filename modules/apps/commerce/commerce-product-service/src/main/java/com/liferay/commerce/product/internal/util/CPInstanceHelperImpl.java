@@ -276,16 +276,32 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			String key = jsonObject.getString("key");
+
+			if (Validator.isNull(key)) {
+				key = jsonObject.getString("skuOptionKey");
+			}
+
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelLocalService.
-					fetchCPDefinitionOptionRelByKey(
-						cpDefinitionId, jsonObject.getString("key"));
+					fetchCPDefinitionOptionRelByKey(cpDefinitionId, key);
 
 			if (cpDefinitionOptionRel == null) {
 				continue;
 			}
 
 			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
+
+			if (valueJSONArray == null) {
+				Object skuOptionValueKey = jsonObject.get("skuOptionValueKey");
+
+				if (JSONUtil.isJSONArray(skuOptionValueKey.toString())) {
+					valueJSONArray = (JSONArray)skuOptionValueKey;
+				}
+				else {
+					valueJSONArray = JSONUtil.put(skuOptionValueKey);
+				}
+			}
 
 			for (int j = 0; j < valueJSONArray.length(); j++) {
 				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =

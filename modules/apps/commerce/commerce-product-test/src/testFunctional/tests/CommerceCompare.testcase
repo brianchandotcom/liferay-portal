@@ -120,7 +120,7 @@ definition {
 
 		task ("Then 'Product Comparison uses Functional Cookies' panel pops up") {
 			AssertElementPresent(
-				key_text = "Product Comparison Uses Functional Cookies",
+				key_text = "Product Comparison Uses Preferences Cookies",
 				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_TITLE");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
@@ -131,7 +131,7 @@ definition {
 		task ("When functional cookies are declined") {
 			CookieConsentPanel.cookiesDeclineAll();
 
-			Alert.viewWarningSpecific(warningMessage = "Cookies Not Allowed:You cannot compare products when functional cookies are not allowed.");
+			Alert.viewWarningSpecific(warningMessage = "Cookies Not Allowed:You cannot compare products when preferences cookies are not allowed.");
 		}
 
 		task ("Then the buyer navigates to the catalog page") {
@@ -146,7 +146,7 @@ definition {
 
 		task ("Then 'Product Comparison uses Functional Cookies' panel pops up again") {
 			AssertElementPresent(
-				key_text = "Product Comparison Uses Functional Cookies",
+				key_text = "Product Comparison Uses Preferences Cookies",
 				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_TITLE");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");

@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("Then the user goes and clear the results") {
-			Search.clearSearchResult();
+			Click(locator1 = "//button[text()='Clear']");
 		}
 
 		task ("And all of the currencies are displayed") {

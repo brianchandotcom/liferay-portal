@@ -2348,7 +2348,7 @@ definition {
 
 			Click(
 				key_entryName = "${sku}SKU",
-				locator1 = "CommerceNavigation#ENTRY_NAME");
+				locator1 = "CommerceNavigation#ENTRY_NAME_EXACT_MATCH");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

@@ -11,21 +11,21 @@ definition {
 	}
 
 	tearDown {
+		CommerceConfiguration.commerceTearDown();
+
+		User.logoutAndLoginPG();
+
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Commerce Order");
+		ObjectPortlet.selectObject(label = "Commerce Order");
 
 		ObjectAdmin.goToActionsTab();
 
-		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			Click(
-				key_value = "",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		while (IsElementPresent(locator1 = "xpath=(//div[@class='table-list-title'])[1]")) {
+			var actionLabel = selenium.getText("xpath=(//div[@class='table-list-title'])[1]/a");
 
-			MenuItem.click(menuItem = "Delete");
+			ObjectAdmin.deleteActionViaUI(actionLabel = ${actionLabel});
 		}
-
-		CommerceConfiguration.commerceTearDown();
 	}
 
 	@description = "This is a test for COMMERCE-12574. Admin can view an order with a single line item that can be split."
@@ -1726,7 +1726,7 @@ definition {
 		task ("Then a new Commerce Order action rule with default settings is created") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+			ObjectPortlet.selectObject(label = "Commerce Order");
 
 			ObjectAdmin.goToActionsTab();
 

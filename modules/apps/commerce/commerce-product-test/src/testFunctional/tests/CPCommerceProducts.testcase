@@ -1731,7 +1731,7 @@ definition {
 		}
 
 		task ("When the search result is cleared") {
-			Search.clearSearchResult();
+			Click(locator1 = "//button[text()='Clear']");
 		}
 
 		task ("Then all three products previously added are shown on the Grouped tab") {
@@ -2806,8 +2806,6 @@ definition {
 
 	@priority = 5
 	test ProductPublishing {
-		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

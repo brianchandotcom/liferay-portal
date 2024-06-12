@@ -732,19 +732,19 @@ definition {
 		task ("And Given two diagram products") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
-				productName = "Diagram T-Shirt 2",
+				productName = "Diagram T-Shirt1",
 				productType = "diagram");
 
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
-				productName = "Diagram T-Shirt",
+				productName = "Diagram T-Shirt2",
 				productType = "diagram");
 
 			CommerceProducts.openProductsAdmin();
 
-			CommerceNavigator.searchEntry(entryName = "Diagram T-Shirt");
+			CommerceNavigator.searchEntry(entryName = "Diagram T-Shirt1");
 
-			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
+			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt1");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
@@ -773,14 +773,14 @@ definition {
 				sku = "MIN93015");
 
 			CommerceDiagram.addPin(
-				diagram = "Diagram T-Shirt 2",
+				diagram = "Diagram T-Shirt2",
 				pinNumber = 3,
 				quantity = 1,
 				selectType = "Linked to a Diagram");
 		}
 
 		task ("Then the Mapped Products table should save information for all pins") {
-			for (var mappedProducts : list "Test,MIN93015,Diagram T-Shirt 2") {
+			for (var mappedProducts : list "Test,MIN93015,Diagram T-Shirt2") {
 				AssertElementPresent(
 					key_productName = ${mappedProducts},
 					locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT");

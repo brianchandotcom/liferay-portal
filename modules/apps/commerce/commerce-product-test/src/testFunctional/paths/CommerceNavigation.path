@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_NAME_EXACT_MATCH</td>
+	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_NAME_N</td>
 	<td>xpath=(//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a)[${key_rowNumber}]</td>
 	<td></td>

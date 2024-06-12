@@ -15,7 +15,6 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -95,9 +94,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				curLayout = layout;
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-11070") &&
-				(layoutMode.equals(Constants.PREVIEW) ||
-				 layoutMode.equals(Constants.VIEW))) {
+			if (layoutMode.equals(Constants.PREVIEW) ||
+				layoutMode.equals(Constants.VIEW)) {
 
 				if (!_hasPreviewPermission(curLayout, themeDisplay)) {
 					throw new PrincipalException.MustHavePermission(

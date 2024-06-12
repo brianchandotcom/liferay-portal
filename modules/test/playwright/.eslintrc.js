@@ -5,61 +5,22 @@
 
 const path = require('path');
 
-/**
- * We use @liferay/npm-scripts to perform linting in a controlled way, but we
- * also try to expose its configuration here so it can be picked up by editors.
- */
-let config = {};
-
-try {
-	config = require('@liferay/npm-scripts/src/config/eslint.config');
-}
-catch (error) {
-	throw new Error('@liferay/npm-scripts is not installed; please run "yarn"');
-}
-
-config = {
-	...config,
+const config = {
 	env: {
-		browser: true,
-		es6: true,
+		es2021: true,
 		node: true,
 	},
-	globals: {
-		...config.globals,
-		MODULE_PATH: true,
-		configuration: true,
-		fragmentElement: true,
-		fragmentNamespace: true,
-		layoutMode: true,
-	},
-	overrides: [
-		{
-			files: [
-				'liferay-sample-workspace/client-extensions/liferay-sample-custom-element-*/**',
-			],
-			rules: {
-				'@liferay/no-abbreviations': 'off',
-				'@liferay/no-it-should': 'off',
-				'sort-keys': 'off',
-			},
+	extends: ['plugin:@liferay/general'],
+	ignorePatterns: ['!*'],
+	parserOptions: {
+		ecmaFeatures: {
+			jsx: true,
 		},
-	],
+		ecmaVersion: 2023,
+	},
+	plugins: ['@liferay'],
+	root: true,
 	rules: {
-		'@liferay/empty-line-between-elements': 'off',
-		'@liferay/import-extensions': 'off',
-		'@liferay/portal/deprecation': 'off',
-		'@liferay/portal/no-document-cookie': 'off',
-		'@liferay/portal/no-explicit-extend': 'off',
-		'@liferay/portal/no-global-fetch': 'off',
-		'@liferay/portal/no-global-storage': 'off',
-		'@liferay/portal/no-loader-import-specifier': 'off',
-		'@liferay/portal/no-localhost-reference': 'off',
-		'@liferay/portal/no-react-dom-create-portal': 'off',
-		'@liferay/portal/no-react-dom-render': 'off',
-		'@liferay/portal/no-side-navigation': 'off',
-		'@liferay/portal/unexecuted-ismounted': 'off',
-		'no-empty': ['error', {allowEmptyCatch: true}],
 		'notice/notice': [
 			'error',
 			{

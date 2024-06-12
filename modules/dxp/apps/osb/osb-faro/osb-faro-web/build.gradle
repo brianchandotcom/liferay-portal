@@ -89,12 +89,6 @@ osbFaroWebYarnWebpack {
 	workingDir = projectDir
 }
 
-packageRunTest {
-	setActions([])
-
-	dependsOn osbFaroWebYarnTest
-}
-
 packageRunWebpack {
 	if (project.hasProperty("faroEnvironmentName")) {
 		environment "FARO_ENVIRONMENT_NAME", faroEnvironmentName

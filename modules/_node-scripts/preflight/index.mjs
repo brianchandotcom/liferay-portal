@@ -5,6 +5,7 @@
 
 import {checkConfigFileNames} from './checkConfigFileNames.mjs';
 import {checkPackageJSONFiles} from './checkPackageJSONFiles.mjs';
+import {checkTsc} from './checkTsc.mjs';
 import {checkYarnLock} from './checkYarnLock.mjs';
 
 /**
@@ -12,11 +13,14 @@ import {checkYarnLock} from './checkYarnLock.mjs';
  * by Prettier or ESLint).
  */
 export default async function preflight() {
-	const errors = [
-		...(await checkConfigFileNames()),
-		...(await checkPackageJSONFiles()),
-		...(await checkYarnLock()),
-	];
+	const results = await Promise.all([
+		checkConfigFileNames(),
+		checkPackageJSONFiles(),
+		checkYarnLock(),
+		checkTsc(),
+	]);
+
+	const errors = results.flat();
 
 	if (errors.length) {
 		console.log('Preflight check failed:');

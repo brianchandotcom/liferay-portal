@@ -18,11 +18,11 @@ import getFileProjectDir from '../util/getFileProjectDir.mjs';
 import getGitModifiedFiles from '../util/getGitModifiedFiles.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
 
-export default async function main() {
-	const {modifiedSince} = getNamedArguments({
-		modifiedSince: '--modified-since',
-	});
+const {modifiedSince} = getNamedArguments({
+	modifiedSince: '--modified-since',
+});
 
+export default async function main(sinceHash = modifiedSince) {
 	const cwd = path.resolve('.');
 	const rootDir = await getRootDir();
 
@@ -35,8 +35,8 @@ export default async function main() {
 
 		let projectDirs;
 
-		if (modifiedSince) {
-			projectDirs = await getGitModifiedProjectDirs(modifiedSince);
+		if (sinceHash) {
+			projectDirs = await getGitModifiedProjectDirs(sinceHash);
 
 			console.log(
 				`ℹ️ Going to check ${projectDirs.length} modified projects`
@@ -79,7 +79,7 @@ export default async function main() {
 		}
 	}
 	else {
-		if (modifiedSince) {
+		if (sinceHash) {
 			console.error(`
 ❌ Argument --modified-since can only be given when checking the whole liferay-portal from modules
    directory.

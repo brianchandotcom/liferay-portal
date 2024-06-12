@@ -65,7 +65,7 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/shippingConfiguration"
+		"/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -103,7 +103,7 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/shippingConfiguration"
+		"/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

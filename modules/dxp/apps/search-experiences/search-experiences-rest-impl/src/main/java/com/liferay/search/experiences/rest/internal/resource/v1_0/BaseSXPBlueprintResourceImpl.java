@@ -279,7 +279,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sxp-blueprints/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sxp-blueprints/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -311,7 +311,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/sxp-blueprints/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sxp-blueprints/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

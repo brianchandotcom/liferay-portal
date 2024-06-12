@@ -89,7 +89,7 @@ public abstract class BaseEmailAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/email-addresses"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/email-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -260,7 +260,7 @@ public abstract class BaseEmailAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode: .+}/email-addresses"
+		"/organizations/by-external-reference-code/{externalReferenceCode}/email-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -400,7 +400,7 @@ public abstract class BaseEmailAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/user-accounts/by-external-reference-code/{externalReferenceCode: .+}/email-addresses"
+		"/user-accounts/by-external-reference-code/{externalReferenceCode}/email-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

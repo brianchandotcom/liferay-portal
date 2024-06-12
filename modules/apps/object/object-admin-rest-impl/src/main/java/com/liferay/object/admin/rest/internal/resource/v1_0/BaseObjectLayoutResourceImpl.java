@@ -103,7 +103,7 @@ public abstract class BaseObjectLayoutResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode: .+}/object-layouts"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-layouts"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -141,7 +141,7 @@ public abstract class BaseObjectLayoutResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode: .+}/object-layouts"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-layouts"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

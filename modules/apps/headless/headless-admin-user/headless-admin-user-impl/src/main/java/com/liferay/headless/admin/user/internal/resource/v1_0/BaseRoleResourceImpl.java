@@ -282,7 +282,7 @@ public abstract class BaseRoleResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/roles/by-external-reference-code/{externalReferenceCode: .+}"
+		"/roles/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -317,7 +317,7 @@ public abstract class BaseRoleResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/roles/by-external-reference-code/{externalReferenceCode: .+}"
+		"/roles/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -358,7 +358,7 @@ public abstract class BaseRoleResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/roles/by-external-reference-code/{externalReferenceCode: .+}/association/user-account/{userAccountId}"
+		"/roles/by-external-reference-code/{externalReferenceCode}/association/user-account/{userAccountId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -398,7 +398,7 @@ public abstract class BaseRoleResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Role")}
 	)
 	@javax.ws.rs.Path(
-		"/roles/by-external-reference-code/{externalReferenceCode: .+}/association/user-account/{userAccountId}"
+		"/roles/by-external-reference-code/{externalReferenceCode}/association/user-account/{userAccountId}"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

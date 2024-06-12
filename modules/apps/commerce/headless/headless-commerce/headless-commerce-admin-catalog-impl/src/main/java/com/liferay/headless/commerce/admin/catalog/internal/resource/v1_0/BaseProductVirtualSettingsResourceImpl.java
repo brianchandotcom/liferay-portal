@@ -64,7 +64,7 @@ public abstract class BaseProductVirtualSettingsResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/product-virtual-settings"
+		"/products/by-externalReferenceCode/{externalReferenceCode}/product-virtual-settings"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

@@ -89,7 +89,7 @@ public abstract class BaseWebUrlResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/web-urls"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/web-urls"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -225,7 +225,7 @@ public abstract class BaseWebUrlResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode: .+}/web-urls"
+		"/organizations/by-external-reference-code/{externalReferenceCode}/web-urls"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -361,7 +361,7 @@ public abstract class BaseWebUrlResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/user-accounts/by-external-reference-code/{externalReferenceCode: .+}/web-urls"
+		"/user-accounts/by-external-reference-code/{externalReferenceCode}/web-urls"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

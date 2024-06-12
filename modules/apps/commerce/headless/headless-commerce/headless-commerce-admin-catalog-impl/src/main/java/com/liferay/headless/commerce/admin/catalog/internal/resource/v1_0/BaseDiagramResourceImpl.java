@@ -119,7 +119,7 @@ public abstract class BaseDiagramResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/diagrams"
+		"/products/by-externalReferenceCode/{externalReferenceCode}/diagrams"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -151,7 +151,7 @@ public abstract class BaseDiagramResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/diagrams"
+		"/products/by-externalReferenceCode/{externalReferenceCode}/diagrams"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

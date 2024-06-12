@@ -88,9 +88,7 @@ public abstract class BaseCartResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Cart")}
 	)
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}"
-	)
+	@javax.ws.rs.Path("/carts/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Response deleteCartByExternalReferenceCode(
@@ -125,9 +123,7 @@ public abstract class BaseCartResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Cart")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}"
-	)
+	@javax.ws.rs.Path("/carts/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Cart getCartByExternalReferenceCode(
@@ -158,9 +154,7 @@ public abstract class BaseCartResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}"
-	)
+	@javax.ws.rs.Path("/carts/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Cart patchCartByExternalReferenceCode(
@@ -258,9 +252,7 @@ public abstract class BaseCartResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Cart")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}"
-	)
+	@javax.ws.rs.Path("/carts/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
@@ -292,7 +284,7 @@ public abstract class BaseCartResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Cart")}
 	)
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/checkout"
+		"/carts/by-externalReferenceCode/{externalReferenceCode}/checkout"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -328,7 +320,7 @@ public abstract class BaseCartResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/coupon-code"
+		"/carts/by-externalReferenceCode/{externalReferenceCode}/coupon-code"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -366,7 +358,7 @@ public abstract class BaseCartResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/payment-url"
+		"/carts/by-externalReferenceCode/{externalReferenceCode}/payment-url"
 	)
 	@javax.ws.rs.Produces("text/plain")
 	@Override
@@ -804,7 +796,7 @@ public abstract class BaseCartResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/account/by-externalReferenceCode/{accountExternalReferenceCode: .+}/carts"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/account/by-externalReferenceCode/{accountExternalReferenceCode}/carts"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -846,7 +838,7 @@ public abstract class BaseCartResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{externalReferenceCode: .+}/carts"
+		"/channels/by-externalReferenceCode/{externalReferenceCode}/carts"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

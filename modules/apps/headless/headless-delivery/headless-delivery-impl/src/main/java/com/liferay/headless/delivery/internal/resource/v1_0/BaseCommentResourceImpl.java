@@ -908,7 +908,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/blog-postings/by-external-reference-code/{blogPostingExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/blog-postings/by-external-reference-code/{blogPostingExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -970,7 +970,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/blog-postings/by-external-reference-code/{blogPostingExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/blog-postings/by-external-reference-code/{blogPostingExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1022,7 +1022,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/blog-postings/by-external-reference-code/{blogPostingExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/blog-postings/by-external-reference-code/{blogPostingExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -1076,7 +1076,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/comments/by-external-reference-code/{parentCommentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1138,7 +1138,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/comments/by-external-reference-code/{parentCommentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1190,7 +1190,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/comments/by-external-reference-code/{parentCommentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/comments/by-external-reference-code/{parentCommentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -1244,7 +1244,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1306,7 +1306,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1358,7 +1358,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -1412,7 +1412,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/structured-contents/by-external-reference-code/{structuredContentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/structured-contents/by-external-reference-code/{structuredContentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1474,7 +1474,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/structured-contents/by-external-reference-code/{structuredContentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/structured-contents/by-external-reference-code/{structuredContentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1526,7 +1526,7 @@ public abstract class BaseCommentResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/structured-contents/by-external-reference-code/{structuredContentExternalReferenceCode: .+}/comments/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/{siteId}/structured-contents/by-external-reference-code/{structuredContentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

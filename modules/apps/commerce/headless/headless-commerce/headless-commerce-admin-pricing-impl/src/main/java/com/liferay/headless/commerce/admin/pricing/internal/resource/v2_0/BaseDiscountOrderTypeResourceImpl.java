@@ -173,7 +173,7 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/discounts/by-externalReferenceCode/{externalReferenceCode: .+}/discount-order-types"
+		"/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -209,7 +209,7 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/discounts/by-externalReferenceCode/{externalReferenceCode: .+}/discount-order-types"
+		"/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

@@ -8,7 +8,8 @@ package com.liferay.login.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -79,14 +81,19 @@ public class LoginActionTest {
 
 	@Test
 	public void testNormalStateWhenLoginFromAnUtilityPage() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
+		try (GroupConfigurationTemporarySwapper configurationTemporarySwapper =
+				new GroupConfigurationTemporarySwapper(
+					_group.getGroupId(),
 					"com.liferay.login.web.internal.configuration." +
 						"AuthLoginConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"promptEnabled", true
 					).build())) {
 
+			System.out.println(
+				"promptEnabled: " +
+					AuthLoginGroupSettingsUtil.isPromptEnabled(
+						_group.getGroupId()));
 			UserTestUtil.setUser(TestPropsValues.getUser());
 
 			SiteInitializer siteInitializer =
@@ -99,20 +106,21 @@ public class LoginActionTest {
 
 			_removeGuestViewPermission(layout);
 
-			PrincipalThreadLocal.setName(_originalName);
+			UserTestUtil.setUser(
+				_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
 
 			URL url = new URL(
 				"http://localhost:8080/web" + _group.getFriendlyURL() +
 					layout.getFriendlyURL());
 
-			HttpURLConnection connection =
+			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();
 
-			connection.setRequestMethod("GET");
+			httpURLConnection.setRequestMethod("GET");
 
-			Assert.assertEquals(200, connection.getResponseCode());
+			Assert.assertEquals(200, httpURLConnection.getResponseCode());
 
-			String queryString = connection.getURL(
+			String queryString = httpURLConnection.getURL(
 			).getQuery();
 
 			Assert.assertTrue(queryString.contains("p_p_state=normal"));
@@ -181,5 +189,8 @@ public class LoginActionTest {
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

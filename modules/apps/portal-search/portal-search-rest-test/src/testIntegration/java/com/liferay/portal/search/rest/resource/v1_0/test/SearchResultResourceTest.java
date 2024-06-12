@@ -45,14 +45,12 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.search.rest.client.pagination.Page;
@@ -67,8 +65,6 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import java.net.URLEncoder;
-
-import java.text.DateFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -333,10 +329,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	@Test
-	public void testGetSearchPageWithSortDateTime() throws Exception {
-	}
-
-	@Test
 	public void testGetSearchPageWithSortInteger() throws Exception {
 	}
 
@@ -375,47 +367,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	@Override
-	protected String getFilterString(
-		EntityField entityField, String operator,
-		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
-			searchResult) {
-
-		StringBundler sb = new StringBundler(4);
-
-		String entityFieldName = entityField.getName();
-
-		sb.append(entityFieldName);
-
-		sb.append(" ");
-		sb.append(operator);
-		sb.append(" ");
-
-		if (entityFieldName.equals("dateCreated")) {
-			if (operator.equals("between")) {
-				Date date = searchResult.getDateModified();
-
-				sb = new StringBundler();
-
-				sb.append("(");
-				sb.append(entityFieldName);
-				sb.append(" gt ");
-				sb.append(
-					_dateFormat.format(date.getTime() - (5 * Time.SECOND)));
-				sb.append(" and ");
-				sb.append(entityFieldName);
-				sb.append(" lt ");
-				sb.append(
-					_dateFormat.format(date.getTime() + (5 * Time.SECOND)));
-				sb.append(")");
-			}
-
-			return sb.toString();
-		}
-
-		return super.getFilterString(entityField, operator, searchResult);
-	}
-
-	@Override
 	protected com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
 			testGetSearchPage_addSearchResult(
 				com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
@@ -442,11 +393,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
 			searchResult1 = testGetSearchPage_addSearchResult(
-				randomSearchResult());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
-			searchResult2 = testGetSearchPage_addSearchResult(
 				randomSearchResult());
 
 		for (EntityField entityField : entityFields) {
@@ -1270,9 +1216,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				jsonObject.getInt("page"), jsonObject.getInt("pageSize")),
 			jsonObject.getLong("totalCount"));
 	}
-
-	private static final DateFormat _dateFormat =
-		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	private AssetCategory _assetCategory;
 

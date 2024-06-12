@@ -5,8 +5,8 @@
 
 package com.liferay.portal.configuration.persistence.internal.upgrade.schema;
 
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -27,13 +27,11 @@ public class SchemaCreationUpgradeStep extends BaseSchemaCreationUpgradeStep {
 
 	@Override
 	public void upgrade() throws UpgradeException {
+		if (!StartupHelperUtil.isDBNew()) {
+			return;
+		}
+
 		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			if (dbInspector.hasTable("Configuration_")) {
-				return;
-			}
-
 			DB db = DBManagerUtil.getDB();
 
 			db.runSQLTemplateString(connection, sqlTemplate, false);

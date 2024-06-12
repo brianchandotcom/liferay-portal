@@ -458,7 +458,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configurePmd(project);
 		_configureProject(project);
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
-		_configureSourceSetMain(project);
+
+		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_2_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_3_X.equals(portalVersion)) {
+
+			_configureSourceSetMain(project);
+		}
+
 		_configureTaskDeploy(project, deployConfigsTask);
 		_configureTaskJar(jar, testProject);
 		_configureTaskJavadoc(project, bundleExtension, portalRootDir);

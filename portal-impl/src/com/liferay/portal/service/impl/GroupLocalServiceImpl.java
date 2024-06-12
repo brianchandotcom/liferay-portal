@@ -1515,7 +1515,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
-		if (_stagingGroupInMemoryFilterLimit <= 0) {
+		if (_stagingGroupsInMemoryFilterLimit <= 0) {
 			return GroupUtil.fetchByLiveGroupId(liveGroupId);
 		}
 
@@ -1523,8 +1523,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			_liveToStagingGroupsDCLSingleton.getSingleton(
 				this::_getLiveToStagingGroups);
 
-		if (liveToStagingGroups.size() > _stagingGroupInMemoryFilterLimit) {
-			_stagingGroupInMemoryFilterLimit = 0;
+		if (liveToStagingGroups.size() > _stagingGroupsInMemoryFilterLimit) {
+			_stagingGroupsInMemoryFilterLimit = 0;
 
 			_liveToStagingGroupsDCLSingleton.destroy(null);
 		}
@@ -5526,7 +5526,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		_liveToStagingGroupsDCLSingleton = new DCLSingleton<>();
 	private static final Snapshot<ReindexerBridge> _reindexerBridgeSnapshot =
 		new Snapshot<>(GroupLocalServiceImpl.class, ReindexerBridge.class);
-	private static volatile int _stagingGroupInMemoryFilterLimit =
+	private static volatile int _stagingGroupsInMemoryFilterLimit =
 		PropsValues.STAGING_GROUPS_IN_MEMORY_FILTER_LIMIT;
 
 	@BeanReference(type = AssetEntryLocalService.class)

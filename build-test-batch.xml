@@ -6268,6 +6268,7 @@ information. Make sure to commit in all format-javadoc results.
 			<test-action>
 				<gradle-execute dir="modules" task="packageRunTest">
 					<arg value="--continue" />
+					<arg value="--parallel" />
 				</gradle-execute>
 
 				<replace

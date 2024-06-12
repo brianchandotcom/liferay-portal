@@ -24,7 +24,7 @@ import java.sql.Connection;
 public class SchemaCreationUpgradeStep extends BaseSchemaCreationUpgradeStep {
 
 	public SchemaCreationUpgradeStep() {
-		super(_getTemplateSQL());
+		super(_getSQLTemplate());
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class SchemaCreationUpgradeStep extends BaseSchemaCreationUpgradeStep {
 		}
 	}
 
-	private static String _getTemplateSQL() {
+	private static String _getSQLTemplate() {
 		ClassLoader classLoader =
 			SchemaCreationUpgradeStep.class.getClassLoader();
 

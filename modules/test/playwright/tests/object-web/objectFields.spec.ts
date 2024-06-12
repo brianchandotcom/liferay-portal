@@ -20,15 +20,13 @@ export const test = mergeTests(
 	objectPagesTest
 );
 
-interface CreatedEntities {
-	listTypeDefinitionIds: number[];
-	objectDefinition: ObjectDefinition;
-}
-
 const createdEntities = {
 	listTypeDefinitionIds: [],
 	objectDefinition: {},
-} as CreatedEntities;
+} as {
+	listTypeDefinitionIds: number[];
+	objectDefinition: ObjectDefinition;
+};
 
 test.beforeEach(async ({apiHelpers}) => {
 	const newObjectDefinition =

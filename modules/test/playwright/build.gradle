@@ -15,5 +15,5 @@ buildscript {
 apply plugin: "com.liferay.node"
 
 node {
-	nodeVersion = "16.15.0"
+	nodeVersion = "20.12.2"
 }

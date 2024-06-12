@@ -2154,6 +2154,11 @@
   dependencies:
     prettier "3.2.5"
 
+"@liferay/stylelint-plugin@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@liferay/stylelint-plugin/-/stylelint-plugin-1.1.0.tgz#0855b3dbb7037272a952f0016a97c613ada794b9"
+  integrity sha512-Xv7y6OaGjJ9hsfX7y+R+OSFYUnvUHYnzQZ9csa9oAmgygjpA3dEyCwjyPbZhsjdlFngpWiAYMQC9MpJYbb8HXQ==
+
 "@n1ru4l/graphql-live-query@^0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@n1ru4l/graphql-live-query/-/graphql-live-query-0.9.0.tgz#defaebdd31f625bee49e6745934f36312532b2bc"

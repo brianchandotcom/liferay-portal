@@ -5,45 +5,59 @@
 
 const path = require('path');
 
-/**
- * We use @liferay/npm-scripts to perform linting in a controlled way, but we
- * also try to expose its configuration here so it can be picked up by editors.
- */
-let config = {};
+const CONFIG_FILES = [
+	'**/.babelrc.js',
+	'**/.eslintrc.js',
+	'**/.prettierrc.js',
+	'**/.stylelintrc.js',
+	'**/gulpfile.js',
+	'**/liferay-npm-bundler.config.js',
+	'**/npmscripts.config.js',
+	'**/webpack.config.dev.js',
+	'**/webpack.config.js',
+	'**/node-scripts.config.js',
+];
 
-try {
-	config = require('@liferay/npm-scripts/src/config/eslint.config');
-}
-catch (error) {
-	throw new Error(
-		'@liferay/npm-scripts is not installed; please run "ant setup-sdk"'
-	);
-}
-
-config = {
-	...config,
+const config = {
 	env: {
 		browser: true,
 		es2021: true,
-		node: true,
 	},
+	extends: ['plugin:@liferay/portal'],
 	globals: {
-		...config.globals,
+		AUI: true,
+		CKEDITOR: true,
+		Liferay: true,
 		MODULE_PATH: true,
+		process: true,
+		submitForm: true,
+		svg4everybody: true,
+		themeDisplay: true,
 	},
+	ignorePatterns: ['!*'],
 	overrides: [
-		...config.overrides,
 		{
 			env: {
 				node: true,
 			},
-			files: ['**/node-scripts.config.js'],
+			files: CONFIG_FILES,
+		},
+		{
+			env: {
+				jest: true,
+				node: true,
+			},
+			files: ['**/test/**/*.{js,ts,tsx}'],
 		},
 	],
 	parserOptions: {
-		ecmaVersion: '2022',
-		type: 'module',
+		ecmaFeatures: {
+			jsx: true,
+		},
+		ecmaVersion: 2023,
 	},
+	plugins: ['@liferay'],
+	root: true,
 	rules: {
 		'@liferay/import-extensions': 'off',
 		'@liferay/no-extraneous-dependencies': [

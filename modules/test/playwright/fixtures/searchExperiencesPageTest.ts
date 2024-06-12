@@ -5,14 +5,19 @@
 
 import {test} from '@playwright/test';
 
-import {SearchExperiencesPage} from '../pages/search-experiences-web/SearchExperiencesPage';
+import {EditSXPBlueprintPage} from '../pages/search-experiences-web/EditSXPBlueprintPage';
+import {SXPBlueprintsAndElementsViewPage} from '../pages/search-experiences-web/SXPBlueprintsAndElementsViewPage';
 
-const searchExperiencesPageTest = test.extend<{
-	searchExperiencesPage: SearchExperiencesPage;
+const searchExperiencesPagesTest = test.extend<{
+	editSXPBlueprintPage: EditSXPBlueprintPage;
+	sxpBlueprintsAndElementsViewPage: SXPBlueprintsAndElementsViewPage;
 }>({
-	searchExperiencesPage: async ({page}, use) => {
-		await use(new SearchExperiencesPage(page));
+	editSXPBlueprintPage: async ({page}, use) => {
+		await use(new EditSXPBlueprintPage(page));
+	},
+	sxpBlueprintsAndElementsViewPage: async ({page}, use) => {
+		await use(new SXPBlueprintsAndElementsViewPage(page));
 	},
 });
 
-export {searchExperiencesPageTest};
+export {searchExperiencesPagesTest};

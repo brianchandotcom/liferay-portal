@@ -13,6 +13,7 @@ export class ApplicationsMenuPage {
 	private readonly announcementsItem: Locator;
 	private readonly apiBuilderMenuItem: Locator;
 	private readonly applicationsMenuTabButton: Locator;
+	private readonly blueprintsItem: Locator;
 	private readonly clientExtensionsLink: Locator;
 	private readonly commerceChannelsMenuItem: Locator;
 	private readonly commerceDiscountsMenuItem: Locator;
@@ -62,6 +63,10 @@ export class ApplicationsMenuPage {
 		});
 		this.applicationsMenuTabButton = page.getByRole('tab', {
 			name: 'Applications',
+		});
+		this.blueprintsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Blueprints',
 		});
 		this.clientExtensionsLink = page.getByRole('menuitem', {
 			name: 'Client Extensions',
@@ -318,6 +323,11 @@ export class ApplicationsMenuPage {
 	async goToControlPanel() {
 		await this.goto();
 		await this.controlPanelButton.click();
+	}
+
+	async goToBlueprints() {
+		await this.goToApplicationsMenu();
+		await this.blueprintsItem.click();
 	}
 
 	async goToOauth2Administration() {

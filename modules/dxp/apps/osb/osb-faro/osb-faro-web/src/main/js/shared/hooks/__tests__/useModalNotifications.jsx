@@ -5,7 +5,7 @@ import ModalRenderer from 'shared/components/ModalRenderer';
 import React from 'react';
 import {close, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
-import {fireEvent, render, waitFor} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import {mockGetDateNow} from 'test/mock-date';
 import {
 	NotificationSubtypes,
@@ -14,6 +14,7 @@ import {
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
 import {useModalNotifications} from 'shared/hooks/useModalNotifications';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -49,11 +50,11 @@ describe('useModalNotifications', () => {
 			</Provider>
 		);
 
-		await waitFor(() => {});
+		await waitForLoadingToBeRemoved(container);
 
 		jest.runAllTimers();
 
-		await waitFor(() => {});
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -72,7 +73,7 @@ describe('useModalNotifications', () => {
 			)
 		);
 
-		const {getByText} = render(
+		const {container, getByText} = render(
 			<Provider store={mockStore()}>
 				<ModalRenderer />
 				<WrapperComponent />
@@ -81,7 +82,7 @@ describe('useModalNotifications', () => {
 
 		jest.runAllTimers();
 
-		await waitFor(() => {});
+		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(getByText('Do This Later'));
 

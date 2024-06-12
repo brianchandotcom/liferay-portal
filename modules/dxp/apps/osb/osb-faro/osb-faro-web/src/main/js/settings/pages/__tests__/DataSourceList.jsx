@@ -75,6 +75,10 @@ describe('DataSourceList', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container).toMatchSnapshot();
 	});
 
@@ -93,6 +97,10 @@ describe('DataSourceList', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container.querySelector('.no-results-root')).toMatchSnapshot();
 	});
 
@@ -106,6 +114,10 @@ describe('DataSourceList', () => {
 		);
 
 		const {container} = render(<DefaultComponent />);
+
+		await waitForLoadingToBeRemoved(container);
+
+		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -145,6 +157,10 @@ describe('DataSourceList', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
+
 		expect(
 			container.querySelectorAll('.embedded-alert-list-root')[1]
 		).toMatchSnapshot();
@@ -179,6 +195,10 @@ describe('DataSourceList', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
+
 		expect(container.querySelector('.no-results-root')).toMatchSnapshot();
 	});
 
@@ -205,6 +225,10 @@ describe('DataSourceList', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
+
 		expect(
 			container.querySelectorAll('.embedded-alert-list-root')[1]
 		).toMatchSnapshot();
@@ -226,6 +250,10 @@ describe('DataSourceList', () => {
 		);
 
 		const {container} = render(<DefaultComponent />);
+
+		await waitForLoadingToBeRemoved(container);
+
+		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 
@@ -254,6 +282,10 @@ describe('DataSourceList', () => {
 		);
 
 		const {container} = render(<DefaultUserComponent />);
+
+		await waitForLoadingToBeRemoved(container);
+
+		jest.runAllTimers();
 
 		await waitForLoadingToBeRemoved(container);
 

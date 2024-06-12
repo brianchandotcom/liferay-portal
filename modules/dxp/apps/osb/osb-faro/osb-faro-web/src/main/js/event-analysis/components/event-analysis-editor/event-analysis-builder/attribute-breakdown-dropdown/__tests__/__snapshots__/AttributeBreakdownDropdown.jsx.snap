@@ -97,7 +97,7 @@ exports[`AttributeBreakdownDropdown render 2`] = `
                     role="presentation"
                   >
                     <use
-                      href="#search"
+                      href="/o/osb-faro-web/dist/sprite.svg#search"
                     />
                   </svg>
                 </button>

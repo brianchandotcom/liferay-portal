@@ -76,6 +76,8 @@ describe('Event Analysis List', () => {
 	it('should render empty state', async () => {
 		const {container} = render(<WrappedComponent eventAnalyses={[]} />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		const noResults = container.querySelector('.no-results-root');
@@ -118,6 +120,10 @@ describe('Event Analysis List', () => {
 		const selectAllCheckbox = getByTestId('select-all-checkbox');
 
 		fireEvent.click(selectAllCheckbox);
+
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(managementBar.querySelector('.lexicon-icon-trash')).toBeTruthy();
 	});

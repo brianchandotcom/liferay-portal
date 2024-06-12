@@ -29,6 +29,8 @@ describe('IndividualAttributes', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
@@ -37,9 +39,15 @@ describe('IndividualAttributes', () => {
 	it('should open modal after click on fielName', async () => {
 		const {container, getByText} = render(<DefaultComponent />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		fireEvent.click(getByText('testFildName0'));
+
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(open).toBeCalled();
 	});

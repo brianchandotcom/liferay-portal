@@ -56,6 +56,8 @@ describe('ExperimentOverviewPage', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
+		await waitForLoadingToBeRemoved(container);
+
 		const reviewButton = (await findByRole('link', {
 			name: /review/i
 		})) as HTMLAnchorElement;

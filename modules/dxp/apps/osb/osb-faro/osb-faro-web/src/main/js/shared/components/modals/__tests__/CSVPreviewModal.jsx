@@ -1,7 +1,8 @@
 import CSVPreviewModal from '../CSVPreviewModal';
 import React from 'react';
 import {noop} from 'lodash';
-import {render, waitFor} from '@testing-library/react';
+import {render} from '@testing-library/react';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -16,7 +17,9 @@ describe('CSVPreviewModal', () => {
 			/>
 		);
 
-		await waitFor(() => {});
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -31,6 +34,8 @@ describe('CSVPreviewModal', () => {
 				onClose={noop}
 			/>
 		);
+
+		jest.runAllTimers();
 
 		expect(getByText('Data Preview "Liferay Test"')).toBeTruthy();
 	});

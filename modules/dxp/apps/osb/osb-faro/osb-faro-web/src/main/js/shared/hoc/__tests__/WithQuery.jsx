@@ -1,6 +1,7 @@
 import React from 'react';
 import withQuery from '../WithQuery';
-import {cleanup, render, waitFor} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
+import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -12,16 +13,17 @@ const rejectRequest = jest.fn(() => Promise.reject(mockFailData));
 
 describe('WithQuery', () => {
 	afterEach(cleanup);
-
 	it('should pass result props to the wrapped component', async () => {
 		const WrappedComponent = withQuery(
 			request,
 			val => val
 		)(({data}) => <div>{data && data.test}</div>);
 
-		const {queryByText} = render(<WrappedComponent />);
+		const {container, queryByText} = render(<WrappedComponent />);
 
-		await waitFor(() => {});
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('pass')).toBeTruthy();
 	});
@@ -32,9 +34,11 @@ describe('WithQuery', () => {
 			val => val
 		)(({error}) => <div>{error && 'error'}</div>);
 
-		const {queryByText} = render(<WrappedComponent />);
+		const {container, queryByText} = render(<WrappedComponent />);
 
-		await waitFor(() => {});
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('error')).toBeTruthy();
 	});
@@ -46,11 +50,11 @@ describe('WithQuery', () => {
 			({data}) => ({fooProp: data})
 		)(({fooProp}) => <div>{fooProp && fooProp.test}</div>);
 
-		const {queryByText} = render(<WrappedComponent />);
+		const {container, queryByText} = render(<WrappedComponent />);
 
 		jest.runAllTimers();
 
-		await waitFor(() => {});
+		await waitForLoadingToBeRemoved(container);
 
 		expect(queryByText('pass')).toBeTruthy();
 	});

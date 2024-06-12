@@ -52,6 +52,8 @@ describe('List', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		expect(container).toMatchSnapshot();

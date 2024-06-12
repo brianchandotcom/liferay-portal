@@ -198,8 +198,111 @@
 			"state": false,
 			"system": false,
 			"type": "String"
+		},
+		{
+			"listTypeDefinitionExternalReferenceCode": "LIST_APPLICATION_STATES",
+			"indexed": true,
+			"defaultValue": "open",
+			"localized": false,
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow",
+					"value": {
+						"objectStates": [
+							{
+								"objectStateTransitions": [
+									{
+										"key": "underReview"
+									},
+									{
+										"key": "withdrawn"
+									}
+								],
+								"key": "open"
+							},
+							{
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									},
+									{
+										"key": "denied"
+									},
+									{
+										"key": "withdrawn"
+									},
+									{
+										"key": "onHold"
+									}
+								],
+								"key": "underReview"
+							},
+							{
+								"objectStateTransitions": [
+									{
+										"key": "underReview"
+									}
+								],
+								"key": "approved"
+							},
+							{
+								"objectStateTransitions": [
+									{
+										"key": "underReview"
+									}
+								],
+								"key": "denied"
+							},
+							{
+								"objectStateTransitions": [
+									{
+										"key": "open"
+									}
+								],
+								"key": "withdrawn"
+							},
+							{
+								"objectStateTransitions": [
+									{
+										"key": "open"
+									},
+									{
+										"key": "underReview"
+									}
+								],
+								"key": "onHold"
+							}
+						]
+					}
+				},
+				{
+					"name": "defaultValueType",
+					"value": "inputAsValue"
+				},
+				{
+					"name": "defaultValue",
+					"value": "open"
+				}
+			],
+			"readOnly": "false",
+			"DBType": "String",
+			"label": {
+				"en_US": "testObjectImport"
+			},
+			"type": "String",
+			"required": true,
+			"externalReferenceCode": "937a8a2d-37a8-70ca-cc51-50e037473062",
+			"indexedAsKeyword": false,
+			"system": false,
+			"indexedLanguageId": "en_US",
+			"unique": false,
+			"name": "testObjectImport",
+			"state": true,
+			"businessType": "Picklist",
+			"readOnlyConditionExpression": ""
 		}
 	],
+	"objectFolderExternalReferenceCode": "default",
 	"objectLayouts": [
 		{
 			"defaultObjectLayout": true,
@@ -232,6 +335,16 @@
 									"objectLayoutColumns": [
 										{
 											"objectFieldName": "testObjectField2",
+											"priority": 0,
+											"size": 12
+										}
+									],
+									"priority": 0
+								},
+								{
+									"objectLayoutColumns": [
+										{
+											"objectFieldName": "testObjectImport",
 											"priority": 0,
 											"size": 12
 										}
@@ -318,7 +431,6 @@
 	"pluralLabel": {
 		"en_US": "Test Object Definitions"
 	},
-	"portlet": false,
 	"scope": "company",
 	"status": {
 		"code": 2,
@@ -326,5 +438,5 @@
 		"label_i18n": "Draft"
 	},
 	"system": false,
-	"titleObjectFieldName": "testObjectField1"
+	"titleObjectFieldName": "id"
 }

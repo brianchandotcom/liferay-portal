@@ -78,13 +78,6 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			"test-object-definition.site-default-locale.json",
 			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionPortuguese");
 
-		// State manager object definition
-
-		testExportImport(
-			"test-object-definition-state-manager.json",
-			"test-object-definition-state-manager.json", null,
-			"Testobjectdefinitionstatemanager");
-
 		// Published object definition
 
 		String externalReferenceCode = RandomTestUtil.randomString();

@@ -4515,6 +4515,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		if (user.isAgreedToTermsOfUse() == agreedToTermsOfUse) {
+			return user;
+		}
+
 		user.setAgreedToTermsOfUse(agreedToTermsOfUse);
 
 		return userPersistence.update(user);
@@ -5398,6 +5402,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		validateReminderQuery(user.getCompanyId(), question, answer);
+
+		if (Objects.equals(user.getReminderQueryQuestion(), question) &&
+			Objects.equals(user.getReminderQueryAnswer(), answer)) {
+
+			return user;
+		}
 
 		user.setReminderQueryQuestion(question);
 		user.setReminderQueryAnswer(answer);

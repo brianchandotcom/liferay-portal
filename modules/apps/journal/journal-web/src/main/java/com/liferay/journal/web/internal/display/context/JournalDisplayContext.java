@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -282,9 +281,7 @@ public class JournalDisplayContext {
 	}
 
 	public String getArticleSubtitle(JournalArticle article) {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11218") &&
-			(isNavigationMine() || isNavigationRecent())) {
-
+		if (isNavigationMine() || isNavigationRecent()) {
 			return _getSubtitle(
 				article.getCreateDate(), "created-x-ago-by-x",
 				article.getUserName());
@@ -678,9 +675,7 @@ public class JournalDisplayContext {
 	}
 
 	public String getFolderSubtitle(JournalFolder folder) {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11218") &&
-			(isNavigationMine() || isNavigationRecent())) {
-
+		if (isNavigationMine() || isNavigationRecent()) {
 			return _getSubtitle(
 				folder.getCreateDate(), "created-x-ago-by-x",
 				folder.getUserName());
@@ -862,13 +857,9 @@ public class JournalDisplayContext {
 	}
 
 	public String[] getOrderColumns() {
-		String[] orderColumns = {"display-date", "modified-date", "title"};
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11218")) {
-			orderColumns = new String[] {
-				"display-date", "modified-date", "create-date", "title"
-			};
-		}
+		String[] orderColumns = {
+			"display-date", "modified-date", "create-date", "title"
+		};
 
 		if (isSearch()) {
 			orderColumns = ArrayUtil.append(orderColumns, "relevance");
@@ -943,9 +934,7 @@ public class JournalDisplayContext {
 	}
 
 	public ResultRowSplitter getResultRowSplitter() {
-		if (isNavigationRecent() &&
-			FeatureFlagManagerUtil.isEnabled("LPD-11218")) {
-
+		if (isNavigationRecent()) {
 			return new JournalRecentArticlesResultRowSplitter(_themeDisplay);
 		}
 

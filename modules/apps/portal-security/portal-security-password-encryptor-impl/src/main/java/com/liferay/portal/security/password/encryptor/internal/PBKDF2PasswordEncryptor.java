@@ -121,7 +121,9 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 					_keySize = byteBuffer.getInt();
 					_rounds = byteBuffer.getInt();
 
-					_saltBytes = new byte[length - (2 * 4) - (_keySize / 8)];
+					_saltBytes = new byte
+						[length - (2 * 4) -
+							(int)Math.ceil((double)_keySize / 8)];
 
 					byteBuffer.get(_saltBytes);
 				}

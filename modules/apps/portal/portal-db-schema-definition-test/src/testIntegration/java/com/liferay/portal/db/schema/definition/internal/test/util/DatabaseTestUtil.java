@@ -94,8 +94,8 @@ public class DatabaseTestUtil {
 							resultSet.getInt("COLUMN_SIZE"), "Decimal Digits: ",
 							resultSet.getInt("DECIMAL_DIGITS"), "Is Nullable: ",
 							resultSet.getString("IS_NULLABLE"),
-							"Is AutoIncrement: ",
-							resultSet.getString("IS_AUTOINCREMENT")));
+							"Default value: ",
+							resultSet.getString("COLUMN_DEF")));
 				}
 			}
 		}

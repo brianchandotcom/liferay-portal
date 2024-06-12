@@ -12,7 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {blogsPagesTest} from './fixtures/blogsPagesTest';
-import {friendlyURLCategoriesSetup} from './utils/friendlyURLCategoriesSetup';
+import {blogsCategorizedFriendlyUrlSetup} from './utils/blogsCategorizedFriendlyUrlSetup';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -74,7 +74,7 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 	const vocabularyName = getRandomString();
 	const friendlyUrlCategories = ['category-1', 'category-2', 'category-3'];
 
-	await friendlyURLCategoriesSetup({
+	await blogsCategorizedFriendlyUrlSetup({
 		apiHelpers,
 		displayPageTemplatesPage,
 		friendlyUrlCategories,
@@ -121,7 +121,7 @@ test('LPD-24858 Categories with blank spaces in friendly URL', async ({
 	const vocabularyName = getRandomString();
 	const friendlyUrlCategories = ['category 1', 'category 2', 'category 3'];
 
-	await friendlyURLCategoriesSetup({
+	await blogsCategorizedFriendlyUrlSetup({
 		apiHelpers,
 		displayPageTemplatesPage,
 		friendlyUrlCategories,
@@ -162,7 +162,7 @@ test('LPD-26753 The URL changes when a category is modified', async ({
 	const vocabularyName = getRandomString();
 	const friendlyUrlCategories = ['category-1', 'category-2', 'category-3'];
 
-	const {categories} = await friendlyURLCategoriesSetup({
+	const {categories} = await blogsCategorizedFriendlyUrlSetup({
 		apiHelpers,
 		displayPageTemplatesPage,
 		friendlyUrlCategories,

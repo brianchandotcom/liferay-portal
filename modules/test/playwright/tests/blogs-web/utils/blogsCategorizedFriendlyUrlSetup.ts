@@ -11,7 +11,7 @@ import type {ApiHelpers} from '../../../helpers/ApiHelpers';
 import type {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import type {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 
-export async function friendlyURLCategoriesSetup({
+export async function blogsCategorizedFriendlyUrlSetup({
 	apiHelpers,
 	displayPageTemplatesPage,
 	friendlyUrlCategories,

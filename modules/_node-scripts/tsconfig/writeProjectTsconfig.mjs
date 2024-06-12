@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
 
 import {SRC_PATH, SRC_TSCONFIG_PATH, getRootDir} from '../util/constants.mjs';
 import sortObjectKeys from '../util/sortObjectKeys.mjs';
+import stringifyJson from '../util/stringifyJson.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 
 export default async function writeProjectTsconfig(
@@ -90,11 +92,26 @@ export default async function writeProjectTsconfig(
 		references,
 	};
 
+	json['@generated'] = hash(json);
+
 	sortObjectKeys(json);
 
 	await fs.writeFile(
 		path.join(srcPath, 'tsconfig.json'),
-		JSON.stringify(json, null, '\t'),
+		stringifyJson(json),
 		'utf-8'
 	);
+}
+
+function hash(config) {
+	const shasum = crypto.createHash('sha1');
+
+	shasum.update(
+		JSON.stringify({
+			...config,
+			['@generated']: null,
+		})
+	);
+
+	return shasum.digest('hex');
 }

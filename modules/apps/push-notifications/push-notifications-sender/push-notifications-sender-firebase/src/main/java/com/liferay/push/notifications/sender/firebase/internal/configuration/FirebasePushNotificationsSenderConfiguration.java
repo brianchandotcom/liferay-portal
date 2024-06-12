@@ -21,14 +21,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FirebasePushNotificationsSenderConfiguration {
 
-	@ExtendedAttributeDefinition(
-		descriptionArguments = "https://cloud.google.com/iam/docs/creating-managing-service-account-keys"
-	)
 	@Meta.AD(
-		description = "service-account-key-help", name = "service-account-key",
-		required = false
+		deflt = "https://fcm.googleapis.com",
+		name = "firebase-cloud-messaging-url", required = false
 	)
-	public String serviceAccountKey();
+	public String firebaseCloudMessagingURL();
 
 	@ExtendedAttributeDefinition(
 		descriptionArguments = "https://firebase.google.com/docs/projects/learn-more#project-number"
@@ -38,5 +35,14 @@ public interface FirebasePushNotificationsSenderConfiguration {
 		required = false
 	)
 	public String projectNumber();
+
+	@ExtendedAttributeDefinition(
+		descriptionArguments = "https://cloud.google.com/iam/docs/creating-managing-service-account-keys"
+	)
+	@Meta.AD(
+		description = "service-account-key-help", name = "service-account-key",
+		required = false
+	)
+	public String serviceAccountKey();
 
 }

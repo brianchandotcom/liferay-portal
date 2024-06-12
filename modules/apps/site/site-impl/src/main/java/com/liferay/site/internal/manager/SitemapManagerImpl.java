@@ -12,7 +12,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -259,8 +258,7 @@ public class SitemapManagerImpl implements SitemapManager {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187793") ||
-			Validator.isNotNull(layoutUuid) ||
+		if (Validator.isNotNull(layoutUuid) ||
 			!_isCompanyVirtualHostname(themeDisplay)) {
 
 			return ListUtil.fromArray(layoutSet);
@@ -544,8 +542,7 @@ public class SitemapManagerImpl implements SitemapManager {
 		for (SitemapURLProvider sitemapURLProvider :
 				_getSitemapURLProviders()) {
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-187793") &&
-				!sitemapURLProvider.isInclude(
+			if (!sitemapURLProvider.isInclude(
 					themeDisplay.getCompanyId(),
 					themeDisplay.getScopeGroupId())) {
 

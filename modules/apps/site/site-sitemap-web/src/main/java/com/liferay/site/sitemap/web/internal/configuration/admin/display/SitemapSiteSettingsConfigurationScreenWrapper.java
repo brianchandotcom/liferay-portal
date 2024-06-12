@@ -7,7 +7,6 @@ package com.liferay.site.sitemap.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,10 +86,6 @@ public class SitemapSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible(Group group) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-187793")) {
-				return false;
-			}
-
 			return true;
 		}
 

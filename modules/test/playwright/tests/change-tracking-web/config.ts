@@ -6,7 +6,4 @@
 export const config = {
 	name: 'change-tracking-web',
 	testDir: 'tests/change-tracking-web',
-	use: {
-		testIdAttribute: 'data-qa-id',
-	},
 };

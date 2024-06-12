@@ -6,7 +6,4 @@
 export const config = {
 	name: 'headless-builder-impl',
 	testDir: 'tests/headless-builder-impl',
-	use: {
-		testIdAttribute: 'data-qa-id',
-	},
 };

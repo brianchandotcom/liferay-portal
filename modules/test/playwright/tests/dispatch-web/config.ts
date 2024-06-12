@@ -6,7 +6,4 @@
 export const config = {
 	name: 'dispatch-web',
 	testDir: 'tests/dispatch-web',
-	use: {
-		testIdAttribute: 'data-qa-id',
-	},
 };

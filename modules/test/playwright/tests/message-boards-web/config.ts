@@ -6,7 +6,4 @@
 export const config = {
 	name: 'message-boards-web',
 	testDir: 'tests/message-boards-web',
-	use: {
-		testIdAttribute: 'data-qa-id',
-	},
 };

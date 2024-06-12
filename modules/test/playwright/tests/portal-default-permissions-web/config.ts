@@ -6,7 +6,4 @@
 export const config = {
 	name: 'portal-default-permissions-web',
 	testDir: 'tests/portal-default-permissions-web',
-	use: {
-		testIdAttribute: 'data-qa-id',
-	},
 };

@@ -6,7 +6,4 @@
 export const config = {
 	name: 'client-extension-web',
 	testDir: 'tests/client-extension-web',
-	use: {
-		testIdAttribute: 'data-qa-id',
-	},
 };

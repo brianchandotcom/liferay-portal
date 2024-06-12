@@ -1,0 +1,57 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/**
+ * Stringifies config as JSON in a manner pleasing to the Java SourceFormatter.
+ */
+export default function stringifyJson(config, level = 0) {
+	const indent = '\t'.repeat(level);
+
+	if (config === undefined) {
+		return;
+	}
+	else if (Array.isArray(config)) {
+		const items = config.map((item) => {
+			if (item === undefined) {
+				return `${indent}\tnull`;
+			}
+			else {
+				return (
+					`${indent}\t` + stringifyJson(item, level + 1).trimStart()
+				);
+			}
+		});
+
+		return (
+			`${indent}[\n` +
+			(items.length ? items.join(',\n') + '\n' : '') +
+			`${indent}]`
+		);
+	}
+	else if (config && typeof config === 'object') {
+		const entries = Object.entries(config)
+			.map(([key, value]) => {
+				if (value === undefined) {
+					return;
+				}
+				else {
+					return (
+						`${indent}\t${JSON.stringify(key)}: ` +
+						stringifyJson(value, level + 1).trimStart()
+					);
+				}
+			})
+			.filter(Boolean);
+
+		return (
+			`${indent}{\n` +
+			(entries.length ? entries.join(',\n') + '\n' : '') +
+			`${indent}}`
+		);
+	}
+	else {
+		return `${indent}${JSON.stringify(config)}`;
+	}
+}

@@ -153,7 +153,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			new SkuDTOConverterContext(
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
 				contextAcceptLanguage.getPreferredLocale(), BigDecimal.ONE,
-				cpInstance.getCPInstanceId(),
+				cpInstance.getCPInstanceId(), null,
 				_getDefaultUnitOfMeasureKey(cpInstance.getCPInstanceId()),
 				contextUriInfo, contextUser));
 	}
@@ -302,8 +302,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
 				contextAcceptLanguage.getPreferredLocale(),
 				BigDecimalUtil.get(quantity, BigDecimal.ONE),
-				cpInstance.getCPInstanceId(), skuUnitOfMeasureKey,
-				contextUriInfo, contextUser));
+				cpInstance.getCPInstanceId(), skuOptionJSONArray,
+				skuUnitOfMeasureKey, contextUriInfo, contextUser));
 	}
 
 	private CommerceContext _getCommerceContext(
@@ -373,7 +373,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 						_getCommerceContext(accountId, commerceChannel),
 						contextCompany.getCompanyId(), cpDefinition,
 						contextAcceptLanguage.getPreferredLocale(),
-						BigDecimal.ONE, cpInstance.getCPInstanceId(),
+						BigDecimal.ONE, cpInstance.getCPInstanceId(), null,
 						_getDefaultUnitOfMeasureKey(
 							cpInstance.getCPInstanceId()),
 						contextUriInfo, contextUser)));

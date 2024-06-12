@@ -151,7 +151,7 @@ public class SelectDateCommerceOptionTypeImpl implements CommerceOptionType {
 						commerceContext,
 						_portal.getCompanyId(httpServletRequest), cpDefinition,
 						_portal.getLocale(httpServletRequest), minQuantity,
-						defaultCPInstanceId, StringPool.BLANK, null,
+						defaultCPInstanceId, null, StringPool.BLANK, null,
 						_portal.getUser(httpServletRequest)));
 			}
 		}

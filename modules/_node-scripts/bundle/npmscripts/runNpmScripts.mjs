@@ -12,7 +12,7 @@ import {WORK_PATH} from '../../util/constants.mjs';
 import forkModule from '../../util/forkModule.mjs';
 import onExit from '../../util/onExit.mjs';
 
-const DISABLE_BUILD_CONFIGS = ['babel', 'bundler', 'exports', 'main'];
+const DISABLE_BUILD_CONFIGS = ['babel', 'bundler', 'exports', 'main', 'tsc'];
 
 export default async function runNpmScripts(projectNpmScriptsConfig) {
 	if (!projectNpmScriptsConfig) {

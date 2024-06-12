@@ -269,7 +269,7 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async assingUserToRole(
+	async assignUserToRole(
 		roleExternalReferenceCode: string,
 		userId: number | string
 	) {
@@ -279,7 +279,7 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async assingUserToAccountRole(
+	async assignUserToAccountRole(
 		accountId: number | string,
 		accountRoleId: number | string,
 		userId: number | string

@@ -142,7 +142,7 @@ test.describe('LPD-26142 Refactor of CommerceSalesAgent#CanSalesAgentWithPermiss
 				'demo.unprivileged@liferay.com'
 			);
 
-		await apiHelpers.headlessAdminUser.assingUserToRole(role.name, user.id);
+		await apiHelpers.headlessAdminUser.assignUserToRole(role.name, user.id);
 
 		const account1 = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),

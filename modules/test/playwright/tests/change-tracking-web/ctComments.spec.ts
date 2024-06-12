@@ -40,7 +40,7 @@ test.beforeEach(async ({apiHelpers, ctCollection}) => {
 		'demo.unprivileged@liferay.com'
 	);
 
-	await apiHelpers.headlessAdminUser.assingUserToRole(
+	await apiHelpers.headlessAdminUser.assignUserToRole(
 		'Administrator',
 		user.id
 	);

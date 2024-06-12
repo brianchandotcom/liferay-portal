@@ -46,7 +46,7 @@ test.describe('Can Publish and Manage Solutions', () => {
 				return role.name === SOLUTION_PUBLISHER_ROLE;
 			});
 
-			await apiHelpers.headlessAdminUser.assingUserToAccountRole(
+			await apiHelpers.headlessAdminUser.assignUserToAccountRole(
 				account.id,
 				accountSupplierRole[0].id,
 				user.id

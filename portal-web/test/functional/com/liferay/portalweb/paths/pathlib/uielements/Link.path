@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>CLEAR</td>
-	<td>//a[contains(.,'Clear')]</td>
+	<td>//button[contains(.,'Clear')]</td>
 	<td></td>
 </tr>
 <tr>

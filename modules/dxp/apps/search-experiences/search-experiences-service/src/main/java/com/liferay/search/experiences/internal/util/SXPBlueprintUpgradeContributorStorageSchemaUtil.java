@@ -13,18 +13,12 @@ import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Joshua Cords
  */
-@Component(
-	enabled = false,
-	service = UpgradeSXPBlueprintContributorStorageSchemaHelper.class
-)
-public class UpgradeSXPBlueprintContributorStorageSchemaHelper {
+public class SXPBlueprintUpgradeContributorStorageSchemaUtil {
 
-	public SXPBlueprint upgradeContributorStorageSchema(
+	public static SXPBlueprint upgradeContributorStorageSchema(
 		SXPBlueprint sxpBlueprint) {
 
 		if (!Objects.equals(sxpBlueprint.getSchemaVersion(), "1.0")) {

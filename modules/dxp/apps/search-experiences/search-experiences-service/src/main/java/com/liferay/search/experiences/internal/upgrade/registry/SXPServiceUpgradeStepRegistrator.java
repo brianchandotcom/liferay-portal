@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.search.experiences.internal.util.UpgradeSXPBlueprintContributorStorageSchemaHelper;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -106,8 +105,7 @@ public class SXPServiceUpgradeStepRegistrator
 			"3.1.1", "3.1.2",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_2.
 				SXPBlueprintUpgradeProcess(
-					_companyLocalService, _sxpBlueprintLocalService,
-					_upgradeSXPBlueprintContributorStorageSchemaHelper));
+					_companyLocalService, _sxpBlueprintLocalService));
 	}
 
 	@Reference
@@ -115,9 +113,5 @@ public class SXPServiceUpgradeStepRegistrator
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
-
-	@Reference
-	private UpgradeSXPBlueprintContributorStorageSchemaHelper
-		_upgradeSXPBlueprintContributorStorageSchemaHelper;
 
 }

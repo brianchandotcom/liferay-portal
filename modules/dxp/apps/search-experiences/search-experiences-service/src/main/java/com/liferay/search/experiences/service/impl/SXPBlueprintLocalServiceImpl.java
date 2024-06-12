@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
-import com.liferay.search.experiences.internal.util.UpgradeSXPBlueprintContributorStorageSchemaHelper;
+import com.liferay.search.experiences.internal.util.SXPBlueprintUpgradeContributorStorageSchemaUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
@@ -79,7 +79,7 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setStatusDate(serviceContext.getModifiedDate(null));
 
 		sxpBlueprint =
-			_upgradeSXPBlueprintContributorStorageSchemaHelper.
+			SXPBlueprintUpgradeContributorStorageSchemaUtil.
 				upgradeContributorStorageSchema(sxpBlueprint);
 
 		sxpBlueprint = sxpBlueprintPersistence.update(sxpBlueprint);
@@ -209,10 +209,6 @@ public class SXPBlueprintLocalServiceImpl
 
 	@Reference
 	private SXPBlueprintValidator _sxpBlueprintValidator;
-
-	@Reference
-	private UpgradeSXPBlueprintContributorStorageSchemaHelper
-		_upgradeSXPBlueprintContributorStorageSchemaHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

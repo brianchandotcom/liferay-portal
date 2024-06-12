@@ -7,7 +7,7 @@ package com.liferay.search.experiences.internal.upgrade.v3_1_2;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.search.experiences.internal.util.UpgradeSXPBlueprintContributorStorageSchemaHelper;
+import com.liferay.search.experiences.internal.util.SXPBlueprintUpgradeContributorStorageSchemaUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -20,14 +20,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 	public SXPBlueprintUpgradeProcess(
 		CompanyLocalService companyLocalService,
-		SXPBlueprintLocalService sxpBlueprintLocalService,
-		UpgradeSXPBlueprintContributorStorageSchemaHelper
-			upgradeSXPBlueprintContributorStorageSchemaHelper) {
+		SXPBlueprintLocalService sxpBlueprintLocalService) {
 
 		_companyLocalService = companyLocalService;
 		_sxpBlueprintLocalService = sxpBlueprintLocalService;
-		_upgradeSXPBlueprintContributorStorageSchemaHelper =
-			upgradeSXPBlueprintContributorStorageSchemaHelper;
 	}
 
 	@Override
@@ -39,7 +35,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 				for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
 					sxpBlueprint =
-						_upgradeSXPBlueprintContributorStorageSchemaHelper.
+						SXPBlueprintUpgradeContributorStorageSchemaUtil.
 							upgradeContributorStorageSchema(sxpBlueprint);
 
 					_sxpBlueprintLocalService.updateSXPBlueprint(sxpBlueprint);
@@ -49,7 +45,5 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 	private final CompanyLocalService _companyLocalService;
 	private final SXPBlueprintLocalService _sxpBlueprintLocalService;
-	private final UpgradeSXPBlueprintContributorStorageSchemaHelper
-		_upgradeSXPBlueprintContributorStorageSchemaHelper;
 
 }

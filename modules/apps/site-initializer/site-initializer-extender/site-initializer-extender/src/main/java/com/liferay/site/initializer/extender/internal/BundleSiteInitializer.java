@@ -223,6 +223,9 @@ import com.liferay.template.service.TemplateEntryLocalService;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Method;
+
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -528,7 +531,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	public interface R extends UnsafeRunnable<Exception> {
+	public interface R extends Serializable, UnsafeRunnable<Exception> {
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -4890,225 +4893,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private List<R> _dependsOn(R... rArray) {
-		return ListUtil.fromArray(rArray);
-	}
-
-	private long[] _getAssetCategoryIds(
-		long groupId, String[] externalReferenceCodes) {
-
-		List<Long> assetCategoryIds = new ArrayList<>();
-
-		for (String externalReferenceCode : externalReferenceCodes) {
-			AssetCategory assetCategory =
-				_assetCategoryLocalService.
-					fetchAssetCategoryByExternalReferenceCode(
-						externalReferenceCode, groupId);
-
-			if (assetCategory != null) {
-				assetCategoryIds.add(assetCategory.getCategoryId());
-			}
-		}
-
-		return ArrayUtil.toLongArray(assetCategoryIds);
-	}
-
-	private String _getAssetRendererFactoryName(String assetEntryType) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntryType);
-
-		if ((assetRendererFactory == null) ||
-			!assetRendererFactory.isSupportsClassTypes()) {
-
-			return StringPool.BLANK;
-		}
-
-		Class<?> clazz = assetRendererFactory.getClass();
-
-		if (assetRendererFactory instanceof AssetRendererFactoryWrapper) {
-			AssetRendererFactoryWrapper<?> assetRendererFactoryWrapper =
-				(AssetRendererFactoryWrapper<?>)assetRendererFactory;
-
-			clazz = assetRendererFactoryWrapper.getWrappedClass();
-		}
-
-		String className = clazz.getName();
-
-		int pos = className.lastIndexOf(StringPool.PERIOD);
-
-		return className.substring(pos + 1);
-	}
-
-	private Map<String, String> _getClassNameIdStringUtilReplaceValues() {
-		Map<String, String> map = new HashMap<>();
-
-		Class<?>[] classes = {DDMStructure.class, JournalArticle.class};
-
-		for (Class<?> clazz : classes) {
-			map.put(
-				"CLASS_NAME_ID:" + clazz.getName(),
-				String.valueOf(_portal.getClassNameId(clazz)));
-		}
-
-		return map;
-	}
-
-	private Serializable _getExpandoAttributeValue(JSONObject jsonObject)
-		throws Exception {
-
-		if (jsonObject.getInt("dataType") == ExpandoColumnConstants.BOOLEAN) {
-			return jsonObject.getBoolean("defaultValue");
-		}
-		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.DATE) {
-			if (Validator.isNull(jsonObject.getString("defaultValue"))) {
-				return null;
-			}
-
-			DateFormat dateFormat = DateUtil.getISOFormat(
-				jsonObject.getString("defaultValue"));
-
-			return dateFormat.parse(jsonObject.getString("defaultValue"));
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.DOUBLE) {
-
-			return jsonObject.getDouble("defaultValue");
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.DOUBLE_ARRAY) {
-
-			return JSONUtil.toDoubleArray(
-				jsonObject.getJSONArray("defaultValue"));
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.FLOAT) {
-
-			return jsonObject.getDouble("defaultValue");
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.FLOAT_ARRAY) {
-
-			return JSONUtil.toFloatArray(
-				jsonObject.getJSONArray("defaultValue"));
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.INTEGER) {
-
-			return jsonObject.getInt("defaultValue");
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.INTEGER_ARRAY) {
-
-			return JSONUtil.toIntegerArray(
-				jsonObject.getJSONArray("defaultValue"));
-		}
-		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.LONG) {
-			return jsonObject.getLong("defaultValue");
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.LONG_ARRAY) {
-
-			return JSONUtil.toLongArray(
-				jsonObject.getJSONArray("defaultValue"));
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.NUMBER) {
-
-			return jsonObject.getDouble("defaultValue");
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.NUMBER_ARRAY) {
-
-			return JSONUtil.toIntegerArray(
-				jsonObject.getJSONArray("defaultValue"));
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.STRING) {
-
-			return jsonObject.getString("defaultValue");
-		}
-		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.STRING_ARRAY) {
-
-			return JSONUtil.toStringArray(
-				jsonObject.getJSONArray("defaultValue"));
-		}
-
-		return (Serializable)jsonObject.get("defaultValue");
-	}
-
-	private UnicodePropertiesBuilder.UnicodePropertiesWrapper
-		_getNavigationMenuItemUnicodePropertiesWrapper(
-			JSONObject menuItemJSONObject) {
-
-		JSONObject nameI18nJSONObject = menuItemJSONObject.getJSONObject(
-			"name_i18n");
-
-		if (nameI18nJSONObject == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Missing \"name_i18n\" in " + menuItemJSONObject);
-			}
-
-			return null;
-		}
-
-		UnicodePropertiesBuilder.UnicodePropertiesWrapper
-			unicodePropertiesWrapper = UnicodePropertiesBuilder.put(
-				"defaultLanguageId",
-				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-
-		for (String key : nameI18nJSONObject.keySet()) {
-			unicodePropertiesWrapper.put(
-				"name_" + key, nameI18nJSONObject.getString(key));
-		}
-
-		return unicodePropertiesWrapper;
-	}
-
-	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {
-		Map<String, String> map = new HashMap<>();
-
-		Object[] entries = {
-			"BUILD_DATE", ReleaseInfo.getBuildDate(), "BUILD_NUMBER",
-			ReleaseInfo.getBuildNumber(), "CODE_NAME",
-			ReleaseInfo.getCodeName(), "NAME", ReleaseInfo.getName(),
-			"PARENT_BUILD_NUMBER", ReleaseInfo.getParentBuildNumber(),
-			"RELEASE_INFO",
-			_replace(
-				ReleaseInfo.getReleaseInfo(), StringPool.OPEN_PARENTHESIS,
-				"<br>("),
-			"SERVER_INFO", ReleaseInfo.getServerInfo(), "VENDOR",
-			ReleaseInfo.getVendor(), "VERSION", ReleaseInfo.getVersion(),
-			"VERSION_DISPLAY_NAME", ReleaseInfo.getVersionDisplayName()
-		};
-
-		for (int i = 0; i < entries.length; i += 2) {
-			String entryKey = String.valueOf(entries[i]);
-			String entryValue = String.valueOf(entries[i + 1]);
-
-			map.put("RELEASE_INFO:" + entryKey, entryValue);
-		}
-
-		return map;
-	}
-
-	private String _getThemeId(
-		long companyId, String defaultThemeId, String themeName) {
-
-		List<Theme> themes = ListUtil.filter(
-			_themeLocalService.getThemes(companyId),
-			theme -> Objects.equals(theme.getName(), themeName));
-
-		if (ListUtil.isNotEmpty(themes)) {
-			Theme theme = themes.get(0);
-
-			return theme.getThemeId();
-		}
-
-		return defaultThemeId;
-	}
-
 	private Map<R, List<R>> _createRMap(ServiceContext serviceContext) {
 		Map<String, ObjectDefinition> accountEntryRestrictedObjectDefinitions =
 			new HashMap<>();
@@ -5433,6 +5217,225 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 	}
 
+	private List<R> _dependsOn(R... rArray) {
+		return ListUtil.fromArray(rArray);
+	}
+
+	private long[] _getAssetCategoryIds(
+		long groupId, String[] externalReferenceCodes) {
+
+		List<Long> assetCategoryIds = new ArrayList<>();
+
+		for (String externalReferenceCode : externalReferenceCodes) {
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.
+					fetchAssetCategoryByExternalReferenceCode(
+						externalReferenceCode, groupId);
+
+			if (assetCategory != null) {
+				assetCategoryIds.add(assetCategory.getCategoryId());
+			}
+		}
+
+		return ArrayUtil.toLongArray(assetCategoryIds);
+	}
+
+	private String _getAssetRendererFactoryName(String assetEntryType) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntryType);
+
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSupportsClassTypes()) {
+
+			return StringPool.BLANK;
+		}
+
+		Class<?> clazz = assetRendererFactory.getClass();
+
+		if (assetRendererFactory instanceof AssetRendererFactoryWrapper) {
+			AssetRendererFactoryWrapper<?> assetRendererFactoryWrapper =
+				(AssetRendererFactoryWrapper<?>)assetRendererFactory;
+
+			clazz = assetRendererFactoryWrapper.getWrappedClass();
+		}
+
+		String className = clazz.getName();
+
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		return className.substring(pos + 1);
+	}
+
+	private Map<String, String> _getClassNameIdStringUtilReplaceValues() {
+		Map<String, String> map = new HashMap<>();
+
+		Class<?>[] classes = {DDMStructure.class, JournalArticle.class};
+
+		for (Class<?> clazz : classes) {
+			map.put(
+				"CLASS_NAME_ID:" + clazz.getName(),
+				String.valueOf(_portal.getClassNameId(clazz)));
+		}
+
+		return map;
+	}
+
+	private Serializable _getExpandoAttributeValue(JSONObject jsonObject)
+		throws Exception {
+
+		if (jsonObject.getInt("dataType") == ExpandoColumnConstants.BOOLEAN) {
+			return jsonObject.getBoolean("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.DATE) {
+			if (Validator.isNull(jsonObject.getString("defaultValue"))) {
+				return null;
+			}
+
+			DateFormat dateFormat = DateUtil.getISOFormat(
+				jsonObject.getString("defaultValue"));
+
+			return dateFormat.parse(jsonObject.getString("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.DOUBLE) {
+
+			return jsonObject.getDouble("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.DOUBLE_ARRAY) {
+
+			return JSONUtil.toDoubleArray(
+				jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.FLOAT) {
+
+			return jsonObject.getDouble("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.FLOAT_ARRAY) {
+
+			return JSONUtil.toFloatArray(
+				jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.INTEGER) {
+
+			return jsonObject.getInt("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.INTEGER_ARRAY) {
+
+			return JSONUtil.toIntegerArray(
+				jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.LONG) {
+			return jsonObject.getLong("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.LONG_ARRAY) {
+
+			return JSONUtil.toLongArray(
+				jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.NUMBER) {
+
+			return jsonObject.getDouble("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.NUMBER_ARRAY) {
+
+			return JSONUtil.toIntegerArray(
+				jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.STRING) {
+
+			return jsonObject.getString("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") ==
+					ExpandoColumnConstants.STRING_ARRAY) {
+
+			return JSONUtil.toStringArray(
+				jsonObject.getJSONArray("defaultValue"));
+		}
+
+		return (Serializable)jsonObject.get("defaultValue");
+	}
+
+	private UnicodePropertiesBuilder.UnicodePropertiesWrapper
+		_getNavigationMenuItemUnicodePropertiesWrapper(
+			JSONObject menuItemJSONObject) {
+
+		JSONObject nameI18nJSONObject = menuItemJSONObject.getJSONObject(
+			"name_i18n");
+
+		if (nameI18nJSONObject == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing \"name_i18n\" in " + menuItemJSONObject);
+			}
+
+			return null;
+		}
+
+		UnicodePropertiesBuilder.UnicodePropertiesWrapper
+			unicodePropertiesWrapper = UnicodePropertiesBuilder.put(
+				"defaultLanguageId",
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+		for (String key : nameI18nJSONObject.keySet()) {
+			unicodePropertiesWrapper.put(
+				"name_" + key, nameI18nJSONObject.getString(key));
+		}
+
+		return unicodePropertiesWrapper;
+	}
+
+	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {
+		Map<String, String> map = new HashMap<>();
+
+		Object[] entries = {
+			"BUILD_DATE", ReleaseInfo.getBuildDate(), "BUILD_NUMBER",
+			ReleaseInfo.getBuildNumber(), "CODE_NAME",
+			ReleaseInfo.getCodeName(), "NAME", ReleaseInfo.getName(),
+			"PARENT_BUILD_NUMBER", ReleaseInfo.getParentBuildNumber(),
+			"RELEASE_INFO",
+			_replace(
+				ReleaseInfo.getReleaseInfo(), StringPool.OPEN_PARENTHESIS,
+				"<br>("),
+			"SERVER_INFO", ReleaseInfo.getServerInfo(), "VENDOR",
+			ReleaseInfo.getVendor(), "VERSION", ReleaseInfo.getVersion(),
+			"VERSION_DISPLAY_NAME", ReleaseInfo.getVersionDisplayName()
+		};
+
+		for (int i = 0; i < entries.length; i += 2) {
+			String entryKey = String.valueOf(entries[i]);
+			String entryValue = String.valueOf(entries[i + 1]);
+
+			map.put("RELEASE_INFO:" + entryKey, entryValue);
+		}
+
+		return map;
+	}
+
+	private String _getThemeId(
+		long companyId, String defaultThemeId, String themeName) {
+
+		List<Theme> themes = ListUtil.filter(
+			_themeLocalService.getThemes(companyId),
+			theme -> Objects.equals(theme.getName(), themeName));
+
+		if (ListUtil.isNotEmpty(themes)) {
+			Theme theme = themes.get(0);
+
+			return theme.getThemeId();
+		}
+
+		return defaultThemeId;
+	}
+
 	private void _initialize(long groupId) throws Exception {
 		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
 
@@ -5464,7 +5467,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 					continue;
 				}
 
+				long startTime = System.currentTimeMillis();
+
 				r.run();
+
+				if (_log.isInfoEnabled()) {
+					Class<?> rClass = r.getClass();
+
+					Method method = rClass.getDeclaredMethod("writeReplace");
+
+					method.setAccessible(true);
+
+					SerializedLambda serializedLambda =
+						(SerializedLambda)method.invoke(r);
+
+					_log.info(
+						StringBundler.concat(
+							"Invoking ", serializedLambda.getImplMethodName(),
+							" took ", System.currentTimeMillis() - startTime,
+							" ms"));
+				}
 
 				rList.add(r);
 			}

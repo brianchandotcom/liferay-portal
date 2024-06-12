@@ -528,6 +528,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
+	public interface R extends UnsafeRunnable<Exception> {
+	}
+
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
@@ -5129,401 +5132,333 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new SiteNavigationMenuItemSettingsBuilder();
 		Map<String, String> stringUtilReplaceValues = new HashMap<>();
 
-		UnsafeRunnable<Exception> addAcountGroupAssignments =
-			() -> _addAccountGroupAssignments(serviceContext);
-		UnsafeRunnable<Exception> addAcountGroups = () -> _addAccountGroups(
+		R addAcountGroupAssignments = () -> _addAccountGroupAssignments(
 			serviceContext);
-		UnsafeRunnable<Exception> addAccounts = () -> _addAccounts(
+		R addAcountGroups = () -> _addAccountGroups(serviceContext);
+		R addAccounts = () -> _addAccounts(serviceContext);
+		R addAccountsOrganizations = () -> _addAccountsOrganizations(
 			serviceContext);
-		UnsafeRunnable<Exception> addAccountsOrganizations =
-			() -> _addAccountsOrganizations(serviceContext);
-		UnsafeRunnable<Exception> addAssetListEntries =
-			() -> _addAssetListEntries(serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addCPDefinitions = () -> _addCPDefinitions(
+		R addAssetListEntries = () -> _addAssetListEntries(
 			serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addExpandoValues = () -> _addExpandoValues(
+		R addCPDefinitions = () -> _addCPDefinitions(
 			serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addFragmentEntries =
-			() -> _addFragmentEntries(serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addKeywords = () -> _addKeywords(
+		R addExpandoValues = () -> _addExpandoValues(
 			serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addLayoutPageTemplates =
-			() -> _addLayoutPageTemplates(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addLayoutUtilityPageEntries =
-			() -> _addLayoutUtilityPageEntries(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addObjectDefinitions =
-			() -> _addObjectDefinitions(
-				accountEntryRestrictedObjectDefinitions, objectDefinitionIds,
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateAccountEntryRestrictions =
+		R addFragmentEntries = () -> _addFragmentEntries(
+			serviceContext, stringUtilReplaceValues);
+		R addKeywords = () -> _addKeywords(
+			serviceContext, stringUtilReplaceValues);
+		R addLayoutPageTemplates = () -> _addLayoutPageTemplates(
+			serviceContext, stringUtilReplaceValues);
+		R addLayoutUtilityPageEntries = () -> _addLayoutUtilityPageEntries(
+			serviceContext, stringUtilReplaceValues);
+		R addObjectDefinitions = () -> _addObjectDefinitions(
+			accountEntryRestrictedObjectDefinitions, objectDefinitionIds,
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateAccountEntryRestrictions =
 			() -> _addOrUpdateAccountEntryRestrictions(
 				accountEntryRestrictedObjectDefinitions, serviceContext);
-		UnsafeRunnable<Exception> addOrUpdateAssetLinkEntries =
-			() -> _addOrUpdateAssetLinkEntries(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateBlogPostings =
-			() -> _addOrUpdateBlogPostings(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateClientExtensionEntries =
+		R addOrUpdateAssetLinkEntries = () -> _addOrUpdateAssetLinkEntries(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateBlogPostings = () -> _addOrUpdateBlogPostings(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateClientExtensionEntries =
 			() -> _addOrUpdateClientExtensionEntries(
 				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateDataDefinitions =
-			() -> _addOrUpdateDataDefinitions(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateDDMStructures =
-			() -> _addOrUpdateDDMStructures(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateDDMTemplate =
-			() -> _addOrUpdateDDMTemplates(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateDepotEntries =
-			() -> _addOrUpdateDepotEntries(serviceContext);
-		UnsafeRunnable<Exception> addOrUpdateDocuments =
-			() -> _addOrUpdateDocuments(
-				serviceContext, siteNavigationMenuItemSettingsBuilder,
-				stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateExpandoColumns =
-			() -> _addOrUpdateExpandoColumns(serviceContext);
-		UnsafeRunnable<Exception> addOrUpdateJournalArticles =
-			() -> _addOrUpdateJournalArticles(
-				serviceContext, siteNavigationMenuItemSettingsBuilder,
-				stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateKnowledgeBaseArticles =
+		R addOrUpdateDataDefinitions = () -> _addOrUpdateDataDefinitions(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateDDMStructures = () -> _addOrUpdateDDMStructures(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateDDMTemplate = () -> _addOrUpdateDDMTemplates(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateDepotEntries = () -> _addOrUpdateDepotEntries(
+			serviceContext);
+		R addOrUpdateDocuments = () -> _addOrUpdateDocuments(
+			serviceContext, siteNavigationMenuItemSettingsBuilder,
+			stringUtilReplaceValues);
+		R addOrUpdateExpandoColumns = () -> _addOrUpdateExpandoColumns(
+			serviceContext);
+		R addOrUpdateJournalArticles = () -> _addOrUpdateJournalArticles(
+			serviceContext, siteNavigationMenuItemSettingsBuilder,
+			stringUtilReplaceValues);
+		R addOrUpdateKnowledgeBaseArticles =
 			() -> _addOrUpdateKnowledgeBaseArticles(serviceContext);
-		UnsafeRunnable<Exception> addOrUpdateLayouts =
-			() -> _addOrUpdateLayouts(
-				layoutsMap, serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateLayoutsContent =
-			() -> _addOrUpdateLayoutsContent(
-				layoutsMap, serviceContext,
-				siteNavigationMenuItemSettingsBuilder.build(),
-				stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateListTypeDefinitions =
+		R addOrUpdateLayouts = () -> _addOrUpdateLayouts(
+			layoutsMap, serviceContext, stringUtilReplaceValues);
+		R addOrUpdateLayoutsContent = () -> _addOrUpdateLayoutsContent(
+			layoutsMap, serviceContext,
+			siteNavigationMenuItemSettingsBuilder.build(),
+			stringUtilReplaceValues);
+		R addOrUpdateListTypeDefinitions =
 			() -> _addOrUpdateListTypeDefinitions(
 				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateNotificationTemplates =
+		R addOrUpdateNotificationTemplates =
 			() -> _addOrUpdateNotificationTemplates(
 				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateObjectActions =
-			() -> _addOrUpdateObjectActions(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateObjectEntries =
-			() -> _addOrUpdateObjectEntries(
-				serviceContext, siteNavigationMenuItemSettingsBuilder,
-				stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateObjectFields =
-			() -> _addOrUpdateObjectFields(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateObjectRelationships =
+		R addOrUpdateObjectActions = () -> _addOrUpdateObjectActions(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateObjectEntries = () -> _addOrUpdateObjectEntries(
+			serviceContext, siteNavigationMenuItemSettingsBuilder,
+			stringUtilReplaceValues);
+		R addOrUpdateObjectFields = () -> _addOrUpdateObjectFields(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateObjectRelationships =
 			() -> _addOrUpdateObjectRelationships(
 				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateOrganizations =
-			() -> _addOrUpdateOrganizations(serviceContext);
-		UnsafeRunnable<Exception> addOrUpdateResourcePermissions =
+		R addOrUpdateOrganizations = () -> _addOrUpdateOrganizations(
+			serviceContext);
+		R addOrUpdateResourcePermissions =
 			() -> _addOrUpdateResourcePermissions(
 				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateRoles = () -> _addOrUpdateRoles(
+		R addOrUpdateRoles = () -> _addOrUpdateRoles(
 			serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateSAPEntries =
-			() -> _addOrUpdateSAPEntries(serviceContext);
-		UnsafeRunnable<Exception> addOrUpdateSegmentsEntries =
-			() -> _addOrUpdateSegmentsEntries(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateSXPBlueprint =
-			() -> _addOrUpdateSXPBlueprint(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateTaxonomyVocabularies =
+		R addOrUpdateSAPEntries = () -> _addOrUpdateSAPEntries(serviceContext);
+		R addOrUpdateSegmentsEntries = () -> _addOrUpdateSegmentsEntries(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateSXPBlueprint = () -> _addOrUpdateSXPBlueprint(
+			serviceContext, stringUtilReplaceValues);
+		R addOrUpdateTaxonomyVocabularies =
 			() -> _addOrUpdateTaxonomyVocabularies(
 				serviceContext, siteNavigationMenuItemSettingsBuilder,
 				stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addOrUpdateUserGroups =
-			() -> _addOrUpdateUserGroups(serviceContext);
-		UnsafeRunnable<Exception> addPortletSettings =
-			() -> _addPortletSettings(serviceContext);
-		UnsafeRunnable<Exception> addRolesAssignments =
-			() -> _addRolesAssignments(serviceContext);
-		UnsafeRunnable<Exception> addSegmentsExperiences =
-			() -> _addSegmentsExperiences(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addSiteConfiguration =
-			() -> _addSiteConfiguration(serviceContext);
-		UnsafeRunnable<Exception> addSiteSettings = () -> _addSiteSettings(
-			serviceContext);
-		UnsafeRunnable<Exception> addStyleBookEntries =
-			() -> _addStyleBookEntries(serviceContext);
-		UnsafeRunnable<Exception> addUserRoles = () -> _addUserRoles(
-			serviceContext);
-		UnsafeRunnable<Exception> addUserAccounts = () -> _addUserAccounts(
+		R addOrUpdateUserGroups = () -> _addOrUpdateUserGroups(serviceContext);
+		R addPortletSettings = () -> _addPortletSettings(serviceContext);
+		R addRolesAssignments = () -> _addRolesAssignments(serviceContext);
+		R addSegmentsExperiences = () -> _addSegmentsExperiences(
 			serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> addWorkflowDefinitions =
-			() -> _addWorkflowDefinitions(
-				serviceContext, stringUtilReplaceValues);
-		UnsafeRunnable<Exception> publishObjectDefinitions =
-			() -> _publishObjectDefinitions(
-				objectDefinitionIds, serviceContext);
-		UnsafeRunnable<Exception> setPLOEntries = () -> _setPLOEntries(
-			serviceContext);
-		UnsafeRunnable<Exception> updateLayoutSets = () -> _updateLayoutSets(
+		R addSiteConfiguration = () -> _addSiteConfiguration(serviceContext);
+		R addSiteSettings = () -> _addSiteSettings(serviceContext);
+		R addStyleBookEntries = () -> _addStyleBookEntries(serviceContext);
+		R addUserRoles = () -> _addUserRoles(serviceContext);
+		R addUserAccounts = () -> _addUserAccounts(
+			serviceContext, stringUtilReplaceValues);
+		R addWorkflowDefinitions = () -> _addWorkflowDefinitions(
+			serviceContext, stringUtilReplaceValues);
+		R publishObjectDefinitions = () -> _publishObjectDefinitions(
+			objectDefinitionIds, serviceContext);
+		R setPLOEntries = () -> _setPLOEntries(serviceContext);
+		R updateLayoutSets = () -> _updateLayoutSets(
 			serviceContext, stringUtilReplaceValues);
 
-		Map<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
-			unsafeRunnableMap =
-				HashMapBuilder.
-					<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
-						put(
-							addAccounts,
-							ListUtil.fromArray(addOrUpdateExpandoColumns)
-					).put(
-						addAccountsOrganizations,
-						ListUtil.fromArray(
-							addAccounts, addOrUpdateOrganizations)
-					).put(
-						addAcountGroupAssignments,
-						ListUtil.fromArray(addAcountGroups, addAccounts)
-					).put(
-						addAcountGroups, new ArrayList<>()
-					).put(
-						addAssetListEntries,
-						ListUtil.fromArray(
-							addObjectDefinitions, addOrUpdateDDMStructures,
-							publishObjectDefinitions)
-					).put(
-						addCPDefinitions,
-						ListUtil.fromArray(
-							addObjectDefinitions, addOrUpdateDocuments,
-							addOrUpdateExpandoColumns, addOrUpdateLayouts,
-							addOrUpdateObjectEntries, publishObjectDefinitions)
-					).put(
-						addExpandoValues,
-						ListUtil.fromArray(
-							addAccounts, addCPDefinitions,
-							addOrUpdateBlogPostings, addOrUpdateDocuments,
-							addOrUpdateExpandoColumns,
-							addOrUpdateJournalArticles,
-							addOrUpdateKnowledgeBaseArticles,
-							addOrUpdateLayouts, addOrUpdateLayoutsContent,
-							addOrUpdateOrganizations, addOrUpdateRoles,
-							addOrUpdateSegmentsEntries, addOrUpdateUserGroups,
-							addUserAccounts)
-					).put(
-						addFragmentEntries,
-						ListUtil.fromArray(addOrUpdateDocuments)
-					).put(
-						addKeywords, ListUtil.fromArray(addOrUpdateDepotEntries)
-					).put(
-						addLayoutPageTemplates,
-						ListUtil.fromArray(
-							addAssetListEntries, addCPDefinitions,
-							addObjectDefinitions,
-							addOrUpdateClientExtensionEntries,
-							addOrUpdateDataDefinitions,
-							addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
-							addOrUpdateDocuments, addOrUpdateExpandoColumns,
-							addOrUpdateJournalArticles, addOrUpdateLayouts,
-							addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addLayoutUtilityPageEntries,
-						ListUtil.fromArray(
-							addAssetListEntries, addCPDefinitions,
-							addObjectDefinitions,
-							addOrUpdateClientExtensionEntries,
-							addOrUpdateDataDefinitions,
-							addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
-							addOrUpdateDocuments, addOrUpdateExpandoColumns,
-							addOrUpdateJournalArticles, addOrUpdateLayouts,
-							addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addObjectDefinitions,
-						ListUtil.fromArray(
-							addOrUpdateListTypeDefinitions, addUserAccounts)
-					).put(
-						addOrUpdateAccountEntryRestrictions,
-						ListUtil.fromArray(
-							addObjectDefinitions, addOrUpdateObjectFields,
-							addOrUpdateObjectRelationships,
-							publishObjectDefinitions)
-					).put(
-						addOrUpdateAssetLinkEntries,
-						ListUtil.fromArray(
-							addOrUpdateBlogPostings, addOrUpdateDDMStructures)
-					).put(
-						addOrUpdateBlogPostings,
-						ListUtil.fromArray(
-							addKeywords, addOrUpdateDocuments,
-							addOrUpdateExpandoColumns,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addOrUpdateClientExtensionEntries,
-						ListUtil.fromArray(addOrUpdateDocuments)
-					).put(
-						addOrUpdateDataDefinitions, new ArrayList<>()
-					).put(
-						addOrUpdateDDMStructures, new ArrayList<>()
-					).put(
-						addOrUpdateDDMTemplate,
-						ListUtil.fromArray(
-							addObjectDefinitions, addOrUpdateDDMStructures,
-							publishObjectDefinitions)
-					).put(
-						addOrUpdateDepotEntries, new ArrayList<>()
-					).put(
-						addOrUpdateDocuments,
-						ListUtil.fromArray(
-							addOrUpdateExpandoColumns,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addOrUpdateExpandoColumns, new ArrayList<>()
-					).put(
-						addOrUpdateJournalArticles,
-						ListUtil.fromArray(
-							addOrUpdateDDMStructures, addOrUpdateDDMTemplate)
-					).put(
-						addOrUpdateKnowledgeBaseArticles,
-						ListUtil.fromArray(addOrUpdateExpandoColumns)
-					).put(
-						addOrUpdateLayouts, ListUtil.fromArray(addOrUpdateRoles)
-					).put(
-						addOrUpdateLayoutsContent,
-						ListUtil.fromArray(
-							addAssetListEntries, addCPDefinitions,
-							addLayoutPageTemplates, addLayoutUtilityPageEntries,
-							addObjectDefinitions,
-							addOrUpdateClientExtensionEntries,
-							addOrUpdateDataDefinitions,
-							addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
-							addOrUpdateDocuments, addOrUpdateExpandoColumns,
-							addOrUpdateJournalArticles, addOrUpdateLayouts,
-							addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addOrUpdateListTypeDefinitions, new ArrayList<>()
-					).put(
-						addOrUpdateNotificationTemplates,
-						ListUtil.fromArray(
-							addObjectDefinitions, publishObjectDefinitions)
-					).put(
-						addOrUpdateObjectActions,
-						ListUtil.fromArray(
-							addObjectDefinitions,
-							addOrUpdateAccountEntryRestrictions,
-							addOrUpdateObjectFields,
-							addOrUpdateObjectRelationships,
-							publishObjectDefinitions)
-					).put(
-						addOrUpdateObjectEntries,
-						ListUtil.fromArray(
-							addObjectDefinitions,
-							addOrUpdateAccountEntryRestrictions,
-							addOrUpdateDocuments, addOrUpdateObjectFields,
-							addOrUpdateObjectRelationships,
-							publishObjectDefinitions)
-					).put(
-						addOrUpdateObjectFields,
-						ListUtil.fromArray(
-							addObjectDefinitions,
-							addOrUpdateObjectRelationships)
-					).put(
-						addOrUpdateObjectRelationships,
-						ListUtil.fromArray(addObjectDefinitions)
-					).put(
-						addOrUpdateOrganizations,
-						ListUtil.fromArray(addOrUpdateExpandoColumns)
-					).put(
-						addOrUpdateResourcePermissions,
-						ListUtil.fromArray(
-							addAssetListEntries, addCPDefinitions,
-							addLayoutPageTemplates, addLayoutUtilityPageEntries,
-							addObjectDefinitions, addOrUpdateBlogPostings,
-							addOrUpdateClientExtensionEntries,
-							addOrUpdateDataDefinitions,
-							addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
-							addOrUpdateDocuments, addOrUpdateJournalArticles,
-							addOrUpdateLayouts, addOrUpdateObjectEntries,
-							addOrUpdateRoles, addOrUpdateSXPBlueprint,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addOrUpdateRoles, new ArrayList<>()
-					).put(
-						addOrUpdateSAPEntries, new ArrayList<>()
-					).put(
-						addOrUpdateSegmentsEntries,
-						ListUtil.fromArray(
-							addKeywords, addOrUpdateExpandoColumns,
-							addOrUpdateOrganizations, addOrUpdateRoles,
-							addOrUpdateTaxonomyVocabularies, addUserAccounts)
-					).put(
-						addOrUpdateSXPBlueprint, new ArrayList<>()
-					).put(
-						addOrUpdateTaxonomyVocabularies,
-						ListUtil.fromArray(addOrUpdateDDMStructures)
-					).put(
-						addOrUpdateUserGroups, new ArrayList<>()
-					).put(
-						addPortletSettings,
-						ListUtil.fromArray(addOrUpdateTaxonomyVocabularies)
-					).put(
-						addRolesAssignments,
-						ListUtil.fromArray(
-							addOrUpdateOrganizations, addOrUpdateRoles,
-							addOrUpdateUserGroups, addUserAccounts)
-					).put(
-						addSegmentsExperiences,
-						ListUtil.fromArray(
-							addAssetListEntries, addCPDefinitions,
-							addLayoutPageTemplates, addLayoutUtilityPageEntries,
-							addObjectDefinitions,
-							addOrUpdateClientExtensionEntries,
-							addOrUpdateDataDefinitions,
-							addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
-							addOrUpdateDocuments, addOrUpdateJournalArticles,
-							addOrUpdateLayouts, addOrUpdateLayoutsContent,
-							addOrUpdateObjectEntries,
-							addOrUpdateSegmentsEntries, addOrUpdateSXPBlueprint,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addSiteConfiguration, new ArrayList<>()
-					).put(
-						addSiteSettings, new ArrayList<>()
-					).put(
-						addStyleBookEntries, new ArrayList<>()
-					).put(
-						addUserAccounts,
-						ListUtil.fromArray(
-							addAccounts, addKeywords, addOrUpdateDocuments,
-							addOrUpdateExpandoColumns, addOrUpdateOrganizations,
-							addOrUpdateTaxonomyVocabularies)
-					).put(
-						addUserRoles,
-						ListUtil.fromArray(addOrUpdateRoles, addUserAccounts)
-					).put(
-						addWorkflowDefinitions,
-						ListUtil.fromArray(addOrUpdateRoles)
-					).put(
-						publishObjectDefinitions,
-						ListUtil.fromArray(
-							addObjectDefinitions, addOrUpdateObjectFields,
-							addOrUpdateObjectRelationships)
-					).put(
-						setPLOEntries, new ArrayList<>()
-					).put(
-						updateLayoutSets, ListUtil.fromArray(addOrUpdateLayouts)
-					).build();
+		Map<R, List<R>> unsafeRunnableMap = HashMapBuilder.<R, List<R>>put(
+			addAccounts, ListUtil.fromArray(addOrUpdateExpandoColumns)
+		).put(
+			addAccountsOrganizations,
+			ListUtil.fromArray(addAccounts, addOrUpdateOrganizations)
+		).put(
+			addAcountGroupAssignments,
+			ListUtil.fromArray(addAcountGroups, addAccounts)
+		).put(
+			addAcountGroups, new ArrayList<>()
+		).put(
+			addAssetListEntries,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateDDMStructures,
+				publishObjectDefinitions)
+		).put(
+			addCPDefinitions,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateDocuments,
+				addOrUpdateExpandoColumns, addOrUpdateLayouts,
+				addOrUpdateObjectEntries, publishObjectDefinitions)
+		).put(
+			addExpandoValues,
+			ListUtil.fromArray(
+				addAccounts, addCPDefinitions, addOrUpdateBlogPostings,
+				addOrUpdateDocuments, addOrUpdateExpandoColumns,
+				addOrUpdateJournalArticles, addOrUpdateKnowledgeBaseArticles,
+				addOrUpdateLayouts, addOrUpdateLayoutsContent,
+				addOrUpdateOrganizations, addOrUpdateRoles,
+				addOrUpdateSegmentsEntries, addOrUpdateUserGroups,
+				addUserAccounts)
+		).put(
+			addFragmentEntries, ListUtil.fromArray(addOrUpdateDocuments)
+		).put(
+			addKeywords, ListUtil.fromArray(addOrUpdateDepotEntries)
+		).put(
+			addLayoutPageTemplates,
+			ListUtil.fromArray(
+				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
+				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDocuments, addOrUpdateExpandoColumns,
+				addOrUpdateJournalArticles, addOrUpdateLayouts,
+				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
+				addOrUpdateTaxonomyVocabularies)
+		).put(
+			addLayoutUtilityPageEntries,
+			ListUtil.fromArray(
+				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
+				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDocuments, addOrUpdateExpandoColumns,
+				addOrUpdateJournalArticles, addOrUpdateLayouts,
+				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
+				addOrUpdateTaxonomyVocabularies)
+		).put(
+			addObjectDefinitions,
+			ListUtil.fromArray(addOrUpdateListTypeDefinitions, addUserAccounts)
+		).put(
+			addOrUpdateAccountEntryRestrictions,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateObjectFields,
+				addOrUpdateObjectRelationships, publishObjectDefinitions)
+		).put(
+			addOrUpdateAssetLinkEntries,
+			ListUtil.fromArray(
+				addOrUpdateBlogPostings, addOrUpdateDDMStructures)
+		).put(
+			addOrUpdateBlogPostings,
+			ListUtil.fromArray(
+				addKeywords, addOrUpdateDocuments, addOrUpdateExpandoColumns,
+				addOrUpdateTaxonomyVocabularies)
+		).put(
+			addOrUpdateClientExtensionEntries,
+			ListUtil.fromArray(addOrUpdateDocuments)
+		).put(
+			addOrUpdateDataDefinitions, new ArrayList<>()
+		).put(
+			addOrUpdateDDMStructures, new ArrayList<>()
+		).put(
+			addOrUpdateDDMTemplate,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateDDMStructures,
+				publishObjectDefinitions)
+		).put(
+			addOrUpdateDepotEntries, new ArrayList<>()
+		).put(
+			addOrUpdateDocuments,
+			ListUtil.fromArray(
+				addOrUpdateExpandoColumns, addOrUpdateTaxonomyVocabularies)
+		).put(
+			addOrUpdateExpandoColumns, new ArrayList<>()
+		).put(
+			addOrUpdateJournalArticles,
+			ListUtil.fromArray(addOrUpdateDDMStructures, addOrUpdateDDMTemplate)
+		).put(
+			addOrUpdateKnowledgeBaseArticles,
+			ListUtil.fromArray(addOrUpdateExpandoColumns)
+		).put(
+			addOrUpdateLayouts, ListUtil.fromArray(addOrUpdateRoles)
+		).put(
+			addOrUpdateLayoutsContent,
+			ListUtil.fromArray(
+				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
+				addLayoutUtilityPageEntries, addObjectDefinitions,
+				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDocuments, addOrUpdateExpandoColumns,
+				addOrUpdateJournalArticles, addOrUpdateLayouts,
+				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
+				addOrUpdateTaxonomyVocabularies)
+		).put(
+			addOrUpdateListTypeDefinitions, new ArrayList<>()
+		).put(
+			addOrUpdateNotificationTemplates,
+			ListUtil.fromArray(addObjectDefinitions, publishObjectDefinitions)
+		).put(
+			addOrUpdateObjectActions,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
+				addOrUpdateObjectFields, addOrUpdateObjectRelationships,
+				publishObjectDefinitions)
+		).put(
+			addOrUpdateObjectEntries,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
+				addOrUpdateDocuments, addOrUpdateObjectFields,
+				addOrUpdateObjectRelationships, publishObjectDefinitions)
+		).put(
+			addOrUpdateObjectFields,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateObjectRelationships)
+		).put(
+			addOrUpdateObjectRelationships,
+			ListUtil.fromArray(addObjectDefinitions)
+		).put(
+			addOrUpdateOrganizations,
+			ListUtil.fromArray(addOrUpdateExpandoColumns)
+		).put(
+			addOrUpdateResourcePermissions,
+			ListUtil.fromArray(
+				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
+				addLayoutUtilityPageEntries, addObjectDefinitions,
+				addOrUpdateBlogPostings, addOrUpdateClientExtensionEntries,
+				addOrUpdateDataDefinitions, addOrUpdateDDMStructures,
+				addOrUpdateDDMTemplate, addOrUpdateDocuments,
+				addOrUpdateJournalArticles, addOrUpdateLayouts,
+				addOrUpdateObjectEntries, addOrUpdateRoles,
+				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
+		).put(
+			addOrUpdateRoles, new ArrayList<>()
+		).put(
+			addOrUpdateSAPEntries, new ArrayList<>()
+		).put(
+			addOrUpdateSegmentsEntries,
+			ListUtil.fromArray(
+				addKeywords, addOrUpdateExpandoColumns,
+				addOrUpdateOrganizations, addOrUpdateRoles,
+				addOrUpdateTaxonomyVocabularies, addUserAccounts)
+		).put(
+			addOrUpdateSXPBlueprint, new ArrayList<>()
+		).put(
+			addOrUpdateTaxonomyVocabularies,
+			ListUtil.fromArray(addOrUpdateDDMStructures)
+		).put(
+			addOrUpdateUserGroups, new ArrayList<>()
+		).put(
+			addPortletSettings,
+			ListUtil.fromArray(addOrUpdateTaxonomyVocabularies)
+		).put(
+			addRolesAssignments,
+			ListUtil.fromArray(
+				addOrUpdateOrganizations, addOrUpdateRoles,
+				addOrUpdateUserGroups, addUserAccounts)
+		).put(
+			addSegmentsExperiences,
+			ListUtil.fromArray(
+				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
+				addLayoutUtilityPageEntries, addObjectDefinitions,
+				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDocuments, addOrUpdateJournalArticles,
+				addOrUpdateLayouts, addOrUpdateLayoutsContent,
+				addOrUpdateObjectEntries, addOrUpdateSegmentsEntries,
+				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
+		).put(
+			addSiteConfiguration, new ArrayList<>()
+		).put(
+			addSiteSettings, new ArrayList<>()
+		).put(
+			addStyleBookEntries, new ArrayList<>()
+		).put(
+			addUserAccounts,
+			ListUtil.fromArray(
+				addAccounts, addKeywords, addOrUpdateDocuments,
+				addOrUpdateExpandoColumns, addOrUpdateOrganizations,
+				addOrUpdateTaxonomyVocabularies)
+		).put(
+			addUserRoles, ListUtil.fromArray(addOrUpdateRoles, addUserAccounts)
+		).put(
+			addWorkflowDefinitions, ListUtil.fromArray(addOrUpdateRoles)
+		).put(
+			publishObjectDefinitions,
+			ListUtil.fromArray(
+				addObjectDefinitions, addOrUpdateObjectFields,
+				addOrUpdateObjectRelationships)
+		).put(
+			setPLOEntries, new ArrayList<>()
+		).put(
+			updateLayoutSets, ListUtil.fromArray(addOrUpdateLayouts)
+		).build();
 
-		List<UnsafeRunnable<Exception>> visitUnsafeRunnables =
-			new ArrayList<>();
+		List<R> visitUnsafeRunnables = new ArrayList<>();
 
 		while (visitUnsafeRunnables.size() != unsafeRunnableMap.size()) {
 			int prevent = visitUnsafeRunnables.size();
 
-			for (Map.Entry
-					<UnsafeRunnable<Exception>, List<UnsafeRunnable<Exception>>>
-						entry : unsafeRunnableMap.entrySet()) {
-
-				UnsafeRunnable<Exception> key = entry.getKey();
+			for (Map.Entry<R, List<R>> entry : unsafeRunnableMap.entrySet()) {
+				R key = entry.getKey();
 
 				if (visitUnsafeRunnables.contains(key) ||
 					!visitUnsafeRunnables.containsAll(entry.getValue())) {

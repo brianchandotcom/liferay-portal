@@ -212,11 +212,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
 			searchResult1 = testGetSearchPage_addSearchResult(
 				randomSearchResult());
-
 		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
 			searchResult2 = testGetSearchPage_addSearchResult(
 				randomSearchResult());
-
 		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
 			searchResult3 = testGetSearchPage_addSearchResult(
 				randomSearchResult());
@@ -441,25 +439,20 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 
 		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
-			searchResult1 = testGetSearchPage_addSearchResult(
-				randomSearchResult());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		com.liferay.portal.search.rest.client.dto.v1_0.SearchResult
-			searchResult2 = testGetSearchPage_addSearchResult(
+			searchResult = testGetSearchPage_addSearchResult(
 				randomSearchResult());
 
 		for (EntityField entityField : entityFields) {
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page = searchResultResource.getSearchPage(
 					null, true, null, null, null,
-					getFilterString(entityField, operator, searchResult1),
+					getFilterString(entityField, operator, searchResult),
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(1, 2),
 					null);
 
 			assertEquals(
-				Collections.singletonList(searchResult1),
+				Collections.singletonList(searchResult),
 				(List
 					<com.liferay.portal.search.rest.client.dto.v1_0.
 						SearchResult>)page.getItems());
@@ -492,7 +485,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 
 		searchResult1 = testGetSearchPage_addSearchResult(searchResult1);
-
 		searchResult2 = testGetSearchPage_addSearchResult(searchResult2);
 
 		Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult> page =

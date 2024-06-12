@@ -23,9 +23,9 @@ const GetSolutionRouter = () => {
 	const {properties} = useMarketplaceContext();
 
 	const {data: product, isLoading} = useDeliveryProduct(
-		((new URLSearchParams(queryString).get(
+		(new URLSearchParams(queryString).get(
 			'productId'
-		) as unknown) as string) || properties.trialProductId
+		) as unknown as string) || properties.trialProductId
 	);
 
 	if (isLoading) {

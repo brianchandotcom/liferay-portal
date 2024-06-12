@@ -18,9 +18,11 @@ const Review = ({
 	onCancel,
 	onPrevious,
 }: PRMFormikPageProps & DealRegistrationStepProps) => {
-	const {isSubmitting, status: submitted, values} = useFormikContext<
-		DealRegistration
-	>();
+	const {
+		isSubmitting,
+		status: submitted,
+		values,
+	} = useFormikContext<DealRegistration>();
 
 	return (
 		<>
@@ -184,8 +186,7 @@ const Review = ({
 					rows={[
 						{
 							title: 'Additional Information',
-							value:
-								values.additionalInformationAboutTheOpportunity,
+							value: values.additionalInformationAboutTheOpportunity,
 						},
 					]}
 					tableLayoutAuto

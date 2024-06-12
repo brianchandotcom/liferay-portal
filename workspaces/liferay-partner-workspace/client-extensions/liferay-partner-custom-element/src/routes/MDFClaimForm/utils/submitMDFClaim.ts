@@ -19,7 +19,7 @@ const submitMDFClaim = async (
 				ResourceName.MDF_CLAIM_DXP,
 				mdfClaim,
 				mdfRequest
-		  );
+			);
 
 	return dtoMDFClaim;
 };

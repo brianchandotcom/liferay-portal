@@ -34,20 +34,22 @@ const submitDocuments = async (
 				activity.listOfQualifiedLeadsFile &&
 				!activity.listOfQualifiedLeadsFile.documentId
 			) {
-				activity.listOfQualifiedLeadsFile.documentId = await uploadDocument(
-					activity.listOfQualifiedLeadsFile,
-					claimParentFolderId
-				);
+				activity.listOfQualifiedLeadsFile.documentId =
+					await uploadDocument(
+						activity.listOfQualifiedLeadsFile,
+						claimParentFolderId
+					);
 			}
 
 			if (
 				activity.telemarketingScriptFile &&
 				!activity.telemarketingScriptFile.documentId
 			) {
-				activity.telemarketingScriptFile.documentId = await uploadDocument(
-					activity.telemarketingScriptFile,
-					claimParentFolderId
-				);
+				activity.telemarketingScriptFile.documentId =
+					await uploadDocument(
+						activity.telemarketingScriptFile,
+						claimParentFolderId
+					);
 			}
 
 			if (activity.proofOfPerformance?.allContents?.length) {
@@ -58,17 +60,19 @@ const submitDocuments = async (
 			}
 
 			if (activity.proofOfPerformance?.eventCollaterals?.length) {
-				activity.proofOfPerformance.eventCollaterals = await uploadDocuments(
-					activity.proofOfPerformance.eventCollaterals,
-					claimParentFolderId
-				);
+				activity.proofOfPerformance.eventCollaterals =
+					await uploadDocuments(
+						activity.proofOfPerformance.eventCollaterals,
+						claimParentFolderId
+					);
 			}
 
 			if (activity.proofOfPerformance?.eventInvitations?.length) {
-				activity.proofOfPerformance.eventInvitations = await uploadDocuments(
-					activity.proofOfPerformance.eventInvitations,
-					claimParentFolderId
-				);
+				activity.proofOfPerformance.eventInvitations =
+					await uploadDocuments(
+						activity.proofOfPerformance.eventInvitations,
+						claimParentFolderId
+					);
 			}
 
 			if (activity.proofOfPerformance?.eventPhotos?.length) {

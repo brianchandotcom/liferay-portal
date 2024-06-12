@@ -31,9 +31,8 @@ export default function getMiscellaneousMarketing(
 			},
 			{
 				title: 'Guaranteed Impressions',
-				value:
-					mdfRequestActivity.activityDescription
-						?.guaranteedImpressions,
+				value: mdfRequestActivity.activityDescription
+					?.guaranteedImpressions,
 			}
 		);
 	}
@@ -52,8 +51,8 @@ export default function getMiscellaneousMarketing(
 			},
 			{
 				title: 'Expected Impressions',
-				value:
-					mdfRequestActivity.activityDescription?.expectedImpressions,
+				value: mdfRequestActivity.activityDescription
+					?.expectedImpressions,
 			}
 		);
 	}
@@ -94,15 +93,13 @@ export default function getMiscellaneousMarketing(
 			},
 			{
 				title: 'Source and Size of call List',
-				value:
-					mdfRequestActivity.activityDescription
-						?.sourceAndSizeOfCallList,
+				value: mdfRequestActivity.activityDescription
+					?.sourceAndSizeOfCallList,
 			},
 			{
 				title: 'Resources necessary from Liferay',
-				value:
-					mdfRequestActivity.activityDescription
-						?.resourcesNecessaryFromLiferay,
+				value: mdfRequestActivity.activityDescription
+					?.resourcesNecessaryFromLiferay,
 			}
 		);
 	}
@@ -118,8 +115,8 @@ export default function getMiscellaneousMarketing(
 			},
 			{
 				title: 'Expected Impressions',
-				value:
-					mdfRequestActivity.activityDescription?.expectedImpressions,
+				value: mdfRequestActivity.activityDescription
+					?.expectedImpressions,
 			}
 		);
 	}

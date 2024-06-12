@@ -27,9 +27,8 @@ export default function getDTOFromMDFRequestActivity(
 		...newMDFRequestActivity,
 		externalReferenceCode: externalReferenceCodeFromSF,
 		externalReferenceCodeSF: externalReferenceCodeFromSF,
-		leadFollowUpStrategies: activityDescription?.leadFollowUpStrategies?.join(
-			', '
-		),
+		leadFollowUpStrategies:
+			activityDescription?.leadFollowUpStrategies?.join(', '),
 		mdfRequestExternalReferenceCode: mdfRequestDTO?.externalReferenceCode,
 		r_accToActs_accountEntryERC: mdfRequest.company?.externalReferenceCode,
 		r_accToActs_accountEntryId: mdfRequest.company?.id,

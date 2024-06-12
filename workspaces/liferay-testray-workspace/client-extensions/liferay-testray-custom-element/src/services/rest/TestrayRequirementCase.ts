@@ -18,7 +18,8 @@ const createRequirementCaseBatch = (
 			requirements.map(
 				({
 					caseId: r_caseToRequirementsCases_c_caseId,
-					requirementId: r_requiremenToRequirementsCases_c_requirementId,
+					requirementId:
+						r_requiremenToRequirementsCases_c_requirementId,
 				}) =>
 					fetcher.post('/requirementscaseses', {
 						name:

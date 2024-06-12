@@ -14,11 +14,9 @@ import {
 } from '../../utils/api';
 
 const useNextSteps = (orderId: string) => {
-	const {
-		data = [],
-		isLoading: cartLoading,
-	} = useSWR(`/next-steps/cart/${orderId}`, () =>
-		Promise.all([getCart(orderId), getCartItems(orderId)])
+	const {data = [], isLoading: cartLoading} = useSWR(
+		`/next-steps/cart/${orderId}`,
+		() => Promise.all([getCart(orderId), getCartItems(orderId)])
 	);
 
 	const [cart, cartItems] = data ?? [];
@@ -45,10 +43,7 @@ const useNextSteps = (orderId: string) => {
 			)
 	);
 
-	const {
-		data: accountCommerce,
-		isLoading: accountCommerceLoading,
-	} = useSWR(
+	const {data: accountCommerce, isLoading: accountCommerceLoading} = useSWR(
 		accountId ? `/next-steps/account-commerce/${accountId}` : null,
 		() => getAccountInfoFromCommerce(accountId)
 	);

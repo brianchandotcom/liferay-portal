@@ -8,6 +8,7 @@ export default async function liferayFetcher<T>(
 	token: string,
 	options?: RequestInit
 ): Promise<T> {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(url, {
 		...options,

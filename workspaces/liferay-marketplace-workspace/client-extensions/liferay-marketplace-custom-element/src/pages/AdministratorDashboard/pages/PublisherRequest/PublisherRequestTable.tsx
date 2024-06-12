@@ -21,9 +21,8 @@ type AppsTableProps = {
 
 const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 	const modal = useModal();
-	const [selectedRequest, setSelectedRequest] = useState<
-		PublisherRequestInfo
-	>();
+	const [selectedRequest, setSelectedRequest] =
+		useState<PublisherRequestInfo>();
 
 	if (!items?.length) {
 		return (

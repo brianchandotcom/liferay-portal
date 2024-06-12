@@ -6,7 +6,9 @@
 	font-weight: var(--font-weight-semi-bold);
 	gap: 8px;
 	text-decoration: none;
-	transition: color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+	transition:
+		color 0.15s ease-in-out,
+		opacity 0.15s ease-in-out;
 	width: fit-content;
 }
 
@@ -51,7 +53,9 @@
 
 .cta-link-icon {
 	height: 16px;
-	transition: color 0.15s ease-in-out, transform 0.15s ease-in-out;
+	transition:
+		color 0.15s ease-in-out,
+		transform 0.15s ease-in-out;
 	width: 16px;
 }
 

@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 /* eslint-disable no-undef */
 
 const findRequestIdUrl = (paramsUrl) => {
@@ -14,6 +15,7 @@ const currentPath = Liferay.ThemeDisplay.getLayoutRelativeURL().split('/');
 const mdfClaimId = findRequestIdUrl(currentPath.at(-1));
 
 const getMDFClaimSummary = async () => {
+
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
 		headers: {
@@ -39,16 +41,13 @@ const getMDFClaimSummary = async () => {
 		const paymentDate = Liferay.Util.escape(data.paymentDate);
 
 		fragmentElement.querySelector('#mdf-claim-type').innerHTML = type;
-		fragmentElement.querySelector(
-			'#mdf-claim-amount-claimed'
-		).innerHTML = totalClaimAmount;
-		fragmentElement.querySelector(
-			'#mdf-claim-payment-received'
-		).innerHTML = claimPaid;
+		fragmentElement.querySelector('#mdf-claim-amount-claimed').innerHTML =
+			totalClaimAmount;
+		fragmentElement.querySelector('#mdf-claim-payment-received').innerHTML =
+			claimPaid;
 		fragmentElement.querySelector('#mdf-claim-check').innerHTML = check;
-		fragmentElement.querySelector(
-			'#mdf-claim-payment-date'
-		).innerHTML = formatNewDate(Liferay.Util.escape(paymentDate));
+		fragmentElement.querySelector('#mdf-claim-payment-date').innerHTML =
+			formatNewDate(Liferay.Util.escape(paymentDate));
 
 		return;
 	}

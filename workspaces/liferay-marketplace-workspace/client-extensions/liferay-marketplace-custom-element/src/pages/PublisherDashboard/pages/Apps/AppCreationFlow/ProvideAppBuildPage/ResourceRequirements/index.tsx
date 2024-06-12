@@ -25,7 +25,7 @@ const ResourceRequirements = () => {
 				maxLength={2}
 				name="numberOfCPUs"
 				onChange={({target: {value}}) => {
-					if (!isNaN((value as unknown) as number)) {
+					if (!isNaN(value as unknown as number)) {
 						dispatch({
 							payload: {key: 'cpu', value},
 							type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
@@ -46,7 +46,7 @@ const ResourceRequirements = () => {
 				maxLength={2}
 				name="ram"
 				onChange={({target: {value}}) => {
-					if (!isNaN((value as unknown) as number)) {
+					if (!isNaN(value as unknown as number)) {
 						dispatch({
 							payload: {key: 'ram', value},
 							type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,

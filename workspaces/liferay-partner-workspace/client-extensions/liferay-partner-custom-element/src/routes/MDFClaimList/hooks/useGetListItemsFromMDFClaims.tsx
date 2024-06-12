@@ -45,7 +45,7 @@ export default function useGetListItemsFromMDFClaims(
 					? getDateCustomFormat(
 							item.submitDate,
 							customFormatDateOptions.SHORT_MONTH
-					  )
+						)
 					: '-',
 				[MDFClaimColumnKey.AMOUNT_PAID]: !item.claimPaid
 					? '-'
@@ -54,7 +54,7 @@ export default function useGetListItemsFromMDFClaims(
 					? getDateCustomFormat(
 							item.paymentDate,
 							customFormatDateOptions.SHORT_MONTH
-					  )
+						)
 					: '-',
 			})),
 		[swrResponse.data?.items]

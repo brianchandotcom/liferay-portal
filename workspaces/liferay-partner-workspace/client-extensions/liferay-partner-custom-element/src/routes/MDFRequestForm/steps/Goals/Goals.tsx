@@ -35,9 +35,8 @@ const Goals = ({
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
-	const {companiesEntries, fieldEntries} = useDynamicFieldEntries(
-		disableCompany
-	);
+	const {companiesEntries, fieldEntries} =
+		useDynamicFieldEntries(disableCompany);
 
 	const errors = formikHelpers.errors;
 
@@ -69,13 +68,11 @@ const Goals = ({
 		!isObjectEmpty(values.company) ? values.company : undefined
 	);
 
-	const {
-		onSelected: onAdditionalOptionSelected,
-		options: additionalOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS],
-		(selected) => setFieldValue('additionalOption', selected)
-	);
+	const {onSelected: onAdditionalOptionSelected, options: additionalOptions} =
+		getPicklistOptions(
+			fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS],
+			(selected) => setFieldValue('additionalOption', selected)
+		);
 
 	const goalsErrors = useMemo(() => {
 		delete errors.activities;
@@ -91,6 +88,7 @@ const Goals = ({
 		) {
 			setFieldValue(`liferayBusinessSalesGoalsOther`, '');
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.liferayBusinessSalesGoals]);
 

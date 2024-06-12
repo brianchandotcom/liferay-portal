@@ -24,23 +24,19 @@ export enum TRIAL_CUSTOM_FIELDS {
 const statusAlert = {
 	[ORDER_WORKFLOW_STATUS_CODE.CANCELLED]: {
 		displayType: 'danger',
-		text:
-			'Your order has been cancelled. Please contact support if you have any questions.',
+		text: 'Your order has been cancelled. Please contact support if you have any questions.',
 	},
 	[ORDER_WORKFLOW_STATUS_CODE.ON_HOLD]: {
 		displayType: 'secondary',
-		text:
-			'Your order is currently on hold. Please check your email for further instructions.',
+		text: 'Your order is currently on hold. Please check your email for further instructions.',
 	},
 	[ORDER_WORKFLOW_STATUS_CODE.PROCESSING]: {
 		displayType: 'info',
-		text:
-			'Your order is being processed. We will notify you once it is ready for the next step.',
+		text: 'Your order is being processed. We will notify you once it is ready for the next step.',
 	},
 	[ORDER_WORKFLOW_STATUS_CODE.PENDING]: {
 		displayType: 'warning',
-		text:
-			'Your order is pending. Please wait a few minutes or hours for the processing to complete.',
+		text: 'Your order is pending. Please wait a few minutes or hours for the processing to complete.',
 	},
 };
 
@@ -59,7 +55,7 @@ const Solution = () => {
 		? differenceInDays(
 				new Date(customFields[TRIAL_CUSTOM_FIELDS.END_DATE]),
 				new Date()
-		  ) <= NEXT_TO_EXPIRE_LEFT_DAYS
+			) <= NEXT_TO_EXPIRE_LEFT_DAYS
 		: false;
 	const virtualHost = customFields[TRIAL_CUSTOM_FIELDS.VIRTUAL_HOST] || '';
 
@@ -109,7 +105,7 @@ const Solution = () => {
 											customFields[
 												TRIAL_CUSTOM_FIELDS.START_DATE
 											]
-									  )
+										)
 									: '-',
 							},
 							{

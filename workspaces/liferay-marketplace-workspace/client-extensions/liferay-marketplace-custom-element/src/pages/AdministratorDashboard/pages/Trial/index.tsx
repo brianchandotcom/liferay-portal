@@ -22,14 +22,8 @@ const getAvailabilityResourceLabel = (availability: Availability) => {
 };
 
 const Trial = () => {
-	const {
-		availability,
-		expired,
-		isLoading,
-		mutate,
-		orderTableData,
-		orders,
-	} = useTrialMetrics('week');
+	const {availability, expired, isLoading, mutate, orderTableData, orders} =
+		useTrialMetrics('week');
 
 	return (
 		<Page pageRendererProps={{isLoading}}>

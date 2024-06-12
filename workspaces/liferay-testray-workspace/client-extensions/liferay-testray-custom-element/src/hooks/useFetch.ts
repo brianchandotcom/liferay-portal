@@ -53,6 +53,7 @@ export function useFetch<Data = any, Error = any>(
 		}
 
 		return data;
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 

@@ -132,10 +132,8 @@ const TestFlowTasks = () => {
 	) => {
 		setIsLoading(true);
 
-		const {
-			childTestraySubtasks,
-			parentTestraySubtask,
-		} = await testraySubtaskImpl.mergedToSubtask(subtasks);
+		const {childTestraySubtasks, parentTestraySubtask} =
+			await testraySubtaskImpl.mergedToSubtask(subtasks);
 
 		updateItemFromList(
 			mutate,
@@ -414,7 +412,8 @@ const TestFlowTasks = () => {
 															0,
 															{},
 															{
-																revalidate: true,
+																revalidate:
+																	true,
 															}
 														);
 													})
@@ -440,9 +439,10 @@ const TestFlowTasks = () => {
 						{items},
 						{dispatch, listViewContext: {selectedRows}, mutate}
 					) => {
-						const selectedSubtasks: TestraySubtask[] = selectedRows.map(
-							(rowId) => items.find(({id}) => rowId === id)
-						);
+						const selectedSubtasks: TestraySubtask[] =
+							selectedRows.map((rowId) =>
+								items.find(({id}) => rowId === id)
+							);
 
 						const alerts = getFloatingBoxAlerts(selectedSubtasks);
 
@@ -452,8 +452,7 @@ const TestFlowTasks = () => {
 								clearList={() =>
 									dispatch({
 										payload: [],
-										type:
-											ListViewTypes.SET_CLEAR_CHECKED_ROW,
+										type: ListViewTypes.SET_CLEAR_CHECKED_ROW,
 									})
 								}
 								isVisible={!!selectedRows.length}

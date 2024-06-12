@@ -20,16 +20,21 @@ import useRequirementActions from './useRequirementActions';
 const RequirementsOutlet = () => {
 	const {actions} = useRequirementActions({isHeaderActions: true});
 	const {requirementId} = useParams();
-	const {
-		testrayProject,
-	}: {testrayProject: TestrayProject} = useOutletContext();
+	const {testrayProject}: {testrayProject: TestrayProject} =
+		useOutletContext();
 
-	const {data: testrayRequirement, error, loading, mutate} = useFetch<
-		TestrayRequirement
-	>(testrayRequirementsImpl.getResource(requirementId as string), {
-		transformData: (response: TestrayRequirement) =>
-			testrayRequirementsImpl.transformData(response),
-	});
+	const {
+		data: testrayRequirement,
+		error,
+		loading,
+		mutate,
+	} = useFetch<TestrayRequirement>(
+		testrayRequirementsImpl.getResource(requirementId as string),
+		{
+			transformData: (response: TestrayRequirement) =>
+				testrayRequirementsImpl.transformData(response),
+		}
+	);
 
 	const {setHeaderActions, setHeading} = useHeader({
 		timeout: 100,

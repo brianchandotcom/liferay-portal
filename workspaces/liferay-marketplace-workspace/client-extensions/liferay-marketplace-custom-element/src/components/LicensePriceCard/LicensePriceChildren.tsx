@@ -48,11 +48,8 @@ const LicensePriceChildren = ({
 					</span>
 					<div className="align-items-start d-flex flex-column">
 						{tierPrices.map((tierPrice, indexTP) => {
-							const {
-								currency,
-								priceFormatted,
-								quantity,
-							} = tierPrice;
+							const {currency, priceFormatted, quantity} =
+								tierPrice;
 
 							const minPriceLicenseOption =
 								indexTP === tierPrices?.length - 1;

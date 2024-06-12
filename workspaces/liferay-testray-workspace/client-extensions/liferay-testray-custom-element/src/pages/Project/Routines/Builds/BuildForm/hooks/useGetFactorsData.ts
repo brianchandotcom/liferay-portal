@@ -33,9 +33,10 @@ const useGetFactorsData = (
 		}
 	);
 
-	const factorItems = useMemo(() => factorsData?.items || [], [
-		factorsData?.items,
-	]);
+	const factorItems = useMemo(
+		() => factorsData?.items || [],
+		[factorsData?.items]
+	);
 
 	useEffect(() => {
 		if (factorItems.length) {

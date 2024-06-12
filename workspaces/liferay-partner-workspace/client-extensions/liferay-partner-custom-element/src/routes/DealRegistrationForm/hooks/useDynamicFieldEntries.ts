@@ -52,9 +52,10 @@ export default function useDynamicFieldEntries(
 		[userAccount?.accountBriefs]
 	);
 
-	const partnerPrimaryPhone = userAccount?.userAccountContactInformation?.telephones?.find(
-		(phoneNumber) => phoneNumber.primary
-	);
+	const partnerPrimaryPhone =
+		userAccount?.userAccountContactInformation?.telephones?.find(
+			(phoneNumber) => phoneNumber.primary
+		);
 
 	useEffect(() => {
 		if (

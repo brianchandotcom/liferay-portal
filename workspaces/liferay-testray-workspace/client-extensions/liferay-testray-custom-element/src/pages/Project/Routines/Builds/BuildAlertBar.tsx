@@ -97,7 +97,7 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 			className="build-alert-bar w-100"
 			displayType={alertProperty.displayType as AlertDisplayType}
 			title={
-				((
+				(
 					<>
 						<ClayLabel
 							displayType={
@@ -109,7 +109,7 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 
 						{alertProperty.text}
 					</>
-				) as unknown) as string
+				) as unknown as string
 			}
 			variant="inline"
 		/>

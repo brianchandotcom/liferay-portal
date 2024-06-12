@@ -32,9 +32,8 @@ export default function getMDFListColumns(
 	isChannel?: boolean
 ): TableColumn<MDFRequestListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFRequestListItem, index: number) => {
-		const isUserAssociated = hasUserAccountSameAccountEntryCurrentMDFRequest(
-			index
-		);
+		const isUserAssociated =
+			hasUserAccountSameAccountEntryCurrentMDFRequest(index);
 
 		const options = actions?.reduce<DropdownOption[]>(
 			(previousValue, currentValue) => {
@@ -101,10 +100,11 @@ export default function getMDFListColumns(
 									'Are you sure you want to complete the MDF request?',
 								onConfirm: async (isConfirmed: boolean) => {
 									if (isConfirmed) {
-										const newRequestStatus = await patchRequestStatus(
-											Status.COMPLETED,
-											String(row[MDFColumnKey.ID])
-										);
+										const newRequestStatus =
+											await patchRequestStatus(
+												Status.COMPLETED,
+												String(row[MDFColumnKey.ID])
+											);
 
 										if (newRequestStatus) {
 											Liferay.Util.openToast({
@@ -137,10 +137,11 @@ export default function getMDFListColumns(
 									'Are you sure you want to cancel the MDF request?',
 								onConfirm: async (isConfirmed: boolean) => {
 									if (isConfirmed) {
-										const newRequestStatus = await patchRequestStatus(
-											Status.CANCELED,
-											String(row[MDFColumnKey.ID])
-										);
+										const newRequestStatus =
+											await patchRequestStatus(
+												Status.CANCELED,
+												String(row[MDFColumnKey.ID])
+											);
 
 										if (newRequestStatus) {
 											Liferay.Util.openToast({

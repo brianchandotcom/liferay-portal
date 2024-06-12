@@ -73,10 +73,11 @@ const BuildSelectStacksModal: React.FC<
 
 	const onStepNext = (form: BuildSelectStacksModalForm) => {
 		if (step === 0) {
-			const factorCombinations = testrayFactorRest.getTestrayFactorCombinations(
-				factorWithOptionsList,
-				selectedOptions
-			);
+			const factorCombinations =
+				testrayFactorRest.getTestrayFactorCombinations(
+					factorWithOptionsList,
+					selectedOptions
+				);
 
 			remove();
 

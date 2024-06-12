@@ -30,6 +30,7 @@ app.get(lookupConfig('ready.path'), (req, res) => {
 });
 
 app.listen(serverPort, () => {
+
 	// eslint-disable-next-line no-console
 	console.log(`App listening on ${serverPort}`);
 });

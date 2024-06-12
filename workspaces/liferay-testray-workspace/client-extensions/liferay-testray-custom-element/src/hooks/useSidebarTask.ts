@@ -52,9 +52,10 @@ export function useSidebarTask() {
 		}
 	);
 
-	const subtasks = useMemo(() => subtasksResponse?.items || [], [
-		subtasksResponse?.items,
-	]);
+	const subtasks = useMemo(
+		() => subtasksResponse?.items || [],
+		[subtasksResponse?.items]
+	);
 
 	const tasks = useMemo(
 		() =>

@@ -54,12 +54,11 @@ const DealRegistrationList = () => {
 			? true
 			: (JSON.parse(
 					sessionStorage.getItem('submittedDealsFilter')!
-			  ) as boolean)
+				) as boolean)
 	);
 
-	const [dealRegistrationTableSort, setDealRegistrationTableSort] = useState<
-		string
-	>('partnerAccountName:asc');
+	const [dealRegistrationTableSort, setDealRegistrationTableSort] =
+		useState<string>('partnerAccountName:asc');
 
 	const debouncedDealRegistrationTableSort = useDebounce(
 		dealRegistrationTableSort,
@@ -208,11 +207,11 @@ const DealRegistrationList = () => {
 		? {
 				end: formattedDate,
 				start: previousFiscalYearStart,
-		  }
+			}
 		: {
 				end: formattedDate,
 				start: currentFiscalYearStart,
-		  };
+			};
 
 	const filterFields = [
 		{

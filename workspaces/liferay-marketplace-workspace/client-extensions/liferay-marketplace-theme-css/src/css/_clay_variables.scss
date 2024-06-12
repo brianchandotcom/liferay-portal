@@ -91,9 +91,19 @@ $admonition-warning-highlight: $warning-l1;
 
 // Variable Overrides
 
-$font-family-base: 'Source Sans Pro', 'Source Serif Pro', -apple-system,
-	blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue', arial, sans-serif,
-	'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$font-family-base:
+	'Source Sans Pro',
+	'Source Serif Pro',
+	-apple-system,
+	blinkmacsystemfont,
+	'Segoe UI',
+	roboto,
+	'Helvetica Neue',
+	arial,
+	sans-serif,
+	'Apple Color Emoji',
+	'Segoe UI Emoji',
+	'Segoe UI Symbol';
 
 $font-weight-light: 200;
 $font-weight-normal: 400;

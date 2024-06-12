@@ -49,18 +49,14 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 		},
 	});
 
-	const {
-		filter,
-		setModalContext,
-		suiteIds,
-		suitesCasesHandler,
-	} = useSuitesCasesHandler(
-		buildId,
-		caseIds,
-		setCaseIds,
-		setCaseIdsLoading,
-		setTotalCases
-	);
+	const {filter, setModalContext, suiteIds, suitesCasesHandler} =
+		useSuitesCasesHandler(
+			buildId,
+			caseIds,
+			setCaseIds,
+			setCaseIdsLoading,
+			setTotalCases
+		);
 
 	const {modal} = useFormModal<number[]>({
 		onSave: suitesCasesHandler,

@@ -25,14 +25,8 @@ type SubmitProps = {
 const Submit: React.FC<SubmitProps> = ({readOnly = false}) => {
 	const [context, dispatch] = useSolutionContext();
 
-	const {
-		company,
-		contactUs,
-		details,
-		header,
-		profile,
-		termsAndConditions,
-	} = context;
+	const {company, contactUs, details, header, profile, termsAndConditions} =
+		context;
 
 	return (
 		<div className="mb-4 solutions-form-header">

@@ -99,7 +99,7 @@ const Table: React.FC<TableProps> = ({
 									? column.render(data, {
 											...row,
 											rowIndex,
-									  })
+										})
 									: data;
 
 								return (

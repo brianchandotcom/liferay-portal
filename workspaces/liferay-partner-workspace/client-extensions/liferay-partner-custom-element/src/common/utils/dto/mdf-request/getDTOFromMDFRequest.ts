@@ -25,13 +25,14 @@ export function getDTOFromMDFRequest(
 			? mdfRequest.emailAddress
 			: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCode: externalReferenceCodeFromSF,
-		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.includes(
-			'Other - Please describe'
-		)
-			? mdfRequest.liferayBusinessSalesGoals
-					?.filter((item) => item !== 'Other - Please describe')
-					.join('; ')
-			: mdfRequest.liferayBusinessSalesGoals?.join('; '),
+		liferayBusinessSalesGoals:
+			mdfRequest.liferayBusinessSalesGoals?.includes(
+				'Other - Please describe'
+			)
+				? mdfRequest.liferayBusinessSalesGoals
+						?.filter((item) => item !== 'Other - Please describe')
+						.join('; ')
+				: mdfRequest.liferayBusinessSalesGoals?.join('; '),
 		liferayBusinessSalesGoalsOther:
 			mdfRequest?.liferayBusinessSalesGoalsOther,
 		liferaysUserIdSF: mdfRequest.id

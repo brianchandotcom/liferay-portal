@@ -23,9 +23,11 @@ const Download = () => {
 
 	const channel = marketplaceContext.channel;
 	const virtualProducts = outletContext?.placedOrder.placedOrderItems;
-	const hasVersionSpecification = outletContext?.product.productSpecifications.find(
-		(specification) => specification.specificationKey === 'latest-version'
-	);
+	const hasVersionSpecification =
+		outletContext?.product.productSpecifications.find(
+			(specification) =>
+				specification.specificationKey === 'latest-version'
+		);
 
 	const {data: skus = [], isLoading} = useSWR(
 		hasVersionSpecification

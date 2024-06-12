@@ -202,10 +202,9 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 															false
 														}
 														tooltip={
-															(tooltipText as any)[
-																listTypeEntry
-																	.key
-															]
+															(
+																tooltipText as any
+															)[listTypeEntry.key]
 														}
 													/>
 												)}

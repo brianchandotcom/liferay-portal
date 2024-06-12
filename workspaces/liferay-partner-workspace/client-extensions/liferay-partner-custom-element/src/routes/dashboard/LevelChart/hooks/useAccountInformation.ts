@@ -36,12 +36,11 @@ export default function useAccountInformation() {
 		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`
 	);
 
-	const {data: account, isValidating: isValidatingAccount} = useGet<
-		AccountEntry
-	>(
-		userAccount?.accountBriefs[0]?.externalReferenceCode &&
-			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${userAccount.accountBriefs[0].externalReferenceCode}`
-	);
+	const {data: account, isValidating: isValidatingAccount} =
+		useGet<AccountEntry>(
+			userAccount?.accountBriefs[0]?.externalReferenceCode &&
+				`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${userAccount.accountBriefs[0].externalReferenceCode}`
+		);
 
 	const currency = account ? account.currency : 'USD';
 
@@ -50,20 +49,17 @@ export default function useAccountInformation() {
 			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${account.externalReferenceCode}/user-accounts?pageSize=-1`
 	);
 
-	const {
-		data: opportunities,
-		isValidating: isValidatingOpportunities,
-	} = useGet<LiferayItems<Opportunity[]>>(
-		account?.name &&
-			`/o/${LiferayAPIs.OBJECT}/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=${Filters.LEVEL_DASHBOARD.opportunities}`
-	);
+	const {data: opportunities, isValidating: isValidatingOpportunities} =
+		useGet<LiferayItems<Opportunity[]>>(
+			account?.name &&
+				`/o/${LiferayAPIs.OBJECT}/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=${Filters.LEVEL_DASHBOARD.opportunities}`
+		);
 
-	const {data: partnerLevel, isValidating: isValidatingPartnerLevel} = useGet<
-		PartnerLevel
-	>(
-		account?.r_prtLvlToAcc_c_partnerLevelERC &&
-			`/o/${LiferayAPIs.OBJECT}/partnerlevels/by-external-reference-code/${account.r_prtLvlToAcc_c_partnerLevelERC}`
-	);
+	const {data: partnerLevel, isValidating: isValidatingPartnerLevel} =
+		useGet<PartnerLevel>(
+			account?.r_prtLvlToAcc_c_partnerLevelERC &&
+				`/o/${LiferayAPIs.OBJECT}/partnerlevels/by-external-reference-code/${account.r_prtLvlToAcc_c_partnerLevelERC}`
+		);
 
 	const opportunitiesNB =
 		opportunities &&

@@ -309,7 +309,8 @@ function JenkinsServerPage() {
 									onClick: () => {
 										deleteJenkinsServerById({
 											id,
-											redirect: redirectToJenkinsServerPage,
+											redirect:
+												redirectToJenkinsServerPage,
 										});
 									},
 									title: 'Delete',

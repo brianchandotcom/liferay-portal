@@ -55,9 +55,8 @@ const MDFRequestList = () => {
 	const {userAccount} = useDynamicFieldEntries();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
-	const [requestTableSort, setRequestTableSort] = useState<string>(
-		'dateCreated:desc'
-	);
+	const [requestTableSort, setRequestTableSort] =
+		useState<string>('dateCreated:desc');
 
 	const debouncedRequestTableSort = useDebounce(requestTableSort, 1000);
 

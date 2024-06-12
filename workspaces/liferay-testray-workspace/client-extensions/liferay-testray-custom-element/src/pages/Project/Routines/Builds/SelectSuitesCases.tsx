@@ -22,9 +22,10 @@ const SelectSuitesCases: React.FC<SelectSuitesCasesProps> = ({
 	setState,
 	testraySuite,
 }) => {
-	const isSmartSuite = useMemo(() => !!testraySuite.caseParameters, [
-		testraySuite.caseParameters,
-	]);
+	const isSmartSuite = useMemo(
+		() => !!testraySuite.caseParameters,
+		[testraySuite.caseParameters]
+	);
 
 	return (
 		<SuitesCasesTable

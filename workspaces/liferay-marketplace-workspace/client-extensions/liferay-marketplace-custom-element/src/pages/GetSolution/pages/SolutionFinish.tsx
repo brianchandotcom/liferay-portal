@@ -22,13 +22,11 @@ enum States {
 
 const trialLabels = {
 	[States.HOLD]: {
-		body:
-			'You will be notified once the process begins, check your email for instructions.',
+		body: 'You will be notified once the process begins, check your email for instructions.',
 		title: 'project creation is on hold',
 	},
 	[States.PROCESSING]: {
-		body:
-			'Expect two emails in 10 minutes or less to verify your project and extension environments are ready.',
+		body: 'Expect two emails in 10 minutes or less to verify your project and extension environments are ready.',
 		title: 'project is being created now.',
 	},
 };

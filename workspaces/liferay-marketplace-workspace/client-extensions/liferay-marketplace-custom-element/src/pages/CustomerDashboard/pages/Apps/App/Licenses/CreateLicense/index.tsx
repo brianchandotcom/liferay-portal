@@ -104,13 +104,8 @@ const CreateLicense = () => {
 		},
 	});
 
-	const {
-		description,
-		hostname,
-		ipAddress,
-		macAddress,
-		subscription,
-	} = watch();
+	const {description, hostname, ipAddress, macAddress, subscription} =
+		watch();
 
 	useEffect(() => {
 		if (product) {
@@ -141,8 +136,8 @@ const CreateLicense = () => {
 				(product as DeliveryProduct)?.productSpecifications || [];
 
 			try {
-				const licenseKey = await marketplaceSpringBootOAuth2.createLicenseKey(
-					{
+				const licenseKey =
+					await marketplaceSpringBootOAuth2.createLicenseKey({
 						licenseEntry: {
 							description: form.description,
 							hostName: form.hostname,
@@ -161,8 +156,7 @@ const CreateLicense = () => {
 						},
 						skuId: form.subscription?.skuId as number,
 						type: form.subscription?.name as string,
-					}
-				);
+					});
 
 				Liferay.Util.openToast({
 					message: 'License Key created successfully',

@@ -235,13 +235,16 @@ const ListView: React.FC<ListViewProps> = ({
 		]
 	);
 
-	const {data: response, error, isValidating, loading, mutate} = useFetch(
-		resource,
-		{
-			params: getURLSearchParams(),
-			transformData,
-		}
-	);
+	const {
+		data: response,
+		error,
+		isValidating,
+		loading,
+		mutate,
+	} = useFetch(resource, {
+		params: getURLSearchParams(),
+		transformData,
+	});
 
 	const {
 		actions = {},
@@ -258,11 +261,10 @@ const ListView: React.FC<ListViewProps> = ({
 		[results, title]
 	);
 
-	const itemsMemoized = useMemo(() => (results ? matrixData : items), [
-		items,
-		matrixData,
-		results,
-	]);
+	const itemsMemoized = useMemo(
+		() => (results ? matrixData : items),
+		[items, matrixData, results]
+	);
 
 	const isCompareRunsMatrix = title === 'Runs';
 

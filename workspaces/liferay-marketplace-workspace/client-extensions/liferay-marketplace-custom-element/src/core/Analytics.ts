@@ -29,6 +29,7 @@ export const AnalyticsKeys = {
 export class Analytics {
 	public static track(key: keyof typeof AnalyticsKeys, data: unknown) {
 		if (!LiferayAnalytics) {
+
 			// eslint-disable-next-line no-console
 			return console.debug(`Track event: '${key}'`, data);
 		}

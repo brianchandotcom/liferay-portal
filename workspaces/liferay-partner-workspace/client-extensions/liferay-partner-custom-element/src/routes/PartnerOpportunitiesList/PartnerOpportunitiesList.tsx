@@ -51,12 +51,11 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 			? true
 			: (JSON.parse(
 					sessionStorage.getItem('openOpportunitiesFilter')!
-			  ) as boolean)
+				) as boolean)
 	);
 
-	const [opportunitiesTableSort, setOpportunitiesTableSort] = useState<
-		string
-	>('partnerAccountName:asc');
+	const [opportunitiesTableSort, setOpportunitiesTableSort] =
+		useState<string>('partnerAccountName:asc');
 
 	const debouncedDealRegistrationTableSort = useDebounce(
 		opportunitiesTableSort,
@@ -73,9 +72,8 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 	);
 
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
-	const [modalContent, setModalContent] = useState<
-		PartnerOpportunitiesItem
-	>();
+	const [modalContent, setModalContent] =
+		useState<PartnerOpportunitiesItem>();
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setIsVisibleModal(false);
@@ -148,11 +146,11 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 		? {
 				end: formattedDate,
 				start: previousFiscalYearStart,
-		  }
+			}
 		: {
 				end: formattedDate,
 				start: currentFiscalYearStart,
-		  };
+			};
 
 	const getFilters = () => {
 		const filterFields = [

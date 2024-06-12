@@ -61,8 +61,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.overallCampaignName,
 				},
 				{
-					title:
-						'Provide a short description of the overall campaign',
+					title: 'Provide a short description of the overall campaign',
 					value: mdfRequest.overallCampaignDescription,
 				},
 				{
@@ -71,8 +70,8 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 						'Other - Please describe'
 					)
 						? mdfRequest.liferayBusinessSalesGoalsOther +
-						  '; ' +
-						  mdfRequest.liferayBusinessSalesGoals
+							'; ' +
+							mdfRequest.liferayBusinessSalesGoals
 								?.filter(
 									(item) => item !== 'Other - Please describe'
 								)

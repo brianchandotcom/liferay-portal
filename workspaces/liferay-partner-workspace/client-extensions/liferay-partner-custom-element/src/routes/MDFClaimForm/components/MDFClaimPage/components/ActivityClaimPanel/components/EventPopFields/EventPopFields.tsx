@@ -57,7 +57,7 @@ const EventPopFields = ({
 						activity.proofOfPerformance?.eventInvitations
 							? activity.proofOfPerformance.eventInvitations.concat(
 									liferayFiles as LiferayFile[]
-							  )
+								)
 							: liferayFiles
 					)
 				}
@@ -77,7 +77,7 @@ const EventPopFields = ({
 						activity.proofOfPerformance?.eventPhotos
 							? activity.proofOfPerformance.eventPhotos.concat(
 									liferayFiles as LiferayFile[]
-							  )
+								)
 							: liferayFiles
 					)
 				}
@@ -97,7 +97,7 @@ const EventPopFields = ({
 						activity.proofOfPerformance?.eventCollaterals
 							? activity.proofOfPerformance.eventCollaterals.concat(
 									liferayFiles as LiferayFile[]
-							  )
+								)
 							: liferayFiles
 					)
 				}

@@ -43,7 +43,7 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 		return (
 			sku?.price?.price &&
 			sku.purchasable &&
-			!isTrialSKU((sku as unknown) as SKU)
+			!isTrialSKU(sku as unknown as SKU)
 		);
 	});
 
@@ -79,7 +79,7 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 										isCloudProduct(product)
 											? 'Standard'
 											: skuOption?.skuOptionValueKey ??
-											  sku.sku
+												sku.sku
 									}
 									productId={productId}
 									sku={sku}

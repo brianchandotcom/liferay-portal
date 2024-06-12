@@ -16,9 +16,8 @@ export default async function submitMDFRequestActivityProxyAPI(
 	mdfRequestDTO: MDFRequestDTO,
 	mdfRequest: MDFRequest
 ) {
-	let dtoMDFRequestActivitySFResponse:
-		| MDFRequestActivityDTO
-		| undefined = undefined;
+	let dtoMDFRequestActivitySFResponse: MDFRequestActivityDTO | undefined =
+		undefined;
 
 	if (
 		mdfRequestActivity.externalReferenceCode &&

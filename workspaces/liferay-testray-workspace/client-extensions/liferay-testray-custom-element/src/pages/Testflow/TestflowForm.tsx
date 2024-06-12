@@ -54,9 +54,8 @@ const TestflowForm = () => {
 		form: {onClose, onError, onSubmit, onSuccess},
 	} = useFormActions();
 
-	const [modalType, setModalType] = useState<TestflowAssigUserType>(
-		'select-users'
-	);
+	const [modalType, setModalType] =
+		useState<TestflowAssigUserType>('select-users');
 	const [userIds, setUserIds] = useState<number[]>([]);
 	const {modal} = useFormModal({
 		onSave: setUserIds,

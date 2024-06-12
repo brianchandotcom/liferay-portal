@@ -57,7 +57,7 @@ const Legend = ({currency, currentValue, total, type}: IProps) => {
 								currentValue,
 								currency,
 								'lessPrecision'
-						  )
+							)
 						: currentValue}
 				</span>
 

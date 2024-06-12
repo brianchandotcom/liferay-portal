@@ -85,12 +85,11 @@ const ActivityClaimPanel = ({
 				}
 
 				return accumulator;
-		  }, [])
+			}, [])
 		: undefined;
 
-	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeControlPanelURL().split(
-		'/'
-	)[2];
+	const siteURL =
+		Liferay.ThemeDisplay.getLayoutRelativeControlPanelURL().split('/')[2];
 
 	useBudgetsAmount(
 		activity.budgets,
@@ -250,19 +249,23 @@ const ActivityClaimPanel = ({
 							!isBudgetSelected.includes(activityIndex) &&
 							(isButtonClicked || isEdit) && (
 								<>
-									{(errors.activities[activityIndex] as {
-										budgets?: boolean;
-									})?.budgets && (
+									{(
+										errors.activities[activityIndex] as {
+											budgets?: boolean;
+										}
+									)?.budgets && (
 										<ClayAlert
 											displayType="danger"
 											hideCloseIcon={true}
 										>
 											{
-												(errors?.activities[
-													activityIndex
-												] as {
-													budgets?: string;
-												})?.budgets
+												(
+													errors?.activities[
+														activityIndex
+													] as {
+														budgets?: string;
+													}
+												)?.budgets
 											}
 										</ClayAlert>
 									)}

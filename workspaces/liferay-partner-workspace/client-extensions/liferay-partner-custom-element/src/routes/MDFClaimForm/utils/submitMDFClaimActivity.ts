@@ -17,12 +17,12 @@ const submitMDFClaimActivity = async (
 				mdfClaimActivity,
 				dtoMDFClaimId,
 				companyId
-		  )
+			)
 		: await createMDFClaimActivity(
 				mdfClaimActivity,
 				dtoMDFClaimId,
 				companyId
-		  );
+			);
 
 	return dtoMDFClaimActivity;
 };

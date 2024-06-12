@@ -41,7 +41,7 @@ const colourStyles: StylesConfig<any, true> = {
 			'borderRadius': '8px',
 			'boxShadow': 'none',
 			'transition': 'all ease-in-out .3s',
-		} as any),
+		}) as any,
 
 	multiValue: (styles) =>
 		({
@@ -49,7 +49,7 @@ const colourStyles: StylesConfig<any, true> = {
 			backgroundColor: '#f0f5ff',
 			borderRadius: '4px',
 			color: '#1C3667',
-		} as any),
+		}) as any,
 	multiValueRemove: (styles) =>
 		({
 			...styles,
@@ -58,7 +58,7 @@ const colourStyles: StylesConfig<any, true> = {
 				color: 'white',
 			},
 			'color': '#1C3667',
-		} as any),
+		}) as any,
 };
 
 export function MultiSelect<T>({

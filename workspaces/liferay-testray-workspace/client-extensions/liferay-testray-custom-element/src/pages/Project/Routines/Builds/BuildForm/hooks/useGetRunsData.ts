@@ -41,9 +41,10 @@ const useGetRunsData = (
 		}
 	);
 
-	const categoryItems = useMemo(() => categories?.items || [], [
-		categories?.items,
-	]);
+	const categoryItems = useMemo(
+		() => categories?.items || [],
+		[categories?.items]
+	);
 
 	useEffect(() => {
 		if (categoryItems.length) {

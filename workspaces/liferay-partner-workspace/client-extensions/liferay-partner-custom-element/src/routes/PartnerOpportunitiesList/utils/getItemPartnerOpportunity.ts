@@ -20,17 +20,16 @@ export default function getItemPartnerOpportunity(
 			? getDateCustomFormat(
 					item.closeDate,
 					customFormatDateOptions.SHORT_MONTH
-			  )
+				)
 			: '- ',
 		[PartnerOpportunitiesColumnKey.CREATED_DATE]: item.dateCreated
 			? getDateCustomFormat(
 					item.dateCreated,
 					customFormatDateOptions.SHORT_MONTH
-			  )
+				)
 			: '- ',
-		[PartnerOpportunitiesColumnKey.OPPORTUNITY_ACCOUNT_NAME]: item.accountName
-			? item.accountName
-			: ' - ',
+		[PartnerOpportunitiesColumnKey.OPPORTUNITY_ACCOUNT_NAME]:
+			item.accountName ? item.accountName : ' - ',
 		[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency
 			? item.currency
 			: '- ',
@@ -46,9 +45,8 @@ export default function getItemPartnerOpportunity(
 		[PartnerOpportunitiesColumnKey.OPPORTUNITY]: item.opportunity
 			? item.opportunity
 			: '',
-		[PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
-			? item.partnerAccountName
-			: ' - ',
+		[PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME]:
+			item.partnerAccountName ? item.partnerAccountName : ' - ',
 		[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.partnerEmail
 			? item.partnerEmail
 			: ' - ',
@@ -60,7 +58,7 @@ export default function getItemPartnerOpportunity(
 			item.subscriptionArr && item.currency
 				? getIntlNumberFormatString(item.currency).format(
 						item.subscriptionArr
-				  )
+					)
 				: '- ',
 		[PartnerOpportunitiesColumnKey.SUBSCRIPTION_TERM]: item.subscriptionTerm
 			? item.subscriptionTerm

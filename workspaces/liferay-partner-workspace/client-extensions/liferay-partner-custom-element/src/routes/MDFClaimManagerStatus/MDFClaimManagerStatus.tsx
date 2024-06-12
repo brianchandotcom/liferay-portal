@@ -27,20 +27,18 @@ import getDropdownOptions from './util/getDropdownOptions';
 import patchClaimStatus from './util/patchClaimStatus';
 
 const MDFClaimManagerStatus = () => {
-	const [displayModalStatus, setDisplayModalStatus] = useState<
-		LiferayPicklist
-	>();
+	const [displayModalStatus, setDisplayModalStatus] =
+		useState<LiferayPicklist>();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);
 
 	const mdfClaimId = useGetObjectIdBySlash();
-	const {data: mdfClaim, isValidating: isValidatingMdfRequest} = useGet<
-		MDFClaimDTO
-	>(
-		mdfClaimId &&
-			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_CLAIM_DXP}/${mdfClaimId}`
-	);
+	const {data: mdfClaim, isValidating: isValidatingMdfRequest} =
+		useGet<MDFClaimDTO>(
+			mdfClaimId &&
+				`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_CLAIM_DXP}/${mdfClaimId}`
+		);
 	const [patchedStatus, setPatchedStatus] = useState<LiferayPicklist>();
 
 	const mdfClaimStatus = patchedStatus

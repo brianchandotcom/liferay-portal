@@ -46,9 +46,9 @@ const priorities = [...new Array(5)].map((_, index) => ({
 	value: index + 1,
 }));
 
-const descriptionTypes = Object.values(
-	DescriptionType
-).map((descriptionType) => ({label: descriptionType, value: descriptionType}));
+const descriptionTypes = Object.values(DescriptionType).map(
+	(descriptionType) => ({label: descriptionType, value: descriptionType})
+);
 
 const CaseForm = () => {
 	const {
@@ -109,11 +109,11 @@ const CaseForm = () => {
 					caseTypeId: testrayCase.caseType?.id,
 					componentId: testrayCase.component?.id,
 					priority: testrayCase.priority,
-			  }
+				}
 			: {
 					addAnother: false,
 					estimatedDuration: 0,
-			  },
+				},
 		resolver: yupResolver(yupSchema.case),
 	});
 

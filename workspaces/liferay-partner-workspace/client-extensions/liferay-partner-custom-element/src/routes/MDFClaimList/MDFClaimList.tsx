@@ -54,9 +54,8 @@ const MDFClaimList = () => {
 
 	const {companiesEntries} = useDynamicFieldEntries();
 
-	const [claimTableSort, setClaimTableSort] = useState<string>(
-		'dateCreated:desc'
-	);
+	const [claimTableSort, setClaimTableSort] =
+		useState<string>('dateCreated:desc');
 
 	const debouncedClaimTableSort = useDebounce(claimTableSort, 1000);
 
@@ -262,9 +261,9 @@ const MDFClaimList = () => {
 							{
 								component: (
 									<CheckboxFilter
-										availableItems={companiesEntries?.map<
-											string
-										>((company) => company.label as string)}
+										availableItems={companiesEntries?.map<string>(
+											(company) => company.label as string
+										)}
 										clearCheckboxes={
 											!filters.partner.value?.length
 										}

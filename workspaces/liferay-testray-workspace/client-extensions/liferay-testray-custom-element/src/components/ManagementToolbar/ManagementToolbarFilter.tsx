@@ -69,9 +69,10 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		return () => clearTimeout(timeout);
 	}, [isVisible]);
 
-	const fields = useMemo(() => filterSchema?.fields as RendererFields[], [
-		filterSchema?.fields,
-	]);
+	const fields = useMemo(
+		() => filterSchema?.fields as RendererFields[],
+		[filterSchema?.fields]
+	);
 
 	const initialFilters = useMemo(() => {
 		const initialValues: {[key: string]: string} = {};

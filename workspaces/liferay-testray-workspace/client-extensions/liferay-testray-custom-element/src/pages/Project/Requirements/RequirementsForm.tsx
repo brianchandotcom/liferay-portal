@@ -50,10 +50,8 @@ const RequirementsForm = () => {
 	} = useFormActions();
 	useHeader({headerActions: {actions: []}, tabs: [], timeout: 150});
 	const {projectId, requirementId} = useParams();
-	const {
-		mutateTestrayRequirement,
-		testrayRequirement,
-	}: OutletContext = useOutletContext();
+	const {mutateTestrayRequirement, testrayRequirement}: OutletContext =
+		useOutletContext();
 	const {
 		formState: {errors, isSubmitting},
 		handleSubmit,

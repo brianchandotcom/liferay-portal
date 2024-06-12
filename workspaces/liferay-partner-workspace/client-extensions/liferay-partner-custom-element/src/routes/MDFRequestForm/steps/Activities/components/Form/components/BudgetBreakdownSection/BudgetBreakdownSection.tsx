@@ -47,17 +47,15 @@ const BudgetBreakdownSection = ({
 	isEdit,
 	setFieldValue,
 }: IProps) => {
-	const {
-		onSelected: onExpenseSelected,
-		options: expensesOptions,
-	} = getPicklistOptions<number>(
-		expenseEntries,
-		(expenseSelected, currentBudgetIndex) =>
-			setFieldValue(
-				`activities[${currentActivityIndex}].budgets[${currentBudgetIndex}].expense`,
-				expenseSelected
-			)
-	);
+	const {onSelected: onExpenseSelected, options: expensesOptions} =
+		getPicklistOptions<number>(
+			expenseEntries,
+			(expenseSelected, currentBudgetIndex) =>
+				setFieldValue(
+					`activities[${currentActivityIndex}].budgets[${currentBudgetIndex}].expense`,
+					expenseSelected
+				)
+		);
 
 	const budgetsAmount = useBudgetsAmount(
 		budgets,
@@ -102,9 +100,7 @@ const BudgetBreakdownSection = ({
 										label="Expense"
 										name={`activities[${currentActivityIndex}].budgets[${index}].expense`}
 										onChange={(
-											event: React.ChangeEvent<
-												HTMLInputElement
-											>
+											event: React.ChangeEvent<HTMLInputElement>
 										) => onExpenseSelected(event, index)}
 										options={expensesOptions}
 										required

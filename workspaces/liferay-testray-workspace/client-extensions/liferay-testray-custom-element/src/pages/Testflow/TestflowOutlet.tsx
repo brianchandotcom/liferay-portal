@@ -69,9 +69,12 @@ const TestflowOutlet = () => {
 
 	const taskId = params.taskId as string;
 
-	const {data: testrayTask, error, loading, mutate: mutateTask} = useFetch<
-		TestrayTask
-	>(testrayTaskImpl.getResource(taskId), {
+	const {
+		data: testrayTask,
+		error,
+		loading,
+		mutate: mutateTask,
+	} = useFetch<TestrayTask>(testrayTaskImpl.getResource(taskId), {
 		transformData: (response) => testrayTaskImpl.transformData(response),
 	});
 	const projectId = String(testrayTask?.build?.project?.id);

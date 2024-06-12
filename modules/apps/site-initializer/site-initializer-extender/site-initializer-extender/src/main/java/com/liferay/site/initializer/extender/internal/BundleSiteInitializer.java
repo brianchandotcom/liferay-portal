@@ -4890,6 +4890,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private List<R> _dependsOn(R... rArray) {
+		return ListUtil.fromArray(rArray);
+	}
+
 	private long[] _getAssetCategoryIds(
 		long groupId, String[] externalReferenceCodes) {
 
@@ -5241,29 +5245,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext, stringUtilReplaceValues);
 
 		Map<R, List<R>> unsafeRunnableMap = HashMapBuilder.<R, List<R>>put(
-			addAccounts, ListUtil.fromArray(addOrUpdateExpandoColumns)
+			addAccounts, _dependsOn(addOrUpdateExpandoColumns)
 		).put(
 			addAccountsOrganizations,
-			ListUtil.fromArray(addAccounts, addOrUpdateOrganizations)
+			_dependsOn(addAccounts, addOrUpdateOrganizations)
 		).put(
-			addAcountGroupAssignments,
-			ListUtil.fromArray(addAcountGroups, addAccounts)
+			addAcountGroupAssignments, _dependsOn(addAcountGroups, addAccounts)
 		).put(
-			addAcountGroups, new ArrayList<>()
+			addAcountGroups, _dependsOn()
 		).put(
 			addAssetListEntries,
-			ListUtil.fromArray(
+			_dependsOn(
 				addObjectDefinitions, addOrUpdateDDMStructures,
 				publishObjectDefinitions)
 		).put(
 			addCPDefinitions,
-			ListUtil.fromArray(
+			_dependsOn(
 				addObjectDefinitions, addOrUpdateDocuments,
 				addOrUpdateExpandoColumns, addOrUpdateLayouts,
 				addOrUpdateObjectEntries, publishObjectDefinitions)
 		).put(
 			addExpandoValues,
-			ListUtil.fromArray(
+			_dependsOn(
 				addAccounts, addCPDefinitions, addOrUpdateBlogPostings,
 				addOrUpdateDocuments, addOrUpdateExpandoColumns,
 				addOrUpdateJournalArticles, addOrUpdateKnowledgeBaseArticles,
@@ -5272,12 +5275,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateSegmentsEntries, addOrUpdateUserGroups,
 				addUserAccounts)
 		).put(
-			addFragmentEntries, ListUtil.fromArray(addOrUpdateDocuments)
+			addFragmentEntries, _dependsOn(addOrUpdateDocuments)
 		).put(
-			addKeywords, ListUtil.fromArray(addOrUpdateDepotEntries)
+			addKeywords, _dependsOn(addOrUpdateDepotEntries)
 		).put(
 			addLayoutPageTemplates,
-			ListUtil.fromArray(
+			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
 				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
@@ -5287,7 +5290,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateTaxonomyVocabularies)
 		).put(
 			addLayoutUtilityPageEntries,
-			ListUtil.fromArray(
+			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
 				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
@@ -5297,52 +5300,50 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateTaxonomyVocabularies)
 		).put(
 			addObjectDefinitions,
-			ListUtil.fromArray(addOrUpdateListTypeDefinitions, addUserAccounts)
+			_dependsOn(addOrUpdateListTypeDefinitions, addUserAccounts)
 		).put(
 			addOrUpdateAccountEntryRestrictions,
-			ListUtil.fromArray(
+			_dependsOn(
 				addObjectDefinitions, addOrUpdateObjectFields,
 				addOrUpdateObjectRelationships, publishObjectDefinitions)
 		).put(
 			addOrUpdateAssetLinkEntries,
-			ListUtil.fromArray(
-				addOrUpdateBlogPostings, addOrUpdateDDMStructures)
+			_dependsOn(addOrUpdateBlogPostings, addOrUpdateDDMStructures)
 		).put(
 			addOrUpdateBlogPostings,
-			ListUtil.fromArray(
+			_dependsOn(
 				addKeywords, addOrUpdateDocuments, addOrUpdateExpandoColumns,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateClientExtensionEntries,
-			ListUtil.fromArray(addOrUpdateDocuments)
+			addOrUpdateClientExtensionEntries, _dependsOn(addOrUpdateDocuments)
 		).put(
-			addOrUpdateDataDefinitions, new ArrayList<>()
+			addOrUpdateDataDefinitions, _dependsOn()
 		).put(
-			addOrUpdateDDMStructures, new ArrayList<>()
+			addOrUpdateDDMStructures, _dependsOn()
 		).put(
 			addOrUpdateDDMTemplate,
-			ListUtil.fromArray(
+			_dependsOn(
 				addObjectDefinitions, addOrUpdateDDMStructures,
 				publishObjectDefinitions)
 		).put(
-			addOrUpdateDepotEntries, new ArrayList<>()
+			addOrUpdateDepotEntries, _dependsOn()
 		).put(
 			addOrUpdateDocuments,
-			ListUtil.fromArray(
+			_dependsOn(
 				addOrUpdateExpandoColumns, addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateExpandoColumns, new ArrayList<>()
+			addOrUpdateExpandoColumns, _dependsOn()
 		).put(
 			addOrUpdateJournalArticles,
-			ListUtil.fromArray(addOrUpdateDDMStructures, addOrUpdateDDMTemplate)
+			_dependsOn(addOrUpdateDDMStructures, addOrUpdateDDMTemplate)
 		).put(
 			addOrUpdateKnowledgeBaseArticles,
-			ListUtil.fromArray(addOrUpdateExpandoColumns)
+			_dependsOn(addOrUpdateExpandoColumns)
 		).put(
-			addOrUpdateLayouts, ListUtil.fromArray(addOrUpdateRoles)
+			addOrUpdateLayouts, _dependsOn(addOrUpdateRoles)
 		).put(
 			addOrUpdateLayoutsContent,
-			ListUtil.fromArray(
+			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
@@ -5352,35 +5353,32 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateListTypeDefinitions, new ArrayList<>()
+			addOrUpdateListTypeDefinitions, _dependsOn()
 		).put(
 			addOrUpdateNotificationTemplates,
-			ListUtil.fromArray(addObjectDefinitions, publishObjectDefinitions)
+			_dependsOn(addObjectDefinitions, publishObjectDefinitions)
 		).put(
 			addOrUpdateObjectActions,
-			ListUtil.fromArray(
+			_dependsOn(
 				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
 				addOrUpdateObjectFields, addOrUpdateObjectRelationships,
 				publishObjectDefinitions)
 		).put(
 			addOrUpdateObjectEntries,
-			ListUtil.fromArray(
+			_dependsOn(
 				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
 				addOrUpdateDocuments, addOrUpdateObjectFields,
 				addOrUpdateObjectRelationships, publishObjectDefinitions)
 		).put(
 			addOrUpdateObjectFields,
-			ListUtil.fromArray(
-				addObjectDefinitions, addOrUpdateObjectRelationships)
+			_dependsOn(addObjectDefinitions, addOrUpdateObjectRelationships)
 		).put(
-			addOrUpdateObjectRelationships,
-			ListUtil.fromArray(addObjectDefinitions)
+			addOrUpdateObjectRelationships, _dependsOn(addObjectDefinitions)
 		).put(
-			addOrUpdateOrganizations,
-			ListUtil.fromArray(addOrUpdateExpandoColumns)
+			addOrUpdateOrganizations, _dependsOn(addOrUpdateExpandoColumns)
 		).put(
 			addOrUpdateResourcePermissions,
-			ListUtil.fromArray(
+			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
 				addOrUpdateBlogPostings, addOrUpdateClientExtensionEntries,
@@ -5390,33 +5388,32 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateRoles,
 				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateRoles, new ArrayList<>()
+			addOrUpdateRoles, _dependsOn()
 		).put(
-			addOrUpdateSAPEntries, new ArrayList<>()
+			addOrUpdateSAPEntries, _dependsOn()
 		).put(
 			addOrUpdateSegmentsEntries,
-			ListUtil.fromArray(
+			_dependsOn(
 				addKeywords, addOrUpdateExpandoColumns,
 				addOrUpdateOrganizations, addOrUpdateRoles,
 				addOrUpdateTaxonomyVocabularies, addUserAccounts)
 		).put(
-			addOrUpdateSXPBlueprint, new ArrayList<>()
+			addOrUpdateSXPBlueprint, _dependsOn()
 		).put(
 			addOrUpdateTaxonomyVocabularies,
-			ListUtil.fromArray(addOrUpdateDDMStructures)
+			_dependsOn(addOrUpdateDDMStructures)
 		).put(
-			addOrUpdateUserGroups, new ArrayList<>()
+			addOrUpdateUserGroups, _dependsOn()
 		).put(
-			addPortletSettings,
-			ListUtil.fromArray(addOrUpdateTaxonomyVocabularies)
+			addPortletSettings, _dependsOn(addOrUpdateTaxonomyVocabularies)
 		).put(
 			addRolesAssignments,
-			ListUtil.fromArray(
+			_dependsOn(
 				addOrUpdateOrganizations, addOrUpdateRoles,
 				addOrUpdateUserGroups, addUserAccounts)
 		).put(
 			addSegmentsExperiences,
-			ListUtil.fromArray(
+			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
@@ -5426,30 +5423,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateSegmentsEntries,
 				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
 		).put(
-			addSiteConfiguration, new ArrayList<>()
+			addSiteConfiguration, _dependsOn()
 		).put(
-			addSiteSettings, new ArrayList<>()
+			addSiteSettings, _dependsOn()
 		).put(
-			addStyleBookEntries, new ArrayList<>()
+			addStyleBookEntries, _dependsOn()
 		).put(
 			addUserAccounts,
-			ListUtil.fromArray(
+			_dependsOn(
 				addAccounts, addKeywords, addOrUpdateDocuments,
 				addOrUpdateExpandoColumns, addOrUpdateOrganizations,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addUserRoles, ListUtil.fromArray(addOrUpdateRoles, addUserAccounts)
+			addUserRoles, _dependsOn(addOrUpdateRoles, addUserAccounts)
 		).put(
-			addWorkflowDefinitions, ListUtil.fromArray(addOrUpdateRoles)
+			addWorkflowDefinitions, _dependsOn(addOrUpdateRoles)
 		).put(
 			publishObjectDefinitions,
-			ListUtil.fromArray(
+			_dependsOn(
 				addObjectDefinitions, addOrUpdateObjectFields,
 				addOrUpdateObjectRelationships)
 		).put(
-			setPLOEntries, new ArrayList<>()
+			setPLOEntries, _dependsOn()
 		).put(
-			updateLayoutSets, ListUtil.fromArray(addOrUpdateLayouts)
+			updateLayoutSets, _dependsOn(addOrUpdateLayouts)
 		).build();
 
 		List<R> visitUnsafeRunnables = new ArrayList<>();

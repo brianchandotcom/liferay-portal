@@ -8,8 +8,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import {SRC_PATH, SRC_TSCONFIG_PATH, getRootDir} from '../util/constants.mjs';
-import sortObjectKeys from '../util/sortObjectKeys.mjs';
-import stringifyJson from '../util/stringifyJson.mjs';
+import objectSF from '../util/objectSF.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 
 const GENERATED = '@generated';
@@ -96,8 +95,6 @@ export default async function writeProjectTsconfig(
 
 	json[GENERATED] = hash(json);
 
-	sortObjectKeys(json);
-
 	const contents = await fs.readFile(
 		path.join(srcPath, 'tsconfig.json'),
 		'utf8'
@@ -108,7 +105,7 @@ export default async function writeProjectTsconfig(
 	if (json[GENERATED] !== previousConfig[GENERATED]) {
 		const configPath = path.join(srcPath, 'tsconfig.json');
 
-		await fs.writeFile(configPath, stringifyJson(json), 'utf-8');
+		await fs.writeFile(configPath, objectSF(json), 'utf-8');
 
 		console.log(`Generated new tsconfig.json at ${configPath}`);
 	}

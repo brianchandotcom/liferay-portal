@@ -6,7 +6,7 @@
 /**
  * Stringifies config as JSON in a manner pleasing to the Java SourceFormatter.
  */
-export default function stringifyJson(config, level = 0) {
+export default function objectSF(config, level = 0) {
 	const indent = '\t'.repeat(level);
 
 	if (config === undefined) {
@@ -18,9 +18,7 @@ export default function stringifyJson(config, level = 0) {
 				return `${indent}\tnull`;
 			}
 			else {
-				return (
-					`${indent}\t` + stringifyJson(item, level + 1).trimStart()
-				);
+				return `${indent}\t` + objectSF(item, level + 1).trimStart();
 			}
 		});
 
@@ -39,7 +37,7 @@ export default function stringifyJson(config, level = 0) {
 				else {
 					return (
 						`${indent}\t${JSON.stringify(key)}: ` +
-						stringifyJson(value, level + 1).trimStart()
+						objectSF(value, level + 1).trimStart()
 					);
 				}
 			})

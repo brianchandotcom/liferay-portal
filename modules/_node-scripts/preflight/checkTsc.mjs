@@ -21,7 +21,5 @@ export async function checkTsc() {
 	console.log('📜 Validating tsconfig files...');
 	await generateTscConfig();
 
-	await runTscChecks(commitHash);
-
-	return [];
+	return await runTscChecks(commitHash);
 }

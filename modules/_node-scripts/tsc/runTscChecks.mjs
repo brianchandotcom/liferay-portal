@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {$} from 'execa';
 import os from 'os';
 import path from 'path';
 import resolve from 'resolve';
@@ -13,13 +14,14 @@ import {
 	getRootDir,
 } from '../util/constants.mjs';
 import fileExists from '../util/fileExists.mjs';
-import forkModule from '../util/forkModule.mjs';
 import getFileProjectDir from '../util/getFileProjectDir.mjs';
 import getGitModifiedFiles from '../util/getGitModifiedFiles.mjs';
 
 export default async function runTscChecks(modifiedSince) {
 	const cwd = path.resolve('.');
 	const rootDir = await getRootDir();
+
+	const results = [];
 
 	if (cwd === rootDir) {
 		const cpuCount = os.cpus().length;
@@ -62,7 +64,7 @@ export default async function runTscChecks(modifiedSince) {
 		}
 
 		for (const projectGroup of projectGroups) {
-			await Promise.all(
+			const all = await Promise.all(
 				projectGroup.map((projectDir) => {
 					console.log(
 						`🕵️ Checking ${path.relative(rootDir, projectDir)}`
@@ -71,6 +73,8 @@ export default async function runTscChecks(modifiedSince) {
 					return runTsc(projectDir);
 				})
 			);
+
+			results.push(...all);
 		}
 	}
 	else {
@@ -83,8 +87,10 @@ export default async function runTscChecks(modifiedSince) {
 			process.exit(2);
 		}
 
-		await runTsc(cwd);
+		results.push(await runTsc(cwd));
 	}
+
+	return results.filter(Boolean);
 }
 
 async function getGitModifiedProjectDirs(commit) {
@@ -111,22 +117,25 @@ async function getGitModifiedProjectDirs(commit) {
 async function runTsc(cwd) {
 	const tscPath = resolve.sync('typescript/bin/tsc', {basedir: '.'});
 
-	await forkModule(
-		tscPath,
-		[
-			'-b',
-			path.join(
-				'src',
-				'main',
-				'resources',
-				'META-INF',
-				'resources',
-				'tsconfig.json'
-			),
-		],
-		{
-			cwd,
-			stdio: 'inherit',
-		}
+	const configPath = path.join(
+		'src',
+		'main',
+		'resources',
+		'META-INF',
+		'resources',
+		'tsconfig.json'
 	);
+
+	const res = await $({
+		all: true,
+		cwd,
+		reject: false,
+		stdout: ['inherit', 'pipe'],
+	})`${tscPath} -b ${configPath}`;
+
+	const {failed, stdout} = res;
+
+	if (failed) {
+		return stdout;
+	}
 }

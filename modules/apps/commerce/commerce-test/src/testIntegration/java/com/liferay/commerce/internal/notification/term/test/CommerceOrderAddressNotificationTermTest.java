@@ -60,19 +60,16 @@ public class CommerceOrderAddressNotificationTermTest {
 			TestPropsValues.getGroupId(), commerceCurrency.getCode());
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
-			commerceCurrency);
+			TestPropsValues.getUserId(), commerceChannel.getGroupId(), commerceCurrency);
 
 		CommerceAddress billingCommerceAddress =
-			CommerceTestUtil.addUserCommerceAddress(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+			CommerceTestUtil.addUserCommerceAddress(TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		_commerceOrder.setBillingAddressId(
 			billingCommerceAddress.getCommerceAddressId());
 
 		CommerceAddress shippingCommerceAddress =
-			CommerceTestUtil.addUserCommerceAddress(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+			CommerceTestUtil.addUserCommerceAddress(TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		_commerceOrder.setShippingAddressId(
 			shippingCommerceAddress.getCommerceAddressId());

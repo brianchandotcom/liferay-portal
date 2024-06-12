@@ -128,6 +128,7 @@ const Table = <T extends BasicRow>({
 			PARTNER_ACCOUNT_NAME: 'partnerAccountName',
 			PARTNER_NAME: 'partnerFirstName',
 			REQUEST_STATUS: 'mdfRequestStatus',
+			STAGE: 'stage',
 			START_ACT_PERIOD: 'minDateActivity',
 			TYPE: 'partial',
 		};

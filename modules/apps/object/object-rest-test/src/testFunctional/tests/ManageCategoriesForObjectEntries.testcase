@@ -290,7 +290,6 @@ definition {
 
 	@description = "LPS-186852. The category to set is not being validated if it belongs to the same site or a parent one"
 	@disable-webdriver = "true"
-	@ignore = "true"
 	@priority = 3
 	test CanUpdateSiteScopedObjectEntryWithTaxonomyCategoryOfDifferentSiteScope {
 		property portal.acceptance = "true";

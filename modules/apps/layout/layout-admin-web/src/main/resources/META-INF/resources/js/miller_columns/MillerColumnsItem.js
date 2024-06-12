@@ -443,21 +443,14 @@ const MillerColumnsItem = ({
 			<ClayLayout.ContentCol className="c-pl-1" expand>
 				<div
 					className={classNames(
-						'list-group-title text-truncate-inline',
-						{
-							'align-items-center':
-								Liferay.FeatureFlags['LPS-196847'],
-						}
+						'align-items-center list-group-title text-truncate-inline'
 					)}
 					data-qa-id="layoutHref"
 				>
 					{viewUrl ? (
 						<ClayLink
 							aria-label={(() => {
-								if (
-									Liferay.FeatureFlags['LPS-196847'] &&
-									!hasGuestViewPermission
-								) {
+								if (!hasGuestViewPermission) {
 									return `${title}. ${Liferay.Language.get(
 										'restricted-page'
 									)}`;
@@ -482,16 +475,13 @@ const MillerColumnsItem = ({
 						<span className="text-truncate">{title}</span>
 					)}
 
-					{Liferay.FeatureFlags['LPS-196847'] &&
-						!hasGuestViewPermission && (
-							<ClayIcon
-								className="c-ml-2 c-mt-0 lfr-portal-tooltip miller-columns-item--restricted__icon text-4 text-secondary"
-								data-title={Liferay.Language.get(
-									'restricted-page'
-								)}
-								symbol="password-policies"
-							/>
-						)}
+					{!hasGuestViewPermission && (
+						<ClayIcon
+							className="c-ml-2 c-mt-0 lfr-portal-tooltip miller-columns-item--restricted__icon text-4 text-secondary"
+							data-title={Liferay.Language.get('restricted-page')}
+							symbol="password-policies"
+						/>
+					)}
 
 					{Liferay.FeatureFlags['LPS-174417'] &&
 					hasDuplicatedFriendlyURL ? (

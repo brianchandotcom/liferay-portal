@@ -2055,8 +2055,7 @@ public class LayoutsAdminDisplayContext {
 			availableActions.add("exportTranslation");
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
-			LayoutPermissionUtil.contains(
+		if (LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.PERMISSIONS)) {
 

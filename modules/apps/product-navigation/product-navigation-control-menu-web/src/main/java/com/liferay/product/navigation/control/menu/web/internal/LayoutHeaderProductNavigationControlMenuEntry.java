@@ -12,7 +12,6 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -113,9 +112,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		try {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
-				!_hasGuestViewPermission(layout) && !layout.isPrivateLayout()) {
-
+			if (!_hasGuestViewPermission(layout) && !layout.isPrivateLayout()) {
 				sb.append("<span class=\"sr-only\">");
 				sb.append(_language.get(httpServletRequest, "restricted-page"));
 				sb.append("</span>");
@@ -143,9 +140,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 				layout = _layoutLocalService.fetchLayout(layout.getClassPK());
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
-				!_hasGuestViewPermission(layout) && !layout.isPrivateLayout()) {
-
+			if (!_hasGuestViewPermission(layout) && !layout.isPrivateLayout()) {
 				sb.append("<span class=\"align-items-center c-ml-3 d-flex ");
 				sb.append("lfr-portal-tooltip text-white\" title=\"");
 				sb.append(_language.get(httpServletRequest, "restricted-page"));

@@ -13,7 +13,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -610,9 +609,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			ServiceContextFactory.getInstance(actionRequest),
 			themeDisplay.getUserId());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-196847") &&
-			(resourcePrimKeys.length > 1)) {
-
+		if (resourcePrimKeys.length > 1) {
 			SessionMessages.add(
 				actionRequest, "requestProcessed",
 				_language.format(

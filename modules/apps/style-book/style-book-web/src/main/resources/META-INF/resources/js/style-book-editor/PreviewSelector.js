@@ -213,23 +213,22 @@ export function LayoutSelector({layoutType}) {
 								/>
 							)}
 
-							{Liferay.FeatureFlags['LPS-196847'] &&
-								!layout.hasGuestViewPermission && (
-									<span
-										aria-label={Liferay.Language.get(
-											'restricted-page'
-										)}
-										className="c-ml-2 lfr-portal-tooltip"
-										title={Liferay.Language.get(
-											'restricted-page'
-										)}
-									>
-										<ClayIcon
-											className="c-mt-0 text-4 text-dark"
-											symbol="password-policies"
-										/>
-									</span>
-								)}
+							{!layout.hasGuestViewPermission && (
+								<span
+									aria-label={Liferay.Language.get(
+										'restricted-page'
+									)}
+									className="c-ml-2 lfr-portal-tooltip"
+									title={Liferay.Language.get(
+										'restricted-page'
+									)}
+								>
+									<ClayIcon
+										className="c-mt-0 text-4 text-dark"
+										symbol="password-policies"
+									/>
+								</span>
+							)}
 						</ClayDropDown.Item>
 					))}
 				</ClayDropDown.Group>

@@ -52,6 +52,21 @@ public class SearchResultSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (searchResult.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(searchResult.getDateCreated()));
+
+			sb.append("\"");
+		}
+
 		if (searchResult.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -158,6 +173,15 @@ public class SearchResultSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (searchResult.getDateCreated() == null) {
+			map.put("dateCreated", null);
+		}
+		else {
+			map.put(
+				"dateCreated",
+				liferayToJSONDateFormat.format(searchResult.getDateCreated()));
+		}
+
 		if (searchResult.getDateModified() == null) {
 			map.put("dateModified", null);
 		}
@@ -221,7 +245,10 @@ public class SearchResultSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "dateModified")) {
+			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -248,7 +275,13 @@ public class SearchResultSerDes {
 			SearchResult searchResult, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateModified")) {
+			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					searchResult.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
 					searchResult.setDateModified(
 						toDate((String)jsonParserFieldValue));

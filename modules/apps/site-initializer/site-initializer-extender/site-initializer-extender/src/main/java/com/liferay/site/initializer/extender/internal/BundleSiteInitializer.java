@@ -5244,7 +5244,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		R updateLayoutSets = () -> _updateLayoutSets(
 			serviceContext, stringUtilReplaceValues);
 
-		Map<R, List<R>> unsafeRunnableMap = HashMapBuilder.<R, List<R>>put(
+		Map<R, List<R>> rMap = HashMapBuilder.<R, List<R>>put(
 			addAccounts, _dependsOn(addOrUpdateExpandoColumns)
 		).put(
 			addAccountsOrganizations,
@@ -5449,26 +5449,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 			updateLayoutSets, _dependsOn(addOrUpdateLayouts)
 		).build();
 
-		List<R> visitUnsafeRunnables = new ArrayList<>();
+		List<R> rList = new ArrayList<>();
 
-		while (visitUnsafeRunnables.size() != unsafeRunnableMap.size()) {
-			int prevent = visitUnsafeRunnables.size();
+		while (rList.size() != rMap.size()) {
+			int size = rList.size();
 
-			for (Map.Entry<R, List<R>> entry : unsafeRunnableMap.entrySet()) {
-				R key = entry.getKey();
+			for (Map.Entry<R, List<R>> entry : rMap.entrySet()) {
+				R r = entry.getKey();
 
-				if (visitUnsafeRunnables.contains(key) ||
-					!visitUnsafeRunnables.containsAll(entry.getValue())) {
-
+				if (rList.contains(r) || !rList.containsAll(entry.getValue())) {
 					continue;
 				}
 
-				key.run();
+				r.run();
 
-				visitUnsafeRunnables.add(key);
+				rList.add(r);
 			}
 
-			if (prevent == visitUnsafeRunnables.size()) {
+			if (size == rList.size()) {
 				throw new InitializationException("Circular dependency found");
 			}
 		}

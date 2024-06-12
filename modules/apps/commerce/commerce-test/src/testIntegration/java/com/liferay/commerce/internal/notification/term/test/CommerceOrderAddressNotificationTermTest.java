@@ -65,11 +65,11 @@ public class CommerceOrderAddressNotificationTermTest {
 		CommerceAddress billingCommerceAddress =
 			CommerceTestUtil.addUserCommerceAddress(TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
-		CommerceAddress shippingCommerceAddress =
-			CommerceTestUtil.addUserCommerceAddress(TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
 		_commerceOrder.setBillingAddressId(
 			billingCommerceAddress.getCommerceAddressId());
+
+		CommerceAddress shippingCommerceAddress =
+			CommerceTestUtil.addUserCommerceAddress(TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		_commerceOrder.setShippingAddressId(
 			shippingCommerceAddress.getCommerceAddressId());

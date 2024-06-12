@@ -12,10 +12,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Mariano Álvaro Sáiz
  */
-@ExtendedObjectClassDefinition(
-	category = "infrastructure",
-	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
-)
+@ExtendedObjectClassDefinition(category = "upgrades")
 @Meta.OCD(
 	id = "com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration",
 	localization = "content/Language",
@@ -23,10 +20,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DBSchemaDefinitionExporterConfiguration {
 
-	@Meta.AD(name = "database-type")
+	@Meta.AD(name = "database-type", optionValues = {"mysql", "postgresql"})
 	public String databaseType();
 
-	@Meta.AD(name = "path", optionValues = {"mysql", "postgresql"})
+	@Meta.AD(name = "path")
 	public String path();
 
 }

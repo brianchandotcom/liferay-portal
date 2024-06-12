@@ -999,6 +999,16 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
+				String label = (String)properties.get("label");
+
+				if (label.equals(StringPool.BLANK)) {
+					Map<String, String> labelI18n =
+						(Map<String, String>)properties.get("label_i18n");
+
+					label = labelI18n.get(
+						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+				}
+
 				if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
 					return JSONUtil.put(
 						"active", properties.get("default")
@@ -1009,7 +1019,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					).put(
 						"key", properties.get("fieldName")
 					).put(
-						"label", properties.get("label")
+						"label", label
 					);
 				}
 

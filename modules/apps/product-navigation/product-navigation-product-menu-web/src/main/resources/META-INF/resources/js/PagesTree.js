@@ -229,10 +229,7 @@ function TreeItem({
 					{item.regularURL ? (
 						<a
 							aria-label={(() => {
-								if (
-									Liferay.FeatureFlags['LPS-196847'] &&
-									!item.hasGuestViewPermission
-								) {
+								if (!item.hasGuestViewPermission) {
 									return `${
 										item.name
 									}. ${Liferay.Language.get(
@@ -262,8 +259,7 @@ function TreeItem({
 								{item.name}
 							</span>
 
-							{Liferay.FeatureFlags['LPS-196847'] &&
-							!item.hasGuestViewPermission ? (
+							{!item.hasGuestViewPermission ? (
 								<ClayIcon
 									className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip text-4"
 									data-title={Liferay.Language.get(
@@ -328,12 +324,7 @@ function TreeItem({
 							{item.regularURL ? (
 								<a
 									aria-label={(() => {
-										if (
-											Liferay.FeatureFlags[
-												'LPS-196847'
-											] &&
-											!item.hasGuestViewPermission
-										) {
+										if (!item.hasGuestViewPermission) {
 											return `${
 												item.name
 											}. ${Liferay.Language.get(
@@ -364,8 +355,7 @@ function TreeItem({
 										{item.name}
 									</span>
 
-									{Liferay.FeatureFlags['LPS-196847'] &&
-									!item.hasGuestViewPermission ? (
+									{!item.hasGuestViewPermission ? (
 										<ClayIcon
 											className="c-ml-2 c-mt-0 flex-shrink-0 icon-tooltip text-4"
 											data-title={Liferay.Language.get(

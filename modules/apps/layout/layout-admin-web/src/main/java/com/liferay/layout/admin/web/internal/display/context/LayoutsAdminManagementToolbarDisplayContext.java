@@ -12,7 +12,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -114,7 +113,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-196847"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "changePermissions");
 				dropdownItem.putData(

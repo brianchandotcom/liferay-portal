@@ -162,12 +162,7 @@ function TreeItem({
 
 				{item.icon && <ClayIcon symbol={item.icon} />}
 
-				<div
-					className={classNames('d-flex', {
-						'align-items-center c-ml-1':
-							Liferay.FeatureFlags['LPS-196847'],
-					})}
-				>
+				<div className={classNames('align-items-center c-ml-1 d-flex')}>
 					<span
 						className={classNames('flex-grow-0', {
 							'layout-incomplete': item.incomplete,
@@ -177,9 +172,7 @@ function TreeItem({
 						{getItemName(item)}
 					</span>
 
-					{Liferay.FeatureFlags['LPS-196847'] &&
-					item.id !== '0' &&
-					!item.hasGuestViewPermission ? (
+					{item.id !== '0' && !item.hasGuestViewPermission ? (
 						<span
 							aria-label={Liferay.Language.get('restricted-page')}
 							className="c-ml-2 lfr-portal-tooltip"
@@ -215,10 +208,9 @@ function TreeItem({
 						{childItem.icon && <ClayIcon symbol={childItem.icon} />}
 
 						<div
-							className={classNames('d-flex', {
-								'align-items-center c-ml-1':
-									Liferay.FeatureFlags['LPS-196847'],
-							})}
+							className={classNames(
+								'align-items-center c-ml-1 d-flex'
+							)}
 						>
 							<span
 								className={classNames({
@@ -230,8 +222,7 @@ function TreeItem({
 								{getItemName(childItem)}
 							</span>
 
-							{Liferay.FeatureFlags['LPS-196847'] &&
-							!childItem.hasGuestViewPermission ? (
+							{!childItem.hasGuestViewPermission ? (
 								<span
 									aria-label={Liferay.Language.get(
 										'restricted-page'

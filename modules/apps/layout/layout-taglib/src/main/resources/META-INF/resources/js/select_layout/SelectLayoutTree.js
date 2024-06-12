@@ -291,10 +291,9 @@ export default function SelectLayoutTree({
 								<ClayIcon symbol={item.icon} />
 
 								<div
-									className={classNames('d-flex', {
-										'align-items-center c-ml-1':
-											Liferay.FeatureFlags['LPS-196847'],
-									})}
+									className={classNames(
+										'align-items-center c-ml-1 d-flex'
+									)}
 								>
 									<span
 										className="flex-grow-0"
@@ -303,8 +302,7 @@ export default function SelectLayoutTree({
 										{item.name}
 									</span>
 
-									{Liferay.FeatureFlags['LPS-196847'] &&
-									item.id !== '0' &&
+									{item.id !== '0' &&
 									!item.hasGuestViewPermission ? (
 										<span
 											aria-label={Liferay.Language.get(
@@ -374,12 +372,9 @@ export default function SelectLayoutTree({
 										<ClayIcon symbol={item.icon} />
 
 										<div
-											className={classNames('d-flex', {
-												'align-items-center c-ml-1':
-													Liferay.FeatureFlags[
-														'LPS-196847'
-													],
-											})}
+											className={classNames(
+												'align-items-center c-ml-1 d-flex'
+											)}
 										>
 											<span
 												className="flex-grow-0"
@@ -388,26 +383,23 @@ export default function SelectLayoutTree({
 												{item.name}
 											</span>
 
-											{Liferay.FeatureFlags[
-												'LPS-196847'
-											] &&
-												item.hasGuestViewPermission ===
-													false && (
-													<span
-														aria-label={Liferay.Language.get(
-															'restricted-page'
-														)}
-														className="c-ml-2 lfr-portal-tooltip"
-														title={Liferay.Language.get(
-															'restricted-page'
-														)}
-													>
-														<ClayIcon
-															className="c-mt-0 text-4"
-															symbol="password-policies"
-														/>
-													</span>
-												)}
+											{item.hasGuestViewPermission ===
+												false && (
+												<span
+													aria-label={Liferay.Language.get(
+														'restricted-page'
+													)}
+													className="c-ml-2 lfr-portal-tooltip"
+													title={Liferay.Language.get(
+														'restricted-page'
+													)}
+												>
+													<ClayIcon
+														className="c-mt-0 text-4"
+														symbol="password-policies"
+													/>
+												</span>
+											)}
 										</div>
 									</ClayTreeView.Item>
 								)}

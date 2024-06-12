@@ -85,4 +85,8 @@ export class AccountsPage {
 	async goto() {
 		await this.applicationsMenuPage.goToAccounts();
 	}
+
+	async organizationName(name: string): Promise<Locator> {
+		return this.page.getByText(name, {exact: true});
+	}
 }

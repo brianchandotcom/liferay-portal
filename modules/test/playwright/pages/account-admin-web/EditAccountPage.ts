@@ -8,9 +8,13 @@ import {Locator, Page} from '@playwright/test';
 export class EditAccountPage {
 	readonly contactLink: Locator;
 	readonly page: Page;
+	readonly rolesLink: Locator;
+	readonly usersLink: Locator;
 
 	constructor(page: Page) {
 		this.contactLink = page.getByRole('link', {name: 'Contact'});
 		this.page = page;
+		this.rolesLink = page.getByRole('link', {name: 'Roles'});
+		this.usersLink = page.getByRole('link', {name: 'Users'});
 	}
 }

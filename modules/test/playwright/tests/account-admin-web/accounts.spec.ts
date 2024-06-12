@@ -10,6 +10,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
 
 export const test = mergeTests(
 	accountsPagesTest,
@@ -188,4 +189,62 @@ test('LPD-18484 Add account website', async ({
 	await expect(
 		page.getByRole('cell', {name: 'https://www.website.com'})
 	).toBeVisible();
+});
+
+test('LPD-28161 Can view role and organization name escaped', async ({
+	accountRolesPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const roleName = 'My title<script>confirm("compromised")</script>';
+
+	const accountRole =
+		await apiHelpers.headlessAdminUser.postAccountAccountRoles(account.id, {
+			name: roleName,
+		});
+
+	apiHelpers.data.push({id: accountRole.id, type: 'role'});
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	await apiHelpers.headlessAdminUser.postAccountUserAccountByEmailAddress(
+		account.id,
+		[accountRole.id],
+		[user.emailAddress]
+	);
+
+	const organizationName = 'My org1<script>confirm("compromised")</script>';
+
+	const organization = await apiHelpers.headlessAdminUser.postOrganization({
+		name: organizationName,
+	});
+
+	await apiHelpers.headlessAdminUser.postOrganizationAccounts(
+		Number(organization.id),
+		[account.id]
+	);
+
+	await accountsPage.goto();
+
+	await expect(
+		await accountsPage.organizationName(organizationName)
+	).toBeVisible();
+
+	await (await accountsPage.accountsTableRowLink(account.name)).click();
+	await editAccountPage.rolesLink.click();
+
+	await expect(await accountRolesPage.roleName(roleName)).toBeVisible();
+
+	await editAccountPage.usersLink.click();
+
+	await expect(await accountUsersPage.roleName(roleName)).toBeVisible();
 });

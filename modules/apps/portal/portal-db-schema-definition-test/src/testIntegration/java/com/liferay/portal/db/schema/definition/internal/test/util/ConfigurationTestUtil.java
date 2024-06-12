@@ -37,8 +37,8 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationTestUtil {
 
 	public static void deployConfiguration(
-			ConfigurationAdmin configurationAdmin, String pid,
-			String databaseType, String path)
+			ConfigurationAdmin configurationAdmin, String databaseType,
+			String path, String pid)
 		throws Exception {
 
 		Assert.assertNull(
@@ -104,11 +104,11 @@ public class ConfigurationTestUtil {
 	}
 
 	private static String _getConfigurationContent(
-		String databaseType, String dumpPath) {
+		String databaseType, String path) {
 
 		return StringBundler.concat(
 			"databaseType=\"", databaseType, "\"", StringPool.NEW_LINE,
-			"path=\"", dumpPath, "\"", StringPool.NEW_LINE);
+			"path=\"", path, "\"", StringPool.NEW_LINE);
 	}
 
 	private static AutoCloseable

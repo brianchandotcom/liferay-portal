@@ -26,7 +26,7 @@ public interface DBSchemaDefinitionExporterConfiguration {
 	@Meta.AD(name = "database-type")
 	public String databaseType();
 
-	@Meta.AD(name = "path")
+	@Meta.AD(name = "path", optionValues = {"mysql", "postgresql"})
 	public String path();
 
 }

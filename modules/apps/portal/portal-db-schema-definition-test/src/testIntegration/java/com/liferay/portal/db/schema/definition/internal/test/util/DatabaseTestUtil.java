@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -86,16 +87,17 @@ public class DatabaseTestUtil {
 						continue;
 					}
 
-					columns.add(
-						StringBundler.concat(
-							"Table Name: ", tableName, "Column Name: ",
-							resultSet.getString("COLUMN_NAME"), "Data Type: ",
-							resultSet.getInt("DATA_TYPE"), "Column Size: ",
-							resultSet.getInt("COLUMN_SIZE"), "Decimal Digits: ",
-							resultSet.getInt("DECIMAL_DIGITS"), "Is Nullable: ",
-							resultSet.getString("IS_NULLABLE"),
-							"Default value: ",
-							resultSet.getString("COLUMN_DEF")));
+					Object[] columnArray = {
+						tableName, resultSet.getString("COLUMN_NAME"),
+						resultSet.getInt("DATA_TYPE"),
+						resultSet.getInt("COLUMN_SIZE"),
+						resultSet.getInt("DECIMAL_DIGITS"),
+						resultSet.getString("COLUMN_DEF"),
+						resultSet.getString("IS_NULLABLE"),
+						resultSet.getString("IS_AUTOINCREMENT")
+					};
+
+					columns.add(ArrayUtil.toString(columnArray, (String)null));
 				}
 			}
 		}
@@ -212,13 +214,14 @@ public class DatabaseTestUtil {
 				connection, tableName, unique)) {
 
 			while (resultSet.next()) {
+				Object[] tableIndexArray = {
+					tableName, unique, resultSet.getString("INDEX_NAME"),
+					resultSet.getString("COLUMN_NAME"),
+					resultSet.getShort("ORDINAL_POSITION")
+				};
+
 				tableIndexes.add(
-					StringBundler.concat(
-						"Table Name: ", tableName, "Non Unique: ", unique,
-						"Index Name: ", resultSet.getString("INDEX_NAME"),
-						"Ordinal Position: ",
-						resultSet.getShort("ORDINAL_POSITION"), "Column Name: ",
-						resultSet.getString("COLUMN_NAME")));
+					ArrayUtil.toString(tableIndexArray, (String)null));
 			}
 		}
 

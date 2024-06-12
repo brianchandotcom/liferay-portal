@@ -30,8 +30,10 @@ export default function ({formId, initialKeywords, retainFacetSelections}) {
 	const scopeSelect = form.querySelector('.search-bar-scope-select');
 
 	function enableKeywordsInput() {
-		keywordsInput.disabled = false;
-		keywordsInput.classList.remove('disabled');
+		if (keywordsInput) {
+			keywordsInput.disabled = false;
+			keywordsInput.classList.remove('disabled');
+		}
 
 		if (keywordsInputSearchButton) {
 			keywordsInputSearchButton.disabled = false;

@@ -44,6 +44,11 @@ components:
             type: object
         SearchResult:
             properties:
+                dateCreated:
+                    description:
+                        The time the item was created.
+                    format: date-time
+                    type: string
                 dateModified:
                     description:
                         The last time the item was changed.
@@ -104,7 +109,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.portal.search.rest.client', and version '1.0.19'."
+        'com.liferay.portal.search.rest.client', and version '1.0.20'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

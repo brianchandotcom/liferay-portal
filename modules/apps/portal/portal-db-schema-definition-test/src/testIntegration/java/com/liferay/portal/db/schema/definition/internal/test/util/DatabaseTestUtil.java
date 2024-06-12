@@ -62,10 +62,56 @@ public class DatabaseTestUtil {
 		}
 	}
 
-	public static List<String> getColumns(DataSource dataSource)
+	public static List<String> getIndexColumns(DataSource dataSource)
 		throws Exception {
 
-		List<String> columns = new ArrayList<>();
+		DB db = DBManagerUtil.getDB();
+
+		List<String> indexColumns = new ArrayList<>();
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					connection.getCatalog(), connection.getSchema(), null,
+					new String[] {"TABLE"})) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (dbInspector.isObjectTable(
+							Collections.singletonList(
+								PortalInstancePool.getDefaultCompanyId()),
+							tableName)) {
+
+						continue;
+					}
+
+					indexColumns.addAll(
+						_getIndexColumns(connection, db, tableName, false));
+				}
+			}
+		}
+
+		Collections.sort(indexColumns);
+
+		return indexColumns;
+	}
+
+	public static String getSchemaURL(String schemaName) {
+		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
+			return _getMySQLSchemaURL(schemaName);
+		}
+
+		return _getPostgreSQLSchemaURL(schemaName);
+	}
+
+	public static List<String> getTableColumns(DataSource dataSource)
+		throws Exception {
+
+		List<String> tableColumns = new ArrayList<>();
 
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -97,60 +143,15 @@ public class DatabaseTestUtil {
 						resultSet.getString("IS_AUTOINCREMENT")
 					};
 
-					columns.add(ArrayUtil.toString(columnArray, (String)null));
+					tableColumns.add(
+						ArrayUtil.toString(columnArray, (String)null));
 				}
 			}
 		}
 
-		Collections.sort(columns);
+		Collections.sort(tableColumns);
 
-		return columns;
-	}
-
-	public static List<String> getIndexes(DataSource dataSource)
-		throws Exception {
-
-		DB db = DBManagerUtil.getDB();
-
-		List<String> indexes = new ArrayList<>();
-
-		try (Connection connection = dataSource.getConnection()) {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			DBInspector dbInspector = new DBInspector(connection);
-
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					connection.getCatalog(), connection.getSchema(), null,
-					new String[] {"TABLE"})) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (dbInspector.isObjectTable(
-							Collections.singletonList(
-								PortalInstancePool.getDefaultCompanyId()),
-							tableName)) {
-
-						continue;
-					}
-
-					indexes.addAll(
-						_getTableIndexes(connection, db, tableName, false));
-				}
-			}
-		}
-
-		Collections.sort(indexes);
-
-		return indexes;
-	}
-
-	public static String getSchemaURL(String schemaName) {
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			return _getMySQLSchemaURL(schemaName);
-		}
-
-		return _getPostgreSQLSchemaURL(schemaName);
+		return tableColumns;
 	}
 
 	public static void importFileTo(File file, DataSource targetDataSource)
@@ -171,6 +172,31 @@ public class DatabaseTestUtil {
 			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
 			getSchemaURL(schemaName), PropsValues.JDBC_DEFAULT_USERNAME,
 			PropsValues.JDBC_DEFAULT_PASSWORD, StringPool.BLANK);
+	}
+
+	private static List<String> _getIndexColumns(
+			Connection connection, DB db, String tableName, boolean unique)
+		throws Exception {
+
+		List<String> indexColumns = new ArrayList<>();
+
+		try (ResultSet resultSet = db.getIndexResultSet(
+				connection, tableName, unique)) {
+
+			while (resultSet.next()) {
+				Object[] tableIndexArray = {
+					tableName, resultSet.getString("NON_UNIQUE"),
+					resultSet.getString("INDEX_NAME"),
+					resultSet.getString("COLUMN_NAME"),
+					resultSet.getShort("ORDINAL_POSITION")
+				};
+
+				indexColumns.add(
+					ArrayUtil.toString(tableIndexArray, (String)null));
+			}
+		}
+
+		return indexColumns;
 	}
 
 	private static String _getMySQLSchemaURL(String schemaName) {
@@ -200,31 +226,6 @@ public class DatabaseTestUtil {
 		}
 
 		return jdbcURL + "&currentSchema=" + schemaName;
-	}
-
-	private static List<String> _getTableIndexes(
-			Connection connection, DB db, String tableName, boolean unique)
-		throws Exception {
-
-		List<String> tableIndexes = new ArrayList<>();
-
-		try (ResultSet resultSet = db.getIndexResultSet(
-				connection, tableName, unique)) {
-
-			while (resultSet.next()) {
-				Object[] tableIndexArray = {
-					tableName, resultSet.getString("NON_UNIQUE"),
-					resultSet.getString("INDEX_NAME"),
-					resultSet.getString("COLUMN_NAME"),
-					resultSet.getShort("ORDINAL_POSITION")
-				};
-
-				tableIndexes.add(
-					ArrayUtil.toString(tableIndexArray, (String)null));
-			}
-		}
-
-		return tableIndexes;
 	}
 
 }

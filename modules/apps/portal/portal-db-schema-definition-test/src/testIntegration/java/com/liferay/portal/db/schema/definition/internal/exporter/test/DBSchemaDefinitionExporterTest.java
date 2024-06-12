@@ -86,7 +86,7 @@ public class DBSchemaDefinitionExporterTest {
 				LoggerTestUtil.INFO)) {
 
 			ConfigurationTestUtil.deployConfiguration(
-				_configurationAdmin, _PID, _databaseType, _path);
+				_configurationAdmin, _databaseType, _path, _PID);
 
 			_assertImportDBSchemaDefinition(
 				new File(_path, "tables.sql"), new File(_path, "indexes.sql"));
@@ -120,20 +120,6 @@ public class DBSchemaDefinitionExporterTest {
 		}
 	}
 
-	private void _assertColumns(DataSource copyDataSource) throws Exception {
-		List<String> columns = DatabaseTestUtil.getColumns(
-			InfrastructureUtil.getDataSource());
-		List<String> copyColumns = DatabaseTestUtil.getColumns(copyDataSource);
-
-		Assert.assertEquals(
-			StringUtils.difference(copyColumns.toString(), columns.toString()),
-			columns.size(), copyColumns.size());
-
-		for (int i = 0; i < columns.size(); i++) {
-			Assert.assertEquals(columns.get(i), copyColumns.get(i));
-		}
-	}
-
 	private void _assertImportDBSchemaDefinition(
 			File tablesSQLFile, File indexesSQLFile)
 		throws Exception {
@@ -149,7 +135,7 @@ public class DBSchemaDefinitionExporterTest {
 			DatabaseTestUtil.importFileTo(tablesSQLFile, copyDataSource);
 			DatabaseTestUtil.importFileTo(indexesSQLFile, copyDataSource);
 
-			_assertColumns(copyDataSource);
+			_assertTables(copyDataSource);
 			_assertIndexes(copyDataSource);
 		}
 		finally {
@@ -162,16 +148,34 @@ public class DBSchemaDefinitionExporterTest {
 	}
 
 	private void _assertIndexes(DataSource copyDataSource) throws Exception {
-		List<String> indexes = DatabaseTestUtil.getIndexes(
+		List<String> indexColumns = DatabaseTestUtil.getIndexColumns(
 			InfrastructureUtil.getDataSource());
-		List<String> copyIndexes = DatabaseTestUtil.getIndexes(copyDataSource);
+		List<String> copyIndexColumns = DatabaseTestUtil.getIndexColumns(
+			copyDataSource);
 
 		Assert.assertEquals(
-			StringUtils.difference(copyIndexes.toString(), indexes.toString()),
-			indexes.size(), copyIndexes.size());
+			StringUtils.difference(
+				copyIndexColumns.toString(), indexColumns.toString()),
+			indexColumns.size(), copyIndexColumns.size());
 
-		for (int i = 0; i < indexes.size(); i++) {
-			Assert.assertEquals(indexes.get(i), copyIndexes.get(i));
+		for (int i = 0; i < indexColumns.size(); i++) {
+			Assert.assertEquals(indexColumns.get(i), copyIndexColumns.get(i));
+		}
+	}
+
+	private void _assertTables(DataSource copyDataSource) throws Exception {
+		List<String> tableColumns = DatabaseTestUtil.getTableColumns(
+			InfrastructureUtil.getDataSource());
+		List<String> copyTableColumns = DatabaseTestUtil.getTableColumns(
+			copyDataSource);
+
+		Assert.assertEquals(
+			StringUtils.difference(
+				copyTableColumns.toString(), tableColumns.toString()),
+			tableColumns.size(), copyTableColumns.size());
+
+		for (int i = 0; i < tableColumns.size(); i++) {
+			Assert.assertEquals(tableColumns.get(i), copyTableColumns.get(i));
 		}
 	}
 

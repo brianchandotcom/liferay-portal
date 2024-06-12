@@ -6,6 +6,7 @@
 package com.liferay.journal.internal.change.tracking.spi.conflict;
 
 import com.liferay.change.tracking.conflict.CTEntryConflictHelper;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -34,6 +35,10 @@ public class JournalArticleCTEntryConflictHelper
 	@Override
 	public boolean hasDeletionModificationConflict(
 		CTEntry ctEntry, long targetCTCollectionId) {
+
+		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			return false;
+		}
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchJournalArticle(

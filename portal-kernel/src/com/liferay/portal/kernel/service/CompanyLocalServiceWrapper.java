@@ -111,12 +111,12 @@ public class CompanyLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Company copyBPartitionCompany(
-			String name, long sourceCompanyId, Long targetCompanyId,
+			long fromCompanyId, String name, Long toCompanyId,
 			String virtualHostname, String webId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyLocalService.copyBPartitionCompany(
-			name, sourceCompanyId, targetCompanyId, virtualHostname, webId);
+			fromCompanyId, name, toCompanyId, virtualHostname, webId);
 	}
 
 	/**

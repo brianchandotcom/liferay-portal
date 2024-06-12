@@ -29,6 +29,7 @@ import {ListTypeAdminApiHelper} from './ListTypeAdminApiHelper';
 import {NotificationApiHelper} from './NotificationApiHelper';
 import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectEntryApiHelper} from './ObjectEntryApiHelper';
+import {SearchExperiencesApiHelper} from './SearchExperiencesApiHelper';
 import {JSONWebServicesAnnouncementsEntryApiHelper} from './json-web-services/JSONWebServicesAnnouncementsEntryApiHelper';
 import {JSONWebServicesClassNameApiHelper} from './json-web-services/JSONWebServicesClassNameApiHelper';
 import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServicesCompanyApiHelper';
@@ -90,6 +91,7 @@ export class ApiHelpers {
 	readonly objectAdmin: ObjectAdminApiHelper;
 	readonly objectEntry: ObjectEntryApiHelper;
 	readonly page: Page;
+	readonly searchExperiences: SearchExperiencesApiHelper;
 
 	private static readonly _authorization = `Basic ${btoa(
 		`test@liferay.com:test`
@@ -145,6 +147,7 @@ export class ApiHelpers {
 		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.objectEntry = new ObjectEntryApiHelper(this);
 		this.page = page;
+		this.searchExperiences = new SearchExperiencesApiHelper(this);
 	}
 
 	async postResponse<T>(
@@ -368,6 +371,14 @@ export class DataApiHelpers extends ApiHelpers {
 					await this.headlessCommerceAdminCatalog.deleteSpecification(
 						item.id
 					);
+
+					break;
+				case 'sxpElement':
+					await this.searchExperiences.deleteSXPElement(item.id);
+
+					break;
+				case 'sxpBlueprint':
+					await this.searchExperiences.deleteSXPBlueprint(item.id);
 
 					break;
 				case 'terms':

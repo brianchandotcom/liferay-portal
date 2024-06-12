@@ -669,8 +669,7 @@ public class DXPCloudClientTestrayImporter {
 		properties.setProperty(
 			"testray.build.date",
 			JenkinsResultsParserUtil.toDateString(
-				new Date(), "yyy-MM-dd HH:mm:ss",
-				"America/Los_Angeles"));
+				new Date(), "yyy-MM-dd HH:mm:ss", "America/Los_Angeles"));
 		properties.setProperty("testray.build.name", testrayBuild.getName());
 		properties.setProperty("testray.build.type", testrayRoutine.getName());
 		properties.setProperty(

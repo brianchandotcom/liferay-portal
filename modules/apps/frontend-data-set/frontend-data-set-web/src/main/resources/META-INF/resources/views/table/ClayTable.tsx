@@ -140,11 +140,10 @@ export function ClayTable({
 				{(field) => {
 					if (field.fieldName === 'select') {
 						if (!!items.length && selectionType !== 'multiple') {
-
-							// @ts-ignore
-
 							return (
-								<Cell key="select" scope="col" width="51px" />
+								<Cell key="select" scope="col" width="51px">
+									{null}
+								</Cell>
 							);
 						}
 

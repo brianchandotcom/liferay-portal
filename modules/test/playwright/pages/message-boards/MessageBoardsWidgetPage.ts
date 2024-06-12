@@ -27,7 +27,7 @@ export class MessageBoardsWidgetPage {
 		);
 
 		await this.page.goto(
-			'/web' + site.friendlyUrlPath + layout.friendlyURL
+			`/web${site.friendlyUrlPath}${layout.friendlyURL}`
 		);
 
 		await this.widgetPage.addPortlet('Message Boards');
@@ -39,7 +39,7 @@ export class MessageBoardsWidgetPage {
 		await performLogout(this.page);
 
 		await this.page.goto(
-			'/web' + site.friendlyUrlPath + layout.friendlyURL
+			`/web${site.friendlyUrlPath}${layout.friendlyURL}`
 		);
 
 		await this.page.getByRole('link', {name: 'Thread Subject'}).click();

@@ -133,25 +133,33 @@ public class CommerceOrderAddressNotificationTermTest {
 	}
 
 	private String _getExpectedContent() throws Exception {
-		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
-		CommerceAddress billingAddress = _commerceOrder.getBillingAddress();
-		Country shippingCountry = shippingAddress.getCountry();
-		Country billingCountry = billingAddress.getCountry();
-		Region shippingRegion = shippingAddress.getRegion();
-		Region billingRegion = billingAddress.getRegion();
+		CommerceAddress shippingCommerceAddress =
+			_commerceOrder.getShippingAddress();
+		CommerceAddress billingCommerceAddress =
+			_commerceOrder.getBillingAddress();
+		Country shippingCountry = shippingCommerceAddress.getCountry();
+		Country billingCountry = billingCommerceAddress.getCountry();
+		Region shippingRegion = shippingCommerceAddress.getRegion();
+		Region billingRegion = billingCommerceAddress.getRegion();
 
 		return StringBundler.concat(
-			billingAddress.getCity(), " | ", billingCountry.getTitle(), " | ",
-			billingAddress.getName(), " | ", billingAddress.getPhoneNumber(),
-			" | ", billingRegion.getTitle(), " | ", billingAddress.getStreet1(),
-			" | ", billingAddress.getStreet2(), " | ",
-			billingAddress.getStreet3(), " | ", billingAddress.getZip(), " | ",
-			shippingAddress.getCity(), " | ", shippingCountry.getTitle(), " | ",
-			shippingAddress.getName(), " | ", shippingAddress.getPhoneNumber(),
-			" | ", shippingRegion.getTitle(), " | ",
-			shippingAddress.getStreet1(), " | ", shippingAddress.getStreet2(),
-			" | ", shippingAddress.getStreet3(), " | ",
-			shippingAddress.getZip());
+			billingCommerceAddress.getCity(), " | ", billingCountry.getTitle(),
+			" | ", billingCommerceAddress.getName(), " | ",
+			billingCommerceAddress.getPhoneNumber(), " | ",
+			billingRegion.getTitle(), " | ",
+			billingCommerceAddress.getStreet1(), " | ",
+			billingCommerceAddress.getStreet2(), " | ",
+			billingCommerceAddress.getStreet3(), " | ",
+			billingCommerceAddress.getZip(), " | ",
+			shippingCommerceAddress.getCity(), " | ",
+			shippingCountry.getTitle(), " | ",
+			shippingCommerceAddress.getName(), " | ",
+			shippingCommerceAddress.getPhoneNumber(), " | ",
+			shippingRegion.getTitle(), " | ",
+			shippingCommerceAddress.getStreet1(), " | ",
+			shippingCommerceAddress.getStreet2(), " | ",
+			shippingCommerceAddress.getStreet3(), " | ",
+			shippingCommerceAddress.getZip());
 	}
 
 	private CommerceOrder _commerceOrder;

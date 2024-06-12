@@ -61,9 +61,20 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		// Call another client extension (liferay-sample-etc-spring-boot)
 
 		try {
-			String dadJoke = _getDadJoke(
-				"liferay-sample-etc-cron-oauth-application-headless-server",
-				_liferaySampleEtcSpringBootHomePageURL);
+			String dadJoke = WebClient.create(
+			).get(
+			).uri(
+				_liferaySampleEtcSpringBootHomePageURL + "/dad/joke"
+			).header(
+				"Authorization",
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-sample-etc-cron-oauth-application-headless-server")
+			).accept(
+				MediaType.TEXT_PLAIN
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block();
 
 			if ((dadJoke != null) && _log.isInfoEnabled()) {
 				_log.info("Dad joke: " + dadJoke);
@@ -123,26 +134,6 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 				_log.info(messageBoardThread);
 			}
 		}
-	}
-
-	private String _getDadJoke(
-		String externalReferenceCode,
-		URL liferaySampleEtcSpringBootHomePageURL) {
-
-		return WebClient.create(
-		).get(
-		).uri(
-			liferaySampleEtcSpringBootHomePageURL + "/dad/joke"
-		).header(
-			"Authorization",
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				externalReferenceCode)
-		).accept(
-			MediaType.TEXT_PLAIN
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
 	}
 
 	private static final Log _log = LogFactory.getLog(

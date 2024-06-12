@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -58,6 +59,68 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		}
 
 		_htmlParser.extractText(null);
+
+		HttpComponentsUtil.addParameter(null, null, null);
+		HttpComponentsUtil.decodePath(null);
+		HttpComponentsUtil.decodeURL(null);
+		HttpComponentsUtil.encodeParameters(null);
+		HttpComponentsUtil.encodePath(null);
+		HttpComponentsUtil.fixPath(null);
+		HttpComponentsUtil.getCompleteURL(null, null, null);
+		HttpComponentsUtil.getDomain(null);
+		HttpComponentsUtil.getIpAddress(null);
+		HttpComponentsUtil.getParameter(null, null);
+		HttpComponentsUtil.getParameterMap(null);
+		HttpComponentsUtil.getPath(null);
+		HttpComponentsUtil.getProtocol(null);
+		HttpComponentsUtil.getQueryString(null);
+		HttpComponentsUtil.getRequestURL(null);
+		HttpComponentsUtil.getURI(null);
+		HttpComponentsUtil.hasDomain(null);
+		HttpComponentsUtil.hasProtocol(null);
+		HttpComponentsUtil.isForwarded(null);
+		HttpComponentsUtil.isSecure(null);
+		HttpComponentsUtil.normalizePath(null);
+		HttpComponentsUtil.parameterMapFromString(null);
+		HttpComponentsUtil.protocolize(null, null);
+		HttpComponentsUtil.removeDomain(null);
+		HttpComponentsUtil.removeParameter(null);
+		HttpComponentsUtil.removePathParameters(null);
+		HttpComponentsUtil.removeProtocol(null);
+		HttpComponentsUtil.sanitizeHeader(null);
+		HttpComponentsUtil.setParameter(null, null, null);
+		HttpComponentsUtil.shortenURL(null);
+
+		HttpComponentsUtil.addParameter(null, null, null);
+		HttpComponentsUtil.decodePath(null);
+		HttpComponentsUtil.decodeURL(null);
+		HttpComponentsUtil.encodeParameters(null);
+		HttpComponentsUtil.encodePath(null);
+		HttpComponentsUtil.fixPath(null);
+		HttpComponentsUtil.getCompleteURL(null, null, null);
+		HttpComponentsUtil.getDomain(null);
+		HttpComponentsUtil.getIpAddress(null);
+		HttpComponentsUtil.getParameter(null, null);
+		HttpComponentsUtil.getParameterMap(null);
+		HttpComponentsUtil.getPath(null);
+		HttpComponentsUtil.getProtocol(null);
+		HttpComponentsUtil.getQueryString(null);
+		HttpComponentsUtil.getRequestURL(null);
+		HttpComponentsUtil.getURI(null);
+		HttpComponentsUtil.hasDomain(null);
+		HttpComponentsUtil.hasProtocol(null);
+		HttpComponentsUtil.isForwarded(null);
+		HttpComponentsUtil.isSecure(null);
+		HttpComponentsUtil.normalizePath(null);
+		HttpComponentsUtil.parameterMapFromString(null);
+		HttpComponentsUtil.protocolize(null, null);
+		HttpComponentsUtil.removeDomain(null);
+		HttpComponentsUtil.removeParameter(null);
+		HttpComponentsUtil.removePathParameters(null);
+		HttpComponentsUtil.removeProtocol(null);
+		HttpComponentsUtil.sanitizeHeader(null);
+		HttpComponentsUtil.setParameter(null, null, null);
+		HttpComponentsUtil.shortenURL(null);
 
 		new ArrayList<>(LanguageUtil.getAvailableLocales());
 
@@ -708,6 +771,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;

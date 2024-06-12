@@ -3,6 +3,7 @@
 		"@liferay/eslint-plugin": "1.5.0",
 		"@liferay/npm-scripts": "51.0.2",
 		"@liferay/prettier-plugin": "1.1.5",
+		"@liferay/stylelint-plugin": "1.1.0",
 		"@types/ckeditor4": "4.16.2",
 		"@types/codemirror": "^5.60.5",
 		"@types/react-router-dom": "^5.3.3",

@@ -605,6 +605,10 @@ public abstract class BaseSearchResultResourceTestCase {
 	protected void assertValid(SearchResult searchResult) throws Exception {
 		boolean valid = true;
 
+		if (searchResult.getDateCreated() == null) {
+			valid = false;
+		}
+
 		if (searchResult.getDateModified() == null) {
 			valid = false;
 		}
@@ -770,6 +774,17 @@ public abstract class BaseSearchResultResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						searchResult1.getDateCreated(),
+						searchResult2.getDateCreated())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -941,6 +956,37 @@ public abstract class BaseSearchResultResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("dateCreated")) {
+			if (operator.equals("between")) {
+				Date date = searchResult.getDateCreated();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(searchResult.getDateCreated()));
+			}
+
+			return sb.toString();
+		}
 
 		if (entityFieldName.equals("dateModified")) {
 			if (operator.equals("between")) {
@@ -1166,6 +1212,7 @@ public abstract class BaseSearchResultResourceTestCase {
 	protected SearchResult randomSearchResult() throws Exception {
 		return new SearchResult() {
 			{
+				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

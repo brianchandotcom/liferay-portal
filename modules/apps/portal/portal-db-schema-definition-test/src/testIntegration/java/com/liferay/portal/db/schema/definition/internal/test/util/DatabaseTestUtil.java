@@ -136,8 +136,6 @@ public class DatabaseTestUtil {
 
 					indexes.addAll(
 						_getTableIndexes(connection, db, tableName, false));
-					indexes.addAll(
-						_getTableIndexes(connection, db, tableName, true));
 				}
 			}
 		}
@@ -215,7 +213,8 @@ public class DatabaseTestUtil {
 
 			while (resultSet.next()) {
 				Object[] tableIndexArray = {
-					tableName, unique, resultSet.getString("INDEX_NAME"),
+					tableName, resultSet.getString("NON_UNIQUE"),
+					resultSet.getString("INDEX_NAME"),
 					resultSet.getString("COLUMN_NAME"),
 					resultSet.getShort("ORDINAL_POSITION")
 				};

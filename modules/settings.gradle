@@ -32,6 +32,10 @@ if (Boolean.getBoolean("gradle.develocity.enabled")) {
 				tag System.getProperty("gradle.develocity.tag")
 			}
 
+			if (System.getenv("GITHUB_SENDER_BRANCH_SHA")) {
+				tag System.getenv("GITHUB_SENDER_BRANCH_SHA")
+			}
+
 			termsOfUseAgree = "yes"
 			termsOfUseUrl = "https://gradle.com/terms-of-service"
 

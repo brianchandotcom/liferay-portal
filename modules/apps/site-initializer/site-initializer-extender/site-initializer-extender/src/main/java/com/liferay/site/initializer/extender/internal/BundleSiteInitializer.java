@@ -5109,24 +5109,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return defaultThemeId;
 	}
 
-	private void _initialize(long groupId) throws Exception {
-		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
-
-		ServiceContext serviceContextThreadLocal =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ServiceContext serviceContext =
-			(ServiceContext)serviceContextThreadLocal.clone();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setTimeZone(user.getTimeZone());
-		serviceContext.setUserId(user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
+	private Map<R, List<R>> _createRMap(ServiceContext serviceContext) {
 		Map<String, ObjectDefinition> accountEntryRestrictedObjectDefinitions =
 			new HashMap<>();
 		Map<String, Layout> layoutsMap = new HashMap<>();
@@ -5135,8 +5118,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			siteNavigationMenuItemSettingsBuilder =
 				new SiteNavigationMenuItemSettingsBuilder();
 		Map<String, String> stringUtilReplaceValues = new HashMap<>();
-
-		List<R> rList = new ArrayList<>();
 
 		R addAcountGroupAssignments = () -> _addAccountGroupAssignments(
 			serviceContext);
@@ -5246,7 +5227,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		R updateLayoutSets = () -> _updateLayoutSets(
 			serviceContext, stringUtilReplaceValues);
 
-		Map<R, List<R>> rMap = HashMapBuilder.<R, List<R>>put(
+		return HashMapBuilder.<R, List<R>>put(
 			addAccounts, _dependsOn(addOrUpdateExpandoColumns)
 		).put(
 			addAccountsOrganizations,
@@ -5450,6 +5431,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			updateLayoutSets, _dependsOn(addOrUpdateLayouts)
 		).build();
+	}
+
+	private void _initialize(long groupId) throws Exception {
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+
+		ServiceContext serviceContextThreadLocal =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ServiceContext serviceContext =
+			(ServiceContext)serviceContextThreadLocal.clone();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setTimeZone(user.getTimeZone());
+		serviceContext.setUserId(user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		List<R> rList = new ArrayList<>();
+		Map<R, List<R>> rMap = _createRMap(serviceContext);
 
 		while (rList.size() != rMap.size()) {
 			int size = rList.size();
@@ -5467,7 +5470,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			if (size == rList.size()) {
-				throw new InitializationException("Circular dependency found");
+				throw new InitializationException("Circular dependency");
 			}
 		}
 

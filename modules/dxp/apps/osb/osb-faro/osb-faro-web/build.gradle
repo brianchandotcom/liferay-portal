@@ -1,8 +1,8 @@
 import com.liferay.gradle.plugins.node.task.YarnInstallTask
 
-task osbFaroWebYarnInstall(type: YarnInstallTask)
-task osbFaroWebYarnTest(type: Exec)
-task osbFaroWebYarnWebpack(type: Exec)
+task osbYarnInstall(type: YarnInstallTask)
+task osbYarnTest(type: Exec)
+task osbYarnWebpack(type: Exec)
 
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-base", version: "2.11.4"
@@ -65,7 +65,7 @@ node {
 	yarnVersion = "1.22.19"
 }
 
-osbFaroWebYarnInstall {
+osbYarnInstall {
 	doLast {
 		delete ".yarnrc"
 	}
@@ -73,26 +73,24 @@ osbFaroWebYarnInstall {
 	workingDir = projectDir
 }
 
-osbFaroWebYarnTest {
-	dependsOn osbFaroWebYarnWebpack
-
-	args = [osbFaroWebYarnInstall.scriptFile, "test"]
-	executable = new File(osbFaroWebYarnInstall.nodeDir, "bin/node")
+osbYarnTest {
+	args = [osbYarnInstall.scriptFile, "test"]
+	dependsOn osbYarnWebpack
+	executable = new File(osbYarnInstall.nodeDir, "bin/node")
 	workingDir = projectDir
 }
 
-osbFaroWebYarnWebpack {
-	dependsOn osbFaroWebYarnInstall
-
-	args = [osbFaroWebYarnInstall.scriptFile, "webpack"]
-	executable = new File(osbFaroWebYarnInstall.nodeDir, "bin/node")
+osbYarnWebpack {
+	args = [osbYarnInstall.scriptFile, "webpack"]
+	dependsOn osbYarnInstall
+	executable = new File(osbYarnInstall.nodeDir, "bin/node")
 	workingDir = projectDir
 }
 
 packageRunTest {
 	setActions([])
 
-	dependsOn osbFaroWebYarnTest
+	dependsOn osbYarnTest
 }
 
 packageRunWebpack {

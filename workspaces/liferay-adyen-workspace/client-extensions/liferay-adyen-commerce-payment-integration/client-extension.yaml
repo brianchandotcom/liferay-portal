@@ -1,0 +1,35 @@
+assemble:
+    - fromTask: bootJar
+liferay-adyen-commerce-payment-integration:
+    key: liferay-adyen-commerce-payment-integration
+    name: Liferay Adyen Payment Integration
+    oAuth2ApplicationExternalReferenceCode: liferay-adyen-commerce-payment-integration-oauth-application-user-agent
+    paymentIntegrationType: 4
+    paymentIntegrationTypeSettings:
+        apiKey: enter your secret key here
+        environment: enter your environment here
+        hmacSignature: enter your HMAC Signature here
+        merchantAccount: enter your Merchant Account here
+        themeId: enter your theme ID here
+        webhookPassword: enter your Adyen Webhook Passoword here
+        webhookUsername: enter your Adyen Webhook Username here
+    type: commercePaymentIntegration
+liferay-adyen-commerce-payment-integration-oauth-application-headless-server:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Adyen Payment Integration OAuth Application Headless Server
+    scopes:
+        - c_adyenwebhook.everything
+        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Headless.Commerce.Admin.Payment.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer
+liferay-adyen-commerce-payment-integration-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Adyen Payment Integration OAuth Application User Agent
+    scopes:
+        - c_adyenwebhook.everything
+        - Liferay.Headless.Commerce.Admin.Order.everything
+    type: oAuthApplicationUserAgent

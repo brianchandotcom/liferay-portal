@@ -46,11 +46,11 @@ export class MessageBoardsWidgetPage {
 
 		await this.page.getByRole('button', {name: 'Reply'}).click();
 
-		const frameLocator = this.page.frameLocator(
+		const messageBodyIframe = this.page.frameLocator(
 			'iframe[title*="_com_liferay_message_boards_web_portlet_MBPortlet_replyMessageBody"]'
 		);
 
-		await frameLocator.getByRole('textbox').fill('test guest');
+		await messageBodyIframe.getByRole('textbox').fill('test guest');
 
 		await this.page.getByRole('button', {name: buttonName}).click();
 	}

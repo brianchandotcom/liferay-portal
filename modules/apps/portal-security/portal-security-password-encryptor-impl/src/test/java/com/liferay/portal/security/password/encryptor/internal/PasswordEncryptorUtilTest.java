@@ -165,6 +165,22 @@ public class PasswordEncryptorUtilTest {
 	}
 
 	@Test
+	public void testEncryptPBKDF2With8ByteSalt() throws Exception {
+		runTests(
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1", "password",
+			"AAAAoAAK/IBDrUHgboU2XfC7pqk97rPAQEuRTknBTxehNard",
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
+	}
+
+	@Test
+	public void testEncryptPBKDF2With16ByteSalt() throws Exception {
+		runTests(
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1", "password",
+			"AAAAoAAK/IAwGhXn0y8iEgAAAAAAAAAA4zLIf9Yqr/EvCcKm3UJw4gc2KBQ=",
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1");
+	}
+
+	@Test
 	public void testEncryptPBKDF2With50000Rounds() throws Exception {
 		runTests(
 			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1/50000", "password",

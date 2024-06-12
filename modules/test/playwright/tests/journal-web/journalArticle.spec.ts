@@ -190,6 +190,44 @@ autoSaveAsDraftTest(
 	}
 );
 
+autoSaveAsDraftTest(
+	'LPD-26863: Undo/Redo buttons work with metadata fields',
+	async ({journalEditArticlePage, page, site}) => {
+		const changesSavedIndicator = await page.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
+		);
+		const redoButton = page.getByTitle('Redo', {exact: true});
+		const title = getRandomString();
+		const undobutton = page.getByTitle('Undo', {exact: true});
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.titlePlaceholder.click();
+
+		await page.waitForTimeout(200);
+
+		await journalEditArticlePage.titlePlaceholder.fill(title);
+
+		await expect(changesSavedIndicator).toBeVisible();
+
+		await page.locator('body').click();
+
+		await undobutton.click();
+
+		await expect(undobutton).toBeDisabled();
+
+		await expect(journalEditArticlePage.titlePlaceholder).toHaveValue('');
+
+		await redoButton.click();
+
+		await expect(redoButton).toBeDisabled();
+
+		await expect(journalEditArticlePage.titlePlaceholder).toHaveValue(
+			title
+		);
+	}
+);
+
 keepTitlesUntranslated(
 	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',
 	async ({apiHelpers, journalPage, page, site}) => {

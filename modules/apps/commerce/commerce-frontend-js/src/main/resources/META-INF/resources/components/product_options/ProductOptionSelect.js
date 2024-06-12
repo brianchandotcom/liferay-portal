@@ -221,25 +221,45 @@ const ProductOptionSelect = ({
 					skuOptions: currentSkuOptions,
 				})
 			);
-
-			return;
 		}
+		else {
+			setSelectedProductOptionValue({
+				...selectedProductOptionValue,
+				productOptionValueId: valueArray[0],
+				skuId: selectedSkuId,
+			});
+			setSelectedProductOptionValueKey(valueArray[1]);
 
-		setSelectedProductOptionValue({
-			...selectedProductOptionValue,
-			productOptionValueId: valueArray[0],
-			skuId: selectedSkuId,
-		});
-		setSelectedProductOptionValueKey(valueArray[1]);
+			const currentSkuOption = currentSkuOptions.filter(
+				(skuOption) => skuOption.skuOptionKey === productOption.key
+			)[0];
 
-		const currentSkuOption = currentSkuOptions.filter(
-			(skuOption) => skuOption.skuOptionKey === productOption.key
-		)[0];
+			if (currentSkuOption) {
+				currentSkuOptions = currentSkuOptions.map((skuOption) => {
+					if (skuOption.skuOptionKey === productOption.key) {
+						return {
+							key: productOption.key,
+							price: currentProductOptionValue.price,
+							priceType: currentProductOptionValue.priceType,
+							quantity: currentProductOptionValue.quantity,
+							skuId: currentProductOptionValue.skuId,
+							skuOptionKey: productOption.key,
+							skuOptionName: productOption.name,
+							skuOptionValueKey: valueArray[1],
+							skuOptionValueNames: [
+								currentProductOptionValue.name,
+							],
+							value: valueArray[1],
+						};
+					}
 
-		if (currentSkuOption) {
-			currentSkuOptions = currentSkuOptions.map((skuOption) => {
-				if (skuOption.skuOptionKey === productOption.key) {
-					return {
+					return skuOption;
+				});
+			}
+			else {
+				currentSkuOptions = [
+					...currentSkuOptions,
+					{
 						key: productOption.key,
 						price: currentProductOptionValue.price,
 						priceType: currentProductOptionValue.priceType,
@@ -250,55 +270,9 @@ const ProductOptionSelect = ({
 						skuOptionValueKey: valueArray[1],
 						skuOptionValueNames: [currentProductOptionValue.name],
 						value: valueArray[1],
-					};
-				}
-
-				return skuOption;
-			});
-		}
-		else {
-			currentSkuOptions = [
-				...currentSkuOptions,
-				{
-					key: productOption.key,
-					price: currentProductOptionValue.price,
-					priceType: currentProductOptionValue.priceType,
-					quantity: currentProductOptionValue.quantity,
-					skuId: currentProductOptionValue.skuId,
-					skuOptionKey: productOption.key,
-					skuOptionName: productOption.name,
-					skuOptionValueKey: valueArray[1],
-					skuOptionValueNames: [currentProductOptionValue.name],
-					value: valueArray[1],
-				},
-			];
-		}
-
-		if (!productOption.skuContributor) {
-			setHasErrors(false);
-
-			setSkuOptionsAtomState({
-				...skuOptionsAtomState,
-				[errorsKey]: getSkuOptionsErrors(
-					false,
-					isFromMiniCart,
-					productOption,
-					skuOptionsAtomState
-				),
-				[skuOptionsKey]: currentSkuOptions,
-				updating: false,
-			});
-
-			setTimeout(() =>
-				Liferay.fire(`${namespace}${CP_OPTION_CHANGED}`, {
-					productOptionId: productOption.id,
-					productOptionValueId: valueArray[0],
-					skuId: selectedSkuId,
-					skuOptions: currentSkuOptions,
-				})
-			);
-
-			return;
+					},
+				];
+			}
 		}
 
 		let currentSkuId = selectedSkuId;

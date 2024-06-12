@@ -178,6 +178,33 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	}
 
 	@Test
+	public void testProcessActionWithFieldNamesWithoutRandomDigits()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_createMockLiferayPortletActionRequest(
+				"valid_data_definition_with_field_names_without_random_" +
+					"digits.json",
+				"Imported Structure");
+
+		_setUpUploadPortletRequest(mockLiferayPortletActionRequest);
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				_portal.getPortletId(mockLiferayPortletActionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE));
+		Assert.assertNotNull(
+			SessionMessages.get(
+				mockLiferayPortletActionRequest,
+				"importDataDefinitionSuccessMessage"));
+	}
+
+	@Test
 	public void testProcessActionWithInvalidDataDefinition() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_createMockLiferayPortletActionRequest(

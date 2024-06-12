@@ -48,6 +48,7 @@ public class CPSpecificationOptionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPOptionCategoryId", getCPOptionCategoryId());
+		attributes.put("listTypeDefinitionId", getListTypeDefinitionId());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("facetable", isFacetable());
@@ -119,6 +120,13 @@ public class CPSpecificationOptionWrapper
 
 		if (CPOptionCategoryId != null) {
 			setCPOptionCategoryId(CPOptionCategoryId);
+		}
+
+		Long listTypeDefinitionId = (Long)attributes.get(
+			"listTypeDefinitionId");
+
+		if (listTypeDefinitionId != null) {
+			setListTypeDefinitionId(listTypeDefinitionId);
 		}
 
 		String title = (String)attributes.get("title");
@@ -334,6 +342,16 @@ public class CPSpecificationOptionWrapper
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
+	}
+
+	/**
+	 * Returns the list type definition ID of this cp specification option.
+	 *
+	 * @return the list type definition ID of this cp specification option
+	 */
+	@Override
+	public long getListTypeDefinitionId() {
+		return model.getListTypeDefinitionId();
 	}
 
 	/**
@@ -667,6 +685,16 @@ public class CPSpecificationOptionWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	 * Sets the list type definition ID of this cp specification option.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID of this cp specification option
+	 */
+	@Override
+	public void setListTypeDefinitionId(long listTypeDefinitionId) {
+		model.setListTypeDefinitionId(listTypeDefinitionId);
 	}
 
 	/**

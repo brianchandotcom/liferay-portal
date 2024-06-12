@@ -417,6 +417,7 @@ create table CPSpecificationOption (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPOptionCategoryId LONG,
+	listTypeDefinitionId LONG,
 	title STRING null,
 	description STRING null,
 	facetable BOOLEAN,

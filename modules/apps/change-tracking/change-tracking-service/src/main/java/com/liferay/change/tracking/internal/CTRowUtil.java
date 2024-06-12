@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
+import java.io.Serializable;
+
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -164,20 +166,30 @@ public class CTRowUtil {
 		sb.append(tableName);
 		sb.append(" where ctCollectionId = ");
 		sb.append(ctCollectionId);
-		sb.append(" and (");
+		sb.append(" and ");
+		sb.append(primaryColumnName);
+		sb.append(" in (");
 
-		for (long primaryKey : primaryKeys) {
-			sb.append("(");
-			sb.append(primaryColumnName);
-			sb.append(" = ");
+		int i = 0;
+
+		for (Serializable primaryKey : primaryKeys) {
+			if (i == _BATCH_SIZE) {
+				sb.setStringAt(")", sb.index() - 1);
+
+				sb.append(" or ");
+				sb.append(primaryColumnName);
+				sb.append(" in (");
+
+				i = 0;
+			}
+
 			sb.append(primaryKey);
-			sb.append(")");
-			sb.append(" or ");
+			sb.append(", ");
+
+			i++;
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
+		sb.setStringAt(")", sb.index() - 1);
 
 		return sb.toString();
 	}
@@ -200,5 +212,7 @@ public class CTRowUtil {
 
 	private CTRowUtil() {
 	}
+
+	private static final int _BATCH_SIZE = 1000;
 
 }

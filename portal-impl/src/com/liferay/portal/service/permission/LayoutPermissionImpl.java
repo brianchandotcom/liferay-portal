@@ -8,7 +8,6 @@ package com.liferay.portal.service.permission;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -215,8 +214,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		}
 
 		if (containsLayoutUpdatePermission(permissionChecker, layout) ||
-			(FeatureFlagManagerUtil.isEnabled("LPD-11070") &&
-			 contains(permissionChecker, layout, ActionKeys.PREVIEW_DRAFT))) {
+			contains(permissionChecker, layout, ActionKeys.PREVIEW_DRAFT)) {
 
 			return true;
 		}

@@ -876,13 +876,19 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public Theme getTheme() throws PortalException {
-		if (isInheritLookAndFeel()) {
-			LayoutSet layoutSet = getLayoutSet();
-
-			return layoutSet.getTheme();
+		if (!isInheritLookAndFeel()) {
+			return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
 		}
 
-		return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
+		Layout masterLayout = _getMasterLayout();
+
+		if (masterLayout != null) {
+			return masterLayout.getTheme();
+		}
+
+		LayoutSet layoutSet = getLayoutSet();
+
+		return layoutSet.getTheme();
 	}
 
 	@Override

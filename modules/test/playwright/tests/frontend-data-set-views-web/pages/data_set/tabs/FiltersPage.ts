@@ -177,7 +177,7 @@ export class FiltersPage {
 		await this.saveAddFilterModal();
 	}
 
-	async createSelectionFilterApiHeadless({
+	async createHeadlessAPISelectionFilter({
 		filterBy,
 		filterMode,
 		itemKey,
@@ -247,7 +247,7 @@ export class FiltersPage {
 		await this.saveAddFilterModal();
 	}
 
-	async createSelectionFilterPicklist({
+	async createPicklistSelectionFilter({
 		filterBy,
 		filterMode,
 		name,

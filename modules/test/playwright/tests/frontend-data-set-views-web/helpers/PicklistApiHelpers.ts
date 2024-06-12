@@ -18,30 +18,27 @@ export class PicklistApiHelpers extends ApiHelpers {
 		return this.post(url, {data});
 	}
 
-	async deletePicklist(name: string) {
-		const picklist = await this.getPicklist(name);
-
-		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}`;
+	async deletePicklist(id: number) {
+		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/${id}`;
 
 		return this.delete(url);
 	}
 
-	async editPicklist({
-		key,
-		name,
-		value,
+	async addPicklistEntry({
+		entryKey,
+		entryName,
+		picklistId,
 	}: {
-		key: string;
-		name: string;
-		value: string;
+		entryKey: string;
+		entryName: string;
+		picklistId: number;
 	}) {
-		const picklist = await this.getPicklist(name);
-		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/${picklist.id}/list-type-entries`;
+		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/${picklistId}/list-type-entries`;
 
 		const data = {
-			key,
+			key: entryKey,
 			name_i18n: {
-				en_US: value,
+				en_US: entryName,
 			},
 		};
 

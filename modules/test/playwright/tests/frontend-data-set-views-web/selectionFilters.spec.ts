@@ -16,10 +16,7 @@ import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 import {picklistApiHelpersTest} from './fixtures/picklistApiHelpersTest';
 
-const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
-const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
-const PICKLIST_VALUE_KEY = 'sampleValue';
-const PICKLIST_VALUE_NAME = 'Sample Value';
+const SAMPLE_PICKLIST_ENTRY_KEY = 'samplePicklistEntryKey';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -35,11 +32,14 @@ export const test = mergeTests(
 
 let dataSetERC: string;
 let dataSetLabel: string;
+let picklistEntryName: string;
+let picklistId: number;
 let picklistName: string;
 
 test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
+	picklistEntryName = getRandomString();
 	picklistName = getRandomString();
 
 	await dataSetManagerApiHelpers.createDataSet({
@@ -47,25 +47,32 @@ test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 		label: dataSetLabel,
 	});
 
-	await picklistApiHelpers.createPicklist({
+	const picklist = await picklistApiHelpers.createPicklist({
 		name: picklistName,
 	});
 
-	await picklistApiHelpers.editPicklist({
-		key: PICKLIST_VALUE_KEY,
-		name: picklistName,
-		value: PICKLIST_VALUE_NAME,
+	picklistId = picklist.id;
+
+	await picklistApiHelpers.addPicklistEntry({
+		entryKey: SAMPLE_PICKLIST_ENTRY_KEY,
+		entryName: picklistEntryName,
+		picklistId,
 	});
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 
-	await picklistApiHelpers.deletePicklist(picklistName);
+	await picklistApiHelpers.deletePicklist(picklistId);
 });
 
-test.describe('Filters in Data Set Manager', () => {
-	test('Can create a selection filter', async ({filtersPage, page}) => {
+test.describe('Selection Filters in Data Set Manager', () => {
+	test('Can create a selection filter with Picklists source', async ({
+		filtersPage,
+		page,
+	}) => {
+		const selectionFilterName = getRandomString();
+
 		await test.step('Navigate to the Filters tab', async () => {
 			await filtersPage.goto({
 				dataSetLabel,
@@ -73,11 +80,11 @@ test.describe('Filters in Data Set Manager', () => {
 		});
 
 		await test.step('Create a selection filter from picklist source', async () => {
-			await filtersPage.createSelectionFilterPicklist({
+			await filtersPage.createPicklistSelectionFilter({
 				filterBy: 'externalReferenceCode',
 				filterMode: 'Include',
-				name: SELECTION_PICKLIST_FILTER_NAME,
-				preselectedValues: [PICKLIST_VALUE_NAME],
+				name: selectionFilterName,
+				preselectedValues: [picklistEntryName],
 				selectionType: 'Single',
 				source: picklistName,
 				sourceType: 'Object Picklist',
@@ -88,29 +95,31 @@ test.describe('Filters in Data Set Manager', () => {
 			await expect(
 				page.getByRole('cell', {
 					exact: true,
-					name: SELECTION_PICKLIST_FILTER_NAME,
+					name: selectionFilterName,
 				})
 			).toBeVisible();
 		});
 	});
 
-	test('Can create a selection filter with API Headless source', async ({
+	test('Can create a selection filter with Headless API source', async ({
 		filtersPage,
 		page,
 	}) => {
+		const selectionFilterName = getRandomString();
+
 		await test.step('Navigate to the Filters tab', async () => {
 			await filtersPage.goto({
 				dataSetLabel,
 			});
 		});
 
-		await test.step('Create a selection filter from API Headless source', async () => {
-			await filtersPage.createSelectionFilterApiHeadless({
+		await test.step('Create a selection filter from Headless API source', async () => {
+			await filtersPage.createHeadlessAPISelectionFilter({
 				filterBy: 'externalReferenceCode',
 				filterMode: 'Include',
 				itemKey: 'id',
 				itemLabel: 'label',
-				name: SELECTION_API_HEADLESS_FILTER_NAME,
+				name: selectionFilterName,
 				preselectedValues: [dataSetLabel],
 				restApplication: '/data-set-manager/data-sets',
 				restEndpoint: '/',
@@ -124,7 +133,7 @@ test.describe('Filters in Data Set Manager', () => {
 			await expect(
 				page.getByRole('cell', {
 					exact: true,
-					name: SELECTION_API_HEADLESS_FILTER_NAME,
+					name: selectionFilterName,
 				})
 			).toBeVisible();
 		});
@@ -143,7 +152,7 @@ export const fragmentTest = mergeTests(
 	picklistApiHelpersTest
 );
 
-fragmentTest.describe('Filters in Data Set fragment', () => {
+fragmentTest.describe('Selection Filters in Data Set fragment', () => {
 	fragmentTest(
 		'Selection filter is displayed in fragment, and applied to data @LPD-10754',
 		async ({
@@ -157,16 +166,16 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 			const picklistDefaultOption = 'Default';
 
 			await fragmentTest.step('Populate a picklist', async () => {
-				await picklistApiHelpers.editPicklist({
-					key: picklistBooleanOption.toLocaleLowerCase(),
-					name: picklistName,
-					value: picklistBooleanOption,
+				await picklistApiHelpers.addPicklistEntry({
+					entryKey: picklistBooleanOption.toLocaleLowerCase(),
+					entryName: picklistBooleanOption,
+					picklistId,
 				});
 
-				await picklistApiHelpers.editPicklist({
-					key: picklistDefaultOption.toLocaleLowerCase(),
-					name: picklistName,
-					value: picklistDefaultOption,
+				await picklistApiHelpers.addPicklistEntry({
+					entryKey: picklistDefaultOption.toLocaleLowerCase(),
+					entryName: picklistDefaultOption,
+					picklistId,
 				});
 			});
 

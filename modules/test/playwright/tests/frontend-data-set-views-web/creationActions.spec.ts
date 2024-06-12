@@ -416,9 +416,8 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 
 				await dataSetFragmentPage.page.getByRole('dialog').waitFor();
 
-				const dialog = await dataSetFragmentPage.page.getByRole(
-					'dialog'
-				);
+				const dialog =
+					await dataSetFragmentPage.page.getByRole('dialog');
 
 				await expect(dialog).toBeInViewport();
 

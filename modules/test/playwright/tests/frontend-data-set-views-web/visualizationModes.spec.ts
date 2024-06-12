@@ -373,7 +373,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 	}) => {
 		const SAMPLE_FIELD = 'name';
 		const SAMPLE_SCALAR_FIELD = 'id';
-		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const SAMPLE_OBJECT_FIELD = 'dsmDataSetTableSectionRelationship';
 		const SAMPLE_OBJECT_CHILD_FIELD = 'id';
 
 		await test.step('Navigate to table visualization mode page', async () => {

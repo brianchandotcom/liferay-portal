@@ -453,6 +453,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CPSpecificationOption", "priority DOUBLE"));
 
+		registry.register(
+			"5.15.0", "5.16.0",
+			UpgradeProcessFactory.addColumns(
+				"CPSpecificationOption", "listTypeDefinitionId LONG"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

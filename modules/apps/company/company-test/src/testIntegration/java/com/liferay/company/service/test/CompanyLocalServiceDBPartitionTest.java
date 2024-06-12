@@ -398,7 +398,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		try {
 			newCompany = companyLocalService.copyBPartitionCompany(
-				name, company.getCompanyId(), null, virtualHostname, webId);
+				company.getCompanyId(), name, null, virtualHostname, webId);
 
 			Assert.assertTrue(
 				ArrayUtil.contains(
@@ -433,23 +433,23 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
-		long targetCompanyId = RandomTestUtil.nextLong();
+		long toCompanyId = RandomTestUtil.nextLong();
 
 		try {
 			companyLocalService.copyBPartitionCompany(
-				company.getName(), company.getCompanyId(), targetCompanyId,
+				company.getCompanyId(), company.getName(), toCompanyId,
 				company.getVirtualHostname(), company.getWebId());
 
 			Assert.fail();
 		}
 		catch (PortalException portalException) {
 			Assert.assertFalse(
-				ArrayUtil.contains(_getCompanyIdsBySQL(), targetCompanyId));
+				ArrayUtil.contains(_getCompanyIdsBySQL(), toCompanyId));
 
 			Assert.assertEquals(
 				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
-			_checkPartitionNonexists(targetCompanyId);
+			_checkPartitionNonexists(toCompanyId);
 		}
 		finally {
 			companyLocalService.deleteCompany(company);
@@ -467,7 +467,7 @@ public class CompanyLocalServiceDBPartitionTest
 		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
 		String name = RandomTestUtil.randomString();
-		long targetCompanyId = RandomTestUtil.nextLong();
+		long toCompanyId = RandomTestUtil.nextLong();
 		String virtualHostname = RandomTestUtil.randomString();
 		String webId = RandomTestUtil.randomString();
 
@@ -490,19 +490,19 @@ public class CompanyLocalServiceDBPartitionTest
 						}))) {
 
 			companyLocalService.copyBPartitionCompany(
-				name, company.getCompanyId(), targetCompanyId, virtualHostname,
+				company.getCompanyId(), name, toCompanyId, virtualHostname,
 				webId);
 
 			Assert.fail();
 		}
 		catch (PortalException portalException) {
 			Assert.assertFalse(
-				ArrayUtil.contains(_getCompanyIdsBySQL(), targetCompanyId));
+				ArrayUtil.contains(_getCompanyIdsBySQL(), toCompanyId));
 
 			Assert.assertEquals(
 				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
-			_checkPartitionNonexists(targetCompanyId);
+			_checkPartitionNonexists(toCompanyId);
 		}
 		finally {
 			companyLocalService.deleteCompany(company);

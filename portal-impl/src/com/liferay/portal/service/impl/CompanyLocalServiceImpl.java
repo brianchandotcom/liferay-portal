@@ -497,7 +497,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@Override
 	public Company copyBPartitionCompany(
-			String name, long sourceCompanyId, Long targetCompanyId,
+			long fromCompanyId, String name, Long toCompanyId,
 			String virtualHostname, String webId)
 		throws PortalException {
 
@@ -519,29 +519,29 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			throw new IllegalArgumentException("Web ID must not be null");
 		}
 
-		if (sourceCompanyId == PortalInstancePool.getDefaultCompanyId()) {
+		if (fromCompanyId == PortalInstancePool.getDefaultCompanyId()) {
 			throw new IllegalArgumentException(
-				"Company ID " + sourceCompanyId + " is the default company ID");
+				"Company ID " + fromCompanyId + " is the default company ID");
 		}
 
-		Company sourceCompany = companyPersistence.findByPrimaryKey(
-			sourceCompanyId);
+		Company fromCompany = companyPersistence.findByPrimaryKey(
+			fromCompanyId);
 
-		if (sourceCompany == null) {
+		if (fromCompany == null) {
 			throw new IllegalArgumentException(
-				"Source company ID " + sourceCompanyId + " does not exist");
+				"Source company ID " + fromCompanyId + " does not exist");
 		}
 
-		if (targetCompanyId == null) {
-			targetCompanyId = _getNextCompanyId();
+		if (toCompanyId == null) {
+			toCompanyId = _getNextCompanyId();
 		}
 
-		if (fetchCompanyById(targetCompanyId) != null) {
+		if (fetchCompanyById(toCompanyId) != null) {
 			throw new IllegalArgumentException(
-				"Target company ID " + targetCompanyId + " already exists");
+				"Target company ID " + toCompanyId + " already exists");
 		}
 
-		validateName(targetCompanyId, name);
+		validateName(toCompanyId, name);
 
 		String lowerCaseVirtualHostname = StringUtil.toLowerCase(
 			StringUtil.trim(virtualHostname));
@@ -550,14 +550,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		validateWebId(webId);
 
-		DBPartitionUtil.copyDBPartition(sourceCompanyId, targetCompanyId);
+		DBPartitionUtil.copyDBPartition(fromCompanyId, toCompanyId);
 
-		long addedCompanyId = targetCompanyId;
+		long addedCompanyId = toCompanyId;
 
 		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
-			targetCompanyId);
+			toCompanyId);
 
-		Company targetCompany = sourceCompany.cloneWithOriginalValues();
+		Company toCompany = fromCompany.cloneWithOriginalValues();
 
 		try {
 			return _transactionAwareInvoke(
@@ -565,12 +565,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					companyPersistence.clearCache();
 					_virtualHostPersistence.clearCache();
 
-					targetCompany.setCompanyId(addedCompanyId);
-					targetCompany.setWebId(webId);
-					targetCompany.setName(name);
-					targetCompany.setNew(true);
+					toCompany.setCompanyId(addedCompanyId);
+					toCompany.setWebId(webId);
+					toCompany.setName(name);
+					toCompany.setNew(true);
 
-					companyPersistence.update(targetCompany);
+					companyPersistence.update(toCompany);
 
 					Company updatedCompany = updateVirtualHostname(
 						addedCompanyId, virtualHostname);

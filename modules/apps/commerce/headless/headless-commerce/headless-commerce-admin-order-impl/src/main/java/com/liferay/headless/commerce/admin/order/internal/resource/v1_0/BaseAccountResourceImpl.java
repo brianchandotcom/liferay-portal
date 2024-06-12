@@ -89,7 +89,7 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode: .+}/account"
+		"/orders/by-externalReferenceCode/{externalReferenceCode}/account"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

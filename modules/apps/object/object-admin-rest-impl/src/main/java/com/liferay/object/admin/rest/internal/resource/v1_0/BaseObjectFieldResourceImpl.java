@@ -107,7 +107,7 @@ public abstract class BaseObjectFieldResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode: .+}/object-fields"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -146,7 +146,7 @@ public abstract class BaseObjectFieldResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode: .+}/object-fields"
+		"/object-definitions/by-external-reference-code/{externalReferenceCode}/object-fields"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

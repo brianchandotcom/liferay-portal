@@ -91,7 +91,7 @@ public abstract class BasePaymentMethodResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/payment-methods"
+		"/carts/by-externalReferenceCode/{externalReferenceCode}/payment-methods"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

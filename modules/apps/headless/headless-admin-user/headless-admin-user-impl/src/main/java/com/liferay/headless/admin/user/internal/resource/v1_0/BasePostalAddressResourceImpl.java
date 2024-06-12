@@ -92,7 +92,7 @@ public abstract class BasePostalAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/postal-addresses"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -324,7 +324,7 @@ public abstract class BasePostalAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode: .+}/postal-addresses"
+		"/organizations/by-external-reference-code/{externalReferenceCode}/postal-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -759,7 +759,7 @@ public abstract class BasePostalAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/user-accounts/by-external-reference-code/{externalReferenceCode: .+}/postal-addresses"
+		"/user-accounts/by-external-reference-code/{externalReferenceCode}/postal-addresses"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

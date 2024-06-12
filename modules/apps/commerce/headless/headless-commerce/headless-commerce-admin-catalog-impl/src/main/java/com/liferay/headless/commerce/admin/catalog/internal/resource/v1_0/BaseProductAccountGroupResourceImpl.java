@@ -209,7 +209,7 @@ public abstract class BaseProductAccountGroupResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/products/by-externalReferenceCode/{externalReferenceCode: .+}/product-account-groups"
+		"/products/by-externalReferenceCode/{externalReferenceCode}/product-account-groups"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

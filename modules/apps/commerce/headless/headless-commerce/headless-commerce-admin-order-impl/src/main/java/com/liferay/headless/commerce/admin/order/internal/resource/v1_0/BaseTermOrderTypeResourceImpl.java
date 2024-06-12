@@ -173,7 +173,7 @@ public abstract class BaseTermOrderTypeResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/terms/by-externalReferenceCode/{externalReferenceCode: .+}/term-order-types"
+		"/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -208,7 +208,7 @@ public abstract class BaseTermOrderTypeResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/terms/by-externalReferenceCode/{externalReferenceCode: .+}/term-order-types"
+		"/terms/by-externalReferenceCode/{externalReferenceCode}/term-order-types"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

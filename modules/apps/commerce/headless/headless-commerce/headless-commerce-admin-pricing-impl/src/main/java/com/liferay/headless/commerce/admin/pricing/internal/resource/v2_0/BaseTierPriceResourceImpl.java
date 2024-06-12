@@ -95,7 +95,7 @@ public abstract class BaseTierPriceResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/price-entries/by-externalReferenceCode/{externalReferenceCode: .+}/tier-prices"
+		"/price-entries/by-externalReferenceCode/{externalReferenceCode}/tier-prices"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -128,7 +128,7 @@ public abstract class BaseTierPriceResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/price-entries/by-externalReferenceCode/{externalReferenceCode: .+}/tier-prices"
+		"/price-entries/by-externalReferenceCode/{externalReferenceCode}/tier-prices"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -285,7 +285,7 @@ public abstract class BaseTierPriceResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/tier-prices/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/tier-prices/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -315,7 +315,7 @@ public abstract class BaseTierPriceResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/tier-prices/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/tier-prices/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -348,7 +348,7 @@ public abstract class BaseTierPriceResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/tier-prices/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/tier-prices/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

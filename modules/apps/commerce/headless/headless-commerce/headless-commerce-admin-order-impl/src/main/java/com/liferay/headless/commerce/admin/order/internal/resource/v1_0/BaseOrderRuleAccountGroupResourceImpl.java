@@ -179,7 +179,7 @@ public abstract class BaseOrderRuleAccountGroupResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/order-rules/by-externalReferenceCode/{externalReferenceCode: .+}/order-rule-account-groups"
+		"/order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-account-groups"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -217,7 +217,7 @@ public abstract class BaseOrderRuleAccountGroupResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/order-rules/by-externalReferenceCode/{externalReferenceCode: .+}/order-rule-account-groups"
+		"/order-rules/by-externalReferenceCode/{externalReferenceCode}/order-rule-account-groups"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

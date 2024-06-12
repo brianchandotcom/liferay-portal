@@ -108,7 +108,7 @@ public abstract class BasePinResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/pins"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/pins"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

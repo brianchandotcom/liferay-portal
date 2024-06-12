@@ -273,7 +273,7 @@ public abstract class BasePaymentResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/payments/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/payments/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -307,7 +307,7 @@ public abstract class BasePaymentResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/payments/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/payments/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -340,7 +340,7 @@ public abstract class BasePaymentResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/payments/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/payments/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -372,7 +372,7 @@ public abstract class BasePaymentResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Payment")}
 	)
 	@javax.ws.rs.Path(
-		"/payments/by-externalReferenceCode/{externalReferenceCode: .+}/refund"
+		"/payments/by-externalReferenceCode/{externalReferenceCode}/refund"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

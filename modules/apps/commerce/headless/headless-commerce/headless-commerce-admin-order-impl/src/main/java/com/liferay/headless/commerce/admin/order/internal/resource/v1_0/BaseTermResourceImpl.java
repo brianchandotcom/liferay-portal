@@ -272,9 +272,7 @@ public abstract class BaseTermResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Term")}
 	)
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
-		"/terms/by-externalReferenceCode/{externalReferenceCode: .+}"
-	)
+	@javax.ws.rs.Path("/terms/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteTermByExternalReferenceCode(
@@ -302,9 +300,7 @@ public abstract class BaseTermResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Term")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/terms/by-externalReferenceCode/{externalReferenceCode: .+}"
-	)
+	@javax.ws.rs.Path("/terms/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Term getTermByExternalReferenceCode(
@@ -335,9 +331,7 @@ public abstract class BaseTermResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/terms/by-externalReferenceCode/{externalReferenceCode: .+}"
-	)
+	@javax.ws.rs.Path("/terms/by-externalReferenceCode/{externalReferenceCode}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Term patchTermByExternalReferenceCode(

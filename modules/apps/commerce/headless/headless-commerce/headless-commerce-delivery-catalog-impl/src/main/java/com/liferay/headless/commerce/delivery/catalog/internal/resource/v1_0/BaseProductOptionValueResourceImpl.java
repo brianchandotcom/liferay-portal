@@ -115,7 +115,7 @@ public abstract class BaseProductOptionValueResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/product-options/by-externalReferenceCode/{productOptionExternalReferenceCode: .+}/product-option-values"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/product-options/by-externalReferenceCode/{productOptionExternalReferenceCode}/product-option-values"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -199,7 +199,7 @@ public abstract class BaseProductOptionValueResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/product-options/by-externalReferenceCode/{productOptionExternalReferenceCode: .+}/product-option-values"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/product-options/by-externalReferenceCode/{productOptionExternalReferenceCode}/product-option-values"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

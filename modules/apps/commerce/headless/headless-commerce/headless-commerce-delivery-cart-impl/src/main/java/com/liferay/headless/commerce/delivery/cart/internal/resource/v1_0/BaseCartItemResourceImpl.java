@@ -90,7 +90,7 @@ public abstract class BaseCartItemResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/cart-items/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/cart-items/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -123,7 +123,7 @@ public abstract class BaseCartItemResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/cart-items/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/cart-items/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -159,7 +159,7 @@ public abstract class BaseCartItemResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/cart-items/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/cart-items/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -229,7 +229,7 @@ public abstract class BaseCartItemResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/cart-items/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/cart-items/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -532,7 +532,7 @@ public abstract class BaseCartItemResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/items"
+		"/carts/by-externalReferenceCode/{externalReferenceCode}/items"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -571,7 +571,7 @@ public abstract class BaseCartItemResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/carts/by-externalReferenceCode/{externalReferenceCode: .+}/items"
+		"/carts/by-externalReferenceCode/{externalReferenceCode}/items"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

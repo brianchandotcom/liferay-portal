@@ -59,7 +59,7 @@ public abstract class BaseUserResourceImpl implements UserResource {
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode: .+}/accountMembers/createUser"
+		"/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/createUser"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

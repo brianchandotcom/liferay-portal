@@ -97,7 +97,7 @@ public abstract class BasePriceModifierResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/price-lists/by-externalReferenceCode/{externalReferenceCode: .+}/price-modifiers"
+		"/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-modifiers"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -133,7 +133,7 @@ public abstract class BasePriceModifierResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/price-lists/by-externalReferenceCode/{externalReferenceCode: .+}/price-modifiers"
+		"/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-modifiers"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -305,7 +305,7 @@ public abstract class BasePriceModifierResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/price-modifiers/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/price-modifiers/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -337,7 +337,7 @@ public abstract class BasePriceModifierResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/price-modifiers/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/price-modifiers/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -372,7 +372,7 @@ public abstract class BasePriceModifierResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/price-modifiers/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/price-modifiers/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

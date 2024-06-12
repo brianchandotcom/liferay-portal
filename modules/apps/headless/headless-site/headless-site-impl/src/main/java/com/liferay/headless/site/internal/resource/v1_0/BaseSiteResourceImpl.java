@@ -137,7 +137,7 @@ public abstract class BaseSiteResourceImpl implements SiteResource {
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/sites/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -167,7 +167,7 @@ public abstract class BaseSiteResourceImpl implements SiteResource {
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -203,7 +203,7 @@ public abstract class BaseSiteResourceImpl implements SiteResource {
 	)
 	@javax.ws.rs.Consumes("multipart/form-data")
 	@javax.ws.rs.Path(
-		"/sites/by-external-reference-code/{externalReferenceCode: .+}"
+		"/sites/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -237,7 +237,7 @@ public abstract class BaseSiteResourceImpl implements SiteResource {
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/by-external-reference-code/{externalReferenceCode: .+}/site-initializer"
+		"/sites/by-external-reference-code/{externalReferenceCode}/site-initializer"
 	)
 	@javax.ws.rs.Produces("application/zip")
 	@Override

@@ -257,7 +257,7 @@ public abstract class BaseObjectFolderResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/object-folders/by-external-reference-code/{externalReferenceCode: .+}"
+		"/object-folders/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -289,7 +289,7 @@ public abstract class BaseObjectFolderResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-folders/by-external-reference-code/{externalReferenceCode: .+}"
+		"/object-folders/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

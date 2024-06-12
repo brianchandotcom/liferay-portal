@@ -100,7 +100,7 @@ public abstract class BasePlacedOrderResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/accounts/by-externalReferenceCode/{accountExternalReferenceCode: .+}/placed-orders"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/placed-orders"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -193,7 +193,7 @@ public abstract class BasePlacedOrderResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode: .+}"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -229,7 +229,7 @@ public abstract class BasePlacedOrderResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/placed-orders/by-externalReferenceCode/{externalReferenceCode: .+}/payment-url"
+		"/placed-orders/by-externalReferenceCode/{externalReferenceCode}/payment-url"
 	)
 	@javax.ws.rs.Produces("text/plain")
 	@Override

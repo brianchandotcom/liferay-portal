@@ -112,7 +112,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/organizations"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/organizations"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -155,7 +155,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/organizations/{organizationId}"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -193,7 +193,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/organizations/{organizationId}"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -232,7 +232,7 @@ public abstract class BaseOrganizationResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Organization")}
 	)
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/organizations/{organizationId}"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/organizations/{organizationId}"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -727,7 +727,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode: .+}"
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -757,7 +757,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode: .+}"
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -793,7 +793,7 @@ public abstract class BaseOrganizationResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode: .+}"
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -858,7 +858,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/organizations/by-external-reference-code/{externalReferenceCode: .+}"
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

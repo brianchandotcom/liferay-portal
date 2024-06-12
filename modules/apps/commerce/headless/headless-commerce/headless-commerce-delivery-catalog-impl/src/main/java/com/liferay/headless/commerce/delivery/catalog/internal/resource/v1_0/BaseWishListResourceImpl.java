@@ -102,7 +102,7 @@ public abstract class BaseWishListResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{externalReferenceCode: .+}/wishlists"
+		"/channels/by-externalReferenceCode/{externalReferenceCode}/wishlists"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -142,7 +142,7 @@ public abstract class BaseWishListResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{externalReferenceCode: .+}/wishlists"
+		"/channels/by-externalReferenceCode/{externalReferenceCode}/wishlists"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

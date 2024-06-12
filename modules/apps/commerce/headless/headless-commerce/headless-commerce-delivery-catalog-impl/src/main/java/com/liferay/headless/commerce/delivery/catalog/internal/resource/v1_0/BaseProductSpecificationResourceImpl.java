@@ -100,7 +100,7 @@ public abstract class BaseProductSpecificationResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/channels/by-externalReferenceCode/{channelExternalReferenceCode: .+}/products/by-externalReferenceCode/{productExternalReferenceCode: .+}/product-specifications"
+		"/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/product-specifications"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

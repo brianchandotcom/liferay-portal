@@ -56,6 +56,15 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 	</aui:fieldset>
 </commerce-ui:panel>
 
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21636") %>'>
+	<commerce-ui:panel
+		elementClasses="mt-4"
+		title='<%= LanguageUtil.get(request, "picklist") %>'
+	>
+
+	</commerce-ui:panel>
+</c:if>
+
 <c:if test="<%= cpSpecificationOption == null %>">
 	<aui:script sandbox="<%= true %>">
 		var form = document.getElementById('<portlet:namespace />fm');

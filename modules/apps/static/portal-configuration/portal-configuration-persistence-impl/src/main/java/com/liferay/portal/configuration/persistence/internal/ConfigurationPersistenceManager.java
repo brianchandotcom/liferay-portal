@@ -212,7 +212,12 @@ public class ConfigurationPersistenceManager
 			}
 		}
 
-		_loadConfigurationTable();
+		Map<String, Map<String, Object>> overridePropertiesMap =
+			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap();
+
+		overridePropertiesMap.forEach(
+			(key, value) -> _dictionaries.put(
+				key, new HashMapDictionary<>((Map)value)));
 
 		for (Bundle bundle : _bundleContext.getBundles()) {
 			if (Objects.equals(
@@ -395,15 +400,6 @@ public class ConfigurationPersistenceManager
 		}
 
 		return true;
-	}
-
-	private void _loadConfigurationTable() {
-		Map<String, Map<String, Object>> overridePropertiesMap =
-			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap();
-
-		overridePropertiesMap.forEach(
-			(key, value) -> _dictionaries.put(
-				key, new HashMapDictionary<>((Map)value)));
 	}
 
 	private Dictionary<Object, Object> _overrideDictionary(

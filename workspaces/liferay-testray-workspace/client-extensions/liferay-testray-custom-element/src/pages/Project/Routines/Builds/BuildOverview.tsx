@@ -16,7 +16,7 @@ import {useTotalTestCases} from '../../../../hooks/data/useCaseResultGroupBy';
 import useIssuesFound from '../../../../hooks/data/useIssuesFound';
 import i18n from '../../../../i18n';
 import {TestrayBuild, TestrayTask} from '../../../../services/rest';
-import dayjs from '../../../../util/date';
+import { getTimeFromUtcFormat } from '../../../../util/date';
 import {getDonutLegend} from '../../../../util/graph';
 import BuildAlertBar from './BuildAlertBar';
 
@@ -78,7 +78,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 						},
 						{
 							title: i18n.translate('execution-date'),
-							value: dayjs(testrayBuild.dueDate).format('lll'),
+							value: getTimeFromUtcFormat(testrayBuild.dueDate),
 						},
 						{
 							title: i18n.translate('created-by'),

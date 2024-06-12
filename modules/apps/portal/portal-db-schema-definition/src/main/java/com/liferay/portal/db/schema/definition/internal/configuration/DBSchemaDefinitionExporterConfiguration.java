@@ -19,20 +19,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration",
 	localization = "content/Language",
-	name = "db-schema-dump-configuration-name"
+	name = "db-schema-definition-exporter-configuration-name"
 )
 public interface DBSchemaDefinitionExporterConfiguration {
 
-	@Meta.AD(
-		description = "generated-dump-database-type-description",
-		name = "generated-dump-database-type"
-	)
+	@Meta.AD(name = "database-type")
 	public String databaseType();
 
-	@Meta.AD(
-		description = "generated-dump-path-description",
-		name = "generated-dump-path"
-	)
+	@Meta.AD(name = "path")
 	public String path();
 
 }

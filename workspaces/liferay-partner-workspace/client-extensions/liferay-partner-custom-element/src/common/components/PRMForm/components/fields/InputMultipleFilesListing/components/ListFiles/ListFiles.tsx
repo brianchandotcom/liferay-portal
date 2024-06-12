@@ -53,9 +53,8 @@ const ListFiles = ({arrayHelpers, files, meta, resourceName}: IProps) => {
 							displayType={null}
 							onClick={async () => {
 								if (file.documentId) {
-									const deletedDocument = await deleteDocument(
-										file.documentId
-									);
+									const deletedDocument =
+										await deleteDocument(file.documentId);
 
 									if (deletedDocument) {
 										arrayHelpers.remove(index);

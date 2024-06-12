@@ -21,7 +21,11 @@ const Apps = () => {
 	const {data: supplierAccount} = useAccount();
 	const navigate = useNavigate();
 
-	const {data: publishedProductTable = {}, error, isLoading} = useSWR(
+	const {
+		data: publishedProductTable = {},
+		error,
+		isLoading,
+	} = useSWR(
 		catalogId
 			? `/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}`
 			: null,

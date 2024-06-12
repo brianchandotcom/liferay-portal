@@ -44,9 +44,10 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 		filterSchemaKey as string
 	] as FilterSchemaType;
 
-	const filterKeys = useMemo(() => Object.keys(serializedFilter), [
-		serializedFilter,
-	]);
+	const filterKeys = useMemo(
+		() => Object.keys(serializedFilter),
+		[serializedFilter]
+	);
 	const filterFields = useMemo(
 		() =>
 			filterSchema?.fields?.filter((field) =>
@@ -69,7 +70,7 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 							? (field.resource({
 									...parameters,
 									...customFilterFields,
-							  }) as string)
+								}) as string)
 							: (field.resource as string);
 
 					if (cache[cacheKey]) {
@@ -123,10 +124,9 @@ const useFilterUrlParams = (customFilterFields?: CustomFilterFieldsProps) => {
 
 			Object.keys(filterResponse).forEach((key) => {
 				if (Array.isArray(serializedFilter[key])) {
-					const filteredOptions = filterResponse[
-						key
-					]?.filter((option: Options) =>
-						serializedFilter[key].includes(option.value)
+					const filteredOptions = filterResponse[key]?.filter(
+						(option: Options) =>
+							serializedFilter[key].includes(option.value)
 					);
 
 					if (filteredOptions.length) {

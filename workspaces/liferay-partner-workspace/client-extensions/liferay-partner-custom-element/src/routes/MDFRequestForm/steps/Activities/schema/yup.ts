@@ -30,17 +30,20 @@ const activitiesSchema = object({
 								);
 								break;
 							case TypeActivityKey.DIGITAL_MARKETING:
-								targetFields = getDigitalMarketingFieldsValidation(
-									tactic.key as TacticKeys
-								);
+								targetFields =
+									getDigitalMarketingFieldsValidation(
+										tactic.key as TacticKeys
+									);
 								break;
 							case TypeActivityKey.CONTENT_MARKETING:
-								targetFields = getContentMarketingFieldsValidation();
+								targetFields =
+									getContentMarketingFieldsValidation();
 								break;
 							default:
-								targetFields = getMiscellaneousMarketingFieldsValidation(
-									tactic.key as TacticKeys
-								);
+								targetFields =
+									getMiscellaneousMarketingFieldsValidation(
+										tactic.key as TacticKeys
+									);
 								break;
 						}
 

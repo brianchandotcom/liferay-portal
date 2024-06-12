@@ -22,6 +22,7 @@ const useGetAddresses = (selectedAccountId: number | undefined) => {
 
 	useEffect(() => {
 		getAddresses(selectedAccountId);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedAccountId]);
 

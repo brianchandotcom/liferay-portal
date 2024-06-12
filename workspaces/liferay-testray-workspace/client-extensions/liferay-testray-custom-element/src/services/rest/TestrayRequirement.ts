@@ -41,15 +41,15 @@ class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
 				'component,team,componentToRequirements.teamToComponents',
 			transformData: (testrayRequirement) => ({
 				...testrayRequirement,
-				component: testrayRequirement.r_componentToRequirements_c_component
-					? {
-							...testrayRequirement.r_componentToRequirements_c_component,
-							team:
-								testrayRequirement
+				component:
+					testrayRequirement.r_componentToRequirements_c_component
+						? {
+								...testrayRequirement.r_componentToRequirements_c_component,
+								team: testrayRequirement
 									.r_componentToRequirements_c_component
 									.r_teamToComponents_c_team,
-					  }
-					: undefined,
+							}
+						: undefined,
 			}),
 			uri: 'requirements',
 		});

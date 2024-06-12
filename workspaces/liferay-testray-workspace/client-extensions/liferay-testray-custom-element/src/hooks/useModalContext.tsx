@@ -53,7 +53,7 @@ const useModalContext = () => {
 							) : (
 								footer
 							),
-					  ]
+						]
 					: [],
 				header: title,
 				size,

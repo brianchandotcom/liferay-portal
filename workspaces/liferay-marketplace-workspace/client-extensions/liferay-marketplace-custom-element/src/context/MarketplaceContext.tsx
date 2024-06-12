@@ -20,7 +20,7 @@ type ContextType = {
 
 const MarketplaceContext = createContext<ContextType>({
 	channel: {} as Channel,
-	mutateMyUserAccount: ((() => null) as unknown) as KeyedMutator<
+	mutateMyUserAccount: (() => null) as unknown as KeyedMutator<
 		UserAccount | undefined
 	>,
 	myUserAccount: {} as UserAccount,
@@ -46,18 +46,16 @@ const MarketplaceContextProvider: React.FC<MarketplaceContextProviderProps> = ({
 	const {data: marketplaceChannel} = useSWR(
 		'/marketplace/channel',
 		async () => {
-			const channelResponse = await HeadlessCommerceDeliveryCatalogImpl.getChannels(
-				urlSearchParams
-			);
+			const channelResponse =
+				await HeadlessCommerceDeliveryCatalogImpl.getChannels(
+					urlSearchParams
+				);
 
 			return (channelResponse?.items ?? [])[0];
 		}
 	);
 
-	const {
-		data: myUserAccount,
-		mutate,
-	} = useSWR(
+	const {data: myUserAccount, mutate} = useSWR(
 		Liferay.ThemeDisplay.isSignedIn()
 			? '/marketplace/my-user-account'
 			: null,

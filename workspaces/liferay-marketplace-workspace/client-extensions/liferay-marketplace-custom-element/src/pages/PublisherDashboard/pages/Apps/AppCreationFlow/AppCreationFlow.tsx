@@ -34,12 +34,10 @@ type AppCreationFlowProps = {
 };
 
 export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
-	const [
-		{appERC, appLogo, appName, appProductId, priceModel},
-	] = useAppContext();
-	const [appFlowListItems, setAppFlowListItems] = useState(
-		initialFLowListItems
-	);
+	const [{appERC, appLogo, appName, appProductId, priceModel}] =
+		useAppContext();
+	const [appFlowListItems, setAppFlowListItems] =
+		useState(initialFLowListItems);
 	const [currentFlow, setCurrentFlow] = useState('create');
 	const {data: account} = useAccount();
 

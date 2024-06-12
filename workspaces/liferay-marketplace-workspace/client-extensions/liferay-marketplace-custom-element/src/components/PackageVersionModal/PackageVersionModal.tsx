@@ -32,9 +32,8 @@ export function PackageVersionModal({
 		onClose: handleClose,
 	});
 
-	const [checkboxVersions, setCheckboxVersions] = useState<string[]>(
-		currentVersions
-	);
+	const [checkboxVersions, setCheckboxVersions] =
+		useState<string[]>(currentVersions);
 
 	const [versionSelected, setVersionSelected] = useState('');
 	const [versions, setVersions] = useState<string[]>([]);

@@ -44,7 +44,7 @@ const CompareRuns: React.FC<CompareRunsProps> = ({setVisible}) => {
 							{compareRuns?.runA
 								? `${i18n.translate('run-a')} : ${
 										compareRuns?.runA
-								  }`
+									}`
 								: i18n.translate('run-a')}
 						</ClayButton>
 					</ClayLayout.Col>
@@ -54,7 +54,7 @@ const CompareRuns: React.FC<CompareRunsProps> = ({setVisible}) => {
 							{compareRuns?.runB
 								? `${i18n.translate('run-b')} : ${
 										compareRuns?.runB
-								  }`
+									}`
 								: i18n.translate('run-b')}
 						</ClayButton>
 					</ClayLayout.Col>

@@ -62,7 +62,7 @@ export type Sku = {id: number; sku: string};
 
 export type PriceEntry = {priceEntryId: number; sku: {name: string}};
 
-const initialState = ({
+const initialState = {
 	appBuild: 'upload',
 	appCategories: [],
 	appDescription: '',
@@ -84,7 +84,7 @@ const initialState = ({
 		ram: '',
 	},
 	supportURL: '',
-} as unknown) as InitialStateProps;
+} as unknown as InitialStateProps;
 
 interface AppContextProps extends Array<InitialStateProps | Function> {
 	0: typeof initialState;

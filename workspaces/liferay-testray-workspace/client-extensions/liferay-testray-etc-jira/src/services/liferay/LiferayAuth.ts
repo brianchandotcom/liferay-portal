@@ -14,6 +14,7 @@ import {
 class LiferayAuth {
 	protected fetcher = baseFetcher(LIFERAY_BASE_URL as string, {
 		headers: {
+
 			// eslint-disable-next-line quote-props
 			'Authorization': LIFERAY_AUTH_TOKEN as string,
 			'Content-Type': 'application/json',

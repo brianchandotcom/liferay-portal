@@ -123,30 +123,33 @@ const useFormActions = (): Form => {
 		forceRefetch,
 
 		form: {
-			onChange: ({form, setForm}: any) => (event: any) => {
-				const {
-					target: {checked, name, options, type},
-				} = event;
+			onChange:
+				({form, setForm}: any) =>
+				(event: any) => {
+					const {
+						target: {checked, name, options, type},
+					} = event;
 
-				let {value} = event.target;
+					let {value} = event.target;
 
-				if (type === 'checkbox') {
-					value = checked;
-				}
-				else if (type === 'select-one') {
-					value = [
-						{
-							label: options.item(options.selectedIndex).label,
-							value: Number(value) || value,
-						},
-					];
-				}
+					if (type === 'checkbox') {
+						value = checked;
+					}
+					else if (type === 'select-one') {
+						value = [
+							{
+								label: options.item(options.selectedIndex)
+									.label,
+								value: Number(value) || value,
+							},
+						];
+					}
 
-				setForm({
-					...form,
-					[name]: value,
-				});
-			},
+					setForm({
+						...form,
+						[name]: value,
+					});
+				},
 			onClose,
 			onError,
 			onSave,

@@ -92,9 +92,10 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 
 	const lastRunNumber = getLastRunNumber();
 
-	const factorItems = useMemo(() => factorsData?.items || [], [
-		factorsData?.items,
-	]);
+	const factorItems = useMemo(
+		() => factorsData?.items || [],
+		[factorsData?.items]
+	);
 
 	const _onSubmit = (form: RunForm) => {
 		const factorOptionIds = (
@@ -115,7 +116,7 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		onSubmit(
 			{
 				...form,
-				buildId: (buildId as unknown) as number,
+				buildId: buildId as unknown as number,
 				name: runName,
 				number: (lastRunNumber ?? 0) + 1,
 			},

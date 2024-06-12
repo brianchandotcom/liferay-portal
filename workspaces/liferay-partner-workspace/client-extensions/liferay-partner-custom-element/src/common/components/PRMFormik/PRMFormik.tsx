@@ -14,9 +14,9 @@ const PRMFormik = <T extends FormikValues>({
 	children,
 	...props
 }: FormikConfig<T>) => {
-	const currentChild = React.Children.only(children) as React.ReactElement<
-		PRMFormikPageProps
-	>;
+	const currentChild = React.Children.only(
+		children
+	) as React.ReactElement<PRMFormikPageProps>;
 
 	return (
 		<Formik

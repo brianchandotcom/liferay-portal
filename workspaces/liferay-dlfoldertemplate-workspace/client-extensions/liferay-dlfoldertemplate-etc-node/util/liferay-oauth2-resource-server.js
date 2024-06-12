@@ -75,6 +75,7 @@ async function clientLiferayJWT(req, res, next) {
 				next();
 			}
 			else {
+
 				// eslint-disable-next-line no-console
 				console.error(
 					'JWT token client_id value does not match expected client_id value.'
@@ -84,6 +85,7 @@ async function clientLiferayJWT(req, res, next) {
 			}
 		}
 		else {
+
 			// eslint-disable-next-line no-console
 			console.error(
 				'Error fetching JWKS %s %s',
@@ -95,6 +97,7 @@ async function clientLiferayJWT(req, res, next) {
 		}
 	}
 	catch (error) {
+
 		// eslint-disable-next-line no-console
 		console.error('Error validating client JWT token\n%s', error);
 

@@ -42,7 +42,7 @@ const ContentMarketingPopFields = ({
 						activity.proofOfPerformance?.allContents
 							? activity.proofOfPerformance.allContents.concat(
 									liferayFiles as LiferayFile[]
-							  )
+								)
 							: liferayFiles
 					)
 				}

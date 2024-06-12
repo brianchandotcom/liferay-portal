@@ -65,7 +65,7 @@ export function UploadAppPackagesComponent({
 					? [
 							...buildAppPackages[versionName as string],
 							...newUploadedPackage,
-					  ]
+						]
 					: newUploadedPackage,
 				versionName,
 			},
@@ -108,10 +108,10 @@ export function UploadAppPackagesComponent({
 						appType.value === ProductType.CLOUD
 							? i18n.translate(
 									'only-zip-files-are-allowed-max-file-size-is-500-mb'
-							  )
+								)
 							: i18n.translate(
 									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
-							  )
+								)
 					}
 					maxFiles={
 						properties.featureFlags?.includes('LPD-21582') ? 1 : 10

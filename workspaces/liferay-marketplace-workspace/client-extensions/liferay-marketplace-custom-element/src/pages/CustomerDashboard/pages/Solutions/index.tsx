@@ -35,9 +35,10 @@ const Solutions = () => {
 		swrConfig: {refreshInterval},
 	});
 
-	const orderItems = useMemo(() => placedOrders.items ?? [], [
-		placedOrders.items,
-	]);
+	const orderItems = useMemo(
+		() => placedOrders.items ?? [],
+		[placedOrders.items]
+	);
 
 	useEffect(() => {
 		const isProcessing = orderItems.some(({orderStatusInfo}) =>

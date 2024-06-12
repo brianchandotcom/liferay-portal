@@ -26,16 +26,13 @@ type TypeOfActivityComponent = {
 };
 const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 	const fieldsByTypeActivity: TypeOfActivityComponent = {
-		[TypeActivityKey.DIGITAL_MARKETING]: getDigitalMarketFields(
-			mdfRequestActivity
-		),
-		[TypeActivityKey.CONTENT_MARKETING]: getContentMarketFields(
-			mdfRequestActivity
-		),
+		[TypeActivityKey.DIGITAL_MARKETING]:
+			getDigitalMarketFields(mdfRequestActivity),
+		[TypeActivityKey.CONTENT_MARKETING]:
+			getContentMarketFields(mdfRequestActivity),
 		[TypeActivityKey.EVENT]: getEventFields(mdfRequestActivity),
-		[TypeActivityKey.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketing(
-			mdfRequestActivity
-		),
+		[TypeActivityKey.MISCELLANEOUS_MARKETING]:
+			getMiscellaneousMarketing(mdfRequestActivity),
 	};
 
 	const options = {timeZone: 'UTC'};

@@ -229,7 +229,7 @@ const MDFClaimPage = ({
 								values.reimbursementInvoices
 									? values.reimbursementInvoices.concat(
 											liferayFiles as LiferayFile[]
-									  )
+										)
 									: liferayFiles
 							)
 						}

@@ -78,58 +78,60 @@ const addOrUpdateImages = async (
 	}
 };
 
-const _updateSpecification = (
-	getTemporaryProductIdForSpefication: ReturnType<
-		typeof useFeaturePreview
-	>['getTemporaryProductIdForSpefication']
-) => async (
-	product: Product,
-	specificationKey: PRODUCT_SPECIFICATION_KEY,
-	value: string
-) => {
-	const {id, productId, productSpecifications = []} = product;
+const _updateSpecification =
+	(
+		getTemporaryProductIdForSpefication: ReturnType<
+			typeof useFeaturePreview
+		>['getTemporaryProductIdForSpefication']
+	) =>
+	async (
+		product: Product,
+		specificationKey: PRODUCT_SPECIFICATION_KEY,
+		value: string
+	) => {
+		const {id, productId, productSpecifications = []} = product;
 
-	const specification = productSpecifications.find(
-		(productSpecification) =>
-			productSpecification.specificationKey === specificationKey
-	);
+		const specification = productSpecifications.find(
+			(productSpecification) =>
+				productSpecification.specificationKey === specificationKey
+		);
 
-	if (
-		!value?.trim() ||
-		(specification && specification.value.en_US === value)
-	) {
+		if (
+			!value?.trim() ||
+			(specification && specification.value.en_US === value)
+		) {
 
-		// No need to update the specification if the value is equal
-		// the previous value or empty.
+			// No need to update the specification if the value is equal
+			// the previous value or empty.
 
-		return;
-	}
-
-	const _productId = getTemporaryProductIdForSpefication({
-		appId: id,
-		productId,
-	});
-
-	const fn = specification
-		? headlessCommerceAdminCatalogImpl.updateProductSpecification
-		: headlessCommerceAdminCatalogImpl.createProductSpecification;
-
-	const result = await fn(
-		(specification ? specification.id : _productId) as number,
-		{
-			specificationKey,
-			value: {en_US: value},
+			return;
 		}
-	);
 
-	if (specification) {
-		specification.value.en_US = value;
+		const _productId = getTemporaryProductIdForSpefication({
+			appId: id,
+			productId,
+		});
 
-		return;
-	}
+		const fn = specification
+			? headlessCommerceAdminCatalogImpl.updateProductSpecification
+			: headlessCommerceAdminCatalogImpl.createProductSpecification;
 
-	productSpecifications.push(result);
-};
+		const result = await fn(
+			(specification ? specification.id : _productId) as number,
+			{
+				specificationKey,
+				value: {en_US: value},
+			}
+		);
+
+		if (specification) {
+			specification.value.en_US = value;
+
+			return;
+		}
+
+		productSpecifications.push(result);
+	};
 
 const usePublishSolutionSubmission = (
 	context: SolutionInitialState,
@@ -203,16 +205,15 @@ const usePublishSolutionSubmission = (
 			return _product;
 		}
 
-		const product = await headlessCommerceAdminCatalogImpl.createVirtualProduct(
-			{
+		const product =
+			await headlessCommerceAdminCatalogImpl.createVirtualProduct({
 				catalogId,
 				categories: productCategories,
 				description,
 				name,
 				productStatus,
 				workflowStatusInfo: productStatus,
-			}
-		);
+			});
 
 		product.productSpecifications = [];
 

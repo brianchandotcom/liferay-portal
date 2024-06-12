@@ -27,10 +27,8 @@ export function ChoosePricingModelPage({
 	onClickBack,
 	onClickContinue,
 }: ChoosePricingModelPageProps) {
-	const [
-		{appId, appLicense, appProductId, priceModel},
-		dispatch,
-	] = useAppContext();
+	const [{appId, appLicense, appProductId, priceModel}, dispatch] =
+		useAppContext();
 
 	const {getTemporaryProductIdForSpefication} = useFeaturePreview();
 
@@ -119,9 +117,8 @@ export function ChoosePricingModelPage({
 							}
 						}
 						else {
-							const dataSpecification = await getSpecification(
-								'price-model'
-							);
+							const dataSpecification =
+								await getSpecification('price-model');
 
 							const {id} = await createProductSpecification({
 								body: {

@@ -20,6 +20,7 @@ router.post(
 			response.status(200).json({});
 		}
 		catch (error) {
+
 			// eslint-disable-next-line no-console
 			console.log(error.message);
 

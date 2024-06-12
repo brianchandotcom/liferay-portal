@@ -68,7 +68,7 @@ const SelectSubscription = ({
 										new Date(
 											licenseKey.endDate
 										).toISOString()
-								  )
+									)
 								: 'DNE'
 						}`,
 						selected:

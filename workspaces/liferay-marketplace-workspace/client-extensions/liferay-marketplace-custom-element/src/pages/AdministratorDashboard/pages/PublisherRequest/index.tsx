@@ -11,10 +11,14 @@ import fetcher from '../../../../services/fetcher';
 import PublisherRequestTable from './PublisherRequestTable';
 
 const PublisherRequest = () => {
-	const {data: publisherRequests, error, isLoading, mutate} = useSWR<
-		APIResponse<PublisherRequestInfo>
-	>('requestpublisheraccounts', () =>
-		fetcher('o/c/requestpublisheraccounts?sort=dateCreated:desc')
+	const {
+		data: publisherRequests,
+		error,
+		isLoading,
+		mutate,
+	} = useSWR<APIResponse<PublisherRequestInfo>>(
+		'requestpublisheraccounts',
+		() => fetcher('o/c/requestpublisheraccounts?sort=dateCreated:desc')
 	);
 
 	return (

@@ -56,7 +56,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 							routine:
 								caseResult.r_buildToCaseResult_c_build
 									?.r_routineToBuilds_c_routine,
-					  }
+						}
 					: undefined,
 				case: caseResult?.r_caseToCaseResult_c_case
 					? {
@@ -64,21 +64,20 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 							caseType:
 								caseResult?.r_caseToCaseResult_c_case
 									?.r_caseTypeToCases_c_caseType,
-					  }
+						}
 					: undefined,
 				component: caseResult?.r_componentToCaseResult_c_component
 					? {
 							...caseResult.r_componentToCaseResult_c_component,
-							team:
-								caseResult.r_componentToCaseResult_c_component
-									.r_teamToComponents_c_team,
-					  }
+							team: caseResult.r_componentToCaseResult_c_component
+								.r_teamToComponents_c_team,
+						}
 					: undefined,
 				run: caseResult?.r_runToCaseResult_c_run
 					? {
 							...caseResult?.r_runToCaseResult_c_run,
 							build: caseResult?.r_runToCaseResult_c_run?.build,
-					  }
+						}
 					: undefined,
 				runId: caseResult?.r_runToCaseResult_c_runId,
 				user: caseResult?.r_userToCaseResults_user,
@@ -165,9 +164,8 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			let mbThreadId = data.mbThreadId;
 
 			if (!mbThreadId) {
-				const mbThread = await liferayMessageBoardImpl.createMbThread(
-					message
-				);
+				const mbThread =
+					await liferayMessageBoardImpl.createMbThread(message);
 
 				mbThreadId = mbThread.id;
 

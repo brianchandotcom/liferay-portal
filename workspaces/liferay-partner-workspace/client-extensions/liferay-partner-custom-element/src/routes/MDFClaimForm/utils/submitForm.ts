@@ -106,11 +106,12 @@ export default async function submitForm(
 								mdfRequest.r_accToMDFReqs_accountEntryId &&
 								dtoMDFClaimActivity.id
 							) {
-								const dtoMDFClaimBudget = await submitMDFClaimBudget(
-									mdfClaimBudget,
-									mdfRequest.r_accToMDFReqs_accountEntryId,
-									dtoMDFClaimActivity.id
-								);
+								const dtoMDFClaimBudget =
+									await submitMDFClaimBudget(
+										mdfClaimBudget,
+										mdfRequest.r_accToMDFReqs_accountEntryId,
+										dtoMDFClaimActivity.id
+									);
 
 								mdfClaimBudget.id = dtoMDFClaimBudget.id;
 								mdfClaimBudget.externalReferenceCode =

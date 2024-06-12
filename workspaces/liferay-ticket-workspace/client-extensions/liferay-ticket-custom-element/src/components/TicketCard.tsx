@@ -24,13 +24,8 @@ const TicketCard = ({ticket}: {ticket: Ticket}) => {
 
 	const queryClient: QueryClient = useQueryClient();
 
-	const {
-		attributes,
-		isDragging,
-		listeners,
-		setNodeRef,
-		transform,
-	} = useDraggable({data: ticket, id: ticket.id + '_draggable'});
+	const {attributes, isDragging, listeners, setNodeRef, transform} =
+		useDraggable({data: ticket, id: ticket.id + '_draggable'});
 
 	const draggableContainerClass = classNames({
 		'bg-brand-primary-lighten-6': isDragging,

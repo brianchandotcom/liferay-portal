@@ -158,7 +158,7 @@ const useOrderChartLineMetrics = () => {
 		);
 
 		const metrics = response.map(({items}, index) => {
-			const dates = (daysInterval[index] as unknown) as Date[];
+			const dates = daysInterval[index] as unknown as Date[];
 
 			return {
 				dates: dates.map(

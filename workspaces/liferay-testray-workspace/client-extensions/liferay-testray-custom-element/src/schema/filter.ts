@@ -371,8 +371,7 @@ const filterSchema = {
 		fields: [
 			overrides(baseFilters.productVersion, {
 				label: i18n.translate('product-version-name'),
-				name:
-					'buildToCaseResult/r_productVersionToBuilds_c_productVersionId',
+				name: 'buildToCaseResult/r_productVersionToBuilds_c_productVersionId',
 				type: 'multiselect',
 			}),
 			{
@@ -386,8 +385,7 @@ const filterSchema = {
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.team, {
-				name:
-					'caseToCaseResult/componentToCases/r_teamToComponents_c_teamId',
+				name: 'caseToCaseResult/componentToCases/r_teamToComponents_c_teamId',
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.assignee, {
@@ -847,8 +845,7 @@ const filterSchema = {
 			},
 			{
 				label: i18n.translate('case'),
-				name:
-					'requiremenToRequirementsCases/caseToRequirementsCases/name',
+				name: 'requiremenToRequirementsCases/caseToRequirementsCases/name',
 				operator: 'contains',
 				optionalOperator: 'ne',
 				type: 'textarea',
@@ -990,13 +987,11 @@ const filterSchema = {
 				optionalOperator: 'ne',
 			}),
 			overrides(baseFilters.team, {
-				name:
-					'subtaskToCaseResults/componentToCaseResult/r_teamToComponents_c_teamId',
+				name: 'subtaskToCaseResults/componentToCaseResult/r_teamToComponents_c_teamId',
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.component, {
-				name:
-					'subtaskToCaseResults/r_componentToCaseResult_c_componentId',
+				name: 'subtaskToCaseResults/r_componentToCaseResult_c_componentId',
 				type: 'multiselect',
 			}),
 		] as RendererFields[],

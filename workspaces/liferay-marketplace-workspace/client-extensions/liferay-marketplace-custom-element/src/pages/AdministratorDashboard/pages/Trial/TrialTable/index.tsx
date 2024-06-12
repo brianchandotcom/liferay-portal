@@ -231,7 +231,8 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 								>
 									<DropDown.ItemList items={itemsDropdown}>
 										{(dropDownItem: unknown) => {
-											const item = dropDownItem as DropDownItems;
+											const item =
+												dropDownItem as DropDownItems;
 
 											return (
 												<DropDown.Item

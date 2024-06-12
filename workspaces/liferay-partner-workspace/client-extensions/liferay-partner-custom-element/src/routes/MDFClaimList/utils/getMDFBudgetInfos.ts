@@ -13,9 +13,8 @@ export default function getMDFClaimAmountClaimedInfo(
 ) {
 	if (totalClaimAmount) {
 		return {
-			[MDFClaimColumnKey.AMOUNT_CLAIMED]: getIntlNumberFormat(
-				currency
-			).format(totalClaimAmount),
+			[MDFClaimColumnKey.AMOUNT_CLAIMED]:
+				getIntlNumberFormat(currency).format(totalClaimAmount),
 		};
 	}
 }

@@ -1,4 +1,5 @@
 /* eslint-disable quote-props */
+
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -113,8 +114,7 @@ class Testray extends LiferayAuth {
 
 	public async getIssues(issues: string[], httpContext: HttpContext) {
 		const searchParams = getSearchParams({
-			fields:
-				'id,name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.priority',
+			fields: 'id,name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.priority',
 			filter: SearchBuilder.in('name', issues),
 			nestedFields:
 				'issueToCaseResultsIssues,r_caseResultToCaseResultsIssues_c_caseResult',

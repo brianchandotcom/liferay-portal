@@ -17,9 +17,8 @@ export default function useFilters(
 	isChannel?: boolean
 ) {
 	const [filters, setFilters] = useState(() => {
-		const initialFilter: typeof INITIAL_FILTER = structuredClone(
-			INITIAL_FILTER
-		);
+		const initialFilter: typeof INITIAL_FILTER =
+			structuredClone(INITIAL_FILTER);
 
 		if (urlParams.getAll('partner').length) {
 			initialFilter.partner.value = urlParams.getAll('partner')!;
@@ -38,9 +37,8 @@ export default function useFilters(
 		}
 
 		if (urlParams.get('startdate')) {
-			initialFilter.submitDate.dates.startDate = urlParams.get(
-				'startdate'
-			)!;
+			initialFilter.submitDate.dates.startDate =
+				urlParams.get('startdate')!;
 		}
 
 		if (urlParams.getAll('type').length) {
@@ -55,8 +53,8 @@ export default function useFilters(
 			? Filters.MDF_CLAIM_LISTING.channelsOpen
 			: Filters.MDF_CLAIM_LISTING.channelsCompleted
 		: openClaimsFilter
-		? Filters.MDF_CLAIM_LISTING.partnersOpen
-		: Filters.MDF_CLAIM_LISTING.partnersCompleted;
+			? Filters.MDF_CLAIM_LISTING.partnersOpen
+			: Filters.MDF_CLAIM_LISTING.partnersCompleted;
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) => {
 		setFilters((previousFilters) => {

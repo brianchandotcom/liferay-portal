@@ -49,10 +49,9 @@ class TestrayCaseImpl extends Rest<Case, TestrayCase> {
 				component: testrayCase?.r_componentToCases_c_component
 					? {
 							...testrayCase?.r_componentToCases_c_component,
-							team:
-								testrayCase?.r_componentToCases_c_component
-									?.r_teamToComponents_c_team,
-					  }
+							team: testrayCase?.r_componentToCases_c_component
+								?.r_teamToComponents_c_team,
+						}
 					: undefined,
 				project: testrayCase?.r_projectToCases_c_project,
 			}),

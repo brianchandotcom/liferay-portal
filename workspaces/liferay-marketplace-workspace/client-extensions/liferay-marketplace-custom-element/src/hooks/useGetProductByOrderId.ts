@@ -11,14 +11,14 @@ import HeadlessCommerceDeliveryOrderImpl from '../services/rest/HeadlessCommerce
 
 const useGetProductByOrderId = (orderId: string) => {
 	return useSWR(`/placed-order/${orderId}`, async () => {
-		const placedOrder = await HeadlessCommerceDeliveryOrderImpl.getPlacedOrder(
-			orderId
-		);
+		const placedOrder =
+			await HeadlessCommerceDeliveryOrderImpl.getPlacedOrder(orderId);
 
 		if (placedOrder.placedOrderBillingAddressId > 0) {
-			placedOrder.placedOrderBillingAddress = await HeadlessCommerceDeliveryOrderImpl.getPlacedOrderBillingAddress(
-				orderId
-			);
+			placedOrder.placedOrderBillingAddress =
+				await HeadlessCommerceDeliveryOrderImpl.getPlacedOrderBillingAddress(
+					orderId
+				);
 		}
 
 		const product = await HeadlessCommerceDeliveryCatalogImpl.getProduct(

@@ -125,8 +125,12 @@
 .lfr-layout-structure-item-content-container
 	> div[id^='fragment-']
 	> .f-content-container.force-equal-height,
-.lfr-layout-structure-item-content-container:has(.f-content-container.force-equal-height)
+.lfr-layout-structure-item-content-container:has(
+		.f-content-container.force-equal-height
+	)
 	> div[id^='fragment-'],
-.lfr-layout-structure-item-content-container:has(.f-content-container.force-equal-height) {
+.lfr-layout-structure-item-content-container:has(
+		.f-content-container.force-equal-height
+	) {
 	height: 100%;
 }

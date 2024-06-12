@@ -4,6 +4,7 @@
  */
 
 /* global MktoForms2, mktoForms2BaseStyle, mktoForms2ThemeStyle*/
+
 /* eslint no-undef: "error"*/
 
 const mktoCallback = function (form) {

@@ -11,15 +11,19 @@ import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/Headless
 import AppAdministratorTable from './AppAdministratorTable';
 
 const AppAdministrator = () => {
-	const {data: apps, error, isLoading} = useSWR<
-		APIResponse<PublisherRequestInfo>
-	>('administrator-dashboard/apps', () =>
-		HeadlessCommerceAdminCatalogImpl.getProducts(
-			new URLSearchParams({
-				nestedFields: 'productSpecifications',
-				sort: 'createDate:desc',
-			})
-		)
+	const {
+		data: apps,
+		error,
+		isLoading,
+	} = useSWR<APIResponse<PublisherRequestInfo>>(
+		'administrator-dashboard/apps',
+		() =>
+			HeadlessCommerceAdminCatalogImpl.getProducts(
+				new URLSearchParams({
+					nestedFields: 'productSpecifications',
+					sort: 'createDate:desc',
+				})
+			)
 	);
 
 	return (

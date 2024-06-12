@@ -68,7 +68,11 @@ const Licenses = () => {
 			? 'On-Premise'
 			: 'Cloud';
 
-	const {data: licenseKeysResponse, isLoading, mutate} = useSWR(
+	const {
+		data: licenseKeysResponse,
+		isLoading,
+		mutate,
+	} = useSWR(
 		`/order-license-keys/${orderId}/${page}/${pageSize}`,
 		async () => {
 			try {
@@ -94,19 +98,16 @@ const Licenses = () => {
 	const orderStatusIsNotCompleted =
 		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
-	const {
-		onDeativateLicenseKey,
-		onDownload,
-		onViewLicenseKey,
-	} = useLicenseActions({
-		deactivateLicenseModal,
-		keyType,
-		licenseKeyModal,
-		marketplaceSpringBootOAuth2,
-		mutate,
-		product,
-		setModal: setModalData,
-	});
+	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
+		useLicenseActions({
+			deactivateLicenseModal,
+			keyType,
+			licenseKeyModal,
+			marketplaceSpringBootOAuth2,
+			mutate,
+			product,
+			setModal: setModalData,
+		});
 
 	const buttonsInfo = useMemo(
 		() => ({
@@ -148,7 +149,7 @@ const Licenses = () => {
 							)
 								? i18n.translate(
 										'this-key-is-expired-and-cannot-be-downloaded'
-								  )
+									)
 								: ''
 						}
 					>
@@ -183,7 +184,7 @@ const Licenses = () => {
 								isLicenseExpired(row.expirationDate)
 									? i18n.translate(
 											'this-key-is-expired-and-cannot-be-downloaded'
-									  )
+										)
 									: ''
 							}
 						/>
@@ -245,7 +246,7 @@ const Licenses = () => {
 											? format(
 													new Date(expirationDate),
 													'MMM dd, yyyy'
-											  )
+												)
 											: 'DNE'}
 									</p>
 								</div>
@@ -319,7 +320,7 @@ const Licenses = () => {
 								orderStatusIsNotCompleted
 									? i18n.translate(
 											'the-order-must-be-completed-before-licensing-this-app.'
-									  )
+										)
 									: undefined
 							}
 							to={`/order/${orderId}/create-license`}

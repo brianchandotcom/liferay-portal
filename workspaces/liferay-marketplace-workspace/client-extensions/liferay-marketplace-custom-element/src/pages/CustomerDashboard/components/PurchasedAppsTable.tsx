@@ -178,7 +178,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 																orderStatusIsNotCompleted
 																	? i18n.translate(
 																			'the-order-must-be-completed-before-licensing-this-app.'
-																	  )
+																		)
 																	: undefined
 															}
 														>
@@ -268,7 +268,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 														orderStatusIsNotCompleted
 															? i18n.translate(
 																	'this-order-must-be-completed-before-downloading-this-app.'
-															  )
+																)
 															: undefined
 													}
 												>

@@ -127,15 +127,17 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 
 	const productId = Number(appId) + 1;
 
-	const {data: selectedApp, isLoading, mutate} = useSWR(
-		`/published-app/${productId}`,
-		() =>
-			HeadlessCommerceAdminCatalogImpl.getProduct(
-				productId,
-				new URLSearchParams({
-					nestedFields: 'attachments,images,productSpecifications',
-				})
-			)
+	const {
+		data: selectedApp,
+		isLoading,
+		mutate,
+	} = useSWR(`/published-app/${productId}`, () =>
+		HeadlessCommerceAdminCatalogImpl.getProduct(
+			productId,
+			new URLSearchParams({
+				nestedFields: 'attachments,images,productSpecifications',
+			})
+		)
 	);
 
 	const appVersion = useMemo(

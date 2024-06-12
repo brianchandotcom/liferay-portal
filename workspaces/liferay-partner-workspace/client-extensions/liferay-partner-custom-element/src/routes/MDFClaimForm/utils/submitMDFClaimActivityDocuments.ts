@@ -15,25 +15,28 @@ const submitMDFClaimActivityDocuments = async (
 	companyId: number,
 	dtoMDFClaimActivityId: number
 ) => {
-	const dtoMDFClaimActivityDocumentsCreate: MDFClaimActivityDocumentDTO[] = [];
-	const dtoMDFClaimActivityDocumentsUpdate: MDFClaimActivityDocumentDTO[] = [];
+	const dtoMDFClaimActivityDocumentsCreate: MDFClaimActivityDocumentDTO[] =
+		[];
+	const dtoMDFClaimActivityDocumentsUpdate: MDFClaimActivityDocumentDTO[] =
+		[];
 
 	if (proofOfPerformance.allContents?.length) {
 		proofOfPerformance.allContents.map(async (allContentDocument) => {
 			if (allContentDocument.documentId) {
-				const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
-					allContentDocument,
-					ProofOfPerformanceType.ALL_CONTENTS,
-					companyId,
-					dtoMDFClaimActivityId
-				);
+				const dtoMDFClaimActivityDocument =
+					getDocumentDTOFromLiferayFile(
+						allContentDocument,
+						ProofOfPerformanceType.ALL_CONTENTS,
+						companyId,
+						dtoMDFClaimActivityId
+					);
 				dtoMDFClaimActivityDocument.id
 					? dtoMDFClaimActivityDocumentsUpdate.push(
 							dtoMDFClaimActivityDocument
-					  )
+						)
 					: dtoMDFClaimActivityDocumentsCreate.push(
 							dtoMDFClaimActivityDocument
-					  );
+						);
 			}
 		});
 	}
@@ -42,19 +45,20 @@ const submitMDFClaimActivityDocuments = async (
 		proofOfPerformance.eventCollaterals.map(
 			async (eventCollateralsDocument) => {
 				if (eventCollateralsDocument.documentId) {
-					const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
-						eventCollateralsDocument,
-						ProofOfPerformanceType.EVENT_COLLATERALS,
-						companyId,
-						dtoMDFClaimActivityId
-					);
+					const dtoMDFClaimActivityDocument =
+						getDocumentDTOFromLiferayFile(
+							eventCollateralsDocument,
+							ProofOfPerformanceType.EVENT_COLLATERALS,
+							companyId,
+							dtoMDFClaimActivityId
+						);
 					dtoMDFClaimActivityDocument.id
 						? dtoMDFClaimActivityDocumentsUpdate.push(
 								dtoMDFClaimActivityDocument
-						  )
+							)
 						: dtoMDFClaimActivityDocumentsCreate.push(
 								dtoMDFClaimActivityDocument
-						  );
+							);
 				}
 			}
 		);
@@ -63,19 +67,20 @@ const submitMDFClaimActivityDocuments = async (
 		proofOfPerformance.eventInvitations.map(
 			async (eventInvitationsDocument) => {
 				if (eventInvitationsDocument.documentId) {
-					const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
-						eventInvitationsDocument,
-						ProofOfPerformanceType.EVENT_INVITATIONS,
-						companyId,
-						dtoMDFClaimActivityId
-					);
+					const dtoMDFClaimActivityDocument =
+						getDocumentDTOFromLiferayFile(
+							eventInvitationsDocument,
+							ProofOfPerformanceType.EVENT_INVITATIONS,
+							companyId,
+							dtoMDFClaimActivityId
+						);
 					dtoMDFClaimActivityDocument.id
 						? dtoMDFClaimActivityDocumentsUpdate.push(
 								dtoMDFClaimActivityDocument
-						  )
+							)
 						: dtoMDFClaimActivityDocumentsCreate.push(
 								dtoMDFClaimActivityDocument
-						  );
+							);
 				}
 			}
 		);
@@ -83,38 +88,40 @@ const submitMDFClaimActivityDocuments = async (
 	if (proofOfPerformance.eventPhotos?.length) {
 		proofOfPerformance.eventPhotos.map(async (eventPhotosDocument) => {
 			if (eventPhotosDocument.documentId) {
-				const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
-					eventPhotosDocument,
-					ProofOfPerformanceType.EVENT_PHOTOS,
-					companyId,
-					dtoMDFClaimActivityId
-				);
+				const dtoMDFClaimActivityDocument =
+					getDocumentDTOFromLiferayFile(
+						eventPhotosDocument,
+						ProofOfPerformanceType.EVENT_PHOTOS,
+						companyId,
+						dtoMDFClaimActivityId
+					);
 				dtoMDFClaimActivityDocument.id
 					? dtoMDFClaimActivityDocumentsUpdate.push(
 							dtoMDFClaimActivityDocument
-					  )
+						)
 					: dtoMDFClaimActivityDocumentsCreate.push(
 							dtoMDFClaimActivityDocument
-					  );
+						);
 			}
 		});
 	}
 	if (proofOfPerformance.images?.length) {
 		proofOfPerformance.images.map(async (imagesDocument) => {
 			if (imagesDocument.documentId) {
-				const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
-					imagesDocument,
-					ProofOfPerformanceType.IMAGES,
-					companyId,
-					dtoMDFClaimActivityId
-				);
+				const dtoMDFClaimActivityDocument =
+					getDocumentDTOFromLiferayFile(
+						imagesDocument,
+						ProofOfPerformanceType.IMAGES,
+						companyId,
+						dtoMDFClaimActivityId
+					);
 				dtoMDFClaimActivityDocument.id
 					? dtoMDFClaimActivityDocumentsUpdate.push(
 							dtoMDFClaimActivityDocument
-					  )
+						)
 					: dtoMDFClaimActivityDocumentsCreate.push(
 							dtoMDFClaimActivityDocument
-					  );
+						);
 			}
 		});
 	}

@@ -105,7 +105,8 @@ const App = () => {
 									return (
 										<div
 											className={classNames('mb-2 row', {
-												'justify-content-end': !isPaidApp,
+												'justify-content-end':
+													!isPaidApp,
 											})}
 											key={order.id}
 										>

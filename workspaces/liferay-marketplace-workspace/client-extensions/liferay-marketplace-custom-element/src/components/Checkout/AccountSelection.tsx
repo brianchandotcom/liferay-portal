@@ -31,9 +31,10 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 	showContactSupport = true,
 	userAccount,
 }) => {
-	const accountBriefs = useMemo(() => userAccount?.accountBriefs ?? [], [
-		userAccount?.accountBriefs,
-	]);
+	const accountBriefs = useMemo(
+		() => userAccount?.accountBriefs ?? [],
+		[userAccount?.accountBriefs]
+	);
 
 	const accountBriefIds = accountBriefs.map(({id}) => id);
 
@@ -57,12 +58,13 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 						: true;
 
 					if (accountBrief.roleBriefs.length) {
-						displayAccount = accountBriefs[
-							index
-						].roleBriefs.some((roleBrief) =>
-							enabledAccountRoles
-								? enabledAccountRoles.includes(roleBrief.name)
-								: true
+						displayAccount = accountBriefs[index].roleBriefs.some(
+							(roleBrief) =>
+								enabledAccountRoles
+									? enabledAccountRoles.includes(
+											roleBrief.name
+										)
+									: true
 						);
 					}
 

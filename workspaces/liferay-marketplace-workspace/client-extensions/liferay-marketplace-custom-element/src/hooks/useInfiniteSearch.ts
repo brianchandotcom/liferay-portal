@@ -8,21 +8,20 @@ import useSWRInfinite from 'swr/infinite';
 
 import useDebounce from './useDebounce';
 
-const getKey = (search: string, searchKey: string) => (
-	pageIndex: number,
-	previousData: any
-) => {
-	if (previousData && previousData.lastPage === pageIndex) {
-		return null;
-	}
+const getKey =
+	(search: string, searchKey: string) =>
+	(pageIndex: number, previousData: any) => {
+		if (previousData && previousData.lastPage === pageIndex) {
+			return null;
+		}
 
-	return {
-		key: `/infinite-search/${pageIndex}`,
-		pageIndex,
-		search,
-		searchKey,
+		return {
+			key: `/infinite-search/${pageIndex}`,
+			pageIndex,
+			search,
+			searchKey,
+		};
 	};
-};
 
 export type FetcherParams = {pageIndex: string; search: string};
 

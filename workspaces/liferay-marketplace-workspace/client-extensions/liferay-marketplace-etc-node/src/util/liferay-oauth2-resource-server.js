@@ -16,9 +16,8 @@ const clientExtensionOauthJwksRoute =
 		'liferay-marketplace-etc-node-oauth-application-user-agent.oauth2.jwks.uri'
 	];
 const domains = config['com.liferay.lxc.dxp.domains'].split('\n');
-const externalReferenceCode = config[
-	'liferay.oauth.application.external.reference.codes'
-]?.split(',')[0];
+const externalReferenceCode =
+	config['liferay.oauth.application.external.reference.codes']?.split(',')[0];
 const lxcDXPServerProtocol = config['com.liferay.lxc.dxp.server.protocol'];
 const routesDXPConfig = config['com.liferay.lxc.dxp.mainDomain'];
 const lxcDXPMainDomain = routesDXPConfig.split('\n')[0];

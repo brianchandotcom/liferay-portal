@@ -25,12 +25,8 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			return state;
 		}
 		case TYPES.SUBMIT_APP_PROFILE: {
-			const {
-				appERC,
-				appId,
-				appProductId,
-				appWorkflowStatusInfo,
-			} = action.payload.value;
+			const {appERC, appId, appProductId, appWorkflowStatusInfo} =
+				action.payload.value;
 
 			return {
 				...state,

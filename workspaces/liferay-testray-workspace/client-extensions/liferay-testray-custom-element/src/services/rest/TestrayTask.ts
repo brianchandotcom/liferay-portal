@@ -56,7 +56,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 							routine:
 								testrayTask.r_buildToTasks_c_build
 									.r_routineToBuilds_c_routine,
-					  }
+						}
 					: undefined,
 				users: testrayTask.taskToTasksUsers
 					? testrayTask.taskToTasksUsers.map(
@@ -65,7 +65,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 							}: {
 								r_userToTasksUsers_user: UserAccount;
 							}) => r_userToTasksUsers_user
-					  )
+						)
 					: undefined,
 			}),
 			uri: 'tasks',

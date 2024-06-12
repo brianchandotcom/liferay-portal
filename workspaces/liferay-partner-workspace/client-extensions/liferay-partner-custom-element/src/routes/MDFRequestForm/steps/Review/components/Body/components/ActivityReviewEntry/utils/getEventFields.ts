@@ -22,8 +22,8 @@ export default function getEventFields(mdfRequestActivity: MDFRequestActivity) {
 			},
 			{
 				title: 'Webinar Host/Platform',
-				value:
-					mdfRequestActivity.activityDescription?.webinarHostPlatform,
+				value: mdfRequestActivity.activityDescription
+					?.webinarHostPlatform,
 			}
 		);
 	}
@@ -47,15 +47,13 @@ export default function getEventFields(mdfRequestActivity: MDFRequestActivity) {
 		},
 		{
 			title: 'Liferay Participation / Requirements',
-			value:
-				mdfRequestActivity.activityDescription
-					?.liferayParticipationRequirements,
+			value: mdfRequestActivity.activityDescription
+				?.liferayParticipationRequirements,
 		},
 		{
 			title: 'Source and Size of Invite List',
-			value:
-				mdfRequestActivity.activityDescription
-					?.sourceAndSizeOfInviteeList,
+			value: mdfRequestActivity.activityDescription
+				?.sourceAndSizeOfInviteeList,
 		},
 		{
 			title: 'Activity Promotion',

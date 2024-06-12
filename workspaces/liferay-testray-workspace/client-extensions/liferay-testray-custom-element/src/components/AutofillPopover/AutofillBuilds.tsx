@@ -103,7 +103,7 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({
 							{autofillBuild?.buildA
 								? `${i18n.translate('build-a')} : ${
 										autofillBuild?.buildA
-								  }`
+									}`
 								: i18n.translate('build-a')}
 						</ClayButton>
 					</ClayLayout.Col>
@@ -113,7 +113,7 @@ const AutofillBuilds: React.FC<AutofillBuildsProps> = ({
 							{autofillBuild?.buildB
 								? `${i18n.translate('run-b')} : ${
 										autofillBuild?.buildB
-								  }`
+									}`
 								: i18n.translate('build-b')}
 						</ClayButton>
 					</ClayLayout.Col>

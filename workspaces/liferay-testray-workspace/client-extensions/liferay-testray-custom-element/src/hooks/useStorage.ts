@@ -24,9 +24,10 @@ const useStorage = <T = string>(
 		storageType: 'persisted',
 	}
 ): UseStorage<T> => {
-	const storage = useMemo(() => testrayStorage.getStorage(storageType), [
-		storageType,
-	]);
+	const storage = useMemo(
+		() => testrayStorage.getStorage(storageType),
+		[storageType]
+	);
 
 	const [storedValue, setStoredValue] = useState(() => {
 		let storageValue;

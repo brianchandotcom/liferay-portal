@@ -79,7 +79,7 @@ const Header = () => {
 								? [
 										...contentType.content.headerImages,
 										...newUploadedFiles,
-								  ]
+									]
 								: newUploadedFiles,
 						},
 						type: ContentMediaType.UPLOAD_IMAGES,
@@ -91,9 +91,9 @@ const Header = () => {
 	};
 
 	const handleDelete = async (id: string) => {
-		const files = (contentType as HeaderContentTypeImages).content.headerImages.filter(
-			(uploadedFile) => uploadedFile.id !== id
-		);
+		const files = (
+			contentType as HeaderContentTypeImages
+		).content.headerImages.filter((uploadedFile) => uploadedFile.id !== id);
 
 		dispatch({
 			payload: id,
@@ -246,8 +246,7 @@ const Header = () => {
 												headerVideoUrl:
 													event.target.value,
 											},
-											type:
-												ContentMediaType.EMBED_VIDEO_URL,
+											type: ContentMediaType.EMBED_VIDEO_URL,
 										},
 									},
 									type: SolutionTypes.SET_HEADER,
@@ -283,8 +282,7 @@ const Header = () => {
 													headerVideoDescription:
 														event.target.value,
 												},
-												type:
-													ContentMediaType.EMBED_VIDEO_URL,
+												type: ContentMediaType.EMBED_VIDEO_URL,
 											},
 										},
 										type: SolutionTypes.SET_HEADER,
@@ -323,8 +321,7 @@ const Header = () => {
 											content: {
 												headerImages: newImagesInputs,
 											},
-											type:
-												ContentMediaType.UPLOAD_IMAGES,
+											type: ContentMediaType.UPLOAD_IMAGES,
 										},
 									},
 									type: SolutionTypes.SET_HEADER,

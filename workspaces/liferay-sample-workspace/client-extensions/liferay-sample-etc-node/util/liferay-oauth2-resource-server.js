@@ -12,9 +12,8 @@ import config from './configTreePath.js';
 import {logger} from './logger.js';
 
 const domains = config['com.liferay.lxc.dxp.domains'].split('\n');
-const externalReferenceCode = config[
-	'liferay.oauth.application.external.reference.codes'
-].split(',')[0];
+const externalReferenceCode =
+	config['liferay.oauth.application.external.reference.codes'].split(',')[0];
 const lxcDXPMainDomain = config['com.liferay.lxc.dxp.mainDomain'];
 const lxcDXPServerProtocol = config['com.liferay.lxc.dxp.server.protocol'];
 

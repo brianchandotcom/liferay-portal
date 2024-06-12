@@ -22,13 +22,15 @@ const RoutineOutlet = () => {
 	const {actions} = useRoutineActions({isHeaderActions: true});
 	const {pathname} = useLocation();
 	const {projectId, routineId, ...otherParams} = useParams();
-	const {
-		testrayProject,
-	}: {testrayProject: TestrayProject} = useOutletContext();
+	const {testrayProject}: {testrayProject: TestrayProject} =
+		useOutletContext();
 
-	const {data: testrayRoutine, error, loading, mutate} = useFetch<
-		TestrayRoutine
-	>(`/routines/${routineId}`);
+	const {
+		data: testrayRoutine,
+		error,
+		loading,
+		mutate,
+	} = useFetch<TestrayRoutine>(`/routines/${routineId}`);
 
 	const hasOtherParams = !!Object.values(otherParams).length;
 

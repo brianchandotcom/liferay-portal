@@ -23,9 +23,12 @@ const ProjectOutlet = () => {
 
 	const {actions} = useProjectActions({isHeaderActions: true});
 
-	const {data: testrayProject, error, loading, mutate} = useFetch<
-		TestrayProject
-	>(`/projects/${projectId}`);
+	const {
+		data: testrayProject,
+		error,
+		loading,
+		mutate,
+	} = useFetch<TestrayProject>(`/projects/${projectId}`);
 
 	const {data: dataTestrayProjects} = useFetch<APIResponse<TestrayProject>>(
 		'/projects',

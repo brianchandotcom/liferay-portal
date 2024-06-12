@@ -23,7 +23,7 @@ const patchClaimStatus = async (
 				? values
 				: {
 						mdfClaimStatus,
-				  }
+					}
 		);
 
 		if (mdfClaimDTO) {

@@ -95,6 +95,7 @@ const useMarketo = ({
 				footerElement(buttonElem[0]);
 
 				form.onSuccess(() => {
+
 					// eslint-disable-next-line no-console
 					console.info('Submitting Marketo form', formId);
 

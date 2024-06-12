@@ -53,9 +53,8 @@ class WebComponent extends HTMLElement {
 				.then((response) => response.json())
 				.then((response) => {
 					if (response.givenName) {
-						const nameElements = document.getElementsByClassName(
-							'hello-world-name'
-						);
+						const nameElements =
+							document.getElementsByClassName('hello-world-name');
 
 						if (nameElements.length) {
 							nameElements[0].innerHTML = response.givenName;
@@ -63,6 +62,7 @@ class WebComponent extends HTMLElement {
 					}
 				})
 				.catch((error) => {
+
 					// eslint-disable-next-line no-console
 					console.log(error);
 				});

@@ -17,12 +17,12 @@ const submitMDFClaimBudget = async (
 				mdfClaimBudget,
 				dtoMDFClaimActivityId,
 				companyId
-		  )
+			)
 		: await createMDFClaimActivityBudget(
 				mdfClaimBudget,
 				dtoMDFClaimActivityId,
 				companyId
-		  );
+			);
 
 	return dtoMDFClaimBudget;
 };

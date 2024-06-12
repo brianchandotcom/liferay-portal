@@ -13,9 +13,8 @@ export default function getMDFBudgetInfos(
 ) {
 	if (totalRequested) {
 		return {
-			[MDFColumnKey.REQUESTED]: getIntlNumberFormat(currency).format(
-				totalRequested
-			),
+			[MDFColumnKey.REQUESTED]:
+				getIntlNumberFormat(currency).format(totalRequested),
 		};
 	}
 }

@@ -68,7 +68,7 @@ const SubtaskOutlet = () => {
 		testraySubtask?.mbMessageId
 			? liferayMessageBoardImpl.getMessagesIdURL(
 					testraySubtask.mbMessageId
-			  )
+				)
 			: null
 	);
 

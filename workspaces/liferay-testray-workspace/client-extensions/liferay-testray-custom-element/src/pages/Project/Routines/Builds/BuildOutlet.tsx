@@ -39,11 +39,18 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {pathname} = useLocation();
 	const {testrayProject, testrayRoutine}: OutletContext = useOutletContext();
 
-	const {data: testrayBuild, error, loading, mutate: mutateBuild} = useFetch<
-		TestrayBuild
-	>(testrayBuildImpl.getResource(buildId as string), {
-		transformData: (response) => testrayBuildImpl.transformData(response),
-	});
+	const {
+		data: testrayBuild,
+		error,
+		loading,
+		mutate: mutateBuild,
+	} = useFetch<TestrayBuild>(
+		testrayBuildImpl.getResource(buildId as string),
+		{
+			transformData: (response) =>
+				testrayBuildImpl.transformData(response),
+		}
+	);
 
 	const hasOtherParams = !!Object.values(otherParams).length;
 

@@ -39,7 +39,7 @@ const useCaseRequirementActions = ({
 								caseId,
 								requirementId,
 								...requirementCase,
-							} as any)
+							}) as any
 					)
 				)
 					.then(() => {

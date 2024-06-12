@@ -101,9 +101,8 @@ export function DefineAppProfilePage({
 
 		setLoading(true);
 
-		const catalog = await HeadlessCommerceAdminCatalogImpl.getCatalog(
-			catalogId
-		);
+		const catalog =
+			await HeadlessCommerceAdminCatalogImpl.getCatalog(catalogId);
 
 		if (appERC) {
 			response = await updateApp({
@@ -126,7 +125,8 @@ export function DefineAppProfilePage({
 					{
 						channelId: channel?.id as number,
 						currencyCode: channel?.currencyCode as string,
-						externalReferenceCode: channel?.externalReferenceCode as string,
+						externalReferenceCode:
+							channel?.externalReferenceCode as string,
 						id: channel?.id as number,
 						name: channel?.name as string,
 						type: channel?.type as string,

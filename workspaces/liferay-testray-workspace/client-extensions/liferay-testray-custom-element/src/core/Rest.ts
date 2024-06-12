@@ -38,7 +38,7 @@ const getNestedFieldDepth = (nestedFields?: string) => {
 interface RestContructor<
 	YupModel = any,
 	ObjectModel = any,
-	NestedObjectOptions = any
+	NestedObjectOptions = any,
 > {
 	adapter?: Adapter<YupModel>;
 	fields?: string;

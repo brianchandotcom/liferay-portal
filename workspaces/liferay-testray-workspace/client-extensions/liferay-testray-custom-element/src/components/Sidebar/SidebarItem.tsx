@@ -53,7 +53,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 					className={classNames(
 						'tr-sidebar__content__list__item__text',
 						{
-							'tr-sidebar__content__list__item__text--expanded': expanded,
+							'tr-sidebar__content__list__item__text--expanded':
+								expanded,
 						}
 					)}
 				>

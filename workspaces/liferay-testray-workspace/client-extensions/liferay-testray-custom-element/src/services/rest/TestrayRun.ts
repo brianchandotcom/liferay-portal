@@ -52,7 +52,7 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 								routine:
 									run.r_buildToRuns_c_build
 										.r_routineToBuilds_c_routine,
-						  }
+							}
 						: undefined,
 					database,
 					javaJDK,

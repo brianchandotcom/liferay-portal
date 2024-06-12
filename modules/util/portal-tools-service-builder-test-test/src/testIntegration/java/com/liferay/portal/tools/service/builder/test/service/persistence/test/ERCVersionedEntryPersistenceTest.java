@@ -168,16 +168,11 @@ public class ERCVersionedEntryPersistenceTest {
 
 		draftERCVersionedEntry.setMvccVersion(
 			ercVersionedEntry.getMvccVersion());
-
 		draftERCVersionedEntry.setUuid(ercVersionedEntry.getUuid());
-
 		draftERCVersionedEntry.setExternalReferenceCode(
 			ercVersionedEntry.getExternalReferenceCode());
-
 		draftERCVersionedEntry.setHeadId(-ercVersionedEntry.getHeadId());
-
 		draftERCVersionedEntry.setGroupId(ercVersionedEntry.getGroupId());
-
 		draftERCVersionedEntry.setCompanyId(ercVersionedEntry.getCompanyId());
 
 		_ercVersionedEntries.add(_persistence.update(draftERCVersionedEntry));

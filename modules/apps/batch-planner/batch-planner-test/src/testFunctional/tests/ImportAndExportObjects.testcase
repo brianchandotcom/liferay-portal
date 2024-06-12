@@ -270,8 +270,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored until fixed in LPD-27260"
-	@ignore = "true"
 	@priority = 3
 	test SaveImportCustomObjectAsTemplate {
 		task ("And Given I create an import task with custom objects") {
@@ -283,7 +281,7 @@ definition {
 
 			ImportExport.importFile(
 				entityType = "Student (v1.0 - Liferay Object REST)",
-				fieldMappings = "name:Student Name,externalReferenceCode:External Reference Code",
+				fieldMappings = "name:name,externalReferenceCode:externalReferenceCode",
 				fileName = "csv_student_import.csv",
 				noImport = "true");
 		}

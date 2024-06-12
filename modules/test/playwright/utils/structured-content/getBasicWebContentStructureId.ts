@@ -8,9 +8,10 @@ import {ApiHelpers} from '../../helpers/ApiHelpers';
 export default async function getBasicWebContentStructureId(
 	apiHelpers: ApiHelpers
 ): Promise<number> {
-	const company = await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-		'liferay.com'
-	);
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
 
 	const globalGroup = await apiHelpers.jsonWebServicesGroup.getCompanyGroup(
 		company.companyId

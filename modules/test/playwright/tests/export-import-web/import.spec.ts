@@ -61,9 +61,8 @@ test('can import a lar file selecting some items to import', async ({
 			.getByText('Successful')
 	).toBeVisible();
 
-	const exportFilePath = await exportImportPage.downloadExportProcess(
-		exportName
-	);
+	const exportFilePath =
+		await exportImportPage.downloadExportProcess(exportName);
 
 	await exportImportPage.goToImport();
 

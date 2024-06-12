@@ -68,9 +68,8 @@ export class SearchAdminPage {
 	}
 
 	async reindexAllSearchIndexes() {
-		const reindexAllSearchIndexes = await this.getIndexActionsItem(
-			'All Search Indexes'
-		);
+		const reindexAllSearchIndexes =
+			await this.getIndexActionsItem('All Search Indexes');
 
 		await reindexAllSearchIndexes.getByRole('button').click();
 

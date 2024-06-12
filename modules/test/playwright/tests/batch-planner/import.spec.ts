@@ -551,9 +551,8 @@ test('can import CSV file with custom columns order', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postObjectDefinition(siteObjectDefinition);
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -620,9 +619,8 @@ test('can import CSV file with multiple site scoped object entries', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const response =
+		await apiHelpers.objectAdmin.postObjectDefinition(siteObjectDefinition);
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -720,9 +718,8 @@ test('can import CSV file with new and existing site scoped object entries', asy
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const response =
+		await apiHelpers.objectAdmin.postObjectDefinition(siteObjectDefinition);
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -941,9 +938,8 @@ test('can map all imported fields', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const response =
+		await apiHelpers.objectAdmin.postObjectDefinition(siteObjectDefinition);
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -972,9 +968,8 @@ test('can preview CSV file', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const response =
+		await apiHelpers.objectAdmin.postObjectDefinition(siteObjectDefinition);
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
@@ -1145,9 +1140,8 @@ test('cannot import CSV file with empty headers row', async ({
 	dataMigrationCenterPage,
 	page,
 }) => {
-	const response = await apiHelpers.objectAdmin.postObjectDefinition(
-		siteObjectDefinition
-	);
+	const response =
+		await apiHelpers.objectAdmin.postObjectDefinition(siteObjectDefinition);
 
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();

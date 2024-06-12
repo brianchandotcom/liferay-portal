@@ -216,9 +216,8 @@ testWithIsolatedSite(
 
 		// Create two Web Contents with tags
 
-		const contentStructureId = await getBasicWebContentStructureId(
-			apiHelpers
-		);
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
 		const webContents = [
 			{
 				name: 'Web content with the tag Dogs',

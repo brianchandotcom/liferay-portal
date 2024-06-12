@@ -4,9 +4,10 @@
  */
 
 export default async function getGlobalSiteId(apiHelpers) {
-	const company = await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-		'liferay.com'
-	);
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
 
 	const globalGroup = await apiHelpers.jsonWebServicesGroup.getCompanyGroup(
 		company.companyId

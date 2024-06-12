@@ -62,9 +62,8 @@ test.describe('LPD-25858 Refactor of GDPR#CanExportMultipleEntries', () => {
 
 		await apiHelpers.headlessDelivery.postBlog(site.id);
 
-		const contentStructureId = await getBasicWebContentStructureId(
-			apiHelpers
-		);
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
 
 		await apiHelpers.jsonWebServicesJournal.addWebContent({
 			ddmStructureId: contentStructureId,

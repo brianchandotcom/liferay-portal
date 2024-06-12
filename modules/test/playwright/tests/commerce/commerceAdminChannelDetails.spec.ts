@@ -26,9 +26,8 @@ test('LPD-13490 Manage channel country visibility from channel page', async ({
 }) => {
 	await page.goto('/');
 
-	const site = await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-		'guest'
-	);
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,

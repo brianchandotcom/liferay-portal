@@ -418,9 +418,8 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await applicationsMenuPage.goToSiteTemplates();
 	await layoutSetPrototypePage.addSiteTemplate(templateName);
 	await applicationsMenuPage.goToSiteTemplates();
-	const siteTemplateUrl = await layoutSetPrototypePage.getSiteTemplateUrl(
-		templateName
-	);
+	const siteTemplateUrl =
+		await layoutSetPrototypePage.getSiteTemplateUrl(templateName);
 	await page.goto(siteTemplateUrl);
 	await productMenuPage.checkIfAdecuateProductMenu(templateName);
 	await productMenuPage.openProductMenuIfClosed();
@@ -477,9 +476,8 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	await applicationsMenuPage.goToSiteTemplates();
 	await layoutSetPrototypePage.addSiteTemplate(templateName);
 	await applicationsMenuPage.goToSiteTemplates();
-	const siteTemplateUrl = await layoutSetPrototypePage.getSiteTemplateUrl(
-		templateName
-	);
+	const siteTemplateUrl =
+		await layoutSetPrototypePage.getSiteTemplateUrl(templateName);
 
 	await page.goto(siteTemplateUrl);
 	await productMenuPage.checkIfAdecuateProductMenu(templateName);
@@ -529,9 +527,8 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	await applicationsMenuPage.goToSiteTemplates();
 	await layoutSetPrototypePage.addSiteTemplate(templateName);
 	await applicationsMenuPage.goToSiteTemplates();
-	const siteTemplateUrl = await layoutSetPrototypePage.getSiteTemplateUrl(
-		templateName
-	);
+	const siteTemplateUrl =
+		await layoutSetPrototypePage.getSiteTemplateUrl(templateName);
 
 	await page.goto(siteTemplateUrl);
 	await productMenuPage.checkIfAdecuateProductMenu(templateName);

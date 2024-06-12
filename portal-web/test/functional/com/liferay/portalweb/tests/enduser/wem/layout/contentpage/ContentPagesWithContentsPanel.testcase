@@ -395,8 +395,8 @@ definition {
 				key_resolutionLabel = "Width",
 				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 
-			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalWidth");
-			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image.png')]@naturalHeight");
+			var editedNaturalWidth = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalWidth");
+			var editedNaturalHeight = selenium.getAttribute("//img[contains(@data-lfr-editable-id,'image-square') and contains(@src,'analytics-cloud-hero-image')]@naturalHeight");
 		}
 
 		task ("View the naturalWidth doesn't change") {

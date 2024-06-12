@@ -797,12 +797,12 @@ definition {
 				siteName = ${randomSiteName});
 
 			AssertVisible(
-				key_append = "//img[contains(@src,'document_1')]",
+				key_append = "//img[contains(@src,'Document_1')]",
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			Click(
-				key_append = "//img[contains(@src,'document_1')]",
+				key_append = "//img[contains(@src,'Document_1')]",
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 

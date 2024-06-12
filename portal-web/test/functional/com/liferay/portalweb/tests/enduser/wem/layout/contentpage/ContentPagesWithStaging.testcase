@@ -1645,7 +1645,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "document_1");
+				image = "Document_1");
 		}
 	}
 

@@ -13,6 +13,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,6 +48,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,6 +69,11 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
 
 	@Test
 	public void testDataLayoutFieldNamesAreEqualToDataDefinitionFieldNames()
@@ -380,8 +389,8 @@ public class ImportDataDefinitionMVCActionCommandTest {
 		Page<DataDefinition> page =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeContentTypePage(
-					TestPropsValues.getGroupId(), "journal",
-					"Imported Structure", Pagination.of(1, 1), null);
+					_group.getGroupId(), "journal", "Imported Structure",
+					Pagination.of(1, 1), null);
 
 		List<DataDefinition> items = (List<DataDefinition>)page.getItems();
 
@@ -397,7 +406,7 @@ public class ImportDataDefinitionMVCActionCommandTest {
 
 		themeDisplay.setLayout(layout);
 
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -437,6 +446,9 @@ public class ImportDataDefinitionMVCActionCommandTest {
 
 	@Inject
 	private File _file;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject(filter = "mvc.command.name=/journal/import_data_definition")
 	private MVCActionCommand _mvcActionCommand;

@@ -27,6 +27,13 @@ type TDiscount = {
 	usePercentage?: boolean;
 };
 
+type TDiscountRule = {
+	id?: number;
+	name?: string;
+	type?: string;
+	typeSettings?: string;
+};
+
 class TPriceEntry {
 	id?: number;
 	skuId: number;
@@ -120,5 +127,30 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		}
 
 		return discount;
+	}
+
+	async postDiscountRule(discountId: number, discountRule?: TDiscountRule) {
+		discountRule = {
+			name: getRandomString(),
+			type: 'cart-total',
+			...(discountRule || {}),
+		};
+
+		discountRule = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/discounts/${discountId}/discount-rules`,
+			{
+				data: discountRule,
+				failOnStatusCode: true,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: discountRule.id,
+				type: 'discountRule',
+			});
+		}
+
+		return discountRule;
 	}
 }

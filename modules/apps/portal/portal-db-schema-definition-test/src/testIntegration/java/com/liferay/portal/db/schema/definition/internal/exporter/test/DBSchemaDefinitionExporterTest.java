@@ -29,6 +29,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
@@ -125,7 +126,8 @@ public class DBSchemaDefinitionExporterTest {
 		List<String> copyColumns = DatabaseTestUtil.getColumns(copyDataSource);
 
 		Assert.assertEquals(
-			copyColumns.toString(), columns.size(), copyColumns.size());
+			StringUtils.difference(copyColumns.toString(), columns.toString()),
+			columns.size(), copyColumns.size());
 
 		for (int i = 0; i < columns.size(); i++) {
 			Assert.assertEquals(columns.get(i), copyColumns.get(i));
@@ -165,7 +167,8 @@ public class DBSchemaDefinitionExporterTest {
 		List<String> copyIndexes = DatabaseTestUtil.getIndexes(copyDataSource);
 
 		Assert.assertEquals(
-			copyIndexes.toString(), indexes.size(), copyIndexes.size());
+			StringUtils.difference(copyIndexes.toString(), indexes.toString()),
+			indexes.size(), copyIndexes.size());
 
 		for (int i = 0; i < indexes.size(); i++) {
 			Assert.assertEquals(indexes.get(i), copyIndexes.get(i));

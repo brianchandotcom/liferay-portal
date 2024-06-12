@@ -1,0 +1,50 @@
+{
+	"@generated": "a3768aa0ed7def5477e7a2d80fe3400f8f17e4bc",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"declarationDir": "../../../../../../../../.tsc/types",
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"paths": {
+			"@liferay/frontend-js-state-web": [
+				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"@liferay/frontend-js-walkthrough-web": [
+				"../../../../../../frontend-js-walkthrough-web/src/main/resources/META-INF/resources/index.js"
+			],
+			"frontend-js-components-web": [
+				"../../../../../../frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			]
+		},
+		"rootDir": "../../../../../../../..",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-js-components-sample-web.tsbuildinfo",
+		"typeRoots": [
+			"../../../../../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../../../../../global.d.ts"
+	],
+	"references": [
+		{
+			"path": "../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../frontend-js-walkthrough-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
+	]
+}

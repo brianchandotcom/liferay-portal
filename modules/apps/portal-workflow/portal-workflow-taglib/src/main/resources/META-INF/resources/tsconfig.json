@@ -1,0 +1,38 @@
+{
+	"@generated": "c1ebb205454b3cd2a3fdca6de4c43f34be4994b7",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"declarationDir": "../../../../../../../../.tsc/types",
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"paths": {
+			"@liferay/portal-workflow-instance-tracker-web": [
+				"../../../../../../portal-workflow-instance-tracker-web/src/main/resources/META-INF/resources/js/index.js"
+			]
+		},
+		"rootDir": "../../../../../../../..",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/portal-workflow-taglib.tsbuildinfo",
+		"typeRoots": [
+			"../../../../../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../../../../../global.d.ts"
+	],
+	"references": [
+		{
+			"path": "../../../../../../portal-workflow-instance-tracker-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
+	]
+}

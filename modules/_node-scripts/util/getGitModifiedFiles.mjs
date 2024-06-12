@@ -9,7 +9,8 @@ const cachedGitModifiedFiles = {};
 
 export default async function getGitModifiedFiles(commit = undefined) {
 	if (commit === undefined) {
-		const {stdout} = await $`git rev-parse master`;
+		const {stdout} =
+			await $`git rev-parse ${process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME || 'master'}`;
 
 		commit = stdout;
 	}

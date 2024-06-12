@@ -20,6 +20,7 @@ const SideMenu = () => {
 	const [{subscriptionGroups}] = useCustomerPortal();
 	const [isOpenedProductsMenu, setIsOpenedProductsMenu] = useState(false);
 	const [menuItemActiveStatus, setMenuItemActiveStatus] = useState([]);
+	const [hasLiferayPaasActivation, setHasLiferayPaasActivation] = useState(false);
 	const {featureFlags} = useAppPropertiesContext();
 
 	const productActivationMenuRef = useRef();
@@ -27,7 +28,13 @@ const SideMenu = () => {
 	const activationSubscriptionGroups = useMemo(
 		() =>
 			subscriptionGroups?.filter(
-				(subscriptionGroup) => subscriptionGroup.hasActivation
+				(subscriptionGroup) => {
+					if (subscriptionGroup.name === MENU_TYPES.liferayPaaS) {
+						setHasLiferayPaasActivation(true);
+					}
+
+					return subscriptionGroup.hasActivation && subscriptionGroup.name !== MENU_TYPES.liferayPaaS
+				}
 			),
 		[subscriptionGroups]
 	);
@@ -51,10 +58,10 @@ const SideMenu = () => {
 		isOpenedProductsMenu,
 	]);
 
-	const hasLiferayExperienceCloud = useMemo(
-		() =>
+	const hasProductSubscription = useMemo(
+		() => (productType) =>
 			subscriptionGroups?.some(
-				({name}) => name === PRODUCT_TYPES.liferayExperienceCloud
+				({name}) => name === productType
 			),
 		[subscriptionGroups]
 	);
@@ -112,7 +119,7 @@ const SideMenu = () => {
 				</div>
 
 				{featureFlags.includes('LPS-153478') &&
-					hasLiferayExperienceCloud && (
+					hasProductSubscription(PRODUCT_TYPES.liferayExperienceCloud) && (
 						<div className="d-flex">
 							<MenuItem
 								iconKey="experienceCloud"
@@ -123,7 +130,16 @@ const SideMenu = () => {
 								{MENU_TYPES.liferaySaaS}
 							</MenuItem>
 						</div>
-					)}
+					)
+				}
+
+				{hasLiferayPaasActivation && hasProductSubscription(PRODUCT_TYPES.dxpCloud) && (
+					<div className="d-flex">
+						<MenuItem iconKey="lxc" to={getKebabCase(PRODUCT_TYPES.dxpCloud)}>
+							{MENU_TYPES.liferayPaaS}
+						</MenuItem>
+					</div>
+				)}
 
 				<li>
 					<div className="d-flex">

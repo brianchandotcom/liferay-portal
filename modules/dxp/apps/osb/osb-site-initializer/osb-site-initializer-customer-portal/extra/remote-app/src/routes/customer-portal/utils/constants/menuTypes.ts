@@ -5,6 +5,7 @@
 
 export const MENU_TYPES = {
 	attachments: 'Attachments',
+	liferayPaaS: 'Liferay PaaS',
 	liferaySaaS: 'Liferay SaaS',
 	overview: 'Overview',
 	productActivation: 'Product Activation',

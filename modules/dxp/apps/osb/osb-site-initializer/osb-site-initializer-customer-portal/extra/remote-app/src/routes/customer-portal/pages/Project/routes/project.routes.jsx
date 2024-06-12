@@ -75,18 +75,20 @@ const ProjectRoutes = () => {
 						</Route>
 					)}
 
-					<Route element={<ActivationOutlet />} path="activation">
-						<Route
-							element={
-								<ProductOutlet
-									product={PRODUCT_TYPES.dxpCloud}
-								/>
-							}
-							path={getKebabCase(PRODUCT_TYPES.dxpCloud)}
-						>
-							<Route element={<DXPCloud />} index />
-						</Route>
+					<Route
+						element={
+							<ProductOutlet
+								product={PRODUCT_TYPES.dxpCloud}
+							/>
+						}
+					>
+						<Route 
+							element={<DXPCloud />} 
+							path={getKebabCase(PRODUCT_TYPES.dxpCloud)} 
+						/>
+					</Route>
 
+					<Route element={<ActivationOutlet />} path="activation">
 						<Route
 							element={
 								<ProductOutlet product={PRODUCT_TYPES.portal} />

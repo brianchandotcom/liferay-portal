@@ -5136,6 +5136,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new SiteNavigationMenuItemSettingsBuilder();
 		Map<String, String> stringUtilReplaceValues = new HashMap<>();
 
+		List<R> rList = new ArrayList<>();
+
 		R addAcountGroupAssignments = () -> _addAccountGroupAssignments(
 			serviceContext);
 		R addAcountGroups = () -> _addAccountGroups(serviceContext);
@@ -5448,8 +5450,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			updateLayoutSets, _dependsOn(addOrUpdateLayouts)
 		).build();
-
-		List<R> rList = new ArrayList<>();
 
 		while (rList.size() != rMap.size()) {
 			int size = rList.size();

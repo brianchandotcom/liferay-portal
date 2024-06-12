@@ -2574,8 +2574,8 @@ public interface PropsKeys {
 		STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT =
 			"staging.draft.export.import.configuration.clean.up.count";
 
-	public static final String STAGING_GROUP_IN_MEMORY_FILTER_LIMIT =
-		"staging.group.in.memory.filter.limit";
+	public static final String STAGING_GROUPS_IN_MEMORY_FILTER_LIMIT =
+		"staging.groups.in.memory.filter.limit";
 
 	public static final String STAGING_LIVE_GROUP_LOCKING_ENABLED =
 		"staging.live.group.locking.enabled";

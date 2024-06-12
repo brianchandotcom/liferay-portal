@@ -5527,7 +5527,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	private static final Snapshot<ReindexerBridge> _reindexerBridgeSnapshot =
 		new Snapshot<>(GroupLocalServiceImpl.class, ReindexerBridge.class);
 	private static volatile int _stagingGroupInMemoryFilterLimit =
-		PropsValues.STAGING_GROUP_IN_MEMORY_FILTER_LIMIT;
+		PropsValues.STAGING_GROUPS_IN_MEMORY_FILTER_LIMIT;
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -6,16 +6,17 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {searchPageTest} from '../../fixtures/searchPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {SearchPage} from '../../pages/portal-search-web/SearchPage';
-import {getRandomInt} from '../../utils/getRandomInt';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
+	isolatedLayoutTest({type: 'portlet'}),
 	loginTest(),
 	productMenuPageTest,
 	usersAndOrganizationsPagesTest,
@@ -23,52 +24,11 @@ export const test = mergeTests(
 	searchPageTest
 );
 
-test.describe('Searchbar directs to correct page', () => {
-	const TEST_PAGE = `Test${getRandomInt()}`;
-
-	test.beforeEach(async ({page, productMenuPage, staticPagesPage}) => {
-		await test.step('Create a new test page', async () => {
-			await productMenuPage.openProductMenuIfClosed();
-
-			await productMenuPage.goToPages();
-
-			await page.getByRole('button', {name: 'New'}).click();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: 'Page'})
-				.click();
-
-			await staticPagesPage.addWidgetPage(TEST_PAGE);
-		});
-	});
-
-	test.afterEach(async ({page, productMenuPage}) => {
-		await test.step('Delete test page', async () => {
-			await page.goto('/');
-
-			await productMenuPage.openProductMenuIfClosed();
-
-			await productMenuPage.goToPages();
-
-			await page
-				.locator('li')
-				.filter({hasText: new RegExp(TEST_PAGE, 'i')})
-				.getByTitle('Open Page Options Menu')
-				.click();
-
-			await page.getByRole('menuitem', {name: 'Delete'}).click();
-
-			await page
-				.locator('.modal-dialog')
-				.getByRole('button', {name: 'Delete'})
-				.click();
-		});
-	});
-
+test.describe('Search Bar directs to correct page', () => {
 	test('retains impersonation parameter when suggestions is disabled @LPD-17509', async ({
 		apiHelpers,
+		layout,
 		page,
-		productMenuPage,
 		searchPage,
 		usersAndOrganizationsPage,
 	}) => {
@@ -80,21 +40,15 @@ test.describe('Searchbar directs to correct page', () => {
 			testUser = await apiHelpers.headlessAdminUser.postUserAccount();
 		});
 
-		await test.step('Add searchbar and results portlet to new page', async () => {
-			await page.goto('/');
-
-			await productMenuPage.openProductMenuIfClosed();
-
-			await productMenuPage.goToPages();
-
-			await productMenuPage.clickSpecificPage(TEST_PAGE);
+		await test.step('Add search bar and results portlet to new page', async () => {
+			await page.goto('/web/guest' + layout.friendlyURL);
 
 			await searchPage.addPortlet('Search Bar', 'Search');
 
 			await searchPage.addPortlet('Search Results', 'Search');
 		});
 
-		await test.step('Disable search suggestions for added searchbar', async () => {
+		await test.step('Disable search suggestions for added search bar', async () => {
 			await searchPage.selectSearchBarInMainContentConfigurations([
 				{
 					label: 'Enable Suggestions',
@@ -129,7 +83,7 @@ test.describe('Searchbar directs to correct page', () => {
 
 		await test.step('Check that impersonation parameter persists', async () => {
 			await impersonatePage
-				.getByRole('menuitem', {name: TEST_PAGE})
+				.getByRole('menuitem', {name: layout.nameCurrentValue})
 				.click();
 
 			await impersonateSearchPage.searchKeywordInMainContent('test');

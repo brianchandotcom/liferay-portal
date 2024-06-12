@@ -78,9 +78,7 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setStatusByUserId(user.getUserId());
 		sxpBlueprint.setStatusDate(serviceContext.getModifiedDate(null));
 
-		sxpBlueprint =
-			SXPBlueprintUpgradeContributorStorageSchemaUtil.
-				upgradeContributorStorageSchema(sxpBlueprint);
+		sxpBlueprint = _upgradeImportedBlueprint(sxpBlueprint);
 
 		sxpBlueprint = sxpBlueprintPersistence.update(sxpBlueprint);
 
@@ -188,6 +186,11 @@ public class SXPBlueprintLocalServiceImpl
 				GetterUtil.getFloat(sxpBlueprint.getVersion(), 0.9F) + 0.1));
 
 		return updateSXPBlueprint(sxpBlueprint);
+	}
+
+	private SXPBlueprint _upgradeImportedBlueprint(SXPBlueprint sxpBlueprint) {
+		return SXPBlueprintUpgradeContributorStorageSchemaUtil.
+			upgradeContributorStorageSchema(sxpBlueprint);
 	}
 
 	private void _validate(

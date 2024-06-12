@@ -105,8 +105,6 @@ public class JournalEditDDMStructuresDisplayContextTest {
 				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
 			new MockLiferayPortletContext(path));
 
-		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
@@ -123,6 +121,8 @@ public class JournalEditDDMStructuresDisplayContextTest {
 
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
 
 		return mockLiferayPortletRenderRequest;
 	}

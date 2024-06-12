@@ -38,14 +38,8 @@ exports[`EmptyDropZone renders illustration when empty contributors 1`] = `
         <div
           class="c-empty-state-title"
         >
-          <span
-            class="text-truncate-inline"
-          >
-            <span
-              class="text-truncate"
-            >
-              no-x-yet
-            </span>
+          <span>
+            no-x-yet
           </span>
         </div>
         <div

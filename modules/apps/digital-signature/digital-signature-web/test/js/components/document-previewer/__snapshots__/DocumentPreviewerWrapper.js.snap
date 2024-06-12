@@ -192,14 +192,8 @@ exports[`DocumentPreviewerWrapper renders with a document without preview 1`] = 
         <div
           class="c-empty-state-title"
         >
-          <span
-            class="text-truncate-inline"
-          >
-            <span
-              class="text-truncate"
-            >
-              no-preview-available
-            </span>
+          <span>
+            no-preview-available
           </span>
         </div>
         <div
@@ -483,14 +477,8 @@ exports[`DocumentPreviewerWrapper renders with empty state 1`] = `
         <div
           class="c-empty-state-title"
         >
-          <span
-            class="text-truncate-inline"
-          >
-            <span
-              class="text-truncate"
-            >
-              no-preview-available
-            </span>
+          <span>
+            no-preview-available
           </span>
         </div>
         <div

@@ -553,7 +553,16 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd");
 
-			return simpleDateFormat.format(infoFieldValue.getValue());
+			try {
+				return simpleDateFormat.format(infoFieldValue.getValue());
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(illegalArgumentException);
+				}
+
+				return null;
+			}
 		}
 
 		Object value = infoFieldValue.getValue();

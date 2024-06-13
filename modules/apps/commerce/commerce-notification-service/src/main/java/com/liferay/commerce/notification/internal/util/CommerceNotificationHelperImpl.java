@@ -203,7 +203,7 @@ public class CommerceNotificationHelperImpl
 		}
 
 		if (Validator.isNull(body)) {
-			_formatString(
+			body = _formatString(
 				commerceNotificationType, _FIELD_BODY,
 				commerceNotificationTemplate.getBody(siteDefaultLocale), object,
 				siteDefaultLocale);

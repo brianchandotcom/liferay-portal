@@ -11,7 +11,6 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.model.NotificationQueueEntry;
-import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
@@ -93,7 +92,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -563,26 +561,6 @@ public class BaseNotificationTypeTest {
 					String.valueOf(expectedTermValue), actualTermValue);
 			}
 		}
-	}
-
-	protected NotificationRecipientSetting createNotificationRecipientSetting(
-		String name, Object value) {
-
-		NotificationRecipientSetting notificationRecipientSetting =
-			_notificationRecipientSettingLocalService.
-				createNotificationRecipientSetting(0L);
-
-		notificationRecipientSetting.setName(name);
-
-		if (value instanceof String) {
-			notificationRecipientSetting.setValue(String.valueOf(value));
-		}
-		else {
-			notificationRecipientSetting.setValueMap(
-				(Map<Locale, String>)value);
-		}
-
-		return notificationRecipientSetting;
 	}
 
 	protected void executeNotificationObjectAction(

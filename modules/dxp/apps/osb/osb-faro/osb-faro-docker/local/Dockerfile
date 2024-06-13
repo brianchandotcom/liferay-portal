@@ -26,6 +26,7 @@ RUN mkdir -p $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util && \
     echo "server.info=" > $LIFERAY_HOME/tomcat/lib/org/apache/catalina/util/ServerInfo.properties
 
 COPY ./common/resources/context.xml $LIFERAY_HOME/tomcat/conf
+COPY ./common/resources/lib/mysql.jar $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib/
 COPY ./common/resources/portal-ext.properties $LIFERAY_HOME/
 COPY ./common/resources/rewrite.config $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/
 COPY ./common/resources/setenv.sh $LIFERAY_HOME/tomcat/bin/

@@ -1,0 +1,738 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.push.notifications.sender.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.push.notifications.exception.PushNotificationsException;
+import com.liferay.push.notifications.sender.PushNotificationsSender;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+
+import org.mockserver.integration.ClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
+import org.mockserver.model.MediaType;
+import org.mockserver.verify.VerificationTimes;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
+/**
+ * @author Carlos Correa
+ */
+@RunWith(Arquillian.class)
+public class FirebasePushNotificationsSenderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		_clientAndServer = ClientAndServer.startClientAndServer();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_clientAndServer.stop();
+
+		_deleteConfiguration();
+	}
+
+	@Test
+	public void testSendEmptyNotificationWithOneDestination() throws Exception {
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String destinationToken = RandomTestUtil.randomString();
+
+		_mockSendNotificationRequest(accessToken, true);
+
+		_pushNotificationsSender.send(
+			Arrays.asList(destinationToken),
+			JSONFactoryUtil.createJSONObject());
+
+		_verifyAccessTokenRequest();
+		_verifyGroupRequestInteractions(accessToken, false, false);
+		_verifySendNotificationRequest(
+			accessToken,
+			_getExpectedEmptyNotificationJSONObject(destinationToken));
+	}
+
+	@Test
+	public void testSendEmptyNotificationWithSeveralDestinations()
+		throws Exception {
+
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String groupId = RandomTestUtil.randomString();
+
+		_mockGroupRequest(accessToken, true, groupId, true);
+
+		_mockSendNotificationRequest(accessToken, true);
+
+		List<String> destinationTokens = Arrays.asList(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_pushNotificationsSender.send(
+			destinationTokens, JSONFactoryUtil.createJSONObject());
+
+		_verifyAccessTokenRequest();
+
+		String groupName = _verifyCreateGroupRequest(
+			accessToken, destinationTokens);
+
+		_verifyGroupRequestInteractions(accessToken, true, true);
+
+		_verifySendNotificationRequest(
+			accessToken, _getExpectedEmptyNotificationJSONObject(groupId));
+
+		_verifyRemoveGroupRequest(
+			accessToken, destinationTokens, groupId, groupName);
+	}
+
+	@Test
+	public void testSendWithOneDestination() throws Exception {
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String destinationToken = RandomTestUtil.randomString();
+
+		JSONObject jsonObject = _getRandomNotificationJSONObject();
+
+		_mockSendNotificationRequest(accessToken, true);
+
+		_pushNotificationsSender.send(
+			Arrays.asList(destinationToken), jsonObject);
+
+		_verifyAccessTokenRequest();
+		_verifyGroupRequestInteractions(accessToken, false, false);
+		_verifySendNotificationRequest(
+			accessToken,
+			_getExpectedNotificationJSONObject(destinationToken, jsonObject));
+	}
+
+	@Test
+	public void testSendWithOneDestinationAndErrorWhenSendingNotification()
+		throws Exception {
+
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String destinationToken = RandomTestUtil.randomString();
+
+		_mockSendNotificationRequest(accessToken, false);
+
+		expectedException.expect(PushNotificationsException.class);
+		expectedException.expectMessage("Unable to send the push notification");
+
+		try {
+			_pushNotificationsSender.send(
+				Arrays.asList(destinationToken),
+				_getRandomNotificationJSONObject());
+		}
+		finally {
+			_verifyAccessTokenRequest();
+			_verifyGroupRequestInteractions(accessToken, false, false);
+		}
+	}
+
+	@Test
+	public void testSendWithoutConfiguration() throws Exception {
+		expectedException.expect(PushNotificationsException.class);
+		expectedException.expectMessage(
+			"Firebase push notifications sender is not configured properly");
+
+		_pushNotificationsSender.send(
+			Arrays.asList(RandomTestUtil.randomString()),
+			JSONFactoryUtil.createJSONObject());
+	}
+
+	@Test
+	public void testSendWithSeveralDestinations() throws Exception {
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String groupId = RandomTestUtil.randomString();
+
+		_mockGroupRequest(accessToken, true, groupId, true);
+
+		_mockSendNotificationRequest(accessToken, true);
+
+		List<String> destinationTokens = Arrays.asList(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		JSONObject jsonObject = _getRandomNotificationJSONObject();
+
+		_mockSendNotificationRequest(accessToken, true);
+
+		_pushNotificationsSender.send(destinationTokens, jsonObject);
+
+		_verifyAccessTokenRequest();
+
+		String groupName = _verifyCreateGroupRequest(
+			accessToken, destinationTokens);
+
+		_verifyGroupRequestInteractions(accessToken, true, true);
+
+		_verifySendNotificationRequest(
+			accessToken,
+			_getExpectedNotificationJSONObject(groupId, jsonObject));
+
+		_verifyRemoveGroupRequest(
+			accessToken, destinationTokens, groupId, groupName);
+	}
+
+	@Test
+	public void testSendWithSeveralDestinationsAndErrorWhenCreatingGroup()
+		throws Exception {
+
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String groupId = RandomTestUtil.randomString();
+
+		_mockGroupRequest(accessToken, false, groupId, true);
+
+		List<String> destinationTokens = Arrays.asList(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		expectedException.expect(PushNotificationsException.class);
+		expectedException.expectMessage(
+			"Unable to create a notification group");
+
+		try {
+			_pushNotificationsSender.send(
+				destinationTokens, _getRandomNotificationJSONObject());
+		}
+		finally {
+			_verifyAccessTokenRequest();
+			_verifyCreateGroupRequest(accessToken, destinationTokens);
+			_verifyGroupRequestInteractions(accessToken, true, false);
+		}
+	}
+
+	@Test
+	public void testSendWithSeveralDestinationsAndErrorWhenRemovingGroup()
+		throws Exception {
+
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String groupId = RandomTestUtil.randomString();
+
+		_mockGroupRequest(accessToken, true, groupId, false);
+
+		_mockSendNotificationRequest(accessToken, true);
+
+		List<String> destinationTokens = Arrays.asList(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		JSONObject jsonObject = _getRandomNotificationJSONObject();
+
+		expectedException.expect(PushNotificationsException.class);
+		expectedException.expectMessage("Unable to remove notification group");
+
+		try {
+			_pushNotificationsSender.send(destinationTokens, jsonObject);
+		}
+		finally {
+			_verifyAccessTokenRequest();
+
+			String groupName = _verifyCreateGroupRequest(
+				accessToken, destinationTokens);
+
+			_verifySendNotificationRequest(
+				accessToken,
+				_getExpectedNotificationJSONObject(groupId, jsonObject));
+
+			_verifyRemoveGroupRequest(
+				accessToken, destinationTokens, groupId, groupName);
+		}
+	}
+
+	@Test
+	public void testSendWithSeveralDestinationsAndErrorWhenSendingNotification()
+		throws Exception {
+
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(true);
+
+		String groupId = RandomTestUtil.randomString();
+
+		_mockGroupRequest(accessToken, true, groupId, false);
+
+		_mockSendNotificationRequest(accessToken, false);
+
+		List<String> destinationTokens = Arrays.asList(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		expectedException.expect(PushNotificationsException.class);
+		expectedException.expectMessage("Unable to send the push notification");
+
+		JSONObject jsonObject = _getRandomNotificationJSONObject();
+
+		try {
+			_pushNotificationsSender.send(destinationTokens, jsonObject);
+		}
+		finally {
+			_verifyAccessTokenRequest();
+
+			String groupName = _verifyCreateGroupRequest(
+				accessToken, destinationTokens);
+
+			_verifySendNotificationRequest(
+				accessToken,
+				_getExpectedNotificationJSONObject(groupId, jsonObject));
+
+			_verifyRemoveGroupRequest(
+				accessToken, destinationTokens, groupId, groupName);
+		}
+	}
+
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
+
+	private void _deleteConfiguration() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_PID);
+	}
+
+	private int _getCode(boolean success) {
+		if (success) {
+			return 200;
+		}
+
+		return 500;
+	}
+
+	private JSONObject _getExpectedEmptyNotificationJSONObject(
+		String destinationToken) {
+
+		return JSONUtil.put(
+			"message",
+			JSONUtil.put(
+				"android",
+				JSONUtil.put("notification", JSONFactoryUtil.createJSONObject())
+			).put(
+				"data",
+				JSONUtil.put(
+					"payload",
+					JSONFactoryUtil.createJSONObject(
+					).toString())
+			).put(
+				"token", destinationToken
+			));
+	}
+
+	private JSONObject _getExpectedNotificationJSONObject(
+		String destinationToken, JSONObject jsonObject) {
+
+		return JSONUtil.put(
+			"message",
+			JSONUtil.put(
+				"android",
+				JSONUtil.put(
+					"notification",
+					JSONUtil.put(
+						"body", jsonObject.getString("body")
+					).put(
+						"body_loc_args",
+						jsonObject.getJSONArray("bodyLocalizedArguments")
+					).put(
+						"body_loc_key", jsonObject.getString("bodyLocalizedKey")
+					).put(
+						"notification_count", jsonObject.getInt("badge")
+					).put(
+						"sound", jsonObject.getString("sound")
+					).put(
+						"title", jsonObject.getString("title")
+					).put(
+						"title_loc_args",
+						jsonObject.getJSONArray("titleLocalizedArguments")
+					).put(
+						"title_loc_key",
+						jsonObject.getString("titleLocalizedKey")
+					))
+			).put(
+				"data",
+				JSONUtil.put(
+					"payload",
+					JSONUtil.put(
+						"customField1", jsonObject.getString("customField1")
+					).put(
+						"customField2", jsonObject.getString("customField2")
+					).put(
+						"customField3", jsonObject.getInt("customField3")
+					).put(
+						"customFieldN", jsonObject.getString("customFieldN")
+					).put(
+						"title", jsonObject.getString("title")
+					).put(
+						"titleLocalizedArguments",
+						jsonObject.getJSONArray("titleLocalizedArguments")
+					).put(
+						"titleLocalizedKey",
+						jsonObject.getString("titleLocalizedKey")
+					).toString())
+			).put(
+				"token", destinationToken
+			));
+	}
+
+	private JSONObject _getRandomNotificationJSONObject() {
+		return JSONUtil.put(
+			"badge", RandomTestUtil.randomInt()
+		).put(
+			"body", RandomTestUtil.randomString()
+		).put(
+			"bodyLocalizedArguments",
+			JSONFactoryUtil.createJSONArray(
+				Arrays.asList(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()))
+		).put(
+			"bodyLocalizedKey", RandomTestUtil.randomString()
+		).put(
+			"customField1", RandomTestUtil.randomString()
+		).put(
+			"customField2", RandomTestUtil.randomString()
+		).put(
+			"customField3", RandomTestUtil.randomInt()
+		).put(
+			"customFieldN", RandomTestUtil.randomString()
+		).put(
+			"silent", true
+		).put(
+			"sound", RandomTestUtil.randomString()
+		).put(
+			"title", RandomTestUtil.randomString()
+		).put(
+			"titleLocalizedArguments",
+			JSONFactoryUtil.createJSONArray(
+				Arrays.asList(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()))
+		).put(
+			"titleLocalizedKey", RandomTestUtil.randomString()
+		);
+	}
+
+	private String _mockAccessTokenRequest(boolean success) {
+		String accessToken = RandomTestUtil.randomString();
+
+		_clientAndServer.when(
+			HttpRequest.request(
+			).withMethod(
+				"POST"
+			).withPath(
+				"/token"
+			)
+		).respond(
+			HttpResponse.response(
+			).withBody(
+				JSONUtil.put(
+					"access_token", accessToken
+				).put(
+					"expires_in", RandomTestUtil.randomInt()
+				).put(
+					"scope", RandomTestUtil.randomString()
+				).put(
+					"token_type", "Bearer"
+				).toString()
+			).withStatusCode(
+				_getCode(success)
+			)
+		);
+
+		return accessToken;
+	}
+
+	private void _mockGroupRequest(
+		String accessToken, boolean createGroupSuccess, String groupId,
+		boolean removeGroupSuccess) {
+
+		int[] invocations = {0};
+
+		_clientAndServer.when(
+			HttpRequest.request(
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
+			).withHeader(
+				"Authorization", "Bearer " + accessToken
+			).withHeader(
+				"Content-type", "application/json"
+			).withMethod(
+				"POST"
+			).withPath(
+				"/fcm/notification"
+			)
+		).respond(
+			httpRequest -> {
+				invocations[0]++;
+
+				if (((invocations[0] - 1) % 2) == 0) {
+					if (createGroupSuccess) {
+						return HttpResponse.response(
+						).withBody(
+							JSONUtil.put(
+								"notification_key", groupId
+							).toString()
+						).withContentType(
+							MediaType.APPLICATION_JSON
+						).withStatusCode(
+							_getCode(true)
+						);
+					}
+
+					return HttpResponse.response(
+					).withStatusCode(
+						_getCode(false)
+					);
+				}
+
+				return HttpResponse.response(
+				).withStatusCode(
+					_getCode(removeGroupSuccess)
+				);
+			}
+		);
+	}
+
+	private void _mockSendNotificationRequest(
+		String accessToken, boolean success) {
+
+		_clientAndServer.when(
+			HttpRequest.request(
+			).withHeader(
+				"Authorization", "Bearer " + accessToken
+			).withHeader(
+				"Content-type", "application/json"
+			).withMethod(
+				"POST"
+			).withPath(
+				"/v1/projects/" + _PROJECT_ID + "/messages:send"
+			)
+		).respond(
+			HttpResponse.response(
+			).withBody(
+				"OK"
+			).withStatusCode(
+				_getCode(success)
+			)
+		);
+	}
+
+	private String _readFileToString(String s) throws Exception {
+		return new String(FileUtil.getBytes(getClass(), s));
+	}
+
+	private void _saveConfiguration() throws Exception {
+		ConfigurationTestUtil.saveConfiguration(
+			_PID,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"firebaseCloudMessagingURL",
+				"http://localhost:" + _clientAndServer.getPort()
+			).put(
+				"projectNumber", _PROJECT_NUMBER
+			).put(
+				"serviceAccountKey",
+				StringUtil.replace(
+					_readFileToString("dependencies/service-account-key.json"),
+					new String[] {"${URL}", "${PROJECT_ID}"},
+					new String[] {
+						"http://localhost:" + _clientAndServer.getPort(),
+						_PROJECT_ID
+					})
+			).build());
+	}
+
+	private void _verifyAccessTokenRequest() {
+		_clientAndServer.verify(
+			HttpRequest.request(
+			).withMethod(
+				"POST"
+			).withPath(
+				"/token"
+			),
+			VerificationTimes.once());
+	}
+
+	private String _verifyCreateGroupRequest(
+			String accessToken, List<String> destinationTokens)
+		throws Exception {
+
+		HttpRequest[] recordedRequests =
+			_clientAndServer.retrieveRecordedRequests(
+				HttpRequest.request(
+				).withMethod(
+					"POST"
+				).withPath(
+					"/fcm/notification"
+				));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			recordedRequests[0].getBodyAsString());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"operation", "create"
+			).put(
+				"registration_ids", destinationTokens
+			).toString(),
+			jsonObject.toString(), JSONCompareMode.STRICT_ORDER);
+
+		_clientAndServer.verify(
+			HttpRequest.request(
+			).withBody(
+				jsonObject.toString()
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
+			).withHeader(
+				"Authorization", "Bearer " + accessToken
+			).withHeader(
+				"Content-Type", "application/json"
+			).withMethod(
+				"POST"
+			).withPath(
+				"/fcm/notification"
+			),
+			VerificationTimes.once());
+
+		return jsonObject.getString("notification_key_name");
+	}
+
+	private void _verifyGroupRequestInteractions(
+		String accessToken, boolean createGroupInteraction,
+		boolean removeGroupInteraction) {
+
+		int times = 0;
+
+		if (createGroupInteraction) {
+			times++;
+		}
+
+		if (removeGroupInteraction) {
+			times++;
+		}
+
+		_clientAndServer.verify(
+			HttpRequest.request(
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
+			).withHeader(
+				"Authorization", "Bearer " + accessToken
+			).withHeader(
+				"Content-Type", "application/json"
+			).withMethod(
+				"POST"
+			).withPath(
+				"/fcm/notification"
+			),
+			VerificationTimes.exactly(times));
+	}
+
+	private void _verifyRemoveGroupRequest(
+		String accessToken, List<String> destinationTokens, String groupId,
+		String groupName) {
+
+		_clientAndServer.verify(
+			HttpRequest.request(
+			).withBody(
+				JSONUtil.put(
+					"notification_key", groupId
+				).put(
+					"notification_key_name", groupName
+				).put(
+					"operation", "remove"
+				).put(
+					"registration_ids", destinationTokens
+				).toString()
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
+			).withHeader(
+				"Authorization", "Bearer " + accessToken
+			).withHeader(
+				"Content-type", "application/json"
+			).withMethod(
+				"POST"
+			).withPath(
+				"/fcm/notification"
+			),
+			VerificationTimes.once());
+	}
+
+	private void _verifySendNotificationRequest(
+		String accessToken, JSONObject notificationJSONObject) {
+
+		_clientAndServer.verify(
+			HttpRequest.request(
+			).withBody(
+				notificationJSONObject.toString()
+			).withHeader(
+				"Authorization", "Bearer " + accessToken
+			).withHeader(
+				"Content-Type", "application/json"
+			).withMethod(
+				"POST"
+			).withPath(
+				"/v1/projects/" + _PROJECT_ID + "/messages:send"
+			),
+			VerificationTimes.once());
+	}
+
+	private static final String _PID =
+		"com.liferay.push.notifications.sender.firebase.internal." +
+			"configuration.FirebasePushNotificationsSenderConfiguration";
+
+	private static final String _PROJECT_ID = RandomTestUtil.randomString();
+
+	private static final String _PROJECT_NUMBER = RandomTestUtil.randomString();
+
+	private ClientAndServer _clientAndServer;
+
+	@Inject(
+		filter = "component.name=com.liferay.push.notifications.sender.firebase.internal.FirebasePushNotificationsSender"
+	)
+	private PushNotificationsSender _pushNotificationsSender;
+
+}

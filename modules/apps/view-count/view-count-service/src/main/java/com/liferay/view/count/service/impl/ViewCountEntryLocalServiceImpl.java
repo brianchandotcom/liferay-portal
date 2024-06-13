@@ -148,7 +148,10 @@ public class ViewCountEntryLocalServiceImpl
 	@Override
 	@Transactional(enabled = false)
 	public boolean isViewCountEnabled(long classNameId) {
-		if (_disabledClassNameIds.contains(classNameId)) {
+		ClassName className = _classNameLocalService.fetchByClassNameId(
+			classNameId);
+
+		if (_disabledClassNames.contains(className.getValue())) {
 			return false;
 		}
 
@@ -179,16 +182,15 @@ public class ViewCountEntryLocalServiceImpl
 			ConfigurableUtil.createConfigurable(
 				ViewCountConfiguration.class, properties);
 
-		Set<Long> disabledClassNameIds = new HashSet<>();
+		Set<String> disabledClassNames = new HashSet<>();
 
 		for (String className : viewCountConfiguration.disabledClassNames()) {
 			if (Validator.isNotNull(className)) {
-				disabledClassNameIds.add(
-					_classNameLocalService.getClassNameId(className));
+				disabledClassNames.add(className);
 			}
 		}
 
-		_disabledClassNameIds = disabledClassNameIds;
+		_disabledClassNames = disabledClassNames;
 
 		_enabled = viewCountConfiguration.enabled();
 	}
@@ -196,7 +198,7 @@ public class ViewCountEntryLocalServiceImpl
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	private volatile Set<Long> _disabledClassNameIds;
+	private volatile Set<String> _disabledClassNames;
 	private volatile boolean _enabled;
 	private ServiceTrackerMap<String, ViewCountEntryModelListener>
 		_serviceTrackerMap;

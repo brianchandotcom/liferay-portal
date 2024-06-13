@@ -339,12 +339,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		_updateProduct(cpDefinition, product);
 
-		if (!Validator.isBlank(product.getExternalReferenceCode())) {
-			_cpDefinitionService.updateExternalReferenceCode(
-				product.getExternalReferenceCode(),
-				cpDefinition.getCPDefinitionId());
-		}
-
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
@@ -377,12 +371,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		}
 
 		_updateProduct(cpDefinition, product);
-
-		if (!Validator.isBlank(product.getExternalReferenceCode())) {
-			_cpDefinitionService.updateExternalReferenceCode(
-				product.getExternalReferenceCode(),
-				cpDefinition.getCPDefinitionId());
-		}
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -1491,6 +1479,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				cpDefinition.getCPDefinitionId(),
 				WorkflowConstants.STATUS_INACTIVE, serviceContext,
 				workflowContext);
+		}
+
+		if (!Validator.isBlank(product.getExternalReferenceCode())) {
+			_cpDefinitionService.updateExternalReferenceCode(
+				product.getExternalReferenceCode(),
+				cpDefinition.getCPDefinitionId());
 		}
 
 		Map<String, ?> expando = product.getExpando();

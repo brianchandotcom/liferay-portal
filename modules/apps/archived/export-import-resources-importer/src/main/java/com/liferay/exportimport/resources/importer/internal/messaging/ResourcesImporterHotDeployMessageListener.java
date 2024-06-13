@@ -96,8 +96,6 @@ public class ResourcesImporterHotDeployMessageListener
 	protected void deactivate() {
 		_serviceRegistration.unregister();
 
-		_destination.destroy();
-
 		_serviceTrackerMap.close();
 
 		_bundleContext = null;

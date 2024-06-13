@@ -45,7 +45,9 @@ test('checks the correct label for restricted page in the page heading', async (
 
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	await expect(
-		page.getByRole('heading', {name: pageName}).getByText('Restricted Page')
-	).toBeVisible();
+	const header = await page.getByRole('heading', {name: pageName});
+
+	await header.waitFor({state: 'visible'});
+
+	await expect(header.getByText('Restricted Page')).toBeVisible();
 });

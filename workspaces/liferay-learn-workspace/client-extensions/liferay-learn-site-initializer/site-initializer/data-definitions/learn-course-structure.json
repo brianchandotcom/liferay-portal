@@ -6,6 +6,7 @@
 	"dataDefinitionFields": [
 		{
 			"customProperties": {
+				"autocomplete": false,
 				"confirmationErrorMessage": {
 					"en_US": ""
 				},
@@ -22,23 +23,18 @@
 				"hideField": false,
 				"labelAtStructureLevel": true,
 				"nativeField": false,
-				"objectFieldName": "",
 				"options": {
 				},
 				"placeholder": {
 					"en_US": ""
 				},
 				"requireConfirmation": false,
-				"requiredErrorMessage": {
-					"en_US": ""
-				},
 				"tooltip": {
 					"en_US": ""
 				},
 				"visibilityExpression": ""
 			},
 			"defaultValue": {
-				"en_US": ""
 			},
 			"fieldType": "text",
 			"indexType": "keyword",
@@ -48,6 +44,61 @@
 			},
 			"localizable": true,
 			"name": "course",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		},
+		{
+			"customProperties": {
+				"autocomplete": false,
+				"confirmationErrorMessage": {
+					"en_US": ""
+				},
+				"confirmationLabel": {
+					"en_US": ""
+				},
+				"dataSourceType": "",
+				"dataType": "string",
+				"ddmDataProviderInstanceId": [
+				],
+				"ddmDataProviderInstanceOutput": [
+				],
+				"direction": [
+					"vertical"
+				],
+				"displayStyle": "singleline",
+				"fieldNamespace": "",
+				"fieldReference": "courseTime",
+				"hideField": false,
+				"labelAtStructureLevel": true,
+				"nativeField": false,
+				"options": {
+				},
+				"placeholder": {
+					"en_US": ""
+				},
+				"requireConfirmation": false,
+				"tooltip": {
+					"en_US": ""
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {
+				"en_US": "Course Time (e.g 2 hours)"
+			},
+			"localizable": true,
+			"name": "courseTime",
 			"nestedDataDefinitionFields": [
 			],
 			"readOnly": false,
@@ -88,6 +139,7 @@
 		},
 		{
 			"customProperties": {
+				"autocomplete": false,
 				"confirmationErrorMessage": {
 					"en_US": ""
 				},
@@ -154,7 +206,7 @@
 				],
 				"displayStyle": "singleline",
 				"fieldNamespace": "",
-				"fieldReference": "timeToComplete",
+				"fieldReference": "articleTime",
 				"hideField": false,
 				"labelAtStructureLevel": true,
 				"nativeField": false,
@@ -175,10 +227,10 @@
 			"indexType": "keyword",
 			"indexable": true,
 			"label": {
-				"en_US": "Time to Complete (in minutes)"
+				"en_US": "Article Time (e.g 10 min)"
 			},
 			"localizable": true,
-			"name": "timeToComplete",
+			"name": "articleTime",
 			"nestedDataDefinitionFields": [
 			],
 			"readOnly": false,
@@ -209,8 +261,8 @@
 					"en_US": [
 						{
 							"label": "Practitioner",
-							"reference": "pacticioner",
-							"value": "pacticioner"
+							"reference": "practicioner",
+							"value": "practicioner"
 						},
 						{
 							"label": "Sales",
@@ -382,6 +434,16 @@
 							{
 								"columnSize": 12,
 								"fieldNames": [
+									"courseTime"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
 									"content"
 								]
 							}
@@ -402,7 +464,7 @@
 							{
 								"columnSize": 12,
 								"fieldNames": [
-									"timeToComplete"
+									"articleTime"
 								]
 							}
 						]

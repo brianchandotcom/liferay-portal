@@ -1,0 +1,224 @@
+{
+	"breadcrumb": [
+		{
+			"title": "Courses",
+			"url": "/w/courses/index"
+		}
+	],
+	"children": [
+		{
+			"title": "Introduction",
+			"url": "/w/courses/building-enterprise-websites-with-liferay"
+		},
+		{
+			"children": [
+				{
+					"title": "The Clarity Story",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-1-getting-started-with-clarity/the-clarity-story"
+				},
+				{
+					"title": "The Liferay Solution",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-1-getting-started-with-clarity/the-liferay-solution"
+				},
+				{
+					"title": "Building Clarity on Liferay",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-1-getting-started-with-clarity/building-clarity-on-liferay"
+				}
+			],
+			"title": "Module 1: Getting Started with Clarity",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-1-getting-started-with-clarity"
+		},
+		{
+			"children": [
+				{
+					"title": "Liferay Workspace",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-2-developer-setup/liferay-workspace"
+				},
+				{
+					"title": "Client Extensions",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-2-developer-setup/client-extensions"
+				}
+			],
+			"title": "Module 2: Developer Setup",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-2-developer-setup"
+		},
+		{
+			"children": [
+				{
+					"title": "Clarity's Deployment Requirements",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-3-deploying-liferay/claritys-deployment-requirements"
+				},
+				{
+					"title": "Liferay Deployment Options",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-3-deploying-liferay/liferay-deployment-options"
+				},
+				{
+					"title": "Liferay SaaS Provisioning",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-3-deploying-liferay/liferay-saas-onboarding"
+				}
+			],
+			"title": "Module 3: Deploying Liferay",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-3-deploying-liferay"
+		},
+		{
+			"children": [
+				{
+					"title": "Clarity's Authentication and SSO Requirements",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-4-identity-management-and-sso/claritys-authentication-and-sso-requirements"
+				},
+				{
+					"title": "Liferay Authentication",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-4-identity-management-and-sso/liferay-authentication"
+				},
+				{
+					"title": "Managing Clarity Employees",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-4-identity-management-and-sso/managing-clarity-employees"
+				},
+				{
+					"title": "Using Okta for Authentication and SSO with Liferay",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-4-identity-management-and-sso/using-okta-for-authentication-and-sso"
+				},
+				{
+					"title": "Managing Clarity Business Partners and Guests",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-4-identity-management-and-sso/managing-clarity-business-partners-and-guests"
+				}
+			],
+			"title": "Module 4: Identity Management & SSO",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-4-identity-management-and-sso"
+		},
+		{
+			"children": [
+				{
+					"title": "Users and Permissions Setup",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-5-users-and-permissions/users-and-permissions-setup"
+				},
+				{
+					"title": "Managing and Organizing Clarity Users",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-5-users-and-permissions/managing-and-organizing-clarity-users"
+				}
+			],
+			"title": "Module 5: Users & Permissions",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-5-users-and-permissions"
+		},
+		{
+			"children": [
+				{
+					"title": "Clarity’s Site Building Requirements",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/claritys-site-building-requirements"
+				},
+				{
+					"title": "Setting Up Clarity's Site",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/setting-up-claritys-site"
+				},
+				{
+					"title": "Configuring the Clarity Site",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/configuring-the-clarity-site"
+				},
+				{
+					"title": "Adding Pages to Clarity's Site",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/adding-pages-to-claritys-site"
+				},
+				{
+					"title": "Understanding Page Design",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/understanding-page-design"
+				},
+				{
+					"title": "Designing Clarity’s Master Pages",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/designing-claritys-master-pages"
+				},
+				{
+					"title": "Creating Navigation Menus for Clarity’s Master Pages",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/creating-navigation-menus-for-claritys-master-pages"
+				},
+				{
+					"title": "Creating Custom Fragments for Clarity",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/creating-custom-fragments-for-clarity"
+				},
+				{
+					"title": "Wireframing Clarity's Pages",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/wireframing-claritys-pages"
+				},
+				{
+					"title": "Applying Clarity's Brand Styling",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building/applying-claritys-brand-styling"
+				}
+			],
+			"title": "Module 6: Site Building",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-6-site-building"
+		},
+		{
+			"children": [
+			],
+			"title": "Module 7: Content Authoring & Management",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-7-content-authoring-and-management"
+		},
+		{
+			"children": [
+			],
+			"title": "Module 8: Headless Delivery",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-8-headless-delivery"
+		},
+		{
+			"children": [
+			],
+			"title": "Module 9: Search",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-9-search"
+		},
+		{
+			"children": [
+				{
+					"title": "Clarity's Building Applications Requirements",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-10-building-applications/claritys-building-applications-requirements"
+				},
+				{
+					"title": "Deploying the Application",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-10-building-applications/deploying-the-application"
+				},
+				{
+					"title": "Modeling Data Structures",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-10-building-applications/modeling-data-structures"
+				},
+				{
+					"title": "Implementing Business Logic",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-10-building-applications/implementing-business-logic"
+				},
+				{
+					"title": "Designing User Interfaces",
+					"url": "/w/courses/building-enterprise-websites-with-liferay/module-10-building-applications/designing-user-interfaces"
+				}
+			],
+			"title": "Module 10: Building Applications",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-10-building-applications"
+		},
+		{
+			"children": [
+			],
+			"title": "Module 11: Performance Tuning",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-11"
+		},
+		{
+			"children": [
+			],
+			"title": "Module 12: Troubleshooting",
+			"url": "/w/courses/building-enterprise-websites-with-liferay/module-12"
+		}
+	],
+	"parent": {
+		"title": "Courses",
+		"url": "/w/courses/index"
+	},
+	"self": {
+		"title": "Building Enterprise Websites with Liferay",
+		"url": "/w/courses/building-enterprise-websites-with-liferay"
+	},
+	"siblings": [
+		{
+			"title": "Building Enterprise Websites with Liferay",
+			"url": "/w/courses/building-enterprise-websites-with-liferay"
+		},
+		{
+			"title": "Selling Liferay",
+			"url": "/w/courses/selling-liferay"
+		}
+	]
+}

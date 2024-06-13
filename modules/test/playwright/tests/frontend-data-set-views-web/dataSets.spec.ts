@@ -105,6 +105,14 @@ async function assertTableColumnLabels(page) {
 	});
 }
 
+async function assertTableRowsCount(page, rowsCount) {
+	await test.step(`Assert table has ${rowsCount} rows`, async () => {
+		const rows = await page.locator('.dnd-table > .dnd-tbody > .dnd-tr');
+
+		expect(rows).toHaveCount(rowsCount);
+	});
+}
+
 test('Create data set via UI', async ({dataSetsPage, page}) => {
 	await test.step('Create Data Set', async () => {
 		await dataSetsPage.goto();
@@ -168,5 +176,97 @@ test('Create data set via API', async ({
 		await dataSetManagerApiHelpers.deleteDataSet({
 			erc: DEFAULT_DATA_SET_ERC,
 		});
+	});
+});
+
+test('Can paginate created Data Sets', async ({
+	dataSetManagerApiHelpers,
+	dataSetsPage,
+	page,
+}) => {
+	const dataSetERCs = Array.from(Array(5).keys()).map(() =>
+		getRandomString()
+	);
+
+	await test.step('Create collection of Data Sets', async () => {
+		for (const DATA_SET_ERC of dataSetERCs) {
+			await dataSetManagerApiHelpers.createDataSet({
+				...tableSectionsDataSetConfig,
+				erc: DATA_SET_ERC,
+				label: tableSectionsDataSetConfig.name,
+			});
+		}
+	});
+
+	await test.step('Navigate to Data Sets page', async () => {
+		await dataSetsPage.goto();
+	});
+
+	await assertTableRowsCount(page, 5);
+
+	await test.step('Change page size', async () => {
+		const itemsPerPageButton = page.getByLabel('Items Per Page');
+
+		await expect(itemsPerPageButton).toContainText('8 Items');
+
+		await itemsPerPageButton.click();
+
+		const dropdownId = await itemsPerPageButton.evaluate((node) =>
+			node.getAttribute('aria-controls')
+		);
+
+		await page.locator(`#${dropdownId}`).waitFor();
+
+		await page
+			.locator(`#${dropdownId}`)
+			.getByRole('option', {name: '4 Items'})
+			.click();
+
+		await expect(itemsPerPageButton).toContainText('4 Items');
+	});
+
+	await assertTableRowsCount(page, 4);
+
+	await test.step('Navigate to Data Set page 2', async () => {
+		await page.getByLabel('Go to page, 2').click();
+
+		await page.getByText('Showing 5 to 5 of 5 entries.').isVisible();
+	});
+
+	await assertTableRowsCount(page, 1);
+
+	await test.step('Delete Data Set from current page', async () => {
+		const dataSetActionsButton = await page.getByRole('button', {
+			name: 'Actions',
+		});
+
+		dataSetActionsButton.click();
+
+		const actionsDropdownId = await dataSetActionsButton.evaluate((node) =>
+			node.getAttribute('aria-controls')
+		);
+
+		await page.locator(`#${actionsDropdownId}`).waitFor();
+
+		await page
+			.locator(`#${actionsDropdownId}`)
+			.getByRole('menuitem', {name: 'Delete'})
+			.click();
+
+		await page.getByRole('dialog').waitFor({state: 'visible'});
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await page.getByRole('dialog').waitFor({state: 'hidden'});
+	});
+
+	await assertTableRowsCount(page, 4);
+
+	await test.step('Delete Data Set collection', async () => {
+		for (const DATA_SET_ERC of dataSetERCs) {
+			await dataSetManagerApiHelpers.deleteDataSet({
+				erc: DATA_SET_ERC,
+			});
+		}
 	});
 });

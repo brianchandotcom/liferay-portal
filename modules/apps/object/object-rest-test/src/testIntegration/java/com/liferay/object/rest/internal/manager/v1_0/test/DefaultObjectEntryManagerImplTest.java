@@ -3893,113 +3893,115 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testUpdateObjectEntryWithAccountEntryRestrictedAsAccountRoleWithPermissions()
+	public void testUpdateObjectEntryWithAccountRestrictionAsAccountRoleWithPermission()
 		throws Exception {
 
-			ObjectDefinition customObjectDefinition = _createObjectDefinition(
-				Arrays.asList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"textObjectFieldName"
-					).build()));
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textObjectFieldName"
+				).build()));
 
-			ObjectRelationship objectRelationship1 =
-				_objectRelationshipLocalService.addObjectRelationship(
-					null, adminUser.getUserId(),
-					_objectDefinition3.getObjectDefinitionId(),
-					customObjectDefinition.getObjectDefinitionId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-					LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-					StringUtil.randomId(), false,
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		ObjectRelationship objectRelationship1 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, adminUser.getUserId(),
+				_objectDefinition3.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
-			ObjectDefinition accountEntryObjectDefinition =
-				objectDefinitionLocalService.fetchObjectDefinition(
-					companyId, "AccountEntry");
+		ObjectDefinition accountEntryObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, "AccountEntry");
 
-			ObjectRelationship objectRelationship2 =
-				_objectRelationshipLocalService.addObjectRelationship(
-					null, adminUser.getUserId(),
-					accountEntryObjectDefinition.getObjectDefinitionId(),
-					customObjectDefinition.getObjectDefinitionId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-					LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-					StringUtil.randomId(), false,
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+		ObjectRelationship objectRelationship2 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, adminUser.getUserId(),
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oneToManyRelationship", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 
-			customObjectDefinition.setAccountEntryRestrictedObjectFieldId(
-				objectRelationship2.getObjectFieldId2());
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship2.getObjectFieldId2());
 
-			customObjectDefinition.setAccountEntryRestricted(true);
+		objectDefinition.setAccountEntryRestricted(true);
 
-			customObjectDefinition =
-				objectDefinitionLocalService.updateObjectDefinition(
-					customObjectDefinition);
+		objectDefinition =
+			objectDefinitionLocalService.updateObjectDefinition(
+				objectDefinition);
 
-			AccountEntry accountEntry1 = _addAccountEntry();
-			AccountEntry accountEntry2 = _addAccountEntry();
+		AccountEntry accountEntry1 = _addAccountEntry();
+		AccountEntry accountEntry2 = _addAccountEntry();
 
-			ObjectEntry objectEntry1 = _addObjectEntry(accountEntry1);
+		_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
+		_addResourcePermission(ActionKeys.UPDATE, _accountAdministratorRole);
+		_addResourcePermission(ObjectActionKeys.ADD_OBJECT_ENTRY, _accountAdministratorRole);
 
-			ObjectEntry objectEntry2 = _defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, customObjectDefinition,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName1_accountEntryId",
-							accountEntry2.getAccountEntryId()
-						).put(
-							"textObjectFieldName", "English"
-						).put(
-							() -> {
-								ObjectField objectField = _objectFieldLocalService.getObjectField(objectRelationship1.getObjectFieldId2());
-								return objectField.getName();
-							},
-							objectEntry1.getId()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
+		_addResourcePermission(ActionKeys.VIEW, objectDefinition, _accountAdministratorRole);
+		_addResourcePermission(ActionKeys.UPDATE, objectDefinition, _accountAdministratorRole);
+		_addResourcePermission(ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, _accountAdministratorRole);
 
-			_user = _addUser();
+		ObjectEntry objectEntry1 = _addObjectEntry(accountEntry1);
 
-			_addResourcePermission(ActionKeys.VIEW, _accountAdministratorRole);
-			_addResourcePermission(ActionKeys.UPDATE, _accountAdministratorRole);
-			_addResourcePermission(ObjectActionKeys.ADD_OBJECT_ENTRY, _accountAdministratorRole);
+		ObjectEntry objectEntry2 = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationship_accountEntryId",
+						accountEntry2.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).put(
+						() -> {
+							ObjectField objectField = _objectFieldLocalService.getObjectField(objectRelationship1.getObjectFieldId2());
+							return objectField.getName();
+						},
+						objectEntry1.getId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-			_addResourcePermission(ActionKeys.VIEW, customObjectDefinition, _accountAdministratorRole);
-			_addResourcePermission(ActionKeys.UPDATE, customObjectDefinition, _accountAdministratorRole);
-			_addResourcePermission(ObjectActionKeys.ADD_OBJECT_ENTRY, customObjectDefinition, _accountAdministratorRole);
+		_user = _addUser();
 
-			_assignAccountEntryRole(accountEntry1, _accountAdministratorRole, _user);
-			_assignAccountEntryRole(accountEntry2, _accountAdministratorRole, _user);
+		_assignAccountEntryRole(accountEntry1, _accountAdministratorRole, _user);
+		_assignAccountEntryRole(accountEntry2, _accountAdministratorRole, _user);
+
+		String textObjectFieldName = RandomTestUtil.randomString();
 
 		Map<String, Object> customObjectEntryProperties =
 			HashMapBuilder.<String, Object>put(
-				"textObjectFieldName", "Able-update"
+				"textObjectFieldName", textObjectFieldName
 			).build();
 
 		assertEquals(
-			_defaultObjectEntryManager.updateObjectEntry(
-				_simpleDTOConverterContext, customObjectDefinition,
-				objectEntry2.getId(),
-				new ObjectEntry() {
-					{
-						properties = customObjectEntryProperties;
-					}
-				}),
+		_defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			objectEntry2.getId(),
 			new ObjectEntry() {
 				{
-
+					properties = customObjectEntryProperties;
+				}
+			}),
+			new ObjectEntry() {
+				{
 					properties = HashMapBuilder.<String, Object>put(
-						"textObjectFieldName", "Able-update"
+						"textObjectFieldName", textObjectFieldName
 					).build();
 				}
-			});
+			}
+		);
 	}
 
 	@Override
@@ -4236,8 +4238,6 @@ public class DefaultObjectEntryManagerImplTest
 					properties = HashMapBuilder.<String, Object>put(
 						"r_oneToManyRelationshipName1_accountEntryId",
 						accountEntry.getAccountEntryId()
-					).put(
-						"textObjectFieldName1", RandomTestUtil.randomString()
 					).build();
 				}
 			},

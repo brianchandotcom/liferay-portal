@@ -60,6 +60,8 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 
 				return null;
 			}
+		).put(
+			"REST_CLIENT", true
 		).build();
 		_headers = HashMapBuilder.put(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON

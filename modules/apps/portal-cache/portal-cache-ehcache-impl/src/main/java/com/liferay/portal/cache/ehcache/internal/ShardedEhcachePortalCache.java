@@ -6,7 +6,7 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.io.Serializable;
 
@@ -37,7 +37,7 @@ public class ShardedEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public Ehcache getEhcache() {
-		long companyId = DBPartitionUtil.getCurrentCompanyId();
+		long companyId = CompanyThreadLocal.getNonsystemCompanyId();
 
 		return _ehcaches.computeIfAbsent(
 			companyId,

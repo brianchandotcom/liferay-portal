@@ -183,7 +183,7 @@ public class DBPartitionUtil {
 			Connection connection, boolean copyData, String viewName)
 		throws Exception {
 
-		long companyId = getCurrentCompanyId();
+		long companyId = CompanyThreadLocal.getNonsystemCompanyId();
 
 		if (companyId == _defaultCompanyId) {
 			return;
@@ -1062,7 +1062,8 @@ public class DBPartitionUtil {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			if ((dbInspector.isControlTable(tableName) &&
-				 (getCurrentCompanyId() != _defaultCompanyId)) ||
+				 (CompanyThreadLocal.getNonsystemCompanyId() !=
+					 _defaultCompanyId)) ||
 				dbInspector.hasView(tableName)) {
 
 				return true;

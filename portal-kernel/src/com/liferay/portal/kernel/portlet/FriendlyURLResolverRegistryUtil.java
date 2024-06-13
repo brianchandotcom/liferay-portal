@@ -94,10 +94,7 @@ public class FriendlyURLResolverRegistryUtil {
 					FriendlyURLResolver friendlyURLResolver =
 						_bundleContext.getService(serviceReference);
 
-					Class<?> friendlyURLResolverClass =
-						friendlyURLResolver.getClass();
-
-					emitter.emit(friendlyURLResolverClass.getName());
+					emitter.emit(friendlyURLResolver.getURLSeparator());
 
 					_bundleContext.ungetService(serviceReference);
 				}

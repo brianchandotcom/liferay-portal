@@ -27,6 +27,7 @@
 		"jest": "25.1.0",
 		"jest-environment-jsdom-thirteen": "1.0.1",
 		"jest-fetch-mock": "^3.0.3",
+		"liferay-theme-tasks": "11.5.1",
 		"minimist": "^1.2.8",
 		"prettier": "^3.2.5",
 		"react-test-renderer": "16.13.1",

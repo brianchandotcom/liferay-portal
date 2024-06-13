@@ -318,6 +318,8 @@ public class EditInfoItemStrutsActionTest {
 		_editInfoItemStrutsAction.execute(
 			uploadPortletRequest, pipingServletResponse);
 
+		Assert.assertNull(SessionErrors.get(uploadPortletRequest, _formItemId));
+
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
@@ -582,6 +584,8 @@ public class EditInfoItemStrutsActionTest {
 
 		_editInfoItemStrutsAction.execute(
 			uploadPortletRequest, pipingServletResponse);
+
+		Assert.assertNull(SessionErrors.get(uploadPortletRequest, _formItemId));
 
 		objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			objectEntry.getObjectEntryId());

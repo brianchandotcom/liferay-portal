@@ -117,7 +117,7 @@ const App = () => {
 															? 'Standard'
 															: optionName[0]
 																	?.value ||
-															  ''}
+																''}
 													</p>
 													<p className="col-3">
 														{order.quantity}

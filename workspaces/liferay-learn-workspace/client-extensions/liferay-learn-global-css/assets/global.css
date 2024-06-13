@@ -802,7 +802,8 @@ pre[class*='language-'] {
 		min-height: 282px;
 	}
 
-	.learn-education__card:hover, .learn-education__landing-card:hover {
+	.learn-education__card:hover,
+	.learn-education__landing-card:hover {
 		background: var(--color-action-primary-hover-10, #edf3fe) !important;
 		border-color: var(--color-action-primary-hover, #0053f0) !important;
 		cursor: pointer;

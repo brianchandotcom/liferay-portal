@@ -251,10 +251,11 @@ export function ProvideAppBuildPage({
 				appProductId,
 			});
 
-			const filteredProductSpecifications = dataProductSpecifications.filter(
-				(specification) =>
-					specification.specificationKey !== 'liferay-version'
-			);
+			const filteredProductSpecifications =
+				dataProductSpecifications.filter(
+					(specification) =>
+						specification.specificationKey !== 'liferay-version'
+				);
 
 			for (const versionKey in buildAppPackages) {
 				const appPackagesByVersion = buildAppPackages[versionKey];

@@ -94,6 +94,7 @@ import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -371,11 +372,15 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		String fileName = null;
 		String title = null;
 		String description = null;
+		Date displayDate = null;
+		Date expirationDate = null;
 
 		if (document != null) {
 			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
+			displayDate = document.getDatePublished();
+			expirationDate = document.getDateExpired();
 		}
 
 		if (fileName == null) {
@@ -390,14 +395,20 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			existingFileEntry.getDescription();
 		}
 
+		if (displayDate == null) {
+			existingFileEntry.getDisplayDate();
+		}
+
+		if (expirationDate == null) {
+			existingFileEntry.getExpirationDate();
+		}
+
 		return _toDocument(
 			_dlAppService.updateFileEntry(
 				documentId, fileName, binaryFile.getContentType(), title, null,
 				description, null, DLVersionNumberIncrease.AUTOMATIC,
-				binaryFile.getInputStream(), binaryFile.getSize(),
-				existingFileEntry.getDisplayDate(),
-				existingFileEntry.getExpirationDate(),
-				existingFileEntry.getReviewDate(),
+				binaryFile.getInputStream(), binaryFile.getSize(), displayDate,
+				expirationDate, existingFileEntry.getReviewDate(),
 				_createServiceContext(
 					Constants.UPDATE,
 					() -> ArrayUtil.toArray(
@@ -549,11 +560,15 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		String fileName = null;
 		String title = null;
 		String description = null;
+		Date displayDate = null;
+		Date expirationDate = null;
 
 		if (document != null) {
 			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
+			displayDate = document.getDatePublished();
+			expirationDate = document.getDateExpired();
 		}
 
 		if (fileName == null) {
@@ -568,8 +583,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			_dlAppService.addFileEntry(
 				externalReferenceCode, repositoryId, documentFolderId, fileName,
 				binaryFile.getContentType(), title, null, description, null,
-				binaryFile.getInputStream(), binaryFile.getSize(), null, null,
-				null,
+				binaryFile.getInputStream(), binaryFile.getSize(), displayDate,
+				expirationDate, null,
 				_createServiceContext(
 					Constants.ADD, () -> new Long[0], () -> new String[0],
 					documentFolderId, document, groupId)));
@@ -968,11 +983,15 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		String fileName = null;
 		String title = null;
 		String description = null;
+		Date displayDate = null;
+		Date expirationDate = null;
 
 		if (document != null) {
 			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
+			displayDate = document.getDatePublished();
+			expirationDate = document.getDateExpired();
 		}
 
 		if (fileName == null) {
@@ -988,8 +1007,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				fileEntry.getFileEntryId(), fileName,
 				binaryFile.getContentType(), title, null, description, null,
 				DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
-				binaryFile.getSize(), fileEntry.getDisplayDate(),
-				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+				binaryFile.getSize(), displayDate, expirationDate,
+				fileEntry.getReviewDate(),
 				_createServiceContext(
 					Constants.UPDATE, () -> new Long[0], () -> new String[0],
 					fileEntry.getFolderId(), document,

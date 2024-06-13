@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>CLEAR_BUTTON</td>
-	<td>//a[contains(text(),'Clear')]</td>
+	<td>//button[contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
 <tr>

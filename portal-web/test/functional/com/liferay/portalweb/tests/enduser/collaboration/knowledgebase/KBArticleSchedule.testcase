@@ -25,35 +25,6 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that users can add an article with a scheduled date."
-	@priority = 5
-	test CanAddArticleWithScheduledDate {
-		KBArticle.updateCheckInterval(fieldValue = 1);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addArticleWithScheduledDate(
-			increaseMinutes = 1,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbStatus = "Scheduled");
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
-
-		Pause(value1 = 120000);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbStatus = "Approved");
-	}
-
 	@description = "This test ensures that users can add a scheduled article with expiration date."
 	@priority = 5
 	test CanAddScheduledArticleWithExpirationDate {
@@ -150,31 +121,6 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			scheduledDateAfterexpirationDate = "true");
-	}
-
-	@description = "This test ensures that users can publish a scheduled article immediately when editing a scheduled article."
-	@priority = 5
-	test CanPublishScheduledArticleImmediately {
-		JSONKnowledgeBase.addkBArticle(
-			displayDate = "true",
-			groupName = "Guest",
-			increaseMinutes = 5,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.editScheduledDate(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			publishNow = "true");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbStatus = "Approved");
 	}
 
 	@description = "This test ensures that users can publish a draft article with a scheduled date."

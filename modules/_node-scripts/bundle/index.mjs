@@ -14,11 +14,13 @@ import writeExportBridges from './amd/writeExportBridges.mjs';
 import writeMainBridge from './amd/writeMainBridge.mjs';
 import writeManifestJson from './amd/writeManifestJson.mjs';
 import writePackageJson from './amd/writePackageJson.mjs';
+import processCSSFiles from './css/processCSSFiles.mjs';
 import writeCSSExportsLoaderModules from './cssLoad/writeCSSExportsLoaderModules.mjs';
 import bundleCSSExports from './esbuild/bundleCSSExports.mjs';
 import bundleJavaScriptExports from './esbuild/bundleJavaScriptExports.mjs';
 import bundleJavaScriptMain from './esbuild/bundleJavaScriptMain.mjs';
 import runNpmScripts from './npmscripts/runNpmScripts.mjs';
+import processSassFiles from './sass/processSassFiles.mjs';
 import writeTimings from './writeTimings.mjs';
 
 export default async function main() {
@@ -46,7 +48,7 @@ export default async function main() {
 
 	await Promise.all([
 
-		// JavaScript bundling
+		// JavaScript exports bundling
 
 		bundleJavaScriptMain(
 			globalImports,
@@ -61,7 +63,7 @@ export default async function main() {
 			projectWebContextPath
 		),
 
-		// CSS Bundling
+		// CSS exports bundling
 
 		bundleCSSExports(projectExports),
 		writeCSSExportsLoaderModules(projectExports, projectWebContextPath),
@@ -76,6 +78,11 @@ export default async function main() {
 		),
 		writeManifestJson(projectDescription, projectExports),
 		writePackageJson(projectDescription),
+
+		// CSS processing
+
+		processCSSFiles(),
+		processSassFiles(),
 
 		// Rest of legacy build
 

@@ -183,9 +183,11 @@ Properties can be configured for testray imports by creating a `testray-ext.prop
 To import results into Testray without attachments the following credentials are required:
 
 ```
-testrayUserName=[liferay_user_name]@liferay.com
-testrayUserPassword=[liferay_user_password]
+testrayOAuth2ClientId=[oauth2_client_id]
+testrayOAuth2ClientSecret=[oauth2_client_secret]
 ```
+
+Please contact CI Infrastructure for access.
 
 #### Default Configuration
 

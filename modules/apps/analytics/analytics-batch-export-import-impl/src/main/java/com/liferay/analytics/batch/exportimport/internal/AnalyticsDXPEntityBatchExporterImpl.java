@@ -15,8 +15,8 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.time.Instant;
@@ -62,7 +62,8 @@ public class AnalyticsDXPEntityBatchExporterImpl
 					"dispatchTriggerId", dispatchTrigger.getDispatchTriggerId()
 				).toString());
 
-			_destination.send(message);
+			_messageBus.sendMessage(
+				DispatchConstants.EXECUTOR_DESTINATION_NAME, message);
 		}
 	}
 
@@ -178,16 +179,14 @@ public class AnalyticsDXPEntityBatchExporterImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsDXPEntityBatchExporterImpl.class);
 
-	@Reference(
-		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
-	)
-	private Destination _destination;
-
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Reference
+	private MessageBus _messageBus;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -12,8 +12,8 @@ import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
 import com.liferay.dispatch.service.DispatchTriggerService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -72,13 +72,9 @@ public class DispatchTriggerResourceImpl
 				"dispatchTriggerId", dispatchTriggerId
 			).toString());
 
-		_destination.send(message);
+		_messageBus.sendMessage(
+			DispatchConstants.EXECUTOR_DESTINATION_NAME, message);
 	}
-
-	@Reference(
-		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
-	)
-	private Destination _destination;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dispatch.model.DispatchTrigger)"
@@ -88,5 +84,8 @@ public class DispatchTriggerResourceImpl
 
 	@Reference
 	private DispatchTriggerService _dispatchTriggerService;
+
+	@Reference
+	private MessageBus _messageBus;
 
 }

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.List;
@@ -222,7 +222,8 @@ public class CommerceAvalaraDispatchTriggerImpl
 				"dispatchTriggerId", dispatchTriggerId
 			).toString());
 
-		_destination.send(message);
+		_messageBus.sendMessage(
+			DispatchConstants.EXECUTOR_DESTINATION_NAME, message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -231,15 +232,13 @@ public class CommerceAvalaraDispatchTriggerImpl
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
-	@Reference(
-		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
-	)
-	private Destination _destination;
-
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Reference
+	private MessageBus _messageBus;
 
 }

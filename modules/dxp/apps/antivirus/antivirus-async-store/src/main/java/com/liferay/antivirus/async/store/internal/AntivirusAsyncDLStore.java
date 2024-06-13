@@ -19,8 +19,8 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -362,7 +362,8 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				_destination.send(message);
+				_messageBus.sendMessage(
+					AntivirusAsyncDestinationNames.ANTIVIRUS, message);
 
 				return null;
 			});
@@ -388,16 +389,14 @@ public class AntivirusAsyncDLStore implements DLStore {
 	private AntivirusAsyncEventListenerManager
 		_antivirusAsyncEventListenerManager;
 
-	@Reference(
-		target = "(destination.name=" + AntivirusAsyncDestinationNames.ANTIVIRUS + ")"
-	)
-	private Destination _destination;
-
 	@Reference
 	private DLValidator _dlValidator;
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;
+
+	@Reference
+	private MessageBus _messageBus;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

@@ -5,11 +5,10 @@
 
 package com.liferay.search.experiences.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,14 +103,10 @@ public class SXPServiceUpgradeStepRegistrator
 		registry.register(
 			"3.1.1", "3.1.2",
 			new com.liferay.search.experiences.internal.upgrade.v3_1_2.
-				SXPBlueprintUpgradeProcess(
-					_companyLocalService, _sxpBlueprintLocalService));
+				SXPBlueprintUpgradeProcess(_jsonFactory));
 	}
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+	private JSONFactory _jsonFactory;
 
 }

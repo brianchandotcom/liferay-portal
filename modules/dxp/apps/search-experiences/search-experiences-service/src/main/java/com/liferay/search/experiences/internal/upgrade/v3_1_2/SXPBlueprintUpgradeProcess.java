@@ -5,45 +5,97 @@
 
 package com.liferay.search.experiences.internal.upgrade.v3_1_2;
 
-import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.search.experiences.internal.util.SXPBlueprintUpgradeContributorStorageSchemaUtil;
-import com.liferay.search.experiences.model.SXPBlueprint;
-import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Joshua Cords
  */
 public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
-	public SXPBlueprintUpgradeProcess(
-		CompanyLocalService companyLocalService,
-		SXPBlueprintLocalService sxpBlueprintLocalService) {
-
-		_companyLocalService = companyLocalService;
-		_sxpBlueprintLocalService = sxpBlueprintLocalService;
+	public SXPBlueprintUpgradeProcess(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				List<SXPBlueprint> sxpBlueprints =
-					_sxpBlueprintLocalService.getSXPBlueprints(companyId);
-
-				for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-					sxpBlueprint =
-						SXPBlueprintUpgradeContributorStorageSchemaUtil.
-							upgradeContributorStorageSchema(sxpBlueprint);
-
-					_sxpBlueprintLocalService.updateSXPBlueprint(sxpBlueprint);
-				}
-			});
+		_upgradeSXPBlueprints();
 	}
 
-	private final CompanyLocalService _companyLocalService;
-	private final SXPBlueprintLocalService _sxpBlueprintLocalService;
+	private String _updateConfigurationStorage(String configurationJSON)
+		throws Exception {
+
+		if (Validator.isBlank(configurationJSON)) {
+			return configurationJSON;
+		}
+
+		JSONObject configurationjsonObject = JSONFactoryUtil.createJSONObject(
+			configurationJSON);
+
+		JSONObject generalConfigurationjsonObject =
+			configurationjsonObject.getJSONObject("generalConfiguration");
+
+		JSONArray clauseContributorsExcludesjsonArray =
+			generalConfigurationjsonObject.getJSONArray(
+				"clauseContributorsExcludes");
+
+		JSONArray clauseContributorsIncludesjsonArray =
+			generalConfigurationjsonObject.getJSONArray(
+				"clauseContributorsIncludes");
+
+		if (clauseContributorsExcludesjsonArray.length() == 0) {
+			generalConfigurationjsonObject.put(
+				"clauseContributorsIncludes",
+				_jsonFactory.createJSONArray(new String[] {"*"}));
+		}
+		else if (clauseContributorsIncludesjsonArray.length() == 0) {
+			generalConfigurationjsonObject.put(
+				"clauseContributorsExcludes",
+				_jsonFactory.createJSONArray(new String[] {"*"}));
+		}
+		else {
+			generalConfigurationjsonObject.put(
+				"clauseContributorsExcludes", _jsonFactory.createJSONArray());
+		}
+
+		return configurationjsonObject.toString();
+	}
+
+	private void _upgradeSXPBlueprints() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select configurationJSON,sxpBlueprintId from SXPBlueprint");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update SXPBlueprint set configurationJSON = ?," +
+						"schemaVersion = ? where sxpBlueprintId = ?")) {
+
+			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+				while (resultSet1.next()) {
+					preparedStatement2.setString(
+						1,
+						_updateConfigurationStorage(
+							resultSet1.getString("configurationJSON")));
+					preparedStatement2.setString(2, "1.1");
+					preparedStatement2.setLong(
+						3, resultSet1.getLong("sxpBlueprintId"));
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
+			}
+		}
+	}
+
+	private final JSONFactory _jsonFactory;
 
 }

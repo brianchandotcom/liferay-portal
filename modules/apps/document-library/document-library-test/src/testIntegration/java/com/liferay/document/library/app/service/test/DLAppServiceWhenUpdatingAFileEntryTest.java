@@ -7,7 +7,7 @@ package com.liferay.document.library.app.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.app.service.test.util.DLAppServiceTestUtil;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -15,10 +15,9 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
@@ -91,7 +91,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		AssetEntry latestAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry latestAssetEntry = _assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(),
 			fileVersion.getFileVersionId());
 
@@ -100,7 +100,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		AssertUtils.assertEqualsSorted(
 			assetTagNames, latestAssetEntry.getTagNames());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		Assert.assertNotNull(assetEntry);
@@ -139,7 +139,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion();
 
-		AssetEntry latestAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry latestAssetEntry = _assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(),
 			fileVersion.getFileVersionId());
 
@@ -148,7 +148,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		AssertUtils.assertEqualsSorted(
 			assetTagNames, latestAssetEntry.getTagNames());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		Assert.assertNotNull(assetEntry);
@@ -180,7 +180,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			DLVersionNumberIncrease.MINOR, bytes, null, null, null,
 			serviceContext);
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
@@ -193,19 +193,19 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry = dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), null, null, null,
 			new UnsyncByteArrayInputStream(CONTENT.getBytes()),
 			CONTENT.length(), null, null, null, serviceContext);
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
 			fileEntry.getFileEntryId());
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		DLStoreUtil.updateFile(
+		_dlStore.updateFile(
 			DLStoreRequest.builder(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName()
@@ -213,7 +213,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 				dlFileVersion.getVersion()
 			).build(),
 			new UnsyncByteArrayInputStream(CONTENT.getBytes()));
-		DLStoreUtil.deleteFile(
+		_dlStore.deleteFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), dlFileVersion.getStoreFileName());
 
@@ -487,5 +487,14 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			DLVersionNumberIncrease.MAJOR, null, 0, null, null, null,
 			serviceContext);
 	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLStore _dlStore;
 
 }

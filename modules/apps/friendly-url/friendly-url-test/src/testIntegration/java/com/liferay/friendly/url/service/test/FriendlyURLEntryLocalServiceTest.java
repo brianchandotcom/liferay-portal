@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
+import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
@@ -197,6 +198,40 @@ public class FriendlyURLEntryLocalServiceTest {
 			"cat1-es/cat2-es/url-title-es",
 			friendlyURLEntry.getCategorizedUrlTitle(
 				_language.getLanguageId(new Locale("es", "ES"))));
+	}
+
+	@FeatureFlags("LPD-11147")
+	@Test(expected = FriendlyURLCategoryException.class)
+	public void testAddFriendlyURLEntryWithSlashAndAssetCategories()
+		throws Exception {
+
+		ServiceContext serviceContext = _getServiceContext();
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "cat1",
+			assetVocabulary.getVocabularyId(), serviceContext);
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "cat2",
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		serviceContext.setAttribute(
+			"friendlyURLAssetCategoryIds",
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(),
+			_classNameLocalService.getClassNameId(User.class),
+			TestPropsValues.getUserId(),
+			Collections.singletonMap(
+				_language.getLanguageId(LocaleUtil.US), "url/title/en"),
+			serviceContext);
 	}
 
 	@FeatureFlags("LPD-11147")

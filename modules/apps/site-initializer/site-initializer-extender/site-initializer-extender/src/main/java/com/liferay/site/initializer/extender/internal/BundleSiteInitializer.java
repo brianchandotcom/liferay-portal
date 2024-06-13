@@ -223,9 +223,6 @@ import com.liferay.template.service.TemplateEntryLocalService;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.lang.invoke.SerializedLambda;
-import java.lang.reflect.Method;
-
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -529,9 +526,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return true;
-	}
-
-	public interface R extends Serializable, UnsafeRunnable<Exception> {
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -4903,123 +4897,200 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new SiteNavigationMenuItemSettingsBuilder();
 		Map<String, String> stringUtilReplaceValues = new HashMap<>();
 
-		R addAcountGroupAssignments = () -> _addAccountGroupAssignments(
-			serviceContext);
-		R addAcountGroups = () -> _addAccountGroups(serviceContext);
-		R addAccounts = () -> _addAccounts(serviceContext);
-		R addAccountsOrganizations = () -> _addAccountsOrganizations(
-			serviceContext);
-		R addAssetListEntries = () -> _addAssetListEntries(
-			serviceContext, stringUtilReplaceValues);
-		R addCPDefinitions = () -> _addCPDefinitions(
-			serviceContext, stringUtilReplaceValues);
-		R addExpandoValues = () -> _addExpandoValues(
-			serviceContext, stringUtilReplaceValues);
-		R addFragmentEntries = () -> _addFragmentEntries(
-			serviceContext, stringUtilReplaceValues);
-		R addKeywords = () -> _addKeywords(
-			serviceContext, stringUtilReplaceValues);
-		R addLayoutPageTemplates = () -> _addLayoutPageTemplates(
-			serviceContext, stringUtilReplaceValues);
-		R addLayoutUtilityPageEntries = () -> _addLayoutUtilityPageEntries(
-			serviceContext, stringUtilReplaceValues);
-		R addObjectDefinitions = () -> _addObjectDefinitions(
-			accountEntryRestrictedObjectDefinitions, objectDefinitionIds,
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateAccountEntryRestrictions =
+		R addAccountGroupAssignments = new R(
+			"addAccountGroupAssignments",
+			() -> _addAccountGroupAssignments(serviceContext));
+		R addAccountGroups = new R(
+			"addAccountGroups", () -> _addAccountGroups(serviceContext));
+		R addAccounts = new R(
+			"addAccounts", () -> _addAccounts(serviceContext));
+		R addAccountsOrganizations = new R(
+			"addAccountsOrganizations",
+			() -> _addAccountsOrganizations(serviceContext));
+		R addAssetListEntries = new R(
+			"addAssetListEntries",
+			() -> _addAssetListEntries(
+				serviceContext, stringUtilReplaceValues));
+		R addCPDefinitions = new R(
+			"addCPDefinitions",
+			() -> _addCPDefinitions(serviceContext, stringUtilReplaceValues));
+		R addExpandoValues = new R(
+			"addExpandoValues",
+			() -> _addExpandoValues(serviceContext, stringUtilReplaceValues));
+		R addFragmentEntries = new R(
+			"addFragmentEntries",
+			() -> _addFragmentEntries(serviceContext, stringUtilReplaceValues));
+		R addKeywords = new R(
+			"addKeywords",
+			() -> _addKeywords(serviceContext, stringUtilReplaceValues));
+		R addLayoutPageTemplates = new R(
+			"addLayoutPageTemplates",
+			() -> _addLayoutPageTemplates(
+				serviceContext, stringUtilReplaceValues));
+		R addLayoutUtilityPageEntries = new R(
+			"addLayoutUtilityPageEntries",
+			() -> _addLayoutUtilityPageEntries(
+				serviceContext, stringUtilReplaceValues));
+		R addObjectDefinitions = new R(
+			"addObjectDefinitions",
+			() -> _addObjectDefinitions(
+				accountEntryRestrictedObjectDefinitions, objectDefinitionIds,
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateAccountEntryRestrictions = new R(
+			"addOrUpdateAccountEntryRestrictions",
 			() -> _addOrUpdateAccountEntryRestrictions(
-				accountEntryRestrictedObjectDefinitions, serviceContext);
-		R addOrUpdateAssetLinkEntries = () -> _addOrUpdateAssetLinkEntries(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateBlogPostings = () -> _addOrUpdateBlogPostings(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateClientExtensionEntries =
+				accountEntryRestrictedObjectDefinitions, serviceContext));
+		R addOrUpdateAssetLinkEntries = new R(
+			"addOrUpdateAssetLinkEntries",
+			() -> _addOrUpdateAssetLinkEntries(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateBlogPostings = new R(
+			"addOrUpdateBlogPostings",
+			() -> _addOrUpdateBlogPostings(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateClientExtensionEntries = new R(
+			"addOrUpdateClientExtensionEntries",
 			() -> _addOrUpdateClientExtensionEntries(
-				serviceContext, stringUtilReplaceValues);
-		R addOrUpdateDataDefinitions = () -> _addOrUpdateDataDefinitions(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateDDMStructures = () -> _addOrUpdateDDMStructures(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateDDMTemplate = () -> _addOrUpdateDDMTemplates(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateDepotEntries = () -> _addOrUpdateDepotEntries(
-			serviceContext);
-		R addOrUpdateDocuments = () -> _addOrUpdateDocuments(
-			serviceContext, siteNavigationMenuItemSettingsBuilder,
-			stringUtilReplaceValues);
-		R addOrUpdateExpandoColumns = () -> _addOrUpdateExpandoColumns(
-			serviceContext);
-		R addOrUpdateJournalArticles = () -> _addOrUpdateJournalArticles(
-			serviceContext, siteNavigationMenuItemSettingsBuilder,
-			stringUtilReplaceValues);
-		R addOrUpdateKnowledgeBaseArticles =
-			() -> _addOrUpdateKnowledgeBaseArticles(serviceContext);
-		R addOrUpdateLayouts = () -> _addOrUpdateLayouts(
-			layoutsMap, serviceContext, stringUtilReplaceValues);
-		R addOrUpdateLayoutsContent = () -> _addOrUpdateLayoutsContent(
-			layoutsMap, serviceContext,
-			siteNavigationMenuItemSettingsBuilder.build(),
-			stringUtilReplaceValues);
-		R addOrUpdateListTypeDefinitions =
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateDataDefinitions = new R(
+			"addOrUpdateDataDefinitions",
+			() -> _addOrUpdateDataDefinitions(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateDDMStructures = new R(
+			"addOrUpdateDDMStructures",
+			() -> _addOrUpdateDDMStructures(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateDDMTemplates = new R(
+			"addOrUpdateDDMTemplates",
+			() -> _addOrUpdateDDMTemplates(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateDepotEntries = new R(
+			"addOrUpdateDepotEntries",
+			() -> _addOrUpdateDepotEntries(serviceContext));
+		R addOrUpdateDocuments = new R(
+			"addOrUpdateDocuments",
+			() -> _addOrUpdateDocuments(
+				serviceContext, siteNavigationMenuItemSettingsBuilder,
+				stringUtilReplaceValues));
+		R addOrUpdateExpandoColumns = new R(
+			"addOrUpdateExpandoColumns",
+			() -> _addOrUpdateExpandoColumns(serviceContext));
+		R addOrUpdateJournalArticles = new R(
+			"addOrUpdateJournalArticles",
+			() -> _addOrUpdateJournalArticles(
+				serviceContext, siteNavigationMenuItemSettingsBuilder,
+				stringUtilReplaceValues));
+		R addOrUpdateKnowledgeBaseArticles = new R(
+			"addOrUpdateKnowledgeBaseArticles",
+			() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
+		R addOrUpdateLayouts = new R(
+			"addOrUpdateLayouts",
+			() -> _addOrUpdateLayouts(
+				layoutsMap, serviceContext, stringUtilReplaceValues));
+		R addOrUpdateLayoutsContent = new R(
+			"addOrUpdateLayoutsContent",
+			() -> _addOrUpdateLayoutsContent(
+				layoutsMap, serviceContext,
+				siteNavigationMenuItemSettingsBuilder.build(),
+				stringUtilReplaceValues));
+		R addOrUpdateListTypeDefinitions = new R(
+			"addOrUpdateListTypeDefinitions",
 			() -> _addOrUpdateListTypeDefinitions(
-				serviceContext, stringUtilReplaceValues);
-		R addOrUpdateNotificationTemplates =
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateNotificationTemplates = new R(
+			"addOrUpdateNotificationTemplates",
 			() -> _addOrUpdateNotificationTemplates(
-				serviceContext, stringUtilReplaceValues);
-		R addOrUpdateObjectActions = () -> _addOrUpdateObjectActions(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateObjectEntries = () -> _addOrUpdateObjectEntries(
-			serviceContext, siteNavigationMenuItemSettingsBuilder,
-			stringUtilReplaceValues);
-		R addOrUpdateObjectFields = () -> _addOrUpdateObjectFields(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateObjectRelationships =
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateObjectActions = new R(
+			"addOrUpdateObjectActions",
+			() -> _addOrUpdateObjectActions(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateObjectEntries = new R(
+			"addOrUpdateObjectEntries",
+			() -> _addOrUpdateObjectEntries(
+				serviceContext, siteNavigationMenuItemSettingsBuilder,
+				stringUtilReplaceValues));
+		R addOrUpdateObjectFields = new R(
+			"addOrUpdateObjectFields",
+			() -> _addOrUpdateObjectFields(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateObjectRelationships = new R(
+			"addOrUpdateObjectRelationships",
 			() -> _addOrUpdateObjectRelationships(
-				serviceContext, stringUtilReplaceValues);
-		R addOrUpdateOrganizations = () -> _addOrUpdateOrganizations(
-			serviceContext);
-		R addOrUpdateResourcePermissions =
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateOrganizations = new R(
+			"addOrUpdateOrganizations",
+			() -> _addOrUpdateOrganizations(serviceContext));
+		R addOrUpdateResourcePermissions = new R(
+			"addOrUpdateResourcePermissions",
 			() -> _addOrUpdateResourcePermissions(
-				serviceContext, stringUtilReplaceValues);
-		R addOrUpdateRoles = () -> _addOrUpdateRoles(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateSAPEntries = () -> _addOrUpdateSAPEntries(serviceContext);
-		R addOrUpdateSegmentsEntries = () -> _addOrUpdateSegmentsEntries(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateSXPBlueprint = () -> _addOrUpdateSXPBlueprint(
-			serviceContext, stringUtilReplaceValues);
-		R addOrUpdateTaxonomyVocabularies =
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateRoles = new R(
+			"addOrUpdateRoles",
+			() -> _addOrUpdateRoles(serviceContext, stringUtilReplaceValues));
+		R addOrUpdateSAPEntries = new R(
+			"addOrUpdateSAPEntries",
+			() -> _addOrUpdateSAPEntries(serviceContext));
+		R addOrUpdateSegmentsEntries = new R(
+			"addOrUpdateSegmentsEntries",
+			() -> _addOrUpdateSegmentsEntries(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateSXPBlueprint = new R(
+			"addOrUpdateSXPBlueprint",
+			() -> _addOrUpdateSXPBlueprint(
+				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateTaxonomyVocabularies = new R(
+			"addOrUpdateTaxonomyVocabularies",
 			() -> _addOrUpdateTaxonomyVocabularies(
 				serviceContext, siteNavigationMenuItemSettingsBuilder,
-				stringUtilReplaceValues);
-		R addOrUpdateUserGroups = () -> _addOrUpdateUserGroups(serviceContext);
-		R addPortletSettings = () -> _addPortletSettings(serviceContext);
-		R addRolesAssignments = () -> _addRolesAssignments(serviceContext);
-		R addSegmentsExperiences = () -> _addSegmentsExperiences(
-			serviceContext, stringUtilReplaceValues);
-		R addSiteConfiguration = () -> _addSiteConfiguration(serviceContext);
-		R addSiteSettings = () -> _addSiteSettings(serviceContext);
-		R addStyleBookEntries = () -> _addStyleBookEntries(serviceContext);
-		R addUserRoles = () -> _addUserRoles(serviceContext);
-		R addUserAccounts = () -> _addUserAccounts(
-			serviceContext, stringUtilReplaceValues);
-		R addWorkflowDefinitions = () -> _addWorkflowDefinitions(
-			serviceContext, stringUtilReplaceValues);
-		R publishObjectDefinitions = () -> _publishObjectDefinitions(
-			objectDefinitionIds, serviceContext);
-		R setPLOEntries = () -> _setPLOEntries(serviceContext);
-		R updateLayoutSets = () -> _updateLayoutSets(
-			serviceContext, stringUtilReplaceValues);
+				stringUtilReplaceValues));
+		R addOrUpdateUserGroups = new R(
+			"addOrUpdateUserGroups",
+			() -> _addOrUpdateUserGroups(serviceContext));
+		R addPortletSettings = new R(
+			"addPortletSettings", () -> _addPortletSettings(serviceContext));
+		R addRolesAssignments = new R(
+			"addRolesAssignments", () -> _addRolesAssignments(serviceContext));
+		R addSegmentsExperiences = new R(
+			"addSegmentsExperiences",
+			() -> _addSegmentsExperiences(
+				serviceContext, stringUtilReplaceValues));
+		R addSiteConfiguration = new R(
+			"addSiteConfiguration",
+			() -> _addSiteConfiguration(serviceContext));
+		R addSiteSettings = new R(
+			"addSiteSettings", () -> _addSiteSettings(serviceContext));
+		R addStyleBookEntries = new R(
+			"addStyleBookEntries", () -> _addStyleBookEntries(serviceContext));
+		R addUserRoles = new R(
+			"addUserRoles", () -> _addUserRoles(serviceContext));
+		R addUserAccounts = new R(
+			"addUserAccounts",
+			() -> _addUserAccounts(serviceContext, stringUtilReplaceValues));
+		R addWorkflowDefinitions = new R(
+			"addWorkflowDefinitions",
+			() -> _addWorkflowDefinitions(
+				serviceContext, stringUtilReplaceValues));
+		R publishObjectDefinitions = new R(
+			"publishObjectDefinitions",
+			() -> _publishObjectDefinitions(
+				objectDefinitionIds, serviceContext));
+		R setPLOEntries = new R(
+			"setPLOEntries", () -> _setPLOEntries(serviceContext));
+		R updateLayoutSets = new R(
+			"updateLayoutSets",
+			() -> _updateLayoutSets(serviceContext, stringUtilReplaceValues));
 
 		return HashMapBuilder.<R, List<R>>put(
+			addAccountGroupAssignments,
+			_dependsOn(addAccountGroups, addAccounts)
+		).put(
+			addAccountGroups, _dependsOn()
+		).put(
 			addAccounts, _dependsOn(addOrUpdateExpandoColumns)
 		).put(
 			addAccountsOrganizations,
 			_dependsOn(addAccounts, addOrUpdateOrganizations)
-		).put(
-			addAcountGroupAssignments, _dependsOn(addAcountGroups, addAccounts)
-		).put(
-			addAcountGroups, _dependsOn()
 		).put(
 			addAssetListEntries,
 			_dependsOn(
@@ -5050,7 +5121,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
 				addOrUpdateDocuments, addOrUpdateExpandoColumns,
 				addOrUpdateJournalArticles, addOrUpdateLayouts,
 				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
@@ -5060,7 +5131,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
 				addOrUpdateDocuments, addOrUpdateExpandoColumns,
 				addOrUpdateJournalArticles, addOrUpdateLayouts,
 				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
@@ -5088,7 +5159,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			addOrUpdateDDMStructures, _dependsOn()
 		).put(
-			addOrUpdateDDMTemplate,
+			addOrUpdateDDMTemplates,
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateDDMStructures,
 				publishObjectDefinitions)
@@ -5102,7 +5173,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			addOrUpdateExpandoColumns, _dependsOn()
 		).put(
 			addOrUpdateJournalArticles,
-			_dependsOn(addOrUpdateDDMStructures, addOrUpdateDDMTemplate)
+			_dependsOn(addOrUpdateDDMStructures, addOrUpdateDDMTemplates)
 		).put(
 			addOrUpdateKnowledgeBaseArticles,
 			_dependsOn(addOrUpdateExpandoColumns)
@@ -5114,7 +5185,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
 				addOrUpdateDocuments, addOrUpdateExpandoColumns,
 				addOrUpdateJournalArticles, addOrUpdateLayouts,
 				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
@@ -5150,7 +5221,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addLayoutUtilityPageEntries, addObjectDefinitions,
 				addOrUpdateBlogPostings, addOrUpdateClientExtensionEntries,
 				addOrUpdateDataDefinitions, addOrUpdateDDMStructures,
-				addOrUpdateDDMTemplate, addOrUpdateDocuments,
+				addOrUpdateDDMTemplates, addOrUpdateDocuments,
 				addOrUpdateJournalArticles, addOrUpdateLayouts,
 				addOrUpdateObjectEntries, addOrUpdateRoles,
 				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
@@ -5184,7 +5255,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplate,
+				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
 				addOrUpdateDocuments, addOrUpdateJournalArticles,
 				addOrUpdateLayouts, addOrUpdateLayoutsContent,
 				addOrUpdateObjectEntries, addOrUpdateSegmentsEntries,
@@ -5469,23 +5540,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				long startTime = System.currentTimeMillis();
 
-				r.run();
+				r.getUnsafeRunnable(
+				).run();
 
 				if (_log.isInfoEnabled()) {
-					Class<?> rClass = r.getClass();
-
-					Method method = rClass.getDeclaredMethod("writeReplace");
-
-					method.setAccessible(true);
-
-					SerializedLambda serializedLambda =
-						(SerializedLambda)method.invoke(r);
-
 					_log.info(
 						StringBundler.concat(
-							"Invoking ", serializedLambda.getImplMethodName(),
-							" took ", System.currentTimeMillis() - startTime,
-							" ms"));
+							"Invoking ", r.getName(), " took ",
+							System.currentTimeMillis() - startTime, " ms"));
 				}
 
 				rList.add(r);
@@ -5936,6 +5998,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final WorkflowDefinitionResource.Factory
 		_workflowDefinitionResourceFactory;
 	private final ZipWriterFactory _zipWriterFactory;
+
+	private class R {
+
+		public R(String name, UnsafeRunnable<Exception> unsafeRunnable) {
+			_name = name;
+			_unsafeRunnable = unsafeRunnable;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public UnsafeRunnable<Exception> getUnsafeRunnable() {
+			return _unsafeRunnable;
+		}
+
+		private final String _name;
+		private final UnsafeRunnable<Exception> _unsafeRunnable;
+
+	}
 
 	private class SiteNavigationMenuItemSetting {
 

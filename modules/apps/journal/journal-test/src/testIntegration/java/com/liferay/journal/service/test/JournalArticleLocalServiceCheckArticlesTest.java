@@ -109,7 +109,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 	}
 
 	@Test
-	public void testExpireJournalArticleWithoutAffectingOthersExpirationErrors()
+	public void testExpireJournalArticleWithExpirationErrors()
 		throws Exception {
 
 		JournalArticle journalArticle = addArticle(
@@ -154,7 +154,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 	}
 
 	@Test
-	public void testScheduleJournalArticleWithoutAffectingOthersSchedulingErrors()
+	public void testScheduleJournalArticleWithSchedulingErrors()
 		throws Exception {
 
 		JournalArticle journalArticle = addArticle(

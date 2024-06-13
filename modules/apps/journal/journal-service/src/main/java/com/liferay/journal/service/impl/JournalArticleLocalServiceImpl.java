@@ -6092,12 +6092,11 @@ public class JournalArticleLocalServiceImpl
 				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Error expiring article " + article.getId(),
+							"Unable to expire article " + article.getId(),
 							portalException);
 					}
 				}
 			});
-
 		indexableActionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
@@ -6163,7 +6162,7 @@ public class JournalArticleLocalServiceImpl
 				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Error publishing article " + article.getId(),
+							"Unable to publish article " + article.getId(),
 							portalException);
 					}
 				}

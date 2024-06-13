@@ -473,7 +473,8 @@ public class DLAppHelperLocalServiceImpl
 			if (dlFileVersion.isApproved()) {
 				visible = true;
 			}
-			else {
+
+			if (!dlFileVersion.isApproved() && !dlFileVersion.isScheduled()) {
 				String version = dlFileVersion.getVersion();
 
 				if (!version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {

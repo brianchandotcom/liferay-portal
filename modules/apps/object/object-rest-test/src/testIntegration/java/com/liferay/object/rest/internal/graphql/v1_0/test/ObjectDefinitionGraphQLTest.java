@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -220,6 +221,67 @@ public class ObjectDefinitionGraphQLTest {
 					"JSONArray/errors", "Object/0", "JSONObject/extensions",
 					"Object/code"));
 		}
+
+		// insert draft with enableObjectEntryDraft disabled
+
+		Assert.assertEquals(
+			"Bad Request",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"create" + _parentObjectDefinitionName,
+								HashMapBuilder.<String, Object>put(
+									_parentObjectDefinitionName,
+									StringBundler.concat(
+										"{", _objectFieldName, ": \"",
+										RandomTestUtil.randomString(), "\", ",
+										_listFieldName, ": {key: \"",
+										_listFieldValueKey, "\"}",
+										", statusCode:",
+										WorkflowConstants.STATUS_DRAFT, "}")
+								).build(),
+								new GraphQLField(_objectFieldName),
+								new GraphQLField(_listFieldName + " {key}"))))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		_parentObjectDefinition.setEnableObjectEntryDraft(true);
+
+		_parentObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_parentObjectDefinition);
+
+		value = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DRAFT),
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"create" + _parentObjectDefinitionName,
+								HashMapBuilder.<String, Object>put(
+									_parentObjectDefinitionName,
+									StringBundler.concat(
+										"{", _objectFieldName, ": \"", value,
+										"\", ", _listFieldName, ": {key: \"",
+										_listFieldValueKey, "\"}",
+										", statusCode:",
+										WorkflowConstants.STATUS_DRAFT, "}")
+								).build(),
+								new GraphQLField("status"),
+								new GraphQLField(_objectFieldName),
+								new GraphQLField(_listFieldName + " {key}"))))),
+				"JSONObject/data", "JSONObject/c",
+				"JSONObject/create" + _parentObjectDefinitionName,
+				"Object/status"));
 	}
 
 	@Test
@@ -750,6 +812,39 @@ public class ObjectDefinitionGraphQLTest {
 				"JSONObject/data", "JSONObject/c",
 				"JSONObject/update" + _parentObjectDefinitionName,
 				"Object/" + _objectFieldName));
+
+		_parentObjectDefinition.setEnableObjectEntryDraft(true);
+
+		_parentObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_parentObjectDefinition);
+
+		value = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			"Bad Request",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"update" + _parentObjectDefinitionName,
+								HashMapBuilder.<String, Object>put(
+									_parentObjectDefinitionName,
+									StringBundler.concat(
+										"{", _objectFieldName, ": \"", value,
+										"\", statusCode:",
+										WorkflowConstants.STATUS_DRAFT, "}")
+								).put(
+									_parentObjectDefinitionPrimaryKeyName,
+									String.valueOf(objectEntryId)
+								).build(),
+								new GraphQLField(_objectFieldName),
+								new GraphQLField(_listFieldName + " {key}"))))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	private void _addListTypeEntry(

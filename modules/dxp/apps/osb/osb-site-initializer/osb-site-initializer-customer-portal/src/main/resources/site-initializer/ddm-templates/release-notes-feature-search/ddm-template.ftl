@@ -255,7 +255,7 @@
 								/>
 
 								<#list restArticle.contentFields as fieldData>
-									<#if fieldData.contentFieldValue.data?has_content>
+									<#if fieldData.contentFieldValue.data?has_content && validator.isNotNull(fieldData.contentFieldValue.data)>
 										<#assign webContentData = fieldData.contentFieldValue.data />
 
 										<div>

@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCompositionService;
-import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -19,12 +18,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,9 +40,8 @@ public class FragmentCompositionServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.fragment.service"));
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -78,27 +74,21 @@ public class FragmentCompositionServiceTest {
 				fragmentCompositionKey, name, description, data,
 				previewFileEntryId, status, serviceContext);
 
-		_fragmentCompositionService.updateFragmentComposition(
-			fragmentComposition.getFragmentCompositionId(),
-			_updatedFragmentCollection.getFragmentCollectionId(),
-			fragmentComposition.getName(), fragmentComposition.getDescription(),
-			fragmentComposition.getData(),
-			fragmentComposition.getPreviewFileEntryId(),
-			fragmentComposition.getStatus());
-
-		FragmentComposition fragmentCompositionByPK =
-			_fragmentCompositionPersistence.fetchByPrimaryKey(
-				fragmentComposition.getFragmentCompositionId());
+		fragmentComposition =
+			_fragmentCompositionService.updateFragmentComposition(
+				fragmentComposition.getFragmentCompositionId(),
+				_updatedFragmentCollection.getFragmentCollectionId(),
+				fragmentComposition.getName(), fragmentComposition.getDescription(),
+				fragmentComposition.getData(),
+				fragmentComposition.getPreviewFileEntryId(),
+				fragmentComposition.getStatus());
 
 		Assert.assertEquals(
-			fragmentCompositionByPK.getFragmentCollectionId(),
+			fragmentComposition.getFragmentCollectionId(),
 			_updatedFragmentCollection.getFragmentCollectionId());
 	}
 
 	private FragmentCollection _fragmentCollection;
-
-	@Inject
-	private FragmentCompositionPersistence _fragmentCompositionPersistence;
 
 	@Inject
 	private FragmentCompositionService _fragmentCompositionService;

@@ -220,6 +220,20 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		assertValid(getProduct);
 
+		randomPatchProduct = randomProduct();
+
+		productResource.patchProductByExternalReferenceCode(
+			getProduct.getExternalReferenceCode(), randomPatchProduct);
+
+		getProduct = productResource.getProduct(postProduct.getProductId());
+
+		BaseProductResourceTestCase.BeanTestUtil.copyProperties(
+			randomPatchProduct, expectedPatchProduct);
+
+		assertEquals(expectedPatchProduct, getProduct);
+
+		assertValid(getProduct);
+
 		_testPatchProductWithNegativeValue("cost");
 		_testPatchProductWithNegativeValue("depth");
 		_testPatchProductWithNegativeValue("height");

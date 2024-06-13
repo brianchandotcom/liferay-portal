@@ -141,7 +141,7 @@ test('LPD-26142 A Sales Agent can manage channel defaults', async ({
 			'demo.unprivileged@liferay.com'
 		);
 
-	await apiHelpers.headlessAdminUser.assingUserToRole(role.name, user.id);
+	await apiHelpers.headlessAdminUser.assignUserToRole(role.name, user.id);
 
 	const account1 = await apiHelpers.headlessAdminUser.postAccount({
 		name: getRandomString(),

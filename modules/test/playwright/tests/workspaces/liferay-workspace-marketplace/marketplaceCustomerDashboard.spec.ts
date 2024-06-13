@@ -70,7 +70,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 			(role) => role.name === 'Account Buyer'
 		);
 
-		await apiHelpers.headlessAdminUser.assingUserToAccountRole(
+		await apiHelpers.headlessAdminUser.assignUserToAccountRole(
 			customer.id,
 			customerAccountRole[0].id,
 			user.id

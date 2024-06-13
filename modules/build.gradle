@@ -387,7 +387,9 @@ gradle.beforeProject {
 						!it.endsWith(".gitignore")
 					}
 
-					ant.jar(basedir: project.file("classes"), defaultexcludes: false, destfile: jar.archivePath, excludes: filteredDefaultExcludes.join(","), includes: "**/.gitignore", update: true)
+					if (sourceSets.main.output.resourcesDir.exists()) {
+						ant.jar(basedir: sourceSets.main.output.resourcesDir, defaultexcludes: false, destfile: jar.archivePath, excludes: filteredDefaultExcludes.join(","), includes: "**/.gitignore", update: true)
+					}
 				}
 			}
 

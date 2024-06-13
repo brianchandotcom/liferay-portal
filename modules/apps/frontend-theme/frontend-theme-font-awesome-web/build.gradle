@@ -2,7 +2,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildFontAwesome(type: Copy)
 
-File fontAwesomeDestinationDir = new File("classes/META-INF/resources/font")
+File fontAwesomeDestinationDir = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/font")
 
 buildCSS {
 	imports = [

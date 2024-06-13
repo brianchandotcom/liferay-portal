@@ -103,7 +103,7 @@ processResources {
 	doLast {
 		copy {
 			from new File(projectDir, "src/main/resources/site-initializer/thumbnail.png")
-			into new File(projectDir, "classes/META-INF/resources")
+			into new File(sourceSets.main.output.resourcesDir, "META-INF/resources")
 		}
 	}
 
@@ -146,7 +146,7 @@ processResources {
 			doLast {
 				copy {
 					from new File(fragmentsSrcDir, "build/liferay-fragments/src")
-					into new File(projectDir, "classes/site-initializer/fragments/group/src")
+					into new File(sourceSets.main.output.resourcesDir, "site-initializer/fragments/group/src")
 				}
 			}
 		}
@@ -166,7 +166,7 @@ processResources {
 				copy {
 					from zipTree(configurations.extraRemoteApp.singleFile)
 					include "fragments/**"
-					into new File(projectDir, "classes/site-initializer")
+					into new File(sourceSets.main.output.resourcesDir, "site-initializer")
 				}
 			}
 		}

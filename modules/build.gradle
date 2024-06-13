@@ -720,10 +720,6 @@ gradle.beforeProject {
 						mustRunAfter "${it.dependencyProject.path}:processResources"
 					}
 				}
-
-				outputs.cacheIf {
-					false
-				}
 			}
 
 			processResources {

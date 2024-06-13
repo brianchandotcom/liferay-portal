@@ -9,7 +9,9 @@ import path from 'path';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 
 export class PublisherSolutionPage {
+	readonly accountSearchDropdown: Locator;
 	readonly addContentBlockButton: Locator;
+	readonly becomePublisherForm: Locator;
 	readonly blocksTitle: Locator;
 	readonly categories: Locator;
 	readonly chooseBlockSelect: Locator;
@@ -24,6 +26,7 @@ export class PublisherSolutionPage {
 	readonly emailInput: Locator;
 	readonly headerTitle: Locator;
 	readonly newSolutionButton: Locator;
+	readonly notAvailableAlert: Locator;
 	readonly page: Page;
 	readonly phoneInput: Locator;
 	readonly radioUploadImages: Locator;
@@ -42,8 +45,12 @@ export class PublisherSolutionPage {
 	readonly website: Locator;
 
 	constructor(page: Page) {
+		this.accountSearchDropdown = page.locator('#account-search.dropdown');
 		this.addContentBlockButton = page.getByRole('button', {
 			name: 'Add Content Block',
+		});
+		this.becomePublisherForm = page.getByRole('link', {
+			name: 'please complete this form.',
 		});
 		this.blocksTitle = page.getByPlaceholder('Enter title');
 		this.categories = page.getByPlaceholder('Select categories');
@@ -75,6 +82,7 @@ export class PublisherSolutionPage {
 		this.newSolutionButton = page.getByRole('button', {
 			name: 'New Solution Template',
 		});
+		this.notAvailableAlert = page.getByRole('alert');
 		this.page = page;
 		this.phoneInput = page.getByPlaceholder('+1 (123) 456-7890');
 		this.richTextEditor = page.locator('.ql-editor');
@@ -222,6 +230,24 @@ export class PublisherSolutionPage {
 	async goToNewSolution() {
 		await this.newSolutionButton.click();
 		await this.createTemplate.waitFor({state: 'visible'});
+	}
+
+	async selectAccount(accountName: string) {
+		const accountOption = this.page.getByRole('menuitem', {
+			name: accountName,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: accountOption,
+			trigger: this.accountSearchDropdown,
+		});
+
+		await accountOption.click();
+
+		// Necessary to wait few seconds because the page forces a full reload
+		// using window.reload()
+
+		await this.page.waitForTimeout(2000);
 	}
 
 	async reviewAndSubmit() {

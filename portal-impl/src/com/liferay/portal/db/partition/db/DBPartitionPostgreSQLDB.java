@@ -49,8 +49,10 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 	@Override
 	public String getSafeAlterTable(String alterTableSQL) {
-		if (StringUtil.count(
-				StringUtil.toLowerCase(alterTableSQL), "drop column") > 0) {
+		String lowerCaseAlterTableSQL = StringUtil.toLowerCase(alterTableSQL);
+
+		if ((StringUtil.count(lowerCaseAlterTableSQL, " cascade") == 0) &&
+			lowerCaseAlterTableSQL.matches("alter table \\S* drop.*$")) {
 
 			return alterTableSQL + " cascade";
 		}

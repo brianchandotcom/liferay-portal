@@ -99,8 +99,7 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 
 						AssetRenderer<JournalArticle> assetRenderer =
 							assetRendererFactory.getAssetRenderer(
-								article.getResourcePrimKey(),
-								AssetRendererFactory.TYPE_LATEST);
+								article, AssetRendererFactory.TYPE_LATEST);
 
 						String viewContentURL = StringPool.BLANK;
 

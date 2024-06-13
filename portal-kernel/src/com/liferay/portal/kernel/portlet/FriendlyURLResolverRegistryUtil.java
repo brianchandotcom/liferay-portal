@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Eduardo García
@@ -84,21 +82,13 @@ public class FriendlyURLResolverRegistryUtil {
 	private static final ServiceTrackerMap<String, FriendlyURLResolver>
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, FriendlyURLResolver.class, null,
-			new ServiceReferenceMapper<String, FriendlyURLResolver>() {
+			(serviceReference, emitter) -> {
+				FriendlyURLResolver friendlyURLResolver =
+					_bundleContext.getService(serviceReference);
 
-				@Override
-				public void map(
-					ServiceReference<FriendlyURLResolver> serviceReference,
-					ServiceReferenceMapper.Emitter<String> emitter) {
+				emitter.emit(friendlyURLResolver.getURLSeparator());
 
-					FriendlyURLResolver friendlyURLResolver =
-						_bundleContext.getService(serviceReference);
-
-					emitter.emit(friendlyURLResolver.getURLSeparator());
-
-					_bundleContext.ungetService(serviceReference);
-				}
-
+				_bundleContext.ungetService(serviceReference);
 			});
 
 }

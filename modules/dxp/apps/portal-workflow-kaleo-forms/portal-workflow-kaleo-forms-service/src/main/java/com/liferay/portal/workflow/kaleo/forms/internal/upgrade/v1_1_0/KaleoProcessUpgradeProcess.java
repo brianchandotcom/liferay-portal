@@ -119,9 +119,10 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 		DDMStructure newDDMStructure = _ddmStructureLocalService.addStructure(
 			oldDDMStructure.getUserId(), oldDDMStructure.getGroupId(),
 			oldDDMStructure.getParentStructureId(),
-			PortalUtil.getClassNameId(KaleoProcess.class), oldDDMStructure.getStructureKey(),
-			oldDDMStructure.getNameMap(), oldDDMStructure.getDescriptionMap(),
-			oldDDMStructure.getDDMForm(), oldDDMStructure.getDDMFormLayout(),
+			PortalUtil.getClassNameId(KaleoProcess.class),
+			oldDDMStructure.getStructureKey(), oldDDMStructure.getNameMap(),
+			oldDDMStructure.getDescriptionMap(), oldDDMStructure.getDDMForm(),
+			oldDDMStructure.getDDMFormLayout(),
 			oldDDMStructure.getStorageType(), oldDDMStructure.getType(),
 			serviceContext);
 
@@ -170,10 +171,11 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 			DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
 				oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
 				oldDDMTemplate.getClassNameId(), newDDMStructureId,
-				PortalUtil.getClassNameId(KaleoProcess.class), oldDDMTemplate.getNameMap(),
-				oldDDMTemplate.getDescriptionMap(), oldDDMTemplate.getType(),
-				oldDDMTemplate.getMode(), oldDDMTemplate.getLanguage(),
-				oldDDMTemplate.getScript(), serviceContext);
+				PortalUtil.getClassNameId(KaleoProcess.class),
+				oldDDMTemplate.getNameMap(), oldDDMTemplate.getDescriptionMap(),
+				oldDDMTemplate.getType(), oldDDMTemplate.getMode(),
+				oldDDMTemplate.getLanguage(), oldDDMTemplate.getScript(),
+				serviceContext);
 
 			newDDMTemplateId = newDDMTemplate.getTemplateId();
 		}

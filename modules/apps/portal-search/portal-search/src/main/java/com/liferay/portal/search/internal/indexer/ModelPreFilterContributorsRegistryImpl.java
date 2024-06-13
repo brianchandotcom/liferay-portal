@@ -43,12 +43,6 @@ public class ModelPreFilterContributorsRegistryImpl
 			_retainAll(modelPreFilterContributors, _getMandatoryContributors());
 		}
 		else {
-			if ((includes != null) && (includes.size() == 1) &&
-				includes.contains(StringPool.STAR)) {
-
-				return modelPreFilterContributors;
-			}
-
 			if ((excludes != null) && (excludes.size() == 1) &&
 				excludes.contains(StringPool.STAR)) {
 
@@ -58,7 +52,9 @@ public class ModelPreFilterContributorsRegistryImpl
 			List<String> mandatoryContributorClassNames =
 				_getMandatoryContributorNames(_getMandatoryContributors());
 
-			if ((includes != null) && !includes.isEmpty()) {
+			if ((includes != null) && !includes.isEmpty() &&
+				(includes.size() != 1) && !includes.contains(StringPool.STAR)) {
+
 				modelPreFilterContributors.removeIf(
 					modelPreFilterContributor -> {
 						String className = _getClassName(

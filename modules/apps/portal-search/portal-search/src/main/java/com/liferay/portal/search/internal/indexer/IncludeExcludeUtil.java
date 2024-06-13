@@ -22,15 +22,19 @@ public class IncludeExcludeUtil {
 		List<T> list, Collection<String> includeIds,
 		Collection<String> excludeIds, Function<T, String> function) {
 
-		if ((includeIds.size() == 1) && includeIds.contains(StringPool.STAR)) {
-			return list;
-		}
-
 		if ((excludeIds.size() == 1) && excludeIds.contains(StringPool.STAR)) {
 			return new ArrayList<>();
 		}
 
-		return _include(list, includeIds, function);
+		if (!((includeIds.size() == 1) &&
+			  includeIds.contains(StringPool.STAR))) {
+
+			_filter(list, includeIds, t -> isPresent(t, includeIds, function));
+		}
+
+		_filter(list, excludeIds, t -> !isPresent(t, excludeIds, function));
+
+		return list;
 	}
 
 	protected static <T> boolean isPresent(
@@ -49,12 +53,6 @@ public class IncludeExcludeUtil {
 		list.removeIf(cur -> !predicate.test(cur));
 
 		return list;
-	}
-
-	private static <T> List<T> _include(
-		List<T> list, Collection<String> ids, Function<T, String> function) {
-
-		return _filter(list, ids, t -> isPresent(t, ids, function));
 	}
 
 }

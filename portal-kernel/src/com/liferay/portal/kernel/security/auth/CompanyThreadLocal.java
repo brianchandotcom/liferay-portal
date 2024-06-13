@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -89,6 +90,16 @@ public class CompanyThreadLocal {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Get company ID " + companyId);
+		}
+
+		return companyId;
+	}
+
+	public static long getNonsystemCompanyId() {
+		long companyId = _companyId.get();
+
+		if (companyId == CompanyConstants.SYSTEM) {
+			return PortalInstancePool.getDefaultCompanyId();
 		}
 
 		return companyId;

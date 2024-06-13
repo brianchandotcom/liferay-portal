@@ -289,7 +289,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			HttpServletRequest httpServletRequest =
 				accessControlContext.getRequest();
 
-			if (httpServletRequest.getHeader("X-CSRF-Token") != null) {
+			if (httpServletRequest.getAttribute("REST_CLIENT") != null) {
 				systemServiceAccessPolicyNames.add(
 					sapConfiguration.systemTemplateDefaultSAPEntryName());
 			}

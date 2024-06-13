@@ -5,20 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {backendPageTest} from '../../../fixtures/backendPageTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../../utils/getRandomInt';
-import {getTempDir} from '../../../utils/temp';
-import {marketplacePagesTest} from './fixtures/marketplacePages';
-import {marketplaceSiteFixture} from './fixtures/marketplaceSite';
+import {backendPageTest} from '../../../../fixtures/backendPageTest';
+import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../utils/getRandomInt';
+import {getTempDir} from '../../../../utils/temp';
+import {marketplacePagesTest} from '../fixtures/marketplacePages';
+import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
 import {
 	MARKETPLACE_CHANNEL,
 	ORDER_TYPES,
 	ORDER_WORKFLOW_STATUS_CODE,
 	PAYMENT_STATUS,
 	PRODUCT_WORKFLOW_STATUS_CODE,
-} from './utils/constants';
+} from '../utils/constants';
 
 export const test = mergeTests(
 	backendPageTest,

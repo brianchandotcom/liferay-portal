@@ -5,12 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {marketplacePagesTest} from './fixtures/marketplacePages';
-import {marketplaceSiteFixture} from './fixtures/marketplaceSite';
-import {PublishProductPayload} from './types';
-import {products, solutions} from './utils/constants';
+import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {marketplacePagesTest} from '../fixtures/marketplacePages';
+import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
+import {solutions} from '../utils/constants';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -18,16 +18,25 @@ export const test = mergeTests(
 	marketplacePagesTest
 );
 
-const ACCOUNT_NAME = 'Supplier Account';
+const ACCOUNT_NAME = {
+	PERSON: `Person Account${getRandomInt()}`,
+	SUPPLIER: `Supplier Account${getRandomInt()}`,
+};
 const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';
 
 test.describe('Can Publish and Manage Solutions', () => {
+	let _account;
+	let _catalog;
+	let _productId;
+
 	test.beforeEach(
 		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
 			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: ACCOUNT_NAME,
+				name: ACCOUNT_NAME.SUPPLIER,
 				type: 'supplier',
 			});
+
+			_account = account;
 
 			const user =
 				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
@@ -52,9 +61,12 @@ test.describe('Can Publish and Manage Solutions', () => {
 				user.id
 			);
 
-			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-				accountId: account.id,
-			});
+			const catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+					accountId: account.id,
+				});
+
+			_catalog = catalog;
 
 			await publisherSolutionPage.goto(
 				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
@@ -62,9 +74,20 @@ test.describe('Can Publish and Manage Solutions', () => {
 		}
 	);
 
+	test.afterEach(async ({apiHelpers}) => {
+		await apiHelpers.headlessAdminUser.deleteAccount(_account.id);
+
+		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
+			_catalog.id
+		);
+
+		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(_productId);
+	});
+
 	test('LPD-26707 New Solution Template button should be visible for Suppliers', async ({
 		publisherSolutionPage,
 	}) => {
+		await publisherSolutionPage.selectAccount(ACCOUNT_NAME.SUPPLIER);
 		await expect(publisherSolutionPage.newSolutionButton).toBeEnabled();
 	});
 
@@ -75,10 +98,12 @@ test.describe('Can Publish and Manage Solutions', () => {
 			marketplace,
 			page,
 			publisherSolutionPage,
+			apiHelpers,
 		}) => {
 			await publisherSolutionPage.goto(
 				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
 			);
+
 			await publisherSolutionPage.goToNewSolution();
 			await publisherSolutionPage.goToDefineSolutionProfile();
 			await publisherSolutionPage.fillDefineSolutionProfile(
@@ -122,6 +147,17 @@ test.describe('Can Publish and Manage Solutions', () => {
 				.getByText(`Solution ${solution.profile.name} submitted`)
 				.waitFor({state: 'visible'});
 
+			const createdProduct =
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq '${solution.profile.name}'`,
+					})
+				);
+
+			const productId = createdProduct.items[0].productId;
+
+			_productId = productId;
+
 			await expect(
 				page.getByText(solution.profile.name).last()
 			).toBeVisible();
@@ -133,62 +169,53 @@ test.describe('Can Publish and Manage Solutions', () => {
 	}
 });
 
-test.describe('Can Publish Marketplace Apps', () => {
-	for (const key of Object.keys(products)) {
-		const product = products[key as keyof typeof products];
+test.describe(`Supplier Accounts without ${SOLUTION_PUBLISHER_ROLE} role can not be a solution publisher`, () => {
+	let _account;
+	let _catalog;
 
-		test(`can publish "${product.name}"`, async ({
-			apiHelpers,
-			page,
-			publisherAppPage,
-			publisherDashboardPage,
-		}) => {
-			publisherAppPage.setPublishProduct(
-				product as unknown as PublishProductPayload
+	test.beforeEach(
+		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
+			const account = await apiHelpers.headlessAdminUser.postAccount({
+				name: ACCOUNT_NAME.SUPPLIER,
+				type: 'supplier',
+			});
+
+			_account = account;
+
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account.id,
+				['test@liferay.com']
 			);
 
-			// Go to Publisher Dashboard
+			const catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+					accountId: account.id,
+				});
 
-			await publisherDashboardPage.goto();
+			_catalog = catalog;
 
-			await publisherDashboardPage.gotoNewAppPage();
+			await publisherSolutionPage.goto(
+				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
+			);
+		}
+	);
 
-			// Publish the app
+	test.afterEach(async ({apiHelpers}) => {
+		await apiHelpers.headlessAdminUser.deleteAccount(_account.id);
+		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
+			_catalog.id
+		);
+	});
 
-			await publisherAppPage.checkHeader({
-				accountName: ACCOUNT_NAME,
-				appName: 'New App',
-			});
-			await publisherAppPage.continue();
-			await publisherAppPage.fillProfile();
-			await publisherAppPage.fillBuild();
+	test('LPD-28486 New Solution Template button should NOT be visible', async ({
+		publisherSolutionPage,
+	}) => {
+		await publisherSolutionPage.selectAccount(ACCOUNT_NAME.SUPPLIER);
 
-			const createdProduct =
-				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-					new URLSearchParams({
-						filter: `name eq '${product.name}'`,
-					})
-				);
+		await expect(publisherSolutionPage.newSolutionButton).toBeHidden();
 
-			const productId = createdProduct.items[0].productId;
+		await expect(publisherSolutionPage.notAvailableAlert).toBeVisible();
 
-			const productVirtualSettings =
-				await apiHelpers.headlessCommerceAdminCatalog.getProductVirtualSettings(
-					productId
-				);
-
-			expect(
-				productVirtualSettings.productVirtualSettingsFileEntries[0]
-					.version === product.dxpVersions[0]
-			).toBeTruthy();
-
-			await publisherAppPage.fillStoreFront();
-			await publisherAppPage.fillVersion();
-			await publisherAppPage.fillPricing();
-			await publisherAppPage.fillSupport();
-			await publisherAppPage.reviewAndSubmit();
-
-			expect(page.getByText(product.name)).toBeTruthy();
-		});
-	}
+		await expect(publisherSolutionPage.becomePublisherForm).toBeVisible();
+	});
 });

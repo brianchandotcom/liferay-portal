@@ -139,9 +139,9 @@ public class DXPCloudClientTestrayImporter {
 				htmlFileContent.replaceAll(
 					"(screenshots/(?:after|before|screenshot)\\d+)\\.jpg",
 					JenkinsResultsParserUtil.combine(
-						_testrayServerURL, "/reports/", _testrayReleaseName,
-						"/logs/", _getRelativeURLPath(), "/",
-						parentFile.getName(), "/$1.jpg.gz")));
+						_testrayS3Bucket.getTestrayS3BaseURL(), "/",
+						_getRelativeURLPath(), "/", parentFile.getName(),
+						"/$1.jpg.gz")));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

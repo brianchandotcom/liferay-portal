@@ -9,6 +9,5 @@ export {default as DepotAdminManagementToolbarPropsTransformer} from './DepotAdm
 export {default as DepotEntryDropdownDefaultEventHandler} from './DepotEntryDropdownDefaultEventHandler.es';
 export {default as DepotEntryDropdownPropsTransformer} from './DepotEntryDropdownPropsTransformer';
 export {default as DepotRoles} from './DepotRoles';
-export {default as FileSizePerMimeType} from './FileSizePerMimeType';
 export {default as Languages} from './Languages.es';
 export {default as StagingIndicator} from './StagingIndicator';

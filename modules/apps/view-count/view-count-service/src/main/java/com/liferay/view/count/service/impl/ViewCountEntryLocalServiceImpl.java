@@ -148,14 +148,14 @@ public class ViewCountEntryLocalServiceImpl
 	@Override
 	@Transactional(enabled = false)
 	public boolean isViewCountEnabled(long classNameId) {
-		ClassName className = _classNameLocalService.fetchByClassNameId(
-			classNameId);
+		if (isViewCountEnabled()) {
+			ClassName className = _classNameLocalService.fetchByClassNameId(
+				classNameId);
 
-		if (_disabledClassNames.contains(className.getValue())) {
-			return false;
+			return !_disabledClassNames.contains(className.getValue());
 		}
 
-		return isViewCountEnabled();
+		return false;
 	}
 
 	@Activate

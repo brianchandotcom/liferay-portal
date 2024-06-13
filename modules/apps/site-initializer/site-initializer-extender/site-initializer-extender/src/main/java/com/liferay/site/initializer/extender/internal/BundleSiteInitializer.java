@@ -223,9 +223,6 @@ import com.liferay.template.service.TemplateEntryLocalService;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.lang.invoke.SerializedLambda;
-import java.lang.reflect.Method;
-
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -4893,7 +4890,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private Map<R, List<R>> _createRMap(ServiceContext serviceContext) {
+	private Map<NamedR, List<R>> _createRMap(ServiceContext serviceContext) {
 		Map<String, ObjectDefinition> accountEntryRestrictedObjectDefinitions =
 			new HashMap<>();
 		Map<String, Layout> layoutsMap = new HashMap<>();
@@ -5011,28 +5008,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 		R updateLayoutSets = () -> _updateLayoutSets(
 			serviceContext, stringUtilReplaceValues);
 
-		return HashMapBuilder.<R, List<R>>put(
-			addAccounts, _dependsOn(addOrUpdateExpandoColumns)
+		return HashMapBuilder.<NamedR, List<R>>put(
+			new NamedR("addAccounts", addAccounts),
+			_dependsOn(addOrUpdateExpandoColumns)
 		).put(
-			addAccountsOrganizations,
+			new NamedR("addAccountsOrganizations", addAccountsOrganizations),
 			_dependsOn(addAccounts, addOrUpdateOrganizations)
 		).put(
-			addAcountGroupAssignments, _dependsOn(addAcountGroups, addAccounts)
+			new NamedR("addAccountGroupAssignments", addAcountGroupAssignments),
+			_dependsOn(addAcountGroups, addAccounts)
 		).put(
-			addAcountGroups, _dependsOn()
+			new NamedR("addAccountGroups", addAcountGroups), _dependsOn()
 		).put(
-			addAssetListEntries,
+			new NamedR("addAssetListEntries", addAssetListEntries),
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateDDMStructures,
 				publishObjectDefinitions)
 		).put(
-			addCPDefinitions,
+			new NamedR("addCPDefinitions", addCPDefinitions),
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateDocuments,
 				addOrUpdateExpandoColumns, addOrUpdateLayouts,
 				addOrUpdateObjectEntries, publishObjectDefinitions)
 		).put(
-			addExpandoValues,
+			new NamedR("addExpandoValues", addExpandoValues),
 			_dependsOn(
 				addAccounts, addCPDefinitions, addOrUpdateBlogPostings,
 				addOrUpdateDocuments, addOrUpdateExpandoColumns,
@@ -5042,11 +5041,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateSegmentsEntries, addOrUpdateUserGroups,
 				addUserAccounts)
 		).put(
-			addFragmentEntries, _dependsOn(addOrUpdateDocuments)
+			new NamedR("addFragmentEntries", addFragmentEntries),
+			_dependsOn(addOrUpdateDocuments)
 		).put(
-			addKeywords, _dependsOn(addOrUpdateDepotEntries)
+			new NamedR("addKeywords", addKeywords),
+			_dependsOn(addOrUpdateDepotEntries)
 		).put(
-			addLayoutPageTemplates,
+			new NamedR("addLayoutPageTemplates", addLayoutPageTemplates),
 			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
@@ -5056,7 +5057,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addLayoutUtilityPageEntries,
+			new NamedR(
+				"addLayoutUtilityPageEntries", addLayoutUtilityPageEntries),
 			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
 				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
@@ -5066,50 +5068,65 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addObjectDefinitions,
+			new NamedR("addObjectDefinitions", addObjectDefinitions),
 			_dependsOn(addOrUpdateListTypeDefinitions, addUserAccounts)
 		).put(
-			addOrUpdateAccountEntryRestrictions,
+			new NamedR(
+				"addOrUpdateAccountEntryRestrictions",
+				addOrUpdateAccountEntryRestrictions),
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateObjectFields,
 				addOrUpdateObjectRelationships, publishObjectDefinitions)
 		).put(
-			addOrUpdateAssetLinkEntries,
+			new NamedR(
+				"addOrUpdateAssetLinkEntries", addOrUpdateAssetLinkEntries),
 			_dependsOn(addOrUpdateBlogPostings, addOrUpdateDDMStructures)
 		).put(
-			addOrUpdateBlogPostings,
+			new NamedR("addOrUpdateBlogPostings", addOrUpdateBlogPostings),
 			_dependsOn(
 				addKeywords, addOrUpdateDocuments, addOrUpdateExpandoColumns,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateClientExtensionEntries, _dependsOn(addOrUpdateDocuments)
+			new NamedR(
+				"addOrUpdateClientExtensionEntries",
+				addOrUpdateClientExtensionEntries),
+			_dependsOn(addOrUpdateDocuments)
 		).put(
-			addOrUpdateDataDefinitions, _dependsOn()
+			new NamedR(
+				"addOrUpdateDataDefinitions", addOrUpdateDataDefinitions),
+			_dependsOn()
 		).put(
-			addOrUpdateDDMStructures, _dependsOn()
+			new NamedR("addOrUpdateDDMStructures", addOrUpdateDDMStructures),
+			_dependsOn()
 		).put(
-			addOrUpdateDDMTemplate,
+			new NamedR("addOrUpdateDDMTemplate", addOrUpdateDDMTemplate),
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateDDMStructures,
 				publishObjectDefinitions)
 		).put(
-			addOrUpdateDepotEntries, _dependsOn()
+			new NamedR("addOrUpdateDepotEntries", addOrUpdateDepotEntries),
+			_dependsOn()
 		).put(
-			addOrUpdateDocuments,
+			new NamedR("addOrUpdateDocuments", addOrUpdateDocuments),
 			_dependsOn(
 				addOrUpdateExpandoColumns, addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateExpandoColumns, _dependsOn()
+			new NamedR("addOrUpdateExpandoColumns", addOrUpdateExpandoColumns),
+			_dependsOn()
 		).put(
-			addOrUpdateJournalArticles,
+			new NamedR(
+				"addOrUpdateJournalArticles", addOrUpdateJournalArticles),
 			_dependsOn(addOrUpdateDDMStructures, addOrUpdateDDMTemplate)
 		).put(
-			addOrUpdateKnowledgeBaseArticles,
+			new NamedR(
+				"addOrUpdateKnowledgeBaseArticles",
+				addOrUpdateKnowledgeBaseArticles),
 			_dependsOn(addOrUpdateExpandoColumns)
 		).put(
-			addOrUpdateLayouts, _dependsOn(addOrUpdateRoles)
+			new NamedR("addOrUpdateLayouts", addOrUpdateLayouts),
+			_dependsOn(addOrUpdateRoles)
 		).put(
-			addOrUpdateLayoutsContent,
+			new NamedR("addOrUpdateLayoutsContent", addOrUpdateLayoutsContent),
 			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
@@ -5120,31 +5137,42 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateListTypeDefinitions, _dependsOn()
+			new NamedR(
+				"addOrUpdateListTypeDefinitions",
+				addOrUpdateListTypeDefinitions),
+			_dependsOn()
 		).put(
-			addOrUpdateNotificationTemplates,
+			new NamedR(
+				"addOrUpdateNotificationTemplates",
+				addOrUpdateNotificationTemplates),
 			_dependsOn(addObjectDefinitions, publishObjectDefinitions)
 		).put(
-			addOrUpdateObjectActions,
+			new NamedR("addOrUpdateObjectActions", addOrUpdateObjectActions),
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
 				addOrUpdateObjectFields, addOrUpdateObjectRelationships,
 				publishObjectDefinitions)
 		).put(
-			addOrUpdateObjectEntries,
+			new NamedR("addOrUpdateObjectEntries", addOrUpdateObjectEntries),
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
 				addOrUpdateDocuments, addOrUpdateObjectFields,
 				addOrUpdateObjectRelationships, publishObjectDefinitions)
 		).put(
-			addOrUpdateObjectFields,
+			new NamedR("addOrUpdateObjectFields", addOrUpdateObjectFields),
 			_dependsOn(addObjectDefinitions, addOrUpdateObjectRelationships)
 		).put(
-			addOrUpdateObjectRelationships, _dependsOn(addObjectDefinitions)
+			new NamedR(
+				"addOrUpdateObjectRelationship",
+				addOrUpdateObjectRelationships),
+			_dependsOn(addObjectDefinitions)
 		).put(
-			addOrUpdateOrganizations, _dependsOn(addOrUpdateExpandoColumns)
+			new NamedR("addOrUpdateOrganizations", addOrUpdateOrganizations),
+			_dependsOn(addOrUpdateExpandoColumns)
 		).put(
-			addOrUpdateResourcePermissions,
+			new NamedR(
+				"addOrUpdateResourcePermissions",
+				addOrUpdateResourcePermissions),
 			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
@@ -5155,31 +5183,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateRoles,
 				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
 		).put(
-			addOrUpdateRoles, _dependsOn()
+			new NamedR("addOrUpdateRoles", addOrUpdateRoles), _dependsOn()
 		).put(
-			addOrUpdateSAPEntries, _dependsOn()
+			new NamedR("addOrUpdateSAPEntries", addOrUpdateSAPEntries),
+			_dependsOn()
 		).put(
-			addOrUpdateSegmentsEntries,
+			new NamedR(
+				"addOrUpdateSegmentsEntries", addOrUpdateSegmentsEntries),
 			_dependsOn(
 				addKeywords, addOrUpdateExpandoColumns,
 				addOrUpdateOrganizations, addOrUpdateRoles,
 				addOrUpdateTaxonomyVocabularies, addUserAccounts)
 		).put(
-			addOrUpdateSXPBlueprint, _dependsOn()
+			new NamedR("addOrUpdateSXPBlueprint", addOrUpdateSXPBlueprint),
+			_dependsOn()
 		).put(
-			addOrUpdateTaxonomyVocabularies,
+			new NamedR(
+				"addOrUpdateTaxonomyVocabularies",
+				addOrUpdateTaxonomyVocabularies),
 			_dependsOn(addOrUpdateDDMStructures)
 		).put(
-			addOrUpdateUserGroups, _dependsOn()
+			new NamedR("addOrUpdateUserGroups", addOrUpdateUserGroups),
+			_dependsOn()
 		).put(
-			addPortletSettings, _dependsOn(addOrUpdateTaxonomyVocabularies)
+			new NamedR("addPortletSettings", addPortletSettings),
+			_dependsOn(addOrUpdateTaxonomyVocabularies)
 		).put(
-			addRolesAssignments,
+			new NamedR("addRolesAssignments", addRolesAssignments),
 			_dependsOn(
 				addOrUpdateOrganizations, addOrUpdateRoles,
 				addOrUpdateUserGroups, addUserAccounts)
 		).put(
-			addSegmentsExperiences,
+			new NamedR("addSegmentsExperiences", addSegmentsExperiences),
 			_dependsOn(
 				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
 				addLayoutUtilityPageEntries, addObjectDefinitions,
@@ -5190,30 +5225,34 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateObjectEntries, addOrUpdateSegmentsEntries,
 				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
 		).put(
-			addSiteConfiguration, _dependsOn()
+			new NamedR("addSiteConfiguration", addSiteConfiguration),
+			_dependsOn()
 		).put(
-			addSiteSettings, _dependsOn()
+			new NamedR("addSiteSettings", addSiteSettings), _dependsOn()
 		).put(
-			addStyleBookEntries, _dependsOn()
+			new NamedR("addStyleBookEntries", addStyleBookEntries), _dependsOn()
 		).put(
-			addUserAccounts,
+			new NamedR("addUserAccounts", addUserAccounts),
 			_dependsOn(
 				addAccounts, addKeywords, addOrUpdateDocuments,
 				addOrUpdateExpandoColumns, addOrUpdateOrganizations,
 				addOrUpdateTaxonomyVocabularies)
 		).put(
-			addUserRoles, _dependsOn(addOrUpdateRoles, addUserAccounts)
+			new NamedR("addUserRoles", addUserRoles),
+			_dependsOn(addOrUpdateRoles, addUserAccounts)
 		).put(
-			addWorkflowDefinitions, _dependsOn(addOrUpdateRoles)
+			new NamedR("addWorkflowDefinitions", addWorkflowDefinitions),
+			_dependsOn(addOrUpdateRoles)
 		).put(
-			publishObjectDefinitions,
+			new NamedR("publishObjectDefinitions", publishObjectDefinitions),
 			_dependsOn(
 				addObjectDefinitions, addOrUpdateObjectFields,
 				addOrUpdateObjectRelationships)
 		).put(
-			setPLOEntries, _dependsOn()
+			new NamedR("setPLOEntries", setPLOEntries), _dependsOn()
 		).put(
-			updateLayoutSets, _dependsOn(addOrUpdateLayouts)
+			new NamedR("updateLayoutSets", updateLayoutSets),
+			_dependsOn(addOrUpdateLayouts)
 		).build();
 	}
 
@@ -5455,13 +5494,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		List<R> rList = new ArrayList<>();
-		Map<R, List<R>> rMap = _createRMap(serviceContext);
+		Map<NamedR, List<R>> rMap = _createRMap(serviceContext);
 
 		while (rList.size() != rMap.size()) {
 			int size = rList.size();
 
-			for (Map.Entry<R, List<R>> entry : rMap.entrySet()) {
-				R r = entry.getKey();
+			for (Map.Entry<NamedR, List<R>> entry : rMap.entrySet()) {
+				NamedR namedR = entry.getKey();
+
+				R r = namedR.getR();
 
 				if (rList.contains(r) || !rList.containsAll(entry.getValue())) {
 					continue;
@@ -5472,20 +5513,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				r.run();
 
 				if (_log.isInfoEnabled()) {
-					Class<?> rClass = r.getClass();
-
-					Method method = rClass.getDeclaredMethod("writeReplace");
-
-					method.setAccessible(true);
-
-					SerializedLambda serializedLambda =
-						(SerializedLambda)method.invoke(r);
-
 					_log.info(
 						StringBundler.concat(
-							"Invoking ", serializedLambda.getImplMethodName(),
-							" took ", System.currentTimeMillis() - startTime,
-							" ms"));
+							"Invoking ", namedR.getName(), " took ",
+							System.currentTimeMillis() - startTime, " ms"));
 				}
 
 				rList.add(r);
@@ -5936,6 +5967,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final WorkflowDefinitionResource.Factory
 		_workflowDefinitionResourceFactory;
 	private final ZipWriterFactory _zipWriterFactory;
+
+	private class NamedR {
+
+		public NamedR(String name, R r) {
+			_name = name;
+			_r = r;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public R getR() {
+			return _r;
+		}
+
+		private final String _name;
+		private final R _r;
+
+	}
 
 	private class SiteNavigationMenuItemSetting {
 

@@ -281,6 +281,23 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 		return fragmentCompositionPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public FragmentComposition fetchFragmentCompositionByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return fragmentCompositionPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public FragmentComposition getFragmentCompositionByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return fragmentCompositionPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment composition with the primary key.
 	 *

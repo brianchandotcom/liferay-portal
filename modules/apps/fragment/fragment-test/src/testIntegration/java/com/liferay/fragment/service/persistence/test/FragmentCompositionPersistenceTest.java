@@ -6,6 +6,7 @@
 package com.liferay.fragment.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.exception.DuplicateFragmentCompositionExternalReferenceCodeException;
 import com.liferay.fragment.exception.NoSuchCompositionException;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCompositionLocalServiceUtil;
@@ -123,6 +124,9 @@ public class FragmentCompositionPersistenceTest {
 
 		newFragmentComposition.setUuid(RandomTestUtil.randomString());
 
+		newFragmentComposition.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newFragmentComposition.setGroupId(RandomTestUtil.nextLong());
 
 		newFragmentComposition.setCompanyId(RandomTestUtil.nextLong());
@@ -175,6 +179,9 @@ public class FragmentCompositionPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentComposition.getUuid(),
 			newFragmentComposition.getUuid());
+		Assert.assertEquals(
+			existingFragmentComposition.getExternalReferenceCode(),
+			newFragmentComposition.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingFragmentComposition.getFragmentCompositionId(),
 			newFragmentComposition.getFragmentCompositionId());
@@ -232,6 +239,28 @@ public class FragmentCompositionPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingFragmentComposition.getStatusDate()),
 			Time.getShortTimestamp(newFragmentComposition.getStatusDate()));
+	}
+
+	@Test(
+		expected = DuplicateFragmentCompositionExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		FragmentComposition fragmentComposition = addFragmentComposition();
+
+		FragmentComposition newFragmentComposition = addFragmentComposition();
+
+		newFragmentComposition.setGroupId(fragmentComposition.getGroupId());
+
+		newFragmentComposition = _persistence.update(newFragmentComposition);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newFragmentComposition);
+
+		newFragmentComposition.setExternalReferenceCode(
+			fragmentComposition.getExternalReferenceCode());
+
+		_persistence.update(newFragmentComposition);
 	}
 
 	@Test
@@ -323,6 +352,15 @@ public class FragmentCompositionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FragmentComposition newFragmentComposition = addFragmentComposition();
 
@@ -350,9 +388,10 @@ public class FragmentCompositionPersistenceTest {
 	protected OrderByComparator<FragmentComposition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"FragmentComposition", "mvccVersion", true, "ctCollectionId", true,
-			"uuid", true, "fragmentCompositionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "fragmentCollectionId", true,
+			"uuid", true, "externalReferenceCode", true,
+			"fragmentCompositionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentCompositionKey", true, "name", true, "description", true,
 			"previewFileEntryId", true, "lastPublishDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
@@ -660,6 +699,17 @@ public class FragmentCompositionPersistenceTest {
 			ReflectionTestUtil.invoke(
 				fragmentComposition, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "fragmentCompositionKey"));
+
+		Assert.assertEquals(
+			fragmentComposition.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				fragmentComposition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(fragmentComposition.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				fragmentComposition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected FragmentComposition addFragmentComposition() throws Exception {
@@ -672,6 +722,9 @@ public class FragmentCompositionPersistenceTest {
 		fragmentComposition.setCtCollectionId(RandomTestUtil.nextLong());
 
 		fragmentComposition.setUuid(RandomTestUtil.randomString());
+
+		fragmentComposition.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		fragmentComposition.setGroupId(RandomTestUtil.nextLong());
 

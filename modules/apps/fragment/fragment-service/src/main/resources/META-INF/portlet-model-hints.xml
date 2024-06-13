@@ -26,6 +26,7 @@
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="fragmentCompositionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -53,6 +54,7 @@
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="headId" type="long" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -140,6 +142,7 @@
 		<field name="fragmentEntryVersionId" type="long" />
 		<field name="version" type="int" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

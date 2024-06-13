@@ -48,16 +48,17 @@ public interface FragmentEntryService extends BaseService {
 	 */
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, String css, String html, String js, boolean cacheable,
-			String configuration, String icon, long previewFileEntryId,
-			boolean readOnly, int type, String typeOptions, int status,
+			String name, String css, String html, String js,
+			String configuration, long previewFileEntryId, int type, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String fragmentEntryKey,
-			String name, String css, String html, String js,
-			String configuration, long previewFileEntryId, int type, int status,
+			String externalReferenceCode, long groupId,
+			long fragmentCollectionId, String fragmentEntryKey, String name,
+			String css, String html, String js, boolean cacheable,
+			String configuration, String icon, long previewFileEntryId,
+			boolean readOnly, int type, String typeOptions, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -70,6 +71,10 @@ public interface FragmentEntryService extends BaseService {
 		throws PortalException;
 
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
+		throws PortalException;
+
+	public FragmentEntry deleteFragmentEntry(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -167,6 +172,11 @@ public interface FragmentEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentEntriesCountByTypeAndStatus(
 		long groupId, long fragmentCollectionId, int type, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntry getFragmentEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

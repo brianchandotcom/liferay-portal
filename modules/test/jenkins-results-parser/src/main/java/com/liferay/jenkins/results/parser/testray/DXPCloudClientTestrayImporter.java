@@ -776,12 +776,6 @@ public class DXPCloudClientTestrayImporter {
 			_testrayProjectName = testrayProjectName;
 		}
 
-		String testrayReleaseName = _getEnvVarValue("testrayReleaseName");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayReleaseName)) {
-			_testrayReleaseName = testrayReleaseName;
-		}
-
 		String testrayRoutineName = _getEnvVarValue("testrayRoutineName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
@@ -934,7 +928,6 @@ public class DXPCloudClientTestrayImporter {
 	private static String _testrayOAuth2ClientSecret;
 	private static String _testrayProductVersion = "1.x";
 	private static String _testrayProjectName = "DXP Cloud Client";
-	private static String _testrayReleaseName = "production";
 	private static String _testrayRoutineName = "DXP Cloud Client Routine";
 	private static TestrayS3Bucket _testrayS3Bucket;
 	private static String _testrayServerURL = "https://testray.liferay.com";

@@ -436,27 +436,36 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					RandomTestUtil.randomString(),
 					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
 					Arrays.asList(
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_CC,
-							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_FROM,
-							"[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.
-								NAME_FROM_NAME,
-							Collections.singletonMap(
-								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.
-								NAME_SINGLE_RECIPIENT,
-							Boolean.FALSE.toString()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO,
-							role1.getName()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO_TYPE,
-							NotificationRecipientConstants.TYPE_ROLE)),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_CC,
+								"[%CURRENT_USER_EMAIL_ADDRESS%]," +
+									"cc@liferay.com"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_FROM,
+								"[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_FROM_NAME,
+								Collections.singletonMap(
+									LocaleUtil.US,
+									"[%CURRENT_USER_FIRST_NAME%]")),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_SINGLE_RECIPIENT,
+								Boolean.FALSE.toString()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								role1.getName()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_TO_TYPE,
+								NotificationRecipientConstants.TYPE_ROLE)),
 					RandomTestUtil.randomString(),
 					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
 
@@ -501,45 +510,61 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					RandomTestUtil.randomString(),
 					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
 					Arrays.asList(
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_BCC,
-							accountRole3.getRoleName()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_BCC,
-							organizationRole2.getName()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_BCC_TYPE,
-							NotificationRecipientConstants.TYPE_ROLE),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_CC,
-							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_FROM,
-							"[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.
-								NAME_FROM_NAME,
-							Collections.singletonMap(
-								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.
-								NAME_SINGLE_RECIPIENT,
-							Boolean.FALSE.toString()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO,
-							accountRole1.getRoleName()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO,
-							accountRole2.getRoleName()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO,
-							accountRole4.getRoleName()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO,
-							organizationRole1.getName()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO_TYPE,
-							NotificationRecipientConstants.TYPE_ROLE)),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_BCC,
+								accountRole3.getRoleName()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_BCC,
+								organizationRole2.getName()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_BCC_TYPE,
+								NotificationRecipientConstants.TYPE_ROLE),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_CC,
+								"[%CURRENT_USER_EMAIL_ADDRESS%]," +
+									"cc@liferay.com"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_FROM,
+								"[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_FROM_NAME,
+								Collections.singletonMap(
+									LocaleUtil.US,
+									"[%CURRENT_USER_FIRST_NAME%]")),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_SINGLE_RECIPIENT,
+								Boolean.FALSE.toString()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								accountRole1.getRoleName()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								accountRole2.getRoleName()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								accountRole4.getRoleName()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								organizationRole1.getName()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_TO_TYPE,
+								NotificationRecipientConstants.TYPE_ROLE)),
 					RandomTestUtil.randomString(),
 					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
 
@@ -687,34 +712,46 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					RandomTestUtil.randomString(),
 					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
 					Arrays.asList(
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_BCC,
-							AccountRoleConstants.
-								REQUIRED_ROLE_NAME_ACCOUNT_MEMBER),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_BCC_TYPE,
-							NotificationRecipientConstants.TYPE_ROLE),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_CC,
-							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_FROM,
-							"[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.
-								NAME_FROM_NAME,
-							Collections.singletonMap(
-								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.
-								NAME_SINGLE_RECIPIENT,
-							Boolean.FALSE.toString()),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO,
-							RoleConstants.ORGANIZATION_USER),
-						createNotificationRecipientSetting(
-							NotificationRecipientSettingConstants.NAME_TO_TYPE,
-							NotificationRecipientConstants.TYPE_ROLE)),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_BCC,
+								AccountRoleConstants.
+									REQUIRED_ROLE_NAME_ACCOUNT_MEMBER),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_BCC_TYPE,
+								NotificationRecipientConstants.TYPE_ROLE),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_CC,
+								"[%CURRENT_USER_EMAIL_ADDRESS%]," +
+									"cc@liferay.com"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_FROM,
+								"[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_FROM_NAME,
+								Collections.singletonMap(
+									LocaleUtil.US,
+									"[%CURRENT_USER_FIRST_NAME%]")),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_SINGLE_RECIPIENT,
+								Boolean.FALSE.toString()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								RoleConstants.ORGANIZATION_USER),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_TO_TYPE,
+								NotificationRecipientConstants.TYPE_ROLE)),
 					RandomTestUtil.randomString(),
 					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
 
@@ -930,17 +967,25 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				childObjectDefinition.getObjectDefinitionId(), body,
 				RandomTestUtil.randomString(), editorType,
 				Arrays.asList(
-					createNotificationRecipientSetting(
-						"bcc",
-						"[%CURRENT_USER_EMAIL_ADDRESS%],bcc@liferay.com"),
-					createNotificationRecipientSetting(
-						"cc", "[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-					createNotificationRecipientSetting(
-						"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-					createNotificationRecipientSetting("fromName", fromName),
-					createNotificationRecipientSetting(
-						"singleRecipient", String.valueOf(singleRecipient)),
-					createNotificationRecipientSetting("to", to)),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"bcc",
+							"[%CURRENT_USER_EMAIL_ADDRESS%],bcc@liferay.com"),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"cc",
+							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"fromName", fromName),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							"singleRecipient", String.valueOf(singleRecipient)),
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting("to", to)),
 				ListUtil.toString(
 					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
 				NotificationConstants.TYPE_EMAIL,
@@ -961,18 +1006,25 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					RandomTestUtil.randomString(),
 					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
 					Arrays.asList(
-						createNotificationRecipientSetting(
-							"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							"cc",
-							"[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-						createNotificationRecipientSetting(
-							"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						createNotificationRecipientSetting(
-							"fromName",
-							Collections.singletonMap(
-								LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-						createNotificationRecipientSetting("to", to)),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								"cc",
+								"[%CURRENT_USER_EMAIL_ADDRESS%]," +
+									"cc@liferay.com"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								"fromName",
+								Collections.singletonMap(
+									LocaleUtil.US,
+									"[%CURRENT_USER_FIRST_NAME%]")),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting("to", to)),
 					RandomTestUtil.randomString(),
 					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
 

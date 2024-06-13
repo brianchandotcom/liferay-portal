@@ -10,6 +10,7 @@ import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
+import com.liferay.notification.service.NotificationRecipientSettingLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -19,12 +20,33 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Feliphe Marinho
  */
 public class NotificationRecipientSettingUtil {
+
+	public static NotificationRecipientSetting
+		createNotificationRecipientSetting(String name, Object value) {
+
+		NotificationRecipientSetting notificationRecipientSetting =
+			NotificationRecipientSettingLocalServiceUtil.
+				createNotificationRecipientSetting(0L);
+
+		notificationRecipientSetting.setName(name);
+
+		if (value instanceof String) {
+			notificationRecipientSetting.setValue(String.valueOf(value));
+		}
+		else {
+			notificationRecipientSetting.setValueMap(
+				(Map<Locale, String>)value);
+		}
+
+		return notificationRecipientSetting;
+	}
 
 	public static Map<String, Object> getNotificationRecipientSettingsMap(
 		NotificationQueueEntry notificationQueueEntry) {

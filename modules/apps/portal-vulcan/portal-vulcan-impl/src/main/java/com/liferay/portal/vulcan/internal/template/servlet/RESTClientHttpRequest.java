@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.service.access.policy.constants.SAPWebKeys;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,6 +53,8 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 		HttpServletRequest httpServletRequest) {
 
 		_attributes = HashMapBuilder.<String, Object>put(
+			SAPWebKeys.TEMPLATE_DISPATCH, true
+		).put(
 			WebKeys.USER,
 			() -> {
 				if (contextObjects.containsKey("user")) {
@@ -60,8 +63,6 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 
 				return null;
 			}
-		).put(
-			"REST_CLIENT", true
 		).build();
 		_headers = HashMapBuilder.put(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON

@@ -200,10 +200,16 @@
 			"type": "String"
 		},
 		{
-			"listTypeDefinitionExternalReferenceCode": "LIST_APPLICATION_STATES",
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "TESTOBJECTFIELD3",
 			"indexed": true,
-			"defaultValue": "open",
-			"localized": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "testObjectImport"
+			},
+			"name": "testObjectField3",
 			"objectFieldSettings": [
 				{
 					"name": "stateFlow",
@@ -284,22 +290,11 @@
 					"value": "open"
 				}
 			],
-			"readOnly": "false",
-			"DBType": "String",
-			"label": {
-				"en_US": "testObjectImport"
-			},
-			"type": "String",
+			"listTypeDefinitionExternalReferenceCode": "LIST_APPLICATION_STATES",
 			"required": true,
-			"externalReferenceCode": "TESTOBJECTFIELD3",
-			"indexedAsKeyword": false,
-			"system": false,
-			"indexedLanguageId": "en_US",
-			"unique": false,
-			"name": "testObjectField3",
 			"state": true,
-			"businessType": "Picklist",
-			"readOnlyConditionExpression": ""
+			"system": false,
+			"type": "String"
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",

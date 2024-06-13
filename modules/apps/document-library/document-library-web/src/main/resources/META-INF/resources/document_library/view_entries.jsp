@@ -141,7 +141,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 															title="<%= HtmlUtil.escapeAttribute(latestFileVersion.getTitle()) %>"
 														/>
 
-														<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+														<c:if test="<%= !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>">
 															<clay:icon
 																aria-label='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 																cssClass="c-ml-2 c-mt-1 flex-shrink-0 lfr-portal-tooltip text-4 text-secondary"
@@ -257,7 +257,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 																translated="<%= false %>"
 															/>
 
-															<c:if test='<%= FeatureFlagManagerUtil.isEnabled(latestFileVersion.getCompanyId(), "LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+															<c:if test="<%= !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>">
 																<clay:icon
 																	aria-label='<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>'
 																	cssClass="c-ml-2 c-mt-1 flex-shrink-0 lfr-portal-tooltip text-4 text-secondary"

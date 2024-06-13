@@ -7,7 +7,6 @@ package com.liferay.document.library.web.internal.product.navigation.control.men
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -57,12 +56,6 @@ public class EditFileEntryHeaderProductNavigationControlMenuEntry
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-16311")) {
-
-			return false;
-		}
 
 		Layout layout = themeDisplay.getLayout();
 

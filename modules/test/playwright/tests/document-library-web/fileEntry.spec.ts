@@ -15,7 +15,6 @@ export const testFeatureFlagsEnabled = mergeTests(
 	loginTest(),
 	featureFlagsTest({
 		'LPD-10701': true,
-		'LPD-16311': true,
 	}),
 	documentLibraryPagesTest
 );

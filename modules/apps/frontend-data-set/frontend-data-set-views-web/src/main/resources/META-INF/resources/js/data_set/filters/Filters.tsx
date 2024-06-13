@@ -64,7 +64,7 @@ const FILTER_TYPES = {
 			item.type === EFieldType.STRING && !item.format,
 		dataSetRelationship: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER,
 		dataSetRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTER_ID,
-		displayType: Liferay.Language.get('dynamic-filter'),
+		displayType: Liferay.Language.get('selection-filter'),
 		label: Liferay.Language.get('selection'),
 		url: API_URL.SELECTION_FILTERS,
 	},

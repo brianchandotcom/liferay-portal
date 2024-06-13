@@ -13,23 +13,21 @@ import ValidationFeedback from '../../../../../components/ValidationFeedback';
 import getAllPicklists from '../../../../../utils/getAllPicklists';
 import {IFilter, IPickList} from '../../../../../utils/types';
 
-interface IObjectPicklistProps {
-	filter?: IFilter;
-	namespace: string;
-	onChange: Function;
-	sourceValidationError: boolean;
-}
-
-function ObjectPicklist({
+function Picklist({
 	filter,
 	namespace,
 	onChange,
 	sourceValidationError,
-}: IObjectPicklistProps) {
+}: {
+	filter?: IFilter;
+	namespace: string;
+	onChange: Function;
+	sourceValidationError: boolean;
+}) {
 	const [picklists, setPicklists] = useState<IPickList[]>();
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
 
-	const objectPicklistFormElementId = `${namespace}ObjectPicklist`;
+	const picklistFormElementId = `${namespace}Picklist`;
 
 	useEffect(() => {
 		getAllPicklists().then((items) => {
@@ -64,7 +62,7 @@ function ObjectPicklist({
 						'has-error': sourceValidationError,
 					})}
 				>
-					<label htmlFor={objectPicklistFormElementId}>
+					<label htmlFor={picklistFormElementId}>
 						{Liferay.Language.get('picklist')}
 
 						<RequiredMark />
@@ -73,7 +71,7 @@ function ObjectPicklist({
 					{picklists && (
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('picklist')}
-							name={objectPicklistFormElementId}
+							name={picklistFormElementId}
 							onChange={(event) => {
 								const picklist = picklists?.find(
 									(item) =>
@@ -111,4 +109,4 @@ function ObjectPicklist({
 	);
 }
 
-export default ObjectPicklist;
+export default Picklist;

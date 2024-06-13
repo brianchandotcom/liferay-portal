@@ -25,7 +25,7 @@ import getFields from '../../../../../utils/getFields';
 import openDefaultFailureToast from '../../../../../utils/openDefaultFailureToast';
 import {IField, ISelectionFilter} from '../../../../../utils/types';
 
-interface IApiRestApplicationModalContentProps {
+interface IHeadlessModalContentProps {
 	filter?: ISelectionFilter;
 	itemKeyValidationError: boolean;
 	itemLabelValidationError: boolean;
@@ -49,7 +49,7 @@ interface IApiRestApplicationModalContentProps {
 	restSchemaValidationError: boolean;
 }
 
-function ApiRestApplication({
+function Headless({
 	filter,
 	itemKeyValidationError,
 	itemLabelValidationError,
@@ -59,7 +59,7 @@ function ApiRestApplication({
 	restApplications,
 	restEndpointValidationError,
 	restSchemaValidationError,
-}: IApiRestApplicationModalContentProps) {
+}: IHeadlessModalContentProps) {
 	const [fields, setFields] = useState<IField[]>([]);
 	const [selectedItemKey, setSelectedItemKey] = useState<string>(
 		filter?.itemKey ? filter.itemKey : ''
@@ -667,4 +667,4 @@ function ApiRestApplication({
 	);
 }
 
-export default ApiRestApplication;
+export default Headless;

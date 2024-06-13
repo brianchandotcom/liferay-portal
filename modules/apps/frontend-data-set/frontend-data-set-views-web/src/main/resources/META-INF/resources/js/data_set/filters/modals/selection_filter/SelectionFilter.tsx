@@ -31,8 +31,8 @@ import {
 import {IFilterModal} from '../../Filters';
 import Configuration from '../Configuration';
 import Footer from '../Footer';
-import ApiRestApplication from './source_type/ApiRestApplication';
-import ObjectPicklist from './source_type/ObjectPicklist';
+import Headless from './source_type/Headless';
+import Picklist from './source_type/Picklist';
 
 function Header() {
 	return <>{Liferay.Language.get('new-selection-filter')}</>;
@@ -185,7 +185,7 @@ function Body({
 		if (
 			Liferay.FeatureFlags['LPD-10754'] &&
 			sourceType &&
-			sourceType === ESelectionFilterSourceType.API_HEADLESS
+			sourceType === ESelectionFilterSourceType.HEADLESS
 		) {
 			if (!selectedItemKey) {
 				setItemKeyValidationError(true);
@@ -233,7 +233,7 @@ function Body({
 			};
 
 			if (Liferay.FeatureFlags['LPD-10754']) {
-				if (sourceType === ESelectionFilterSourceType.API_HEADLESS) {
+				if (sourceType === ESelectionFilterSourceType.HEADLESS) {
 					formData = {
 						...formData,
 						itemKey: selectedItemKey,
@@ -284,7 +284,7 @@ function Body({
 	};
 
 	useEffect(() => {
-		if (source && sourceType === ESelectionFilterSourceType.API_HEADLESS) {
+		if (source && sourceType === ESelectionFilterSourceType.HEADLESS) {
 			getAPIValues(source as string).then((apiValues) => {
 				setFilteredSourceItems(
 					!apiValues.items.length
@@ -342,7 +342,7 @@ function Body({
 
 			if (
 				selectionFilter.sourceType ===
-				ESelectionFilterSourceType.API_HEADLESS
+				ESelectionFilterSourceType.HEADLESS
 			) {
 				setSelectedRESTApplication(selectionFilter.restApplication);
 				setSelectedRESTSchema(selectionFilter.restSchema);
@@ -363,10 +363,7 @@ function Body({
 
 			let validSavedPreselectedValues: any[] = [];
 
-			if (
-				source &&
-				sourceType === ESelectionFilterSourceType.API_HEADLESS
-			) {
+			if (source && sourceType === ESelectionFilterSourceType.HEADLESS) {
 				validSavedPreselectedValues = filteredSourceItems.filter(
 					(item) =>
 						JSON.parse(
@@ -417,7 +414,7 @@ function Body({
 
 	if (
 		!Liferay.FeatureFlags['LPD-10754'] &&
-		sourceType === ESelectionFilterSourceType.API_HEADLESS &&
+		sourceType === ESelectionFilterSourceType.HEADLESS &&
 		!picklists.length
 	) {
 		return (
@@ -515,7 +512,7 @@ function Body({
 												label: Liferay.Language.get(
 													'api-rest-application'
 												),
-												value: ESelectionFilterSourceType.API_HEADLESS,
+												value: ESelectionFilterSourceType.HEADLESS,
 											},
 											{
 												disabled: false,
@@ -550,7 +547,7 @@ function Body({
 								{sourceType &&
 									sourceType ===
 										ESelectionFilterSourceType.PICKLIST && (
-										<ObjectPicklist
+										<Picklist
 											filter={filter}
 											namespace={namespace}
 											onChange={(item: IPickList) => {
@@ -565,8 +562,8 @@ function Body({
 
 								{sourceType &&
 									sourceType ===
-										ESelectionFilterSourceType.API_HEADLESS && (
-										<ApiRestApplication
+										ESelectionFilterSourceType.HEADLESS && (
+										<Headless
 											filter={filter as ISelectionFilter}
 											itemKeyValidationError={
 												itemKeyValidationError
@@ -702,7 +699,7 @@ function Body({
 
 														if (
 															sourceType ===
-															ESelectionFilterSourceType.API_HEADLESS
+															ESelectionFilterSourceType.HEADLESS
 														) {
 															valueItem = {
 																label: item[
@@ -728,7 +725,7 @@ function Body({
 
 													if (
 														sourceType ===
-														ESelectionFilterSourceType.API_HEADLESS
+														ESelectionFilterSourceType.HEADLESS
 													) {
 														preselectedValues =
 															selectedItems.map(

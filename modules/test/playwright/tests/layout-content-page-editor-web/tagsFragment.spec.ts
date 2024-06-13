@@ -91,7 +91,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	// Create two tags in Wem Site
 
 	for (const tagName of ['Dogs', 'Cats']) {
-		await apiHelpers.headlessAdminTaxonomy.createTag({
+		await apiHelpers.headlessAdminTaxonomy.postTag({
 			name: tagName,
 			siteId: site.id,
 		});
@@ -101,7 +101,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	const globalSiteId = await getGlobalSiteId(apiHelpers);
 
-	const globalTag = await apiHelpers.headlessAdminTaxonomy.createTag({
+	const globalTag = await apiHelpers.headlessAdminTaxonomy.postTag({
 		name: 'Rabbits',
 		siteId: globalSiteId,
 	});

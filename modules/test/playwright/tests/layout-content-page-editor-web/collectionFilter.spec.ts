@@ -207,7 +207,7 @@ testWithIsolatedSite(
 
 		for (const tagName of ['Dogs', 'Cats']) {
 			tags.push(
-				await apiHelpers.headlessAdminTaxonomy.createTag({
+				await apiHelpers.headlessAdminTaxonomy.postTag({
 					name: tagName,
 					siteId: site.id,
 				})

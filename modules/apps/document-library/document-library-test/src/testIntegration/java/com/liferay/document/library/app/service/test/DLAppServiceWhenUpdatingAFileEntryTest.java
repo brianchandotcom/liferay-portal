@@ -488,6 +488,70 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			serviceContext);
 	}
 
+	@Test
+	public void testUpdateFileEntryPublishingAFileShouldOnlyHaveOneAssetEntryFromDrafts()
+		throws Exception {
+
+		_testUpdateFileEntryShouldOnlyHaveOneAssetEntryFromDrafts(null);
+	}
+
+	@Test
+	public void testUpdateFileEntrySchedulingAFileShouldOnlyHaveOneAssetEntryFromDrafts()
+		throws Exception {
+
+		_testUpdateFileEntryShouldOnlyHaveOneAssetEntryFromDrafts(
+			new Date(System.currentTimeMillis() + Time.DAY));
+	}
+
+	private void _testUpdateFileEntryShouldOnlyHaveOneAssetEntryFromDrafts(
+			Date displayDate)
+		throws Exception {
+
+		String fileName = RandomTestUtil.randomString();
+		byte[] bytes = CONTENT.getBytes();
+
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), fileName, fileName, displayDate, null,
+			null, null);
+
+		int initialAssetEntriesCount =
+			_assetEntryLocalService.getAssetEntriesCount();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MINOR, bytes, displayDate,
+			null, null, serviceContext);
+
+		dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MINOR, bytes, displayDate,
+			null, null, serviceContext);
+
+		Assert.assertEquals(
+			initialAssetEntriesCount + 1,
+			_assetEntryLocalService.getAssetEntriesCount());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MINOR, bytes, displayDate,
+			null, null, serviceContext);
+
+		Assert.assertEquals(
+			initialAssetEntriesCount,
+			_assetEntryLocalService.getAssetEntriesCount());
+	}
+
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 

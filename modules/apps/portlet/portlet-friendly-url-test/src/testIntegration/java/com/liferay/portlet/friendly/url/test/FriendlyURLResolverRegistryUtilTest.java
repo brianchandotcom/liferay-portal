@@ -6,6 +6,9 @@
 package com.liferay.portlet.friendly.url.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -14,6 +17,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.AfterClass;
@@ -76,6 +80,65 @@ public class FriendlyURLResolverRegistryUtilTest {
 			_friendlyURLResolver,
 			FriendlyURLResolverRegistryUtil.
 				getFriendlyURLResolverByDefaultURLSeparator(_SEPARATOR));
+	}
+
+	@Test
+	public void testGetFriendlyURLResolverWithHigherServiceRanking() {
+		FriendlyURLResolver sampleFriendlyURLResolver =
+			new SampleFriendlyURLResolver();
+
+		FriendlyURLResolver defaultCanonicalURLSeparatorFriendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				_CANONICAL_URL_SEPARATOR);
+
+		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
+			_bundleContext.registerService(
+				FriendlyURLResolver.class, sampleFriendlyURLResolver,
+				MapUtil.singletonDictionary("service.ranking", 1000));
+
+		try {
+			FriendlyURLResolver friendlyURLResolver =
+				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+					_CANONICAL_URL_SEPARATOR);
+
+			Assert.assertNotEquals(
+				defaultCanonicalURLSeparatorFriendlyURLResolver,
+				friendlyURLResolver);
+			Assert.assertEquals(sampleFriendlyURLResolver, friendlyURLResolver);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
+	public void testGetFriendlyURLResolverWithLowerServiceRanking() {
+		FriendlyURLResolver sampleFriendlyURLResolver =
+			new SampleFriendlyURLResolver();
+
+		FriendlyURLResolver defaultCanonicalURLSeparatorFriendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				_CANONICAL_URL_SEPARATOR);
+
+		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
+			_bundleContext.registerService(
+				FriendlyURLResolver.class, sampleFriendlyURLResolver,
+				MapUtil.singletonDictionary("service.ranking", -1000));
+
+		try {
+			FriendlyURLResolver friendlyURLResolver =
+				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+					_CANONICAL_URL_SEPARATOR);
+
+			Assert.assertEquals(
+				defaultCanonicalURLSeparatorFriendlyURLResolver,
+				friendlyURLResolver);
+			Assert.assertNotEquals(
+				sampleFriendlyURLResolver, friendlyURLResolver);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -156,11 +219,44 @@ public class FriendlyURLResolverRegistryUtilTest {
 			friendlyURLResolvers.toString(), friendlyURLResolvers.isEmpty());
 	}
 
+	private static final String _CANONICAL_URL_SEPARATOR = "/-/";
+
 	private static final String _SEPARATOR = "/-foo-";
 
 	private static BundleContext _bundleContext;
 	private static FriendlyURLResolver _friendlyURLResolver;
 	private static ServiceRegistration<FriendlyURLResolver>
 		_serviceRegistration;
+
+	private static class SampleFriendlyURLResolver
+		implements FriendlyURLResolver {
+
+		@Override
+		public String getActualURL(
+				long companyId, long groupId, boolean privateLayout,
+				String mainPath, String friendlyURL,
+				Map<String, String[]> params,
+				Map<String, Object> requestContext)
+			throws PortalException {
+
+			return StringPool.BLANK;
+		}
+
+		@Override
+		public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
+				long companyId, long groupId, boolean privateLayout,
+				String friendlyURL, Map<String, String[]> params,
+				Map<String, Object> requestContext)
+			throws PortalException {
+
+			return null;
+		}
+
+		@Override
+		public String getURLSeparator() {
+			return _CANONICAL_URL_SEPARATOR;
+		}
+
+	}
 
 }

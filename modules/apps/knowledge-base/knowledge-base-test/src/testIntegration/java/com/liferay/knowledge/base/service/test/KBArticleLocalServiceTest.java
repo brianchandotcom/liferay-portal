@@ -326,6 +326,18 @@ public class KBArticleLocalServiceTest {
 			null, _serviceContext);
 	}
 
+	@Test(expected = KBArticleDisplayDateException.class)
+	public void testAddKBArticleShouldFailIfDisplayDateIsNull()
+		throws Exception {
+
+		_kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, null, null, null, _serviceContext);
+	}
+
 	@Test
 	public void testAddKBArticlesMarkdownWithNoWorkflow() throws Exception {
 		updateWorkflowDefinitionForKBArticle("");
@@ -451,6 +463,28 @@ public class KBArticleLocalServiceTest {
 
 			Assert.assertTrue(matcher.matches());
 		}
+	}
+
+	@FeatureFlags("LPS-188058")
+	@Test
+	public void testAddKBArticleWithDisplayDateExpirationDateReviewDate()
+		throws Exception {
+
+		Date displayDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + (2 * Time.MINUTE));
+		Date reviewDate = new Date(System.currentTimeMillis() + Time.MINUTE);
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			displayDate, expirationDate, reviewDate, null, _serviceContext);
+
+		Assert.assertEquals(displayDate, kbArticle.getDisplayDate());
+		Assert.assertEquals(expirationDate, kbArticle.getExpirationDate());
+		Assert.assertEquals(reviewDate, kbArticle.getReviewDate());
 	}
 
 	@Test(expected = KBArticleUrlTitleException.class)

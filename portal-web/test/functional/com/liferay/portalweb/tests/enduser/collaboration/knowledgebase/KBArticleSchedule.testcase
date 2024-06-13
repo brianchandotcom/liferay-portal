@@ -25,40 +25,6 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that users can add a scheduled article with expiration date."
-	@priority = 5
-	test CanAddScheduledArticleWithExpirationDate {
-		KBArticle.updateCheckInterval(fieldValue = 1);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addArticleWithScheduledDate(
-			expirationDate = "true",
-			increaseMinutes = 1,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbStatus = "Scheduled");
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
-
-		Pause(value1 = 120000);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewExpirationStatus(
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbExpirationStatus = "Expiring Soon");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbStatus = "Approved");
-	}
-
 	@description = "This test ensures that users can edit a scheduled article."
 	@priority = 5
 	test CanEditScheduledArticle {
@@ -108,19 +74,6 @@ definition {
 			invalidScheduledDate = "true",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
-	}
-
-	@description = "This test ensures that an error is displayed when the scheduled date is after the expiration date."
-	@priority = 3
-	test CannotConfigureScheduledDateAfterExpirationDate {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addArticleWithScheduledDate(
-			expirationDate = "true",
-			increaseMinutes = 10,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			scheduledDateAfterexpirationDate = "true");
 	}
 
 	@description = "This test ensures that users can publish a draft article with a scheduled date."

@@ -5,6 +5,7 @@
 
 package com.liferay.gradle.plugins.patcher;
 
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 
@@ -18,6 +19,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.SourceDirectorySet;
@@ -26,6 +28,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -38,6 +41,26 @@ public class PatcherPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		if (FileUtil.isChild(
+				FileUtil.getJavaClassesDir(sourceSet), project.getBuildDir())) {
+
+			File javaClassesDir = project.file("classes");
+
+			SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+
+			DirectoryProperty directoryProperty =
+				javaSourceDirectorySet.getDestinationDirectory();
+
+			directoryProperty.set(javaClassesDir);
+
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+			sourceSetOutput.setResourcesDir(javaClassesDir);
+		}
 
 		TaskContainer taskContainer = project.getTasks();
 

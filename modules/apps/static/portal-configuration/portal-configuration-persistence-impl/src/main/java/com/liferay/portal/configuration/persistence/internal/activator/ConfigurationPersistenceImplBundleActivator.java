@@ -5,11 +5,9 @@
 
 package com.liferay.portal.configuration.persistence.internal.activator;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.internal.ConfigurationPersistenceManager;
 import com.liferay.portal.configuration.persistence.internal.upgrade.ConfigurationUpgradeStepFactoryImpl;
-import com.liferay.portal.configuration.persistence.internal.upgrade.schema.SchemaCreationUpgradeStep;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -29,16 +27,6 @@ public class ConfigurationPersistenceImplBundleActivator
 
 	@Override
 	public void start(BundleContext bundleContext) {
-		try {
-			SchemaCreationUpgradeStep schemaCreationUpgradeStep =
-				new SchemaCreationUpgradeStep();
-
-			schemaCreationUpgradeStep.upgrade();
-		}
-		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
-		}
-
 		_configurationPersistenceManager = new ConfigurationPersistenceManager(
 			bundleContext, InfrastructureUtil.getDataSource());
 

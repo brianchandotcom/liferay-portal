@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
+import com.liferay.portal.configuration.persistence.internal.upgrade.schema.SchemaCreationUpgradeStep;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
@@ -212,12 +213,7 @@ public class ConfigurationPersistenceManager
 			}
 		}
 
-		Map<String, Map<String, Object>> overridePropertiesMap =
-			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap();
-
-		overridePropertiesMap.forEach(
-			(key, value) -> _dictionaries.put(
-				key, new HashMapDictionary<>((Map)value)));
+		_createConfigurationTable();
 
 		for (Bundle bundle : _bundleContext.getBundles()) {
 			if (Objects.equals(
@@ -328,6 +324,22 @@ public class ConfigurationPersistenceManager
 		}
 
 		return newDictionary;
+	}
+
+	private void _createConfigurationTable() {
+		try {
+			_schemaCreationUpgradeStep.upgrade();
+		}
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
+		}
+
+		Map<String, Map<String, Object>> overridePropertiesMap =
+			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap();
+
+		overridePropertiesMap.forEach(
+			(key, value) -> _dictionaries.put(
+				key, new HashMapDictionary<>((Map)value)));
 	}
 
 	private void _deleteFromDatabase(String pid) throws IOException {
@@ -608,6 +620,9 @@ public class ConfigurationPersistenceManager
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationPersistenceManager.class);
+
+	private static final SchemaCreationUpgradeStep _schemaCreationUpgradeStep =
+		new SchemaCreationUpgradeStep();
 
 	private final BundleContext _bundleContext;
 	private final DataSource _dataSource;

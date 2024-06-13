@@ -223,6 +223,9 @@ public class ProvisioningRestController extends BaseRestController {
 
 	private AppLicenseKeyResource _appLicenseKeyResource;
 
+	@Value("${external.provisioning.oauth2.headless.server.home.page.url}")
+	private URL _externalProvisioningHomePageURL;
+
 	@Value("${liferay.marketplace.koroneiki.auth.token}")
 	private String _koroneikiAuthToken;
 
@@ -233,8 +236,5 @@ public class ProvisioningRestController extends BaseRestController {
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 	private ProductPurchaseResource _productPurchaseResource;
-
-	@Value("${external.provisioning.oauth2.headless.server.home.page.url}")
-	private URL _externalProvisioningHomePageURL;
 
 }

@@ -22,10 +22,14 @@ import com.liferay.dispatch.service.test.util.CronExpressionUtil;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -34,10 +38,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.Serializable;
 
 import java.text.SimpleDateFormat;
 
@@ -186,6 +193,65 @@ public class DispatchTriggerLocalServiceTest {
 		finally {
 			SystemProperties.set("liferay.mode", liferayMode);
 		}
+	}
+
+	@Test
+	public void testDeleteDispatchTriggerWithDispatchLogs() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(
+				user, _getRandomDispatchExecutorType(), 1));
+
+		for (int i = 0; i < 3; i++) {
+			Date date = new Date();
+
+			Date startDate = new Date(
+				date.getTime() - Time.WEEK + (Time.HOUR * i));
+
+			Date endDate = new Date(
+				date.getTime() - Time.WEEK + (Time.HOUR * i) + Time.MINUTE);
+
+			_dispatchLogLocalService.addDispatchLog(
+				user.getUserId(), dispatchTrigger.getDispatchTriggerId(),
+				endDate, null, RandomTestUtil.randomString(), startDate,
+				DispatchTaskStatus.SUCCESSFUL);
+		}
+
+		EntityCache originalEntityCache = ReflectionTestUtil.getFieldValue(
+			_dispatchLogLocalService.getBasePersistence(), "entityCache");
+
+		MockEntityCache mockEntityCache = new MockEntityCache(
+			originalEntityCache);
+
+		try {
+			ReflectionTestUtil.setFieldValue(
+				_dispatchLogLocalService.getBasePersistence(), "entityCache",
+				mockEntityCache);
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(
+				dispatchTrigger.getDispatchTriggerId());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				_dispatchLogLocalService.getBasePersistence(), "entityCache",
+				originalEntityCache);
+		}
+
+		// Verify that the cache invalidation is not invoked one-by-one for each
+		// DispatchLog entry deletion
+
+		Assert.assertEquals(0, mockEntityCache.getRemoveCount());
+
+		Assert.assertEquals(
+			0,
+			_dispatchLogLocalService.getDispatchLogsCount(
+				dispatchTrigger.getDispatchTriggerId()));
+
+		Assert.assertEquals(
+			0,
+			_dispatchTriggerLocalService.getUserDispatchTriggersCount(
+				user.getCompanyId(), user.getUserId()));
 	}
 
 	@Test
@@ -545,5 +611,93 @@ public class DispatchTriggerLocalServiceTest {
 
 	@Inject
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	private static class MockEntityCache implements EntityCache {
+
+		public MockEntityCache(EntityCache entityCache) {
+			_entityCache = entityCache;
+		}
+
+		@Override
+		public void clearCache() {
+			_entityCache.clearCache();
+		}
+
+		@Override
+		public void clearCache(Class<?> clazz) {
+			_entityCache.clearCache(clazz);
+		}
+
+		@Override
+		public void clearLocalCache() {
+			_entityCache.clearLocalCache();
+		}
+
+		@Override
+		public Serializable getLocalCacheResult(
+			Class<?> clazz, Serializable primaryKey) {
+
+			return _entityCache.getLocalCacheResult(clazz, primaryKey);
+		}
+
+		@Override
+		public PortalCache<Serializable, Serializable> getPortalCache(
+			Class<?> clazz) {
+
+			return _entityCache.getPortalCache(clazz);
+		}
+
+		public int getRemoveCount() {
+			return _removeCount;
+		}
+
+		@Override
+		public Serializable getResult(Class<?> clazz, Serializable primaryKey) {
+			return _entityCache.getResult(clazz, primaryKey);
+		}
+
+		@Override
+		public void invalidate() {
+			_entityCache.invalidate();
+		}
+
+		@Override
+		public void putResult(
+			Class<?> clazz, BaseModel<?> baseModel, boolean quiet,
+			boolean updateFinderCache) {
+
+			_entityCache.putResult(clazz, baseModel, quiet, updateFinderCache);
+		}
+
+		@Override
+		public void putResult(
+			Class<?> clazz, Serializable primaryKey, Serializable result) {
+
+			_entityCache.putResult(clazz, primaryKey, result);
+		}
+
+		@Override
+		public void removeCache(String className) {
+			_entityCache.removeCache(className);
+		}
+
+		@Override
+		public void removeResult(Class<?> clazz, BaseModel<?> baseModel) {
+			if (baseModel instanceof DispatchLog) {
+				_removeCount++;
+			}
+
+			_entityCache.removeResult(clazz, baseModel);
+		}
+
+		@Override
+		public void removeResult(Class<?> clazz, Serializable primaryKey) {
+			_entityCache.removeResult(clazz, primaryKey);
+		}
+
+		private final EntityCache _entityCache;
+		private int _removeCount;
+
+	}
 
 }

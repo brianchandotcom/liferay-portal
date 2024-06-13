@@ -5540,13 +5540,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				long startTime = System.currentTimeMillis();
 
-				r.getUnsafeRunnable(
-				).run();
+				r._unsafeRunnable.run();
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Invoking ", r.getName(), " took ",
+							"Invoking ", r._name, " took ",
 							System.currentTimeMillis() - startTime, " ms"));
 				}
 
@@ -6004,14 +6003,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		public R(String name, UnsafeRunnable<Exception> unsafeRunnable) {
 			_name = name;
 			_unsafeRunnable = unsafeRunnable;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public UnsafeRunnable<Exception> getUnsafeRunnable() {
-			return _unsafeRunnable;
 		}
 
 		private final String _name;

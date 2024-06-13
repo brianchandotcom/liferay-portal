@@ -31,6 +31,9 @@ COPY ./common/resources/rewrite.config $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF
 COPY ./common/resources/setenv.sh $LIFERAY_HOME/tomcat/bin/
 COPY ./common/resources/system-ext.properties $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/classes
 
+RUN curl -LJO https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.3.0/mysql-connector-j-8.3.0.jar
+RUN cp mysql-connector-j-8.3.0.jar $LIFERAY_HOME/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib/mysql.jar
+
 # Configs
 
 COPY ./common/resources/configs $LIFERAY_HOME/osgi/configs/

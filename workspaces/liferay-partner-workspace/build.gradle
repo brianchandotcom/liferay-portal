@@ -1,0 +1,12 @@
+task quickstart {
+	description = "Initialize the enviornmet for this workspace."
+
+	doLast {
+		createDockerfile
+
+		exec {
+			commandLine 'docker', 'compose', 'up', '--build'
+			workingDir = file('./quickstart')
+		}
+	}
+}

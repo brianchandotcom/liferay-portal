@@ -1,0 +1,55 @@
+name: liferaypartner
+services:
+    database:
+        container_name: database
+        env_file: database.env
+        healthcheck:
+            interval: 5s
+            retries: 10
+            start_period: 5s
+            test: mysql -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --protocol tcp -e 'select 1' 2>&1 | grep -qvF "Can't connect"
+        image: mysql:5.7
+        ports:
+            - 127.0.0.1:3307:3306
+    deployer:
+        command: ./gradlew -Pliferay.workspace.home.dir=/opt/liferay clean deploy
+        container_name: deployer
+        depends_on:
+            liferay:
+                condition: service_healthy
+        image: liferay/jdk11:latest
+        volumes:
+            - ../:/mnt/workspaces/liferay-partner-workspace
+    initializer:
+        command: apt-get update && apt-get install --yes mysql-client && mysql -u root -h database -s -N -e "UPDATE lportal.Group_ SET externalReferenceCode='LIFERAY_PARTNER' WHERE groupKey = 'Guest'"
+        container_name: initializer
+        depends_on:
+            liferay:
+                condition: service_healthy
+        image: liferay/jdk11:latest
+    liferay:
+        build: ../build/docker
+        container_name: liferay
+        depends_on:
+            database:
+                condition: service_healthy
+        deploy:
+            resources:
+                limits:
+                    memory: 4G
+                reservations:
+                    memory: 4G
+        env_file: liferay.env
+        healthcheck:
+            interval: 1m
+            retries: 8
+            start_period: 2m
+            test: curl -fsS "http://localhost:8080/c/portal/layout"
+            timeout: 1m
+        ports:
+            - 127.0.0.1:8080:8080
+        volumes:
+            - liferay-data:/opt/liferay/data
+            - liferay-data:/opt/liferay/osgi/client-extensions
+volumes:
+    liferay-data:

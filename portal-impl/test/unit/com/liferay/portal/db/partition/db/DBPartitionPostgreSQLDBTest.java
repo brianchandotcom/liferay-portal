@@ -25,9 +25,6 @@ public class DBPartitionPostgreSQLDBTest {
 
 	@Test
 	public void testGetSafeAlterTable() {
-
-		// No change performed over SQL
-
 		_testGetSafeAlterTable(
 			"ALTER TABLE test ALTER COLUMN column1 DROP DEFAULT",
 			StringPool.BLANK);
@@ -35,17 +32,14 @@ public class DBPartitionPostgreSQLDBTest {
 			"ALTER TABLE test ALTER COLUMN column1 DROP NOT NULL",
 			StringPool.BLANK);
 		_testGetSafeAlterTable(
+			"ALTER TABLE test DROP COLUMN column1 CASCADE", StringPool.BLANK);
+		_testGetSafeAlterTable(
+			"ALTER TABLE test DROP COLUMN column1", " cascade");
+		_testGetSafeAlterTable(
 			"ALTER TABLE test DROP CONSTRAINT constraint1 CASCADE",
 			StringPool.BLANK);
 		_testGetSafeAlterTable(
-			"ALTER TABLE test DROP COLUMN column1 CASCADE", StringPool.BLANK);
-
-		// cascade appended at the end of the SQL
-
-		_testGetSafeAlterTable(
 			"ALTER TABLE test DROP CONSTRAINT constraint1", " cascade");
-		_testGetSafeAlterTable(
-			"ALTER TABLE test DROP COLUMN column1", " cascade");
 		_testGetSafeAlterTable("ALTER TABLE test DROP column1", " cascade");
 	}
 

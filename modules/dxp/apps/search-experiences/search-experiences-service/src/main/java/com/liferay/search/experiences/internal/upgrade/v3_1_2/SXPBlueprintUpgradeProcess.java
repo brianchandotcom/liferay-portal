@@ -71,7 +71,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 	private void _upgradeSXPBlueprints() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select configurationJSON,sxpBlueprintId from SXPBlueprint");
+				"select configurationJSON,sxpBlueprintId from SXPBlueprint " +
+					"where schemaVersion = '1.0'");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

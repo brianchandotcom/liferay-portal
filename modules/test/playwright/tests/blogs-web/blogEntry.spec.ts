@@ -95,7 +95,7 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
 		friendlyUrl: {
-			categories: friendlyUrlCategories.map(({name}) => name),
+			categories: friendlyUrlCategories,
 			vocabularyName,
 		},
 		publish: false,
@@ -151,7 +151,7 @@ test('LPD-24858 Categories with blank spaces in friendly URL', async ({
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
 		friendlyUrl: {
-			categories: friendlyUrlCategories.map(({name}) => name),
+			categories: friendlyUrlCategories,
 			vocabularyName,
 		},
 		publish: true,
@@ -199,7 +199,7 @@ test('LPD-26753 The URL changes when a category is modified', async ({
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
 		friendlyUrl: {
-			categories: friendlyUrlCategories.map(({name}) => name),
+			categories: friendlyUrlCategories,
 			vocabularyName,
 		},
 		publish: true,
@@ -260,7 +260,7 @@ test('LPD-26755 The URL redirects to the correct language when a category has a 
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
 		friendlyUrl: {
-			categories: friendlyUrlCategories.map(({name}) => name),
+			categories: friendlyUrlCategories,
 			vocabularyName,
 		},
 		publish: true,

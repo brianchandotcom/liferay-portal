@@ -291,12 +291,12 @@
 			},
 			"type": "String",
 			"required": true,
-			"externalReferenceCode": "937a8a2d-37a8-70ca-cc51-50e037473062",
+			"externalReferenceCode": "TESTOBJECTFIELD3",
 			"indexedAsKeyword": false,
 			"system": false,
 			"indexedLanguageId": "en_US",
 			"unique": false,
-			"name": "testObjectImport",
+			"name": "testObjectField3",
 			"state": true,
 			"businessType": "Picklist",
 			"readOnlyConditionExpression": ""
@@ -344,7 +344,7 @@
 								{
 									"objectLayoutColumns": [
 										{
-											"objectFieldName": "testObjectImport",
+											"objectFieldName": "testObjectField3",
 											"priority": 0,
 											"size": 12
 										}
@@ -426,11 +426,13 @@
 			]
 		}
 	],
+
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
 		"en_US": "Test Object Definitions"
 	},
+	"portlet": false,
 	"scope": "company",
 	"status": {
 		"code": 2,
@@ -438,5 +440,5 @@
 		"label_i18n": "Draft"
 	},
 	"system": false,
-	"titleObjectFieldName": "id"
+	"titleObjectFieldName": "testObjectField1"
 }

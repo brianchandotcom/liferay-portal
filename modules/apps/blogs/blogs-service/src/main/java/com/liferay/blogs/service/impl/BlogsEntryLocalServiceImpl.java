@@ -1998,7 +1998,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionSender.setClassPK(entry.getEntryId());
 		subscriptionSender.setClassName(entry.getModelClassName());
-		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$BLOGS_ENTRY_CONTENT$]",
 			StringUtil.shorten(HtmlUtil.stripHtml(entry.getContent()), 500),

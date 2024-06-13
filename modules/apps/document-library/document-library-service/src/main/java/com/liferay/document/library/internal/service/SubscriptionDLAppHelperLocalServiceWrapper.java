@@ -255,7 +255,6 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
 		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
-		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
 
 		if (folder != null) {
 			subscriptionSender.setContextAttribute(

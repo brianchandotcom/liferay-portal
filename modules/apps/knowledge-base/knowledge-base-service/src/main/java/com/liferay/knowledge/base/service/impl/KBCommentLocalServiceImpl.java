@@ -491,7 +491,6 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 				kbArticle, serviceContext);
 
 		subscriptionSender.setBody(body);
-		subscriptionSender.setCompanyId(kbArticle.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", kbArticleContent, false);
 		subscriptionSender.setContextAttribute(

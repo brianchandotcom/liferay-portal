@@ -2256,7 +2256,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setBulk(PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
 		subscriptionSender.setClassName(message.getModelClassName());
 		subscriptionSender.setClassPK(message.getMessageId());
-		subscriptionSender.setCompanyId(message.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$MESSAGE_BODY$]", messageBody, false);
 		subscriptionSender.setContextAttribute(
@@ -2414,7 +2413,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			new MBDiscussionSubscriptionSender(
 				commentGroupServiceConfiguration);
 
-		subscriptionSender.setCompanyId(message.getCompanyId());
 		subscriptionSender.setClassName(MBDiscussion.class.getName());
 		subscriptionSender.setClassPK(mbDiscussion.getDiscussionId());
 		subscriptionSender.setContextAttribute(

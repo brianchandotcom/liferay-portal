@@ -825,7 +825,6 @@ public class BookmarksEntryLocalServiceImpl
 
 		subscriptionSender.setClassName(entry.getModelClassName());
 		subscriptionSender.setClassPK(entry.getEntryId());
-		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$BOOKMARKS_ENTRY_STATUS_BY_USER_NAME$]", statusByUserName,
 			"[$BOOKMARKS_ENTRY_URL$]", entryURL);

@@ -3098,7 +3098,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		subscriptionSender.setClassName(page.getModelClassName());
 		subscriptionSender.setClassPK(page.getPageId());
-		subscriptionSender.setCompanyId(page.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$PAGE_CONTENT$]", pageContent, false);
 		subscriptionSender.setContextAttribute(

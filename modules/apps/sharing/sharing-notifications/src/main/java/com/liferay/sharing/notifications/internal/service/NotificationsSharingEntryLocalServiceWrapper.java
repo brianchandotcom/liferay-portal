@@ -319,8 +319,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 				sharingEntry.getModelClassName());
 			sharingNotificationSubcriptionSender.setClassPK(
 				sharingEntry.getSharingEntryId());
-			sharingNotificationSubcriptionSender.setCompanyId(
-				user.getCompanyId());
 			sharingNotificationSubcriptionSender.setCurrentUserId(
 				serviceContext.getUserId());
 			sharingNotificationSubcriptionSender.setEntryURL(entryURL);

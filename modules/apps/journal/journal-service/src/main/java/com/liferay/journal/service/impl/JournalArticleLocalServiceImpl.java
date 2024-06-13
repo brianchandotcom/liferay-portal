@@ -6742,7 +6742,6 @@ public class JournalArticleLocalServiceImpl
 
 		subscriptionSender.setClassName(article.getModelClassName());
 		subscriptionSender.setClassPK(article.getId());
-		subscriptionSender.setCompanyId(article.getCompanyId());
 
 		JournalFolder folder = _journalFolderPersistence.fetchByPrimaryKey(
 			article.getFolderId());
@@ -7973,7 +7972,6 @@ public class JournalArticleLocalServiceImpl
 		ServiceContext serviceContext, SubscriptionSender subscriptionSender) {
 
 		subscriptionSender.setClassName(article.getModelClassName());
-		subscriptionSender.setCompanyId(article.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_DIFFS$]", _getArticleDiffs(article, serviceContext),
 			false);

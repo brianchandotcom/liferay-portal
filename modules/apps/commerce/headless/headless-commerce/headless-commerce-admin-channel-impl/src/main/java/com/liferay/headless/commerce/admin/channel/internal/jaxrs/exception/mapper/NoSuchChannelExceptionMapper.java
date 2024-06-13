@@ -5,8 +5,8 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
-import com.liferay.portal.kernel.exception.NoSuchLayoutTemplateException;
-import com.liferay.portal.kernel.model.LayoutTemplate;
+import com.liferay.commerce.product.exception.NoSuchChannelException;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
@@ -24,23 +24,23 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel.NoSuchPageTemplateExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Channel.NoSuchChannelExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class NoSuchPageTemplateExceptionMapper
-	extends BaseExceptionMapper<NoSuchLayoutTemplateException> {
+public class NoSuchChannelExceptionMapper
+	extends BaseExceptionMapper<NoSuchChannelException> {
 
 	@Override
 	protected Problem getProblem(
-		NoSuchLayoutTemplateException noSuchLayoutTemplateException) {
+		NoSuchChannelException noSuchChannelException) {
 
 		return new Problem(
 			Response.Status.NOT_FOUND,
 			StringUtil.replace(
-				noSuchLayoutTemplateException.getMessage(),
-				LayoutTemplate.class.getSimpleName(), "page template"));
+				noSuchChannelException.getMessage(),
+				CommerceChannel.class.getSimpleName(), "channel"));
 	}
 
 }

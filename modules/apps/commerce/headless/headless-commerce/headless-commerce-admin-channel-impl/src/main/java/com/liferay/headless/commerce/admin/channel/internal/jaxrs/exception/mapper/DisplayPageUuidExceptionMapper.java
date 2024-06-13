@@ -35,7 +35,7 @@ public class DisplayPageUuidExceptionMapper
 		CPDisplayLayoutEntryUuidException cpDisplayLayoutEntryUuidException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Display page uuid is invalid");
+			Response.Status.BAD_REQUEST, "The display page uuid is invalid");
 	}
 
 }

@@ -34,7 +34,8 @@ public class DisplayPageExceptionMapper
 	protected Problem getProblem(
 		CPDisplayLayoutEntryException cpDisplayLayoutEntryException) {
 
-		return new Problem(Response.Status.NOT_FOUND, "Display page not found");
+		return new Problem(
+			Response.Status.BAD_REQUEST, "The display page is invalid");
 	}
 
 }

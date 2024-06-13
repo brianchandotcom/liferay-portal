@@ -6,6 +6,8 @@
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -32,7 +34,11 @@ public class NoSuchPageExceptionMapper
 
 	@Override
 	protected Problem getProblem(NoSuchLayoutException noSuchLayoutException) {
-		return new Problem(Response.Status.NOT_FOUND, "Page not found");
+		return new Problem(
+			Response.Status.NOT_FOUND,
+			StringUtil.replace(
+				noSuchLayoutException.getMessage(),
+				Layout.class.getSimpleName(), "page"));
 	}
 
 }

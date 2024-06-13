@@ -6,6 +6,8 @@
 package com.liferay.headless.commerce.admin.channel.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException;
+import com.liferay.commerce.product.model.CPDisplayLayout;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -34,7 +36,11 @@ public class NoSuchDisplayPageExceptionMapper
 	protected Problem getProblem(
 		NoSuchCPDisplayLayoutException noSuchCPDisplayLayoutException) {
 
-		return new Problem(Response.Status.NOT_FOUND, "Display page not found");
+		return new Problem(
+			Response.Status.NOT_FOUND,
+			StringUtil.replace(
+				noSuchCPDisplayLayoutException.getMessage(),
+				CPDisplayLayout.class.getSimpleName(), "display page"));
 	}
 
 }

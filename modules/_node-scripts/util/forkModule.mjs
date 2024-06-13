@@ -19,11 +19,19 @@ export default async function forkModule(modulePath, params, options) {
 	});
 
 	return new Promise((resolve, reject) => {
+		const result = {
+			stdout: '',
+		};
+
+		child.stdout.on('data', (data) => {
+			result.stdout += data.toString();
+		});
+
 		child.on('exit', (code, signal) => {
 			killChild = false;
 
 			if (code === 0) {
-				resolve();
+				resolve(result);
 			}
 			else if (code !== null) {
 				reject(

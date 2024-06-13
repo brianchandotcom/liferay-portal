@@ -12,6 +12,7 @@
 		"fast-glob": "^3.3.2",
 		"glob": "^10.3.12",
 		"globby": "^14.0.1",
+		"liferay-theme-tasks": "11.5.1",
 		"minimist": "^1.2.8",
 		"prettier": "^3.2.5",
 		"resolve": "^1.19.0",

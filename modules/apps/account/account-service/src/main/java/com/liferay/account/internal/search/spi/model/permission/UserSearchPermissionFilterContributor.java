@@ -13,17 +13,21 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,6 +100,43 @@ public class UserSearchPermissionFilterContributor
 									getAccountEntryId()));
 					}
 				}
+
+				if (OrganizationPermissionUtil.contains(
+						permissionChecker, userOrgId,
+						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) {
+
+					Set<Organization> organizationSet = new HashSet<>();
+
+					List<Organization> suborganizations =
+						_organizationLocalService.getSuborganizations(
+							companyId, userOrgId);
+
+					while (!suborganizations.isEmpty()) {
+						organizationSet.addAll(suborganizations);
+
+						suborganizations =
+							_organizationLocalService.getSuborganizations(
+								suborganizations);
+					}
+
+					for (Organization organization : organizationSet) {
+						List<AccountEntryOrganizationRel>
+							accountEntryOrganizationRels =
+								_accountEntryOrganizationRelLocalService.
+									getAccountEntryOrganizationRelsByOrganizationId(
+										organization.getOrganizationId());
+
+						for (AccountEntryOrganizationRel
+								accountEntryOrganizationRel :
+									accountEntryOrganizationRels) {
+
+							termsFilter.addValue(
+								String.valueOf(
+									accountEntryOrganizationRel.
+										getAccountEntryId()));
+						}
+					}
+				}
 			}
 
 			if (!termsFilter.isEmpty()) {
@@ -129,5 +170,8 @@ public class UserSearchPermissionFilterContributor
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 }

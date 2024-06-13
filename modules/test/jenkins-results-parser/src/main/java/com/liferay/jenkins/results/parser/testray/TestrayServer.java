@@ -38,6 +38,29 @@ import org.json.JSONObject;
  */
 public class TestrayServer {
 
+	public TestrayProject createTestrayProject(String projectName) {
+		TestrayProject testrayProject = getTestrayProjectByName(projectName);
+
+		if (testrayProject != null) {
+			return testrayProject;
+		}
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("name", projectName);
+
+		try {
+			JSONObject responseJSONObject = new JSONObject(
+				requestPost("/o/c/projects", requestJSONObject.toString()));
+
+			return getTestrayProjectByID(responseJSONObject.getLong("id"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				requestJSONObject.toString(), ioException);
+		}
+	}
+
 	public JenkinsResultsParserUtil.HTTPAuthorization getHTTPAuthorization() {
 		return _httpAuthorization;
 	}

@@ -24,6 +24,11 @@ import org.json.JSONObject;
 public class Testray1TestrayServer extends TestrayServer {
 
 	@Override
+	public TestrayProject createTestrayProject(String projectName) {
+		return null;
+	}
+
+	@Override
 	public TestrayBuild getTestrayBuildByID(long buildID) {
 		String buildAPIURLPath = JenkinsResultsParserUtil.combine(
 			"/web/guest/home/-/testray/builds/", String.valueOf(buildID),

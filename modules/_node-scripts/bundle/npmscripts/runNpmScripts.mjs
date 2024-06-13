@@ -12,12 +12,21 @@ import {WORK_PATH} from '../../util/constants.mjs';
 import forkModule from '../../util/forkModule.mjs';
 import onExit from '../../util/onExit.mjs';
 
-const DISABLE_BUILD_CONFIGS = ['babel', 'bundler', 'exports', 'main', 'tsc'];
+const DISABLE_BUILD_CONFIGS = [
+	'babel',
+	'bundler',
+	'exports',
+	'main',
+	'sass',
+	'tsc',
+];
 
 export default async function runNpmScripts(projectNpmScriptsConfig) {
 	if (!projectNpmScriptsConfig) {
 		return;
 	}
+
+	const start = performance.now();
 
 	await writeNpmScriptsConfig(projectNpmScriptsConfig);
 
@@ -26,9 +35,15 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 		{basedir: '.'}
 	);
 
-	await forkModule(npmScriptsPath, ['build'], {
-		stdio: 'inherit',
+	const {stdout} = await forkModule(npmScriptsPath, ['build'], {
+		stdio: 'pipe',
 	});
+
+	const lapse = performance.now() - start;
+
+	console.log(
+		`⌛ Legacy build (liferay-npm-scripts) took: ${(lapse / 1000).toFixed(3)} s\n\n${stdout}`
+	);
 }
 
 async function writeNpmScriptsConfig(projectNpmScriptsConfig) {

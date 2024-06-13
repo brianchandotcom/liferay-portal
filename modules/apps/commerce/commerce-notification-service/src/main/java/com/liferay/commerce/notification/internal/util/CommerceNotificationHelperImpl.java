@@ -171,43 +171,12 @@ public class CommerceNotificationHelperImpl
 			CommerceNotificationType commerceNotificationType, Object object)
 		throws PortalException {
 
-		long groupId = commerceNotificationTemplate.getGroupId();
-
 		User user = _userLocalService.getUser(userId);
-
-		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
-		Locale userLocale = user.getLocale();
 
 		String fromName = commerceNotificationTemplate.getFromName(
 			user.getLanguageId());
 
-		String subject = _formatString(
-			commerceNotificationType, _FIELD_SUBJECT,
-			commerceNotificationTemplate.getSubject(userLocale), object,
-			userLocale);
-		String body = _formatString(
-			commerceNotificationType, _FIELD_BODY,
-			commerceNotificationTemplate.getBody(userLocale), object,
-			userLocale);
-
-		if (Validator.isNull(fromName)) {
-			fromName = commerceNotificationTemplate.getFromName(
-				_portal.getSiteDefaultLocale(groupId));
-		}
-
-		if (Validator.isNull(subject)) {
-			subject = _formatString(
-				commerceNotificationType, _FIELD_SUBJECT,
-				commerceNotificationTemplate.getSubject(siteDefaultLocale),
-				object, siteDefaultLocale);
-		}
-
-		if (Validator.isNull(body)) {
-			body = _formatString(
-				commerceNotificationType, _FIELD_BODY,
-				commerceNotificationTemplate.getBody(siteDefaultLocale), object,
-				siteDefaultLocale);
-		}
+		Locale userLocale = user.getLocale();
 
 		String to = _formatString(
 			commerceNotificationType, _FIELD_TO,
@@ -218,6 +187,39 @@ public class CommerceNotificationHelperImpl
 		String bcc = _formatString(
 			commerceNotificationType, _FIELD_BCC,
 			commerceNotificationTemplate.getBcc(), object, userLocale);
+
+		if (Validator.isNull(fromName)) {
+			fromName = commerceNotificationTemplate.getFromName(
+				_portal.getSiteDefaultLocale(
+					commerceNotificationTemplate.getGroupId()));
+		}
+
+		String subject = _formatString(
+			commerceNotificationType, _FIELD_SUBJECT,
+			commerceNotificationTemplate.getSubject(userLocale), object,
+			userLocale);
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
+			commerceNotificationTemplate.getGroupId());
+
+		if (Validator.isNull(subject)) {
+			subject = _formatString(
+				commerceNotificationType, _FIELD_SUBJECT,
+				commerceNotificationTemplate.getSubject(siteDefaultLocale),
+				object, siteDefaultLocale);
+		}
+
+		String body = _formatString(
+			commerceNotificationType, _FIELD_BODY,
+			commerceNotificationTemplate.getBody(userLocale), object,
+			userLocale);
+
+		if (Validator.isNull(body)) {
+			body = _formatString(
+				commerceNotificationType, _FIELD_BODY,
+				commerceNotificationTemplate.getBody(siteDefaultLocale), object,
+				siteDefaultLocale);
+		}
 
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
@@ -241,20 +243,20 @@ public class CommerceNotificationHelperImpl
 					}
 
 					_addNotificationQueueEntry(
-						groupId, commerceNotificationType,
+						commerceNotificationTemplate.getGroupId(), commerceNotificationType,
 						commerceNotificationTemplate, fromName, toUserString,
 						toUserString, cc, bcc, subject, body, object);
 				}
 				else {
 					_addNotificationQueueEntry(
-						groupId, commerceNotificationType,
+						commerceNotificationTemplate.getGroupId(), commerceNotificationType,
 						commerceNotificationTemplate, fromName, toUser, cc, bcc,
 						subject, body, object);
 				}
 			}
 			else {
 				_addNotificationQueueEntry(
-					groupId, commerceNotificationType,
+					commerceNotificationTemplate.getGroupId(), commerceNotificationType,
 					commerceNotificationTemplate, fromName, toUser, cc, bcc,
 					subject, body, object);
 			}

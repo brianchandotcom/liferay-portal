@@ -72,7 +72,11 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 	site,
 }) => {
 	const vocabularyName = getRandomString();
-	const friendlyUrlCategories = ['category-1', 'category-2', 'category-3'];
+	const friendlyUrlCategories = [
+		{name: 'category-1'},
+		{name: 'category-2'},
+		{name: 'category-3'},
+	];
 
 	await blogsCategorizedFriendlyUrlSetup({
 		apiHelpers,
@@ -90,13 +94,18 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
-		friendlyUrl: {categories: friendlyUrlCategories, vocabularyName},
+		friendlyUrl: {
+			categories: friendlyUrlCategories.map(({name}) => name),
+			vocabularyName,
+		},
 		publish: false,
 		title,
 	});
 
 	await expect(
-		page.getByText(`/-/blogs/${friendlyUrlCategories.join('/')}/`)
+		page.getByText(
+			`/-/blogs/${friendlyUrlCategories.map(({name}) => name).join('/')}/`
+		)
 	).toBeVisible();
 
 	await blogsEditBlogEntryPage.publishBlogEntry();
@@ -104,9 +113,9 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 	const response = await page.goto(`/web${site.friendlyUrlPath}/b/${title}`);
 
 	await expect(response.url()).toContain(
-		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories.join(
-			'/'
-		)}/${title}`
+		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+			.map(({name}) => name)
+			.join('/')}/${title}`
 	);
 });
 
@@ -119,7 +128,11 @@ test('LPD-24858 Categories with blank spaces in friendly URL', async ({
 	site,
 }) => {
 	const vocabularyName = getRandomString();
-	const friendlyUrlCategories = ['category 1', 'category 2', 'category 3'];
+	const friendlyUrlCategories = [
+		{name: 'category 1'},
+		{name: 'category 2'},
+		{name: 'category 3'},
+	];
 
 	await blogsCategorizedFriendlyUrlSetup({
 		apiHelpers,
@@ -137,7 +150,10 @@ test('LPD-24858 Categories with blank spaces in friendly URL', async ({
 
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
-		friendlyUrl: {categories: friendlyUrlCategories, vocabularyName},
+		friendlyUrl: {
+			categories: friendlyUrlCategories.map(({name}) => name),
+			vocabularyName,
+		},
 		publish: true,
 		title,
 	});
@@ -146,7 +162,7 @@ test('LPD-24858 Categories with blank spaces in friendly URL', async ({
 
 	await expect(response.url()).toContain(
 		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
-			.map((category) => encodeURIComponent(category))
+			.map(({name}) => encodeURIComponent(name))
 			.join('/')}/${title}`
 	);
 });
@@ -160,7 +176,11 @@ test('LPD-26753 The URL changes when a category is modified', async ({
 	site,
 }) => {
 	const vocabularyName = getRandomString();
-	const friendlyUrlCategories = ['category-1', 'category-2', 'category-3'];
+	const friendlyUrlCategories = [
+		{name: 'category-1'},
+		{name: 'category-2'},
+		{name: 'category-3'},
+	];
 
 	const {categories} = await blogsCategorizedFriendlyUrlSetup({
 		apiHelpers,
@@ -178,7 +198,10 @@ test('LPD-26753 The URL changes when a category is modified', async ({
 
 	await blogsEditBlogEntryPage.editBlogEntry({
 		content: getRandomString(),
-		friendlyUrl: {categories: friendlyUrlCategories, vocabularyName},
+		friendlyUrl: {
+			categories: friendlyUrlCategories.map(({name}) => name),
+			vocabularyName,
+		},
 		publish: true,
 		title,
 	});
@@ -187,20 +210,69 @@ test('LPD-26753 The URL changes when a category is modified', async ({
 		`/web${site.friendlyUrlPath}/b/${title}`
 	);
 	await expect(initialResponse.url()).toContain(
-		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories.join(
-			'/'
-		)}/${title}`
+		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+			.map(({name}) => name)
+			.join('/')}/${title}`
 	);
 
-	friendlyUrlCategories[0] = `${friendlyUrlCategories[0]}-edited`;
+	friendlyUrlCategories[0].name = `${friendlyUrlCategories[0].name}-edited`;
 	await apiHelpers.headlessAdminTaxonomy.patchCategory({
 		id: categories[0].id,
-		name: friendlyUrlCategories[0],
+		name: friendlyUrlCategories[0].name,
 	});
 	const editedResponse = await page.goto(initialResponse.url());
 	await expect(editedResponse.url()).toContain(
-		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories.join(
-			'/'
-		)}/${title}`
+		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+			.map(({name}) => name)
+			.join('/')}/${title}`
+	);
+});
+
+test('LPD-26755 The URL redirects to the correct language when a category has a translation', async ({
+	apiHelpers,
+	blogsEditBlogEntryPage,
+	displayPageTemplatesPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const vocabularyName = getRandomString();
+	const friendlyUrlCategories = [
+		{name: 'lifestyle', name_i18n: {['ES-es']: 'estilo-de-vida'}},
+		{name: 'fashion', name_i18n: {['ES-es']: 'moda'}},
+		{name: 'places', name_i18n: {['ES-es']: 'lugares'}},
+	];
+
+	await blogsCategorizedFriendlyUrlSetup({
+		apiHelpers,
+		displayPageTemplatesPage,
+		friendlyUrlCategories,
+		page,
+		pageEditorPage,
+		site,
+		vocabularyName,
+	});
+
+	await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+
+	const title = getRandomString();
+
+	await blogsEditBlogEntryPage.editBlogEntry({
+		content: getRandomString(),
+		friendlyUrl: {
+			categories: friendlyUrlCategories.map(({name}) => name),
+			vocabularyName,
+		},
+		publish: true,
+		title,
+	});
+
+	const response = await page.goto(
+		`/es/web${site.friendlyUrlPath}/b/${title}`
+	);
+	await expect(response.url()).toContain(
+		`/es/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+			.map((category) => category.name_i18n['ES-es'])
+			.join('/')}/${title}`
 	);
 });

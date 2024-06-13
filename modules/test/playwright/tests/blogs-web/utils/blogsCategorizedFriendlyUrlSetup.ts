@@ -22,7 +22,7 @@ export async function blogsCategorizedFriendlyUrlSetup({
 }: {
 	apiHelpers: ApiHelpers;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
-	friendlyUrlCategories: string[];
+	friendlyUrlCategories: {name: string; name_i18n?: {'ES-es': string}}[];
 	page;
 	pageEditorPage: PageEditorPage;
 	site: Site;

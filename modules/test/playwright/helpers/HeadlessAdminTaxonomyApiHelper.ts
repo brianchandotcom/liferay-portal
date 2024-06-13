@@ -13,6 +13,7 @@ interface postVocabularyProps {
 
 interface postCategoryProps {
 	name: string;
+	name_i18n?: {['ES-es']: string};
 	vocabularyId: number;
 }
 
@@ -63,11 +64,12 @@ export class HeadlessAdminTaxonomyApiHelper {
 
 	async postCategory({
 		name,
+		name_i18n,
 		vocabularyId,
 	}: postCategoryProps): Promise<{id: number}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`,
-			{data: {name}}
+			{data: {name, name_i18n}}
 		);
 	}
 

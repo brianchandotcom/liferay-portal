@@ -12,7 +12,10 @@ export async function createCategories({
 	vocabularyName,
 }: {
 	apiHelpers: ApiHelpers;
-	friendlyUrlCategories: string[];
+	friendlyUrlCategories: {
+		name: string;
+		name_i18n?: {'ES-es': string};
+	}[];
 	site: Site;
 	vocabularyName: string;
 }): Promise<{id: number; name: string}[]> {
@@ -23,9 +26,10 @@ export async function createCategories({
 		});
 
 	const categories = [];
-	for (const name of friendlyUrlCategories) {
+	for (const {name, name_i18n} of friendlyUrlCategories) {
 		const {id} = await apiHelpers.headlessAdminTaxonomy.postCategory({
 			name,
+			name_i18n,
 			vocabularyId,
 		});
 

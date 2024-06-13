@@ -155,7 +155,9 @@ public class DocumentDTOConverter
 						fileEntry.getCompanyId(),
 						dtoConverterContext.getLocale()));
 				setDateCreated(fileEntry::getCreateDate);
+				setDateExpired(fileEntry::getExpirationDate);
 				setDateModified(fileEntry::getModifiedDate);
+				setDatePublished(fileEntry::getDisplayDate);
 				setDescription(fileEntry::getDescription);
 				setDocumentFolderId(fileEntry::getFolderId);
 				setDocumentType(

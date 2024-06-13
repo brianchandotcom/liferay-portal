@@ -4,5 +4,6 @@
  */
 
 module.exports = {
+	exports: ['recharts'],
 	npmscripts: {},
 };

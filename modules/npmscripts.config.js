@@ -471,6 +471,7 @@ module.exports = {
 				'url',
 				'util',
 			],
+			'frontend-js-recharts': ['recharts'],
 			'frontend-js-web': [],
 			'frontend-taglib-clay': [
 				'@clayui/alert',

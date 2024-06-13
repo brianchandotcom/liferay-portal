@@ -1320,11 +1320,21 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                dateExpired:
+                    description:
+                        The expiration date of the document.
+                    format: date-time
+                    type: string
                 dateModified:
                     description:
                         The last time a field of the document changed.
                     format: date-time
                     readOnly: true
+                    type: string
+                datePublished:
+                    description:
+                        The document's most recent publication date.
+                    format: date-time
                     type: string
                 description:
                     description:

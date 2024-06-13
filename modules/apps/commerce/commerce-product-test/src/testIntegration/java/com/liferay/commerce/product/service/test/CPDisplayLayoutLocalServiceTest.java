@@ -124,18 +124,18 @@ public class CPDisplayLayoutLocalServiceTest {
 		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
 			_commerceChannel1.getSiteGroupId());
 
-		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
-			_commerceChannel2.getSiteGroupId());
-
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
 			AssetCategory.class, assetCategory.getCategoryId(), null,
 			layout1.getUuid());
-
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel1.getSiteGroupId(),
 			CPDefinition.class, _cpDefinition.getCPDefinitionId(), null,
 			layout1.getUuid());
+
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
+			_commerceChannel2.getSiteGroupId());
+
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			_user.getUserId(), _commerceChannel2.getSiteGroupId(),
 			AssetCategory.class, assetCategory.getCategoryId(), null,

@@ -17,6 +17,7 @@ import React, {useContext, useState} from 'react';
 import formatLocaleWithDashes from '../utils/language/format_locale_with_dashes';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
 import sub from '../utils/language/sub';
+import {TEST_IDS} from '../utils/testIds';
 import EditERCModal from './EditERCModal';
 import EditTitleModal from './EditTitleModal';
 import ThemeContext from './ThemeContext';
@@ -258,7 +259,10 @@ export default function PageToolbar({
 									{Liferay.Language.get('id')}:
 								</span>
 
-								<strong className="text-dark">
+								<strong
+									className="text-dark"
+									data-testid={TEST_IDS.ENTITY_ID}
+								>
 									{entityId}
 								</strong>
 							</div>

@@ -18,6 +18,7 @@ import {
 	INACTIVE,
 } from '../../utils/constants';
 import removeDuplicates from '../../utils/functions/remove_duplicates';
+import {TEST_IDS} from '../../utils/testIds';
 import LearnMessage from './../../shared/LearnMessage';
 import ManagementToolbar from './ManagementToolbar';
 
@@ -279,6 +280,9 @@ export default function ({
 							{contributor.value.map((className) => (
 								<ClayList.Item
 									active={selected.includes(className)}
+									data-testid={
+										TEST_IDS.CLAUSE_CONTRIBUTORS_SIDEBAR_LIST_ITEM
+									}
 									flex
 									key={className}
 								>

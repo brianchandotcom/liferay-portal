@@ -4,7 +4,10 @@
  */
 
 export const TEST_IDS = {
+	CLAUSE_CONTRIBUTORS_SIDEBAR_LIST_ITEM: 'clauseContributorsSidebarListItem',
+	ENTITY_ID: 'entityId',
 	ERROR_LIST_ITEM: 'errorListItem',
 	PREVIEW_SIDEBAR: 'previewSidebar',
 	PREVIEW_SIDEBAR_BUTTON: 'previewSidebarButton',
+	PREVIEW_SIDEBAR_RESULT_LIST_ITEM: 'previewSidebarResultListItem',
 };

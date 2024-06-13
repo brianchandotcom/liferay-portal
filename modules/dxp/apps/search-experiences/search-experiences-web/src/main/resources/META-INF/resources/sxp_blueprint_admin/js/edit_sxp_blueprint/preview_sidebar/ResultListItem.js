@@ -13,6 +13,7 @@ import React, {useContext, useState} from 'react';
 
 import {PreviewModalWithCopyDownload} from '../../shared/PreviewModal';
 import ThemeContext from '../../shared/ThemeContext';
+import {TEST_IDS} from '../../utils/testIds';
 
 const getResultDefaultKeys = (locale) => [
 	'entryClassName',
@@ -73,7 +74,12 @@ function ResultListItem({explanation = '', fields, id, score = 0}) {
 		);
 
 	return (
-		<ClayList.Item className="result-list-item" flex key={id}>
+		<ClayList.Item
+			className="result-list-item"
+			data-testid={TEST_IDS.PREVIEW_SIDEBAR_RESULT_LIST_ITEM}
+			flex
+			key={id}
+		>
 			<ClayList.ItemField>
 				<PreviewModalWithCopyDownload
 					fileName="score_explanation.json"

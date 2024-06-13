@@ -5,7 +5,9 @@
 		</div>
 
 		<div id="commerce-header-search">
-			[@liferay_commerce_ui["search-bar"] /]
+			[#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) /]
+
+			[@liferay.search_bar default_preferences="${preferences}" /]
 		</div>
 
 		<div class="align-items-center justify-content-end row" id="commerce-header-components">

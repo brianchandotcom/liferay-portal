@@ -4,7 +4,7 @@
  */
 
 import {createAssetPublisherAndConfigure} from './createAssetPublisherAndConfigure';
-import {createCategories} from './createCategories';
+import {TCategory, createCategories} from './createCategories';
 import {createDPTandMarkAsDefault} from './createDPTandMarkAsDefault';
 
 import type {ApiHelpers} from '../../../helpers/ApiHelpers';
@@ -22,7 +22,7 @@ export async function blogsCategorizedFriendlyUrlSetup({
 }: {
 	apiHelpers: ApiHelpers;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
-	friendlyUrlCategories: {name: string; name_i18n?: {'ES-es': string}}[];
+	friendlyUrlCategories: TCategory[];
 	page;
 	pageEditorPage: PageEditorPage;
 	site: Site;

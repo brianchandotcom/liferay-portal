@@ -11,7 +11,7 @@ interface postVocabularyProps {
 	siteId: string;
 }
 
-interface postCategoryProps {
+export interface postCategoryProps {
 	name: string;
 	name_i18n?: {['ES-es']: string};
 	vocabularyId: number;

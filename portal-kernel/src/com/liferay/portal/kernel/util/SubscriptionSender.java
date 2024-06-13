@@ -141,8 +141,6 @@ public class SubscriptionSender implements Serializable {
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
 				_classLoader)) {
 
-			long companyId = CompanyThreadLocal.getCompanyId();
-
 			for (Tuple tuple : _persistedSubscribersTuples) {
 				String className = (String)tuple.getObject(0);
 				long classPK = (long)tuple.getObject(1);
@@ -150,7 +148,8 @@ public class SubscriptionSender implements Serializable {
 
 				List<Subscription> subscriptions =
 					SubscriptionLocalServiceUtil.getSubscriptions(
-						companyId, className, classPK);
+						CompanyThreadLocal.getNonsystemCompanyId(), className,
+						classPK);
 
 				for (Subscription subscription : subscriptions) {
 					try {
@@ -251,7 +250,7 @@ public class SubscriptionSender implements Serializable {
 	 */
 	@Deprecated
 	public long getCompanyId() {
-		return CompanyThreadLocal.getCompanyId();
+		return CompanyThreadLocal.getNonsystemCompanyId();
 	}
 
 	public Object getContextAttribute(String key) {
@@ -275,15 +274,14 @@ public class SubscriptionSender implements Serializable {
 			return true;
 		}
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		for (Tuple tuple : _persistedSubscribersTuples) {
 			String className = (String)tuple.getObject(0);
 			long classPK = (long)tuple.getObject(1);
 
 			List<Subscription> subscriptions =
 				SubscriptionLocalServiceUtil.getSubscriptions(
-					companyId, className, classPK);
+					CompanyThreadLocal.getNonsystemCompanyId(), className,
+					classPK);
 
 			if (!subscriptions.isEmpty()) {
 				return true;
@@ -305,7 +303,7 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		Company company = CompanyLocalServiceUtil.getCompany(
-			CompanyThreadLocal.getCompanyId());
+			CompanyThreadLocal.getNonsystemCompanyId());
 
 		setContextAttribute("[$COMPANY_ID$]", company.getCompanyId());
 		setContextAttribute("[$COMPANY_MX$]", company.getMx());
@@ -767,7 +765,7 @@ public class SubscriptionSender implements Serializable {
 
 		String emailAddress = to.getAddress();
 
-		long companyId = CompanyThreadLocal.getCompanyId();
+		long companyId = CompanyThreadLocal.getNonsystemCompanyId();
 
 		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
 			companyId, emailAddress);

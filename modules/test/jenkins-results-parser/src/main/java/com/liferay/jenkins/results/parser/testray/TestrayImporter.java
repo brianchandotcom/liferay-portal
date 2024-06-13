@@ -652,6 +652,13 @@ public class TestrayImporter {
 					_replaceEnvVars(testrayProjectName, true));
 			}
 
+			if ((testrayProject == null) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
+
+				testrayProject = testrayServer.createTestrayProject(
+					_replaceEnvVars(testrayProjectName, true));
+			}
+
 			testrayProjectID = _getBuildParameter("TESTRAY_PROJECT_ID");
 
 			if ((testrayProject == null) && (testrayProjectID != null) &&

@@ -378,6 +378,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		_updateProduct(cpDefinition, product);
 
+		if (!Validator.isBlank(product.getExternalReferenceCode())) {
+			_cpDefinitionService.updateExternalReferenceCode(
+				product.getExternalReferenceCode(),
+				cpDefinition.getCPDefinitionId());
+		}
+
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();

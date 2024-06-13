@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
+import com.liferay.portal.security.service.access.policy.constants.SAPWebKeys;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
@@ -289,7 +290,9 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			HttpServletRequest httpServletRequest =
 				accessControlContext.getRequest();
 
-			if (httpServletRequest.getAttribute("REST_CLIENT") != null) {
+			if (httpServletRequest.getAttribute(SAPWebKeys.TEMPLATE_DISPATCH) !=
+					null) {
+
 				systemServiceAccessPolicyNames.add(
 					sapConfiguration.systemTemplateDefaultSAPEntryName());
 			}

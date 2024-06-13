@@ -119,7 +119,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 		DDMStructure newDDMStructure = _ddmStructureLocalService.addStructure(
 			oldDDMStructure.getUserId(), oldDDMStructure.getGroupId(),
 			oldDDMStructure.getParentStructureId(),
-			_KALEO_PROCESS_CLASS_NAME_ID, oldDDMStructure.getStructureKey(),
+			PortalUtil.getClassNameId(KaleoProcess.class), oldDDMStructure.getStructureKey(),
 			oldDDMStructure.getNameMap(), oldDDMStructure.getDescriptionMap(),
 			oldDDMStructure.getDDMForm(), oldDDMStructure.getDDMFormLayout(),
 			oldDDMStructure.getStorageType(), oldDDMStructure.getType(),
@@ -170,7 +170,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 			DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
 				oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
 				oldDDMTemplate.getClassNameId(), newDDMStructureId,
-				_KALEO_PROCESS_CLASS_NAME_ID, oldDDMTemplate.getNameMap(),
+				PortalUtil.getClassNameId(KaleoProcess.class), oldDDMTemplate.getNameMap(),
 				oldDDMTemplate.getDescriptionMap(), oldDDMTemplate.getType(),
 				oldDDMTemplate.getMode(), oldDDMTemplate.getLanguage(),
 				oldDDMTemplate.getScript(), serviceContext);
@@ -241,7 +241,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 					"KaleoProcess.DDLRecordSetId join DDMStructure on ",
 					"DDMStructure.structureId = DDLRecordSet.DDMStructureId ",
 					"where DDMStructure.classNameId <> ",
-					_KALEO_PROCESS_CLASS_NAME_ID));
+					PortalUtil.getClassNameId(KaleoProcess.class)));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -279,7 +279,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 					"join DDMTemplate on DDMTemplate.templateId = ",
 					"KaleoProcessLink.DDMTemplateId where ",
 					"DDMTemplate.resourceClassNameId <> ",
-					_KALEO_PROCESS_CLASS_NAME_ID));
+					PortalUtil.getClassNameId(KaleoProcess.class)));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -304,9 +304,6 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 			preparedStatement2.executeBatch();
 		}
 	}
-
-	private static final long _KALEO_PROCESS_CLASS_NAME_ID =
-		PortalUtil.getClassNameId(KaleoProcess.class);
 
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

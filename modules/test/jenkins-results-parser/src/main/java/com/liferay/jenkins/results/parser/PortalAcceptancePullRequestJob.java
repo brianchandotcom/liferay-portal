@@ -5,6 +5,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.batch.TestBatch;
+import com.liferay.jenkins.results.parser.test.suite.RelevantTestSuite;
+
 import java.io.File;
 
 import java.nio.file.FileSystem;
@@ -12,6 +15,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -102,6 +106,32 @@ public class PortalAcceptancePullRequestJob
 		}
 
 		return batchNames;
+	}
+
+	@Override
+	protected Set<TestBatch> getTestBatches() {
+		if (!_isRelevantTestSuite()) {
+			return super.getTestBatches();
+		}
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
+
+		List<File> modifiedFilesList =
+			portalGitWorkingDirectory.getModifiedFilesList();
+
+		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
+			workingDirectory, modifiedFilesList);
+
+		List<TestBatch> testBatchList = relevantTestSuite.getTestBatches();
+
+		Set<TestBatch> testBatchSet = new HashSet<>(testBatchList);
+
+		testBatchSet.addAll(relevantTestSuite.getTestBatches());
+
+		return testBatchSet;
 	}
 
 	private boolean _hasMatchingFiles(List<PathMatcher> pathMatchers) {

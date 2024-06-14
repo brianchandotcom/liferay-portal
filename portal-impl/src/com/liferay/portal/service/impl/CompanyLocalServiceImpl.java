@@ -349,7 +349,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@Override
 	public Company addDBPartitionCompany(
-			long companyId, String name, String virtualHostName, String webId)
+			long companyId, String name, String virtualHostname, String webId)
 		throws PortalException {
 
 		if (!DBPartition.isPartitionEnabled()) {
@@ -387,7 +387,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					}
 
 					String lowerCaseVirtualHostname = StringUtil.toLowerCase(
-						StringUtil.trim(virtualHostName));
+						StringUtil.trim(virtualHostname));
 
 					if (Validator.isNotNull(lowerCaseVirtualHostname) &&
 						!StringUtil.equals(

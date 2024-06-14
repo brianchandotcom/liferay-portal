@@ -28,6 +28,12 @@ import TimeRangeQuery from 'shared/queries/TimeRangeQuery';
 import TouchpointsQuery from 'shared/queries/TouchpointsQuery';
 import UserSessionQuery from 'shared/queries/UserSessionQuery';
 import {
+	AssetMetricQuery,
+	AssetTabsQuery,
+	SitesMetricQuery,
+	SitesTabsQuery
+} from 'shared/components/metric-card/queries';
+import {
 	AttributeTypes,
 	DataTypes,
 	DateGroupings
@@ -55,10 +61,6 @@ import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {isArray, mapValues, range} from 'lodash';
 import {PageAudienceReportQuery} from 'shared/components/audience-report/queries';
 import {SegmentPageViewsQuery} from 'shared/queries/SegmentPageViewsQuery';
-import {
-	SitesMetricQuery,
-	SitesTabsQuery
-} from 'shared/components/metric-card/queries';
 
 const METRIC_TYPENAME_MAP = {
 	histogram: 'HistogramMetric',
@@ -154,6 +156,109 @@ export function mockAssetAppearsOnReq(variables) {
 						}
 					],
 					total: 1000
+				}
+			}
+		}
+	};
+}
+
+export function mockAssetMetricReq({empty, metricName, queryName, rangeKey}) {
+	return {
+		request: {
+			query: AssetMetricQuery(queryName)(metricName),
+			variables: {
+				assetId: '123',
+				channelId: '456',
+				devices: 'Any',
+				interval: 'D',
+				location: 'Any',
+				rangeEnd: null,
+				rangeKey,
+				rangeStart: null,
+				title: 'My awesome asset',
+				touchpoint: 'https://liferay.com'
+			}
+		},
+		result: {
+			data: {
+				[queryName]: {
+					__typename: 'AssetMetric',
+					[metricName]: {
+						__typename: 'Metric',
+						histogram: {
+							__typename: 'HistogramMetricBag',
+							asymmetricComparison: false,
+							metrics: empty
+								? []
+								: [
+										{
+											__typename: 'HistogramMetric',
+											key: '2024-01-17T18:00',
+											previousValue: 0,
+											previousValueKey:
+												'2024-01-16T18:00',
+											trend: {
+												__typename: 'Trend',
+												percentage: null,
+												trendClassification: 'NEUTRAL'
+											},
+											value: 0,
+											valueKey: '2024-01-17T18:00'
+										}
+								  ],
+							total: empty ? 0 : 5
+						},
+						previousValue: null,
+						trend: {
+							__typename: 'Trend',
+							percentage: null,
+							trendClassification: 'NEUTRAL'
+						},
+						value: 0
+					}
+				}
+			}
+		}
+	};
+}
+
+export function mockAssetTabsReq({metrics, name, rangeKey}) {
+	const assetMetrics = {};
+
+	metrics.forEach(metric => {
+		assetMetrics[metric.name] = {
+			__typename: 'Metric',
+			previousValue: null,
+			trend: {
+				__typename: 'Trend',
+				percentage: null,
+				trendClassification: 'NEUTRAL'
+			},
+			value: 100
+		};
+	});
+
+	return {
+		request: {
+			query: AssetTabsQuery(metrics, name),
+			variables: {
+				assetId: '123',
+				channelId: '456',
+				devices: 'Any',
+				interval: 'D',
+				location: 'Any',
+				rangeEnd: null,
+				rangeKey,
+				rangeStart: null,
+				title: 'My awesome asset',
+				touchpoint: 'https://liferay.com'
+			}
+		},
+		result: {
+			data: {
+				[name]: {
+					__typename: 'AssetMetric',
+					...assetMetrics
 				}
 			}
 		}

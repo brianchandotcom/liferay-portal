@@ -407,26 +407,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						company = companyPersistence.update(company);
 					}
 
-					preregisterCompany(company);
-
-					_resourceActionLocalService.checkResourceActions();
-
-					_portletLocalService.checkPortlets(company.getCompanyId());
-
-					TransactionCommitCallbackUtil.registerCallback(
-						() -> {
-							Company dbPartitionCompany =
-								companyPersistence.findByPrimaryKey(companyId);
-
-							registerCompany(dbPartitionCompany);
-
-							PortalInstances.initCompany(
-								dbPartitionCompany, true);
-
-							return null;
-						});
-
-					return company;
+					return _addDBPartitionCompany(company);
 				});
 		}
 		catch (Throwable throwable) {
@@ -577,26 +558,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					company = updateVirtualHostname(
 						company.getCompanyId(), virtualHostname);
 
-					preregisterCompany(company);
-
-					_resourceActionLocalService.checkResourceActions();
-
-					_portletLocalService.checkPortlets(company.getCompanyId());
-
-					TransactionCommitCallbackUtil.registerCallback(
-						() -> {
-							Company dbPartitionCompany =
-								companyPersistence.findByPrimaryKey(companyId);
-
-							registerCompany(dbPartitionCompany);
-
-							PortalInstances.initCompany(
-								dbPartitionCompany, true);
-
-							return null;
-						});
-
-					return company;
+					return _addDBPartitionCompany(company);
 				});
 		}
 		catch (Throwable throwable) {
@@ -2161,6 +2123,30 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		private ActionableDynamicQuery _actionableDynamicQuery;
 
+	}
+
+	private Company _addDBPartitionCompany(Company company)
+		throws PortalException {
+
+		preregisterCompany(company);
+
+		_resourceActionLocalService.checkResourceActions();
+
+		_portletLocalService.checkPortlets(company.getCompanyId());
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Company dbPartitionCompany =
+					companyPersistence.findByPrimaryKey(company.getCompanyId());
+
+				registerCompany(dbPartitionCompany);
+
+				PortalInstances.initCompany(dbPartitionCompany, true);
+
+				return null;
+			});
+
+		return company;
 	}
 
 	private void _addDemoSettings(Company company) throws PortalException {

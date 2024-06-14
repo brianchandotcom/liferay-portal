@@ -96,7 +96,7 @@ public interface CompanyLocalService
 		throws PortalException;
 
 	public Company addDBPartitionCompany(
-			long companyId, String name, String virtualHostName, String webId)
+			long companyId, String name, String virtualHostname, String webId)
 		throws PortalException;
 
 	/**
@@ -118,8 +118,8 @@ public interface CompanyLocalService
 	 */
 	public void checkCompanyKey(long companyId) throws PortalException;
 
-	public Company copyBPartitionCompany(
-			long fromCompanyId, String name, Long toCompanyId,
+	public Company copyDBPartitionCompany(
+			long fromCompanyId, Long toCompanyId, String name,
 			String virtualHostname, String webId)
 		throws PortalException;
 

@@ -1450,6 +1450,20 @@ public class ObjectActionLocalServiceTest {
 						"name", "shippingAmount"
 					).put(
 						"value", "10"
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "taxAmount"
+					).put(
+						"value", "10"
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "total"
+					).put(
+						"value", "10"
 					)
 				).toString()
 			).build(),

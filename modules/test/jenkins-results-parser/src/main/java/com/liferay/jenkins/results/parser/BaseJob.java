@@ -501,11 +501,10 @@ public abstract class BaseJob implements Job {
 				jsonObject.put("smoke_batches", smokeBatchesJSONArray);
 			}
 
-			if (this instanceof TestSuiteJob) {
-				TestSuiteJob testSuiteJob = (TestSuiteJob)this;
+			String testSuiteName = getTestSuiteName();
 
-				jsonObject.put(
-					"test_suite_name", testSuiteJob.getTestSuiteName());
+			if (testSuiteName != null) {
+				jsonObject.put("test_suite_name", testSuiteName);
 			}
 
 			return jsonObject;
@@ -896,13 +895,7 @@ public abstract class BaseJob implements Job {
 
 		List<Callable<BatchTestClassGroup>> callables = new ArrayList<>();
 
-		String testSuiteName = null;
-
-		if (this instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
-
-			testSuiteName = testSuiteJob.getTestSuiteName();
-		}
+		String testSuiteName = getTestSuiteName();
 
 		final Job job = this;
 
@@ -1416,12 +1409,10 @@ public abstract class BaseJob implements Job {
 	private List<PathMatcher> _getJUnitIncludePathMatchers() {
 		List<PathMatcher> jUnitIncludePathMatchers = new ArrayList<>();
 
-		String testSuiteName = "default";
+		String testSuiteName = getTestSuiteName();
 
-		if (this instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
-
-			testSuiteName = testSuiteJob.getTestSuiteName();
+		if (testSuiteName == null) {
+			testSuiteName = "default";
 		}
 
 		for (String jUnitBatchName : _JUNIT_BATCH_NAMES) {

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyRelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -28,13 +29,17 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
+import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.List;
 
 import org.junit.Assert;
@@ -54,6 +59,66 @@ public class ForgotPasswordMVCActionCommandTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testLdapPasswordPolicyPreventsPasswordReset() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		Dictionary<String, Object> configurations =
+			_ldapAuthConfigurationProvider.getConfigurationProperties(
+				_user.getCompanyId());
+
+		Object existingValue = configurations.put(
+			"passwordPolicyEnabled", true);
+
+		_ldapAuthConfigurationProvider.updateProperties(
+			_user.getCompanyId(), configurations);
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.captcha.configuration.CaptchaConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"sendPasswordCaptchaEnabled", false
+					).build());
+			SafeCloseable safeCloseable =
+				PrefsPropsTestUtil.swapWithSafeCloseable(
+					_user.getCompanyId(),
+					PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
+					Boolean.FALSE.toString())) {
+
+			List<Ticket> tickets1 = _ticketLocalService.getTickets(
+				_user.getCompanyId(), User.class.getName(), _user.getUserId());
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest();
+
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			Object message = SessionMessages.get(
+				_portal.getHttpServletRequest(mockLiferayPortletActionRequest),
+				"forgotPasswordSent");
+
+			Assert.assertNotNull(message);
+
+			List<Ticket> tickets2 = _ticketLocalService.getTickets(
+				_user.getCompanyId(), User.class.getName(), _user.getUserId());
+
+			Assert.assertEquals(tickets1, tickets2);
+		}
+		finally {
+			if (existingValue != null) {
+				configurations.put("passwordPolicyEnabled", existingValue);
+			}
+			else {
+				configurations.remove("passwordPolicyEnabled");
+			}
+
+			_ldapAuthConfigurationProvider.updateProperties(
+				_user.getCompanyId(), configurations);
+		}
+	}
 
 	@Test
 	public void testSendPasswordReminderToLockedOutUser() throws Exception {
@@ -145,6 +210,12 @@ public class ForgotPasswordMVCActionCommandTest {
 	private static User _user;
 
 	@Inject(
+		filter = "factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration"
+	)
+	private ConfigurationProvider<LDAPAuthConfiguration>
+		_ldapAuthConfigurationProvider;
+
+	@Inject(
 		filter = "mvc.command.name=/login/forgot_password",
 		type = MVCActionCommand.class
 	)
@@ -155,6 +226,9 @@ public class ForgotPasswordMVCActionCommandTest {
 
 	@Inject
 	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@DeleteAfterTestRun
 	private PasswordPolicy _testPasswordPolicy;

@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.DestinationWrapper;
+import com.liferay.portal.kernel.messaging.DestinationStatistics;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -203,10 +203,40 @@ public class CTMessageBusInterceptorTest {
 	private ServiceRegistration<Destination> _serviceRegistration;
 	private TestDestination _testDestination;
 
-	private static class TestDestination extends DestinationWrapper {
+	private static class TestDestination implements Destination {
 
 		public TestDestination(Destination destination) {
-			super(destination);
+			_destination = destination;
+		}
+
+		@Override
+		public void close() {
+			_destination.close();
+		}
+
+		@Override
+		public void close(boolean force) {
+			_destination.close(force);
+		}
+
+		@Override
+		public void destroy() {
+			_destination.destroy();
+		}
+
+		@Override
+		public DestinationStatistics getDestinationStatistics() {
+			return _destination.getDestinationStatistics();
+		}
+
+		@Override
+		public String getDestinationType() {
+			return _destination.getDestinationType();
+		}
+
+		@Override
+		public String getName() {
+			return _destination.getName();
 		}
 
 		public Message getReceivedMessage() {
@@ -214,10 +244,16 @@ public class CTMessageBusInterceptorTest {
 		}
 
 		@Override
+		public void open() {
+			_destination.open();
+		}
+
+		@Override
 		public void send(Message message) {
 			_message = message;
 		}
 
+		private final Destination _destination;
 		private Message _message;
 
 	}

@@ -38,7 +38,11 @@ public class FileEntryInfoItemFormVariationsProvider
 	public InfoItemFormVariation getInfoItemFormVariation(
 		long groupId, String formVariationKey) {
 
-		long dlFileEntryTypeId = GetterUtil.getLong(formVariationKey);
+		long dlFileEntryTypeId = GetterUtil.getLong(formVariationKey, -1);
+
+		if (dlFileEntryTypeId < 0) {
+			return null;
+		}
 
 		if (dlFileEntryTypeId ==
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {

@@ -672,6 +672,38 @@ components:
                     readOnly: true
                     type: string
             type: object
+        ListTypeDefinition:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                system:
+                    type: boolean
+            type: object
         LowStockAction:
             properties:
                 key:
@@ -2139,6 +2171,11 @@ components:
                 key:
                     example: specification-key
                     type: string
+                listTypeDefinitionId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
                 optionCategory:
                     $ref: "#/components/schemas/OptionCategory"
                 priority:
@@ -15412,6 +15449,158 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a specification by ID.
             tags: ["Specification"]
+    "/specifications/{id}/list-type-definitions":
+        get:
+            operationId: getSpecificationIdListTypeDefinitionsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ListTypeDefinition"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ListTypeDefinition"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets the picklist associated to the specification.
+            tags: ["ListTypeDefinition"]
+        post:
+            operationId: postSpecificationIdListTypeDefinition
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                    description:
+                        Created
+                202:
+                    description:
+                        Accepted - Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Creates a picklist and links it to the specification.
+            tags: ["ListTypeDefinition"]
     "/unit-of-measure-skus":
         get:
             operationId: getUnitOfMeasureSkusPage

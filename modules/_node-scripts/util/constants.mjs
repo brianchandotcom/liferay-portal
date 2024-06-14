@@ -49,6 +49,10 @@ const NO_RECURSE_PROJECT_DIRS = [
 	'test',
 ];
 
+export async function getBuildPropertiesPath() {
+	return path.resolve(await getRootDir(), '..', 'build.properties');
+}
+
 let cachedProjectDirs;
 
 export async function getProjectDirs(dir = undefined) {

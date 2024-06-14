@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -174,7 +175,11 @@ public class CommerceCountryManagerImpl
 
 		return joinStep.where(
 			() -> {
-				Predicate predicate = CountryTable.INSTANCE.active.eq(true);
+				Predicate predicate = CountryTable.INSTANCE.companyId.eq(
+					CompanyThreadLocal.getCompanyId()
+				).and(
+					CountryTable.INSTANCE.active.eq(true)
+				);
 
 				Predicate groupFilterPredicate =
 					CountryTable.INSTANCE.groupFilterEnabled.eq(false);

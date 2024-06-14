@@ -896,8 +896,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
 					site, true, null);
 
+				String externalReferenceCode = TextFormatter.format(
+					groupKey, TextFormatter.F);
+
+				externalReferenceCode = TextFormatter.format(
+					externalReferenceCode, TextFormatter.K);
+
 				group.setExternalReferenceCode(
-					_toExternalReferenceCode(groupKey));
+					"system-site-" + externalReferenceCode);
 
 				group = groupPersistence.update(group);
 
@@ -5476,19 +5482,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return normalizedNameMap;
-	}
-
-	private String _toExternalReferenceCode(String groupKey) {
-
-		// Web Search --> webSearch
-
-		groupKey = TextFormatter.format(groupKey, TextFormatter.F);
-
-		// webSearch --> web-search
-
-		groupKey = TextFormatter.format(groupKey, TextFormatter.K);
-
-		return "system-site-" + groupKey;
 	}
 
 	private void _validateGroupKeyChange(long groupId, String typeSettings)

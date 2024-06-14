@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -5012,7 +5013,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return userPersistence.findByPrimaryKey(userId);
 		}
 
-		userPersistence.cacheResult(user);
+		EntityCacheUtil.putResult(UserImpl.class, user, false, true);
 
 		return user;
 	}

@@ -535,8 +535,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (toCompanyId == null) {
 			toCompanyId = _getNextCompanyId();
 		}
+		else if ((toCompanyId == 0) ||
+				 ArrayUtil.contains(
+					 PortalInstancePool.getCompanyIds(), toCompanyId)) {
 
-		if (fetchCompanyById(toCompanyId) != null) {
 			throw new IllegalArgumentException(
 				"Target company ID " + toCompanyId + " already exists");
 		}

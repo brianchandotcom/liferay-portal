@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
-import {TAGS_OBJECT_ERC} from '../../setup/wem-site/constants';
+import {LEMON_OBJECT_ERC} from '../../setup/wem-site/constants';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -32,11 +32,11 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	wemSite,
 }) => {
 
-	// Get the id of the tags object from the site initializer
+	// Get the id of Lemon object from the site initializer
 
 	const {id: objectId} =
 		await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
-			TAGS_OBJECT_ERC
+			LEMON_OBJECT_ERC
 		);
 
 	// Create a Form Container with a Tags fragment and Submit fragment

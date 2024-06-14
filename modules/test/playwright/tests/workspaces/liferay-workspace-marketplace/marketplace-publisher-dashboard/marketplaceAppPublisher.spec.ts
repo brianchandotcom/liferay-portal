@@ -1,10 +1,11 @@
 import {expect, mergeTests} from '@playwright/test';
+
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
-import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
-import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {getRandomInt} from '../../../../utils/getRandomInt';
-import {products} from '../utils/constants';
+import {marketplacePagesTest} from '../fixtures/marketplacePages';
+import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
 import {PublishProductPayload} from '../types';
+import {products} from '../utils/constants';
 
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com

@@ -237,7 +237,7 @@ public class CPSpecificationOptionDisplayContext
 			cpRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/cp_specification_options" +
-			"/add_cp_specification_option_list_type_definition"
+				"/add_cp_specification_option_list_type_definition"
 		).setCMD(
 			actionCommand
 		).setParameter(

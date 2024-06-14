@@ -44,6 +44,7 @@ public class CPSpecificationOptionServiceHttp {
 	public static com.liferay.commerce.product.model.CPSpecificationOption
 			addCPSpecificationOption(
 				HttpPrincipal httpPrincipal, long cpOptionCategoryId,
+				long listTypeDefinitionId,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				boolean facetable, String key, double priority,
@@ -57,8 +58,8 @@ public class CPSpecificationOptionServiceHttp {
 				_addCPSpecificationOptionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpOptionCategoryId, titleMap, descriptionMap,
-				facetable, key, priority, serviceContext);
+				methodKey, cpOptionCategoryId, listTypeDefinitionId, titleMap,
+				descriptionMap, facetable, key, priority, serviceContext);
 
 			Object returnObj = null;
 
@@ -305,7 +306,7 @@ public class CPSpecificationOptionServiceHttp {
 	public static com.liferay.commerce.product.model.CPSpecificationOption
 			updateCPSpecificationOption(
 				HttpPrincipal httpPrincipal, long cpSpecificationOptionId,
-				long cpOptionCategoryId,
+				long cpOptionCategoryId, long listTypeDefinitionId,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				boolean facetable, String key, double priority,
@@ -320,8 +321,8 @@ public class CPSpecificationOptionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpSpecificationOptionId, cpOptionCategoryId,
-				titleMap, descriptionMap, facetable, key, priority,
-				serviceContext);
+				listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+				priority, serviceContext);
 
 			Object returnObj = null;
 
@@ -357,8 +358,8 @@ public class CPSpecificationOptionServiceHttp {
 
 	private static final Class<?>[] _addCPSpecificationOptionParameterTypes0 =
 		new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
-			String.class, double.class,
+			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			boolean.class, String.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -376,8 +377,8 @@ public class CPSpecificationOptionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCPSpecificationOptionParameterTypes6 = new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			boolean.class, String.class, double.class,
+			long.class, long.class, long.class, java.util.Map.class,
+			java.util.Map.class, boolean.class, String.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

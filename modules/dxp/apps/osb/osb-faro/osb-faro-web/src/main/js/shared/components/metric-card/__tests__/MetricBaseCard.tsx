@@ -8,7 +8,8 @@ import {
 	CompositeMetric,
 	Metric,
 	SessionDurationMetric,
-	SessionsPerVisitorMetric
+	SessionsPerVisitorMetric,
+	VisitorsMetric
 } from '../metrics';
 import {fireEvent, render} from '@testing-library/react';
 import {getSiteMetricsChartData} from 'shared/components/metric-card/util';
@@ -113,7 +114,7 @@ const WrapperComponent = ({
 		<MockedProvider
 			mocks={[
 				mockSitesTabsReq({rangeKey}),
-				mockSitesMetricReq('visitorsMetric', {rangeKey}),
+				mockSitesMetricReq(VisitorsMetric.name, {rangeKey}),
 				mockPreferenceReq(retentionPeriodTimestamp)
 			]}
 		>

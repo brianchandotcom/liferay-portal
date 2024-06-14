@@ -256,6 +256,19 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public void putProperty(
+		String key, String propertyName, String propertyValue) {
+
+		synchronized (_buildDatabaseFile) {
+			Properties properties = getProperties(key);
+
+			properties.setProperty(propertyName, propertyValue);
+
+			putProperties(key, properties);
+		}
+	}
+
+	@Override
 	public void putPullRequest(String key, PullRequest pullRequest) {
 		if (!JenkinsResultsParserUtil.isCINode()) {
 			return;

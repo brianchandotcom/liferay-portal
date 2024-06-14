@@ -292,12 +292,8 @@ public class BatchBuild extends BaseParentBuild {
 	public void saveBuildURLInBuildDatabase() {
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(this);
 
-		Properties properties = buildDatabase.getProperties(
-			BUILD_URLS_PROPERTIES_KEY);
-
-		properties.put(getBatchName(), getBuildURL());
-
-		buildDatabase.putProperties(BUILD_URLS_PROPERTIES_KEY, properties);
+		buildDatabase.putProperty(
+			BUILD_URLS_PROPERTIES_KEY, getBatchName(), getBuildURL());
 	}
 
 	protected BatchBuild(String url) {

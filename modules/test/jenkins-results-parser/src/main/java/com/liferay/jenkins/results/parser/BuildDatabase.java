@@ -60,6 +60,9 @@ public interface BuildDatabase {
 
 	public void putProperties(String key, Properties properties);
 
+	public void putProperty(
+		String key, String propertyName, String propertyValue);
+
 	public void putPullRequest(String key, PullRequest pullRequest);
 
 	public void putWorkspace(String key, Workspace workspace);

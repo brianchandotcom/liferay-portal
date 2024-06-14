@@ -52,9 +52,17 @@ test.describe('Can Publish and Manage Solutions', () => {
 				user.id
 			);
 
+<<<<<<< HEAD
 			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 				accountId: account.id,
 			});
+=======
+		await apiHelpers.headlessAdminUser.assignUserToAccountRole(
+			account.id,
+			accountSupplierRole[0].id,
+			user.id
+		);
+>>>>>>> 339768d9a67a5 (LPD-28116 - SF)
 
 			await publisherSolutionPage.goto(
 				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`

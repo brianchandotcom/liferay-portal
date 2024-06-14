@@ -910,8 +910,6 @@ definition {
 
 		CommerceAcceleratorsInitializer.viewDisabledAddToCartButton(productName = "ABS Sensor");
 
-		CommerceAcceleratorsInitializer.viewAllAccountsFromAccountSelector();
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No accounts were found.");

@@ -195,7 +195,7 @@ definition {
 
 			CommerceNavigator.gotoMiniCart();
 
-			var productPrice = selenium.getText("//p[@class='item-sku' and contains(.,'Simple Product')]/../../../..//span[@class='price-value']");
+			var productPrice = selenium.getText("//p[@class='item-sku']/../../../..//span[@class='price-value']");
 
 			var match = StringUtil.matches(${productPrice}, "₹\s\d{1,2},\d\d,\d\d,\d\d0.00");
 

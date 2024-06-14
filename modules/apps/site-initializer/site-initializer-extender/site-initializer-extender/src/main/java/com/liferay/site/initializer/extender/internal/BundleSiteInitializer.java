@@ -4897,394 +4897,397 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new SiteNavigationMenuItemSettingsBuilder();
 		Map<String, String> stringUtilReplaceValues = new HashMap<>();
 
-		R addAccountGroupAssignments = new R(
+		R addAccountGroupAssignmentsR = new R(
 			"addAccountGroupAssignments",
 			() -> _addAccountGroupAssignments(serviceContext));
-		R addAccountGroups = new R(
+		R addAccountGroupsR = new R(
 			"addAccountGroups", () -> _addAccountGroups(serviceContext));
-		R addAccounts = new R(
+		R addAccountsR = new R(
 			"addAccounts", () -> _addAccounts(serviceContext));
-		R addAccountsOrganizations = new R(
+		R addAccountsOrganizationsR = new R(
 			"addAccountsOrganizations",
 			() -> _addAccountsOrganizations(serviceContext));
-		R addAssetListEntries = new R(
+		R addAssetListEntriesR = new R(
 			"addAssetListEntries",
 			() -> _addAssetListEntries(
 				serviceContext, stringUtilReplaceValues));
-		R addCPDefinitions = new R(
+		R addCPDefinitionsR = new R(
 			"addCPDefinitions",
 			() -> _addCPDefinitions(serviceContext, stringUtilReplaceValues));
-		R addExpandoValues = new R(
+		R addExpandoValuesR = new R(
 			"addExpandoValues",
 			() -> _addExpandoValues(serviceContext, stringUtilReplaceValues));
-		R addFragmentEntries = new R(
+		R addFragmentEntriesR = new R(
 			"addFragmentEntries",
 			() -> _addFragmentEntries(serviceContext, stringUtilReplaceValues));
-		R addKeywords = new R(
+		R addKeywordsR = new R(
 			"addKeywords",
 			() -> _addKeywords(serviceContext, stringUtilReplaceValues));
-		R addLayoutPageTemplates = new R(
+		R addLayoutPageTemplatesR = new R(
 			"addLayoutPageTemplates",
 			() -> _addLayoutPageTemplates(
 				serviceContext, stringUtilReplaceValues));
-		R addLayoutUtilityPageEntries = new R(
+		R addLayoutUtilityPageEntriesR = new R(
 			"addLayoutUtilityPageEntries",
 			() -> _addLayoutUtilityPageEntries(
 				serviceContext, stringUtilReplaceValues));
-		R addObjectDefinitions = new R(
+		R addObjectDefinitionsR = new R(
 			"addObjectDefinitions",
 			() -> _addObjectDefinitions(
 				accountEntryRestrictedObjectDefinitions, objectDefinitionIds,
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateAccountEntryRestrictions = new R(
+		R addOrUpdateAccountEntryRestrictionsR = new R(
 			"addOrUpdateAccountEntryRestrictions",
 			() -> _addOrUpdateAccountEntryRestrictions(
 				accountEntryRestrictedObjectDefinitions, serviceContext));
-		R addOrUpdateAssetLinkEntries = new R(
+		R addOrUpdateAssetLinkEntriesR = new R(
 			"addOrUpdateAssetLinkEntries",
 			() -> _addOrUpdateAssetLinkEntries(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateBlogPostings = new R(
+		R addOrUpdateBlogPostingsR = new R(
 			"addOrUpdateBlogPostings",
 			() -> _addOrUpdateBlogPostings(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateClientExtensionEntries = new R(
+		R addOrUpdateClientExtensionEntriesR = new R(
 			"addOrUpdateClientExtensionEntries",
 			() -> _addOrUpdateClientExtensionEntries(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateDataDefinitions = new R(
+		R addOrUpdateDataDefinitionsR = new R(
 			"addOrUpdateDataDefinitions",
 			() -> _addOrUpdateDataDefinitions(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateDDMStructures = new R(
+		R addOrUpdateDDMStructuresR = new R(
 			"addOrUpdateDDMStructures",
 			() -> _addOrUpdateDDMStructures(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateDDMTemplates = new R(
+		R addOrUpdateDDMTemplatesR = new R(
 			"addOrUpdateDDMTemplates",
 			() -> _addOrUpdateDDMTemplates(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateDepotEntries = new R(
+		R addOrUpdateDepotEntriesR = new R(
 			"addOrUpdateDepotEntries",
 			() -> _addOrUpdateDepotEntries(serviceContext));
-		R addOrUpdateDocuments = new R(
+		R addOrUpdateDocumentsR = new R(
 			"addOrUpdateDocuments",
 			() -> _addOrUpdateDocuments(
 				serviceContext, siteNavigationMenuItemSettingsBuilder,
 				stringUtilReplaceValues));
-		R addOrUpdateExpandoColumns = new R(
+		R addOrUpdateExpandoColumnsR = new R(
 			"addOrUpdateExpandoColumns",
 			() -> _addOrUpdateExpandoColumns(serviceContext));
-		R addOrUpdateJournalArticles = new R(
+		R addOrUpdateJournalArticlesR = new R(
 			"addOrUpdateJournalArticles",
 			() -> _addOrUpdateJournalArticles(
 				serviceContext, siteNavigationMenuItemSettingsBuilder,
 				stringUtilReplaceValues));
-		R addOrUpdateKnowledgeBaseArticles = new R(
+		R addOrUpdateKnowledgeBaseArticlesR = new R(
 			"addOrUpdateKnowledgeBaseArticles",
 			() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
-		R addOrUpdateLayouts = new R(
+		R addOrUpdateLayoutsR = new R(
 			"addOrUpdateLayouts",
 			() -> _addOrUpdateLayouts(
 				layoutsMap, serviceContext, stringUtilReplaceValues));
-		R addOrUpdateLayoutsContent = new R(
+		R addOrUpdateLayoutsContentR = new R(
 			"addOrUpdateLayoutsContent",
 			() -> _addOrUpdateLayoutsContent(
 				layoutsMap, serviceContext,
 				siteNavigationMenuItemSettingsBuilder.build(),
 				stringUtilReplaceValues));
-		R addOrUpdateListTypeDefinitions = new R(
+		R addOrUpdateListTypeDefinitionsR = new R(
 			"addOrUpdateListTypeDefinitions",
 			() -> _addOrUpdateListTypeDefinitions(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateNotificationTemplates = new R(
+		R addOrUpdateNotificationTemplatesR = new R(
 			"addOrUpdateNotificationTemplates",
 			() -> _addOrUpdateNotificationTemplates(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateObjectActions = new R(
+		R addOrUpdateObjectActionsR = new R(
 			"addOrUpdateObjectActions",
 			() -> _addOrUpdateObjectActions(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateObjectEntries = new R(
+		R addOrUpdateObjectEntriesR = new R(
 			"addOrUpdateObjectEntries",
 			() -> _addOrUpdateObjectEntries(
 				serviceContext, siteNavigationMenuItemSettingsBuilder,
 				stringUtilReplaceValues));
-		R addOrUpdateObjectFields = new R(
+		R addOrUpdateObjectFieldsR = new R(
 			"addOrUpdateObjectFields",
 			() -> _addOrUpdateObjectFields(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateObjectRelationships = new R(
+		R addOrUpdateObjectRelationshipsR = new R(
 			"addOrUpdateObjectRelationships",
 			() -> _addOrUpdateObjectRelationships(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateOrganizations = new R(
+		R addOrUpdateOrganizationsR = new R(
 			"addOrUpdateOrganizations",
 			() -> _addOrUpdateOrganizations(serviceContext));
-		R addOrUpdateResourcePermissions = new R(
+		R addOrUpdateResourcePermissionsR = new R(
 			"addOrUpdateResourcePermissions",
 			() -> _addOrUpdateResourcePermissions(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateRoles = new R(
+		R addOrUpdateRolesR = new R(
 			"addOrUpdateRoles",
 			() -> _addOrUpdateRoles(serviceContext, stringUtilReplaceValues));
-		R addOrUpdateSAPEntries = new R(
+		R addOrUpdateSAPEntriesR = new R(
 			"addOrUpdateSAPEntries",
 			() -> _addOrUpdateSAPEntries(serviceContext));
-		R addOrUpdateSegmentsEntries = new R(
+		R addOrUpdateSegmentsEntriesR = new R(
 			"addOrUpdateSegmentsEntries",
 			() -> _addOrUpdateSegmentsEntries(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateSXPBlueprint = new R(
+		R addOrUpdateSXPBlueprintR = new R(
 			"addOrUpdateSXPBlueprint",
 			() -> _addOrUpdateSXPBlueprint(
 				serviceContext, stringUtilReplaceValues));
-		R addOrUpdateTaxonomyVocabularies = new R(
+		R addOrUpdateTaxonomyVocabulariesR = new R(
 			"addOrUpdateTaxonomyVocabularies",
 			() -> _addOrUpdateTaxonomyVocabularies(
 				serviceContext, siteNavigationMenuItemSettingsBuilder,
 				stringUtilReplaceValues));
-		R addOrUpdateUserGroups = new R(
+		R addOrUpdateUserGroupsR = new R(
 			"addOrUpdateUserGroups",
 			() -> _addOrUpdateUserGroups(serviceContext));
-		R addPortletSettings = new R(
+		R addPortletSettingsR = new R(
 			"addPortletSettings", () -> _addPortletSettings(serviceContext));
-		R addRolesAssignments = new R(
+		R addRolesAssignmentsR = new R(
 			"addRolesAssignments", () -> _addRolesAssignments(serviceContext));
-		R addSegmentsExperiences = new R(
+		R addSegmentsExperiencesR = new R(
 			"addSegmentsExperiences",
 			() -> _addSegmentsExperiences(
 				serviceContext, stringUtilReplaceValues));
-		R addSiteConfiguration = new R(
+		R addSiteConfigurationR = new R(
 			"addSiteConfiguration",
 			() -> _addSiteConfiguration(serviceContext));
-		R addSiteSettings = new R(
+		R addSiteSettingsR = new R(
 			"addSiteSettings", () -> _addSiteSettings(serviceContext));
-		R addStyleBookEntries = new R(
+		R addStyleBookEntriesR = new R(
 			"addStyleBookEntries", () -> _addStyleBookEntries(serviceContext));
-		R addUserRoles = new R(
+		R addUserRolesR = new R(
 			"addUserRoles", () -> _addUserRoles(serviceContext));
-		R addUserAccounts = new R(
+		R addUserAccountsR = new R(
 			"addUserAccounts",
 			() -> _addUserAccounts(serviceContext, stringUtilReplaceValues));
-		R addWorkflowDefinitions = new R(
+		R addWorkflowDefinitionsR = new R(
 			"addWorkflowDefinitions",
 			() -> _addWorkflowDefinitions(
 				serviceContext, stringUtilReplaceValues));
-		R publishObjectDefinitions = new R(
+		R publishObjectDefinitionsR = new R(
 			"publishObjectDefinitions",
 			() -> _publishObjectDefinitions(
 				objectDefinitionIds, serviceContext));
-		R setPLOEntries = new R(
+		R setPLOEntriesR = new R(
 			"setPLOEntries", () -> _setPLOEntries(serviceContext));
-		R updateLayoutSets = new R(
+		R updateLayoutSetsR = new R(
 			"updateLayoutSets",
 			() -> _updateLayoutSets(serviceContext, stringUtilReplaceValues));
 
 		return HashMapBuilder.<R, List<R>>put(
-			addAccountGroupAssignments,
-			_dependsOn(addAccountGroups, addAccounts)
+			addAccountGroupAssignmentsR,
+			_dependsOn(addAccountGroupsR, addAccountsR)
 		).put(
-			addAccountGroups, _dependsOn()
+			addAccountGroupsR, _dependsOn()
 		).put(
-			addAccounts, _dependsOn(addOrUpdateExpandoColumns)
+			addAccountsOrganizationsR,
+			_dependsOn(addAccountsR, addOrUpdateOrganizationsR)
 		).put(
-			addAccountsOrganizations,
-			_dependsOn(addAccounts, addOrUpdateOrganizations)
+			addAccountsR, _dependsOn(addOrUpdateExpandoColumnsR)
 		).put(
-			addAssetListEntries,
+			addAssetListEntriesR,
 			_dependsOn(
-				addObjectDefinitions, addOrUpdateDDMStructures,
-				publishObjectDefinitions)
+				addObjectDefinitionsR, addOrUpdateDDMStructuresR,
+				publishObjectDefinitionsR)
 		).put(
-			addCPDefinitions,
+			addCPDefinitionsR,
 			_dependsOn(
-				addObjectDefinitions, addOrUpdateDocuments,
-				addOrUpdateExpandoColumns, addOrUpdateLayouts,
-				addOrUpdateObjectEntries, publishObjectDefinitions)
+				addObjectDefinitionsR, addOrUpdateDocumentsR,
+				addOrUpdateExpandoColumnsR, addOrUpdateLayoutsR,
+				addOrUpdateObjectEntriesR, publishObjectDefinitionsR)
 		).put(
-			addExpandoValues,
+			addExpandoValuesR,
 			_dependsOn(
-				addAccounts, addCPDefinitions, addOrUpdateBlogPostings,
-				addOrUpdateDocuments, addOrUpdateExpandoColumns,
-				addOrUpdateJournalArticles, addOrUpdateKnowledgeBaseArticles,
-				addOrUpdateLayouts, addOrUpdateLayoutsContent,
-				addOrUpdateOrganizations, addOrUpdateRoles,
-				addOrUpdateSegmentsEntries, addOrUpdateUserGroups,
-				addUserAccounts)
+				addAccountsR, addCPDefinitionsR, addOrUpdateBlogPostingsR,
+				addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
+				addOrUpdateJournalArticlesR, addOrUpdateKnowledgeBaseArticlesR,
+				addOrUpdateLayoutsR, addOrUpdateLayoutsContentR,
+				addOrUpdateOrganizationsR, addOrUpdateRolesR,
+				addOrUpdateSegmentsEntriesR, addOrUpdateUserGroupsR,
+				addUserAccountsR)
 		).put(
-			addFragmentEntries, _dependsOn(addOrUpdateDocuments)
+			addFragmentEntriesR, _dependsOn(addOrUpdateDocumentsR)
 		).put(
-			addKeywords, _dependsOn(addOrUpdateDepotEntries)
+			addKeywordsR, _dependsOn(addOrUpdateDepotEntriesR)
 		).put(
-			addLayoutPageTemplates,
+			addLayoutPageTemplatesR,
 			_dependsOn(
-				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
-				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
-				addOrUpdateDocuments, addOrUpdateExpandoColumns,
-				addOrUpdateJournalArticles, addOrUpdateLayouts,
-				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
-				addOrUpdateTaxonomyVocabularies)
+				addAssetListEntriesR, addCPDefinitionsR, addObjectDefinitionsR,
+				addOrUpdateClientExtensionEntriesR, addOrUpdateDataDefinitionsR,
+				addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR,
+				addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
+				addOrUpdateJournalArticlesR, addOrUpdateLayoutsR,
+				addOrUpdateObjectEntriesR, addOrUpdateSXPBlueprintR,
+				addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addLayoutUtilityPageEntries,
+			addLayoutUtilityPageEntriesR,
 			_dependsOn(
-				addAssetListEntries, addCPDefinitions, addObjectDefinitions,
-				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
-				addOrUpdateDocuments, addOrUpdateExpandoColumns,
-				addOrUpdateJournalArticles, addOrUpdateLayouts,
-				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
-				addOrUpdateTaxonomyVocabularies)
+				addAssetListEntriesR, addCPDefinitionsR, addObjectDefinitionsR,
+				addOrUpdateClientExtensionEntriesR, addOrUpdateDataDefinitionsR,
+				addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR,
+				addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
+				addOrUpdateJournalArticlesR, addOrUpdateLayoutsR,
+				addOrUpdateObjectEntriesR, addOrUpdateSXPBlueprintR,
+				addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addObjectDefinitions,
-			_dependsOn(addOrUpdateListTypeDefinitions, addUserAccounts)
+			addObjectDefinitionsR,
+			_dependsOn(addOrUpdateListTypeDefinitionsR, addUserAccountsR)
 		).put(
-			addOrUpdateAccountEntryRestrictions,
+			addOrUpdateAccountEntryRestrictionsR,
 			_dependsOn(
-				addObjectDefinitions, addOrUpdateObjectFields,
-				addOrUpdateObjectRelationships, publishObjectDefinitions)
+				addObjectDefinitionsR, addOrUpdateObjectFieldsR,
+				addOrUpdateObjectRelationshipsR, publishObjectDefinitionsR)
 		).put(
-			addOrUpdateAssetLinkEntries,
-			_dependsOn(addOrUpdateBlogPostings, addOrUpdateDDMStructures)
+			addOrUpdateAssetLinkEntriesR,
+			_dependsOn(addOrUpdateBlogPostingsR, addOrUpdateDDMStructuresR)
 		).put(
-			addOrUpdateBlogPostings,
+			addOrUpdateBlogPostingsR,
 			_dependsOn(
-				addKeywords, addOrUpdateDocuments, addOrUpdateExpandoColumns,
-				addOrUpdateTaxonomyVocabularies)
+				addKeywordsR, addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
+				addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addOrUpdateClientExtensionEntries, _dependsOn(addOrUpdateDocuments)
+			addOrUpdateClientExtensionEntriesR,
+			_dependsOn(addOrUpdateDocumentsR)
 		).put(
-			addOrUpdateDataDefinitions, _dependsOn()
+			addOrUpdateDataDefinitionsR, _dependsOn()
 		).put(
-			addOrUpdateDDMStructures, _dependsOn()
+			addOrUpdateDDMStructuresR, _dependsOn()
 		).put(
-			addOrUpdateDDMTemplates,
+			addOrUpdateDDMTemplatesR,
 			_dependsOn(
-				addObjectDefinitions, addOrUpdateDDMStructures,
-				publishObjectDefinitions)
+				addObjectDefinitionsR, addOrUpdateDDMStructuresR,
+				publishObjectDefinitionsR)
 		).put(
-			addOrUpdateDepotEntries, _dependsOn()
+			addOrUpdateDepotEntriesR, _dependsOn()
 		).put(
-			addOrUpdateDocuments,
+			addOrUpdateDocumentsR,
 			_dependsOn(
-				addOrUpdateExpandoColumns, addOrUpdateTaxonomyVocabularies)
+				addOrUpdateExpandoColumnsR, addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addOrUpdateExpandoColumns, _dependsOn()
+			addOrUpdateExpandoColumnsR, _dependsOn()
 		).put(
-			addOrUpdateJournalArticles,
-			_dependsOn(addOrUpdateDDMStructures, addOrUpdateDDMTemplates)
+			addOrUpdateJournalArticlesR,
+			_dependsOn(addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR)
 		).put(
-			addOrUpdateKnowledgeBaseArticles,
-			_dependsOn(addOrUpdateExpandoColumns)
+			addOrUpdateKnowledgeBaseArticlesR,
+			_dependsOn(addOrUpdateExpandoColumnsR)
 		).put(
-			addOrUpdateLayouts, _dependsOn(addOrUpdateRoles)
-		).put(
-			addOrUpdateLayoutsContent,
+			addOrUpdateLayoutsContentR,
 			_dependsOn(
-				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
-				addLayoutUtilityPageEntries, addObjectDefinitions,
-				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
-				addOrUpdateDocuments, addOrUpdateExpandoColumns,
-				addOrUpdateJournalArticles, addOrUpdateLayouts,
-				addOrUpdateObjectEntries, addOrUpdateSXPBlueprint,
-				addOrUpdateTaxonomyVocabularies)
+				addAssetListEntriesR, addCPDefinitionsR,
+				addLayoutPageTemplatesR, addLayoutUtilityPageEntriesR,
+				addObjectDefinitionsR, addOrUpdateClientExtensionEntriesR,
+				addOrUpdateDataDefinitionsR, addOrUpdateDDMStructuresR,
+				addOrUpdateDDMTemplatesR, addOrUpdateDocumentsR,
+				addOrUpdateExpandoColumnsR, addOrUpdateJournalArticlesR,
+				addOrUpdateLayoutsR, addOrUpdateObjectEntriesR,
+				addOrUpdateSXPBlueprintR, addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addOrUpdateListTypeDefinitions, _dependsOn()
+			addOrUpdateLayoutsR, _dependsOn(addOrUpdateRolesR)
 		).put(
-			addOrUpdateNotificationTemplates,
-			_dependsOn(addObjectDefinitions, publishObjectDefinitions)
+			addOrUpdateListTypeDefinitionsR, _dependsOn()
 		).put(
-			addOrUpdateObjectActions,
+			addOrUpdateNotificationTemplatesR,
+			_dependsOn(addObjectDefinitionsR, publishObjectDefinitionsR)
+		).put(
+			addOrUpdateObjectActionsR,
 			_dependsOn(
-				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
-				addOrUpdateObjectFields, addOrUpdateObjectRelationships,
-				publishObjectDefinitions)
+				addObjectDefinitionsR, addOrUpdateAccountEntryRestrictionsR,
+				addOrUpdateObjectFieldsR, addOrUpdateObjectRelationshipsR,
+				publishObjectDefinitionsR)
 		).put(
-			addOrUpdateObjectEntries,
+			addOrUpdateObjectEntriesR,
 			_dependsOn(
-				addObjectDefinitions, addOrUpdateAccountEntryRestrictions,
-				addOrUpdateDocuments, addOrUpdateObjectFields,
-				addOrUpdateObjectRelationships, publishObjectDefinitions)
+				addObjectDefinitionsR, addOrUpdateAccountEntryRestrictionsR,
+				addOrUpdateDocumentsR, addOrUpdateObjectFieldsR,
+				addOrUpdateObjectRelationshipsR, publishObjectDefinitionsR)
 		).put(
-			addOrUpdateObjectFields,
-			_dependsOn(addObjectDefinitions, addOrUpdateObjectRelationships)
+			addOrUpdateObjectFieldsR,
+			_dependsOn(addObjectDefinitionsR, addOrUpdateObjectRelationshipsR)
 		).put(
-			addOrUpdateObjectRelationships, _dependsOn(addObjectDefinitions)
+			addOrUpdateObjectRelationshipsR, _dependsOn(addObjectDefinitionsR)
 		).put(
-			addOrUpdateOrganizations, _dependsOn(addOrUpdateExpandoColumns)
+			addOrUpdateOrganizationsR, _dependsOn(addOrUpdateExpandoColumnsR)
 		).put(
-			addOrUpdateResourcePermissions,
+			addOrUpdateResourcePermissionsR,
 			_dependsOn(
-				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
-				addLayoutUtilityPageEntries, addObjectDefinitions,
-				addOrUpdateBlogPostings, addOrUpdateClientExtensionEntries,
-				addOrUpdateDataDefinitions, addOrUpdateDDMStructures,
-				addOrUpdateDDMTemplates, addOrUpdateDocuments,
-				addOrUpdateJournalArticles, addOrUpdateLayouts,
-				addOrUpdateObjectEntries, addOrUpdateRoles,
-				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
+				addAssetListEntriesR, addCPDefinitionsR,
+				addLayoutPageTemplatesR, addLayoutUtilityPageEntriesR,
+				addObjectDefinitionsR, addOrUpdateBlogPostingsR,
+				addOrUpdateClientExtensionEntriesR, addOrUpdateDataDefinitionsR,
+				addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR,
+				addOrUpdateDocumentsR, addOrUpdateJournalArticlesR,
+				addOrUpdateLayoutsR, addOrUpdateObjectEntriesR,
+				addOrUpdateRolesR, addOrUpdateSXPBlueprintR,
+				addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addOrUpdateRoles, _dependsOn()
+			addOrUpdateRolesR, _dependsOn()
 		).put(
-			addOrUpdateSAPEntries, _dependsOn()
+			addOrUpdateSAPEntriesR, _dependsOn()
 		).put(
-			addOrUpdateSegmentsEntries,
+			addOrUpdateSegmentsEntriesR,
 			_dependsOn(
-				addKeywords, addOrUpdateExpandoColumns,
-				addOrUpdateOrganizations, addOrUpdateRoles,
-				addOrUpdateTaxonomyVocabularies, addUserAccounts)
+				addKeywordsR, addOrUpdateExpandoColumnsR,
+				addOrUpdateOrganizationsR, addOrUpdateRolesR,
+				addOrUpdateTaxonomyVocabulariesR, addUserAccountsR)
 		).put(
-			addOrUpdateSXPBlueprint, _dependsOn()
+			addOrUpdateSXPBlueprintR, _dependsOn()
 		).put(
-			addOrUpdateTaxonomyVocabularies,
-			_dependsOn(addOrUpdateDDMStructures)
+			addOrUpdateTaxonomyVocabulariesR,
+			_dependsOn(addOrUpdateDDMStructuresR)
 		).put(
-			addOrUpdateUserGroups, _dependsOn()
+			addOrUpdateUserGroupsR, _dependsOn()
 		).put(
-			addPortletSettings, _dependsOn(addOrUpdateTaxonomyVocabularies)
+			addPortletSettingsR, _dependsOn(addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addRolesAssignments,
+			addRolesAssignmentsR,
 			_dependsOn(
-				addOrUpdateOrganizations, addOrUpdateRoles,
-				addOrUpdateUserGroups, addUserAccounts)
+				addOrUpdateOrganizationsR, addOrUpdateRolesR,
+				addOrUpdateUserGroupsR, addUserAccountsR)
 		).put(
-			addSegmentsExperiences,
+			addSegmentsExperiencesR,
 			_dependsOn(
-				addAssetListEntries, addCPDefinitions, addLayoutPageTemplates,
-				addLayoutUtilityPageEntries, addObjectDefinitions,
-				addOrUpdateClientExtensionEntries, addOrUpdateDataDefinitions,
-				addOrUpdateDDMStructures, addOrUpdateDDMTemplates,
-				addOrUpdateDocuments, addOrUpdateJournalArticles,
-				addOrUpdateLayouts, addOrUpdateLayoutsContent,
-				addOrUpdateObjectEntries, addOrUpdateSegmentsEntries,
-				addOrUpdateSXPBlueprint, addOrUpdateTaxonomyVocabularies)
+				addAssetListEntriesR, addCPDefinitionsR,
+				addLayoutPageTemplatesR, addLayoutUtilityPageEntriesR,
+				addObjectDefinitionsR, addOrUpdateClientExtensionEntriesR,
+				addOrUpdateDataDefinitionsR, addOrUpdateDDMStructuresR,
+				addOrUpdateDDMTemplatesR, addOrUpdateDocumentsR,
+				addOrUpdateJournalArticlesR, addOrUpdateLayoutsR,
+				addOrUpdateLayoutsContentR, addOrUpdateObjectEntriesR,
+				addOrUpdateSegmentsEntriesR, addOrUpdateSXPBlueprintR,
+				addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addSiteConfiguration, _dependsOn()
+			addSiteConfigurationR, _dependsOn()
 		).put(
-			addSiteSettings, _dependsOn()
+			addSiteSettingsR, _dependsOn()
 		).put(
-			addStyleBookEntries, _dependsOn()
+			addStyleBookEntriesR, _dependsOn()
 		).put(
-			addUserAccounts,
+			addUserAccountsR,
 			_dependsOn(
-				addAccounts, addKeywords, addOrUpdateDocuments,
-				addOrUpdateExpandoColumns, addOrUpdateOrganizations,
-				addOrUpdateTaxonomyVocabularies)
+				addAccountsR, addKeywordsR, addOrUpdateDocumentsR,
+				addOrUpdateExpandoColumnsR, addOrUpdateOrganizationsR,
+				addOrUpdateTaxonomyVocabulariesR)
 		).put(
-			addUserRoles, _dependsOn(addOrUpdateRoles, addUserAccounts)
+			addUserRolesR, _dependsOn(addOrUpdateRolesR, addUserAccountsR)
 		).put(
-			addWorkflowDefinitions, _dependsOn(addOrUpdateRoles)
+			addWorkflowDefinitionsR, _dependsOn(addOrUpdateRolesR)
 		).put(
-			publishObjectDefinitions,
+			publishObjectDefinitionsR,
 			_dependsOn(
-				addObjectDefinitions, addOrUpdateObjectFields,
-				addOrUpdateObjectRelationships)
+				addObjectDefinitionsR, addOrUpdateObjectFieldsR,
+				addOrUpdateObjectRelationshipsR)
 		).put(
-			setPLOEntries, _dependsOn()
+			setPLOEntriesR, _dependsOn()
 		).put(
-			updateLayoutSets, _dependsOn(addOrUpdateLayouts)
+			updateLayoutSetsR, _dependsOn(addOrUpdateLayoutsR)
 		).build();
 	}
 

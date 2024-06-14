@@ -202,9 +202,12 @@ export class ApiHelpers {
 		});
 	}
 
-	async delete(url: string) {
+	async delete(url: string, headers?: any) {
 		return this.page.request.delete(url, {
-			headers: await this.getHeader(),
+			headers: {
+				...await this.getHeader(),
+				...headers
+			},
 		});
 	}
 

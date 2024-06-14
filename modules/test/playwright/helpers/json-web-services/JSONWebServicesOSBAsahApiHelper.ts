@@ -104,4 +104,11 @@ export class JSONWebServicesOSBAsahApiHelper {
 			}
 		);
 	}
+
+	async closeSessions(): Promise<any> {
+		return this.apiHelpers.delete(
+			`${asahConfig.environment.baseUrl}${this.basePath}/sessions/close`,
+			this.getHeaders()
+		);
+	}
 }

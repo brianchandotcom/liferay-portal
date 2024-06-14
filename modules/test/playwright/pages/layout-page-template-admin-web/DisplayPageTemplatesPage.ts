@@ -69,8 +69,6 @@ export class DisplayPageTemplatesPage {
 	}
 
 	async deleteAllDisplayPageTemplates() {
-		await this.goto();
-
 		await this.page
 			.getByLabel('Select All Items on the Page')
 			.setChecked(true);

@@ -285,6 +285,8 @@ test.describe('Manage object entries through page templates', () => {
 
 		// Clean up
 
+		await displayPageTemplatesPage.goto();
+
 		await displayPageTemplatesPage.deleteAllDisplayPageTemplates();
 	});
 });

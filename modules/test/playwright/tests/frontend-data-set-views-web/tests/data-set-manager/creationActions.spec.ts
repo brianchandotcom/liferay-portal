@@ -31,15 +31,29 @@ export const test = mergeTests(
 );
 
 let dataSetERC: string;
-let dataSetLabel: string;
 
-test.beforeEach(async ({dataSetManagerApiHelpers}) => {
+test.beforeEach(async ({actionsPage, dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
-	dataSetLabel = getRandomString();
+	const dataSetLabel = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
+	await test.step('Create a data set', async () => {
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: dataSetERC,
+			label: dataSetLabel,
+		});
+	});
+
+	await test.step('Navigate to the Actions tab', async () => {
+		await actionsPage.goto({
+			dataSetLabel,
+		});
+
+		await expect(actionsPage.creationActionsTab).toBeInViewport();
+	});
+
+	await test.step('Navigate to the Creation Actions tab', async () => {
+		await actionsPage.creationActionsTab.click();
+		await actionsPage.newCreationActionButton.waitFor();
 	});
 });
 
@@ -51,19 +65,6 @@ test.describe('Creation Actions in Data Set Manager', () => {
 	test('There is a message if no Creation Action has been created', async ({
 		actionsPage,
 	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.creationActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Creation Actions tab', async () => {
-			await actionsPage.creationActionsTab.click();
-			await actionsPage.newCreationActionButton.waitFor();
-		});
-
 		await test.step('Assert no Creation Actions are created', async () => {
 			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
 				'No actions were created.'
@@ -75,19 +76,6 @@ test.describe('Creation Actions in Data Set Manager', () => {
 		actionsPage,
 		page,
 	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.creationActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Creation Actions tab', async () => {
-			await actionsPage.creationActionsTab.click();
-			await actionsPage.newCreationActionButton.waitFor();
-		});
-
 		await test.step('Create a creation action', async () => {
 			await actionsPage.createCreationAction({
 				icon: 'arrow-right-full',
@@ -113,19 +101,6 @@ test.describe('Creation Actions in Data Set Manager', () => {
 		actionsPage,
 		page,
 	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.creationActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Creation Actions tab', async () => {
-			await actionsPage.creationActionsTab.click();
-			await actionsPage.newCreationActionButton.waitFor();
-		});
-
 		await test.step('Create a creation action', async () => {
 			await actionsPage.createCreationAction({
 				icon: 'arrow-right-full',
@@ -153,19 +128,6 @@ test.describe('Creation Actions in Data Set Manager', () => {
 		actionsPage,
 		page,
 	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.creationActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Creation Actions tab', async () => {
-			await actionsPage.creationActionsTab.click();
-			await actionsPage.newCreationActionButton.waitFor();
-		});
-
 		await test.step('Create a creation action', async () => {
 			await actionsPage.createCreationAction({
 				icon: 'arrow-right-full',

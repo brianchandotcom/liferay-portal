@@ -11,12 +11,12 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {fdsFragmentPageTest} from '../../tests/data-set-fragment/fixtures/fdsFragmentPageTest';
+import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 let dataSetERC: string;
 let dataSetLabel: string;
 
-export const fragmentTest = mergeTests(
+export const test = mergeTests(
 	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
@@ -28,34 +28,37 @@ export const fragmentTest = mergeTests(
 	loginTest()
 );
 
-fragmentTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
+test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
+	await test.step('Create data set', async () => {
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: dataSetERC,
+			label: dataSetLabel,
+		});
+	});
+
+	await test.step('Create table field', async () => {
+		await dataSetManagerApiHelpers.createDataSetField({
+			label_i18n: {en_US: 'Id'},
+			name: 'id',
+			r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+			type: 'string',
+		});
 	});
 });
 
-fragmentTest.afterEach(async ({dataSetManagerApiHelpers}) => {
+test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-fragmentTest.describe('Creation Actions in Data Set fragment', () => {
-	fragmentTest(
+test.describe('Creation Actions in Data Set fragment', () => {
+	test(
 		'Creation Action button does not appear if no creation action is defined',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
-			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			});
+		async ({fdsFragmentPage, layout}) => {
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -65,7 +68,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the Creation Action button is not present',
 				async () => {
 					await expect(
@@ -76,21 +79,12 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 		}
 	);
 
-	fragmentTest(
+	test(
 		'Show a simple button if only one Creation Action is defined',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			});
-
 			const actionLabel = 'Custom Creation Action';
 
-			await fragmentTest.step('Create Creation Action', async () => {
+			await test.step('Create Creation Action', async () => {
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: actionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
@@ -98,7 +92,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -108,7 +102,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the Creation Action button is present',
 				async () => {
 					await expect(
@@ -121,7 +115,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the Creation Action works',
 				async () => {
 					await fdsFragmentPage.page
@@ -139,22 +133,13 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 		}
 	);
 
-	fragmentTest(
+	test(
 		'Show the Creation Actions menu if more than one Creation Action is defined',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
-			await fragmentTest.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			});
-
 			const firstActionLabel = 'Custom Creation Action';
 			const secondActionLabel = 'Another Creation Action';
 
-			await fragmentTest.step('Create Creation Actions', async () => {
+			await test.step('Create Creation Actions', async () => {
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
 					label_i18n: {en_US: firstActionLabel},
 					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
@@ -170,7 +155,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -180,7 +165,7 @@ fragmentTest.describe('Creation Actions in Data Set fragment', () => {
 				}
 			);
 
-			const actionDropdownMenuId = await fragmentTest.step(
+			const actionDropdownMenuId = await test.step(
 				'Check that the Creation Action menu is present',
 				async () => {
 					await fdsFragmentPage.creationMenuButton

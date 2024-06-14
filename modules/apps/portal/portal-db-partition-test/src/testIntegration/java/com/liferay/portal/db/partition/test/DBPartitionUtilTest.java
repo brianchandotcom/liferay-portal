@@ -68,9 +68,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					connection, getPartitionName(companyId)));
 		}
 
-		_scheduleJob(PortalInstancePool.getDefaultCompanyId(), _JOB_NAME);
-		_scheduleJob(
-			PortalInstancePool.getDefaultCompanyId(), _JOB_NAME + "test");
+		_scheduleJob(PortalInstancePool.getDefaultCompanyId(), _JOB_NAME1);
+		_scheduleJob(PortalInstancePool.getDefaultCompanyId(), _JOB_NAME2);
 	}
 
 	@After
@@ -154,11 +153,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			insertPartitionRequiredData();
 
-			_scheduleJob(COMPANY_IDS[0], _JOB_NAME);
-
-			Assert.assertEquals(
-				_JOBS_COUNT + 1,
-				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
+			_scheduleJob(COMPANY_IDS[0], _JOB_NAME1);
 
 			String testObjectTableNamePrefix = dbInspector.normalizeName(
 				"TestObjectTable_x_");
@@ -194,9 +189,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				_getObjectNames("VIEW", companyId));
 
 			Assert.assertEquals(
-				_JOBS_COUNT + 2,
-				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
-			Assert.assertEquals(1, _getCompanyJobsCount(companyId));
+				_JOBS_COUNT + 2, _getJobsCount(defaultPartitionName));
+			Assert.assertEquals(1, _getJobsCountByCompany(companyId));
 
 			for (String fromTableName : fromTableNames) {
 				String toTableName = fromTableName;
@@ -241,21 +235,21 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				viewNames.put(companyId, _getObjectNames("VIEW", companyId));
 				tablesCount.put(companyId, _getTablesCount(companyId));
 
-				_scheduleJob(companyId, _JOB_NAME);
+				_scheduleJob(companyId, _JOB_NAME1);
 			}
 
 			Assert.assertEquals(
 				COMPANY_IDS.length + _JOBS_COUNT,
-				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
+				_getJobsCount(defaultPartitionName));
 
 			extractDBPartitions();
 
 			Assert.assertEquals(
-				_JOBS_COUNT,
-				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
+				_JOBS_COUNT, _getJobsCount(defaultPartitionName));
 
 			for (long companyId : COMPANY_IDS) {
-				Assert.assertEquals(1, _getJobsCount(companyId));
+				Assert.assertEquals(
+					1, _getJobsCount(getPartitionName(companyId)));
 			}
 
 			Assert.assertEquals(
@@ -279,12 +273,12 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				Assert.assertEquals(
 					(int)tablesCount.get(companyId),
 					_getTablesCount(companyId));
-				Assert.assertEquals(1, _getCompanyJobsCount(companyId));
+				Assert.assertEquals(1, _getJobsCountByCompany(companyId));
 			}
 
 			Assert.assertEquals(
 				COMPANY_IDS.length + _JOBS_COUNT,
-				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
+				_getJobsCount(defaultPartitionName));
 		}
 		finally {
 			deletePartitionRequiredData();
@@ -310,12 +304,12 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 				tablesCount.put(companyId, _getTablesCount(companyId));
 
-				_scheduleJob(companyId, _JOB_NAME);
+				_scheduleJob(companyId, _JOB_NAME1);
 			}
 
 			Assert.assertEquals(
 				COMPANY_IDS.length + _JOBS_COUNT,
-				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
+				_getJobsCount(defaultPartitionName));
 
 			extractDBPartitions();
 
@@ -355,7 +349,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					}
 				}
 
-				Assert.assertEquals(1, _getJobsCount(companyId));
+				Assert.assertEquals(
+					1, _getJobsCount(getPartitionName(companyId)));
 			}
 		}
 		finally {
@@ -400,12 +395,12 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		addDBPartitions();
 
 		for (long companyId : COMPANY_IDS) {
-			_scheduleJob(companyId, _JOB_NAME);
+			_scheduleJob(companyId, _JOB_NAME1);
 		}
 
 		Assert.assertEquals(
 			COMPANY_IDS.length + _JOBS_COUNT,
-			_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
+			_getJobsCount(defaultPartitionName));
 
 		removeDBPartitions();
 
@@ -433,25 +428,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 
-		Assert.assertEquals(
-			_JOBS_COUNT,
-			_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
-	}
-
-	private int _getCompanyJobsCount(long companyId) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select count(1) from ", getPartitionName(companyId),
-					".QUARTZ_JOB_DETAILS where JOB_GROUP = '", _JOB_GROUP_NAME,
-					"' and JOB_NAME like '%@", companyId, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				return resultSet.getInt(1);
-			}
-		}
-
-		throw new Exception("Table does not exist");
+		Assert.assertEquals(_JOBS_COUNT, _getJobsCount(defaultPartitionName));
 	}
 
 	private int _getCount(long companyId, String tableName) throws Exception {
@@ -488,14 +465,28 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		throw new Exception("Table does not exist");
 	}
 
-	private int _getJobsCount(long companyId) throws Exception {
-		String partitionName = getPartitionName(companyId);
-
+	private int _getJobsCount(String partitionName) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(1) from ", partitionName,
 					".QUARTZ_JOB_DETAILS where JOB_GROUP = '", _JOB_GROUP_NAME,
 					"'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		throw new Exception("Table does not exist");
+	}
+
+	private int _getJobsCountByCompany(long companyId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(1) from ", getPartitionName(companyId),
+					".QUARTZ_JOB_DETAILS where JOB_GROUP = '", _JOB_GROUP_NAME,
+					"' and JOB_NAME like '%@", companyId, "'"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -552,7 +543,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	private static final String _JOB_GROUP_NAME = "liferay/test";
 
-	private static final String _JOB_NAME = "test";
+	private static final String _JOB_NAME1 = "testjob1";
+
+	private static final String _JOB_NAME2 = "testjob2";
 
 	private static final int _JOBS_COUNT = 2;
 

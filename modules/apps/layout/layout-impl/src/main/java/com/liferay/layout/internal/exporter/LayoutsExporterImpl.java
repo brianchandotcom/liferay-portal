@@ -587,7 +587,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			{
 				setContentSubtype(
 					() -> {
-						if (layoutPageTemplateEntry.getClassTypeId() == 0) {
+						if (layoutPageTemplateEntry.getClassTypeId() < 0) {
 							return null;
 						}
 

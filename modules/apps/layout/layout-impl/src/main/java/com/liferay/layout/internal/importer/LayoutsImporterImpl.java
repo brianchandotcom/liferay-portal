@@ -2536,16 +2536,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				return 0;
 			}
 
-			Long subtypeId = contentSubtype.getSubtypeId();
-
-			if (subtypeId != null) {
-				return subtypeId;
-			}
-
 			String subtypeKey = contentSubtype.getSubtypeKey();
 
 			if (Validator.isNull(subtypeKey)) {
-				return 0;
+				return GetterUtil.getLong(contentSubtype.getSubtypeId());
 			}
 
 			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =

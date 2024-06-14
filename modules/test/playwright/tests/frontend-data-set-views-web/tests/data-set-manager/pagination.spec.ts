@@ -25,14 +25,37 @@ export const test = mergeTests(
 let dataSetERC: string;
 let dataSetLabel: string;
 
-test.beforeEach(async ({dataSetManagerApiHelpers}) => {
+test.beforeEach(async ({dataSetManagerApiHelpers, paginationPage}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
+	await test.step('Create data set', async () => {
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: dataSetERC,
+			label: dataSetLabel,
+		});
 	});
+
+	await test.step('Navigate to Pagination section', async () => {
+		await paginationPage.goto({
+			dataSetLabel,
+		});
+
+		await expect(paginationPage.header).toBeInViewport();
+	});
+
+	await test.step('Check list items per page has default values', async () => {
+		await expect(paginationPage.listOfItemsPerPageTextarea).toHaveValue(
+			'4, 8, 20, 40, 60'
+		);
+	});
+
+	await test.step('Check default items per page has a default value', async () => {
+		await expect(paginationPage.defaultItemsPerPageInput).toHaveValue(
+			'20'
+		);
+	});
+
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers}) => {
@@ -41,26 +64,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Data Set Manager Pagination', () => {
 	test('Default pagination configuration', async ({paginationPage}) => {
-		await test.step('Navigate to Pagination section', async () => {
-			await paginationPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(paginationPage.header).toBeInViewport();
-		});
-
-		await test.step('Check list items per page has default values', async () => {
-			await expect(paginationPage.listOfItemsPerPageTextarea).toHaveValue(
-				'4, 8, 20, 40, 60'
-			);
-		});
-
-		await test.step('Check default items per page has a default value', async () => {
-			await expect(paginationPage.defaultItemsPerPageInput).toHaveValue(
-				'20'
-			);
-		});
-
 		await test.step('Check default values are valid', async () => {
 			await expect(paginationPage.saveButton).toBeEnabled();
 		});
@@ -85,29 +88,9 @@ test.describe('Data Set Manager Pagination', () => {
 	});
 
 	test('Update pagination configuration', async ({paginationPage}) => {
-		await test.step('Navigate to Pagination section', async () => {
-			await paginationPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(paginationPage.header).toBeInViewport();
-		});
-
-		await test.step('Check list items per page has default values', async () => {
-			await expect(paginationPage.listOfItemsPerPageTextarea).toHaveValue(
-				'4, 8, 20, 40, 60'
-			);
-		});
-
 		await test.step('Update items per page', async () => {
 			await paginationPage.listOfItemsPerPageTextarea.clear();
 			await paginationPage.listOfItemsPerPageTextarea.fill('5, 10, 15');
-		});
-
-		await test.step('Check default items per page has a default value', async () => {
-			await expect(paginationPage.defaultItemsPerPageInput).toHaveValue(
-				'20'
-			);
 		});
 
 		await test.step('Update default items per page', async () => {
@@ -156,20 +139,6 @@ test.describe('Data Set Manager Pagination', () => {
 	});
 
 	test('Pagination configuration limits', async ({paginationPage}) => {
-		await test.step('Navigate to Pagination section', async () => {
-			await paginationPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(paginationPage.header).toBeInViewport();
-		});
-
-		await test.step('Check list items per page has default values', async () => {
-			await expect(paginationPage.listOfItemsPerPageTextarea).toHaveValue(
-				'4, 8, 20, 40, 60'
-			);
-		});
-
 		await test.step('Check list items per page cannot be empty', async () => {
 			await paginationPage.listOfItemsPerPageTextarea.clear();
 			await paginationPage.listOfItemsPerPageTextarea.blur();

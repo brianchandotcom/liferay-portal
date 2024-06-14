@@ -1,7 +1,9 @@
+import ClayLink from '@clayui/link';
 import MetricBaseCard, {
 	IGenericMetricBaseCardProps
 } from 'shared/components/metric-card/MetricBaseCard';
 import React from 'react';
+import URLConstants from 'shared/util/url-constants';
 import {
 	AssetMetricQuery,
 	AssetTabsQuery
@@ -20,6 +22,28 @@ const WebContentMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 	return (
 		<MetricBaseCard
 			{...props}
+			emptyDescription={
+				<>
+					<span className='mr-1'>
+						{Liferay.Language.get(
+							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+						)}
+					</span>
+
+					<ClayLink
+						href={URLConstants.VisitorBehaviorWebContentLink}
+						key='DOCUMENTATION'
+						target='_blank'
+					>
+						{Liferay.Language.get(
+							'learn-more-about-visitor-behavior'
+						)}
+					</ClayLink>
+				</>
+			}
+			emptyTitle={Liferay.Language.get(
+				'there-are-no-visitors-data-found'
+			)}
 			metrics={metrics}
 			queries={{
 				MetricQuery: AssetMetricQuery(NAME),

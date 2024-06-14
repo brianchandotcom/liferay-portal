@@ -323,6 +323,8 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 interface IMetricChartRendererProps extends ICommonMetricProps {}
 
 const MetricChartRenderer: React.FC<IMetricChartRendererProps> = ({
+	emptyDescription,
+	emptyTitle,
 	filters,
 	interval,
 	rangeSelectors
@@ -343,6 +345,8 @@ const MetricChartRenderer: React.FC<IMetricChartRendererProps> = ({
 		<MetricStateRenderer error={error} loading={loading}>
 			<MetricChartWrapper
 				data={data}
+				emptyDescription={emptyDescription}
+				emptyTitle={emptyTitle}
 				interval={interval}
 				metricName={metricName}
 				rangeSelectors={rangeSelectors}
@@ -358,6 +362,24 @@ interface IMetricChartWrapperProps extends Partial<IMetricChartRendererProps> {
 
 const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 	data,
+	emptyDescription = (
+		<>
+			<span className='mr-1'>
+				{Liferay.Language.get(
+					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+				)}
+			</span>
+
+			<ClayLink
+				href={URLConstants.SitesDashboardSitesActivities}
+				key='DOCUMENTATION'
+				target='_blank'
+			>
+				{Liferay.Language.get('learn-more-about-site-activity')}
+			</ClayLink>
+		</>
+	),
+	emptyTitle = Liferay.Language.get('there-is-no-data-for-site-activity'),
 	interval,
 	metricName,
 	rangeSelectors
@@ -392,28 +414,8 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 	return (
 		<div className='analytics-metrics-chart'>
 			<ComposedChartWithEmptyState
-				emptyDescription={
-					<>
-						<span className='mr-1'>
-							{Liferay.Language.get(
-								'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
-							)}
-						</span>
-
-						<ClayLink
-							href={URLConstants.SitesDashboardSitesActivities}
-							key='DOCUMENTATION'
-							target='_blank'
-						>
-							{Liferay.Language.get(
-								'learn-more-about-site-activity'
-							)}
-						</ClayLink>
-					</>
-				}
-				emptyTitle={Liferay.Language.get(
-					'there-is-no-data-for-site-activity'
-				)}
+				emptyDescription={emptyDescription}
+				emptyTitle={emptyTitle}
 				showEmptyState={!intervals.length}
 			>
 				<MetricChart

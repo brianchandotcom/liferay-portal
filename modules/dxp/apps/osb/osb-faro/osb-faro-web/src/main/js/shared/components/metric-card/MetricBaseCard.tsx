@@ -31,12 +31,16 @@ const MetricContextActions = createContext({
 } as any);
 
 export interface ICommonMetricProps {
+	emptyDescription?: React.ReactNode;
+	emptyTitle?: string;
 	filters: RawFilters;
 	interval: Interval;
 	rangeSelectors: RangeSelectors;
 }
 
 export interface IGenericMetricBaseCardProps {
+	emptyDescription?: React.ReactNode;
+	emptyTitle?: string;
 	label: string;
 	legacyDropdownRangeKey?: boolean;
 	reportContainer?: ReportContainer;
@@ -63,6 +67,8 @@ interface IMetricBaseCardProps<TChartData>
 
 function MetricBaseCard<TChartData>({
 	chartDataMapFn = getMetricsChartData,
+	emptyDescription,
+	emptyTitle,
 	label,
 	legacyDropdownRangeKey = false,
 	id,
@@ -111,6 +117,8 @@ function MetricBaseCard<TChartData>({
 				>
 					{({filters, interval, rangeSelectors}) => {
 						const sharedProps: ICommonMetricProps = {
+							emptyDescription,
+							emptyTitle,
 							filters,
 							interval,
 							rangeSelectors

@@ -71,7 +71,11 @@ enum URLConstants {
 	SitesDashboardWebContentViewsByTechnology = 'https://learn.liferay.com/analytics-cloud/latest/en/touchpoints/assets/web-content.html#views-by-technology',
 	SuppressedUsersDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/data-control-and-privacy.html',
 	TermsAndConditions = 'https://web.liferay.com/legal/doc/SSA/AC/1001810',
-	TicketPageLink = 'https://help.liferay.com/hc/requests/new'
+	TicketPageLink = 'https://help.liferay.com/hc/requests/new',
+	VisitorBehaviorBlogsLink = 'https://learn.liferay.com/w/analytics-cloud/touchpoints/assets/blogs#visitor-behavior',
+	VisitorBehaviorDocumentsAndMediaLink = 'https://learn.liferay.com/w/analytics-cloud/touchpoints/assets/documents-and-media#visitor-behavior',
+	VisitorBehaviorFormsLink = 'https://learn.liferay.com/w/analytics-cloud/touchpoints/assets/forms#visitor-behavior',
+	VisitorBehaviorWebContentLink = 'https://learn.liferay.com/w/analytics-cloud/touchpoints/assets/web-content#visitor-behavior'
 }
 
 export const ApisPath = '/api/reports';

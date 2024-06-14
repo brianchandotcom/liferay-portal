@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
-import getRandomString from '../../utils/getRandomString';
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import {liferayConfig} from '../../../../liferay.config';
+import getRandomString from '../../../../utils/getRandomString';
 import {actionsPageTest} from './fixtures/actionsPageTest';
-import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {fdsFragmentPageTest} from '../../tests/data-set-fragment/fixtures/fdsFragmentPageTest';
 
 const LINK_CREATION_ACTION_NAME = 'Link creation action';
 const MODAL_CREATION_ACTION_NAME = 'Modal creation action';

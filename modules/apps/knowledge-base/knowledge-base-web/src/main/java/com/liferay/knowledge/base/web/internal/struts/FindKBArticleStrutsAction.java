@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -131,7 +132,8 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 	}
 
 	private List<Layout> _getCandidateLayouts(
-			long plid, boolean privateLayout, KBArticle kbArticle)
+			long plid, boolean privateLayout, KBArticle kbArticle,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		List<Layout> candidateLayouts = new ArrayList<>();
@@ -151,7 +153,14 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 				group.getGroupId(), privateLayout,
 				LayoutConstants.TYPE_PORTLET));
 
-		Layout layout = _layoutLocalService.getLayout(plid);
+		PortletLayoutFinder.Result result = _portletLayoutFinder.find(
+			themeDisplay, kbArticle.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(result.getPlid());
+
+		if (layout == null) {
+			layout = _layoutLocalService.getLayout(plid);
+		}
 
 		if ((layout.getGroupId() == kbArticle.getGroupId()) &&
 			layout.isTypePortlet()) {
@@ -219,7 +228,9 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		PortletURL firstMatchPortletURL = null;
 
 		List<Layout> layouts = _getCandidateLayouts(
-			plid, privateLayout, kbArticle);
+			plid, privateLayout, kbArticle,
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
 
 		for (Layout layout : layouts) {
 			LayoutTypePortlet layoutTypePortlet =
@@ -491,5 +502,10 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"
+	)
+	private PortletLayoutFinder _portletLayoutFinder;
 
 }

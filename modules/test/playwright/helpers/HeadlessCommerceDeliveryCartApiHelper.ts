@@ -39,6 +39,15 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 		);
 	}
 
+	async patchCart(cart: TCart, id: number): Promise<TCart> {
+		const patchCart = await this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${id}`,
+			cart
+		);
+
+		return patchCart;
+	}
+
 	async postCart(cart: TCart, channelId: number): Promise<TCart> {
 		const postCart = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/carts?nestedFields=cartItems`,

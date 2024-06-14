@@ -7,17 +7,35 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {backendPageTest} from '../../fixtures/backendPageTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
-import {WEM_SITE_ERC} from './constants';
+import {
+	LEMON_BASKET_OBJECT_ERC,
+	LEMON_OBJECT_ERC,
+	WEM_SITE_ERC,
+} from './constants';
 
 export const test = mergeTests(backendPageTest);
 
-test('Teardown: Delete site with required data for Web Experience tests', async ({
+test('Teardown: Delete site and data for Web Experience tests', async ({
 	backendPage,
 }) => {
 	const apiHelpers = new ApiHelpers(backendPage);
 
-	const response =
-		await apiHelpers.headlessSite.deleteSiteByERC(WEM_SITE_ERC);
+	// Delete object definitions
 
-	await expect(response).toBeOK();
+	for (const ERC of [LEMON_OBJECT_ERC, LEMON_BASKET_OBJECT_ERC]) {
+		const {id} =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				ERC
+			);
+
+		await expect(
+			await apiHelpers.objectAdmin.deleteObjectDefinition(id)
+		).toBeOK();
+	}
+
+	// Delete site
+
+	await expect(
+		await apiHelpers.headlessSite.deleteSiteByERC(WEM_SITE_ERC)
+	).toBeOK();
 });

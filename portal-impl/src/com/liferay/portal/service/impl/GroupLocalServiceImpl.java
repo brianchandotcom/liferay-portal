@@ -156,6 +156,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -894,6 +895,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					getLocalizationMap(groupKey), null, type, true,
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
 					site, true, null);
+
+				group.setExternalReferenceCode(
+					_groupKeyToExternalReferenceCode(groupKey));
+
+				group = groupPersistence.update(group);
 
 				if (groupKey.equals(GroupConstants.USER_PERSONAL_SITE)) {
 					initUserPersonalSitePermissions(group);
@@ -5456,6 +5462,19 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		finally {
 			groupPersistence.closeSession(session);
 		}
+	}
+
+	private String _groupKeyToExternalReferenceCode(String groupKey) {
+
+		// Web Search --> webSearch
+
+		groupKey = TextFormatter.format(groupKey, TextFormatter.F);
+
+		// webSearch --> web-search
+
+		groupKey = TextFormatter.format(groupKey, TextFormatter.K);
+
+		return "system-site-" + groupKey;
 	}
 
 	private Map<Locale, String> _normalizeNameMap(Map<Locale, String> nameMap) {

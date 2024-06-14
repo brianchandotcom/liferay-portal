@@ -5,13 +5,13 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import getRandomString from '../../../../utils/getRandomString';
+import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {fdsFragmentPageTest} from '../data-set-fragment/fixtures/fdsFragmentPageTest';
 import {paginationPageTest} from './fixtures/paginationPageTest';
 
 export const test = mergeTests(

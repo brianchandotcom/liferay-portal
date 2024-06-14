@@ -50,8 +50,15 @@ export class DisplayPageTemplatesPage {
 		}
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The display page template was created successfully.'
+		);
+
 		await this.publishButton.waitFor();
 		await this.publishButton.click();
+
 		await waitForSuccessAlert(
 			this.page,
 			'Success:The display page template was published successfully.'

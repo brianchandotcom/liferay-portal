@@ -19,7 +19,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('This is for LPS-102202. Validate if the Blank page template can not be edited and deleted.', async ({
+test('Validate if the Blank page template can not be edited and deleted.', async ({
 	masterPagesPage,
 	site,
 }) => {
@@ -36,7 +36,7 @@ test('This is for LPS-102202. Validate if the Blank page template can not be edi
 	).not.toBeVisible();
 });
 
-test('This is a test for LPS-102566, LPS-109594, LPS-119634 and LPS-104629. Add a page based on custom master.', async ({
+test('Add a page based on custom master.', async ({
 	masterPagesPage,
 	page,
 	pageEditorPage,

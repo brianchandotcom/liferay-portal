@@ -1148,7 +1148,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected List<BatchTestClassGroup> getTestBatchBatchTestClassGroups(
-		Set<TestBatch> testBatches) {
+		List<TestBatch> testBatches) {
 
 		if ((testBatches == null) || testBatches.isEmpty()) {
 			return new ArrayList<>();
@@ -1319,8 +1319,8 @@ public abstract class BaseJob implements Job {
 		return batchTestClassGroups;
 	}
 
-	protected Set<TestBatch> getTestBatches() {
-		return new HashSet<>();
+	protected List<TestBatch> getTestBatches() {
+		return new ArrayList<>();
 	}
 
 	protected void recordJobProperty(JobProperty jobProperty) {

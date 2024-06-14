@@ -12,6 +12,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {ANIMALS_COLLECTION_NAME} from '../../setup/wem-site/constants';
 import getRandomString from '../../utils/getRandomString';
 import getCollectionDefinition from './utils/getCollectionDefinition';
 import getCollectionItemDefinition from './utils/getCollectionItemDefinition';
@@ -52,7 +53,7 @@ test('allows adding a Collection Display with a manual collection into another C
 	// Create definition for a collection mapped to Animals collection
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		'Animals',
+		ANIMALS_COLLECTION_NAME,
 		wemSite.friendlyUrlPath
 	);
 
@@ -142,10 +143,8 @@ test('checks Content Flags, Content Ratings and Content Display are compatible w
 
 	// Create definition for a collection mapped to Animals collection with Content Flags, Content Ratings and Display Content fragments.
 
-	const collectionName = 'Animals';
-
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		collectionName,
+		ANIMALS_COLLECTION_NAME,
 		wemSite.friendlyUrlPath
 	);
 
@@ -253,10 +252,8 @@ test('modifies inline text on all collection items', async ({
 
 	// Create definition for a collection mapped to Animals collection
 
-	const collectionName = 'Animals';
-
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		collectionName,
+		ANIMALS_COLLECTION_NAME,
 		wemSite.friendlyUrlPath
 	);
 
@@ -366,7 +363,7 @@ test('checks the different styles for the Display Collection', async ({
 	// Create several definitions with different Style Display
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		'Animals',
+		ANIMALS_COLLECTION_NAME,
 		wemSite.friendlyUrlPath
 	);
 
@@ -467,7 +464,7 @@ test('checks that fragment ids used within a display collection are not repeated
 	};
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
-		'Animals',
+		ANIMALS_COLLECTION_NAME,
 		wemSite.friendlyUrlPath
 	);
 

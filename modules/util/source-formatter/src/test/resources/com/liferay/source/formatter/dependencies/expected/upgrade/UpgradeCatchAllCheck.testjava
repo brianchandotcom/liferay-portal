@@ -526,6 +526,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CaptchaUtil.serveImage(PortalUtil.getHttpServletRequest(resourceRequest), PortalUtil.getHttpServletResponse(resourceResponse));
 	}
 
+	public void method(String searchEngineId, long companyId, Collection<Document> documents, boolean commitImmediately) {
+		IndexWriterHelperUtil.updateDocument(companyId, documents);
+		IndexWriterHelperUtil.updateDocument("test123", 123, null, null);
+	}
+
 	public void method(
 		String className, long classPK, Locale locale,
 		ThemeDisplay themeDisplay) {

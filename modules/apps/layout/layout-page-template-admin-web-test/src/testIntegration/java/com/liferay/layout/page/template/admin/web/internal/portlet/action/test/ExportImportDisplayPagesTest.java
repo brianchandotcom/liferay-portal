@@ -29,6 +29,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
@@ -48,8 +49,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -119,7 +122,8 @@ public class ExportImportDisplayPagesTest {
 
 		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
 
-		_assertExportImportDisplayPage(classNameId, classTypeId, classTypeId);
+		_assertExportImportDisplayPage(
+			classNameId, classTypeId, null, classTypeId);
 	}
 
 	@Test
@@ -154,12 +158,40 @@ public class ExportImportDisplayPagesTest {
 			_serviceContext2);
 
 		_assertExportImportDisplayPage(
-			classNameId, ddmStructure1.getStructureId(),
+			classNameId, ddmStructure1.getStructureId(), null,
 			ddmStructure2.getStructureId());
 	}
 
+	@Test
+	public void testExportImportDisplayPageWithSiteTiedVariationMissingInTargetSite()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			"com.liferay.journal.model.JournalArticle");
+
+		Locale locale = _portal.getSiteDefaultLocale(_group1);
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"name", new Locale[] {locale}, locale);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
+			TestPropsValues.getUserId(), _group1.getGroupId(), 0L, classNameId,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(locale), null, ddmForm,
+			_ddm.getDefaultDDMFormLayout(ddmForm),
+			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			_serviceContext1);
+
+		_assertExportImportDisplayPage(
+			classNameId, ddmStructure.getStructureId(),
+			"x-could-not-be-imported-because-its-content-type-or-subtype-is-" +
+				"missing",
+			0);
+	}
+
 	private void _assertExportImportDisplayPage(
-			long classNameId, long classTypeId, long expectedClassTypeId)
+			long classNameId, long classTypeId, String errorMessageKey,
+			long expectedClassTypeId)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
@@ -226,6 +258,21 @@ public class ExportImportDisplayPagesTest {
 
 		LayoutsImporterResultEntry layoutPageTemplateImportEntry =
 			layoutsImporterResultEntries.get(0);
+
+		if (Validator.isNotNull(errorMessageKey)) {
+			Assert.assertEquals(
+				LayoutsImporterResultEntry.Status.INVALID,
+				layoutPageTemplateImportEntry.getStatus());
+
+			Assert.assertEquals(
+				_language.format(
+					LocaleUtil.getMostRelevantLocale(), errorMessageKey,
+					"display-page-templates/display-page-template-one" +
+						"/display-page-template.json"),
+				layoutPageTemplateImportEntry.getErrorMessage());
+
+			return;
+		}
 
 		Assert.assertEquals(
 			LayoutsImporterResultEntry.Status.IMPORTED,
@@ -330,6 +377,9 @@ public class ExportImportDisplayPagesTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

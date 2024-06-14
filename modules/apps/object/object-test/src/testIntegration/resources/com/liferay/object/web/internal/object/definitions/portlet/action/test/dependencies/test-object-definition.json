@@ -207,15 +207,52 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "testObjectImport"
+				"en_US": "Test Object Field 3"
 			},
+			"listTypeDefinitionExternalReferenceCode": "LIST_APPLICATION_STATES",
 			"name": "testObjectField3",
 			"objectFieldSettings": [
+				{
+					"name": "defaultValue",
+					"value": "open"
+				},
+				{
+					"name": "defaultValueType",
+					"value": "inputAsValue"
+				},
 				{
 					"name": "stateFlow",
 					"value": {
 						"objectStates": [
 							{
+								"key": "approved",
+								"objectStateTransitions": [
+									{
+										"key": "underReview"
+									}
+								]
+							},
+							{
+								"key": "denied",
+								"objectStateTransitions": [
+									{
+										"key": "underReview"
+									}
+								]
+							},
+							{
+								"key": "onHold",
+								"objectStateTransitions": [
+									{
+										"key": "open"
+									},
+									{
+										"key": "underReview"
+									}
+								]
+							},
+							{
+								"key": "open",
 								"objectStateTransitions": [
 									{
 										"key": "underReview"
@@ -223,10 +260,10 @@
 									{
 										"key": "withdrawn"
 									}
-								],
-								"key": "open"
+								]
 							},
 							{
+								"key": "underReview",
 								"objectStateTransitions": [
 									{
 										"key": "approved"
@@ -235,62 +272,25 @@
 										"key": "denied"
 									},
 									{
-										"key": "withdrawn"
-									},
-									{
 										"key": "onHold"
-									}
-								],
-								"key": "underReview"
-							},
-							{
-								"objectStateTransitions": [
-									{
-										"key": "underReview"
-									}
-								],
-								"key": "approved"
-							},
-							{
-								"objectStateTransitions": [
-									{
-										"key": "underReview"
-									}
-								],
-								"key": "denied"
-							},
-							{
-								"objectStateTransitions": [
-									{
-										"key": "open"
-									}
-								],
-								"key": "withdrawn"
-							},
-							{
-								"objectStateTransitions": [
-									{
-										"key": "open"
 									},
 									{
-										"key": "underReview"
+										"key": "withdrawn"
 									}
-								],
-								"key": "onHold"
+								]
+							},
+							{
+								"key": "withdrawn",
+								"objectStateTransitions": [
+									{
+										"key": "open"
+									}
+								]
 							}
 						]
 					}
-				},
-				{
-					"name": "defaultValueType",
-					"value": "inputAsValue"
-				},
-				{
-					"name": "defaultValue",
-					"value": "open"
 				}
 			],
-			"listTypeDefinitionExternalReferenceCode": "LIST_APPLICATION_STATES",
 			"required": true,
 			"state": true,
 			"system": false,
@@ -421,7 +421,6 @@
 			]
 		}
 	],
-
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {

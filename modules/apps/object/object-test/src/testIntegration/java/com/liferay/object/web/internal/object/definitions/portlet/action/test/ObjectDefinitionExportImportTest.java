@@ -46,9 +46,8 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		// Custom object definition
 
 		testExportImport(
-			"test-object-definition.json",
-			"test-object-definition.json",
-			null, "TestObjectDefinition");
+			"test-object-definition.json", "test-object-definition.json", null,
+			"TestObjectDefinition");
 
 		// Localized object definition
 

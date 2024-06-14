@@ -18,10 +18,15 @@ ${dataFactory.toInsertSQL(ctSchemaVersionModel)}
 	_parentDLFolderId = 0
 />
 
-<#assign homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "home") />
+<#assign
+	homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "home")
+	homePageSegmentsExperienceModel = dataFactory.newSegmentsExperienceModel(homePageContentLayoutModels)
+/>
+
+${dataFactory.toInsertSQL(homePageSegmentsExperienceModel)}
 
 <@insertContentPageLayout
-	_fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
+	_fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels, homePageSegmentsExperienceModel.getSegmentsExperienceId())
 	_layoutModels = homePageContentLayoutModels
 	_templateFileName = "default-homepage-layout-definition.json"
 />

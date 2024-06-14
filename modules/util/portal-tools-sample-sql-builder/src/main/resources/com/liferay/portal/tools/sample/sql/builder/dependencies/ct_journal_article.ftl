@@ -1,5 +1,6 @@
 <#list dataFactory.newCTCollectionResourcePermissionModels(ctCollectionId, "com.liferay.journal", publicationGroupId) as ctCollectionResourcePermissionModel>
-	${dataFactory.toCTCollectionInsertSQL(ctCollectionResourcePermissionModel, ctCollectionId)}
+	${dataFactory.toInsertSQL(ctCollectionResourcePermissionModel)}
+	${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(ctCollectionId, ctCollectionResourcePermissionModel, dataFactory.ctChangeTypeAddition))}
 </#list>
 
 <#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticlePageCount) as publicationJournalArticlePageCount>

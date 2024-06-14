@@ -61,8 +61,10 @@ function updateArticleContent(contentFields) {
 	articleContent.innerHTML = '';
 
 	contentFields.forEach((field) => {
-		if (field.contentFieldValue && field.contentFieldValue.data) {
-			const contentDiv = createContentDiv(field.contentFieldValue.data);
+		const trimmedContent = field.contentFieldValue?.data?.trim();
+
+		if (trimmedContent && trimmedContent !== 'null') {
+			const contentDiv = createContentDiv(trimmedContent);
 
 			articleContent.appendChild(contentDiv);
 		}

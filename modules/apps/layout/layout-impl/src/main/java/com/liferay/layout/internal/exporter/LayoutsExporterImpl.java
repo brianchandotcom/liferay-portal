@@ -13,6 +13,9 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
+import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.MasterPageUtil;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.PageTemplateCollectionUtil;
@@ -334,6 +337,30 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		return null;
 	}
 
+	private String _getSubtypeKey(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				layoutPageTemplateEntry.getClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			return null;
+		}
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				layoutPageTemplateEntry.getGroupId(),
+				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+
+		if (infoItemFormVariation == null) {
+			return null;
+		}
+
+		return infoItemFormVariation.getExternalReferenceCode();
+	}
+
 	private void _populateDisplayPagesZipWriter(
 			LayoutPageTemplateCollection layoutPageTemplateCollection,
 			String path, ZipWriter zipWriter)
@@ -570,6 +597,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 									() ->
 										layoutPageTemplateEntry.
 											getClassTypeId());
+
+								setSubtypeKey(
+									() -> _getSubtypeKey(
+										layoutPageTemplateEntry));
 							}
 						};
 					});
@@ -589,6 +620,9 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

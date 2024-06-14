@@ -2533,13 +2533,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				displayPageTemplate.getContentSubtype();
 
 			if (contentSubtype == null) {
-				return 0;
+				return -1;
 			}
 
 			String subtypeKey = contentSubtype.getSubtypeKey();
 
 			if (Validator.isNull(subtypeKey)) {
-				return GetterUtil.getLong(contentSubtype.getSubtypeId());
+				return GetterUtil.getLong(contentSubtype.getSubtypeId(), -1);
 			}
 
 			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
@@ -2547,7 +2547,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					InfoItemFormVariationsProvider.class, className);
 
 			if (infoItemFormVariationsProvider == null) {
-				return 0;
+				return -1;
 			}
 
 			InfoItemFormVariation infoItemFormVariation =
@@ -2565,7 +2565,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				return GetterUtil.getLong(infoItemFormVariation.getKey());
 			}
 
-			return 0;
+			return -1;
 		}
 
 		private final DisplayPageTemplateEntry _displayPageTemplateEntry;

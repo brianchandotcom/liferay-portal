@@ -191,25 +191,25 @@ public class BlogsEntryLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(), serviceContext);
 
-		_blogsEntries.add(blogsEntry);
+		_blogsEntries.add(entry);
 
 		long initialCommentsCount = CommentManagerUtil.getCommentsCount(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+			BlogsEntry.class.getName(), entry.getEntryId());
 
 		CommentManagerUtil.addComment(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			BlogsEntry.class.getName(), entry.getEntryId(),
 			StringUtil.randomString(),
 			new IdentityServiceContextFunction(serviceContext));
 
 		Assert.assertEquals(
 			initialCommentsCount + 1,
 			CommentManagerUtil.getCommentsCount(
-				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+				BlogsEntry.class.getName(), entry.getEntryId()));
 	}
 
 	@Test
@@ -370,12 +370,12 @@ public class BlogsEntryLocalServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), _creatorUser.getUserId());
 
-				BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+				BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 					_creatorUser.getUserId(), RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), serviceContext);
 
 				_addMBMessage(
-					TestPropsValues.getUserId(), serviceContext, blogsEntry);
+					TestPropsValues.getUserId(), serviceContext, entry);
 
 				Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 			});
@@ -556,7 +556,7 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddOriginalImageInVisibleImageFolder() throws Exception {
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
@@ -572,7 +572,7 @@ public class BlogsEntryLocalServiceTest {
 
 		long originalImageFileEntryId =
 			BlogsEntryLocalServiceUtil.addOriginalImageFileEntry(
-				_user.getUserId(), _group.getGroupId(), blogsEntry.getEntryId(),
+				_user.getUserId(), _group.getGroupId(), entry.getEntryId(),
 				imageSelector);
 
 		FileEntry portletFileEntry =
@@ -626,28 +626,28 @@ public class BlogsEntryLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(), serviceContext);
 
-		_blogsEntries.add(blogsEntry);
+		_blogsEntries.add(entry);
 
 		CommentManagerUtil.addComment(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			BlogsEntry.class.getName(), entry.getEntryId(),
 			StringUtil.randomString(),
 			new IdentityServiceContextFunction(serviceContext));
 
 		Assert.assertTrue(
 			CommentManagerUtil.hasDiscussion(
-				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+				BlogsEntry.class.getName(), entry.getEntryId()));
 
 		CommentManagerUtil.deleteDiscussion(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+			BlogsEntry.class.getName(), entry.getEntryId());
 
 		Assert.assertFalse(
 			CommentManagerUtil.hasDiscussion(
-				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+				BlogsEntry.class.getName(), entry.getEntryId()));
 	}
 
 	@Test(expected = NoSuchEntryException.class)

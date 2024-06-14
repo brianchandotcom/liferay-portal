@@ -68,10 +68,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					connection, getPartitionName(companyId)));
 		}
 
-		_defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
-
-		_scheduleJob(_defaultCompanyId, _JOB_NAME);
-		_scheduleJob(_defaultCompanyId, _JOB_NAME + "test");
+		_scheduleJob(PortalInstancePool.getDefaultCompanyId(), _JOB_NAME);
+		_scheduleJob(
+			PortalInstancePool.getDefaultCompanyId(), _JOB_NAME + "test");
 	}
 
 	@After
@@ -158,7 +157,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			_scheduleJob(COMPANY_IDS[0], _JOB_NAME);
 
 			Assert.assertEquals(
-				_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
+				_JOBS_COUNT + 1,
+				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 
 			String testObjectTableNamePrefix = dbInspector.normalizeName(
 				"TestObjectTable_x_");
@@ -194,7 +194,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				_getObjectNames("VIEW", companyId));
 
 			Assert.assertEquals(
-				_JOBS_COUNT + 2, _getJobsCount(_defaultCompanyId));
+				_JOBS_COUNT + 2,
+				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 			Assert.assertEquals(1, _getCompanyJobsCount(companyId));
 
 			for (String fromTableName : fromTableNames) {
@@ -245,11 +246,13 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			Assert.assertEquals(
 				COMPANY_IDS.length + _JOBS_COUNT,
-				_getJobsCount(_defaultCompanyId));
+				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 
 			extractDBPartitions();
 
-			Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
+			Assert.assertEquals(
+				_JOBS_COUNT,
+				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 
 			for (long companyId : COMPANY_IDS) {
 				Assert.assertEquals(1, _getJobsCount(companyId));
@@ -281,7 +284,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			Assert.assertEquals(
 				COMPANY_IDS.length + _JOBS_COUNT,
-				_getJobsCount(_defaultCompanyId));
+				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 		}
 		finally {
 			deletePartitionRequiredData();
@@ -312,7 +315,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			Assert.assertEquals(
 				COMPANY_IDS.length + _JOBS_COUNT,
-				_getJobsCount(_defaultCompanyId));
+				_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 
 			extractDBPartitions();
 
@@ -329,7 +332,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					if (!isCopyableQuartzTable(viewName)) {
 						Assert.assertEquals(
 							viewName + " count",
-							_getCount(_defaultCompanyId, viewName),
+							_getCount(
+								PortalInstancePool.getDefaultCompanyId(),
+								viewName),
 							_getCount(companyId, viewName));
 					}
 					else if (StringUtil.equalsIgnoreCase(
@@ -399,7 +404,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 
 		Assert.assertEquals(
-			COMPANY_IDS.length + _JOBS_COUNT, _getJobsCount(_defaultCompanyId));
+			COMPANY_IDS.length + _JOBS_COUNT,
+			_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 
 		removeDBPartitions();
 
@@ -427,7 +433,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 
-		Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
+		Assert.assertEquals(
+			_JOBS_COUNT,
+			_getJobsCount(PortalInstancePool.getDefaultCompanyId()));
 	}
 
 	private int _getCompanyJobsCount(long companyId) throws Exception {
@@ -547,8 +555,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private static final String _JOB_NAME = "test";
 
 	private static final int _JOBS_COUNT = 2;
-
-	private static long _defaultCompanyId;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.scheduler.quartz.internal.QuartzSchedulerEngine"

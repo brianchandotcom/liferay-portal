@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.web.internal.BaseExportImportTestCase;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -46,8 +48,28 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		// Custom object definition
 
 		testExportImport(
-			"test-object-definition.json", "test-object-definition.json", null,
-			"TestObjectDefinition");
+			"test-object-definition.json", "test-object-definition.json",
+			"TestObjectDefinition", "TestObjectDefinition");
+
+		ObjectDefinition testObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				"TestObjectDefinition");
+
+		Status status = testObjectDefinition.getStatus();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, (int)status.getCode());
+
+		objectDefinitionResource.postObjectDefinitionPublish(
+			testObjectDefinition.getId());
+
+		testObjectDefinition = objectDefinitionResource.getObjectDefinition(
+			testObjectDefinition.getId());
+
+		status = testObjectDefinition.getStatus();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, (int)status.getCode());
 
 		// Localized object definition
 

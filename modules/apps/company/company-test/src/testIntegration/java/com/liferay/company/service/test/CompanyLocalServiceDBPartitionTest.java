@@ -360,10 +360,10 @@ public class CompanyLocalServiceDBPartitionTest
 				newCompany, name, virtualHostname, webId);
 		}
 		finally {
-			removeDBPartitions(new long[] {company.getCompanyId()});
+			companyLocalService.deleteCompany(company.getCompanyId());
 
 			if (newCompany != null) {
-				removeDBPartitions(new long[] {newCompany.getCompanyId()});
+				companyLocalService.deleteCompany(newCompany.getCompanyId());
 			}
 		}
 	}

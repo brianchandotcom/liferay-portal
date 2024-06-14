@@ -31,6 +31,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -95,7 +96,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 
 		_updateSpecification(id, specification);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
 	}
@@ -157,6 +158,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.addCPSpecificationOption(
 				_getCPOptionCategoryId(specification),
+				GetterUtil.getLong(specification.getListTypeDefinitionId()),
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
 				GetterUtil.getBoolean(specification.getFacetable()),
@@ -194,13 +196,30 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.getCPSpecificationOption(id);
 
+		Map<String, String> descriptionMap = specification.getDescription();
+
+		if ((cpSpecificationOption != null) && (descriptionMap == null)) {
+			descriptionMap = LanguageUtils.getLanguageIdMap(
+				cpSpecificationOption.getDescriptionMap());
+		}
+
+		Map<String, String> titleMap = specification.getTitle();
+
+		if ((cpSpecificationOption != null) && (titleMap == null)) {
+			titleMap = LanguageUtils.getLanguageIdMap(
+				cpSpecificationOption.getTitleMap());
+		}
+
 		return _cpSpecificationOptionService.updateCPSpecificationOption(
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			GetterUtil.getLong(
 				cpSpecificationOption.getCPOptionCategoryId(),
 				_getCPOptionCategoryId(specification)),
-			LanguageUtils.getLocalizedMap(specification.getTitle()),
-			LanguageUtils.getLocalizedMap(specification.getDescription()),
+			GetterUtil.getLong(
+				specification.getListTypeDefinitionId(),
+				cpSpecificationOption.getListTypeDefinitionId()),
+			LanguageUtils.getLocalizedMap(titleMap),
+			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.getBoolean(
 				specification.getFacetable(),
 				cpSpecificationOption.isFacetable()),
@@ -223,11 +242,28 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			_cpSpecificationOptionService.getCPSpecificationOption(
 				serviceContext.getCompanyId(), key);
 
+		Map<String, String> descriptionMap = specification.getDescription();
+
+		if ((cpSpecificationOption != null) && (descriptionMap == null)) {
+			descriptionMap = LanguageUtils.getLanguageIdMap(
+				cpSpecificationOption.getDescriptionMap());
+		}
+
+		Map<String, String> titleMap = specification.getTitle();
+
+		if ((cpSpecificationOption != null) && (titleMap == null)) {
+			titleMap = LanguageUtils.getLanguageIdMap(
+				cpSpecificationOption.getTitleMap());
+		}
+
 		return _cpSpecificationOptionService.updateCPSpecificationOption(
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			_getCPOptionCategoryId(specification),
-			LanguageUtils.getLocalizedMap(specification.getTitle()),
-			LanguageUtils.getLocalizedMap(specification.getDescription()),
+			GetterUtil.getLong(
+				specification.getListTypeDefinitionId(),
+				cpSpecificationOption.getListTypeDefinitionId()),
+			LanguageUtils.getLocalizedMap(titleMap),
+			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.getBoolean(
 				specification.getFacetable(),
 				cpSpecificationOption.isFacetable()),

@@ -63,7 +63,7 @@ const Download = () => {
 			})
 		);
 
-		return virtualItemsWithVersion.filter((item: VirtualItem) =>
+		return virtualItemsWithVersion?.filter((item: VirtualItem) =>
 			item.version.toLowerCase().includes(search)
 		);
 	}, [hasVersionSpecification, search, skus, virtualProducts]);

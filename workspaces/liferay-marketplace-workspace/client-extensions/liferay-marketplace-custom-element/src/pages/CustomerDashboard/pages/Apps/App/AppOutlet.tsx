@@ -93,7 +93,8 @@ const AppOutlet = () => {
 						data?.placedOrder.workflowStatusInfo.code ===
 							ORDER_WORKFLOW_STATUS_CODE.COMPLETED &&
 						placedOrderItems.some(
-							(item: PlacedOrderItems) => item.virtualItems.length
+							(item: PlacedOrderItems) =>
+								item.virtualItems?.length
 						),
 				},
 				{

@@ -7,9 +7,11 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 import './PackageVersionModal.scss';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import useListTypeDefinition from '../../hooks/useListTypeDefinition';
 import i18n from '../../i18n';
 import {useAppContext} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/AppManageState';
 import {TYPES} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/actionTypes';
@@ -31,11 +33,25 @@ export function PackageVersionModal({
 	const {observer, onClose} = useModal({
 		onClose: handleClose,
 	});
+	const {properties} = useMarketplaceContext();
+
+	const hasEnabledFeatureFlag = properties.featureFlags?.includes(
+		'LPD-21582'
+	);
 
 	const [checkboxVersions, setCheckboxVersions] =
 		useState<string[]>(currentVersions);
 
 	const [versionSelected, setVersionSelected] = useState('');
+
+	const {data} = useListTypeDefinition(
+		hasEnabledFeatureFlag ? 'LIFERAY-VERSIONS' : null
+	);
+
+	const newVersions = useMemo(() => {
+		return data?.listTypeEntries?.map((entrie) => entrie.name).reverse();
+	}, [data?.listTypeEntries]);
+
 	const [versions, setVersions] = useState<string[]>([]);
 
 	const handleConfirmation = (selectedVersion: string) => {
@@ -64,11 +80,15 @@ export function PackageVersionModal({
 				.concat(customFieldVersions)
 				.reverse();
 
+			if (hasEnabledFeatureFlag) {
+				return setVersions(newVersions as string[]);
+			}
+
 			setVersions(revertedVersions);
 		};
 
 		getProductVersions();
-	}, [appProductId]);
+	}, [appProductId, hasEnabledFeatureFlag, newVersions]);
 
 	return (
 		<ClayModal
@@ -116,9 +136,9 @@ export function PackageVersionModal({
 				<ClayForm className="modal-form">
 					<ClayForm.Group>
 						{versions
-							.filter((version: string) =>
+							?.filter((version: string) =>
 								version
-									.toLowerCase()
+									?.toLowerCase()
 									.match(versionSelected.toLowerCase())
 							)
 							.map((version, index) => (

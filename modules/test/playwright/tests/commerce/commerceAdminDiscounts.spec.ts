@@ -42,9 +42,7 @@ test('LPD-26243 Verify that discount rule field Cart Total Minimum Amount only a
 	await commerceAdminDiscountsPage.goto();
 
 	await expect(
-		(
-			await commerceAdminDiscountsPage.tableRow(0, discount.title, true)
-		).row
+		(await commerceAdminDiscountsPage.tableRow(0, discount.title, true)).row
 	).toBeVisible();
 
 	await (

@@ -343,16 +343,21 @@ public class CompanyLocalServiceDBPartitionTest
 			newCompany = companyLocalService.copyDBPartitionCompany(
 				company.getCompanyId(), null, name, virtualHostname, webId);
 
-			Assert.assertTrue(
-				ArrayUtil.contains(
-					_getCompanyIdsBySQL(), newCompany.getCompanyId()));
+			_assertCopyDBPartitionCompany(
+				newCompany, name, virtualHostname, webId);
 
-			Assert.assertEquals(name, newCompany.getName());
-			Assert.assertEquals(
-				virtualHostname, newCompany.getVirtualHostname());
-			Assert.assertEquals(webId, newCompany.getWebId());
+			long newCompanyId = newCompany.getCompanyId();
 
-			_virtualHostLocalService.getVirtualHost(virtualHostname);
+			companyLocalService.deleteCompany(newCompany);
+
+			newCompany = companyLocalService.copyDBPartitionCompany(
+				company.getCompanyId(), newCompanyId, name, virtualHostname,
+				webId);
+
+			Assert.assertEquals(newCompanyId, newCompany.getCompanyId());
+
+			_assertCopyDBPartitionCompany(
+				newCompany, name, virtualHostname, webId);
 		}
 		finally {
 			removeDBPartitions(new long[] {company.getCompanyId()});
@@ -569,6 +574,20 @@ public class CompanyLocalServiceDBPartitionTest
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> _resourceActionLocalService.checkResourceActions());
+	}
+
+	private void _assertCopyDBPartitionCompany(
+			Company company, String name, String virtualHostname, String webId)
+		throws Exception {
+
+		Assert.assertTrue(
+			ArrayUtil.contains(_getCompanyIdsBySQL(), company.getCompanyId()));
+
+		Assert.assertEquals(name, company.getName());
+		Assert.assertEquals(virtualHostname, company.getVirtualHostname());
+		Assert.assertEquals(webId, company.getWebId());
+
+		_virtualHostLocalService.getVirtualHost(virtualHostname);
 	}
 
 	private void _checkPartitionNonexists(long companyId) throws SQLException {

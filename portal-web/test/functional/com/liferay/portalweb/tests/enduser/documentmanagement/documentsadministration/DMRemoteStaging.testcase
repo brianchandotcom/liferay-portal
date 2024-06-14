@@ -838,6 +838,14 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Enabled");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
 			groupName = "Site Name",
@@ -899,6 +907,14 @@ definition {
 	test CanViewExternalVideoInMGAfterPublish {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Enabled");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -962,6 +978,12 @@ definition {
 		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Enabled");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -1038,6 +1060,14 @@ definition {
 		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Enabled");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",

@@ -49,7 +49,32 @@ public class JournalArticleInfoItemFormVariationsProvider
 		}
 
 		return new InfoItemFormVariation(
-			groupId, String.valueOf(ddmStructure.getStructureId()),
+			ddmStructure.getStructureKey(), groupId,
+			String.valueOf(ddmStructure.getStructureId()),
+			InfoLocalizedValue.<String>builder(
+			).defaultLocale(
+				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId())
+			).values(
+				ddmStructure.getNameMap()
+			).build());
+	}
+
+	@Override
+	public InfoItemFormVariation
+		getInfoItemFormVariationByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			groupId, _portal.getClassNameId(JournalArticle.class.getName()),
+			externalReferenceCode, true);
+
+		if (ddmStructure == null) {
+			return null;
+		}
+
+		return new InfoItemFormVariation(
+			externalReferenceCode, groupId,
+			String.valueOf(ddmStructure.getStructureId()),
 			InfoLocalizedValue.<String>builder(
 			).defaultLocale(
 				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId())
@@ -85,7 +110,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 
 			infoItemFormVariations.add(
 				new InfoItemFormVariation(
-					ddmStructure.getGroupId(),
+					ddmStructure.getStructureKey(), ddmStructure.getGroupId(),
 					String.valueOf(ddmStructure.getStructureId()),
 					InfoLocalizedValue.<String>builder(
 					).defaultLocale(

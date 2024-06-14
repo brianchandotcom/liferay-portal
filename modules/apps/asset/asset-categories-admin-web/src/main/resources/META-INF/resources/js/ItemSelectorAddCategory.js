@@ -43,7 +43,7 @@ export default function ({currentURL, namespace, redirect}) {
 	} - ${Liferay.Language.get('add-new')}`;
 
 	const initialModalFooterButtons = openerWindow.document.querySelectorAll(
-		'.liferay-modal .modal-footer .btn-group-item'
+		'.liferay-modal .modal-footer button'
 	);
 
 	initialModalFooterButtons.forEach((item) => {
@@ -51,7 +51,7 @@ export default function ({currentURL, namespace, redirect}) {
 	});
 
 	const footer = openerWindow.document.querySelector(
-		'.modal-footer .btn-group'
+		'.modal-footer .btn-group-spaced'
 	);
 
 	const addCategoryButtons = footer.querySelectorAll(

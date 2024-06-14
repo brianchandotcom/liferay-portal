@@ -1383,6 +1383,13 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
+		// Add object action to send an email notification after updating
+		// payment status
+
+		ObjectAction objectAction3 = _addNotificationObjectAction(
+			DestinationNames.COMMERCE_PAYMENT_STATUS,
+			commerceOrderObjectDefinition, "[%CURRENT_USER_EMAIL_ADDRESS%]");
+
 		// Add object action to create commerce order after updating order
 		// status to CommerceOrderConstants#ORDER_STATUS_PROCESSING
 
@@ -1505,6 +1512,15 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(
 				CommerceOrderConstants.ORDER_STATUS_OPEN,
 				commerceOrder2.getOrderStatus());
+
+			notificationQueueEntries =
+				_notificationQueueEntryLocalService.getNotificationEntries(
+					NotificationConstants.TYPE_EMAIL,
+					NotificationQueueEntryConstants.STATUS_SENT);
+
+			Assert.assertEquals(
+				notificationQueueEntries.toString(), 2,
+				notificationQueueEntries.size());
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);

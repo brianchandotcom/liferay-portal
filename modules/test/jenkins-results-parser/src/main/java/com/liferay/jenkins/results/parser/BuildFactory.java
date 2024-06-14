@@ -125,6 +125,10 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.startsWith("test-jenkins-acceptance-pullrequest")) {
+			return new JenkinsTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.startsWith("test-plugins-acceptance-pullrequest")) {
 			return new PullRequestPluginsTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);

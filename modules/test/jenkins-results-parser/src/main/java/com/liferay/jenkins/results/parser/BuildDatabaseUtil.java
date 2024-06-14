@@ -48,6 +48,10 @@ public class BuildDatabaseUtil {
 		if ((build instanceof TopLevelBuild) || (topLevelBuild == null)) {
 			File buildDir = _getBuildDir(build);
 
+			if (topLevelBuild instanceof JenkinsTopLevelBuild) {
+				buildDir = _getBuildDir(topLevelBuild);
+			}
+
 			synchronized (_buildDatabases) {
 				BuildDatabase buildDatabase = _buildDatabases.get(buildDir);
 

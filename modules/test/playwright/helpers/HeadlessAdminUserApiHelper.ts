@@ -200,6 +200,12 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async postAccountOrganization(accountId: number, organizationId: string) {
+		return this.apiHelpers.postResponse(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}/organizations/${organizationId}`
+		);
+	}
+
 	async postAccountUserAccountByEmailAddress(
 		accountId: number,
 		accountRoleIds: number[],

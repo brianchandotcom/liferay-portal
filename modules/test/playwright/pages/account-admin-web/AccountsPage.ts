@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
@@ -44,6 +44,9 @@ export class AccountsPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly accountsTableRowLink: (name: string) => Promise<Locator>;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly newButton: Locator;
+	readonly organizationAssignmentFrame: FrameLocator;
+	readonly organizationsTab: Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
 
@@ -51,6 +54,13 @@ export class AccountsPage {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.accountGroupsTab = page.getByRole('link', {
 			name: 'Account Groups',
+		});
+		this.newButton = page.getByTestId('creationMenuNewButton');
+		this.organizationAssignmentFrame = page.frameLocator(
+			'iframe[id="modalIframe"]'
+		);
+		this.organizationsTab = page.getByRole('link', {
+			name: 'Organizations',
 		});
 		this.page = page;
 		this.pageTitle = page.getByTestId('headerTitle');

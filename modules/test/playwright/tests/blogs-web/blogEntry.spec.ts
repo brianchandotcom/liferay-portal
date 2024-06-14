@@ -102,21 +102,29 @@ test('LPD-26752 Select categories for the custom friendly URL', async ({
 		title,
 	});
 
-	await expect(
-		page.getByText(
-			`/-/blogs/${friendlyUrlCategories.map(({name}) => name).join('/')}/`
-		)
-	).toBeVisible();
+	await test.step('Check input addon categories preview', async () => {
+		await expect(
+			page.getByText(
+				`/-/blogs/${friendlyUrlCategories
+					.map(({name}) => name)
+					.join('/')}/`
+			)
+		).toBeVisible();
+	});
 
-	await blogsEditBlogEntryPage.publishBlogEntry();
+	await test.step('Check categories in friendly URL', async () => {
+		await blogsEditBlogEntryPage.publishBlogEntry();
 
-	const response = await page.goto(`/web${site.friendlyUrlPath}/b/${title}`);
+		const response = await page.goto(
+			`/web${site.friendlyUrlPath}/b/${title}`
+		);
 
-	await expect(response.url()).toContain(
-		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
-			.map(({name}) => name)
-			.join('/')}/${title}`
-	);
+		await expect(response.url()).toContain(
+			`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+				.map(({name}) => name)
+				.join('/')}/${title}`
+		);
+	});
 });
 
 test('LPD-24858 Categories with blank spaces in friendly URL', async ({
@@ -209,23 +217,29 @@ test('LPD-26753 The URL changes when a category is modified', async ({
 	const initialResponse = await page.goto(
 		`/web${site.friendlyUrlPath}/b/${title}`
 	);
-	await expect(initialResponse.url()).toContain(
-		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
-			.map(({name}) => name)
-			.join('/')}/${title}`
-	);
 
-	friendlyUrlCategories[0].name = `${friendlyUrlCategories[0].name}-edited`;
-	await apiHelpers.headlessAdminTaxonomy.patchCategory({
-		id: categories[0].id,
-		name: friendlyUrlCategories[0].name,
+	await test.step('Check categories in friendly URL', async () => {
+		await expect(initialResponse.url()).toContain(
+			`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+				.map(({name}) => name)
+				.join('/')}/${title}`
+		);
 	});
-	const editedResponse = await page.goto(initialResponse.url());
-	await expect(editedResponse.url()).toContain(
-		`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
-			.map(({name}) => name)
-			.join('/')}/${title}`
-	);
+
+	await test.step('Check redirection and edited category in the initial friendly URL', async () => {
+		friendlyUrlCategories[0].name = `${friendlyUrlCategories[0].name}-edited`;
+		await apiHelpers.headlessAdminTaxonomy.patchCategory({
+			id: categories[0].id,
+			name: friendlyUrlCategories[0].name,
+		});
+
+		const editedResponse = await page.goto(initialResponse.url());
+		await expect(editedResponse.url()).toContain(
+			`/web${site.friendlyUrlPath}/b/${friendlyUrlCategories
+				.map(({name}) => name)
+				.join('/')}/${title}`
+		);
+	});
 });
 
 test('LPD-26755 The URL redirects to the correct language when a category has a translation', async ({

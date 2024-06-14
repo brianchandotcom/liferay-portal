@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ICreationAction, IItemAction} from '../../../utils/types';
+import {ICreationAction, IItemAction} from '../../../../../utils/types';
 import {DataSetPage} from '../DataSetPage';
 
 export class ActionsPage {

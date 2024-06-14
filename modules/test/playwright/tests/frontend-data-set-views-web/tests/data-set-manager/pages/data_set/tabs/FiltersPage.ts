@@ -9,7 +9,7 @@ import {
 	IDateRangeFilter,
 	ISelectionFilterApiHeadless,
 	ISelectionFilterPicklist,
-} from '../../../utils/types';
+} from '../../../../../utils/types';
 import {DataSetPage} from '../DataSetPage';
 
 interface NewFilterModal {

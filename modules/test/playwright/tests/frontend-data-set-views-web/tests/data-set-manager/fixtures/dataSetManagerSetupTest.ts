@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {ApplicationsMenuPage} from '../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 
 const dataSetManagerSetupTest = test.extend<{
 	setup: ApplicationsMenuPage;

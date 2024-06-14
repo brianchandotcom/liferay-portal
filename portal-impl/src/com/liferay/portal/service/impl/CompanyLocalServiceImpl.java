@@ -554,12 +554,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		DBPartitionUtil.copyDBPartition(fromCompanyId, toCompanyId);
 
-		long addedCompanyId = toCompanyId;
-
 		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
 			toCompanyId);
 
-		Company toCompany = fromCompany.cloneWithOriginalValues();
+		long companyId = toCompanyId;
 
 		try {
 			return _transactionAwareInvoke(
@@ -567,28 +565,28 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					companyPersistence.clearCache();
 					_virtualHostPersistence.clearCache();
 
-					toCompany.setCompanyId(addedCompanyId);
-					toCompany.setWebId(webId);
-					toCompany.setName(name);
-					toCompany.setNew(true);
+					Company company = fromCompany.cloneWithOriginalValues();
 
-					companyPersistence.update(toCompany);
+					company.setCompanyId(companyId);
+					company.setWebId(webId);
+					company.setName(name);
+					company.setNew(true);
 
-					Company updatedCompany = updateVirtualHostname(
-						addedCompanyId, virtualHostname);
+					company = companyPersistence.update(company);
 
-					preregisterCompany(updatedCompany);
+					company = updateVirtualHostname(
+						company.getCompanyId(), virtualHostname);
+
+					preregisterCompany(company);
 
 					_resourceActionLocalService.checkResourceActions();
 
-					_portletLocalService.checkPortlets(
-						updatedCompany.getCompanyId());
+					_portletLocalService.checkPortlets(company.getCompanyId());
 
 					TransactionCommitCallbackUtil.registerCallback(
 						() -> {
 							Company dbPartitionCompany =
-								companyPersistence.findByPrimaryKey(
-									addedCompanyId);
+								companyPersistence.findByPrimaryKey(companyId);
 
 							registerCompany(dbPartitionCompany);
 
@@ -598,14 +596,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 							return null;
 						});
 
-					return updatedCompany;
+					return company;
 				});
 		}
 		catch (Throwable throwable) {
 			try {
 				_transactionAwareInvoke(
 					() -> {
-						DBPartitionUtil.removeDBPartition(addedCompanyId);
+						DBPartitionUtil.removeDBPartition(companyId);
 
 						return null;
 					});

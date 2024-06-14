@@ -242,7 +242,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 																'LPD-21582'
 															)
 														) {
-															navigate(
+															return navigate(
 																`order/${id}/download`
 															);
 														}

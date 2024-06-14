@@ -10,105 +10,15 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
-import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from '../../tests/data-set-fragment/fixtures/fdsFragmentPageTest';
+import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 const LINK_ITEM_ACTION_NAME = 'Link item action';
 const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
 	'Do you want to navigate to http://www.liferay.com?';
 
-export const test = mergeTests(
-	actionsPageTest,
-	dataSetManagerApiHelpersTest,
-	featureFlagsTest({
-		'LPS-164563': true,
-		'LPS-178052': true,
-	}),
-	loginTest(),
-	dataSetManagerSetupTest
-);
-
 let dataSetERC: string;
 let dataSetLabel: string;
-
-test.beforeEach(async ({dataSetManagerApiHelpers}) => {
-	dataSetERC = getRandomString();
-	dataSetLabel = getRandomString();
-
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
-	});
-});
-
-test.afterEach(async ({dataSetManagerApiHelpers}) => {
-	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
-});
-
-test.describe('Item Actions in Data Set Manager', () => {
-	test('There is a message if there are no Item Actions', async ({
-		actionsPage,
-	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.itemActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Item Actions tab', async () => {
-			await actionsPage.itemActionsTab.click();
-			await actionsPage.newItemActionButton.waitFor();
-		});
-
-		await test.step('Assert no Item Actions are created', async () => {
-			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
-				'No actions were created.'
-			);
-		});
-	});
-
-	test('Can create an Item Action of type Link', async ({
-		actionsPage,
-		page,
-	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.itemActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Item Actions tab', async () => {
-			await actionsPage.itemActionsTab.click();
-			await actionsPage.newItemActionButton.waitFor();
-		});
-
-		await test.step('Create an item action', async () => {
-			await actionsPage.createItemAction({
-				icon: 'arrow-right-full',
-				name: LINK_ITEM_ACTION_NAME,
-				type: 'link',
-				url: liferayConfig.environment.baseUrl,
-			});
-		});
-
-		await test.step('Check that the item action is in the list', async () => {
-			await expect(actionsPage.itemActionsTab).toBeInViewport();
-
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: LINK_ITEM_ACTION_NAME,
-				})
-			).toBeVisible();
-		});
-	});
-});
 
 export const fragmentTest = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -120,6 +30,20 @@ export const fragmentTest = mergeTests(
 	isolatedLayoutTest({publish: false}),
 	loginTest()
 );
+
+fragmentTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
+	dataSetERC = getRandomString();
+	dataSetLabel = getRandomString();
+
+	await dataSetManagerApiHelpers.createDataSet({
+		erc: dataSetERC,
+		label: dataSetLabel,
+	});
+});
+
+fragmentTest.afterEach(async ({dataSetManagerApiHelpers}) => {
+	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+});
 
 fragmentTest.describe('Item Actions in Data Set fragment', () => {
 	fragmentTest(

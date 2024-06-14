@@ -514,7 +514,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		if (fromCompany == null) {
 			throw new IllegalArgumentException(
-				"Source company ID " + fromCompanyId + " does not exist");
+				"Company ID " + fromCompanyId + " does not exist");
 		}
 
 		if (toCompanyId == null) {
@@ -525,7 +525,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					 PortalInstancePool.getCompanyIds(), toCompanyId)) {
 
 			throw new IllegalArgumentException(
-				"Target company ID " + toCompanyId + " already exists");
+				"Company ID " + toCompanyId + " already exists");
 		}
 
 		validateName(toCompanyId, name);

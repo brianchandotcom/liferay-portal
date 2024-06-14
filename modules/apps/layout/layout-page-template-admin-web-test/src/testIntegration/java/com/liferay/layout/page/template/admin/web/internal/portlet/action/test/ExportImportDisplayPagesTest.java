@@ -109,6 +109,13 @@ public class ExportImportDisplayPagesTest {
 
 		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
 
+		_assertExportImportDisplayPage(classNameId, classTypeId);
+	}
+
+	private void _assertExportImportDisplayPage(
+			long classNameId, long classTypeId)
+		throws Exception {
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _serviceContext1.getUserId(),

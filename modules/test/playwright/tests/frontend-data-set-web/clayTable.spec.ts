@@ -63,17 +63,40 @@ test.describe('LPS-193005 ClayTable on FrontendDataSet', () => {
 
 			await expect(idColumnHeader).toBeInViewport();
 
-			await expect(page.locator('td').nth(1)).toHaveText('34250');
-			await expect(page.locator('td').nth(11)).toHaveText('34184');
-			await expect(page.locator('td').nth(21)).toHaveText('34092');
-			await expect(page.locator('td').nth(31)).toHaveText('34076');
+			const cells = await page.locator('td').allInnerTexts();
+
+			await expect(page.locator('td').nth(1)).toHaveText(cells[1]);
+			await expect(page.locator('td').nth(11)).toHaveText(cells[11]);
+			await expect(page.locator('td').nth(21)).toHaveText(cells[21]);
+			await expect(page.locator('td').nth(31)).toHaveText(cells[31]);
 
 			await idColumnHeader.click();
 
-			await expect(page.locator('td').nth(1)).toHaveText('34064');
-			await expect(page.locator('td').nth(11)).toHaveText('34076');
-			await expect(page.locator('td').nth(21)).toHaveText('34080');
-			await expect(page.locator('td').nth(31)).toHaveText('34092');
+			const ascendingIDCells = [
+				cells[1],
+				cells[11],
+				cells[21],
+				cells[31],
+				cells[41],
+				cells[51],
+				cells[61],
+				cells[71],
+				cells[81],
+				cells[91],
+			].sort();
+
+			await expect(page.locator('td').nth(1)).toHaveText(
+				ascendingIDCells[0]
+			);
+			await expect(page.locator('td').nth(11)).toHaveText(
+				ascendingIDCells[1]
+			);
+			await expect(page.locator('td').nth(21)).toHaveText(
+				ascendingIDCells[2]
+			);
+			await expect(page.locator('td').nth(31)).toHaveText(
+				ascendingIDCells[3]
+			);
 
 			const titleColumnHeader = page
 				.getByRole('columnheader')
@@ -81,10 +104,33 @@ test.describe('LPS-193005 ClayTable on FrontendDataSet', () => {
 
 			await titleColumnHeader.click();
 
-			await expect(page.locator('td').nth(2)).toHaveText('Sample3');
-			await expect(page.locator('td').nth(12)).toHaveText('Sample9');
-			await expect(page.locator('td').nth(22)).toHaveText('Sample11');
-			await expect(page.locator('td').nth(32)).toHaveText('Sample17');
+			const ascendingTitleCells = [
+				cells[2],
+				cells[12],
+				cells[22],
+				cells[32],
+				cells[42],
+				cells[52],
+				cells[62],
+				cells[72],
+				cells[82],
+				cells[92],
+			].sort((a, b) =>
+				new Intl.Collator('en', {numeric: true}).compare(a, b)
+			);
+
+			await expect(page.locator('td').nth(2)).toHaveText(
+				ascendingTitleCells[0]
+			);
+			await expect(page.locator('td').nth(12)).toHaveText(
+				ascendingTitleCells[1]
+			);
+			await expect(page.locator('td').nth(22)).toHaveText(
+				ascendingTitleCells[2]
+			);
+			await expect(page.locator('td').nth(32)).toHaveText(
+				ascendingTitleCells[3]
+			);
 		});
 	});
 

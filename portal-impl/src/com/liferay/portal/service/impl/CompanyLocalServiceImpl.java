@@ -386,15 +386,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						company = companyPersistence.update(company);
 					}
 
-					if (Validator.isNotNull(virtualHostName) &&
+					String lowerCaseVirtualHostname = StringUtil.toLowerCase(
+						StringUtil.trim(virtualHostName));
+
+					if (Validator.isNotNull(lowerCaseVirtualHostname) &&
 						!StringUtil.equals(
-							company.getVirtualHostname(), virtualHostName)) {
+							company.getVirtualHostname(),
+							lowerCaseVirtualHostname)) {
 
 						validateVirtualHost(
-							company.getWebId(), virtualHostName);
+							company.getWebId(), lowerCaseVirtualHostname);
 
 						company = updateVirtualHostname(
-							companyId, virtualHostName);
+							companyId, lowerCaseVirtualHostname);
 					}
 
 					if (Validator.isNotNull(webId) &&
@@ -553,7 +557,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					company = companyPersistence.update(company);
 
 					company = updateVirtualHostname(
-						company.getCompanyId(), virtualHostname);
+						company.getCompanyId(), lowerCaseVirtualHostname);
 
 					return _addDBPartitionCompany(company);
 				});

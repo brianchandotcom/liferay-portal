@@ -6,6 +6,9 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -104,6 +107,108 @@ public class ExportImportDisplayPagesTest {
 			_portal.getClassNameId(
 				"com.liferay.asset.kernel.model.AssetCategory"),
 			0, null, 0);
+	}
+
+	@Test
+	public void testFileEntryExportImportDisplayPage() throws Exception {
+		_assertExportImportDisplayPageWithInfoItemFormVariation(
+			"com.liferay.portal.kernel.repository.model.FileEntry");
+	}
+
+	@Test
+	public void testFileEntryExportImportDisplayPageWithSiteTiedVariation()
+		throws Exception {
+
+		long ddmStructureClassNameId = _portal.getClassNameId(
+			"com.liferay.document.library.kernel.model.DLFileEntryMetadata");
+
+		String ddmStructureKey = RandomTestUtil.randomString();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group1);
+
+		Map<Locale, String> ddmStructureNameMap =
+			RandomTestUtil.randomLocaleStringMap(locale);
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"name", new Locale[] {locale}, locale);
+
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
+
+		DDMStructure ddmStructure1 = _ddmStructureLocalService.addStructure(
+			TestPropsValues.getUserId(), _group1.getGroupId(), 0L,
+			ddmStructureClassNameId, ddmStructureKey, ddmStructureNameMap, null,
+			ddmForm, ddmFormLayout, StorageType.DEFAULT.toString(),
+			DDMStructureConstants.TYPE_DEFAULT, _serviceContext1);
+
+		String fileEntryTypeKey = RandomTestUtil.randomString();
+
+		Map<Locale, String> dlFileEntryTypeNameMap =
+			RandomTestUtil.randomLocaleStringMap(locale);
+
+		DLFileEntryType dlFileEntryType1 =
+			_dlFileEntryTypeLocalService.addFileEntryType(
+				TestPropsValues.getUserId(), _group1.getGroupId(),
+				ddmStructure1.getStructureId(), fileEntryTypeKey,
+				dlFileEntryTypeNameMap, null,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+				_serviceContext1);
+
+		DDMStructure ddmStructure2 = _ddmStructureLocalService.addStructure(
+			TestPropsValues.getUserId(), _group2.getGroupId(), 0L,
+			ddmStructureClassNameId, ddmStructureKey, ddmStructureNameMap, null,
+			ddmForm, ddmFormLayout, StorageType.DEFAULT.toString(),
+			DDMStructureConstants.TYPE_DEFAULT, _serviceContext2);
+
+		DLFileEntryType dlFileEntryType2 =
+			_dlFileEntryTypeLocalService.addFileEntryType(
+				TestPropsValues.getUserId(), _group2.getGroupId(),
+				ddmStructure2.getStructureId(), fileEntryTypeKey,
+				dlFileEntryTypeNameMap, null,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+				_serviceContext2);
+
+		_assertExportImportDisplayPage(
+			_portal.getClassNameId(
+				"com.liferay.portal.kernel.repository.model.FileEntry"),
+			dlFileEntryType1.getFileEntryTypeId(), null,
+			dlFileEntryType2.getFileEntryTypeId());
+	}
+
+	@Test
+	public void testFileEntryExportImportDisplayPageWithSiteTiedVariationMissingInTargetSite()
+		throws Exception {
+
+		Locale locale = _portal.getSiteDefaultLocale(_group1);
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"name", new Locale[] {locale}, locale);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
+			TestPropsValues.getUserId(), _group1.getGroupId(), 0L,
+			_portal.getClassNameId(
+				"com.liferay.document.library.kernel.model." +
+					"DLFileEntryMetadata"),
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(locale), null, ddmForm,
+			_ddm.getDefaultDDMFormLayout(ddmForm),
+			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			_serviceContext1);
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.addFileEntryType(
+				TestPropsValues.getUserId(), _group1.getGroupId(),
+				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(locale), null,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+				_serviceContext1);
+
+		_assertExportImportDisplayPage(
+			_portal.getClassNameId(
+				"com.liferay.portal.kernel.repository.model.FileEntry"),
+			dlFileEntryType.getFileEntryTypeId(),
+			"x-could-not-be-imported-because-its-content-type-or-subtype-is-" +
+				"missing",
+			0);
 	}
 
 	@Test
@@ -382,6 +487,9 @@ public class ExportImportDisplayPagesTest {
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group1;

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
@@ -456,47 +457,72 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			throw layoutFriendlyURLException;
 		}
 
-		String keywordConflict = null;
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-		for (FriendlyURLResolver friendlyURLResolver :
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()) {
+		if ((serviceContext == null) || (serviceContext.getCompanyId() <= 0)) {
+			String[] urlSeparators =
+				FriendlyURLResolverRegistryUtil.getURLSeparators();
 
-			String urlSeparator = friendlyURLResolver.getURLSeparator();
+			for (String urlSeparator : urlSeparators) {
+				if (urlSeparator.contains(friendlyURL)) {
+					LayoutFriendlyURLException layoutFriendlyURLException =
+						new LayoutFriendlyURLException(
+							LayoutFriendlyURLException.KEYWORD_CONFLICT);
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-203351") &&
-				urlSeparator.contains(friendlyURL)) {
+					layoutFriendlyURLException.setKeywordConflict(urlSeparator);
 
-				keywordConflict = urlSeparator;
+					throw layoutFriendlyURLException;
+				}
 			}
+		}
+		else {
+			String keywordConflict = null;
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-203351")) {
-				if (urlSeparator.contains(friendlyURL) ||
-					friendlyURL.startsWith(urlSeparator)) {
+			for (FriendlyURLResolver friendlyURLResolver :
+					FriendlyURLResolverRegistryUtil.
+						getFriendlyURLResolversAsCollection()) {
+
+				String urlSeparator = friendlyURLResolver.getURLSeparator();
+
+				if (!FeatureFlagManagerUtil.isEnabled(
+						serviceContext.getCompanyId(), "LPS-203351") &&
+					urlSeparator.contains(friendlyURL)) {
 
 					keywordConflict = urlSeparator;
 				}
 
-				String defaultURLSeparator =
-					friendlyURLResolver.getDefaultURLSeparator();
+				if (FeatureFlagManagerUtil.isEnabled(
+						serviceContext.getCompanyId(), "LPS-203351")) {
 
-				if (Validator.isNull(keywordConflict) &&
-					friendlyURLResolver.isURLSeparatorConfigurable() &&
-					(defaultURLSeparator.contains(friendlyURL) ||
-					 friendlyURL.startsWith(defaultURLSeparator))) {
+					if (urlSeparator.contains(friendlyURL) ||
+						friendlyURL.startsWith(urlSeparator)) {
 
-					keywordConflict = defaultURLSeparator;
+						keywordConflict = urlSeparator;
+					}
+
+					String defaultURLSeparator =
+						friendlyURLResolver.getDefaultURLSeparator();
+
+					if (Validator.isNull(keywordConflict) &&
+						friendlyURLResolver.isURLSeparatorConfigurable() &&
+						(defaultURLSeparator.contains(friendlyURL) ||
+						 friendlyURL.startsWith(defaultURLSeparator))) {
+
+						keywordConflict = defaultURLSeparator;
+					}
 				}
-			}
 
-			if (Validator.isNotNull(keywordConflict)) {
-				LayoutFriendlyURLException layoutFriendlyURLException =
-					new LayoutFriendlyURLException(
-						LayoutFriendlyURLException.KEYWORD_CONFLICT);
+				if (Validator.isNotNull(keywordConflict)) {
+					LayoutFriendlyURLException layoutFriendlyURLException =
+						new LayoutFriendlyURLException(
+							LayoutFriendlyURLException.KEYWORD_CONFLICT);
 
-				layoutFriendlyURLException.setKeywordConflict(keywordConflict);
+					layoutFriendlyURLException.setKeywordConflict(
+						keywordConflict);
 
-				throw layoutFriendlyURLException;
+					throw layoutFriendlyURLException;
+				}
 			}
 		}
 

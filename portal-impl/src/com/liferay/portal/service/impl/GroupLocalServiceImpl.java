@@ -896,14 +896,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
 					site, true, null);
 
-				String externalReferenceCode = TextFormatter.format(
-					groupKey, TextFormatter.F);
-
-				externalReferenceCode = TextFormatter.format(
-					externalReferenceCode, TextFormatter.K);
-
 				group.setExternalReferenceCode(
-					"system-site-" + externalReferenceCode);
+					"L_" + TextFormatter.format(groupKey, TextFormatter.A));
 
 				group = groupPersistence.update(group);
 

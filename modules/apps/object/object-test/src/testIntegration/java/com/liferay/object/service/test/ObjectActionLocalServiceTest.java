@@ -1355,12 +1355,12 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to update commerce order status to
 		// CommerceOrderConstants#ORDER_STATUS_PROCESSING after updating payment
-		// status
+		// status if the previous value for orderStatus is 1
 
 		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			commerceOrderObjectDefinition.getObjectDefinitionId(), true,
-			StringPool.BLANK, RandomTestUtil.randomString(),
+			"oldValue(\"orderStatus\") == 1", RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),

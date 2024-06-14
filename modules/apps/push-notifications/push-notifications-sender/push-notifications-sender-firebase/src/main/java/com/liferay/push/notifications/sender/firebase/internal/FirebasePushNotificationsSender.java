@@ -8,6 +8,7 @@ package com.liferay.push.notifications.sender.firebase.internal;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
@@ -124,7 +124,7 @@ public class FirebasePushNotificationsSender
 	}
 
 	private JSONObject _buildAndroidData(JSONObject payloadJSONObject) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactoryUtil.createJSONObject();
 
 		String body = payloadJSONObject.getString(
 			PushNotificationsConstants.KEY_BODY);
@@ -205,24 +205,24 @@ public class FirebasePushNotificationsSender
 	private JSONObject _buildMessage(
 		String notificationKey, JSONObject payloadJSONObject) {
 
-		JSONObject messageContent = JSONUtil.put(
-			"android", _buildAndroidData(payloadJSONObject)
-		).put(
-			"data", _buildMessagePayload(payloadJSONObject)
-		).put(
-			"token", notificationKey
-		);
-
-		return JSONUtil.put("message", messageContent);
+		return JSONUtil.put(
+			"message",
+			JSONUtil.put(
+				"android", _buildAndroidData(payloadJSONObject)
+			).put(
+				"data", _buildMessagePayload(payloadJSONObject)
+			).put(
+				"token", notificationKey
+			));
 	}
 
 	private JSONObject _buildMessagePayload(JSONObject payloadJSONObject) {
-		Iterator<String> keys = payloadJSONObject.keys();
+		Iterator<String> keysIterator = payloadJSONObject.keys();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = _jsonFactoryUtil.createJSONObject();
 
-		while (keys.hasNext()) {
-			String key = keys.next();
+		while (keysIterator.hasNext()) {
+			String key = keysIterator.next();
 
 			if (!_notificationKeys.contains(key)) {
 				jsonObject.put(key, payloadJSONObject.get(key));
@@ -268,9 +268,11 @@ public class FirebasePushNotificationsSender
 				"Unable to create a notification group");
 		}
 
-		JSONObject response = JSONFactoryUtil.createJSONObject(responseString);
+		JSONObject responseJSONObject = _jsonFactoryUtil.createJSONObject(
+			responseString);
 
-		return new DeviceGroup(response.getString("notification_key"), name);
+		return new DeviceGroup(
+			responseJSONObject.getString("notification_key"), name);
 	}
 
 	private String _getAccessToken() throws Exception {
@@ -371,7 +373,7 @@ public class FirebasePushNotificationsSender
 		}
 	}
 
-	private void _send(String accessToken, JSONObject message)
+	private void _send(String accessToken, JSONObject messageJSONObject)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -381,7 +383,8 @@ public class FirebasePushNotificationsSender
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
 		options.setBody(
-			message.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+			messageJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
 		options.setLocation(
 			StringBundler.concat(
 				_firebaseCloudMessagingURL, "/v1/projects/", _getProjectId(),
@@ -412,10 +415,13 @@ public class FirebasePushNotificationsSender
 	private String _firebaseCloudMessagingURL;
 	private volatile FirebasePushNotificationsSenderConfiguration
 		_firebasePushNotificationsSenderConfiguration;
-	private GoogleCredentials _googleCredentials;
+	private volatile GoogleCredentials _googleCredentials;
 
 	@Reference
 	private HttpUtil _httpUtil;
+
+	@Reference
+	private JSONFactoryUtil _jsonFactoryUtil;
 
 	private String _projectNumber;
 

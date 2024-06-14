@@ -20,7 +20,7 @@ const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
 let dataSetERC: string;
 let dataSetLabel: string;
 
-export const fragmentTest = mergeTests(
+export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
 		'LPS-164563': true,
@@ -31,25 +31,27 @@ export const fragmentTest = mergeTests(
 	loginTest()
 );
 
-fragmentTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
+test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
+	await test.step('Create data set', async () => {
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: dataSetERC,
+			label: dataSetLabel,
+		});
 	});
 });
 
-fragmentTest.afterEach(async ({dataSetManagerApiHelpers}) => {
+test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-fragmentTest.describe('Item Actions in Data Set fragment', () => {
-	fragmentTest(
+test.describe('Empty Item Actions in Data Set fragment', () => {
+	test(
 		'Item Action button does not appear if there is no item action',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
-			await fragmentTest.step('Create table field', async () => {
+			await test.step('Create table field', async () => {
 				await dataSetManagerApiHelpers.createDataSetField({
 					label_i18n: {en_US: 'Id'},
 					name: 'id',
@@ -58,7 +60,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -68,7 +70,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the Item Action button is not present',
 				async () => {
 					await expect(
@@ -80,26 +82,30 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 			);
 		}
 	);
+});
 
-	fragmentTest(
+test.describe('Item Actions in Data Set fragment', () => {
+	test.beforeEach(async ({dataSetManagerApiHelpers}) => {
+		await test.step('Populate Data Set', async () => {
+			await dataSetManagerApiHelpers.createDataSetField({
+				label_i18n: {en_US: 'Id'},
+				name: 'id',
+				r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+				type: 'string',
+			});
+			await dataSetManagerApiHelpers.createDataSetField({
+				label_i18n: {en_US: 'Name'},
+				name: 'name',
+				r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
+				type: 'string',
+			});
+		});
+	});
+
+	test(
 		'Link Item Action (single action) is shown in the fragment',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Name'},
-					name: 'name',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			});
-
-			await fragmentTest.step('Create Item Action', async () => {
+			await test.step('Create Item Action', async () => {
 				await dataSetManagerApiHelpers.createDataSetItemAction({
 					confirmationMessage_i18n: {
 						en_US: LINK_ITEM_ACTION_CONFIRMATION_MESSAGE,
@@ -110,7 +116,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -120,7 +126,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the Item Action button is present',
 				async () => {
 					await expect(
@@ -131,7 +137,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the Item Action works',
 				async () => {
 					const dialogPromise = page
@@ -161,7 +167,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 		}
 	);
 
-	fragmentTest(
+	test(
 		'Link, Modal and Side Panel Item Actions (multiple actions) are shown in fragment',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const MODAL_ITEM_ACTION_NAME = 'Modal item action';
@@ -170,22 +176,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 			const SIDE_PANEL_ITEM_ACTION_URL =
 				liferayConfig.environment.baseUrl;
 
-			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Name'},
-					name: 'name',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			});
-
-			await fragmentTest.step('Create Item Actions', async () => {
+			await test.step('Create Item Actions', async () => {
 				await dataSetManagerApiHelpers.createDataSetItemAction({
 					label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
 					r_fdsViewFDSItemActionRelationship_c_fdsViewERC: dataSetERC,
@@ -211,7 +202,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -221,8 +212,8 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			const datasetRow = await fragmentTest.step(
-				'Checkt that the Item Actions dropdown is present in table row',
+			const datasetRow = await test.step(
+				'Check that the Item Actions dropdown is present in table row',
 				async () => {
 					const tableRow = await page
 						.locator('.dnd-td.item-actions')
@@ -260,7 +251,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Click the modal item action opens a modal window',
 				async () => {
 					const button = await datasetRow.getByRole('button', {
@@ -301,7 +292,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Click the side panel item action opens a side panel',
 				async () => {
 					const button = await datasetRow.getByRole('button', {
@@ -350,7 +341,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 		}
 	);
 
-	fragmentTest(
+	test(
 		'Async and Headless Item Actions (multiple actions) are shown in fragment',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
@@ -362,22 +353,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 			const NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME =
 				'Useless Headless Item Action';
 
-			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Name'},
-					name: 'name',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			});
-
-			await fragmentTest.step('Create Item Actions', async () => {
+			await test.step('Create Item Actions', async () => {
 				await dataSetManagerApiHelpers.createDataSetItemAction({
 					label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
 					permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
@@ -403,7 +379,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -413,7 +389,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			const datasetRow = await fragmentTest.step(
+			const datasetRow = await test.step(
 				'Checkt that the Item Actions dropdown (only 2 items) is present in table row',
 				async () => {
 					const tableRow = await page
@@ -458,7 +434,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Click in the headless item action executes the action',
 				async () => {
 					const button = await datasetRow.getByRole('button', {
@@ -495,7 +471,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Click in the async item action executes the action',
 				async () => {
 					const nextTableRow = await page
@@ -538,7 +514,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 		}
 	);
 
-	fragmentTest(
+	test(
 		'Async Item Action shows an error toast in the fragment when a failure occurs',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
@@ -546,22 +522,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 			const ASYNC_ITEM_ACTION_WRONG_URL =
 				'/o/data-set-manager/table-sections/{foo}';
 
-			await fragmentTest.step('Populate Data Set', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: 'Name'},
-					name: 'name',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			});
-
-			await fragmentTest.step('Create Item Actions', async () => {
+			await test.step('Create Item Actions', async () => {
 				await dataSetManagerApiHelpers.createDataSetItemAction({
 					label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
 					method: ASYNC_ITEM_ACTION_METHOD,
@@ -571,7 +532,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Configure Data Set in the page',
 				async () => {
 					await fdsFragmentPage.configureDataSetFragment({
@@ -581,7 +542,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			const datasetRow = await fragmentTest.step(
+			const datasetRow = await test.step(
 				'Checkt that the Item Actions is present in table row',
 				async () => {
 					const tableRow = await page
@@ -594,7 +555,7 @@ fragmentTest.describe('Item Actions in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Click in the async Item Action shows an error toast.',
 				async () => {
 					await datasetRow

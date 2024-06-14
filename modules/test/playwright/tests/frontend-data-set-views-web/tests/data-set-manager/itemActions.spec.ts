@@ -29,13 +29,28 @@ export const test = mergeTests(
 let dataSetERC: string;
 let dataSetLabel: string;
 
-test.beforeEach(async ({dataSetManagerApiHelpers}) => {
+test.beforeEach(async ({actionsPage, dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
+	await test.step('Create data set', async () => {
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: dataSetERC,
+			label: dataSetLabel,
+		});
+	});
+
+	await test.step('Navigate to the Actions tab', async () => {
+		await actionsPage.goto({
+			dataSetLabel,
+		});
+
+		await expect(actionsPage.itemActionsTab).toBeInViewport();
+	});
+
+	await test.step('Navigate to the Item Actions tab', async () => {
+		await actionsPage.itemActionsTab.click();
+		await actionsPage.newItemActionButton.waitFor();
 	});
 });
 
@@ -47,19 +62,6 @@ test.describe('Item Actions in Data Set Manager', () => {
 	test('There is a message if there are no Item Actions', async ({
 		actionsPage,
 	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.itemActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Item Actions tab', async () => {
-			await actionsPage.itemActionsTab.click();
-			await actionsPage.newItemActionButton.waitFor();
-		});
-
 		await test.step('Assert no Item Actions are created', async () => {
 			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
 				'No actions were created.'
@@ -71,19 +73,6 @@ test.describe('Item Actions in Data Set Manager', () => {
 		actionsPage,
 		page,
 	}) => {
-		await test.step('Navigate to the Actions tab', async () => {
-			await actionsPage.goto({
-				dataSetLabel,
-			});
-
-			await expect(actionsPage.itemActionsTab).toBeInViewport();
-		});
-
-		await test.step('Navigate to the Item Actions tab', async () => {
-			await actionsPage.itemActionsTab.click();
-			await actionsPage.newItemActionButton.waitFor();
-		});
-
 		await test.step('Create an item action', async () => {
 			await actionsPage.createItemAction({
 				icon: 'arrow-right-full',

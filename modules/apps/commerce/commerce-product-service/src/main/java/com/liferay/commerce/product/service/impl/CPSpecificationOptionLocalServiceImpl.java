@@ -75,9 +75,10 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
-			long userId, long cpOptionCategoryId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			double priority, ServiceContext serviceContext)
+			long userId, long cpOptionCategoryId, long listTypeDefinitionId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			boolean facetable, String key, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -97,6 +98,7 @@ public class CPSpecificationOptionLocalServiceImpl
 		cpSpecificationOption.setUserId(user.getUserId());
 		cpSpecificationOption.setUserName(user.getFullName());
 		cpSpecificationOption.setCPOptionCategoryId(cpOptionCategoryId);
+		cpSpecificationOption.setListTypeDefinitionId(listTypeDefinitionId);
 		cpSpecificationOption.setTitleMap(titleMap);
 		cpSpecificationOption.setDescriptionMap(descriptionMap);
 		cpSpecificationOption.setFacetable(facetable);
@@ -113,6 +115,14 @@ public class CPSpecificationOptionLocalServiceImpl
 			cpSpecificationOption, serviceContext);
 
 		return cpSpecificationOption;
+	}
+
+	@Override
+	public int countCPSpecificationOptionByListTypeDefinitionId(
+		long listTypeDefinitionId) {
+
+		return cpSpecificationOptionPersistence.countByListTypeDefinitionId(
+			listTypeDefinitionId);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -221,9 +231,9 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Override
 	public CPSpecificationOption updateCPSpecificationOption(
 			long cpSpecificationOptionId, long cpOptionCategoryId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
-			ServiceContext serviceContext)
+			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, boolean facetable, String key,
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPSpecificationOption cpSpecificationOption =
@@ -239,6 +249,7 @@ public class CPSpecificationOptionLocalServiceImpl
 			cpSpecificationOption.getCompanyId(), titleMap, key);
 
 		cpSpecificationOption.setCPOptionCategoryId(cpOptionCategoryId);
+		cpSpecificationOption.setListTypeDefinitionId(listTypeDefinitionId);
 		cpSpecificationOption.setTitleMap(titleMap);
 		cpSpecificationOption.setDescriptionMap(descriptionMap);
 		cpSpecificationOption.setFacetable(facetable);

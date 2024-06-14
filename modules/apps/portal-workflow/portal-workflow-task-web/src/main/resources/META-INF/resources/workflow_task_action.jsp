@@ -109,7 +109,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 	</c:if>
 </liferay-ui:icon-menu>
 
-<aui:form name='<%= randomId + "form" %>'>
+<aui:form name='<%= randomId + "hiddenForm" %>'>
 	<div class="hide" id="<%= randomId %>updateComments">
 		<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
 	</div>

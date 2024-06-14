@@ -237,7 +237,10 @@ const FrontendDataSet = ({
 	function updateDataSetItems(dataSetData) {
 		setItems(dataSetData.items);
 		setTotal(dataSetData.totalCount);
-		updatePagination(dataSetData);
+
+		if (!dataSetData.items.length && dataSetData.totalCount > 0) {
+			setPageNumber(() => dataSetData.lastPage);
+		}
 	}
 
 	useEffect(() => {
@@ -404,12 +407,6 @@ const FrontendDataSet = ({
 
 				throw error;
 			});
-	}
-
-	function updatePagination(dataSetData) {
-		if (!dataSetData.items.length && dataSetData.totalCount > 0) {
-			setPageNumber(1);
-		}
 	}
 
 	useEffect(() => {

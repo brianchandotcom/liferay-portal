@@ -80,11 +80,11 @@ public class CompanyLocalServiceUtil {
 	}
 
 	public static Company addDBPartitionCompany(
-			long companyId, String name, String virtualHostName, String webId)
+			long companyId, String name, String virtualHostname, String webId)
 		throws PortalException {
 
 		return getService().addDBPartitionCompany(
-			companyId, name, virtualHostName, webId);
+			companyId, name, virtualHostname, webId);
 	}
 
 	/**
@@ -110,13 +110,13 @@ public class CompanyLocalServiceUtil {
 		getService().checkCompanyKey(companyId);
 	}
 
-	public static Company copyBPartitionCompany(
-			long fromCompanyId, String name, Long toCompanyId,
+	public static Company copyDBPartitionCompany(
+			long fromCompanyId, Long toCompanyId, String name,
 			String virtualHostname, String webId)
 		throws PortalException {
 
-		return getService().copyBPartitionCompany(
-			fromCompanyId, name, toCompanyId, virtualHostname, webId);
+		return getService().copyDBPartitionCompany(
+			fromCompanyId, toCompanyId, name, virtualHostname, webId);
 	}
 
 	/**

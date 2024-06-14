@@ -38,9 +38,10 @@ public class CPSpecificationOptionServiceImpl
 
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
-			long cpOptionCategoryId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			double priority, ServiceContext serviceContext)
+			long cpOptionCategoryId, long listTypeDefinitionId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			boolean facetable, String key, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -52,8 +53,8 @@ public class CPSpecificationOptionServiceImpl
 			CPActionKeys.ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION);
 
 		return cpSpecificationOptionLocalService.addCPSpecificationOption(
-			getUserId(), cpOptionCategoryId, titleMap, descriptionMap,
-			facetable, key, priority, serviceContext);
+			getUserId(), cpOptionCategoryId, listTypeDefinitionId, titleMap,
+			descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	@Override
@@ -125,17 +126,17 @@ public class CPSpecificationOptionServiceImpl
 	@Override
 	public CPSpecificationOption updateCPSpecificationOption(
 			long cpSpecificationOptionId, long cpOptionCategoryId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
-			ServiceContext serviceContext)
+			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, boolean facetable, String key,
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.UPDATE);
 
 		return cpSpecificationOptionLocalService.updateCPSpecificationOption(
-			cpSpecificationOptionId, cpOptionCategoryId, titleMap,
-			descriptionMap, facetable, key, priority, serviceContext);
+			cpSpecificationOptionId, cpOptionCategoryId, listTypeDefinitionId,
+			titleMap, descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	@Reference(

@@ -2112,8 +2112,64 @@ public class DefaultObjectEntryManagerImplTest
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", _buildContainsExpressionFilterString("id", "aaaa")
+				"filter",
+				_buildContainsExpressionFilterString(
+					"id", RandomTestUtil.randomString())
 			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					"id", String.valueOf(childObjectEntry1.getId()))
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					"id", String.valueOf(childObjectEntry2.getId()))
+			).build(),
+			childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					"localizedLongTextObjectFieldName",
+					RandomTestUtil.randomString())
+			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					"localizedLongTextObjectFieldName", "en_US")
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					"localizedLongTextObjectFieldName", "localizedLongText")
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					"textObjectFieldName", RandomTestUtil.randomString())
+			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					"textObjectFieldName", "aa")
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString("textObjectFieldName", "b")
+			).build(),
+			childObjectEntry2);
 
 		// Equals expression
 
@@ -2416,6 +2472,68 @@ public class DefaultObjectEntryManagerImplTest
 				"search", parentObjectEntry1.getExternalReferenceCode()
 			).build(),
 			childObjectEntry1);
+
+		// Starts With expression
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"id", RandomTestUtil.randomString())
+			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"id", String.valueOf(childObjectEntry1.getId()))
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"id", String.valueOf(childObjectEntry2.getId()))
+			).build(),
+			childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"localizedLongTextObjectFieldName",
+					RandomTestUtil.randomString())
+			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"localizedLongTextObjectFieldName", "en_US")
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"localizedLongTextObjectFieldName", "localizedLongText")
+			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"textObjectFieldName", RandomTestUtil.randomString())
+			).build());
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"textObjectFieldName", "aa")
+			).build(),
+			childObjectEntry1, childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					"textObjectFieldName", "b")
+			).build());
 	}
 
 	@Test
@@ -4376,6 +4494,13 @@ public class DefaultObjectEntryManagerImplTest
 		return StringBundler.concat(
 			"(", fieldName, "/any(x:",
 			StringUtil.merge(valuesList, includes ? " or " : " and "), "))");
+	}
+
+	private String _buildStartsWithExpressionFilterString(
+		String fieldName, String value) {
+
+		return StringBundler.concat(
+			"startswith( ", fieldName, ",'", value, "')");
 	}
 
 	private ObjectDefinition _createObjectDefinition(

@@ -59,10 +59,10 @@ export class PortletConfigurationPermissionsPage {
 
 	async changePagination(startValue: number, endValue: number) {
 		await this.permissionsFrame
-			.getByText(startValue + ' Entries Per Page', {exact: true})
+			.getByText(startValue + ' Entries', {exact: true})
 			.click();
 		await this.permissionsFrame
-			.getByRole('link', {name: endValue + ' Entries per Page'})
+			.getByRole('link', {name: endValue + ' Entries'})
 			.click();
 		await expect(
 			this.permissionsFrame.getByText('Showing 1 to ' + endValue)

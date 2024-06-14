@@ -340,8 +340,8 @@ public class CompanyLocalServiceDBPartitionTest
 		Company newCompany = null;
 
 		try {
-			newCompany = companyLocalService.copyBPartitionCompany(
-				company.getCompanyId(), name, null, virtualHostname, webId);
+			newCompany = companyLocalService.copyDBPartitionCompany(
+				company.getCompanyId(), null, name, virtualHostname, webId);
 
 			Assert.assertTrue(
 				ArrayUtil.contains(
@@ -372,8 +372,8 @@ public class CompanyLocalServiceDBPartitionTest
 		long toCompanyId = RandomTestUtil.nextLong();
 
 		try {
-			companyLocalService.copyBPartitionCompany(
-				company.getCompanyId(), company.getName(), toCompanyId,
+			companyLocalService.copyDBPartitionCompany(
+				company.getCompanyId(), toCompanyId, company.getName(),
 				company.getVirtualHostname(), company.getWebId());
 
 			Assert.fail();
@@ -419,8 +419,8 @@ public class CompanyLocalServiceDBPartitionTest
 							return method.invoke(dbPartitionDB, args);
 						}))) {
 
-			companyLocalService.copyBPartitionCompany(
-				company.getCompanyId(), name, toCompanyId, virtualHostname,
+			companyLocalService.copyDBPartitionCompany(
+				company.getCompanyId(), toCompanyId, name, virtualHostname,
 				webId);
 
 			Assert.fail();

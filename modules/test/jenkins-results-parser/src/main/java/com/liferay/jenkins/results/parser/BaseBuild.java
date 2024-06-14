@@ -1314,6 +1314,12 @@ public abstract class BaseBuild implements Build {
 	public TopLevelBuild getTopLevelBuild() {
 		Build topLevelBuild = this;
 
+		Build parentBuild = topLevelBuild.getParentBuild();
+
+		if (parentBuild instanceof JenkinsTopLevelBuild) {
+			return (TopLevelBuild)parentBuild;
+		}
+
 		while ((topLevelBuild != null) &&
 			   !(topLevelBuild instanceof TopLevelBuild)) {
 

@@ -4031,9 +4031,7 @@ public class DataFactory {
 						_readFile(
 							_getFragmentComponentInputStream(
 								"paragraph", "html")),
-						_readFile(
-							"fragment_component" +
-								"/fragment_component_paragraph_configuration.json"),
+						"",
 						_replaceReleaseInfo(
 							_readFile(
 								"fragment_component" +

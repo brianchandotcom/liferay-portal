@@ -1346,7 +1346,7 @@ public class GetEntryRenderDataMVCResourceCommand
 							"workflowTaskId", workflowTask.getWorkflowTaskId()
 						).buildString());
 
-					return String.valueOf(jsonObject);
+					return jsonObject;
 				}
 			).put(
 				"createDate", format.format(workflowTask.getCreateDate())

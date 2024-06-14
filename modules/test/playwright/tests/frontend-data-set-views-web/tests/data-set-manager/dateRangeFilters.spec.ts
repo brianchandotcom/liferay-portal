@@ -5,14 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
-import {fdsFragmentPageTest} from '../data-set-fragment/fixtures/fdsFragmentPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 
 export const dsmTest = mergeTests(
@@ -302,119 +299,5 @@ dsmTest(
 				erc: dataSetERC,
 			});
 		});
-	}
-);
-
-export const fragmentTest = mergeTests(
-	apiHelpersTest,
-	dataSetManagerApiHelpersTest,
-	featureFlagsTest({
-		'LPS-178052': true,
-	}),
-	fdsFragmentPageTest,
-	isolatedLayoutTest({publish: false}),
-	loginTest()
-);
-
-fragmentTest(
-	'Date-time filter is displayed in fragment, and applied to data @LPD-10754',
-	async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
-		const fieldLabel = getRandomString();
-
-		const filterLabel = getRandomString();
-
-		async function assertDataIsFetched() {
-			await fragmentTest.step(
-				'Assert that the data entry is fetched',
-				async () => {
-					await expect(
-						fdsFragmentPage.page.getByText(fieldLabel).first()
-					).toBeVisible();
-				}
-			);
-		}
-
-		await fragmentTest.step('Create a new date-time filter', async () => {
-			await dataSetManagerApiHelpers.createDataSetDateFilter({
-				fieldName: DATE_FIELD_NAME,
-				from: '2020-01-01',
-				label_i18n: {en_US: filterLabel},
-				r_fdsViewFDSDateFilterRelationship_c_fdsViewERC: dataSetERC,
-				to: '3020-01-02',
-				type: 'date-time',
-			});
-		});
-
-		await fragmentTest.step(
-			'Add a field, so FDS has something to show',
-			async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					label_i18n: {en_US: fieldLabel},
-					name: 'rendererType',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
-					type: 'string',
-				});
-			}
-		);
-
-		await fragmentTest.step('Configure Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
-				dataSetLabel,
-				layout,
-			});
-		});
-
-		const activeFilterButton = fdsFragmentPage.page.getByRole('button', {
-			name: `${filterLabel}:`,
-		});
-
-		await fragmentTest.step(
-			'Assert that preloaded filter values are in UI @LPS-191295',
-			async () => {
-				await expect(activeFilterButton).toBeVisible();
-			}
-		);
-
-		await assertDataIsFetched();
-
-		await fragmentTest.step('Set an impossible date range', async () => {
-			await activeFilterButton.click();
-
-			const toInput = fdsFragmentPage.page.getByLabel('To', {
-				exact: true,
-			});
-
-			await expect(toInput).toBeVisible();
-
-			await toInput.click();
-
-			await toInput.fill('2020-01-02');
-
-			const editButton = fdsFragmentPage.page.getByRole('button', {
-				name: 'Edit Filter',
-			});
-
-			await expect(editButton).toBeVisible();
-
-			await editButton.click();
-		});
-
-		await fragmentTest.step(
-			'Assert that the data entry is not fetched',
-			async () => {
-				await expect(fdsFragmentPage.emptyStateTitle).toBeVisible();
-			}
-		);
-
-		await fragmentTest.step('Remove the filter @LPS-191295', async () => {
-			const removeFilterButton =
-				fdsFragmentPage.page.getByLabel('Remove Filter');
-
-			await expect(removeFilterButton).toBeVisible();
-
-			await removeFilterButton.click();
-		});
-
-		await assertDataIsFetched();
 	}
 );

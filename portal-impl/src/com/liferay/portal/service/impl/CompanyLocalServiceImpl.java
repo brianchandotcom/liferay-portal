@@ -482,7 +482,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@Override
 	public Company copyBPartitionCompany(
-			long fromCompanyId, String name, Long toCompanyId,
+			long fromCompanyId, Long toCompanyId, String name,
 			String virtualHostname, String webId)
 		throws PortalException {
 

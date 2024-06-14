@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -119,6 +120,7 @@ import graphql.kickstart.execution.GraphQLObjectMapper;
 import graphql.kickstart.execution.GraphQLQueryInvoker;
 import graphql.kickstart.execution.config.DefaultExecutionStrategyProvider;
 import graphql.kickstart.execution.config.ExecutionStrategyProvider;
+import graphql.kickstart.execution.error.GenericGraphQLError;
 import graphql.kickstart.execution.error.GraphQLErrorHandler;
 import graphql.kickstart.servlet.GraphQLConfiguration;
 import graphql.kickstart.servlet.GraphQLHttpServlet;
@@ -2369,7 +2371,12 @@ public class GraphQLServletExtender {
 					continue;
 				}
 
-				if (_isForbiddenException(graphQLError)) {
+				 if (_isStatusException(graphQLError)) {
+					processedErrors.add(
+						_getExtendedGraphQLError(
+							graphQLError, Response.Status.BAD_REQUEST));
+				}
+				 else if (_isForbiddenException(graphQLError)) {
 					processedErrors.add(
 						_getExtendedGraphQLError(
 							graphQLError, Response.Status.FORBIDDEN));
@@ -2502,6 +2509,23 @@ public class GraphQLServletExtender {
 
 			return StringUtil.containsIgnoreCase(
 				(String)path.get(path.size() - 1), "parent");
+		}
+
+		private boolean _isStatusException(GraphQLError graphQLError) {
+			if (graphQLError instanceof GenericGraphQLError ||
+				graphQLError instanceof QueryDepthLimitExceededException) {
+
+				return false;
+			}
+
+			if (StringUtil.endsWith(
+					ClassUtil.getClassName(_getThrowable(graphQLError)),
+					"StatusException")) {
+
+				return true;
+			}
+
+			return false;
 		}
 
 		private final Set<String> _graphQLNamespaces;

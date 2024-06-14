@@ -4920,7 +4920,10 @@ public class ObjectEntryLocalServiceImpl
 			  (status != WorkflowConstants.STATUS_DRAFT))) &&
 			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
-			throw new ObjectEntryStatusException();
+			throw new ObjectEntryStatusException(
+				_language.get(
+					LocaleUtil.getSiteDefault(),
+					"draft-status-is-not-allowed"));
 		}
 	}
 

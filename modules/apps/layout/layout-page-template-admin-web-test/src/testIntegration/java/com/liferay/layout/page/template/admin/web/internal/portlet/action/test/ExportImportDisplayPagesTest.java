@@ -6,6 +6,14 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -53,6 +61,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -110,6 +120,42 @@ public class ExportImportDisplayPagesTest {
 		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
 
 		_assertExportImportDisplayPage(classNameId, classTypeId, classTypeId);
+	}
+
+	@Test
+	public void testExportImportDisplayPageWithSiteTiedVariation()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			"com.liferay.journal.model.JournalArticle");
+
+		String ddmStructureKey = RandomTestUtil.randomString();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group1);
+
+		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap(
+			locale);
+
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+			"name", new Locale[] {locale}, locale);
+
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
+
+		DDMStructure ddmStructure1 = _ddmStructureLocalService.addStructure(
+			TestPropsValues.getUserId(), _group1.getGroupId(), 0L, classNameId,
+			ddmStructureKey, nameMap, null, ddmForm, ddmFormLayout,
+			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			_serviceContext1);
+
+		DDMStructure ddmStructure2 = _ddmStructureLocalService.addStructure(
+			TestPropsValues.getUserId(), _group2.getGroupId(), 0L, classNameId,
+			ddmStructureKey, nameMap, null, ddmForm, ddmFormLayout,
+			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			_serviceContext2);
+
+		_assertExportImportDisplayPage(
+			classNameId, ddmStructure1.getStructureId(),
+			ddmStructure2.getStructureId());
 	}
 
 	private void _assertExportImportDisplayPage(
@@ -269,6 +315,12 @@ public class ExportImportDisplayPagesTest {
 			expectedRootLayoutStructureItem.getParentItemId(),
 			actualRootLayoutStructureItem.getParentItemId());
 	}
+
+	@Inject
+	private DDM _ddm;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group1;

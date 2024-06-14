@@ -99,31 +99,17 @@ public class ExportImportDisplayPagesTest {
 	}
 
 	@Test
-	public void testJournalArticleExportImportDisplayPage() throws Exception {
-		String className = "com.liferay.journal.model.JournalArticle";
-
-		long classNameId = _portal.getClassNameId(className);
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, className);
-
-		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				_serviceContext1.getScopeGroupId()));
-
-		Assert.assertFalse(infoItemFormVariations.isEmpty());
-
-		infoItemFormVariations.sort(
-			Comparator.comparing(InfoItemFormVariation::getKey));
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariations.get(0);
-
-		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
-
+	public void testExportImportDisplayPage() throws Exception {
 		_assertExportImportDisplayPage(
-			classNameId, classTypeId, null, classTypeId);
+			_portal.getClassNameId(
+				"com.liferay.asset.kernel.model.AssetCategory"),
+			0, null, 0);
+	}
+
+	@Test
+	public void testJournalArticleExportImportDisplayPage() throws Exception {
+		_assertExportImportDisplayPageWithInfoItemFormVariation(
+			"com.liferay.journal.model.JournalArticle");
 	}
 
 	@Test
@@ -331,6 +317,34 @@ public class ExportImportDisplayPagesTest {
 				layoutStructure1.getMainLayoutStructureItem(),
 			(RootLayoutStructureItem)
 				layoutStructure2.getMainLayoutStructureItem());
+	}
+
+	private void _assertExportImportDisplayPageWithInfoItemFormVariation(
+			String className)
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(className);
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className);
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
+			infoItemFormVariationsProvider.getInfoItemFormVariations(
+				_serviceContext1.getScopeGroupId()));
+
+		Assert.assertFalse(infoItemFormVariations.isEmpty());
+
+		infoItemFormVariations.sort(
+			Comparator.comparing(InfoItemFormVariation::getKey));
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariations.get(0);
+
+		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
+
+		_assertExportImportDisplayPage(
+			classNameId, classTypeId, null, classTypeId);
 	}
 
 	private String _read(String fileName) throws Exception {

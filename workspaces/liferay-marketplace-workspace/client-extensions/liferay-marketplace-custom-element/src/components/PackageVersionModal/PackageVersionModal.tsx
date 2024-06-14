@@ -35,9 +35,8 @@ export function PackageVersionModal({
 	});
 	const {properties} = useMarketplaceContext();
 
-	const hasEnabledFeatureFlag = properties.featureFlags?.includes(
-		'LPD-21582'
-	);
+	const hasEnabledFeatureFlag =
+		properties.featureFlags?.includes('LPD-21582');
 
 	const [checkboxVersions, setCheckboxVersions] =
 		useState<string[]>(currentVersions);

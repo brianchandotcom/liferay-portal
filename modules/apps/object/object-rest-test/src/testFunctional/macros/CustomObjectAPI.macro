@@ -11,6 +11,7 @@ definition {
 	macro _curlObjectEntries(emailDomain = null, fieldName = null, keywords = null, nestedField = null, relatedUserAccount = null, virtualHost = null, relatedEntryExternalReferenceCode = null, fieldValue = null, relatedEntryFieldName = null, numberOfRelatedObjectEntries = null, externalReferenceCode = null, taxonomyCategoryIds = null, familyName = null, oneToManyChild = null, en_US_plural_label = null, givenName = null, secondFieldValue = null, userEmailAddress = null, alternateName = null, token = null, userExternalReferenceCodes = null, objectEntryId = null) {
 		Variables.assertDefined(parameterList = ${en_US_plural_label});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
 
 		if (isSet(virtualHost)) {
@@ -44,7 +45,7 @@ definition {
 
 		if (isSet(userEmailAddress)) {
 			var headers = '''
-				-u ${userEmailAddress}:test \
+				-u ${userEmailAddress}:${defaultAdminPassword} \
 				-H Content-Type: application/json \
 			''';
 		}

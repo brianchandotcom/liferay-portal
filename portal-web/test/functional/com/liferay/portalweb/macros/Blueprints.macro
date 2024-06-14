@@ -148,12 +148,13 @@ definition {
 	macro getBlueprintID(title = null) {
 		Variables.assertDefined(parameterList = ${title});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints?search=${title} \
 				-H 'accept: application/json' \
-				-u test@liferay.com:test
+				-u test@liferay.com:${defaultAdminPassword}
 		''';
 
 		var blueprintId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");
@@ -167,12 +168,13 @@ definition {
 	macro getElementID(title = null) {
 		Variables.assertDefined(parameterList = ${title});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/search-experiences-rest/v1.0/sxp-elements?search=${title} \
 				-H 'accept: application/json' \
-				-u test@liferay.com:test
+				-u test@liferay.com:${defaultAdminPassword}
 		''';
 
 		var elementId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");

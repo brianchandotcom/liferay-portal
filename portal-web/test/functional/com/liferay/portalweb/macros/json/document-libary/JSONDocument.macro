@@ -2,6 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addComment(dmDocumentTitle = null, groupName = null, baseURL = null, commentBody = null, folderId = null) {
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
 			folderId = ${folderId},
@@ -16,7 +17,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/documents/${fileEntryId}/comments \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${defaultAdminPassword}'
 				-d '{
 					"creator": {
 					},

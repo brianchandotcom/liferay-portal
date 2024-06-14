@@ -34,6 +34,7 @@ definition {
 	macro _addWikiChildPage(parentResourcePrimKey = null, headline = null, content = null) {
 		Variables.assertDefined(parameterList = "${parentResourcePrimKey},${headline}");
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
@@ -67,7 +68,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${defaultAdminPassword}' \
 				-d '{
 					"content": "${content}",
 					"creator": {},
@@ -113,6 +114,7 @@ definition {
 	macro _addWikiPage(nodeId = null, headline = null, content = null) {
 		Variables.assertDefined(parameterList = "${nodeId},${headline}");
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
@@ -146,7 +148,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${defaultAdminPassword}' \
 				-d '{
 					"content": "${content}",
 					"creator": {},
@@ -167,12 +169,13 @@ definition {
 	macro _deleteWikiPageById(wikiPageId = null) {
 		Variables.assertDefined(parameterList = ${wikiPageId});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${defaultAdminPassword}' \
 		''';
 
 		var response = JSONCurlUtil.delete(${curl});
@@ -303,6 +306,7 @@ definition {
 	macro _updateWikiPage(headline = null, resourcePrimKey = null, content = null) {
 		Variables.assertDefined(parameterList = ${resourcePrimKey});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
@@ -336,7 +340,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${defaultAdminPassword}' \
 				-d '{
 					"content": "${content}",
 					"creator": {},

@@ -3,9 +3,10 @@ definition {
 	@summary = "Default summary"
 	macro _getPortalInstances(authenticationMethod = null) {
 		var portalURL = JSONCompany.getDefaultPortalURL();
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${defaultAdminPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
@@ -26,6 +27,7 @@ definition {
 	macro addPortalInstance(authenticationMethod = null, domain = null, portalInstanceId = null, virtualHost = null, token = null) {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getDefaultPortalURL();
 		var parameters = JSONUtil2._addJSONObject(
 			json = "{}",
@@ -43,7 +45,7 @@ definition {
 			value = "\"${portalInstanceId}\"");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${defaultAdminPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
@@ -73,6 +75,7 @@ definition {
 	macro addPortalInstanceWithVirtualInstanceInitializer(siteInitializerKey = null, authenticationMethod = null, domain = null, portalInstanceId = null, virtualHost = null) {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId},${siteInitializerKey}");
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 		var parameters = JSONUtil2._addJSONObject(
 			json = "{}",
@@ -95,7 +98,7 @@ definition {
 			value = "\"${siteInitializerKey}\"");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${defaultAdminPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
@@ -151,11 +154,12 @@ definition {
 	macro deletePortalInstance(authenticationMethod = null) {
 		Variables.assertDefined(parameterList = ${portalInstanceId});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getDefaultPortalURL();
 		var portalInstanceId = StringUtil.replace(${portalInstanceId}, " ", "%20");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${defaultAdminPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

@@ -2,12 +2,13 @@ definition {
 
 	@summary = "Default summary"
 	macro _addPage(categoryId = null, tagField = null, titleField = null, bodyField = null) {
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
 			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test' \
+			-u 'test@liferay.com:${defaultAdminPassword}' \
 			-d '{
 				"keywords": [
 				"${tagField}"

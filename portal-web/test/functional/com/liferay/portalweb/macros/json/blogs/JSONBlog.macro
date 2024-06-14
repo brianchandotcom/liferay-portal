@@ -17,7 +17,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -73,7 +73,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var serviceContext = JSONBlogSetter.setServiceContext(
@@ -163,7 +163,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		if (!(isSet(coverImageId))) {
@@ -273,6 +273,7 @@ definition {
 			var site = "true";
 		}
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
@@ -281,7 +282,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${defaultAdminPassword}'
 		''';
 
 		var imageId = JSONCurlUtil.get(${curl}, "$..[?(@['title'] == '${imageTitle}')]['id']");
@@ -304,7 +305,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -320,6 +321,7 @@ definition {
 	macro removeBlogImage(groupName = null, site = null, imageTitle = null) {
 		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 		var imageId = JSONBlog.getBlogImageId(
 			groupName = ${groupName},
@@ -329,7 +331,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-posting-images/${imageId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${defaultAdminPassword}'
 		''';
 
 		JSONCurlUtil.delete(${curl});
@@ -350,7 +352,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
@@ -436,7 +438,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -493,7 +495,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -519,6 +521,7 @@ definition {
 	macro uploadBlogImage(groupName = null, sourceFileName = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
@@ -539,7 +542,7 @@ definition {
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
 				-H accept: application/json \
 				-H Content-Type: multipart/form-data \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${defaultAdminPassword} \
 				-F file=@${filePath}
 		''';
 

@@ -241,6 +241,7 @@ definition {
 		Variables.assertDefined(parameterList = ${content});
 
 		var baseURL = ${baseURL};
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
@@ -260,7 +261,7 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderNotes \
-				-u ${userEmail}@liferay.com:test \
+				-u ${userEmail}@liferay.com:${defaultAdminPassword} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
@@ -698,6 +699,7 @@ definition {
 		Variables.assertDefined(parameterList = ${orderNoteId});
 
 		var baseURL = ${baseURL};
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var fieldsList = ListUtil.newList();
 
 		if (!(isSet(baseURL))) {
@@ -730,7 +732,7 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orderNotes/${orderNoteId} \
-				-u ${userEmail}@liferay.com:test \
+				-u ${userEmail}@liferay.com:${defaultAdminPassword} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{${payload}}'

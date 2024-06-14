@@ -6,9 +6,10 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = ${authenticationMethod});
 		var portalURL = JSONCompany.getPortalURL();
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${defaultAdminPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

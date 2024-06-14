@@ -15,7 +15,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -118,11 +118,12 @@ definition {
 			groupName = ${groupName},
 			titleField = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${defaultAdminPassword}'
 		''';
 
 		var status = JSONCurlUtil.get(${curl}, "$.[?(@['headline'] == '${titleField}')]['status']");
@@ -145,11 +146,12 @@ definition {
 			pending = 1,
 			titleField = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${defaultAdminPassword}'
 		''';
 
 		var status = JSONCurlUtil.get(${curl}, "$.[?(@['headline'] == '${titleField}')]['status']");

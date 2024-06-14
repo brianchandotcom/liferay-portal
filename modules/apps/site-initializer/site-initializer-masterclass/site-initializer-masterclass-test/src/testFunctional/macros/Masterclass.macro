@@ -111,10 +111,12 @@ definition {
 				value1 = ${password});
 		}
 		else {
+			var defaultAdminPassword = PropsUtil.get("default.admin.password");
+
 			Type(
 				labelTitle = "Password",
 				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "test");
+				value1 = ${defaultAdminPassword});
 		}
 
 		Check(

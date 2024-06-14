@@ -243,6 +243,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addkBFolder(parentFolderName = null, kbFolderName = null, groupName = null) {
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentFolderName)) {
@@ -272,7 +273,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbfolder/add-kb-folder \
 				-d externalReferenceCode= \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${defaultAdminPassword} \
 				-d groupId=${groupId} \
 				-d parentResourceClassNameId=${parentResourceClassNameId} \
 				-d parentResourcePrimKey=${folderId} \
@@ -498,6 +499,7 @@ definition {
 			groupName = ${groupName},
 			kbArticleTitle = ${kbArticleTitle});
 		var baseDir = PropsUtil.get("test.base.dir.name");
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 
 		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
@@ -511,7 +513,7 @@ definition {
 				-H accept: application/json \
 				-H Content-Type: multipart/form-data \
 				-F knowledgeBaseAttachment={"externalReferenceCode": "${externalReferenceCode}"} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${defaultAdminPassword} \
 				-F file=@${filePath}
 		''';
 

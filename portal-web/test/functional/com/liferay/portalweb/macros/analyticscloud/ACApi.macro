@@ -223,10 +223,11 @@ definition {
 	@summary = "Default summary"
 	macro sendEmailReport(groupId = null, userID = null, channelId = null, frequency = null) {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${analyticsCloudURL}/o/faro/main/${groupId}/preferences/send_email_report
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${defaultAdminPassword}'
 				-F 'channelId="${channelId}"'
 				-F 'userId="${userID}"'
 				-F 'frequency="${frequency}"'

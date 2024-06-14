@@ -32,10 +32,11 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 		var countryName = StringUtil.replace(${countryName}, " ", "-");
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${defaultAdminPassword} \
 				-d name=${countryName} \
 		''';
 
@@ -50,11 +51,12 @@ definition {
 	macro _getCountryByName(countryName = null) {
 		Variables.assertDefined(parameterList = ${countryName});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = PropsUtil.get("portal.url");
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${defaultAdminPassword} \
 				-d name=${countryName} \
 		''';
 
@@ -68,11 +70,12 @@ definition {
 		Variables.assertDefined(parameterList = ${countryAbbreviation});
 
 		var companyId = JSONCompany.getCompanyId();
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 		var portalURL = PropsUtil.get("portal.url");
 
 		var curl = '''
 			${portalURL}/api/jsonws/region/get-regions \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${defaultAdminPassword} \
 				-d companyId=${companyId} \
 				-d a2=${countryAbbreviation} \
 				-d active=true

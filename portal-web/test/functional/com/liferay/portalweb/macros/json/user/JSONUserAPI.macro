@@ -135,6 +135,8 @@ definition {
 	macro _agreeToTermsAndAnswerReminderQueryByScreenName(specificURL = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
+
 		if (isSet(specificURL)) {
 			var portalURL = ${specificURL};
 		}
@@ -144,14 +146,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
-				-u test:test
+				-u test:${defaultAdminPassword}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
-				-u test:test
+				-u test:${defaultAdminPassword}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
@@ -160,6 +162,8 @@ definition {
 	@summary = "Default summary"
 	macro _deleteUser(authenticationMethod = null, specificURL = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
+
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(specificURL)) {
 			var portalURL = ${specificURL};
@@ -177,7 +181,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/delete-user \
-				-u ${userName}:test \
+				-u ${userName}:${defaultAdminPassword} \
 				-d userId=${userId}
 		''';
 
@@ -307,6 +311,7 @@ definition {
 	@summary = "Default summary"
 	macro _getUserIds(authenticationMethod = null, specificURL = null) {
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = ${authenticationMethod});
+		var defaultAdminPassword = PropsUtil.get("default.admin.password");
 
 		if (isSet(specificURL)) {
 			var portalURL = ${specificURL};
@@ -316,7 +321,7 @@ definition {
 		}
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${defaultAdminPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

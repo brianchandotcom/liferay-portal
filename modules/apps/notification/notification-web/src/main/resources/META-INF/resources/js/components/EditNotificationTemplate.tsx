@@ -56,6 +56,44 @@ interface EditNotificationTemplateProps {
 	portletNamespace: string;
 }
 
+export function validate(values: NotificationTemplate) {
+	const errors: NotificationTemplateError = {};
+
+	if (!values.name) {
+		errors.name = constantsUtils.REQUIRED_MSG;
+	}
+
+	if (!values.subject[defaultLanguageId]) {
+		errors.subject = Liferay.Language.get('required');
+	}
+
+	if (values.type === 'email') {
+		const [recipient] = values.recipients as EmailRecipients[];
+
+		if (!recipient.from) {
+			errors.from = constantsUtils.REQUIRED_MSG;
+		}
+
+		if (!recipient.fromName[defaultLanguageId]) {
+			errors.fromName = constantsUtils.REQUIRED_MSG;
+		}
+
+		if (!Array.isArray(recipient.to) && !recipient.to[defaultLanguageId]) {
+			errors.to = constantsUtils.REQUIRED_MSG;
+		}
+
+		if (
+			Liferay.FeatureFlags['LPD-11165'] &&
+			Array.isArray(recipient.to) &&
+			!recipient.to.length
+		) {
+			errors.to = constantsUtils.REQUIRED_MSG;
+		}
+	}
+
+	return errors;
+}
+
 export default function EditNotificationTemplate({
 	backURL,
 	baseResourceURL,
@@ -83,47 +121,6 @@ export default function EditNotificationTemplate({
 	const [emailNotificationRoles, setEmailNotificationRoles] = useState<
 		MultiSelectItem[]
 	>([]);
-
-	const validate = (values: NotificationTemplate) => {
-		const errors: NotificationTemplateError = {};
-
-		if (!values.name) {
-			errors.name = constantsUtils.REQUIRED_MSG;
-		}
-
-		if (!values.subject[defaultLanguageId]) {
-			errors.subject = Liferay.Language.get('required');
-		}
-
-		if (notificationTemplateType === 'email' || values.type === 'email') {
-			const [recipient] = values.recipients as EmailRecipients[];
-
-			if (!recipient.from) {
-				errors.from = constantsUtils.REQUIRED_MSG;
-			}
-
-			if (!recipient.fromName[defaultLanguageId]) {
-				errors.fromName = constantsUtils.REQUIRED_MSG;
-			}
-
-			if (
-				!Array.isArray(recipient.to) &&
-				!recipient.to[defaultLanguageId]
-			) {
-				errors.to = constantsUtils.REQUIRED_MSG;
-			}
-
-			if (
-				Liferay.FeatureFlags['LPD-11165'] &&
-				Array.isArray(recipient.to) &&
-				!recipient.to.length
-			) {
-				errors.to = constantsUtils.REQUIRED_MSG;
-			}
-		}
-
-		return errors;
-	};
 
 	const onSubmit = async (notification: NotificationTemplate) => {
 		if (isSubmitted) {

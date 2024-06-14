@@ -90,6 +90,16 @@ public class SpecificationSerDes {
 			sb.append("\"");
 		}
 
+		if (specification.getListTypeDefinitionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listTypeDefinitionId\": ");
+
+			sb.append(specification.getListTypeDefinitionId());
+		}
+
 		if (specification.getOptionCategory() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -168,6 +178,15 @@ public class SpecificationSerDes {
 			map.put("key", String.valueOf(specification.getKey()));
 		}
 
+		if (specification.getListTypeDefinitionId() == null) {
+			map.put("listTypeDefinitionId", null);
+		}
+		else {
+			map.put(
+				"listTypeDefinitionId",
+				String.valueOf(specification.getListTypeDefinitionId()));
+		}
+
 		if (specification.getOptionCategory() == null) {
 			map.put("optionCategory", null);
 		}
@@ -221,6 +240,11 @@ public class SpecificationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "key")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "listTypeDefinitionId")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "optionCategory")) {
 				return false;
 			}
@@ -259,6 +283,14 @@ public class SpecificationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
 					specification.setKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "listTypeDefinitionId")) {
+
+				if (jsonParserFieldValue != null) {
+					specification.setListTypeDefinitionId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "optionCategory")) {

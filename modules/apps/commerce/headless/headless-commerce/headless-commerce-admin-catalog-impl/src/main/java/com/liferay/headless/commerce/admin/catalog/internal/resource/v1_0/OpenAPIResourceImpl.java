@@ -99,6 +99,8 @@ public class OpenAPIResourceImpl {
 
 			add(LinkedProductResourceImpl.class);
 
+			add(ListTypeDefinitionResourceImpl.class);
+
 			add(LowStockActionResourceImpl.class);
 
 			add(MappedProductResourceImpl.class);

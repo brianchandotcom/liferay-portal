@@ -14,6 +14,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Curren
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.DiagramResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.GroupedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.LinkedProductResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.ListTypeDefinitionResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.LowStockActionResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.MappedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.OptionCategoryResourceImpl;
@@ -46,6 +47,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CurrencyResourc
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LinkedProductResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LowStockActionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
@@ -108,6 +110,8 @@ public class ServletDataImpl implements ServletData {
 			_diagramResourceComponentServiceObjects);
 		Mutation.setGroupedProductResourceComponentServiceObjects(
 			_groupedProductResourceComponentServiceObjects);
+		Mutation.setListTypeDefinitionResourceComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects);
 		Mutation.setLowStockActionResourceComponentServiceObjects(
 			_lowStockActionResourceComponentServiceObjects);
 		Mutation.setMappedProductResourceComponentServiceObjects(
@@ -168,6 +172,8 @@ public class ServletDataImpl implements ServletData {
 			_groupedProductResourceComponentServiceObjects);
 		Query.setLinkedProductResourceComponentServiceObjects(
 			_linkedProductResourceComponentServiceObjects);
+		Query.setListTypeDefinitionResourceComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects);
 		Query.setLowStockActionResourceComponentServiceObjects(
 			_lowStockActionResourceComponentServiceObjects);
 		Query.setMappedProductResourceComponentServiceObjects(
@@ -452,6 +458,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							GroupedProductResourceImpl.class,
 							"postProductIdGroupedProductBatch"));
+					put(
+						"mutation#createSpecificationIdListTypeDefinition",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"postSpecificationIdListTypeDefinition"));
+					put(
+						"mutation#createSpecificationIdListTypeDefinitionBatch",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"postSpecificationIdListTypeDefinitionBatch"));
 					put(
 						"mutation#createLowStockActionsPageExportBatch",
 						new ObjectValuePair<>(
@@ -1080,6 +1096,11 @@ public class ServletDataImpl implements ServletData {
 							LinkedProductResourceImpl.class,
 							"getProductIdLinkedProductsPage"));
 					put(
+						"query#specificationIdListTypeDefinitions",
+						new ObjectValuePair<>(
+							ListTypeDefinitionResourceImpl.class,
+							"getSpecificationIdListTypeDefinitionsPage"));
+					put(
 						"query#lowStockActions",
 						new ObjectValuePair<>(
 							LowStockActionResourceImpl.class,
@@ -1583,6 +1604,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<GroupedProductResource>
 		_groupedProductResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ListTypeDefinitionResource>
+		_listTypeDefinitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<LowStockActionResource>

@@ -12,6 +12,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.LinkedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.LowStockAction;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
@@ -44,6 +45,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CurrencyResourc
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LinkedProductResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LowStockActionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
@@ -155,6 +157,14 @@ public class Query {
 
 		_linkedProductResourceComponentServiceObjects =
 			linkedProductResourceComponentServiceObjects;
+	}
+
+	public static void setListTypeDefinitionResourceComponentServiceObjects(
+		ComponentServiceObjects<ListTypeDefinitionResource>
+			listTypeDefinitionResourceComponentServiceObjects) {
+
+		_listTypeDefinitionResourceComponentServiceObjects =
+			listTypeDefinitionResourceComponentServiceObjects;
 	}
 
 	public static void setLowStockActionResourceComponentServiceObjects(
@@ -702,6 +712,24 @@ public class Query {
 			linkedProductResource -> new LinkedProductPage(
 				linkedProductResource.getProductIdLinkedProductsPage(
 					id, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {specificationIdListTypeDefinitions(id: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ListTypeDefinitionPage specificationIdListTypeDefinitions(
+			@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource -> new ListTypeDefinitionPage(
+				listTypeDefinitionResource.
+					getSpecificationIdListTypeDefinitionsPage(id)));
 	}
 
 	/**
@@ -2000,7 +2028,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {specification(id: ___){description, facetable, id, key, optionCategory, priority, title}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {specification(id: ___){description, facetable, id, key, listTypeDefinitionId, optionCategory, priority, title}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Specification specification(@GraphQLName("id") Long id)
@@ -3108,6 +3136,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("ListTypeDefinitionPage")
+	public class ListTypeDefinitionPage {
+
+		public ListTypeDefinitionPage(Page listTypeDefinitionPage) {
+			actions = listTypeDefinitionPage.getActions();
+
+			items = listTypeDefinitionPage.getItems();
+			lastPage = listTypeDefinitionPage.getLastPage();
+			page = listTypeDefinitionPage.getPage();
+			pageSize = listTypeDefinitionPage.getPageSize();
+			totalCount = listTypeDefinitionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ListTypeDefinition> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("LowStockActionPage")
 	public class LowStockActionPage {
 
@@ -4055,6 +4116,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			ListTypeDefinitionResource listTypeDefinitionResource)
+		throws Exception {
+
+		listTypeDefinitionResource.setContextAcceptLanguage(_acceptLanguage);
+		listTypeDefinitionResource.setContextCompany(_company);
+		listTypeDefinitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		listTypeDefinitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		listTypeDefinitionResource.setContextUriInfo(_uriInfo);
+		listTypeDefinitionResource.setContextUser(_user);
+		listTypeDefinitionResource.setGroupLocalService(_groupLocalService);
+		listTypeDefinitionResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			LowStockActionResource lowStockActionResource)
 		throws Exception {
 
@@ -4465,6 +4542,8 @@ public class Query {
 		_groupedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<LinkedProductResource>
 		_linkedProductResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ListTypeDefinitionResource>
+		_listTypeDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<LowStockActionResource>
 		_lowStockActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MappedProductResource>

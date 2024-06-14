@@ -982,6 +982,16 @@ public abstract class BaseSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"listTypeDefinitionId", additionalAssertFieldName)) {
+
+				if (specification.getListTypeDefinitionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("optionCategory", additionalAssertFieldName)) {
 				if (specification.getOptionCategory() == null) {
 					valid = false;
@@ -1160,6 +1170,19 @@ public abstract class BaseSpecificationResourceTestCase {
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						specification1.getKey(), specification2.getKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"listTypeDefinitionId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						specification1.getListTypeDefinitionId(),
+						specification2.getListTypeDefinitionId())) {
 
 					return false;
 				}
@@ -1368,6 +1391,11 @@ public abstract class BaseSpecificationResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("listTypeDefinitionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("optionCategory")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1432,6 +1460,7 @@ public abstract class BaseSpecificationResourceTestCase {
 				facetable = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				listTypeDefinitionId = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
 			}
 		};

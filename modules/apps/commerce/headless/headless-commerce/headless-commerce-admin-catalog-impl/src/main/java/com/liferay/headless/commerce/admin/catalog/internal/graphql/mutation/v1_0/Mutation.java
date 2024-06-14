@@ -13,6 +13,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
@@ -38,6 +39,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResourc
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CurrencyResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LowStockActionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
@@ -138,6 +140,14 @@ public class Mutation {
 
 		_groupedProductResourceComponentServiceObjects =
 			groupedProductResourceComponentServiceObjects;
+	}
+
+	public static void setListTypeDefinitionResourceComponentServiceObjects(
+		ComponentServiceObjects<ListTypeDefinitionResource>
+			listTypeDefinitionResourceComponentServiceObjects) {
+
+		_listTypeDefinitionResourceComponentServiceObjects =
+			listTypeDefinitionResourceComponentServiceObjects;
 	}
 
 	public static void setLowStockActionResourceComponentServiceObjects(
@@ -880,6 +890,37 @@ public class Mutation {
 			groupedProductResource ->
 				groupedProductResource.postProductIdGroupedProductBatch(
 					callbackURL, object));
+	}
+
+	@GraphQLField
+	public ListTypeDefinition createSpecificationIdListTypeDefinition(
+			@GraphQLName("id") Long id,
+			@GraphQLName("listTypeDefinition") ListTypeDefinition
+				listTypeDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.
+					postSpecificationIdListTypeDefinition(
+						id, listTypeDefinition));
+	}
+
+	@GraphQLField
+	public Response createSpecificationIdListTypeDefinitionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.
+					postSpecificationIdListTypeDefinitionBatch(
+						callbackURL, object));
 	}
 
 	@GraphQLField
@@ -2593,6 +2634,28 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			ListTypeDefinitionResource listTypeDefinitionResource)
+		throws Exception {
+
+		listTypeDefinitionResource.setContextAcceptLanguage(_acceptLanguage);
+		listTypeDefinitionResource.setContextCompany(_company);
+		listTypeDefinitionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		listTypeDefinitionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		listTypeDefinitionResource.setContextUriInfo(_uriInfo);
+		listTypeDefinitionResource.setContextUser(_user);
+		listTypeDefinitionResource.setGroupLocalService(_groupLocalService);
+		listTypeDefinitionResource.setRoleLocalService(_roleLocalService);
+
+		listTypeDefinitionResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		listTypeDefinitionResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			LowStockActionResource lowStockActionResource)
 		throws Exception {
 
@@ -3056,6 +3119,8 @@ public class Mutation {
 		_diagramResourceComponentServiceObjects;
 	private static ComponentServiceObjects<GroupedProductResource>
 		_groupedProductResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ListTypeDefinitionResource>
+		_listTypeDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<LowStockActionResource>
 		_lowStockActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MappedProductResource>

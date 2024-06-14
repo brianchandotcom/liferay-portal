@@ -218,6 +218,48 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
+	@DecimalMin("0")
+	@Schema(example = "31130")
+	public Long getListTypeDefinitionId() {
+		if (_listTypeDefinitionIdSupplier != null) {
+			listTypeDefinitionId = _listTypeDefinitionIdSupplier.get();
+
+			_listTypeDefinitionIdSupplier = null;
+		}
+
+		return listTypeDefinitionId;
+	}
+
+	public void setListTypeDefinitionId(Long listTypeDefinitionId) {
+		this.listTypeDefinitionId = listTypeDefinitionId;
+
+		_listTypeDefinitionIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setListTypeDefinitionId(
+		UnsafeSupplier<Long, Exception> listTypeDefinitionIdUnsafeSupplier) {
+
+		_listTypeDefinitionIdSupplier = () -> {
+			try {
+				return listTypeDefinitionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long listTypeDefinitionId;
+
+	@JsonIgnore
+	private Supplier<Long> _listTypeDefinitionIdSupplier;
+
 	@Schema
 	@Valid
 	public OptionCategory getOptionCategory() {
@@ -422,6 +464,18 @@ public class Specification implements Serializable {
 			sb.append(_escape(key));
 
 			sb.append("\"");
+		}
+
+		Long listTypeDefinitionId = getListTypeDefinitionId();
+
+		if (listTypeDefinitionId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listTypeDefinitionId\": ");
+
+			sb.append(listTypeDefinitionId);
 		}
 
 		OptionCategory optionCategory = getOptionCategory();

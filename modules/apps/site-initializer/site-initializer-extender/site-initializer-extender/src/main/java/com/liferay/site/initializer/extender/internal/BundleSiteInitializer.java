@@ -5093,25 +5093,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			addAccountsR, _dependsOn(addOrUpdateExpandoColumnsR)
 		).put(
 			addAssetListEntriesR,
-			_dependsOn(
-				addObjectDefinitionsR, addOrUpdateDDMStructuresR,
-				publishObjectDefinitionsR)
+			_dependsOn(addOrUpdateDDMStructuresR, publishObjectDefinitionsR)
 		).put(
 			addCPDefinitionsR,
-			_dependsOn(
-				addObjectDefinitionsR, addOrUpdateDocumentsR,
-				addOrUpdateExpandoColumnsR, addOrUpdateLayoutsR,
-				addOrUpdateObjectEntriesR, publishObjectDefinitionsR)
+			_dependsOn(addOrUpdateLayoutsR, addOrUpdateObjectEntriesR)
 		).put(
 			addExpandoValuesR,
 			_dependsOn(
-				addAccountsR, addCPDefinitionsR, addOrUpdateBlogPostingsR,
-				addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
-				addOrUpdateJournalArticlesR, addOrUpdateKnowledgeBaseArticlesR,
-				addOrUpdateLayoutsR, addOrUpdateLayoutsContentR,
-				addOrUpdateOrganizationsR, addOrUpdateRolesR,
-				addOrUpdateSegmentsEntriesR, addOrUpdateUserGroupsR,
-				addUserAccountsR)
+				addOrUpdateBlogPostingsR, addOrUpdateJournalArticlesR,
+				addOrUpdateKnowledgeBaseArticlesR, addOrUpdateLayoutsContentR,
+				addOrUpdateSegmentsEntriesR, addOrUpdateUserGroupsR)
 		).put(
 			addFragmentEntriesR, _dependsOn(addOrUpdateDocumentsR)
 		).put(
@@ -5119,39 +5110,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			addLayoutPageTemplatesR,
 			_dependsOn(
-				addAssetListEntriesR, addCPDefinitionsR, addObjectDefinitionsR,
-				addOrUpdateClientExtensionEntriesR, addOrUpdateDataDefinitionsR,
-				addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR,
-				addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
-				addOrUpdateJournalArticlesR, addOrUpdateLayoutsR,
-				addOrUpdateObjectEntriesR, addOrUpdateSXPBlueprintR,
-				addOrUpdateTaxonomyVocabulariesR)
+				addOrUpdateBlogPostingsR, addCPDefinitionsR,
+				addOrUpdateClientExtensionEntriesR, addOrUpdateJournalArticlesR,
+				addOrUpdateSXPBlueprintR)
 		).put(
 			addLayoutUtilityPageEntriesR,
 			_dependsOn(
-				addAssetListEntriesR, addCPDefinitionsR, addObjectDefinitionsR,
-				addOrUpdateClientExtensionEntriesR, addOrUpdateDataDefinitionsR,
-				addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR,
-				addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
-				addOrUpdateJournalArticlesR, addOrUpdateLayoutsR,
-				addOrUpdateObjectEntriesR, addOrUpdateSXPBlueprintR,
-				addOrUpdateTaxonomyVocabulariesR)
+				addOrUpdateBlogPostingsR, addCPDefinitionsR,
+				addOrUpdateClientExtensionEntriesR, addOrUpdateJournalArticlesR,
+				addOrUpdateSXPBlueprintR)
 		).put(
 			addObjectDefinitionsR,
 			_dependsOn(addOrUpdateListTypeDefinitionsR, addUserAccountsR)
 		).put(
 			addOrUpdateAccountEntryRestrictionsR,
-			_dependsOn(
-				addObjectDefinitionsR, addOrUpdateObjectFieldsR,
-				addOrUpdateObjectRelationshipsR, publishObjectDefinitionsR)
+			_dependsOn(publishObjectDefinitionsR)
 		).put(
 			addOrUpdateAssetLinkEntriesR,
 			_dependsOn(addOrUpdateBlogPostingsR, addOrUpdateDDMStructuresR)
 		).put(
 			addOrUpdateBlogPostingsR,
-			_dependsOn(
-				addKeywordsR, addOrUpdateDocumentsR, addOrUpdateExpandoColumnsR,
-				addOrUpdateTaxonomyVocabulariesR)
+			_dependsOn(addKeywordsR, addOrUpdateDocumentsR)
 		).put(
 			addOrUpdateClientExtensionEntriesR,
 			_dependsOn(addOrUpdateDocumentsR)
@@ -5162,7 +5141,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			addOrUpdateDDMTemplatesR,
 			_dependsOn(
-				addObjectDefinitionsR, addOrUpdateDDMStructuresR,
+				addOrUpdateDataDefinitionsR, addOrUpdateDDMStructuresR,
 				publishObjectDefinitionsR)
 		).put(
 			addOrUpdateDepotEntriesR, _dependsOn()
@@ -5174,69 +5153,42 @@ public class BundleSiteInitializer implements SiteInitializer {
 			addOrUpdateExpandoColumnsR, _dependsOn()
 		).put(
 			addOrUpdateJournalArticlesR,
-			_dependsOn(addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR)
+			_dependsOn(addOrUpdateDDMTemplatesR, addOrUpdateDocumentsR)
 		).put(
 			addOrUpdateKnowledgeBaseArticlesR,
 			_dependsOn(addOrUpdateExpandoColumnsR)
 		).put(
-			addOrUpdateLayoutsContentR,
-			_dependsOn(
-				addAssetListEntriesR, addCPDefinitionsR,
-				addLayoutPageTemplatesR, addLayoutUtilityPageEntriesR,
-				addObjectDefinitionsR, addOrUpdateClientExtensionEntriesR,
-				addOrUpdateDataDefinitionsR, addOrUpdateDDMStructuresR,
-				addOrUpdateDDMTemplatesR, addOrUpdateDocumentsR,
-				addOrUpdateExpandoColumnsR, addOrUpdateJournalArticlesR,
-				addOrUpdateLayoutsR, addOrUpdateObjectEntriesR,
-				addOrUpdateSXPBlueprintR, addOrUpdateTaxonomyVocabulariesR)
+			addOrUpdateLayoutsContentR, _dependsOn(addLayoutPageTemplatesR)
 		).put(
 			addOrUpdateLayoutsR, _dependsOn(addOrUpdateRolesR)
 		).put(
 			addOrUpdateListTypeDefinitionsR, _dependsOn()
 		).put(
 			addOrUpdateNotificationTemplatesR,
-			_dependsOn(addObjectDefinitionsR, publishObjectDefinitionsR)
+			_dependsOn(publishObjectDefinitionsR)
 		).put(
 			addOrUpdateObjectActionsR,
-			_dependsOn(
-				addObjectDefinitionsR, addOrUpdateAccountEntryRestrictionsR,
-				addOrUpdateObjectFieldsR, addOrUpdateObjectRelationshipsR,
-				publishObjectDefinitionsR)
+			_dependsOn(addOrUpdateAccountEntryRestrictionsR)
 		).put(
 			addOrUpdateObjectEntriesR,
-			_dependsOn(
-				addObjectDefinitionsR, addOrUpdateAccountEntryRestrictionsR,
-				addOrUpdateDocumentsR, addOrUpdateObjectFieldsR,
-				addOrUpdateObjectRelationshipsR, publishObjectDefinitionsR)
+			_dependsOn(addOrUpdateObjectActionsR, addOrUpdateDocumentsR)
 		).put(
 			addOrUpdateObjectFieldsR,
-			_dependsOn(addObjectDefinitionsR, addOrUpdateObjectRelationshipsR)
+			_dependsOn(addOrUpdateObjectRelationshipsR)
 		).put(
 			addOrUpdateObjectRelationshipsR, _dependsOn(addObjectDefinitionsR)
 		).put(
 			addOrUpdateOrganizationsR, _dependsOn(addOrUpdateExpandoColumnsR)
 		).put(
 			addOrUpdateResourcePermissionsR,
-			_dependsOn(
-				addAssetListEntriesR, addCPDefinitionsR,
-				addLayoutPageTemplatesR, addLayoutUtilityPageEntriesR,
-				addObjectDefinitionsR, addOrUpdateBlogPostingsR,
-				addOrUpdateClientExtensionEntriesR, addOrUpdateDataDefinitionsR,
-				addOrUpdateDDMStructuresR, addOrUpdateDDMTemplatesR,
-				addOrUpdateDocumentsR, addOrUpdateJournalArticlesR,
-				addOrUpdateLayoutsR, addOrUpdateObjectEntriesR,
-				addOrUpdateRolesR, addOrUpdateSXPBlueprintR,
-				addOrUpdateTaxonomyVocabulariesR)
+			_dependsOn(addSegmentsExperiencesR, addWorkflowDefinitionsR)
 		).put(
 			addOrUpdateRolesR, _dependsOn()
 		).put(
 			addOrUpdateSAPEntriesR, _dependsOn()
 		).put(
 			addOrUpdateSegmentsEntriesR,
-			_dependsOn(
-				addKeywordsR, addOrUpdateExpandoColumnsR,
-				addOrUpdateOrganizationsR, addOrUpdateRolesR,
-				addOrUpdateTaxonomyVocabulariesR, addUserAccountsR)
+			_dependsOn(addOrUpdateRolesR, addUserAccountsR)
 		).put(
 			addOrUpdateSXPBlueprintR, _dependsOn()
 		).put(
@@ -5249,20 +5201,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			addRolesAssignmentsR,
 			_dependsOn(
-				addOrUpdateOrganizationsR, addOrUpdateRolesR,
-				addOrUpdateUserGroupsR, addUserAccountsR)
+				addOrUpdateRolesR, addOrUpdateUserGroupsR, addUserAccountsR)
 		).put(
 			addSegmentsExperiencesR,
-			_dependsOn(
-				addAssetListEntriesR, addCPDefinitionsR,
-				addLayoutPageTemplatesR, addLayoutUtilityPageEntriesR,
-				addObjectDefinitionsR, addOrUpdateClientExtensionEntriesR,
-				addOrUpdateDataDefinitionsR, addOrUpdateDDMStructuresR,
-				addOrUpdateDDMTemplatesR, addOrUpdateDocumentsR,
-				addOrUpdateJournalArticlesR, addOrUpdateLayoutsR,
-				addOrUpdateLayoutsContentR, addOrUpdateObjectEntriesR,
-				addOrUpdateSegmentsEntriesR, addOrUpdateSXPBlueprintR,
-				addOrUpdateTaxonomyVocabulariesR)
+			_dependsOn(addOrUpdateLayoutsContentR, addOrUpdateSegmentsEntriesR)
 		).put(
 			addSiteConfigurationR, _dependsOn()
 		).put(
@@ -5273,17 +5215,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			addUserAccountsR,
 			_dependsOn(
 				addAccountsR, addKeywordsR, addOrUpdateDocumentsR,
-				addOrUpdateExpandoColumnsR, addOrUpdateOrganizationsR,
-				addOrUpdateTaxonomyVocabulariesR)
+				addOrUpdateOrganizationsR, addOrUpdateTaxonomyVocabulariesR)
 		).put(
 			addUserRolesR, _dependsOn(addOrUpdateRolesR, addUserAccountsR)
 		).put(
 			addWorkflowDefinitionsR, _dependsOn(addOrUpdateRolesR)
 		).put(
-			publishObjectDefinitionsR,
-			_dependsOn(
-				addObjectDefinitionsR, addOrUpdateObjectFieldsR,
-				addOrUpdateObjectRelationshipsR)
+			publishObjectDefinitionsR, _dependsOn(addOrUpdateObjectFieldsR)
 		).put(
 			setPLOEntriesR, _dependsOn()
 		).put(

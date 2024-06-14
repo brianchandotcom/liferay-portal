@@ -32,6 +32,24 @@ public interface InfoItemFormVariationsProvider<T> {
 		return null;
 	}
 
+	public default InfoItemFormVariation
+		getInfoItemFormVariationByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		for (InfoItemFormVariation infoItemFormVariation :
+				getInfoItemFormVariations(groupId)) {
+
+			if (Objects.equals(
+					externalReferenceCode,
+					infoItemFormVariation.getExternalReferenceCode())) {
+
+				return infoItemFormVariation;
+			}
+		}
+
+		return null;
+	}
+
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId);
 

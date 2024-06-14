@@ -240,29 +240,42 @@
 	_ctCollectionId=""
 >
 	<#if (_ctCollectionId?has_content)>
-		${dataFactory.toCTCollectionInsertSQL(_journalArticleModel, _ctCollectionId)}
+		${dataFactory.toInsertSQL(_journalArticleModel)}
+		${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(_ctCollectionId, _journalArticleModel, dataFactory.ctChangeTypeAddition))}
 
-		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel) />
+		<#local ddmFieldModels = dataFactory.newDDMFieldModels(_journalArticleModel)>
 
 		<#list ddmFieldModels as ddmFieldModel>
-			${dataFactory.toCTCollectionInsertSQL(ddmFieldModel, _ctCollectionId)}
+			${dataFactory.toInsertSQL(ddmFieldModel)}
+			${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(_ctCollectionId, ddmFieldModel, dataFactory.ctChangeTypeAddition))}
 		</#list>
 
-		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_journalArticleModel, ddmFieldModels) />
+		<#local ddmFieldAttributeModels = dataFactory.newDDMFieldAttributeModels(_journalArticleModel, ddmFieldModels)>
 
 		<#list ddmFieldAttributeModels as ddmFieldAttributeModel>
-			${dataFactory.toCTCollectionInsertSQL(ddmFieldAttributeModel, _ctCollectionId)}
+			${dataFactory.toInsertSQL(ddmFieldAttributeModel)}
+			${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(_ctCollectionId, ddmFieldAttributeModel, dataFactory.ctChangeTypeAddition))}
 		</#list>
 
 		<#local journalArticleLocalizationModel = dataFactory.newJournalArticleLocalizationModel(_journalArticleModel)>
 
-		${dataFactory.toCTCollectionInsertSQL(journalArticleLocalizationModel, _ctCollectionId)}
+		${dataFactory.toInsertSQL(journalArticleLocalizationModel)}
+		${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(_ctCollectionId, journalArticleLocalizationModel, dataFactory.ctChangeTypeAddition))}
 
-		${dataFactory.toCTCollectionInsertSQL(dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId), _ctCollectionId)}
+		<#local ddmTemplateLinkModel = dataFactory.newDDMTemplateLinkModel(_journalArticleModel, _journalDDMTemplateModel.templateId)>
 
-		${dataFactory.toCTCollectionInsertSQL(dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId), _ctCollectionId)}
+		${dataFactory.toInsertSQL(ddmTemplateLinkModel)}
+		${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(_ctCollectionId, ddmTemplateLinkModel, dataFactory.ctChangeTypeAddition))}
 
-		${dataFactory.toCTCollectionInsertSQL(dataFactory.newSocialActivityModel(_journalArticleModel), _ctCollectionId)}
+		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_journalArticleModel, _journalDDMStructureModel.structureId)>
+
+		${dataFactory.toInsertSQL(ddmStorageLinkModel)}
+		${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(_ctCollectionId, ddmStorageLinkModel, dataFactory.ctChangeTypeAddition))}
+
+		<#local socialActivityModel = dataFactory.newSocialActivityModel(_journalArticleModel)>
+
+		${dataFactory.toInsertSQL(socialActivityModel)}
+		${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(_ctCollectionId, socialActivityModel, dataFactory.ctChangeTypeAddition))}
 
 		<#if _insertAssetEntry>
 			<@insertAssetEntry

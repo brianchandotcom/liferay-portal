@@ -97,12 +97,12 @@ public class CPSpecificationOptionsImporter {
 			return _cpSpecificationOptionLocalService.
 				updateCPSpecificationOption(
 					cpSpecificationOption.getCPSpecificationOptionId(),
-					cpOptionCategoryId, titleMap, descriptionMap, facetable,
+					cpOptionCategoryId, 0, titleMap, descriptionMap, facetable,
 					key, priority, serviceContext);
 		}
 
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(
-			serviceContext.getUserId(), cpOptionCategoryId, titleMap,
+			serviceContext.getUserId(), cpOptionCategoryId, 0, titleMap,
 			descriptionMap, facetable, key, priority, serviceContext);
 	}
 

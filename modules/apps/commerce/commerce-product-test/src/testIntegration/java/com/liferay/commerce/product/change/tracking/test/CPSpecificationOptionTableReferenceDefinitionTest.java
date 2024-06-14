@@ -58,7 +58,7 @@ public class CPSpecificationOptionTableReferenceDefinitionTest
 		_cpSpecificationOption =
 			_cpSpecificationOptionLocalService.addCPSpecificationOption(
 				TestPropsValues.getUserId(),
-				_cpOptionCategory.getCPOptionCategoryId(),
+				_cpOptionCategory.getCPOptionCategoryId(), 0,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomBoolean(),

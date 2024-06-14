@@ -64,7 +64,7 @@ public class ProductSpecificationResourceTest
 
 		_cpSpecificationOption =
 			_cpSpecificationOptionLocalService.addCPSpecificationOption(
-				_user.getUserId(), _cpOptionCategory.getCPOptionCategoryId(),
+				_user.getUserId(), _cpOptionCategory.getCPOptionCategoryId(), 0,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),

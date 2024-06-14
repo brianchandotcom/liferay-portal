@@ -733,7 +733,7 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CPSpecificationOptionLocalServiceUtil.addCPSpecificationOption(
-			serviceContext.getUserId(), 0,
+			serviceContext.getUserId(), 0, 0,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), false,
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),

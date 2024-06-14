@@ -109,6 +109,7 @@ public class ProductSpecificationUtil {
 				cpSpecificationOptionService.addCPSpecificationOption(
 					GetterUtil.get(
 						productSpecification.getOptionCategoryId(), 0),
+					0,
 					LanguageUtils.getLocalizedMap(
 						productSpecification.getLabel()),
 					LanguageUtils.getLocalizedMap(

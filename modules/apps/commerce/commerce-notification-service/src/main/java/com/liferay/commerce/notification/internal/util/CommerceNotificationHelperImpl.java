@@ -14,6 +14,7 @@ import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
 import com.liferay.commerce.notification.util.CommerceNotificationHelper;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.commerce.order.CommerceDefinitionTermContributorRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -117,8 +118,8 @@ public class CommerceNotificationHelperImpl
 	}
 
 	private String _formatString(
-			CommerceNotificationType commerceNotificationType, int fieldType,
-			String content, Object object, Locale locale)
+			long companyId, CommerceNotificationType commerceNotificationType,
+			int fieldType, String content, Object object, Locale locale)
 		throws PortalException {
 
 		if (Validator.isNull(content)) {
@@ -144,6 +145,22 @@ public class CommerceNotificationHelperImpl
 					getDefinitionTermContributorsByContributorKey(
 						CommerceDefinitionTermConstants.
 							RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR));
+
+			EmailAddressValidator emailAddressValidator =
+				EmailAddressValidatorFactory.getInstance();
+
+			content = StringUtil.merge(
+				TransformUtil.transformToList(
+					StringUtil.split(content),
+					term -> {
+						if (emailAddressValidator.validate(companyId, term) ||
+							placeholders.contains(term)) {
+
+							return term;
+						}
+
+						return null;
+					}));
 		}
 
 		definitionTermContributors.addAll(
@@ -178,15 +195,24 @@ public class CommerceNotificationHelperImpl
 
 		Locale userLocale = user.getLocale();
 
-		String to = _formatString(
-			commerceNotificationType, _FIELD_TO,
-			commerceNotificationTemplate.getTo(), object, userLocale);
-		String cc = _formatString(
-			commerceNotificationType, _FIELD_CC,
-			commerceNotificationTemplate.getCc(), object, userLocale);
-		String bcc = _formatString(
-			commerceNotificationType, _FIELD_BCC,
-			commerceNotificationTemplate.getBcc(), object, userLocale);
+		String to = _toEmailAddresses(
+			commerceNotificationTemplate.getCompanyId(),
+			_formatString(
+				commerceNotificationTemplate.getCompanyId(),
+				commerceNotificationType, _FIELD_TO,
+				commerceNotificationTemplate.getTo(), object, userLocale));
+		String cc = _toEmailAddresses(
+			commerceNotificationTemplate.getCompanyId(),
+			_formatString(
+				commerceNotificationTemplate.getCompanyId(),
+				commerceNotificationType, _FIELD_CC,
+				commerceNotificationTemplate.getCc(), object, userLocale));
+		String bcc = _toEmailAddresses(
+			commerceNotificationTemplate.getCompanyId(),
+			_formatString(
+				commerceNotificationTemplate.getCompanyId(),
+				commerceNotificationType, _FIELD_BCC,
+				commerceNotificationTemplate.getBcc(), object, userLocale));
 
 		if (Validator.isNull(fromName)) {
 			fromName = commerceNotificationTemplate.getFromName(
@@ -195,6 +221,7 @@ public class CommerceNotificationHelperImpl
 		}
 
 		String subject = _formatString(
+			commerceNotificationTemplate.getCompanyId(),
 			commerceNotificationType, _FIELD_SUBJECT,
 			commerceNotificationTemplate.getSubject(userLocale), object,
 			userLocale);
@@ -204,56 +231,41 @@ public class CommerceNotificationHelperImpl
 
 		if (Validator.isNull(subject)) {
 			subject = _formatString(
+				commerceNotificationTemplate.getCompanyId(),
 				commerceNotificationType, _FIELD_SUBJECT,
 				commerceNotificationTemplate.getSubject(siteDefaultLocale),
 				object, siteDefaultLocale);
 		}
 
 		String body = _formatString(
+			commerceNotificationTemplate.getCompanyId(),
 			commerceNotificationType, _FIELD_BODY,
 			commerceNotificationTemplate.getBody(userLocale), object,
 			userLocale);
 
 		if (Validator.isNull(body)) {
 			body = _formatString(
+				commerceNotificationTemplate.getCompanyId(),
 				commerceNotificationType, _FIELD_BODY,
 				commerceNotificationTemplate.getBody(siteDefaultLocale), object,
 				siteDefaultLocale);
 		}
 
-		EmailAddressValidator emailAddressValidator =
-			EmailAddressValidatorFactory.getInstance();
+		for (String emailAddress : StringUtil.split(to)) {
+			User toUser = _userLocalService.fetchUserByEmailAddress(
+				user.getCompanyId(), emailAddress);
 
-		String[] toUserStrings = StringUtil.split(to);
-
-		for (String toUserString : toUserStrings) {
-			User toUser = _userLocalService.fetchUser(
-				GetterUtil.getLong(toUserString));
-
-			if ((toUser == null) &&
-				emailAddressValidator.validate(
-					user.getCompanyId(), toUserString)) {
-
-				toUser = _userLocalService.fetchUserByEmailAddress(
-					user.getCompanyId(), toUserString);
-
-				if (toUser == null) {
-					if (_log.isInfoEnabled()) {
-						_log.info("No User found with key: " + toUserString);
-					}
-
-					_addNotificationQueueEntry(
-						commerceNotificationTemplate.getGroupId(),
-						commerceNotificationType, commerceNotificationTemplate,
-						fromName, toUserString, toUserString, cc, bcc, subject,
-						body, object);
+			if (toUser == null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"No User found with email address: " + emailAddress);
 				}
-				else {
-					_addNotificationQueueEntry(
-						commerceNotificationTemplate.getGroupId(),
-						commerceNotificationType, commerceNotificationTemplate,
-						fromName, toUser, cc, bcc, subject, body, object);
-				}
+
+				_addNotificationQueueEntry(
+					commerceNotificationTemplate.getGroupId(),
+					commerceNotificationType, commerceNotificationTemplate,
+					fromName, emailAddress, emailAddress, cc, bcc, subject,
+					body, object);
 			}
 			else {
 				_addNotificationQueueEntry(
@@ -262,6 +274,46 @@ public class CommerceNotificationHelperImpl
 					fromName, toUser, cc, bcc, subject, body, object);
 			}
 		}
+	}
+
+	private String _toEmailAddresses(long companyId, String value) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		EmailAddressValidator emailAddressValidator =
+			EmailAddressValidatorFactory.getInstance();
+
+		return StringUtil.merge(
+			TransformUtil.transformToList(
+				StringUtil.split(value),
+				currentValue -> {
+					User user = _userLocalService.fetchUser(
+						GetterUtil.getLong(currentValue));
+
+					if (user != null) {
+						return user.getEmailAddress();
+					}
+
+					user = _userLocalService.fetchUserByEmailAddress(
+						companyId, currentValue);
+
+					if (user != null) {
+						return user.getEmailAddress();
+					}
+
+					if (emailAddressValidator.validate(
+							companyId, currentValue)) {
+
+						return currentValue;
+					}
+
+					if (_log.isInfoEnabled()) {
+						_log.info("Invalid email address " + currentValue);
+					}
+
+					return null;
+				}));
 	}
 
 	private static final int _FIELD_BCC = 5;

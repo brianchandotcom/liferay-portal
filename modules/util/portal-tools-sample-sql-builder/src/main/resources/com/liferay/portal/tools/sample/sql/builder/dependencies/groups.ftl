@@ -62,7 +62,7 @@
 ${dataFactory.toInsertSQL(defaultSiteHomePageSegmentsExperienceModel)}
 
 <@insertContentPageLayout
-	_fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels, homePageSegmentsExperienceModel.getSegmentsExperienceId())
+	_fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(defaultSiteHomePageContentLayoutModels, defaultSiteHomePageSegmentsExperienceModel.getSegmentsExperienceId())
 	_layoutModels = defaultSiteHomePageContentLayoutModels
 	_templateFileName = "default-homepage-layout-definition.json"
 />

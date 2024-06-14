@@ -24,6 +24,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
@@ -363,7 +364,11 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _contains(Column<?, ?> column, Object value) {
-		return column.like(StringPool.PERCENT + value + StringPool.PERCENT);
+		return DSLFunctionFactoryUtil.castText(
+			column
+		).like(
+			StringPool.PERCENT + value + StringPool.PERCENT
+		);
 	}
 
 	private Predicate _contains(
@@ -765,7 +770,11 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _startsWith(Column<?, ?> column, Object value) {
-		return column.like(value + StringPool.PERCENT);
+		return DSLFunctionFactoryUtil.castText(
+			column
+		).like(
+			value + StringPool.PERCENT
+		);
 	}
 
 	private Predicate _startsWith(

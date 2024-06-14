@@ -142,7 +142,7 @@
 
 <tr>
 	<td>INFO_TITLE</td>
-	<td>//div[@class='sidebar-header']//div[contains(@class,'component-title')]</td>
+	<td>//div[@class= 'info-panel-content']//div[@class='sidebar-header']//div[contains(@class,'component-title')]</td>
 	<td></td>
 </tr>
 <tr>

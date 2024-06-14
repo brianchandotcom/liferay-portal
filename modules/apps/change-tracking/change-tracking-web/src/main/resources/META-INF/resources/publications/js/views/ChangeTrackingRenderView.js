@@ -873,6 +873,8 @@ export default function ChangeTrackingRenderView({
 					id: `${namespace}${i}taskChangeStatusLink`,
 					label: workflowAction.label,
 					onClick: () => {
+						setShowWorkflowSuccessMessage(false);
+
 						openSimpleInputModal({
 							buttonSubmitLabel: Liferay.Language.get('done'),
 							center: true,
@@ -884,11 +886,11 @@ export default function ChangeTrackingRenderView({
 							mainFieldPlaceholder:
 								Liferay.Language.get('comment'),
 							namespace,
-							onFormSuccess: () => {
-								setShowWorkflowSuccessMessage(true);
-
-								setTimeout(() => window.location.reload(), 500);
-							},
+							onFormSuccess: () =>
+								setTimeout(
+									() => setShowWorkflowSuccessMessage(true),
+									250
+								),
 							required: false,
 							size: 'lg',
 						});
@@ -1581,7 +1583,12 @@ export default function ChangeTrackingRenderView({
 							{Liferay.FeatureFlags['LPD-10703'] ? (
 								<>
 									<WorkflowStatusLabel
-										workflowStatus={workflowStatus}
+										workflowStatus={
+											state.renderData.workflowData
+												? state.renderData.workflowData
+														.status
+												: workflowStatus
+										}
 									/>
 								</>
 							) : null}

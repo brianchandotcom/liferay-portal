@@ -7,10 +7,10 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
 import {solutions} from '../utils/constants';
-import {getRandomInt} from '../../../../utils/getRandomInt';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -95,10 +95,10 @@ test.describe('Can Publish and Manage Solutions', () => {
 		const solution = solutions[key as keyof typeof solutions];
 
 		test(`LPD-26707 can publish solution "${solution.profile.name}" template`, async ({
+			apiHelpers,
 			marketplace,
 			page,
 			publisherSolutionPage,
-			apiHelpers,
 		}) => {
 			await publisherSolutionPage.goto(
 				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`

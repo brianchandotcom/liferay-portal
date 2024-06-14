@@ -289,6 +289,7 @@ message.
 		<setup-sdk />
 
 		<setup-libs />
+		<setup-binary-sass />
 		<setup-yarn />
 
 		<gradle-execute dir="modules/core" task="deploy">
@@ -987,6 +988,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="util-java" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-slf4j" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-taglib" inheritAll="false" target="restore-latest-artifact-version" />
+	</target>
+
+	<target name="setup-binary-sass">
+		<setup-binary-sass />
 	</target>
 
 	<target name="setup-libs">

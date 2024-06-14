@@ -1684,6 +1684,38 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-binary-sass">
+		<sequential>
+			<if>
+				<os family="mac" />
+				<then>
+					<mirrors-get
+						dest="${sass.binary.dir}"
+						src="${sass.binary.mac.url}"
+					/>
+				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<mirrors-get
+							dest="${sass.binary.dir}"
+							src="${sass.binary.linux.url}"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<mirrors-get
+							dest="${sass.binary.dir}"
+							src="${sass.binary.windows.url}"
+						/>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-libs">
 		<sequential>
 			<gradle-execute task="setUpLibs">

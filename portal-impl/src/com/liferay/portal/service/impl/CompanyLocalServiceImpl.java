@@ -543,9 +543,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try {
 			return _transactionAwareInvoke(
 				() -> {
-					companyPersistence.clearCache();
-					_virtualHostPersistence.clearCache();
-
 					Company company = fromCompany.cloneWithOriginalValues();
 
 					company.setCompanyId(companyId);

@@ -99,7 +99,7 @@ public class ExportImportDisplayPagesTest {
 	}
 
 	@Test
-	public void testExportImportDisplayPage() throws Exception {
+	public void testJournalArticleExportImportDisplayPage() throws Exception {
 		String className = "com.liferay.journal.model.JournalArticle";
 
 		long classNameId = _portal.getClassNameId(className);
@@ -127,7 +127,7 @@ public class ExportImportDisplayPagesTest {
 	}
 
 	@Test
-	public void testExportImportDisplayPageWithSiteTiedVariation()
+	public void testJournalArticleExportImportDisplayPageWithSiteTiedVariation()
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(
@@ -163,7 +163,7 @@ public class ExportImportDisplayPagesTest {
 	}
 
 	@Test
-	public void testExportImportDisplayPageWithSiteTiedVariationMissingInTargetSite()
+	public void testJournalArticleExportImportDisplayPageWithSiteTiedVariationMissingInTargetSite()
 		throws Exception {
 
 		long classNameId = _portal.getClassNameId(

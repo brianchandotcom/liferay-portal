@@ -5017,7 +5017,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return userPersistence.findByPrimaryKey(userId);
 		}
 
-		EntityCacheUtil.putResult(UserImpl.class, user, false, true);
+		EntityCacheUtil.putResult(UserImpl.class, user, false, false);
 
 		return user;
 	}

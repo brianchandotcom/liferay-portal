@@ -47,6 +47,14 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
+	async getObjectDefinitionByExternalReferenceCode(
+		externalReferenceCode: string
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/by-external-reference-code/${externalReferenceCode}`
+		);
+	}
+
 	async postObjectActionByExternalReferenceCode(
 		externalReferenceCode: string,
 		objectAction?: Partial<ObjectAction>

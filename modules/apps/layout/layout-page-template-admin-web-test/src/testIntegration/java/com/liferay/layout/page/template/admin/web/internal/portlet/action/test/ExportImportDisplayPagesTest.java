@@ -109,11 +109,11 @@ public class ExportImportDisplayPagesTest {
 
 		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
 
-		_assertExportImportDisplayPage(classNameId, classTypeId);
+		_assertExportImportDisplayPage(classNameId, classTypeId, classTypeId);
 	}
 
 	private void _assertExportImportDisplayPage(
-			long classNameId, long classTypeId)
+			long classNameId, long classTypeId, long expectedClassTypeId)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
@@ -196,6 +196,11 @@ public class ExportImportDisplayPagesTest {
 				_group2.getGroupId(), layoutPageTemplateEntryKey);
 
 		Assert.assertNotNull(layoutPageTemplateEntry2);
+
+		Assert.assertEquals(
+			classNameId, layoutPageTemplateEntry2.getClassNameId());
+		Assert.assertEquals(
+			expectedClassTypeId, layoutPageTemplateEntry2.getClassTypeId());
 
 		Layout layout2 = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry2.getPlid());

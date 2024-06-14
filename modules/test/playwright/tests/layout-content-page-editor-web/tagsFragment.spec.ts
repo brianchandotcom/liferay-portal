@@ -17,8 +17,6 @@ import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
-const OBJECT_DEFINITION_PATH = 'object-admin/v1.0/object-definitions';
-
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
@@ -37,8 +35,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	// Get the id of the tags object from the site initializer
 
 	const {id: objectId} =
-		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
-			OBJECT_DEFINITION_PATH,
+		await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 			TAGS_OBJECT_ERC
 		);
 

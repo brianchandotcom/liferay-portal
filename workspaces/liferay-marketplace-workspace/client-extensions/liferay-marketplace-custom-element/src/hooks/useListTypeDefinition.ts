@@ -7,11 +7,15 @@ import useSWR from 'swr';
 
 import fetcher from '../services/fetcher';
 
-const useListTypeDefinition = (externalReferenceCode: string) => {
-	return useSWR(`/list-type-definition/${externalReferenceCode}`, () =>
-		fetcher<ListTypeDefinition>(
-			`o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`
-		)
+const useListTypeDefinition = (externalReferenceCode: string | null) => {
+	return useSWR(
+		externalReferenceCode
+			? `/list-type-definition/${externalReferenceCode}`
+			: null,
+		() =>
+			fetcher<ListTypeDefinition>(
+				`o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`
+			)
 	);
 };
 

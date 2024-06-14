@@ -15,7 +15,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -109,7 +108,7 @@ public class PortalAcceptancePullRequestJob
 	}
 
 	@Override
-	protected Set<TestBatch> getTestBatches() {
+	protected List<TestBatch> getTestBatches() {
 		if (!_isRelevantTestSuite()) {
 			return super.getTestBatches();
 		}
@@ -125,13 +124,7 @@ public class PortalAcceptancePullRequestJob
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 			workingDirectory, modifiedFilesList);
 
-		List<TestBatch> testBatchList = relevantTestSuite.getTestBatches();
-
-		Set<TestBatch> testBatchSet = new HashSet<>(testBatchList);
-
-		testBatchSet.addAll(relevantTestSuite.getTestBatches());
-
-		return testBatchSet;
+		return relevantTestSuite.getTestBatches();
 	}
 
 	private boolean _hasMatchingFiles(List<PathMatcher> pathMatchers) {

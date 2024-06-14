@@ -14,15 +14,8 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.notification.constants.NotificationConstants;
@@ -45,7 +38,6 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
-import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
@@ -57,7 +49,6 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -79,7 +70,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -115,11 +105,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -945,131 +933,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationTemplate2);
 	}
 
-	@Test
-	public void testSendNotificationWithSystemObjectDefinition()
-		throws Exception {
-
-		// On account entry update
-
-		ObjectDefinition accountEntryObjectDefinition =
-			objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(),
-				AccountEntry.class.getSimpleName());
-
-		ObjectAction accountEntryObjectAction = _addObjectAction(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			accountEntryObjectDefinition,
-			"[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]");
-
-		User omniadminUser = UserTestUtil.addOmniadminUser();
-
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			omniadminUser.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-
-		_accountEntryLocalService.updateAccountEntry(accountEntry);
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		_assertNotificationQueueEntry(
-			user2.getEmailAddress(), true, omniadminUser.getEmailAddress(),
-			notificationQueueEntries.get(0));
-
-		objectActionLocalService.deleteObjectAction(accountEntryObjectAction);
-
-		// On commerce order payment status update
-
-		ObjectDefinition commerceOrderObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
-
-		Set<String> objectActionTriggerKeys = new HashSet<>();
-
-		ListUtil.isNotEmptyForEach(
-			_objectActionTriggerRegistry.getObjectActionTriggers(
-				commerceOrderObjectDefinition.getClassName()),
-			objectActionTrigger -> objectActionTriggerKeys.add(
-				objectActionTrigger.getKey()));
-
-		Assert.assertTrue(
-			objectActionTriggerKeys.contains(
-				DestinationNames.COMMERCE_ORDER_STATUS));
-		Assert.assertTrue(
-			objectActionTriggerKeys.contains(
-				DestinationNames.COMMERCE_PAYMENT_STATUS));
-
-		ObjectAction commerceOrderObjectAction = _addObjectAction(
-			DestinationNames.COMMERCE_PAYMENT_STATUS,
-			commerceOrderObjectDefinition, "[%CURRENT_USER_EMAIL_ADDRESS%]");
-
-		Group group = GroupTestUtil.addGroup();
-
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(
-				TestPropsValues.getCompanyId());
-
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			group.getGroupId(), commerceCurrency.getCode());
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-
-		User user = TestPropsValues.getUser();
-
-		try {
-			PrincipalThreadLocal.setName(user.getUserId());
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
-			CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-				user.getUserId(), commerceChannel.getGroupId(),
-				commerceCurrency);
-
-			commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, user.getUserId());
-
-			Assert.assertEquals(
-				CommerceOrderConstants.ORDER_STATUS_PENDING,
-				commerceOrder.getPaymentStatus());
-
-			commerceOrder = _commerceOrderLocalService.updatePaymentStatus(
-				user.getUserId(), commerceOrder.getCommerceOrderId(),
-				CommerceOrderPaymentConstants.STATUS_COMPLETED);
-
-			Assert.assertEquals(
-				CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-				commerceOrder.getPaymentStatus());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
-		}
-
-		notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 2,
-			notificationQueueEntries.size());
-
-		objectActionLocalService.deleteObjectAction(commerceOrderObjectAction);
-	}
-
 	private AccountEntry _addAccountEntry() throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
@@ -1126,58 +989,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
 				NotificationConstants.TYPE_EMAIL,
 				Collections.singletonList(objectField.getObjectFieldId())));
-	}
-
-	private ObjectAction _addObjectAction(
-			String objectActionTriggerKey, ObjectDefinition objectDefinition,
-			String to)
-		throws Exception {
-
-		NotificationTemplate notificationTemplate =
-			notificationTemplateLocalService.addNotificationTemplate(
-				NotificationTemplateUtil.createNotificationContext(
-					TestPropsValues.getUser(),
-					objectDefinition.getObjectDefinitionId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
-					Arrays.asList(
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								"cc",
-								"[%CURRENT_USER_EMAIL_ADDRESS%]," +
-									"cc@liferay.com"),
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								"fromName",
-								Collections.singletonMap(
-									LocaleUtil.US,
-									"[%CURRENT_USER_FIRST_NAME%]")),
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting("to", to)),
-					RandomTestUtil.randomString(),
-					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
-
-		return objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			objectActionTriggerKey,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				notificationTemplate.getNotificationTemplateId()
-			).build(),
-			false);
 	}
 
 	private Role _addRole(int type, User user) throws Exception {

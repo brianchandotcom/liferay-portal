@@ -52,14 +52,14 @@ public class CommerceNotificationTestUtil {
 	}
 
 	public static CommerceNotificationTemplate addNotificationTemplate(
-			String cc, String bcc, String notificationType,
+			String to, String cc, String bcc, String notificationType,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCommerceNotificationTemplate(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), cc,
-			bcc, notificationType, serviceContext);
+			RandomTestUtil.randomString(), to, cc, bcc, notificationType,
+			serviceContext);
 	}
 
 }

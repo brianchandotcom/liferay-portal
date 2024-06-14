@@ -236,7 +236,8 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
+			List<Portlet> portlets =
+				layoutTypePortlet.getAllNonembeddedPortlets();
 
 			for (Portlet portlet : portlets) {
 				String rootPortletId = PortletIdCodec.decodePortletName(

@@ -42,7 +42,7 @@ public class PackageRunBuildTask extends PackageRunTask {
 		File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 
-		if (!portalRootDir.exists()) {
+		if ((portalRootDir == null) || !portalRootDir.exists()) {
 			return null;
 		}
 

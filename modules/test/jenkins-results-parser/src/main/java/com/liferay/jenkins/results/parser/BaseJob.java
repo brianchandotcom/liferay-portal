@@ -152,7 +152,7 @@ public abstract class BaseJob implements Job {
 				Objects.equals(getTestSuiteName(), "relevant")) {
 
 				_batchTestClassGroups.addAll(
-					getTestBatchBatchTestClassGroups(getTestBatches()));
+					getBatchTestClassGroups(getTestBatches()));
 			}
 			else {
 				_batchTestClassGroups.addAll(
@@ -879,6 +879,178 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected List<BatchTestClassGroup> getBatchTestClassGroups(
+		List<TestBatch> testBatches) {
+
+		if ((testBatches == null) || testBatches.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Started creating ", String.valueOf(testBatches.size()),
+				" batch test class groups at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
+
+		List<Callable<BatchTestClassGroup>> callables = new ArrayList<>();
+
+		String testSuiteName = getTestSuiteName();
+
+		final Job job = this;
+
+		Map<File, List<Callable<BatchTestClassGroup>>> testBaseDirCallablesMap =
+			new HashMap<>();
+
+		for (TestBatch testBatch : testBatches) {
+			File testBaseDir = null;
+
+			String batchName = testBatch.getName();
+
+			JobProperty jobProperty = getJobProperty(
+				"test.base.dir", testSuiteName, batchName);
+
+			if ((jobProperty != null) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(
+					jobProperty.getValue())) {
+
+				testBaseDir = new File(jobProperty.getValue());
+			}
+
+			Callable<BatchTestClassGroup> callable =
+				new Callable<BatchTestClassGroup>() {
+
+					@Override
+					public BatchTestClassGroup call() throws Exception {
+						for (int i = 0; i < _pauseRetryCount; i++) {
+							try {
+								return _call();
+							}
+							catch (Exception exception) {
+								String message = exception.getMessage();
+
+								if ((message != null) &&
+									message.contains(
+										"Errors found in Playwright tests")) {
+
+									throw exception;
+								}
+
+								System.out.println(
+									JenkinsResultsParserUtil.combine(
+										"[", batchName, "] Retry creating a ",
+										"test class group in ",
+										String.valueOf(
+											_pauseRetryDuration / 1000),
+										" seconds."));
+
+								JenkinsResultsParserUtil.sleep(
+									_pauseRetryDuration);
+							}
+						}
+
+						return _call();
+					}
+
+					private BatchTestClassGroup _call() throws Exception {
+						long start =
+							JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"[", batchName, "] Started batch test class ",
+								"group at ",
+								JenkinsResultsParserUtil.toDateString(
+									new Date(start))));
+
+						BatchTestClassGroup batchTestClassGroup =
+							TestClassGroupFactory.newBatchTestClassGroup(
+								job, testBatch);
+
+						long duration =
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								start;
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"[", batchName, "] Completed batch test class ",
+								"group in ",
+								JenkinsResultsParserUtil.toDurationString(
+									duration),
+								" at ",
+								JenkinsResultsParserUtil.toDateString(
+									new Date())));
+
+						if (batchTestClassGroup.getAxisCount() <= 0) {
+							return null;
+						}
+
+						return batchTestClassGroup;
+					}
+
+					private final Integer _pauseRetryCount = 2;
+					private final Integer _pauseRetryDuration = 5000;
+
+				};
+
+			if (testBaseDir == null) {
+				callables.add(callable);
+
+				continue;
+			}
+
+			List<Callable<BatchTestClassGroup>> testBaseDirCallables =
+				testBaseDirCallablesMap.get(testBaseDir);
+
+			if (testBaseDirCallables == null) {
+				testBaseDirCallables = new ArrayList<>();
+
+				testBaseDirCallablesMap.put(testBaseDir, testBaseDirCallables);
+			}
+
+			testBaseDirCallables.add(callable);
+
+			testBaseDirCallablesMap.put(testBaseDir, testBaseDirCallables);
+		}
+
+		ParallelExecutor<BatchTestClassGroup> parallelExecutor =
+			new ParallelExecutor<>(
+				callables, _executorService, "getBatchTestClassGroups");
+
+		List<BatchTestClassGroup> batchTestClassGroups;
+
+		try {
+			batchTestClassGroups = parallelExecutor.execute();
+
+			for (List<Callable<BatchTestClassGroup>> testBaseDirCallables :
+					testBaseDirCallablesMap.values()) {
+
+				parallelExecutor = new ParallelExecutor<>(
+					testBaseDirCallables, _executorService,
+					"getBatchTestClassGroups2");
+
+				batchTestClassGroups.addAll(parallelExecutor.execute());
+			}
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
+
+		batchTestClassGroups.removeAll(Collections.singleton(null));
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Completed creating ",
+				String.valueOf(batchTestClassGroups.size()),
+				" batch test class groups in ",
+				JenkinsResultsParserUtil.toDurationString(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start),
+				" at ", JenkinsResultsParserUtil.toDateString(new Date())));
+
+		return batchTestClassGroups;
+	}
+
+	protected List<BatchTestClassGroup> getBatchTestClassGroups(
 		Set<String> rawBatchNames) {
 
 		if ((rawBatchNames == null) || rawBatchNames.isEmpty()) {
@@ -1145,178 +1317,6 @@ public abstract class BaseJob implements Job {
 		}
 
 		return set;
-	}
-
-	protected List<BatchTestClassGroup> getTestBatchBatchTestClassGroups(
-		List<TestBatch> testBatches) {
-
-		if ((testBatches == null) || testBatches.isEmpty()) {
-			return new ArrayList<>();
-		}
-
-		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Started creating ", String.valueOf(testBatches.size()),
-				" batch test class groups at ",
-				JenkinsResultsParserUtil.toDateString(new Date(start))));
-
-		List<Callable<BatchTestClassGroup>> callables = new ArrayList<>();
-
-		String testSuiteName = getTestSuiteName();
-
-		final Job job = this;
-
-		Map<File, List<Callable<BatchTestClassGroup>>> testBaseDirCallablesMap =
-			new HashMap<>();
-
-		for (TestBatch testBatch : testBatches) {
-			File testBaseDir = null;
-
-			String batchName = testBatch.getName();
-
-			JobProperty jobProperty = getJobProperty(
-				"test.base.dir", testSuiteName, batchName);
-
-			if ((jobProperty != null) &&
-				!JenkinsResultsParserUtil.isNullOrEmpty(
-					jobProperty.getValue())) {
-
-				testBaseDir = new File(jobProperty.getValue());
-			}
-
-			Callable<BatchTestClassGroup> callable =
-				new Callable<BatchTestClassGroup>() {
-
-					@Override
-					public BatchTestClassGroup call() throws Exception {
-						for (int i = 0; i < _pauseRetryCount; i++) {
-							try {
-								return _call();
-							}
-							catch (Exception exception) {
-								String message = exception.getMessage();
-
-								if ((message != null) &&
-									message.contains(
-										"Errors found in Playwright tests")) {
-
-									throw exception;
-								}
-
-								System.out.println(
-									JenkinsResultsParserUtil.combine(
-										"[", batchName, "] Retry creating a ",
-										"test class group in ",
-										String.valueOf(
-											_pauseRetryDuration / 1000),
-										" seconds."));
-
-								JenkinsResultsParserUtil.sleep(
-									_pauseRetryDuration);
-							}
-						}
-
-						return _call();
-					}
-
-					private BatchTestClassGroup _call() throws Exception {
-						long start =
-							JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								"[", batchName, "] Started batch test class ",
-								"group at ",
-								JenkinsResultsParserUtil.toDateString(
-									new Date(start))));
-
-						BatchTestClassGroup batchTestClassGroup =
-							TestClassGroupFactory.newBatchTestClassGroup(
-								job, testBatch);
-
-						long duration =
-							JenkinsResultsParserUtil.getCurrentTimeMillis() -
-								start;
-
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								"[", batchName, "] Completed batch test class ",
-								"group in ",
-								JenkinsResultsParserUtil.toDurationString(
-									duration),
-								" at ",
-								JenkinsResultsParserUtil.toDateString(
-									new Date())));
-
-						if (batchTestClassGroup.getAxisCount() <= 0) {
-							return null;
-						}
-
-						return batchTestClassGroup;
-					}
-
-					private final Integer _pauseRetryCount = 2;
-					private final Integer _pauseRetryDuration = 5000;
-
-				};
-
-			if (testBaseDir == null) {
-				callables.add(callable);
-
-				continue;
-			}
-
-			List<Callable<BatchTestClassGroup>> testBaseDirCallables =
-				testBaseDirCallablesMap.get(testBaseDir);
-
-			if (testBaseDirCallables == null) {
-				testBaseDirCallables = new ArrayList<>();
-
-				testBaseDirCallablesMap.put(testBaseDir, testBaseDirCallables);
-			}
-
-			testBaseDirCallables.add(callable);
-
-			testBaseDirCallablesMap.put(testBaseDir, testBaseDirCallables);
-		}
-
-		ParallelExecutor<BatchTestClassGroup> parallelExecutor =
-			new ParallelExecutor<>(
-				callables, _executorService, "getBatchTestClassGroups");
-
-		List<BatchTestClassGroup> batchTestClassGroups;
-
-		try {
-			batchTestClassGroups = parallelExecutor.execute();
-
-			for (List<Callable<BatchTestClassGroup>> testBaseDirCallables :
-					testBaseDirCallablesMap.values()) {
-
-				parallelExecutor = new ParallelExecutor<>(
-					testBaseDirCallables, _executorService,
-					"getBatchTestClassGroups2");
-
-				batchTestClassGroups.addAll(parallelExecutor.execute());
-			}
-		}
-		catch (TimeoutException timeoutException) {
-			throw new RuntimeException(timeoutException);
-		}
-
-		batchTestClassGroups.removeAll(Collections.singleton(null));
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Completed creating ",
-				String.valueOf(batchTestClassGroups.size()),
-				" batch test class groups in ",
-				JenkinsResultsParserUtil.toDurationString(
-					JenkinsResultsParserUtil.getCurrentTimeMillis() - start),
-				" at ", JenkinsResultsParserUtil.toDateString(new Date())));
-
-		return batchTestClassGroups;
 	}
 
 	protected List<TestBatch> getTestBatches() {

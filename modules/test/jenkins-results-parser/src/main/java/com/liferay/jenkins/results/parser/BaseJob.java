@@ -137,24 +137,18 @@ public abstract class BaseJob implements Job {
 
 			Properties buildProperties;
 
-			boolean relevantEngineProperty = false;
-
 			try {
 				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-
-				if (Objects.equals(
-						buildProperties.getProperty("relevant.engine.enabled"),
-						"true")) {
-
-					relevantEngineProperty = true;
-				}
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(
 					"Unable to get build properties", ioException);
 			}
 
-			if (relevantEngineProperty &&
+			boolean relevantEngineEnabled = Boolean.parseBoolean(
+				buildProperties.getProperty("relevant.engine.enabled"));
+
+			if (relevantEngineEnabled &&
 				Objects.equals(getTestSuiteName(), "relevant")) {
 
 				_batchTestClassGroups.addAll(

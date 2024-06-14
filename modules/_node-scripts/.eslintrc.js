@@ -7,13 +7,31 @@ const path = require('path');
 
 const config = require(path.join(__dirname, '..', '.eslintrc.js'));
 
+config.ignorePatterns = [
+	...config.ignorePatterns,
+
+	// Ignore files with top level await (not supported until eslint v8)
+
+	'bundle/sass/runSass.mjs',
+];
+
 config.rules = {
 	...config.rules,
 	'@liferay/no-dynamic-require': 'off',
 	'@liferay/no-extraneous-dependencies': [
 		'error',
-		['child_process', 'crypto', 'fs', 'module', 'path', 'os', 'url'],
+		[
+			'child_process',
+			'crypto',
+			'fs',
+			'module',
+			'path',
+			'os',
+			'stream',
+			'url',
+		],
 	],
+	'@liferay/portal/no-global-fetch': 'off',
 	'no-console': 'off',
 };
 

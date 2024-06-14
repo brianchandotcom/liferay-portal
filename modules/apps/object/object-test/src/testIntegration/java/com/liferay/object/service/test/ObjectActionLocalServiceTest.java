@@ -5,7 +5,9 @@
 
 package com.liferay.object.service.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
@@ -16,6 +18,17 @@ import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.constants.NotificationTemplateConstants;
+import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.service.NotificationRecipientLocalServiceUtil;
+import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.notification.service.NotificationTemplateLocalServiceUtil;
+import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
@@ -105,6 +118,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -150,7 +164,8 @@ public class ObjectActionLocalServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE,
-			ScriptManagementConfigurationTestRule.INSTANCE);
+			ScriptManagementConfigurationTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -1253,6 +1268,70 @@ public class ObjectActionLocalServiceTest {
 	@Test
 	public void testAddObjectActionWithSystemObject() throws Exception {
 
+		// Account entry system object
+
+		ObjectDefinition accountEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(),
+				AccountEntry.class.getSimpleName());
+
+		// Add object action to send an email notification after updating
+		// account entry
+
+		ObjectAction objectAction1 = _addNotificationObjectAction(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			accountEntryObjectDefinition,
+			"[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]");
+
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
+			omniadminUser.getUserId(), 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null, null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		_accountEntryLocalService.updateAccountEntry(accountEntry1);
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		Map<String, Object> notificationRecipientSettingsMap =
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(
+					notificationQueueEntries.get(0));
+
+		User user = TestPropsValues.getUser();
+
+		AssertUtils.assertEqualsSorted(
+			StringUtil.split(user.getEmailAddress()),
+			StringUtil.split(
+				String.valueOf(notificationRecipientSettingsMap.get("bcc"))));
+		Assert.assertEquals(
+			user.getEmailAddress() + ",cc@liferay.com",
+			notificationRecipientSettingsMap.get("cc"));
+		Assert.assertEquals(
+			user.getEmailAddress(),
+			notificationRecipientSettingsMap.get("from"));
+		Assert.assertEquals(
+			user.getFirstName(),
+			notificationRecipientSettingsMap.get("fromName"));
+
+		Assert.assertTrue(
+			(boolean)notificationRecipientSettingsMap.get("singleRecipient"));
+		AssertUtils.assertEqualsSorted(
+			StringUtil.split(omniadminUser.getEmailAddress()),
+			StringUtil.split(
+				String.valueOf(notificationRecipientSettingsMap.get("to"))));
+
 		// Commerce order system object
 
 		ObjectDefinition commerceOrderObjectDefinition =
@@ -1278,7 +1357,7 @@ public class ObjectActionLocalServiceTest {
 		// CommerceOrderConstants#ORDER_STATUS_PROCESSING after updating payment
 		// status
 
-		ObjectAction objectAction1 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			commerceOrderObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1309,7 +1388,7 @@ public class ObjectActionLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		AccountEntry accountEntry = CommerceTestUtil.addAccount(
+		AccountEntry accountEntry2 = CommerceTestUtil.addAccount(
 			group.getGroupId(), TestPropsValues.getUserId());
 
 		CommerceCurrency commerceCurrency =
@@ -1319,7 +1398,7 @@ public class ObjectActionLocalServiceTest {
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			group.getGroupId(), commerceCurrency.getCode());
 
-		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction4 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			commerceOrderObjectDefinition.getObjectDefinitionId(), true,
 			"orderStatus == 10", RandomTestUtil.randomString(),
@@ -1339,7 +1418,7 @@ public class ObjectActionLocalServiceTest {
 					).put(
 						"name", "accountId"
 					).put(
-						"value", accountEntry.getAccountEntryId()
+						"value", accountEntry2.getAccountEntryId()
 					),
 					JSONUtil.put(
 						"inputAsValue", true
@@ -1380,9 +1459,9 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
+		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
 
 		try {
 			PrincipalThreadLocal.setName(_user.getUserId());
@@ -1418,7 +1497,7 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertNotNull(commerceOrder2);
 
 			Assert.assertEquals(
-				accountEntry.getAccountEntryId(),
+				accountEntry2.getAccountEntryId(),
 				commerceOrder2.getCommerceAccountId());
 			Assert.assertEquals(
 				commerceCurrency.getCommerceCurrencyId(),
@@ -1428,9 +1507,9 @@ public class ObjectActionLocalServiceTest {
 				commerceOrder2.getOrderStatus());
 		}
 		finally {
+			PrincipalThreadLocal.setName(originalName);
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
 		}
 
 		// Organization system object
@@ -1455,7 +1534,7 @@ public class ObjectActionLocalServiceTest {
 				organizationObjectDefinition.getObjectDefinitionId()
 			).build());
 
-		ObjectAction objectAction3 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction5 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			organizationObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1495,7 +1574,7 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
-		ObjectAction objectAction4 = _addObjectAction(
+		ObjectAction objectAction6 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -1605,7 +1684,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to create user after adding an object entry
 
-		ObjectAction objectAction5 = _addObjectAction(
+		ObjectAction objectAction7 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -1656,7 +1735,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to update user after adding a user
 
-		ObjectAction objectAction6 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction8 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			userObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1702,7 +1781,7 @@ public class ObjectActionLocalServiceTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			User user = _userLocalService.getUserByScreenName(
+			user = _userLocalService.getUserByScreenName(
 				TestPropsValues.getCompanyId(), "ScreenName");
 
 			Assert.assertEquals("email@liferay.com", user.getEmailAddress());
@@ -1764,7 +1843,7 @@ public class ObjectActionLocalServiceTest {
 		// While adding a user, the user is updated and it must not trigger
 		// object actions
 
-		User user = UserTestUtil.addUser();
+		user = UserTestUtil.addUser();
 
 		Assert.assertEquals(1, _argumentsList.size());
 
@@ -1784,6 +1863,8 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction4);
 		_objectActionLocalService.deleteObjectAction(objectAction5);
 		_objectActionLocalService.deleteObjectAction(objectAction6);
+		_objectActionLocalService.deleteObjectAction(objectAction7);
+		_objectActionLocalService.deleteObjectAction(objectAction8);
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
 		_objectFieldLocalService.deleteObjectField(objectField3);
@@ -2188,6 +2269,77 @@ public class ObjectActionLocalServiceTest {
 				_objectDefinition.getClassName()));
 	}
 
+	private ObjectAction _addNotificationObjectAction(
+			String objectActionTriggerKey, ObjectDefinition objectDefinition,
+			String to)
+		throws Exception {
+
+		NotificationTemplate notificationTemplate =
+			NotificationTemplateLocalServiceUtil.createNotificationTemplate(
+				RandomTestUtil.randomInt());
+
+		User user = TestPropsValues.getUser();
+
+		notificationTemplate.setUserId(user.getUserId());
+
+		notificationTemplate.setObjectDefinitionId(
+			objectDefinition.getObjectDefinitionId());
+		notificationTemplate.setBody(RandomTestUtil.randomString());
+		notificationTemplate.setDescription(RandomTestUtil.randomString());
+		notificationTemplate.setEditorType(
+			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
+		notificationTemplate.setName(RandomTestUtil.randomString());
+		notificationTemplate.setSubject(RandomTestUtil.randomString());
+		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
+
+		NotificationContext notificationContext = new NotificationContext();
+
+		notificationContext.setAttachmentObjectFieldIds(
+			Collections.emptyList());
+		notificationContext.setNotificationRecipient(
+			NotificationRecipientLocalServiceUtil.createNotificationRecipient(
+				RandomTestUtil.randomInt()));
+		notificationContext.setNotificationRecipientSettings(
+			Arrays.asList(
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"bcc", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"cc", "[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"fromName",
+						Collections.singletonMap(
+							LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting("to", to)));
+		notificationContext.setNotificationTemplate(notificationTemplate);
+		notificationContext.setType(NotificationConstants.TYPE_EMAIL);
+
+		notificationTemplate =
+			_notificationTemplateLocalService.addNotificationTemplate(
+				notificationContext);
+
+		return _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			objectActionTriggerKey,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				notificationTemplate.getNotificationTemplateId()
+			).build(),
+			false);
+	}
+
 	private void _addObjectAction(
 			String errorMessage, String externalReferenceCode, String label,
 			String name, String objectActionTriggerKey, boolean system)
@@ -2495,6 +2647,9 @@ public class ObjectActionLocalServiceTest {
 		}
 	}
 
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
 
 	@Inject
@@ -2508,6 +2663,13 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private NotificationQueueEntryLocalService
+		_notificationQueueEntryLocalService;
+
+	@Inject
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Inject
 	private ObjectActionEngine _objectActionEngine;

@@ -605,30 +605,6 @@ definition {
 			valueScope = "Company");
 	}
 
-	@description = "LPS-142175 - Verify it is possible to publish an imported custom object"
-	@ignore = "Test Stub"
-	@priority = 4
-	test CanPublishImportedObject {
-		ObjectExportImport.importObject(
-			objectFileName = "ImportedObjectWithField",
-			objectName = "ImportedObjectWithField146365");
-
-		AssertElementPresent(
-			key_labelName = "Imported Object With Field",
-			locator1 = "CreateObject#OBJECT_NAME");
-
-		ObjectPortlet.selectCustomObject(label = "Imported Object With Field");
-
-		PortletEntry.publish();
-
-		ObjectAdmin.openObjectAdmin();
-
-		AssertTextEquals(
-			key_label = "Imported Object With Field",
-			locator1 = "ObjectAdmin#OBJECT_STATUS",
-			value1 = "Approved");
-	}
-
 	@description = "LPS-142175 - Verify that an imported custom object is created with Draft Status"
 	@priority = 4
 	test ImportedObjectIsDraft {

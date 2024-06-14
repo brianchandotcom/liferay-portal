@@ -5,12 +5,19 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class CommerceAdminOrderDetailsPage {
+import {CommerceDNDTablePage} from './commerceDNDTablePage';
+
+export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly commerceOrderAccountEntryName: Locator;
 	readonly headerDetailsTitle: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
+		super(
+			page,
+			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_editOrderContainer .dnd-table'
+		);
+
 		this.commerceOrderAccountEntryName = page.getByTestId(
 			'commerceOrderAccountEntryName'
 		);

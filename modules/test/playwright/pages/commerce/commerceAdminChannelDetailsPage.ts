@@ -6,15 +6,20 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-
 export class CommerceAdminChannelDetailsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly countryTab: Locator;
 	readonly page: Page;
+	readonly saveButton: Locator;
+	readonly showSeparateOrderItemsToggle: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.countryTab = page.getByRole('link', {name: 'Countries'});
+		this.saveButton = page.getByRole('link', {name: 'Save'});
+		this.showSeparateOrderItemsToggle = page.getByLabel(
+			'Show Separate Order Items'
+		);
 		this.page = page;
 	}
 

@@ -95,6 +95,10 @@ export default async function installSassBinary() {
 }
 
 async function downloadAndExtract(url, dir) {
+	if (process.env.CI) {
+		throw new Error('Downloading the binary Sass compiler from CI servers is not allowed');
+	}
+
 	const parts = url.split('/');
 	const bundleName = parts[parts.length - 1];
 	const bundlePath = path.join(dir, bundleName);

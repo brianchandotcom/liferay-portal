@@ -333,7 +333,8 @@ public class CompanyLocalServiceDBPartitionTest
 		Company company = CompanyTestUtil.addCompany();
 
 		String name = RandomTestUtil.randomString();
-		String virtualHostname = RandomTestUtil.randomString();
+		String virtualHostname = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
 		String webId = RandomTestUtil.randomString();
 
 		Company newCompany = null;
@@ -350,6 +351,8 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(
 				virtualHostname, newCompany.getVirtualHostname());
 			Assert.assertEquals(webId, newCompany.getWebId());
+
+			_virtualHostLocalService.getVirtualHost(virtualHostname);
 		}
 		finally {
 			removeDBPartitions(new long[] {company.getCompanyId()});
@@ -394,7 +397,8 @@ public class CompanyLocalServiceDBPartitionTest
 
 		String name = RandomTestUtil.randomString();
 		long toCompanyId = RandomTestUtil.nextLong();
-		String virtualHostname = RandomTestUtil.randomString();
+		String virtualHostname = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
 		String webId = RandomTestUtil.randomString();
 
 		try (AutoCloseable autoCloseable =

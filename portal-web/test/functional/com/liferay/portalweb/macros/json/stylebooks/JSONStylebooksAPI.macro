@@ -10,6 +10,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/stylebook.stylebookentry/add-style-book-entry \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d name=${styleBookEntryName} \
 				-d styleBookEntryKey=

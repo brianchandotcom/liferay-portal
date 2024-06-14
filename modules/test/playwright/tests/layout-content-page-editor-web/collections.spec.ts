@@ -49,16 +49,16 @@ test('allows adding a Collection Display with a manual collection into another C
 		provider: 'Recent Content',
 	});
 
-	// Create definition for a collection mapped to Samples collection
+	// Create definition for a collection mapped to Animals collection
 
-	const samplesClassPK = await collectionsPage.getCollectionClassPK(
-		'Samples',
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		'Animals',
 		wemSite.friendlyUrlPath
 	);
 
-	const samplesCollection = getCollectionItemDefinition(getRandomString(), [
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
 		getCollectionDefinition({
-			classPK: samplesClassPK,
+			classPK: animalsClassPK,
 			id: getRandomString(),
 			listStyle: 'Bulleted List (Journal)',
 		}),
@@ -70,7 +70,7 @@ test('allows adding a Collection Display with a manual collection into another C
 
 	const secondCollectionDefinition = getCollectionDefinition({
 		id: secondCollectionId,
-		pageElements: [samplesCollection],
+		pageElements: [animalsCollection],
 		provider: 'Recent Content',
 	});
 
@@ -93,16 +93,14 @@ test('allows adding a Collection Display with a manual collection into another C
 
 	const count = await firstCollection.locator('.list-group-item').count();
 
-	// Expect second collection to display only Sample 01 content that times
+	// Expect second collection to display only Animal 01 and Animal 02 contents that times
 
 	const secondCollection =
 		await pageEditorPage.getFragment(secondCollectionId);
 
-	await expect(secondCollection.getByText('Sample 01')).toHaveCount(count);
-
-	for (const item of await secondCollection.getByRole('listitem').all()) {
-		await expect(item).toHaveText('Sample 01');
-	}
+	await expect(secondCollection.locator('li')).toHaveCount(count * 2);
+	await expect(secondCollection.getByText('Animal 01')).toHaveCount(count);
+	await expect(secondCollection.getByText('Animal 02')).toHaveCount(count);
 
 	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });

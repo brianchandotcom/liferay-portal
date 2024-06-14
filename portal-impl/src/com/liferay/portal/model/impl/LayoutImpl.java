@@ -386,16 +386,34 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public ColorScheme getColorScheme() throws PortalException {
-		if (isInheritLookAndFeel()) {
-			LayoutSet layoutSet = getLayoutSet();
+		if (!isInheritLookAndFeel()) {
+			Theme theme = getTheme();
 
-			return layoutSet.getColorScheme();
+			return ThemeLocalServiceUtil.getColorScheme(
+				getCompanyId(), theme.getThemeId(), getColorSchemeId());
 		}
 
-		Theme theme = getTheme();
+		Layout masterLayout = _getMasterLayout();
 
-		return ThemeLocalServiceUtil.getColorScheme(
-			getCompanyId(), theme.getThemeId(), getColorSchemeId());
+		if (masterLayout != null) {
+			if (Validator.isNotNull(masterLayout.getThemeId()) &&
+				Validator.isNotNull(masterLayout.getColorSchemeId())) {
+
+				return ThemeLocalServiceUtil.getColorScheme(
+					getCompanyId(), masterLayout.getThemeId(),
+					masterLayout.getColorSchemeId());
+			}
+
+			LayoutSet masterLayoutSet =
+				LayoutSetLocalServiceUtil.fetchLayoutSet(
+					masterLayout.getGroupId(), isPrivateLayout());
+
+			return masterLayoutSet.getColorScheme();
+		}
+
+		LayoutSet layoutSet = getLayoutSet();
+
+		return layoutSet.getColorScheme();
 	}
 
 	/**

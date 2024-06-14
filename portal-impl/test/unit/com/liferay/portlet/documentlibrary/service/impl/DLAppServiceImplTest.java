@@ -64,9 +64,7 @@ public class DLAppServiceImplTest {
 	@After
 	public void tearDown() {
 		_dLValidatorUtilMockedStatic.close();
-
 		_guestOrUserUtilMockedStatic.close();
-
 		_repositoryUtilMockedStatic.close();
 	}
 

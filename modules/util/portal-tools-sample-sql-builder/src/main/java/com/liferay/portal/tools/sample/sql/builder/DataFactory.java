@@ -4017,8 +4017,8 @@ public class DataFactory {
 						"",
 						_readFile(
 							"fragment_component" +
-								"/fragment_component_paragraph_editValue." +
-									"json"),
+								"/fragment_component_paragraph_content_edit" +
+									"Value.json"),
 						paragraphRenderNamespace, 0,
 						_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 				originalFragmentEntryLinkModels.add(
@@ -7560,7 +7560,7 @@ public class DataFactory {
 
 			if (rendererKey.equals(_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH)) {
 				data = StringUtil.replace(
-					data, "${paragraphFragmentEntryLinkId}",
+					data, "${paragraphContentFragmentEntryLinkId}",
 					String.valueOf(
 						fragmentEntryLinkModel.getFragmentEntryLinkId()));
 			}

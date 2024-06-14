@@ -190,7 +190,7 @@
 			"children": [
 			],
 			"config": {
-				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"fragmentEntryLinkId": "${paragraphContentFragmentEntryLinkId}",
 				"landscapeMobile": {
 					"styles": {
 					}

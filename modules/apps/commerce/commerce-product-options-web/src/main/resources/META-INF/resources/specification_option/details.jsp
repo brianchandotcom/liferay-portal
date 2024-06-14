@@ -53,6 +53,8 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		<aui:input helpMessage="key-help" name="key" />
 
 		<aui:input name="priority" />
+
+		<aui:input name="listTypeDefinitionId" type="hidden" value="<%= cpSpecificationOption.getListTypeDefinitionId() %>" />
 	</aui:fieldset>
 </commerce-ui:panel>
 
@@ -61,8 +63,27 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		elementClasses="mt-4"
 		title='<%= LanguageUtil.get(request, "picklist") %>'
 	>
-
+		<frontend-data-set:headless-display
+			additionalProps='<%=
+				HashMapBuilder.<String, Object>put(
+					"specificationId", cpSpecificationOption.getCPSpecificationOptionId()
+				).build()
+			%>'
+			apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/specifications/" + cpSpecificationOption.getCPSpecificationOptionId() + "/list-type-definitions" %>'
+			creationMenu="<%= cpSpecificationOptionDisplayContext.getCreationMenu(cpSpecificationOption) %>"
+			fdsActionDropdownItems="<%= cpSpecificationOptionDisplayContext.getFDSActionDropdownItems() %>"
+			id="<%= CommerceSpecificationOptionFDSNames.LIST_TYPE_DEFINITIONS %>"
+			itemsPerPage="<%= 10 %>"
+			propsTransformer="{CPSpecificationOptionListTypeDefinitionPropsTransformer} from commerce-product-options-web"
+			style="stacked"
+		/>
 	</commerce-ui:panel>
+
+	<div>
+		<react:component
+			module="{ListTypeEntriesModal} from object-web"
+		/>
+	</div>
 </c:if>
 
 <c:if test="<%= cpSpecificationOption == null %>">

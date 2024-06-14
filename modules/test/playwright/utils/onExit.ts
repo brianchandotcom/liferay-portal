@@ -14,14 +14,33 @@ const SIGNALS = {
 	SIGINT: 2,
 	SIGQUIT: 3,
 	SIGTERM: 15,
-	exit: -1,
 };
+
+// Register handlers for exit and SIGNALS
+
+process.on('exit', handleExit);
 
 Object.keys(SIGNALS).forEach((signal) => {
 	process.on(signal, handleSignal);
 });
 
-function handleSignal(signal: number): void {
+// Rest of functions
+
+function handleExit(status: number): void {
+	invokeCallbacks();
+
+	process.exit(status);
+}
+
+function handleSignal(signal: string): void {
+	invokeCallbacks();
+
+	const exitCode = SIGNALS[signal] || 0;
+
+	process.exit(128 + exitCode);
+}
+
+function invokeCallbacks() {
 	for (const callback of callbacks) {
 		try {
 			callback();
@@ -31,10 +50,6 @@ function handleSignal(signal: number): void {
 				`Caught error in onExit callback ${callback}: ${error}`
 			);
 		}
-	}
-
-	if (signal !== -1) {
-		process.exit(128 + SIGNALS[signal]);
 	}
 }
 

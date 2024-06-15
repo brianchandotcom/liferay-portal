@@ -47,6 +47,7 @@ import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLoc
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -188,6 +189,17 @@ public class FinderCacheImpl
 
 		if (cacheValue instanceof Serializable[]) {
 			Serializable[] primaryKeys = (Serializable[])cacheValue;
+
+			if (primaryKeys.length == 1) {
+				Serializable result = basePersistence.fetchByPrimaryKey(
+					primaryKeys[0]);
+
+				if (result == null) {
+					return null;
+				}
+
+				return Arrays.asList(result);
+			}
 
 			Set<Serializable> primaryKeysSet = SetUtil.fromArray(primaryKeys);
 

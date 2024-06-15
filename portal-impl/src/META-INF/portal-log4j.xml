@@ -136,7 +136,6 @@
 		<Logger level="WARN" name="com.liferay.portal.servlet.LanguageServlet" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.autologin.AutoLoginFilter" />
-		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.cache" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.dynamiccss" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSFilter" />
 		<Logger level="ERROR" name="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil" />

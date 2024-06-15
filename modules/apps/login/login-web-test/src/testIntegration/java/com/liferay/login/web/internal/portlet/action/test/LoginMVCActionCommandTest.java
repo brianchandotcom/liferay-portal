@@ -80,42 +80,6 @@ public class LoginMVCActionCommandTest {
 	}
 
 	@Test
-	public void testFailedLoginRedirectWithoutLayoutUtilityPageEntry()
-		throws Exception {
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"AUTH_TOKEN_CHECK_ENABLED", false)) {
-
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-				_getMockLiferayPortletActionRequest();
-
-			CustomMockLiferayPortletActionResponse
-				customMockLiferayPortletActionResponse =
-					new CustomMockLiferayPortletActionResponse();
-
-			_mvcActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				customMockLiferayPortletActionResponse);
-
-			Layout layout =
-				(Layout)mockLiferayPortletActionRequest.getAttribute(
-					WebKeys.LAYOUT);
-
-			String redirectLocation =
-				customMockLiferayPortletActionResponse.getRedirectLocation();
-
-			_assertParameter(
-				redirectLocation, "p_l_id", String.valueOf(layout.getPlid()));
-			_assertParameter(
-				redirectLocation, "p_p_id", LoginPortletKeys.LOGIN);
-			_assertParameter(redirectLocation, "p_p_lifecycle", "0");
-			_assertParameter(redirectLocation, "p_p_state", "maximized");
-			_assertParameter(redirectLocation, "saveLastPath", "false");
-		}
-	}
-
-	@Test
 	public void testFailedLoginRedirectWithLayoutUtilityPageEntry()
 		throws Exception {
 
@@ -148,6 +112,42 @@ public class LoginMVCActionCommandTest {
 				redirectLocation, "p_p_id", LoginPortletKeys.LOGIN);
 			_assertParameter(redirectLocation, "p_p_lifecycle", "0");
 			_assertParameter(redirectLocation, "p_p_state", "normal");
+			_assertParameter(redirectLocation, "saveLastPath", "false");
+		}
+	}
+
+	@Test
+	public void testFailedLoginRedirectWithoutLayoutUtilityPageEntry()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"AUTH_TOKEN_CHECK_ENABLED", false)) {
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest();
+
+			CustomMockLiferayPortletActionResponse
+				customMockLiferayPortletActionResponse =
+					new CustomMockLiferayPortletActionResponse();
+
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				customMockLiferayPortletActionResponse);
+
+			Layout layout =
+				(Layout)mockLiferayPortletActionRequest.getAttribute(
+					WebKeys.LAYOUT);
+
+			String redirectLocation =
+				customMockLiferayPortletActionResponse.getRedirectLocation();
+
+			_assertParameter(
+				redirectLocation, "p_l_id", String.valueOf(layout.getPlid()));
+			_assertParameter(
+				redirectLocation, "p_p_id", LoginPortletKeys.LOGIN);
+			_assertParameter(redirectLocation, "p_p_lifecycle", "0");
+			_assertParameter(redirectLocation, "p_p_state", "maximized");
 			_assertParameter(redirectLocation, "saveLastPath", "false");
 		}
 	}

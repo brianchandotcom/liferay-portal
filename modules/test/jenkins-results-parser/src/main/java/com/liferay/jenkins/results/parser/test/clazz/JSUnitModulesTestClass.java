@@ -72,7 +72,9 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 							File gitrepoFile = new File(
 								currentDirectory, ".gitrepo");
 
-							if (gitrepoFile.exists()) {
+							if (gitrepoFile.exists() &&
+								!currentDirectoryPath.contains("osb-faro")) {
+
 								return FileVisitResult.SKIP_SUBTREE;
 							}
 						}

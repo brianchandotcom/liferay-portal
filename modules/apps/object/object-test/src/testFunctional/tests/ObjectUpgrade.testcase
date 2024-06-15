@@ -18,12 +18,12 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@ignore = "Test Stub"
 	@priority = 5
 	test ViewActionWithNotificationAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given Custom Object1 and Object Actions") {
 			ObjectAdmin.openObjectAdmin();

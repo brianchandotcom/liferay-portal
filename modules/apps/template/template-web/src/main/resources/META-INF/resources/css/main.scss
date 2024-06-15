@@ -33,18 +33,11 @@ $productMenuWidth: 320px;
 		}
 
 		.input-localized {
-			flex-direction: row-reverse;
-
 			.form-validator-stack {
 				display: none;
 			}
 
-			.input-group-item {
-				order: 2;
-			}
-
 			.input-localized-content {
-				order: 1;
 				padding-right: 0.5rem;
 			}
 		}

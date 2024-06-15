@@ -6,8 +6,10 @@
 package com.liferay.list.type.internal.upgrade.registry;
 
 import com.liferay.list.type.internal.upgrade.v1_3_0.ListTypeDefinitionUpgradeProcess;
-import com.liferay.list.type.internal.upgrade.v1_3_1.ListTypeUpgradeProcess;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,7 +52,23 @@ public class ListTypeServiceUpgradeStepRegistrator
 		registry.register(
 			"1.2.0", "1.3.0", new ListTypeDefinitionUpgradeProcess());
 
-		registry.register("1.3.0", "1.3.1", new ListTypeUpgradeProcess());
+		registry.register(
+			"1.3.0", "1.3.1",
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update Contact_ set prefixListTypeId = 0 where ",
+					"prefixListTypeId in (select listTypeId from ListType ",
+					"where (name is null or name = '') and (type_ = '",
+					ListTypeConstants.CONTACT_PREFIX, "'))"),
+				StringBundler.concat(
+					"update Contact_ set suffixListTypeId = 0 where ",
+					"suffixListTypeId in (select listTypeId from ListType ",
+					"where (name is null or name = '') and (type_ = '",
+					ListTypeConstants.CONTACT_SUFFIX, "'))"),
+				StringBundler.concat(
+					"delete from ListType where (name is null or name = '') ",
+					"and (type_ = '", ListTypeConstants.CONTACT_PREFIX,
+					"' or type_ = '", ListTypeConstants.CONTACT_SUFFIX, "')")));
 	}
 
 }

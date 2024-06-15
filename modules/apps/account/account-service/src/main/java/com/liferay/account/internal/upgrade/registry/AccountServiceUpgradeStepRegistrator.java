@@ -6,9 +6,11 @@
 package com.liferay.account.internal.upgrade.registry;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.internal.upgrade.v1_1_0.SchemaUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_4_0.AccountGroupResourceUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_5_0.AccountRoleResourceUpgradeProcess;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -181,8 +183,11 @@ public class AccountServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.10.3", "2.10.4",
-			new com.liferay.account.internal.upgrade.v2_10_4.
-				AccountListTypeUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"delete from ListType where type_ = '",
+					AccountListTypeConstants.ACCOUNT_ENTRY_PHONE,
+					"' and name = 'tool-free'")));
 	}
 
 	@Reference

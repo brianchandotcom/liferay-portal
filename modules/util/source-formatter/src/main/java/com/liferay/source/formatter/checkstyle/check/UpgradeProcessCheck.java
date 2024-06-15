@@ -218,6 +218,46 @@ public class UpgradeProcessCheck extends BaseCheck {
 		return true;
 	}
 
+	private boolean _containsOnlyRunSQLCalls(DetailAST detailAST) {
+		if (detailAST == null) {
+			return false;
+		}
+
+		DetailAST lastChildDetailAST = detailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() != TokenTypes.RCURLY) {
+			return false;
+		}
+
+		DetailAST previousSiblingDetailAST =
+			lastChildDetailAST.getPreviousSibling();
+
+		while (previousSiblingDetailAST != null) {
+			if ((previousSiblingDetailAST.getType() != TokenTypes.EXPR) &&
+				(previousSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+
+				return false;
+			}
+
+			if (previousSiblingDetailAST.getType() == TokenTypes.EXPR) {
+				DetailAST firstChildDetailAST =
+					previousSiblingDetailAST.getFirstChild();
+
+				if ((firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) ||
+					!StringUtil.equals(
+						getMethodName(firstChildDetailAST), "runSQL")) {
+
+					return false;
+				}
+			}
+
+			previousSiblingDetailAST =
+				previousSiblingDetailAST.getPreviousSibling();
+		}
+
+		return true;
+	}
+
 	private String _getParameterName(DetailAST detailAST) {
 		if (detailAST == null) {
 			return null;
@@ -321,7 +361,13 @@ public class UpgradeProcessCheck extends BaseCheck {
 	}
 
 	private boolean _isUnnecessaryUpgradeProcessClass(DetailAST detailAST) {
-		return _containsOnlyAlterMethodCalls(detailAST, null, null);
+		if (_containsOnlyAlterMethodCalls(detailAST, null, null) ||
+			_containsOnlyRunSQLCalls(detailAST)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isUpgradeProcess(DetailAST detailAST) {

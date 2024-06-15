@@ -130,6 +130,19 @@ export function ClayTable({
 	return (
 		<Table
 			alwaysVisibleColumns={defaultAlwaysVisibleColumns}
+			messages={{
+				columnsVisibility: Liferay.Language.get(
+					'manage-columns-visibility'
+				),
+				columnsVisibilityDescription: Liferay.Language.get(
+					'least-one-column-must-remain-visible'
+				),
+				columnsVisibilityHeader:
+					Liferay.Language.get('columns-visibility'),
+				expandable: Liferay.Language.get('expandable'),
+				sortDescription: Liferay.Language.get('sortable-column'),
+				sorting: Liferay.Language.get('sorted-by-column-x-in-x-order'),
+			}}
 			nestedKey={nestedItemsReferenceKey}
 			onSortChange={setSort}
 			sort={sort}

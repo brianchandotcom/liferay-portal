@@ -942,7 +942,7 @@ public abstract class BaseJob implements Job {
 										"test class group in ",
 										String.valueOf(
 											_pauseRetryDuration / 1000),
-										" seconds."));
+										" seconds"));
 
 								JenkinsResultsParserUtil.sleep(
 									_pauseRetryDuration);
@@ -1017,7 +1017,7 @@ public abstract class BaseJob implements Job {
 			new ParallelExecutor<>(
 				callables, _executorService, "getBatchTestClassGroups");
 
-		List<BatchTestClassGroup> batchTestClassGroups;
+		List<BatchTestClassGroup> batchTestClassGroups = null;
 
 		try {
 			batchTestClassGroups = parallelExecutor.execute();

@@ -362,7 +362,11 @@ public class AnnouncementsDisplayContext {
 
 	public boolean hasAddAnnouncementsEntryPermission() {
 		try {
-			if (PortletPermissionUtil.hasControlPanelAccessPermission(
+			if (GroupPermissionUtil.contains(
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(),
+					ActionKeys.MANAGE_ANNOUNCEMENTS) ||
+				PortletPermissionUtil.hasControlPanelAccessPermission(
 					_themeDisplay.getPermissionChecker(),
 					_themeDisplay.getScopeGroupId(),
 					AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN)) {

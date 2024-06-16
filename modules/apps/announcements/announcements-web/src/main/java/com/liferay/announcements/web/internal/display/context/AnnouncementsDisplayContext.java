@@ -360,6 +360,25 @@ public class AnnouncementsDisplayContext {
 		return _UUID;
 	}
 
+	public boolean hasAddAnnouncementsEntryPermission() {
+		try {
+			if (PortletPermissionUtil.hasControlPanelAccessPermission(
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(),
+					AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN)) {
+
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isCustomizeAnnouncementsDisplayed() {
 		String portletName = _announcementsRequestHelper.getPortletName();
 

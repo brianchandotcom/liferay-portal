@@ -14,7 +14,7 @@
 	/>
 </c:if>
 
-<c:if test="<%= PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, scopeGroupId, AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN) %>">
+<c:if test="<%= announcementsDisplayContext.hasAddAnnouncementsEntryPermission() %>">
 	<div class="btn-group c-mb-4">
 		<portlet:renderURL var="addEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />

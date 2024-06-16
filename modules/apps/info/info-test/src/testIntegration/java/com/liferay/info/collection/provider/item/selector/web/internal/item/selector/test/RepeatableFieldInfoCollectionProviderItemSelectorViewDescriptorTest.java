@@ -128,7 +128,6 @@ public class
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST,
 			mockLiferayPortletRenderRequest);
-
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());

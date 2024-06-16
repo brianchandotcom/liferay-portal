@@ -71,7 +71,7 @@ public class PortalPreferencesCacheUtil {
 	private static final PortalCache<PortalPreferenceKey, PortalPreferenceKey>
 		_normalizedPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.SINGLE_VM,
-			PortalPreferencesCacheUtil.class.getName() + "._normalized");
+			PortalPreferencesCacheUtil.class.getName() + "#_normalized");
 	private static final PortalCache<Long, Map<PortalPreferenceKey, String[]>>
 		_portalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM,

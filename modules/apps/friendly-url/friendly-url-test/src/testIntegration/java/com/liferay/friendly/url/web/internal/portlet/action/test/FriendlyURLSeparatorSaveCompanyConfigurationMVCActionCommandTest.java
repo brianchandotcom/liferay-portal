@@ -113,6 +113,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-can-not-be-a-number",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -133,6 +134,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -153,6 +155,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -174,6 +177,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-cannot-be-empty",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -194,6 +198,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-invalid-characters",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -222,6 +227,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -244,6 +250,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			"com.liferay.blogs.model.BlogsEntry",
 			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -264,6 +271,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
@@ -284,13 +292,14 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 			mockActionResponse);
 
 		_assertRedirectURL(
+			JournalArticle.class.getName(),
 			"friendly-url-separator-error-other-asset-type-may-use-this-prefix",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
 
 	private void _assertRedirectURL(
-		String errorFieldKey, Map<String, String> friendlyURLSeparators,
-		String redirect) {
+		String className, String errorFieldKey,
+		Map<String, String> friendlyURLSeparators, String redirect) {
 
 		Assert.assertNotNull(redirect);
 
@@ -312,8 +321,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 				"fields",
 				JSONUtil.put(
 					"_com_liferay_configuration_admin_web_portlet_" +
-						"InstanceSettingsPortlet_" +
-							JournalArticle.class.getName(),
+						"InstanceSettingsPortlet_" + className,
 					_language.get(LocaleUtil.US, errorFieldKey))
 			).toString(),
 			HttpComponentsUtil.decodeURL(errors));
@@ -321,13 +329,13 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 		String urlSeparator = HttpComponentsUtil.getParameter(
 			redirect,
 			"_com_liferay_configuration_admin_web_portlet_" +
-				"InstanceSettingsPortlet_" + JournalArticle.class.getName(),
+				"InstanceSettingsPortlet_" + className,
 			false);
 
 		Assert.assertNotNull(urlSeparator);
 
 		Assert.assertEquals(
-			friendlyURLSeparators.get(JournalArticle.class.getName()),
+			friendlyURLSeparators.get(className),
 			HttpComponentsUtil.decodeURL(urlSeparator));
 	}
 

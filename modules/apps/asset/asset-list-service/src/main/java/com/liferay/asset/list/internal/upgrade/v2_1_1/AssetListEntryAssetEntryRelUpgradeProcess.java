@@ -29,14 +29,14 @@ public class AssetListEntryAssetEntryRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		Map<Long, Map<Long, Map<Long, List<Integer>>>> map =
+			new ConcurrentHashMap<>();
+
 		String sql = StringBundler.concat(
 			"select distinct ctCollectionId, assetListEntryAssetEntryRelId, ",
 			"assetListEntryId, segmentsEntryId, position from ",
 			"AssetListEntryAssetEntryRel where not exists (select 1 from ",
 			"AssetEntry where entryId = assetEntryId)");
-
-		Map<Long, Map<Long, Map<Long, List<Integer>>>> map =
-			new ConcurrentHashMap<>();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
@@ -76,7 +76,8 @@ public class AssetListEntryAssetEntryRelUpgradeProcess extends UpgradeProcess {
 
 					positions.add((Integer)values[4]);
 				},
-				"Unable to update AssetListEntryAssetEntryRels");
+				"Unable to update asset list entry and asset entry entry " +
+					"relationships");
 
 			try (PreparedStatement preparedStatement =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -164,9 +165,10 @@ public class AssetListEntryAssetEntryRelUpgradeProcess extends UpgradeProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to update AssetListEntryAssetEntryRels for ",
-						"asset list entry ID ", assetListEntryId,
-						" and segments entry ID ", segmentsEntryId),
+						"Unable to update asset list entry and asset entry ",
+						"relationships for asset list entry ID ",
+						assetListEntryId, " and segments entry ID ",
+						segmentsEntryId),
 					exception);
 			}
 		}

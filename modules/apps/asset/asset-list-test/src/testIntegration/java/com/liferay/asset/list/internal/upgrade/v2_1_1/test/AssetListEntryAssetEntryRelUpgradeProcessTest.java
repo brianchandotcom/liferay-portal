@@ -86,7 +86,7 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeUpdatingPosition() throws Exception {
+	public void testUpgradePosition() throws Exception {
 		JournalArticle journalArticle1 = _addJournalArticle();
 		JournalArticle journalArticle2 = _addJournalArticle();
 
@@ -104,33 +104,7 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeUpdatingPositionWithMultipleOrphanAssetEntryId()
-		throws Exception {
-
-		JournalArticle journalArticle1 = _addJournalArticle();
-		JournalArticle journalArticle2 = _addJournalArticle();
-
-		_addAssetListEntryAssetEntryRel(2);
-
-		JournalArticle journalArticle3 = _addJournalArticle();
-		JournalArticle journalArticle4 = _addJournalArticle();
-
-		_addAssetListEntryAssetEntryRel(5);
-
-		JournalArticle journalArticle5 = _addJournalArticle();
-		JournalArticle journalArticle6 = _addJournalArticle();
-
-		_assertAssetListEntryAssetEntryRelsSize(8);
-
-		_runUpgrade();
-
-		_assertAssetListEntryAssetEntryRels(
-			journalArticle1, journalArticle2, journalArticle3, journalArticle4,
-			journalArticle5, journalArticle6);
-	}
-
-	@Test
-	public void testUpgradeUpdatingPositionWithMultipleOrphanAssetEntryIdAndSegmentsEntryVariation()
+	public void testUpgradePositionWithMultipleOrphanAssetEntryIdAndSegmentsEntryVariation()
 		throws Exception {
 
 		_addAssetListEntryAssetEntryRel(0);
@@ -168,6 +142,32 @@ public class AssetListEntryAssetEntryRelUpgradeProcessTest {
 		_assertAssetListEntryAssetEntryRels(
 			segmentsEntry.getSegmentsEntryId(), journalArticle4,
 			journalArticle3, journalArticle2, journalArticle1);
+	}
+
+	@Test
+	public void testUpgradePositionWithMultipleOrphanAssetEntryIds()
+		throws Exception {
+
+		JournalArticle journalArticle1 = _addJournalArticle();
+		JournalArticle journalArticle2 = _addJournalArticle();
+
+		_addAssetListEntryAssetEntryRel(2);
+
+		JournalArticle journalArticle3 = _addJournalArticle();
+		JournalArticle journalArticle4 = _addJournalArticle();
+
+		_addAssetListEntryAssetEntryRel(5);
+
+		JournalArticle journalArticle5 = _addJournalArticle();
+		JournalArticle journalArticle6 = _addJournalArticle();
+
+		_assertAssetListEntryAssetEntryRelsSize(8);
+
+		_runUpgrade();
+
+		_assertAssetListEntryAssetEntryRels(
+			journalArticle1, journalArticle2, journalArticle3, journalArticle4,
+			journalArticle5, journalArticle6);
 	}
 
 	@Test

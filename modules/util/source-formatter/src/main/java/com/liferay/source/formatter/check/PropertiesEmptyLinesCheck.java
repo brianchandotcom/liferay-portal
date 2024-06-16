@@ -58,7 +58,7 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 			String nextLinePropertyKey = StringUtil.extractFirst(
 				matcher.group(4), "=");
 
-			if (Validator.isNotNull(nextLinePropertyKey)) {
+			if (Validator.isNull(nextLinePropertyKey)) {
 				continue;
 			}
 

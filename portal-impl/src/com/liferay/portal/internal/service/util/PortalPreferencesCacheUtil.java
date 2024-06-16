@@ -33,16 +33,45 @@ public class PortalPreferencesCacheUtil {
 			preferenceMap = Collections.emptyMap();
 		}
 		else {
-			preferenceMap = Collections.unmodifiableMap(
-				new HashMap<>(preferenceMap));
+			Map<PortalPreferenceKey, String[]> copiedPreferenceMap =
+				new HashMap<>();
+
+			for (Map.Entry<PortalPreferenceKey, String[]> entry :
+					preferenceMap.entrySet()) {
+
+				copiedPreferenceMap.put(
+					_normalize(entry.getKey()), entry.getValue());
+			}
+
+			preferenceMap = Collections.unmodifiableMap(copiedPreferenceMap);
 		}
 
 		_portalCache.put(portalPreferencesId, preferenceMap);
 	}
 
+	private static PortalPreferenceKey _normalize(
+		PortalPreferenceKey portalPreferenceKey) {
+
+		PortalPreferenceKey normalizedPortalPreferenceKey =
+			_normalizedPortalCache.get(portalPreferenceKey);
+
+		if (normalizedPortalPreferenceKey == null) {
+			_normalizedPortalCache.put(
+				portalPreferenceKey, portalPreferenceKey);
+
+			normalizedPortalPreferenceKey = portalPreferenceKey;
+		}
+
+		return normalizedPortalPreferenceKey;
+	}
+
 	private PortalPreferencesCacheUtil() {
 	}
 
+	private static final PortalCache<PortalPreferenceKey, PortalPreferenceKey>
+		_normalizedPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			PortalPreferencesCacheUtil.class.getName() + "._normalized");
 	private static final PortalCache<Long, Map<PortalPreferenceKey, String[]>>
 		_portalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM,

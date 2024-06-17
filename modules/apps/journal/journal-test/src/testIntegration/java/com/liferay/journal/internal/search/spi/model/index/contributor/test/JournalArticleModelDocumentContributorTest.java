@@ -84,7 +84,7 @@ public class JournalArticleModelDocumentContributorTest {
 	}
 
 	@Test
-	public void testContentField() throws Exception {
+	public void testFieldContent() throws Exception {
 		Document document = _getDocument();
 
 		for (String languageId : _journalArticle.getAvailableLanguageIds()) {
@@ -96,7 +96,7 @@ public class JournalArticleModelDocumentContributorTest {
 	}
 
 	@Test
-	public void testDefaultLanguageIdField() throws Exception {
+	public void testFieldDefaultLanguageId() throws Exception {
 		DDMStructure ddmStructure = _journalArticle.getDDMStructure();
 
 		DDMFormValues ddmFormValues = _ddmFieldLocalService.getDDMFormValues(

@@ -25,6 +25,7 @@ html#{$cadmin-selector} #{$selector} {
 			transition:
 				margin-left ease $defaultTransitionDuration,
 				margin-right ease $defaultTransitionDuration;
+			padding-left: $sidebarButtonWidth;
 			width: 100%;
 			will-change: margin-left, margin-right;
 			z-index: 1;

@@ -344,7 +344,7 @@ public class CopyLayoutMVCActionCommandTest {
 				_serviceContext);
 
 		_fragmentEntry = _fragmentEntryLocalService.addFragmentEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry-key",
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"<div data-lfr-styles><span>Test</span>Fragment</div>",

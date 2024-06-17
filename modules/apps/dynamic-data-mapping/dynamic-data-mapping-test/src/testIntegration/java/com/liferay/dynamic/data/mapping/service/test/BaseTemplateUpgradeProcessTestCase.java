@@ -74,10 +74,9 @@ public abstract class BaseTemplateUpgradeProcessTestCase {
 				StringPool.BLANK, _serviceContext);
 
 		_fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			null, _group.getGroupId(),
-			fragmentCollection.getFragmentCollectionId(), null,
-			"FragmentEntry Name", null, read(filePath), null, false, null, null,
-			0, false, FragmentConstants.TYPE_COMPONENT, null,
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			null, "FragmentEntry Name", null, read(filePath), null, false, null,
+			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 

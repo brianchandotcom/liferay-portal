@@ -366,7 +366,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), group.getGroupId(),
+				TestPropsValues.getUserId(), group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),

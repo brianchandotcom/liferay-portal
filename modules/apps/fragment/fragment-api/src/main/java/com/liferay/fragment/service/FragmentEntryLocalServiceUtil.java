@@ -153,13 +153,6 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().deleteFragmentEntry(fragmentEntryId);
 	}
 
-	public static FragmentEntry deleteFragmentEntry(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		return getService().deleteFragmentEntry(externalReferenceCode, groupId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */

@@ -58,8 +58,8 @@ public class FragmentEntryStagedModelRepository
 		}
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			fragmentEntry.getExternalReferenceCode(), userId,
-			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
+			userId, fragmentEntry.getGroupId(),
+			fragmentEntry.getFragmentCollectionId(),
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),

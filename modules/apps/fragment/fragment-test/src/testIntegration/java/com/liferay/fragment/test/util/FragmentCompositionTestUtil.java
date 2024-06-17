@@ -28,7 +28,7 @@ public class FragmentCompositionTestUtil {
 				fragmentCollectionId);
 
 		return FragmentCompositionServiceUtil.addFragmentComposition(
-			null, fragmentCollection.getGroupId(),
+			fragmentCollection.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), name, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),

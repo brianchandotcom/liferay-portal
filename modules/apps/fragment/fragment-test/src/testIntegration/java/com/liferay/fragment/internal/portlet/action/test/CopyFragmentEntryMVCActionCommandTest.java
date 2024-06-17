@@ -144,7 +144,7 @@ public class CopyFragmentEntryMVCActionCommandTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
 				StringUtil.randomString(), StringPool.BLANK, false,
 				StringPool.BLANK, StringPool.BLANK, 0, false,

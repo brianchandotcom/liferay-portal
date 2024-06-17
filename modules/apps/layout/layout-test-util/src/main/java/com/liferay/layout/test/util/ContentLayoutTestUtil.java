@@ -106,7 +106,7 @@ public class ContentLayoutTestUtil {
 
 			FragmentEntry fragmentEntry =
 				FragmentEntryLocalServiceUtil.addFragmentEntry(
-					null, TestPropsValues.getUserId(), layout.getGroupId(), 0,
+					TestPropsValues.getUserId(), layout.getGroupId(), 0,
 					StringUtil.randomString(), StringUtil.randomString(),
 					RandomTestUtil.randomString(), inputHTML,
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
@@ -132,7 +132,7 @@ public class ContentLayoutTestUtil {
 		if (addCaptcha) {
 			FragmentEntry fragmentEntry =
 				FragmentEntryLocalServiceUtil.addFragmentEntry(
-					null, TestPropsValues.getUserId(), layout.getGroupId(), 0,
+					TestPropsValues.getUserId(), layout.getGroupId(), 0,
 					StringUtil.randomString(), StringUtil.randomString(),
 					RandomTestUtil.randomString(), inputHTML,
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
@@ -194,7 +194,7 @@ public class ContentLayoutTestUtil {
 
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.addFragmentEntry(
-				null, TestPropsValues.getUserId(), layout.getGroupId(), 0,
+				TestPropsValues.getUserId(), layout.getGroupId(), 0,
 				StringUtil.randomString(), StringUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,

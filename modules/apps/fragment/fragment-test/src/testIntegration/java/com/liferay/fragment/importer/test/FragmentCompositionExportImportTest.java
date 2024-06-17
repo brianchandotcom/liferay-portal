@@ -66,7 +66,7 @@ public class FragmentCompositionExportImportTest {
 	public void testFragmentCompositionExportFormat() throws Exception {
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionLocalService.addFragmentComposition(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				StringUtil.randomId(), StringUtil.randomId(),
 				StringUtil.randomId(), StringPool.BLANK, 0,

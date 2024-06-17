@@ -69,7 +69,7 @@ public class FragmentEntryStagingTest {
 
 		FragmentEntry liveFragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), _liveGroup.getGroupId(),
+				TestPropsValues.getUserId(), _liveGroup.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),

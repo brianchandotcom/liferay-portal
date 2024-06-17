@@ -46,7 +46,7 @@ public class FragmentEntryTestUtil {
 				fragmentCollection.getGroupId());
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div>TEST</div>", StringPool.BLANK, false, StringPool.BLANK, null,
 			0, false, FragmentConstants.TYPE_COMPONENT, null,
@@ -69,7 +69,7 @@ public class FragmentEntryTestUtil {
 		serviceContext.setModifiedDate(createDate);
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			null, TestPropsValues.getUserId(), fragmentCollection.getGroupId(),
+			TestPropsValues.getUserId(), fragmentCollection.getGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			false, FragmentConstants.TYPE_COMPONENT, null,
@@ -97,7 +97,7 @@ public class FragmentEntryTestUtil {
 				fragmentCollection.getGroupId());
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			false, FragmentConstants.TYPE_COMPONENT, null, status,
@@ -120,7 +120,7 @@ public class FragmentEntryTestUtil {
 		serviceContext.setModifiedDate(createDate);
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			false, FragmentConstants.TYPE_COMPONENT, null, status,
@@ -148,7 +148,7 @@ public class FragmentEntryTestUtil {
 				fragmentCollection.getGroupId());
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
 			StringUtil.randomString(), name, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
@@ -169,7 +169,7 @@ public class FragmentEntryTestUtil {
 				fragmentCollection.getGroupId());
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
 			StringUtil.randomString(), name, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,

@@ -158,10 +158,6 @@ public interface FragmentEntryLocalService
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
 		throws PortalException;
 
-	public FragmentEntry deleteFragmentEntry(
-			String externalReferenceCode, long groupId)
-		throws PortalException;
-
 	/**
 	 * @throws PortalException
 	 */

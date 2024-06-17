@@ -224,7 +224,7 @@ public class SaveVariantSegmentsExperienceMVCActionCommandTest {
 		String html = "<div data-lfr-styles><span>Test</span>Fragment</div>";
 
 		_fragmentEntry = _fragmentEntryLocalService.addFragmentEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry-key",
 			RandomTestUtil.randomString(), StringPool.BLANK, html,
 			StringPool.BLANK, false, StringPool.BLANK, null, 0, false,

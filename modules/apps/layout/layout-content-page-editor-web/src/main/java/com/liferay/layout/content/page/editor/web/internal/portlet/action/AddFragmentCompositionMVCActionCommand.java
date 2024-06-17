@@ -110,7 +110,7 @@ public class AddFragmentCompositionMVCActionCommand
 
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionService.addFragmentComposition(
-				null, themeDisplay.getScopeGroupId(),
+				themeDisplay.getScopeGroupId(),
 				fragmentCollection.getFragmentCollectionId(), null, name,
 				description, layoutStructureItemJSON, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);

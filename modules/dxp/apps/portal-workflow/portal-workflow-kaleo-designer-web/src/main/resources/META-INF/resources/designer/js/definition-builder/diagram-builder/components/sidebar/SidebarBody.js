@@ -34,7 +34,6 @@ export default function SidebarBody({children, displayDefaultContent = true}) {
 	);
 
 	if (
-		Liferay.FeatureFlags['LPD-11179'] &&
 		!allowScriptContentToBeExecutedOrIncluded &&
 		!hadGroovyOrJavaScriptBefore
 	) {

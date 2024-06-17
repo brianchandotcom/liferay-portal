@@ -48,7 +48,6 @@ const SelectAssignment = ({section, setSection, setSections}) => {
 
 	const getAssignmentTypeOptions = () => {
 		if (
-			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
 			!hadGroovyOrJavaScriptBefore
 		) {
@@ -62,8 +61,7 @@ const SelectAssignment = ({section, setSection, setSections}) => {
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPD-11179'] &&
-				!allowScriptContentToBeExecutedOrIncluded &&
+			{!allowScriptContentToBeExecutedOrIncluded &&
 				hasGroovyOrJavaScript && (
 					<DisabledGroovyScriptAlert
 						scriptManagementConfigurationPortletURL={

@@ -150,7 +150,6 @@ const BaseNotificationsInfo = ({
 
 	const getRecipientTypeOptions = () => {
 		if (
-			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
 			!hadGroovyScriptBefore
 		) {

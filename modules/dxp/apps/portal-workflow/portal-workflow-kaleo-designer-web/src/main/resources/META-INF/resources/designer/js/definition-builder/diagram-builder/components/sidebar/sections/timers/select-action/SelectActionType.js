@@ -55,7 +55,6 @@ const SelectActionType = ({
 
 	const getActionTypeOptions = () => {
 		if (
-			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
 			!hadGroovyOrJavaScriptBefore &&
 			!functionActionExecutors.length

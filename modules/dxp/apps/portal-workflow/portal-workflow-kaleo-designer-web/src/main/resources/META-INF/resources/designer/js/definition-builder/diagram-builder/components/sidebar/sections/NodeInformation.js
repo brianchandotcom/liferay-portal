@@ -33,8 +33,7 @@ export default function NodeInformation({errors, setErrors}) {
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPD-11179'] &&
-				!allowScriptContentToBeExecutedOrIncluded &&
+			{!allowScriptContentToBeExecutedOrIncluded &&
 				hasGroovyOrJavaScript &&
 				selectedItem &&
 				selectedItem.type === 'condition' && (

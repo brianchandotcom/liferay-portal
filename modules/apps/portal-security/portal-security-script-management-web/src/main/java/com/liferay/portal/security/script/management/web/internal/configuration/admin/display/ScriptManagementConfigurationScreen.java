@@ -7,7 +7,6 @@ package com.liferay.portal.security.script.management.web.internal.configuration
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 import com.liferay.portal.security.script.management.web.internal.display.context.ScriptManagementConfigurationDisplayContext;
@@ -54,9 +53,7 @@ public class ScriptManagementConfigurationScreen
 
 	@Override
 	public boolean isVisible() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11179") &&
-			PropsValues.SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED) {
-
+		if (PropsValues.SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED) {
 			return true;
 		}
 

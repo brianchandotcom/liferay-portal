@@ -56,7 +56,6 @@ const SelectReassignment = ({
 
 	const getReassignmentTypeOptions = () => {
 		if (
-			Liferay.FeatureFlags['LPD-11179'] &&
 			!allowScriptContentToBeExecutedOrIncluded &&
 			!hadGroovyOrJavaScriptBefore
 		) {

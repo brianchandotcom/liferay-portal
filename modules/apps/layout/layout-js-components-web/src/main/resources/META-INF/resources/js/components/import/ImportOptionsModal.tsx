@@ -8,15 +8,15 @@ import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {ReactText, useState} from 'react';
 
-interface Props {
-	onCloseModal: () => void;
-	onImport: (overwriteStrategy?: OverwriteStrategy) => void;
-}
-
 interface ModalProps {
 	onClickImport: () => void;
 	onClose: () => void;
 	onRadioChange: (value: ReactText) => void;
+}
+
+interface Props {
+	onCloseModal: () => void;
+	onImport: (overwriteStrategy?: OverwriteStrategy) => void;
 }
 
 const OPTIONS = [
@@ -34,7 +34,7 @@ const OPTIONS = [
 	},
 ] as const;
 
-export type OverwriteStrategy = (typeof OPTIONS)[number]['value'];
+export type OverwriteStrategy = typeof OPTIONS[number]['value'];
 
 const DEFAULT_OPTION = OPTIONS[0];
 

@@ -26,6 +26,13 @@ export async function setSegmentName(page: Page, segmentName: string) {
 	await page.getByRole('button', { name: 'Unnamed Segment' }).click();
 	await page.getByPlaceholder('Unnamed Segment').fill(segmentName);
 }
+
+export async function editCriteriaAttributeValue(page: Page, attributeValue: string) {
+	await page.locator('input[data-testid="attribute-value-string-input"]').click();
+	await page
+		.locator('input[data-testid="attribute-value-string-input"]')
+		.fill(attributeValue);
+}
 	const target = page.locator('div.drop-zone-target').last();
 
 	return await source.dragTo(target);

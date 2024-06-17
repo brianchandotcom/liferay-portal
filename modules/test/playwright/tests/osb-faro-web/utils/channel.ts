@@ -5,7 +5,7 @@
 
 import { Page } from "@playwright/test";
 
-export async function createChannel(apiHelpers, name) {
+export async function createChannel(apiHelpers, name: string) {
 	const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
 
 	const project = projects.find(({name}) => name === 'FARO-DEV-liferay');

@@ -1165,7 +1165,7 @@ export default function ChangeTrackingRenderView({
 				currentTypeName = node.typeName;
 
 				rows.push(
-					<ClayTable.Row divider>
+					<ClayTable.Row divider key={node.typeName}>
 						<ClayTable.Cell>{node.typeName}</ClayTable.Cell>
 					</ClayTable.Row>
 				);
@@ -1174,6 +1174,7 @@ export default function ChangeTrackingRenderView({
 			rows.push(
 				<ClayTable.Row
 					className="cursor-pointer"
+					key={node.nodeId}
 					onClick={() => handleNavigation(node.nodeId)}
 				>
 					<ClayTable.Cell>

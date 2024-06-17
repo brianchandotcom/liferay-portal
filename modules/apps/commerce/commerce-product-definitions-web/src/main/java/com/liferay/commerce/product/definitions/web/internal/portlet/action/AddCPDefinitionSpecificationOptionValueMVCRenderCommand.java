@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -26,16 +26,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Andrea Sbarra
  */
 @Component(
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
-		"mvc.command.name=/cp_definitions/edit_cp_definition_specification_option_value"
+		"mvc.command.name=/cp_definitions/add_cp_definition_specification_option_value"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPDefinitionSpecificationOptionValueMVCRenderCommand
+public class AddCPDefinitionSpecificationOptionValueMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -69,7 +69,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/edit_cp_definition_specification_option_value.jsp";
+		return "/add_cp_definition_specification_option_value.jsp";
 	}
 
 	@Reference

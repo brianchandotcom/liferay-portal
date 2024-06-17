@@ -4,6 +4,8 @@
  */
 
 export {default as addCpDefinition} from './addCpDefinition';
+export {default as CPDefinitionSpecificationOptionValueAutocomplete} from './cpDefinitionSpecificationOptionValueAutocomplete';
+export {default as addCPDefinitionSpecificationOptionValue} from './add_cp_definition_specification_option_value';
 export {default as addCpInstanceUnitOfMeasure} from './add_cp_instance_unit_of_measure';
 export {default as debounceDetails} from './debounceDetails';
 export {default as debounceEditCpDefinitionOptionValue} from './debounceEditCpDefinitionOptionValue';

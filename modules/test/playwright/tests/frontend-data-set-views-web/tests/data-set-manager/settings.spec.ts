@@ -41,21 +41,25 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: settingsDataSetERC});
 });
 
+const navigateToSettings = async ({settingsPage}) => {
+	await test.step('Navigate to Settings section', async () => {
+		await settingsPage.goto({
+			dataSetLabel,
+		});
+
+		await expect(
+			settingsPage.defaultVisualizationModeLabel
+		).toBeInViewport();
+	});
+}
+
 test.describe('Data Set Settings', () => {
 	test.describe('Default Visualization Mode', () => {
 		test('If Default Visualization Mode is not configured allows user to navigate to Visualization Mode section', async ({
 			settingsPage,
 			visualizationModesPage,
 		}) => {
-			await test.step('Navigate to Settings section', async () => {
-				await settingsPage.goto({
-					dataSetLabel,
-				});
-
-				await expect(
-					settingsPage.defaultVisualizationModeLabel
-				).toBeInViewport();
-			});
+			await navigateToSettings({settingsPage});
 
 			await test.step('Check Default Visualization Mode', async () => {
 				await expect(
@@ -92,15 +96,7 @@ test.describe('Data Set Settings', () => {
 				await page.reload();
 			});
 
-			await test.step('Navigate to Settings section', async () => {
-				await settingsPage.goto({
-					dataSetLabel,
-				});
-
-				await expect(
-					settingsPage.defaultVisualizationModeLabel
-				).toBeInViewport();
-			});
+			await navigateToSettings({settingsPage});
 
 			await test.step('Check Default Visualization Mode', async () => {
 				await expect(
@@ -127,15 +123,7 @@ test.describe('Data Set Settings', () => {
 				await page.reload();
 			});
 
-			await test.step('Navigate to Settings section', async () => {
-				await settingsPage.goto({
-					dataSetLabel,
-				});
-
-				await expect(
-					settingsPage.defaultVisualizationModeLabel
-				).toBeInViewport();
-			});
+			await navigateToSettings({settingsPage});
 
 			await test.step('Check Default Visualization Mode', async () => {
 				await expect(

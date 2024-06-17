@@ -15,7 +15,7 @@ import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 let settingsDataSetERC: string;
 let dataSetLabel: string;
 
-export const fragmentTest = mergeTests(
+export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,
@@ -25,7 +25,7 @@ export const fragmentTest = mergeTests(
 	loginTest()
 );
 
-fragmentTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
+test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	settingsDataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 
@@ -35,15 +35,56 @@ fragmentTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	});
 });
 
-fragmentTest.afterEach(async ({dataSetManagerApiHelpers}) => {
+test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: settingsDataSetERC});
 });
 
-fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
-	fragmentTest(
+const configureDataset = async ({fdsFragmentPage, layout}) => {
+	await test.step(
+		'Configure Data Set in the page',
+		async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		}
+	);
+}
+
+const assertVisualizationMode = async({page, testId, locator}) => {
+	await test.step(
+		'Check Data Set is present',
+		async () => {
+			await page
+				.getByTestId(testId)
+				.waitFor({state: 'visible'});
+
+			await expect(locator).toBeInViewport();
+		}
+	);
+}
+
+const assertCardsVisualizationMode = async({fdsFragmentPage, page}) => {
+	await assertVisualizationMode({
+		page,
+		testId: 'visualization-mode-cards',
+		locator: fdsFragmentPage.fdsCardsWrapper
+	});
+}
+
+const assertListVisualizationMode = async({fdsFragmentPage, page}) => {
+	await assertVisualizationMode({
+		page,
+		testId: 'visualization-mode-list',
+		locator: fdsFragmentPage.fdsListWrapper
+	});
+}
+
+test.describe('Data Set Default Visualization Mode in fragment', () => {
+	test(
 		'When there is only one visualization mode defined, that will be the default one. Cards',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step(
+			await test.step(
 				'Assign a field to a Card title section',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
@@ -53,30 +94,16 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+			await configureDataset({fdsFragmentPage, layout});
 
-			await fragmentTest.step('Data Set (Card) is present', async () => {
-				await page
-					.getByTestId('visualization-mode-cards')
-					.waitFor({state: 'visible'});
-
-				expect(await fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
-			});
+			await assertCardsVisualizationMode({fdsFragmentPage, page});
 		}
 	);
 
-	fragmentTest(
+	test(
 		'When there are more than one visualization mode defined (cards & list), the user could change the visualization option.',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step(
+			await test.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
@@ -90,50 +117,25 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+			await configureDataset({fdsFragmentPage, layout});
 
-			await fragmentTest.step('Check Data Set is present', async () => {
-				await page
-					.getByTestId('visualization-mode-cards')
-					.waitFor({state: 'visible'});
+			await assertCardsVisualizationMode({fdsFragmentPage, page});
 
-				expect(await fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
-			});
-
-			await fragmentTest.step(
+			await test.step(
 				'Change Data Set Visualization option',
 				async () => {
 					await fdsFragmentPage.changeVisualizationMode('List');
 				}
 			);
 
-			await fragmentTest.step(
-				'Check Data Set Visualization option is list',
-				async () => {
-					await page
-						.getByTestId('visualization-mode-list')
-						.waitFor({state: 'visible'});
-
-					expect(
-						await fdsFragmentPage.fdsListWrapper
-					).toBeInViewport();
-				}
-			);
+			await assertListVisualizationMode({fdsFragmentPage, page});
 		}
 	);
 
-	fragmentTest(
+	test(
 		'When there are more than one visualization modes defined, with a default selected (List), this will be the default one in the fragment.',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step(
+			await test.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
@@ -147,7 +149,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Set List as default visualization mode',
 				async () => {
 					await dataSetManagerApiHelpers.updateDataSet({
@@ -157,30 +159,11 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+			await configureDataset({fdsFragmentPage, layout});
 
-			await fragmentTest.step(
-				'Check Data Set is present (List)',
-				async () => {
-					await page
-						.getByTestId('visualization-mode-list')
-						.waitFor({state: 'visible'});
+			await assertListVisualizationMode({fdsFragmentPage, page});
 
-					await expect(
-						fdsFragmentPage.fdsListWrapper
-					).toBeInViewport();
-				}
-			);
-
-			await fragmentTest.step(
+			await test.step(
 				'Check Default Visualization Mode option',
 				async () => {
 					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
@@ -202,10 +185,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 		}
 	);
 
-	fragmentTest(
+	test(
 		'When the default visualization mode is changed in the Data Set Manager, the change is reflected in the fragment',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step(
+			await test.step(
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
@@ -219,7 +202,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Set List as default visualization mode',
 				async () => {
 					await dataSetManagerApiHelpers.updateDataSet({
@@ -229,30 +212,11 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+			await configureDataset({fdsFragmentPage, layout});
 
-			await fragmentTest.step(
-				'Check Data Set is present (List)',
-				async () => {
-					await page
-						.getByTestId('visualization-mode-list')
-						.waitFor({state: 'visible'});
+			await assertListVisualizationMode({fdsFragmentPage, page});
 
-					expect(
-						await fdsFragmentPage.fdsListWrapper
-					).toBeInViewport();
-				}
-			);
-
-			await fragmentTest.step(
+			await test.step(
 				'Check default visualization mode option',
 				async () => {
 					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
@@ -272,7 +236,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Change default visualization mode to Cards',
 				async () => {
 					await dataSetManagerApiHelpers.updateDataSet({
@@ -282,16 +246,12 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Reload page and check the default visualization mode',
 				async () => {
 					await page.reload();
 
-					await page
-						.getByTestId('visualization-mode-cards')
-						.waitFor({state: 'visible'});
-
-					expect(fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
+					await assertCardsVisualizationMode({fdsFragmentPage, page});
 
 					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
 						state: 'visible',

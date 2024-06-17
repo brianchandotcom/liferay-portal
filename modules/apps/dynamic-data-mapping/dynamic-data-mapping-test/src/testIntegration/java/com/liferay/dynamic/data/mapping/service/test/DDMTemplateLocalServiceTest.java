@@ -7,11 +7,13 @@ package com.liferay.dynamic.data.mapping.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.exception.DuplicateDDMTemplateExternalReferenceCodeException;
 import com.liferay.dynamic.data.mapping.exception.TemplateCreationDisabledException;
 import com.liferay.dynamic.data.mapping.exception.TemplateDuplicateTemplateKeyException;
 import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.TemplateIdComparator;
 import com.liferay.petra.string.StringPool;
@@ -23,12 +25,16 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -56,6 +62,23 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			DDL_RECORD_SET_CLASS_NAME);
 	}
 
+	@Test
+	public void testAddTemplate() throws Exception {
+		DDMTemplate template = _ddmTemplateLocalService.addTemplate(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			group.getGroupId(), _classNameId, 0, _resourceClassNameId,
+			Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()),
+			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+			TemplateConstants.LANG_TYPE_VM,
+			getTestTemplateScript(TemplateConstants.LANG_TYPE_VM),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertTrue(
+			Validator.isNotNull(template.getExternalReferenceCode()));
+	}
+
 	@Test(expected = TemplateDuplicateTemplateKeyException.class)
 	public void testAddTemplateWithDuplicateKey() throws Exception {
 		String templateKey = RandomTestUtil.randomString();
@@ -71,6 +94,34 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 			getTestTemplateScript(language), WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Test(expected = DuplicateDDMTemplateExternalReferenceCodeException.class)
+	public void testAddTemplateWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_ddmTemplateLocalService.addTemplate(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			group.getGroupId(), _classNameId, 0, _resourceClassNameId,
+			Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()),
+			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+			TemplateConstants.LANG_TYPE_VM,
+			getTestTemplateScript(TemplateConstants.LANG_TYPE_VM),
+			ServiceContextTestUtil.getServiceContext());
+		_ddmTemplateLocalService.addTemplate(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			group.getGroupId(), _classNameId, 0, _resourceClassNameId,
+			Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()),
+			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+			TemplateConstants.LANG_TYPE_VM,
+			getTestTemplateScript(TemplateConstants.LANG_TYPE_VM),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test(expected = TemplateNameException.class)
@@ -142,6 +193,26 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertNull(
 			DDMTemplateLocalServiceUtil.fetchDDMTemplate(
 				template.getTemplateId()));
+	}
+
+	@Test
+	public void testDeleteTemplateByExternalReferenceCode() throws Exception {
+		DDMTemplate template = _ddmTemplateLocalService.addTemplate(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			group.getGroupId(), _classNameId, 0, _resourceClassNameId,
+			Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()),
+			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+			TemplateConstants.LANG_TYPE_VM,
+			getTestTemplateScript(TemplateConstants.LANG_TYPE_VM),
+			ServiceContextTestUtil.getServiceContext());
+
+		_ddmTemplateLocalService.deleteTemplate(
+			template.getExternalReferenceCode(), template.getGroupId());
+
+		Assert.assertNull(
+			_ddmTemplateLocalService.fetchTemplate(template.getTemplateId()));
 	}
 
 	@Test
@@ -537,5 +608,8 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 
 	private static long _classNameId;
 	private static long _resourceClassNameId;
+
+	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

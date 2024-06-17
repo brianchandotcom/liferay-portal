@@ -265,6 +265,15 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 	}
 
 	private ObjectDefinition _addObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_group.getCompanyId(), "C_CustomObjectDefinition");
+
+		if (objectDefinition != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
+
 		_listTypeEntries.add(
 			ListTypeEntryUtil.createListTypeEntry(
 				"Apple", Collections.singletonMap(LocaleUtil.US, "Apple")));
@@ -350,7 +359,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				ObjectFieldConstants.DB_TYPE_STRING,
 				RandomTestUtil.randomString(), "myRichText", false));
 
-		ObjectDefinition objectDefinition =
+		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, true, false, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

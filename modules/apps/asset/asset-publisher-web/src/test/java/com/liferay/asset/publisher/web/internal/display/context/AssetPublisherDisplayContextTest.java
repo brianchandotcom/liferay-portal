@@ -6,13 +6,12 @@
 package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.TestClassType;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -89,9 +88,9 @@ public class AssetPublisherDisplayContextTest {
 		ClassTypeReader classTypeReader = Mockito.mock(ClassTypeReader.class);
 
 		List<ClassType> classTypes = ListUtil.fromArray(
-			_getClassType(RandomTestUtil.randomLong(), "Map"),
-			_getClassType(RandomTestUtil.randomLong(), "Banner"),
-			_getClassType(RandomTestUtil.randomLong(), "Accordion"));
+			new TestClassType(RandomTestUtil.randomLong(), "Map"),
+			new TestClassType(RandomTestUtil.randomLong(), "Banner"),
+			new TestClassType(RandomTestUtil.randomLong(), "Accordion"));
 
 		Mockito.when(
 			classTypeReader.getAvailableClassTypes(null, LocaleUtil.US)
@@ -109,48 +108,6 @@ public class AssetPublisherDisplayContextTest {
 			TransformUtil.transformToLongArray(
 				_assetPublisherDisplayContext.getClassTypes(classTypeReader),
 				classType -> classType.getClassTypeId()));
-	}
-
-	private ClassType _getClassType(long classTypeId, String name) {
-		return new ClassType() {
-
-			@Override
-			public ClassTypeField getClassTypeField(String fieldName)
-				throws PortalException {
-
-				return null;
-			}
-
-			@Override
-			public List<ClassTypeField> getClassTypeFields()
-				throws PortalException {
-
-				return null;
-			}
-
-			@Override
-			public List<ClassTypeField> getClassTypeFields(int start, int end)
-				throws PortalException {
-
-				return null;
-			}
-
-			@Override
-			public int getClassTypeFieldsCount() throws PortalException {
-				return 0;
-			}
-
-			@Override
-			public long getClassTypeId() {
-				return classTypeId;
-			}
-
-			@Override
-			public String getName() {
-				return name;
-			}
-
-		};
 	}
 
 	private LiferayPortletRequest _getLiferayPortletRequest() {

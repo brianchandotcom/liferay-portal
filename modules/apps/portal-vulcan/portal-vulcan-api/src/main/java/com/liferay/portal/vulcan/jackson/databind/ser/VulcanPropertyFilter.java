@@ -78,11 +78,16 @@ public class VulcanPropertyFilter
 
 			if (value instanceof UnsafeSupplier) {
 				UnsafeSupplier<?, Exception> unsafeSupplier =
-					(UnsafeSupplier)value;
+					(UnsafeSupplier<?, Exception>)value;
 
-				if (unsafeSupplier.get() == null) {
+				Object unsafeSupplierValue = unsafeSupplier.get();
+
+				if (unsafeSupplierValue == null) {
 					return false;
 				}
+
+				mapProperty.setValue(
+					(UnsafeSupplier<?, Exception>)() -> unsafeSupplierValue);
 			}
 		}
 

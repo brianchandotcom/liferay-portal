@@ -37,7 +37,7 @@ public class SchemaCreationUpgradeStep extends BaseSchemaCreationUpgradeStep {
 			try {
 				connection.setAutoCommit(false);
 
-				db.runSQLTemplateString(connection, sqlTemplate, false);
+				db.runSQLTemplate(connection, sqlTemplate, false);
 
 				connection.commit();
 			}

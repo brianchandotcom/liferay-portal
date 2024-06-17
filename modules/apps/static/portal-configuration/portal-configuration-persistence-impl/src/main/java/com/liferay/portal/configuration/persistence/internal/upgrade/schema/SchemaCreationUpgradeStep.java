@@ -29,7 +29,7 @@ public class SchemaCreationUpgradeStep extends BaseSchemaCreationUpgradeStep {
 		try (Connection connection = DataAccess.getConnection()) {
 			DB db = DBManagerUtil.getDB();
 
-			db.runSQLTemplateString(connection, sqlTemplate, false);
+			db.runSQLTemplate(connection, sqlTemplate, false);
 		}
 		catch (Exception exception) {
 			throw new UpgradeException(exception);

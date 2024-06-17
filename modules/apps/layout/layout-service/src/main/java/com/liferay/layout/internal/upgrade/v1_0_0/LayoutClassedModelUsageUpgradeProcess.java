@@ -98,7 +98,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 			LayoutClassedModelUsageUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false);
+		runSQLTemplate(template, false);
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

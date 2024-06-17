@@ -398,7 +398,7 @@ public class DataCleanupTest {
 
 				DB db = DBManagerUtil.getDB();
 
-				db.runSQLTemplateString(StringUtil.read(inputStream), true);
+				db.runSQLTemplate(StringUtil.read(inputStream), true);
 			}
 		}
 

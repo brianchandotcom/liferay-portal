@@ -102,10 +102,10 @@ public class DBInitUtil {
 
 		ClassLoader classLoader = DBInitUtil.class.getClassLoader();
 
-		_runSQLTemplate(db, connection, classLoader, "portal-tables.sql");
-		_runSQLTemplate(db, connection, classLoader, "portal-data-counter.sql");
-		_runSQLTemplate(db, connection, classLoader, "indexes.sql");
-		_runSQLTemplate(db, connection, classLoader, "sequences.sql");
+		_runSQLFile(db, connection, classLoader, "portal-tables.sql");
+		_runSQLFile(db, connection, classLoader, "portal-data-counter.sql");
+		_runSQLFile(db, connection, classLoader, "indexes.sql");
+		_runSQLFile(db, connection, classLoader, "sequences.sql");
 
 		PortalUpgradeProcess.createPortalRelease(connection);
 
@@ -203,11 +203,11 @@ public class DBInitUtil {
 		return dataSource;
 	}
 
-	private static void _runSQLTemplate(
+	private static void _runSQLFile(
 			DB db, Connection connection, ClassLoader classLoader, String path)
 		throws Exception {
 
-		db.runSQLTemplateString(
+		db.runSQLTemplate(
 			connection,
 			StreamUtil.toString(
 				classLoader.getResourceAsStream(

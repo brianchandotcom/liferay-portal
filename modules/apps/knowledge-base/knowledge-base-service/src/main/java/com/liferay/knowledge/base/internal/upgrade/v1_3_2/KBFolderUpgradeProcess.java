@@ -19,7 +19,7 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 			KBFolderUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false);
+		runSQLTemplate(template, false);
 	}
 
 }

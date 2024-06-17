@@ -23,7 +23,7 @@ public class CommerceSubscriptionUpgradeProcess extends UpgradeProcess {
 				CommerceSubscriptionUpgradeProcess.class.getResourceAsStream(
 					"dependencies/CommerceSubscriptionEntry.sql"));
 
-			runSQLTemplateString(template, false);
+			runSQLTemplate(template, false);
 		}
 	}
 

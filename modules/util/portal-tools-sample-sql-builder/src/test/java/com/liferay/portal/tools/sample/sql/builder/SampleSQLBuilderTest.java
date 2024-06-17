@@ -207,7 +207,7 @@ public class SampleSQLBuilderTest {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		db.runSQLTemplateString(connection, sb.toString(), true);
+		db.runSQLTemplate(connection, sb.toString(), true);
 	}
 
 	private void _loadHypersonic(String outputDir) throws Exception {

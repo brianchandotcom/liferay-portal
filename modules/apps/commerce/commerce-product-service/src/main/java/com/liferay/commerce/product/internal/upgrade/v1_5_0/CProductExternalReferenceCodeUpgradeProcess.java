@@ -29,7 +29,7 @@ public class CProductExternalReferenceCodeUpgradeProcess
 					"dependencies" +
 						"/CProductExternalReferenceCodeUpgradeProcess.sql"));
 
-			runSQLTemplateString(template, false);
+			runSQLTemplate(template, false);
 
 			alterTableDropColumn(
 				CPDefinitionImpl.TABLE_NAME, "externalReferenceCode");

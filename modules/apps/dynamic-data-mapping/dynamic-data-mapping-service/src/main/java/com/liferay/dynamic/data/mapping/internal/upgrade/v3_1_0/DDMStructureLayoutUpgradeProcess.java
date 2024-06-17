@@ -22,7 +22,7 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 				DDMStructureLayoutUpgradeProcess.class.getResourceAsStream(
 					"dependencies/update.sql"));
 
-			runSQLTemplateString(template, true);
+			runSQLTemplate(template, true);
 		}
 	}
 

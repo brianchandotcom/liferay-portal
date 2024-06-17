@@ -25,7 +25,7 @@ public class UpgradeRegion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQLTemplate("update-7.3.0-7.4.0-region.sql", false);
+		runSQLFile("update-7.3.0-7.4.0-region.sql", false);
 
 		long companyId = 0;
 		long userId = 0;

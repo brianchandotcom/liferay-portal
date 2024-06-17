@@ -273,14 +273,14 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				!dbInspector.hasColumn(
 					"LayoutPageTemplateStructure", "classPK")) {
 
-				_db.runSQLTemplateString(
+				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure add classNameId " +
 						"LONG;",
 					true);
-				_db.runSQLTemplateString(
+				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure add classPK LONG;",
 					true);
-				_db.runSQLTemplateString(
+				_db.runSQLTemplate(
 					"update LayoutPageTemplateStructure set classPK = plid;",
 					true);
 
@@ -305,11 +305,11 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				dbInspector.hasColumn(
 					"LayoutPageTemplateStructure", "classPK")) {
 
-				_db.runSQLTemplateString(
+				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure drop column " +
 						"classNameId;",
 					true);
-				_db.runSQLTemplateString(
+				_db.runSQLTemplate(
 					"alter table LayoutPageTemplateStructure drop column " +
 						"classPK;",
 					true);

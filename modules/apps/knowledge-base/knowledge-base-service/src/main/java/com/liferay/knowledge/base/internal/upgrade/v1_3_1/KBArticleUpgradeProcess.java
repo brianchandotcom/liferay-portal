@@ -19,7 +19,7 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 			KBArticleUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false);
+		runSQLTemplate(template, false);
 	}
 
 }

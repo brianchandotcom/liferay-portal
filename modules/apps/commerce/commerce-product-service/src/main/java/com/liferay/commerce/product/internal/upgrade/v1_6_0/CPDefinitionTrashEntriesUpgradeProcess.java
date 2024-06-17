@@ -28,7 +28,7 @@ public class CPDefinitionTrashEntriesUpgradeProcess extends UpgradeProcess {
 
 		String template = "DELETE FROM TrashEntry WHERE classNameId = '%s';";
 
-		runSQLTemplateString(
+		runSQLTemplate(
 			String.format(
 				template,
 				_classNameLocalService.getClassNameId(
@@ -37,7 +37,7 @@ public class CPDefinitionTrashEntriesUpgradeProcess extends UpgradeProcess {
 
 		// CPInstance
 
-		runSQLTemplateString(
+		runSQLTemplate(
 			String.format(
 				template,
 				_classNameLocalService.getClassNameId(

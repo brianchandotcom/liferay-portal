@@ -15,7 +15,7 @@ public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_runSQLTemplate(
+		_runSQLFile(
 			"update-6.2.0-7.0.0.sql", "update-6.2.0-7.0.0-asset.sql",
 			"update-6.2.0-7.0.0-group.sql", "update-6.2.0-7.0.0-layoutset.sql",
 			"update-6.2.0-7.0.0-layoutsetbranch.sql");
@@ -23,10 +23,10 @@ public class UpgradeSchema extends UpgradeProcess {
 		upgrade(new UpgradeMVCCVersion());
 	}
 
-	private void _runSQLTemplate(String... sqlFileNames) throws Exception {
+	private void _runSQLFile(String... sqlFileNames) throws Exception {
 		for (String sqlFileName : sqlFileNames) {
 			try (LoggingTimer loggingTimer = new LoggingTimer(sqlFileName)) {
-				runSQLTemplate(sqlFileName, false);
+				runSQLFile(sqlFileName, false);
 			}
 		}
 	}

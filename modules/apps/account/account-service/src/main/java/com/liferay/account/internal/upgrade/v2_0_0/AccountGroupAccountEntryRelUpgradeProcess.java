@@ -21,7 +21,7 @@ public class AccountGroupAccountEntryRelUpgradeProcess extends UpgradeProcess {
 			AccountGroupAccountEntryRelUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false);
+		runSQLTemplate(template, false);
 	}
 
 	@Override

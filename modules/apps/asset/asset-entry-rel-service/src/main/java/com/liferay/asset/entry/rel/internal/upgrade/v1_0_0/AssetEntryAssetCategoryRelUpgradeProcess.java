@@ -61,7 +61,7 @@ public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 			AssetEntryAssetCategoryRelUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false);
+		runSQLTemplate(template, false);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

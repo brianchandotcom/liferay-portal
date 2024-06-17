@@ -43,7 +43,7 @@ public class KBCommentUpgradeProcess extends UpgradeProcess {
 			KBCommentUpgradeProcess.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false);
+		runSQLTemplate(template, false);
 	}
 
 }

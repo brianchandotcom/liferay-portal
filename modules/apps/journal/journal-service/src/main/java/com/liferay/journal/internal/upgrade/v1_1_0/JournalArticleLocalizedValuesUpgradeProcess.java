@@ -267,7 +267,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 			JournalArticleLocalizedValuesUpgradeProcess.class.
 				getResourceAsStream("dependencies/update.sql"));
 
-		runSQLTemplateString(template, false);
+		runSQLTemplate(template, false);
 	}
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;

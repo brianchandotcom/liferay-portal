@@ -100,7 +100,7 @@ public class UpgradeKaleoDefinitionVersionTest {
 		throws Exception {
 
 		if (!_dbInspector.hasColumn(table, column)) {
-			_db.runSQLTemplateString(
+			_db.runSQLTemplate(
 				StringBundler.concat(
 					"alter table ", table, " add ", column, " LONG;"),
 				true);

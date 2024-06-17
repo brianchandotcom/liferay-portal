@@ -25,7 +25,7 @@ public class UpgradeCountry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQLTemplate("update-7.3.0-7.4.0-country.sql", false);
+		runSQLFile("update-7.3.0-7.4.0-country.sql", false);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			try (PreparedStatement preparedStatement1 =

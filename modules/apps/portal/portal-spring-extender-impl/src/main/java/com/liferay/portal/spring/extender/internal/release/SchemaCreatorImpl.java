@@ -84,7 +84,7 @@ public class SchemaCreatorImpl implements SchemaCreator {
 		try (Connection connection = _dataSource.getConnection()) {
 			if (tablesSQL != null) {
 				try {
-					_db.runSQLTemplateString(connection, tablesSQL, true);
+					_db.runSQLTemplate(connection, tablesSQL, true);
 				}
 				catch (Exception exception) {
 					throw new UpgradeException(
@@ -97,7 +97,7 @@ public class SchemaCreatorImpl implements SchemaCreator {
 
 			if (sequencesSQL != null) {
 				try {
-					_db.runSQLTemplateString(connection, sequencesSQL, true);
+					_db.runSQLTemplate(connection, sequencesSQL, true);
 				}
 				catch (Exception exception) {
 					throw new UpgradeException(
@@ -111,7 +111,7 @@ public class SchemaCreatorImpl implements SchemaCreator {
 
 			if (indexesSQL != null) {
 				try {
-					_db.runSQLTemplateString(connection, indexesSQL, true);
+					_db.runSQLTemplate(connection, indexesSQL, true);
 				}
 				catch (Exception exception) {
 					throw new UpgradeException(

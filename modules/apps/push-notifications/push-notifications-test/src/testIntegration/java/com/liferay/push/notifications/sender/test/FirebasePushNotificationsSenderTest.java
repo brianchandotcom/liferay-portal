@@ -220,8 +220,6 @@ public class FirebasePushNotificationsSenderTest {
 
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
-		_mockSendNotificationRequest(accessToken, true);
-
 		_pushNotificationsSender.send(destinationTokens, jsonObject);
 
 		_verifyAccessTokenRequest();

@@ -117,7 +117,7 @@ public class DeleteAPIPropertiesToAPIPropertiesUpgradeProcessTest
 	private static StopWatch _originalStopWatch;
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.headless.builder.internal.upgrade.registry.HeadlessBuilderUpgradeStepRegistrator))"
+		filter = "component.name=com.liferay.headless.builder.internal.upgrade.registry.HeadlessBuilderUpgradeStepRegistrator"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

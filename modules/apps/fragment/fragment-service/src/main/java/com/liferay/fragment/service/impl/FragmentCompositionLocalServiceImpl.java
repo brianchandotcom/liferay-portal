@@ -48,10 +48,10 @@ public class FragmentCompositionLocalServiceImpl
 
 	@Override
 	public FragmentComposition addFragmentComposition(
-			String externalReferenceCode, long userId, long groupId,
-			long fragmentCollectionId, String fragmentCompositionKey,
-			String name, String description, String data,
-			long previewFileEntryId, int status, ServiceContext serviceContext)
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String data, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment composition
@@ -77,7 +77,6 @@ public class FragmentCompositionLocalServiceImpl
 			fragmentCompositionPersistence.create(fragmentCompositionId);
 
 		fragmentComposition.setUuid(serviceContext.getUuid());
-		fragmentComposition.setExternalReferenceCode(externalReferenceCode);
 		fragmentComposition.setGroupId(groupId);
 		fragmentComposition.setCompanyId(user.getCompanyId());
 		fragmentComposition.setUserId(user.getUserId());

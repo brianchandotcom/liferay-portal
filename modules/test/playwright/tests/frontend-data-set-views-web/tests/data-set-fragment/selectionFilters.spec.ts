@@ -5,16 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import getRandomString from '../../../../utils/getRandomString';
+import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {fdsFragmentPageTest} from '../data-set-fragment/fixtures/fdsFragmentPageTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
-import {picklistApiHelpersTest} from './fixtures/picklistApiHelpersTest';
+import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
 const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';

@@ -11,7 +11,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.std.MapProperty;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.ArrayList;
@@ -66,6 +68,27 @@ public class VulcanPropertyFilter
 		}
 	}
 
+	private boolean _hasUnsafeSupplierValue(PropertyWriter propertyWriter)
+		throws Exception {
+
+		if (propertyWriter instanceof MapProperty) {
+			MapProperty mapProperty = (MapProperty)propertyWriter;
+
+			Object value = mapProperty.getValue();
+
+			if (value instanceof UnsafeSupplier) {
+				UnsafeSupplier<?, Exception> unsafeSupplier =
+					(UnsafeSupplier)value;
+
+				if (unsafeSupplier.get() == null) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	private boolean _isFiltered(String path) {
 		if ((_fieldNames.isEmpty() || _fieldNames.contains(path)) &&
 			!_restrictFieldNames.contains(path)) {
@@ -97,14 +120,15 @@ public class VulcanPropertyFilter
 	}
 
 	private boolean _shouldWrite(
-		JsonGenerator jsonGenerator, PropertyWriter propertyWriter) {
+			JsonGenerator jsonGenerator, PropertyWriter propertyWriter)
+		throws Exception {
 
 		List<String> paths = _toPaths(jsonGenerator, propertyWriter.getName());
 
 		String firstPath = paths.get(0);
 
 		if (_isFiltered(firstPath)) {
-			return true;
+			return _hasUnsafeSupplierValue(propertyWriter);
 		}
 
 		if (paths.size() == 1) {
@@ -113,7 +137,7 @@ public class VulcanPropertyFilter
 
 		for (int i = 1; i < paths.size(); i++) {
 			if (_isFilteredWithoutNested(paths.get(i))) {
-				return true;
+				return _hasUnsafeSupplierValue(propertyWriter);
 			}
 		}
 

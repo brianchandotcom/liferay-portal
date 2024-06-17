@@ -185,12 +185,11 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			Assert.assertTrue(fromTableNames.containsAll(toTableNames));
 
 			Assert.assertEquals(
-				_getObjectNames("VIEW", COMPANY_IDS[0]),
-				_getObjectNames("VIEW", companyId));
-
-			Assert.assertEquals(
 				_JOBS_COUNT + 2, _getJobsCount(defaultPartitionName));
 			Assert.assertEquals(1, _getJobsCountByCompany(companyId));
+			Assert.assertEquals(
+				_getObjectNames("VIEW", COMPANY_IDS[0]),
+				_getObjectNames("VIEW", companyId));
 
 			for (String fromTableName : fromTableNames) {
 				String toTableName = fromTableName;

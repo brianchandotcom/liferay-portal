@@ -4004,6 +4004,8 @@ public class DataFactory {
 		for (LayoutModel layoutModel : layoutModels) {
 			if (!layoutModel.isHidden()) {
 				nonhiddenLayout = layoutModel;
+
+				continue;
 			}
 
 			originalFragmentEntryLinkModels.add(

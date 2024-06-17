@@ -167,3 +167,8 @@ af0dfc7e2948e6e4adad068f9b8044049f698fc2^..419bc92b309c78c8fd86f27cf9b93dc889014
 # Bundle Version 4.0.32
 #
 3ba611ca2fa6eed17a3a653b1d488a920b7c924e^..08d384ddf6a0384cdd41af3ef6e5853b1c898182=LPD-25577
+
+#
+# Bundle Version 4.0.33
+#
+08d384ddf6a0384cdd41af3ef6e5853b1c898182^..e1beb6d24909e451cb67e5ae54c2bcc6bd6531f7=LPD-27640	RecentGroupManagerImpl LPD-28351

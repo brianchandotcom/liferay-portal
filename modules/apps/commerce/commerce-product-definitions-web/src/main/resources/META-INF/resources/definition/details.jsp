@@ -196,7 +196,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 										"cpDefinitionId", String.valueOf(cpDefinitionId)
 									).build()
 								%>'
-								creationMenu="<%= cpDefinitionsDisplayContext.getCPDefinitionSpecificationOptionValueCreationMenu()%>"
+								creationMenu="<%= cpDefinitionsDisplayContext.getCPDefinitionSpecificationOptionValueCreationMenu() %>"
 								dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
 								formName="fm"
 								id="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"

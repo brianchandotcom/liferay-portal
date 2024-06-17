@@ -237,6 +237,54 @@ public class CPDefinitionsDisplayContext
 			QueryUtil.ALL_POS, null);
 	}
 
+	public CreationMenu getCPDefinitionSpecificationOptionValueCreationMenu()
+		throws Exception {
+
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/cp_definitions" +
+							"/add_cp_definition_specification_option_value"
+					).setBackURL(
+						cpRequestHelper.getCurrentURL()
+					).setParameter(
+						"cpDefinitionId", getCPDefinitionId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildPortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest, "add-an-existing-specification"));
+				dropdownItem.setTarget("modal");
+			}
+		).addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/cp_definitions" +
+							"/add_cp_definition_specification_option_value"
+					).setBackURL(
+						cpRequestHelper.getCurrentURL()
+					).setParameter(
+						"cpDefinitionId", getCPDefinitionId()
+					).setParameter(
+						"createNewSpecification", true
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildPortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest, "create-new-specification"));
+				dropdownItem.setTarget("modal");
+			}
+		).build();
+	}
+
 	public String getCPDefinitionThumbnailURL() throws Exception {
 		CPDefinition cpDefinition = getCPDefinition();
 

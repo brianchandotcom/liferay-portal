@@ -1550,9 +1550,9 @@ definition {
 
 			CommerceSKUs.generateAllSkuCombinations();
 
-			WaitForElementPresent(locator1 = "//div[(@class='dnd-tr')][2]/div[1]");
+			WaitForElementPresent(locator1 = "//div[@class='dnd-tbody']//div[(@class='dnd-tr')]//span[text()='Approved']/../../..//div[@class='table-list-title']/a");
 
-			var skuCombinationName = selenium.getText("//div[(@class='dnd-tr')][2]/div[1]");
+			var skuCombinationName = selenium.getText("//div[@class='dnd-tbody']//div[(@class='dnd-tr')]//span[text()='Approved']/../../..//div[@class='table-list-title']/a");
 
 			CommerceNavigator.gotoEntry(entryName = ${skuCombinationName});
 

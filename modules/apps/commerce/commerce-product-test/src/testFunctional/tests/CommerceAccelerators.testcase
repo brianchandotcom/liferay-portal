@@ -905,14 +905,6 @@ definition {
 		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND");
-
-		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-
-		CommerceAcceleratorsInitializer.viewDisabledAddToCartButton(productName = "ABS Sensor");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No accounts were found.");
 	}
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"

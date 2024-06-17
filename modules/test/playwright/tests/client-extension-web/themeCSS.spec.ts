@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {pagesAdminPageTest} from '../../fixtures/PagesAdminPageTest';
 import {styleBookPageTest} from '../../fixtures/StyleBookPageTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editThemeCSSClientExtensionsPageTest} from './fixtures/editThemeCSSClientExtensionsPageTest';
@@ -17,7 +17,7 @@ import uploadAndValidateFile from './utils/uploadAndValidateFile';
 export const test = mergeTests(
 	clientExtensionsPageTest,
 	loginTest(),
-	pagesAdminPageTest,
+	pagesAdminPagesTest,
 	styleBookPageTest,
 	editThemeCSSClientExtensionsPageTest
 );

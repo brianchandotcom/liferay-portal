@@ -5,10 +5,10 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {pagesAdminPageTest} from '../../fixtures/PagesAdminPageTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {localizationSiteSettingsPageTest} from '../../fixtures/localizationSiteSettingsPageTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
@@ -52,7 +52,7 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	localizationSiteSettingsPageTest,
 	loginTest(),
-	pagesAdminPageTest
+	pagesAdminPagesTest
 );
 
 test('Create a new JS client extension with a script element attribute', async ({

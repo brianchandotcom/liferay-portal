@@ -5,11 +5,11 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {pagesAdminPageTest} from '../../fixtures/PagesAdminPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {contentPagesTest} from '../../fixtures/contentPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {sitesPageTest} from '../../fixtures/sitesPageTest';
@@ -48,7 +48,7 @@ export const test = mergeTests(
 	sitesPageTest,
 	systemSettingsPageTest,
 	loginTest(),
-	pagesAdminPageTest
+	pagesAdminPagesTest
 );
 
 const webContentName1: string = getRandomString();

@@ -5,11 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {pagesAdminPageTest} from '../../fixtures/PagesAdminPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(
@@ -19,7 +19,7 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	pagesAdminPageTest
+	pagesAdminPagesTest
 );
 
 test('changes the permissions of a group of pages', async ({

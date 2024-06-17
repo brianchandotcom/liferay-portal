@@ -156,7 +156,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -5557,8 +5557,8 @@ public class ObjectEntryResourceTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		AtomicBoolean booleanObjectFieldComputed = new AtomicBoolean();
-		AtomicBoolean dateObjectFieldComputed = new AtomicBoolean();
+		AtomicInteger booleanObjectFieldAtomicInteger = new AtomicInteger();
+		AtomicInteger dateObjectFieldAtomicInteger = new AtomicInteger();
 
 		ServiceRegistration<Feature> serviceRegistration =
 			bundleContext.registerService(
@@ -5581,7 +5581,8 @@ public class ObjectEntryResourceTest {
 
 								UnsafeSupplier<Object, Exception>
 									unsafeSupplier1 = () -> {
-										booleanObjectFieldComputed.set(true);
+										booleanObjectFieldAtomicInteger.
+											incrementAndGet();
 
 										return RandomTestUtil.randomBoolean();
 									};
@@ -5592,7 +5593,8 @@ public class ObjectEntryResourceTest {
 
 								UnsafeSupplier<Object, Exception>
 									unsafeSupplier2 = () -> {
-										dateObjectFieldComputed.set(true);
+										dateObjectFieldAtomicInteger.
+											incrementAndGet();
 
 										return _dateFormat.format(
 											RandomTestUtil.nextDate());
@@ -5634,12 +5636,12 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_BOOLEAN),
 				Http.Method.GET);
 
-			Assert.assertTrue(
-				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed",
-				booleanObjectFieldComputed.getAndSet(false));
-			Assert.assertFalse(
-				_OBJECT_FIELD_NAME_DATE + " should not have been computed",
-				dateObjectFieldComputed.getAndSet(false));
+			Assert.assertEquals(
+				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
+				1, booleanObjectFieldAtomicInteger.getAndSet(0));
+			Assert.assertEquals(
+				_OBJECT_FIELD_NAME_DATE + " should not have been computed", 0,
+				dateObjectFieldAtomicInteger.getAndSet(0));
 
 			HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -5648,12 +5650,12 @@ public class ObjectEntryResourceTest {
 						_objectEntry1.getExternalReferenceCode(),
 				Http.Method.GET);
 
-			Assert.assertTrue(
-				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed",
-				booleanObjectFieldComputed.getAndSet(false));
-			Assert.assertTrue(
-				_OBJECT_FIELD_NAME_DATE + " should have been computed",
-				dateObjectFieldComputed.getAndSet(false));
+			Assert.assertEquals(
+				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
+				1, booleanObjectFieldAtomicInteger.getAndSet(0));
+			Assert.assertEquals(
+				_OBJECT_FIELD_NAME_DATE + " should have been computed once", 1,
+				dateObjectFieldAtomicInteger.getAndSet(0));
 		}
 		finally {
 			serviceRegistration.unregister();

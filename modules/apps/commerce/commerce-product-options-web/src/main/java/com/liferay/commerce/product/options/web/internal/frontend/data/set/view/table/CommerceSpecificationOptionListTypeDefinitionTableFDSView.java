@@ -34,7 +34,9 @@ public class CommerceSpecificationOptionListTypeDefinitionTableFDSView
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "name"
+			"name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
 		).add(
 			"externalReferenceCode", "external-reference-code"
 		).build();

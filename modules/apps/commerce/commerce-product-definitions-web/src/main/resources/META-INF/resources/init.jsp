@@ -18,6 +18,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
@@ -38,9 +39,7 @@ page import="com.liferay.commerce.product.constants.CPAttachmentFileEntryConstan
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPInstanceConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPMeasurementUnitConstants" %><%@
-page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@ page
-	import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
-	taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext" %><%@
@@ -114,9 +113,11 @@ page import="com.liferay.commerce.util.CommerceUtil" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.friendly.url.exception.FriendlyURLLengthException" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
 page import="com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@

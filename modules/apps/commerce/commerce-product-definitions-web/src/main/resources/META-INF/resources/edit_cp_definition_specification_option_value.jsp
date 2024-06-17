@@ -16,6 +16,8 @@ List<CPOptionCategory> cpOptionCategories = cpDefinitionSpecificationOptionValue
 CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 
 long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionValue, request, "CPOptionCategoryId");
+
+List<SelectOption> selectOptions = cpDefinitionSpecificationOptionValueDisplayContext.getSelectOptions();
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_specification_option_value" var="editProductDefinitionSpecificationOptionValueActionURL" />
@@ -33,12 +35,23 @@ long cpOptionCategoryId = BeanParamUtil.getLong(cpDefinitionSpecificationOptionV
 
 			<liferay-ui:error exception="<%= CPDefinitionSpecificationOptionValueKeyException.class %>" message="please-enter-a-valid-key" />
 
-			<aui:field-wrapper label='<%= LanguageUtil.get(resourceBundle, "value") %>' name="valueFieldWrapper">
-				<liferay-ui:input-localized
-					name="value"
-					xml="<%= (cpDefinitionSpecificationOptionValue == null) ? StringPool.BLANK : cpDefinitionSpecificationOptionValue.getValue() %>"
-				/>
-			</aui:field-wrapper>
+			<c:choose>
+				<c:when test="<%= selectOptions.isEmpty() %>">
+					<aui:field-wrapper label='<%= LanguageUtil.get(resourceBundle, "value") %>' name="valueFieldWrapper">
+						<liferay-ui:input-localized
+							name="value"
+							xml="<%= (cpDefinitionSpecificationOptionValue == null) ? StringPool.BLANK : cpDefinitionSpecificationOptionValue.getValue() %>"
+						/>
+					</aui:field-wrapper>
+				</c:when>
+				<c:otherwise>
+					<clay:select
+						label='<%= LanguageUtil.get(resourceBundle, "value") %>'
+						name="value"
+						options="<%= selectOptions %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 
 			<aui:select label="group" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
 

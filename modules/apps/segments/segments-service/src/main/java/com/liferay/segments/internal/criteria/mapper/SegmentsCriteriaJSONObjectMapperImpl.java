@@ -10,13 +10,16 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
+import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.mapper.SegmentsCriteriaJSONObjectMapper;
+import com.liferay.segments.exception.SegmentsEntryCriteriaException;
 import com.liferay.segments.internal.odata.ExpressionVisitorImpl;
 
 import org.osgi.service.component.annotations.Component;
@@ -73,10 +76,8 @@ public class SegmentsCriteriaJSONObjectMapperImpl
 			return null;
 		}
 
-		FilterParser filterParser = _filterParserProvider.provide(
-			segmentsCriteriaContributor.getEntityModel());
-
-		Expression expression = filterParser.parse(filterString);
+		Expression expression = _parseFilterString(
+			segmentsCriteriaContributor.getEntityModel(), filterString);
 
 		JSONObject jsonObject = (JSONObject)expression.accept(
 			new ExpressionVisitorImpl(
@@ -95,6 +96,21 @@ public class SegmentsCriteriaJSONObjectMapperImpl
 		}
 
 		return jsonObject;
+	}
+
+	private Expression _parseFilterString(
+			EntityModel entityModel, String filterString)
+		throws Exception {
+
+		try {
+			FilterParser filterParser = _filterParserProvider.provide(
+				entityModel);
+
+			return filterParser.parse(filterString);
+		}
+		catch (ExpressionVisitException expressionVisitException) {
+			throw new SegmentsEntryCriteriaException(expressionVisitException);
+		}
 	}
 
 	@Reference

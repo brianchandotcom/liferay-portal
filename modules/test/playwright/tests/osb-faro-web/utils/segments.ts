@@ -17,3 +17,8 @@ export async function dragAndDropCriteriaItem(page: Page, itemName: string) {
 
 	return await source.dragTo(target);
 }
+
+export async function saveSegment(page: Page) {
+	await page.getByRole('button', {name: 'Save Segment'}).click();
+	await page.waitForSelector('div.alert-success', { state: 'visible' });
+}

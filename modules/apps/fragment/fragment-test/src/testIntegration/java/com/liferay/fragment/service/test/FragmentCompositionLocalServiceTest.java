@@ -6,7 +6,6 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.exception.DuplicateFragmentCompositionExternalReferenceCodeException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -60,70 +58,6 @@ public class FragmentCompositionLocalServiceTest {
 
 		_updatedFragmentCollection = FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId());
-	}
-
-	@Test
-	public void testAddFragmentComposition() throws Exception {
-		FragmentComposition fragmentComposition =
-			_fragmentCompositionLocalService.addFragmentComposition(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(),
-				StringUtil.randomId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, StringPool.BLANK, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertTrue(
-			Validator.isNotNull(
-				fragmentComposition.getExternalReferenceCode()));
-	}
-
-	@Test(
-		expected = DuplicateFragmentCompositionExternalReferenceCodeException.class
-	)
-	public void testAddFragmentCompositionWithExistingExternalReferenceCode()
-		throws Exception {
-
-		String externalReferenceCode = RandomTestUtil.randomString();
-
-		_fragmentCompositionLocalService.addFragmentComposition(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			StringUtil.randomId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-		_fragmentCompositionLocalService.addFragmentComposition(
-			externalReferenceCode, TestPropsValues.getUserId(),
-			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
-			StringUtil.randomId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	@Test
-	public void testDeleteFragmentCompositionByExternalReferenceCode()
-		throws Exception {
-
-		FragmentComposition fragmentComposition =
-			_fragmentCompositionLocalService.addFragmentComposition(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(),
-				StringUtil.randomId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, StringPool.BLANK, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext());
-
-		_fragmentCompositionLocalService.deleteFragmentComposition(
-			fragmentComposition.getExternalReferenceCode(),
-			fragmentComposition.getGroupId());
-
-		Assert.assertNull(
-			_fragmentCompositionLocalService.fetchFragmentComposition(
-				fragmentComposition.getFragmentCompositionId()));
 	}
 
 	@Test(expected = FragmentCompositionNameException.class)

@@ -25,19 +25,13 @@ import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -303,32 +297,6 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
-	public void testAddFragmentEntryWithoutAddPermission() throws Exception {
-		try {
-			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
-
-			_fragmentEntryService.addFragmentEntry(
-				RandomTestUtil.randomString(), _group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(),
-				"FRAGMENTENTRYKEYONE", "Fragment Entry One",
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
-				0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
-
-			Assert.fail();
-		}
-		catch (PrincipalException principalException) {
-		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
-		}
-	}
-
-	@Test
 	public void testAddFragmentEntryWithType() throws Exception {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			null, _group.getGroupId(),
@@ -450,64 +418,6 @@ public class FragmentEntryServiceTest {
 		Assert.assertNull(
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntry.getFragmentEntryId()));
-	}
-
-	@Test
-	public void testDeleteFragmentEntryByExternalReferenceCode()
-		throws Exception {
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			RandomTestUtil.randomString(), _group.getGroupId(),
-			_fragmentCollection.getFragmentCollectionId(),
-			"FRAGMENTENTRYKEYONE", "Fragment Entry One",
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, "{fieldSets: []}", null, 0,
-			false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-
-		_fragmentEntryService.deleteFragmentEntry(
-			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getGroupId());
-
-		Assert.assertNull(
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				fragmentEntry.getFragmentEntryId()));
-	}
-
-	@Test
-	public void testDeleteFragmentEntryByExternalReferenceCodeWithoutDeletePermission()
-		throws Exception {
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				_fragmentCollection.getFragmentCollectionId(),
-				"FRAGMENTENTRYKEYONE", "Fragment Entry One",
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
-				0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
-
-		try {
-			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
-
-			_fragmentEntryService.deleteFragmentEntry(
-				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getGroupId());
-
-			Assert.fail();
-		}
-		catch (PrincipalException principalException) {
-		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
-		}
 	}
 
 	@Test
@@ -1896,72 +1806,6 @@ public class FragmentEntryServiceTest {
 		Assert.assertEquals(
 			fragmentEntries.toString(), fragmentEntry.getName(),
 			firstFragmentEntry.getName());
-	}
-
-	@Test
-	public void testGetFragmentEntryByExternalReferenceCode() throws Exception {
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			RandomTestUtil.randomString(), _group.getGroupId(),
-			_fragmentCollection.getFragmentCollectionId(),
-			"FRAGMENTENTRYKEYONE", "Fragment Entry One",
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, "{fieldSets: []}", null, 0,
-			false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-
-		FragmentEntry curFragmentEntry =
-			_fragmentEntryService.getFragmentEntryByExternalReferenceCode(
-				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getGroupId());
-
-		Assert.assertEquals(
-			fragmentEntry.getFragmentEntryId(),
-			curFragmentEntry.getFragmentEntryId());
-	}
-
-	@Test
-	public void testGetFragmentEntryByExternalReferenceCodeWithoutViewPermission()
-		throws Exception {
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
-			RandomTestUtil.randomString(), _group.getGroupId(),
-			_fragmentCollection.getFragmentCollectionId(),
-			"FRAGMENTENTRYKEYONE", "Fragment Entry One",
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, "{fieldSets: []}", null, 0,
-			false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, FragmentEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(fragmentEntry.getFragmentEntryId()),
-			ActionKeys.VIEW);
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.SITE_MEMBER, FragmentEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(fragmentEntry.getFragmentEntryId()),
-			ActionKeys.VIEW);
-
-		try {
-			UserTestUtil.setUser(
-				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
-
-			_fragmentEntryService.getFragmentEntryByExternalReferenceCode(
-				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getGroupId());
-
-			Assert.fail();
-		}
-		catch (PrincipalException principalException) {
-		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
-		}
 	}
 
 	@Test

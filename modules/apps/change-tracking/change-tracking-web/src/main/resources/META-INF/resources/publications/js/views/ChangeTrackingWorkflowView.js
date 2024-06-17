@@ -131,7 +131,7 @@ export default function ChangeTrackingWorkflowView({
 
 			<ClayPanel
 				borderless="true"
-				className="mb-0"
+				className="mt-n3"
 				collapsable
 				displayTitle={
 					<ClayPanel.Title>

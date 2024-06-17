@@ -323,8 +323,8 @@ definition {
 
 		task ("Then No API Schema Found message and Add New Schema button are visible") {
 			AssertElementPresent(
-				key_entryName = "No API Schema Found",
-				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+				key_text = "No API Schema Found",
+				locator1 = "ObjectAdmin#EMPTY_STATE_MESSAGE");
 
 			AssertElementPresent(
 				locator1 = "Button#BUTTON_WITH_VALUE",

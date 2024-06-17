@@ -18,7 +18,7 @@ export async function acceptsCookiesBanner(page) {
 }
 
 export async function connectToAnalyticsCloud(page) {
-	await page.getByTestId('input-token', {name: 'input-token'}).click();
+	await page.getByPlaceholder('Paste token here.').click();
 
 	await page.keyboard.press('Control+V');
 

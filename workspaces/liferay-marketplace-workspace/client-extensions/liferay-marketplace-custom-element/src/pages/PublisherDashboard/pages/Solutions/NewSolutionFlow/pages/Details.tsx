@@ -37,9 +37,6 @@ const items = [
 	{label: 'Text & Images Block', value: 'text-images-block'},
 	{label: 'Text & Video Block', value: 'text-video-block'},
 	{label: 'Text Block', value: 'text-block'},
-	{disabled: true, label: 'Single Image Block', value: 'single-image-block'},
-	{disabled: true, label: 'Icons Block', value: 'icons-block'},
-	{disabled: true, label: 'Images Grid Block', value: 'images-grid-block'},
 ];
 
 const Details = () => {
@@ -195,7 +192,6 @@ const Details = () => {
 						>
 							{items.map((item, index) => (
 								<ClaySelect.Option
-									disabled={item.disabled}
 									key={index}
 									label={item.label}
 									value={item.value}

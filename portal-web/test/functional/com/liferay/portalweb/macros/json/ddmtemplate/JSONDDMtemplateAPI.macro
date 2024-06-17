@@ -16,6 +16,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmtemplate/add-template \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId}
 				-d classNameId=${classNameId} \
 				-d classPK=0 \

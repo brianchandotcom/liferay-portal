@@ -16,6 +16,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the local service utility for Layout. This utility wraps
@@ -689,6 +690,10 @@ public class LayoutLocalServiceUtil {
 
 		return getService().fetchLayoutByUuidAndGroupId(
 			uuid, groupId, privateLayout);
+	}
+
+	public static List<Layout> fetchLayouts(Set<Serializable> primaryKeys) {
+		return getService().fetchLayouts(primaryKeys);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

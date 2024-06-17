@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -611,6 +612,9 @@ public interface LayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchLayoutByUuidAndGroupId(
 		String uuid, long groupId, boolean privateLayout);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> fetchLayouts(Set<Serializable> primaryKeys);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

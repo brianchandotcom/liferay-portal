@@ -734,6 +734,13 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<Layout> fetchLayouts(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+
+		return _layoutLocalService.fetchLayouts(primaryKeys);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

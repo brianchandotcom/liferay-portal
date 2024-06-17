@@ -540,17 +540,38 @@ export class PageEditorPage {
 		entry,
 		field,
 		recentSelectedItem,
+		relationship,
 		source,
 	}: {
-		entity: string;
-		entry: string;
+		entity?: string;
+		entry?: string;
 		field: string;
 		recentSelectedItem?: string;
-		source?: 'content' | 'structure';
+		relationship?: string;
+		source?: 'content' | 'relationship' | 'structure';
 	}) {
+
+		// Select source and relationship is needed
+
 		if (source) {
 			await this.page.getByLabel('Source').selectOption(source);
 		}
+
+		if (source === 'relationship') {
+			await this.page
+				.getByLabel('Relationship')
+				.selectOption(relationship);
+		}
+
+		// If source is not content, just select the field
+
+		if (source !== 'content') {
+			await this.page.getByLabel('Field').selectOption(field);
+
+			return;
+		}
+
+		// If source is content, select the item and the field
 
 		await this.selectItemMappingButton.click();
 

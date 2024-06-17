@@ -5,15 +5,15 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
-import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
+import {loginTest} from '../../../../fixtures/loginTest';
+import getRandomString from '../../../../utils/getRandomString';
+import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
-import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {fdsFragmentPageTest} from '../data-set-fragment/fixtures/fdsFragmentPageTest';
 import {sortingPageTest} from './fixtures/sortingPageTest';
-import saveFromModal from './utils/saveFromModal';
+import saveFromModal from '../../utils/saveFromModal';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,

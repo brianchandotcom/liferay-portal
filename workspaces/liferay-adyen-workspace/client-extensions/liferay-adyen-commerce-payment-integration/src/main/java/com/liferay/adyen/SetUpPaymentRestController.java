@@ -68,11 +68,6 @@ public class SetUpPaymentRestController extends BaseRestController {
 							typeSettingsJSONObject.getString("environment")))
 				).sessions(
 					new CreateCheckoutSessionRequest(
-					).reference(
-						commercePaymentEntryJSONObject.getString(
-							"externalReferenceCode")
-					).mode(
-						CreateCheckoutSessionRequest.ModeEnum.HOSTED
 					).amount(
 						new Amount(
 						).currency(
@@ -88,10 +83,15 @@ public class SetUpPaymentRestController extends BaseRestController {
 						)
 					).merchantAccount(
 						typeSettingsJSONObject.getString("merchantAccount")
-					).themeId(
-						typeSettingsJSONObject.getString("themeId")
+					).mode(
+						CreateCheckoutSessionRequest.ModeEnum.HOSTED
+					).reference(
+						commercePaymentEntryJSONObject.getString(
+							"externalReferenceCode")
 					).returnUrl(
 						commercePaymentEntryJSONObject.getString("callbackURL")
+					).themeId(
+						typeSettingsJSONObject.getString("themeId")
 					)
 				);
 

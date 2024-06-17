@@ -588,7 +588,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
-	public void runSQLTemplateString(
+	public void runSQLTemplate(
 			Connection connection, String template, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
@@ -642,7 +642,7 @@ public abstract class BaseDB implements DB {
 
 					include = replaceTemplate(include);
 
-					runSQLTemplateString(connection, include, true);
+					runSQLTemplate(connection, include, true);
 				}
 				else {
 					sb.append(line);
@@ -707,11 +707,11 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
-	public void runSQLTemplateString(String template, boolean failOnError)
+	public void runSQLTemplate(String template, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
 		try (Connection connection = DataAccess.getConnection()) {
-			runSQLTemplateString(connection, template, failOnError);
+			runSQLTemplate(connection, template, failOnError);
 		}
 	}
 

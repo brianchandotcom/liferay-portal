@@ -35,13 +35,34 @@ public interface DBProcess {
 
 	public void runSQL(String[] templates) throws IOException, SQLException;
 
-	public void runSQLTemplate(String path)
+	public void runSQLFile(String path)
 		throws IOException, NamingException, SQLException;
 
-	public void runSQLTemplate(String path, boolean failOnError)
+	public void runSQLFile(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException;
 
-	public void runSQLTemplateString(String template, boolean failOnError)
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #runSQLFile(String)}
+	 */
+	@Deprecated
+	public default void runSQLTemplate(String path)
+		throws IOException, NamingException, SQLException {
+
+		runSQLFile(path);
+	}
+
+	public void runSQLTemplate(String template, boolean failOnError)
 		throws IOException, NamingException, SQLException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #runSQLTemplate(String, boolean)}
+	 */
+	@Deprecated
+	public default void runSQLTemplateString(
+			String template, boolean failOnError)
+		throws IOException, NamingException, SQLException {
+
+		runSQLTemplate(template, failOnError);
+	}
 
 }

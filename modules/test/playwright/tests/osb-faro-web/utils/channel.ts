@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import { Page } from "@playwright/test";
+
 export async function createChannel(apiHelpers, name) {
 	const projects = await apiHelpers.jsonWebServicesOSBFaro.getProjects();
 
@@ -17,4 +19,9 @@ export async function createChannel(apiHelpers, name) {
 		channel,
 		project,
 	};
+}
+
+export async function switchChannel(page: Page, channelName: string) {
+	await page.locator('.channels-menu.button-root').click();
+	await page.getByRole('link', {name: channelName}).click();
 }

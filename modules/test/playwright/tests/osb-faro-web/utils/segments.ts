@@ -10,9 +10,10 @@ export async function createDynamicSegment(page: Page) {
 	await page.getByRole('menuitem', {name: 'Dynamic Segment'}).click();
 }
 
-export async function dragAndDropCriteriaItem(page: Page, itemName: string) {
-	const source = page.getByTestId(`criteria-item-${itemName}`);
-
+export async function createStaticSegment(page: Page) {
+	await page.getByLabel('Menu').click();
+	await page.getByRole('menuitem', {name: 'Static Segment'}).click();
+}
 	const target = page.locator('div.drop-zone-target').last();
 
 	return await source.dragTo(target);

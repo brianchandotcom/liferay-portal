@@ -347,10 +347,7 @@ export default function DiagramBuilder() {
 
 			setElements(elements);
 
-			if (
-				Liferay.FeatureFlags['LPD-11179'] &&
-				!allowScriptContentToBeExecutedOrIncluded
-			) {
+			if (!allowScriptContentToBeExecutedOrIncluded) {
 				const hasGroovyOrJavaScript = detectGroovyOrJavaScript(
 					elements,
 					setHasGroovyOrJavaScript
@@ -410,10 +407,7 @@ export default function DiagramBuilder() {
 
 						setElements(elements);
 
-						if (
-							Liferay.FeatureFlags['LPD-11179'] &&
-							!allowScriptContentToBeExecutedOrIncluded
-						) {
+						if (!allowScriptContentToBeExecutedOrIncluded) {
 							const hasGroovyOrJavaScript =
 								detectGroovyOrJavaScript(
 									elements,

@@ -5,7 +5,7 @@
 
 package com.liferay.asset.publisher.web.internal.helper;
 
-import com.liferay.asset.publisher.web.internal.TestClassType;
+import com.liferay.asset.publisher.web.internal.model.TestClassType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

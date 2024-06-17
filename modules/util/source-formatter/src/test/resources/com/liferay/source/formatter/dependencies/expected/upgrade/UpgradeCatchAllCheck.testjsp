@@ -23,6 +23,8 @@ PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
 
 DLURLHelperUtil.getImagePreviewURL(null, null);
 
+JSONUtil.isJSONObject("test123");
+
 ConfigurationProviderUtil.getPortletInstanceConfiguration(clazz, themeDisplay);
 
 themeDisplay.getScopeGroupId();

@@ -18,8 +18,9 @@ import {
 } from '../analytics-settings-web/utils/analyticsSettings';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import {faroConfig} from './faro.config';
-import {createChannel} from './utils/channel';
+import {createChannel, switchChannel} from './utils/channel';
+import {navigateTo, navigateToACPage, navigateToACPageViaURL} from './utils/navigation';
+import {changeTimeFilterTo, createIndividuals, viewNameListIsNotPresent, viewNameListIsPresent} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -70,327 +71,261 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 	apiHelpers,
 	page,
 }) => {
+	const channelName = 'My Property - ' + getRandomString();
 	const {channel, project} = await createChannel(
 		apiHelpers,
-		'My Property - ' + getRandomString()
+		channelName
 	);
-
-	await apiHelpers.jsonWebServicesOSBAsah.createIndividuals([
-		{
-			emailAddress: 'user1@liferay.com',
-			fields: [
-				{
-					dataSourceId: 0,
-					name: 'givenName',
-					value: 'user1',
-				},
-				{
-					dataSourceId: 0,
-					name: 'familyName',
-					value: 'user1',
-				},
-				{
-					dataSourceId: 0,
-					name: 'email',
-					value: 'user1@liferay.com',
-				},
-			],
-			firstName: 'user1',
-			id: 'user1@liferay.com',
-			lastName: 'user1',
-		},
-		{
-			emailAddress: 'user2@liferay.com',
-			fields: [
-				{
-					dataSourceId: 0,
-					name: 'givenName',
-					value: 'user2',
-				},
-				{
-					dataSourceId: 0,
-					name: 'familyName',
-					value: 'user2',
-				},
-				{
-					dataSourceId: 0,
-					name: 'email',
-					value: 'user2@liferay.com',
-				},
-			],
-			firstName: 'user2',
-			id: 'user2@liferay.com',
-			lastName: 'user2',
-		},
-		{
-			emailAddress: 'user3@liferay.com',
-			fields: [
-				{
-					dataSourceId: 0,
-					name: 'givenName',
-					value: 'user3',
-				},
-				{
-					dataSourceId: 0,
-					name: 'familyName',
-					value: 'user3',
-				},
-				{
-					dataSourceId: 0,
-					name: 'email',
-					value: 'user3@liferay.com',
-				},
-			],
-			firstName: 'user3',
-			id: 'user3@liferay.com',
-			lastName: 'user3',
-		},
-	]);
-
 	const date1 = new Date();
+	const individualsPresentIn24Hours = ['user1 user1', 'user2 user2'];
+	const individualPresentIn30Days = ['user3 user3'];
 
-	await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
-		{
-			createDate: date1.toISOString(),
-			id: '1',
-			individualId: 'user1@liferay.com',
-		},
-		{
-			createDate: date1.toISOString(),
-			id: '2',
-			individualId: 'user2@liferay.com',
-		},
-		{
-			createDate: date1.toISOString(),
-			id: '3',
-			individualId: 'user3@liferay.com',
-		},
-	]);
+	await test.step('Create 3 Individuals and their respective Identity directly in the AC database', async () => {
+        const individualNames = ['user1', 'user2', 'user3'];
+        await createIndividuals(apiHelpers, individualNames);
 
-	await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-		{
-			applicationId: 'Page',
-			canonicalUrl: 'https://www.liferay.com',
-			channelId: channel.id,
-			eventDate: date1.toISOString(),
-			eventId: 'pageViewed',
-			title: 'Liferay',
-			userId: '1',
-		},
-		{
-			applicationId: 'Page',
-			canonicalUrl: 'https://www.liferay.com',
-			channelId: channel.id,
-			eventDate: date1.toISOString(),
-			eventId: 'pageViewed',
-			title: 'Liferay',
-			userId: '2',
-		},
-	]);
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
+			{
+				createDate: date1.toISOString(),
+				id: '1',
+				individualId: 'user1@liferay.com',
+			},
+			{
+				createDate: date1.toISOString(),
+				id: '2',
+				individualId: 'user2@liferay.com',
+			},
+			{
+				createDate: date1.toISOString(),
+				id: '3',
+				individualId: 'user3@liferay.com',
+			},
+		]);
+    });
 
-	const date2 = new Date();
+	await test.step('Create events for two of the individuals to appear within the Last 24 hours period in AC', async () => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: 'Liferay',
+				userId: '1',
+			},
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: 'Liferay',
+				userId: '2',
+			},
+		]);
+    });
 
-	date2.setDate(date2.getDate() - 5);
+	await test.step('Create events for one of the individuals to appear in periods different than the Last 24 hours in AC', async () => {
+		const date2 = new Date();
+		date2.setDate(date2.getDate() - 5);
 
-	await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily([
-		{
-			canonicalUrl: 'https://www.liferay.com',
-			channelId: channel.id,
-			eventDate: date2.toISOString(),
-			title: 'Liferay',
-			userId: '3',
-			views: 1,
-		},
-	]);
+		await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily([
+			{
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date2.toISOString(),
+				title: 'Liferay',
+				userId: '3',
+				views: 1,
+			},
+		]);
+    });
 
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.getByRole('link', {exact: true, name: 'Pages'}).click();
-
-	await page.getByRole('link', {name: 'Liferay'}).click();
-
-	await page.getByRole('link', {name: 'Known Individuals'}).click();
-
-	await expect(
-		page.getByRole('cell', {name: 'user3 user3 user3@liferay.com'})
-	).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await navigateToACPageViaURL(page, project.groupId, channel.id);
 	});
 
-	await page.getByRole('button', {name: 'Last 30 days'}).click();
-
-	await page.getByRole('menuitem', {name: 'Last 24 hours'}).click();
-
-	await expect(
-		page.getByRole('cell', {name: 'user1 user1 user1@liferay.com'})
-	).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to Pages Tab', async () => {
+		await navigateTo(page,'Pages');
 	});
 
-	await expect(
-		page.getByRole('cell', {name: 'user2 user2 user2@liferay.com'})
-	).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Access one of the pages on the list > Go to Known Individuals Tab', async () => {
+		await navigateTo(page,'Liferay');
+		await navigateTo(page,'Known Individuals');
 	});
 
-	await expect(
-		page.getByRole('cell', {name: 'user3 user3 user3@liferay.com'})
-	).toBeHidden({
-		timeout: 100 * 1000,
+	await test.step('Check that User3 User3 is appearing in the list', async () => {
+		await viewNameListIsPresent(page, individualPresentIn30Days);
 	});
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+	await test.step('Change the time filter to Last 24 hours', async () => {
+		await changeTimeFilterTo(page,'Last 24 hours');
+	});
+
+	await test.step('Check that User1 User1 and User2 User2 are appearing in the list', async () => {
+		await viewNameListIsPresent(page, individualsPresentIn24Hours);
+	});
+
+	await test.step('Check that User3 User3 is appearing in the list', async () => {
+		await viewNameListIsNotPresent(page, individualPresentIn30Days);
+	});
+
+	await test.step('Delete the property that was used during automation execution', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('shows outside pages in path analysis', async ({apiHelpers, page}) => {
 	const pageTitle = 'My Page';
-
 	const sitePage = await createSitePage(apiHelpers, pageTitle);
-
 	const channelName = 'My Property - ' + getRandomString();
 
-	await syncAnalyticsCloud(apiHelpers, page, channelName);
-
-	await goToWithReferrer(
-		page,
-		'https://www.google.com',
-		liferayConfig.environment.baseUrl
-	);
-
-	await page.waitForTimeout(10000);
-
-	await page.getByText(pageTitle).first().click();
-
-	await page.waitForTimeout(10000);
-
-	await page.goto(faroConfig.environment.baseUrl);
-
-	await page
-		.getByRole('link', {
-			name: 'FARO-DEV-liferay Liferay Demo Enterprise Plan',
-		})
-		.click();
-
-	await page.locator('.channels-menu.button-root').click();
-
-	await page.getByRole('link', {name: channelName}).click();
-
-	await page.getByRole('link', {exact: true, name: 'Pages'}).click();
-
-	await page.getByRole('button', {name: 'Last 30 days'}).click();
-
-	await page.getByRole('menuitem', {name: 'Last 24 hours'}).click();
-
-	await page
-		.getByRole('cell', {name: 'Home - Liferay DXP'})
-		.getByRole('link')
-		.click();
-
-	await page.getByRole('link', {name: 'Path'}).click();
-
-	await expect(page.getByText('https://www.goo...')).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Connect the DXP to AC', async () => {
+		await syncAnalyticsCloud(apiHelpers, page, channelName);
 	});
 
-	await expect(page.getByText('My Page - Lifer...')).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Access the DXP Home Page using Google Page as a reference page', async () => {
+		await goToWithReferrer(
+			page,
+			'https://www.google.com',
+			liferayConfig.environment.baseUrl
+		);
+
+		await page.waitForTimeout(10000);
 	});
 
-	await expect(page.getByText('1', {exact: true}).first()).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to My Page', async () => {
+		await page.getByText(pageTitle).first().click();
+		await page.waitForTimeout(10000);
 	});
 
-	await expect(page.getByText('1', {exact: true}).nth(1)).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await navigateToACPage(page);
+		await switchChannel(page, channelName);
 	});
 
-	await expect(page.getByText('1', {exact: true}).nth(2)).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to Pages Tab', async () => {
+		await navigateTo(page,'Pages');
 	});
 
-	await page.goto(liferayConfig.environment.baseUrl);
+	await test.step('Change the time filter to Last 24 hours', async () => {
+		await changeTimeFilterTo(page,'Last 24 hours');
+	});
 
-	await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage.id));
+	await test.step('Access one of the pages on the list > Go to Path Tab', async () => {
+		await navigateTo(page,'Home - Liferay DXP');
+		await navigateTo(page,'Path');
+	});
+
+	await test.step('Check that Google Page appears the referral pages and the number of views', async () => {
+		await expect(page.getByText('https://www.goo...')).toBeVisible({
+			timeout: 100 * 1000,
+		});
+
+		await expect(page.getByText('1', {exact: true}).first()).toBeVisible({
+			timeout: 100 * 1000,
+		});
+	});
+
+	await test.step('Check that Home Page appears with one view', async () => {
+		await expect(page.getByText('1', {exact: true}).nth(1)).toBeVisible({
+			timeout: 100 * 1000,
+		});
+	});
+
+	await test.step('Check that My Page appears as exit pages and the number of views', async () => {
+		await expect(page.getByText('My Page - Lifer...')).toBeVisible({
+			timeout: 100 * 1000,
+		});
+	
+		await expect(page.getByText('1', {exact: true}).nth(2)).toBeVisible({
+			timeout: 100 * 1000,
+		});
+	});
+
+	await test.step('Delete pages created in DXP during automation execution', async () => {
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage.id));
+	});
 });
 
 test('shows tracked pages in path analysis', async ({apiHelpers, page}) => {
 	const pageTitle1 = 'My Page 1';
-
 	const sitePage1 = await createSitePage(apiHelpers, pageTitle1);
-
 	const pageTitle2 = 'My Page 2';
-
 	const sitePage2 = await createSitePage(apiHelpers, pageTitle2);
-
 	const channelName = 'My Property - ' + getRandomString();
 
-	await syncAnalyticsCloud(apiHelpers, page, channelName);
-
-	await navigateToSitePage(page, '', pageTitle1);
-
-	await page.waitForTimeout(10000);
-
-	await page.getByText(pageTitle2).first().click();
-
-	await page.waitForTimeout(10000);
-
-	await page.getByText(pageTitle1).first().click();
-
-	await page.waitForTimeout(10000);
-
-	await page.goto(faroConfig.environment.baseUrl);
-
-	await page
-		.getByRole('link', {
-			name: 'FARO-DEV-liferay Liferay Demo Enterprise Plan',
-		})
-		.click();
-
-	await page.locator('.channels-menu.button-root').click();
-
-	await page.getByRole('link', {name: channelName}).click();
-
-	await page.getByRole('link', {exact: true, name: 'Pages'}).click();
-
-	await page.getByRole('button', {name: 'Last 30 days'}).click();
-
-	await page.getByRole('menuitem', {name: 'Last 24 hours'}).click();
-
-	await page
-		.getByRole('cell', {name: 'My Page 1 - Liferay DXP'})
-		.getByRole('link')
-		.click();
-
-	await page.getByRole('link', {name: 'Path'}).click();
-
-	await expect(
-		page.getByText('My Page 2 - Lif...', {exact: true}).first()
-	).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Connect the DXP to AC', async () => {
+		await syncAnalyticsCloud(apiHelpers, page, channelName);
 	});
 
-	await expect(page.getByText('Direct Traffic')).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to My Page 1', async () => {
+		await navigateToSitePage(page, '', pageTitle1);
+		await page.waitForTimeout(10000);
 	});
 
-	await expect(
-		page.getByText('My Page 2 - Lif...', {exact: true}).nth(1)
-	).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to My Page 2', async () => {
+		await page.getByText(pageTitle2).first().click();
+		await page.waitForTimeout(10000);
 	});
 
-	await expect(page.getByText('Drop Offs')).toBeVisible({
-		timeout: 100 * 1000,
+	await test.step('Go to My Page 1', async () => {
+		await page.getByText(pageTitle1).first().click();
+		await page.waitForTimeout(10000);
 	});
 
-	await page.goto(liferayConfig.environment.baseUrl);
+	await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await navigateToACPage(page);
+		await switchChannel(page, channelName);
+	});
 
-	await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage1.id));
+	await test.step('Go to Pages Tab', async () => {
+		await navigateTo(page,'Pages');
+	});
 
-	await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage2.id));
+	await test.step('Change the time filter to Last 24 hours', async () => {
+		await changeTimeFilterTo(page,'Last 24 hours');
+	});
+
+	await test.step('Access one of the pages on the list > Go to Path Tab', async () => {
+		await navigateTo(page,'My Page 1 - Liferay DXP');
+		await navigateTo(page,'Path');
+	});
+
+	await test.step('Check that My Page 2 and Direct Traffic appear as referral pages', async () => {
+		await expect(
+			page.getByText('My Page 2 - Lif...', {exact: true}).first()
+		).toBeVisible({
+			timeout: 100 * 1000,
+		});
+
+		await expect(page.getByText('Direct Traffic')).toBeVisible({
+			timeout: 100 * 1000,
+		});
+	});
+
+	await test.step('Check that My Page 2 and Drop Offs appear as exit pages', async () => {
+		await expect(
+			page.getByText('My Page 2 - Lif...', {exact: true}).nth(1)
+		).toBeVisible({
+			timeout: 100 * 1000,
+		});
+	
+		await expect(page.getByText('Drop Offs')).toBeVisible({
+			timeout: 100 * 1000,
+		});
+	});
+	
+	await test.step('Delete pages created in DXP during automation execution', async () => {
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage1.id));
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage2.id));
+	});
 });

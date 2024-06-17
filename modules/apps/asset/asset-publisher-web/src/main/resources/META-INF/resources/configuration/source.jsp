@@ -110,8 +110,6 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 			}
 		}
 
-		Arrays.sort(assetSelectedClassTypeIds);
-
 		// Right list
 
 		List<KeyValuePair> subtypesRightList = new ArrayList<KeyValuePair>();

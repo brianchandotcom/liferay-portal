@@ -14,7 +14,7 @@ export class EditAccountPage {
 	constructor(page: Page) {
 		this.contactLink = page.getByRole('link', {name: 'Contact'});
 		this.page = page;
-		this.rolesLink = page.getByRole('link', {name: 'Roles'});
-		this.usersLink = page.getByRole('link', {name: 'Users'});
+		this.rolesLink = page.getByRole('link', {exact: true, name: 'Roles'});
+		this.usersLink = page.getByRole('link', {exact: true, name: 'Users'});
 	}
 }

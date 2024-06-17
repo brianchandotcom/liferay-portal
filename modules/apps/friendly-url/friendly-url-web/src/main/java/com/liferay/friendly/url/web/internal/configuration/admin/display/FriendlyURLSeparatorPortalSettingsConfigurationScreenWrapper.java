@@ -12,8 +12,6 @@ import com.liferay.friendly.url.web.internal.display.context.FriendlyURLSeparato
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
@@ -98,14 +96,7 @@ public class FriendlyURLSeparatorPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible() {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if ((serviceContext == null) ||
-				(serviceContext.getCompanyId() <= 0) ||
-				!FeatureFlagManagerUtil.isEnabled(
-					serviceContext.getCompanyId(), "LPS-203351")) {
-
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-203351")) {
 				return false;
 			}
 

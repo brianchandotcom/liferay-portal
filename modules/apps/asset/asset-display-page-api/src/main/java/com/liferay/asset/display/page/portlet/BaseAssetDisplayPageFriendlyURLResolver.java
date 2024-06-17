@@ -213,12 +213,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext == null) || (serviceContext.getCompanyId() <= 0) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				serviceContext.getCompanyId(), "LPS-203351") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-203351") ||
 			!isURLSeparatorConfigurable()) {
 
 			return getDefaultURLSeparator();
@@ -228,6 +223,13 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			_friendlyURLSeparatorProvider.get();
 
 		if (friendlyURLSeparatorProvider == null) {
+			return getDefaultURLSeparator();
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
 			return getDefaultURLSeparator();
 		}
 

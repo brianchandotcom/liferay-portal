@@ -58,5 +58,5 @@
 		"format": "node-scripts format",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "3.0.200"
+	"version": "3.0.201"
 }

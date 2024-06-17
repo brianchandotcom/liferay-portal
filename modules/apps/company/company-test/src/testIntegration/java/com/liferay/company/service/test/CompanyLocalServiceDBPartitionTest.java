@@ -582,7 +582,6 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Assert.assertTrue(
 			ArrayUtil.contains(_getCompanyIdsBySQL(), company.getCompanyId()));
-
 		Assert.assertEquals(name, company.getName());
 		Assert.assertEquals(virtualHostname, company.getVirtualHostname());
 		Assert.assertEquals(webId, company.getWebId());

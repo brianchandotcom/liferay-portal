@@ -118,6 +118,9 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 						externalReferenceCode + ".oauth2.authorization.uri",
 						"/o/oauth2/authorize"
 					).put(
+						externalReferenceCode + ".oauth2.home.page.uri",
+						oAuth2Application.getHomePageURL()
+					).put(
 						externalReferenceCode + ".oauth2.introspection.uri",
 						"/o/oauth2/introspect"
 					).put(

@@ -123,6 +123,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
+import java.io.Serializable;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1124,6 +1126,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		String uuid, long groupId, boolean privateLayout) {
 
 		return layoutPersistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
+	}
+
+	@Override
+	public List<Layout> fetchLayouts(Set<Serializable> primaryKeys) {
+		Map<Serializable, Layout> layoutsMap =
+			layoutPersistence.fetchByPrimaryKeys(primaryKeys);
+
+		if (layoutsMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return new ArrayList<>(layoutsMap.values());
 	}
 
 	/**

@@ -7,7 +7,7 @@ import {test} from '@playwright/test';
 
 import {PagesAdminPage} from '../pages/layout-admin-web/PagesAdminPage';
 
-const pagesAdminPageTest = test.extend<{
+const pagesAdminPagesTest = test.extend<{
 	pagesAdminPage: PagesAdminPage;
 }>({
 	pagesAdminPage: async ({page}, use) => {
@@ -15,4 +15,4 @@ const pagesAdminPageTest = test.extend<{
 	},
 });
 
-export {pagesAdminPageTest};
+export {pagesAdminPagesTest};

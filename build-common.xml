@@ -727,6 +727,12 @@ information.
 						<entry key="groupId" value="${project.groupId}" />
 						<entry key="version" value="${artifact.version}" />
 					</propertyfile>
+
+					<replaceregexp
+						file="classes/META-INF/maven/${project.groupId}/${project.artifactId}/pom.properties"
+						match="#.*[0-9].*\n"
+						replace=""
+					/>
 				</then>
 			</if>
 		</sequential>

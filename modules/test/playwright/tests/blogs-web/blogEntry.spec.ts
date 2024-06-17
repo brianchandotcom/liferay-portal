@@ -228,7 +228,7 @@ test('LPD-26753 The URL changes when a category is modified', async ({
 
 	await test.step('Check redirection and edited category in the initial friendly URL', async () => {
 		friendlyUrlCategories[0].name = `${friendlyUrlCategories[0].name}-edited`;
-		await apiHelpers.headlessAdminTaxonomy.patchCategory({
+		await apiHelpers.headlessAdminTaxonomy.patchTaxonomyCategory({
 			id: categories[0].id,
 			name: friendlyUrlCategories[0].name,
 		});

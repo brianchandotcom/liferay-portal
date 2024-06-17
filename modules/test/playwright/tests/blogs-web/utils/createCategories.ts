@@ -20,18 +20,21 @@ export async function createCategories({
 	vocabularyName: string;
 }): Promise<({id: number} & TCategory)[]> {
 	const {id: vocabularyId} =
-		await apiHelpers.headlessAdminTaxonomy.postVocabulary({
+		await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
 			name: vocabularyName,
 			siteId: site.id,
 		});
 
 	const categories = [];
 	for (const {name, name_i18n} of friendlyUrlCategories) {
-		const {id} = await apiHelpers.headlessAdminTaxonomy.postCategory({
-			name,
-			name_i18n,
-			vocabularyId,
-		});
+		const {id} =
+			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+				{
+					name,
+					name_i18n,
+					vocabularyId,
+				}
+			);
 
 		categories.push({
 			id,

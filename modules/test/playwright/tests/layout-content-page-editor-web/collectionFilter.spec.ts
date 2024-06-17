@@ -202,7 +202,7 @@ testWithIsolatedSite(
 
 		for (const tagName of ['Dogs', 'Cats']) {
 			tags.push(
-				await apiHelpers.headlessAdminTaxonomy.postTag({
+				await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
 					name: tagName,
 					siteId: site.id,
 				})

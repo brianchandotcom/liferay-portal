@@ -43,8 +43,8 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 
 	await fragmentsPage.goto(site.friendlyUrlPath);
 	const publishedFragmentName = getRandomString();
-    await fragmentsPage.createFragment(setName, publishedFragmentName);
-    await fragmentEditorPage.publish();
+	await fragmentsPage.createFragment(setName, publishedFragmentName);
+	await fragmentEditorPage.publish();
 
 	const pageName = getRandomString();
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -67,11 +67,7 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 		await header.click();
 	}
 
-	await expect(
-		page.getByText(publishedFragmentName)
-	).toBeVisible();
+	await expect(page.getByText(publishedFragmentName)).toBeVisible();
 
-	await expect(
-		page.getByText(fragmentName)
-	).not.toBeVisible();
+	await expect(page.getByText(fragmentName)).not.toBeVisible();
 });

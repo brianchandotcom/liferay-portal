@@ -4013,7 +4013,7 @@ public class DataFactory {
 						_getFragmentComponentInputStream("paragraph", "css")),
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "html")),
-					"",
+					StringPool.BLANK,
 					_readFile(
 						"fragment_component" +
 							"/fragment_component_paragraph_title_edit" +
@@ -4027,7 +4027,7 @@ public class DataFactory {
 						_getFragmentComponentInputStream("paragraph", "css")),
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "html")),
-					"",
+					StringPool.BLANK,
 					_readFile(
 						"fragment_component" +
 							"/fragment_component_paragraph_content_edit" +

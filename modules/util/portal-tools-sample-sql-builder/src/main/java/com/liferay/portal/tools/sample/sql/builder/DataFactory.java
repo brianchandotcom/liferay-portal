@@ -4004,7 +4004,7 @@ public class DataFactory {
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
-			if (layoutModel.getHidden()) {
+			if (layoutModel.isHidden()) {
 				originalFragmentEntryLinkModels.add(
 					newFragmentEntryLinkModel(
 						layoutModel, 0, segmentsExperienceId,

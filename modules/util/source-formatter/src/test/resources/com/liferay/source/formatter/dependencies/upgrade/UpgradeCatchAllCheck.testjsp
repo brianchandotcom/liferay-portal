@@ -18,6 +18,8 @@ DLUtil.getGroupIds(themeDisplay);
 
 DLUtil.getImagePreviewURL(null, null);
 
+JSONUtil.isValid("test123");
+
 portletDisplay.getPortletInstanceConfiguration(clazz);
 
 themeDisplay.getPortletGroupId();

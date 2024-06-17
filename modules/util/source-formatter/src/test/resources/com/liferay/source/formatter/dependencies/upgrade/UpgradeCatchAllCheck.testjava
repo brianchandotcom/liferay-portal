@@ -109,6 +109,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		HttpUtil.setParameter(null, null, null);
 		HttpUtil.shortenURL(null);
 
+		JSONUtil.isValid("test123");
+
 		ListUtil.fromArray(LanguageUtil.getAvailableLocales());
 
 		new AssetListEntryCreateDateComparator();

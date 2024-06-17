@@ -124,6 +124,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		HttpComponentsUtil.setParameter(null, null, null);
 		HttpComponentsUtil.shortenURL(null);
 
+		JSONUtil.isJSONObject("test123");
+
 		new ArrayList<>(LanguageUtil.getAvailableLocales());
 
 		AssetListEntryCreateDateComparator.getInstance(false);

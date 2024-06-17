@@ -20,6 +20,10 @@
 	}
 </style>
 
+<#if themeDisplay?has_content>
+	<#assign isSignedIn = themeDisplay.isSignedIn() />
+</#if>
+
 <#if (CPDefinition_cProductId.getData())??>
 	<#assign productId = CPDefinition_cProductId.getData() />
 </#if>
@@ -92,19 +96,16 @@
 				${companyDescription}
 			</div>
 
-			<div class="bg-white company-description-icons-container d-flex justify-content-between px-8 py-7">
+			<div class="bg-white company-description-icons-container d-flex px-8 py-7<#if isSignedIn?string("yes", "no") == "no"> justify-content-center</#if><#if isSignedIn?string("yes", "no") == "yes"> justify-content-between</#if>">
 				<#if companyWebsite?has_content>
 					<div class="d-flex flex-row">
 						<div class="align-items-center d-flex mr-2">
-							<img
-								class="company-icon"
-								aria-label="video-thumbnail"
-								src="/documents/d/marketplace/lr-icon-063-png">
-							</img>
+							<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr-icon-063-png"></img>
 						</div>
 
-					<div class="d-flex flex-column">
-						<h2 class="m-0">Website</h2>
+						<div class="d-flex flex-column">
+							<h2 class="m-0">Website</h2>
+
 							<a class="font-weight-bold" href="https://${companyWebsite}" target="_blank">
 								${companyWebsite}
 							</a>
@@ -112,44 +113,38 @@
 					</div>
 				</#if>
 
-				<#if companyEmail?has_content>
-					<div class="d-flex flex-row">
-						<div class="align-items-center d-flex mr-2">
-							<img
-								class="company-icon"
-								aria-label="video-thumbnail"
-								src="/documents/d/marketplace/lr-icon-184-png">
-							</img>
+				<#if isSignedIn?string("yes", "no") == "yes">
+					<#if companyEmail?has_content>
+						<div class="d-flex flex-row">
+							<div class="align-items-center d-flex mr-2">
+								<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr-icon-184-png"></img>
+							</div>
+
+							<div class="d-flex flex-column">
+								<h2 class="m-0">Email</h2>
+
+								<a class="font-weight-bold" href="mailto:${companyEmail}" target="_blank">
+									${companyEmail}
+								</a>
+							</div>
 						</div>
+					</#if>
 
-						<div class="d-flex flex-column">
-							<h2 class="m-0">Email</h2>
+					<#if companyPhone?has_content>
+						<div class="d-flex flex-row">
+							<div class="align-items-center d-flex mr-2">
+								<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr-icon-185-png"></img>
+							</div>
 
-							<a class="font-weight-bold" href="mailto:${companyEmail}" target="_blank">
-								${companyEmail}
-							</a>
+							<div class="d-flex flex-column">
+								<h2 class="m-0">Phone</h2>
+
+								<a class="font-weight-bold" href="tel:${companyPhone}" target="_blank">
+									${companyPhone}
+								</a>
+							</div>
 						</div>
-					</div>
-				</#if>
-
-				<#if companyEmail?has_content>
-					<div class="d-flex flex-row">
-						<div class="align-items-center d-flex mr-2">
-							<img
-								class="company-icon"
-								aria-label="video-thumbnail"
-								src="/documents/d/marketplace/lr-icon-185-png">
-							</img>
-						</div>
-
-						<div class="d-flex flex-column">
-							<h2 class="m-0">Phone</h2>
-
-							<a class="font-weight-bold" href="tel:${companyPhone}" target="_blank">
-								${companyPhone}
-							</a>
-						</div>
-					</div>
+					</#if>
 				</#if>
 			</div>
 		</div>

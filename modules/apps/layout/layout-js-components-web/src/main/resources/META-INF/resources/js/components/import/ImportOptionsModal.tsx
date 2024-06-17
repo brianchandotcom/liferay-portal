@@ -8,15 +8,15 @@ import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {ReactText, useState} from 'react';
 
-interface Props {
-	onCloseModal: () => void;
-	onImport: (overwriteStrategy?: OverwriteStrategy) => void;
-}
-
 interface ModalProps {
 	onClickImport: () => void;
 	onClose: () => void;
 	onRadioChange: (value: ReactText) => void;
+}
+
+interface Props {
+	onCloseModal: () => void;
+	onImport: (overwriteStrategy?: OverwriteStrategy) => void;
 }
 
 const OPTIONS = [

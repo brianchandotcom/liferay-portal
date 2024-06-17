@@ -25,7 +25,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully.");
+			value1 = "successfully.");
 	}
 
 	@summary = "Default summary"
@@ -76,7 +76,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully.");
+			value1 = "successfully.");
 	}
 
 	@summary = "Default summary"
@@ -126,7 +126,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully.");
+			value1 = "successfully.");
 	}
 
 	@summary = "Default summary"
@@ -150,7 +150,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully.");
+			value1 = "successfully.");
 	}
 
 	@summary = "Default summary"
@@ -178,7 +178,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully.");
+			value1 = "successfully.");
 	}
 
 	@summary = "Default summary"

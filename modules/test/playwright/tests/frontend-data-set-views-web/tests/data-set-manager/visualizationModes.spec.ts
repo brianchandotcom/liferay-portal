@@ -42,6 +42,24 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	});
 });
 
+const clickActionInRow = async ({actionName, rowName, visualizationModesPage}) => {
+	await visualizationModesPage
+		.getRowByText(rowName)
+		.locator('.actions-cell button')
+		.click();
+
+	const actionButton = visualizationModesPage.page.getByRole(
+		'menuitem',
+		{
+			name: actionName,
+		}
+	);
+
+	await expect(actionButton).toBeInViewport();
+
+	await actionButton.click();
+}
+
 test.describe('Visualization Modes in Data Set Manager', () => {
 	test('Configure cards visualization mode @LPD-10735', async ({
 		page,
@@ -298,21 +316,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Edit a field', async () => {
-			await visualizationModesPage
-				.getRowByText(SAMPLE_SCALAR_FIELD)
-				.locator('.actions-cell button')
-				.click();
-
-			const editButton = visualizationModesPage.page.getByRole(
-				'menuitem',
-				{
-					name: 'Edit',
-				}
-			);
-
-			await expect(editButton).toBeInViewport();
-
-			await editButton.click();
+			await clickActionInRow({
+				actionName: 'Edit',
+				rowName: SAMPLE_SCALAR_FIELD,
+				visualizationModesPage
+			});
 
 			const sortableInput =
 				visualizationModesPage.page.getByLabel('Sortable');
@@ -338,21 +346,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Check if object field has disabled sortable option', async () => {
-			await visualizationModesPage
-				.getRowByText(`${SAMPLE_OBJECT_FIELD}.*`)
-				.locator('.actions-cell button')
-				.click();
-
-			const editButton = visualizationModesPage.page.getByRole(
-				'menuitem',
-				{
-					name: 'Edit',
-				}
-			);
-
-			await expect(editButton).toBeInViewport();
-
-			await editButton.click();
+			await clickActionInRow({
+				actionName: 'Edit',
+				rowName: `${SAMPLE_OBJECT_FIELD}.*`,
+				visualizationModesPage
+			});
 
 			const sortableLabel =
 				visualizationModesPage.page.getByLabel('Sortable');
@@ -652,21 +650,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Edit a field, change its label, cancel @LPS-176051 @LPS-178736 @LPS-179151', async () => {
-			await visualizationModesPage
-				.getRowByText(SAMPLE_SCALAR_FIELD)
-				.locator('.actions-cell button')
-				.click();
-
-			const editButton = visualizationModesPage.page.getByRole(
-				'menuitem',
-				{
-					name: 'Edit',
-				}
-			);
-
-			await expect(editButton).toBeInViewport();
-
-			await editButton.click();
+			await clickActionInRow({
+				actionName: 'Edit',
+				rowName: SAMPLE_SCALAR_FIELD,
+				visualizationModesPage
+			});
 
 			const labelInput = visualizationModesPage.page.getByLabel('Label');
 
@@ -691,21 +679,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 
 		await test.step('Delete a field, cancel @LPS-185500', async () => {
-			await visualizationModesPage
-				.getRowByText(SAMPLE_SCALAR_FIELD)
-				.locator('.actions-cell button')
-				.click();
-
-			const deleteButton = visualizationModesPage.page.getByRole(
-				'menuitem',
-				{
-					name: 'Delete',
-				}
-			);
-
-			await expect(deleteButton).toBeInViewport();
-
-			await deleteButton.click();
+			await clickActionInRow({
+				actionName: 'Delete',
+				rowName: SAMPLE_SCALAR_FIELD,
+				visualizationModesPage
+			});
 
 			await visualizationModesPage.cancelAddFieldsModal();
 		});

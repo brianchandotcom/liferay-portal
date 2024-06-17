@@ -1725,6 +1725,15 @@
 		"actionIds": [
 			"VIEW"
 		],
+		"primKey": "[$PermissionAction#MDF-CLAIM-CLAIM-PAID-STATUS$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
+		"roleName": "Channel Marketing Director (CMD)",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
 		"primKey": "[$PermissionAction#DEAL-REGISTRATION-VIEW$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Channel Marketing Director (CMD)",
@@ -1933,6 +1942,15 @@
 			"VIEW"
 		],
 		"primKey": "[$PermissionAction#MDF-CLAIM-IN-DIRECTOR-REVIEW-STATUS$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
+		"roleName": "Channel Marketing Manager (CMM)",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$PermissionAction#MDF-CLAIM-CLAIM-PAID-STATUS$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 4

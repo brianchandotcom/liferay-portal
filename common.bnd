@@ -16,4 +16,5 @@ Liferay-Portal-Version: ${release.info.version}
 Liferay-Portal-Version-Display-Name: ${release.info.version.display.name}
 -donotcopy: (\.touch)
 -fixupmessages.deprecated=annotations are deprecated
+-removeheaders: Bnd-LastModified
 -sources: false

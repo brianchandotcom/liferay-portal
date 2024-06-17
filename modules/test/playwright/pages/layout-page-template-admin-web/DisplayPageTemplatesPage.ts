@@ -88,6 +88,21 @@ export class DisplayPageTemplatesPage {
 			.click();
 	}
 
+	async editTemplate(name: string) {
+		await this.clickMoreActions(name);
+
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: 'Edit',
+			})
+			.click();
+
+		await this.page
+			.getByText('Select a Page Element', {exact: true})
+			.waitFor();
+	}
+
 	async markAsDefault(name: string) {
 		await this.clickMoreActions(name);
 

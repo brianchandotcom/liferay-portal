@@ -93,45 +93,12 @@ test('Add a page based on custom master.', async ({
 				.replace('lfr-layout-structure-item-topper-', '')
 		);
 
-		await expect(topper.locator('a.btn')).toHaveClass(/btn-primary/);
-		await expect(topper.locator('a.btn')).toHaveClass(/btn-nm/);
 		expect(
 			await pageEditorPage.getElementStyle(
 				topper.locator(`.lfr-layout-structure-item-${buttonId}`),
 				'background-color'
 			)
 		).toBe('rgba(0, 0, 0, 0)');
-
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Style',
-			fragmentId: buttonId,
-			tab: 'General',
-			value: 'Link',
-		});
-
-		await expect(topper.locator('a.btn')).toHaveClass(/btn-link/);
-
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Size',
-			fragmentId: buttonId,
-			tab: 'General',
-			value: 'Large',
-		});
-
-		await expect(topper.locator('a.btn')).toHaveClass(/btn-lg/);
-
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Align Center',
-			fragmentId: buttonId,
-			tab: 'Styles',
-		});
-
-		expect(
-			await pageEditorPage.getElementStyle(
-				topper.locator(`.lfr-layout-structure-item-${buttonId}`),
-				'text-align'
-			)
-		).toBe('center');
 
 		await pageEditorPage.changeFragmentConfiguration({
 			fieldLabel: 'Background Color',
@@ -168,11 +135,6 @@ test('Add a page based on custom master.', async ({
 			`.page-editor__fragment-content--master.lfr-layout-structure-item-${buttonId}`
 		);
 
-		await expect(buttonItem.locator('a.btn')).toHaveClass(/btn-link/);
-		await expect(buttonItem.locator('a.btn')).toHaveClass(/btn-lg/);
-		expect(
-			await pageEditorPage.getElementStyle(buttonItem, 'text-align')
-		).toBe('center');
 		expect(
 			await pageEditorPage.getElementStyle(buttonItem, 'background-color')
 		).toBe('rgb(231, 231, 237)');

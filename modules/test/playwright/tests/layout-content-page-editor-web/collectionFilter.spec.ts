@@ -45,24 +45,13 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
 	pageEditorPagesTest,
 	wemSiteTest
 );
 
-const testWithIsolatedSite = mergeTests(
-	apiHelpersTest,
-	collectionsPagesTest,
-	featureFlagsTest({
-		'LPS-178052': true,
-	}),
-	isolatedSiteTest,
-	journalPagesTest,
-	loginTest(),
-	pageEditorPagesTest
-);
+const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
 
 const selectFilter = async (page, categories) => {
 	await page.getByRole('button', {name: 'Select'}).click();
@@ -151,6 +140,11 @@ test('filters a web content collection by single and multiple categories', async
 		.frameLocator('iframe[title="Select"]')
 		.getByRole('button', {name: 'Select This Level'})
 		.click();
+
+	await page
+		.locator('.modal-title')
+		.getByText('Select')
+		.waitFor({state: 'hidden'});
 
 	// Check the option to show the label with the selected vocabulary
 

@@ -11,8 +11,8 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
-import {UIElementsPage} from '../uielements/UIElementsPage';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
+import {UIElementsPage} from '../uielements/UIElementsPage';
 
 export class PagesAdminPage {
 	readonly addButton: Locator;
@@ -53,7 +53,9 @@ export class PagesAdminPage {
 			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
 		);
 		this.widgetPageButton = page.getByRole('button', {name: 'Widget Page'});
-		this.newButton = page.getByText('New', {exact: true}).first();
+		this.newButton = page
+			.locator('.management-bar')
+			.getByRole('button', {name: 'New'});
 		this.pageEditorPage = new PageEditorPage(this.page);
 	}
 
@@ -149,7 +151,10 @@ export class PagesAdminPage {
 	async createNewPage(name: string, template?: string) {
 		await this.newButton.click();
 
-		await this.page.getByRole('menuitem').getByText('Page').first().click();
+		await this.page
+			.getByRole('menuitem')
+			.getByText('Page', {exact: true})
+			.click();
 
 		await this.getTemplateCard(template).click();
 
@@ -160,7 +165,7 @@ export class PagesAdminPage {
 		await loadingAnimation.waitFor({state: 'hidden'});
 
 		const frameLocator = await this.page.frameLocator(
-			'iframe[id="addLayoutDialog_iframe_"]'
+			'iframe[title="Add Page"]'
 		);
 		const inputName = await frameLocator.getByPlaceholder('Add Page Name');
 		await inputName.fill(name);
@@ -172,11 +177,14 @@ export class PagesAdminPage {
 
 	async editPage(name: string) {
 		await this.page
-			.locator('.text-truncate')
-			.filter({hasText: name})
+			.locator('.miller-columns-item')
+			.getByRole('link', {name})
 			.click();
 
-		await this.page.getByText('Place fragments or widgets here.').waitFor();
+		await this.page
+			.locator('.management-bar')
+			.getByRole('button', {name: 'Publish'})
+			.waitFor();
 	}
 
 	getTemplateCard(name: string) {

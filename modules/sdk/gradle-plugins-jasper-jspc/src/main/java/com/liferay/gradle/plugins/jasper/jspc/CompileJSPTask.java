@@ -22,6 +22,7 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
@@ -58,8 +59,7 @@ public class CompileJSPTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
 
-	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Classpath
 	public FileCollection getJspCClasspath() {
 		return _jspCClasspath;
 	}

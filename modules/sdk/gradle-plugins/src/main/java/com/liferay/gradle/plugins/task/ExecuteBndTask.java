@@ -37,8 +37,8 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
@@ -180,8 +180,7 @@ public class ExecuteBndTask extends DefaultTask {
 		}
 	}
 
-	@InputDirectory
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Classpath
 	public File getBaseDir() {
 		return GradleUtil.toFile(getProject(), _baseDir);
 	}

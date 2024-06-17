@@ -630,7 +630,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

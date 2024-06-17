@@ -69,7 +69,7 @@ public class FragmentEntryVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -81,8 +81,6 @@ public class FragmentEntryVersionCacheModel
 		sb.append(version);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
 		sb.append(", fragmentEntryId=");
 		sb.append(fragmentEntryId);
 		sb.append(", groupId=");
@@ -154,14 +152,6 @@ public class FragmentEntryVersionCacheModel
 		}
 		else {
 			fragmentEntryVersionImpl.setUuid(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			fragmentEntryVersionImpl.setExternalReferenceCode("");
-		}
-		else {
-			fragmentEntryVersionImpl.setExternalReferenceCode(
-				externalReferenceCode);
 		}
 
 		fragmentEntryVersionImpl.setFragmentEntryId(fragmentEntryId);
@@ -296,7 +286,6 @@ public class FragmentEntryVersionCacheModel
 
 		version = objectInput.readInt();
 		uuid = objectInput.readUTF();
-		externalReferenceCode = objectInput.readUTF();
 
 		fragmentEntryId = objectInput.readLong();
 
@@ -350,13 +339,6 @@ public class FragmentEntryVersionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(fragmentEntryId);
@@ -464,7 +446,6 @@ public class FragmentEntryVersionCacheModel
 	public long fragmentEntryVersionId;
 	public int version;
 	public String uuid;
-	public String externalReferenceCode;
 	public long fragmentEntryId;
 	public long groupId;
 	public long companyId;

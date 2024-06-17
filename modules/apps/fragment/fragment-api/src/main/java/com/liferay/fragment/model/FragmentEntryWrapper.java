@@ -39,7 +39,6 @@ public class FragmentEntryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
-		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("headId", getHeadId());
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("groupId", getGroupId());
@@ -88,13 +87,6 @@ public class FragmentEntryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
-		}
-
-		String externalReferenceCode = (String)attributes.get(
-			"externalReferenceCode");
-
-		if (externalReferenceCode != null) {
-			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long headId = (Long)attributes.get("headId");
@@ -328,16 +320,6 @@ public class FragmentEntryWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
-	}
-
-	/**
-	 * Returns the external reference code of this fragment entry.
-	 *
-	 * @return the external reference code of this fragment entry
-	 */
-	@Override
-	public String getExternalReferenceCode() {
-		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -820,16 +802,6 @@ public class FragmentEntryWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
-	 * Sets the external reference code of this fragment entry.
-	 *
-	 * @param externalReferenceCode the external reference code of this fragment entry
-	 */
-	@Override
-	public void setExternalReferenceCode(String externalReferenceCode) {
-		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

@@ -69,7 +69,7 @@ public class FragmentCompositionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -77,8 +77,6 @@ public class FragmentCompositionCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
 		sb.append(", fragmentCompositionId=");
 		sb.append(fragmentCompositionId);
 		sb.append(", groupId=");
@@ -133,14 +131,6 @@ public class FragmentCompositionCacheModel
 		}
 		else {
 			fragmentCompositionImpl.setUuid(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			fragmentCompositionImpl.setExternalReferenceCode("");
-		}
-		else {
-			fragmentCompositionImpl.setExternalReferenceCode(
-				externalReferenceCode);
 		}
 
 		fragmentCompositionImpl.setFragmentCompositionId(fragmentCompositionId);
@@ -240,7 +230,6 @@ public class FragmentCompositionCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
-		externalReferenceCode = objectInput.readUTF();
 
 		fragmentCompositionId = objectInput.readLong();
 
@@ -280,13 +269,6 @@ public class FragmentCompositionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
-		}
-
-		if (externalReferenceCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(fragmentCompositionId);
@@ -357,7 +339,6 @@ public class FragmentCompositionCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
-	public String externalReferenceCode;
 	public long fragmentCompositionId;
 	public long groupId;
 	public long companyId;

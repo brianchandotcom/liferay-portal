@@ -175,8 +175,6 @@ export default function ChangeTrackingRenderView({
 		view: VIEW_UNIFIED,
 	});
 
-	const currentContentType = state.contentType;
-
 	useEffect(() => {
 		setLoading(true);
 
@@ -235,7 +233,7 @@ export default function ChangeTrackingRenderView({
 
 				if (
 					newState.view === VIEW_UNIFIED &&
-					currentContentType !== CONTENT_TYPE_WORKFLOW &&
+					newState.contentType !== CONTENT_TYPE_WORKFLOW &&
 					((newState.contentType === CONTENT_TYPE_RENDER &&
 						!Object.prototype.hasOwnProperty.call(
 							json,
@@ -275,7 +273,6 @@ export default function ChangeTrackingRenderView({
 			});
 	}, [
 		childEntries,
-		currentContentType,
 		dataURL,
 		parentEntries,
 		refresh,

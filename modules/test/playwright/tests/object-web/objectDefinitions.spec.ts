@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {collectionsPagesTest} from '../../fixtures/CollectionsPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
@@ -19,6 +20,7 @@ import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDe
 
 export const test = mergeTests(
 	apiHelpersTest,
+	collectionsPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -445,6 +447,42 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 });
 
 test.describe('Manage object definitions through a Page', () => {
+	test('can display an object reactivated on the Collection Providers', async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		objectDefinitions.push(objectDefinition);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await collectionsPage.goto(site.friendlyUrlPath);
+
+		await page.getByRole('link', {name: 'Collection Providers'}).click();
+
+		await expect(
+			page.getByText(objectDefinition.name).first()
+		).toBeVisible();
+	});
+
 	test('can display an object reactivated on the Page Item Selector', async ({
 		apiHelpers,
 		page,

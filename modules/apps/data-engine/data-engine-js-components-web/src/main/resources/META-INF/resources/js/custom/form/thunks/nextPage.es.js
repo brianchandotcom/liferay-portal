@@ -103,12 +103,6 @@ export default function nextPage({
 					page: activePageUpdated,
 					title,
 				});
-
-				const formPagination = document.getElementsByClassName(
-					'ddm-form-pagination'
-				)[0];
-
-				formPagination.scrollIntoView();
 			}
 			else {
 				const pageIndex = selectedPage ? currentPage : activePage;

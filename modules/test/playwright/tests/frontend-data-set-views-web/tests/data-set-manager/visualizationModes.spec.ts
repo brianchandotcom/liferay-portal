@@ -115,7 +115,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					sectionLabel,
 				});
 
-			expect(assignedFieldLocator).toHaveText(fieldName);
+			await expect(assignedFieldLocator).toHaveText(fieldName);
 		});
 
 		await test.step('Edit field to title section', async () => {
@@ -150,7 +150,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					sectionLabel,
 				});
 
-			expect(assignedFieldLocator).toHaveText(newFieldName);
+			await expect(assignedFieldLocator).toHaveText(newFieldName);
 		});
 	});
 
@@ -208,7 +208,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					sectionLabel,
 				});
 
-			expect(assignedFieldLocator).toHaveText(fieldName);
+			await expect(assignedFieldLocator).toHaveText(fieldName);
 		});
 
 		await test.step('Edit field to title section', async () => {
@@ -243,7 +243,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					sectionLabel,
 				});
 
-			expect(assignedFieldLocator).toHaveText(newFieldName);
+			await expect(assignedFieldLocator).toHaveText(newFieldName);
 		});
 	});
 

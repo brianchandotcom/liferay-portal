@@ -119,8 +119,8 @@ test.describe(
 						state: 'visible',
 					});
 
-					expect(
-						await fdsFragmentPage.fdsTableWrapper
+					await expect(
+						fdsFragmentPage.fdsTableWrapper
 					).toBeInViewport();
 
 					expect(

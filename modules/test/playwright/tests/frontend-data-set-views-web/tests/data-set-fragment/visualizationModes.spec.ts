@@ -111,8 +111,8 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 						state: 'visible',
 					});
 
-					expect(
-						await fdsFragmentPage.fdsCardsWrapper
+					await expect(
+						fdsFragmentPage.fdsCardsWrapper
 					).toBeInViewport();
 
 					await fdsFragmentPage.page
@@ -120,15 +120,15 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 						.first()
 						.waitFor();
 
-					const firstCard = await fdsFragmentPage.page
+					const firstCard = fdsFragmentPage.page
 						.locator('.card')
 						.first();
 
-					expect(firstCard.locator('.card-title')).toContainText(
+					await expect(firstCard.locator('.card-title')).toContainText(
 						dataSetLabel
 					);
 
-					expect(firstCard.locator('.card-subtitle')).not.toBeEmpty();
+					await expect(firstCard.locator('.card-subtitle')).not.toBeEmpty();
 				}
 			);
 
@@ -146,8 +146,8 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 						state: 'visible',
 					});
 
-					expect(
-						await fdsFragmentPage.fdsListWrapper
+					await expect(
+						fdsFragmentPage.fdsListWrapper
 					).toBeInViewport();
 
 					await fdsFragmentPage.page
@@ -155,15 +155,15 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 						.first()
 						.waitFor();
 
-					const firstListItem = await fdsFragmentPage.page
+					const firstListItem = fdsFragmentPage.page
 						.locator('.list-group-item')
 						.first();
 
-					expect(
+					await expect(
 						firstListItem.locator('.list-group-title')
 					).toContainText(dataSetLabel);
 
-					expect(
+					await expect(
 						firstListItem.locator('.list-group-text')
 					).not.toBeEmpty();
 				}
@@ -183,7 +183,7 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 						state: 'visible',
 					});
 
-					expect(
+					await expect(
 						await fdsFragmentPage.fdsTableWrapper
 					).toBeInViewport();
 
@@ -234,8 +234,8 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 						state: 'visible',
 					});
 
-					expect(
-						await fdsFragmentPage.fdsTableWrapper
+					await expect(
+						fdsFragmentPage.fdsTableWrapper
 					).toBeInViewport();
 
 					expect(

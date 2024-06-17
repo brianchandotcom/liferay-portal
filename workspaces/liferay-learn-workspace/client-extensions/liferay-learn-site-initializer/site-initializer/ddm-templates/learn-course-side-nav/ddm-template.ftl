@@ -1,8 +1,11 @@
 <#assign
 	groupFriendlyURL = themeDisplay.getScopeGroup().getFriendlyURL()
+
 	groupPathFriendlyURLPublic = themeDisplay.getPathFriendlyURLPublic() + groupFriendlyURL
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
+	
 	childrenJSONArray = navigationJSONObject.getJSONArray("children")
+
 	childrenArrayLength = childrenJSONArray.length()
 />
 

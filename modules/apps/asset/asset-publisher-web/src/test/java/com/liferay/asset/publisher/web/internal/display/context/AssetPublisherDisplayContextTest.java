@@ -5,16 +5,29 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeField;
+import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upgrade.MockPortletPreferences;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -53,33 +66,109 @@ public class AssetPublisherDisplayContextTest {
 	}
 
 	@Before
-	public void setUp() {
+	public void setUp() throws ConfigurationException {
 		_setUpConfigurationProviderUtil();
 		_setUpFrameworkUtil();
 		_setUpPortalUtil();
+
+		_assetPublisherDisplayContext = new AssetPublisherDisplayContext(
+			null, null, null, null, _assetPublisherHelper, null, null, null,
+			null, _portal, _getLiferayPortletRequest(), null,
+			new MockPortletPreferences(), null, null);
 	}
 
 	@Test
 	public void testGetAssetLinkBehavior() throws Exception {
-		AssetPublisherDisplayContext assetPublisherDisplayContext =
-			new AssetPublisherDisplayContext(
-				null, null, null, null, null, null, null, null, null, _portal,
-				_getLiferayPortletRequest(), null, new MockPortletPreferences(),
-				null, null);
-
 		Assert.assertEquals(
 			"viewInPortlet",
-			assetPublisherDisplayContext.getAssetLinkBehavior());
+			_assetPublisherDisplayContext.getAssetLinkBehavior());
+	}
+
+	@Test
+	public void testGetClassTypes() throws Exception {
+		ClassTypeReader classTypeReader = Mockito.mock(ClassTypeReader.class);
+
+		List<ClassType> classTypes = ListUtil.fromArray(
+			_getClassType(RandomTestUtil.randomLong(), "Map"),
+			_getClassType(RandomTestUtil.randomLong(), "Banner"),
+			_getClassType(RandomTestUtil.randomLong(), "Accordion"));
+
+		Mockito.when(
+			classTypeReader.getAvailableClassTypes(null, LocaleUtil.US)
+		).thenReturn(
+			classTypes
+		);
+
+		long[] expectedClassTypeIds = TransformUtil.transformToLongArray(
+			classTypes, classType -> classType.getClassTypeId());
+
+		ArrayUtil.reverse(expectedClassTypeIds);
+
+		Assert.assertArrayEquals(
+			expectedClassTypeIds,
+			TransformUtil.transformToLongArray(
+				_assetPublisherDisplayContext.getClassTypes(classTypeReader),
+				classType -> classType.getClassTypeId()));
+	}
+
+	private ClassType _getClassType(long classTypeId, String name) {
+		return new ClassType() {
+
+			@Override
+			public ClassTypeField getClassTypeField(String fieldName)
+				throws PortalException {
+
+				return null;
+			}
+
+			@Override
+			public List<ClassTypeField> getClassTypeFields()
+				throws PortalException {
+
+				return null;
+			}
+
+			@Override
+			public List<ClassTypeField> getClassTypeFields(int start, int end)
+				throws PortalException {
+
+				return null;
+			}
+
+			@Override
+			public int getClassTypeFieldsCount() throws PortalException {
+				return 0;
+			}
+
+			@Override
+			public long getClassTypeId() {
+				return classTypeId;
+			}
+
+			@Override
+			public String getName() {
+				return name;
+			}
+
+		};
 	}
 
 	private LiferayPortletRequest _getLiferayPortletRequest() {
 		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
 			LiferayPortletRequest.class);
 
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
 		Mockito.when(
 			liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
-			new ThemeDisplay()
+			themeDisplay
 		);
 
 		return liferayPortletRequest;
@@ -115,6 +204,9 @@ public class AssetPublisherDisplayContextTest {
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
+	private AssetPublisherDisplayContext _assetPublisherDisplayContext;
+	private final AssetPublisherHelper _assetPublisherHelper = Mockito.mock(
+		AssetPublisherHelper.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

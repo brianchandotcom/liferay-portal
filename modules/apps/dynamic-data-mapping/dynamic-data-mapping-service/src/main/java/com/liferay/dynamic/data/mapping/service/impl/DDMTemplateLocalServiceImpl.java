@@ -115,6 +115,7 @@ public class DDMTemplateLocalServiceImpl
 	/**
 	 * Adds a template.
 	 *
+	 * @param  externalReferenceCode the template external reference code
 	 * @param  userId the primary key of the template's creator/owner
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the class name for the template's
@@ -139,21 +140,23 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public DDMTemplate addTemplate(
-			long userId, long groupId, long classNameId, long classPK,
-			long resourceClassNameId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String type, String mode,
-			String language, String script, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long classPK, long resourceClassNameId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String type, String mode, String language, String script,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addTemplate(
-			userId, groupId, classNameId, classPK, resourceClassNameId, null,
-			nameMap, descriptionMap, type, mode, language, script, false, false,
-			null, null, serviceContext);
+			externalReferenceCode, userId, groupId, classNameId, classPK,
+			resourceClassNameId, null, nameMap, descriptionMap, type, mode,
+			language, script, false, false, null, null, serviceContext);
 	}
 
 	/**
 	 * Adds a template with additional parameters.
 	 *
+	 * @param  externalReferenceCode the template external reference code
 	 * @param  userId the primary key of the template's creator/owner
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the class name for the template's
@@ -187,12 +190,13 @@ public class DDMTemplateLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMTemplate addTemplate(
-			long userId, long groupId, long classNameId, long classPK,
-			long resourceClassNameId, String templateKey,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String type, String mode, String language, String script,
-			boolean cacheable, boolean smallImage, String smallImageURL,
-			File smallImageFile, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long classPK, long resourceClassNameId,
+			String templateKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String type, String mode,
+			String language, String script, boolean cacheable,
+			boolean smallImage, String smallImageURL, File smallImageFile,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Template
@@ -233,9 +237,10 @@ public class DDMTemplateLocalServiceImpl
 			smallImageBytes);
 
 		DDMTemplate template = _addTemplate(
-			user, groupId, classNameId, classPK, resourceClassNameId,
-			templateKey, nameMap, descriptionMap, type, mode, language, script,
-			cacheable, smallImage, smallImageURL, serviceContext);
+			externalReferenceCode, user, groupId, classNameId, classPK,
+			resourceClassNameId, templateKey, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, smallImage, smallImageURL,
+			serviceContext);
 
 		// Resources
 
@@ -1570,11 +1575,12 @@ public class DDMTemplateLocalServiceImpl
 	protected volatile DDMWebConfiguration ddmWebConfiguration;
 
 	private DDMTemplate _addTemplate(
-			User user, long groupId, long classNameId, long classPK,
-			long resourceClassNameId, String templateKey,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String type, String mode, String language, String script,
-			boolean cacheable, boolean smallImage, String smallImageURL,
+			String externalReferenceCode, User user, long groupId,
+			long classNameId, long classPK, long resourceClassNameId,
+			String templateKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String type, String mode,
+			String language, String script, boolean cacheable,
+			boolean smallImage, String smallImageURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1583,6 +1589,7 @@ public class DDMTemplateLocalServiceImpl
 		DDMTemplate template = ddmTemplatePersistence.create(templateId);
 
 		template.setUuid(serviceContext.getUuid());
+		template.setExternalReferenceCode(externalReferenceCode);
 		template.setGroupId(groupId);
 		template.setCompanyId(user.getCompanyId());
 		template.setUserId(user.getUserId());
@@ -1686,12 +1693,13 @@ public class DDMTemplateLocalServiceImpl
 			sourceTemplate.getSmallImageURL(), smallImageFile, smallImageBytes);
 
 		DDMTemplate targetTemplate = _addTemplate(
-			user, sourceTemplate.getGroupId(), sourceTemplate.getClassNameId(),
-			classPK, sourceTemplate.getResourceClassNameId(), templateKey,
-			nameMap, descriptionMap, sourceTemplate.getType(),
-			sourceTemplate.getMode(), sourceTemplate.getLanguage(),
-			sourceTemplate.getScript(), sourceTemplate.isCacheable(),
-			smallImage, sourceTemplate.getSmallImageURL(), serviceContext);
+			null, user, sourceTemplate.getGroupId(),
+			sourceTemplate.getClassNameId(), classPK,
+			sourceTemplate.getResourceClassNameId(), templateKey, nameMap,
+			descriptionMap, sourceTemplate.getType(), sourceTemplate.getMode(),
+			sourceTemplate.getLanguage(), sourceTemplate.getScript(),
+			sourceTemplate.isCacheable(), smallImage,
+			sourceTemplate.getSmallImageURL(), serviceContext);
 
 		// Resources
 

@@ -57,6 +57,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	/**
 	 * Adds a template.
 	 *
+	 * @param  externalReferenceCode the template external reference code
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
@@ -80,8 +81,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK,
-			long resourceClassNameId, Map<Locale, String> nameMap,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long resourceClassNameId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
 			String language, String script, ServiceContext serviceContext)
 		throws PortalException {
@@ -90,14 +91,15 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			getPermissionChecker(), groupId, classNameId, resourceClassNameId);
 
 		return ddmTemplateLocalService.addTemplate(
-			getUserId(), groupId, classNameId, classPK, resourceClassNameId,
-			null, nameMap, descriptionMap, type, mode, language, script, false,
-			false, null, null, serviceContext);
+			externalReferenceCode, getUserId(), groupId, classNameId, classPK,
+			resourceClassNameId, null, nameMap, descriptionMap, type, mode,
+			language, script, false, false, null, null, serviceContext);
 	}
 
 	/**
 	 * Adds a template with additional parameters.
 	 *
+	 * @param  externalReferenceCode the template external reference code
 	 * @param  groupId the primary key of the group
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
@@ -129,8 +131,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK,
-			long resourceClassNameId, String templateKey,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long resourceClassNameId, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
 			boolean cacheable, boolean smallImage, String smallImageURL,
@@ -141,10 +143,10 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			getPermissionChecker(), groupId, classNameId, resourceClassNameId);
 
 		return ddmTemplateLocalService.addTemplate(
-			getUserId(), groupId, classNameId, classPK, resourceClassNameId,
-			templateKey, nameMap, descriptionMap, type, mode, language, script,
-			cacheable, smallImage, smallImageURL, smallImageFile,
-			serviceContext);
+			externalReferenceCode, getUserId(), groupId, classNameId, classPK,
+			resourceClassNameId, templateKey, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, smallImage, smallImageURL,
+			smallImageFile, serviceContext);
 	}
 
 	/**

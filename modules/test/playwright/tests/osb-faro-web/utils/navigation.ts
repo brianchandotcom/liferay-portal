@@ -21,3 +21,8 @@ export async function navigateToACPageViaURL(page: Page, projectID: number, chan
 		`${faroConfig.environment.baseUrl}/workspace/${projectID}/${channelID}/sites`
 	);
 }
+
+export async function navigateTo(page: Page, pageName: string) {
+	await page.getByRole('link', { name: pageName }).first().click();
+
+}

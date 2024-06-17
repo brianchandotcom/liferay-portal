@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -259,7 +258,7 @@ public class FirebasePushNotificationsSender
 		options.setLocation(_firebaseCloudMessagingURL + "/fcm/notification");
 		options.setPost(true);
 
-		String responseString = _httpUtil.URLtoString(options);
+		String responseString = _http.URLtoString(options);
 
 		Http.Response optionsResponse = options.getResponse();
 
@@ -355,7 +354,7 @@ public class FirebasePushNotificationsSender
 		options.setLocation(_firebaseCloudMessagingURL + "/fcm/notification");
 		options.setPost(true);
 
-		_httpUtil.URLtoString(options);
+		_http.URLtoString(options);
 
 		Http.Response optionsResponse = options.getResponse();
 
@@ -391,7 +390,7 @@ public class FirebasePushNotificationsSender
 				"/messages:send"));
 		options.setPost(true);
 
-		_httpUtil.URLtoString(options);
+		_http.URLtoString(options);
 
 		Http.Response optionsResponse = options.getResponse();
 
@@ -418,7 +417,7 @@ public class FirebasePushNotificationsSender
 	private volatile GoogleCredentials _googleCredentials;
 
 	@Reference
-	private HttpUtil _httpUtil;
+	private Http _http;
 
 	@Reference
 	private JSONFactoryUtil _jsonFactoryUtil;

@@ -68,10 +68,10 @@ async function getFilesToCheck(rootDir) {
 
 const FALLBACK_FILE_PATH = '__fallback__.js';
 
-export default async function format(fix) {
+export default async function format(fix, filePath = undefined) {
 	const rootDir = await getRootDir();
 
-	let filepaths = await getFilesToCheck(rootDir);
+	let filepaths = filePath ? [filePath] : await getFilesToCheck(rootDir);
 
 	filepaths = await filterChangedFiles(filepaths);
 

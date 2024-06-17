@@ -35,6 +35,11 @@ const COMMANDS = {
 		parameters: '[--check]',
 		script: './format/index.mjs',
 	},
+	'format:file': {
+		description: 'formats a single source file.',
+		parameters: '<source file path>',
+		script: './format/file.mjs',
+	},
 	'generate:tsconfig': {
 		description: 'generates tsconfig.json files for all projects',
 		parameters: '',

@@ -334,17 +334,6 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntry deleteFragmentEntry(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByERC_G_Head(
-			externalReferenceCode, groupId, true);
-
-		return fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
-	}
-
-	@Override
 	public FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
 		return fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 	}

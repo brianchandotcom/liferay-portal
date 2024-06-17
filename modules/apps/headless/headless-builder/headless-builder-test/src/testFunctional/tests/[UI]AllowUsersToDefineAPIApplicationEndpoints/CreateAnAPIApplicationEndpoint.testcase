@@ -252,8 +252,8 @@ definition {
 			Click(locator1 = "Modal#CLOSE_BUTTON");
 
 			AssertElementPresent(
-				key_entryName = "No API Endpoint Found",
-				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+				key_text = "No API Endpoint Found",
+				locator1 = "ObjectAdmin#EMPTY_STATE_MESSAGE");
 		}
 	}
 
@@ -285,8 +285,8 @@ definition {
 
 		task ("And Then I can see 'No API Endpoints found' message") {
 			AssertElementPresent(
-				key_entryName = "No API Endpoint Found",
-				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+				key_text = "No API Endpoint Found",
+				locator1 = "ObjectAdmin#EMPTY_STATE_MESSAGE");
 		}
 	}
 
@@ -311,8 +311,8 @@ definition {
 
 		task ("Then no endpoint is created in endpoint list") {
 			AssertElementPresent(
-				key_entryName = "No API Endpoint Found",
-				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+				key_text = "No API Endpoint Found",
+				locator1 = "ObjectAdmin#EMPTY_STATE_MESSAGE");
 		}
 	}
 

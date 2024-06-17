@@ -370,8 +370,8 @@ definition {
 
 		task ("Then I can see no API Endpoint Found message with a Add API Endpoint button") {
 			AssertElementPresent(
-				key_entryName = "No API Endpoint Found",
-				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+				key_text = "No API Endpoint Found",
+				locator1 = "ObjectAdmin#EMPTY_STATE_MESSAGE");
 
 			AssertElementPresent(
 				locator1 = "Button#BUTTON_WITH_VALUE",

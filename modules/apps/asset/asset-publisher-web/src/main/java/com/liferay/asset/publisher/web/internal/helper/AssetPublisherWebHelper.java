@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -225,18 +226,13 @@ public class AssetPublisherWebHelper {
 
 	public Long[] getClassTypeIds(
 		PortletPreferences portletPreferences, String className,
-		List<ClassType> availableClassTypes) {
-
-		Long[] availableClassTypeIds = new Long[availableClassTypes.size()];
-
-		for (int i = 0; i < availableClassTypeIds.length; i++) {
-			ClassType classType = availableClassTypes.get(i);
-
-			availableClassTypeIds[i] = classType.getClassTypeId();
-		}
+		List<ClassType> classTypes) {
 
 		return _getClassTypeIds(
-			portletPreferences, className, availableClassTypeIds);
+			portletPreferences, className,
+			TransformUtil.transformToArray(
+				classTypes, classType -> classType.getClassTypeId(),
+				Long.class));
 	}
 
 	public String getDefaultAssetPublisherId(Layout layout) {
@@ -648,7 +644,9 @@ public class AssetPublisherWebHelper {
 				0L));
 
 		if (classTypeIds != null) {
-			return classTypeIds;
+			return ArrayUtil.filter(
+				availableClassTypeIds,
+				classTypeId -> ArrayUtil.contains(classTypeIds, classTypeId));
 		}
 
 		return availableClassTypeIds;

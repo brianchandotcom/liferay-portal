@@ -10,7 +10,6 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import {expectElementToHaveClass} from '../../utils/expectElementToHaveClass';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -75,7 +74,7 @@ test('allows moving through layout content with keyboard', async ({
 	await card.press('Enter');
 
 	await expect(card).toBeFocused();
-	await expectElementToHaveClass(card, 'active');
+	await expect(card).toHaveClass(/active/);
 
 	// Check we can move to editables with Tab
 
@@ -95,10 +94,7 @@ test('allows moving through layout content with keyboard', async ({
 	await secondEditable.press('Enter');
 
 	await expect(secondEditable).toBeFocused();
-	await expectElementToHaveClass(
-		secondEditable,
-		'page-editor__editable--active'
-	);
+	await expect(secondEditable).toHaveClass(/page-editor__editable--active/);
 });
 
 test('focus order is correct', async ({

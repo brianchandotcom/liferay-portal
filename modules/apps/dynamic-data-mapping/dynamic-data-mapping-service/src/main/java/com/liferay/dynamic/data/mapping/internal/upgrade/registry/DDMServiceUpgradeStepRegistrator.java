@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -564,6 +565,17 @@ public class DDMServiceUpgradeStepRegistrator
 		registry.register(
 			"5.4.4", "5.4.5",
 			new DDMTemplateLinkUpgradeProcess(_classNameLocalService));
+
+		registry.register(
+			"5.4.5", "5.5.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"DDMTemplate", "templateId"}};
+				}
+
+			});
 	}
 
 	@Activate

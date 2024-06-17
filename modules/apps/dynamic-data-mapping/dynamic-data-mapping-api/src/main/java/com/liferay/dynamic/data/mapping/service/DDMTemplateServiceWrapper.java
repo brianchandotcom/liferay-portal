@@ -29,6 +29,7 @@ public class DDMTemplateServiceWrapper
 	/**
 	 * Adds a template.
 	 *
+	 * @param externalReferenceCode the template external reference code
 	 * @param groupId the primary key of the group
 	 * @param classNameId the primary key of the class name for template's
 	 related model
@@ -52,8 +53,8 @@ public class DDMTemplateServiceWrapper
 	 */
 	@Override
 	public DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK,
-			long resourceClassNameId,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long resourceClassNameId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
 			String mode, String language, String script,
@@ -61,13 +62,15 @@ public class DDMTemplateServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateService.addTemplate(
-			groupId, classNameId, classPK, resourceClassNameId, nameMap,
-			descriptionMap, type, mode, language, script, serviceContext);
+			externalReferenceCode, groupId, classNameId, classPK,
+			resourceClassNameId, nameMap, descriptionMap, type, mode, language,
+			script, serviceContext);
 	}
 
 	/**
 	 * Adds a template with additional parameters.
 	 *
+	 * @param externalReferenceCode the template external reference code
 	 * @param groupId the primary key of the group
 	 * @param classNameId the primary key of the class name for template's
 	 related model
@@ -99,8 +102,8 @@ public class DDMTemplateServiceWrapper
 	 */
 	@Override
 	public DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK,
-			long resourceClassNameId, String templateKey,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long resourceClassNameId, String templateKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap, String type,
 			String mode, String language, String script, boolean cacheable,
@@ -110,9 +113,10 @@ public class DDMTemplateServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateService.addTemplate(
-			groupId, classNameId, classPK, resourceClassNameId, templateKey,
-			nameMap, descriptionMap, type, mode, language, script, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+			externalReferenceCode, groupId, classNameId, classPK,
+			resourceClassNameId, templateKey, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, smallImage, smallImageURL,
+			smallImageFile, serviceContext);
 	}
 
 	/**
@@ -193,6 +197,15 @@ public class DDMTemplateServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_ddmTemplateService.deleteTemplate(templateId);
+	}
+
+	@Override
+	public DDMTemplate deleteTemplate(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmTemplateService.deleteTemplate(
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -284,6 +297,15 @@ public class DDMTemplateServiceWrapper
 
 		return _ddmTemplateService.getTemplate(
 			groupId, classNameId, templateKey, includeAncestorTemplates);
+	}
+
+	@Override
+	public DDMTemplate getTemplateByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmTemplateService.getTemplateByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

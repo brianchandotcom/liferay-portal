@@ -54,6 +54,7 @@ public interface DDMTemplateService extends BaseService {
 	/**
 	 * Adds a template.
 	 *
+	 * @param externalReferenceCode the template external reference code
 	 * @param groupId the primary key of the group
 	 * @param classNameId the primary key of the class name for template's
 	 related model
@@ -76,8 +77,8 @@ public interface DDMTemplateService extends BaseService {
 	 * @return the template
 	 */
 	public DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK,
-			long resourceClassNameId, Map<Locale, String> nameMap,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long resourceClassNameId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
 			String language, String script, ServiceContext serviceContext)
 		throws PortalException;
@@ -85,6 +86,7 @@ public interface DDMTemplateService extends BaseService {
 	/**
 	 * Adds a template with additional parameters.
 	 *
+	 * @param externalReferenceCode the template external reference code
 	 * @param groupId the primary key of the group
 	 * @param classNameId the primary key of the class name for template's
 	 related model
@@ -115,8 +117,8 @@ public interface DDMTemplateService extends BaseService {
 	 * @return the template
 	 */
 	public DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK,
-			long resourceClassNameId, String templateKey,
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long resourceClassNameId, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
 			boolean cacheable, boolean smallImage, String smallImageURL,
@@ -177,6 +179,10 @@ public interface DDMTemplateService extends BaseService {
 	 * @param templateId the primary key of the template to be deleted
 	 */
 	public void deleteTemplate(long templateId) throws PortalException;
+
+	public DDMTemplate deleteTemplate(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns the template matching the group and template key.
@@ -248,6 +254,11 @@ public interface DDMTemplateService extends BaseService {
 	public DDMTemplate getTemplate(
 			long groupId, long classNameId, String templateKey,
 			boolean includeAncestorTemplates)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMTemplate getTemplateByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

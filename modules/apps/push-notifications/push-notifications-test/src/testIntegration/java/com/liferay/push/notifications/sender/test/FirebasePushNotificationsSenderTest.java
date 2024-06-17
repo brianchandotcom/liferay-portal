@@ -118,6 +118,28 @@ public class FirebasePushNotificationsSenderTest {
 	}
 
 	@Test
+	public void testSendErrorWhenGettingToken() throws Exception {
+		_saveConfiguration();
+
+		String accessToken = _mockAccessTokenRequest(false);
+
+		String destinationToken = RandomTestUtil.randomString();
+
+		expectedException.expect(PushNotificationsException.class);
+		expectedException.expectMessage("Unable to get the access token");
+
+		try {
+			_pushNotificationsSender.send(
+				Arrays.asList(destinationToken),
+				_getRandomNotificationJSONObject());
+		}
+		finally {
+			_verifyAccessTokenRequest();
+			_verifyGroupRequestInteractions(accessToken, false, false);
+		}
+	}
+
+	@Test
 	public void testSendWithOneDestination() throws Exception {
 		_saveConfiguration();
 
@@ -334,7 +356,7 @@ public class FirebasePushNotificationsSenderTest {
 			return 200;
 		}
 
-		return 500;
+		return 401;
 	}
 
 	private JSONObject _getExpectedEmptyNotificationJSONObject(

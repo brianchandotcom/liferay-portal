@@ -56,8 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 public class FirebasePushNotificationsSender
 	implements PushNotificationsSender {
 
-	public static final int OK_CODE = 200;
-
 	public static final String PLATFORM = "firebase";
 
 	@Override
@@ -262,7 +260,7 @@ public class FirebasePushNotificationsSender
 
 		Http.Response optionsResponse = options.getResponse();
 
-		if (optionsResponse.getResponseCode() != OK_CODE) {
+		if (optionsResponse.getResponseCode() != _OK_CODE) {
 			throw new PushNotificationsException(
 				"Unable to create a notification group");
 		}
@@ -364,7 +362,7 @@ public class FirebasePushNotificationsSender
 
 		Http.Response optionsResponse = options.getResponse();
 
-		if (optionsResponse.getResponseCode() != OK_CODE) {
+		if (optionsResponse.getResponseCode() != _OK_CODE) {
 			String errorMessage = StringBundler.concat(
 				"Unable to remove notification group with notification_key: ",
 				deviceGroup.getId(), " and notification_key_name: ",
@@ -400,11 +398,13 @@ public class FirebasePushNotificationsSender
 
 		Http.Response optionsResponse = options.getResponse();
 
-		if (optionsResponse.getResponseCode() != OK_CODE) {
+		if (optionsResponse.getResponseCode() != _OK_CODE) {
 			throw new PushNotificationsException(
 				"Unable to send the push notification");
 		}
 	}
+
+	private static final int _OK_CODE = 200;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FirebasePushNotificationsSender.class);

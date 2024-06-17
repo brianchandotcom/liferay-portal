@@ -524,8 +524,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	private final List<ListTypeEntry> _listTypeEntries = new ArrayList<>();
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
 	@Inject

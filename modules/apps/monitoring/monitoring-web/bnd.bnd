@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Monitoring Web
 Bundle-SymbolicName: com.liferay.monitoring.web
-Bundle-Version: 5.0.30
+Bundle-Version: 5.0.31
 Web-ContextPath: /monitoring-web

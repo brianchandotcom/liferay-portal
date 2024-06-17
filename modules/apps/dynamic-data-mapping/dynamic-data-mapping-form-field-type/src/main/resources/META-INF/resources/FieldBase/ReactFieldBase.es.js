@@ -23,6 +23,10 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import './FieldBase.scss';
 
+export function updateFieldNameLocale(editingLanguageId, locale, name) {
+	return name.replace(new RegExp(`${editingLanguageId}$`), locale);
+}
+
 function normalizeInputValue(fieldType, locale, value) {
 	if (!value) {
 		return '';
@@ -263,7 +267,11 @@ export default function FieldBase({
 						!!localizedValueEdited?.[editingLanguageId]
 					}
 					key={locale}
-					name={name.replace(editingLanguageId, locale)}
+					name={updateFieldNameLocale(
+						editingLanguageId,
+						locale,
+						name
+					)}
 					type="hidden"
 					value={normalizeInputValue(type, locale, value)}
 				/>

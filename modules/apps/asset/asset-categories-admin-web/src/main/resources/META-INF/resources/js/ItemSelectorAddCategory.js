@@ -61,6 +61,7 @@ export default function ({currentURL, namespace, redirect}) {
 	if (addCategoryButtons.length) {
 		addCategoryButtons.forEach((button) => {
 			button.parentElement.classList.remove('hide');
+			button.classList.remove('hide');
 		});
 	}
 	else {

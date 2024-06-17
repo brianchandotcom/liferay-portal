@@ -55,10 +55,10 @@ public class SetUpPaymentRestController extends BaseRestController {
 		try {
 			JSONObject jsonObject = new JSONObject(json);
 
-			JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
-				"typeSettings");
 			JSONObject commercePaymentEntryJSONObject =
 				jsonObject.getJSONObject("commercePaymentEntry");
+			JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
+				"typeSettings");
 
 			CreateCheckoutSessionResponse createCheckoutSessionResponse =
 				new PaymentsApi(

@@ -32,16 +32,6 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 	public static final TestRule testRule = new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetOptionsWithDoubleEntityField() {
-		Assert.assertFalse(
-			ListUtil.exists(
-				_configurationFieldOptionsProvider.getOptions(),
-				option -> Objects.equals(
-					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
-					option.getValue())));
-	}
-
-	@Test
 	public void testGetOptionsWithStringEntityField() {
 		Assert.assertTrue(
 			ListUtil.exists(

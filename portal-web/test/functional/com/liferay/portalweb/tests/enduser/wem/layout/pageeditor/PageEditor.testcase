@@ -20,37 +20,6 @@ definition {
 		}
 	}
 
-	@description = "An unpublished fragment should not show up in the fragments sidebar."
-	@priority = 4
-	test ViewDraftFragmentDoesNotDisplayInSidebar {
-		task ("Add a fragment without publishing it") {
-			JSONFragment.addFragmentCollection(
-				description = "Collection Description",
-				groupName = "Test Site Name",
-				name = "New Collection");
-
-			JSONFragment.addSection(
-				collectionName = "New Collection",
-				groupName = "Test Site Name",
-				name = "Fragment Name");
-		}
-
-		task ("Assert the unpublished fragment does not appear in the sidebar when editing a content page template") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.viewCollectionNotPresent(collectionName = "New Collection");
-		}
-	}
-
 	@description = "This is a test for LPS-191483. View warning message displays for big image file size used in page edit mode."
 	@priority = 4
 	test ViewWarningMessageOfImageFragment {

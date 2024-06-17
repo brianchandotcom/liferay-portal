@@ -84,8 +84,6 @@ html#{$cadmin-selector}
 			var(--editor-height) + var(--toolbar-height) +
 				var(--zoom-alert-height)
 		);
-		position: absolute;
-		top: 0;
 	}
 
 	&__content {
@@ -235,7 +233,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 html#{$cadmin-selector} body {
 	--toolbar-height: #{$toolbarHeight};
 
-	@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+	@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
 		--toolbar-height: #{$desktopToolbarHeight};
 	}
 

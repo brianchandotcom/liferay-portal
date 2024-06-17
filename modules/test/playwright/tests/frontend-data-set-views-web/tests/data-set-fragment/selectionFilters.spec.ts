@@ -11,33 +11,30 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-import {fdsFragmentPageTest} from '../data-set-fragment/fixtures/fdsFragmentPageTest';
-import {filtersPageTest} from './fixtures/filtersPageTest';
+import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 
-const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
-const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
 const PICKLIST_VALUE_KEY = 'sampleValue';
 const PICKLIST_VALUE_NAME = 'Sample Value';
 
-export const test = mergeTests(
-	dataSetManagerApiHelpersTest,
-	featureFlagsTest({
-		'LPD-10754': true,
-		'LPS-178052': true,
-	}),
-	filtersPageTest,
-	loginTest(),
-	dataSetManagerSetupTest,
-	picklistApiHelpersTest
-);
 
 let dataSetERC: string;
 let dataSetLabel: string;
 let picklistName: string;
 
-test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
+export const fragmentTest = mergeTests(
+	apiHelpersTest,
+	dataSetManagerApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
+	fdsFragmentPageTest,
+	isolatedLayoutTest({publish: false}),
+	loginTest(),
+	picklistApiHelpersTest
+);
+
+fragmentTest.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 	picklistName = getRandomString();
@@ -58,90 +55,11 @@ test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	});
 });
 
-test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
+fragmentTest.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 
 	await picklistApiHelpers.deletePicklist(picklistName);
 });
-
-test.describe('Filters in Data Set Manager', () => {
-	test('Can create a selection filter', async ({filtersPage, page}) => {
-		await test.step('Navigate to the Filters tab', async () => {
-			await filtersPage.goto({
-				dataSetLabel,
-			});
-		});
-
-		await test.step('Create a selection filter from picklist source', async () => {
-			await filtersPage.createSelectionFilterPicklist({
-				filterBy: 'externalReferenceCode',
-				filterMode: 'Include',
-				name: SELECTION_PICKLIST_FILTER_NAME,
-				preselectedValues: [PICKLIST_VALUE_NAME],
-				selectionType: 'Single',
-				source: picklistName,
-				sourceType: 'Object Picklist',
-			});
-		});
-
-		await test.step('Check that the selection filter is in the list', async () => {
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: SELECTION_PICKLIST_FILTER_NAME,
-				})
-			).toBeVisible();
-		});
-	});
-
-	test('Can create a selection filter with API Headless source', async ({
-		filtersPage,
-		page,
-	}) => {
-		await test.step('Navigate to the Filters tab', async () => {
-			await filtersPage.goto({
-				dataSetLabel,
-			});
-		});
-
-		await test.step('Create a selection filter from API Headless source', async () => {
-			await filtersPage.createSelectionFilterApiHeadless({
-				filterBy: 'externalReferenceCode',
-				filterMode: 'Include',
-				itemKey: 'id',
-				itemLabel: 'label',
-				name: SELECTION_API_HEADLESS_FILTER_NAME,
-				preselectedValues: [dataSetLabel],
-				restApplication: '/data-set-manager/data-sets',
-				restEndpoint: '/',
-				restSchema: 'FDSView',
-				selectionType: 'Single',
-				sourceType: 'API REST Application',
-			});
-		});
-
-		await test.step('Check that the selection filter is in the list', async () => {
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: SELECTION_API_HEADLESS_FILTER_NAME,
-				})
-			).toBeVisible();
-		});
-	});
-});
-
-export const fragmentTest = mergeTests(
-	apiHelpersTest,
-	dataSetManagerApiHelpersTest,
-	featureFlagsTest({
-		'LPS-178052': true,
-	}),
-	fdsFragmentPageTest,
-	isolatedLayoutTest({publish: false}),
-	loginTest(),
-	picklistApiHelpersTest
-);
 
 fragmentTest.describe('Filters in Data Set fragment', () => {
 	fragmentTest(

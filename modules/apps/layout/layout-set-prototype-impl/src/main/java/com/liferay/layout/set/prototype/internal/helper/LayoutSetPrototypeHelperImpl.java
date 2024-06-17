@@ -6,7 +6,6 @@
 package com.liferay.layout.set.prototype.internal.helper;
 
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.Sites;
@@ -412,53 +412,54 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	private List<Layout> _getDuplicatedFriendlyURLSiteLayouts(Layout layout)
 		throws PortalException {
 
-		return TransformUtil.transform(
-			(List<Long>)_layoutLocalService.dslQuery(
-				DSLQueryFactoryUtil.selectDistinct(
-					LayoutTable.INSTANCE.plid
-				).from(
-					LayoutTable.INSTANCE
-				).innerJoinON(
-					LayoutSetTable.INSTANCE,
-					LayoutSetTable.INSTANCE.companyId.eq(
-						LayoutTable.INSTANCE.companyId
-					).and(
-						LayoutSetTable.INSTANCE.groupId.eq(
-							LayoutTable.INSTANCE.groupId)
-					).and(
-						LayoutSetTable.INSTANCE.privateLayout.eq(
-							LayoutTable.INSTANCE.privateLayout)
-					)
-				).innerJoinON(
-					LayoutSetPrototypeTable.INSTANCE,
-					LayoutSetPrototypeTable.INSTANCE.companyId.eq(
-						LayoutSetTable.INSTANCE.companyId
-					).and(
-						LayoutSetPrototypeTable.INSTANCE.uuid.eq(
-							LayoutSetTable.INSTANCE.layoutSetPrototypeUuid)
-					)
-				).innerJoinON(
-					GroupTable.INSTANCE,
-					GroupTable.INSTANCE.companyId.eq(
-						LayoutSetPrototypeTable.INSTANCE.companyId
-					).and(
-						GroupTable.INSTANCE.classPK.eq(
-							LayoutSetPrototypeTable.INSTANCE.
-								layoutSetPrototypeId)
-					)
-				).where(
-					LayoutSetTable.INSTANCE.companyId.eq(
-						layout.getCompanyId()
-					).and(
-						LayoutTable.INSTANCE.friendlyURL.eq(
-							layout.getFriendlyURL())
-					).and(
-						LayoutTable.INSTANCE.sourcePrototypeLayoutUuid.isNull()
-					).and(
-						GroupTable.INSTANCE.groupId.eq(layout.getGroupId())
-					)
-				)),
-			plid -> _layoutLocalService.getLayout(plid));
+		return _layoutLocalService.fetchLayouts(
+			SetUtil.fromList(
+				_layoutLocalService.dslQuery(
+					DSLQueryFactoryUtil.selectDistinct(
+						LayoutTable.INSTANCE.plid
+					).from(
+						LayoutTable.INSTANCE
+					).innerJoinON(
+						LayoutSetTable.INSTANCE,
+						LayoutSetTable.INSTANCE.companyId.eq(
+							LayoutTable.INSTANCE.companyId
+						).and(
+							LayoutSetTable.INSTANCE.groupId.eq(
+								LayoutTable.INSTANCE.groupId)
+						).and(
+							LayoutSetTable.INSTANCE.privateLayout.eq(
+								LayoutTable.INSTANCE.privateLayout)
+						)
+					).innerJoinON(
+						LayoutSetPrototypeTable.INSTANCE,
+						LayoutSetPrototypeTable.INSTANCE.companyId.eq(
+							LayoutSetTable.INSTANCE.companyId
+						).and(
+							LayoutSetPrototypeTable.INSTANCE.uuid.eq(
+								LayoutSetTable.INSTANCE.layoutSetPrototypeUuid)
+						)
+					).innerJoinON(
+						GroupTable.INSTANCE,
+						GroupTable.INSTANCE.companyId.eq(
+							LayoutSetPrototypeTable.INSTANCE.companyId
+						).and(
+							GroupTable.INSTANCE.classPK.eq(
+								LayoutSetPrototypeTable.INSTANCE.
+									layoutSetPrototypeId)
+						)
+					).where(
+						LayoutSetTable.INSTANCE.companyId.eq(
+							layout.getCompanyId()
+						).and(
+							LayoutTable.INSTANCE.friendlyURL.eq(
+								layout.getFriendlyURL())
+						).and(
+							LayoutTable.INSTANCE.sourcePrototypeLayoutUuid.
+								isNull()
+						).and(
+							GroupTable.INSTANCE.groupId.eq(layout.getGroupId())
+						)
+					))));
 	}
 
 	private long _getDuplicatedFriendlyURLSiteLayoutsCount(

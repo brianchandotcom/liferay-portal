@@ -717,6 +717,13 @@ public class AssetPublisherDisplayContext {
 		return _classTypeIds;
 	}
 
+	public List<ClassType> getClassTypes(ClassTypeReader classTypeReader)
+		throws PortalException {
+
+		return classTypeReader.getAvailableClassTypes(
+			getReferencedModelsGroupIds(), _themeDisplay.getLocale());
+	}
+
 	public String[] getCompilerTagNames() {
 		if (_compilerTagNames != null) {
 			return _compilerTagNames;

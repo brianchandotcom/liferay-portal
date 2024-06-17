@@ -84,7 +84,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	for (AssetRendererFactory<?> assetRendererFactory : assetRendererFactories) {
 		ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
+		List<ClassType> classTypes = assetPublisherDisplayContext.getClassTypes(classTypeReader);
 
 		if (classTypes.isEmpty()) {
 			continue;
@@ -209,9 +209,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	}
 
 	for (AssetRendererFactory<?> curAssetRendererFactory : classTypesAssetRendererFactories) {
-		ClassTypeReader classTypeReader = curAssetRendererFactory.getClassTypeReader();
-
-		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
+		List<ClassType> assetAvailableClassTypes = assetPublisherDisplayContext.getClassTypes(curAssetRendererFactory.getClassTypeReader());
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;

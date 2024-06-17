@@ -404,6 +404,34 @@ export class PageEditorPage {
 		);
 	}
 
+	/**
+	 * Get id of a fragment that was manually added to the page.
+	 *
+	 * This is for cases in which we are not able to use a page definition to
+	 * create the page, for example when editing display page templates.
+	 *
+	 * It's recommended to change fragment's name before using this method
+	 * so we make sure we get the id for the desired fragment
+	 *
+	 * @param fragmentName Name of the fragment
+	 */
+
+	async getFragmentId(fragmentName: string) {
+		const topper = this.page.locator(
+			`.page-editor__topper[data-name="${fragmentName}"]`
+		);
+
+		const fragmentId = await topper.evaluate((element) =>
+			Array.from(element.classList)
+				.find((cssClass) =>
+					cssClass.includes('lfr-layout-structure-item')
+				)
+				.replace('lfr-layout-structure-item-topper-', '')
+		);
+
+		return fragmentId;
+	}
+
 	async getFragmentStyle(
 		fragmentId: string,
 		style: string,

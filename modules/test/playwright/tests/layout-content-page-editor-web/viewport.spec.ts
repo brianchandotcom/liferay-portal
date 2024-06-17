@@ -311,13 +311,7 @@ test('correct viewport configuration is set when adding a Grid', async ({
 
 	await pageEditorPage.addFragment('Layout Elements', 'Grid');
 
-	const topper = await page.locator('.page-editor__topper[data-name="Grid"]');
-
-	const gridId = await topper.evaluate((element) =>
-		Array.from(element.classList)
-			.find((cssClass) => cssClass.includes('lfr-layout-structure-item'))
-			.replace('lfr-layout-structure-item-topper-', '')
-	);
+	const gridId = await pageEditorPage.getFragmentId('Grid');
 
 	await pageEditorPage.changeFragmentConfiguration(
 		gridId,

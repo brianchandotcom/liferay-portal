@@ -386,6 +386,10 @@ public interface DDMTemplateLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate fetchDDMTemplate(long templateId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMTemplate fetchDDMTemplateByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the ddm template matching the UUID and group.
 	 *
@@ -460,6 +464,11 @@ public interface DDMTemplateLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate getDDMTemplate(long templateId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMTemplate getDDMTemplateByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns the ddm template matching the UUID and group.

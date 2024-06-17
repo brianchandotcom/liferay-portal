@@ -260,6 +260,23 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 		return ddmTemplatePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public DDMTemplate fetchDDMTemplateByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return ddmTemplatePersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public DDMTemplate getDDMTemplateByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return ddmTemplatePersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the ddm template with the primary key.
 	 *

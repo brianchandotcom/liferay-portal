@@ -427,6 +427,13 @@ public class DDMTemplateLocalServiceUtil {
 		return getService().fetchDDMTemplate(templateId);
 	}
 
+	public static DDMTemplate fetchDDMTemplateByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchDDMTemplateByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the ddm template matching the UUID and group.
 	 *
@@ -514,6 +521,14 @@ public class DDMTemplateLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getDDMTemplate(templateId);
+	}
+
+	public static DDMTemplate getDDMTemplateByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getDDMTemplateByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

@@ -66,8 +66,9 @@ create unique index IX_1F8A4EA0 on DDMStructureVersion (structureId, version[$CO
 create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_[$COLUMN_LENGTH:75$]);
 create index IX_32F83D16 on DDMTemplate (classPK);
 create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_[$COLUMN_LENGTH:75$], mode_[$COLUMN_LENGTH:75$]);
-create unique index IX_ED2AF9E2 on DDMTemplate (groupId, classNameId, templateKey[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_78329FE6 on DDMTemplate (groupId, classNameId, ctCollectionId, templateKey[$COLUMN_LENGTH:75$]);
 create index IX_B1C33EA6 on DDMTemplate (groupId, classPK);
+create unique index IX_849840A2 on DDMTemplate (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_BE57F195 on DDMTemplate (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_33BEF579 on DDMTemplate (language[$COLUMN_LENGTH:75$]);
 create index IX_127A35B0 on DDMTemplate (smallImageId);

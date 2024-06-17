@@ -68,7 +68,7 @@ public class DDMTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -76,6 +76,8 @@ public class DDMTemplateCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", templateId=");
 		sb.append(templateId);
 		sb.append(", groupId=");
@@ -143,6 +145,13 @@ public class DDMTemplateCacheModel
 		}
 		else {
 			ddmTemplateImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			ddmTemplateImpl.setExternalReferenceCode("");
+		}
+		else {
+			ddmTemplateImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		ddmTemplateImpl.setTemplateId(templateId);
@@ -273,6 +282,7 @@ public class DDMTemplateCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		templateId = objectInput.readLong();
 
@@ -324,6 +334,13 @@ public class DDMTemplateCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(templateId);
@@ -436,6 +453,7 @@ public class DDMTemplateCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long templateId;
 	public long groupId;
 	public long companyId;

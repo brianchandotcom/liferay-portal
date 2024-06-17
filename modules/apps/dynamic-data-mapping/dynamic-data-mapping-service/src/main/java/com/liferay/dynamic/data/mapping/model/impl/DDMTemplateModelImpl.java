@@ -72,19 +72,20 @@ public class DDMTemplateModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"templateId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"versionUserId", Types.BIGINT}, {"versionUserName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"resourceClassNameId", Types.BIGINT}, {"templateKey", Types.VARCHAR},
-		{"version", Types.VARCHAR}, {"name", Types.CLOB},
-		{"description", Types.CLOB}, {"type_", Types.VARCHAR},
-		{"mode_", Types.VARCHAR}, {"language", Types.VARCHAR},
-		{"script", Types.CLOB}, {"cacheable", Types.BOOLEAN},
-		{"smallImage", Types.BOOLEAN}, {"smallImageId", Types.BIGINT},
-		{"smallImageURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"templateId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"versionUserId", Types.BIGINT},
+		{"versionUserName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"resourceClassNameId", Types.BIGINT},
+		{"templateKey", Types.VARCHAR}, {"version", Types.VARCHAR},
+		{"name", Types.CLOB}, {"description", Types.CLOB},
+		{"type_", Types.VARCHAR}, {"mode_", Types.VARCHAR},
+		{"language", Types.VARCHAR}, {"script", Types.CLOB},
+		{"cacheable", Types.BOOLEAN}, {"smallImage", Types.BOOLEAN},
+		{"smallImageId", Types.BIGINT}, {"smallImageURL", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,6 +95,7 @@ public class DDMTemplateModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -122,7 +124,7 @@ public class DDMTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplate (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,templateId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,primary key (templateId, ctCollectionId))";
+		"create table DDMTemplate (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,templateId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,primary key (templateId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 
@@ -163,50 +165,56 @@ public class DDMTemplateModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LANGUAGE_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODE_COLUMN_BITMASK = 32L;
+	public static final long LANGUAGE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 64L;
+	public static final long MODE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TEMPLATEKEY_COLUMN_BITMASK = 128L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 256L;
+	public static final long TEMPLATEKEY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 512L;
+	public static final long TYPE_COLUMN_BITMASK = 512L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TEMPLATEID_COLUMN_BITMASK = 1024L;
+	public static final long TEMPLATEID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -323,6 +331,8 @@ public class DDMTemplateModelImpl
 				"ctCollectionId", DDMTemplate::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", DDMTemplate::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode", DDMTemplate::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"templateId", DDMTemplate::getTemplateId);
 			attributeGetterFunctions.put("groupId", DDMTemplate::getGroupId);
 			attributeGetterFunctions.put(
@@ -386,6 +396,10 @@ public class DDMTemplateModelImpl
 				(BiConsumer<DDMTemplate, Long>)DDMTemplate::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<DDMTemplate, String>)DDMTemplate::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<DDMTemplate, String>)
+					DDMTemplate::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"templateId",
 				(BiConsumer<DDMTemplate, Long>)DDMTemplate::setTemplateId);
@@ -524,6 +538,35 @@ public class DDMTemplateModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1450,6 +1493,7 @@ public class DDMTemplateModelImpl
 		ddmTemplateImpl.setMvccVersion(getMvccVersion());
 		ddmTemplateImpl.setCtCollectionId(getCtCollectionId());
 		ddmTemplateImpl.setUuid(getUuid());
+		ddmTemplateImpl.setExternalReferenceCode(getExternalReferenceCode());
 		ddmTemplateImpl.setTemplateId(getTemplateId());
 		ddmTemplateImpl.setGroupId(getGroupId());
 		ddmTemplateImpl.setCompanyId(getCompanyId());
@@ -1490,6 +1534,8 @@ public class DDMTemplateModelImpl
 		ddmTemplateImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		ddmTemplateImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		ddmTemplateImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		ddmTemplateImpl.setTemplateId(
 			this.<Long>getColumnOriginalValue("templateId"));
 		ddmTemplateImpl.setGroupId(
@@ -1626,6 +1672,18 @@ public class DDMTemplateModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			ddmTemplateCacheModel.uuid = null;
+		}
+
+		ddmTemplateCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			ddmTemplateCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			ddmTemplateCacheModel.externalReferenceCode = null;
 		}
 
 		ddmTemplateCacheModel.templateId = getTemplateId();
@@ -1833,6 +1891,7 @@ public class DDMTemplateModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _templateId;
 	private long _groupId;
 	private long _companyId;
@@ -1895,6 +1954,8 @@ public class DDMTemplateModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("templateId", _templateId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1951,55 +2012,57 @@ public class DDMTemplateModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("templateId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("templateId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("versionUserId", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("versionUserName", 512L);
+		columnBitmasks.put("versionUserId", 512L);
 
-		columnBitmasks.put("createDate", 1024L);
+		columnBitmasks.put("versionUserName", 1024L);
 
-		columnBitmasks.put("modifiedDate", 2048L);
+		columnBitmasks.put("createDate", 2048L);
 
-		columnBitmasks.put("classNameId", 4096L);
+		columnBitmasks.put("modifiedDate", 4096L);
 
-		columnBitmasks.put("classPK", 8192L);
+		columnBitmasks.put("classNameId", 8192L);
 
-		columnBitmasks.put("resourceClassNameId", 16384L);
+		columnBitmasks.put("classPK", 16384L);
 
-		columnBitmasks.put("templateKey", 32768L);
+		columnBitmasks.put("resourceClassNameId", 32768L);
 
-		columnBitmasks.put("version", 65536L);
+		columnBitmasks.put("templateKey", 65536L);
 
-		columnBitmasks.put("name", 131072L);
+		columnBitmasks.put("version", 131072L);
 
-		columnBitmasks.put("description", 262144L);
+		columnBitmasks.put("name", 262144L);
 
-		columnBitmasks.put("type_", 524288L);
+		columnBitmasks.put("description", 524288L);
 
-		columnBitmasks.put("mode_", 1048576L);
+		columnBitmasks.put("type_", 1048576L);
 
-		columnBitmasks.put("language", 2097152L);
+		columnBitmasks.put("mode_", 2097152L);
 
-		columnBitmasks.put("script", 4194304L);
+		columnBitmasks.put("language", 4194304L);
 
-		columnBitmasks.put("cacheable", 8388608L);
+		columnBitmasks.put("script", 8388608L);
 
-		columnBitmasks.put("smallImage", 16777216L);
+		columnBitmasks.put("cacheable", 16777216L);
 
-		columnBitmasks.put("smallImageId", 33554432L);
+		columnBitmasks.put("smallImage", 33554432L);
 
-		columnBitmasks.put("smallImageURL", 67108864L);
+		columnBitmasks.put("smallImageId", 67108864L);
 
-		columnBitmasks.put("lastPublishDate", 134217728L);
+		columnBitmasks.put("smallImageURL", 134217728L);
+
+		columnBitmasks.put("lastPublishDate", 268435456L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

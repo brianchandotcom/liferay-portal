@@ -462,6 +462,14 @@ public class DDMTemplateLocalServiceWrapper
 		return _ddmTemplateLocalService.fetchDDMTemplate(templateId);
 	}
 
+	@Override
+	public DDMTemplate fetchDDMTemplateByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _ddmTemplateLocalService.fetchDDMTemplateByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the ddm template matching the UUID and group.
 	 *
@@ -557,6 +565,15 @@ public class DDMTemplateLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateLocalService.getDDMTemplate(templateId);
+	}
+
+	@Override
+	public DDMTemplate getDDMTemplateByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmTemplateLocalService.getDDMTemplateByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

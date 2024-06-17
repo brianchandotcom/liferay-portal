@@ -3655,6 +3655,76 @@ public class DDMTemplateUtil {
 	}
 
 	/**
+	 * Returns the ddm template where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchTemplateException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching ddm template
+	 * @throws NoSuchTemplateException if a matching ddm template could not be found
+	 */
+	public static DDMTemplate findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchTemplateException {
+
+		return getPersistence().findByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the ddm template where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
+	 */
+	public static DDMTemplate fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the ddm template where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
+	 */
+	public static DDMTemplate fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_G(
+			externalReferenceCode, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the ddm template where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the ddm template that was removed
+	 */
+	public static DDMTemplate removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchTemplateException {
+
+		return getPersistence().removeByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the number of ddm templates where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching ddm templates
+	 */
+	public static int countByERC_G(String externalReferenceCode, long groupId) {
+		return getPersistence().countByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
 	 * Caches the ddm template in the entity cache if it is enabled.
 	 *
 	 * @param ddmTemplate the ddm template

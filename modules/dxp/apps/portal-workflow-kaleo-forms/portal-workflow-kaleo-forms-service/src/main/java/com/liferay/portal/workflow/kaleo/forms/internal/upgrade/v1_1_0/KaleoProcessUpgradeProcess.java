@@ -169,7 +169,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 
 		try {
 			DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
-				oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
+				null, oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
 				oldDDMTemplate.getClassNameId(), newDDMStructureId,
 				PortalUtil.getClassNameId(KaleoProcess.class),
 				oldDDMTemplate.getNameMap(), oldDDMTemplate.getDescriptionMap(),

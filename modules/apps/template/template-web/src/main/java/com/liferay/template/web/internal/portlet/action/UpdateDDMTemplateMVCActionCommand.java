@@ -99,8 +99,8 @@ public class UpdateDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest, "templateKey");
 
 			ddmTemplate = _ddmTemplateService.addTemplate(
-				groupId, classNameId, classPK, resourceClassNameId, templateKey,
-				nameMap, descriptionMap,
+				null, groupId, classNameId, classPK, resourceClassNameId,
+				templateKey, nameMap, descriptionMap,
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
 				TemplateConstants.LANG_TYPE_FTL, script, cacheable, smallImage,
 				smallImageURL, smallImageFile, serviceContext);

@@ -419,14 +419,18 @@ public class DDMTemplateStagedModelDataHandler
 						portletDataContext.getScopeGroupId(),
 						template.getClassNameId(), template.getTemplateKey());
 
+					String externalReferenceCode = null;
 					String templateKey = null;
 
 					if (existingTemplate == null) {
+						externalReferenceCode =
+							template.getExternalReferenceCode();
 						templateKey = template.getTemplateKey();
 					}
 
 					importedTemplate = _ddmTemplateLocalService.addTemplate(
-						userId, portletDataContext.getScopeGroupId(),
+						externalReferenceCode, userId,
+						portletDataContext.getScopeGroupId(),
 						template.getClassNameId(), classPK, resourceClassNameId,
 						templateKey, template.getNameMap(),
 						template.getDescriptionMap(), template.getType(),
@@ -447,7 +451,7 @@ public class DDMTemplateStagedModelDataHandler
 			}
 			else {
 				importedTemplate = _ddmTemplateLocalService.addTemplate(
-					userId, portletDataContext.getScopeGroupId(),
+					null, userId, portletDataContext.getScopeGroupId(),
 					template.getClassNameId(), classPK, resourceClassNameId,
 					null, template.getNameMap(), template.getDescriptionMap(),
 					template.getType(), template.getMode(),

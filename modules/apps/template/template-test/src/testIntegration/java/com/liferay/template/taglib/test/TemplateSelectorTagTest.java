@@ -66,7 +66,7 @@ public class TemplateSelectorTagTest {
 		_group = GroupTestUtil.addGroup();
 
 		_ddmTemplate = _ddmTemplateLocalService.addTemplate(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(TemplateEntry.class), 0,
 			_portal.getClassNameId(TemplateEntry.class),
 			Collections.singletonMap(

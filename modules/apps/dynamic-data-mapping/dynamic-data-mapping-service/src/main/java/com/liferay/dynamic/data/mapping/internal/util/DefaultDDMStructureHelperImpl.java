@@ -264,7 +264,8 @@ public class DefaultDDMStructureHelperImpl
 				templateElement.elementText("cacheable"));
 
 			_ddmTemplateLocalService.addTemplate(
-				userId, groupId, _portal.getClassNameId(DDMStructure.class),
+				null, userId, groupId,
+				_portal.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(), ddmStructure.getClassNameId(),
 				name, nameMap, null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE,

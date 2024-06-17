@@ -161,7 +161,7 @@ public class ContentTemplateResourceTest
 			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			PortalUtil.getClassNameId(DDMStructure.class),
 			ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class), null,

@@ -135,7 +135,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			_portal.getClassNameId(TemplateEntry.class), 0,
 			_portal.getClassNameId(TemplateEntry.class),
 			Collections.singletonMap(LocaleUtil.US, "name"),

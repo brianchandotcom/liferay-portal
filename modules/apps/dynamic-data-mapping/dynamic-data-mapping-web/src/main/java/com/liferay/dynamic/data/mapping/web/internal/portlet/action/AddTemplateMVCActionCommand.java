@@ -119,9 +119,10 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
 		return ddmTemplateService.addTemplate(
-			groupId, classNameId, classPK, resourceClassNameId, templateKey,
-			nameMap, descriptionMap, type, mode, language, script, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+			null, groupId, classNameId, classPK, resourceClassNameId,
+			templateKey, nameMap, descriptionMap, type, mode, language, script,
+			cacheable, smallImage, smallImageURL, smallImageFile,
+			serviceContext);
 	}
 
 	private String _getFileScriptContent(

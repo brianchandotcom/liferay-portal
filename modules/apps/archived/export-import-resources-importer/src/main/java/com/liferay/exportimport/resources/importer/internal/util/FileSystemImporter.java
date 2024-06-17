@@ -215,7 +215,7 @@ public class FileSystemImporter extends BaseImporter {
 		try {
 			if (!updateModeEnabled || (ddmTemplate == null)) {
 				ddmTemplateLocalService.addTemplate(
-					userId, groupId, classNameId, 0,
+					null, userId, groupId, classNameId, 0,
 					portal.getClassNameId(PortletDisplayTemplate.class),
 					_getKey(fileName), getMap(name), null,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
@@ -573,7 +573,7 @@ public class FileSystemImporter extends BaseImporter {
 		try {
 			if (!updateModeEnabled || (ddmTemplate == null)) {
 				ddmTemplateLocalService.addTemplate(
-					userId, templateGroupId,
+					null, userId, templateGroupId,
 					portal.getClassNameId(DDMStructure.class), ddmStructureId,
 					portal.getClassNameId(JournalArticle.class),
 					_getKey(fileName), getMap(name), null, type, mode, language,
@@ -662,7 +662,8 @@ public class FileSystemImporter extends BaseImporter {
 		try {
 			if (!updateModeEnabled || (ddmTemplate == null)) {
 				ddmTemplate = ddmTemplateLocalService.addTemplate(
-					userId, groupId, portal.getClassNameId(DDMStructure.class),
+					null, userId, groupId,
+					portal.getClassNameId(DDMStructure.class),
 					ddmStructure.getStructureId(),
 					portal.getClassNameId(JournalArticle.class),
 					_getKey(fileName), getMap(name), null,

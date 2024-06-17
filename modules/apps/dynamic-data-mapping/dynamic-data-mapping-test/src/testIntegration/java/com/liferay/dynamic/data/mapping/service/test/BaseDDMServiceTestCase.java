@@ -215,7 +215,7 @@ public abstract class BaseDDMServiceTestCase {
 		serviceContext.setAttribute("status", status);
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			null, TestPropsValues.getUserId(), group.getGroupId(), classNameId,
 			classPK, resourceClassNameId, templateKey,
 			getDefaultLocaleMap(name), getDefaultLocaleMap(description), type,
 			mode, language, script, false, smallImage, smallImageURL, null,

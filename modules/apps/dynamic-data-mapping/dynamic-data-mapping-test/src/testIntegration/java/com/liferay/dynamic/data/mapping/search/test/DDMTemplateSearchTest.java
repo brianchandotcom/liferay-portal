@@ -158,7 +158,7 @@ public class DDMTemplateSearchTest {
 		serviceContext.setAddGuestPermissions(false);
 
 		_ddmTemplate = DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			PortalUtil.getClassNameId(DDMStructure.class),
 			_ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class), null, nameMap,

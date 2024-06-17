@@ -55,8 +55,9 @@ public abstract class BaseTemplateUpgradeProcessTestCase {
 		long classPK = ParamUtil.getLong(_serviceContext, "classPK");
 
 		_ddmTemplate = _ddmTemplateService.addTemplate(
-			_group.getGroupId(), _portal.getClassNameId(DDMTemplate.class),
-			classPK, _portal.getClassNameId(JournalArticle.class),
+			null, _group.getGroupId(),
+			_portal.getClassNameId(DDMTemplate.class), classPK,
+			_portal.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
 				LocaleUtil.US, "DDMTemplate Name"
 			).build(),

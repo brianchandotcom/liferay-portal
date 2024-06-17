@@ -242,7 +242,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 				if (ddmTemplate == null) {
 					_ddmTemplateLocalService.addTemplate(
-						userId, group.getGroupId(), classNameId, 0,
+						null, userId, group.getGroupId(), classNameId, 0,
 						_portal.getClassNameId(
 							_CLASS_NAME_PORTLET_DISPLAY_TEMPLATE),
 						templateKey, nameMap, descriptionMap, type, null,

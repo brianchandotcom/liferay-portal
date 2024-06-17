@@ -68,7 +68,7 @@ public class TemplateTestUtil {
 		throws PortalException {
 
 		return DDMTemplateServiceUtil.addTemplate(
-			serviceContext.getScopeGroupId(), classNameId, classPK,
+			null, serviceContext.getScopeGroupId(), classNameId, classPK,
 			resourceClassNameId,
 			HashMapBuilder.put(
 				PortalUtil.getSiteDefaultLocale(

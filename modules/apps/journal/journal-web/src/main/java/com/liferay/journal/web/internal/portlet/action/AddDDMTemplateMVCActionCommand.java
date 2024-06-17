@@ -102,9 +102,9 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			ddmTemplate = _ddmTemplateService.addTemplate(
-				groupId, _portal.getClassNameId(DDMStructure.class), classPK,
-				_portal.getClassNameId(JournalArticle.class), templateKey,
-				nameMap, descriptionMap,
+				null, groupId, _portal.getClassNameId(DDMStructure.class),
+				classPK, _portal.getClassNameId(JournalArticle.class),
+				templateKey, nameMap, descriptionMap,
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
 				TemplateConstants.LANG_TYPE_FTL, script, cacheable, smallImage,
 				smallImageURL, smallImageFile, serviceContext);

@@ -52,7 +52,7 @@ public class TemplateEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			_portal.getClassNameId(TemplateEntry.class), 0,
 			_portal.getClassNameId(TemplateEntry.class),
 			Collections.singletonMap(LocaleUtil.US, "name"),

@@ -101,7 +101,7 @@ public class DDMTemplateTestUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), groupId, classNameId, classPK,
+			null, TestPropsValues.getUserId(), groupId, classNameId, classPK,
 			resourceClassNameId, templateKey, nameMap, null,
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language, script,
 			false, false, null, null, serviceContext);

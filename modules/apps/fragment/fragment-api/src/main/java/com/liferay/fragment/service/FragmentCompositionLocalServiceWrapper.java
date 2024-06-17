@@ -52,17 +52,15 @@ public class FragmentCompositionLocalServiceWrapper
 
 	@Override
 	public FragmentComposition addFragmentComposition(
-			String externalReferenceCode, long userId, long groupId,
-			long fragmentCollectionId, String fragmentCompositionKey,
-			String name, String description, String data,
-			long previewFileEntryId, int status,
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String data, long previewFileEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentCompositionLocalService.addFragmentComposition(
-			externalReferenceCode, userId, groupId, fragmentCollectionId,
-			fragmentCompositionKey, name, description, data, previewFileEntryId,
-			status, serviceContext);
+			userId, groupId, fragmentCollectionId, fragmentCompositionKey, name,
+			description, data, previewFileEntryId, status, serviceContext);
 	}
 
 	/**
@@ -129,15 +127,6 @@ public class FragmentCompositionLocalServiceWrapper
 
 		return _fragmentCompositionLocalService.deleteFragmentComposition(
 			fragmentCompositionId);
-	}
-
-	@Override
-	public FragmentComposition deleteFragmentComposition(
-			String externalReferenceCode, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCompositionLocalService.deleteFragmentComposition(
-			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -271,15 +260,6 @@ public class FragmentCompositionLocalServiceWrapper
 			groupId, fragmentCompositionKey);
 	}
 
-	@Override
-	public FragmentComposition fetchFragmentCompositionByExternalReferenceCode(
-		String externalReferenceCode, long groupId) {
-
-		return _fragmentCompositionLocalService.
-			fetchFragmentCompositionByExternalReferenceCode(
-				externalReferenceCode, groupId);
-	}
-
 	/**
 	 * Returns the fragment composition matching the UUID and group.
 	 *
@@ -332,16 +312,6 @@ public class FragmentCompositionLocalServiceWrapper
 
 		return _fragmentCompositionLocalService.getFragmentComposition(
 			fragmentCompositionId);
-	}
-
-	@Override
-	public FragmentComposition getFragmentCompositionByExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCompositionLocalService.
-			getFragmentCompositionByExternalReferenceCode(
-				externalReferenceCode, groupId);
 	}
 
 	/**

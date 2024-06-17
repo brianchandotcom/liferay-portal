@@ -43,10 +43,10 @@ public class FragmentCompositionServiceHttp {
 
 	public static com.liferay.fragment.model.FragmentComposition
 			addFragmentComposition(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, long fragmentCollectionId,
-				String fragmentCompositionKey, String name, String description,
-				String data, long previewFileEntryId, int status,
+				HttpPrincipal httpPrincipal, long groupId,
+				long fragmentCollectionId, String fragmentCompositionKey,
+				String name, String description, String data,
+				long previewFileEntryId, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -56,7 +56,7 @@ public class FragmentCompositionServiceHttp {
 				_addFragmentCompositionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, fragmentCollectionId,
+				methodKey, groupId, fragmentCollectionId,
 				fragmentCompositionKey, name, description, data,
 				previewFileEntryId, status, serviceContext);
 
@@ -131,49 +131,6 @@ public class FragmentCompositionServiceHttp {
 	}
 
 	public static com.liferay.fragment.model.FragmentComposition
-			deleteFragmentComposition(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				FragmentCompositionServiceUtil.class,
-				"deleteFragmentComposition",
-				_deleteFragmentCompositionParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.fragment.model.FragmentComposition)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.fragment.model.FragmentComposition
 		fetchFragmentComposition(
 			HttpPrincipal httpPrincipal, long fragmentCompositionId) {
 
@@ -181,7 +138,7 @@ public class FragmentCompositionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class,
 				"fetchFragmentComposition",
-				_fetchFragmentCompositionParameterTypes3);
+				_fetchFragmentCompositionParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCompositionId);
@@ -216,7 +173,7 @@ public class FragmentCompositionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class,
 				"fetchFragmentComposition",
-				_fetchFragmentCompositionParameterTypes4);
+				_fetchFragmentCompositionParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, fragmentCompositionKey);
@@ -242,49 +199,6 @@ public class FragmentCompositionServiceHttp {
 		}
 	}
 
-	public static com.liferay.fragment.model.FragmentComposition
-			getFragmentCompositionByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				FragmentCompositionServiceUtil.class,
-				"getFragmentCompositionByExternalReferenceCode",
-				_getFragmentCompositionByExternalReferenceCodeParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.fragment.model.FragmentComposition)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
 		getFragmentCompositions(
 			HttpPrincipal httpPrincipal, long fragmentCollectionId) {
@@ -292,7 +206,7 @@ public class FragmentCompositionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class, "getFragmentCompositions",
-				_getFragmentCompositionsParameterTypes6);
+				_getFragmentCompositionsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCollectionId);
@@ -327,7 +241,7 @@ public class FragmentCompositionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class, "getFragmentCompositions",
-				_getFragmentCompositionsParameterTypes7);
+				_getFragmentCompositionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCollectionId, start, end);
@@ -362,7 +276,7 @@ public class FragmentCompositionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class, "getFragmentCompositions",
-				_getFragmentCompositionsParameterTypes8);
+				_getFragmentCompositionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, fragmentCollectionId, status);
@@ -400,7 +314,7 @@ public class FragmentCompositionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class, "getFragmentCompositions",
-				_getFragmentCompositionsParameterTypes9);
+				_getFragmentCompositionsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, fragmentCollectionId, start, end,
@@ -439,7 +353,7 @@ public class FragmentCompositionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class, "getFragmentCompositions",
-				_getFragmentCompositionsParameterTypes10);
+				_getFragmentCompositionsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, fragmentCollectionId, name, start, end,
@@ -474,7 +388,7 @@ public class FragmentCompositionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class,
 				"getFragmentCompositionsCount",
-				_getFragmentCompositionsCountParameterTypes11);
+				_getFragmentCompositionsCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCollectionId);
@@ -509,7 +423,7 @@ public class FragmentCompositionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class, "moveFragmentComposition",
-				_moveFragmentCompositionParameterTypes12);
+				_moveFragmentCompositionParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCompositionId, fragmentCollectionId);
@@ -552,7 +466,7 @@ public class FragmentCompositionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class,
 				"updateFragmentComposition",
-				_updateFragmentCompositionParameterTypes13);
+				_updateFragmentCompositionParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCompositionId, previewFileEntryId);
@@ -596,7 +510,7 @@ public class FragmentCompositionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class,
 				"updateFragmentComposition",
-				_updateFragmentCompositionParameterTypes14);
+				_updateFragmentCompositionParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCompositionId, fragmentCollectionId, name,
@@ -640,7 +554,7 @@ public class FragmentCompositionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class,
 				"updateFragmentComposition",
-				_updateFragmentCompositionParameterTypes15);
+				_updateFragmentCompositionParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCompositionId, name);
@@ -684,7 +598,7 @@ public class FragmentCompositionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				FragmentCompositionServiceUtil.class,
 				"updateFragmentComposition",
-				_updateFragmentCompositionParameterTypes16);
+				_updateFragmentCompositionParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentCompositionId, name, description, data,
@@ -723,53 +637,46 @@ public class FragmentCompositionServiceHttp {
 
 	private static final Class<?>[] _addFragmentCompositionParameterTypes0 =
 		new Class[] {
-			String.class, long.class, long.class, String.class, String.class,
-			String.class, String.class, long.class, int.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFragmentCompositionParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _deleteFragmentCompositionParameterTypes2 =
-		new Class[] {String.class, long.class};
+	private static final Class<?>[] _fetchFragmentCompositionParameterTypes2 =
+		new Class[] {long.class};
 	private static final Class<?>[] _fetchFragmentCompositionParameterTypes3 =
-		new Class[] {long.class};
-	private static final Class<?>[] _fetchFragmentCompositionParameterTypes4 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[]
-		_getFragmentCompositionByExternalReferenceCodeParameterTypes5 =
-			new Class[] {String.class, long.class};
-	private static final Class<?>[] _getFragmentCompositionsParameterTypes6 =
+	private static final Class<?>[] _getFragmentCompositionsParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getFragmentCompositionsParameterTypes7 =
+	private static final Class<?>[] _getFragmentCompositionsParameterTypes5 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getFragmentCompositionsParameterTypes8 =
+	private static final Class<?>[] _getFragmentCompositionsParameterTypes6 =
 		new Class[] {long.class, long.class, int.class};
-	private static final Class<?>[] _getFragmentCompositionsParameterTypes9 =
+	private static final Class<?>[] _getFragmentCompositionsParameterTypes7 =
 		new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getFragmentCompositionsParameterTypes10 =
+	private static final Class<?>[] _getFragmentCompositionsParameterTypes8 =
 		new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getFragmentCompositionsCountParameterTypes11 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _moveFragmentCompositionParameterTypes12 =
+		_getFragmentCompositionsCountParameterTypes9 = new Class[] {long.class};
+	private static final Class<?>[] _moveFragmentCompositionParameterTypes10 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateFragmentCompositionParameterTypes13 =
+	private static final Class<?>[] _updateFragmentCompositionParameterTypes11 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _updateFragmentCompositionParameterTypes14 =
+	private static final Class<?>[] _updateFragmentCompositionParameterTypes12 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, String.class,
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateFragmentCompositionParameterTypes15 =
+	private static final Class<?>[] _updateFragmentCompositionParameterTypes13 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateFragmentCompositionParameterTypes16 =
+	private static final Class<?>[] _updateFragmentCompositionParameterTypes14 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, long.class,
 			int.class

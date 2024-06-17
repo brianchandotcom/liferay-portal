@@ -31,17 +31,15 @@ public class FragmentCompositionServiceWrapper
 
 	@Override
 	public FragmentComposition addFragmentComposition(
-			String externalReferenceCode, long groupId,
-			long fragmentCollectionId, String fragmentCompositionKey,
-			String name, String description, String data,
-			long previewFileEntryId, int status,
+			long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String data, long previewFileEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentCompositionService.addFragmentComposition(
-			externalReferenceCode, groupId, fragmentCollectionId,
-			fragmentCompositionKey, name, description, data, previewFileEntryId,
-			status, serviceContext);
+			groupId, fragmentCollectionId, fragmentCompositionKey, name,
+			description, data, previewFileEntryId, status, serviceContext);
 	}
 
 	@Override
@@ -51,15 +49,6 @@ public class FragmentCompositionServiceWrapper
 
 		return _fragmentCompositionService.deleteFragmentComposition(
 			fragmentCompositionId);
-	}
-
-	@Override
-	public FragmentComposition deleteFragmentComposition(
-			String externalReferenceCode, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCompositionService.deleteFragmentComposition(
-			externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -76,16 +65,6 @@ public class FragmentCompositionServiceWrapper
 
 		return _fragmentCompositionService.fetchFragmentComposition(
 			groupId, fragmentCompositionKey);
-	}
-
-	@Override
-	public FragmentComposition getFragmentCompositionByExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _fragmentCompositionService.
-			getFragmentCompositionByExternalReferenceCode(
-				externalReferenceCode, groupId);
 	}
 
 	@Override

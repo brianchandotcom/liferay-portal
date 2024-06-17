@@ -79,10 +79,10 @@ public interface FragmentCompositionLocalService
 		FragmentComposition fragmentComposition);
 
 	public FragmentComposition addFragmentComposition(
-			String externalReferenceCode, long userId, long groupId,
-			long fragmentCollectionId, String fragmentCompositionKey,
-			String name, String description, String data,
-			long previewFileEntryId, int status, ServiceContext serviceContext)
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String data, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -132,10 +132,6 @@ public interface FragmentCompositionLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public FragmentComposition deleteFragmentComposition(
 			long fragmentCompositionId)
-		throws PortalException;
-
-	public FragmentComposition deleteFragmentComposition(
-			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**
@@ -225,10 +221,6 @@ public interface FragmentCompositionLocalService
 	public FragmentComposition fetchFragmentComposition(
 		long groupId, String fragmentCompositionKey);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FragmentComposition fetchFragmentCompositionByExternalReferenceCode(
-		String externalReferenceCode, long groupId);
-
 	/**
 	 * Returns the fragment composition matching the UUID and group.
 	 *
@@ -259,11 +251,6 @@ public interface FragmentCompositionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentComposition getFragmentComposition(
 			long fragmentCompositionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FragmentComposition getFragmentCompositionByExternalReferenceCode(
-			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

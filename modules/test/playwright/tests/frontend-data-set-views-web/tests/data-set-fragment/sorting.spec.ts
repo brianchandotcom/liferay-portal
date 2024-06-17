@@ -11,7 +11,7 @@ import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {fdsFragmentPageTest} from '../data-set-fragment/fixtures/fdsFragmentPageTest';
 
-export const fragmentTest = mergeTests(
+export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	fdsFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
@@ -21,7 +21,7 @@ export const fragmentTest = mergeTests(
 let dataSetERC: string;
 let dataSetLabel: string;
 
-fragmentTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
+test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 
@@ -31,15 +31,15 @@ fragmentTest.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	});
 });
 
-fragmentTest.afterEach(async ({dataSetManagerApiHelpers}) => {
+test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
-	fragmentTest(
+test.describe('Sorting Dropdown in Data Set Fragment', () => {
+	test(
 		'When sorting is configured with at least 1 sort, the dropdown is displayed in the fragment @LPD-19503',
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await fragmentTest.step('Create sorting', async () => {
+			await test.step('Create sorting', async () => {
 				await dataSetManagerApiHelpers.createDataSetSort({
 					defaultValue: true,
 					fieldName: 'id',
@@ -56,7 +56,7 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Add fields, so data is displayed',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetField({
@@ -79,14 +79,14 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 				}
 			);
 
-			await fragmentTest.step('Configure Data Set fragment', async () => {
+			await test.step('Configure Data Set fragment', async () => {
 				await fdsFragmentPage.configureDataSetFragment({
 					dataSetLabel,
 					layout,
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the order dropdown is displayed',
 				async () => {
 					await expect(
@@ -95,7 +95,7 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that default sorting is applied',
 				async () => {
 					const firstIDText = await fdsFragmentPage.fdsTableWrapper
@@ -114,7 +114,7 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that sorting is displayed in the dropdown',
 				async () => {
 					await page.getByRole('button', {name: 'Order'}).click();
@@ -128,7 +128,7 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Select "Descending" in the dropdown',
 				async () => {
 					await page
@@ -137,7 +137,7 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that the first ID is greater than the last ID in the table',
 				async () => {
 					const firstIDText = await fdsFragmentPage.fdsTableWrapper
@@ -156,7 +156,7 @@ fragmentTest.describe('Sorting Dropdown in Data Set Fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Check that a different sort "Name" can be used',
 				async () => {
 					await page.getByRole('button', {name: 'Order'}).click();

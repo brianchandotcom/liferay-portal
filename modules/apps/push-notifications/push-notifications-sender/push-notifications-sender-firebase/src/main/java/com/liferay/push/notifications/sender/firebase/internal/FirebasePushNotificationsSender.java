@@ -275,10 +275,16 @@ public class FirebasePushNotificationsSender
 	}
 
 	private String _getAccessToken() throws Exception {
-		_googleCredentials.refresh();
+		try {
+			_googleCredentials.refresh();
 
-		return _googleCredentials.getAccessToken(
-		).getTokenValue();
+			return _googleCredentials.getAccessToken(
+			).getTokenValue();
+		}
+		catch (Exception exception) {
+			throw new PushNotificationsException(
+				"Unable to get the access token", exception);
+		}
 	}
 
 	private String _getProjectId() {
